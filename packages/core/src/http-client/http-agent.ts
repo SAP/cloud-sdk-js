@@ -29,10 +29,12 @@ export function getAgentConfig(
   const agentType = destination.proxyConfiguration
     ? AgentType.PROXY
     : AgentType.DEFAULT;
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const certificateOptions = getCertificateOption(destination);
   if (agentType === AgentType.PROXY) {
-    return createProxyAgent(destination);
+    return createProxyAgent(destination,certificateOptions);
   }
-  return createDefaultAgent(destination);
+  return createDefaultAgent(destination,certificateOptions);
 }
 
 enum AgentType {
@@ -41,21 +43,15 @@ enum AgentType {
 }
 
 function createProxyAgent(
-  destination: Destination
+  destination: Destination,
+  options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   if (!destination.proxyConfiguration) {
     throw new Error(
       `The destination proxy configuration: ${destination.proxyConfiguration} is undefined.`
     );
-  }
-
-  if (destination.isTrustingAllCertificates) {
-    logger.warn(
-      'The destination is configured to both use a proxy and to trust all certificates. This is currently not supported. The proxy configuration will be applied, but certificates will be validated.'
-    );
-  }
-
-  return proxyAgent(destination);
+ }
+  return proxyAgent(destination,options);
 }
 
 const trustAllOptions = (destination: Destination) => (
@@ -77,6 +73,31 @@ const certificateOptions = (destination: Destination) => (
   }
   return options;
 };
+/**
+ * The http agents (proxy and default) use node tls for the certificate handling. This method creates the options with the pfx and passphrase. *
+ * https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options
+ * @param destination - Destination object
+ * @returns options which can be used later by tls.createSecureContext() e.g. pfx and passphrase. or {} if protocol is not https or no client information are in the defintaion.
+ * @hidden
+ */
+function getCertificateOption(destination: Destination): Record<string, any>  {
+  // http case: no certificate needed
+  if(getProtocolOrDefault(destination) === Protocol.HTTP){
+  if (destination.isTrustingAllCertificates) {
+    logger.warn('"isTrustingAllCertificates" is not available for HTTP.');
+  }
+    return {};
+  }
+  // https case: get certificate options
+  if (destination.isTrustingAllCertificates) {
+    logger.warn(
+      '"isTrustingAllCertificates" property in the provided destination is set to "true". This is highly discouraged in production.'
+    );
+  }
+
+  const options = trustAllOptions(destination)({});
+  return certificateOptions(destination)(options);
+}
 
 const supportedCertificateFormats = ['p12', 'pfx'];
 
@@ -116,26 +137,17 @@ function selectCertificate(destination): DestinationCertificate {
 
   return certificate;
 }
-
+/*
+ See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
+ */
 function createDefaultAgent(
-  destination: Destination
+  destination: Destination,
+  options: https.AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   if (getProtocolOrDefault(destination) === Protocol.HTTPS) {
-    if (destination.isTrustingAllCertificates) {
-      logger.warn(
-        '"isTrustingAllCertificates" property in the provided destination is set to "true". This is highly discouraged in production.'
-      );
-    }
-    let options = trustAllOptions(destination)({});
-    options = certificateOptions(destination)(options);
-
     return { httpsAgent: new https.Agent(options) };
   }
-
-  if (destination.isTrustingAllCertificates) {
-    logger.warn('"isTrustingAllCertificates" is not available for HTTP.');
-  }
-  return { httpAgent: new http.Agent() };
+  return { httpAgent: new http.Agent(options) };
 }
 
 /**

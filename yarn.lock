@@ -1809,10 +1809,10 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@sap/cds-compiler@~1.49.0":
-  version "1.49.2"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-1.49.2.tgz#ec211d3c23eef2bbb01e74afe6ce8b123e7fa16c"
-  integrity sha512-u3WNGw7mVvix15Ylrr44K3jAGUhPqWfnh0wmNJgFsUXAz0YaKWtb/6sx3EQUo7BelYrMj0zQNDZeCEYpa/z80A==
+"@sap/cds-compiler@^1.50.0":
+  version "1.50.0"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-1.50.0.tgz#4c2fdc6ecacb9d659a08ef6adf0c920b5d6cb214"
+  integrity sha512-GjfOYeM4x7fMHxorHVA1FZZxoCbY1XF5gsyyLjIh7W68R5mSh80oOu0CuWRrSJ3ywONmwRfTxoB94xQRZwiilQ==
   dependencies:
     antlr4 "4.8.0"
     resolve "1.8.1"
@@ -1850,10 +1850,10 @@
     xmlbuilder "15.1.1"
     yaml "1.10.0"
 
-"@sap/cds-runtime@~2.8.0":
-  version "2.8.6"
-  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-2.8.6.tgz#afcd9dc84159089bea9e58e50a9ef71240719c73"
-  integrity sha512-CtwOguJCvqPi/3ea3jQ5FMUBKukzwOuSt+bFexHbF4Q3K4byiUvWALSEauAMphD/vccRJBKxEKTy6DqIeaY6rQ==
+"@sap/cds-runtime@~2.9.0":
+  version "2.9.2"
+  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-2.9.2.tgz#a675d0b3fe9deb6efb1242b2daf3030e84abb0b6"
+  integrity sha512-ZMw9BlEBFZ+wMGeQa1KnFvwwVRiUOaNyh3cvQdIOoHW0HRmPSIN3z2cxZ2IP5TsRkGyhlArrrYKPaL+KJa4J4w==
   dependencies:
     "@sap-cloud-sdk/core" "^1.18.1"
     "@sap-cloud-sdk/util" "^1.18.1"
@@ -1868,13 +1868,13 @@
     got "10.7.0"
 
 "@sap/cds@^4.2.2", "@sap/cds@^4.4.7":
-  version "4.5.3"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.5.3.tgz#7785a4227bb2ba107a8bb292cb2281cbc46b6399"
-  integrity sha512-BCX/hj2Gc0HTLX0fK8UeIAhOch43lAQNbjY4M9aDEob2Mjtn9pVPuq/KIB0ogXTvoc9OpDUdEkA4Xs42GSL8aQ==
+  version "4.6.4"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.6.4.tgz#b2515495581a94d3b7f46632caddb35108b12d9d"
+  integrity sha512-ixcSSVQCgRZJL6T8BurjzR/SbDsupwH5R1GBcYdEVoCywZo4aHMlo3JS073116/v3vO5CH4c7wmzjXVltWO68g==
   dependencies:
-    "@sap/cds-compiler" "~1.49.0"
+    "@sap/cds-compiler" "^1.50.0"
     "@sap/cds-foss" "^2"
-    "@sap/cds-runtime" "~2.8.0"
+    "@sap/cds-runtime" "~2.9.0"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0":
   version "1.24.0"

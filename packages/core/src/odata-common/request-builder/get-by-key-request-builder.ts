@@ -70,11 +70,11 @@ export abstract class GetByKeyRequestBuilder<
     options?: DestinationOptions
   ): Promise<EntityT> {
     return this.executeRaw(destination, options)
-      .then(requestResponse =>
+      .then(({ response }) =>
         this.entityDeserializer.deserializeEntity(
-          this.dataAccessor.getSingleResult(requestResponse.response.data),
+          this.dataAccessor.getSingleResult(response.data),
           this._entityConstructor,
-          requestResponse.response.headers
+          response.headers
         )
       )
       .catch(error => {

@@ -111,14 +111,14 @@ export abstract class GetAllRequestBuilder<
     options?: DestinationOptions
   ): Promise<EntityT[]> {
     return this.executeRaw(destination, options)
-      .then(requestResponse =>
+      .then(({ response }) =>
         this.dataAccessor
-          .getCollectionResult(requestResponse.response.data)
+          .getCollectionResult(response.data)
           .map(json =>
             this.entityDeserializer.deserializeEntity(
               json,
               this._entityConstructor,
-              requestResponse.response.headers
+              response.headers
             )
           )
       );

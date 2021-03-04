@@ -90,11 +90,11 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
     options?: DestinationOptions
   ): Promise<EntityT> {
     return this.executeRaw(destination, options)
-      .then(requestResponse =>
+      .then(({ response }) =>
         this.deserializer.deserializeEntity(
-          this.responseDataAccessor.getSingleResult(requestResponse.response.data),
+          this.responseDataAccessor.getSingleResult(response.data),
           this._entityConstructor,
-          requestResponse.response.headers
+          response.headers
         )
       )
       .catch(error => {

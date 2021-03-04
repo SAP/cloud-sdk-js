@@ -42,7 +42,7 @@ const generatorConfigOpenApi: GeneratorOptions = {
   input: path.resolve('test-resources', 'openapi-service-specs'),
   outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
   clearOutputDir: true,
-  generateJs: true,
+  generateJs: false,
   generatePackageJson: true,
   versionInPackageJson: '1.2.3',
   additionalFiles: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',

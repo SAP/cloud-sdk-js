@@ -12,7 +12,7 @@ describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();
   const keyPropString = 'TEST_ID';
 
-  afterAll(() => {
+  afterEach(() => {
     nock.cleanAll();
   });
 

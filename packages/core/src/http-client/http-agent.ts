@@ -65,7 +65,7 @@ const certificateOptions = (destination: Destination) => (
   if (destination.keyStoreName && destination.keyStorePassword) {
     const certificate = selectCertificate(destination);
 
-    logger.debug(`Certifcate with name "${certificate.name}" selected.`)
+    logger.debug(`Certifcate with name "${certificate.name}" selected.`);
 
     return {
       ...options,

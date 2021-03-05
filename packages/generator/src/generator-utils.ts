@@ -1,5 +1,6 @@
 import { EdmTypeShared } from '@sap-cloud-sdk/core';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
+import execa from 'execa';
 import {
   VdmNavigationProperty,
   VdmProperty,
@@ -15,31 +16,31 @@ function hasCapability(object: any, capability: string) {
   return !(capability in object) || object[capability] === 'true';
 }
 
-export function isDeletable(entity: any) {
+export function isDeletable(entity: any): boolean {
   return hasCapability(entity, 'sap:deletable');
 }
 
-export function isUpdatable(entity: any) {
+export function isUpdatable(entity: any): boolean {
   return hasCapability(entity, 'sap:updatable');
 }
 
-export function isCreatable(entity: any) {
+export function isCreatable(entity: any): boolean {
   return hasCapability(entity, 'sap:creatable');
 }
 
-export function isSortable(property: any) {
+export function isSortable(property: any): boolean {
   return hasCapability(property, 'sap:sortable');
 }
 
-export function isFilterable(property: any) {
+export function isFilterable(property: any): boolean {
   return hasCapability(property, 'sap:filterable');
 }
 
-export function isNullableProperty(property: any) {
+export function isNullableProperty(property: any): boolean {
   return hasCapability(property, 'Nullable');
 }
 
-export function isNullableParameter(parameter: any) {
+export function isNullableParameter(parameter: any): boolean {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
 }
 
@@ -209,7 +210,7 @@ export function getGenericParameters(
 export function createPropertyFieldInitializer(
   property: VdmProperty,
   entityClassName: string
-) {
+): string {
   const edmOrComplexTypeOrEnumType =
     property.isComplex || property.isEnum
       ? property.jsType
@@ -299,7 +300,7 @@ const splitAtFirstOccurrence = (str: string, separator: string) => [
 
 const lowerCase = (str: string): string => str.toLowerCase();
 const stripLeadingDotsAndUnderscores = (str: string): string =>
-  str.replace(/^[\._]*/g, '');
+  str.replace(/^[._]*/g, '');
 const replaceNonNpmPackageCharacters = (str: string): string =>
   str.replace(/[^a-z0-9-~._]/g, '');
 
@@ -315,4 +316,19 @@ const npmRegex = /^(?:@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 
 export function hasEntities(service: VdmServiceMetadata): boolean {
   return !!service.entities?.length;
+}
+
+// TODO 1728: The following is duplicate in the openapi generator
+/**
+ * Executes the type script compiler for the given directory.
+ * A valid tsconfig.json needs to be present in the directory.
+ * @param path - Directory to be compiled
+ */
+export async function transpileDirectory(path: string): Promise<void> {
+  logger.debug(`Transpiling files in the directory: ${path} started.`);
+  await execa('tsc', { cwd: path }).catch(err => {
+    logger.error(`Error: Failed to generate js files: ${err}`);
+    process.exit(1);
+  });
+  logger.debug(`Transpiling files in directory: ${path} finished.`);
 }

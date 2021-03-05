@@ -223,7 +223,7 @@ function isRetrieveOrErrorContentType(contentType: string): boolean {
   return contentType?.trim().startsWith('application/http');
 }
 
-export function isHttpSuccessCode(httpCode): boolean {
+export function isHttpSuccessCode(httpCode: number): boolean {
   return httpCode >= 200 && httpCode < 300;
 }
 

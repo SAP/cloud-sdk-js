@@ -38,8 +38,7 @@ export function importDeclarations(
         `Entity${versionInCap}`,
         'EntityBuilderType',
         'Field'
-      ].sort(),
-      oDataVersion
+      ].sort()
     )
   ];
 }

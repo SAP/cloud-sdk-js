@@ -12,6 +12,7 @@ import {
 } from '../../connectivity/scp-cf';
 import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
+import { HttpRequestAndResponse } from '../../http-client';
 
 /**
  * Create OData query to update an entity.
@@ -58,6 +59,25 @@ export class UpdateRequestBuilder<
 
     const request = await this.build(destination, options);
     return super.executeRequest(request);
+  }
+
+  /**
+   * Execute request and return the request and the raw response.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   */
+  async executeRaw(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<HttpRequestAndResponse> {
+    if (this.isEmptyObject(this.requestConfig.payload)) {
+      throw new Error('Cannot execute an update request with empty payload.');
+    }
+
+    const request = await this.build(destination, options);
+    return super.executeRequestRaw(request);
   }
 }
 

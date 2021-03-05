@@ -126,8 +126,6 @@ function properties(
     };
   });
 }
-const propertyFieldType = (type: string): string | undefined =>
-  type.startsWith('Edm.') ? edmToFieldType(type) : undefined;
 
 export function joinEntityMetadata<
   EntitySetT extends EdmxEntitySetBase,

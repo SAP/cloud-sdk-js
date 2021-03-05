@@ -1,0 +1,284 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@sap-cloud-sdk/openapi-generator | SAP Cloud SDK for JavaScript / TypeScript - v1.37.1</title>
+	<meta name="description" content="Documentation for SAP Cloud SDK for JavaScript / TypeScript - v1.37.1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">SAP Cloud SDK for JavaScript / TypeScript - v1.37.1</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">SAP Cloud SDK for JavaScript / TypeScript - v1.37.1</a>
+				</li>
+				<li>
+					<a href="sap_cloud_sdk_openapi_generator">@sap-cloud-sdk/openapi-generator</a>
+				</li>
+			</ul>
+			<h1>Module @sap-cloud-sdk/openapi-generator</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<a href="#sap-cloud-sdk-openapi-client-generator-beta" id="sap-cloud-sdk-openapi-client-generator-beta" style="color: inherit; text-decoration: none;">
+							<h2>SAP Cloud SDK OpenAPI Client Generator (Beta)</h2>
+						</a>
+						<p>Generate custom JavaScript/TypeScript clients for services with OpenAPI specifications.
+						This generator is based on the <a href="https://openapi-generator.tech/">OpenAPI Tools generator</a> for OpenAPI and adds some additional code for convenience to better integrate with the SAP Cloud SDK.</p>
+						<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
+							<h2>Prerequisites</h2>
+						</a>
+						<p>The official OpenAPI generator is Java based, therefore you need to have a Java runtime installed to use the SAP Cloud SDK OpenAPI generator.</p>
+						<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+							<h1>Installation</h1>
+						</a>
+						<pre><code class="language-bash"><span style="color: #000000">$ npm install @sap-cloud-sdk/openapi-generator</span>
+</code></pre>
+						<a href="#usage-cli" id="usage-cli" style="color: inherit; text-decoration: none;">
+							<h1>Usage (CLI)</h1>
+						</a>
+						<!-- commands -->
+						<ul>
+							<li><a href="#generate-openapi-client-autocomplete-shell"><code>generate-openapi-client autocomplete [SHELL]</code></a></li>
+							<li><a href="#generate-openapi-client-help-command"><code>generate-openapi-client help [COMMAND]</code></a></li>
+						</ul>
+						<a href="#generate-openapi-client-autocomplete-shell" id="generate-openapi-client-autocomplete-shell" style="color: inherit; text-decoration: none;">
+							<h2><code>generate-openapi-client autocomplete [SHELL]</code></h2>
+						</a>
+						<p>display autocomplete installation instructions</p>
+						<pre><code><span style="color: #0070C1">USAGE</span>
+<span style="color: #000000">  </span><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">generate</span><span style="color: #000000">-</span><span style="color: #001080">openapi</span><span style="color: #000000">-</span><span style="color: #001080">client</span><span style="color: #000000"> </span><span style="color: #001080">autocomplete</span><span style="color: #000000"> [</span><span style="color: #0070C1">SHELL</span><span style="color: #000000">]</span>
+
+<span style="color: #0070C1">ARGUMENTS</span>
+<span style="color: #000000">  </span><span style="color: #0070C1">SHELL</span><span style="color: #000000">  </span><span style="color: #001080">shell</span><span style="color: #000000"> </span><span style="color: #001080">type</span>
+
+<span style="color: #0070C1">OPTIONS</span>
+<span style="color: #000000">  -</span><span style="color: #001080">r</span><span style="color: #000000">, --</span><span style="color: #001080">refresh</span><span style="color: #000000">-</span><span style="color: #001080">cache</span><span style="color: #000000">  </span><span style="color: #001080">Refresh</span><span style="color: #000000"> </span><span style="color: #795E26">cache</span><span style="color: #000000"> (</span><span style="color: #001080">ignores</span><span style="color: #000000"> </span><span style="color: #001080">displaying</span><span style="color: #000000"> </span><span style="color: #001080">instructions</span><span style="color: #000000">)</span>
+
+<span style="color: #0070C1">EXAMPLES</span>
+<span style="color: #000000">  </span><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">generate</span><span style="color: #000000">-</span><span style="color: #001080">openapi</span><span style="color: #000000">-</span><span style="color: #001080">client</span><span style="color: #000000"> </span><span style="color: #001080">autocomplete</span>
+<span style="color: #000000">  </span><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">generate</span><span style="color: #000000">-</span><span style="color: #001080">openapi</span><span style="color: #000000">-</span><span style="color: #001080">client</span><span style="color: #000000"> </span><span style="color: #001080">autocomplete</span><span style="color: #000000"> </span><span style="color: #001080">bash</span>
+<span style="color: #000000">  </span><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">generate</span><span style="color: #000000">-</span><span style="color: #001080">openapi</span><span style="color: #000000">-</span><span style="color: #001080">client</span><span style="color: #000000"> </span><span style="color: #001080">autocomplete</span><span style="color: #000000"> </span><span style="color: #001080">zsh</span>
+<span style="color: #000000">  </span><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">generate</span><span style="color: #000000">-</span><span style="color: #001080">openapi</span><span style="color: #000000">-</span><span style="color: #001080">client</span><span style="color: #000000"> </span><span style="color: #001080">autocomplete</span><span style="color: #000000"> --</span><span style="color: #001080">refresh</span><span style="color: #000000">-</span><span style="color: #001080">cache</span>
+</code></pre>
+						<p><em>See code: <a href="https://github.com/oclif/plugin-autocomplete/blob/v0.3.0/src/commands/autocomplete/index.ts">@oclif/plugin-autocomplete</a></em></p>
+						<a href="#generate-openapi-client-help-command" id="generate-openapi-client-help-command" style="color: inherit; text-decoration: none;">
+							<h2><code>generate-openapi-client help [COMMAND]</code></h2>
+						</a>
+						<p>display help for generate-openapi-client</p>
+						<pre><code><span style="color: #0070C1">USAGE</span>
+<span style="color: #000000">  </span><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">generate</span><span style="color: #000000">-</span><span style="color: #001080">openapi</span><span style="color: #000000">-</span><span style="color: #001080">client</span><span style="color: #000000"> </span><span style="color: #001080">help</span><span style="color: #000000"> [</span><span style="color: #0070C1">COMMAND</span><span style="color: #000000">]</span>
+
+<span style="color: #0070C1">ARGUMENTS</span>
+<span style="color: #000000">  </span><span style="color: #0070C1">COMMAND</span><span style="color: #000000">  </span><span style="color: #001080">command</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">show</span><span style="color: #000000"> </span><span style="color: #001080">help</span><span style="color: #000000"> </span><span style="color: #001080">for</span>
+
+<span style="color: #0070C1">OPTIONS</span>
+<span style="color: #000000">  --</span><span style="color: #001080">all</span><span style="color: #000000">  </span><span style="color: #001080">see</span><span style="color: #000000"> </span><span style="color: #001080">all</span><span style="color: #000000"> </span><span style="color: #001080">commands</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #0070C1">CLI</span>
+</code></pre>
+						<p><em>See code: <a href="https://github.com/oclif/plugin-help/blob/v3.2.1/src/commands/help.ts">@oclif/plugin-help</a></em></p>
+						<!-- commandsstop -->
+						<a href="#usage-programatically" id="usage-programatically" style="color: inherit; text-decoration: none;">
+							<h1>Usage (programatically)</h1>
+						</a>
+						<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">generate</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@sap-cloud-sdk/openapi-generator&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// initialize generator options based on what you want to do</span>
+<span style="color: #008000">// note that inputDir and outputDir are mandatory</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">options</span><span style="color: #000000">: </span><span style="color: #267F99">GeneratorOptions</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">inputDir:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path/to/inputDir&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">outputDir:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path/to/outputDir&#039;</span>
+<span style="color: #000000">};</span>
+
+<span style="color: #008000">// generates the files and writes them to the outputDir</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">generate</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">);</span>
+</code></pre>
+						<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+							<h3>Documentation</h3>
+						</a>
+						<p><a href="https://sap.github.io/cloud-sdk/docs/js/getting-started">Getting started guide</a>
+						<a href="https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts">API documentation</a></p>
+						<a href="#helpful-links" id="helpful-links" style="color: inherit; text-decoration: none;">
+							<h3>Helpful Links</h3>
+						</a>
+						<ul>
+							<li><a href="https://sap.github.io/cloud-sdk/">SAP Cloud SDK Documentation portal</a></li>
+							<li><a href="https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&amp;tag=topic:javascript">Tutorials on developers.sap.com</a></li>
+							<li><a href="https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest">SAP Cloud SDK on StackOverflow</a></li>
+							<li><a href="https://answers.sap.com/tags/73555000100800000895">SAP Cloud SDK on answers.sap.com</a></li>
+							<li><a href="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/js-index.html">Release notes on help.sap.com</a></li>
+							<li><a href="https://github.com/SAP/cloud-sdk-js/releases">Release notes on Github</a></li>
+							<li><a href="https://help.sap.com/viewer/product/SAP_CLOUD_SDK/1.0/en-US">All versions of this documentation</a></li>
+							<li><a href="https://developers.sap.com/topics/cloud-sdk.html">Product page of the SAP Cloud SDK</a></li>
+							<li><a href="https://github.com/SAP/cloud-s4-sdk-pipeline">SAP Cloud SDK Continuous Delivery Toolkit</a></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#generate" class="tsd-kind-icon">generate</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="generate" class="tsd-anchor"></a>
+					<h3>generate</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">GeneratorOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/openapi-generator/dist/generator.d.ts:8</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>experimental</dt>
+									<dd><p>This API is experimental and might change in newer versions. Use with caution.
+											Main entry point for OpenApi client generation.
+										Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <span class="tsd-signature-type">GeneratorOptions</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options to configure generation.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_analytics">@sap-<wbr>cloud-<wbr>sdk/analytics</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_core">@sap-<wbr>cloud-<wbr>sdk/core</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_generator">@sap-<wbr>cloud-<wbr>sdk/generator</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="sap_cloud_sdk_openapi_generator">@sap-<wbr>cloud-<wbr>sdk/openapi-<wbr>generator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_test_util">@sap-<wbr>cloud-<wbr>sdk/test-<wbr>util</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_util">@sap-<wbr>cloud-<wbr>sdk/util</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_openapi_generator#generate" class="tsd-kind-icon">generate</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+		</div>
+	</div>
+<div class="container"><p>Copyright Ⓒ 2021 SAP SE or an SAP affiliate company. All rights reserved.</p></div>
+</footer>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

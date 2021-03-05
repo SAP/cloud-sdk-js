@@ -5,10 +5,11 @@ import { ODataBatchRequestConfig } from '../../request/odata-batch-request-confi
 import { Constructable, Entity } from '../../entity';
 import {
   Destination,
-  DestinationNameAndJwt,
+  DestinationNameAndJwt, DestinationOptions,
   DestinationRetrievalOptions
 } from '../../../connectivity/scp-cf';
 import { ODataRequest } from '../../request/odata-request';
+import { HttpRequestAndResponse } from '../../../http-client';
 import { BatchChangeSet } from './batch-change-set';
 import { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';
@@ -55,6 +56,21 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
           .build(destination!, options)
           .then(request => this.setPayload(request))
       : this.setPayload(super.build());
+  }
+
+  /**
+   * Execute request and return the request and the raw response.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   */
+  async executeRaw(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<HttpRequestAndResponse>{
+    return this.build(destination, options)
+      .then(request => request.executeRaw());
   }
 
   private setPayload(

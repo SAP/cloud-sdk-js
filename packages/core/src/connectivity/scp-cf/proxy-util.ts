@@ -1,3 +1,4 @@
+import { AgentOptions } from 'https';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
@@ -199,7 +200,7 @@ const addHost = (groups: any) => (
 export function parseProxyEnv(
   proxyEnvValue: string
 ): ProxyConfiguration | undefined {
-  const regex = /(?<protocolWithDelimiter>(?<protocol>^.+)\:\/\/)?(?<userPwdWithDelimeter>(?<user>.+)\:(?<pwd>.+)\@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
+  const regex = /(?<protocolWithDelimiter>(?<protocol>^.+):\/\/)?(?<userPwdWithDelimeter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
   const parsed = regex.exec(proxyEnvValue);
 
   if (parsed?.groups) {
@@ -234,7 +235,7 @@ export function parseProxyEnv(
  * @param destination - to which the proxy configuration is added.
  * @returns Destination containing the configuration for web proxy.
  */
-export function addProxyConfigurationInternet(destination): Destination {
+export function addProxyConfigurationInternet(destination: any): Destination {
   const proxyEnvValue = getProxyEnvValue(getProtocolOrDefault(destination));
   if (proxyEnvValue) {
     const proxyConfiguration = parseProxyEnv(proxyEnvValue);
@@ -252,12 +253,15 @@ export function addProxyConfigurationInternet(destination): Destination {
 /**
  * Builds the http(s)-agent config. Note that the proxy agent type like http or https is determined by the destination RUL protocol.
  * The protocol from the proxy is unrelated to this and in most cases http.
+ * All additional options are forwarded to tls.connect and net.connect see https://github.com/TooTallNate/node-https-proxy-agent#new-httpsproxyagentobject-options
  *
  * @param destination - Destination containing the proxy configurations
+ * @param options - Addiotional options for the agent
  * @returns The http(s)-agent containing the proxy configuration
  */
 export function proxyAgent(
-  destination: Destination
+  destination: Destination,
+  options?: AgentOptions
 ): HttpAgentConfig | HttpsAgentConfig {
   const targetProtocol = getProtocolOrDefault(destination);
   const proxyConfig = destination.proxyConfiguration;
@@ -266,18 +270,29 @@ export function proxyAgent(
     throw new Error('Proxy config must not be undefined.');
   }
 
+  if(options?.host){
+    logger.warn(`The agent options you passed to the proxy agent creation contains the host "${options.host}" which will overwrite the host from the proxy config.`);
+  }
+
+  if(options?.port){
+    logger.warn(`The agent options you passed to the proxy agent creation contains the port "${options.port}" which will overwrite the port from the proxy config.`);
+  }
+
+  const agentConfig = {
+    host: proxyConfig.host,
+    protocol: proxyConfig.protocol,
+    port: proxyConfig.port,
+    ...options
+  };
+
   switch (targetProtocol) {
     case Protocol.HTTP:
       return {
-        httpAgent: new HttpProxyAgent(
-          `${proxyConfig.protocol}://${proxyConfig.host}:${proxyConfig.port}`
-        )
+        httpAgent: new HttpProxyAgent(agentConfig)
       };
     case Protocol.HTTPS:
       return {
-        httpsAgent: new HttpsProxyAgent(
-          `${proxyConfig.protocol}://${proxyConfig.host}:${proxyConfig.port}`
-        )
+        httpsAgent: new HttpsProxyAgent(agentConfig)
       };
   }
 }

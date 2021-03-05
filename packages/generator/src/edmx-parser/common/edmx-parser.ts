@@ -6,7 +6,7 @@ import {
   EdmxEntityTypeBase
 } from './edmx-types';
 
-export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
+export function parseComplexTypesBase(root: any): EdmxComplexTypeBase[] {
   return getMergedPropertyWithNamespace(root, 'ComplexType').map(c => ({
     ...c,
     Property: forceArray(c.Property),
@@ -14,7 +14,7 @@ export function parseComplexTypesBase(root): EdmxComplexTypeBase[] {
   }));
 }
 
-export function parseEntityTypesBase(root): EdmxEntityTypeBase<any>[] {
+export function parseEntityTypesBase(root: any): EdmxEntityTypeBase<any>[] {
   return getMergedPropertyWithNamespace(root, 'EntityType').map(e => ({
     ...e,
     Key: {
@@ -26,12 +26,12 @@ export function parseEntityTypesBase(root): EdmxEntityTypeBase<any>[] {
   }));
 }
 
-export function parseEntitySetsBase(root): EdmxEntitySetBase[] {
+export function parseEntitySetsBase(root: any): EdmxEntitySetBase[] {
   return getPropertyFromEntityContainer(root, 'EntitySet');
 }
 
 export function getPropertyFromEntityContainer(
-  schema,
+  schema: any,
   entityContainerProperty: string
 ): any[] {
   return flat(
@@ -55,7 +55,10 @@ function addNamespace<T>(obj: T, namespace: string): T & { Namespace: string } {
  * @param property The property that will be merged
  * @returns A collection containing the merged property
  */
-export function getMergedPropertyWithNamespace(root, property: string): any[] {
+export function getMergedPropertyWithNamespace(
+  root: any,
+  property: string
+): any[] {
   return flat(
     forceArray(root).map(s =>
       forceArray(s[property]).map(p => addNamespace(p, s.Namespace))

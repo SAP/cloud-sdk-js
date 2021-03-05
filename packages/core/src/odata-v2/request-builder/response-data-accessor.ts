@@ -16,7 +16,7 @@ const logger = createLogger({
  * @param data - Response of the OData v2 service
  * @returns any[] - Collection extracted from the response
  */
-export function getCollectionResult(data): any[] {
+export function getCollectionResult(data: any): any[] {
   validateCollectionResult(data);
   return isCollectionResult(data) ? data?.d?.results : [];
 }
@@ -26,11 +26,11 @@ export function getCollectionResult(data): any[] {
  * @param data - Response of the OData service.
  * @returns True if the data is a collection result.
  */
-export function isCollectionResult(data): boolean {
+export function isCollectionResult(data: any): boolean {
   return Array.isArray(data?.d?.results);
 }
 
-function validateCollectionResult(data): void {
+function validateCollectionResult(data: any): void {
   if (!isCollectionResult(data)) {
     logger.warn(
       'The given reponse data does not have the standard OData v2 format for collections.'
@@ -44,7 +44,7 @@ function validateCollectionResult(data): void {
  * @param data - Response of the one to many link
  * @returns any[] - Collection extracted from the response
  */
-export function getLinkedCollectionResult(data): any[] {
+export function getLinkedCollectionResult(data: any): any[] {
   if (Array.isArray(data?.results)) {
     return data.results;
   }
@@ -62,11 +62,11 @@ export function getSingleResult(data: any): Record<string, any> {
 }
 
 // Workaround to be compatible with services that wrongly implement the OData v2 protocol and serve single responses in the same format as collections
-function isSingleResultAsCollection(data): boolean {
+function isSingleResultAsCollection(data: any): boolean {
   return !!data?.d?.results && !isCollectionResult(data);
 }
 
-function validateSingleResult(data): void {
+function validateSingleResult(data: any): void {
   if (isSingleResultAsCollection(data)) {
     logger.warn(
       'The given reponse data has the format for collections instead of the standard OData v2 format for single results.'

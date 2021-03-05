@@ -33,7 +33,7 @@ exports.TestEntity = void 0;
 var TestEntityRequestBuilder_1 = require("./TestEntityRequestBuilder");
 var core_1 = require("@sap-cloud-sdk/core");
 /**
- * This class represents the entity "TestEntity" of service "AdminService".
+ * This class represents the entity "TestEntity" of service "TestService".
  */
 var TestEntity = /** @class */ (function (_super) {
     __extends(TestEntity, _super);

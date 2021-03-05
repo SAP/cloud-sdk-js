@@ -57,7 +57,7 @@ function joinActionImportData(
     []
   );
 
-  if (actionImportsWithoutActions) {
+  if (actionImportsWithoutActions.length) {
     logger.warn(
       `Could not find actions referenced by the following action imports. Skipping code generation: 
 ${actionImportsWithoutActions

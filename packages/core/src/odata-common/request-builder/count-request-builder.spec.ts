@@ -63,7 +63,7 @@ describe('CountRequestBuilderV2', () => {
         messageContext: 'count-request-config'
       });
       const warnSpy = jest.spyOn(logger, 'warn');
-      const actual = await TestEntityV4.requestBuilder()
+      await TestEntityV4.requestBuilder()
         .getAll()
         .top(1)
         .count()
@@ -89,6 +89,26 @@ describe('CountRequestBuilderV2', () => {
             .count()
             .execute(defaultDestination);
           expect(count).toBe(4711);
+        })
+      ));
+  });
+
+  describe('executeRaw', () => {
+    it('returns request and raw response', async () =>
+      Promise.all(
+        requestBuilders.map(async requestBuilder => {
+          mockCountRequest(
+            defaultDestination,
+            4711,
+            TestEntityV4.requestBuilder().getAll()
+          );
+          const actual = await requestBuilder
+            .getAll()
+            .count()
+            .executeRaw(defaultDestination);
+          expect(actual.response.data).toEqual(4711);
+          expect(actual.request.method).toBe('get');
+          expect(actual.request.baseURL).toBe(defaultDestination.url);
         })
       ));
   });

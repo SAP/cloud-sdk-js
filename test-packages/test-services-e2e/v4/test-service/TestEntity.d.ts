@@ -3,7 +3,7 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { AllFields, BigNumberField, BooleanField, CustomFieldV4, DateField, EntityBuilderType, EntityV4, Field, NumberField, OneToManyLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 /**
- * This class represents the entity "TestEntity" of service "AdminService".
+ * This class represents the entity "TestEntity" of service "TestService".
  */
 export declare class TestEntity extends EntityV4 implements TestEntityType {
     /**

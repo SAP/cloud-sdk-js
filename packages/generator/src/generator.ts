@@ -1,10 +1,6 @@
 import { PathLike, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
-import {
-  createLogger,
-  splitInChunks,
-  transpileDirectory
-} from '@sap-cloud-sdk/util';
+import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
   Directory,
@@ -17,7 +13,6 @@ import {
 } from 'ts-morph';
 import { ModuleKind } from 'typescript';
 import { GlobSync } from 'glob';
-import execa = require('execa');
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
 import { readme as aggregatorReadme } from './aggregator-package/readme';
 import { batchSourceFile } from './batch/file';
@@ -31,7 +26,8 @@ import {
 import {
   cloudSdkVdmHack,
   hasEntities,
-  npmCompliantName
+  npmCompliantName,
+  transpileDirectory
 } from './generator-utils';
 import {
   genericDescription,
@@ -372,6 +368,7 @@ function getGeneratorVersion(): string {
     .version;
 }
 
+// TODO 1728 move to a new package for reduce code duplication.
 function copyAdditionalFiles(
   toDirectory: Directory,
   options: GeneratorOptions

@@ -200,4 +200,29 @@ describe('CreateRequestBuilder', () => {
 
     await expect(createRequest).rejects.toThrowErrorMatchingSnapshot();
   });
+
+  describe('executeRaw', () => {
+    it('returns request and raw response', async () => {
+      const keyProp = uuid();
+      const stringProp = 'testStr';
+      const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
+
+      mockCreateRequest({
+        body: postBody
+      });
+
+      const entity = TestEntity.builder()
+        .keyPropertyGuid(keyProp)
+        .stringProperty(stringProp)
+        .build();
+
+      const actual = await new CreateRequestBuilder(TestEntity, entity).executeRaw(
+        defaultDestination
+      );
+
+      expect(actual.response.data.d).toEqual(postBody);
+      expect(actual.request.method).toBe('post');
+      expect(actual.request.baseURL).toBe(defaultDestination.url);
+    });
+  });
 });

@@ -289,7 +289,7 @@ describe('UpdateRequestBuilder', () => {
     expect(actual['remoteState']).toEqual(entity);
   });
 
-  it('warns if navigaton properties are sent', async () => {
+  it('warns if navigation properties are sent', async () => {
     const entity = createTestEntity();
     entity.toMultiLink = [
       TestEntityMultiLink.builder().keyProperty('someKey').build()
@@ -314,5 +314,43 @@ describe('UpdateRequestBuilder', () => {
         'Update of navigation properties is not supported and will be ignored.'
       )
     );
+  });
+
+  describe('executeRaw', () => {
+    it('returns undefined when only keys have been modified', async () => {
+      const entity = createTestEntity().setOrInitializeRemoteState();
+      entity.keyPropertyGuid = uuid();
+      entity.keyPropertyString = 'UPDATED!';
+      const actual = await new UpdateRequestBuilder(TestEntity, entity).executeRaw(
+        defaultDestination
+      );
+      await expect(actual).toEqual(undefined);
+    });
+
+    it('returns request and raw response when sending non-key properties', async () => {
+      const entity = createTestEntity();
+      entity.booleanProperty = false;
+      const requestBody = {
+        Int32Property: entity.int32Property,
+        BooleanProperty: false
+      };
+      const response = { d: requestBody };
+
+      mockUpdateRequest({
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString
+        ),
+        responseBody: response
+      });
+
+      const actual = await new UpdateRequestBuilder(TestEntity, entity).executeRaw(
+        defaultDestination
+      );
+      expect(actual!.response.data).toEqual(response);
+      expect(actual!.request.method).toEqual('patch');
+      expect(actual!.request.baseURL).toEqual(defaultDestination.url);
+    });
   });
 });

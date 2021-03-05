@@ -50,7 +50,7 @@ export declare const DefaultApiFp: (configuration?: Configuration | undefined) =
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    patchEntity(pathParam: string, testEntity?: TestEntity | undefined, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    patchEntity(pathParam: string, testEntity?: TestEntity | undefined, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<string>>;
     /**
      * Test POST
      * @summary Test POST
@@ -74,7 +74,7 @@ export declare const DefaultApiFactory: (configuration?: Configuration | undefin
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    patchEntity(pathParam: string, testEntity?: TestEntity | undefined, options?: any): AxiosPromise<void>;
+    patchEntity(pathParam: string, testEntity?: TestEntity | undefined, options?: any): AxiosPromise<string>;
     /**
      * Test POST
      * @summary Test POST
@@ -101,7 +101,7 @@ export declare class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    patchEntity(pathParam: string, testEntity?: TestEntity, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    patchEntity(pathParam: string, testEntity?: TestEntity, options?: any): Promise<import("axios").AxiosResponse<string>>;
     /**
      * Test POST
      * @summary Test POST

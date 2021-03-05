@@ -38,6 +38,7 @@ export interface UserAccessTokens {
 export interface Systems {
   s4: {
     providerBasic: string;
+    providerClientCert: string;
     providerOAuth2SAMLBearerAssertion: string;
     subscriberBasic: string;
   };

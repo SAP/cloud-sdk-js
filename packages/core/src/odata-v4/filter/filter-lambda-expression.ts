@@ -2,7 +2,6 @@ import {
   FilterLambdaExpression,
   OneToManyLink,
   Entity as EntityBase,
-  FieldType,
   and,
   Filterable,
   toFilterableList
@@ -18,7 +17,7 @@ export function any<
   LinkedEntityT extends EntityBase
 >(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
-): FilterLambdaExpression<EntityT, FieldType> {
+): FilterLambdaExpression<EntityT> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'any');
 }
 
@@ -33,6 +32,6 @@ export function all<
   LinkedEntityT extends EntityBase
 >(
   ...filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
-): FilterLambdaExpression<EntityT, FieldType> {
+): FilterLambdaExpression<EntityT> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'all');
 }

@@ -78,4 +78,23 @@ describe('action import request builder', () => {
     ).execute(destination);
     expect(result).toEqual(tsResponse);
   });
+
+  describe('executeRaw', () => {
+    it('returns request and raw response', async () => {
+      mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
+
+      nock(host)
+        .post(
+          `${servicePath}/TestActionImportNoParameterNoReturnType?$format=json`
+        )
+        .reply(204, {});
+
+      const actual = await testActionImportNoParameterNoReturnType({}).executeRaw(
+        destination
+      );
+      expect(actual.response.data).toEqual({});
+      expect(actual.request.method).toBe('post');
+      expect(actual.request.baseURL).toBe(destination.url);
+    });
+  });
 });

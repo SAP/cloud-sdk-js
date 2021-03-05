@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="API_TEST_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityType Name="A_TestEntityType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyPropertyGuid"/>
+          <PropertyRef Name="KeyPropertyString"/>
+        </Key>
+        <Property Name="ComplexTypeProperty" Type="API_TEST_SRV.A_TestComplexTypeMISTAKE"/>
+      </EntityType>
+
+
+
+      <ComplexType Name="A_TestComplexType">
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" Nullable="false"/>
+        <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
+        <Property Name="GuidProperty" Type="Edm.Guid"/>
+        <Property Name="Int16Property" Type="Edm.Int16"/>
+      </ComplexType>
+
+      <EntityContainer Name="API_TEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+        <EntitySet Name="A_TestEntity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1"/>
+      </EntityContainer>
+      <Annotations Target="API_TEST_SRV.API_TEST_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Aggregation.ApplySupported">
+          <Record>
+            <PropertyValue Property="Transformations">
+              <Collection>
+                <String>aggregate</String>
+                <String>groupby</String>
+                <String>filter</String>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="Rollup" EnumMember="None"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <atom:link rel="self" href="https://host:port/sap/opu/odata/sap/API_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+      <atom:link rel="latest-version" href="https://host:port/sap/opu/odata/sap/API_TEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

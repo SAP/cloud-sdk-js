@@ -1,7 +1,6 @@
-import type { Entity } from './entity';
 import { toStaticPropertyFormat } from './name-converter';
 
-export const nonEnumerable = (target: any, propertyKey: string) => {
+export const nonEnumerable = (target: any, propertyKey: string): void => {
   const descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
   if (descriptor.enumerable !== false) {
     descriptor.enumerable = false;
@@ -16,7 +15,7 @@ export const nonEnumerable = (target: any, propertyKey: string) => {
  * @param entityConstructor Constructor of the entity.
  * @returns A boolean denoting whether an entity is a navigation property or not.
  */
-export function isNavigationProperty<EntityT extends Entity>(
+export function isNavigationProperty(
   key: string,
   entityConstructor: any
 ): boolean {

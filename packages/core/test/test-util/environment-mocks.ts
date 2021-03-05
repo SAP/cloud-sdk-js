@@ -36,14 +36,14 @@ export const mockDestinationServiceBinding: Service = {
   }
 };
 
-export const mockedConnectivityServiceProxyConfig: ProxyConfiguration = {
+export const mockedConnectivityServiceProxyConfig: ProxyConfiguration &{rejectUnauthorized: boolean} = {
   host: 'proxy.example.com',
   port: 12345,
   protocol: Protocol.HTTP,
-  headers: undefined
+  rejectUnauthorized:true
 };
 
-export const mockedConnectivityServiceProxyURL = `${mockedConnectivityServiceProxyConfig.protocol}://${mockedConnectivityServiceProxyConfig.host}:${mockedConnectivityServiceProxyConfig.port}`;
+// export const mockedConnectivityServiceProxyURL = `${mockedConnectivityServiceProxyConfig.protocol}://${mockedConnectivityServiceProxyConfig.host}:${mockedConnectivityServiceProxyConfig.port}`;
 
 export const mockConnectivityServiceBinding: Service = {
   plan: 'application',

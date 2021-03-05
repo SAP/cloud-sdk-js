@@ -62,7 +62,7 @@
     "typescript": "^4.0.3"
   },
   "oclif": {
-    "commands": "./src/commands",
+    "commands": "./dist/commands",
     "warn-if-update-available": {
       "timeoutInDays": 7
     },

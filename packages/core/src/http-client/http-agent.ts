@@ -32,9 +32,9 @@ export function getAgentConfig(
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const certificateOptions = getCertificateOption(destination);
   if (agentType === AgentType.PROXY) {
-    return createProxyAgent(destination,certificateOptions);
+    return createProxyAgent(destination, certificateOptions);
   }
-  return createDefaultAgent(destination,certificateOptions);
+  return createDefaultAgent(destination, certificateOptions);
 }
 
 enum AgentType {

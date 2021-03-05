@@ -131,7 +131,8 @@ export enum VdmReturnTypeCategory {
   ENTITY,
   COMPLEX_TYPE,
   EDM_TYPE,
-  VOID
+  VOID,
+  ENTITY_NOT_DESERIALIZABLE
 }
 
 export interface VdmParameter extends VdmMappedEdmType {

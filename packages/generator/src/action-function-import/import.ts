@@ -26,7 +26,10 @@ function actionFunctionImportDeclarations(
       [
         ...corePropertyTypeImportNames(parameters),
         ...returnTypes.map(returnType =>
-          responseTransformerFunctionName(returnType, oDataVersion)
+          returnType.returnTypeCategory ===
+          VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+            ? 'throwErrorWhenReturnTypeIsUnionType'
+            : responseTransformerFunctionName(returnType, oDataVersion)
         ),
         ...edmRelatedImports(returnTypes, oDataVersion),
         ...complexTypeRelatedImports(returnTypes, oDataVersion),
@@ -70,7 +73,9 @@ function returnTypeImports(
       .filter(
         returnType =>
           returnType.returnTypeCategory !== VdmReturnTypeCategory.EDM_TYPE &&
-          returnType.returnTypeCategory !== VdmReturnTypeCategory.VOID
+          returnType.returnTypeCategory !== VdmReturnTypeCategory.VOID &&
+          returnType.returnTypeCategory !==
+            VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
       )
       .map(returnType => returnTypeImport(returnType))
   );

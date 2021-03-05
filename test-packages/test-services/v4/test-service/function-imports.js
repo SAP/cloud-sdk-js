@@ -8,7 +8,6 @@ exports.functionImports = exports.testFunctionImportWithDifferentName = exports.
  */
 var core_1 = require("@sap-cloud-sdk/core");
 var TestEntity_1 = require("./TestEntity");
-var TestEntitySharesEntityType1_1 = require("./TestEntitySharesEntityType1");
 var TestComplexType_1 = require("./TestComplexType");
 /**
  * Test Function Import Edm Return Type.
@@ -62,7 +61,7 @@ exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityR
  */
 function testFunctionImportSharedEntityReturnType(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnType', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntitySharesEntityType1_1.TestEntitySharesEntityType1); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnType', function (data) { return core_1.throwErrorWhenReturnTypeIsUnionType(data, 'TestFunctionImportSharedEntityReturnType'); }, params);
 }
 exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntityReturnType;
 /**
@@ -73,7 +72,7 @@ exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntit
  */
 function testFunctionImportSharedEntityReturnTypeCollection(parameters) {
     var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeCollection', function (data) { return core_1.transformReturnValueForEntityListV4(data, TestEntitySharesEntityType1_1.TestEntitySharesEntityType1); }, params);
+    return new core_1.FunctionImportRequestBuilderV4('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportSharedEntityReturnTypeCollection', function (data) { return core_1.throwErrorWhenReturnTypeIsUnionType(data, 'TestFunctionImportSharedEntityReturnTypeCollection'); }, params);
 }
 exports.testFunctionImportSharedEntityReturnTypeCollection = testFunctionImportSharedEntityReturnTypeCollection;
 /**

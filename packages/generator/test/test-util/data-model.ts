@@ -238,3 +238,18 @@ export const orderBreakfast: VdmFunctionImport = {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE
   }
 };
+
+export const entityNotDeserializable: VdmFunctionImport = {
+  description: 'entityNotDeserializable',
+  name: 'entityNotDeserializable',
+  httpMethod: 'get',
+  originalName: 'entityNotDeserializable',
+  parameters: [],
+  parametersTypeName: 'Params',
+  returnType: {
+    builderFunction: '',
+    returnType: 'any',
+    isCollection: false,
+    returnTypeCategory: VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+  }
+};

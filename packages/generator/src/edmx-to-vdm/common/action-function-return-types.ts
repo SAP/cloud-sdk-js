@@ -1,4 +1,4 @@
-import { caps, last, ODataVersion } from '@sap-cloud-sdk/util';
+import { caps, first, last, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmActionImportReturnType,
   VdmComplexType,
@@ -67,7 +67,7 @@ function parseReturnTypes(
   }
 
   const entity = findEntityType(returnType, entities);
-  if (entity) {
+  if (entity.length) {
     return getEntityReturnType(isCollection, entity);
   }
 
@@ -89,15 +89,15 @@ function findEdmType(returnType: string): string | undefined {
 function findEntityType(
   returnType: string,
   entities: VdmEntity[]
-): VdmEntity | undefined {
+): VdmEntity[] {
   returnType = parseTypeName(returnType);
-  const entity = entities.find(
+  const entity = entities.filter(
     e => `${e.entityTypeNamespace}.${e.entityTypeName}` === returnType
   );
   // TODO 1584 remove this block after testing all the s/4 edmx files
-  if (!entity) {
+  if (entity.length) {
     const parsedReturnType = last(returnType.split('.'));
-    return entities.find(e => e.entityTypeName === parsedReturnType);
+    return entities.filter(e => e.entityTypeName === parsedReturnType);
   }
   return entity;
 }
@@ -150,15 +150,27 @@ function getEdmReturnType(
 
 function getEntityReturnType(
   isCollection: boolean,
-  entity: VdmEntity
+  entities: VdmEntity[]
 ): VdmFunctionImportReturnType {
-  return {
-    returnTypeCategory: VdmReturnTypeCategory.ENTITY,
-    returnType: entity.className,
-    builderFunction: entity.className,
-    isMulti: isCollection,
-    isCollection
-  };
+  if (!entities.length) {
+    throw Error('Cannot get entity return type from an empty collection.');
+  }
+
+  return entities.length === 1
+    ? {
+        returnTypeCategory: VdmReturnTypeCategory.ENTITY,
+        returnType: first(entities)!.className,
+        builderFunction: first(entities)!.className,
+        isMulti: isCollection,
+        isCollection
+      }
+    : {
+        returnTypeCategory: VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE,
+        returnType: 'any',
+        builderFunction: '',
+        isMulti: false,
+        isCollection: false
+      };
 }
 
 function getComplexReturnType(

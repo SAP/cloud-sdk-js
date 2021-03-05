@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { transformReturnValueForUndefinedV4, transformReturnValueForComplexTypeV4, transformReturnValueForEdmTypeV4, transformReturnValueForEntityV4, edmToTsV4, deserializeComplexTypeV4, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core';
+import { transformReturnValueForUndefinedV4, transformReturnValueForComplexTypeV4, transformReturnValueForEdmTypeV4, transformReturnValueForEntityV4, throwErrorWhenReturnTypeIsUnionType, edmToTsV4, deserializeComplexTypeV4, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core';
 import { TestComplexType } from './TestComplexType';
 import { TestEntity } from './TestEntity';
 
@@ -110,9 +110,51 @@ export function testActionImportNoParameterEntityReturnType(parameters: TestActi
   return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterEntityReturnType', (data) => transformReturnValueForEntityV4(data, TestEntity), params);
 }
 
+/**
+ * Type of the parameters to be passed to [[testActionImportSharedEntityReturnType]].
+ */
+export interface TestActionImportSharedEntityReturnTypeParameters {
+}
+
+/**
+ * Test Action Import Shared Entity Return Type.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export function testActionImportSharedEntityReturnType(parameters: TestActionImportSharedEntityReturnTypeParameters): ActionImportRequestBuilder<TestActionImportSharedEntityReturnTypeParameters, any> {
+  const params = {
+
+  }
+
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnType', (data) => throwErrorWhenReturnTypeIsUnionType(data, 'TestActionImportSharedEntityReturnType'), params);
+}
+
+/**
+ * Type of the parameters to be passed to [[testActionImportSharedEntityReturnTypeCollection]].
+ */
+export interface TestActionImportSharedEntityReturnTypeCollectionParameters {
+}
+
+/**
+ * Test Action Import Shared Entity Return Type Collection.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export function testActionImportSharedEntityReturnTypeCollection(parameters: TestActionImportSharedEntityReturnTypeCollectionParameters): ActionImportRequestBuilder<TestActionImportSharedEntityReturnTypeCollectionParameters, any> {
+  const params = {
+
+  }
+
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnTypeCollection', (data) => throwErrorWhenReturnTypeIsUnionType(data, 'TestActionImportSharedEntityReturnTypeCollection'), params);
+}
+
 export const actionImports = {
   testActionImportNoParameterNoReturnType,
   testActionImportMultipleParameterComplexReturnType,
   testActionImportUnsupportedEdmTypes,
-  testActionImportNoParameterEntityReturnType
+  testActionImportNoParameterEntityReturnType,
+  testActionImportSharedEntityReturnType,
+  testActionImportSharedEntityReturnTypeCollection
 };

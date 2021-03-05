@@ -190,6 +190,14 @@
         <ReturnType Type="API_TEST_SRV.A_TestEntityType"/>
       </Action>
 
+      <Action Name="TestActionImportSharedEntityReturnType">
+        <ReturnType Type="API_TEST_SRV.A_TestEntityTypeToBeShared"/>
+      </Action>
+
+      <Action Name="TestActionImportSharedEntityReturnTypeCollection">
+        <ReturnType Type="Collection(API_TEST_SRV.A_TestEntityTypeToBeShared)"/>
+      </Action>
+
       <Function Name="TestFunctionImportNoReturnType">
       </Function>
 
@@ -292,6 +300,12 @@
         </ActionImport>
 
         <ActionImport Name="TestActionImportNoActionDefined" Action="API_TEST_SRV.TestActionImportNoActionDefined">
+        </ActionImport>
+
+        <ActionImport Name="TestActionImportSharedEntityReturnType" Action="API_TEST_SRV.TestActionImportSharedEntityReturnType">
+        </ActionImport>
+
+        <ActionImport Name="TestActionImportSharedEntityReturnTypeCollection" Action="API_TEST_SRV.TestActionImportSharedEntityReturnTypeCollection">
         </ActionImport>
 
         <FunctionImport Name="TestFunctionImportEdmReturnType" Function="API_TEST_SRV.TestFunctionImportEdmReturnType">

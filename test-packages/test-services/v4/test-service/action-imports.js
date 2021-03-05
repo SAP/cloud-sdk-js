@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.actionImports = exports.testActionImportNoParameterEntityReturnType = exports.testActionImportUnsupportedEdmTypes = exports.testActionImportMultipleParameterComplexReturnType = exports.testActionImportNoParameterNoReturnType = void 0;
+exports.actionImports = exports.testActionImportSharedEntityReturnTypeCollection = exports.testActionImportSharedEntityReturnType = exports.testActionImportNoParameterEntityReturnType = exports.testActionImportUnsupportedEdmTypes = exports.testActionImportMultipleParameterComplexReturnType = exports.testActionImportNoParameterNoReturnType = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -60,10 +60,34 @@ function testActionImportNoParameterEntityReturnType(parameters) {
     return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterEntityReturnType', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntity_1.TestEntity); }, params);
 }
 exports.testActionImportNoParameterEntityReturnType = testActionImportNoParameterEntityReturnType;
+/**
+ * Test Action Import Shared Entity Return Type.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+function testActionImportSharedEntityReturnType(parameters) {
+    var params = {};
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnType', function (data) { return core_1.throwErrorWhenReturnTypeIsUnionType(data, 'TestActionImportSharedEntityReturnType'); }, params);
+}
+exports.testActionImportSharedEntityReturnType = testActionImportSharedEntityReturnType;
+/**
+ * Test Action Import Shared Entity Return Type Collection.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+function testActionImportSharedEntityReturnTypeCollection(parameters) {
+    var params = {};
+    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnTypeCollection', function (data) { return core_1.throwErrorWhenReturnTypeIsUnionType(data, 'TestActionImportSharedEntityReturnTypeCollection'); }, params);
+}
+exports.testActionImportSharedEntityReturnTypeCollection = testActionImportSharedEntityReturnTypeCollection;
 exports.actionImports = {
     testActionImportNoParameterNoReturnType: testActionImportNoParameterNoReturnType,
     testActionImportMultipleParameterComplexReturnType: testActionImportMultipleParameterComplexReturnType,
     testActionImportUnsupportedEdmTypes: testActionImportUnsupportedEdmTypes,
-    testActionImportNoParameterEntityReturnType: testActionImportNoParameterEntityReturnType
+    testActionImportNoParameterEntityReturnType: testActionImportNoParameterEntityReturnType,
+    testActionImportSharedEntityReturnType: testActionImportSharedEntityReturnType,
+    testActionImportSharedEntityReturnTypeCollection: testActionImportSharedEntityReturnTypeCollection
 };
 //# sourceMappingURL=action-imports.js.map

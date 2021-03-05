@@ -19,7 +19,7 @@ const logger = createLogger({
  * @deprecated Since version 1.25.0 due to major generator refactoring.
  */
 export function parseBaseMetadata(
-  root,
+  root: any,
   oDataVersion: ODataVersion,
   edmxPath: PathLike
 ): EdmxMetadataBase {
@@ -34,7 +34,7 @@ export function parseBaseMetadata(
 /**
  * @deprecated Since version 1.25.0 due to major generator refactoring.
  */
-export function parseEntityTypes(root): EdmxEntityTypeBase[] {
+export function parseEntityTypes(root: any): EdmxEntityTypeBase[] {
   return forceArray(root.EntityType).map(e => {
     if (!e.Key) {
       e.Key = {};
@@ -48,7 +48,7 @@ export function parseEntityTypes(root): EdmxEntityTypeBase[] {
 /**
  * @deprecated Since version 1.25.0 due to major generator refactoring.
  */
-export function parseFunctionImportsBase(root): EdmxFunctionImportBase[] {
+export function parseFunctionImportsBase(root: any): EdmxFunctionImportBase[] {
   return forceArray(root.EntityContainer.FunctionImport).map(f => {
     f.Parameter = forceArray(f.Parameter);
     return f;
@@ -57,14 +57,14 @@ export function parseFunctionImportsBase(root): EdmxFunctionImportBase[] {
 /**
  * @deprecated Since version 1.25.0 due to major generator refactoring.
  */
-export function parseComplexTypes(root): EdmxComplexTypeBase[] {
+export function parseComplexTypes(root: any): EdmxComplexTypeBase[] {
   return forceArray(root.ComplexType).map(c => {
     c.Property = forceArray(c.Property);
     return c;
   });
 }
 
-function parseLink(root): string | undefined {
+function parseLink(root: any): string | undefined {
   const links = forceArray(root['atom:link']);
   const selfLink = links.find(link => link.rel === 'self');
   if (selfLink) {
@@ -74,7 +74,7 @@ function parseLink(root): string | undefined {
 /**
  * @deprecated Since version 1.25.0 due to major generator refactoring.
  */
-export function getRoot(edmx) {
+export function getRoot(edmx: any): any {
   const schema = edmx['edmx:Edmx']['edmx:DataServices'].Schema;
   if (schema.length > 1) {
     if (schema.length > 2) {

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/nightly-tests",
-  "version": "1.37.0",
+  "version": "1.39.0",
   "description": "Expensive SDK tests which run as a nightly job",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -8,14 +8,17 @@
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "test": "yarn jest",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "depcheck . --ignores=@sap-cloud-sdk/generator,@sap-cloud-sdk/openapi-generator"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/cli" :"^1.37.0",
+    "@sap-cloud-sdk/cli": "^1.39.0",
+    "@sap-cloud-sdk/generator": "^1.39.0",
+    "@sap-cloud-sdk/openapi-generator": "^1.39.0",
+    "execa": "^5.0.0",
     "fs-extra": "^9.0.0",
     "jest": "^26.6.1",
-    "ts-jest": "^26.4.3",
+    "jest-circus": "^26.6.1",
     "jest-extended": "^0.11.5",
-    "execa": "^5.0.0"
+    "ts-jest": "^26.4.3"
   }
 }

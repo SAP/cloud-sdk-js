@@ -5,10 +5,11 @@ import type { OpenAPIV3 } from 'openapi-types';
  * Representation of a parsed OpenApi Service.
  */
 export interface OpenApiDocument {
-  apiName: string;
+  serviceName: string;
   npmPackageName: string;
   directoryName: string;
   originalFileName: string;
+  tags: string[];
   operations: OpenApiOperation[];
 }
 
@@ -17,9 +18,10 @@ export interface OpenApiDocument {
  * Representation of an operation.
  */
 export interface OpenApiOperation extends OpenAPIV3.OperationObject {
+  tags: string[];
   operationId: string;
   method: string;
-  pattern: string;
+  path: string;
   requestBody?: OpenApiRequestBody;
   parameters: OpenApiParameter[];
 }

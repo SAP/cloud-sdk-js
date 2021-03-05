@@ -2,7 +2,7 @@
 
 let warnings: string[][] = [];
 
-export function recordWarning(...warn: string[]) {
+export function recordWarning(...warn: string[]): void {
   warnings.push(warn);
 }
 

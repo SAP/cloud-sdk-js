@@ -33,14 +33,14 @@ function toggleSilenceTransports(logger: Logger, silence: boolean) {
 /**
  * Mute all logger output created by the SAP Cloud SDK Logger. This also applies to future loggers created. Useful for tests.
  */
-export function muteLoggers() {
+export function muteLoggers(): void {
   toggleMuteLoggers(true);
 }
 
 /**
  * Unmute all logger output created by the SAP Cloud SDK Logger. This also applies to future loggers created. Useful for tests.
  */
-export function unmuteLoggers() {
+export function unmuteLoggers(): void {
   toggleMuteLoggers(false);
 }
 
@@ -56,14 +56,14 @@ export const cloudSdkExceptionLogger = container.get(exceptionLoggerId, {
 /**
  * Disable logging of exceptions. Enabled by default.
  */
-export function disableExceptionLogger() {
+export function disableExceptionLogger(): void {
   cloudSdkExceptionLogger.exceptions.unhandle();
 }
 
 /**
  * Enable logging of exceptions. Enabled by default.
  */
-export function enableExceptionLogger() {
+export function enableExceptionLogger(): void {
   // Flush all possible handlers to make sure there is only one in the end.
   disableExceptionLogger();
   cloudSdkExceptionLogger.exceptions.handle(exceptionTransport);

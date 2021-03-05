@@ -82,11 +82,11 @@ export function getComplexTypePropertyDescription(
   property: VdmProperty,
   complexTypeName: string
 ): string {
-  return `Representation of the [[${complexTypeName}.${property.instancePropertyName}]] property for query construction.\nUse to reference this property in query operations such as \'filter\' in the fluent request API.`;
+  return `Representation of the [[${complexTypeName}.${property.instancePropertyName}]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API.`;
 }
 
 export function getStaticPropertyDescription(property: VdmProperty): string {
-  return `Static representation of the [[${property.instancePropertyName}]] property for query construction.\nUse to reference this property in query operations such as \'select\' in the fluent request API.`;
+  return `Static representation of the [[${property.instancePropertyName}]] property for query construction.\nUse to reference this property in query operations such as 'select' in the fluent request API.`;
 }
 
 export function getStaticNavPropertyDescription(
@@ -131,11 +131,11 @@ const seeForMoreInformation = (url: string) =>
 
 const partOfCommunicationScenarios = (communicationScenarios: string) =>
   `This service is part of the following communication scenarios: ${communicationScenarios}.`;
-export function getRequestBuilderDescription(entity: VdmEntity) {
+export function getRequestBuilderDescription(entity: VdmEntity): string {
   return `Request builder class for operations supported on the [[${entity.className}]] entity.`;
 }
 
-export function getLookupDescription(service: VdmServiceMetadata) {
+export function getLookupDescription(service: VdmServiceMetadata): string {
   return `Lookup class for finding the constructor for an entity of the [[${service.className}]] service.`;
 }
 

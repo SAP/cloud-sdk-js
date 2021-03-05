@@ -42,7 +42,7 @@ export class ODataCreateRequestConfig<
     return this.prependDollarToQueryParameters({});
   }
 
-  protected resourcePathAsChild() {
+  protected resourcePathAsChild(): string {
     return (
       this.oDataUri.getResourcePathForKeys(
         this.parentKeys,

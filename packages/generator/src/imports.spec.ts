@@ -7,11 +7,7 @@ import {
   externalImportDeclarations,
   mergeImportDeclarations
 } from '../src/imports';
-import {
-  VdmNavigationProperty,
-  VdmProperty,
-  VdmServiceMetadata
-} from '../src/vdm-types';
+import { VdmNavigationProperty, VdmProperty } from '../src/vdm-types';
 import {
   bigNumberImport,
   momentImport
@@ -54,10 +50,6 @@ const multiLink = {
 const oneToOneLink = {
   isCollection: false
 } as VdmNavigationProperty;
-
-const service = {
-  oDataVersion: 'v2'
-} as VdmServiceMetadata;
 
 describe('imports', () => {
   describe('external import declarations', () => {

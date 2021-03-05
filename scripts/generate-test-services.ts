@@ -1,18 +1,14 @@
-import fs from 'fs';
+import { promises, Dirent } from 'fs';
 import path from 'path';
-import util from 'util';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
-import { generate as generateOpenApi } from '../packages/openapi-generator/src';
+import {
+  generate as generateOpenApi,
+  GeneratorOptions
+} from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
 
-type fsTypes = typeof fs.readdir & typeof fs.writeFile & typeof fs.readFile;
-const [readFile, readdir, writeFile] = [
-  fs.readFile,
-  fs.readdir,
-  fs.writeFile
-].map((fsModule: fsTypes) => util.promisify(fsModule));
-
+const { readFile, readdir, writeFile } = promises;
 const odataServiceSpecsDir = path.join('test-resources', 'odata-service-specs');
 const openApiServiceSpecsDir = path.join(
   'test-resources',
@@ -42,13 +38,15 @@ const generatorConfigOData = {
   s4hanaCloud: false
 };
 
-const generatorConfigOpenApi = {
+const generatorConfigOpenApi: GeneratorOptions = {
   input: path.resolve('test-resources', 'openapi-service-specs'),
   outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
   clearOutputDir: true,
   generateJs: true,
   generatePackageJson: true,
-  versionInPackageJson: '1.2.3'
+  versionInPackageJson: '1.2.3',
+  additionalFiles: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',
+  writeReadme: true
 };
 
 const logger = createLogger('generate-test-service');
@@ -85,7 +83,7 @@ async function generateTestServicesWithLocalCoreModules(
   }
 
   (await readServiceDirectories()).forEach(serviceDirectory =>
-    readServiceDirectory(serviceDirectory).then((dirents: fs.Dirent[]) =>
+    readServiceDirectory(serviceDirectory).then((dirents: Dirent[]) =>
       dirents
         .filter(dirent => dirent.isFile())
         .forEach(dirent =>
@@ -102,7 +100,7 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  function readServiceDirectory(serviceDirectory): Promise<fs.Dirent[]> {
+  function readServiceDirectory(serviceDirectory): Promise<Dirent[]> {
     return readdir(path.resolve(outputDir, serviceDirectory), {
       withFileTypes: true
     }).catch(serviceDirErr => {
@@ -135,7 +133,7 @@ async function generateTestServicesWithLocalCoreModules(
 
 async function generateAll(): Promise<void> {
   // Promise.catch() won't work when error happens in the nested forEach loop. When updating to node 15, we can remove it.
-  process.on('unhandledRejection', (reason, promise) => {
+  process.on('unhandledRejection', reason => {
     logger.error(`Unhandled rejection at: ${reason}`);
     process.exit(1);
   });

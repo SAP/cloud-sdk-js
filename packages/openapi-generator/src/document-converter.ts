@@ -5,9 +5,9 @@ import { convert } from 'swagger2openapi';
 import { load } from 'js-yaml';
 import {
   camelCase,
-  ErrorWithCause,
+  ErrorWithCause, flatten,
   partition,
-  pascalCase,
+  pascalCase, unique,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import { Method, methods } from './openapi-types';
@@ -15,7 +15,7 @@ const { readFile } = promises;
 
 /**
  * Convert an OpenAPI document to ensure smooth parsing and generation thereafter.
- * Documents are expected to be formatted as JSON, OpenAPI version 3 and only have one "default" tag.
+ * Documents are expected to be formatted as JSON and compliant with OpenAPI version 3.
  * @param filePath File content of the original spec.
  */
 export async function convertOpenApiSpec(
@@ -23,7 +23,9 @@ export async function convertOpenApiSpec(
 ): Promise<OpenAPIV3.Document> {
   const file = await parseFileAsJson(filePath);
   const openApiDocument = await convertDocToOpenApiV3(file);
-  return convertDocToGlobalTag(convertDocToUniqueOperationIds(openApiDocument));
+  return convertDocWithApiNameTag(
+    convertDocToUniqueOperationIds(openApiDocument)
+  );
 }
 
 /**
@@ -69,22 +71,43 @@ export async function convertDocToOpenApiV3(
 }
 
 /**
- * Workaround for OpenAPI generation to build one and only one API for all tags.
- * Modify spec to contain only one 'default' tag.
+ * Modify spec to contain the 'default' tag when no tags are defined.
  * @param openApiDocument OpenAPI JSON document.
  * @returns The modified document.
  */
-export function convertDocToGlobalTag(
+export function convertDocWithApiNameTag(
   openApiDocument: OpenAPIV3.Document
 ): OpenAPIV3.Document {
-  const tag = 'default';
-  openApiDocument.tags = [{ name: tag }];
+  const defaultTag = 'default';
 
-  executeForAllOperationObjects(openApiDocument, operation => {
-    operation.tags = [tag];
+  executeForAllOperationObjects(openApiDocument, (param: ExecuteForAllOperationObjectsParam) => {
+    param.operation.tags = getTags(param.extensionApiName, param.operation.tags, defaultTag);
   });
 
+  openApiDocument.tags = collectTags(openApiDocument).map(tag => ({ name: tag }));
+
   return openApiDocument;
+}
+
+function collectTags(
+  openApiDocument: OpenAPIV3.Document
+): string[] {
+  return unique(flatten(Object.entries(
+    openApiDocument.paths
+  ).map(([, pathDefinition]: [string, OpenAPIV3.PathItemObject]) =>
+    methods
+      .map(method => pathDefinition[method]?.tags)
+  ))).filter(tag => !!tag);
+}
+
+function getTags(
+  extensionApiName: string | undefined,
+  originalTags: string[] | undefined,
+  globalTag: string
+): string[] {
+  return extensionApiName ? [extensionApiName]
+    : originalTags?.length ? originalTags
+      : [globalTag];
 }
 
 /**
@@ -95,6 +118,8 @@ export function convertDocToGlobalTag(
 export function convertDocToUniqueOperationIds(
   openApiDocument: OpenAPIV3.Document
 ): OpenAPIV3.Document {
+  overwriteOperationIdByUsingExtensions(openApiDocument);
+
   const {
     namedOperations,
     unnamedOperationsWithAdditionalInfo
@@ -113,10 +138,10 @@ export function convertDocToUniqueOperationIds(
   });
 
   unnamedOperationsWithAdditionalInfo.forEach(
-    ({ operation, pathPattern, method }) => {
+    ({ operation, path, method }) => {
       setUniqueOperationName(
         operation,
-        getOperationNameFromPatternAndMethod(pathPattern, method),
+        getOperationNameFromPatternAndMethod(path, method),
         nameGenerator
       );
     }
@@ -127,7 +152,7 @@ export function convertDocToUniqueOperationIds(
 
 interface OperationWithAdditionalInfo {
   operation: OpenAPIV3.OperationObject;
-  pathPattern: string;
+  path: string;
   method: Method;
 }
 
@@ -181,14 +206,14 @@ function partitionOperationsToNamedAndUnnamed(
   const unnamedOperationsWithAdditionalInfo: OperationWithAdditionalInfo[] = [];
   executeForAllOperationObjects(
     openApiDocument,
-    (operation, pathPattern, method) => {
-      if (operation.operationId) {
-        namedOperations.push(operation);
+    (param: ExecuteForAllOperationObjectsParam) => {
+      if (param.operation.operationId) {
+        namedOperations.push(param.operation);
       } else {
         unnamedOperationsWithAdditionalInfo.push({
-          operation,
-          pathPattern,
-          method
+          operation: param.operation,
+          path: param.path,
+          method: param.method
         });
       }
     }
@@ -214,16 +239,19 @@ function setUniqueOperationName(
 function executeForAllOperationObjects(
   openApiDocument: OpenAPIV3.Document,
   callback: (
-    operation: OpenAPIV3.OperationObject,
-    pathPattern: string,
-    method: Method
+    param: ExecuteForAllOperationObjectsParam
   ) => any
 ): void {
   return Object.entries(openApiDocument.paths).forEach(
-    ([pathPattern, pathDefinition]: [string, OpenAPIV3.PathItemObject]) => {
+    ([path, pathDefinition]: [string, OpenApiPathItemObject]) => {
       methods.forEach(method => {
         if (pathDefinition[method]) {
-          callback(pathDefinition[method]!, pathPattern, method);
+          callback({
+            operation: pathDefinition[method]!,
+            path,
+            method,
+            extensionApiName: pathDefinition['x-sap-cloud-sdk-api-name']
+          });
         }
       });
     }
@@ -260,3 +288,21 @@ const nameMapping = {
   options: 'getOptionsFor',
   trace: 'trace'
 } as const;
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+interface OpenApiPathItemObject<T extends {} = {}> extends OpenAPIV3.PathItemObject<T>{
+  'x-sap-cloud-sdk-api-name'?: string;
+}
+
+function overwriteOperationIdByUsingExtensions(openApiDocument: OpenAPIV3.Document){
+  executeForAllOperationObjects(openApiDocument, (param: ExecuteForAllOperationObjectsParam) => {
+    param.operation.operationId = param.operation['x-sap-cloud-sdk-operation-name'] || param.operation.operationId;
+  });
+}
+
+interface ExecuteForAllOperationObjectsParam {
+  operation: OpenAPIV3.OperationObject;
+  path: string;
+  method: Method;
+  extensionApiName?: string;
+}

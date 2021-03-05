@@ -33,7 +33,7 @@ export default class AddCxServer extends Command {
     }
   ];
 
-  async run() {
+  async run(): Promise<void> {
     const parsed = this.parse(AddCxServer);
     const projectDir = parsed.args.projectDir || '.';
     const options = await this.getOptions();

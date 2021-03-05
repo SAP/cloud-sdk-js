@@ -25,9 +25,7 @@ testEntityChangeset(createTestEntity, createTestEntity);
 testEntityChangeset([createTestEntity, createTestEntity]);
 
 // $ExpectType ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
-const changeSetOtherServiceTestEntity = otherServiceChangeset(
-  createTestEntityFromOtherService
-);
+otherServiceChangeset(createTestEntityFromOtherService);
 
 // // $ExpectError
 // TestEntityChangeset(createTestEntityFromOtherService);

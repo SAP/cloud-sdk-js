@@ -2,10 +2,10 @@ import { OpenAPIV2, OpenAPIV3 } from 'openapi-types';
 import { emptyApiDefinition } from '../test/test-util';
 import {
   convertDocToUniqueOperationIds,
-  convertDocToGlobalTag,
   convertDocToOpenApiV3,
   getOperationNameFromPatternAndMethod,
-  parseFileAsJson
+  parseFileAsJson,
+  convertDocWithApiNameTag
 } from './document-converter';
 
 const jsonContent = { test: 'test' };
@@ -23,14 +23,95 @@ jest.mock('fs', () => ({
   }
 }));
 
-describe('convertDocToGlobalTag', () => {
-  it("replaces all tags with 'default'", () => {
-    const newSpec = convertDocToGlobalTag({
+describe('convertDocWithApiNameTag', () => {
+  it('should use api name extensions when provided', () => {
+    const originalSpec = {
       ...emptyApiDefinition,
+      tags: [{ name: 'tag1' }, { name: 'tag2' }, { name: 'tag' }],
+      paths: {
+        '/pattern1': {
+          'x-sap-cloud-sdk-api-name': 'api1',
+          get: {
+            tags: []
+          },
+          post: {
+            tags: ['tag']
+          }
+        },
+        '/pattern1/pattern2': {
+          'x-sap-cloud-sdk-api-name': 'api2',
+          get: {},
+          post: {
+            tags: ['tag']
+          }
+        }
+      }
+    };
+    const newSpec = convertDocWithApiNameTag(originalSpec);
+
+    expect(newSpec).toEqual({
+      ...emptyApiDefinition,
+      tags: [
+        { name: 'api1' },
+        { name: 'api2' }
+      ],
+      paths: {
+        '/pattern1': {
+          'x-sap-cloud-sdk-api-name': 'api1',
+          get: {
+            tags: ['api1']
+          },
+          post: {
+            tags: ['api1']
+          }
+        },
+        '/pattern1/pattern2': {
+          'x-sap-cloud-sdk-api-name': 'api2',
+          get: {
+            tags: ['api2']
+          },
+          post: {
+            tags: ['api2']
+          }
+        }
+      }
+    });
+  });
+
+  it('does not change the spec when tags are provided but api name extensions are missing', () => {
+    const originalSpec = {
+      ...emptyApiDefinition,
+      tags: [{ name: 'tag1' }, { name: 'tag2' }, { name: 'tag' }],
       paths: {
         '/pattern1': {
           get: {
             tags: ['tag1', 'tag2']
+          },
+          post: {
+            tags: ['tag']
+          }
+        },
+        '/pattern1/pattern2': {
+          post: {
+            tags: ['tag']
+          }
+        }
+      }
+    };
+    const oldSpec = JSON.parse(JSON.stringify(originalSpec));
+    const newSpec = convertDocWithApiNameTag(originalSpec);
+
+    expect(newSpec).toEqual(oldSpec);
+  });
+
+  it('should use default tag as fallback', () => {
+    const originalSpec = {
+      ...emptyApiDefinition,
+      tags: [{ name: 'tag1' }, { name: 'tag2' }, { name: 'tag' }],
+      paths: {
+        '/pattern1': {
+          get: {
+            tags: []
           },
           post: {
             tags: ['tag']
@@ -43,24 +124,30 @@ describe('convertDocToGlobalTag', () => {
           }
         }
       }
-    });
+    };
+    const newSpec = convertDocWithApiNameTag(originalSpec);
 
     expect(newSpec).toEqual({
       ...emptyApiDefinition,
-      tags: [{ name: 'default' }],
+      tags: [
+        { name: 'default' },
+        { name: 'tag' }
+      ],
       paths: {
         '/pattern1': {
           get: {
             tags: ['default']
           },
           post: {
-            tags: ['default']
+            tags: ['tag']
           }
         },
         '/pattern1/pattern2': {
-          get: { tags: ['default'] },
-          post: {
+          get: {
             tags: ['default']
+          },
+          post: {
+            tags: ['tag']
           }
         }
       }
@@ -294,6 +381,36 @@ describe('convertDocToUniqueOperationIds', () => {
         },
         post: {
           operationId: 'createX'
+        }
+      }
+    });
+  });
+
+  it('use extensions when provided', () => {
+    const newSpec = convertDocToUniqueOperationIds({
+      ...emptyApiDefinition,
+      paths: {
+        '/url': {
+          get: {
+            'x-sap-cloud-sdk-operation-name': 'niceGetName',
+            operationId: 'id'
+          },
+          post: {
+            'x-sap-cloud-sdk-operation-name': 'nicePostName',
+          }
+        }
+      }
+    } as OpenAPIV3.Document);
+
+    expect(newSpec.paths).toEqual({
+      '/url': {
+        get: {
+          operationId: 'niceGetName',
+          'x-sap-cloud-sdk-operation-name': 'niceGetName'
+        },
+        post: {
+          operationId: 'nicePostName',
+          'x-sap-cloud-sdk-operation-name': 'nicePostName'
         }
       }
     });

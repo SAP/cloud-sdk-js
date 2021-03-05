@@ -1,6 +1,5 @@
 import { existsSync, PathLike, readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import execa from 'execa';
 import { createLogger } from './logger';
 
 const logger = createLogger({
@@ -35,18 +34,4 @@ export function readJSON(path: PathLike): { [key: string]: any } {
   }
   logger.warn(`File "${path}" does not exist, return empty object.`);
   return {};
-}
-
-/**
- * Executes the type script compiler for the given directory.
- * A valid tsconfig.json needs to be present in the directory.
- * @param path - Directory to be compiled
- */
-export async function transpileDirectory(path: string): Promise<void> {
-  logger.debug(`Transpiling files in the directory: ${path} started.`);
-  await execa('tsc', { cwd: path }).catch(err => {
-    logger.error(`Error: Failed to generate js files: ${err}`);
-    process.exit(1);
-  });
-  logger.debug(`Transpiling files in directory: ${path} finished.`);
 }

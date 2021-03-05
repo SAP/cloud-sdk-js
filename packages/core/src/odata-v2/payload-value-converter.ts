@@ -57,7 +57,7 @@ const toTime = (value: string): Time => {
  * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
  */
 export function edmDateTimeToMoment(edmDateTime: string): moment.Moment {
-  const dateTimeOffsetComponents = /.*\((-?\d+)(?:([\+-])(\d{4})\))?/.exec(
+  const dateTimeOffsetComponents = /.*\((-?\d+)(?:([+-])(\d{4})\))?/.exec(
     edmDateTime
   );
   if (!dateTimeOffsetComponents) {

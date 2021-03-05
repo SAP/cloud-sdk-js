@@ -51,7 +51,7 @@ function entityName(entity: VdmEntity): PropertyDeclarationStructure {
     kind: StructureKind.Property,
     name: prependPrefix('entityName'),
     isStatic: true,
-    initializer: `\'${entity.entitySetName}\'`,
+    initializer: `'${entity.entitySetName}'`,
     docs: [addLeadingNewline(`Technical entity name for ${entity.className}.`)]
   };
 }
@@ -63,7 +63,7 @@ function defaultServicePath(
     kind: StructureKind.Property,
     name: prependPrefix('defaultServicePath'),
     isStatic: true,
-    initializer: `\'${service.servicePath}\'`,
+    initializer: `'${service.servicePath}'`,
     docs: [addLeadingNewline('Default url path for the according service.')]
   };
 }
@@ -125,7 +125,7 @@ function methods(
     builder(entity, oDataVersion),
     requestBuilder(entity),
     customField(entity, oDataVersion),
-    toJSON(entity)
+    toJSON()
   ];
 }
 
@@ -221,7 +221,7 @@ function customField(
   };
 }
 
-function toJSON(entity: VdmEntity): MethodDeclarationStructure {
+function toJSON(): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'toJSON',

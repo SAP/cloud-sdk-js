@@ -13,13 +13,10 @@ export function importDeclarations(
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(entity.keys),
-    coreImportDeclaration(
-      [
-        ...corePropertyTypeImportNames(entity.keys),
-        ...requestBuilderCoreImportDeclarations(entity, oDataVersion)
-      ],
-      oDataVersion
-    ),
+    coreImportDeclaration([
+      ...corePropertyTypeImportNames(entity.keys),
+      ...requestBuilderCoreImportDeclarations(entity, oDataVersion)
+    ]),
     entityImportDeclaration(entity)
   ];
 }

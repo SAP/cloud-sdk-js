@@ -33,7 +33,7 @@ exports.TestEntityLink = void 0;
 var TestEntityLinkRequestBuilder_1 = require("./TestEntityLinkRequestBuilder");
 var core_1 = require("@sap-cloud-sdk/core");
 /**
- * This class represents the entity "TestEntityLink" of service "AdminService".
+ * This class represents the entity "TestEntityLink" of service "TestService".
  */
 var TestEntityLink = /** @class */ (function (_super) {
     __extends(TestEntityLink, _super);

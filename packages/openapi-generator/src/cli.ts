@@ -80,10 +80,26 @@ export = class GenerateOpenApiClient extends Command {
         'tsconfig.json file to overwrite the default "tsconfig.json".',
       parse: input => resolve(input),
       required: false
+    }),
+    additionalFiles: flags.string({
+      name: 'additionalFiles',
+      description:
+        'Glob describing additional files to be added to the each generated service directory.',
+      parse: input => resolve(input),
+      required: false,
+      hidden: true
+    }),
+    writeReadme: flags.boolean({
+      name: 'writeReadme',
+      description:
+        'When set to true, the generator will write a README.md file into the root folder of every package.',
+      default: false,
+      required: false,
+      hidden: true
     })
   };
 
-  async run() {
+  async run(): Promise<void> {
     try {
       const parsed = this.parse(GenerateOpenApiClient);
       await validateJavaRuntime();

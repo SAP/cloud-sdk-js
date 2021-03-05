@@ -4,7 +4,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 
 const logger = createLogger('check-licenses');
 
-// Here all FLOSS licences are ok see https://en.wikipedia.org/wiki/Category:Free_and_open-source_software_licenses
+// Here all FLOSS licenses are ok see https://en.wikipedia.org/wiki/Category:Free_and_open-source_software_licenses
 // We just added the most common ones here. If one is in the wiki list and not here add it.
 const allowedLicenses = [
   'MIT',
@@ -47,7 +47,7 @@ function isAllowedLicense(licenses) {
 }
 
 function isSapDependency(dependency) {
-  // Exclude root package from licence check
+  // Exclude root package from license check
   if (dependency.startsWith('sap-cloud-sdk')) {
     return true;
   }
@@ -68,7 +68,7 @@ async function checkLicenses() {
       );
     });
     logger.error(
-      'Check if the faulty licences are in the FLOSS list: https://en.wikipedia.org/wiki/Category:Free_and_open-source_software_licenses and update the check script accordingly.'
+      'Check if the faulty licenses are in the FLOSS list: https://en.wikipedia.org/wiki/Category:Free_and_open-source_software_licenses and update the check script accordingly.'
     );
 
     process.exit(1);

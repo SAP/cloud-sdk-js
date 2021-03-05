@@ -1,5 +1,5 @@
 <!-- sap-cloud-sdk-logo -->
-<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
@@ -49,7 +49,7 @@ EXAMPLE
   $ sap-cloud-sdk add-approuter
 ```
 
-_See code: [src/commands/add-approuter.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/add-approuter.ts)_
+_See code: [src/commands/add-approuter.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/add-approuter.ts)_
 
 ## `sap-cloud-sdk add-cds [PROJECTDIR]`
 
@@ -71,7 +71,7 @@ EXAMPLE
   $ sap-cloud-sdk add-cds
 ```
 
-_See code: [src/commands/add-cds.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/add-cds.ts)_
+_See code: [src/commands/add-cds.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/add-cds.ts)_
 
 ## `sap-cloud-sdk add-cx-server [PROJECTDIR]`
 
@@ -92,7 +92,7 @@ EXAMPLE
   $ sap-cloud-sdk add-cx-server
 ```
 
-_See code: [src/commands/add-cx-server.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/add-cx-server.ts)_
+_See code: [src/commands/add-cx-server.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/add-cx-server.ts)_
 
 ## `sap-cloud-sdk autocomplete [SHELL]`
 
@@ -202,7 +202,7 @@ EXAMPLES
   $ sap-cloud-sdk generate-odata-client --help
 ```
 
-_See code: [src/commands/generate-odata-client.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/generate-odata-client.ts)_
+_See code: [src/commands/generate-odata-client.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/generate-odata-client.ts)_
 
 ## `sap-cloud-sdk help [COMMAND]`
 
@@ -230,7 +230,7 @@ USAGE
   $ sap-cloud-sdk help-page
 ```
 
-_See code: [src/commands/help-page.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/help-page.ts)_
+_See code: [src/commands/help-page.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/help-page.ts)_
 
 ## `sap-cloud-sdk init [PROJECTDIR]`
 
@@ -261,7 +261,7 @@ EXAMPLES
   $ sap-cloud-sdk init --help
 ```
 
-_See code: [src/commands/init.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/init.ts)_
 
 ## `sap-cloud-sdk package [PROJECTDIR]`
 
@@ -293,11 +293,11 @@ EXAMPLES
   $ sap-cloud-sdk package --include="package.json,package-lock.json,index.js,dist/**/*" --exclude="**/*.java"
 ```
 
-_See code: [src/commands/package.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.38.0/src/commands/package.ts)_
+_See code: [src/commands/package.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/package.ts)_
 <!-- commandsstop -->
 
 <!-- sap-cloud-sdk-common-readme -->
-<!-- This block is inserted by scripts/copy-generic-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
 ## Support
 
 The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).
@@ -314,15 +314,19 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 
 - [Github](https://github.com/SAP/cloud-sdk-js)
 - [Github - Releases](https://github.com/SAP/cloud-sdk-js/releases)
-<br><br>
+
+<br>
+
 - [SAP Cloud SDK Documentation portal](https://sap.github.io/cloud-sdk/)
 - [SAP Cloud SDK Documentation portal - Getting started guide](https://sap.github.io/cloud-sdk/docs/js/getting-started)
 - [SAP Cloud SDK Documentation portal - API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts)
-<br><br>
+
+<br>
+
 - [developers.sap.com - Product Overview](https://developers.sap.com/topics/cloud-sdk.html)
 - [developers.sap.com - Tutorials](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:javascript)
 
-## Licence
+## License
 
-The SAP Cloud SDK is released under the  [Apache License Version 2.0.](http://www.apache.org/licenses/)
+The SAP Cloud SDK is released under the [Apache License Version 2.0.](http://www.apache.org/licenses/)
 <!-- sap-cloud-sdk-common-readme-stop -->

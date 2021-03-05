@@ -34,8 +34,7 @@ function actionFunctionImportDeclarations(
         ...edmRelatedImports(returnTypes, oDataVersion),
         ...complexTypeRelatedImports(returnTypes, oDataVersion),
         ...additionalImports
-      ],
-      oDataVersion
+      ]
     ),
     ...returnTypeImports(returnTypes)
   ];

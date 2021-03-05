@@ -31,9 +31,8 @@ export class ODataBatchRequestBuilder extends BatchRequestBuilder {
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<BatchResponse[]> {
-    return this.build(destination, options)
-      .then(request => request.execute())
-      .then(response => parseBatchResponse(response))
+    return this.executeRaw(destination, options)
+      .then(({ response }) => parseBatchResponse(response))
       .then(parsedResponse =>
         deserializeBatchResponse(
           parsedResponse,

@@ -81,21 +81,6 @@ export abstract class GetByKeyRequestBuilder<
         throw new ErrorWithCause('OData get by key request failed!', error);
       });
   }
-
-  /**
-   * Execute request and return the request and the raw response.
-   *
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpRequestAndResponse]].
-   */
-  async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse>{
-    return this.build(destination, options)
-      .then(request => request.executeRaw());
-  }
 }
 
 export { GetByKeyRequestBuilder as GetByKeyRequestBuilderBase };

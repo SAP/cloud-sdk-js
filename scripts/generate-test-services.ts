@@ -170,7 +170,10 @@ async function generateAll(): Promise<void> {
   }
 
   if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
-    await generateOpenApi(generatorConfigOpenApi);
+    await generateOpenApi({
+      ...generatorConfigOpenApi,
+      generateJs: true
+    });
     await generateTestServicesWithLocalCoreModules(
       coreUnitTestOutputDir,
       'openapi'

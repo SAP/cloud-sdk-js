@@ -31,7 +31,7 @@ describe('FunctionImportRequestBuilder', () => {
     nock(defaultHost)
       .get(`${serviceUrl}/TestFunctionImportSharedEntityReturnType()`)
       .query({ $format: 'json' })
-      .reply(200);
+      .reply(200, {});
     const requestBuilder = testFunctionImportSharedEntityReturnType({});
 
     await expect(

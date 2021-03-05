@@ -21,7 +21,7 @@ describe('connectivity-service', () => {
     jest.restoreAllMocks();
   });
 
-  it('adds a proxy configuration containing at least the host, the port, and the "Proxy-Authorization" header to a destination', done => {
+  it('adds a proxy configuration containing at least the host, the port, and the "Proxy-Authorization" header to a destination', async() => {
     mockServiceBindings();
     mockServiceToken();
 
@@ -41,17 +41,11 @@ describe('connectivity-service', () => {
       }
     };
 
-    addProxyConfiguration(input)
-      .then(actual => {
-        expect(actual).toEqual(expected);
-        done();
-      })
-      .catch(error => {
-        testLogger.error(error);
-      });
+    const withProxy = await addProxyConfiguration(input);
+    expect(withProxy).toEqual(expected);
   });
 
-  it('also contains the "SAP-Connectivity-Authentication" header if a JWT is present', done => {
+  it('also contains the "SAP-Connectivity-Authentication" header if a JWT is present', async() => {
     mockServiceBindings();
     mockServiceToken();
 
@@ -72,14 +66,8 @@ describe('connectivity-service', () => {
       }
     };
 
-    addProxyConfiguration(input, providerUserJwt)
-      .then(actual => {
-        expect(actual).toEqual(expected);
-        done();
-      })
-      .catch(error => {
-        testLogger.error(error);
-      });
+    const withProxy = await addProxyConfiguration(input, providerUserJwt);
+      expect(withProxy).toEqual(expected);
   });
 
   it('throws an error if there is no connectivity service bound', done => {

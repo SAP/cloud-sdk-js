@@ -32,7 +32,7 @@ describe('createAgent', () => {
 
   it('returns a proxy agent if there is a proxy setting on the destination', () => {
     expect(getAgentConfig(proxyDestination)['httpsAgent']).toEqual(
-      new HttpsProxyAgent(mockedConnectivityServiceProxyConfig)
+      new HttpsProxyAgent({ ...mockedConnectivityServiceProxyConfig,        rejectUnauthorized:true })
     );
   });
 

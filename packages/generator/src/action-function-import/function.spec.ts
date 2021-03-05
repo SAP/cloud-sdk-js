@@ -29,13 +29,13 @@ describe('function', () => {
       kind: StructureKind.Function,
       name: 'entityNotDeserializable',
       parameters: [{ name: 'parameters', type: 'Params' }],
-      returnType: 'FunctionImportRequestBuilderV2<Params, string>',
+      returnType: 'FunctionImportRequestBuilderV2<Params, any>',
       docs: [
         'entityNotDeserializable\n\n@param parameters - Object containing all parameters for the function import.\n@returns A request builder that allows to overwrite some of the values and execute the resultng request.'
       ],
       isExported: true,
       statements:
-        "const params = {\n\n}\n\nreturn new FunctionImportRequestBuilderV2('get', 'some/path/to/food', 'entityNotDeserializable', (data) => throwErrorWhenReturnTypeIsUnionType(data, entityNotDeserializable), params);"
+        "const params = {\n\n}\n\nreturn new FunctionImportRequestBuilderV2('get', 'some/path/to/food', 'entityNotDeserializable', (data) => throwErrorWhenReturnTypeIsUnionType(data, 'entityNotDeserializable'), params);"
     });
   });
 });

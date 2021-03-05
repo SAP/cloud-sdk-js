@@ -96,7 +96,7 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(34);
+      expect(files.length).toBe(38);
     });
 
     it('generates TestEntity.ts file', () => {
@@ -134,7 +134,7 @@ describe('generator', () => {
 
     it('generates function-imports.ts file', () => {
       const functionImports = getFunctionImportDeclarations(files);
-      expect(functionImports.length).toBe(8);
+      expect(functionImports.length).toBe(10);
       const functionImportNames = functionImports.map(fi => fi.getName());
       expect(functionImportNames).toEqual(
         expect.arrayContaining(['testFunctionImportWithDifferentName'])
@@ -146,7 +146,7 @@ describe('generator', () => {
 
     it('generates action-imports.ts file', () => {
       const actionImports = getActionImportDeclarations(files);
-      expect(actionImports.length).toBe(4);
+      expect(actionImports.length).toBe(6);
       const actionImportNames = actionImports.map(action => action.getName());
       expect(actionImportNames).toEqual(
         expect.arrayContaining(['testActionImportNoParameterNoReturnType'])

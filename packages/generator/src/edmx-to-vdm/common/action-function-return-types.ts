@@ -95,7 +95,7 @@ function findEntityType(
     e => `${e.entityTypeNamespace}.${e.entityTypeName}` === returnType
   );
   // TODO 1584 remove this block after testing all the s/4 edmx files
-  if (entity.length) {
+  if (!entity.length) {
     const parsedReturnType = last(returnType.split('.'));
     return entities.filter(e => e.entityTypeName === parsedReturnType);
   }

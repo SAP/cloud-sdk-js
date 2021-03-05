@@ -16,9 +16,6 @@
   "bin": {
     "sap-cloud-sdk": "./bin/run"
   },
-  "publishConfig": {
-    "access": "restricted"
-  },
   "files": [
     "dist/**/*.js",
     "dist/**/*.js.map",

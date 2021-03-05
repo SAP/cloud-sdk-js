@@ -271,11 +271,11 @@ export function proxyAgent(
   }
 
   if(options?.host){
-    logger.warn(`The agent options you passed to the proxy agent creation contains the host "${options.host}" which will overwrite the host from the proxy config.`)
+    logger.warn(`The agent options you passed to the proxy agent creation contains the host "${options.host}" which will overwrite the host from the proxy config.`);
   }
 
   if(options?.port){
-    logger.warn(`The agent options you passed to the proxy agent creation contains the port "${options.host}" which will overwrite the port from the proxy config.`)
+    logger.warn(`The agent options you passed to the proxy agent creation contains the port "${options.host}" which will overwrite the port from the proxy config.`);
   }
 
   const agentConfig = {

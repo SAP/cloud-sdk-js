@@ -11,7 +11,6 @@ import {
 import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import { HttpRequestAndResponse } from '../../http-client';
 import { GetRequestBuilder } from './get-request-builder-base';
 
 /**

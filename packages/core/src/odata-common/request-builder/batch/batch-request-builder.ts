@@ -9,10 +9,10 @@ import {
   DestinationRetrievalOptions
 } from '../../../connectivity/scp-cf';
 import { ODataRequest } from '../../request/odata-request';
+import { HttpRequestAndResponse } from '../../../http-client';
 import { BatchChangeSet } from './batch-change-set';
 import { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';
-import { HttpRequestAndResponse } from '../../../http-client';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
@@ -58,16 +58,6 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
       : this.setPayload(super.build());
   }
 
-  private setPayload(
-    request: ODataRequest<ODataBatchRequestConfig>
-  ): ODataRequest<ODataBatchRequestConfig> {
-    request.config.payload = serializeBatchRequest(this, {
-      subRequestPathType: request.config.subRequestPathType,
-      destination: request.destination!
-    });
-    return request;
-  }
-
   /**
    * Execute request and return the request and the raw response.
    *
@@ -81,5 +71,15 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
   ): Promise<HttpRequestAndResponse>{
     return this.build(destination, options)
       .then(request => request.executeRaw());
+  }
+
+  private setPayload(
+    request: ODataRequest<ODataBatchRequestConfig>
+  ): ODataRequest<ODataBatchRequestConfig> {
+    request.config.payload = serializeBatchRequest(this, {
+      subRequestPathType: request.config.subRequestPathType,
+      destination: request.destination!
+    });
+    return request;
   }
 }

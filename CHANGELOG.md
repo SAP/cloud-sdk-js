@@ -26,9 +26,28 @@
 
 ## Fixed Issues
 
+-
+
+
+# 1.39.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.39.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [core] Deprecated `_customFields` in the `fromJson` method of the entity builders. Instead, add custom fields to the JSON objects directly.
+
+## New Functionality
+
+- [openapi-generator] Support custom API names and operation names by using OpenAPI extensions `x-sap-cloud-sdk-api-name` and `x-sap-cloud-sdk-operation-name`.
+
+## Fixed Issues
+
+- [core] Fix building of entities using `fromJson` with navigation properties.
 - [odata-generator] The exit code of the node process is set to 1 in cases of a generator error.
 - [odata-generator] Fix the false-positive warning message, when functions/actions are not used by any function/action imports.
-
 
 # 1.38.0
 

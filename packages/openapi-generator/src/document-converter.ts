@@ -5,9 +5,9 @@ import { convert } from 'swagger2openapi';
 import { load } from 'js-yaml';
 import {
   camelCase,
-  ErrorWithCause,
+  ErrorWithCause, flatten,
   partition,
-  pascalCase,
+  pascalCase, unique,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import { Method, methods } from './openapi-types';
@@ -23,7 +23,7 @@ export async function convertOpenApiSpec(
 ): Promise<OpenAPIV3.Document> {
   const file = await parseFileAsJson(filePath);
   const openApiDocument = await convertDocToOpenApiV3(file);
-  return convertDocWithDefaultTag(
+  return convertDocWithApiNameTag(
     convertDocToUniqueOperationIds(openApiDocument)
   );
 }
@@ -75,54 +75,39 @@ export async function convertDocToOpenApiV3(
  * @param openApiDocument OpenAPI JSON document.
  * @returns The modified document.
  */
-export function convertDocWithDefaultTag(
+export function convertDocWithApiNameTag(
   openApiDocument: OpenAPIV3.Document
 ): OpenAPIV3.Document {
-  const tag = 'default';
+  const defaultTag = 'default';
 
-  executeForAllOperationObjects(openApiDocument, operation => {
-    operation.tags = addGlobalTagToOperationWhenNoTagsAreUsed(
-      operation.tags,
-      tag
-    );
+  executeForAllOperationObjects(openApiDocument, (param: ExecuteForAllOperationObjectsParam) => {
+    param.operation.tags = getTags(param.extensionApiName, param.operation.tags, defaultTag);
   });
 
-  const detectGlobalTag = !!Object.entries(
-    openApiDocument.paths
-  ).find(([, pathDefinition]: [string, OpenAPIV3.PathItemObject]) =>
-    hasTag(pathDefinition, tag)
-  );
-
-  if (detectGlobalTag) {
-    openApiDocument.tags = addGlobalTagToRootTags(openApiDocument.tags, tag);
-  }
+  openApiDocument.tags = collectTags(openApiDocument).map(tag => ({ name: tag }));
 
   return openApiDocument;
 }
 
-function hasTag(
-  pathDefinition: OpenAPIV3.PathItemObject,
-  tag: string
-): boolean {
-  return !!methods.find(method => pathDefinition[method]?.tags!.includes(tag));
+function collectTags(
+  openApiDocument: OpenAPIV3.Document
+): string[] {
+  return unique(flatten(Object.entries(
+    openApiDocument.paths
+  ).map(([, pathDefinition]: [string, OpenAPIV3.PathItemObject]) =>
+    methods
+      .map(method => pathDefinition[method]?.tags)
+  ))).filter(tag => !!tag);
 }
 
-function addGlobalTagToRootTags(
-  tags: OpenAPIV3.TagObject[] | undefined,
-  globalTag: string
-): OpenAPIV3.TagObject[] {
-  return tags?.find(tag => tag.name === globalTag)
-    ? tags
-    : tags?.length
-    ? tags.concat({ name: globalTag })
-    : [{ name: globalTag }];
-}
-
-function addGlobalTagToOperationWhenNoTagsAreUsed(
-  tags: string[] | undefined,
+function getTags(
+  extensionApiName: string | undefined,
+  originalTags: string[] | undefined,
   globalTag: string
 ): string[] {
-  return tags?.length ? tags : [globalTag];
+  return extensionApiName ? [extensionApiName]
+    : originalTags?.length ? originalTags
+      : [globalTag];
 }
 
 /**
@@ -133,6 +118,8 @@ function addGlobalTagToOperationWhenNoTagsAreUsed(
 export function convertDocToUniqueOperationIds(
   openApiDocument: OpenAPIV3.Document
 ): OpenAPIV3.Document {
+  overwriteOperationIdByUsingExtensions(openApiDocument);
+
   const {
     namedOperations,
     unnamedOperationsWithAdditionalInfo
@@ -151,10 +138,10 @@ export function convertDocToUniqueOperationIds(
   });
 
   unnamedOperationsWithAdditionalInfo.forEach(
-    ({ operation, pathPattern, method }) => {
+    ({ operation, path, method }) => {
       setUniqueOperationName(
         operation,
-        getOperationNameFromPatternAndMethod(pathPattern, method),
+        getOperationNameFromPatternAndMethod(path, method),
         nameGenerator
       );
     }
@@ -165,7 +152,7 @@ export function convertDocToUniqueOperationIds(
 
 interface OperationWithAdditionalInfo {
   operation: OpenAPIV3.OperationObject;
-  pathPattern: string;
+  path: string;
   method: Method;
 }
 
@@ -219,14 +206,14 @@ function partitionOperationsToNamedAndUnnamed(
   const unnamedOperationsWithAdditionalInfo: OperationWithAdditionalInfo[] = [];
   executeForAllOperationObjects(
     openApiDocument,
-    (operation, pathPattern, method) => {
-      if (operation.operationId) {
-        namedOperations.push(operation);
+    (param: ExecuteForAllOperationObjectsParam) => {
+      if (param.operation.operationId) {
+        namedOperations.push(param.operation);
       } else {
         unnamedOperationsWithAdditionalInfo.push({
-          operation,
-          pathPattern,
-          method
+          operation: param.operation,
+          path: param.path,
+          method: param.method
         });
       }
     }
@@ -252,16 +239,19 @@ function setUniqueOperationName(
 function executeForAllOperationObjects(
   openApiDocument: OpenAPIV3.Document,
   callback: (
-    operation: OpenAPIV3.OperationObject,
-    path: string,
-    method: Method
+    param: ExecuteForAllOperationObjectsParam
   ) => any
 ): void {
   return Object.entries(openApiDocument.paths).forEach(
-    ([path, pathDefinition]: [string, OpenAPIV3.PathItemObject]) => {
+    ([path, pathDefinition]: [string, OpenApiPathItemObject]) => {
       methods.forEach(method => {
         if (pathDefinition[method]) {
-          callback(pathDefinition[method]!, path, method);
+          callback({
+            operation: pathDefinition[method]!,
+            path,
+            method,
+            extensionApiName: pathDefinition['x-sap-cloud-sdk-api-name']
+          });
         }
       });
     }
@@ -298,3 +288,21 @@ const nameMapping = {
   options: 'getOptionsFor',
   trace: 'trace'
 } as const;
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+interface OpenApiPathItemObject<T extends {} = {}> extends OpenAPIV3.PathItemObject<T>{
+  'x-sap-cloud-sdk-api-name'?: string;
+}
+
+function overwriteOperationIdByUsingExtensions(openApiDocument: OpenAPIV3.Document){
+  executeForAllOperationObjects(openApiDocument, (param: ExecuteForAllOperationObjectsParam) => {
+    param.operation.operationId = param.operation['x-sap-cloud-sdk-operation-name'] || param.operation.operationId;
+  });
+}
+
+interface ExecuteForAllOperationObjectsParam {
+  operation: OpenAPIV3.OperationObject;
+  path: string;
+  method: Method;
+  extensionApiName?: string;
+}

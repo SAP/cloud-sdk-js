@@ -522,7 +522,6 @@
         }
       }
     },
-
     "/test-cases/special-tag": {
       "get": {
         "operationId": "tag with dot",
@@ -561,6 +560,29 @@
           "default"
         ],
         "operationId": "defaultTag",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/test-cases/extension": {
+      "x-sap-cloud-sdk-api-name": "extension",
+      "get": {
+        "x-sap-cloud-sdk-operation-name": "niceGetFunction",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "post": {
+        "x-sap-cloud-sdk-operation-name": "nicePostFunction",
+        "tags": [
+          "default"
+        ],
+        "operationId": "testCasesExtensionPost",
         "responses": {
           "201": {
             "description": "no content"

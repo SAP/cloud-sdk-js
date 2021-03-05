@@ -23,10 +23,10 @@
     "doc": "yarn typedoc"
   },
   "dependencies": {
-    "../../../../../src": "^1.38.0"
+    "../../../../../src": "^1.39.0"
   },
   "peerDependencies": {
-    "@sap-cloud-sdk/core": "^1.38.0"
+    "@sap-cloud-sdk/core": "^1.39.0"
   },
   "devDependencies": {
     "typedoc": "^0.17.0",

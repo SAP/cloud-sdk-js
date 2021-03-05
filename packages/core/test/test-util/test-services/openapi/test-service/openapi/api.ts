@@ -16,6 +16,7 @@
 
 export * from './api/default-api';
 export * from './api/entity-api';
+export * from './api/extension-api';
 export * from './api/tag-dot-api';
 export * from './api/tag-space-api';
 export * from './api/test-case-api';

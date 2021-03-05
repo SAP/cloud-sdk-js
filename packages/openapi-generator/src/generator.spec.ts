@@ -42,6 +42,8 @@ describe('generator', () => {
     expect(existsSync(entityApi)).toBe(true);
     const testCaseApi = resolve(testServicePath, 'test-case-api.js');
     expect(existsSync(testCaseApi)).toBe(true);
+    const extensionApi = resolve(testServicePath, 'extension-api.js');
+    expect(existsSync(extensionApi)).toBe(true);
   });
 
   it('should create a package.json', () => {

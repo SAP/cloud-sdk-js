@@ -85,9 +85,10 @@ const certificateOptions = (destination: Destination) => (
 function getCertificateOption(destination: Destination): Record<string, any>  {
   // http case: no certificate needed
   if(getProtocolOrDefault(destination) === Protocol.HTTP){
-  if (destination.isTrustingAllCertificates) {
-    logger.warn('"isTrustingAllCertificates" is not available for HTTP.');
-  }
+    if (destination.isTrustingAllCertificates) {
+      logger.warn('"isTrustingAllCertificates" is not available for HTTP.');
+    }
+
     return {};
   }
   // https case: get certificate options

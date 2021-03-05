@@ -125,7 +125,10 @@ describe('OAuth flows', () => {
     expect(response.status).toBe(200);
   }, 60000);
 
-  it('ClientCertificate: Fetches the certificate and uses it',async ()=>{
+  xit('ClientCertificate: Fetches the certificate and uses it',async ()=>{
+    process.env.HTTPS_PROXY = 'http://someHost:1234'
+    process.env.NO_PROXY = 'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token'
+
     const destination = await getDestination('CC8-HTTP-CERT');
     expect(destination!.certificates!.length).toBe(1);
     const bps = await BusinessPartner.requestBuilder().getAll().top(5).execute(destination!);

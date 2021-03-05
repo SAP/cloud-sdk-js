@@ -99,6 +99,29 @@ describe('GetByKeyRequestBuilder', () => {
     });
   });
 
+  describe('executeRaw', () => {
+    it('returns request and raw response', async () => {
+      const entityData = createOriginalTestEntityData1();
+      const expected = createTestEntity(entityData);
+
+      mockGetRequest({
+        path: testEntityResourcePath(
+          expected.keyPropertyGuid,
+          expected.keyPropertyString
+        ),
+        responseBody: { d: entityData }
+      });
+
+      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+        KeyPropertyGuid: expected.keyPropertyGuid,
+        KeyPropertyString: expected.keyPropertyString
+      }).executeRaw(defaultDestination);
+      expect(actual.response.data.d).toEqual(entityData);
+      expect(actual.request.method).toBe('get');
+      expect(actual.request.baseURL).toBe(defaultDestination.url);
+    });
+  });
+
   it('throws a useful error when request execution fails', async () => {
     nock(/.*/).get(/.*/).reply(500);
 

@@ -68,9 +68,8 @@ export abstract class GetByKeyRequestBuilder<
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT> {
-    return this.build(destination, options)
-      .then(request => request.execute())
-      .then(response =>
+    return this.executeRaw(destination, options)
+      .then(({ response }) =>
         this.entityDeserializer.deserializeEntity(
           this.dataAccessor.getSingleResult(response.data),
           this._entityConstructor,

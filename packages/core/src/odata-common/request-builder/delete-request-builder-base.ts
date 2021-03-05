@@ -8,6 +8,7 @@ import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataDeleteRequestConfig } from '../request';
 import type { ODataUri } from '../uri-conversion';
 import type { FieldType } from '../selectable';
+import { HttpRequestAndResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
@@ -66,15 +67,27 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<void> {
-    return (
-      this.build(destination, options)
-        .then(request => request.execute())
+    return this.executeRaw(destination, options)
         // Transform response to void
         .then(() => Promise.resolve())
         .catch(error => {
           throw new ErrorWithCause('OData delete request failed!', error);
-        })
-    );
+        });
+  }
+
+  /**
+   * Execute request and return the request and the raw response.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   */
+  async executeRaw(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<HttpRequestAndResponse>{
+    return this.build(destination, options)
+      .then(request => request.executeRaw());
   }
 
   abstract setVersionIdentifier(eTag: string): this;

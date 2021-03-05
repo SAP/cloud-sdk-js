@@ -11,6 +11,7 @@ import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
 import type { Link } from '../selectable';
+import { HttpRequestAndResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -88,9 +89,8 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT> {
-    return this.build(destination, options)
-      .then(request => request.execute())
-      .then(response =>
+    return this.executeRaw(destination, options)
+      .then(({ response }) =>
         this.deserializer.deserializeEntity(
           this.responseDataAccessor.getSingleResult(response.data),
           this._entityConstructor,
@@ -100,6 +100,21 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
       .catch(error => {
         throw new ErrorWithCause('Create request failed!', error);
       });
+  }
+
+  /**
+   * Execute request and return the request and the raw response.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   */
+  async executeRaw(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<HttpRequestAndResponse>{
+    return this.build(destination, options)
+      .then(request => request.executeRaw());
   }
 }
 

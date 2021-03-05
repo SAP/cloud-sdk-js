@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [generator] When calling a function/action import that has entity return type referenced by multiple entity sets, an exception is thrown instead of deserializing the response with the first entity set.
 
 ## Fixed Issues
 

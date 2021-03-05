@@ -16,5 +16,5 @@ export * from './entity-serializer';
 export * from './payload-value-converter';
 export * from './name-converter';
 export * from './properties-util';
-export * from './response-transformer'
+export * from './response-transformer';
 export { ResponseDataAccessor } from './response-data-accessor';

@@ -1,9 +1,12 @@
-import { defaultDestination, defaultHost } from '../../../test/test-util/request-mocker';
+import nock from 'nock';
+import {
+  defaultDestination,
+  defaultHost
+} from '../../../test/test-util/request-mocker';
 import {
   testFunctionImportMultipleParams,
   testFunctionImportSharedEntityReturnType
 } from '../../../test/test-util/test-services/v4/test-service';
-import nock from 'nock';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
 

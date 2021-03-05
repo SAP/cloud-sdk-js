@@ -122,8 +122,13 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
  * @returns A list of sub responses represented as strings.
  */
 export function splitResponse(response: string, boundary: string): string[] {
-  const parts = response.split(`--${boundary}`).map(part => {part.trim();
-  part+"\r\n"});
+  const parts = response.split(`--${boundary}`).map(part => { 
+    var trimmedPart = part.trim();
+    if(trimmedPart.substring(trimmedPart.length-23, trimmedPart.length-4).localeCompare("dataserviceversion:") == 0){
+      trimmedPart += '\r\n';
+    }
+    return trimmedPart;
+  });
 
   if (parts.length >= 3) {
     return parts.slice(1, parts.length - 1);

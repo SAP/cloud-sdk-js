@@ -323,6 +323,8 @@ describe('batch response parser', () => {
         'Content-Length: 0',
         'dataserviceversion: 2.0',
         '',
+        '{"valid": "json"}',
+        '',
         '',
         '--3B17E95920A7FAF8BCB7495D043515001',
         'Content-Type: application/http',

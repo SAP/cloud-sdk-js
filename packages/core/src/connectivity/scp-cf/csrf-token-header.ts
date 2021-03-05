@@ -8,6 +8,7 @@ import {
 import { AxiosError } from 'axios';
 import { HttpRequestConfig, executeHttpRequest } from '../../http-client';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
+import { removeTrailingSlashes } from '../../odata-common/remove-slashes';
 
 const logger = createLogger({
   package: 'core',
@@ -53,19 +54,30 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
     url: requestConfig.url
   };
 
-  return executeHttpRequest(destination, axiosConfig)
+  // The S/4 does a redirect if the CSRF token is fetched in case the '/' is not in the URL.
+  // TODO: remove once https://github.com/axios/axios/issues/3369 is really fixed. Issue is closed but problem stays.
+  return executeHttpRequest(destination, appendSlash(axiosConfig))
     .then(response => response.headers)
-    .catch(error => {
-      if (!error.response) {
-        // TODO: remove once https://github.com/axios/axios/issues/3369 is fixed
-        const retry = axiosWorkaround(error, requestConfig, destination);
-        if (retry) {
-          return retry;
-        }
-        throw new ErrorWithCause('Csrf fetch failed.', error);
-      }
-      return error.response.headers;
+    .catch(e1 => {
+      logger.error(new ErrorWithCause('Initial try to fetch CSRF token failed - retry without slash at ',e1));
+      return executeHttpRequest(destination, removeSlash(axiosConfig)).then(response=>response.headers).catch(e2=>{
+throw new ErrorWithCause('Also second try to fetch SRF token failed - No CSRF token fetched.',e2);
+});
     });
+}
+
+function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig{
+  if(!requestConfig.url!.endsWith('/')){
+    requestConfig.url = `${requestConfig.url}/`;
+  }
+  return requestConfig;
+}
+
+function removeSlash(requestConfig: HttpRequestConfig): HttpRequestConfig{
+  if(requestConfig.url!.endsWith('/')){
+    requestConfig.url = removeTrailingSlashes(requestConfig.url!);
+  }
+  return requestConfig;
 }
 
 function axiosWorkaround<T extends HttpRequestConfig>(

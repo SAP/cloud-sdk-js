@@ -1,9 +1,5 @@
 import { $Refs } from '@apidevtools/swagger-parser';
-import {
-  camelCase,
-  filterDuplicatesRight,
-  partition
-} from '@sap-cloud-sdk/util';
+import { filterDuplicatesRight, partition } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { OpenApiParameter } from '../openapi-types';
 import { resolveObject } from './refs';
@@ -18,17 +14,36 @@ import { getType } from './type-mapping';
 export function parseParameters(
   operation: OpenAPIV3.OperationObject,
   refs: $Refs
+): {
+  pathParameters: OpenApiParameter[];
+  queryParameters: OpenApiParameter[];
+} {
+  const parameters = getRelevantParameters(operation, refs);
+  const [pathParameters, queryParameters] = partition(
+    parameters,
+    parameter => parameter.in === 'path'
+  );
+  // TODO: don't forget url encoding
+  // TODO make path parameters uniquely named, when camel case, body + queryParameters cannot be used
+  return { pathParameters, queryParameters };
+}
+
+function getRelevantParameters(
+  operation: OpenAPIV3.OperationObject,
+  refs: $Refs
 ): OpenApiParameter[] {
   // TODO: What if this is a reference? What does OpenApi do?
   // TODO: What about one of and other operations?
   let parameters =
     operation.parameters?.map(param => resolveObject(param, refs)) || [];
   parameters = filterDuplicateParams(parameters);
-  parameters = reorderParameters(parameters);
-  parameters = renameEquallyNamedParams(parameters);
+  // parameters = reorderParameters(parameters);
+  // parameters = renameEquallyNamedParams(parameters);
+
   return parameters.map(param => ({
     ...param,
-    name: camelCase(param.name),
+    // TODO: not necessary?
+    // name: camelCase(param.name),
     // TODO: Check whether types are correct here and whether we can use union types here.
     type: parseType(param, refs)
   }));
@@ -61,6 +76,11 @@ function enumAsUnionType(
   throw new Error(`Cannot parse enum with original type: ${originalType}.`);
 }
 
+/**
+ * Filter parameters, that came in hierarchically.
+ * @param parameters Parameters to filter.
+ * @returns Filtered parameters
+ */
 export function filterDuplicateParams(
   parameters: OpenAPIV3.ParameterObject[]
 ): OpenAPIV3.ParameterObject[] {
@@ -77,6 +97,7 @@ function reorderParameters(
   return [...required, ...optional];
 }
 
+// TODO: Cannot happen anymore
 export function renameEquallyNamedParams(
   parameters: OpenAPIV3.ParameterObject[]
 ): OpenAPIV3.ParameterObject[] {

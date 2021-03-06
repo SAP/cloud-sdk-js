@@ -75,6 +75,7 @@ async function generateSDKSources(
   openApiDocument: OpenApiDocument,
   options: GeneratorOptions
 ): Promise<void> {
+  // TODO: This isn't really "request builder" anymore
   logger.info(`Generating request builder in ${serviceDir}.`);
   // TODO: what about overwrite?
   await createApis(serviceDir, openApiDocument);
@@ -214,15 +215,14 @@ function parseServiceName(filePath: string): string {
  * @param filePath The filepath where the service to generate is located.
  * @param options  Options to configure generation.
  * @param vdmMapping The vdmMapping for the OpenAPI generation.
- * @param uniqueServiceName The uniqueServiceName to be used.
+ * @param serviceName The unique service name to be used.
  */
 async function generateFromFile(
   filePath: string,
   options: GeneratorOptions,
   vdmMapping: VdmMapping,
-  uniqueServiceName: string
+  serviceName: string
 ): Promise<void> {
-  const serviceName = uniqueServiceName;
   const serviceDir = resolve(options.outputDir, serviceName);
 
   let openApiDocument;
@@ -254,7 +254,7 @@ async function generateFromFile(
     convertedInputFilePath,
     JSON.stringify(openApiDocument, null, 2)
   );
-  await generateOpenApiService(convertedInputFilePath, serviceDir);
+  // await generateOpenApiService(convertedInputFilePath, serviceDir);
   await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
 }
 

@@ -1,4 +1,4 @@
-import { codeBlock, partition, pascalCase, unique } from '@sap-cloud-sdk/util';
+import { codeBlock, pascalCase, unique } from '@sap-cloud-sdk/util';
 import { OpenApiOperation, SchemaMetadata } from '../openapi-types';
 
 /**
@@ -18,7 +18,6 @@ export function apiFile(
   const requestBodyTypes = getRequestBodyReferenceTypes(operations);
   return codeBlock`
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { ${apiNamePascal}Api } from './openapi/api';
 ${
   requestBodyTypes
     ? `import { ${requestBodyTypes} } from './openapi/model';`
@@ -68,27 +67,25 @@ function getOperations(
  * @returns The operation as a string.
  */
 function getOperation(operation: OpenApiOperation, apiName: string): string {
-  const params = getParams(operation);
-  const argsQuestionMark = params.every(param => !param.required) ? '?' : '';
-  const paramsArg = params.length
-    ? codeBlock`args${argsQuestionMark}: {
-  ${params
-    .map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`)
-    .join(',\n')}
-}`
-    : '';
-  const requestBuilderParams = [
-    `${apiName}Api`,
-    `'${operation.operationId}'`,
-    ...params.map(param => `args${argsQuestionMark}.${param.name}`)
-  ];
+  // const params = getParams(operation);
+  //   const argsQuestionMark = params.every(param => !param.required) ? '?' : '';
+  //   const paramsArg = params.length
+  //     ? codeBlock`args${argsQuestionMark}: {
+  //   ${params
+  //     .map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`)
+  //     .join(',\n')}
+  // }`
+  //     : '';
 
+  const requestBuilderParams = [
+    `'${operation.method}'`,
+    `'${operation.path}'`,
+    getRequestBuilderParams(operation)
+  ];
   return codeBlock`
-${
-    operation.operationId
-}: (${paramsArg}) => new OpenApiRequestBuilder<${apiName}Api, '${
-    operation.operationId
-  }'>(
+${operation.operationId}: (${getSignatureParams(
+    operation
+  )}) => new OpenApiRequestBuilder(
   ${requestBuilderParams.join(',\n')}
 )`;
 }
@@ -99,26 +96,84 @@ interface Parameter {
   required?: boolean;
 }
 
-function getParams(operation: OpenApiOperation): Parameter[] {
-  const parameters = [
-    ...operation.parameters,
-    ...getRequestBodyParams(operation)
-  ];
+// function getParams(operation: OpenApiOperation): Parameter[] {
+//   const parameters = [
+//     ...operation.parameters,
+//     ...getRequestBodyParams(operation)
+//   ];
 
-  const [required, optional] = partition(parameters, param => !!param.required);
-  return [...required, ...optional];
+//   const [required, optional] = partition(parameters, param => !!param.required);
+//   return [...required, ...optional];
+// }
+
+function getSignatureRequestBodyParam(
+  operation: OpenApiOperation
+): string | undefined {
+  if (operation.requestBody) {
+    return `${operation.requestBody.parameterName}: ${getParameterTypeString(
+      operation.requestBody.parameterType
+    )}${operation.requestBody.required ? ' | undefined' : ''}`;
+  }
 }
 
-function getRequestBodyParams(operation: OpenApiOperation): Parameter[] {
-  return operation.requestBody
-    ? [
-        {
-          name: operation.requestBody.parameterName,
-          type: getParameterTypeString(operation.requestBody.parameterType),
-          required: operation.requestBody.required
-        }
-      ]
-    : [];
+function getSignatureQueryParams(
+  operation: OpenApiOperation
+): string | undefined {
+  if (operation.queryParameters) {
+    const allOptional = operation.queryParameters.every(
+      param => !param.required
+    );
+    const queryParams = operation.queryParameters
+      .map(
+        param => `'${param.name}'${param.required ? '' : '?'}: ${param.type}`
+      )
+      .join(',\n');
+
+    return `queryParameters${allOptional ? '?' : ''}: {${queryParams}}`;
+  }
+}
+
+function getSignaturePathParams(
+  operation: OpenApiOperation
+): string | undefined {
+  if (operation.pathParameters) {
+    return operation.pathParameters
+      .map(param => `${param.name}: string`)
+      .join(', ');
+  }
+}
+
+function getSignatureParams(operation: OpenApiOperation): string {
+  const pathParams = getSignaturePathParams(operation);
+  const requestBodyParam = getSignatureRequestBodyParam(operation);
+  const queryParams = getSignatureQueryParams(operation);
+
+  return [pathParams, requestBodyParam, queryParams]
+    .filter(params => params)
+    .join(', ');
+}
+
+function getRequestBuilderParams(
+  operation: OpenApiOperation
+): string | undefined {
+  const pathParams = operation.pathParameters
+    .map(param => param.name)
+    .join(', ');
+  const params: string[] = [];
+  if (pathParams) {
+    params.push(`pathParameters: [${pathParams}]`);
+  }
+  if (operation.requestBody) {
+    params.push(operation.requestBody.parameterName);
+  }
+  if (operation.queryParameters.length) {
+    params.push('queryParameters');
+  }
+  if (params.length) {
+    return codeBlock`{
+      ${params.join(',\n')}
+    }`;
+  }
 }
 
 function getParameterTypeString(schemaMetadata: SchemaMetadata): string {

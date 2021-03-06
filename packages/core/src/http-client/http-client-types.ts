@@ -7,7 +7,7 @@ export interface DestinationHttpRequestConfig {
   httpsAgent?: http.Agent;
 }
 
-type Method =
+export type Method =
   | 'get'
   | 'GET'
   | 'delete'

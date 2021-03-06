@@ -4,26 +4,23 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
-import { DefaultApi } from './openapi/api';
 import { TestEntity } from './openapi/model';
 
 export const SwaggerYamlServiceDefaultApi = {
-  postEntity: (args: {
-    pathParam: string,
-    queryParam?: string
-  }) => new OpenApiRequestBuilder<DefaultApi, 'postEntity'>(
-    DefaultApi,
-    'postEntity',
-    args.pathParam,
-    args.queryParam
+  postEntity: (pathParam: string, queryParameters?: {'queryParam'?: string}) => new OpenApiRequestBuilder(
+    'post',
+    '/entities/{pathParam}',
+    {
+          pathParameters: [pathParam],
+          queryParameters
+        }
   ),
-  patchEntity: (args: {
-    pathParam: string,
-    body?: TestEntity
-  }) => new OpenApiRequestBuilder<DefaultApi, 'patchEntity'>(
-    DefaultApi,
-    'patchEntity',
-    args.pathParam,
-    args.body
+  patchEntity: (pathParam: string, body: TestEntity, queryParameters?: {}) => new OpenApiRequestBuilder(
+    'patch',
+    '/entities/{pathParam}',
+    {
+          pathParameters: [pathParam],
+          body
+        }
   )
 };

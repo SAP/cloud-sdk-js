@@ -4,16 +4,17 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
-import { DefaultApi } from './openapi/api';
 
 
 export const TestServiceDefaultApi = {
-  noTag: () => new OpenApiRequestBuilder<DefaultApi, 'noTag'>(
-    DefaultApi,
-    'noTag'
+  noTag: (queryParameters?: {}) => new OpenApiRequestBuilder(
+    'get',
+    '/test-cases/default-tag',
+    
   ),
-  defaultTag: () => new OpenApiRequestBuilder<DefaultApi, 'defaultTag'>(
-    DefaultApi,
-    'defaultTag'
+  defaultTag: (queryParameters?: {}) => new OpenApiRequestBuilder(
+    'post',
+    '/test-cases/default-tag',
+    
   )
 };

@@ -4,68 +4,61 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
-import { EntityApi } from './openapi/api';
 import { TestEntity } from './openapi/model';
 
 export const TestServiceEntityApi = {
-  getAllEntities: (args?: {
-    stringParameter?: string,
-    integerParameter?: number,
-    dollarParameter?: string,
-    dotParameter?: string,
-    enumStringParameter?: 'value1' | 'value2',
-    enumInt32Parameter?: 1 | 2,
-    enumDoubleParameter?: 1 | 2,
-    enumBooleanParameter?: boolean
-  }) => new OpenApiRequestBuilder<EntityApi, 'getAllEntities'>(
-    EntityApi,
-    'getAllEntities',
-    args?.stringParameter,
-    args?.integerParameter,
-    args?.dollarParameter,
-    args?.dotParameter,
-    args?.enumStringParameter,
-    args?.enumInt32Parameter,
-    args?.enumDoubleParameter,
-    args?.enumBooleanParameter
+  getAllEntities: (queryParameters?: {'stringParameter'?: string,
+  'integerParameter'?: number,
+  '$dollarParameter'?: string,
+  'dot.parameter'?: string,
+  'enumStringParameter'?: 'value1' | 'value2',
+  'enumInt32Parameter'?: 1 | 2,
+  'enumDoubleParameter'?: 1 | 2,
+  'enumBooleanParameter'?: boolean}) => new OpenApiRequestBuilder(
+    'get',
+    '/entities',
+    {
+          queryParameters
+        }
   ),
-  updateEntityWithPut: (args?: {
-    body?: TestEntity[]
-  }) => new OpenApiRequestBuilder<EntityApi, 'updateEntityWithPut'>(
-    EntityApi,
-    'updateEntityWithPut',
-    args?.body
+  updateEntityWithPut: (body: TestEntity[], queryParameters?: {}) => new OpenApiRequestBuilder(
+    'put',
+    '/entities',
+    {
+          body
+        }
   ),
-  createEntity: (args?: {
-    body?: TestEntity
-  }) => new OpenApiRequestBuilder<EntityApi, 'createEntity'>(
-    EntityApi,
-    'createEntity',
-    args?.body
+  createEntity: (body: TestEntity, queryParameters?: {}) => new OpenApiRequestBuilder(
+    'post',
+    '/entities',
+    {
+          body
+        }
   ),
-  updateEntity: (args?: {
-    body?: Record<string, any>
-  }) => new OpenApiRequestBuilder<EntityApi, 'updateEntity'>(
-    EntityApi,
-    'updateEntity',
-    args?.body
+  updateEntity: (body: Record<string, any>, queryParameters?: {}) => new OpenApiRequestBuilder(
+    'patch',
+    '/entities',
+    {
+          body
+        }
   ),
-  deleteEntity: (args?: {
-    body?: string[]
-  }) => new OpenApiRequestBuilder<EntityApi, 'deleteEntity'>(
-    EntityApi,
-    'deleteEntity',
-    args?.body
+  deleteEntity: (body: string[], queryParameters?: {}) => new OpenApiRequestBuilder(
+    'delete',
+    '/entities',
+    {
+          body
+        }
   ),
-  getEntityByKey: (args: {
-    entityId: string
-  }) => new OpenApiRequestBuilder<EntityApi, 'getEntityByKey'>(
-    EntityApi,
-    'getEntityByKey',
-    args.entityId
+  getEntityByKey: (entityId: string, queryParameters?: {}) => new OpenApiRequestBuilder(
+    'get',
+    '/entities/{entityId}',
+    {
+          pathParameters: [entityId]
+        }
   ),
-  countEntities: () => new OpenApiRequestBuilder<EntityApi, 'countEntities'>(
-    EntityApi,
-    'countEntities'
+  countEntities: (queryParameters?: {}) => new OpenApiRequestBuilder(
+    'get',
+    '/entities/count',
+    
   )
 };

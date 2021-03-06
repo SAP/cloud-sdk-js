@@ -20,7 +20,7 @@ export function parseOperation(
     path,
     method,
     requestBody,
-    parameters,
+    ...parameters,
     operationId: operation.operationId!,
     tags: operation.tags!
   };

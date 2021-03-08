@@ -105,9 +105,14 @@ function getTags(
   originalTags: string[] | undefined,
   globalTag: string
 ): string[] {
-  return extensionApiName ? [extensionApiName]
+  const tags =  extensionApiName ? [extensionApiName]
     : originalTags?.length ? originalTags
       : [globalTag];
+  return tags.map(tag => removeApiSuffix(camelCase(tag)));
+}
+
+function removeApiSuffix(tag: string): string{
+  return tag.endsWith('Api')? tag.slice(0, -3): tag;
 }
 
 /**

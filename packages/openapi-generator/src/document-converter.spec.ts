@@ -153,6 +153,54 @@ describe('convertDocWithApiNameTag', () => {
       }
     });
   });
+
+  it('should remove api suffix', () => {
+    const originalSpec = {
+      ...emptyApiDefinition,
+      tags: [{ name: 'tagApi' }, { name: 'tagapi' }, { name: 'tag-api' }, { name: 'tag api' }],
+      paths: {
+        '/path': {
+          get: {
+            tags: ['tagApi']
+          },
+          post: {
+            tags: ['tagapi']
+          },
+          patch: {
+            tags: ['tag-api']
+          },
+          put: {
+            tags: ['tag api']
+          }
+        }
+      }
+    };
+    const newSpec = convertDocWithApiNameTag(originalSpec);
+
+    expect(newSpec).toEqual({
+      ...emptyApiDefinition,
+      tags: [
+        { name: 'tag' },
+        { name: 'tagapi' }
+      ],
+      paths: {
+        '/path': {
+          get: {
+            tags: ['tag']
+          },
+          post: {
+            tags: ['tagapi']
+          },
+          patch: {
+            tags: ['tag']
+          },
+          put: {
+            tags: ['tag']
+          }
+        }
+      }
+    });
+  });
 });
 
 describe('convertDocToOpenApiV3', () => {

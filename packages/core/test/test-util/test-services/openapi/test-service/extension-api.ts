@@ -15,5 +15,17 @@ export const TestServiceExtensionApi = {
   nicePostFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'nicePostFunction'>(
     ExtensionApi,
     'nicePostFunction'
+  ),
+  getTestCasesExtensionWithApiSuffix: () => new OpenApiRequestBuilder<ExtensionApi, 'getTestCasesExtensionWithApiSuffix'>(
+    ExtensionApi,
+    'getTestCasesExtensionWithApiSuffix'
+  ),
+  getTestCasesExtensionWithSpaceApiSuffix: () => new OpenApiRequestBuilder<ExtensionApi, 'getTestCasesExtensionWithSpaceApiSuffix'>(
+    ExtensionApi,
+    'getTestCasesExtensionWithSpaceApiSuffix'
+  ),
+  getTestCasesExtensionWithHyphenApiSuffix: () => new OpenApiRequestBuilder<ExtensionApi, 'getTestCasesExtensionWithHyphenApiSuffix'>(
+    ExtensionApi,
+    'getTestCasesExtensionWithHyphenApiSuffix'
   )
 };

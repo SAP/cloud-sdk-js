@@ -93,6 +93,111 @@ var ExtensionApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getTestCasesExtensionWithApiSuffix: function (options) {
+            if (options === void 0) { options = {}; }
+            return __awaiter(_this, void 0, void 0, function () {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
+                return __generator(this, function (_a) {
+                    localVarPath = "/test-cases/extension/with-Api-suffix";
+                    localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                    if (configuration) {
+                        baseOptions = configuration.baseOptions;
+                    }
+                    localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                    localVarHeaderParameter = {};
+                    localVarQueryParameter = {};
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
+                    for (key in localVarQueryParameter) {
+                        queryParameters.set(key, localVarQueryParameter[key]);
+                    }
+                    for (key in options.query) {
+                        queryParameters.set(key, options.query[key]);
+                    }
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+                    headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                    localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                    return [2 /*return*/, {
+                            url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                            options: localVarRequestOptions,
+                        }];
+                });
+            });
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestCasesExtensionWithHyphenApiSuffix: function (options) {
+            if (options === void 0) { options = {}; }
+            return __awaiter(_this, void 0, void 0, function () {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
+                return __generator(this, function (_a) {
+                    localVarPath = "/test-cases/extension/with-hyphen-api-suffix";
+                    localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                    if (configuration) {
+                        baseOptions = configuration.baseOptions;
+                    }
+                    localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                    localVarHeaderParameter = {};
+                    localVarQueryParameter = {};
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
+                    for (key in localVarQueryParameter) {
+                        queryParameters.set(key, localVarQueryParameter[key]);
+                    }
+                    for (key in options.query) {
+                        queryParameters.set(key, options.query[key]);
+                    }
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+                    headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                    localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                    return [2 /*return*/, {
+                            url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                            options: localVarRequestOptions,
+                        }];
+                });
+            });
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestCasesExtensionWithSpaceApiSuffix: function (options) {
+            if (options === void 0) { options = {}; }
+            return __awaiter(_this, void 0, void 0, function () {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, queryParameters, key, key, headersFromBaseOptions;
+                return __generator(this, function (_a) {
+                    localVarPath = "/test-cases/extension/with-space-api-suffix";
+                    localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                    if (configuration) {
+                        baseOptions = configuration.baseOptions;
+                    }
+                    localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                    localVarHeaderParameter = {};
+                    localVarQueryParameter = {};
+                    queryParameters = new URLSearchParams(localVarUrlObj.search);
+                    for (key in localVarQueryParameter) {
+                        queryParameters.set(key, localVarQueryParameter[key]);
+                    }
+                    for (key in options.query) {
+                        queryParameters.set(key, options.query[key]);
+                    }
+                    localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+                    headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                    localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                    return [2 /*return*/, {
+                            url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                            options: localVarRequestOptions,
+                        }];
+                });
+            });
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         niceGetFunction: function (options) {
             if (options === void 0) { options = {}; }
             return __awaiter(_this, void 0, void 0, function () {
@@ -172,6 +277,75 @@ var ExtensionApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getTestCasesExtensionWithApiSuffix: function (options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, exports.ExtensionApiAxiosParamCreator(configuration).getTestCasesExtensionWithApiSuffix(options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
+            });
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestCasesExtensionWithHyphenApiSuffix: function (options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, exports.ExtensionApiAxiosParamCreator(configuration).getTestCasesExtensionWithHyphenApiSuffix(options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
+            });
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestCasesExtensionWithSpaceApiSuffix: function (options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, exports.ExtensionApiAxiosParamCreator(configuration).getTestCasesExtensionWithSpaceApiSuffix(options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
+            });
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         niceGetFunction: function (options) {
             return __awaiter(this, void 0, void 0, function () {
                 var localVarAxiosArgs;
@@ -227,6 +401,30 @@ var ExtensionApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getTestCasesExtensionWithApiSuffix: function (options) {
+            return exports.ExtensionApiFp(configuration).getTestCasesExtensionWithApiSuffix(options).then(function (request) { return request(axios, basePath); });
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestCasesExtensionWithHyphenApiSuffix: function (options) {
+            return exports.ExtensionApiFp(configuration).getTestCasesExtensionWithHyphenApiSuffix(options).then(function (request) { return request(axios, basePath); });
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestCasesExtensionWithSpaceApiSuffix: function (options) {
+            return exports.ExtensionApiFp(configuration).getTestCasesExtensionWithSpaceApiSuffix(options).then(function (request) { return request(axios, basePath); });
+        },
+        /**
+         *
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         niceGetFunction: function (options) {
             return exports.ExtensionApiFp(configuration).niceGetFunction(options).then(function (request) { return request(axios, basePath); });
         },
@@ -252,6 +450,36 @@ var ExtensionApi = /** @class */ (function (_super) {
     function ExtensionApi() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ExtensionApi
+     */
+    ExtensionApi.prototype.getTestCasesExtensionWithApiSuffix = function (options) {
+        var _this = this;
+        return exports.ExtensionApiFp(this.configuration).getTestCasesExtensionWithApiSuffix(options).then(function (request) { return request(_this.axios, _this.basePath); });
+    };
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ExtensionApi
+     */
+    ExtensionApi.prototype.getTestCasesExtensionWithHyphenApiSuffix = function (options) {
+        var _this = this;
+        return exports.ExtensionApiFp(this.configuration).getTestCasesExtensionWithHyphenApiSuffix(options).then(function (request) { return request(_this.axios, _this.basePath); });
+    };
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ExtensionApi
+     */
+    ExtensionApi.prototype.getTestCasesExtensionWithSpaceApiSuffix = function (options) {
+        var _this = this;
+        return exports.ExtensionApiFp(this.configuration).getTestCasesExtensionWithSpaceApiSuffix(options).then(function (request) { return request(_this.axios, _this.basePath); });
+    };
     /**
      *
      * @param {*} [options] Override http request option.

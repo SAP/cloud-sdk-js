@@ -14,13 +14,13 @@
       "name": "entity"
     },
     {
-      "name": "test case"
+      "name": "testCase"
     },
     {
-      "name": "tag.dot"
+      "name": "tagDot"
     },
     {
-      "name": "tag space"
+      "name": "tagSpace"
     },
     {
       "name": "default"
@@ -354,7 +354,7 @@
       ],
       "get": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "operationId": "testCaseGetRequiredParameters",
         "parameters": [
@@ -401,7 +401,7 @@
       },
       "post": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "operationId": "testCasePostRequiredParameters",
         "requestBody": {
@@ -442,7 +442,7 @@
     "/test-cases/parameters/{duplicateParam}": {
       "get": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "operationId": "testCaseGetDuplicateParameters",
         "parameters": [
@@ -473,7 +473,7 @@
     "/test-cases/reserved-words": {
       "get": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "operationId": "_export",
         "responses": {
@@ -484,7 +484,7 @@
       },
       "post": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "operationId": "_class",
         "responses": {
@@ -497,7 +497,7 @@
     "/test-cases/no-operation-id": {
       "get": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "responses": {
           "201": {
@@ -510,7 +510,7 @@
     "/test-cases/duplicate-operation-ids": {
       "get": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "operationId": "duplicateOperationId",
         "responses": {
@@ -521,7 +521,7 @@
       },
       "post": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "operationId": "duplicateOperationId3",
         "responses": {
@@ -532,7 +532,7 @@
       },
       "put": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "operationId": "duplicateOperationId2",
         "responses": {
@@ -543,7 +543,7 @@
       },
       "patch": {
         "tags": [
-          "test case"
+          "testCase"
         ],
         "operationId": "duplicateOperationId1",
         "responses": {
@@ -557,7 +557,7 @@
       "get": {
         "operationId": "tagWithDot",
         "tags": [
-          "tag.dot"
+          "tagDot"
         ],
         "responses": {
           "201": {
@@ -568,7 +568,7 @@
       "post": {
         "operationId": "tagWithSpace",
         "tags": [
-          "tag space"
+          "tagSpace"
         ],
         "responses": {
           "201": {
@@ -606,7 +606,7 @@
       "get": {
         "x-sap-cloud-sdk-operation-name": "niceGetFunction",
         "responses": {
-          "201": {
+          "204": {
             "description": "no content"
           }
         },
@@ -622,10 +622,52 @@
         ],
         "operationId": "nicePostFunction",
         "responses": {
-          "201": {
+          "204": {
             "description": "no content"
           }
         }
+      }
+    },
+    "/test-cases/extension/with-Api-suffix": {
+      "x-sap-cloud-sdk-api-name": "extensionApi",
+      "get": {
+        "responses": {
+          "204": {
+            "description": "no content"
+          }
+        },
+        "operationId": "getTestCasesExtensionWithApiSuffix",
+        "tags": [
+          "extension"
+        ]
+      }
+    },
+    "/test-cases/extension/with-space-api-suffix": {
+      "x-sap-cloud-sdk-api-name": "extension api",
+      "get": {
+        "responses": {
+          "204": {
+            "description": "no content"
+          }
+        },
+        "operationId": "getTestCasesExtensionWithSpaceApiSuffix",
+        "tags": [
+          "extension"
+        ]
+      }
+    },
+    "/test-cases/extension/with-hyphen-api-suffix": {
+      "x-sap-cloud-sdk-api-name": "extension-api",
+      "get": {
+        "responses": {
+          "204": {
+            "description": "no content"
+          }
+        },
+        "operationId": "getTestCasesExtensionWithHyphenApiSuffix",
+        "tags": [
+          "extension"
+        ]
       }
     }
   },

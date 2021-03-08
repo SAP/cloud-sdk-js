@@ -596,7 +596,7 @@
       "get": {
         "x-sap-cloud-sdk-operation-name": "niceGetFunction",
         "responses": {
-          "201": {
+          "204": {
             "description": "no content"
           }
         }
@@ -608,7 +608,37 @@
         ],
         "operationId": "testCasesExtensionPost",
         "responses": {
-          "201": {
+          "204": {
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/test-cases/extension/with-Api-suffix": {
+      "x-sap-cloud-sdk-api-name": "extensionApi",
+      "get": {
+        "responses": {
+          "204": {
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/test-cases/extension/with-space-api-suffix": {
+      "x-sap-cloud-sdk-api-name": "extension api",
+      "get": {
+        "responses": {
+          "204": {
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/test-cases/extension/with-hyphen-api-suffix": {
+      "x-sap-cloud-sdk-api-name": "extension-api",
+      "get": {
+        "responses": {
+          "204": {
             "description": "no content"
           }
         }

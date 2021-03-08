@@ -22,6 +22,24 @@ export declare const ExtensionApiAxiosParamCreator: (configuration?: Configurati
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
+    getTestCasesExtensionWithApiSuffix: (options?: any) => Promise<RequestArgs>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getTestCasesExtensionWithHyphenApiSuffix: (options?: any) => Promise<RequestArgs>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getTestCasesExtensionWithSpaceApiSuffix: (options?: any) => Promise<RequestArgs>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
     niceGetFunction: (options?: any) => Promise<RequestArgs>;
     /**
      *
@@ -35,6 +53,24 @@ export declare const ExtensionApiAxiosParamCreator: (configuration?: Configurati
  * @export
  */
 export declare const ExtensionApiFp: (configuration?: Configuration | undefined) => {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getTestCasesExtensionWithApiSuffix(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getTestCasesExtensionWithHyphenApiSuffix(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getTestCasesExtensionWithSpaceApiSuffix(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     /**
      *
      * @param {*} [options] Override http request option.
@@ -58,6 +94,24 @@ export declare const ExtensionApiFactory: (configuration?: Configuration | undef
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
+    getTestCasesExtensionWithApiSuffix(options?: any): AxiosPromise<void>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getTestCasesExtensionWithHyphenApiSuffix(options?: any): AxiosPromise<void>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getTestCasesExtensionWithSpaceApiSuffix(options?: any): AxiosPromise<void>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
     niceGetFunction(options?: any): AxiosPromise<void>;
     /**
      *
@@ -73,6 +127,27 @@ export declare const ExtensionApiFactory: (configuration?: Configuration | undef
  * @extends {BaseAPI}
  */
 export declare class ExtensionApi extends BaseAPI {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ExtensionApi
+     */
+    getTestCasesExtensionWithApiSuffix(options?: any): Promise<import("axios").AxiosResponse<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ExtensionApi
+     */
+    getTestCasesExtensionWithHyphenApiSuffix(options?: any): Promise<import("axios").AxiosResponse<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ExtensionApi
+     */
+    getTestCasesExtensionWithSpaceApiSuffix(options?: any): Promise<import("axios").AxiosResponse<void>>;
     /**
      *
      * @param {*} [options] Override http request option.

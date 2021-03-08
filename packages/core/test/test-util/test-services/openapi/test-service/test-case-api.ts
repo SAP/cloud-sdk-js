@@ -51,6 +51,14 @@ export const TestServiceTestCaseApi = {
     args.duplicateParam,
     args.duplicateParam2
   ),
+  _export: () => new OpenApiRequestBuilder<TestCaseApi, '_export'>(
+    TestCaseApi,
+    '_export'
+  ),
+  _class: () => new OpenApiRequestBuilder<TestCaseApi, '_class'>(
+    TestCaseApi,
+    '_class'
+  ),
   getTestCasesNoOperationId: () => new OpenApiRequestBuilder<TestCaseApi, 'getTestCasesNoOperationId'>(
     TestCaseApi,
     'getTestCasesNoOperationId'

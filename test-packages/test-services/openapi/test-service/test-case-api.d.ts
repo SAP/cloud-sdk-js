@@ -22,6 +22,8 @@ export declare const TestServiceTestCaseApi: {
         duplicateParam: string;
         duplicateParam2: string;
     }) => OpenApiRequestBuilder<TestCaseApi, "testCaseGetDuplicateParameters">;
+    _export: () => OpenApiRequestBuilder<TestCaseApi, "_export">;
+    _class: () => OpenApiRequestBuilder<TestCaseApi, "_class">;
     getTestCasesNoOperationId: () => OpenApiRequestBuilder<TestCaseApi, "getTestCasesNoOperationId">;
     duplicateOperationId: () => OpenApiRequestBuilder<TestCaseApi, "duplicateOperationId">;
     duplicateOperationId2: () => OpenApiRequestBuilder<TestCaseApi, "duplicateOperationId2">;

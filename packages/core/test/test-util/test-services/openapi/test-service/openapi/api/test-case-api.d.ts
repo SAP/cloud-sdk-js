@@ -23,6 +23,18 @@ export declare const TestCaseApiAxiosParamCreator: (configuration?: Configuratio
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
+    _class: (options?: any) => Promise<RequestArgs>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _export: (options?: any) => Promise<RequestArgs>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
     duplicateOperationId: (options?: any) => Promise<RequestArgs>;
     /**
      *
@@ -86,6 +98,18 @@ export declare const TestCaseApiAxiosParamCreator: (configuration?: Configuratio
  * @export
  */
 export declare const TestCaseApiFp: (configuration?: Configuration | undefined) => {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _class(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _export(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
     /**
      *
      * @param {*} [options] Override http request option.
@@ -159,6 +183,18 @@ export declare const TestCaseApiFactory: (configuration?: Configuration | undefi
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
+    _class(options?: any): AxiosPromise<void>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    _export(options?: any): AxiosPromise<void>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
     duplicateOperationId(options?: any): AxiosPromise<void>;
     /**
      *
@@ -224,6 +260,20 @@ export declare const TestCaseApiFactory: (configuration?: Configuration | undefi
  * @extends {BaseAPI}
  */
 export declare class TestCaseApi extends BaseAPI {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestCaseApi
+     */
+    _class(options?: any): Promise<import("axios").AxiosResponse<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestCaseApi
+     */
+    _export(options?: any): Promise<import("axios").AxiosResponse<void>>;
     /**
      *
      * @param {*} [options] Override http request option.

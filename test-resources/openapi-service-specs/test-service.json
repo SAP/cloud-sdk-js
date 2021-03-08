@@ -464,6 +464,30 @@
         }
       }
     },
+    "/test-cases/reserved-words": {
+      "get": {
+        "tags": [
+          "test case"
+        ],
+        "operationId": "export",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "test case"
+        ],
+        "operationId": "class",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
     "/test-cases/no-operation-id": {
       "get": {
         "tags": [

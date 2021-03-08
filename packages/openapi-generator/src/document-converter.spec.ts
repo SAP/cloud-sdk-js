@@ -415,6 +415,33 @@ describe('convertDocToUniqueOperationIds', () => {
       }
     });
   });
+
+  it('resolve the reserved keywords', () => {
+    const newSpec = convertDocToUniqueOperationIds({
+      ...emptyApiDefinition,
+      paths: {
+        '/path': {
+          get: {
+            operationId: 'class'
+          },
+          post: {
+            operationId: 'export'
+          }
+        }
+      }
+    });
+
+    expect(newSpec.paths).toEqual({
+      '/path': {
+        get: {
+          operationId: '_class'
+        },
+        post: {
+          operationId: '_export'
+        }
+      }
+    });
+  });
 });
 
 describe('getOperationNameFromPatternAndMethod', () => {

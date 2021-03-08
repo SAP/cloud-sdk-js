@@ -119,6 +119,7 @@ export function convertDocToUniqueOperationIds(
   openApiDocument: OpenAPIV3.Document
 ): OpenAPIV3.Document {
   overwriteOperationIdByUsingExtensions(openApiDocument);
+  resolveReservedWords(openApiDocument);
 
   const {
     namedOperations,
@@ -231,8 +232,9 @@ function setUniqueOperationName(
   nameGenerator: UniqueNameGenerator
 ) {
   // TODO: The transformation to camel case only exists to comply with the underlying OpenAPI generator. Remove once the generator is not used anymore.
+  const camelCaseName = reservedWords.find(word => `_${word}` === name)? name: camelCase(name);
   operation.operationId = nameGenerator.generateAndSaveUniqueName(
-    camelCase(name)
+    camelCaseName
   );
 }
 
@@ -305,4 +307,26 @@ interface ExecuteForAllOperationObjectsParam {
   path: string;
   method: Method;
   extensionApiName?: string;
+}
+
+function resolveReservedWords(
+  openApiDocument: OpenAPIV3.Document
+){
+  executeForAllOperationObjects(
+    openApiDocument,
+    (param: ExecuteForAllOperationObjectsParam) => {
+      param.operation.operationId = escapeReservedWords(param.operation.operationId!);
+    }
+  );
+}
+
+const reservedWords: string[] = [
+    // TODO: used by OpenAPI generator, can be removed when switching to own solution.
+    'varLocalPath', 'queryParameters', 'headerParams', 'formParams', 'useFormData', 'varLocalDeferred', 'requestOptions',
+    // Typescript reserved words
+    'abstract', 'await', 'boolean', 'break', 'byte', 'case', 'catch', 'char', 'class', 'const', 'continue', 'debugger', 'default', 'delete', 'do', 'double', 'else', 'enum', 'export', 'extends', 'false', 'final', 'finally', 'float', 'for', 'function', 'goto', 'if', 'implements', 'import', 'in', 'instanceof', 'int', 'interface', 'let', 'long', 'native', 'new', 'null', 'package', 'private', 'protected', 'public', 'return', 'short', 'static', 'super', 'switch', 'synchronized', 'this', 'throw', 'transient', 'true', 'try', 'typeof', 'var', 'void', 'volatile', 'while', 'with', 'yield'
+    ];
+
+function escapeReservedWords(operationName: string): string{
+  return reservedWords.includes(operationName)? `_${operationName}`: operationName;
 }

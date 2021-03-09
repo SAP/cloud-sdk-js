@@ -109,6 +109,8 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
 
   try {
     const boundary = getBoundary(pickValueIgnoreCase(headers, 'content-type'));
+    console.log('headers:');
+    console.log(headers);
     return splitResponse(changeSetResponse, boundary);
   } catch (err) {
     throw new ErrorWithCause('Could not parse change set response.', err);
@@ -125,7 +127,7 @@ export function splitResponse(response: string, boundary: string): string[] {
   const parts = response.split(`--${boundary}`).map(part => {
     let trimmedPart = part.trim();
     if(trimmedPart.includes('No Content')){
-      trimmedPart += '\r\n';
+      trimmedPart += '\n';
     }
     return trimmedPart;
   });
@@ -133,6 +135,15 @@ export function splitResponse(response: string, boundary: string): string[] {
   if (parts.length >= 3) {
     return parts.slice(1, parts.length - 1);
   }
+
+  console.log('response:');
+  console.log(response);
+
+  console.log('boundary:');
+  console.log(boundary);
+
+  console.log('parts:');
+  console.log(parts);
 
   throw new Error(
     'Could not parse batch response body. Expected at least two response boundaries.'

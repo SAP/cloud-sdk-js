@@ -23,12 +23,12 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "compile": "yarn tsc -b",
+    "compile": "yarn root:tsc -b",
     "prepare": "yarn compile",
-    "test": "yarn jest --coverage --runInBand",
-    "test:local": "yarn jest",
+    "test": "yarn root:jest --coverage --runInBand",
+    "test:local": "yarn root:jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "yarn root:depcheck ."
   },
   "dependencies": {
     "@sap-cloud-sdk/util": "^1.39.0",

@@ -124,7 +124,7 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
 export function splitResponse(response: string, boundary: string): string[] {
   const parts = response.split(`--${boundary}`).map(part => {
     let trimmedPart = part.trim();
-    if(trimmedPart.substring(trimmedPart.length-23, trimmedPart.length-4).localeCompare('dataserviceversion:') === 0){
+    if(trimmedPart.includes('No Content')){
       trimmedPart += '\r\n';
     }
     return trimmedPart;

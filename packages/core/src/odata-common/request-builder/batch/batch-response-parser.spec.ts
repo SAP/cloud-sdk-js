@@ -333,7 +333,7 @@ describe('batch response parser', () => {
         '',
         'HTTP/1.1 204 No Content',
         'Content-Length: 0',
-        'dataserviceversion: 2.0',
+        'odata-version: 2.0',
         '',
         '',
         '--3B17E95920A7FAF8BCB7495D043515001--',

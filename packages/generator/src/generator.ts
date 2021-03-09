@@ -49,6 +49,7 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
+import { sdkMetaData, sdkMetaDataHeader, sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
 
 const logger = createLogger({
   package: 'generator',
@@ -188,8 +189,7 @@ export async function generateSourcesForService(
       'package.json',
       packageJson(
         service.npmPackageName,
-        options.versionInPackageJson,
-        getGeneratorVersion(),
+        getVersion(options),
         serviceDescription(service, options),
         options.sdkAfterVersionScript
       ),
@@ -320,6 +320,11 @@ export async function generateSourcesForService(
       );
     }
   }
+
+  if(options.generateSdkMetadata){
+    otherFile(serviceDir, 'sdk-metadata-js.json', JSON.stringify(sdkMetaDataJS(service)), options.forceOverwrite);
+    otherFile(serviceDir, 'sdk-metadata-header.json', sdkMetaDataHeader(service), options.forceOverwrite);
+  }
 }
 
 function projectOptions(): ProjectOptions {
@@ -363,10 +368,7 @@ function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
   return options;
 }
 
-function getGeneratorVersion(): string {
-  return JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8'))
-    .version;
-}
+
 
 // TODO 1728 move to a new package for reduce code duplication.
 function copyAdditionalFiles(
@@ -385,14 +387,7 @@ function copyAdditionalFiles(
   }
 }
 
-function serviceDescription(
-  service: VdmServiceMetadata,
-  options: GeneratorOptions
-): string {
-  return options.s4hanaCloud
-    ? s4hanaCloudDescription(service.directoryName)
-    : genericDescription(service.directoryName);
-}
+
 
 function resolvePath(path: PathLike, options: GeneratorOptions): string {
   return resolve(options.outputDir.toString(), path.toString());

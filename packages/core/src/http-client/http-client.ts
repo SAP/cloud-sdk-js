@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as https from 'https';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import {
   buildHeadersForDestination,
   Destination,
@@ -13,7 +13,7 @@ import { getAgentConfig } from './http-agent';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
-  HttpRequest, HttpRequestAndResponse,
+  HttpRequest,
   HttpRequestConfig,
   HttpResponse
 } from './http-client-types';
@@ -122,19 +122,19 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  *
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
- * @returns An [[HttpResponse]].
+ * @returns Promise resolving to an [[HttpResponse]].
  */
 export const executeHttpRequest = execute(executeWithAxios);
 
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
- * and executes it (using Axios). The request is also included in the object returned.
+ * and executes it (using Axios). The original [[AxiosResponse]] is returned.
  *
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
- * @returns An [[HttpRequestAndResponse]].
+ * @returns Promise resolving to an [[AxiosResponse]].
  */
-export const executeHttpRequestReturnRequestAndResponse = execute(executeWithAxiosReturnRequestAndResponse);
+export const executeHttpRequestReturnAxiosResponse = execute(executeWithAxiosReturnAxiosResponse);
 
 function buildDestinationHttpRequestConfig(
   destination: Destination,
@@ -201,11 +201,8 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
   return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 
-function executeWithAxiosReturnRequestAndResponse(request: HttpRequest): Promise<HttpRequestAndResponse> {
-  const merged = mergeRequestWithAxiosDefaults(request);
-  return axios.request(merged).then(
-    res => ({ request: merged, response: res })
-  );
+function executeWithAxiosReturnAxiosResponse(request: HttpRequest): Promise<AxiosResponse> {
+  return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 
 /**

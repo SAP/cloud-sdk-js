@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import {
   DestinationOptions,
   Destination,
@@ -6,7 +7,6 @@ import {
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
 import { ODataActionImportRequestConfig } from '../../odata-v4';
-import { HttpRequestAndResponse } from '../../http-client';
 
 /**
  * Create OData request to execute a action or function import.
@@ -45,20 +45,20 @@ export abstract class ActionFunctionImportRequestBuilder<
     options?: DestinationOptions
   ): Promise<ReturnT> {
     return this.executeRaw(destination, options)
-      .then(({ response }) => this.responseTransformer(response.data));
+      .then((response) => this.responseTransformer(response.data));
   }
 
   /**
-   * Execute request and return the request and the raw response.
+   * Execute request and return the original [[AxiosResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   * @returns A promise resolving to an [[AxiosResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse>{
+  ): Promise<AxiosResponse>{
     return this.build(destination, options)
       .then(request => request.executeRaw());
   }

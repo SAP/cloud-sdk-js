@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { Entity } from '../entity';
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import {
@@ -6,7 +7,6 @@ import {
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
-import { HttpRequestAndResponse } from '../../http-client';
 import type { GetAllRequestBuilder } from './get-all-request-builder-base';
 
 /**
@@ -39,7 +39,7 @@ export class CountRequestBuilder<
     options?: DestinationOptions
   ): Promise<number> {
     return this.executeRaw(destination, options)
-      .then(({ response }) => {
+      .then((response) => {
         if (typeof response.data !== 'number') {
           throw new Error('Count request did not return a bare number.');
         }
@@ -48,16 +48,16 @@ export class CountRequestBuilder<
   }
 
   /**
-   * Execute request and return the request and the raw response.
+   * Execute request and return the original [[AxiosResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   * @returns A promise resolving to an [[AxiosResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse>{
+  ): Promise<AxiosResponse>{
     return this.build(destination, options)
       .then(request => request.executeRaw());
   }

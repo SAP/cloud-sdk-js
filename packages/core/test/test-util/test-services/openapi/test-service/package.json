@@ -19,8 +19,8 @@
     "url": ""
   },
   "scripts": {
-    "compile": "npx tsc",
-    "doc": "npx typedoc"
+    "compile": "yarn tsc",
+    "doc": "yarn typedoc"
   },
   "dependencies": {
     "../../../../../src": "^1.39.0"

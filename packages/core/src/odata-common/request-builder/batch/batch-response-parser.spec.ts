@@ -247,51 +247,6 @@ describe('batch response parser', () => {
       });
     });
 
-    it('reproduce the error from internal e2e test response', () => {
-      const logger = createLogger({
-        messageContext: 'batch-response-parser'
-      });
-      const errorSpy = jest.spyOn(logger, 'error');
-      const response = [
-        'content-type: application/http',
-        'content-transfer-encoding: binary',
-        'content-id: ~00',
-        '',
-        'HTTP/1.1 204 No Content',
-        'odata-version: 4.0',
-        ''
-      ].join('\r\n');
-
-      expect(parseResponseData(response)).toEqual({
-        httpCode: 204,
-        body: {}
-      });
-      expect(errorSpy).toHaveBeenCalledTimes(0);
-    });
-
-    it('reproduce the error from public issue', () => {
-      const logger = createLogger({
-        messageContext: 'batch-response-parser'
-      });
-      const errorSpy = jest.spyOn(logger, 'error');
-      const response = [
-        'content-type: application/http',
-        'Content-Length: 71',
-        'content-transfer-encoding: binary',
-        '',
-        'HTTP/1.1 204 No Content',
-        'Content-Length: 0',
-        'dataserviceversion: 2.0',
-        ''
-      ].join('\r\n');
-
-      expect(parseResponseData(response)).toEqual({
-        httpCode: 204,
-        body: {}
-      });
-      expect(errorSpy).toHaveBeenCalledTimes(0);
-    });
-
     it('parses create response', () => {
       const response = [
         firstHeader,
@@ -308,7 +263,7 @@ describe('batch response parser', () => {
   });
 
   describe('parseBatchResponse', () => {
-    it('reproduce the error from public issue', () => {
+    it('parses a batch response with both empty and non-empty bodies', () => {
       const data = [
         '--3B17E95920A7FAF8BCB7495D043515000',
         'Content-Type: multipart/mixed; boundary=3B17E95920A7FAF8BCB7495D043515001',
@@ -333,7 +288,16 @@ describe('batch response parser', () => {
         '',
         'HTTP/1.1 204 No Content',
         'Content-Length: 0',
-        'odata-version: 2.0',
+        'dataserviceversion: 2.0',
+        '',
+        '',
+        '--3B17E95920A7FAF8BCB7495D043515001',
+        'content-type: application/http',
+        'content-transfer-encoding: binary',
+        'content-id: ~00',
+        '',
+        'HTTP/1.1 204 No Content',
+        'odata-version: 4.0',
         '',
         '',
         '--3B17E95920A7FAF8BCB7495D043515001--',

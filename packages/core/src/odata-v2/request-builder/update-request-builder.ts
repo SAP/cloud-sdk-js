@@ -73,11 +73,11 @@ export class UpdateRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Execute request and return the original [[AxiosResponse]]. The request is only executed if some properties of the entity are modified.
+   * Execute request and return the original `AxiosResponse`. The request is only executed if some properties of the entity are modified.
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[AxiosResponse]] when the request is executed or undefined otherwise.
+   * @returns A promise resolving to an `AxiosResponse` when the request is executed or undefined otherwise.
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,

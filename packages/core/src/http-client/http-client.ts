@@ -128,11 +128,11 @@ export const executeHttpRequest = execute(executeWithAxios);
 
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
- * and executes it (using Axios). The original [[AxiosResponse]] is returned.
+ * and executes it (using Axios). The original `AxiosResponse` is returned.
  *
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
- * @returns Promise resolving to an [[AxiosResponse]].
+ * @returns Promise resolving to an `AxiosResponse`.
  */
 export const executeHttpRequestReturnAxiosResponse = execute(executeWithAxiosReturnAxiosResponse);
 

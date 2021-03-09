@@ -103,11 +103,11 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Execute request and return the the original [[AxiosResponse]].
+   * Execute request and return the the original `AxiosResponse`.
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[AxiosResponse]].
+   * @returns A promise resolving to an `AxiosResponse`.
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,

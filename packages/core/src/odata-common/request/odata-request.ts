@@ -250,9 +250,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   /**
-   * Execute the given request and return the original [[AxiosResponse]].
+   * Execute the given request and return the original `AxiosResponse`.
    *
-   * @returns Promise resolving to an [[AxiosResponse]].
+   * @returns Promise resolving to an `AxiosResponse`.
    */
   async executeRaw(): Promise<AxiosResponse> {
     const destination = this.destination;

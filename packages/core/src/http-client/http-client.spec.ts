@@ -11,7 +11,7 @@ import {
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  executeHttpRequest, executeHttpRequestReturnRequestAndResponse
+  executeHttpRequest, executeHttpRequestReturnAxiosResponse
 } from './http-client';
 
 describe('generic http client', () => {
@@ -323,10 +323,10 @@ describe('generic http client', () => {
         url: '/api/entity'
       };
 
-      const reqRes = await executeHttpRequestReturnRequestAndResponse(httpsDestination, config);
-      expect(reqRes.response.data).toEqual(rawResponse);
-      expect(reqRes.request.method).toBe(HttpMethod.GET);
-      expect(reqRes.request.baseURL).toBe('https://example.com');
+      const response = await executeHttpRequestReturnAxiosResponse(httpsDestination, config);
+      expect(response.data).toEqual(rawResponse);
+      expect(response.config.method).toBe('get');
+      expect(response.config.baseURL).toBe('https://example.com');
     });
   });
 });

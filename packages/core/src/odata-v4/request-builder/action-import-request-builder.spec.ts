@@ -92,9 +92,9 @@ describe('action import request builder', () => {
       const actual = await testActionImportNoParameterNoReturnType({}).executeRaw(
         destination
       );
-      expect(actual.response.data).toEqual({});
-      expect(actual.request.method).toBe('post');
-      expect(actual.request.baseURL).toBe(destination.url);
+      expect(actual.data).toEqual({});
+      expect(actual.config.method).toBe('post');
+      expect(actual.config.baseURL).toBe(destination.url);
     });
   });
 });

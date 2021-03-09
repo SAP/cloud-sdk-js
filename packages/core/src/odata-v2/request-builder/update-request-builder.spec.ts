@@ -348,9 +348,9 @@ describe('UpdateRequestBuilder', () => {
       const actual = await new UpdateRequestBuilder(TestEntity, entity).executeRaw(
         defaultDestination
       );
-      expect(actual!.response.data).toEqual(response);
-      expect(actual!.request.method).toEqual('patch');
-      expect(actual!.request.baseURL).toEqual(defaultDestination.url);
+      expect(actual!.data).toEqual(response);
+      expect(actual!.config.method).toEqual('patch');
+      expect(actual!.config.baseURL).toEqual(defaultDestination.url);
     });
   });
 });

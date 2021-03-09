@@ -92,4 +92,24 @@ describe('CountRequestBuilderV2', () => {
         })
       ));
   });
+
+  describe('executeRaw', () => {
+    it('returns request and raw response', async () =>
+      Promise.all(
+        requestBuilders.map(async requestBuilder => {
+          mockCountRequest(
+            defaultDestination,
+            4711,
+            TestEntityV4.requestBuilder().getAll()
+          );
+          const actual = await requestBuilder
+            .getAll()
+            .count()
+            .executeRaw(defaultDestination);
+          expect(actual.response.data).toEqual(4711);
+          expect(actual.request.method).toBe('get');
+          expect(actual.request.baseURL).toBe(defaultDestination.url);
+        })
+      ));
+  });
 });

@@ -12,7 +12,7 @@ describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();
   const keyPropString = 'TEST_ID';
 
-  afterAll(() => {
+  afterEach(() => {
     nock.cleanAll();
   });
 
@@ -115,5 +115,22 @@ describe('DeleteRequestBuilder', () => {
     }).execute(defaultDestination);
 
     await expect(deleteRequest).rejects.toThrowErrorMatchingSnapshot();
+  });
+
+  describe('executeRaw', () => {
+    it('returns request and raw response', async () => {
+      mockDeleteRequest({
+        path: testEntityResourcePath(keyPropGuid, keyPropString)
+      });
+
+      const actual = await new DeleteRequestBuilder(TestEntity, {
+        KeyPropertyGuid: keyPropGuid,
+        KeyPropertyString: keyPropString
+      }).executeRaw(defaultDestination);
+
+      expect(actual.response.data).toEqual('');
+      expect(actual.request.method).toBe('delete');
+      expect(actual.request.baseURL).toBe(defaultDestination.url);
+    });
   });
 });

@@ -10,7 +10,7 @@
 
 ## Known Issues
 
--
+- 
 
 ## Compatibility Notes
 
@@ -18,11 +18,11 @@
 
 ## New Functionality
 
--
+- [core] Support `executeRaw` in all `RequestBuilder`, which returns request and raw response without deserialization.
 
 ## Improvements
 
--
+- [http-agent] Fix client certificate authentication in conjunction with proxies - depends on [this PR](https://github.com/TooTallNate/node-https-proxy-agent/pull/111).
 
 ## Fixed Issues
 

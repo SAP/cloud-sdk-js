@@ -80,7 +80,7 @@ describe('buildCsrfHeaders', () => {
     );
   });
 
-  it('should redirect csrf request when using proxy', async () => {
+  it('should try csrf request with / in the end first', async () => {
     const destination: Destination = {
       ...defaultDestination,
       proxyType: 'OnPremise'
@@ -92,13 +92,37 @@ describe('buildCsrfHeaders', () => {
     };
 
     nock(defaultHost)
-      .get(request.serviceUrl())
-      .reply(307, undefined, {
-        location: `${defaultHost}${request.serviceUrl()}/`
-      });
+      .get(request.serviceUrl() + '/')
+      .reply(200, undefined, mockedHeaders);
+
+    const expected = {
+      cookie: 'mocked-cookie-0;mocked-cookie-2',
+      'x-csrf-token': mockedHeaders['x-csrf-token']
+    };
+    const headers = await buildCsrfHeaders(request.destination!, {
+      headers: standardHeaders,
+      url: request.relativeServiceUrl()
+    });
+    expect(headers).toEqual(expected);
+  });
+
+  it('tries csrf request without / if the first one fails', async () => {
+    const destination: Destination = {
+      ...defaultDestination,
+      proxyType: 'OnPremise'
+    };
+    const request = createCreateRequest(destination);
+    const mockedHeaders = {
+      'x-csrf-token': 'mocked-x-csrf-token',
+      'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
+    };
 
     nock(defaultHost)
       .get(request.serviceUrl() + '/')
+      .reply(500, undefined, mockedHeaders);
+
+    nock(defaultHost)
+      .get(request.serviceUrl())
       .reply(200, undefined, mockedHeaders);
 
     const expected = {

@@ -11,7 +11,7 @@ import {
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  executeHttpRequest
+  executeHttpRequest, executeHttpRequestReturnRequestAndResponse
 } from './http-client';
 
 describe('generic http client', () => {
@@ -304,6 +304,29 @@ describe('generic http client', () => {
           }
         })
       ).rejects.toThrowErrorMatchingSnapshot();
+    });
+  });
+
+  describe('executeRawHttpRequest', () => {
+    beforeAll(() => {
+      nock.cleanAll();
+    });
+
+    it('takes a generic HTTP request and executes it', async () => {
+      const rawResponse = { res: 'ult' };
+      nock('https://example.com')
+        .get('/api/entity')
+        .reply(200, rawResponse);
+
+      const config = {
+        method: HttpMethod.GET,
+        url: '/api/entity'
+      };
+
+      const reqRes = await executeHttpRequestReturnRequestAndResponse(httpsDestination, config);
+      expect(reqRes.response.data).toEqual(rawResponse);
+      expect(reqRes.request.method).toBe(HttpMethod.GET);
+      expect(reqRes.request.baseURL).toBe('https://example.com');
     });
   });
 });

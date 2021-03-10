@@ -4,7 +4,14 @@ import { createOptions } from '../../test/test-util/create-generator-options';
 import { GlobalNameFormatter } from '../global-name-formatter';
 import {resolve} from 'path'
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
-import { getInstallationSnippet, getRepositoryLink, getVersion, getServiceDescription } from './npm';
+import {
+  getInstallationSnippet,
+  getRepositoryLink,
+  getVersion,
+  getServiceDescription,
+  getTimeStamp,
+  getPregeneratedLibrary, isPublishedNpmPackage
+} from './pregenerated-lib';
 import { GeneratorOptions } from '../generator-options';
 
 describe('sdk metadata - npm related information',()=>{
@@ -45,4 +52,15 @@ describe('sdk metadata - npm related information',()=>{
   it('returns description of the service',()=>{
     expect(getServiceDescription(service,createOptions())).toBe('123')
   })
+
+  it('returns a timestamp in unix format',()=>{
+    expect(getTimeStamp()).toMatch(/\/Date\(\d{13,13}\)\//)
+  })
+
+  it('returns ',async ()=>{
+    expect(await isPublishedNpmPackage({npmPackageName:"@sap/cloud-sdk-core"} as VdmServiceMetadata)).toBe(true)
+    expect(await isPublishedNpmPackage({npmPackageName:"@sap/non-existing-service"} as VdmServiceMetadata)).toBe(false)
+  },10000)
+
+
 })

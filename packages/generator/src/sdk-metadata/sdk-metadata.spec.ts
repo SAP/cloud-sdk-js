@@ -1,3 +1,3 @@
-describe('SDK metadata generation',()=>{
+describe('SDK metadata -  generation',()=>{
 
 })

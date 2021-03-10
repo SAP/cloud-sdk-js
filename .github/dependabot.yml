@@ -4,6 +4,6 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-    time: "01:00"
+    time: "09:04"
   open-pull-requests-limit: 10
   target-branch: "fix-dependabot"

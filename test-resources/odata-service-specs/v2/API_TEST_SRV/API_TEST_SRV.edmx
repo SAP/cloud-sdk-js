@@ -128,6 +128,16 @@
         <Property Name="KeyProperty" Type="Edm.String" Nullable="false"/>
       </EntityType>
 
+      <!-- duplicate_entity_name
+        In some C4C APIs there are entity sets, that have the same with different casing.
+      -->
+      <EntityType Name="A_CaseTestType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyPropertyString"/>
+        </Key>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+      </EntityType>
+
       <ComplexType Name="A_TestComplexType">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" Nullable="false"/>
         <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
@@ -221,7 +231,8 @@
         <!-- duplicate_entity_name
           In some C4C APIs there are entity sets, that have the same with different casing.
         -->
-        <EntitySet Name="A_Testentity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1"/>
+        <EntitySet Name="A_CaseTest" EntityType="API_TEST_SRV.A_CaseTestType" sap:content-version="1"/>
+        <EntitySet Name="A_CASETEST" EntityType="API_TEST_SRV.A_CaseTestType" sap:content-version="1"/>
 
         <AssociationSet Name="assoc_TestEntityToMultiLink" Association="API_TEST_SRV.assoc_TestEntityToMultiLink" sap:content-version="1">
           <End EntitySet="A_TestEntity" Role="FromRole_assoc_TestEntityToMultiLink"/>

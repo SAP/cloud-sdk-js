@@ -24,6 +24,7 @@
 
 - [generator] When calling a function/action import that has entity return type referenced by multiple entity sets, an exception is thrown instead of deserializing the response with the first entity set.
 - [http-agent] Fix client certificate authentication in conjunction with proxies - depends on [this PR](https://github.com/TooTallNate/node-https-proxy-agent/pull/111).
+- [generator] When an entity type is shared by multiple entity sets and is used as the return type of function/action imports, an exception will be thrown with the recommendation to use `executeRaw` instead of `execute`.
 
 ## Fixed Issues
 

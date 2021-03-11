@@ -43,9 +43,11 @@ jobs:
       env:
         YARN_ENABLE_SCRIPTS: 0 # disable postinstall scripts
     - name: Config Git
+      env:
+        TOKEN: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
       run: |
         # use personal access token to allow triggering new workflow
-        BASIC_AUTH=$(echo -n "x-access-token:${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}" | base64)
+        BASIC_AUTH=$(echo -n "x-access-token:$TOKEN" | base64)
         echo "::add-mask::$BASIC_AUTH"
         git config --global user.name '${{ github.event.commits[0].author.name }}'
         git config --global user.email '${{ github.event.commits[0].author.email }}'

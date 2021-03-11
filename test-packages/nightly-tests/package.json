@@ -16,7 +16,7 @@
     "@sap-cloud-sdk/openapi-generator": "^1.39.0",
     "execa": "^5.0.0",
     "fs-extra": "^9.0.0",
-    "jest": "^26.6.1",
+    "jest": "^26.6.3",
     "jest-circus": "^26.6.1",
     "jest-extended": "^0.11.5",
     "ts-jest": "^26.4.3"

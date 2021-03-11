@@ -61,7 +61,7 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(30);
+      expect(files.length).toBe(32);
     });
 
     it('generates TestEntity.ts file', () => {

@@ -6,6 +6,7 @@ import {
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
+import { HttpRequestAndResponse } from '../../http-client';
 import type { GetAllRequestBuilder } from './get-all-request-builder-base';
 
 /**
@@ -37,13 +38,27 @@ export class CountRequestBuilder<
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<number> {
-    return this.build(destination, options)
-      .then(request => request.execute())
-      .then(response => {
+    return this.executeRaw(destination, options)
+      .then(({ response }) => {
         if (typeof response.data !== 'number') {
           throw new Error('Count request did not return a bare number.');
         }
         return response.data;
       });
+  }
+
+  /**
+   * Execute request and return the request and the raw response.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   */
+  async executeRaw(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<HttpRequestAndResponse>{
+    return this.build(destination, options)
+      .then(request => request.executeRaw());
   }
 }

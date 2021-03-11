@@ -17,6 +17,7 @@ import {
 } from '../../connectivity/scp-cf';
 import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
+import { HttpRequestAndResponse } from '../../http-client';
 
 const logger = createLogger({
   package: 'core',
@@ -69,6 +70,28 @@ export class UpdateRequestBuilder<EntityT extends Entity>
     warnIfNavigation(request, this._entity, this._entityConstructor);
 
     return super.executeRequest(request);
+  }
+
+  /**
+   * Execute request and return the request and the raw response. The request is only executed if some properties of the entity are modified.
+   *
+   * @param destination - Destination to execute the request against
+   * @param options - Options to employ when fetching destinations
+   * @returns A promise resolving to an [[HttpRequestAndResponse]] when the request is executed or undefined otherwise.
+   */
+  async executeRaw(
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
+  ): Promise<HttpRequestAndResponse| undefined> {
+    if (this.isEmptyObject(this.requestConfig.payload)) {
+      logger.info('The request is not executed because no properties of the entity are modified.');
+      return;
+    }
+
+    const request = await this.build(destination, options);
+    warnIfNavigation(request, this._entity, this._entityConstructor);
+
+    return super.executeRequestRaw(request);
   }
 }
 

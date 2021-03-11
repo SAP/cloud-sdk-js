@@ -233,7 +233,7 @@ async function getAuthenticationRelatedHeaders(
       return headerForPrincipalPropagation(destination);
     default:
       throw Error(
-        'Failed to build authorization header for the given destination. Make sure to either correctly configure your destination for principal propagation, provide both a username and a password or select "NoAuthentication" in your destination configuration.'
+        `The destination used "${destination.authentication}" as authentication type which is not supported by the SDK.`
       );
   }
 }

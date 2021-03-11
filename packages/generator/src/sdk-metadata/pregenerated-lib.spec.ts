@@ -1,66 +1,63 @@
+import { resolve } from 'path';
 import { VdmServiceMetadata } from '../vdm-types';
 import { parseService } from '../service-generator';
 import { createOptions } from '../../test/test-util/create-generator-options';
 import { GlobalNameFormatter } from '../global-name-formatter';
-import {resolve} from 'path'
 import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
+import { GeneratorOptions } from '../generator-options';
 import {
   getInstallationSnippet,
   getRepositoryLink,
   getVersion,
   getServiceDescription,
-  getTimeStamp,
-  getPregeneratedLibrary, isPublishedNpmPackage
+  getTimeStamp, isPublishedNpmPackage
 } from './pregenerated-lib';
-import { GeneratorOptions } from '../generator-options';
 
-describe('sdk metadata - npm related information',()=>{
-  let service:VdmServiceMetadata
-
-  beforeAll(async()=> {
-    service = parseService(
-      {
-        edmxPath:
-          resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV/API_TEST_SRV.edmx')
-      },
-      createOptions(),
-      {},
-      new GlobalNameFormatter({
-          "API_TEST_SRV": {
-            "directoryName": "test-service",
-            "servicePath": "/sap/opu/odata/sap/API_TEST_SERVICE_SRV;v=0002",
-            "npmPackageName": "@sap/cloud-sdk-vdm-test-service"
-          }
-        }
-      )
-    )
-  })
+describe('sdk metadata - pregenerated client information',()=>{
+  const service: VdmServiceMetadata = getTestService();
 
   it('returns installation snipped',()=>{
-    expect(getInstallationSnippet(service)).toBe('npm i @sap/cloud-sdk-vdm-test-service::latest')
-  })
+    expect(getInstallationSnippet(service)).toBe('npm i @sap/cloud-sdk-vdm-test-service:latest');
+  });
 
   it('returns repository link',()=>{
-    expect(getRepositoryLink(service)).toBe('https://www.npmjs.com/package/@sap/cloud-sdk-vdm-test-service')
-  })
+    expect(getRepositoryLink(service)).toBe('https://www.npmjs.com/package/@sap/cloud-sdk-vdm-test-service');
+  });
 
   it('returns version from generator options or generator version',()=>{
-    expect(getVersion({versionInPackageJson:'123'} as GeneratorOptions)).toBe('123')
-    expect(getVersion({} as GeneratorOptions)).toMatch(/d+\.d+\.d+/)
-  })
+    expect(getVersion({ versionInPackageJson:'123' } as GeneratorOptions)).toBe('123');
+    expect(getVersion({} as GeneratorOptions)).toMatch(/\d+\.\d+\.\d+/);
+  });
 
   it('returns description of the service',()=>{
-    expect(getServiceDescription(service,createOptions())).toBe('123')
-  })
+    expect(getServiceDescription(service,createOptions())).toMatchSnapshot();
+  });
 
   it('returns a timestamp in unix format',()=>{
-    expect(getTimeStamp()).toMatch(/\/Date\(\d{13,13}\)\//)
-  })
+    expect(getTimeStamp()).toMatch(/\/Date\(\d{13,13}\)\//);
+  });
 
-  it('returns ',async ()=>{
-    expect(await isPublishedNpmPackage({npmPackageName:"@sap/cloud-sdk-core"} as VdmServiceMetadata)).toBe(true)
-    expect(await isPublishedNpmPackage({npmPackageName:"@sap/non-existing-service"} as VdmServiceMetadata)).toBe(false)
-  },10000)
+  it('checks if there is a client published',async ()=>{
+    expect(await isPublishedNpmPackage({ npmPackageName:'@sap/cloud-sdk-core' } as VdmServiceMetadata)).toBe(true);
+    expect(await isPublishedNpmPackage({ npmPackageName:'@sap/non-existing-service' } as VdmServiceMetadata)).toBe(false);
+  },10000);
+});
 
-
-})
+export function getTestService(): VdmServiceMetadata{
+  return parseService(
+    {
+      edmxPath:
+        resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV/API_TEST_SRV.edmx')
+    },
+    createOptions(),
+    {},
+    new GlobalNameFormatter({
+        'API_TEST_SRV': {
+          'directoryName': 'test-service',
+          'servicePath': '/sap/opu/odata/sap/API_TEST_SERVICE_SRV;v=0002',
+          'npmPackageName': '@sap/cloud-sdk-vdm-test-service'
+        }
+      }
+    )
+  );
+}

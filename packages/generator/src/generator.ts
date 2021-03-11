@@ -1,4 +1,4 @@
-import { PathLike, readFileSync } from 'fs';
+import { PathLike } from 'fs';
 import { resolve, basename } from 'path';
 import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
@@ -29,10 +29,6 @@ import {
   npmCompliantName,
   transpileDirectory
 } from './generator-utils';
-import {
-  genericDescription,
-  s4hanaCloudDescription
-} from './package-description';
 import { parseAllServices } from './edmx-to-vdm';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
@@ -49,7 +45,8 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
-import { sdkMetaData, sdkMetaDataHeader, sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
+import { getSdkMetadataFileNames, sdkMetaDataHeader, sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
+import { getGeneratorVersion, getServiceDescription, getVersion } from './sdk-metadata/pregenerated-lib';
 
 const logger = createLogger({
   package: 'generator',
@@ -190,7 +187,7 @@ export async function generateSourcesForService(
       packageJson(
         service.npmPackageName,
         getVersion(options),
-        serviceDescription(service, options),
+        getServiceDescription(service, options),
         options.sdkAfterVersionScript
       ),
       options.forceOverwrite
@@ -322,8 +319,16 @@ export async function generateSourcesForService(
   }
 
   if(options.generateSdkMetadata){
-    otherFile(serviceDir, 'sdk-metadata-js.json', JSON.stringify(sdkMetaDataJS(service)), options.forceOverwrite);
-    otherFile(serviceDir, 'sdk-metadata-header.json', sdkMetaDataHeader(service), options.forceOverwrite);
+    const { clientFileName,headerFileName } = getSdkMetadataFileNames(service);
+    logger.info(
+      `Generating sdk header metatdata ${headerFileName}...`
+    );
+    otherFile(serviceDir, headerFileName, JSON.stringify(await sdkMetaDataHeader(service,options)), options.forceOverwrite);
+
+    logger.info(
+      `Generating sdk client metatdata ${clientFileName}...`
+    );
+    otherFile(serviceDir, clientFileName, JSON.stringify(await sdkMetaDataJS(service,options)), options.forceOverwrite);
   }
 }
 
@@ -368,8 +373,6 @@ function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
   return options;
 }
 
-
-
 // TODO 1728 move to a new package for reduce code duplication.
 function copyAdditionalFiles(
   toDirectory: Directory,
@@ -386,8 +389,6 @@ function copyAdditionalFiles(
     });
   }
 }
-
-
 
 function resolvePath(path: PathLike, options: GeneratorOptions): string {
   return resolve(options.outputDir.toString(), path.toString());

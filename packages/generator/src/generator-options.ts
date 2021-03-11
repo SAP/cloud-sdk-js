@@ -21,7 +21,7 @@ export interface GeneratorOptions {
   generatePackageJson: boolean;
   versionInPackageJson?: string;
   generateJs: boolean;
-  generateSdkMetadata:boolean;
+  generateSdkMetadata: boolean;
   processesJsGeneration?: number;
   sdkAfterVersionScript: boolean;
   s4hanaCloud: boolean;

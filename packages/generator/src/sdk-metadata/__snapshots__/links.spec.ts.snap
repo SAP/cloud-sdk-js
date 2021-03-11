@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sdk metadata links fails for non existing link 1`] = `"Request failed with status code 404"`;

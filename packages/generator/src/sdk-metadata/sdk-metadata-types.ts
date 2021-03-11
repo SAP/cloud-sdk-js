@@ -1,29 +1,7 @@
-export interface SdkMetadata {
+export interface SdkMetadataHeader {
   name: string; // API_BANKDETAIL_SRV
   type: 'odata' | 'rest' | 'soap';
   version: string;
-  apiMetadata: ApiMetaData;
-  clients: Client[];
-}
-
-interface ApiMetaData {
-  id: string; // API_BANKDETAIL_SRV
-  createdAt: DateTimeString;
-  modifiedAt: DateTimeString;
-  state: 'ACTIVE' | 'DEPRECATED' | 'DECOMISSIONED';
-  url: UrlString; // "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_BANKDETAIL_SRV"
-  title: string; // "Bank - Read"
-  shortText: string; // Enable external applications to read bank master data from your SAP S/4HANA Cloud system using this asynchronous inbound service
-  serviceType: 'Cloud' | 'OnPremise'; //TODO discuss with Artem the purpose of this field
-  typeVersion: string;
-  directoryName: string; // bank-detail-service
-  servicePath: string; // sap/opu/odata/sap/API_BANKDETAIL_SRV
-  md5HashSums: {
-    edmx?: string; // Odata
-    json?: string; // OData,REST,SOAP
-    yaml?: string; // REST
-    wsdl?: string; // SOAP
-  };
 }
 
 // If generationAndUsage is not possible  e.g. SOAP  service for JS we do not put it in the array
@@ -53,7 +31,7 @@ export interface Links {
 }
 
 export interface GenerationAndUsage {
-  successfulGenerationVerified: boolean; //we have tested the API spec with the generator -> true, false if not tested
+  successfulGenerationVerified: boolean; // we have tested the API spec with the generator -> true, false if not tested
   generationSteps: string; // "some-step<br />another step <br />another step"
   apiSpecificUsage: string;
   genericUsage: string; // import { <ServiceName> } from @sap/cloud-sdk-vdm-<service-name>-service<br /><ServiceName>.requestBuilder()<br />.<operationName>()<br />.execute(destination);

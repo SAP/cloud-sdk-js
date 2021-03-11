@@ -1,28 +1,35 @@
-import { GenerationAndUsage } from './sdk-metadata-types';
-import { getLinks } from './links';
-import {promises} from 'fs'
-import {resolve} from 'path'
+import { promises } from 'fs';
+import { resolve } from 'path';
 import { VdmServiceMetadata } from '../vdm-types';
+import { getLinks } from './links';
+import { GenerationAndUsage } from './sdk-metadata-types';
 
-export async function getGenerationAndUsage(service:VdmServiceMetadata):Promise<GenerationAndUsage>{
+export async function getGenerationAndUsage(service: VdmServiceMetadata): Promise<GenerationAndUsage>{
   return {
     successfulGenerationVerified: true,
     genericUsage: await getGenericUsage(),
-    apiSpecificUsage:'',
+    apiSpecificUsage:await getApiSpecificUsage(service),
     links: getLinks(),
-    generationSteps:''
-  }
+    generationSteps:getGenerationDocumentation()
+  };
 }
 
-export async function getGenericUsage():Promise<string>{
-  return promises.readFile(resolve(__dirname,'generic-get-all-code-sample.ts'),{encoding:'utf8'})
+export async function getGenericUsage(): Promise<string>{
+  return promises.readFile(resolve(__dirname,'code-samples','generic-get-all-code-sample.ts'),{ encoding:'utf8' });
 }
 
-export async function getApiSpecificUsage(service:VdmServiceMetadata):Promise<string>{
+export async function getApiSpecificUsage(service: VdmServiceMetadata): Promise<string>{
   if(service.entities.length > 0){
-    const genericString = (await getGenericUsage())
-    const f00 =  "genericString TestEntity".replace('TestEntity',service.entities[0].className)
-      return f00.replace('@sap-cloud-sdk/test-services/v2/test-service',service.npmPackageName)
+    const genericString = (await getGenericUsage());
+    return genericString.replace(/TestEntity/g,service.entities[0].className).replace('@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service',service.npmPackageName);
   }
-  return ''
+  // TODO handle cases if no entity is there in the follow up ticket.
+  if(service.functionImports.length > 0){
+    return '';
+  }
+  return '';
+}
+
+export function getGenerationDocumentation(): string{
+  return 'Please follow the documentation https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
 }

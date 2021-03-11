@@ -49,8 +49,8 @@ jobs:
         # use personal access token to allow triggering new workflow
         BASIC_AUTH=$(echo -n "x-access-token:$TOKEN" | base64)
         echo "::add-mask::$BASIC_AUTH"
-        git config --global user.name '${{ github.event.commits[0].author.name }}'
-        git config --global user.email '${{ github.event.commits[0].author.email }}'
+        git config --global user.name 'cloud-sdk-js'
+        git config --global user.email 'cloud-sdk-js@github.com'
         git config --local http.$GITHUB_SERVER_URL/.extraheader "AUTHORIZATION: basic $BASIC_AUTH"
     - name: Commit changes
       run: |

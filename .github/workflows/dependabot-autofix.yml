@@ -1,7 +1,7 @@
 name: dependabot-autofix
 
 on:
-  pull_request:
+  push:
     branches: [ dependabot/npm_and_yarn/** ]
 
 jobs:

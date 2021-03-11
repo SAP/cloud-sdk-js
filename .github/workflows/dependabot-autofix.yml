@@ -3,12 +3,12 @@ name: dependabot-autofix
 on:
   pull_request_target:
     types: [ opened, reopened ]
-    branches: [ dependabot/npm_and_yarn/** ]
+    branches: [ fix-git-authentication ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
+    if: github.actor == 'tomfrenken'
 
     steps:
     - uses: actions/checkout@v2

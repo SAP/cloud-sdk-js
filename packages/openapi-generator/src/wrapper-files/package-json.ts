@@ -31,8 +31,8 @@ export function packageJson(
           url: ''
         },
         scripts: {
-          compile: 'yarn tsc',
-          doc: 'yarn typedoc'
+          compile: 'npx tsc',
+          doc: 'npx typedoc'
         },
         dependencies: {
           '@sap-cloud-sdk/core': `^${sdkVersion}`

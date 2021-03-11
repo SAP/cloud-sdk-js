@@ -2,7 +2,7 @@ name: dependabot-autofix
 
 on:
   pull_request:
-    branches: [ dependabot/npm_and_yarn/** ]
+    branches: [ main ]
 
 jobs:
   build:

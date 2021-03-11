@@ -19,6 +19,7 @@ describe('batch', () => {
       .stringProperty('batch')
       .build();
     const create = TestEntity.requestBuilder().create(testEntity);
+    const deleteRequestBuilder = TestEntity.requestBuilder().delete(entityKey);
 
     const [retrieveResponse, changesetResponse] = await batch(
       getAll,
@@ -27,7 +28,14 @@ describe('batch', () => {
       .withSubRequestPathType('relativeToEntity')
       .execute(destination);
 
+    const [deleteRes] = await batch(
+      changeset(deleteRequestBuilder)
+    )
+      .withSubRequestPathType('relativeToEntity')
+      .execute(destination);
+
     expect(retrieveResponse.isSuccess()).toBe(true);
     expect(changesetResponse.isSuccess()).toBe(true);
+    expect(deleteRes.isSuccess()).toBe(true);
   });
 });

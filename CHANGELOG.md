@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [core] Fix parsing of empty bodies in batch responses.
 
 
 # 1.39.0

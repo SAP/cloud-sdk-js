@@ -122,7 +122,11 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
  * @returns A list of sub responses represented as strings.
  */
 export function splitResponse(response: string, boundary: string): string[] {
-  const parts = response.split(`--${boundary}`).map(part => part.trim());
+  const newLineSymbol = detectNewLineSymbol(response);
+  const parts = response.split(`--${boundary}`).map(part => {
+    const trimmedPart = part.trim();
+    return trimmedPart.includes('204 No Content') ? `${trimmedPart}${newLineSymbol}` : trimmedPart;
+  });
 
   if (parts.length >= 3) {
     return parts.slice(1, parts.length - 1);

@@ -1,4 +1,4 @@
-name: Dependabot
+name: dependabot-autofix
 
 on:
   push:
@@ -28,9 +28,6 @@ jobs:
         # restore yarn.lock from the previous commit
         git checkout HEAD^ -- yarn.lock
 
-        # install yarn-plugin-deduplicate
-        yarn plugin import https://raw.githubusercontent.com/eps1lon/yarn-plugin-deduplicate/latest/bin/%40yarnpkg/plugin-deduplicate.js
-
         # if package.json was not updated, upgrade the dependency
         # assuming Angular commit style (build: bump XXX from ...)
         # use $2 for default commit message style (Bump XXX from ...)
@@ -42,13 +39,13 @@ jobs:
         yarn install
 
         # deduplicate lockfile
-        yarn deduplicate
+        yarn dedupe
       env:
         YARN_ENABLE_SCRIPTS: 0 # disable postinstall scripts
     - name: Config Git
       run: |
         # use personal access token to allow triggering new workflow
-        BASIC_AUTH=$(echo -n "x-access-token:${{ secrets.GITHUB_TOKEN }}" | base64)
+        BASIC_AUTH=$(echo -n "x-access-token:${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}" | base64)
         echo "::add-mask::$BASIC_AUTH"
         git config --global user.name '${{ github.event.commits[0].author.name }}'
         git config --global user.email '${{ github.event.commits[0].author.email }}'
@@ -56,6 +53,6 @@ jobs:
     - name: Commit changes
       run: |
         cd .`git log -1 --pretty=%s | awk '{ print $9 }'` # ditto
-        git add yarn.lock .yarn/cache .pnp.* # only add yarn.lock if not using zero-installs
-        git commit -m "Dependabot autofix"
+        git add yarn.lock
+        git commit -m "dependabot autofix"
         git push

@@ -4,7 +4,5 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-    time: "09:14"
-    timezone: "Europe/Berlin"
+    time: "01:00"
   open-pull-requests-limit: 10
-  target-branch: "fix-dependabot"

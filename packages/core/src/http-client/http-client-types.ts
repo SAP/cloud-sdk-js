@@ -75,7 +75,7 @@ export interface HttpReponse extends KnownHttpResponseFields {
   [otherKey: string]: any;
 }
 
-export interface DefaultHttpResponse extends KnownHttpResponseFields {
+export interface DefaultHttpResponse extends HttpResponse {
   request: any;
   [otherKey: string]: any;
 }

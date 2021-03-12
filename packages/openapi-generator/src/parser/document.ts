@@ -2,9 +2,15 @@ import { basename } from 'path';
 import { parse, resolve, $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { flatten, pascalCase, unique } from '@sap-cloud-sdk/util';
-import { OpenApiOperation, OpenApiDocument, methods } from '../openapi-types';
+import {
+  OpenApiOperation,
+  OpenApiDocument,
+  methods,
+  OpenApiNamedSchema
+} from '../openapi-types';
 import { VdmMapping } from '../service-mapping';
 import { parseOperation } from './operation';
+import { parseSchema } from './schema';
 
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
@@ -15,6 +21,7 @@ export async function parseOpenApiDocument(
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
+  const components = parseComponents(document);
   const operations = parseAllOperations(document, refs);
   const originalFileName = basename(filePath).split('.')[0];
   return {
@@ -27,7 +34,8 @@ export async function parseOpenApiDocument(
       ? vdmMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
-    tags: collectTags(operations)
+    tags: collectTags(operations),
+    components
   };
 }
 
@@ -60,4 +68,19 @@ export function parseAllOperations(
  */
 export function collectTags(operations: OpenApiOperation[]): string[] {
   return unique(flatten(operations.map(operation => operation.tags)));
+}
+
+export function parseComponents(
+  document: OpenAPIV3.Document
+): {
+  schemas: OpenApiNamedSchema[];
+} {
+  return {
+    schemas: Object.entries(document.components?.schemas || {}).map(
+      ([name, schema]) => ({
+        name,
+        schema: parseSchema(schema)
+      })
+    )
+  };
 }

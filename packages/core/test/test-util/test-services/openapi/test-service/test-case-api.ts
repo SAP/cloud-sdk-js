@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
-import { SimpleTestEntity } from './openapi/model';
+import { SimpleTestEntity, ComplexTestEntity } from './model';
 
 export const TestServiceTestCaseApi = {
   testCaseGetRequiredParameters: (requiredPathItemPathParam: string, body: SimpleTestEntity, queryParameters: {'requiredPathItemQueryParam': string,
@@ -63,5 +63,12 @@ export const TestServiceTestCaseApi = {
     'patch',
     '/test-cases/duplicate-operation-ids',
     
+  ),
+  complexSchemas: (body: ComplexTestEntity, queryParameters?: {}) => new OpenApiRequestBuilder(
+    'get',
+    '/test-cases/complex-schemas',
+    {
+          body
+        }
   )
 };

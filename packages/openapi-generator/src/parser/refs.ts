@@ -1,6 +1,7 @@
-import { last, pascalCase } from '@sap-cloud-sdk/util';
+import { last, pascalCase, kebabCase } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
+import {} from 'voca';
 
 /**
  * Type guard to check whether an object is of type `OpenAPIV3.ReferenceObject`.
@@ -19,6 +20,11 @@ export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
 export function parseTypeName(obj: OpenAPIV3.ReferenceObject): string {
   // TODO: How do we know that this is correct?
   return pascalCase(last(obj.$ref.split('/'))!);
+}
+
+export function parseFileName(obj: OpenAPIV3.ReferenceObject): string {
+  // TODO: How do we know that this is correct?
+  return kebabCase(last(obj.$ref.split('/'))!);
 }
 
 /**

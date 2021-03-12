@@ -603,6 +603,28 @@
           }
         }
       }
+    },
+    "/test-cases/complex-schemas": {
+      "get": {
+        "tags": [
+          "test case"
+        ],
+        "operationId": "complexSchemas",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComplexTestEntity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -676,6 +698,126 @@
           }
         },
         "description": "SimpleTestEntity schema"
+      },
+      "OtherSimpleTestEntity": {
+        "$ref": "#/components/schemas/SimpleTestEntity"
+      },
+      "ComplexTestEntity": {
+        "properties": {
+          "referenceProperty": {
+            "$ref": "#/components/schemas/SimpleTestEntity"
+          },
+          "arrayProperty": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "uniqueItemsProperty": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "requiredPropertiesProperty": {
+            "type": "object",
+            "properties": {
+              "optionalProperty": {
+                "type": "string"
+              },
+              "requiredProperty": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "requiredProperty"
+            ]
+          },
+          "enumProperty": {
+            "type": "string",
+            "enum": [
+              "one",
+              "two"
+            ]
+          },
+          "oneOfProperty": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SimpleTestEntity"
+              },
+              {
+                "$ref": "#/components/schemas/TestEntity"
+              }
+            ]
+          },
+          "allOfProperty": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SimpleTestEntity"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "additionalProperty": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "anyOfProperty": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SimpleTestEntity"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "additionalProperty": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "notProperty": {
+            "not": {
+              "type": "integer"
+            }
+          },
+          "objectPropertyWithNoAdditionalProperties": {
+            "properties": {
+              "specifiedProperty": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "objectPropertyWithAdditionalProperties": {
+            "properties": {
+              "specifiedProperty": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          },
+          "objectPropertyWithNumberAdditionalProperties": {
+            "properties": {
+              "specifiedProperty": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        }
       }
     }
   }

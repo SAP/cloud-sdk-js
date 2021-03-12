@@ -110,10 +110,6 @@ export class OpenApiRequestBuilder {
     return /^\{.+\}$/.test(pathPart);
   }
 
-  private static getPlaceholderName(pathPart: string): string {
-    return pathPart.slice(1, -1);
-  }
-
   private customHeaders: Record<string, string> = {};
 
   /**
@@ -151,13 +147,6 @@ export class OpenApiRequestBuilder {
   async executeRaw(
     destination: Destination | DestinationNameAndJwt
   ): Promise<HttpResponse> {
-    // TODO: method
-    // TODO: query params
-    // TODO: path pattern
-
-    // TODO: request body
-    // TODO: headers?
-
     return executeHttpRequest(destination, {
       method: this.method,
       url: this.getPath(),
@@ -186,24 +175,19 @@ export class OpenApiRequestBuilder {
     );
   }
 
-  private getPlaceholders(): string[] {
-    const pathParts = this.pathPattern.split('/');
-    return pathParts
-      .filter(part => OpenApiRequestBuilder.isPlaceholder(part))
-      .map(part => OpenApiRequestBuilder.getPlaceholderName(part));
-  }
-
   private getPath(): string {
-    const pathParameters = [...(this.parameters?.pathParameters || [])];
+    const pathParameters = (
+      this.parameters?.pathParameters || []
+    ).map(pathParameter => encodeURIComponent(pathParameter));
     const pathParts = this.pathPattern.split('/');
     const placeholders = pathParts.filter(part =>
       OpenApiRequestBuilder.isPlaceholder(part)
     );
-    if (
-      placeholders.length !== (this.parameters?.pathParameters?.length || 0)
-    ) {
+    if (placeholders.length !== pathParameters.length) {
       // TODO: Improve error
-      throw new Error('Falsy values,');
+      throw new Error(
+        `Could not build path with path with path parameters. Expected number of parameters was ${placeholders.length}, but got ${pathParameters.length}.`
+      );
     }
     return pathParts
       .map(part =>

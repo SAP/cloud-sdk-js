@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
-import { TestEntity } from './openapi/model';
+import { TestEntity } from './model';
 
 export const TestServiceEntityApi = {
   getAllEntities: (queryParameters?: {'stringParameter'?: string,

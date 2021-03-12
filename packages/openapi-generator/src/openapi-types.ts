@@ -1,9 +1,5 @@
 import type { OpenAPIV3 } from 'openapi-types';
 
-/**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Representation of a parsed OpenApi Service.
- */
 export interface OpenApiDocument {
   serviceName: string;
   npmPackageName: string;
@@ -11,6 +7,9 @@ export interface OpenApiDocument {
   originalFileName: string;
   tags: string[];
   operations: OpenApiOperation[];
+  components: {
+    schemas: OpenApiNamedSchema[];
+  };
 }
 
 /**
@@ -77,4 +76,86 @@ export interface SchemaMetadata {
   innerType: string;
   isInnerTypeReferenceType: boolean;
   arrayLevel?: number;
+}
+
+// export type OpenApiSchemaObject =
+//   | OpenApiArraySchemaObject
+//   | OpenApiNonArraySchemaObject;
+// export type OpenApiNamedSchemaObject = OpenApiSchemaObject & { name: string };
+// export interface OpenApiArraySchemaObject
+//   extends Omit<OpenAPIV3.ArraySchemaObject, 'items'> {
+//   items: OpenApiSchemaObject | OpenAPIV3.ReferenceObject;
+// }
+
+// export interface OpenApiNamedReferenceObject extends OpenAPIV3.ReferenceObject {
+//   name: string;
+// }
+
+// export type OpenApiNonArraySchemaObject = Omit<
+//   OpenAPIV3.NonArraySchemaObject,
+//   'properties'
+// > & {
+//   properties?: (OpenApiNamedSchemaObject | OpenApiNamedReferenceObject)[];
+//   oneOf?: (OpenApiSchemaObject | OpenAPIV3.ReferenceObject)[];
+// };
+
+// TODO create completely custom types. This will be too complicated
+
+export interface Named {
+  name: string;
+}
+
+export type OpenApiSchema =
+  | OpenAPIV3.ReferenceObject
+  | OpenApiArraySchema
+  | OpenApiSimpleSchema
+  | OpenApiObjectSchema
+  | OpenApiEnumSchema
+  | OpenApiOneOfSchema
+  | OpenApiAllOfSchema
+  | OpenApiAnyOfSchema
+  | OpenApiNotSchema;
+
+export interface OpenApiNamedSchema extends Named {
+  schema: OpenApiSchema;
+}
+
+export interface OpenApiArraySchema {
+  type: 'array';
+  items: any;
+  uniqueItems: boolean;
+}
+
+export interface OpenApiSimpleSchema {
+  type: string;
+}
+
+export interface OpenApiEnumSchema extends OpenApiSimpleSchema {
+  enum: string[];
+}
+
+export interface OpenApiObjectSchema {
+  type: 'object';
+  properties: OpenApiObjectSchemaProperty[];
+  additionalProperties: boolean | OpenApiSchema;
+}
+
+export interface OpenApiOneOfSchema {
+  oneOf: OpenApiSchema[];
+}
+
+export interface OpenApiAllOfSchema {
+  allOf: OpenApiSchema[];
+}
+
+export interface OpenApiAnyOfSchema {
+  anyOf: OpenApiSchema[];
+}
+
+export interface OpenApiNotSchema {
+  not: OpenApiSchema;
+}
+
+export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
+  required: boolean;
 }

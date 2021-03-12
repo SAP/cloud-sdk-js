@@ -1,5 +1,4 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
-import voca from 'voca';
+import { codeBlock, kebabCase } from '@sap-cloud-sdk/util';
 import { OpenApiDocument } from '../openapi-types';
 
 /**
@@ -8,23 +7,31 @@ import { OpenApiDocument } from '../openapi-types';
  * @param openApiDocument Parsed service.
  * @returns The index file contents.
  */
-export function indexFile(openApiDocument: OpenApiDocument): string {
+export function exportAllFiles(fileNames: string[]): string {
+  return codeBlock`${fileNames
+    .map(fileName => exportAll(`${kebabCase(fileName)}`))
+    .join('\n')}`;
+}
+
+export function apiIndexFile(openApiDocument: OpenApiDocument): string {
+  const apiFiles = openApiDocument.tags.map(tag => `${tag}Api`);
+  const files = [
+    ...apiFiles,
+    ...(openApiDocument.components.schemas.length ? ['model'] : [])
+  ];
   return codeBlock`
-export * from './openapi/model';
-${getApiFilesForIndex(openApiDocument)
-  .map(api => exportAll(api))
-  .join('\n')}
-`;
+    ${exportAllFiles(files)}
+  `;
+}
+
+export function modelIndexFile(openApiDocument: OpenApiDocument): string {
+  return codeBlock`
+    ${exportAllFiles(
+      openApiDocument.components.schemas.map(schema => schema.name)
+    )}
+  `;
 }
 
 function exportAll(file: string) {
   return `export * from './${file}';`;
-}
-
-function getApiFilesForIndex(openApiDocument: OpenApiDocument): string[] {
-  return openApiDocument.tags.map(tag => buildApiFileNameUsedByIndexFile(tag));
-}
-
-function buildApiFileNameUsedByIndexFile(apiName: string) {
-  return `${voca.kebabCase(apiName + 'Api')}`;
 }

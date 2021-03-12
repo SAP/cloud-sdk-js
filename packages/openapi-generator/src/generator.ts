@@ -5,18 +5,19 @@ import { resolve, parse, basename, join } from 'path';
 import {
   createLogger,
   ErrorWithCause,
-  UniqueNameGenerator
+  UniqueNameGenerator,
+  kebabCase
 } from '@sap-cloud-sdk/util';
 import execa = require('execa');
-import voca from 'voca';
 import { GlobSync } from 'glob';
 import { GeneratorOptions } from './options';
 import {
   apiFile,
-  indexFile,
   packageJson,
   genericDescription,
-  readme
+  readme,
+  apiIndexFile,
+  modelIndexFile
 } from './wrapper-files';
 import { OpenApiDocument, OpenApiOperation } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
@@ -26,6 +27,7 @@ import { tsconfigJson } from './wrapper-files/tsconfig-json';
 import { transpileDirectory } from './generator-utils';
 import { createFile } from './wrapper-files/create-file';
 import { copyFile } from './wrapper-files/copy-file';
+import { interfaceFile } from './wrapper-files/interface-file';
 
 const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -78,8 +80,20 @@ async function generateSDKSources(
   // TODO: This isn't really "request builder" anymore
   logger.info(`Generating request builder in ${serviceDir}.`);
   // TODO: what about overwrite?
+  if (openApiDocument.components.schemas.length) {
+    const modelDir = resolve(serviceDir, 'model');
+    await createInterfaceFiles(modelDir, openApiDocument);
+    await createFile(
+      modelDir,
+      'index.ts',
+      modelIndexFile(openApiDocument),
+      true
+    );
+  }
+
   await createApis(serviceDir, openApiDocument);
-  await createFile(serviceDir, 'index.ts', indexFile(openApiDocument), true);
+  await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
+
   if (options.generatePackageJson) {
     logger.debug(`Generating package.json in ${serviceDir}.`);
 
@@ -137,6 +151,23 @@ async function createApis(
   );
 }
 
+async function createInterfaceFiles(
+  dir: string,
+  openApiDocument: OpenApiDocument
+): Promise<void> {
+  await mkdir(dir, { recursive: true });
+  await Promise.all(
+    openApiDocument.components.schemas.map(schema =>
+      createFile(
+        dir,
+        `${kebabCase(schema.name)}.ts`,
+        interfaceFile(schema),
+        true
+      )
+    )
+  );
+}
+
 function findOperationsWithTag(
   openApiDocument: OpenApiDocument,
   tag: string
@@ -147,7 +178,7 @@ function findOperationsWithTag(
 }
 
 function buildApiFileName(apiName: string) {
-  return `${voca.kebabCase(apiName + 'Api')}.ts`;
+  return `${kebabCase(apiName + 'Api')}.ts`;
 }
 
 /**

@@ -18,11 +18,7 @@ export function apiFile(
   const requestBodyTypes = getRequestBodyReferenceTypes(operations);
   return codeBlock`
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-${
-  requestBodyTypes
-    ? `import { ${requestBodyTypes} } from './openapi/model';`
-    : ''
-}
+${requestBodyTypes ? `import { ${requestBodyTypes} } from './model';` : ''}
 
 export const ${serviceName}${apiNamePascal}Api = {
   ${getOperations(operations, apiNamePascal)}

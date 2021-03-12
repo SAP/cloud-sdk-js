@@ -3,7 +3,5 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-      
-      export type SimpleTestEntity = {
-    stringProperty: string;
-  } | Record<string, any>;
+      import { SimpleTestEntity } from './simple-test-entity';
+      export type OtherSimpleTestEntity = SimpleTestEntity;

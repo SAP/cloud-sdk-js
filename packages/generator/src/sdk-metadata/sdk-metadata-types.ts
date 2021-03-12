@@ -77,4 +77,4 @@ type DateTimeString = string;
 /**
  * String fields containing a text formatted with multiple lines.
  */
-type MultiLineText = string
+type MultiLineText = string;

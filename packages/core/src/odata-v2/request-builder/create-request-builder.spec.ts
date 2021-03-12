@@ -1,5 +1,6 @@
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
+import { AxiosResponse } from 'axios';
 import {
   defaultDestination,
   mockCreateRequest
@@ -218,7 +219,7 @@ describe('CreateRequestBuilder', () => {
 
       const actual = await new CreateRequestBuilder(TestEntity, entity).executeRaw(
         defaultDestination
-      );
+      ) as AxiosResponse;
 
       expect(actual.data.d).toEqual(postBody);
       expect(actual.config.method).toBe('post');

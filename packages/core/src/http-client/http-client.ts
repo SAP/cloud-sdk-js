@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as https from 'https';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import {
   buildHeadersForDestination,
   Destination,
@@ -126,16 +126,6 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  */
 export const executeHttpRequest = execute(executeWithAxios);
 
-/**
- * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
- * and executes it (using Axios). The original `AxiosResponse` is returned.
- *
- * @param destination - A destination or a destination name and a JWT.
- * @param requestConfig - Any object representing an HTTP request.
- * @returns Promise resolving to an `AxiosResponse`.
- */
-export const executeHttpRequestReturnAxiosResponse = execute(executeWithAxiosReturnAxiosResponse);
-
 function buildDestinationHttpRequestConfig(
   destination: Destination,
   headers: Record<string, string>
@@ -198,10 +188,6 @@ function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest{
 }
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
-  return axios.request(mergeRequestWithAxiosDefaults(request));
-}
-
-function executeWithAxiosReturnAxiosResponse(request: HttpRequest): Promise<AxiosResponse> {
   return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 

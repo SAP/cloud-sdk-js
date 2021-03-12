@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { AxiosResponse } from 'axios';
 import {
   defaultDestination,
   mockUpdateRequest
@@ -347,10 +348,10 @@ describe('UpdateRequestBuilder', () => {
 
       const actual = await new UpdateRequestBuilder(TestEntity, entity).executeRaw(
         defaultDestination
-      );
-      expect(actual!.data).toEqual(response);
-      expect(actual!.config.method).toEqual('patch');
-      expect(actual!.config.baseURL).toEqual(defaultDestination.url);
+      ) as AxiosResponse;
+      expect(actual.data).toEqual(response);
+      expect(actual.config.method).toEqual('patch');
+      expect(actual.config.baseURL).toEqual(defaultDestination.url);
     });
   });
 });

@@ -1,4 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { AxiosResponse } from 'axios';
 import {
   defaultDestination,
   mockCountRequest
@@ -105,7 +106,7 @@ describe('CountRequestBuilderV2', () => {
           const actual = await requestBuilder
             .getAll()
             .count()
-            .executeRaw(defaultDestination);
+            .executeRaw(defaultDestination) as AxiosResponse;
           expect(actual.data).toEqual(4711);
           expect(actual.config.method).toBe('get');
           expect(actual.config.baseURL).toBe(defaultDestination.url);

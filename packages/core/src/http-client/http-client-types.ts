@@ -62,6 +62,7 @@ interface KnownHttpResponseFields {
   data: any;
   status: number;
   headers: any;
+  request?: any;
 }
 
 export interface HttpResponse extends KnownHttpResponseFields {

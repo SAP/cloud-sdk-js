@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { Entity } from '../entity';
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import {
@@ -7,6 +6,7 @@ import {
   DestinationNameAndJwt
 } from '../../connectivity/scp-cf';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
+import { HttpResponse } from '../../http-client';
 import type { GetAllRequestBuilder } from './get-all-request-builder-base';
 
 /**
@@ -48,17 +48,17 @@ export class CountRequestBuilder<
   }
 
   /**
-   * Execute request and return the original `AxiosResponse`.
+   * Execute request and return an [[HttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an `AxiosResponse`.
+   * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<AxiosResponse>{
+  ): Promise<HttpResponse>{
     return this.build(destination, options)
-      .then(request => request.executeRaw());
+      .then(request => request.execute());
   }
 }

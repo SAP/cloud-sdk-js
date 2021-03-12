@@ -1,5 +1,4 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { AxiosResponse } from 'axios';
 import {
   DestinationOptions,
   Destination,
@@ -12,6 +11,7 @@ import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
 import type { Link } from '../selectable';
+import { HttpResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -103,18 +103,18 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Execute request and return the the original `AxiosResponse`.
+   * Execute request and return an [[HttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an `AxiosResponse`.
+   * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<AxiosResponse>{
+  ): Promise<HttpResponse>{
     return this.build(destination, options)
-      .then(request => request.executeRaw());
+      .then(request => request.execute());
   }
 }
 

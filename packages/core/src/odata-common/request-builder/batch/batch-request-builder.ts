@@ -1,6 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { AxiosResponse } from 'axios';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
 import { Constructable, Entity } from '../../entity';
@@ -10,6 +9,7 @@ import {
   DestinationRetrievalOptions
 } from '../../../connectivity/scp-cf';
 import { ODataRequest } from '../../request/odata-request';
+import { HttpResponse } from '../../../http-client';
 import { BatchChangeSet } from './batch-change-set';
 import { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';
@@ -59,18 +59,18 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
   }
 
   /**
-   * Execute request and return the original `AxiosResponse`.
+   * Execute request and return an [[HttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an `AxiosResponse`.
+   * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<AxiosResponse>{
+  ): Promise<HttpResponse>{
     return this.build(destination, options)
-      .then(request => request.executeRaw());
+      .then(request => request.execute());
   }
 
   private setPayload(

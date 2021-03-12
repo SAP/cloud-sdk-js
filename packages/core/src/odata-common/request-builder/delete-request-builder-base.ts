@@ -1,5 +1,4 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { AxiosResponse } from 'axios';
 import {
   DestinationOptions,
   Destination,
@@ -9,6 +8,7 @@ import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataDeleteRequestConfig } from '../request';
 import type { ODataUri } from '../uri-conversion';
 import type { FieldType } from '../selectable';
+import { HttpResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
@@ -76,18 +76,18 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Execute request and return the original `AxiosResponse`.
+   * Execute request and return an [[HttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an `AxiosResponse`.
+   * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<AxiosResponse>{
+  ): Promise<HttpResponse>{
     return this.build(destination, options)
-      .then(request => request.executeRaw());
+      .then(request => request.execute());
   }
 
   abstract setVersionIdentifier(eTag: string): this;

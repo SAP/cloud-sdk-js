@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { AxiosResponse } from 'axios';
 import {
   defaultDestination,
   mockCsrfTokenRequest
@@ -91,7 +92,7 @@ describe('action import request builder', () => {
 
       const actual = await testActionImportNoParameterNoReturnType({}).executeRaw(
         destination
-      );
+      ) as AxiosResponse;
       expect(actual.data).toEqual({});
       expect(actual.config.method).toBe('post');
       expect(actual.config.baseURL).toBe(destination.url);

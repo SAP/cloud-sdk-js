@@ -6,7 +6,6 @@ import {
   pickValueIgnoreCase,
   propertyExists
 } from '@sap-cloud-sdk/util';
-import { AxiosResponse } from 'axios';
 import {
   Destination,
   sanitizeDestination,
@@ -20,8 +19,7 @@ import {
 } from '../remove-slashes';
 import {
   HttpResponse,
-  executeHttpRequest,
-  executeHttpRequestReturnAxiosResponse
+  executeHttpRequest
 } from '../../http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
@@ -240,27 +238,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     }
 
     return executeHttpRequest(destination, {
-      headers: await this.headers(),
-      url: this.relativeUrl(),
-      method: this.config.method,
-      data: this.config.payload
-    }).catch(error => {
-      throw constructError(error, this.config.method, this.serviceUrl());
-    });
-  }
-
-  /**
-   * Execute the given request and return the original `AxiosResponse`.
-   *
-   * @returns Promise resolving to an `AxiosResponse`.
-   */
-  async executeRaw(): Promise<AxiosResponse> {
-    const destination = this.destination;
-    if (!destination) {
-      throw Error('The destination cannot be undefined.');
-    }
-
-    return executeHttpRequestReturnAxiosResponse(destination, {
       headers: await this.headers(),
       url: this.relativeUrl(),
       method: this.config.method,

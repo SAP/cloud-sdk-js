@@ -1,5 +1,4 @@
 import { identity } from '@sap-cloud-sdk/util';
-import { AxiosResponse } from 'axios';
 import {
   Constructable,
   UpdateRequestBuilder as UpdateRequestBuilderBase
@@ -13,6 +12,7 @@ import {
 } from '../../connectivity/scp-cf';
 import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
+import { HttpResponse } from '../../http-client';
 
 export class UpdateRequestBuilder<
   EntityT extends Entity
@@ -57,16 +57,16 @@ export class UpdateRequestBuilder<
   }
 
   /**
-   * Execute request and return the original `AxiosResponse`.
+   * Execute request and return an [[HttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an `AxiosResponse`.
+   * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<AxiosResponse> {
+  ): Promise<HttpResponse> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       throw new Error('Cannot execute an update request with empty payload.');
     }

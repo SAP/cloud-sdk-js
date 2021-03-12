@@ -40,7 +40,7 @@ export interface PregeneratedLibrary {
    * @type {string}
    * @memberof PregeneratedLibrary
    */
-  installLibrarySnippet: string;
+  installLibrarySnippet: MultiLineText;
   /**
    * Compatability version note. Is not filled yet since there is no flow to detect API changes since the versions are not maintend and the hash workaround is not yet in place.
    * @type {string}
@@ -62,9 +62,9 @@ export interface Links {
 
 export interface GenerationAndUsage {
   successfulGenerationVerified: boolean;
-  generationSteps: UrlString;
-  apiSpecificUsage: string;
-  genericUsage: string;
+  generationSteps: string;
+  apiSpecificUsage: MultiLineText;
+  genericUsage: MultiLineText;
   links: Links;
 }
 
@@ -72,4 +72,9 @@ type UrlString = string;
 /**
  * Type representing a DateTimeString in unix timestamp format: "/Date(1612342001106)/"
  */
-type DateTimeString = string; //
+type DateTimeString = string;
+
+/**
+ * String fields containing a text formatted with multiple lines.
+ */
+type MultiLineText = string

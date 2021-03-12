@@ -7,11 +7,11 @@
   "private": true,
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "test": "yarn root:jest --coverage ",
-    "test:local": "yarn root:jest",
+    "test": "yarn jest --coverage ",
+    "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
-    "check:dependencies": "yarn root:depcheck ."
+    "check:dependencies": "depcheck ."
   },
   "dependencies": {
     "@sap-cloud-sdk/analytics": "^1.39.0",

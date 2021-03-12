@@ -32,7 +32,7 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --immutable
+      - run: yarn install --frozen-lockfile
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
@@ -53,7 +53,7 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --immutable
+      - run: yarn install --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
       - run: yarn check:test-service
@@ -85,7 +85,7 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --immutable
+      - run: yarn install --frozen-lockfile
       - run: yarn test:e2e
   canary-release:
     if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/v')
@@ -104,7 +104,7 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --immutable
+      - run: yarn install --frozen-lockfile
       - name: Canary Release
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
@@ -121,7 +121,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: yarn install --immutable
+      - run: yarn install --frozen-lockfile
       - uses: ./.github/actions/get-changelog
         name: Get Changelog
         id: get-changelog

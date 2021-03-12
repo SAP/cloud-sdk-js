@@ -12,9 +12,9 @@
     "start": "pm2 start server.js || pm2 restart server.js",
     "stop": "pm2 stop server.js",
     "deploy": "cds deploy --to sqlite",
-    "test": "yarn pretest && yarn root:jest --runInBand && yarn posttest",
-    "test:local": "yarn pretest && yarn root:jest && yarn posttest",
-    "check:dependencies": "yarn root:depcheck . --ignores='express,sqlite3,@sap/cds'"
+    "test": "yarn jest --runInBand",
+    "test:local": "yarn jest",
+    "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",

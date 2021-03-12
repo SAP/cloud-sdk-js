@@ -62,6 +62,7 @@ interface KnownHttpResponseFields {
   data: any;
   status: number;
   headers: any;
+  request?: any;
 }
 
 export interface HttpResponse extends KnownHttpResponseFields {
@@ -77,5 +78,4 @@ export interface HttpReponse extends KnownHttpResponseFields {
 
 export interface DefaultHttpResponse extends HttpResponse {
   request: any;
-  [otherKey: string]: any;
 }

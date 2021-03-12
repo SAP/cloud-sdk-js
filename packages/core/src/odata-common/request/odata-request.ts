@@ -258,7 +258,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequestReturnDefaultResponse(destination, {
+    const a = executeHttpRequest(destination, {
       headers: await this.headers(),
       url: this.relativeUrl(),
       method: this.config.method,

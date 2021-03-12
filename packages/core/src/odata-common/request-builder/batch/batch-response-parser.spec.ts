@@ -59,7 +59,7 @@ describe('batch response parser', () => {
       headers: Record<string, any> = {
         'content-type': `multipart/mixed; boundary=${batchId}`
       }
-    ) => ({ data, headers, status: 200 });
+    ) => ({ data, headers, status: 200, request: undefined });
 
     it('correctly splits batch response', () => {
       const body = [

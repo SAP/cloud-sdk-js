@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- A mandatory property `request` is added to the `HttpResponse`.
 
 ## New Functionality
 

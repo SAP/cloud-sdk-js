@@ -16,6 +16,9 @@
   "bin": {
     "sap-cloud-sdk": "./bin/run"
   },
+  "publishConfig": {
+    "access": "private"
+  },
   "files": [
     "dist/**/*.js",
     "dist/**/*.js.map",
@@ -28,7 +31,7 @@
     "readme": "oclif-dev readme",
     "prepare": "yarn compile",
     "test": "yarn jest --coverage",
-    "check:dependencies": "yarn root:depcheck . --ignores='@oclif/plugin-*'"
+    "check:dependencies": "depcheck . --ignores=@oclif/plugin-*"
   },
   "dependencies": {
     "@oclif/command": "^1.5.19",

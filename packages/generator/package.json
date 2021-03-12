@@ -52,6 +52,7 @@
   "devDependencies": {
     "@types/yargs": "^16.0.0",
     "mock-fs": "^4.13.0",
-    "@sap/cloud-sdk-vdm-business-partner-service": "^1.24.0"
+    "@sap/cloud-sdk-vdm-business-partner-service": "^1.24.0",
+    "@sap-cloud-sdk/test-util": "^1.39.0"
   }
 }

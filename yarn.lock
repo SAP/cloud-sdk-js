@@ -1653,9 +1653,9 @@
     "@octokit/openapi-types" "^5.2.2"
 
 "@openapitools/openapi-generator-cli@^2.1.4":
-  version "2.1.26"
-  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.1.26.tgz#69108458c0c1a0a3964d9b3e2f0360b195c8ea5f"
-  integrity sha512-wr4LHQCoZCvLhf0/UY/9AZYTVi3nWvvOT+/JFjZYWDA/TIqC4eWxPjzM5tnSzGed6gBTuNHEh8gUonDz6WOZDw==
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.2.1.tgz#7945318ffb2965d7ebad5b73f760403b1ecb0f3a"
+  integrity sha512-fAvhMQvZbI3zJmBiT7kvAREX1w4qYpRGRlAmLlO+q74W8zs8BU4BNTjamm6i2BBYmglrNIeLVroRJpFUZ54jmA==
   dependencies:
     "@nestjs/common" "7.6.13"
     "@nestjs/core" "7.6.13"

@@ -306,27 +306,4 @@ describe('generic http client', () => {
       ).rejects.toThrowErrorMatchingSnapshot();
     });
   });
-
-  describe('executeRawHttpRequest', () => {
-    beforeAll(() => {
-      nock.cleanAll();
-    });
-
-    it('takes a generic HTTP request and executes it', async () => {
-      const rawResponse = { res: 'ult' };
-      nock('https://example.com')
-        .get('/api/entity')
-        .reply(200, rawResponse);
-
-      const config = {
-        method: HttpMethod.GET,
-        url: '/api/entity'
-      };
-
-      const response = await executeHttpRequestReturnAxiosResponse(httpsDestination, config);
-      expect(response.data).toEqual(rawResponse);
-      expect(response.config.method).toBe('get');
-      expect(response.config.baseURL).toBe('https://example.com');
-    });
-  });
 });

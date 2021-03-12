@@ -8,7 +8,7 @@ import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataDeleteRequestConfig } from '../request';
 import type { ODataUri } from '../uri-conversion';
 import type { FieldType } from '../selectable';
-import { HttpResponse } from '../../http-client';
+import { DefaultHttpResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
@@ -76,18 +76,18 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Execute request and return an [[HttpResponse]].
+   * Execute request and return a [[DefaultHttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpResponse]].
+   * @returns A promise resolving to a [[DefaultHttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpResponse>{
+  ): Promise<DefaultHttpResponse>{
     return this.build(destination, options)
-      .then(request => request.execute());
+      .then(request => request.executeRaw());
   }
 
   abstract setVersionIdentifier(eTag: string): this;

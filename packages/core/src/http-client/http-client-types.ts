@@ -62,7 +62,6 @@ interface KnownHttpResponseFields {
   data: any;
   status: number;
   headers: any;
-  request?: any;
 }
 
 export interface HttpResponse extends KnownHttpResponseFields {
@@ -73,5 +72,10 @@ export interface HttpResponse extends KnownHttpResponseFields {
  * @deprecated Since v1.6.4. Use [[HttpResponse]] instead.
  */
 export interface HttpReponse extends KnownHttpResponseFields {
+  [otherKey: string]: any;
+}
+
+export interface DefaultHttpResponse extends KnownHttpResponseFields {
+  request: any;
   [otherKey: string]: any;
 }

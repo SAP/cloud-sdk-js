@@ -5,7 +5,7 @@ import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-confi
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../request';
 import { Destination, DestinationNameAndJwt, DestinationOptions } from '../../connectivity/scp-cf/destination';
-import { HttpResponse } from '../../http-client';
+import { DefaultHttpResponse } from '../../http-client';
 
 export abstract class GetRequestBuilder<
     EntityT extends Entity,
@@ -46,18 +46,18 @@ export abstract class GetRequestBuilder<
   }
 
   /**
-   * Execute request and return an [[HttpResponse]].
+   * Execute request and return a [[DefaultHttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpResponse]].
+   * @returns A promise resolving to a [[DefaultHttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpResponse>{
+  ): Promise<DefaultHttpResponse>{
     return this.build(destination, options)
-      .then(request => request.execute());
+      .then(request => request.executeRaw());
   }
 }
 

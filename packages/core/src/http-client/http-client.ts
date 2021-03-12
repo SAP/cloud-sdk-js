@@ -11,6 +11,7 @@ import {
 } from '../connectivity/scp-cf';
 import { getAgentConfig } from './http-agent';
 import {
+  DefaultHttpResponse,
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
   HttpRequest,
@@ -126,6 +127,16 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  */
 export const executeHttpRequest = execute(executeWithAxios);
 
+/**
+ * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
+ * and executes it (using Axios). It returns a [[DefaultHttpResponse]].
+ *
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
+ * @returns Promise resolving to a [[DefaultHttpResponse]].
+ */
+export const executeHttpRequestReturnDefaultResponse = execute(executeWithAxiosReturnDefaultResponse);
+
 function buildDestinationHttpRequestConfig(
   destination: Destination,
   headers: Record<string, string>
@@ -188,6 +199,10 @@ function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest{
 }
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
+  return axios.request(mergeRequestWithAxiosDefaults(request));
+}
+
+function executeWithAxiosReturnDefaultResponse(request: HttpRequest): Promise<DefaultHttpResponse> {
   return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 

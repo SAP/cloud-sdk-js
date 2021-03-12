@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import {
   defaultDestination,
   mockDestinationsEnv,
@@ -143,10 +142,9 @@ describe('GetAllRequestBuilder', () => {
         responseBody: rawResponse
       });
 
-      const actual = await requestBuilder.executeRaw(defaultDestination) as AxiosResponse;
+      const actual = await requestBuilder.executeRaw(defaultDestination);
       expect(actual.data).toEqual(rawResponse);
-      expect(actual.config.method).toBe('get');
-      expect(actual.config.baseURL).toBe(defaultDestination.url);
+      expect(actual.request.method).toBe('GET');
     });
   });
 });

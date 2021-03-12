@@ -1,6 +1,5 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { AxiosResponse } from 'axios';
 import {
   defaultDestination,
   mockDeleteRequest
@@ -127,11 +126,10 @@ describe('DeleteRequestBuilder', () => {
       const actual = await new DeleteRequestBuilder(TestEntity, {
         KeyPropertyGuid: keyPropGuid,
         KeyPropertyString: keyPropString
-      }).executeRaw(defaultDestination) as AxiosResponse;
+      }).executeRaw(defaultDestination);
 
       expect(actual.data).toEqual('');
-      expect(actual.config.method).toBe('delete');
-      expect(actual.config.baseURL).toBe(defaultDestination.url);
+      expect(actual.request.method).toBe('DELETE');
     });
   });
 });

@@ -19,7 +19,7 @@ import {
 } from '../remove-slashes';
 import {
   HttpResponse,
-  executeHttpRequest
+  executeHttpRequest, executeHttpRequestReturnDefaultResponse, DefaultHttpResponse
 } from '../../http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
@@ -238,6 +238,27 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     }
 
     return executeHttpRequest(destination, {
+      headers: await this.headers(),
+      url: this.relativeUrl(),
+      method: this.config.method,
+      data: this.config.payload
+    }).catch(error => {
+      throw constructError(error, this.config.method, this.serviceUrl());
+    });
+  }
+
+  /**
+   * Execute the given request and return the according promise.
+   *
+   * @returns Promise resolving to the requested data
+   */
+  async executeRaw(): Promise<DefaultHttpResponse> {
+    const destination = this.destination;
+    if (!destination) {
+      throw Error('The destination cannot be undefined.');
+    }
+
+    return executeHttpRequestReturnDefaultResponse(destination, {
       headers: await this.headers(),
       url: this.relativeUrl(),
       method: this.config.method,

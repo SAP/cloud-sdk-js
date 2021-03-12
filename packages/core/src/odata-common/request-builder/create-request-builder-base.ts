@@ -11,7 +11,7 @@ import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
 import type { Link } from '../selectable';
-import { HttpResponse } from '../../http-client';
+import { DefaultHttpResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -103,18 +103,18 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Execute request and return an [[HttpResponse]].
+   * Execute request and return a [[DefaultHttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpResponse]].
+   * @returns A promise resolving to a [[DefaultHttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpResponse>{
+  ): Promise<DefaultHttpResponse>{
     return this.build(destination, options)
-      .then(request => request.execute());
+      .then(request => request.executeRaw());
   }
 }
 

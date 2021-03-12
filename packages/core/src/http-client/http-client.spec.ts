@@ -11,7 +11,7 @@ import {
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  executeHttpRequest, executeHttpRequestReturnAxiosResponse
+  executeHttpRequest
 } from './http-client';
 
 describe('generic http client', () => {

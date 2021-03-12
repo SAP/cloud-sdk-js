@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [core] Support `executeRaw` in all `RequestBuilder`, which returns `AxiosResponse` without deserialization.
+- [core] Support `executeRaw` in all `RequestBuilder`, which returns `HttpResponse` that contains raw response and original request.
 
 ## Improvements
 

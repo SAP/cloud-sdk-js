@@ -10,9 +10,6 @@
     "**/*-csn.json"
   ],
   "private": true,
-  "publishConfig": {
-    "access": "restricted"
-  },
   "scripts": {
     "test": "echo 'Nothing to test here.'",
     "check:dependencies": "echo Nothing to check here."

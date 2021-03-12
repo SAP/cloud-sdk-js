@@ -12,7 +12,7 @@ import {
 } from '../../connectivity/scp-cf';
 import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DefaultHttpResponse } from '../../http-client';
+import { HttpResponse } from '../../http-client';
 
 export class UpdateRequestBuilder<
   EntityT extends Entity
@@ -57,16 +57,16 @@ export class UpdateRequestBuilder<
   }
 
   /**
-   * Execute request and return a [[DefaultHttpResponse]].
+   * Execute request and return an [[HttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to a [[DefaultHttpResponse]].
+   * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<DefaultHttpResponse> {
+  ): Promise<HttpResponse> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       throw new Error('Cannot execute an update request with empty payload.');
     }

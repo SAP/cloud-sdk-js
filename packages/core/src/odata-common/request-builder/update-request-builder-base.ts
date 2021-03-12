@@ -5,7 +5,7 @@ import { ODataUri } from '../uri-conversion';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
-import { DefaultHttpResponse } from '../../http-client';
+import { HttpResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -214,8 +214,8 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   protected async executeRequestRaw(
     request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
-  ): Promise<DefaultHttpResponse> {
-    return request.executeRaw();
+  ): Promise<HttpResponse> {
+    return request.execute();
   }
 
   protected getPayload(): Record<string, any> {

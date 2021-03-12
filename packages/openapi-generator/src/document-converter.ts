@@ -6,10 +6,8 @@ import { load } from 'js-yaml';
 import {
   camelCase,
   ErrorWithCause,
-  flatten,
   partition,
   pascalCase,
-  unique,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
 import { Method, methods } from './openapi-types';
@@ -25,9 +23,7 @@ export async function convertOpenApiSpec(
 ): Promise<OpenAPIV3.Document> {
   const file = await parseFileAsJson(filePath);
   const openApiDocument = await convertDocToOpenApiV3(file);
-  return convertDocWithApiNameTag(
-    convertDocToUniqueOperationIds(openApiDocument)
-  );
+  return convertDocToUniqueOperationIds(openApiDocument);
 }
 
 /**
@@ -70,58 +66,6 @@ export async function convertDocToOpenApiV3(
       err
     );
   }
-}
-
-/**
- * Modify spec to contain the 'default' tag when no tags are defined.
- * @param openApiDocument OpenAPI JSON document.
- * @returns The modified document.
- */
-export function convertDocWithApiNameTag(
-  openApiDocument: OpenAPIV3.Document
-): OpenAPIV3.Document {
-  const defaultTag = 'default';
-
-  executeForAllOperationObjects(
-    openApiDocument,
-    (param: ExecuteForAllOperationObjectsParam) => {
-      param.operation.tags = getTags(
-        param.extensionApiName,
-        param.operation.tags,
-        defaultTag
-      );
-    }
-  );
-
-  openApiDocument.tags = collectTags(openApiDocument).map(tag => ({
-    name: tag
-  }));
-
-  return openApiDocument;
-}
-
-function collectTags(openApiDocument: OpenAPIV3.Document): string[] {
-  return unique(
-    flatten(
-      Object.entries(
-        openApiDocument.paths
-      ).map(([, pathDefinition]: [string, OpenAPIV3.PathItemObject]) =>
-        methods.map(method => pathDefinition[method]?.tags)
-      )
-    )
-  ).filter(tag => !!tag);
-}
-
-function getTags(
-  extensionApiName: string | undefined,
-  originalTags: string[] | undefined,
-  globalTag: string
-): string[] {
-  return extensionApiName
-    ? [extensionApiName]
-    : originalTags?.length
-    ? originalTags
-    : [globalTag];
 }
 
 /**

@@ -3,15 +3,16 @@ import { OpenAPIV3 } from 'openapi-types';
 import { Method, OpenApiOperation } from '../openapi-types';
 import { parseRequestBody } from './request-body';
 import { parseParameters } from './parameters';
+import { apiNameExtension } from './extensions';
 
 export function parseOperation(
   path: string,
   pathItem: OpenAPIV3.PathItemObject,
   method: Method,
+  defaultApiName: string,
   refs: $Refs
 ): OpenApiOperation {
   const operation = getOperation(pathItem, method);
-  // TODO: What does the OpenApi generator do in this case?
   const requestBody = parseRequestBody(operation.requestBody, refs);
   const parameters = parseParameters(operation, refs);
 
@@ -22,7 +23,12 @@ export function parseOperation(
     requestBody,
     ...parameters,
     operationId: operation.operationId!,
-    tags: operation.tags!
+    tags: operation.tags!,
+    originalApiName:
+      operation[apiNameExtension] ||
+      pathItem[apiNameExtension] ||
+      operation.tags?.[0] ||
+      defaultApiName
   };
 }
 

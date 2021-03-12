@@ -5,11 +5,15 @@ export interface OpenApiDocument {
   npmPackageName: string;
   directoryName: string;
   originalFileName: string;
-  tags: string[];
-  operations: OpenApiOperation[];
   components: {
     schemas: OpenApiNamedSchema[];
   };
+  apis: OpenApiApi[];
+}
+
+export interface OpenApiApi {
+  name: string;
+  operations: OpenApiOperation[];
 }
 
 /**
@@ -24,6 +28,7 @@ export interface OpenApiOperation extends OpenAPIV3.OperationObject {
   requestBody?: OpenApiRequestBody;
   pathParameters: OpenApiParameter[];
   queryParameters: OpenApiParameter[];
+  originalApiName: string;
 }
 
 const supportedMethods = {

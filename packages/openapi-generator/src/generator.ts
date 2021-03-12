@@ -4,7 +4,6 @@ import { promises as promisesFs } from 'fs';
 import { resolve, parse, basename, join } from 'path';
 import {
   createLogger,
-  ErrorWithCause,
   UniqueNameGenerator,
   kebabCase
 } from '@sap-cloud-sdk/util';
@@ -19,7 +18,7 @@ import {
   apiIndexFile,
   modelIndexFile
 } from './wrapper-files';
-import { OpenApiDocument, OpenApiOperation } from './openapi-types';
+import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
@@ -136,15 +135,11 @@ async function createApis(
   openApiDocument: OpenApiDocument
 ): Promise<void> {
   await Promise.all(
-    openApiDocument.tags.map(tag =>
+    openApiDocument.apis.map(api =>
       createFile(
         serviceDir,
-        buildApiFileName(tag),
-        apiFile(
-          openApiDocument.serviceName,
-          tag,
-          findOperationsWithTag(openApiDocument, tag)
-        ),
+        `${kebabCase(api.name)}.ts`,
+        apiFile(openApiDocument.serviceName, api),
         true
       )
     )
@@ -166,70 +161,6 @@ async function createInterfaceFiles(
       )
     )
   );
-}
-
-function findOperationsWithTag(
-  openApiDocument: OpenApiDocument,
-  tag: string
-): OpenApiOperation[] {
-  return openApiDocument.operations.filter(operation =>
-    operation.tags.includes(tag)
-  );
-}
-
-function buildApiFileName(apiName: string) {
-  return `${kebabCase(apiName + 'Api')}.ts`;
-}
-
-/**
- * Generate an OpenApiClient using the OpenApi Generator CLI.
- * @param inputFilePath Location of the spec file.
- * @param serviceDir Directory to generate the service to. The resulting client will be created in `serviceDir/openapi`
- */
-async function generateOpenApiService(
-  inputFilePath: string,
-  serviceDir: string
-) {
-  // TODO: what about overwrite?
-  const generationArguments = [
-    'openapi-generator-cli',
-    'generate',
-    '--input-spec',
-    inputFilePath,
-    '--generator-name',
-    'typescript-axios',
-    '--output',
-    resolve(serviceDir, 'openapi'),
-    '--template-dir',
-    resolve(__dirname, './templates'),
-    '--api-package',
-    'api',
-    '--model-package',
-    'model',
-    '--additional-properties',
-    'withSeparateModelsAndApi=true',
-    '--skip-validate-spec'
-  ];
-
-  logger.debug(`OpenAPI generator CLI arguments: ${generationArguments}`);
-
-  try {
-    const response = await execa('npx', generationArguments, {
-      cwd: resolve(__dirname, '..')
-    });
-    if (response.stderr) {
-      throw new Error(response.stderr);
-    }
-    logger.info(
-      `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
-    );
-  } catch (err) {
-    // The generator execution creates strange error objects, hence we add the method here:
-    const errorMessage = `Could not generate the OpenApi client using the OpenApi generator CLI: ${
-      err.message || err.stderr || err.shortMessage
-    }`;
-    throw new ErrorWithCause(errorMessage, err);
-  }
 }
 
 /**
@@ -273,7 +204,7 @@ async function generateFromFile(
     vdmMapping
   );
 
-  if (!parsedOpenApiDocument.operations.length) {
+  if (!parsedOpenApiDocument.apis.length) {
     logger.warn(
       `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${filePath}`
     );

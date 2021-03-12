@@ -1,27 +1,21 @@
-import { codeBlock, pascalCase, unique } from '@sap-cloud-sdk/util';
-import { OpenApiOperation, SchemaMetadata } from '../openapi-types';
+import { codeBlock, unique } from '@sap-cloud-sdk/util';
+import { OpenApiApi, OpenApiOperation, SchemaMetadata } from '../openapi-types';
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Get the file contents for an API wrapper file.
  * @param serviceName The name of the service.
- * @param apiName The name of the API.
- * @param operations All operations, that belong to the given API.
+ * @param api Parsed OpenApi API representation.
  * @returns The generated code for the SDK API wrapper.
  */
-export function apiFile(
-  serviceName: string,
-  apiName: string,
-  operations: OpenApiOperation[]
-): string {
-  const apiNamePascal = pascalCase(apiName);
-  const requestBodyTypes = getRequestBodyReferenceTypes(operations);
+export function apiFile(serviceName: string, api: OpenApiApi): string {
+  const requestBodyTypes = getRequestBodyReferenceTypes(api.operations);
   return codeBlock`
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 ${requestBodyTypes ? `import { ${requestBodyTypes} } from './model';` : ''}
 
-export const ${serviceName}${apiNamePascal}Api = {
-  ${getOperations(operations, apiNamePascal)}
+export const ${serviceName}${api.name} = {
+  ${getOperations(api.operations)}
 };
 `;
 }
@@ -47,13 +41,8 @@ function getRequestBodyReferenceTypes(operations: OpenApiOperation[]): string {
  * @param apiName The name of the API.
  * @returns All operations as a string.
  */
-function getOperations(
-  operations: OpenApiOperation[],
-  apiName: string
-): string {
-  return operations
-    .map(operation => getOperation(operation, apiName))
-    .join(',\n');
+function getOperations(operations: OpenApiOperation[]): string {
+  return operations.map(operation => getOperation(operation)).join(',\n');
 }
 
 /**
@@ -62,7 +51,7 @@ function getOperations(
  * @param apiName The name of the API.
  * @returns The operation as a string.
  */
-function getOperation(operation: OpenApiOperation, apiName: string): string {
+function getOperation(operation: OpenApiOperation): string {
   // const params = getParams(operation);
   //   const argsQuestionMark = params.every(param => !param.required) ? '?' : '';
   //   const paramsArg = params.length
@@ -84,12 +73,6 @@ ${operation.operationId}: (${getSignatureParams(
   )}) => new OpenApiRequestBuilder(
   ${requestBuilderParams.join(',\n')}
 )`;
-}
-
-interface Parameter {
-  type: string;
-  name: string;
-  required?: boolean;
 }
 
 // function getParams(operation: OpenApiOperation): Parameter[] {

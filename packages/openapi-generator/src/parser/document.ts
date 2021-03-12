@@ -6,11 +6,13 @@ import {
   OpenApiOperation,
   OpenApiDocument,
   methods,
-  OpenApiNamedSchema
+  OpenApiNamedSchema,
+  OpenApiApi
 } from '../openapi-types';
 import { VdmMapping } from '../service-mapping';
 import { parseOperation } from './operation';
 import { parseSchema } from './schema';
+import { apiNameExtension, defaultApiName } from './extensions';
 
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
@@ -22,10 +24,10 @@ export async function parseOpenApiDocument(
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
   const components = parseComponents(document);
-  const operations = parseAllOperations(document, refs);
+  // const operations = parseAllOperations(document, refs);
   const originalFileName = basename(filePath).split('.')[0];
   return {
-    operations,
+    apis: parseApis(document, refs),
     serviceName: pascalCase(serviceName),
     npmPackageName: vdmMapping[originalFileName]
       ? vdmMapping[originalFileName].npmPackageName
@@ -34,9 +36,39 @@ export async function parseOpenApiDocument(
       ? vdmMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
-    tags: collectTags(operations),
+    // tags: collectTags(operations),
     components
   };
+}
+
+/**
+ * Collect and parse all operations of an `OpenAPIV3.Document`.
+ * @param document The OpenApi document to parse.
+ * @param refs List of crossreferences that can occur in the document.
+ * @returns A flat list of parsed operations.
+ */
+export function parseApis(
+  document: OpenAPIV3.Document,
+  refs: $Refs
+): OpenApiApi[] {
+  // TODO ensure uniqueness of names
+  const apis: Record<string, OpenApiOperation[]> = parseAllOperations(
+    document,
+    refs
+  ).reduce((apiMap, operation) => {
+    if (!apiMap[operation.originalApiName]) {
+      apiMap[operation.originalApiName] = [];
+    }
+    apiMap[operation.originalApiName].push(operation);
+    return apiMap;
+  }, {});
+
+  return Object.entries(apis)
+    .filter(([, operations]) => operations.length)
+    .map(([name, operations]) => ({
+      name: `${pascalCase(name)}Api`,
+      operations
+    }));
 }
 
 /**
@@ -55,7 +87,15 @@ export function parseAllOperations(
       ...methods
         .filter(method => pathDefinition?.[method])
         // Undefined path definitions have been filtered out in the line before
-        .map(method => parseOperation(path, pathDefinition!, method, refs))
+        .map(method =>
+          parseOperation(
+            path,
+            pathDefinition!,
+            method,
+            document[apiNameExtension] || defaultApiName,
+            refs
+          )
+        )
     ],
     []
   );

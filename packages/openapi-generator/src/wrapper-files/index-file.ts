@@ -14,9 +14,8 @@ export function exportAllFiles(fileNames: string[]): string {
 }
 
 export function apiIndexFile(openApiDocument: OpenApiDocument): string {
-  const apiFiles = openApiDocument.tags.map(tag => `${tag}Api`);
   const files = [
-    ...apiFiles,
+    ...openApiDocument.apis.map(api => api.name),
     ...(openApiDocument.components.schemas.length ? ['model'] : [])
   ];
   return codeBlock`

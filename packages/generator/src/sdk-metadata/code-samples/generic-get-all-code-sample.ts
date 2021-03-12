@@ -1,3 +1,3 @@
-import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
+import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 
-const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
+const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });

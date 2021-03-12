@@ -1,3 +1,5 @@
+import { getGeneratorVersion } from '../sdk-metadata/pregenerated-lib';
+
 export function packageJson(
   npmPackageName: string,
   version: string,
@@ -35,10 +37,10 @@ export function packageJson(
             : {})
         },
         dependencies: {
-          '@sap-cloud-sdk/core': `^${version}`
+          '@sap-cloud-sdk/core': `^${getGeneratorVersion()}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${version}`
+          '@sap-cloud-sdk/core': `^${getGeneratorVersion()}`
         },
         devDependencies: {
           typedoc: '^0.17.0',

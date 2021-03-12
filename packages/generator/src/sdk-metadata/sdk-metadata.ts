@@ -6,7 +6,7 @@ import {
   SdkMetadataHeader
 } from './sdk-metadata-types';
 import{
-  getVersion,
+  getVersionForClient,
   getPregeneratedLibrary
 } from './pregenerated-lib';
 import { getGenerationAndUsage } from './generation-and-usage';
@@ -34,7 +34,7 @@ return {
   type: 'odata',
   // For the file name with use the artifact.name from API which should be the unique identifier
   name: removeFileExtension(service.originalFileName),
-  version: getVersion(options)
+  version: getVersionForClient(options)
 };
 }
 

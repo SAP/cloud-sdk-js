@@ -19,7 +19,7 @@ export function getGeneratorVersion(): string {
     .version;
 }
 
-export function getVersion(options: GeneratorOptions): string{
+export function getVersionForClient(options: GeneratorOptions): string{
   return options.versionInPackageJson || getGeneratorVersion();
 }
 
@@ -55,7 +55,7 @@ export async function getPregeneratedLibrary(service: VdmServiceMetadata,options
       compatibilityNotes:'',
       description: getServiceDescription(service,options),
       generatedAt: getTimeStamp(),
-      version: getVersion(options)
+      version: getVersionForClient(options)
     };
   }
 }

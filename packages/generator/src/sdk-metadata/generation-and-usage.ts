@@ -21,7 +21,7 @@ export async function getGenericUsage(): Promise<string>{
 export async function getApiSpecificUsage(service: VdmServiceMetadata): Promise<string>{
   if(service.entities.length > 0){
     const genericString = (await getGenericUsage());
-    return genericString.replace(/TestEntity/g,service.entities[0].className).replace('@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service',service.npmPackageName);
+    return genericString.replace(/BusinessPartner/g,service.entities[0].className).replace('@sap/cloud-sdk-vdm-business-partner-service',service.npmPackageName);
   }
   // TODO handle cases if no entity is there in the follow up ticket.
   if(service.functionImports.length > 0){
@@ -30,6 +30,8 @@ export async function getApiSpecificUsage(service: VdmServiceMetadata): Promise<
   return '';
 }
 
+export const linkGenerationDocumentaion = 'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
+
 export function getGenerationDocumentation(): string{
-  return 'Please follow the documentation https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
+  return `Please follow the documentation ${linkGenerationDocumentaion}`;
 }

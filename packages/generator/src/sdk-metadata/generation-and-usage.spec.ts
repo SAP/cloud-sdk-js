@@ -1,5 +1,10 @@
 import { checkUrlExists } from '@sap-cloud-sdk/test-util';
-import { getApiSpecificUsage, getGenerationDocumentation, getGenericUsage } from './generation-and-usage';
+import {
+  getApiSpecificUsage,
+  getGenerationDocumentation,
+  getGenericUsage,
+  linkGenerationDocumentaion
+} from './generation-and-usage';
 
 describe('generation-and-usage',()=>{
   it('creates generic usage example',async()=>{
@@ -10,8 +15,8 @@ describe('generation-and-usage',()=>{
     await expect(getApiSpecificUsage({ npmPackageName: '@sap/dummy-package', entities : [{ className:'DummyClass' }] } as any)).resolves.toMatchSnapshot();
   });
 
-  it('gives instruction with working link',async ()=> {
-    const url = getGenerationDocumentation().match(/(http.*)/)![1];
-    checkUrlExists(url);
+  it('[E2E] gives instruction with working link',async ()=> {
+    expect(getGenerationDocumentation()).toContain(linkGenerationDocumentaion);
+    checkUrlExists(linkGenerationDocumentaion);
   });
 });

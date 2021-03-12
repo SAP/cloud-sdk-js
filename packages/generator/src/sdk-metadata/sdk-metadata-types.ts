@@ -28,7 +28,7 @@ export interface Client {
 
 export interface PregeneratedLibrary {
   /**
-   * Version of the published client library e.g. "1.23.0"  - It uses the [[getVersion]] method to get it
+   * Version of the published client library e.g. "1.23.0"  - It uses the [[getVersionForClient]] method to get it
    * @type {string}
    * @memberof PregeneratedLibrary
    */

@@ -46,7 +46,7 @@ import {
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
 import { getSdkMetadataFileNames, sdkMetaDataHeader, sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
-import { getGeneratorVersion, getServiceDescription, getVersion } from './sdk-metadata/pregenerated-lib';
+import { getGeneratorVersion, getServiceDescription, getVersionForClient } from './sdk-metadata/pregenerated-lib';
 
 const logger = createLogger({
   package: 'generator',
@@ -186,7 +186,7 @@ export async function generateSourcesForService(
       'package.json',
       packageJson(
         service.npmPackageName,
-        getVersion(options),
+        getVersionForClient(options),
         getServiceDescription(service, options),
         options.sdkAfterVersionScript
       ),

@@ -10,7 +10,7 @@ describe('sdk-metadata',()=>{
    expect(sdkMetaDataHeader(service,createOptions())).toMatchSnapshot();
   });
 
-  it('generates the JS metadata content',async ()=>{
+  it('[E2E] generates the JS metadata content',async ()=>{
     await expect(sdkMetaDataJS(service,createOptions())).resolves.toMatchSnapshot();
   });
 

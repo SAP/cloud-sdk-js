@@ -2,7 +2,7 @@ import { checkUrlExists } from '@sap-cloud-sdk/test-util';
 import { getLinks } from './links';
 
 describe('links',()=>{
-  it('contains only existing links',async ()=>{
+  it('[E2E] contains only existing links',async ()=>{
     const links = getLinks();
     for(const link of Object.values(links)){
       await checkUrlExists(link);

@@ -35,8 +35,7 @@ const generatorConfigOData = {
   generateCSN: false,
   // Unnecessary options
   sdkAfterVersionScript: false,
-  s4hanaCloud: false,
-  generateSdkMetadata: false
+  s4hanaCloud: false
 };
 
 const generatorConfigOpenApi: GeneratorOptions = {

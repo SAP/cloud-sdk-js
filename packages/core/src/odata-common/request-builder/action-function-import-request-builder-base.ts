@@ -49,11 +49,11 @@ export abstract class ActionFunctionImportRequestBuilder<
   }
 
   /**
-   * Execute request and return a [[DefaultHttpResponse]].
+   * Execute request and return an [[HttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to a [[DefaultHttpResponse]].
+   * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,

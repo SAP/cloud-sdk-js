@@ -1,7 +1,7 @@
+import { checkUrlExists } from '@sap-cloud-sdk/test-util';
 import { getApiSpecificUsage, getGenerationDocumentation, getGenericUsage } from './generation-and-usage';
-import { checkUrlExists } from './links.spec';
 
-describe('sdk metadata - generation and usage content',()=>{
+describe('generation-and-usage',()=>{
   it('creates generic usage example',async()=>{
     await expect(getGenericUsage()).resolves.toMatchSnapshot();
   });

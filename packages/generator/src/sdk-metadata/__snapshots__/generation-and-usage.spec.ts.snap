@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sdk metadata - generation and usage content creates api specific usage for entity 1`] = `
+exports[`generation-and-usage creates api specific usage for entity 1`] = `
 "import { DummyClass } from '@sap/dummy-package';
 
 const resultPromise = DummyClass.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 "
 `;
 
-exports[`sdk metadata - generation and usage content creates generic usage example 1`] = `
+exports[`generation-and-usage creates generic usage example 1`] = `
 "import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
 
 const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });

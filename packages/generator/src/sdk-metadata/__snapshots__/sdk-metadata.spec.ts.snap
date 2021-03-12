@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sdk metadata - pregenerated client information returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service"`;
+exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service"`;
 
-exports[`sdk metadata generates the File names 1`] = `
+exports[`sdk-metadata generates the File names 1`] = `
 Object {
   "clientFileName": "MyService-client-js.json",
   "headerFileName": "MyService-header.json",
 }
 `;
 
-exports[`sdk metadata generates the JS metadata content 1`] = `
+exports[`sdk-metadata generates the JS metadata content 1`] = `
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": "import { TestEntity } from '@sap/cloud-sdk-vdm-test-service';
@@ -35,7 +35,7 @@ const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ dest
 }
 `;
 
-exports[`sdk metadata generates the header content 1`] = `
+exports[`sdk-metadata generates the header content 1`] = `
 Object {
   "name": "API_TEST_SRV",
   "type": "odata",

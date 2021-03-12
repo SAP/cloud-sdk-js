@@ -1,25 +1,55 @@
+/**
+ * Represents the language independent header data of the sdk metadata
+ */
 export interface SdkMetadataHeader {
-  name: string; // API_BANKDETAIL_SRV
+  /**
+   * The unique identifier of the serivice which is the file name
+   * @type {string}
+   * @memberof SdkMetadataHeader
+   */
+  name: string;
   type: 'odata' | 'rest' | 'soap';
   version: string;
 }
 
-// If generationAndUsage is not possible  e.g. SOAP  service for JS we do not put it in the array
+/**
+ * Represents the language specific data of the sdk metadata
+ */
 export interface Client {
   language: 'java' | 'javascript';
-  pregeneratedLibrary: PregeneratedLibrary | undefined; // undefined if no pregenerated exists
+  /**
+   * The information on the pregenerated library. Undefined if there is no lib generated
+   * @type {PregeneratedLibrary}
+   * @memberof Client
+   */
+  pregeneratedLibrary: PregeneratedLibrary | undefined;
   generationAndUsage: GenerationAndUsage;
 }
 
 export interface PregeneratedLibrary {
-  version: string; // version of the client  library e.g. "1.23.0" - NOT the generator and NOT the API version
+  /**
+   * Version of the published client library e.g. "1.23.0"  - It uses the [[getVersion]] method to get it
+   * @type {string}
+   * @memberof PregeneratedLibrary
+   */
+  version: string;
   generatedAt: DateTimeString;
-  description: string; // "some-description-about-the-library",
-  installLibrarySnippet: string; // "npm -i @sap/cloud-sdk-vdm-bank-detail-service" or  "<dependencies><br /><dependency><br /><groupId>com.sap.cloud.sdk.s4hana</groupId><br /><artifactId>s4hana-api-odata</artifactId><br /><version>use-latest-version-here</version><br /></dependency><br /></dependencies><br />",
-  compatibilityNotes: '';// 'You have a minor version mismatch',...
+  description: string;
+  /**
+   * Information how to install it via npm or maven
+   * @type {string}
+   * @memberof PregeneratedLibrary
+   */
+  installLibrarySnippet: string;
+  /**
+   * Compatability version note. Is not filled yet since there is no flow to detect API changes since the versions are not maintend and the hash workaround is not yet in place.
+   * @type {string}
+   * @memberof PregeneratedLibrary
+   */
+  compatibilityNotes: '';
   repository: 'maven' | 'npm';
-  repositoryLink: UrlString; // "https://www.npmjs.com/package/@sap/cloud-sdk-vdm-bank-detail-service" or https://mvnrepository.com/artifact/com.sap.cloud.sdk.cloudplatform/cloudplatform-core
-  dependencyName: string; // "@sap/cloud-sdk-vdm-bank-detail-service" or com.sap.cloud.sdk.cloudplatform/cloudplatform-core
+  repositoryLink: UrlString;
+  dependencyName: string;
 }
 
 export interface Links {
@@ -31,12 +61,15 @@ export interface Links {
 }
 
 export interface GenerationAndUsage {
-  successfulGenerationVerified: boolean; // we have tested the API spec with the generator -> true, false if not tested
-  generationSteps: string; // "some-step<br />another step <br />another step"
+  successfulGenerationVerified: boolean;
+  generationSteps: UrlString;
   apiSpecificUsage: string;
-  genericUsage: string; // import { <ServiceName> } from @sap/cloud-sdk-vdm-<service-name>-service<br /><ServiceName>.requestBuilder()<br />.<operationName>()<br />.execute(destination);
+  genericUsage: string;
   links: Links;
 }
 
 type UrlString = string;
-type DateTimeString = string; // "/Date(1612342001106)/"
+/**
+ * Type representing a DateTimeString in unix timestamp format: "/Date(1612342001106)/"
+ */
+type DateTimeString = string; //

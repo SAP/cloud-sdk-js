@@ -21,7 +21,8 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "check:dependencies": "echo dependencies are not checked for this package"
+    "check:dependencies": "echo dependencies are not checked for this package",
+    "test": "echo nothing to test here"
   },
   "dependencies": {
     "eslint-config-prettier": "^8.0.0"

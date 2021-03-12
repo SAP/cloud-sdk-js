@@ -13,7 +13,7 @@ import {
   getTimeStamp, isPublishedNpmPackage
 } from './pregenerated-lib';
 
-describe('sdk metadata - pregenerated client information',()=>{
+describe('pregenerated-lib',()=>{
   const service: VdmServiceMetadata = getTestService();
 
   it('returns installation snipped',()=>{

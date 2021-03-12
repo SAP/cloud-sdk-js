@@ -3,7 +3,7 @@ import { VdmServiceMetadata } from '../vdm-types';
 import { getTestService } from './pregenerated-lib.spec';
 import { getSdkMetadataFileNames, sdkMetaDataHeader, sdkMetaDataJS } from './sdk-metadata';
 
-describe('sdk metadata',()=>{
+describe('sdk-metadata',()=>{
   const service = getTestService();
 
  it('generates the header content',async ()=>{

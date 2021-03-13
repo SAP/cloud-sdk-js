@@ -1,1 +1,1 @@
-{"version":3,"file":"tag-dot-api.js","sourceRoot":"","sources":["tag-dot-api.ts"],"names":[],"mappings":";;;AAAA;;;;GAIG;AACH,4CAA4D;AAG/C,QAAA,oBAAoB,GAAG;IAClC,UAAU,EAAE,UAAC,eAAoB,IAAK,OAAA,IAAI,4BAAqB,CAC7D,KAAK,EACL,yBAAyB,CAE1B,EAJqC,CAIrC;CACF,CAAC"}
+{"version":3,"file":"tag-dot-api.js","sourceRoot":"","sources":["tag-dot-api.ts"],"names":[],"mappings":";;;AAAA;;;;GAIG;AACH,4CAA4D;AAG/C,QAAA,SAAS,GAAG;IACvB,UAAU,EAAE,UAAC,eAAoB,IAAK,OAAA,IAAI,4BAAqB,CAC7D,KAAK,EACL,yBAAyB,CAE1B,EAJqC,CAIrC;CACF,CAAC"}

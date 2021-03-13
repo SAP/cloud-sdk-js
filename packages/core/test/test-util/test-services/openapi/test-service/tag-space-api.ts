@@ -6,7 +6,7 @@
 import { OpenApiRequestBuilder } from '../../../../../src';
 
 
-export const TestServiceTagSpaceApi = {
+export const TagSpaceApi = {
   tagWithSpace: (queryParameters?: {}) => new OpenApiRequestBuilder(
     'post',
     '/test-cases/special-tag',

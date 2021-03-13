@@ -24,11 +24,10 @@ export interface OpenApiOperation extends OpenAPIV3.OperationObject {
   tags: string[];
   operationId: string;
   method: string;
-  path: string;
+  pathPattern: string;
   requestBody?: OpenApiRequestBody;
   pathParameters: OpenApiParameter[];
   queryParameters: OpenApiParameter[];
-  originalApiName: string;
 }
 
 const supportedMethods = {

@@ -20,7 +20,7 @@ describe('api-file', () => {
             required: true
           }
         ],
-        path: 'test/{id}'
+        pathPattern: 'test/{id}'
       },
       {
         operationId: 'deleteFn',
@@ -33,7 +33,7 @@ describe('api-file', () => {
             required: true
           }
         ],
-        path: 'test/{id}'
+        pathPattern: 'test/{id}'
       }
     ] as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
@@ -54,7 +54,7 @@ describe('api-file', () => {
           },
           required: true
         } as OpenApiRequestBody,
-        path: 'test'
+        pathPattern: 'test'
       },
       {
         operationId: 'updateFn',
@@ -77,7 +77,7 @@ describe('api-file', () => {
           },
           required: true
         } as OpenApiRequestBody,
-        path: 'test/{id}'
+        pathPattern: 'test/{id}'
       }
     ] as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
@@ -129,7 +129,7 @@ describe('api-file', () => {
           },
           required: true
         } as OpenApiRequestBody,
-        path: 'test'
+        pathPattern: 'test'
       }
     ] as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
@@ -147,7 +147,7 @@ describe('api-file', () => {
             type: 'number'
           }
         ],
-        path: 'test'
+        pathPattern: 'test'
       }
     ] as OpenApiOperation[];
     expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();

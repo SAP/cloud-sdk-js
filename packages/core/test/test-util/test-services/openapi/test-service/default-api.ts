@@ -6,7 +6,7 @@
 import { OpenApiRequestBuilder } from '../../../../../src';
 
 
-export const TestServiceDefaultApi = {
+export const DefaultApi = {
   noTag: (queryParameters?: {}) => new OpenApiRequestBuilder(
     'get',
     '/test-cases/default-tag',

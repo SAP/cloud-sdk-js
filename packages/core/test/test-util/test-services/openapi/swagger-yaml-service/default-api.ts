@@ -6,7 +6,7 @@
 import { OpenApiRequestBuilder } from '../../../../../src';
 import { TestEntity } from './model';
 
-export const SwaggerYamlServiceDefaultApi = {
+export const DefaultApi = {
   postEntity: (pathParam: string, queryParameters?: {'queryParam'?: string}) => new OpenApiRequestBuilder(
     'post',
     '/entities/{pathParam}',

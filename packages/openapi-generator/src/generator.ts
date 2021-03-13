@@ -7,7 +7,6 @@ import {
   UniqueNameGenerator,
   kebabCase
 } from '@sap-cloud-sdk/util';
-import execa = require('execa');
 import { GlobSync } from 'glob';
 import { GeneratorOptions } from './options';
 import {

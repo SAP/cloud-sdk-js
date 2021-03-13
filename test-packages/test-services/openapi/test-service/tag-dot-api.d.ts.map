@@ -1,1 +1,1 @@
-{"version":3,"file":"tag-dot-api.d.ts","sourceRoot":"","sources":["tag-dot-api.ts"],"names":[],"mappings":"AAKA,OAAO,EAAE,qBAAqB,EAAE,MAAM,qBAAqB,CAAC;AAG5D,eAAO,MAAM,oBAAoB;;CAMhC,CAAC"}
+{"version":3,"file":"tag-dot-api.d.ts","sourceRoot":"","sources":["tag-dot-api.ts"],"names":[],"mappings":"AAKA,OAAO,EAAE,qBAAqB,EAAE,MAAM,qBAAqB,CAAC;AAG5D,eAAO,MAAM,SAAS;;CAMrB,CAAC"}

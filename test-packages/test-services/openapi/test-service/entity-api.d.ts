@@ -1,6 +1,6 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntity } from './model';
-export declare const TestServiceEntityApi: {
+export declare const EntityApi: {
     getAllEntities: (queryParameters?: {
         stringParameter?: string | undefined;
         integerParameter?: number | undefined;

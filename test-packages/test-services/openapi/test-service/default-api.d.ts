@@ -1,5 +1,5 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-export declare const TestServiceDefaultApi: {
+export declare const DefaultApi: {
     noTag: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
     defaultTag: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
 };

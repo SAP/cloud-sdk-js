@@ -14,7 +14,7 @@ export function apiFile(serviceName: string, api: OpenApiApi): string {
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 ${requestBodyTypes ? `import { ${requestBodyTypes} } from './model';` : ''}
 
-export const ${serviceName}${api.name} = {
+export const ${api.name} = {
   ${getOperations(api.operations)}
 };
 `;
@@ -64,7 +64,7 @@ function getOperation(operation: OpenApiOperation): string {
 
   const requestBuilderParams = [
     `'${operation.method}'`,
-    `'${operation.path}'`,
+    `'${operation.pathPattern}'`,
     getRequestBuilderParams(operation)
   ];
   return codeBlock`

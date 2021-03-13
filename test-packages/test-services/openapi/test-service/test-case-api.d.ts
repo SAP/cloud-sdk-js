@@ -1,6 +1,6 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { SimpleTestEntity, ComplexTestEntity } from './model';
-export declare const TestServiceTestCaseApi: {
+export declare const TestCaseApi: {
     testCaseGetRequiredParameters: (requiredPathItemPathParam: string, body: SimpleTestEntity, queryParameters: {
         'requiredPathItemQueryParam': string;
         'optionalQueryParam'?: string;
@@ -16,11 +16,11 @@ export declare const TestServiceTestCaseApi: {
     testCaseGetDuplicateParameters: (duplicateParam: string, queryParameters: {
         'duplicateParam': string;
     }) => OpenApiRequestBuilder;
-    getTestCasesNoOperationId: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
     duplicateOperationId: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
-    duplicateOperationId2: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
-    duplicateOperationId3: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
     duplicateOperationId1: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
     complexSchemas: (body: ComplexTestEntity, queryParameters?: {} | undefined) => OpenApiRequestBuilder;
+    duplicateOperationId2: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
+    duplicateOperationId3: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
+    getTestCasesNoOperationId: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
 };
 //# sourceMappingURL=test-case-api.d.ts.map

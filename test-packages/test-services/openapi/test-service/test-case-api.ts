@@ -6,7 +6,7 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { SimpleTestEntity, ComplexTestEntity } from './model';
 
-export const TestServiceTestCaseApi = {
+export const TestCaseApi = {
   testCaseGetRequiredParameters: (requiredPathItemPathParam: string, body: SimpleTestEntity, queryParameters: {'requiredPathItemQueryParam': string,
   'optionalQueryParam'?: string,
   'requiredQueryParam': string,
@@ -39,23 +39,8 @@ export const TestServiceTestCaseApi = {
           queryParameters
         }
   ),
-  getTestCasesNoOperationId: (queryParameters?: {}) => new OpenApiRequestBuilder(
-    'get',
-    '/test-cases/no-operation-id',
-    
-  ),
   duplicateOperationId: (queryParameters?: {}) => new OpenApiRequestBuilder(
     'get',
-    '/test-cases/duplicate-operation-ids',
-    
-  ),
-  duplicateOperationId2: (queryParameters?: {}) => new OpenApiRequestBuilder(
-    'put',
-    '/test-cases/duplicate-operation-ids',
-    
-  ),
-  duplicateOperationId3: (queryParameters?: {}) => new OpenApiRequestBuilder(
-    'post',
     '/test-cases/duplicate-operation-ids',
     
   ),
@@ -70,5 +55,20 @@ export const TestServiceTestCaseApi = {
     {
           body
         }
+  ),
+  duplicateOperationId2: (queryParameters?: {}) => new OpenApiRequestBuilder(
+    'put',
+    '/test-cases/duplicate-operation-ids',
+    
+  ),
+  duplicateOperationId3: (queryParameters?: {}) => new OpenApiRequestBuilder(
+    'post',
+    '/test-cases/duplicate-operation-ids',
+    
+  ),
+  getTestCasesNoOperationId: (queryParameters?: {}) => new OpenApiRequestBuilder(
+    'get',
+    '/test-cases/no-operation-id',
+    
   )
 };

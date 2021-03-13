@@ -6,7 +6,7 @@
 import { OpenApiRequestBuilder } from '../../../../../src';
 
 
-export const TestServiceExtensionApi = {
+export const ExtensionApi = {
   niceGetFunction: (queryParameters?: {}) => new OpenApiRequestBuilder(
     'get',
     '/test-cases/extension',

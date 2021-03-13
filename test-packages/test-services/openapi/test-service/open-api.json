@@ -11,22 +11,16 @@
   },
   "tags": [
     {
-      "name": "entity"
+      "name": "entity",
+      "description": "entity tag"
     },
     {
-      "name": "test case"
+      "name": "test case",
+      "description": "test case tag"
     },
     {
-      "name": "tag.dot"
-    },
-    {
-      "name": "tag space"
-    },
-    {
-      "name": "default"
-    },
-    {
-      "name": "extension"
+      "name": "default",
+      "description": "default tag"
     }
   ],
   "paths": {
@@ -479,8 +473,7 @@
           "201": {
             "description": "no content"
           }
-        },
-        "operationId": "getTestCasesNoOperationId"
+        }
       }
     },
     "/test-cases/duplicate-operation-ids": {
@@ -499,7 +492,7 @@
         "tags": [
           "test case"
         ],
-        "operationId": "duplicateOperationId3",
+        "operationId": "duplicateOperationId",
         "responses": {
           "201": {
             "description": "no content"
@@ -510,7 +503,7 @@
         "tags": [
           "test case"
         ],
-        "operationId": "duplicateOperationId2",
+        "operationId": "duplicateOperationId_1",
         "responses": {
           "201": {
             "description": "no content"
@@ -531,7 +524,7 @@
     },
     "/test-cases/special-tag": {
       "get": {
-        "operationId": "tagWithDot",
+        "operationId": "tag with dot",
         "tags": [
           "tag.dot"
         ],
@@ -542,7 +535,7 @@
         }
       },
       "post": {
-        "operationId": "tagWithSpace",
+        "operationId": "tag with space",
         "tags": [
           "tag space"
         ],
@@ -560,10 +553,7 @@
           "201": {
             "description": "no content"
           }
-        },
-        "tags": [
-          "default"
-        ]
+        }
       },
       "post": {
         "tags": [
@@ -585,18 +575,14 @@
           "201": {
             "description": "no content"
           }
-        },
-        "operationId": "niceGetFunction",
-        "tags": [
-          "extension"
-        ]
+        }
       },
       "post": {
         "x-sap-cloud-sdk-operation-name": "nicePostFunction",
         "tags": [
-          "extension"
+          "default"
         ],
-        "operationId": "nicePostFunction",
+        "operationId": "testCasesExtensionPost",
         "responses": {
           "201": {
             "description": "no content"

@@ -1280,20 +1280,20 @@
     npmlog "^4.1.2"
     write-file-atomic "^3.0.3"
 
-"@nestjs/common@7.6.13":
-  version "7.6.13"
-  resolved "https://registry.npmjs.org/@nestjs/common/-/common-7.6.13.tgz#597558afedfddeb5021fe8a154327ee082279ab8"
-  integrity sha512-xijw6so4yA8Ywi8mnrA7Kz97ZC36u20Eyb5/XvmokdLcgTcTyHVdE39r44JYnjHPf8SKZoJ965zdu/fKl4s4GQ==
+"@nestjs/common@7.6.14":
+  version "7.6.14"
+  resolved "https://registry.npmjs.org/@nestjs/common/-/common-7.6.14.tgz#abdad360ef107482345b111eeee74fbef00620c9"
+  integrity sha512-XJrGoGttCsIOvG2+EXl09pl9iCmYXnhPjx3ndPPigMRdXQGLVpF38OdzroWTD7aYU5rHo3Co21G9cYl8aqdt2Q==
   dependencies:
     axios "0.21.1"
     iterare "1.2.1"
     tslib "2.1.0"
     uuid "8.3.2"
 
-"@nestjs/core@7.6.13":
-  version "7.6.13"
-  resolved "https://registry.npmjs.org/@nestjs/core/-/core-7.6.13.tgz#b7518dceb436e6ed2c1fad2cff86ddf69b143e73"
-  integrity sha512-8oY8yZSgri2DngqmvBMtwYw1GIAaXbUXS7Y0mp/iSZ6jP7CQqYCybdcMPneunrt5PG8rtJsq6n+4JNRvxXrVmA==
+"@nestjs/core@7.6.14":
+  version "7.6.14"
+  resolved "https://registry.npmjs.org/@nestjs/core/-/core-7.6.14.tgz#b3be15506aee33b847abce993a7371439b292dd9"
+  integrity sha512-iAeQIsC79xcLTpga3he48ROX4g561VFsfbksicqotrFy0k9czKxVtHxevsnwo8KzFsYXQqOCO6XYI8MsuAjMcg==
   dependencies:
     "@nuxtjs/opencollective" "0.3.2"
     fast-safe-stringify "2.0.7"
@@ -1653,12 +1653,12 @@
     "@octokit/openapi-types" "^5.2.2"
 
 "@openapitools/openapi-generator-cli@^2.1.4":
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.2.1.tgz#7945318ffb2965d7ebad5b73f760403b1ecb0f3a"
-  integrity sha512-fAvhMQvZbI3zJmBiT7kvAREX1w4qYpRGRlAmLlO+q74W8zs8BU4BNTjamm6i2BBYmglrNIeLVroRJpFUZ54jmA==
+  version "2.2.2"
+  resolved "https://registry.npmjs.org/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.2.2.tgz#12b2171a0404731e35aa89a2e0c146186480f51c"
+  integrity sha512-Hl0/5bvv/ETYFuPpTPXqAtChHE2+lLrH0ATl8MtNDxtdXRLoQGCeT8jdT600VvCqJToRkNvQ1JPHbcg/hehyBw==
   dependencies:
-    "@nestjs/common" "7.6.13"
-    "@nestjs/core" "7.6.13"
+    "@nestjs/common" "7.6.14"
+    "@nestjs/core" "7.6.14"
     "@nuxtjs/opencollective" "0.3.2"
     chalk "4.1.0"
     commander "6.2.1"

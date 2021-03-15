@@ -41,3 +41,12 @@ export function trimRight(string: string): string {
 export function trim(string: string): string {
   return trimRight(trimLeft(string));
 }
+
+/**
+ * Remove file extension from a string e.g. test.jpg -> test
+ * @param string String to remove file extension.
+ * @returns String without extension.
+ */
+export function removeFileExtension(string: string): string {
+  return string.includes('.') ? string.split('.').slice(0, -1).join('.') : string;
+}

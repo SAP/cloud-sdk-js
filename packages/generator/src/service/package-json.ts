@@ -1,7 +1,8 @@
+import { getGeneratorVersion } from '../sdk-metadata/pregenerated-lib';
+
 export function packageJson(
   npmPackageName: string,
-  versionInPackageJson: string | undefined,
-  generatorVersion: string,
+  version: string,
   description: string,
   sdkAfterVersionScript: boolean
 ): string {
@@ -9,7 +10,7 @@ export function packageJson(
     JSON.stringify(
       {
         name: npmPackageName,
-        version: versionInPackageJson || generatorVersion,
+        version,
         description,
         homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
         main: './index.js',
@@ -36,10 +37,10 @@ export function packageJson(
             : {})
         },
         dependencies: {
-          '@sap-cloud-sdk/core': `^${generatorVersion}`
+          '@sap-cloud-sdk/core': `^${getGeneratorVersion()}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${generatorVersion}`
+          '@sap-cloud-sdk/core': `^${getGeneratorVersion()}`
         },
         devDependencies: {
           typedoc: '^0.17.0',

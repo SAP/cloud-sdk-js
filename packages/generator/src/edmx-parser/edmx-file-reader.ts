@@ -1,7 +1,7 @@
 import { PathLike, readFileSync } from 'fs';
 import path, { basename } from 'path';
 import { parse } from 'fast-xml-parser';
-import { ODataVersion } from '@sap-cloud-sdk/util';
+import { ODataVersion, removeFileExtension } from '@sap-cloud-sdk/util';
 import { forceArray } from '../generator-utils';
 import { SwaggerMetadata } from '../swagger-parser/swagger-types';
 import { getMergedPropertyWithNamespace } from './common';
@@ -23,7 +23,7 @@ function parseMetadata(
   return {
     path: edmxPath,
     oDataVersion,
-    fileName: basename(edmxPath.toString()).split('.')[0],
+    fileName: removeFileExtension(basename(edmxPath.toString())),
     namespaces: forceArray(root).map(schema => schema.Namespace),
     selfLink: parseLink(root),
     root

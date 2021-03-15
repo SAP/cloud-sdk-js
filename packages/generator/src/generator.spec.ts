@@ -27,25 +27,30 @@ describe('generator', () => {
         sourceFiles.find(file => file.getBaseName() === 'CHANGELOG.md')
       ).toBeDefined();
     });
+
+    it('generates the api hub metadata',async ()=>{
+      const project = await generateProject(
+        createOptions({
+          inputDir: '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+          generateSdkMetadata:true
+        })
+      );
+      const sourceFiles = project!.getSourceFiles();
+      expect(
+        sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-client-js.json')
+      ).toBeDefined();
+      expect(
+        sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-header.json')
+      ).toBeDefined();
+    });
   });
   describe('edmx-to-csn', () => {
-    const testGeneratorOptions: GeneratorOptions = {
+    const testGeneratorOptions: GeneratorOptions = createOptions({
       inputDir:
         '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx',
       outputDir: 'foo',
-      useSwagger: false,
-      writeReadme: false,
-      forceOverwrite: false,
-      clearOutputDir: false,
-      serviceMapping: 'foo',
-      generateNpmrc: true,
-      generateTypedocJson: true,
-      generatePackageJson: true,
-      generateJs: false,
-      s4hanaCloud: false,
-      sdkAfterVersionScript: false,
       generateCSN: true
-    };
+    });
 
     it('should invoke csn', async () => {
       jest.spyOn(csnGeneration, 'csn');

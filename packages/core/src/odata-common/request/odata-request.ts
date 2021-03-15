@@ -19,9 +19,7 @@ import {
 } from '../remove-slashes';
 import {
   HttpResponse,
-  executeHttpRequest,
-  HttpRequestAndResponse,
-  executeHttpRequestReturnRequestAndResponse
+  executeHttpRequest
 } from '../../http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
@@ -240,27 +238,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     }
 
     return executeHttpRequest(destination, {
-      headers: await this.headers(),
-      url: this.relativeUrl(),
-      method: this.config.method,
-      data: this.config.payload
-    }).catch(error => {
-      throw constructError(error, this.config.method, this.serviceUrl());
-    });
-  }
-
-  /**
-   * Execute the given request and return the request and the raw response.
-   *
-   * @returns Promise resolving to an [[HttpRequestAndResponse]].
-   */
-  async executeRaw(): Promise<HttpRequestAndResponse> {
-    const destination = this.destination;
-    if (!destination) {
-      throw Error('The destination cannot be undefined.');
-    }
-
-    return executeHttpRequestReturnRequestAndResponse(destination, {
       headers: await this.headers(),
       url: this.relativeUrl(),
       method: this.config.method,

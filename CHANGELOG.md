@@ -14,11 +14,11 @@
 
 ## Compatibility Notes
 
--
+- A mandatory property `request` is added to the `HttpResponse`.
 
 ## New Functionality
 
-- [core] Support `executeRaw` in all `RequestBuilder`, which returns request and raw response without deserialization.
+- [core] Support `executeRaw` in all `RequestBuilder`, which returns `HttpResponse` that contains the raw response and original request.
 
 ## Improvements
 

@@ -220,9 +220,8 @@ describe('CreateRequestBuilder', () => {
         defaultDestination
       );
 
-      expect(actual.response.data.d).toEqual(postBody);
-      expect(actual.request.method).toBe('post');
-      expect(actual.request.baseURL).toBe(defaultDestination.url);
+      expect(actual.data.d).toEqual(postBody);
+      expect(actual.request.method).toBe('POST');
     });
   });
 });

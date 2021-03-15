@@ -62,7 +62,7 @@ describe('batch response parser', () => {
       headers: Record<string, any> = {
         'content-type': `multipart/mixed; boundary=${batchId}`
       }
-    ) => ({ data, headers, status: 200 });
+    ) => ({ data, headers, status: 200, request: undefined });
 
     it('correctly splits batch response', () => {
       const body = [
@@ -302,14 +302,14 @@ describe('batch response parser', () => {
         '',
         '--3B17E95920A7FAF8BCB7495D043515000--'
       ].join('\r\n');
-      const batchResponse: HttpResponse = {
+      const batchResponse = {
         data,
         status: 200,
         headers: {
           'content-type':
             'multipart/mixed; boundary=3B17E95920A7FAF8BCB7495D043515000'
         }
-      };
+      } as HttpResponse;
       const logger = createLogger({
         messageContext: 'batch-response-parser'
       });

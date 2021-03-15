@@ -13,6 +13,7 @@
     "dist/**/*",
     "test/**/*",
     "**/*.spec.ts",
+    "code-samples/**/*",
     "node_modules/**/*"
   ],
   "references": [

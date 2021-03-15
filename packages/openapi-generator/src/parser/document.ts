@@ -1,7 +1,7 @@
 import { basename } from 'path';
 import { parse, resolve } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import { flatten, pascalCase, unique } from '@sap-cloud-sdk/util';
+import { flatten, pascalCase, removeFileExtension, unique } from '@sap-cloud-sdk/util';
 import {
   OpenApiOperation,
   OpenApiDocument,
@@ -22,7 +22,7 @@ export async function parseOpenApiDocument(
   const refs = await resolve(document);
   const components = parseComponents(document);
   // const operations = parseAllOperations(document, refs);
-  const originalFileName = basename(filePath).split('.')[0];
+  const originalFileName = removeFileExtension(basename(filePath));
   return {
     apis: parseApis(document, refs),
     serviceName: pascalCase(serviceName),

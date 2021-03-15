@@ -122,7 +122,7 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  *
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
- * @returns Promise resolving to an [[HttpResponse]].
+ * @returns A promise resolving to an [[HttpResponse]].
  */
 export const executeHttpRequest = execute(executeWithAxios);
 

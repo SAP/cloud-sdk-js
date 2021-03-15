@@ -1840,7 +1840,7 @@
     "@sap/cds-foss" "^2"
     "@sap/cds-runtime" "~2.9.0"
 
-"@sap/cloud-sdk-vdm-business-partner-service@^1.23.0":
+"@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
   version "1.24.0"
   resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.24.0.tgz#51f4e5c71de890421d8eb241c46ec9e5bfe3d990"
   integrity sha512-fP/09Dudpktk945NsK9xogEn62xk8Hs8R0bvjP336ZJy1uDMn1AqrF8G0/pUHCAbmcty9+G7ZVlOWD7Va7bp2g==

@@ -1773,7 +1773,7 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@sap/cds-compiler@^1.50.0":
+"@sap/cds-compiler@~1.50.0":
   version "1.50.0"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-1.50.0.tgz#4c2fdc6ecacb9d659a08ef6adf0c920b5d6cb214"
   integrity sha512-GjfOYeM4x7fMHxorHVA1FZZxoCbY1XF5gsyyLjIh7W68R5mSh80oOu0CuWRrSJ3ywONmwRfTxoB94xQRZwiilQ==
@@ -1832,15 +1832,15 @@
     got "10.7.0"
 
 "@sap/cds@^4.4.7", "@sap/cds@^4.6.0":
-  version "4.6.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.6.4.tgz#b2515495581a94d3b7f46632caddb35108b12d9d"
-  integrity sha512-ixcSSVQCgRZJL6T8BurjzR/SbDsupwH5R1GBcYdEVoCywZo4aHMlo3JS073116/v3vO5CH4c7wmzjXVltWO68g==
+  version "4.6.5"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.6.5.tgz#4c70c137795aef6a62d21502ff9fe5a47ecfbfaa"
+  integrity sha512-JTSv1z71Arz9JZdc0OWnnNibIvfJldjzFQOcm/EoKmVfeJ6dfTjNseT6YJrQf3lEzYFjojCMaj2fi45F6/dSWw==
   dependencies:
-    "@sap/cds-compiler" "^1.50.0"
+    "@sap/cds-compiler" "~1.50.0"
     "@sap/cds-foss" "^2"
     "@sap/cds-runtime" "~2.9.0"
 
-"@sap/cloud-sdk-vdm-business-partner-service@^1.23.0":
+"@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
   version "1.24.0"
   resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.24.0.tgz#51f4e5c71de890421d8eb241c46ec9e5bfe3d990"
   integrity sha512-fP/09Dudpktk945NsK9xogEn62xk8Hs8R0bvjP336ZJy1uDMn1AqrF8G0/pUHCAbmcty9+G7ZVlOWD7Va7bp2g==
@@ -2078,9 +2078,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@>=13.9.8", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.20.5"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.5.tgz#4ca82a766f05c359fd6c77505007e5a272f4bb9b"
-  integrity sha512-5Oy7tYZnu3a4pnJ//d4yVvOImExl4Vtwf0D40iKUlU+XlUsyV9iyFWyCFlwy489b72FMAik/EFwRkNLjjOdSPg==
+  version "12.20.6"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.6.tgz#7b73cce37352936e628c5ba40326193443cfba25"
+  integrity sha512-sRVq8d+ApGslmkE9e3i+D3gFGk7aZHAT+G4cIpIEdLJYPsWiSPwcAnJEjddLQQDqV3Ra2jOclX/Sv6YrvGYiWA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"

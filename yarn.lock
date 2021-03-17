@@ -2077,11 +2077,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/mustache@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/@types/mustache/-/mustache-4.1.1.tgz#fcfa2db0cee6261e66f2437dc2fe71e26c7856b4"
-  integrity sha512-Sm0NWeLhS2QL7NNGsXvO+Fgp7e3JLHCO6RS3RCnfjAnkw6Y1bsji/AGfISdQZDIR/AeOyzkrxRk9jBkl55zdJw==
-
 "@types/node@*", "@types/node@>=13.9.8", "@types/node@^12.0.0", "@types/node@^12.12.29":
   version "12.20.6"
   resolved "https://registry.npmjs.org/@types/node/-/node-12.20.6.tgz#7b73cce37352936e628c5ba40326193443cfba25"
@@ -8113,11 +8108,6 @@ mustache@4.0.1:
   version "4.0.1"
   resolved "https://registry.npmjs.org/mustache/-/mustache-4.0.1.tgz#d99beb031701ad433338e7ea65e0489416c854a2"
   integrity sha512-yL5VE97+OXn4+Er3THSmTdCFCtx5hHWzrolvH+JObZnUYwuaG7XV+Ch4fR2cIrcYI0tFHxS7iyFYl14bW8y2sA==
-
-mustache@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/mustache/-/mustache-4.1.0.tgz#8c1b042238a982d2eb2d30efc6c14296ae3f699d"
-  integrity sha512-0FsgP/WVq4mKyjolIyX+Z9Bd+3WS8GOwoUTyKXT5cTYMGeauNTi2HPCwERqseC1IHAy0Z7MDZnJBfjabd4O8GQ==
 
 mute-stream@0.0.8, mute-stream@~0.0.4:
   version "0.0.8"

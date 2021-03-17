@@ -1,4 +1,7 @@
+import { resolve } from 'path';
 import { checkUrlExists } from '@sap-cloud-sdk/test-util';
+import { writeFile, readFile, removeSync } from 'fs-extra';
+import execa = require('execa');
 import {
   getApiSpecificUsage,
   getGenerationDocumentation,
@@ -19,4 +22,14 @@ describe('generation-and-usage',()=>{
     expect(getGenerationDocumentation()).toContain(linkGenerationDocumentaion);
     checkUrlExists(linkGenerationDocumentaion);
   });
+
+  it('[E2E] creates compiling generic usage',async ()=>{
+    const codeSnippet = await getGenericUsage();
+    const tsFile = 'generic-get-all-code-sample.ts';
+    const jsFile = tsFile.replace('.ts','.js');
+    await writeFile(resolve(__dirname,tsFile),codeSnippet);
+    await execa('tsc',[tsFile,'--esModuleInterop'],{ cwd:__dirname });
+    await expect(readFile(resolve(__dirname,jsFile))).resolves;
+    [tsFile,jsFile].map(file=>removeSync(resolve(__dirname,file)));
+  },10000);
 });

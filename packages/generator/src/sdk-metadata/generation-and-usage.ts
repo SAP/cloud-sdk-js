@@ -1,5 +1,6 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
+import { render } from 'mustache';
 import { VdmServiceMetadata } from '../vdm-types';
 import { getLinks } from './links';
 import { GenerationAndUsage } from './sdk-metadata-types';
@@ -14,14 +15,21 @@ export async function getGenerationAndUsage(service: VdmServiceMetadata): Promis
   };
 }
 
+async function readGeneticGetAllCodeSample(): Promise<string>{
+  return promises.readFile(resolve(__dirname,'code-samples','generic-get-all-code-sample.mustache'),{ encoding:'utf8' });
+}
+
 export async function getGenericUsage(): Promise<string>{
-  return promises.readFile(resolve(__dirname,'code-samples','generic-get-all-code-sample.ts'),{ encoding:'utf8' });
+  const file =  await readGeneticGetAllCodeSample();
+  return render(file,{ EntityName:'BusinessPartner',PackageName:'@sap/cloud-sdk-vdm-business-partner-service' });
 }
 
 export async function getApiSpecificUsage(service: VdmServiceMetadata): Promise<string>{
+  const file =  await readGeneticGetAllCodeSample();
+
   if(service.entities.length > 0){
     const genericString = (await getGenericUsage());
-    return genericString.replace(/BusinessPartner/g,service.entities[0].className).replace('@sap/cloud-sdk-vdm-business-partner-service',service.npmPackageName);
+    return render(file,{ EntityName:service.entities[0].className,PackageName:service.npmPackageName });
   }
   // TODO handle cases if no entity is there in the follow up ticket.
   if(service.functionImports.length > 0){

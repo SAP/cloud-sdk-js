@@ -31,8 +31,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
-      - if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
@@ -52,7 +51,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-        run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
       - run: yarn check:test-service
@@ -83,7 +82,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-        run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile
       - run: yarn test:e2e
   canary-release:
     if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/v')
@@ -101,7 +100,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-        run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile
       - name: Canary Release
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc

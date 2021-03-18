@@ -1783,11 +1783,11 @@
     sax "^1.2.4"
 
 "@sap/cds-dk@^3.3.3":
-  version "3.5.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.5.0.tgz#31a4b220e80f6ef62a200b00bcb8f4fc7a079c5d"
-  integrity sha512-KLUbHXE4ZxcENMDozJRbve6g1ByTrCluMaf4qkwYkwR9GJc64XovOIlduiiI1LLAhLdbqApUpqqZP26GNqfGmA==
+  version "3.5.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-3.5.1.tgz#587e27a97d555f9645c058b5d20dfdc7e9f3b6e8"
+  integrity sha512-YrBdE1X/IAYN26FDNlN95zK8E7UTYle0xPXjZtJbEYDXAYKIS12/t6wmGTDCBQ98reiYFlILu0T6XFA+RKBmyQ==
   dependencies:
-    "@sap/cds" "^4.6.0"
+    "@sap/cds" "^4.6.5"
     "@sap/cds-foss" "^2"
     "@sap/cds-sidecar-client" "^1.1.6"
     "@sap/edm-converters" "^1.0.27"
@@ -1831,7 +1831,7 @@
     fs-extra "9.0.1"
     got "10.7.0"
 
-"@sap/cds@^4.4.7", "@sap/cds@^4.6.0":
+"@sap/cds@^4.4.7", "@sap/cds@^4.6.5":
   version "4.6.5"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.6.5.tgz#4c70c137795aef6a62d21502ff9fe5a47ecfbfaa"
   integrity sha512-JTSv1z71Arz9JZdc0OWnnNibIvfJldjzFQOcm/EoKmVfeJ6dfTjNseT6YJrQf3lEzYFjojCMaj2fi45F6/dSWw==

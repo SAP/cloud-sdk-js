@@ -27,7 +27,7 @@ jobs:
       - uses: actions/cache@v2
         id: cache
         with:
-          path: '**/node_modules'
+          path: node_modules
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/cache@v2
         id: cache
         with:
-          path: '**/node_modules'
+          path: node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - if: steps.cache.cache-hit != 'true'
         run: yarn install --frozen-lockfile
@@ -76,7 +76,7 @@ jobs:
       - uses: actions/cache@v2
         id: cache
         with:
-          path: '**/node_modules'
+          path: node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - if: steps.cache.cache-hit != 'true'
         run: yarn install --frozen-lockfile && echo "it didnt hit"
@@ -93,7 +93,7 @@ jobs:
       - uses: actions/cache@v2
         id: cache
         with:
-          path: '**/node_modules'
+          path: node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - if: steps.cache.cache-hit != 'true'
         run: yarn install --frozen-lockfile

@@ -32,10 +32,8 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
-      - if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
-        run: |
-          yarn install --frozen-lockfile
-          echo "test if cache hits"
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
@@ -56,7 +54,7 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
+      - if: steps.cache.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
@@ -89,7 +87,7 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
+      - if: steps.cache.cache-hit != 'true'
         run: yarn install --frozen-lockfile && echo "it didnt hit"
       - run: yarn test:e2e
   canary-release:
@@ -109,7 +107,7 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
+      - if: steps.cache.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - name: Canary Release
         run: |

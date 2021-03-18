@@ -34,8 +34,7 @@ describe('generator', () => {
       const project = await generateProject(
         createOptions({
           inputDir:resolve(oDataServiceSpecs,'v2','API_TEST_SRV'),
-          generateSdkMetadata:true,
-          forceOverwrite:true
+          generateSdkMetadata:true
         })
       );
       const sourceFiles = project!.getSourceFiles();

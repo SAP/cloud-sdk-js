@@ -4,9 +4,8 @@ import {
   pascalCase,
   camelCase
 } from '@sap-cloud-sdk/util';
-import { Method } from '../openapi-types';
+import { OpenApiOperation } from '../openapi-types';
 import { operationNameExtension } from './extensions';
-import { OperationInfo, getOperation } from './operation-info';
 
 /**
  * Modify each operation to contain a unique `operationId`.
@@ -14,21 +13,21 @@ import { OperationInfo, getOperation } from './operation-info';
  * @returns The modified document.
  */
 export function ensureUniqueOperationIds(
-  operations: OperationInfo[]
-): OperationInfo[] {
+  operations: OpenApiOperation[]
+): OpenApiOperation[] {
   const [operationsWithExtensions, operationsWithoutExtensions] = partition(
     operations,
-    operationInfo => !!getOperation(operationInfo)[operationNameExtension]
+    operation => !!operation[operationNameExtension]
   );
 
   const renamedOperationsWithExtensions = renameOperations(
     operationsWithExtensions,
-    operationInfo => getOperation(operationInfo)[operationNameExtension]
+    operation => operation[operationNameExtension]
   );
 
   const [namedOperations, unnamedOperations] = partition(
     operationsWithoutExtensions,
-    operationInfo => !!getOperation(operationInfo).operationId
+    ({ operationId }) => !!operationId
   );
 
   const renamedUnnamedOperations = renameOperations(
@@ -50,21 +49,19 @@ export function ensureUniqueOperationIds(
 
   const renamedOperations = renameOperations(
     [...operationsWithDuplicateNames, ...renamedUnnamedOperations],
-    operationInfo =>
-      nameGenerator.generateAndSaveUniqueName(
-        camelCase(getOperation(operationInfo).operationId!)
-      )
+    ({ operationId }) =>
+      nameGenerator.generateAndSaveUniqueName(camelCase(operationId!))
   );
   return [...operationsWithUniqueNames, ...renamedOperations];
 }
 
 function renameOperations(
-  operationInfoList: OperationInfo[],
-  renameFn: (operationInfo: OperationInfo) => string
-): OperationInfo[] {
-  return operationInfoList.map(operationInfo => {
-    getOperation(operationInfo).operationId = renameFn(operationInfo);
-    return operationInfo;
+  operations: OpenApiOperation[],
+  renameFn: (op: OpenApiOperation) => string
+): OpenApiOperation[] {
+  return operations.map(operation => {
+    operation.operationId = renameFn(operation);
+    return operation;
   });
 }
 
@@ -74,36 +71,34 @@ function renameOperations(
  * @returns an object containing the unique operation names and operations with (potentially) duplicate names
  */
 function partitionNamedOperationsToUniqueAndDuplicate(
-  namedOperations: OperationInfo[]
+  namedOperations: OpenApiOperation[]
 ): {
   uniqueOperationNames: string[];
-  operationsWithUniqueNames: OperationInfo[];
-  operationsWithDuplicateNames: OperationInfo[];
+  operationsWithUniqueNames: OpenApiOperation[];
+  operationsWithDuplicateNames: OpenApiOperation[];
 } {
   return namedOperations.reduce(
     (
       partitionedOperations: {
         uniqueOperationNames: string[];
-        operationsWithUniqueNames: OperationInfo[];
-        operationsWithDuplicateNames: OperationInfo[];
+        operationsWithUniqueNames: OpenApiOperation[];
+        operationsWithDuplicateNames: OpenApiOperation[];
       },
-      operationInfo
+      operation
     ) => {
-      const operation = getOperation(operationInfo);
       if (
         partitionedOperations.uniqueOperationNames.includes(
           operation.operationId!
         ) ||
         camelCase(operation.operationId!) !== operation.operationId ||
         partitionedOperations.operationsWithDuplicateNames.find(
-          duplicate =>
-            getOperation(duplicate).operationId === operation.operationId
+          duplicate => duplicate.operationId === operation.operationId
         )
       ) {
-        partitionedOperations.operationsWithDuplicateNames.push(operationInfo);
+        partitionedOperations.operationsWithDuplicateNames.push(operation);
       } else {
         partitionedOperations.uniqueOperationNames.push(operation.operationId!);
-        partitionedOperations.operationsWithUniqueNames.push(operationInfo);
+        partitionedOperations.operationsWithUniqueNames.push(operation);
       }
       return partitionedOperations;
     },
@@ -117,7 +112,7 @@ function partitionNamedOperationsToUniqueAndDuplicate(
 
 export function getOperationNameFromPatternAndMethod(
   pattern: string,
-  method: Method
+  method: string
 ): string {
   const [placeholders, pathParts] = partition(pattern.split('/'), part =>
     /^\{.+\}$/.test(part)
@@ -131,7 +126,7 @@ export function getOperationNameFromPatternAndMethod(
   return prefix + base + suffix;
 }
 
-function getSpeakingNameForMethod(method: Method): string {
+function getSpeakingNameForMethod(method: string): string {
   return nameMapping[method];
 }
 

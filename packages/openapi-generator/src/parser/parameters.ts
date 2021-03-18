@@ -12,13 +12,13 @@ import { getType } from './type-mapping';
  * @returns A list of parsed parameters.
  */
 export function parseParameters(
-  operation: OpenAPIV3.OperationObject,
+  originalParameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[],
   refs: $Refs
 ): {
   pathParameters: OpenApiParameter[];
   queryParameters: OpenApiParameter[];
 } {
-  const parameters = getRelevantParameters(operation, refs);
+  const parameters = getRelevantParameters(originalParameters, refs);
   const [pathParameters, queryParameters] = partition(
     parameters,
     parameter => parameter.in === 'path'
@@ -29,13 +29,13 @@ export function parseParameters(
 }
 
 function getRelevantParameters(
-  operation: OpenAPIV3.OperationObject,
+  originalParameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[],
   refs: $Refs
 ): OpenApiParameter[] {
   // TODO: What if this is a reference? What does OpenApi do?
   // TODO: What about one of and other operations?
   let parameters =
-    operation.parameters?.map(param => resolveObject(param, refs)) || [];
+    originalParameters.map(param => resolveObject(param, refs)) || [];
   parameters = filterDuplicateParams(parameters);
   // parameters = reorderParameters(parameters);
   // parameters = renameEquallyNamedParams(parameters);

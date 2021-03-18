@@ -323,14 +323,14 @@ export async function generateSourcesForService(
     logger.info(
       `Generating sdk header metatdata ${headerFileName}...`
     );
-     const edmxDir = project.createDirectory(dirname(service.edmxPath.toString()));
+     const metadataDir = project.createDirectory(resolve(dirname(service.edmxPath.toString()),'sdk-metadata'));
 
-    otherFile(edmxDir, headerFileName, JSON.stringify(await sdkMetaDataHeader(service,options),null,2), options.forceOverwrite);
+    otherFile(metadataDir, headerFileName, JSON.stringify(await sdkMetaDataHeader(service,options),null,2), options.forceOverwrite);
 
     logger.info(
       `Generating sdk client metatdata ${clientFileName}...`
     );
-    otherFile(edmxDir, clientFileName, JSON.stringify(await sdkMetaDataJS(service,options),null,2), options.forceOverwrite);
+    otherFile(metadataDir, clientFileName, JSON.stringify(await sdkMetaDataJS(service,options),null,2), options.forceOverwrite);
   }
 }
 

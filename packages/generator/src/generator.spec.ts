@@ -38,12 +38,12 @@ describe('generator', () => {
         })
       );
       const sourceFiles = project!.getSourceFiles();
-      const clientFile = sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-client.json')
-      const headerFile = sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-header.json');
+      const clientFile = sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV_CLIENT_JS.json')
+      const headerFile = sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV_HEADER.json');
 
       [clientFile,headerFile].forEach(file=>{
         expect(file).toBeDefined();
-        expect(file!.getDirectoryPath()).toMatch(resolve(oDataServiceSpecs,'v2','API_TEST_SRV'))
+        expect(file!.getDirectoryPath()).toMatch(resolve(oDataServiceSpecs,'v2','API_TEST_SRV','sdk-metadata'))
       })
     });
   });

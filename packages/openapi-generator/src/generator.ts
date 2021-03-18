@@ -15,17 +15,16 @@ import {
   genericDescription,
   readme,
   apiIndexFile,
-  modelIndexFile
+  modelIndexFile,
+  tsconfigJson,
+  interfaceFile
 } from './file-serializer';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, VdmMapping } from './service-mapping';
-import { tsconfigJson } from './file-serializer/tsconfig-json';
 import { transpileDirectory } from './generator-utils';
-import { createFile } from './file-serializer/create-file';
-import { copyFile } from './file-serializer/copy-file';
-import { interfaceFile } from './file-serializer/interface-file';
+import { createFile, copyFile } from './file-writer';
 
 const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');

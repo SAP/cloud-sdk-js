@@ -52,7 +52,6 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - if: steps.cache.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - run: yarn lint
         name: Static Code Check
@@ -84,7 +83,6 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - if: steps.cache.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - run: yarn test:e2e
   canary-release:
@@ -103,7 +101,6 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      - if: steps.cache.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - name: Canary Release
         run: |

@@ -32,8 +32,7 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
-      - name: Does this change?
-        if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
+      - if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - run: yarn test:unit
         env:
@@ -90,6 +89,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
+        run: echo "it didn't hit"
       - run: yarn test:e2e
   canary-release:
     if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/v')

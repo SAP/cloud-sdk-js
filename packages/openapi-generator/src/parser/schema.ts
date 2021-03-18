@@ -1,16 +1,12 @@
 import { OpenAPIV3 } from 'openapi-types';
+import { isReferenceObject } from '../model';
 import {
-  OpenApiAllOfSchema,
-  OpenApiAnyOfSchema,
   OpenApiArraySchema,
   OpenApiEnumSchema,
-  OpenApiNotSchema,
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty,
-  OpenApiOneOfSchema,
   OpenApiSchema
 } from '../openapi-types';
-import { isReferenceObject } from './refs';
 import { getType } from './type-mapping';
 
 /**
@@ -24,34 +20,6 @@ export function isArraySchemaObject(
   return obj?.type === 'array';
 }
 
-export function isArraySchema(obj: any): obj is OpenApiArraySchema {
-  return obj?.type === 'array';
-}
-
-export function isObjectSchema(obj: any): obj is OpenApiObjectSchema {
-  return obj?.type === 'object';
-}
-
-export function isEnumSchema(obj: any): obj is OpenApiEnumSchema {
-  return obj?.enum;
-}
-
-export function isOneOfSchema(obj: any): obj is OpenApiOneOfSchema {
-  return obj?.oneOf;
-}
-
-export function isAllOfSchema(obj: any): obj is OpenApiAllOfSchema {
-  return obj?.allOf;
-}
-
-export function isAnyOfSchema(obj: any): obj is OpenApiAnyOfSchema {
-  return obj?.anyOf;
-}
-
-export function isNotSchema(obj: any): obj is OpenApiNotSchema {
-  return obj?.not;
-}
-
 export function parseSchema(
   schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
 ): OpenApiSchema {
@@ -62,7 +30,11 @@ export function parseSchema(
     return parseArraySchema(schema);
   }
 
-  if (schema.properties || 'additionalProperties' in schema) {
+  if (
+    schema.type === 'object' ||
+    schema.properties ||
+    'additionalProperties' in schema
+  ) {
     return parseObjectSchema(schema);
   }
 

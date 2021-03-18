@@ -7,7 +7,7 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
 
 export const TagSpaceApi = {
-  tagWithSpace: (queryParameters?: {}) => new OpenApiRequestBuilder(
+  tagWithSpace: () => new OpenApiRequestBuilder(
     'post',
     '/test-cases/special-tag',
     

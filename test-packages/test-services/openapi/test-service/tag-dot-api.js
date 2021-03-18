@@ -8,6 +8,6 @@ exports.TagDotApi = void 0;
  */
 var core_1 = require("@sap-cloud-sdk/core");
 exports.TagDotApi = {
-    tagWithDot: function (queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/test-cases/special-tag'); }
+    tagWithDot: function () { return new core_1.OpenApiRequestBuilder('get', '/test-cases/special-tag'); }
 };
 //# sourceMappingURL=tag-dot-api.js.map

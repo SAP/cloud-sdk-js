@@ -5,6 +5,6 @@
  */
       
       export type TestEntity = {
-    stringProperty?: string;
-    integerProperty?: number;
-  } | Record<string, any>;
+      stringProperty?: string;
+      integerProperty?: number;
+    } | Record<string, any>;

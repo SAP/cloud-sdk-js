@@ -1,24 +1,24 @@
-import { codeBlock, createLogger, unique } from '@sap-cloud-sdk/util';
+import { codeBlock, createLogger } from '@sap-cloud-sdk/util';
+import {
+  collectRefs,
+  hasNotType,
+  parseTypeName,
+  parseFileName,
+  isReferenceObject,
+  isArraySchema,
+  isObjectSchema,
+  isEnumSchema,
+  isOneOfSchema,
+  isAllOfSchema,
+  isAnyOfSchema,
+  isNotSchema
+} from '../model';
 import {
   OpenApiNamedSchema,
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty,
   OpenApiSchema
 } from '../openapi-types';
-import {
-  isReferenceObject,
-  parseFileName,
-  parseTypeName
-} from '../parser/refs';
-import {
-  isAllOfSchema,
-  isAnyOfSchema,
-  isArraySchema,
-  isEnumSchema,
-  isNotSchema,
-  isObjectSchema,
-  isOneOfSchema
-} from '../parser/schema';
 import { getType } from '../parser/type-mapping';
 const logger = createLogger('openapi-generator');
 
@@ -36,37 +36,6 @@ export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
       ${imports}
       export type ${name} = ${getTypeFromSchema(schema)};
     `;
-
-  // if (isReferenceObject(schema)) {
-  //   return codeBlock`
-  //     ${imports}
-  //     export type ${name} = ${getTypeFromSchema(schema)};
-  //   `;
-  // }
-  // if (isArraySchema(schema)) {
-  //   return codeBlock`
-  //     ${imports}
-  //     export type ${name} = ${getTypeFromSchema(schema)};
-  //   `;
-  // }
-  // if (isOneOfSchema(schema)) {
-  //   return codeBlock`
-  //     ${imports}
-  //     export type ${name} = ${getTypeFromSchema(schema)};
-  //   `;
-  // }
-  // if (isObjectSchema(schema)) {
-  //   return codeBlock`
-  //     ${imports}
-  //     export interface ${name} ${getTypeFromSchema(schema)}`;
-  // }
-
-  // logger.warn(`Could not generate type for schema '${name}', using 'any'.`);
-
-  // return codeBlock`
-  // ${imports}
-  // export type ${name} = any;
-  // `;
 }
 
 function getImportsFromRefs(refs: string[]): string[] {
@@ -114,60 +83,49 @@ export function getTypeFromSchema(schema: OpenApiSchema): string {
 }
 
 function getObjectSchema(schema: OpenApiObjectSchema): string {
-  const additionalProperties = getAdditionalProperties(schema);
-
   const propertiesSchema = getObjectSchemaForProperties(schema.properties);
 
-  return additionalProperties
-    ? codeBlock`${propertiesSchema} | ${additionalProperties}`
-    : propertiesSchema;
+  const needsAdditionalSchema =
+    (schema.properties.length && schema.additionalProperties) ||
+    (!schema.properties.length && schema.additionalProperties !== true);
+
+  if (needsAdditionalSchema) {
+    const additionalProperties = schema.additionalProperties
+      ? getRecordSchema(schema.additionalProperties)
+      : undefined;
+
+    return codeBlock`${propertiesSchema} | ${additionalProperties}`;
+  }
+
+  return propertiesSchema;
 }
 
 function getObjectSchemaForProperties(
   properties: OpenApiObjectSchemaProperty[]
 ): string {
-  return codeBlock`{
-    ${properties
-      .map(
-        property =>
-          [
-            `${property.name}${property.required ? '' : '?'}`,
-            getTypeFromSchema(property.schema)
-          ].join(': ') + ';'
-      )
-      .join('\n')}
-  }`;
+  if (properties.length) {
+    return codeBlock`{
+      ${properties
+        .map(
+          property =>
+            [
+              `${property.name}${property.required ? '' : '?'}`,
+              getTypeFromSchema(property.schema)
+            ].join(': ') + ';'
+        )
+        .join('\n')}
+    }`;
+  }
+  return getRecordSchema();
 }
 
-function getAdditionalProperties(
-  schema: OpenApiObjectSchema
-): string | undefined {
-  if (schema.additionalProperties) {
-    const schemaDefinition =
-      typeof schema.additionalProperties === 'object'
-        ? schema.additionalProperties
-        : { type: 'any' };
-    return codeBlock`Record<string, ${getTypeFromSchema(schemaDefinition)}>`;
+function getRecordSchema(
+  additionalProperties: true | OpenApiSchema = true
+): string {
+  if (typeof additionalProperties === 'object') {
+    return codeBlock`Record<string, ${getTypeFromSchema(
+      additionalProperties
+    )}>`;
   }
-}
-
-function collectRefs(schema: OpenApiSchema): string[] {
-  if (isReferenceObject(schema)) {
-    return [schema.$ref];
-  }
-  return Object.values(schema)
-    .filter(value => typeof value === 'object')
-    .reduce((refs, value) => unique([...refs, ...collectRefs(value)]), []);
-}
-
-function hasNotType(schema: OpenApiSchema): boolean {
-  if (isNotSchema(schema)) {
-    return true;
-  }
-  return Object.values(schema)
-    .filter(value => typeof value === 'object')
-    .reduce(
-      (containsNotSchema, value) => containsNotSchema || hasNotType(value),
-      false
-    );
+  return codeBlock`Record<string, any>`;
 }

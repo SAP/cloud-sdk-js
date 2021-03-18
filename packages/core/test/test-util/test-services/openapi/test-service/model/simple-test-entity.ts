@@ -5,5 +5,5 @@
  */
       
       export type SimpleTestEntity = {
-    stringProperty: string;
-  } | Record<string, any>;
+      stringProperty: string;
+    } | Record<string, any>;

@@ -12,7 +12,7 @@ exports.DefaultApi = {
         pathParameters: [pathParam],
         queryParameters: queryParameters
     }); },
-    patchEntity: function (pathParam, body, queryParameters) { return new core_1.OpenApiRequestBuilder('patch', '/entities/{pathParam}', {
+    patchEntity: function (pathParam, body) { return new core_1.OpenApiRequestBuilder('patch', '/entities/{pathParam}', {
         pathParameters: [pathParam],
         body: body
     }); }

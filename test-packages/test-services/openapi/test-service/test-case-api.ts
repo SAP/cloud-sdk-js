@@ -39,34 +39,34 @@ export const TestCaseApi = {
           queryParameters
         }
   ),
-  duplicateOperationId: (queryParameters?: {}) => new OpenApiRequestBuilder(
+  duplicateOperationId: () => new OpenApiRequestBuilder(
     'get',
     '/test-cases/duplicate-operation-ids',
     
   ),
-  duplicateOperationId1: (queryParameters?: {}) => new OpenApiRequestBuilder(
+  duplicateOperationId1: () => new OpenApiRequestBuilder(
     'patch',
     '/test-cases/duplicate-operation-ids',
     
   ),
-  complexSchemas: (body: ComplexTestEntity, queryParameters?: {}) => new OpenApiRequestBuilder(
+  complexSchemas: (body: ComplexTestEntity) => new OpenApiRequestBuilder(
     'get',
     '/test-cases/complex-schemas',
     {
           body
         }
   ),
-  duplicateOperationId2: (queryParameters?: {}) => new OpenApiRequestBuilder(
+  duplicateOperationId2: () => new OpenApiRequestBuilder(
     'put',
     '/test-cases/duplicate-operation-ids',
     
   ),
-  duplicateOperationId3: (queryParameters?: {}) => new OpenApiRequestBuilder(
+  duplicateOperationId3: () => new OpenApiRequestBuilder(
     'post',
     '/test-cases/duplicate-operation-ids',
     
   ),
-  getTestCasesNoOperationId: (queryParameters?: {}) => new OpenApiRequestBuilder(
+  getTestCasesNoOperationId: () => new OpenApiRequestBuilder(
     'get',
     '/test-cases/no-operation-id',
     

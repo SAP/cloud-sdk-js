@@ -1,5 +1,5 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 export declare const TagSpaceApi: {
-    tagWithSpace: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
+    tagWithSpace: () => OpenApiRequestBuilder;
 };
 //# sourceMappingURL=tag-space-api.d.ts.map

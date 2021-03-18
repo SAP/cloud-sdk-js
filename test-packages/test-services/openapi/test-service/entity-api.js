@@ -11,21 +11,21 @@ exports.EntityApi = {
     getAllEntities: function (queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/entities', {
         queryParameters: queryParameters
     }); },
-    updateEntityWithPut: function (body, queryParameters) { return new core_1.OpenApiRequestBuilder('put', '/entities', {
+    updateEntityWithPut: function (body) { return new core_1.OpenApiRequestBuilder('put', '/entities', {
         body: body
     }); },
-    createEntity: function (body, queryParameters) { return new core_1.OpenApiRequestBuilder('post', '/entities', {
+    createEntity: function (body) { return new core_1.OpenApiRequestBuilder('post', '/entities', {
         body: body
     }); },
-    updateEntity: function (body, queryParameters) { return new core_1.OpenApiRequestBuilder('patch', '/entities', {
+    updateEntity: function (body) { return new core_1.OpenApiRequestBuilder('patch', '/entities', {
         body: body
     }); },
-    deleteEntity: function (body, queryParameters) { return new core_1.OpenApiRequestBuilder('delete', '/entities', {
+    deleteEntity: function (body) { return new core_1.OpenApiRequestBuilder('delete', '/entities', {
         body: body
     }); },
-    getEntityByKey: function (entityId, queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/entities/{entityId}', {
+    getEntityByKey: function (entityId) { return new core_1.OpenApiRequestBuilder('get', '/entities/{entityId}', {
         pathParameters: [entityId]
     }); },
-    countEntities: function (queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/entities/count'); }
+    countEntities: function () { return new core_1.OpenApiRequestBuilder('get', '/entities/count'); }
 };
 //# sourceMappingURL=entity-api.js.map

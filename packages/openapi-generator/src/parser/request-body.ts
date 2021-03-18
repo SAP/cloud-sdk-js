@@ -1,9 +1,14 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
-import { OpenApiRequestBody, SchemaMetadata } from '../openapi-types';
-import { isReferenceObject, parseTypeName, resolveObject } from './refs';
+import {
+  OpenApiRequestBody,
+  OpenApiSchema,
+  SchemaMetadata
+} from '../openapi-types';
+import { isReferenceObject, parseTypeName } from '../model';
+import { resolveObject } from './refs';
 import { getType } from './type-mapping';
-import { isArraySchemaObject } from './schema';
+import { isArraySchemaObject, parseSchema } from './schema';
 
 /**
  * Parse the request body.
@@ -36,11 +41,13 @@ export function parseRequestBody(
  */
 function parseRequestBodyType(
   requestBody: OpenAPIV3.RequestBodyObject | undefined
-): SchemaMetadata | undefined {
+): OpenApiSchema | undefined {
   if (requestBody) {
     const mediaType = getMediaType(requestBody, 'application/json');
     const schema = mediaType?.schema;
-    return parseSchemaMetadata(schema);
+    if (schema) {
+      return parseSchema(schema);
+    }
   }
 }
 

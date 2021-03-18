@@ -5,14 +5,14 @@
  */
       import { SimpleTestEntity } from './simple-test-entity';
       export type TestEntity = {
-    keyProperty: string;
-    stringProperty?: string;
-    dateProperty?: string;
-    dateTimeProperty?: string;
-    int32Property?: number;
-    int64Property?: number;
-    floatProperty?: number;
-    doubleProperty?: number;
-    linkedSimpleTestEntity?: SimpleTestEntity;
-    linkedSimpleTestEntityCollection?: SimpleTestEntity[];
-  } | Record<string, any>;
+      keyProperty: string;
+      stringProperty?: string;
+      dateProperty?: string;
+      dateTimeProperty?: string;
+      int32Property?: number;
+      int64Property?: number;
+      floatProperty?: number;
+      doubleProperty?: number;
+      linkedSimpleTestEntity?: SimpleTestEntity;
+      linkedSimpleTestEntityCollection?: SimpleTestEntity[];
+    } | Record<string, any>;

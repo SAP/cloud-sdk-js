@@ -8,6 +8,6 @@ exports.TagSpaceApi = void 0;
  */
 var core_1 = require("@sap-cloud-sdk/core");
 exports.TagSpaceApi = {
-    tagWithSpace: function (queryParameters) { return new core_1.OpenApiRequestBuilder('post', '/test-cases/special-tag'); }
+    tagWithSpace: function () { return new core_1.OpenApiRequestBuilder('post', '/test-cases/special-tag'); }
 };
 //# sourceMappingURL=tag-space-api.js.map

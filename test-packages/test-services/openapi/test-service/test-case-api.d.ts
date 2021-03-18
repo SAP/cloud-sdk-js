@@ -16,11 +16,11 @@ export declare const TestCaseApi: {
     testCaseGetDuplicateParameters: (duplicateParam: string, queryParameters: {
         'duplicateParam': string;
     }) => OpenApiRequestBuilder;
-    duplicateOperationId: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
-    duplicateOperationId1: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
-    complexSchemas: (body: ComplexTestEntity, queryParameters?: {} | undefined) => OpenApiRequestBuilder;
-    duplicateOperationId2: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
-    duplicateOperationId3: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
-    getTestCasesNoOperationId: (queryParameters?: {} | undefined) => OpenApiRequestBuilder;
+    duplicateOperationId: () => OpenApiRequestBuilder;
+    duplicateOperationId1: () => OpenApiRequestBuilder;
+    complexSchemas: (body: ComplexTestEntity) => OpenApiRequestBuilder;
+    duplicateOperationId2: () => OpenApiRequestBuilder;
+    duplicateOperationId3: () => OpenApiRequestBuilder;
+    getTestCasesNoOperationId: () => OpenApiRequestBuilder;
 };
 //# sourceMappingURL=test-case-api.d.ts.map

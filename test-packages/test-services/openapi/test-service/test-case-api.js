@@ -22,13 +22,13 @@ exports.TestCaseApi = {
         pathParameters: [duplicateParam],
         queryParameters: queryParameters
     }); },
-    duplicateOperationId: function (queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/test-cases/duplicate-operation-ids'); },
-    duplicateOperationId1: function (queryParameters) { return new core_1.OpenApiRequestBuilder('patch', '/test-cases/duplicate-operation-ids'); },
-    complexSchemas: function (body, queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/test-cases/complex-schemas', {
+    duplicateOperationId: function () { return new core_1.OpenApiRequestBuilder('get', '/test-cases/duplicate-operation-ids'); },
+    duplicateOperationId1: function () { return new core_1.OpenApiRequestBuilder('patch', '/test-cases/duplicate-operation-ids'); },
+    complexSchemas: function (body) { return new core_1.OpenApiRequestBuilder('get', '/test-cases/complex-schemas', {
         body: body
     }); },
-    duplicateOperationId2: function (queryParameters) { return new core_1.OpenApiRequestBuilder('put', '/test-cases/duplicate-operation-ids'); },
-    duplicateOperationId3: function (queryParameters) { return new core_1.OpenApiRequestBuilder('post', '/test-cases/duplicate-operation-ids'); },
-    getTestCasesNoOperationId: function (queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/test-cases/no-operation-id'); }
+    duplicateOperationId2: function () { return new core_1.OpenApiRequestBuilder('put', '/test-cases/duplicate-operation-ids'); },
+    duplicateOperationId3: function () { return new core_1.OpenApiRequestBuilder('post', '/test-cases/duplicate-operation-ids'); },
+    getTestCasesNoOperationId: function () { return new core_1.OpenApiRequestBuilder('get', '/test-cases/no-operation-id'); }
 };
 //# sourceMappingURL=test-case-api.js.map

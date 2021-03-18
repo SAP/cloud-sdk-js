@@ -7,12 +7,12 @@ import { OpenApiRequestBuilder } from '../../../../../src';
 
 
 export const ExtensionApi = {
-  niceGetFunction: (queryParameters?: {}) => new OpenApiRequestBuilder(
+  niceGetFunction: () => new OpenApiRequestBuilder(
     'get',
     '/test-cases/extension',
     
   ),
-  nicePostFunction: (queryParameters?: {}) => new OpenApiRequestBuilder(
+  nicePostFunction: () => new OpenApiRequestBuilder(
     'post',
     '/test-cases/extension',
     

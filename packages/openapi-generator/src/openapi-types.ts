@@ -68,7 +68,7 @@ export interface OpenApiParameter extends OpenAPIV3.ParameterObject {
  */
 export interface OpenApiRequestBody extends OpenAPIV3.RequestBodyObject {
   parameterName: string;
-  parameterType: SchemaMetadata;
+  parameterType: OpenApiSchema;
 }
 
 /**

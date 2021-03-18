@@ -21,42 +21,42 @@ export const EntityApi = {
           queryParameters
         }
   ),
-  updateEntityWithPut: (body: TestEntity[], queryParameters?: {}) => new OpenApiRequestBuilder(
+  updateEntityWithPut: (body: TestEntity[]) => new OpenApiRequestBuilder(
     'put',
     '/entities',
     {
           body
         }
   ),
-  createEntity: (body: TestEntity, queryParameters?: {}) => new OpenApiRequestBuilder(
+  createEntity: (body: TestEntity) => new OpenApiRequestBuilder(
     'post',
     '/entities',
     {
           body
         }
   ),
-  updateEntity: (body: Record<string, any>, queryParameters?: {}) => new OpenApiRequestBuilder(
+  updateEntity: (body: Record<string, any>) => new OpenApiRequestBuilder(
     'patch',
     '/entities',
     {
           body
         }
   ),
-  deleteEntity: (body: string[], queryParameters?: {}) => new OpenApiRequestBuilder(
+  deleteEntity: (body: string[]) => new OpenApiRequestBuilder(
     'delete',
     '/entities',
     {
           body
         }
   ),
-  getEntityByKey: (entityId: string, queryParameters?: {}) => new OpenApiRequestBuilder(
+  getEntityByKey: (entityId: string) => new OpenApiRequestBuilder(
     'get',
     '/entities/{entityId}',
     {
           pathParameters: [entityId]
         }
   ),
-  countEntities: (queryParameters?: {}) => new OpenApiRequestBuilder(
+  countEntities: () => new OpenApiRequestBuilder(
     'get',
     '/entities/count',
     

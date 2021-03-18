@@ -15,7 +15,7 @@ export const DefaultApi = {
           queryParameters
         }
   ),
-  patchEntity: (pathParam: string, body: TestEntity, queryParameters?: {}) => new OpenApiRequestBuilder(
+  patchEntity: (pathParam: string, body: TestEntity) => new OpenApiRequestBuilder(
     'patch',
     '/entities/{pathParam}',
     {

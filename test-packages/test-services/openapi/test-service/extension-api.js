@@ -8,7 +8,7 @@ exports.ExtensionApi = void 0;
  */
 var core_1 = require("@sap-cloud-sdk/core");
 exports.ExtensionApi = {
-    niceGetFunction: function (queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/test-cases/extension'); },
-    nicePostFunction: function (queryParameters) { return new core_1.OpenApiRequestBuilder('post', '/test-cases/extension'); }
+    niceGetFunction: function () { return new core_1.OpenApiRequestBuilder('get', '/test-cases/extension'); },
+    nicePostFunction: function () { return new core_1.OpenApiRequestBuilder('post', '/test-cases/extension'); }
 };
 //# sourceMappingURL=extension-api.js.map

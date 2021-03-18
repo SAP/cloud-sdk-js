@@ -10,7 +10,7 @@ import {
   getProjectNameFromManifest,
   getTemplatePaths
 } from '../utils';
-
+// some diff
 export default class AddApprouter extends Command {
   static description =
     'Setup your Cloud Foundry app to authenticate through the app router';

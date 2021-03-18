@@ -34,6 +34,8 @@ jobs:
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
+      - run: yarn lerna run compile --since main
+        if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
@@ -56,6 +58,8 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
+      - run: yarn lerna run compile --since main
+        if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn lint
         name: Static Code Check
       - run: yarn check:test-service
@@ -89,7 +93,8 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn test:e2e
+      - run: yarn lerna run compile --since main
+        if: steps.cache.outputs.cache-hit == 'true'
   canary-release:
     if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
@@ -109,6 +114,8 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
+      - run: yarn lerna run compile --since main
+        if: steps.cache.outputs.cache-hit == 'true'
       - name: Canary Release
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc

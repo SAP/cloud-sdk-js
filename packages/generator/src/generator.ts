@@ -1,5 +1,5 @@
 import { PathLike } from 'fs';
-import { resolve, basename } from 'path';
+import { resolve, basename,dirname } from 'path';
 import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
@@ -323,12 +323,14 @@ export async function generateSourcesForService(
     logger.info(
       `Generating sdk header metatdata ${headerFileName}...`
     );
-    otherFile(serviceDir, headerFileName, JSON.stringify(await sdkMetaDataHeader(service,options)), options.forceOverwrite);
+     const metadataDir = project.createDirectory(resolve(dirname(service.edmxPath.toString()),'sdk-metadata'));
+
+    otherFile(metadataDir, headerFileName, JSON.stringify(await sdkMetaDataHeader(service,options),null,2), options.forceOverwrite);
 
     logger.info(
       `Generating sdk client metatdata ${clientFileName}...`
     );
-    otherFile(serviceDir, clientFileName, JSON.stringify(await sdkMetaDataJS(service,options)), options.forceOverwrite);
+    otherFile(metadataDir, clientFileName, JSON.stringify(await sdkMetaDataJS(service,options),null,2), options.forceOverwrite);
   }
 }
 

@@ -19,7 +19,6 @@ export async function getGenericUsage(): Promise<string>{
 
 export async function getApiSpecificUsage(service: VdmServiceMetadata): Promise<string>{
   if(service.entities.length > 0){
-    const genericString = (await getGenericUsage());
     return genericGetAllCodeSample(service.entities[0].className,service.npmPackageName);
   }
   // TODO handle cases if no entity is there in the follow up ticket.

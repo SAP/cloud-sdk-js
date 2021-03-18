@@ -32,7 +32,8 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
-      - if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
+      - name: Does this change?
+        if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - run: yarn test:unit
         env:

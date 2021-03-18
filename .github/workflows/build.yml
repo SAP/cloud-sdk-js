@@ -33,7 +33,9 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - if: steps.yarn-cache-dir-path.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+        run: |
+          yarn install --frozen-lockfile
+          echo "test if cache hits"
       - run: yarn test:unit
         env:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}

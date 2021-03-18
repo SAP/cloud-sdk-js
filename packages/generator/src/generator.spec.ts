@@ -30,20 +30,22 @@ describe('generator', () => {
       ).toBeDefined();
     });
 
-    it('generates the api hub metadata',async ()=>{
+    it('generates the api hub metadata and writes to the input folder',async ()=>{
       const project = await generateProject(
         createOptions({
           inputDir:resolve(oDataServiceSpecs,'v2','API_TEST_SRV'),
-          generateSdkMetadata:true
+          generateSdkMetadata:true,
+          forceOverwrite:true
         })
       );
       const sourceFiles = project!.getSourceFiles();
-      expect(
-        sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-client-js.json')
-      ).toBeDefined();
-      expect(
-        sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-header.json')
-      ).toBeDefined();
+      const clientFile = sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-client.json')
+      const headerFile = sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-header.json');
+
+      [clientFile,headerFile].forEach(file=>{
+        expect(file).toBeDefined();
+        expect(file!.getDirectoryPath()).toMatch(resolve(oDataServiceSpecs,'v2','API_TEST_SRV'))
+      })
     });
   });
   describe('edmx-to-csn', () => {

@@ -1,0 +1,16 @@
+{
+  "language": "javascript",
+  "generationAndUsage": {
+    "successfulGenerationVerified": true,
+    "genericUsage": "import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';\n\nconst resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });\n",
+    "apiSpecificUsage": "import { Photos } from 'microsoft-o-data-service-sample-trippin-in-memory-models-service';\n\nconst resultPromise = Photos.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });\n",
+    "links": {
+      "sdkDocumentation": "https://sap.github.io/cloud-sdk/",
+      "featureDocumentation": "https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript",
+      "support": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
+      "apiHubTutorial": "https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request",
+      "generationManual": "https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client"
+    },
+    "generationSteps": "Please follow the documentation https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client"
+  }
+}

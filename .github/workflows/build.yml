@@ -20,8 +20,8 @@ jobs:
           - os: macos-latest
             node-version: 10.x
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - uses: actions/cache@v2
@@ -44,8 +44,8 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: '12.x'
       - uses: actions/cache@v2
@@ -79,8 +79,8 @@ jobs:
   e2e-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: '12.x'
       - uses: actions/cache@v2
@@ -100,8 +100,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [tests, checks]
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: '12.x'
       - uses: actions/cache@v2
@@ -128,11 +128,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: [tests, checks]
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: '12.x'
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+            **/dist
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}    
       - run: yarn install --frozen-lockfile
+        if: steps.cache.outputs.cache-hit != 'true'
+      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
+        if: steps.cache.outputs.cache-hit == 'true'
       - uses: ./.github/actions/get-changelog
         name: Get Changelog
         id: get-changelog 

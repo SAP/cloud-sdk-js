@@ -30,8 +30,8 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
 
 exports[`sdk-metadata generates the File names 1`] = `
 Object {
-  "clientFileName": "MyService-client-js.json",
-  "headerFileName": "MyService-header.json",
+  "clientFileName": "MyService_CLIENT_JS.json",
+  "headerFileName": "MyService_HEADER.json",
 }
 `;
 

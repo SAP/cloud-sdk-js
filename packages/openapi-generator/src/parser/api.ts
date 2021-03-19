@@ -2,10 +2,10 @@ import { $Refs } from '@apidevtools/swagger-parser';
 import { flat, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { methods, OpenApiApi } from '../openapi-types';
-import { apiNameExtension, defaultApiName } from './extensions';
+import { apiNameExtension, defaultApiName } from '../extensions';
 import { parseOperation } from './operation';
 import { OperationInfo } from './operation-info';
-import { ensureUniqueOperationIds } from './operation-naming';
+import { ensureUniqueOperationIds, nameOperations } from './operation-naming';
 
 /**
  * Collect and parse all APIs of an `OpenAPIV3.Document`.
@@ -22,7 +22,7 @@ export function parseApis(
   return Object.entries(operationsByApis).map(([name, operations]) => ({
     name,
     operations: ensureUniqueOperationIds(
-      operations
+      nameOperations(operations)
     ).map(({ pathPattern, method }) =>
       parseOperation(
         pathPattern,

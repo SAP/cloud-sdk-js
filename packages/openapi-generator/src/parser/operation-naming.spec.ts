@@ -1,74 +1,66 @@
-import { OpenAPIV3 } from 'openapi-types';
-import { emptyApiDefinition } from '../../test/test-util';
-import { OpenApiOperation } from '../openapi-types';
-import { ensureUniqueOperationIds } from './operation-naming';
+import { operationNameExtension } from '../extensions';
+import { OperationInfo } from './operation-info';
+import {
+  ensureUniqueOperationIds,
+  getOperationNameFromPatternAndMethod,
+  nameOperations
+} from './operation-naming';
 
-describe('ensureUniqueOperationIds', () => {
-  it('replaces duplicate names, while prioritizing original names', () => {
-    const uniqueOperations = ensureUniqueOperationIds([
-      { operationId: 'getX' },
-      { operationId: 'getX' },
-      { operationId: 'getX1' }
-    ] as OpenApiOperation[]);
+it('ensureUniqueOperationIds replaces duplicate names, while prioritizing original names', () => {
+  const uniqueOperations = ensureUniqueOperationIds([
+    { operation: { operationId: 'getX', summary: 'operation1' } },
+    { operation: { operationId: 'getX', summary: 'operation2' } },
+    { operation: { operationId: 'getX1', summary: 'operation3' } }
+  ] as OperationInfo[]);
 
-    expect(uniqueOperations.map(({ operationId }) => operationId)).toEqual([
-      'getX',
-      'getX2',
-      'getX1'
-    ]);
-  });
+  expect(uniqueOperations.map(({ operation }) => operation)).toEqual([
+    { operationId: 'getX', summary: 'operation1' },
+    { operationId: 'getX1', summary: 'operation3' },
+    { operationId: 'getX2', summary: 'operation2' }
+  ]);
+});
 
-  it('adds names when there is no operationId, while prioritizing original names', () => {
-    const uniqueOperations = ensureUniqueOperationIds(([
-      { method: 'get' },
-      { method: 'post' },
-      { operationId: 'getX' },
-      { operationId: 'createX' }
-    ] as unknown) as OpenApiOperation[]);
-    expect(uniqueOperations.map(({ operationId }) => operationId)).toEqual([
-      'getX1',
-      'createX1',
-      'getX',
-      'createX'
-    ]);
-  });
-
-  it('prioritizes extensions', () => {
-    const uniqueOperations = ensureUniqueOperationIds(([
-      { method: 'get' },
-      { method: 'post' },
-      { operationId: 'getX' },
-      { operationId: 'createX' }
-    ] as unknown) as OpenApiOperation[]);
-
-    const newSpec = ensureUniqueOperationIds({
-      ...emptyApiDefinition,
-      paths: {
-        '/url': {
-          get: {
-            'x-sap-cloud-sdk-operation-name': 'niceGetName',
-            operationId: 'id'
-          },
-          post: {
-            'x-sap-cloud-sdk-operation-name': 'nicePostName'
-          }
-        }
+it('nameOperations adds retrieves initial names for operations', () => {
+  const uniqueOperations = nameOperations([
+    { operation: { operationId: 'getX', summary: 'operation1' } },
+    { method: 'get', pathPattern: '/x', operation: { summary: 'operation2' } },
+    {
+      operation: {
+        [operationNameExtension]: 'nameFromExtension',
+        summary: 'operation3'
       }
-    } as OpenAPIV3.Document);
+    }
+  ] as OperationInfo[]);
 
-    expect(newSpec.paths).toEqual({
-      '/url': {
-        get: {
-          operationId: 'niceGetName',
-          'x-sap-cloud-sdk-operation-name': 'niceGetName'
-        },
-        post: {
-          operationId: 'nicePostName',
-          'x-sap-cloud-sdk-operation-name': 'nicePostName'
-        }
+  expect(uniqueOperations.map(({ operation }) => operation)).toEqual([
+    expect.objectContaining({
+      operationId: 'nameFromExtension',
+      summary: 'operation3'
+    }),
+    { operationId: 'getX', summary: 'operation1' },
+    { operationId: 'getX', summary: 'operation2' }
+  ]);
+});
+
+it('nameOperations throws an error if there are duplicate extensions', () => {
+  const operations = [
+    {
+      operation: {
+        [operationNameExtension]: 'nameFromExtension',
+        summary: 'operation1'
       }
-    });
-  });
+    },
+    {
+      operation: {
+        [operationNameExtension]: 'NameFromExtension',
+        summary: 'operation2'
+      }
+    }
+  ] as OperationInfo[];
+
+  expect(() => nameOperations(operations)).toThrowErrorMatchingInlineSnapshot(
+    "\"Operation name 'NameFromExtension' provided for 'x-sap-cloud-sdk-operation-name' resolves to 'nameFromExtension' and is not unique.\""
+  );
 });
 
 describe('getOperationNameFromPatternAndMethod', () => {

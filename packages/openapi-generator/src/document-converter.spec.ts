@@ -1,9 +1,7 @@
 import { OpenAPIV2, OpenAPIV3 } from 'openapi-types';
 import { emptyApiDefinition } from '../test/test-util';
 import {
-  convertDocToUniqueOperationIds,
   convertDocToOpenApiV3,
-  getOperationNameFromPatternAndMethod,
   parseFileAsJson,
   convertDocWithApiNameTag
 } from './document-converter';
@@ -51,10 +49,7 @@ describe('convertDocWithApiNameTag', () => {
 
     expect(newSpec).toEqual({
       ...emptyApiDefinition,
-      tags: [
-        { name: 'api1' },
-        { name: 'api2' }
-      ],
+      tags: [{ name: 'api1' }, { name: 'api2' }],
       paths: {
         '/pattern1': {
           'x-sap-cloud-sdk-api-name': 'api1',
@@ -129,10 +124,7 @@ describe('convertDocWithApiNameTag', () => {
 
     expect(newSpec).toEqual({
       ...emptyApiDefinition,
-      tags: [
-        { name: 'default' },
-        { name: 'tag' }
-      ],
+      tags: [{ name: 'default' }, { name: 'tag' }],
       paths: {
         '/pattern1': {
           get: {
@@ -306,148 +298,5 @@ describe('parseFileAsJson', () => {
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Could not parse OpenAPI specification at /path/other-extension.test. Only JSON and YAML files are allowed."'
     );
-  });
-});
-
-describe('convertDocToUniqueOperationIds', () => {
-  it('replaces duplicate names, while prioritizing original names', () => {
-    const newSpec = convertDocToUniqueOperationIds({
-      ...emptyApiDefinition,
-      paths: {
-        '/pattern1': {
-          get: {
-            operationId: 'getX'
-          },
-          post: {
-            operationId: 'getX'
-          }
-        },
-        '/pattern2': {
-          get: {
-            operationId: 'getX1'
-          }
-        }
-      }
-    });
-
-    expect(newSpec.paths).toEqual({
-      '/pattern1': {
-        get: {
-          operationId: 'getX'
-        },
-        post: {
-          operationId: 'getX2'
-        }
-      },
-      '/pattern2': {
-        get: {
-          operationId: 'getX1'
-        }
-      }
-    });
-  });
-
-  it('adds names when there is no operationId, while prioritizing original names', () => {
-    const newSpec = convertDocToUniqueOperationIds({
-      ...emptyApiDefinition,
-      paths: {
-        '/x': {
-          get: {},
-          post: {}
-        },
-        '/pattern2': {
-          get: {
-            operationId: 'getX'
-          },
-          post: {
-            operationId: 'createX'
-          }
-        }
-      }
-    });
-
-    expect(newSpec.paths).toEqual({
-      '/x': {
-        get: {
-          operationId: 'getX1'
-        },
-        post: {
-          operationId: 'createX1'
-        }
-      },
-      '/pattern2': {
-        get: {
-          operationId: 'getX'
-        },
-        post: {
-          operationId: 'createX'
-        }
-      }
-    });
-  });
-
-  it('use extensions when provided', () => {
-    const newSpec = convertDocToUniqueOperationIds({
-      ...emptyApiDefinition,
-      paths: {
-        '/url': {
-          get: {
-            'x-sap-cloud-sdk-operation-name': 'niceGetName',
-            operationId: 'id'
-          },
-          post: {
-            'x-sap-cloud-sdk-operation-name': 'nicePostName',
-          }
-        }
-      }
-    } as OpenAPIV3.Document);
-
-    expect(newSpec.paths).toEqual({
-      '/url': {
-        get: {
-          operationId: 'niceGetName',
-          'x-sap-cloud-sdk-operation-name': 'niceGetName'
-        },
-        post: {
-          operationId: 'nicePostName',
-          'x-sap-cloud-sdk-operation-name': 'nicePostName'
-        }
-      }
-    });
-  });
-});
-
-describe('getOperationNameFromPatternAndMethod', () => {
-  it('parses the operation name from the pattern and method', () => {
-    expect(getOperationNameFromPatternAndMethod('/entity', 'get')).toEqual(
-      'getEntity'
-    );
-  });
-
-  it('parses the operation name from the pattern and method for post', () => {
-    expect(
-      getOperationNameFromPatternAndMethod('/entity/property', 'post')
-    ).toEqual('createEntityProperty');
-  });
-
-  it('parses the operation name from the pattern and method with one placeholder', () => {
-    expect(
-      getOperationNameFromPatternAndMethod('/entity/{entityId}/property', 'get')
-    ).toEqual('getEntityPropertyByEntityId');
-  });
-
-  it('parses the operation name from the pattern and method with multiple placeholders', () => {
-    expect(
-      getOperationNameFromPatternAndMethod(
-        '/entity/{entityId}/property/{propertyId}',
-        'get'
-      )
-    ).toEqual('getEntityPropertyByEntityIdAndPropertyId');
-  });
-
-  it('parses the operation name from the pattern and method with only placeholders', () => {
-    expect(
-      getOperationNameFromPatternAndMethod('/{placeholder}', 'get')
-    ).toEqual('getByPlaceholder');
   });
 });

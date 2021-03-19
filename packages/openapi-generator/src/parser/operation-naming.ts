@@ -5,7 +5,7 @@ import {
   camelCase
 } from '@sap-cloud-sdk/util';
 import { Method } from '../openapi-types';
-import { operationNameExtension } from './extensions';
+import { operationNameExtension } from '../extensions';
 import { OperationInfo } from './operation-info';
 
 /**
@@ -16,13 +16,11 @@ import { OperationInfo } from './operation-info';
 export function ensureUniqueOperationIds(
   operations: OperationInfo[]
 ): OperationInfo[] {
-  const namedOperations = nameOperations(operations);
-
   const {
     uniqueOperationNames,
     operationsWithUniqueNames,
     operationsWithDuplicateNames
-  } = partitionNamedOperationsToUniqueAndDuplicate(namedOperations);
+  } = partitionNamedOperationsToUniqueAndDuplicate(operations);
 
   const nameGenerator = new UniqueNameGenerator('', uniqueOperationNames);
 
@@ -34,7 +32,7 @@ export function ensureUniqueOperationIds(
   return [...operationsWithUniqueNames, ...renamedOperations];
 }
 
-function nameOperations(operations: OperationInfo[]): OperationInfo[] {
+export function nameOperations(operations: OperationInfo[]): OperationInfo[] {
   const [operationsWithExtensions, operationsWithoutExtensions] = partition(
     operations,
     ({ operation }) => !!operation[operationNameExtension]

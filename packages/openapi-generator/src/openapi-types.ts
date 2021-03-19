@@ -1,5 +1,4 @@
 import type { OpenAPIV3 } from 'openapi-types';
-
 export interface OpenApiDocument {
   serviceName: string;
   npmPackageName: string;

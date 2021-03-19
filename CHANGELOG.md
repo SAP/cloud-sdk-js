@@ -10,33 +10,6 @@
 
 ## Known Issues
 
--
-
-## Compatibility Notes
-
--
-
-## New Functionality
-
--
-
-## Improvements
-
--
-
-## Fixed Issues
-
--
-
-
-# 1.40.0
-
-Release Date: TBD<br>
-API Docs: https://sap.github.io/cloud-sdk/api/1.40.0<br>
-Blog: TBD<br>
-
-## Known Issues
-
 - 
 
 ## Compatibility Notes
@@ -54,6 +27,7 @@ Blog: TBD<br>
 ## Fixed Issues
 
 - [core] Fix parsing of empty bodies in batch responses.
+
 
 # 1.39.0
 

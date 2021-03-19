@@ -26,7 +26,7 @@ export default class AddApprouter extends Command {
       description: 'Show help for the add-approuter command.'
     })
   };
-// trigger diff
+
   static args = [
     {
       name: 'projectDir',

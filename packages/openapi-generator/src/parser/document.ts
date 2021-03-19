@@ -1,12 +1,8 @@
 import { basename } from 'path';
 import { parse, resolve } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import { flatten, pascalCase, removeFileExtension, unique } from '@sap-cloud-sdk/util';
-import {
-  OpenApiOperation,
-  OpenApiDocument,
-  OpenApiNamedSchema
-} from '../openapi-types';
+import { pascalCase, removeFileExtension } from '@sap-cloud-sdk/util';
+import { OpenApiDocument, OpenApiNamedSchema } from '../openapi-types';
 import { VdmMapping } from '../service-mapping';
 import { parseSchema } from './schema';
 import { parseApis } from './api';
@@ -33,18 +29,8 @@ export async function parseOpenApiDocument(
       ? vdmMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
-    // tags: collectTags(operations),
     components
   };
-}
-
-/**
- * Collect all the tags used by given operations.
- * @param operations The given operations.
- * @returns An array that holds the unique tags.
- */
-export function collectTags(operations: OpenApiOperation[]): string[] {
-  return unique(flatten(operations.map(operation => operation.tags)));
 }
 
 export function parseComponents(

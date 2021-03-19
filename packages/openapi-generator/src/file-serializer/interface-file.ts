@@ -2,16 +2,16 @@ import { codeBlock, createLogger } from '@sap-cloud-sdk/util';
 import { OpenApiNamedSchema } from '../openapi-types';
 import {
   collectRefs,
-  hasNotType,
-  parseTypeName,
-  parseFileName
+  hasNotSchema,
+  parseTypeNameFromRef,
+  parseFileNameFromRef
 } from '../model';
 import { serializeSchema } from './schema';
 const logger = createLogger('openapi-generator');
 
 export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
   const refs = collectRefs(schema);
-  const coreImports = hasNotType(schema)
+  const coreImports = hasNotSchema(schema)
     ? "import { Except } from '@sap-cloud-sdk/core';"
     : '';
 
@@ -28,8 +28,8 @@ export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
 function getImportsFromRefs(refs: string[]): string[] {
   return refs.map(
     ref =>
-      codeBlock`import { ${parseTypeName({
+      codeBlock`import { ${parseTypeNameFromRef({
         $ref: ref
-      })} } from './${parseFileName({ $ref: ref })}';`
+      })} } from './${parseFileNameFromRef({ $ref: ref })}';`
   );
 }

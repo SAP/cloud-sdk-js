@@ -5,7 +5,7 @@ import {
   OpenApiSchema,
   SchemaMetadata
 } from '../openapi-types';
-import { isReferenceObject, parseTypeName } from '../model';
+import { isReferenceObject, parseTypeNameFromRef } from '../model';
 import { resolveObject } from './refs';
 import { getType } from './type-mapping';
 import { isArraySchemaObject, parseSchema } from './schema';
@@ -73,7 +73,7 @@ function parseReferenceObject(
 ): SchemaMetadata {
   return {
     isArrayType: false,
-    innerType: parseTypeName(schema),
+    innerType: parseTypeNameFromRef(schema),
     isInnerTypeReferenceType: true
   };
 }

@@ -1,12 +1,12 @@
 import { codeBlock, unique } from '@sap-cloud-sdk/util';
 import { OpenApiApi, OpenApiOperation } from '../openapi-types';
-import { collectRefs, parseTypeName } from '../model';
+import { collectRefs, parseTypeNameFromRef } from '../model';
 import { serializeOperation } from './operation';
 
 export function apiFile(api: OpenApiApi): string {
   const requestBodyTypes = getRequestBodyReferenceTypes(
     api.operations
-  ).map(requestBodyType => parseTypeName({ $ref: requestBodyType }));
+  ).map(requestBodyType => parseTypeNameFromRef({ $ref: requestBodyType }));
   return codeBlock`
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 ${

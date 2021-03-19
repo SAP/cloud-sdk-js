@@ -20,14 +20,14 @@ export function collectRefs(schema: OpenApiSchema): string[] {
     .reduce((refs, value) => unique([...refs, ...collectRefs(value)]), []);
 }
 
-export function hasNotType(schema: OpenApiSchema): boolean {
+export function hasNotSchema(schema: OpenApiSchema): boolean {
   if (isNotSchema(schema)) {
     return true;
   }
   return Object.values(schema)
     .filter(value => typeof value === 'object')
     .reduce(
-      (containsNotSchema, value) => containsNotSchema || hasNotType(value),
+      (containsNotSchema, value) => containsNotSchema || hasNotSchema(value),
       false
     );
 }
@@ -74,12 +74,19 @@ export function isNotSchema(obj: any): obj is OpenApiNotSchema {
  * @param obj Reference object to get the type name from.
  * @returns Parsed type name.
  */
-export function parseTypeName(obj: OpenAPIV3.ReferenceObject): string {
-  // TODO: How do we know that this is correct?
-  return pascalCase(last(obj.$ref.split('/'))!);
+export function parseTypeNameFromRef(
+  obj: OpenAPIV3.ReferenceObject | string
+): string {
+  return pascalCase(parseType(obj));
 }
 
-export function parseFileName(obj: OpenAPIV3.ReferenceObject): string {
-  // TODO: How do we know that this is correct?
-  return kebabCase(last(obj.$ref.split('/'))!);
+export function parseFileNameFromRef(
+  obj: OpenAPIV3.ReferenceObject | string
+): string {
+  return kebabCase(parseType(obj));
+}
+
+function parseType(obj: OpenAPIV3.ReferenceObject | string): string {
+  const ref = isReferenceObject(obj) ? obj.$ref : obj;
+  return last(ref.split('/'))!;
 }

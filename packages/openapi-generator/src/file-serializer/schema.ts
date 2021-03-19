@@ -7,7 +7,7 @@ import {
 import { getType } from '../parser/type-mapping';
 import {
   isReferenceObject,
-  parseTypeName,
+  parseTypeNameFromRef,
   isArraySchema,
   isObjectSchema,
   isEnumSchema,
@@ -19,7 +19,7 @@ import {
 
 export function serializeSchema(schema: OpenApiSchema): string {
   if (isReferenceObject(schema)) {
-    return parseTypeName(schema);
+    return parseTypeNameFromRef(schema);
   }
   if (isArraySchema(schema)) {
     const type = serializeSchema(schema.items);

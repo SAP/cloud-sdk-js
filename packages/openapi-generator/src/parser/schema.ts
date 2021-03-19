@@ -26,6 +26,7 @@ export function parseSchema(
   if (isReferenceObject(schema)) {
     return schema;
   }
+
   if (isArraySchemaObject(schema)) {
     return parseArraySchema(schema);
   }
@@ -118,19 +119,6 @@ export function parseEnumSchema(
   };
 }
 
-// export function parseXOfSchema(
-//   schema: OpenAPIV3.NonArraySchemaObject,
-//   xOf: 'oneOf'
-// ): OpenApiOneOfSchema;
-// export function parseXOfSchema(
-//   schema: OpenAPIV3.NonArraySchemaObject,
-//   xOf: 'allOf'
-// ): OpenApiAllOfSchema;
-// export function parseXOfSchema(
-//   schema: OpenAPIV3.NonArraySchemaObject,
-//   xOf: 'anyOf'
-// ): OpenApiAnyOfSchema;
-
 export function parseXOfSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   xOf: 'oneOf' | 'allOf' | 'anyOf'
@@ -139,21 +127,3 @@ export function parseXOfSchema(
     [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry))
   };
 }
-
-// export function parseOneOfSchema(
-//   schema: OpenAPIV3.NonArraySchemaObject
-// ): OpenApiOneOfSchema {
-//   return parseXOfSchema(schema, 'oneOf');
-// }
-
-// export function parseAllOfSchema(
-//   schema: OpenAPIV3.NonArraySchemaObject
-// ): OpenApiAllOfSchema {
-//   return parseXOfSchema(schema, 'allOf');
-// }
-
-// export function parseAnyOfSchema(
-//   schema: OpenAPIV3.NonArraySchemaObject
-// ): OpenApiAnyOfSchema {
-//   return parseXOfSchema(schema, 'anyOf');
-// }

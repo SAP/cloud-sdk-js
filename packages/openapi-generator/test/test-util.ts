@@ -1,7 +1,7 @@
 import { resolve, $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 
-export const emptyApiDefinition = {
+export const emptyDocument = {
   openapi: '3.0.0',
   info: { title: 'Spec', version: '1.0.0' },
   paths: {}
@@ -10,5 +10,5 @@ export const emptyApiDefinition = {
 export function createRefs(
   components: OpenAPIV3.ComponentsObject = {}
 ): Promise<$Refs> {
-  return resolve({ ...emptyApiDefinition, components });
+  return resolve({ ...emptyDocument, components });
 }

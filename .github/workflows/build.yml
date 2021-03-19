@@ -35,7 +35,7 @@ jobs:
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit == 'false'
-      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
+      - run: yarn lerna run compile --since origin/main
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn test:unit
         env:
@@ -60,7 +60,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit == 'false'
-      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
+      - run: yarn lerna run compile --since origin/main
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn lint
         name: Static Code Check
@@ -96,7 +96,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit == 'false'
-      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
+      - run: yarn lerna run compile --since origin/main
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn test:e2e     
   canary-release:
@@ -119,7 +119,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit == 'false'
-      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
+      - run: yarn lerna run compile --since origin/main
         if: steps.cache.outputs.cache-hit == 'true'
       - name: Canary Release
         run: |
@@ -148,7 +148,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}    
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit == 'false'
-      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
+      - run: yarn lerna run compile --since origin/main
         if: steps.cache.outputs.cache-hit == 'true'
       - uses: ./.github/actions/get-changelog
         name: Get Changelog

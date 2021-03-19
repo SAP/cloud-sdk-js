@@ -27,8 +27,8 @@ exports.TestCaseApi = {
     complexSchemas: function (body) { return new core_1.OpenApiRequestBuilder('get', '/test-cases/complex-schemas', {
         body: body
     }); },
+    getTestCasesNoOperationId: function () { return new core_1.OpenApiRequestBuilder('get', '/test-cases/no-operation-id'); },
     duplicateOperationId2: function () { return new core_1.OpenApiRequestBuilder('put', '/test-cases/duplicate-operation-ids'); },
-    duplicateOperationId3: function () { return new core_1.OpenApiRequestBuilder('post', '/test-cases/duplicate-operation-ids'); },
-    getTestCasesNoOperationId: function () { return new core_1.OpenApiRequestBuilder('get', '/test-cases/no-operation-id'); }
+    duplicateOperationId3: function () { return new core_1.OpenApiRequestBuilder('post', '/test-cases/duplicate-operation-ids'); }
 };
 //# sourceMappingURL=test-case-api.js.map

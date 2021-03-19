@@ -1,10 +1,10 @@
 import { $Refs } from '@apidevtools/swagger-parser';
-import { flatten, pascalCase } from '@sap-cloud-sdk/util';
+import { flat, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { methods, OpenApiApi } from '../openapi-types';
 import { apiNameExtension, defaultApiName } from './extensions';
 import { parseOperation } from './operation';
-import { OperationInfo, getOperation } from './operation-info';
+import { OperationInfo } from './operation-info';
 import { ensureUniqueOperationIds } from './operation-naming';
 
 /**
@@ -23,21 +23,41 @@ export function parseApis(
     name,
     operations: ensureUniqueOperationIds(
       operations
-    ).map(({ pathItem, pathPattern, method }) =>
-      parseOperation(pathPattern, pathItem, method, refs)
+    ).map(({ pathPattern, method }) =>
+      parseOperation(
+        pathPattern,
+        getPathItem(document, pathPattern),
+        method,
+        refs
+      )
     )
   }));
 }
 
-function getApiName(
-  operationInfo: OperationInfo,
-  defaultDocumentApiName: string
+function getPathItem(
+  document: OpenAPIV3.Document,
+  pathPattern: string
+): OpenAPIV3.PathItemObject {
+  const pathItem = document.paths[pathPattern];
+  if (!pathItem) {
+    // This should never happen
+    throw new Error(
+      `Could not parse APIs. Path pattern '${pathPattern}' does not exist in the document.`
+    );
+  }
+  return pathItem;
+}
+
+function getApiNameForOperation(
+  { operation, pathPattern }: OperationInfo,
+  document: OpenAPIV3.Document
 ): string {
+  const pathItem = getPathItem(document, pathPattern);
   const originalApiName =
-    getOperation(operationInfo)[apiNameExtension] ||
-    operationInfo.pathItem[apiNameExtension] ||
-    defaultDocumentApiName ||
-    getOperation(operationInfo).tags?.[0] ||
+    operation[apiNameExtension] ||
+    pathItem[apiNameExtension] ||
+    document[apiNameExtension] ||
+    operation.tags?.[0] ||
     defaultApiName;
   return `${pascalCase(originalApiName)}Api`;
 }
@@ -46,7 +66,7 @@ function getOperationsByApis(document: OpenAPIV3.Document) {
   const allOperations = getAllOperations(document);
 
   return allOperations.reduce((apiMap, operationInfo) => {
-    const apiName = getApiName(operationInfo, document[apiNameExtension]);
+    const apiName = getApiNameForOperation(operationInfo, document);
     if (!apiMap[apiName]) {
       apiMap[apiName] = [];
     }
@@ -58,14 +78,15 @@ function getOperationsByApis(document: OpenAPIV3.Document) {
 function getAllOperations(
   openApiDocument: OpenAPIV3.Document
 ): OperationInfo[] {
-  return flatten(
+  return flat(
     Object.entries(openApiDocument.paths).map(
       ([pathPattern, pathItem]: [string, OpenAPIV3.PathItemObject]) =>
         methods
           .filter(method => pathItem[method])
           .map(method => ({
-            pathItem,
             pathPattern,
+            // We can assume that the operation exists as non existing operations where filtered before.
+            operation: pathItem[method]!,
             method
           }))
     )

@@ -6,7 +6,7 @@ import {
 } from '@sap-cloud-sdk/util';
 import { Method } from '../openapi-types';
 import { operationNameExtension } from './extensions';
-import { OperationInfo, getOperation } from './operation-info';
+import { OperationInfo } from './operation-info';
 
 /**
  * Modify each operation to contain a unique `operationId`.
@@ -16,19 +16,40 @@ import { OperationInfo, getOperation } from './operation-info';
 export function ensureUniqueOperationIds(
   operations: OperationInfo[]
 ): OperationInfo[] {
+  const namedOperations = nameOperations(operations);
+
+  const {
+    uniqueOperationNames,
+    operationsWithUniqueNames,
+    operationsWithDuplicateNames
+  } = partitionNamedOperationsToUniqueAndDuplicate(namedOperations);
+
+  const nameGenerator = new UniqueNameGenerator('', uniqueOperationNames);
+
+  const renamedOperations = renameOperations(
+    operationsWithDuplicateNames,
+    ({ operation }) =>
+      nameGenerator.generateAndSaveUniqueName(camelCase(operation.operationId!))
+  );
+  return [...operationsWithUniqueNames, ...renamedOperations];
+}
+
+function nameOperations(operations: OperationInfo[]): OperationInfo[] {
   const [operationsWithExtensions, operationsWithoutExtensions] = partition(
     operations,
-    operationInfo => !!getOperation(operationInfo)[operationNameExtension]
+    ({ operation }) => !!operation[operationNameExtension]
   );
+
+  validateUniqueExtensions(operationsWithExtensions);
 
   const renamedOperationsWithExtensions = renameOperations(
     operationsWithExtensions,
-    operationInfo => getOperation(operationInfo)[operationNameExtension]
+    renameOperationWithExtension
   );
 
   const [namedOperations, unnamedOperations] = partition(
     operationsWithoutExtensions,
-    operationInfo => !!getOperation(operationInfo).operationId
+    ({ operation }) => !!operation.operationId
   );
 
   const renamedUnnamedOperations = renameOperations(
@@ -37,33 +58,35 @@ export function ensureUniqueOperationIds(
       getOperationNameFromPatternAndMethod(pathPattern, method)
   );
 
-  const {
-    uniqueOperationNames,
-    operationsWithUniqueNames,
-    operationsWithDuplicateNames
-  } = partitionNamedOperationsToUniqueAndDuplicate([
+  return [
     ...renamedOperationsWithExtensions,
-    ...namedOperations
-  ]);
+    ...namedOperations,
+    ...renamedUnnamedOperations
+  ];
+}
 
-  const nameGenerator = new UniqueNameGenerator('', uniqueOperationNames);
+function validateUniqueExtensions(operations: OperationInfo[]): void {
+  operations.reduce((uniqueOperationNames: string[], operationInfo) => {
+    const operationName = renameOperationWithExtension(operationInfo);
+    if (uniqueOperationNames.includes(operationName)) {
+      throw new Error(
+        `Operation name '${operationInfo.operation[operationNameExtension]}' provided for '${operationNameExtension}' resolves to '${operationName}' and is not unique.`
+      );
+    }
+    return [...uniqueOperationNames, operationName];
+  }, []);
+}
 
-  const renamedOperations = renameOperations(
-    [...operationsWithDuplicateNames, ...renamedUnnamedOperations],
-    operationInfo =>
-      nameGenerator.generateAndSaveUniqueName(
-        camelCase(getOperation(operationInfo).operationId!)
-      )
-  );
-  return [...operationsWithUniqueNames, ...renamedOperations];
+function renameOperationWithExtension({ operation }: OperationInfo): string {
+  return camelCase(operation[operationNameExtension]);
 }
 
 function renameOperations(
-  operationInfoList: OperationInfo[],
+  operations: OperationInfo[],
   renameFn: (operationInfo: OperationInfo) => string
 ): OperationInfo[] {
-  return operationInfoList.map(operationInfo => {
-    getOperation(operationInfo).operationId = renameFn(operationInfo);
+  return operations.map(operationInfo => {
+    operationInfo.operation.operationId = renameFn(operationInfo);
     return operationInfo;
   });
 }
@@ -89,20 +112,23 @@ function partitionNamedOperationsToUniqueAndDuplicate(
       },
       operationInfo
     ) => {
-      const operation = getOperation(operationInfo);
       if (
         partitionedOperations.uniqueOperationNames.includes(
-          operation.operationId!
+          operationInfo.operation.operationId!
         ) ||
-        camelCase(operation.operationId!) !== operation.operationId ||
+        camelCase(operationInfo.operation.operationId!) !==
+          operationInfo.operation.operationId ||
         partitionedOperations.operationsWithDuplicateNames.find(
           duplicate =>
-            getOperation(duplicate).operationId === operation.operationId
+            duplicate.operation.operationId ===
+            operationInfo.operation.operationId
         )
       ) {
         partitionedOperations.operationsWithDuplicateNames.push(operationInfo);
       } else {
-        partitionedOperations.uniqueOperationNames.push(operation.operationId!);
+        partitionedOperations.uniqueOperationNames.push(
+          operationInfo.operation.operationId!
+        );
         partitionedOperations.operationsWithUniqueNames.push(operationInfo);
       }
       return partitionedOperations;

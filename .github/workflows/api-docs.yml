@@ -10,7 +10,7 @@ jobs:
   push-to-documentation-branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Add key
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock

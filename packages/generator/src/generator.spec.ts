@@ -17,6 +17,7 @@ describe('generator', () => {
       const project = await generateProject(
         createOptions({
           inputDir:resolve(oDataServiceSpecs,'v2','API_TEST_SRV'),
+          outputDir: 'common-copy-additional-files',
           additionalFiles: '../../test-resources/*.md'
         })
       );
@@ -34,6 +35,7 @@ describe('generator', () => {
       const project = await generateProject(
         createOptions({
           inputDir:resolve(oDataServiceSpecs,'v2','API_TEST_SRV'),
+          outputDir: 'common-api-hub-metadata',
           generateSdkMetadata:true
         })
       );

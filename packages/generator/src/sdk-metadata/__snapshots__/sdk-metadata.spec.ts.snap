@@ -39,6 +39,6 @@ exports[`sdk-metadata generates the header content 1`] = `
 Object {
   "name": "API_TEST_SRV",
   "type": "odata",
-  "version": "1.39.0",
+  "version": "1.0.0",
 }
 `;

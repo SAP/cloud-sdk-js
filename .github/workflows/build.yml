@@ -94,6 +94,7 @@ jobs:
             */*/node_modules
             **/dist
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn test:e2e   
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
       - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}

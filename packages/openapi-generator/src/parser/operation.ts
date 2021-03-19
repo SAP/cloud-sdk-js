@@ -6,19 +6,13 @@ import { parseParameters } from './parameters';
 
 export function parseOperation(
   pathPattern: string,
-  method: Method,
   pathItem: OpenAPIV3.PathItemObject,
+  method: Method,
   refs: $Refs
 ): OpenApiOperation {
-  const operation = pathItem[method];
-  if (!operation) {
-    throw new Error(
-      `Could not parse operation. Operation for method '${method}' does not exist.`
-    );
-  }
-  const originalParameters = getParameters(operation, pathItem);
+  const operation = getOperation(pathItem, method);
   const requestBody = parseRequestBody(operation.requestBody, refs);
-  const parameters = parseParameters(originalParameters, refs);
+  const parameters = parseParameters(operation, refs);
 
   return {
     ...operation,
@@ -37,9 +31,19 @@ export function parseOperation(
  * @param method HTTP method to get the operation for.
  * @returns The sanitized original operation.
  */
-export function getParameters(
-  operation: OpenAPIV3.OperationObject,
-  pathItem: OpenAPIV3.PathItemObject
-): (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[] {
-  return [...(pathItem.parameters || []), ...(operation.parameters || [])];
+export function getOperation(
+  pathItem: OpenAPIV3.PathItemObject,
+  method: Method
+): OpenAPIV3.OperationObject {
+  const operation = pathItem[method];
+  if (!operation) {
+    throw new Error(
+      `Could not parse operation. Operation for method '${method}' does not exist.`
+    );
+  }
+  operation.parameters = [
+    ...(pathItem.parameters || []),
+    ...(operation.parameters || [])
+  ];
+  return operation;
 }

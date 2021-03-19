@@ -1,9 +1,10 @@
 import { $Refs } from '@apidevtools/swagger-parser';
-import { flat, pascalCase } from '@sap-cloud-sdk/util';
+import { flatten, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
-import { methods, OpenApiApi, OpenApiOperation } from '../openapi-types';
+import { methods, OpenApiApi } from '../openapi-types';
 import { apiNameExtension, defaultApiName } from './extensions';
 import { parseOperation } from './operation';
+import { OperationInfo, getOperation } from './operation-info';
 import { ensureUniqueOperationIds } from './operation-naming';
 
 /**
@@ -16,51 +17,57 @@ export function parseApis(
   document: OpenAPIV3.Document,
   refs: $Refs
 ): OpenApiApi[] {
-  const operationsByApis = getOperationsByApis(document, refs);
+  const operationsByApis = getOperationsByApis(document);
 
   return Object.entries(operationsByApis).map(([name, operations]) => ({
     name,
-    operations: ensureUniqueOperationIds(operations)
+    operations: ensureUniqueOperationIds(
+      operations
+    ).map(({ pathItem, pathPattern, method }) =>
+      parseOperation(pathPattern, pathItem, method, refs)
+    )
   }));
 }
 
 function getApiName(
-  operation: OpenApiOperation,
-  document: OpenAPIV3.Document
+  operationInfo: OperationInfo,
+  defaultDocumentApiName: string
 ): string {
   const originalApiName =
-    operation[apiNameExtension] ||
-    document.paths?.[operation.pathPattern]?.[apiNameExtension] ||
-    document[apiNameExtension] ||
-    operation.tags?.[0] ||
+    getOperation(operationInfo)[apiNameExtension] ||
+    operationInfo.pathItem[apiNameExtension] ||
+    defaultDocumentApiName ||
+    getOperation(operationInfo).tags?.[0] ||
     defaultApiName;
   return `${pascalCase(originalApiName)}Api`;
 }
 
-function getOperationsByApis(document: OpenAPIV3.Document, refs: $Refs) {
-  const allOperations = parseAllOperations(document, refs);
+function getOperationsByApis(document: OpenAPIV3.Document) {
+  const allOperations = getAllOperations(document);
 
-  return allOperations.reduce((apiMap, operation) => {
-    const apiName = getApiName(operation, document);
+  return allOperations.reduce((apiMap, operationInfo) => {
+    const apiName = getApiName(operationInfo, document[apiNameExtension]);
     if (!apiMap[apiName]) {
       apiMap[apiName] = [];
     }
-    apiMap[apiName].push(operation);
+    apiMap[apiName].push(operationInfo);
     return apiMap;
-  }, {} as Record<string, OpenApiOperation[]>);
+  }, {} as Record<string, OperationInfo[]>);
 }
 
-function parseAllOperations(
-  openApiDocument: OpenAPIV3.Document,
-  refs: $Refs
-): OpenApiOperation[] {
-  return flat(
-    Object.entries(
-      openApiDocument.paths
-    ).map(([pathPattern, pathItem]: [string, OpenAPIV3.PathItemObject]) =>
-      methods
-        .filter(method => pathItem[method])
-        .map(method => parseOperation(pathPattern, method, pathItem, refs))
+function getAllOperations(
+  openApiDocument: OpenAPIV3.Document
+): OperationInfo[] {
+  return flatten(
+    Object.entries(openApiDocument.paths).map(
+      ([pathPattern, pathItem]: [string, OpenAPIV3.PathItemObject]) =>
+        methods
+          .filter(method => pathItem[method])
+          .map(method => ({
+            pathItem,
+            pathPattern,
+            method
+          }))
     )
   );
 }

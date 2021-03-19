@@ -34,7 +34,7 @@ jobs:
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since ${{ github.event.pull_request.base.ref }}
+      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn test:unit
         env:
@@ -58,7 +58,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since ${{ github.event.pull_request.base.ref }}
+      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn lint
         name: Static Code Check
@@ -93,7 +93,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since ${{ github.event.pull_request.base.ref }}
+      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
         if: steps.cache.outputs.cache-hit == 'true'
   canary-release:
     if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/v')
@@ -114,7 +114,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since ${{ github.event.pull_request.base.ref }}
+      - run: yarn lerna run compile --since origin/${{ github.event.pull_request.base.ref }}
         if: steps.cache.outputs.cache-hit == 'true'
       - name: Canary Release
         run: |

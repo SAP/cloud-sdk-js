@@ -7073,9 +7073,9 @@ json-parse-even-better-errors@^2.3.0:
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
 json-schema-faker@^0.5.0-rcv.30:
-  version "0.5.0-rcv.33"
-  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.0-rcv.33.tgz#0f84d45d4460d79b02fa0051f5f6bd31e13ce7f4"
-  integrity sha512-DZs0rAP1N6vJlyb19bpFXGBzAdgNiCY+H4L9/tQegDavpfkYuBfpwascA57H+OjBtQBoij4cZOxKewDzJaiaEw==
+  version "0.5.0-rcv.34"
+  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.0-rcv.34.tgz#65dc143464ffad79147112caf11951c29f592173"
+  integrity sha512-Q68XN31eg8rtDNZQpW7f3BrOJxdpBFdPRTmvbn3rex0fI7hrQJGyoqEKb2lb5UiUS+sblOwgKq4aPtdzwHph9Q==
   dependencies:
     json-schema-ref-parser "^6.1.0"
     jsonpath-plus "^3.0.0"

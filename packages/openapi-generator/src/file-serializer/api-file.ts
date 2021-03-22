@@ -30,7 +30,7 @@ function getRequestBodyReferenceTypes(
   operations: OpenApiOperation[]
 ): string[] {
   return operations.reduce((referenceTypes, operation) => {
-    const requestBodySchema = operation.requestBody?.parameterType;
+    const requestBodySchema = operation.requestBody?.schema;
     return requestBodySchema
       ? unique([...referenceTypes, ...collectRefs(requestBodySchema)])
       : referenceTypes;

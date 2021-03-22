@@ -9,12 +9,10 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 export const DefaultApi = {
   noTag: () => new OpenApiRequestBuilder(
     'get',
-    '/test-cases/default-tag',
-    
+    '/test-cases/default-tag'
   ),
   defaultTag: () => new OpenApiRequestBuilder(
     'post',
-    '/test-cases/default-tag',
-    
+    '/test-cases/default-tag'
   )
 };

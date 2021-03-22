@@ -14,7 +14,7 @@ export const EntityApi = {
   'enumStringParameter'?: 'value1' | 'value2',
   'enumInt32Parameter'?: 1 | 2,
   'enumDoubleParameter'?: 1 | 2,
-  'enumBooleanParameter'?: boolean}) => new OpenApiRequestBuilder(
+  'enumBooleanParameter'?: true | false}) => new OpenApiRequestBuilder(
     'get',
     '/entities',
     {
@@ -58,7 +58,6 @@ export const EntityApi = {
   ),
   countEntities: () => new OpenApiRequestBuilder(
     'get',
-    '/entities/count',
-    
+    '/entities/count'
   )
 };

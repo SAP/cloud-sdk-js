@@ -41,13 +41,11 @@ export const TestCaseApi = {
   ),
   duplicateOperationId: () => new OpenApiRequestBuilder(
     'get',
-    '/test-cases/duplicate-operation-ids',
-    
+    '/test-cases/duplicate-operation-ids'
   ),
   duplicateOperationId1: () => new OpenApiRequestBuilder(
     'patch',
-    '/test-cases/duplicate-operation-ids',
-    
+    '/test-cases/duplicate-operation-ids'
   ),
   complexSchemas: (body: ComplexTestEntity) => new OpenApiRequestBuilder(
     'get',
@@ -58,17 +56,14 @@ export const TestCaseApi = {
   ),
   getTestCasesNoOperationId: () => new OpenApiRequestBuilder(
     'get',
-    '/test-cases/no-operation-id',
-    
+    '/test-cases/no-operation-id'
   ),
   duplicateOperationId2: () => new OpenApiRequestBuilder(
     'put',
-    '/test-cases/duplicate-operation-ids',
-    
+    '/test-cases/duplicate-operation-ids'
   ),
   duplicateOperationId3: () => new OpenApiRequestBuilder(
     'post',
-    '/test-cases/duplicate-operation-ids',
-    
+    '/test-cases/duplicate-operation-ids'
   )
 };

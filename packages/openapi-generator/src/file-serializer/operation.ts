@@ -11,9 +11,12 @@ import { serializeSchema } from './schema';
 export function serializeOperation(operation: OpenApiOperation): string {
   const requestBuilderParams = [
     `'${operation.method}'`,
-    `'${operation.pathPattern}'`,
-    serializeParamsForRequestBuilder(operation)
+    `'${operation.pathPattern}'`
   ];
+  const pathAndQueryParams = serializeParamsForRequestBuilder(operation);
+  if (pathAndQueryParams) {
+    requestBuilderParams.push(pathAndQueryParams);
+  }
   return codeBlock`
 ${operation.operationId}: (${serializeOperationSignature(
     operation
@@ -46,8 +49,8 @@ function serializeRequestBodyParamForSignature(
   operation: OpenApiOperation
 ): string | undefined {
   if (operation.requestBody) {
-    return `${operation.requestBody.parameterName}: ${serializeSchema(
-      operation.requestBody.parameterType
+    return `${operation.requestBody.name}: ${serializeSchema(
+      operation.requestBody.schema
     )}${operation.requestBody.required ? ' | undefined' : ''}`;
   }
 }
@@ -61,7 +64,10 @@ function serializeQueryParamsForSignature(
     );
     const queryParams = operation.queryParameters
       .map(
-        param => `'${param.name}'${param.required ? '' : '?'}: ${param.type}`
+        param =>
+          `'${param.name}'${param.required ? '' : '?'}: ${serializeSchema(
+            param.schema
+          )}`
       )
       .join(',\n');
 
@@ -80,7 +86,7 @@ function serializeParamsForRequestBuilder(
     params.push(`pathParameters: [${pathParams}]`);
   }
   if (operation.requestBody) {
-    params.push(operation.requestBody.parameterName);
+    params.push(operation.requestBody.name);
   }
   if (operation.queryParameters.length) {
     params.push('queryParameters');

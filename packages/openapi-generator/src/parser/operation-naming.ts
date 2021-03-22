@@ -76,7 +76,14 @@ function validateUniqueExtensions(operations: OperationInfo[]): void {
 }
 
 function renameOperationWithExtension({ operation }: OperationInfo): string {
-  return camelCase(operation[operationNameExtension]);
+  const originalOperationName = operation[operationNameExtension];
+  if (!originalOperationName) {
+    // This should never happen
+    throw new Error(
+      'Could not rename operation based on extension. Extension is not defined.'
+    );
+  }
+  return camelCase(originalOperationName);
 }
 
 function renameOperations(

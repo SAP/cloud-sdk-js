@@ -116,9 +116,8 @@ describe('GetByKeyRequestBuilder', () => {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).executeRaw(defaultDestination);
-      expect(actual.response.data.d).toEqual(entityData);
-      expect(actual.request.method).toBe('get');
-      expect(actual.request.baseURL).toBe(defaultDestination.url);
+      expect(actual.data.d).toEqual(entityData);
+      expect(actual.request.method).toBe('GET');
     });
   });
 

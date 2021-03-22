@@ -106,9 +106,8 @@ describe('CountRequestBuilderV2', () => {
             .getAll()
             .count()
             .executeRaw(defaultDestination);
-          expect(actual.response.data).toEqual(4711);
-          expect(actual.request.method).toBe('get');
-          expect(actual.request.baseURL).toBe(defaultDestination.url);
+          expect(actual.data).toEqual(4711);
+          expect(actual.request.method).toBe('GET');
         })
       ));
   });

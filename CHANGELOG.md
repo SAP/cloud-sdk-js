@@ -10,7 +10,7 @@
 
 ## Known Issues
 
-- 
+-
 
 ## Compatibility Notes
 
@@ -18,7 +18,34 @@
 
 ## New Functionality
 
-- [core] Support `executeRaw` in all `RequestBuilder`, which returns request and raw response without deserialization.
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.40.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.40.0<br>
+Blog: TBD<br>
+
+## Known Issues
+
+- 
+
+## Compatibility Notes
+
+- A mandatory property `request` is added to the `HttpResponse`.
+
+## New Functionality
+
+- [core] Support `executeRaw` in all `RequestBuilder`, which returns `HttpResponse` that contains the raw response and original request.
 
 ## Improvements
 
@@ -27,7 +54,6 @@
 ## Fixed Issues
 
 - [core] Fix parsing of empty bodies in batch responses.
-
 
 # 1.39.0
 

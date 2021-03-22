@@ -128,9 +128,8 @@ describe('DeleteRequestBuilder', () => {
         KeyPropertyString: keyPropString
       }).executeRaw(defaultDestination);
 
-      expect(actual.response.data).toEqual('');
-      expect(actual.request.method).toBe('delete');
-      expect(actual.request.baseURL).toBe(defaultDestination.url);
+      expect(actual.data).toEqual('');
+      expect(actual.request.method).toBe('DELETE');
     });
   });
 });

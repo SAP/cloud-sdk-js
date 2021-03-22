@@ -6,7 +6,7 @@ import {
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
 import { ODataActionImportRequestConfig } from '../../odata-v4';
-import { HttpRequestAndResponse } from '../../http-client';
+import { HttpResponse } from '../../http-client';
 
 /**
  * Create OData request to execute a action or function import.
@@ -45,22 +45,22 @@ export abstract class ActionFunctionImportRequestBuilder<
     options?: DestinationOptions
   ): Promise<ReturnT> {
     return this.executeRaw(destination, options)
-      .then(({ response }) => this.responseTransformer(response.data));
+      .then((response) => this.responseTransformer(response.data));
   }
 
   /**
-   * Execute request and return the request and the raw response.
+   * Execute request and return an [[HttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse>{
+  ): Promise<HttpResponse>{
     return this.build(destination, options)
-      .then(request => request.executeRaw());
+      .then(request => request.execute());
   }
 }
 

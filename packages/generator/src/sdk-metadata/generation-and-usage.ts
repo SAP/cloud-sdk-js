@@ -1,8 +1,7 @@
-import { promises } from 'fs';
-import { resolve } from 'path';
 import { VdmServiceMetadata } from '../vdm-types';
 import { getLinks } from './links';
 import { GenerationAndUsage } from './sdk-metadata-types';
+import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
 
 export async function getGenerationAndUsage(service: VdmServiceMetadata): Promise<GenerationAndUsage>{
   return {
@@ -15,13 +14,12 @@ export async function getGenerationAndUsage(service: VdmServiceMetadata): Promis
 }
 
 export async function getGenericUsage(): Promise<string>{
-  return promises.readFile(resolve(__dirname,'code-samples','generic-get-all-code-sample.ts'),{ encoding:'utf8' });
+  return genericGetAllCodeSample('BusinessPartner','@sap/cloud-sdk-vdm-business-partner-service');
 }
 
 export async function getApiSpecificUsage(service: VdmServiceMetadata): Promise<string>{
   if(service.entities.length > 0){
-    const genericString = (await getGenericUsage());
-    return genericString.replace(/BusinessPartner/g,service.entities[0].className).replace('@sap/cloud-sdk-vdm-business-partner-service',service.npmPackageName);
+    return genericGetAllCodeSample(service.entities[0].className,service.npmPackageName);
   }
   // TODO handle cases if no entity is there in the follow up ticket.
   if(service.functionImports.length > 0){

@@ -143,9 +143,8 @@ describe('GetAllRequestBuilder', () => {
       });
 
       const actual = await requestBuilder.executeRaw(defaultDestination);
-      expect(actual.response.data).toEqual(rawResponse);
-      expect(actual.request.method).toBe('get');
-      expect(actual.request.baseURL).toBe(defaultDestination.url);
+      expect(actual.data).toEqual(rawResponse);
+      expect(actual.request.method).toBe('GET');
     });
   });
 });

@@ -51,7 +51,7 @@ function serializeRequestBodyParamForSignature(
   if (operation.requestBody) {
     return `${operation.requestBody.name}: ${serializeSchema(
       operation.requestBody.schema
-    )}${operation.requestBody.required ? ' | undefined' : ''}`;
+    )}${operation.requestBody.required ? '' : ' | undefined'}`;
   }
 }
 

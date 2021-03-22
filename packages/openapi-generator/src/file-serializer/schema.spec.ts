@@ -37,12 +37,14 @@ describe('serializeSchema for object schemas', () => {
         ],
         additionalProperties: false
       })
-    ).toEqual(`{
-      'simpleProperty': number;
-      'nested-property'?: {
-            'stringProperty'?: string;
-          };
-    }`);
+    ).toMatchInlineSnapshot(`
+      "{
+            'simpleProperty': number;
+            'nested-property'?: {
+                  'stringProperty'?: string;
+                };
+          }"
+    `);
   });
 
   it('serializes object schema without properties, but additional properties', () => {
@@ -88,9 +90,11 @@ describe('serializeSchema for object schemas', () => {
         ],
         additionalProperties: { type: 'string' }
       })
-    ).toEqual(`{
-      'simpleProperty': number;
-    } | Record<string, string>`);
+    ).toMatchInlineSnapshot(`
+      "{
+            'simpleProperty': number;
+          } | Record<string, string>"
+    `);
   });
 });
 

@@ -1,155 +1,88 @@
-import { OpenApiOperation, OpenApiRequestBody } from '../openapi-types';
+import { OpenApiApi } from '../openapi-types';
 import { apiFile } from './api-file';
 
-describe('api-file', () => {
-  it('creates api file content for operations with parameters and no request bodies', () => {
-    const operations = [
-      {
-        operationId: 'getFn',
-        method: 'get',
-        parameters: [
+describe('apiFile', () => {
+  it('apiFile serializes api file with one operation and no references', () => {
+    const api: OpenApiApi = {
+      name: 'TestApi',
+      operations: [
+        {
+          operationId: 'getFn',
+          method: 'get',
+          tags: [],
+          pathParameters: [
+            {
+              in: 'path',
+              name: 'id',
+              schema: { type: 'string' },
+              required: true
+            }
+          ],
+          queryParameters: [],
+          pathPattern: 'test/{id}'
+        }
+      ]
+    };
+    expect(apiFile(api)).toMatchInlineSnapshot(`
+      "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+
+
+      export const TestApi = {
+        getFn: (id: string) => new OpenApiRequestBuilder(
+          'get',
+          'test/{id}',
           {
-            in: 'query',
-            name: 'limit',
-            type: 'number'
-          },
-          {
-            in: 'path',
-            name: 'id',
-            type: 'string',
-            required: true
-          }
-        ],
-        pathPattern: 'test/{id}'
-      },
-      {
-        operationId: 'deleteFn',
-        method: 'delete',
-        parameters: [
-          {
-            in: 'path',
-            name: 'id',
-            type: 'string',
-            required: true
-          }
-        ],
-        pathPattern: 'test/{id}'
-      }
-    ] as OpenApiOperation[];
-    expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
+                pathParameters: [id]
+              }
+        )
+      };"
+    `);
   });
 
-  it('creates api file content for operation with request body', () => {
-    const operations = [
-      {
-        operationId: 'createFn',
-        method: 'post',
-        parameters: [],
-        requestBody: {
-          name: 'body',
-          schema: {
-            isArrayType: false,
-            innerType: 'TestEntity',
-            isInnerTypeReferenceType: true
+  it('apiFile serializes api file with multiple operations and references', () => {
+    const api: OpenApiApi = {
+      name: 'TestApi',
+      operations: [
+        {
+          operationId: 'getFn',
+          method: 'get',
+          tags: [],
+          pathParameters: [],
+          queryParameters: [],
+          pathPattern: 'test'
+        },
+        {
+          operationId: 'createFn',
+          method: 'post',
+          tags: [],
+          pathParameters: [],
+          queryParameters: [],
+          requestBody: {
+            name: 'body',
+            required: true,
+            schema: { $ref: '#/components/schemas/RefType' }
           },
-          required: true
-        } as OpenApiRequestBody,
-        pathPattern: 'test'
-      },
-      {
-        operationId: 'updateFn',
-        method: 'patch',
-        parameters: [
-          {
-            in: 'path',
-            name: 'id',
-            type: 'string',
-            required: true
-          }
-        ],
-        requestBody: {
-          name: 'body',
-          schema: {
-            isArrayType: true,
-            innerType: 'string',
-            isInnerTypeReferenceType: false,
-            arrayLevel: 1
-          },
-          required: true
-        } as OpenApiRequestBody,
-        pathPattern: 'test/{id}'
-      }
-    ] as OpenApiOperation[];
-    expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
-  });
+          pathPattern: 'test'
+        }
+      ]
+    };
+    expect(apiFile(api)).toMatchInlineSnapshot(`
+      "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+      import { RefType } from './model';
 
-  it('creates api file content for operation with no parameters or request body', () => {
-    const operations = ([
-      {
-        operationId: 'getFn',
-        method: 'get',
-        parameters: [],
-        path: 'test'
-      }
-    ] as unknown) as OpenApiOperation[];
-    expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
-  });
-
-  it('creates api file content for operation with required parameters defined after optional parameters', () => {
-    const operations = [
-      {
-        operationId: 'createFn',
-        method: 'post',
-        parameters: [
+      export const TestApi = {
+        getFn: () => new OpenApiRequestBuilder(
+          'get',
+          'test'
+        ),
+        createFn: (body: RefType) => new OpenApiRequestBuilder(
+          'post',
+          'test',
           {
-            in: 'query',
-            name: 'optionalQueryParam',
-            type: 'number'
-          },
-          {
-            in: 'query',
-            name: 'requiredQueryParam',
-            type: 'number',
-            required: true
-          },
-          {
-            in: 'path',
-            name: 'requiredPathParam',
-            type: 'number',
-            required: true
-          }
-        ],
-        requestBody: {
-          name: 'body',
-          schema: {
-            isArrayType: true,
-            innerType: 'TestEntity',
-            isInnerTypeReferenceType: true,
-            arrayLevel: 2
-          },
-          required: true
-        } as OpenApiRequestBody,
-        pathPattern: 'test'
-      }
-    ] as OpenApiOperation[];
-    expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
-  });
-
-  it('creates api file content for operation with only optional parameters', () => {
-    const operations = [
-      {
-        operationId: 'getFn',
-        method: 'get',
-        parameters: [
-          {
-            in: 'query',
-            name: 'optionalQueryParam',
-            type: 'number'
-          }
-        ],
-        pathPattern: 'test'
-      }
-    ] as OpenApiOperation[];
-    expect(apiFile('TestService', 'tag', operations)).toMatchSnapshot();
+                body
+              }
+        )
+      };"
+    `);
   });
 });

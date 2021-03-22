@@ -136,4 +136,29 @@ describe('parseApis', () => {
       }
     ]);
   });
+
+  it("parses API names without trailing 'api'", async () => {
+    const document = {
+      ...emptyDocument,
+      [apiNameExtension]: 'RootApi',
+      paths: {
+        '/x': {
+          get: {
+            tags: [],
+            operationId: 'someOperation'
+          }
+        }
+      }
+    };
+    expect(parseApis(document, await createRefs({}))).toStrictEqual([
+      {
+        name: 'RootApi',
+        operations: [
+          expect.objectContaining({
+            operationId: 'someOperation'
+          })
+        ]
+      }
+    ]);
+  });
 });

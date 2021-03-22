@@ -59,7 +59,7 @@ function getApiNameForOperation(
     document[apiNameExtension] ||
     operation.tags?.[0] ||
     defaultApiName;
-  return `${pascalCase(originalApiName)}Api`;
+  return `${pascalCase(originalApiName.replace(/api$/i, ''))}Api`;
 }
 
 function getOperationsByApis(document: OpenAPIV3.Document) {

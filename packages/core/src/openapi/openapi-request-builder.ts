@@ -7,7 +7,7 @@ export class OpenApiRequestBuilder {
   private customHeaders: Record<string, string> = {};
 
   /**
-   * Create an instance of `RestRequestBuilder`.
+   * Create an instance of `OpenApiRequestBuilder`.
    * @param apiConstructor Constructor of the underlying OpenApi api definition.
    * @param fn Name of the function represented in thie request builder.
    * @param args Arguments to pass to the api function.

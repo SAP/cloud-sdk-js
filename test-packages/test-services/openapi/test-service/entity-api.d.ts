@@ -11,10 +11,10 @@ export declare const EntityApi: {
         enumDoubleParameter?: 1 | 2 | undefined;
         enumBooleanParameter?: boolean | undefined;
     } | undefined) => OpenApiRequestBuilder;
-    updateEntityWithPut: (body: TestEntity[]) => OpenApiRequestBuilder;
-    createEntity: (body: TestEntity) => OpenApiRequestBuilder;
-    updateEntity: (body: Record<string, any>) => OpenApiRequestBuilder;
-    deleteEntity: (body: string[]) => OpenApiRequestBuilder;
+    updateEntityWithPut: (body: TestEntity[] | undefined) => OpenApiRequestBuilder;
+    createEntity: (body: TestEntity | undefined) => OpenApiRequestBuilder;
+    updateEntity: (body: Record<string, any> | undefined) => OpenApiRequestBuilder;
+    deleteEntity: (body: string[] | undefined) => OpenApiRequestBuilder;
     getEntityByKey: (entityId: string) => OpenApiRequestBuilder;
     countEntities: () => OpenApiRequestBuilder;
 };

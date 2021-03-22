@@ -4,6 +4,6 @@ export declare const DefaultApi: {
     postEntity: (pathParam: string, queryParameters?: {
         queryParam?: string | undefined;
     } | undefined) => OpenApiRequestBuilder;
-    patchEntity: (pathParam: string, body: TestEntity) => OpenApiRequestBuilder;
+    patchEntity: (pathParam: string, body: TestEntity | undefined) => OpenApiRequestBuilder;
 };
 //# sourceMappingURL=default-api.d.ts.map

@@ -21,28 +21,28 @@ export const EntityApi = {
           queryParameters
         }
   ),
-  updateEntityWithPut: (body: TestEntity[]) => new OpenApiRequestBuilder(
+  updateEntityWithPut: (body: TestEntity[] | undefined) => new OpenApiRequestBuilder(
     'put',
     '/entities',
     {
           body
         }
   ),
-  createEntity: (body: TestEntity) => new OpenApiRequestBuilder(
+  createEntity: (body: TestEntity | undefined) => new OpenApiRequestBuilder(
     'post',
     '/entities',
     {
           body
         }
   ),
-  updateEntity: (body: Record<string, any>) => new OpenApiRequestBuilder(
+  updateEntity: (body: Record<string, any> | undefined) => new OpenApiRequestBuilder(
     'patch',
     '/entities',
     {
           body
         }
   ),
-  deleteEntity: (body: string[]) => new OpenApiRequestBuilder(
+  deleteEntity: (body: string[] | undefined) => new OpenApiRequestBuilder(
     'delete',
     '/entities',
     {

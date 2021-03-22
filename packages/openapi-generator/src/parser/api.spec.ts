@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { apiNameExtension } from '../../dist/parser/extensions';
 import { createRefs, emptyDocument } from '../../test/test-util';
+import { apiNameExtension } from '../extensions';
 import { parseApis } from './api';
 
 describe('parseApis', () => {

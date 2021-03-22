@@ -1,4 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
+import { emptyObjectSchema } from '../../test/test-util';
 import { isArraySchemaObject, parseSchema } from './schema';
 
 describe('isArraySchemaObject', () => {
@@ -31,11 +32,6 @@ describe('isArraySchemaObject', () => {
   });
 });
 
-const emptyObjectSchema = {
-  type: 'object',
-  additionalProperties: true,
-  properties: []
-};
 describe('parseSchema', () => {
   it('parses reference schema', () => {
     const schema = { $ref: 'test' };

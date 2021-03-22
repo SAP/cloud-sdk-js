@@ -46,8 +46,8 @@ describe('api-file', () => {
         method: 'post',
         parameters: [],
         requestBody: {
-          parameterName: 'body',
-          parameterType: {
+          name: 'body',
+          schema: {
             isArrayType: false,
             innerType: 'TestEntity',
             isInnerTypeReferenceType: true
@@ -68,8 +68,8 @@ describe('api-file', () => {
           }
         ],
         requestBody: {
-          parameterName: 'body',
-          parameterType: {
+          name: 'body',
+          schema: {
             isArrayType: true,
             innerType: 'string',
             isInnerTypeReferenceType: false,
@@ -120,8 +120,8 @@ describe('api-file', () => {
           }
         ],
         requestBody: {
-          parameterName: 'body',
-          parameterType: {
+          name: 'body',
+          schema: {
             isArrayType: true,
             innerType: 'TestEntity',
             isInnerTypeReferenceType: true,

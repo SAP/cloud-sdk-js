@@ -19,7 +19,8 @@ export interface OpenApiApi {
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Representation of an operation.
  */
-export interface OpenApiOperation extends OpenAPIV3.OperationObject {
+export interface OpenApiOperation
+  extends Omit<OpenAPIV3.OperationObject, 'requestBody'> {
   tags: string[];
   operationId: string;
   method: string;
@@ -57,17 +58,16 @@ export const methods: Method[] = Object.values(supportedMethods);
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Representation of a parameter for both queries and path parameters.
  */
-export interface OpenApiParameter extends OpenAPIV3.ParameterObject {
-  type: string;
-}
+export type OpenApiParameter = Omit<OpenAPIV3.ParameterObject, 'schema'> & {
+  schema: OpenApiSchema;
+};
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Representation of the request body.
  */
-export interface OpenApiRequestBody extends OpenAPIV3.RequestBodyObject {
-  parameterName: string;
-  parameterType: OpenApiSchema;
+export interface OpenApiRequestBody extends OpenApiNamedSchema {
+  required: boolean;
 }
 
 /**

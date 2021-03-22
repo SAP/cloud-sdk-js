@@ -1,14 +1,8 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
-import {
-  OpenApiRequestBody,
-  OpenApiSchema,
-  SchemaMetadata
-} from '../openapi-types';
-import { isReferenceObject, parseTypeNameFromRef } from '../model';
+import { OpenApiRequestBody, OpenApiSchema } from '../openapi-types';
 import { resolveObject } from './refs';
-import { getType } from './type-mapping';
-import { isArraySchemaObject, parseSchema } from './schema';
+import { parseSchema } from './schema';
 
 /**
  * Parse the request body.
@@ -24,12 +18,12 @@ export function parseRequestBody(
   refs: $Refs
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = resolveObject(requestBody, refs);
-  const parameterType = parseRequestBodyType(resolvedRequestBody);
-  if (parameterType && resolvedRequestBody) {
+  const schema = parseRequestBodySchema(resolvedRequestBody);
+  if (schema && resolvedRequestBody) {
     return {
-      ...resolvedRequestBody,
-      parameterName: 'body',
-      parameterType
+      name: 'body',
+      required: !!resolvedRequestBody.required,
+      schema
     };
   }
 }
@@ -39,7 +33,7 @@ export function parseRequestBody(
  * @param requestBody The body to parse the type from.
  * @returns The type name of the request body if there is one.
  */
-function parseRequestBodyType(
+function parseRequestBodySchema(
   requestBody: OpenAPIV3.RequestBodyObject | undefined
 ): OpenApiSchema | undefined {
   if (requestBody) {
@@ -49,59 +43,6 @@ function parseRequestBodyType(
       return parseSchema(schema);
     }
   }
-}
-
-export function parseSchemaMetadata(
-  schema?:
-    | OpenAPIV3.ReferenceObject
-    | OpenAPIV3.ArraySchemaObject
-    | OpenAPIV3.NonArraySchemaObject
-): SchemaMetadata | undefined {
-  if (isReferenceObject(schema)) {
-    return parseReferenceObject(schema);
-  }
-  if (isArraySchemaObject(schema)) {
-    return parseArrayObject(schema);
-  }
-  if (schema !== undefined) {
-    return parseNonArrayObject(schema);
-  }
-}
-
-function parseReferenceObject(
-  schema: OpenAPIV3.ReferenceObject
-): SchemaMetadata {
-  return {
-    isArrayType: false,
-    innerType: parseTypeNameFromRef(schema),
-    isInnerTypeReferenceType: true
-  };
-}
-
-function parseNonArrayObject(
-  schema: OpenAPIV3.NonArraySchemaObject
-): SchemaMetadata {
-  return {
-    isArrayType: false,
-    innerType: getType(schema.type),
-    isInnerTypeReferenceType: false
-  };
-}
-
-function parseArrayObject(
-  schema: OpenAPIV3.ArraySchemaObject
-): SchemaMetadata | undefined {
-  const internalSchema = parseSchemaMetadata(schema.items);
-  return internalSchema
-    ? {
-        isArrayType: true,
-        innerType: internalSchema.innerType,
-        isInnerTypeReferenceType: internalSchema.isInnerTypeReferenceType,
-        arrayLevel: internalSchema.arrayLevel
-          ? internalSchema.arrayLevel + 1
-          : 1
-      }
-    : undefined;
 }
 
 /**

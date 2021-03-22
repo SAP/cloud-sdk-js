@@ -12,3 +12,9 @@ export function createRefs(
 ): Promise<$Refs> {
   return resolve({ ...emptyDocument, components });
 }
+
+export const emptyObjectSchema = {
+  type: 'object',
+  additionalProperties: true,
+  properties: []
+};

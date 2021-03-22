@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { isReferenceObject } from '../model';
 import {
@@ -8,6 +9,8 @@ import {
   OpenApiSchema
 } from '../openapi-types';
 import { getType } from './type-mapping';
+
+const logger = createLogger('openapi-generator');
 
 /**
  * Type guard to check whether an object is of type `OpenAPIV3.ArraySchemaObject`.
@@ -21,8 +24,13 @@ export function isArraySchemaObject(
 }
 
 export function parseSchema(
-  schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
+  schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined
 ): OpenApiSchema {
+  if (!schema) {
+    logger.warn("No schema provided, continuing with 'any'.");
+    return { type: 'any' };
+  }
+
   if (isReferenceObject(schema)) {
     return schema;
   }

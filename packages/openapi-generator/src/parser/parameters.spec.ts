@@ -1,170 +1,89 @@
-import { createRefs } from '../../test/test-util';
-import {
-  filterDuplicateParams,
-  parseParameters,
-  renameEquallyNamedParams
-} from './parameters';
+import { OpenAPIV3 } from 'openapi-types';
+import { createRefs, emptyObjectSchema } from '../../test/test-util';
+import { parseParameters } from './parameters';
 
 describe('parseParameters', () => {
-  it('returns empty array if there are no parameters', async () => {
-    expect(parseParameters({}, await createRefs())).toEqual([]);
+  it('returns empty arrays if there are no parameters', async () => {
+    expect(parseParameters({}, await createRefs())).toEqual({
+      pathParameters: [],
+      queryParameters: []
+    });
   });
 
-  it('parses inline parameters', async () => {
-    const anyParamNoSchema = { in: 'query', name: 'anyParamNoSchema' };
-    const anyParamWithSchema = {
+  it('resolves references', async () => {
+    const refSchema: OpenAPIV3.ParameterObject = {
+      name: 'refParam',
       in: 'query',
-      name: 'anyParamWithSchema',
-      schema: {}
+      schema: { type: 'object' }
     };
-    const stringParam = {
+    expect(
+      parseParameters(
+        { parameters: [{ $ref: '#/components/parameters/RefSchema' }] },
+        await createRefs({
+          parameters: {
+            RefSchema: refSchema
+          }
+        })
+      )
+    ).toEqual({
+      pathParameters: [],
+      queryParameters: [{ ...refSchema, schema: emptyObjectSchema }]
+    });
+  });
+
+  it('removes duplicates from parameters, keeping the last elements only', async () => {
+    const queryParam1: OpenAPIV3.ParameterObject = {
+      name: 'param1',
       in: 'query',
-      name: 'stringParam',
       schema: { type: 'string' }
     };
-    const numberParam = {
+    const queryParam2: OpenAPIV3.ParameterObject = {
+      name: 'param2',
       in: 'query',
-      name: 'numberParam',
-      schema: { type: 'integer' }
+      schema: { type: 'string' }
     };
-    const enumStringParam = {
+    const pathParam: OpenAPIV3.ParameterObject = {
+      name: 'param1',
+      in: 'path',
+      schema: { type: 'string' }
+    };
+    const queryParam1Replacement: OpenAPIV3.ParameterObject = {
+      name: 'param1',
       in: 'query',
-      name: 'enumStringParam',
-      schema: {
-        type: 'string',
-        enum: ['value1', 'value2']
-      }
+      example: 'test',
+      schema: { type: 'string' }
     };
-    const enumNumberParam = {
-      in: 'query',
-      name: 'enumNumberParam',
-      schema: {
-        type: 'integer',
-        enum: [1, 2]
-      }
-    };
-    const enumBooleanParam = {
-      in: 'query',
-      name: 'enumBooleanParam',
-      schema: {
-        type: 'boolean',
-        enum: ['true', 'false']
-      }
-    };
-
     expect(
       parseParameters(
         {
           parameters: [
-            anyParamNoSchema,
-            anyParamWithSchema,
-            stringParam,
-            numberParam,
-            enumStringParam,
-            enumNumberParam,
-            enumBooleanParam
+            queryParam1,
+            queryParam2,
+            pathParam,
+            queryParam1Replacement
           ]
         },
         await createRefs()
       )
-    ).toStrictEqual([
-      { ...anyParamNoSchema, type: 'any' },
-      { ...anyParamWithSchema, type: 'any' },
-      { ...stringParam, type: 'string' },
-      { ...numberParam, type: 'number' },
-      { ...enumStringParam, type: "'value1' | 'value2'" },
-      { ...enumNumberParam, type: '1 | 2' },
-      { ...enumBooleanParam, type: 'boolean' }
-    ]);
+    ).toEqual({
+      pathParameters: [pathParam],
+      queryParameters: [queryParam2, queryParam1Replacement]
+    });
   });
 
-  it('parses referenced parameters', async () => {
-    const referencedParam = { in: 'query', name: 'referencedParam' };
-    const parameterSchema = { $ref: '#/components/schemas/parameterSchema' };
-    const referencedParamWithReferencedSchema = {
-      in: 'query',
-      name: 'referencedParamWithReferencedSchema',
-      schema: parameterSchema
-    };
-
-    expect(
-      parseParameters(
-        {
-          parameters: [
-            {
-              $ref: '#/components/parameters/referencedParam'
-            },
-            {
-              $ref:
-                '#/components/parameters/referencedParamWithReferencedSchema'
-            }
-          ]
-        },
-        await createRefs({
-          parameters: { referencedParam, referencedParamWithReferencedSchema },
-          schemas: { parameterSchema }
-        })
-      )
-    ).toStrictEqual([
-      { ...referencedParam, type: 'any' },
-      { ...referencedParamWithReferencedSchema, type: 'any' }
-    ]);
-  });
-});
-
-describe('filterDuplicateParams', () => {
-  it('removes duplicates from parameters, keeping the last elements only', () => {
-    const queryParam1 = {
-      name: 'param1',
-      in: 'query'
-    };
-    const queryParam2 = {
-      name: 'param2',
-      in: 'query'
-    };
-    const pathParam1 = {
-      name: 'param1',
-      in: 'path'
-    };
-    const queryParam1Replacement = {
-      name: 'param1',
-      in: 'query',
-      format: 'uuid'
-    };
-
-    expect(
-      filterDuplicateParams([
-        queryParam1,
-        queryParam2,
-        queryParam1Replacement,
-        pathParam1
-      ])
-    ).toStrictEqual([queryParam2, queryParam1Replacement, pathParam1]);
-  });
-});
-
-describe('renameEquallyNamedParams', () => {
-  it('renames parameters', () => {
-    expect(
-      renameEquallyNamedParams([
-        {
-          name: 'name',
-          in: 'query'
-        },
-        {
-          name: 'name',
-          in: 'path'
-        }
-      ])
-    ).toStrictEqual([
-      {
-        name: 'name',
-        in: 'query'
-      },
-      {
-        name: 'name2',
-        in: 'path'
-      }
-    ]);
+  it('returns path parameters with unique camel case names', async () => {
+    const parameters: OpenAPIV3.ParameterObject[] = [
+      { name: 'path-param', in: 'path', schema: { type: 'string' } },
+      { name: 'pathParam', in: 'path', schema: { type: 'string' } },
+      { name: 'PathParam1', in: 'path', schema: { type: 'string' } },
+      { name: 'path_param', in: 'path', schema: { type: 'string' } }
+    ];
+    expect(parseParameters({ parameters }, await createRefs())).toEqual({
+      pathParameters: parameters.map((param, i) => ({
+        ...param,
+        name: 'pathParam' + (i ? i : '')
+      })),
+      queryParameters: []
+    });
   });
 });

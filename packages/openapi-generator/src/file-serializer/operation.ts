@@ -9,13 +9,14 @@ import { serializeSchema } from './schema';
  * @returns The operation as a string.
  */
 export function serializeOperation(operation: OpenApiOperation): string {
-  const requestBuilderParams = [
-    `'${operation.method}'`,
-    `'${operation.pathPattern}'`
-  ];
-  const pathAndQueryParams = serializeParamsForRequestBuilder(operation);
-  if (pathAndQueryParams) {
-    requestBuilderParams.push(pathAndQueryParams);
+  const pathTemplate = operation.pathParameters.length
+    ? `\`${operation.pathTemplate}\``
+    : `'${operation.pathTemplate}'`;
+  const requestBuilderParams = [`'${operation.method}'`, pathTemplate];
+
+  const bodyAndQueryParams = serializeParamsForRequestBuilder(operation);
+  if (bodyAndQueryParams) {
+    requestBuilderParams.push(bodyAndQueryParams);
   }
   return codeBlock`
 ${operation.operationId}: (${serializeOperationSignature(
@@ -78,13 +79,8 @@ function serializeQueryParamsForSignature(
 function serializeParamsForRequestBuilder(
   operation: OpenApiOperation
 ): string | undefined {
-  const pathParams = operation.pathParameters
-    .map(param => param.name)
-    .join(', ');
   const params: string[] = [];
-  if (pathParams) {
-    params.push(`pathParameters: [${pathParams}]`);
-  }
+
   if (operation.requestBody) {
     params.push(operation.requestBody.name);
   }

@@ -22,7 +22,7 @@ export interface OpenApiOperation
   tags: string[];
   operationId: string;
   method: string;
-  pathPattern: string;
+  pathTemplate: string;
   requestBody?: OpenApiRequestBody;
   pathParameters: OpenApiParameter[];
   queryParameters: OpenApiParameter[];

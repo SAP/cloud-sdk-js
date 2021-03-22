@@ -28,14 +28,14 @@ describe('serializeOperation', () => {
           schema: { type: 'number' }
         }
       ],
-      pathPattern: 'test/{id}/{subId}'
+      // eslint-disable-next-line no-template-curly-in-string
+      pathTemplate: 'test/${id}/${subId}'
     };
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder(
         'get',
-        'test/{id}/{subId}',
+        \`test/\${id}/\${subId}\`,
         {
-              pathParameters: [id, subId],
               queryParameters
             }
       )"
@@ -56,16 +56,14 @@ describe('serializeOperation', () => {
         }
       ],
       queryParameters: [],
-      pathPattern: 'test/{id}'
+      // eslint-disable-next-line no-template-curly-in-string
+      pathTemplate: 'test/${id}'
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "deleteFn: (id: string) => new OpenApiRequestBuilder(
         'delete',
-        'test/{id}',
-        {
-              pathParameters: [id]
-            }
+        \`test/\${id}\`
       )"
     `);
   });
@@ -83,7 +81,7 @@ describe('serializeOperation', () => {
           schema: { type: 'number' }
         }
       ],
-      pathPattern: 'test'
+      pathTemplate: 'test'
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
@@ -120,14 +118,14 @@ describe('serializeOperation', () => {
           additionalProperties: true
         }
       },
-      pathPattern: 'test/{id}'
+      // eslint-disable-next-line no-template-curly-in-string
+      pathTemplate: 'test/${id}'
     };
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder(
         'post',
-        'test/{id}',
+        \`test/\${id}\`,
         {
-              pathParameters: [id],
               body
             }
       )"
@@ -146,7 +144,7 @@ describe('serializeOperation', () => {
         required: false,
         schema: { $ref: '#/components/schemas/RefType' }
       },
-      pathPattern: 'test'
+      pathTemplate: 'test'
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`

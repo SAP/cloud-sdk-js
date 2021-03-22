@@ -1,8 +1,15 @@
 import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import { Method, OpenApiOperation } from '../openapi-types';
+import {
+  camelCase,
+  filterDuplicatesRight,
+  partition,
+  UniqueNameGenerator
+} from '@sap-cloud-sdk/util';
+import { Method, OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { parseRequestBody } from './request-body';
-import { parseParameters } from './parameters';
+import { resolveObject } from './refs';
+import { parseSchema } from './schema';
 
 export function parseOperation(
   pathPattern: string,
@@ -12,14 +19,27 @@ export function parseOperation(
 ): OpenApiOperation {
   const operation = getOperation(pathItem, method);
   const requestBody = parseRequestBody(operation.requestBody, refs);
-  const parameters = parseParameters(operation, refs);
+  const parameters = parseParameters(
+    [...(pathItem.parameters || []), ...(operation.parameters || [])],
+    refs
+  );
+
+  const [pathParameters, queryParameters] = partition(
+    parameters,
+    parameter => parameter.in === 'path'
+  );
+
+  const pathTemplateAndPathParams = renamePathParametersAndPath(
+    pathPattern,
+    pathParameters
+  );
 
   return {
     ...operation,
-    pathPattern,
     method,
     requestBody,
-    ...parameters,
+    queryParameters,
+    ...pathTemplateAndPathParams,
     operationId: operation.operationId!,
     tags: operation.tags!
   };
@@ -41,9 +61,66 @@ export function getOperation(
       `Could not parse operation. Operation for method '${method}' does not exist.`
     );
   }
-  operation.parameters = [
-    ...(pathItem.parameters || []),
-    ...(operation.parameters || [])
-  ];
   return operation;
+}
+
+function getRelevantParameters(
+  parameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[],
+  refs: $Refs
+): OpenAPIV3.ParameterObject[] {
+  const resolvedParameters = parameters.map(param =>
+    resolveObject(param, refs)
+  );
+  return filterDuplicatesRight(
+    resolvedParameters,
+    (left, right) => left.name === right.name && left.in === right.in
+  );
+}
+
+export function parseParameters(
+  allParameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[],
+  refs: $Refs
+): OpenApiParameter[] {
+  const relevantParameters = getRelevantParameters(allParameters, refs);
+  return relevantParameters.map(param => ({
+    ...param,
+    schema: parseSchema(param.schema)
+  }));
+}
+
+export function renamePathParametersAndPath(
+  pathPattern: string,
+  pathParams: OpenApiParameter[]
+): {
+  pathTemplate: string;
+  pathParameters: OpenApiParameter[];
+} {
+  const nameGenerator = new UniqueNameGenerator('', [
+    'body',
+    'queryParameters'
+  ]);
+
+  return pathParams.reduce(
+    ({ pathTemplate, pathParameters }, parameter) => {
+      const subPattern = new RegExp(`(?<!\\$){${parameter.name}}`);
+
+      if (!subPattern.test(pathTemplate)) {
+        throw new Error(
+          `Path parameter '${parameter.name}' is not referenced in path.`
+        );
+      }
+      const name = nameGenerator.generateAndSaveUniqueName(
+        camelCase(parameter.name)
+      );
+
+      return {
+        pathTemplate: pathTemplate.replace(subPattern, `\${${name}}`),
+        pathParameters: [...pathParameters, { ...parameter, name }]
+      };
+    },
+    {
+      pathTemplate: pathPattern,
+      pathParameters: []
+    }
+  );
 }

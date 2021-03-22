@@ -9,17 +9,15 @@ import { TestEntity } from './model';
 export const DefaultApi = {
   postEntity: (pathParam: string, queryParameters?: {'queryParam'?: string}) => new OpenApiRequestBuilder(
     'post',
-    '/entities/{pathParam}',
+    `/entities/${pathParam}`,
     {
-          pathParameters: [pathParam],
           queryParameters
         }
   ),
   patchEntity: (pathParam: string, body: TestEntity | undefined) => new OpenApiRequestBuilder(
     'patch',
-    '/entities/{pathParam}',
+    `/entities/${pathParam}`,
     {
-          pathParameters: [pathParam],
           body
         }
   )

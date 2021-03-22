@@ -12,9 +12,8 @@ export const TestCaseApi = {
   'requiredQueryParam': string,
   'optionalPathItemQueryParam'?: string}) => new OpenApiRequestBuilder(
     'get',
-    '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}',
+    `/test-cases/parameters/required-parameters/${requiredPathItemPathParam}`,
     {
-          pathParameters: [requiredPathItemPathParam],
           body,
           queryParameters
         }
@@ -24,18 +23,16 @@ export const TestCaseApi = {
   'optionalQueryParam'?: string,
   'requiredQueryParam': string}) => new OpenApiRequestBuilder(
     'post',
-    '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}',
+    `/test-cases/parameters/required-parameters/${requiredPathItemPathParam}`,
     {
-          pathParameters: [requiredPathItemPathParam],
           body,
           queryParameters
         }
   ),
   testCaseGetDuplicateParameters: (duplicateParam: string, queryParameters: {'duplicateParam': string}) => new OpenApiRequestBuilder(
     'get',
-    '/test-cases/parameters/{duplicateParam}',
+    `/test-cases/parameters/${duplicateParam}`,
     {
-          pathParameters: [duplicateParam],
           queryParameters
         }
   ),

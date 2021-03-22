@@ -16,7 +16,7 @@ export function exportAllFiles(fileNames: string[]): string {
 export function apiIndexFile(openApiDocument: OpenApiDocument): string {
   const files = [
     ...openApiDocument.apis.map(api => api.name),
-    ...(openApiDocument.components.schemas.length ? ['model'] : [])
+    ...(openApiDocument.schemas.length ? ['model'] : [])
   ];
   return codeBlock`
     ${exportAllFiles(files)}
@@ -25,9 +25,7 @@ export function apiIndexFile(openApiDocument: OpenApiDocument): string {
 
 export function modelIndexFile(openApiDocument: OpenApiDocument): string {
   return codeBlock`
-    ${exportAllFiles(
-      openApiDocument.components.schemas.map(schema => schema.name)
-    )}
+    ${exportAllFiles(openApiDocument.schemas.map(schema => schema.name))}
   `;
 }
 

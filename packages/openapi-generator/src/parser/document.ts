@@ -16,8 +16,6 @@ export async function parseOpenApiDocument(
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
-  const components = parseComponents(document);
-  // const operations = parseAllOperations(document, refs);
   const originalFileName = removeFileExtension(basename(filePath));
   return {
     apis: parseApis(document, refs),
@@ -29,21 +27,17 @@ export async function parseOpenApiDocument(
       ? vdmMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
-    components
+    schemas: parseSchemas(document)
   };
 }
 
-export function parseComponents(
+export function parseSchemas(
   document: OpenAPIV3.Document
-): {
-  schemas: OpenApiNamedSchema[];
-} {
-  return {
-    schemas: Object.entries(document.components?.schemas || {}).map(
-      ([name, schema]) => ({
-        name,
-        schema: parseSchema(schema)
-      })
-    )
-  };
+): OpenApiNamedSchema[] {
+  return Object.entries(document.components?.schemas || {}).map(
+    ([name, schema]) => ({
+      name,
+      schema: parseSchema(schema)
+    })
+  );
 }

@@ -77,7 +77,7 @@ async function generateSDKSources(
   // TODO: This isn't really "request builder" anymore
   logger.info(`Generating request builder in ${serviceDir}.`);
   // TODO: what about overwrite?
-  if (openApiDocument.components.schemas.length) {
+  if (openApiDocument.schemas.length) {
     const modelDir = resolve(serviceDir, 'model');
     await createInterfaceFiles(modelDir, openApiDocument);
     await createFile(
@@ -145,7 +145,7 @@ async function createInterfaceFiles(
 ): Promise<void> {
   await mkdir(dir, { recursive: true });
   await Promise.all(
-    openApiDocument.components.schemas.map(schema =>
+    openApiDocument.schemas.map(schema =>
       createFile(
         dir,
         `${kebabCase(schema.name)}.ts`,

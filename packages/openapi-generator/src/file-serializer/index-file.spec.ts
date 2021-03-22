@@ -4,7 +4,7 @@ import { apiIndexFile, modelIndexFile } from './index-file';
 it('apiIndexFile serializes the api index file with referenced schemas', () => {
   const document = {
     apis: [{ name: 'TestApi' }, { name: 'DefaultApi' }],
-    components: { schemas: [{}] }
+    schemas: [{}]
   } as OpenApiDocument;
   expect(apiIndexFile(document)).toMatchInlineSnapshot(`
     "    export * from './test-api';
@@ -16,7 +16,7 @@ it('apiIndexFile serializes the api index file with referenced schemas', () => {
 it('apiIndexFile serializes the api index file without referenced schemas', () => {
   const document = ({
     apis: [{ name: 'TestApi' }, { name: 'DefaultApi' }],
-    components: { schemas: [] }
+    schemas: []
   } as unknown) as OpenApiDocument;
   expect(apiIndexFile(document)).toMatchInlineSnapshot(`
     "    export * from './test-api';
@@ -27,7 +27,7 @@ it('apiIndexFile serializes the api index file without referenced schemas', () =
 it('modelIndexFile serializes the model index file for schemas in a document', () => {
   const document = ({
     apis: [],
-    components: { schemas: [{ name: 'MySchema1' }, { name: 'MySchema2' }] }
+    schemas: [{ name: 'MySchema1' }, { name: 'MySchema2' }]
   } as unknown) as OpenApiDocument;
   expect(modelIndexFile(document)).toMatchInlineSnapshot(`
     "    export * from './my-schema-1';

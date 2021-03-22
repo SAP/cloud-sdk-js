@@ -4,9 +4,7 @@ export interface OpenApiDocument {
   npmPackageName: string;
   directoryName: string;
   originalFileName: string;
-  components: {
-    schemas: OpenApiNamedSchema[];
-  };
+  schemas: OpenApiNamedSchema[];
   apis: OpenApiApi[];
 }
 

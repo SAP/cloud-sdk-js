@@ -4,10 +4,6 @@ import { Destination, DestinationNameAndJwt } from '../connectivity/scp-cf';
 import { executeHttpRequest, HttpResponse, Method } from '../http-client';
 
 export class OpenApiRequestBuilder {
-  private static isPlaceholder(pathPart: string): boolean {
-    return /^\{.+\}$/.test(pathPart);
-  }
-
   private customHeaders: Record<string, string> = {};
 
   /**
@@ -18,7 +14,7 @@ export class OpenApiRequestBuilder {
    */
   constructor(
     public method: Method,
-    private pathPattern: string,
+    private path: string,
     private parameters?: OpenApiRequestParameters
   ) {}
 
@@ -47,7 +43,7 @@ export class OpenApiRequestBuilder {
   ): Promise<HttpResponse> {
     return executeHttpRequest(destination, {
       method: this.method,
-      url: this.getPath(),
+      url: this.path,
       headers: this.customHeaders,
       params: this.parameters?.queryParameters,
       data: this.parameters?.body
@@ -72,34 +68,10 @@ export class OpenApiRequestBuilder {
       'Could not access response data. Response was not an axios response.'
     );
   }
-
-  private getPath(): string {
-    const pathParameters = (
-      this.parameters?.pathParameters || []
-    ).map(pathParameter => encodeURIComponent(pathParameter));
-    const pathParts = this.pathPattern.split('/');
-    const placeholders = pathParts.filter(part =>
-      OpenApiRequestBuilder.isPlaceholder(part)
-    );
-    if (placeholders.length !== pathParameters.length) {
-      // TODO: Improve error
-      throw new Error(
-        `Could not build path with path with path parameters. Expected number of parameters was ${placeholders.length}, but got ${pathParameters.length}.`
-      );
-    }
-    return pathParts
-      .map(part =>
-        OpenApiRequestBuilder.isPlaceholder(part)
-          ? pathParameters.shift()
-          : part
-      )
-      .join('/');
-  }
 }
 
 // TODO: Tighten types
 interface OpenApiRequestParameters {
-  pathParameters?: string[];
   queryParameters?: Record<string, any>;
   body?: any;
 }

@@ -69,6 +69,7 @@ export function isNotSchema(obj: any): obj is OpenApiNotSchema {
   return obj?.not;
 }
 
+// TODO: handle duplicates after pascal case => my-type, MyType
 /**
  * Parse the type name of a reference object.
  * @param obj Reference object to get the type name from.

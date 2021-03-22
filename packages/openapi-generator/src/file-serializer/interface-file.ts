@@ -1,4 +1,4 @@
-import { codeBlock, createLogger } from '@sap-cloud-sdk/util';
+import { codeBlock } from '@sap-cloud-sdk/util';
 import { OpenApiNamedSchema } from '../openapi-types';
 import {
   collectRefs,
@@ -7,7 +7,6 @@ import {
   parseFileNameFromRef
 } from '../model';
 import { serializeSchema } from './schema';
-const logger = createLogger('openapi-generator');
 
 export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
   const refs = collectRefs(schema);
@@ -28,8 +27,8 @@ export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
 function getImportsFromRefs(refs: string[]): string[] {
   return refs.map(
     ref =>
-      codeBlock`import { ${parseTypeNameFromRef({
-        $ref: ref
-      })} } from './${parseFileNameFromRef({ $ref: ref })}';`
+      codeBlock`import { ${parseTypeNameFromRef(
+        ref
+      )} } from './${parseFileNameFromRef({ $ref: ref })}';`
   );
 }

@@ -53,42 +53,39 @@ export function serializeSchema(schema: OpenApiSchema): string {
 }
 
 function serializeObjectSchema(schema: OpenApiObjectSchema): string {
-  const propertiesSchema = serializeObjectSchemaForProperties(
-    schema.properties
-  );
-
-  const needsAdditionalSchema =
-    (schema.properties.length && schema.additionalProperties) ||
-    (!schema.properties.length && schema.additionalProperties !== true);
-
-  if (needsAdditionalSchema) {
-    const additionalProperties = schema.additionalProperties
-      ? getRecordSchema(schema.additionalProperties)
-      : undefined;
-
-    return codeBlock`${propertiesSchema} | ${additionalProperties}`;
+  if (
+    !schema.properties.length &&
+    typeof schema.additionalProperties !== 'object'
+  ) {
+    return getRecordSchema();
   }
 
-  return propertiesSchema;
+  const types: string[] = [];
+  if (schema.properties.length) {
+    types.push(serializeObjectSchemaForProperties(schema.properties));
+  }
+
+  if (schema.additionalProperties) {
+    types.push(getRecordSchema(schema.additionalProperties));
+  }
+
+  return types.join(' | ');
 }
 
 function serializeObjectSchemaForProperties(
   properties: OpenApiObjectSchemaProperty[]
 ): string {
-  if (properties.length) {
-    return codeBlock`{
+  return codeBlock`{
       ${properties
         .map(
           property =>
             [
-              `${property.name}${property.required ? '' : '?'}`,
+              `'${property.name}'${property.required ? '' : '?'}`,
               serializeSchema(property.schema)
             ].join(': ') + ';'
         )
         .join('\n')}
     }`;
-  }
-  return getRecordSchema();
 }
 
 function getRecordSchema(

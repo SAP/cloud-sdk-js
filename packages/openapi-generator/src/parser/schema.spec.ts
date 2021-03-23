@@ -116,6 +116,18 @@ describe('parseSchema', () => {
     });
   });
 
+  it('throws an error if there are neither propertes nor additional properties', () => {
+    expect(() =>
+      parseSchema({
+        type: 'object',
+        additionalProperties: false,
+        properties: {}
+      })
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Could not parse object schema without neither properties nor additional properties."'
+    );
+  });
+
   it('parses enum schema', () => {
     const schema: OpenAPIV3.SchemaObject = {
       enum: ['1', '2', '3'],

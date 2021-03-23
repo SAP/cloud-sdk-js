@@ -11,7 +11,10 @@ import {
   OpenApiSchema
 } from './openapi-types';
 
-export function collectRefs(schema: OpenApiSchema): string[] {
+export function collectRefs(schema: OpenApiSchema | undefined): string[] {
+  if (!schema) {
+    return [];
+  }
   if (isReferenceObject(schema)) {
     return [schema.$ref];
   }

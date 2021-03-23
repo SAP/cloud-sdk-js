@@ -6,11 +6,11 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
 export const ExtensionApi = {
-  niceGetFunction: () => new OpenApiRequestBuilder(
+  niceGetFunction: () => new OpenApiRequestBuilder<any>(
     'get',
     '/test-cases/extension'
   ),
-  nicePostFunction: () => new OpenApiRequestBuilder(
+  nicePostFunction: () => new OpenApiRequestBuilder<any>(
     'post',
     '/test-cases/extension'
   )

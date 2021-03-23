@@ -88,6 +88,10 @@ describe('hasNotSchema', () => {
 });
 
 describe('collectRefs', () => {
+  it('collects empty array for undefined', () => {
+    expect(collectRefs(undefined)).toEqual([]);
+  });
+
   it('collects all unique references within a schema', () => {
     expect(
       collectRefs({

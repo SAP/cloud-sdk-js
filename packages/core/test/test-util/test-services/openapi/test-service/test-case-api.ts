@@ -10,7 +10,7 @@ export const TestCaseApi = {
   testCaseGetRequiredParameters: (requiredPathItemPathParam: string, body: SimpleTestEntity | undefined, queryParameters: {'requiredPathItemQueryParam': string,
   'optionalQueryParam'?: string,
   'requiredQueryParam': string,
-  'optionalPathItemQueryParam'?: string}) => new OpenApiRequestBuilder(
+  'optionalPathItemQueryParam'?: string}) => new OpenApiRequestBuilder<any>(
     'get',
     `/test-cases/parameters/required-parameters/${requiredPathItemPathParam}`,
     {
@@ -21,7 +21,7 @@ export const TestCaseApi = {
   testCasePostRequiredParameters: (requiredPathItemPathParam: string, body: SimpleTestEntity, queryParameters: {'optionalPathItemQueryParam'?: string,
   'requiredPathItemQueryParam': string,
   'optionalQueryParam'?: string,
-  'requiredQueryParam': string}) => new OpenApiRequestBuilder(
+  'requiredQueryParam': string}) => new OpenApiRequestBuilder<any>(
     'post',
     `/test-cases/parameters/required-parameters/${requiredPathItemPathParam}`,
     {
@@ -29,37 +29,37 @@ export const TestCaseApi = {
           queryParameters
         }
   ),
-  testCaseGetDuplicateParameters: (duplicateParam: string, queryParameters: {'duplicateParam': string}) => new OpenApiRequestBuilder(
+  testCaseGetDuplicateParameters: (duplicateParam: string, queryParameters: {'duplicateParam': string}) => new OpenApiRequestBuilder<any>(
     'get',
     `/test-cases/parameters/${duplicateParam}`,
     {
           queryParameters
         }
   ),
-  duplicateOperationId: () => new OpenApiRequestBuilder(
+  duplicateOperationId: () => new OpenApiRequestBuilder<any>(
     'get',
     '/test-cases/duplicate-operation-ids'
   ),
-  duplicateOperationId1: () => new OpenApiRequestBuilder(
+  duplicateOperationId1: () => new OpenApiRequestBuilder<any>(
     'patch',
     '/test-cases/duplicate-operation-ids'
   ),
-  complexSchemas: (body: ComplexTestEntity | undefined) => new OpenApiRequestBuilder(
+  complexSchemas: (body: ComplexTestEntity | undefined) => new OpenApiRequestBuilder<any>(
     'get',
     '/test-cases/complex-schemas',
     {
           body
         }
   ),
-  getTestCasesNoOperationId: () => new OpenApiRequestBuilder(
+  getTestCasesNoOperationId: () => new OpenApiRequestBuilder<any>(
     'get',
     '/test-cases/no-operation-id'
   ),
-  duplicateOperationId2: () => new OpenApiRequestBuilder(
+  duplicateOperationId2: () => new OpenApiRequestBuilder<any>(
     'put',
     '/test-cases/duplicate-operation-ids'
   ),
-  duplicateOperationId3: () => new OpenApiRequestBuilder(
+  duplicateOperationId3: () => new OpenApiRequestBuilder<any>(
     'post',
     '/test-cases/duplicate-operation-ids'
   )

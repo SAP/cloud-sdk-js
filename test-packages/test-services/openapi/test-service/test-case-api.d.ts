@@ -6,21 +6,21 @@ export declare const TestCaseApi: {
         'optionalQueryParam'?: string;
         'requiredQueryParam': string;
         'optionalPathItemQueryParam'?: string;
-    }) => OpenApiRequestBuilder;
+    }) => OpenApiRequestBuilder<any>;
     testCasePostRequiredParameters: (requiredPathItemPathParam: string, body: SimpleTestEntity, queryParameters: {
         'optionalPathItemQueryParam'?: string;
         'requiredPathItemQueryParam': string;
         'optionalQueryParam'?: string;
         'requiredQueryParam': string;
-    }) => OpenApiRequestBuilder;
+    }) => OpenApiRequestBuilder<any>;
     testCaseGetDuplicateParameters: (duplicateParam: string, queryParameters: {
         'duplicateParam': string;
-    }) => OpenApiRequestBuilder;
-    duplicateOperationId: () => OpenApiRequestBuilder;
-    duplicateOperationId1: () => OpenApiRequestBuilder;
-    complexSchemas: (body: ComplexTestEntity | undefined) => OpenApiRequestBuilder;
-    getTestCasesNoOperationId: () => OpenApiRequestBuilder;
-    duplicateOperationId2: () => OpenApiRequestBuilder;
-    duplicateOperationId3: () => OpenApiRequestBuilder;
+    }) => OpenApiRequestBuilder<any>;
+    duplicateOperationId: () => OpenApiRequestBuilder<any>;
+    duplicateOperationId1: () => OpenApiRequestBuilder<any>;
+    complexSchemas: (body: ComplexTestEntity | undefined) => OpenApiRequestBuilder<any>;
+    getTestCasesNoOperationId: () => OpenApiRequestBuilder<any>;
+    duplicateOperationId2: () => OpenApiRequestBuilder<any>;
+    duplicateOperationId3: () => OpenApiRequestBuilder<any>;
 };
 //# sourceMappingURL=test-case-api.d.ts.map

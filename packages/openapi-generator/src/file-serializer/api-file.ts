@@ -21,12 +21,15 @@ export const ${api.name} = {
  * @returns The list of body types.
  */
 function collectRefsFromOperations(operations: OpenApiOperation[]): string[] {
-  return operations.reduce((referenceTypes, operation) => {
-    const requestBodySchema = operation.requestBody?.schema;
-    return requestBodySchema
-      ? unique([...referenceTypes, ...collectRefs(requestBodySchema)])
-      : referenceTypes;
-  }, []);
+  return operations.reduce(
+    (referenceTypes, operation) =>
+      unique([
+        ...referenceTypes,
+        ...collectRefs(operation.requestBody?.schema),
+        ...collectRefs(operation.response)
+      ]),
+    []
+  );
 }
 
 function hasNotSchemaInOperations(operations: OpenApiOperation[]): boolean {

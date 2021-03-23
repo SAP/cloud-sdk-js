@@ -10,12 +10,12 @@ export declare const EntityApi: {
         enumInt32Parameter?: 1 | 2 | undefined;
         enumDoubleParameter?: 1 | 2 | undefined;
         enumBooleanParameter?: boolean | undefined;
-    } | undefined) => OpenApiRequestBuilder;
-    updateEntityWithPut: (body: TestEntity[] | undefined) => OpenApiRequestBuilder;
-    createEntity: (body: TestEntity | undefined) => OpenApiRequestBuilder;
-    updateEntity: (body: Record<string, any> | undefined) => OpenApiRequestBuilder;
-    deleteEntity: (body: string[] | undefined) => OpenApiRequestBuilder;
-    getEntityByKey: (entityId: string) => OpenApiRequestBuilder;
-    countEntities: () => OpenApiRequestBuilder;
+    } | undefined) => OpenApiRequestBuilder<TestEntity[]>;
+    updateEntityWithPut: (body: TestEntity[] | undefined) => OpenApiRequestBuilder<any>;
+    createEntity: (body: TestEntity | undefined) => OpenApiRequestBuilder<any>;
+    updateEntity: (body: Record<string, any> | undefined) => OpenApiRequestBuilder<any>;
+    deleteEntity: (body: string[] | undefined) => OpenApiRequestBuilder<any>;
+    getEntityByKey: (entityId: string) => OpenApiRequestBuilder<any>;
+    countEntities: () => OpenApiRequestBuilder<number>;
 };
 //# sourceMappingURL=entity-api.d.ts.map

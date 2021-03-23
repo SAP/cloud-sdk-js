@@ -14,46 +14,46 @@ export const EntityApi = {
   'enumStringParameter'?: 'value1' | 'value2',
   'enumInt32Parameter'?: 1 | 2,
   'enumDoubleParameter'?: 1 | 2,
-  'enumBooleanParameter'?: true | false}) => new OpenApiRequestBuilder(
+  'enumBooleanParameter'?: true | false}) => new OpenApiRequestBuilder<TestEntity[]>(
     'get',
     '/entities',
     {
           queryParameters
         }
   ),
-  updateEntityWithPut: (body: TestEntity[] | undefined) => new OpenApiRequestBuilder(
+  updateEntityWithPut: (body: TestEntity[] | undefined) => new OpenApiRequestBuilder<any>(
     'put',
     '/entities',
     {
           body
         }
   ),
-  createEntity: (body: TestEntity | undefined) => new OpenApiRequestBuilder(
+  createEntity: (body: TestEntity | undefined) => new OpenApiRequestBuilder<any>(
     'post',
     '/entities',
     {
           body
         }
   ),
-  updateEntity: (body: Record<string, any> | undefined) => new OpenApiRequestBuilder(
+  updateEntity: (body: Record<string, any> | undefined) => new OpenApiRequestBuilder<any>(
     'patch',
     '/entities',
     {
           body
         }
   ),
-  deleteEntity: (body: string[] | undefined) => new OpenApiRequestBuilder(
+  deleteEntity: (body: string[] | undefined) => new OpenApiRequestBuilder<any>(
     'delete',
     '/entities',
     {
           body
         }
   ),
-  getEntityByKey: (entityId: string) => new OpenApiRequestBuilder(
+  getEntityByKey: (entityId: string) => new OpenApiRequestBuilder<any>(
     'get',
     `/entities/${entityId}`
   ),
-  countEntities: () => new OpenApiRequestBuilder(
+  countEntities: () => new OpenApiRequestBuilder<number>(
     'get',
     '/entities/count'
   )

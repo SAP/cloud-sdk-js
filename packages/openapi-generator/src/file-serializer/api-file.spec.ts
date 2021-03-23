@@ -62,20 +62,20 @@ describe('apiFile', () => {
             schema: { $ref: '#/components/schemas/RefType' }
           },
           pathTemplate: 'test',
-          response: { $ref: '#/components/schemas/RefType' }
+          response: { $ref: '#/components/schemas/ResponseType' }
         }
       ]
     };
     expect(apiFile(api)).toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-      import { RefType } from './model';
+      import { RefType, ResponseType } from './model';
 
       export const TestApi = {
         getFn: () => new OpenApiRequestBuilder<string>(
           'get',
           'test'
         ),
-        createFn: (body: RefType) => new OpenApiRequestBuilder<RefType>(
+        createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
           'post',
           'test',
           {

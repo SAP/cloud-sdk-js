@@ -10,5 +10,7 @@ if (dev) {
   require('ts-node').register({ project });
 }
 
-const command = require(`../${dev ? 'src' : 'dist'}`);
-command.run().catch(require('@oclif/errors/handle'));
+const command = require(`../${dev ? 'src/cli' : 'dist/cli'}`);
+  command.run()
+  .catch(require('@oclif/errors/handle'));
+

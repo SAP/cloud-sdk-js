@@ -57,9 +57,11 @@ export const methods: Method[] = Object.values(supportedMethods);
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Representation of a parameter for both queries and path parameters.
  */
-export type OpenApiParameter = Omit<OpenAPIV3.ParameterObject, 'schema'> & {
-  schema: OpenApiSchema;
-};
+export interface OpenApiParameter
+  extends Omit<OpenAPIV3.ParameterObject, 'schema'>,
+    OpenApiNamedSchema {
+  originalName: string;
+}
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.

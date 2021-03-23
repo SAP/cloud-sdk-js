@@ -21,28 +21,26 @@ export function parseOperation(
   const operation = getOperation(pathItem, method);
   const requestBody = parseRequestBody(operation.requestBody, refs);
   const response = parseResponses(operation.responses, refs);
-  const parameters = parseParameters(
+  const relevantParameters = getRelevantParameters(
     [...(pathItem.parameters || []), ...(operation.parameters || [])],
     refs
   );
 
-  const [pathParameters, queryParameters] = partition(
-    parameters,
+  const [pathParams, queryParams] = partition(
+    relevantParameters,
     parameter => parameter.in === 'path'
   );
 
-  const pathTemplateAndPathParams = renamePathParametersAndPath(
-    pathPattern,
-    pathParameters
-  );
+  const pathParameters = parsePathParameters(pathParams, pathPattern);
 
   return {
     ...operation,
     method,
     requestBody,
     response,
-    queryParameters,
-    ...pathTemplateAndPathParams,
+    queryParameters: parseParameters(queryParams),
+    pathParameters,
+    pathTemplate: parsePathTemplate(pathPattern, pathParameters),
     operationId: operation.operationId!,
     tags: operation.tags!
   };
@@ -67,63 +65,90 @@ export function getOperation(
   return operation;
 }
 
-function getRelevantParameters(
+export function getRelevantParameters(
   parameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[],
   refs: $Refs
 ): OpenAPIV3.ParameterObject[] {
-  const resolvedParameters = parameters.map(param =>
-    resolveObject(param, refs)
-  );
+  const resolvedParameters = parameters
+    .map(param => resolveObject(param, refs))
+    // Filter cookie and header parameters
+    .filter(param => param.in === 'path' || param.in === 'query');
   return filterDuplicatesRight(
     resolvedParameters,
     (left, right) => left.name === right.name && left.in === right.in
   );
 }
 
-export function parseParameters(
-  allParameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[],
-  refs: $Refs
-): OpenApiParameter[] {
-  const relevantParameters = getRelevantParameters(allParameters, refs);
-  return relevantParameters.map(param => ({
-    ...param,
-    schema: parseSchema(param.schema)
-  }));
+function isPlaceholder(pathPart: string): boolean {
+  return /^\{.+\}$/.test(pathPart);
 }
 
-export function renamePathParametersAndPath(
+function sortPathParameters(
+  pathParameters: OpenAPIV3.ParameterObject[],
+  pathPattern: string
+): OpenAPIV3.ParameterObject[] {
+  const pathParts = pathPattern.split('/');
+  const placeholders = pathParts.filter(part => isPlaceholder(part));
+
+  return placeholders.map(placeholder => {
+    const strippedPlaceholder = placeholder.slice(1, -1);
+    const pathParameter = pathParameters.find(
+      param => param.name === strippedPlaceholder
+    );
+    if (!pathParameter) {
+      throw new Error(
+        `Path parameter '${strippedPlaceholder}' provided in path is missing in path parameters.`
+      );
+    }
+
+    return pathParameter;
+  });
+}
+
+export function parsePathTemplate(
   pathPattern: string,
-  pathParams: OpenApiParameter[]
-): {
-  pathTemplate: string;
-  pathParameters: OpenApiParameter[];
-} {
+  pathParameters: OpenApiParameter[]
+): string {
+  const pathParts = pathPattern.split('/');
+  const parameterNames = pathParameters.map(param => param.name);
+
+  return pathParts
+    .map(part => {
+      if (isPlaceholder(part)) {
+        if (!parameterNames.length) {
+          throw new Error(
+            `Could not find parameter for placeholder '${part}'.`
+          );
+        }
+        return `\${${parameterNames.shift()}}`;
+      }
+      return part;
+    })
+    .join('/');
+}
+
+export function parsePathParameters(
+  pathParameters: OpenAPIV3.ParameterObject[],
+  pathPattern: string
+): OpenApiParameter[] {
+  const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
   const nameGenerator = new UniqueNameGenerator('', [
     'body',
     'queryParameters'
   ]);
 
-  return pathParams.reduce(
-    ({ pathTemplate, pathParameters }, parameter) => {
-      const subPattern = new RegExp(`(?<!\\$){${parameter.name}}`);
+  return parseParameters(sortedPathParameters).map(param => ({
+    ...param,
+    name: nameGenerator.generateAndSaveUniqueName(camelCase(param.originalName))
+  }));
+}
 
-      if (!subPattern.test(pathTemplate)) {
-        throw new Error(
-          `Path parameter '${parameter.name}' is not referenced in path.`
-        );
-      }
-      const name = nameGenerator.generateAndSaveUniqueName(
-        camelCase(parameter.name)
-      );
-
-      return {
-        pathTemplate: pathTemplate.replace(subPattern, `\${${name}}`),
-        pathParameters: [...pathParameters, { ...parameter, name }]
-      };
-    },
-    {
-      pathTemplate: pathPattern,
-      pathParameters: []
-    }
-  );
+export function parseParameters(
+  pathParameters: OpenAPIV3.ParameterObject[]
+): OpenApiParameter[] {
+  return pathParameters.map(param => ({
+    ...param,
+    originalName: param.name,
+    schema: parseSchema(param.schema)
+  }));
 }

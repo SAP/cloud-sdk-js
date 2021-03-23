@@ -1,5 +1,5 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
-import { OpenApiNamedSchema } from '../openapi-types';
+import { OpenApiNamedSchema, OpenApiSchema } from '../openapi-types';
 import {
   collectRefs,
   hasNotSchema,
@@ -7,16 +7,10 @@ import {
   parseFileNameFromRef
 } from '../model';
 import { serializeSchema } from './schema';
+import { Import, serializeImports } from './imports';
 
 export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
-  const refs = collectRefs(schema);
-  const coreImports = hasNotSchema(schema)
-    ? "import { Except } from '@sap-cloud-sdk/core';"
-    : '';
-
-  const imports = codeBlock`${[...getImportsFromRefs(refs), coreImports].join(
-    '\n'
-  )}`;
+  const imports = serializeImports(getImports(schema));
 
   return codeBlock`
       ${imports}
@@ -24,11 +18,14 @@ export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
     `;
 }
 
-function getImportsFromRefs(refs: string[]): string[] {
-  return refs.map(
-    ref =>
-      codeBlock`import { ${parseTypeNameFromRef(
-        ref
-      )} } from './${parseFileNameFromRef({ $ref: ref })}';`
-  );
+function getImports(schema: OpenApiSchema): Import[] {
+  const refImports = collectRefs(schema).map(ref => ({
+    names: [parseTypeNameFromRef(ref)],
+    moduleIdentifier: `./${parseFileNameFromRef(ref)}`
+  }));
+  const coreImportNames = hasNotSchema(schema) ? ['Except'] : [];
+  return [
+    { names: coreImportNames, moduleIdentifier: '@sap-cloud-sdk/core' },
+    ...refImports
+  ];
 }

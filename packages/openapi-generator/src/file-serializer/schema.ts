@@ -57,7 +57,7 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
     !schema.properties.length &&
     typeof schema.additionalProperties !== 'object'
   ) {
-    return getRecordSchema();
+    return serializeRecordSchema();
   }
 
   const types: string[] = [];
@@ -66,7 +66,7 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
   }
 
   if (schema.additionalProperties) {
-    types.push(getRecordSchema(schema.additionalProperties));
+    types.push(serializeRecordSchema(schema.additionalProperties));
   }
 
   return types.join(' | ');
@@ -88,7 +88,7 @@ function serializeObjectSchemaForProperties(
     }`;
 }
 
-function getRecordSchema(
+function serializeRecordSchema(
   additionalProperties: true | OpenApiSchema = true
 ): string {
   if (typeof additionalProperties === 'object') {

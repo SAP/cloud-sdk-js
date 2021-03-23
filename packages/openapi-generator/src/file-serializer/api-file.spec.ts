@@ -27,7 +27,6 @@ describe('apiFile', () => {
     expect(apiFile(api)).toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
-
       export const TestApi = {
         getFn: (id: string) => new OpenApiRequestBuilder(
           'get',

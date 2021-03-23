@@ -1,19 +1,13 @@
 import { codeBlock, unique } from '@sap-cloud-sdk/util';
 import { OpenApiApi, OpenApiOperation } from '../openapi-types';
-import { collectRefs, parseTypeNameFromRef } from '../model';
+import { collectRefs, hasNotSchema, parseTypeNameFromRef } from '../model';
 import { serializeOperation } from './operation';
+import { Import, serializeImports } from './imports';
 
 export function apiFile(api: OpenApiApi): string {
-  const requestBodyTypes = getRequestBodyReferenceTypes(
-    api.operations
-  ).map(requestBodyType => parseTypeNameFromRef({ $ref: requestBodyType }));
+  const imports = serializeImports(getImports(api));
   return codeBlock`
-import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-${
-  requestBodyTypes.length
-    ? `import { ${requestBodyTypes.join(', ')} } from './model';`
-    : ''
-}
+${imports}
 
 export const ${api.name} = {
   ${api.operations.map(operation => serializeOperation(operation)).join(',\n')}
@@ -26,13 +20,37 @@ export const ${api.name} = {
  * @param operations The given operation list.
  * @returns The list of body types.
  */
-function getRequestBodyReferenceTypes(
-  operations: OpenApiOperation[]
-): string[] {
+function collectRefsFromOperations(operations: OpenApiOperation[]): string[] {
   return operations.reduce((referenceTypes, operation) => {
     const requestBodySchema = operation.requestBody?.schema;
     return requestBodySchema
       ? unique([...referenceTypes, ...collectRefs(requestBodySchema)])
       : referenceTypes;
   }, []);
+}
+
+function hasNotSchemaInOperations(operations: OpenApiOperation[]): boolean {
+  return operations.reduce((foundNotSchema, operation) => {
+    const requestBodySchema = operation.requestBody?.schema;
+    return (
+      foundNotSchema || (!!requestBodySchema && hasNotSchema(requestBodySchema))
+    );
+  }, false);
+}
+
+function getImports(api: OpenApiApi): Import[] {
+  const refs = collectRefsFromOperations(api.operations).map(requestBodyType =>
+    parseTypeNameFromRef(requestBodyType)
+  );
+
+  const refImports = { names: refs, moduleIdentifier: './model' };
+  const coreImports = {
+    names: ['OpenApiRequestBuilder'],
+    moduleIdentifier: '@sap-cloud-sdk/core'
+  };
+  if (hasNotSchemaInOperations(api.operations)) {
+    coreImports.names.push('Except');
+  }
+
+  return [coreImports, refImports];
 }

@@ -18,15 +18,15 @@ const logger = createLogger({
  * @typeparam JsonT JSON type of the entity
  */
 type FromJsonType<JsonT> = {
-  [key: string]: any;
+  [key: string]: any; // custom properties
 } & {
   [P in keyof JsonT]?: JsonT[P] extends (infer U)[]
-    ? U extends Record<string, any>
-      ? FromJsonType<U>[]
-      : JsonT[P]
-    : JsonT[P] extends Record<string, any>
-    ? FromJsonType<JsonT[P]>
-    : JsonT[P];
+    ? (U extends Record<string, any>
+      ? FromJsonType<U>[] // one-to-many navigation properties
+      : JsonT[P]) // collection type
+    : (JsonT[P] extends Record<string, any> | null | undefined
+      ? FromJsonType<JsonT[P]> | null | undefined // one-to-one navigation properties
+      : JsonT[P]); // else
 };
 
 /**

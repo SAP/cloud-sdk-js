@@ -58,12 +58,12 @@ describe('EntityBuilder', () => {
   describe('fromJson', () => {
     it('should build an entity from json', () => {
       const stringProperty = 'stringProperty';
-      const singleLinkKeyProperty = 'singleLinkedValue';
+      const singleLinkStringProperty = 'singleLinkedValue';
       const multiLinkStringProperty = 'multiLinkedValue';
       const entity = TestEntity.builder().fromJson({
         stringProperty,
         toSingleLink: {
-          keyProperty: singleLinkKeyProperty, toMultiLink: []
+          stringProperty: singleLinkStringProperty
         },
         toMultiLink: [
           {
@@ -75,8 +75,7 @@ describe('EntityBuilder', () => {
         .stringProperty(stringProperty)
         .toSingleLink(
           TestEntitySingleLink.builder()
-            .keyProperty(singleLinkKeyProperty)
-            .toMultiLink([])
+            .stringProperty(singleLinkStringProperty)
             .build()
         )
         .toMultiLink([
@@ -90,27 +89,25 @@ describe('EntityBuilder', () => {
 
     it('should build an entity with nested navigation properties from json', () => {
       const stringProperty = 'stringProperty';
-      const singleLinkKeyProperty = 'singleLinkedValue';
-      const nestedSingleLinkKeyProperty = 'nestedSingleLinkedValue';
+      const singleLinkStringProperty = 'singleLinkedValue';
+      const nestedSingleLinkStringProperty = 'nestedSingleLinkedValue';
       const entity = TestEntity.builder().fromJson({
         stringProperty,
         toSingleLink: {
-          keyProperty: singleLinkKeyProperty,
+          stringProperty: singleLinkStringProperty,
           toSingleLink: {
-            keyProperty: nestedSingleLinkKeyProperty
-          },
-          toMultiLink: []
+            stringProperty: nestedSingleLinkStringProperty
+          }
         }
       });
       const expectedEntity = TestEntity.builder()
         .stringProperty(stringProperty)
         .toSingleLink(
           TestEntitySingleLink.builder()
-            .keyProperty(singleLinkKeyProperty)
-            .toMultiLink([])
+            .stringProperty(singleLinkStringProperty)
             .toSingleLink(
               TestEntityLvl2SingleLink.builder()
-                .keyProperty(nestedSingleLinkKeyProperty)
+                .stringProperty(nestedSingleLinkStringProperty)
                 .build()
             )
             .build()
@@ -215,10 +212,9 @@ describe('EntityBuilder', () => {
     });
 
     it('should build an entity from json with one-to-one navigation properties being null', () => {
-      const toSingleLink = {
+      const entity = TestEntity.builder().fromJson({
         toSingleLink: null
-      };
-      const entity = TestEntity.builder().fromJson(toSingleLink);
+      });
       const expectedEntity = TestEntity.builder()
         .toSingleLink(null)
         .build();

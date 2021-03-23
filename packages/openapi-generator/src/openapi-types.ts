@@ -24,6 +24,7 @@ export interface OpenApiOperation
   method: string;
   pathTemplate: string;
   requestBody?: OpenApiRequestBody;
+  response: OpenApiSchema;
   pathParameters: OpenApiParameter[];
   queryParameters: OpenApiParameter[];
 }

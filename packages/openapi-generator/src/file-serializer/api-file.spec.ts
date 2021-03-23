@@ -19,6 +19,7 @@ describe('apiFile', () => {
             }
           ],
           queryParameters: [],
+          response: { type: 'any' },
           // eslint-disable-next-line no-template-curly-in-string
           pathTemplate: 'test/${id}'
         }
@@ -28,7 +29,7 @@ describe('apiFile', () => {
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
       export const TestApi = {
-        getFn: (id: string) => new OpenApiRequestBuilder(
+        getFn: (id: string) => new OpenApiRequestBuilder<any>(
           'get',
           \`test/\${id}\`
         )
@@ -46,7 +47,8 @@ describe('apiFile', () => {
           tags: [],
           pathParameters: [],
           queryParameters: [],
-          pathTemplate: 'test'
+          pathTemplate: 'test',
+          response: { type: 'string' }
         },
         {
           operationId: 'createFn',
@@ -59,7 +61,8 @@ describe('apiFile', () => {
             required: true,
             schema: { $ref: '#/components/schemas/RefType' }
           },
-          pathTemplate: 'test'
+          pathTemplate: 'test',
+          response: { $ref: '#/components/schemas/RefType' }
         }
       ]
     };
@@ -68,11 +71,11 @@ describe('apiFile', () => {
       import { RefType } from './model';
 
       export const TestApi = {
-        getFn: () => new OpenApiRequestBuilder(
+        getFn: () => new OpenApiRequestBuilder<string>(
           'get',
           'test'
         ),
-        createFn: (body: RefType) => new OpenApiRequestBuilder(
+        createFn: (body: RefType) => new OpenApiRequestBuilder<RefType>(
           'post',
           'test',
           {

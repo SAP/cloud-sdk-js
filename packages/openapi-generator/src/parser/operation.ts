@@ -10,6 +10,7 @@ import { Method, OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { parseRequestBody } from './request-body';
 import { resolveObject } from './refs';
 import { parseSchema } from './schema';
+import { parseResponses } from './responses';
 
 export function parseOperation(
   pathPattern: string,
@@ -19,6 +20,7 @@ export function parseOperation(
 ): OpenApiOperation {
   const operation = getOperation(pathItem, method);
   const requestBody = parseRequestBody(operation.requestBody, refs);
+  const response = parseResponses(operation.responses, refs);
   const parameters = parseParameters(
     [...(pathItem.parameters || []), ...(operation.parameters || [])],
     refs
@@ -38,6 +40,7 @@ export function parseOperation(
     ...operation,
     method,
     requestBody,
+    response,
     queryParameters,
     ...pathTemplateAndPathParams,
     operationId: operation.operationId!,

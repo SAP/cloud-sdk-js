@@ -3,14 +3,14 @@ import { AxiosResponse } from 'axios';
 import { Destination, DestinationNameAndJwt } from '../connectivity/scp-cf';
 import { executeHttpRequest, HttpResponse, Method } from '../http-client';
 
-export class OpenApiRequestBuilder {
+export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
-   * @param apiConstructor Constructor of the underlying OpenApi api definition.
-   * @param fn Name of the function represented in thie request builder.
-   * @param args Arguments to pass to the api function.
+   * @param method HTTP method of the request to be built.
+   * @param path Relative URL path of the request.
+   * @param parameters Query parameters and or body to pass to the request.
    */
   constructor(
     public method: Method,
@@ -20,9 +20,8 @@ export class OpenApiRequestBuilder {
 
   /**
    * Add custom headers to the request. If a header field with the given name already exists it is overwritten.
-   *
-   * @param headers Key-value pairs denoting additional custom headers
-   * @returns The request builder itself, to facilitate method chaining
+   * @param headers Key-value pairs denoting additional custom headers.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomHeaders(headers: Record<string, string>): this {
     Object.entries(headers).forEach(([key, value]) => {
@@ -32,11 +31,10 @@ export class OpenApiRequestBuilder {
   }
 
   /**
-   * Execute request and get a raw AxiosResponse, including all information about the HTTP response.
+   * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination Destination to execute the request against.
-   * @param options Options to employ when fetching destinations.
-   * @returns A promise resolving to an AxiosResponse.
+   * @returns A promise resolving to an HttpResponse.
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt
@@ -53,12 +51,11 @@ export class OpenApiRequestBuilder {
   /**
    * Execute request and get the response data. Use this to conveniently access the data of a service without technical information about the response.
    * @param destination Destination to execute the request against.
-   * @param options Options to employ when fetching destinations.
    * @returns A promise resolving to the requested return type.
    */
   async execute(
     destination: Destination | DestinationNameAndJwt
-  ): Promise<any> {
+  ): Promise<ResponseT> {
     // TODO: fix return type
     const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {

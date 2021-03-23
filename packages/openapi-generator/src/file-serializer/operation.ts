@@ -21,7 +21,7 @@ export function serializeOperation(operation: OpenApiOperation): string {
   return codeBlock`
 ${operation.operationId}: (${serializeOperationSignature(
     operation
-  )}) => new OpenApiRequestBuilder(
+  )}) => new OpenApiRequestBuilder<${serializeSchema(operation.response)}>(
   ${requestBuilderParams.join(',\n')}
 )`;
 }

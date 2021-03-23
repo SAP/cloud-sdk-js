@@ -87,15 +87,23 @@ export function parseArraySchema(
 export function parseObjectSchema(
   schema: OpenAPIV3.NonArraySchemaObject
 ): OpenApiObjectSchema {
+  const properties = parseObjectSchemaProperties(schema);
+  const additionalProperties =
+    typeof schema.additionalProperties === 'object'
+      ? !Object.keys(schema.additionalProperties).length
+        ? true
+        : parseSchema(schema.additionalProperties)
+      : schema.additionalProperties ?? true;
+  if (!properties.length && !additionalProperties) {
+    throw new Error(
+      'Could not parse object schema without neither properties nor additional properties.'
+    );
+  }
+
   return {
     type: 'object',
-    properties: parseObjectSchemaProperties(schema),
-    additionalProperties:
-      typeof schema.additionalProperties === 'object'
-        ? !Object.keys(schema.additionalProperties).length
-          ? true
-          : parseSchema(schema.additionalProperties)
-        : schema.additionalProperties ?? true
+    properties,
+    additionalProperties
   };
 }
 

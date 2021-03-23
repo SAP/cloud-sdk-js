@@ -2,7 +2,7 @@ import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenApiRequestBody } from '../openapi-types';
 import { resolveObject } from './refs';
-import { parseApplicationJsonMediaType } from './media-type';
+import { parseMediaType } from './media-type';
 
 /**
  * Parse the request body.
@@ -18,7 +18,7 @@ export function parseRequestBody(
   refs: $Refs
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = resolveObject(requestBody, refs);
-  const schema = parseApplicationJsonMediaType(resolvedRequestBody);
+  const schema = parseMediaType(resolvedRequestBody);
   if (schema && resolvedRequestBody) {
     return {
       name: 'body',

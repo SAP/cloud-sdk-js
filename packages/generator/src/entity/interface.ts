@@ -60,7 +60,7 @@ function navProperty(
 
   return {
     kind: StructureKind.PropertySignature,
-    name: navProp.instancePropertyName,
-    type: entity.className + 'Type' + (navProp.isCollection ? '[]' : '')
+    name: navProp.instancePropertyName + (navProp.isCollection? '' : '?'),
+    type: entity.className + 'Type' + (navProp.isCollection ? '[]' : ' | null')
   };
 }

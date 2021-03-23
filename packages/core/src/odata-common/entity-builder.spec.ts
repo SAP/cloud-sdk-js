@@ -210,5 +210,18 @@ describe('EntityBuilder', () => {
         expectedEntity.toSingleLink.getCustomFields()
       );
     });
+
+    it('should build an entity from json with one-to-one navigation properties being null', () => {
+      // todo any
+      const toSingleLink = {
+        toSingleLink: null
+      } as any; // The object comes from unknown systems so return type of a function is any.
+      const entity = TestEntity.builder().fromJson(toSingleLink);
+      // todo any
+      const expectedEntity = TestEntity.builder()
+        .toSingleLink(null as any)
+        .build();
+      expect(entity).toStrictEqual(expectedEntity);
+    });
   });
 });

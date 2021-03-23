@@ -79,7 +79,7 @@ export class EntityBuilder<EntityT extends Entity, JsonT> {
     );
 
     entityEntries.forEach(([key, value]) => {
-      const propertyValue = isNavigationProperty(key, entityConstructor)
+      const propertyValue = isNavigationProperty(key, entityConstructor) && !!value
         ? buildNavigationPropertyFromJson(key, value, entityConstructor)
         : value;
 

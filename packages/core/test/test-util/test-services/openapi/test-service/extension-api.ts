@@ -5,7 +5,6 @@
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
 
-
 export const ExtensionApi = {
   niceGetFunction: () => new OpenApiRequestBuilder(
     'get',

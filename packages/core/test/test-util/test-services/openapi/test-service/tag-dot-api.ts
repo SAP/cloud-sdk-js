@@ -5,7 +5,6 @@
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
 
-
 export const TagDotApi = {
   tagWithDot: () => new OpenApiRequestBuilder(
     'get',

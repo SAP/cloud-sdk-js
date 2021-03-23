@@ -5,7 +5,6 @@
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
-
 export const TagDotApi = {
   tagWithDot: () => new OpenApiRequestBuilder(
     'get',

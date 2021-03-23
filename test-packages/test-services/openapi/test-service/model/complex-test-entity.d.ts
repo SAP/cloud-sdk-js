@@ -1,6 +1,6 @@
+import { Except } from '@sap-cloud-sdk/core';
 import { SimpleTestEntity } from './simple-test-entity';
 import { TestEntity } from './test-entity';
-import { Except } from '@sap-cloud-sdk/core';
 export declare type ComplexTestEntity = {
     'referenceProperty'?: SimpleTestEntity;
     'arrayProperty'?: {

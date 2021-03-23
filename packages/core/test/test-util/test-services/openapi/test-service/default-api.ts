@@ -5,7 +5,6 @@
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
 
-
 export const DefaultApi = {
   noTag: () => new OpenApiRequestBuilder(
     'get',

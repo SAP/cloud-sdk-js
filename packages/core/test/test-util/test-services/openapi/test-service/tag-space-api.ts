@@ -5,7 +5,6 @@
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
 
-
 export const TagSpaceApi = {
   tagWithSpace: () => new OpenApiRequestBuilder(
     'post',

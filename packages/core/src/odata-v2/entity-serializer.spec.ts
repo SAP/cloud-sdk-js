@@ -150,10 +150,9 @@ describe('entity-serializer', () => {
   });
 
   it('should serialize null value', () => {
-    // todo any
     const testEntity = TestEntity.builder()
       .stringProperty(null)
-      .toSingleLink(null as any)
+      .toSingleLink(null)
       .build();
 
     expect(serializeEntity(testEntity, TestEntity)).toEqual({

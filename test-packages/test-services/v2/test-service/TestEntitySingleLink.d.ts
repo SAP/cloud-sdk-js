@@ -45,7 +45,7 @@ export declare class TestEntitySingleLink extends EntityV2 implements TestEntity
     /**
      * One-to-one navigation property to the [[TestEntityLvl2SingleLink]] entity.
      */
-    toSingleLink: TestEntityLvl2SingleLink;
+    toSingleLink?: TestEntityLvl2SingleLink | null;
     /**
      * Returns an entity builder to construct instances of `TestEntitySingleLink`.
      * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
@@ -79,7 +79,7 @@ export interface TestEntitySingleLinkType {
     guidProperty?: string | null;
     int16Property?: number | null;
     toMultiLink: TestEntityLvl2MultiLinkType[];
-    toSingleLink: TestEntityLvl2SingleLinkType;
+    toSingleLink?: TestEntityLvl2SingleLinkType | null;
 }
 export declare namespace TestEntitySingleLink {
     /**

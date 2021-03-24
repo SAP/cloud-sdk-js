@@ -38,12 +38,10 @@ function collectRefsFromOperations(operations: OpenApiOperation[]): string[] {
 }
 
 function hasNotSchemaInOperations(operations: OpenApiOperation[]): boolean {
-  return operations.reduce((foundNotSchema, operation) => {
-    const requestBodySchema = operation.requestBody?.schema;
-    return (
-      foundNotSchema || (!!requestBodySchema && hasNotSchema(requestBodySchema))
-    );
-  }, false);
+  return operations.some(
+    operation => hasNotSchema(operation.requestBody?.schema),
+    false
+  );
 }
 
 function getImports(api: OpenApiApi): Import[] {
@@ -51,7 +49,7 @@ function getImports(api: OpenApiApi): Import[] {
     parseTypeNameFromRef(requestBodyType)
   );
 
-  const refImports = { names: refs, moduleIdentifier: './model' };
+  const refImports = { names: refs, moduleIdentifier: './schema' };
   const coreImports = {
     names: ['OpenApiRequestBuilder'],
     moduleIdentifier: '@sap-cloud-sdk/core'

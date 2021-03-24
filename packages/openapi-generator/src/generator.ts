@@ -15,7 +15,7 @@ import {
   genericDescription,
   readme,
   apiIndexFile,
-  modelIndexFile,
+  schemaIndexFile,
   tsconfigJson,
   interfaceFile
 } from './file-serializer';
@@ -75,12 +75,12 @@ async function generateSources(
   options: GeneratorOptions
 ): Promise<void> {
   if (openApiDocument.schemas.length) {
-    const modelDir = resolve(serviceDir, 'model');
-    await createInterfaceFiles(modelDir, openApiDocument);
+    const schemaDir = resolve(serviceDir, 'schema');
+    await createInterfaceFiles(schemaDir, openApiDocument);
     await createFile(
-      modelDir,
+      schemaDir,
       'index.ts',
-      modelIndexFile(openApiDocument),
+      schemaIndexFile(openApiDocument),
       true
     );
   }

@@ -9,7 +9,7 @@ import { OpenApiDocument } from '../openapi-types';
 export function apiIndexFile(openApiDocument: OpenApiDocument): string {
   const files = [
     ...openApiDocument.apis.map(api => api.name),
-    ...(openApiDocument.schemas.length ? ['model'] : [])
+    ...(openApiDocument.schemas.length ? ['schema'] : [])
   ];
   return codeBlock`
     ${exportAllFiles(files)}
@@ -17,11 +17,11 @@ export function apiIndexFile(openApiDocument: OpenApiDocument): string {
 }
 
 /**
- * Serialize an index file for the model directory of the generated service.
- * @param openApiDocument The parsed document to serialize into an index file for the model directory.
+ * Serialize an index file for the schema directory of the generated service.
+ * @param openApiDocument The parsed document to serialize into an index file for the schema directory.
  * @returns The serialized index file contents.
  */
-export function modelIndexFile(openApiDocument: OpenApiDocument): string {
+export function schemaIndexFile(openApiDocument: OpenApiDocument): string {
   return codeBlock`
     ${exportAllFiles(openApiDocument.schemas.map(schema => schema.name))}
   `;

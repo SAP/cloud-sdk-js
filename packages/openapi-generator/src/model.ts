@@ -33,7 +33,10 @@ export function collectRefs(schema: OpenApiSchema | undefined): string[] {
  * @param schema Parsed schema to check.
  * @returns True if the parsed schema contains am not schema, false otherwise.
  */
-export function hasNotSchema(schema: OpenApiSchema): boolean {
+export function hasNotSchema(schema: OpenApiSchema | undefined): boolean {
+  if (!schema) {
+    return false;
+  }
   if (isNotSchema(schema)) {
     return true;
   }

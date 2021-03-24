@@ -1,5 +1,5 @@
 import { OpenApiDocument } from '../openapi-types';
-import { apiIndexFile, modelIndexFile } from './index-file';
+import { apiIndexFile, schemaIndexFile } from './index-file';
 
 it('apiIndexFile serializes the api index file with referenced schemas', () => {
   const document = {
@@ -9,7 +9,7 @@ it('apiIndexFile serializes the api index file with referenced schemas', () => {
   expect(apiIndexFile(document)).toMatchInlineSnapshot(`
     "    export * from './test-api';
         export * from './default-api';
-        export * from './model';"
+        export * from './schema';"
   `);
 });
 
@@ -24,12 +24,12 @@ it('apiIndexFile serializes the api index file without referenced schemas', () =
   `);
 });
 
-it('modelIndexFile serializes the model index file for schemas in a document', () => {
+it('schemaIndexFile serializes the schema index file for schemas in a document', () => {
   const document = ({
     apis: [],
     schemas: [{ name: 'MySchema1' }, { name: 'MySchema2' }]
   } as unknown) as OpenApiDocument;
-  expect(modelIndexFile(document)).toMatchInlineSnapshot(`
+  expect(schemaIndexFile(document)).toMatchInlineSnapshot(`
     "    export * from './my-schema-1';
         export * from './my-schema-2';"
   `);

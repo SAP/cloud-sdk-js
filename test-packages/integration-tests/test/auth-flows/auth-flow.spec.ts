@@ -3,9 +3,9 @@ import {
   fetchDestination, getDestination,
   getService,
   serviceToken,
-  userApprovedServiceToken,
   wrapJwtInHeader
 } from '@sap-cloud-sdk/core';
+import { jwtBearerToken } from '@sap-cloud-sdk/core/src';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import {
   loadLocalVcap,
@@ -32,7 +32,7 @@ describe('OAuth flows', () => {
   });
 
   xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
-    const userGrant = await userApprovedServiceToken(
+    const userGrant = await jwtBearerToken(
       accessToken.provider,
       destinationService
     );

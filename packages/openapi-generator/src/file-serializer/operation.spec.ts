@@ -11,12 +11,14 @@ describe('serializeOperation', () => {
         {
           in: 'path',
           name: 'id',
+          originalName: 'id',
           schema: { type: 'string' },
           required: true
         },
         {
           in: 'path',
           name: 'subId',
+          originalName: 'subId',
           schema: { type: 'string' },
           required: true
         }
@@ -25,17 +27,17 @@ describe('serializeOperation', () => {
         {
           in: 'query',
           name: 'limit',
+          originalName: 'limit',
           schema: { type: 'number' }
         }
       ],
       response: { type: 'string' },
-      // eslint-disable-next-line no-template-curly-in-string
-      pathTemplate: 'test/${id}/${subId}'
+      pathPattern: 'test/{id}/{subId}'
     };
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
         'get',
-        \`test/\${id}/\${subId}\`,
+        'test/{id}/{subId}',
         {
               queryParameters
             }
@@ -52,20 +54,20 @@ describe('serializeOperation', () => {
         {
           in: 'path',
           name: 'id',
+          originalName: 'id',
           schema: { type: 'string' },
           required: true
         }
       ],
       queryParameters: [],
       response: { type: 'object', additionalProperties: true, properties: [] },
-      // eslint-disable-next-line no-template-curly-in-string
-      pathTemplate: 'test/${id}'
+      pathPattern: 'test/{id}'
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
         'delete',
-        \`test/\${id}\`
+        'test/{id}'
       )"
     `);
   });
@@ -80,11 +82,12 @@ describe('serializeOperation', () => {
         {
           in: 'query',
           name: 'limit',
+          originalName: 'limit',
           schema: { type: 'number' }
         }
       ],
       response: { type: 'any' },
-      pathTemplate: 'test'
+      pathPattern: 'test'
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
@@ -107,13 +110,13 @@ describe('serializeOperation', () => {
         {
           in: 'path',
           name: 'id',
+          originalName: 'id',
           schema: { type: 'string' },
           required: true
         }
       ],
       queryParameters: [],
       requestBody: {
-        name: 'body',
         required: true,
         schema: {
           type: 'object',
@@ -122,13 +125,12 @@ describe('serializeOperation', () => {
         }
       },
       response: { type: 'any' },
-      // eslint-disable-next-line no-template-curly-in-string
-      pathTemplate: 'test/${id}'
+      pathPattern: 'test/{id}'
     };
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
         'post',
-        \`test/\${id}\`,
+        'test/{id}',
         {
               body
             }
@@ -144,12 +146,11 @@ describe('serializeOperation', () => {
       pathParameters: [],
       queryParameters: [],
       requestBody: {
-        name: 'body',
         required: false,
         schema: { $ref: '#/components/schemas/RefType' }
       },
       response: { type: 'string' },
-      pathTemplate: 'test'
+      pathPattern: 'test'
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`

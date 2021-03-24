@@ -5,7 +5,7 @@ import {
   parseParameters,
   getRelevantParameters,
   parsePathParameters,
-  parsePathTemplate
+  parsePathPattern
 } from './operation';
 
 describe('getRelevantParameters', () => {
@@ -154,12 +154,12 @@ describe('parsePathParameters', () => {
 
 describe('parsePathTemplate', () => {
   it('returns the original path when there is no pattern', async () => {
-    expect(parsePathTemplate('/test', [])).toEqual('/test');
+    expect(parsePathPattern('/test', [])).toEqual('/test');
   });
 
   it('throws an error if the path and parameters do not match', async () => {
     expect(() =>
-      parsePathTemplate('/test/{id}', [])
+      parsePathPattern('/test/{id}', [])
     ).toThrowErrorMatchingInlineSnapshot(
       '"Could not find parameter for placeholder \'{id}\'."'
     );
@@ -193,13 +193,12 @@ describe('parsePathTemplate', () => {
       }
     ];
     expect(
-      parsePathTemplate(
+      parsePathPattern(
         '/root/{path-param}/{pathParam}/path/{PathParam1}/sub-path/{path_param}',
         parameters
       )
     ).toEqual(
-      // eslint-disable-next-line no-template-curly-in-string
-      '/root/${pathParam}/${pathParam1}/path/${pathParam2}/sub-path/${pathParam3}'
+      '/root/{pathParam}/{pathParam1}/path/{pathParam2}/sub-path/{pathParam3}'
     );
   });
 });

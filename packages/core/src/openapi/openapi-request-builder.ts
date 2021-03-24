@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { AxiosResponse } from 'axios';
-import { Destination, DestinationNameAndJwt } from '../connectivity/scp-cf';
+import { Destination, DestinationNameAndJwt } from '../connectivity';
 import { executeHttpRequest, HttpResponse, Method } from '../http-client';
 
 /**
@@ -10,15 +10,19 @@ import { executeHttpRequest, HttpResponse, Method } from '../http-client';
 export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
 
+  private static isPlaceholder(pathPart: string): boolean {
+    return /^\{.+\}$/.test(pathPart);
+  }
+
   /**
    * Create an instance of `OpenApiRequestBuilder`.
    * @param method HTTP method of the request to be built.
-   * @param path Relative URL path of the request.
+   * @param pathPattern Path for the request containing path parameter references as in the OpenAPI specification.
    * @param parameters Query parameters and or body to pass to the request.
    */
   constructor(
     public method: Method,
-    private path: string,
+    private pathPattern: string,
     private parameters?: OpenApiRequestParameters
   ) {}
 
@@ -45,7 +49,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   ): Promise<HttpResponse> {
     return executeHttpRequest(destination, {
       method: this.method,
-      url: this.path,
+      url: this.getPath(),
       headers: this.customHeaders,
       params: this.parameters?.queryParameters,
       data: this.parameters?.body
@@ -68,10 +72,32 @@ export class OpenApiRequestBuilder<ResponseT = any> {
       'Could not access response data. Response was not an axios response.'
     );
   }
+
+  private getPath(): string {
+    const pathParameters = this.parameters?.pathParameters || {};
+
+    const pathParts = this.pathPattern.split('/');
+    return pathParts
+      .map(part => {
+        if (OpenApiRequestBuilder.isPlaceholder(part)) {
+          const paramName = part.slice(1, -1);
+          const paramValue = pathParameters[paramName];
+          if (!paramValue) {
+            throw new Error(
+              `Cannot execute request, no path parameter provided for '${paramName}'.`
+            );
+          }
+          return encodeURIComponent(paramValue);
+        }
+        return part;
+      })
+      .join('/');
+  }
 }
 
 // TODO: Tighten types
 interface OpenApiRequestParameters {
+  pathParameters?: Record<string, any>;
   queryParameters?: Record<string, any>;
   body?: any;
 }

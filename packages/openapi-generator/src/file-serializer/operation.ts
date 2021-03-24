@@ -3,16 +3,15 @@ import { OpenApiOperation } from '../openapi-types';
 import { serializeSchema } from './schema';
 
 /**
- * Get the string representation of one operation.
+ * Serialize an operation to a string.
  * @param operation Operation to serialize.
- * @param apiName The name of the API.
  * @returns The operation as a string.
  */
 export function serializeOperation(operation: OpenApiOperation): string {
-  const pathTemplate = operation.pathParameters.length
-    ? `\`${operation.pathTemplate}\``
-    : `'${operation.pathTemplate}'`;
-  const requestBuilderParams = [`'${operation.method}'`, pathTemplate];
+  const requestBuilderParams = [
+    `'${operation.method}'`,
+    `'${operation.pathPattern}'`
+  ];
 
   const bodyAndQueryParams = serializeParamsForRequestBuilder(operation);
   if (bodyAndQueryParams) {

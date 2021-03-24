@@ -46,7 +46,7 @@ export function parseOperation(
     response,
     queryParameters: parseParameters(queryParams),
     pathParameters,
-    pathTemplate: parsePathTemplate(pathPattern, pathParameters),
+    pathPattern: parsePathPattern(pathPattern, pathParameters),
     operationId: operation.operationId!,
     tags: operation.tags!
   };
@@ -92,7 +92,7 @@ function sortPathParameters(
   });
 }
 
-export function parsePathTemplate(
+export function parsePathPattern(
   pathPattern: string,
   pathParameters: OpenApiParameter[]
 ): string {
@@ -107,7 +107,7 @@ export function parsePathTemplate(
             `Could not find parameter for placeholder '${part}'.`
           );
         }
-        return `\${${parameterNames.shift()}}`;
+        return `{${parameterNames.shift()}}`;
       }
       return part;
     })

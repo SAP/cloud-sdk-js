@@ -21,8 +21,7 @@ describe('apiFile', () => {
           ],
           queryParameters: [],
           response: { type: 'any' },
-          // eslint-disable-next-line no-template-curly-in-string
-          pathTemplate: 'test/${id}'
+          pathPattern: 'test/{id}'
         }
       ]
     };
@@ -32,7 +31,7 @@ describe('apiFile', () => {
       export const TestApi = {
         getFn: (id: string) => new OpenApiRequestBuilder<any>(
           'get',
-          \`test/\${id}\`
+          'test/{id}'
         )
       };"
     `);
@@ -48,7 +47,7 @@ describe('apiFile', () => {
           tags: [],
           pathParameters: [],
           queryParameters: [],
-          pathTemplate: 'test',
+          pathPattern: 'test',
           response: { type: 'string' }
         },
         {
@@ -61,7 +60,7 @@ describe('apiFile', () => {
             required: true,
             schema: { $ref: '#/components/schemas/RefType' }
           },
-          pathTemplate: 'test',
+          pathPattern: 'test',
           response: { $ref: '#/components/schemas/ResponseType' }
         }
       ]

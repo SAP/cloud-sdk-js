@@ -73,4 +73,30 @@ describe('openapi-request-builder', () => {
       data: undefined
     });
   });
+
+  it('throws an error if the path parameters do not match the path pattern', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
+      pathParameters: { test: 'test' }
+    });
+
+    await expect(() =>
+      requestBuilder.executeRaw(destination)
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      `"Cannot execute request, no path parameter provided for 'id'."`
+    );
+  });
+
+  it('encodes path parameters', () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
+      pathParameters: { id: '#test' }
+    });
+    requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
+      method: 'get',
+      url: '/test/%23test',
+      headers: {},
+      params: undefined,
+      data: undefined
+    });
+  });
 });

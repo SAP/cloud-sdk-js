@@ -1,8 +1,9 @@
 import * as http from 'http';
 import * as https from 'https';
-import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause, pickIgnoreCase } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import {
+  buildCsrfHeaders,
   buildHeadersForDestination,
   Destination,
   DestinationNameAndJwt,
@@ -14,7 +15,7 @@ import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
   HttpRequest,
-  HttpRequestConfig,
+  HttpRequestConfig, HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
 
@@ -72,7 +73,7 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
 }
 
 /**
- * Takes as paramter a function that expects an [[HttpRequest]] and returns a Promise of [[HttpResponse]].
+ * Takes as parameter a function that expects an [[HttpRequest]] and returns a Promise of [[HttpResponse]].
  * Returns a function that takes a destination and a request-config (extends [[HttpRequestConfig]]), builds an [[HttpRequest]] from them, and calls
  * the provided execute function.
  *
@@ -84,13 +85,15 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
 export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   return async function <T extends HttpRequestConfig>(
     destination: Destination | DestinationNameAndJwt,
-    requestConfig: T
+    requestConfig: T,
+    httpRequestOptions?: HttpRequestOptions
   ): Promise<ReturnT> {
     const destinationRequestConfig = await buildHttpRequest(
       destination,
       requestConfig.headers
     );
     const request = merge(destinationRequestConfig, requestConfig);
+    request.headers = await addCsrfTokenToHeader(destination, request, httpRequestOptions);
     return executeFn(request);
   };
 }
@@ -124,7 +127,11 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  * @param requestConfig - Any object representing an HTTP request.
  * @returns A promise resolving to an [[HttpResponse]].
  */
-export const executeHttpRequest = execute(executeWithAxios);
+export const executeHttpRequest: <T extends HttpRequestConfig>(
+  destination: Destination | DestinationNameAndJwt,
+  requestConfig: T,
+  options?: HttpRequestOptions
+) => Promise<HttpResponse>  = execute(executeWithAxios);
 
 function buildDestinationHttpRequestConfig(
   destination: Destination,
@@ -213,3 +220,53 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
     httpsAgent: new https.Agent()
   };
 }
+
+function getDefaultHttpRequestOptions(): HttpRequestOptions {
+  // TODO: 2.0 change to true
+  return {
+    fetchCsrfToken: false
+  };
+}
+
+function buildHttpRequestOptions(httpRequestOptions?: HttpRequestOptions): HttpRequestOptions{
+  return httpRequestOptions?
+    {
+      ...getDefaultHttpRequestOptions(),
+      ...httpRequestOptions
+    }
+    : getDefaultHttpRequestOptions();
+}
+
+function shouldHandleCsrfToken(requestConfig: HttpRequestConfig, options: HttpRequestOptions): boolean {
+  return !!options.fetchCsrfToken && requestConfig.method !== 'get' && requestConfig.method !== 'GET';
+}
+
+export const xCsrfTokenHeaderKey = 'x-csrf-token';
+
+async function getCsrfHeaders(
+  destination: Destination | DestinationNameAndJwt,
+  headers: Record<string, string>,
+  url: string
+): Promise<Record<string, any>> {
+  const csrfHeaders = pickIgnoreCase(
+    headers,
+    xCsrfTokenHeaderKey
+  );
+  return Object.keys(csrfHeaders).length
+    ? csrfHeaders
+    : buildCsrfHeaders(destination, {
+      headers,
+      url
+    });
+}
+
+async function addCsrfTokenToHeader(destination: Destination | DestinationNameAndJwt,
+                 request: HttpRequestConfig & DestinationHttpRequestConfig,
+                 httpRequestOptions?: HttpRequestOptions): Promise<Record<string, string>>{
+  const options = buildHttpRequestOptions(httpRequestOptions);
+  const csrfHeaders = shouldHandleCsrfToken(request, options)
+    ? await getCsrfHeaders(destination, request.headers, request.url!)
+    : {};
+  return { ...request.headers, ...csrfHeaders };
+}
+

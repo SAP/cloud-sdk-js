@@ -11,7 +11,7 @@ import {
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  executeHttpRequest
+  executeHttpRequest, xCsrfTokenHeaderKey
 } from './http-client';
 
 describe('generic http client', () => {
@@ -304,6 +304,53 @@ describe('generic http client', () => {
           }
         })
       ).rejects.toThrowErrorMatchingSnapshot();
+    });
+
+    it('fetches csrf token headers when fetchCsrfToken is true', async () => {
+      const csrfToken = 'some-csrf-token';
+      nock('https://example.com', {
+        reqheaders: {
+          [xCsrfTokenHeaderKey]: 'Fetch',
+          'content-type': 'application/json',
+          accept: 'application/json',
+          authorization: 'custom-auth-header',
+          'sap-client': '001'
+        }
+      })
+        .get('/api/entity')
+        .reply(200, {}, { [xCsrfTokenHeaderKey]: csrfToken });
+
+      nock('https://example.com', {
+        reqheaders: {
+          // [xCsrfTokenHeaderKey]: csrfToken,
+          'content-type': 'application/json',
+          accept: 'application/json',
+          authorization: 'custom-auth-header',
+          'sap-client': '001'
+        }
+      })
+        .post('/api/entity', {
+          a: 1
+        })
+        .reply(200);
+
+      const config: HttpRequest = {
+        baseURL: 'https://example.com',
+        method: HttpMethod.POST,
+        url: '/api/entity',
+        headers: {
+          authorization: 'custom-auth-header',
+          'content-type': 'application/json',
+          accept: 'application/json',
+        },
+        data: {
+          a: 1
+        }
+      };
+
+      await expect(
+        executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
+      ).resolves.not.toThrow();
     });
   });
 });

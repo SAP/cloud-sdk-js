@@ -13,16 +13,10 @@ import { getType } from './type-mapping';
 const logger = createLogger('openapi-generator');
 
 /**
- * Type guard to check whether an object is of type `OpenAPIV3.ArraySchemaObject`.
- * @param obj Object to check.
- * @returns True if the object is a array schema object, false otherwise.
+ * Parse the original schema or reference object to a serializable schema.
+ * @param schema Originally provided schema or reference object.
+ * @returns The parsed schema.
  */
-export function isArraySchemaObject(
-  obj: any
-): obj is OpenAPIV3.ArraySchemaObject {
-  return obj?.type === 'array';
-}
-
 export function parseSchema(
   schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined
 ): OpenApiSchema {
@@ -35,7 +29,7 @@ export function parseSchema(
     return schema;
   }
 
-  if (isArraySchemaObject(schema)) {
+  if (schema.type === 'array') {
     return parseArraySchema(schema);
   }
 
@@ -74,7 +68,12 @@ export function parseSchema(
   };
 }
 
-export function parseArraySchema(
+/**
+ * Parse a schema to an array schema.
+ * @param schema Original schema representing an array.
+ * @returns The recursively parsed array schema.
+ */
+function parseArraySchema(
   schema: OpenAPIV3.ArraySchemaObject
 ): OpenApiArraySchema {
   return {
@@ -84,7 +83,12 @@ export function parseArraySchema(
   };
 }
 
-export function parseObjectSchema(
+/**
+ * Parse a schema to an object schema.
+ * @param schema Original schema representing an object.
+ * @returns The recursively parsed object schema.
+ */
+function parseObjectSchema(
   schema: OpenAPIV3.NonArraySchemaObject
 ): OpenApiObjectSchema {
   const properties = parseObjectSchemaProperties(schema);
@@ -107,7 +111,12 @@ export function parseObjectSchema(
   };
 }
 
-export function parseObjectSchemaProperties(
+/**
+ * Parse properties of an object as property schemas.
+ * @param schema Original schema representing an object.
+ * @returns The list of parsed property schemas.
+ */
+function parseObjectSchemaProperties(
   schema: OpenAPIV3.NonArraySchemaObject
 ): OpenApiObjectSchemaProperty[] {
   return Object.entries(schema.properties || {}).reduce(
@@ -123,7 +132,12 @@ export function parseObjectSchemaProperties(
   );
 }
 
-export function parseEnumSchema(
+/**
+ * Parse an enum schema
+ * @param schema Original schema representing an enum.
+ * @returns The parsed enum schema.
+ */
+function parseEnumSchema(
   schema: OpenAPIV3.NonArraySchemaObject
 ): OpenApiEnumSchema {
   const type = getType(schema.type);
@@ -135,7 +149,13 @@ export function parseEnumSchema(
   };
 }
 
-export function parseXOfSchema(
+/**
+ * Parse a 'oneOf', 'allOf' or 'anyOf' schema.
+ * @param schema Original schema to parse.
+ * @param xOf Key to identify which schema to parse.
+ * @returns The parsed schema based on the given key.
+ */
+function parseXOfSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   xOf: 'oneOf' | 'allOf' | 'anyOf'
 ): any {

@@ -2,31 +2,11 @@ import { OpenAPIV3 } from 'openapi-types';
 import { createRefs, emptyObjectSchema } from '../../test/test-util';
 import { OpenApiParameter } from '../openapi-types';
 import {
-  getOperation,
   parseParameters,
   getRelevantParameters,
   parsePathParameters,
   parsePathTemplate
 } from './operation';
-
-describe('getOperation', () => {
-  const operation = { operationId: 'someOperation' };
-  const pathItem: OpenAPIV3.PathItemObject = {
-    get: operation
-  };
-
-  it('retrieves the operation', () => {
-    expect(getOperation(pathItem, 'get')).toStrictEqual(operation);
-  });
-
-  it('throws an error if there is no operation for the given method', () => {
-    expect(() =>
-      getOperation(pathItem, 'post')
-    ).toThrowErrorMatchingInlineSnapshot(
-      '"Could not parse operation. Operation for method \'post\' does not exist."'
-    );
-  });
-});
 
 describe('getRelevantParameters', () => {
   it('ignores cookie and header parameters', async () => {

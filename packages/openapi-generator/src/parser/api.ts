@@ -23,11 +23,10 @@ export function parseApis(
     name,
     operations: ensureUniqueOperationIds(
       nameOperations(operations)
-    ).map(({ pathPattern, method }) =>
+    ).map(operationInfo =>
       parseOperation(
-        pathPattern,
-        getPathItem(document, pathPattern),
-        method,
+        operationInfo,
+        getPathItem(document, operationInfo.pathPattern),
         refs
       )
     )

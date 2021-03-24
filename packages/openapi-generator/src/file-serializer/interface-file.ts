@@ -18,9 +18,9 @@ export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
   const imports = serializeImports(getImports(schema));
 
   return codeBlock`
-      ${imports}
-      export type ${name} = ${serializeSchema(schema)};
-    `;
+    ${imports}
+    export type ${name} = ${serializeSchema(schema)};
+  `;
 }
 
 function getImports(schema: OpenApiSchema): Import[] {

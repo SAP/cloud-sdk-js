@@ -6,11 +6,12 @@ import {
   partition,
   UniqueNameGenerator
 } from '@sap-cloud-sdk/util';
-import { Method, OpenApiOperation, OpenApiParameter } from '../openapi-types';
+import { OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { parseRequestBody } from './request-body';
 import { resolveObject } from './refs';
 import { parseSchema } from './schema';
 import { parseResponses } from './responses';
+import { OperationInfo } from './operation-info';
 
 /**
  * Parse an operation info into a serialization-ready object.
@@ -20,12 +21,10 @@ import { parseResponses } from './responses';
  * @returns A flat list of parsed operations.
  */
 export function parseOperation(
-  pathPattern: string,
+  { operation, pathPattern, method }: OperationInfo,
   pathItem: OpenAPIV3.PathItemObject,
-  method: Method,
   refs: $Refs
 ): OpenApiOperation {
-  const operation = getOperation(pathItem, method);
   const requestBody = parseRequestBody(operation.requestBody, refs);
   const response = parseResponses(operation.responses, refs);
   const relevantParameters = getRelevantParameters(
@@ -51,25 +50,6 @@ export function parseOperation(
     operationId: operation.operationId!,
     tags: operation.tags!
   };
-}
-
-/**
- * Get the operation for the given method and merge path parameters with operation parameters.
- * @param pathItem Path Item to get the operation from.
- * @param method HTTP method to get the operation for.
- * @returns The sanitized original operation.
- */
-export function getOperation(
-  pathItem: OpenAPIV3.PathItemObject,
-  method: Method
-): OpenAPIV3.OperationObject {
-  const operation = pathItem[method];
-  if (!operation) {
-    throw new Error(
-      `Could not parse operation. Operation for method '${method}' does not exist.`
-    );
-  }
-  return operation;
 }
 
 export function getRelevantParameters(

@@ -33,7 +33,8 @@ const typeMapping = {
   UUID: 'string',
   URI: 'string',
   Error: 'Error',
-  AnyType: 'any'
+  AnyType: 'any',
+  any: 'any'
 };
 
 /**

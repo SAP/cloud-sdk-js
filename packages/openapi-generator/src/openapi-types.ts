@@ -67,8 +67,9 @@ export interface OpenApiParameter
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Representation of the request body.
  */
-export interface OpenApiRequestBody extends OpenApiNamedSchema {
+export interface OpenApiRequestBody {
   required: boolean;
+  schema: OpenApiSchema;
 }
 
 /**

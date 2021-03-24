@@ -18,8 +18,8 @@ describe('interface-file', () => {
         }
       })
     ).toMatchInlineSnapshot(`
-      "      
-            export type MySchema = {
+      "    
+          export type MySchema = {
             'string-property': string;
           };"
     `);
@@ -50,9 +50,9 @@ describe('interface-file', () => {
         }
       })
     ).toMatchInlineSnapshot(`
-      "      import { OtherSchema1 } from './other-schema-1';
-            import { OtherSchema2 } from './other-schema-2';
-            export type MySchema = {
+      "    import { OtherSchema1 } from './other-schema-1';
+          import { OtherSchema2 } from './other-schema-2';
+          export type MySchema = {
             'otherSchema1': OtherSchema1;
             'otherSchema2': OtherSchema2;
           };"
@@ -69,8 +69,8 @@ describe('interface-file', () => {
         }
       })
     ).toMatchInlineSnapshot(`
-      "      import { Except } from '@sap-cloud-sdk/core';
-            export type MySchema = Except<any, number>[];"
+      "    import { Except } from '@sap-cloud-sdk/core';
+          export type MySchema = Except<any, number>[];"
     `);
   });
 });

@@ -14,6 +14,7 @@ describe('apiFile', () => {
             {
               in: 'path',
               name: 'id',
+              originalName: 'id',
               schema: { type: 'string' },
               required: true
             }
@@ -57,7 +58,6 @@ describe('apiFile', () => {
           pathParameters: [],
           queryParameters: [],
           requestBody: {
-            name: 'body',
             required: true,
             schema: { $ref: '#/components/schemas/RefType' }
           },

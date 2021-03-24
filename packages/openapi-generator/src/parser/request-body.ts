@@ -21,7 +21,6 @@ export function parseRequestBody(
   const schema = parseMediaType(resolvedRequestBody);
   if (schema && resolvedRequestBody) {
     return {
-      name: 'body',
       required: !!resolvedRequestBody.required,
       schema
     };

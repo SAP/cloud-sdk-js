@@ -50,9 +50,9 @@ function serializeRequestBodyParamForSignature(
   operation: OpenApiOperation
 ): string | undefined {
   if (operation.requestBody) {
-    return `${operation.requestBody.name}: ${serializeSchema(
-      operation.requestBody.schema
-    )}${operation.requestBody.required ? '' : ' | undefined'}`;
+    return `body: ${serializeSchema(operation.requestBody.schema)}${
+      operation.requestBody.required ? '' : ' | undefined'
+    }`;
   }
 }
 
@@ -82,7 +82,7 @@ function serializeParamsForRequestBuilder(
   const params: string[] = [];
 
   if (operation.requestBody) {
-    params.push(operation.requestBody.name);
+    params.push('body');
   }
   if (operation.queryParameters.length) {
     params.push('queryParameters');

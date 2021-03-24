@@ -33,7 +33,6 @@ describe('getRequestBody', () => {
         })
       )
     ).toEqual({
-      name: 'body',
       schema: { type: 'string' },
       required: false
     });
@@ -51,7 +50,6 @@ describe('getRequestBody', () => {
     };
 
     expect(parseRequestBody(requestBody, await createRefs())).toEqual({
-      name: 'body',
       schema,
       required: true
     });

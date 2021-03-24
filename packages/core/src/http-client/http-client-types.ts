@@ -7,6 +7,9 @@ export interface DestinationHttpRequestConfig {
   httpsAgent?: http.Agent;
 }
 
+/**
+ * HTTP Methods supported by the http-client.
+ */
 export type Method =
   | 'get'
   | 'GET'

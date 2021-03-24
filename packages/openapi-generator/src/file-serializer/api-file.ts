@@ -49,7 +49,11 @@ function getImports(api: OpenApiApi): Import[] {
     parseTypeNameFromRef(requestBodyType)
   );
 
-  const refImports = { names: refs, moduleIdentifier: './schema' };
+  const refImports = {
+    names: refs,
+    moduleIdentifier: './schema',
+    typeOnly: true
+  };
   const coreImports = {
     names: ['OpenApiRequestBuilder'],
     moduleIdentifier: '@sap-cloud-sdk/core'

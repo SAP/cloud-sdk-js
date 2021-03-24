@@ -26,6 +26,7 @@ export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
 function getImports(schema: OpenApiSchema): Import[] {
   const refImports = collectRefs(schema).map(ref => ({
     names: [parseTypeNameFromRef(ref)],
+    typeOnly: true,
     moduleIdentifier: `./${parseFileNameFromRef(ref)}`
   }));
   const coreImportNames = hasNotSchema(schema) ? ['Except'] : [];

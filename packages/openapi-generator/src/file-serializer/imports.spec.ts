@@ -18,11 +18,15 @@ describe('serializeImports', () => {
     expect(
       serializeImports([
         { names: ['test'], moduleIdentifier: './module1' },
-        { names: ['x1', 'x2'], moduleIdentifier: './module2' }
+        {
+          names: ['x1', 'x2'],
+          moduleIdentifier: './module2',
+          typeOnly: true
+        }
       ])
     ).toMatchInlineSnapshot(`
       "import { test } from './module1';
-      import { x1, x2 } from './module2';"
+      import type { x1, x2 } from './module2';"
     `);
   });
 });

@@ -50,8 +50,8 @@ describe('interface-file', () => {
         }
       })
     ).toMatchInlineSnapshot(`
-      "    import { OtherSchema1 } from './other-schema-1';
-          import { OtherSchema2 } from './other-schema-2';
+      "    import type { OtherSchema1 } from './other-schema-1';
+          import type { OtherSchema2 } from './other-schema-2';
           export type MySchema = {
             'otherSchema1': OtherSchema1;
             'otherSchema2': OtherSchema2;

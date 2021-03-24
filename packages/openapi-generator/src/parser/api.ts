@@ -19,18 +19,20 @@ export function parseApis(
 ): OpenApiApi[] {
   const operationsByApis = getOperationsByApis(document);
 
-  return Object.entries(operationsByApis).map(([name, operations]) => ({
-    name,
-    operations: ensureUniqueOperationIds(
-      nameOperations(operations)
-    ).map(operationInfo =>
-      parseOperation(
-        operationInfo,
-        getPathItem(document, operationInfo.pathPattern),
-        refs
+  return Object.entries(operationsByApis).map(
+    ([name, operations]: [string, OperationInfo[]]) => ({
+      name,
+      operations: ensureUniqueOperationIds(
+        nameOperations(operations)
+      ).map(operationInfo =>
+        parseOperation(
+          operationInfo,
+          getPathItem(document, operationInfo.pathPattern),
+          refs
+        )
       )
-    )
-  }));
+    })
+  );
 }
 
 function getPathItem(

@@ -7,6 +7,7 @@ import {
 import { Method } from '../openapi-types';
 import { operationNameExtension } from '../extensions';
 import { OperationInfo } from './operation-info';
+import { OpenAPIV3 } from 'openapi-types';
 
 /**
  * Ensure uniqueness of the operation names.
@@ -17,12 +18,14 @@ export function ensureUniqueOperationIds(
   operations: OperationInfo[]
 ): OperationInfo[] {
   const {
-    uniqueOperationNames,
-    operationsWithUniqueNames,
-    operationsWithDuplicateNames
+    unique: operationsWithUniqueNames,
+    duplicate: operationsWithDuplicateNames
   } = partitionNamedOperationsToUniqueAndDuplicate(operations);
 
-  const nameGenerator = new UniqueNameGenerator('', uniqueOperationNames);
+  const nameGenerator = new UniqueNameGenerator(
+    '',
+    operationsWithUniqueNames.map(({ operation }) => operation.operationId!)
+  );
 
   const renamedOperations = renameOperations(
     operationsWithDuplicateNames,
@@ -103,54 +106,45 @@ function renameOperations(
   });
 }
 
+function isDuplicateOperationName(
+  uniqueOperationNames: string[],
+  operationName: string
+): boolean {
+  return (
+    // is already in unique names
+    uniqueOperationNames.includes(operationName) ||
+    // differs when transformed to camel case - can potentially become duplicate
+    camelCase(operationName) !== operationName
+  );
+}
+
 /**
- * Partition operations into a list of unique names that do not need to be changed and a list of operations where the name is duplicate or subject to change and therefore potentially duplicate.
- * @param namedOperations All operations that have an operationId
- * @returns an object containing the unique operation names and operations with (potentially) duplicate names
+ * Partition operations into an object with two lists - one conaining the operations that have unique names and one containint the operations that have duplicate or potentially duplicate names.
+ * @param namedOperations Operations with an operationId.
+ * @returns An object containing the unique operations, denoted by `unique` and operations with (potentially) duplicate names, denoted by `duplicate`.
  */
 function partitionNamedOperationsToUniqueAndDuplicate(
   namedOperations: OperationInfo[]
 ): {
-  uniqueOperationNames: string[];
-  operationsWithUniqueNames: OperationInfo[];
-  operationsWithDuplicateNames: OperationInfo[];
+  unique: OperationInfo[];
+  duplicate: OperationInfo[];
 } {
-  return namedOperations.reduce(
-    (
-      partitionedOperations: {
-        uniqueOperationNames: string[];
-        operationsWithUniqueNames: OperationInfo[];
-        operationsWithDuplicateNames: OperationInfo[];
-      },
-      operationInfo
-    ) => {
-      if (
-        partitionedOperations.uniqueOperationNames.includes(
-          operationInfo.operation.operationId!
-        ) ||
-        camelCase(operationInfo.operation.operationId!) !==
-          operationInfo.operation.operationId ||
-        partitionedOperations.operationsWithDuplicateNames.find(
-          duplicate =>
-            duplicate.operation.operationId ===
-            operationInfo.operation.operationId
-        )
-      ) {
-        partitionedOperations.operationsWithDuplicateNames.push(operationInfo);
-      } else {
-        partitionedOperations.uniqueOperationNames.push(
-          operationInfo.operation.operationId!
-        );
-        partitionedOperations.operationsWithUniqueNames.push(operationInfo);
-      }
-      return partitionedOperations;
-    },
-    {
-      uniqueOperationNames: [],
-      operationsWithUniqueNames: [],
-      operationsWithDuplicateNames: []
+  const unique: OperationInfo[] = [];
+  const duplicate: OperationInfo[] = [];
+  namedOperations.forEach(operationInfo => {
+    if (
+      isDuplicateOperationName(
+        unique.map(op => op.operation.operationId!),
+        operationInfo.operation.operationId!
+      )
+    ) {
+      duplicate.push(operationInfo);
+    } else {
+      unique.push(operationInfo);
     }
-  );
+  });
+
+  return { unique, duplicate };
 }
 
 export function getOperationNameFromPatternAndMethod(

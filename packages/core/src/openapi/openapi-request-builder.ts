@@ -60,7 +60,6 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   async execute(
     destination: Destination | DestinationNameAndJwt
   ): Promise<ResponseT> {
-    // TODO: fix return type
     const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {
       return response.data;

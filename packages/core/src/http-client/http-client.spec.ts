@@ -322,7 +322,7 @@ describe('generic http client', () => {
 
       nock('https://example.com', {
         reqheaders: {
-          // [xCsrfTokenHeaderKey]: csrfToken,
+          [xCsrfTokenHeaderKey]: csrfToken,
           'content-type': 'application/json',
           accept: 'application/json',
           authorization: 'custom-auth-header',

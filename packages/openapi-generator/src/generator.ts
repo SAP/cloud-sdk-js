@@ -17,7 +17,7 @@ import {
   apiIndexFile,
   schemaIndexFile,
   tsconfigJson,
-  interfaceFile
+  schemaFile
 } from './file-serializer';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
@@ -143,12 +143,7 @@ async function createInterfaceFiles(
   await mkdir(dir, { recursive: true });
   await Promise.all(
     openApiDocument.schemas.map(schema =>
-      createFile(
-        dir,
-        `${kebabCase(schema.name)}.ts`,
-        interfaceFile(schema),
-        true
-      )
+      createFile(dir, `${kebabCase(schema.name)}.ts`, schemaFile(schema), true)
     )
   );
 }

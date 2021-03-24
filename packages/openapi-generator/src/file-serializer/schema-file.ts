@@ -10,11 +10,11 @@ import { serializeSchema } from './schema';
 import { Import, serializeImports } from './imports';
 
 /**
- * Serialize a schema representation to a string representing the according interface file contents.
+ * Serialize a schema representation to a string representing the according schema file contents.
  * @param operationInfo A named schema.
- * @returns The serialized interface file contents.
+ * @returns The serialized schema file contents.
  */
-export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
+export function schemaFile({ name, schema }: OpenApiNamedSchema): string {
   const imports = serializeImports(getImports(schema));
 
   return codeBlock`
@@ -29,9 +29,11 @@ function getImports(schema: OpenApiSchema): Import[] {
     typeOnly: true,
     moduleIdentifier: `./${parseFileNameFromRef(ref)}`
   }));
-  const coreImportNames = hasNotSchema(schema) ? ['Except'] : [];
-  return [
-    { names: coreImportNames, moduleIdentifier: '@sap-cloud-sdk/core' },
-    ...refImports
-  ];
+  if (hasNotSchema(schema)) {
+    return [
+      { names: ['Except'], moduleIdentifier: '@sap-cloud-sdk/core' },
+      ...refImports
+    ];
+  }
+  return refImports;
 }

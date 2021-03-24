@@ -1,8 +1,8 @@
-import { interfaceFile } from './interface-file';
+import { schemaFile } from './schema-file';
 describe('interface-file', () => {
   it('serializes interface file for schema', () => {
     expect(
-      interfaceFile({
+      schemaFile({
         name: 'MySchema',
         schema: {
           type: 'object',
@@ -27,7 +27,7 @@ describe('interface-file', () => {
 
   it('serializes interface file for schema including references', () => {
     expect(
-      interfaceFile({
+      schemaFile({
         name: 'MySchema',
         schema: {
           type: 'object',
@@ -61,7 +61,7 @@ describe('interface-file', () => {
 
   it('serializes interface file for schema including not schema', () => {
     expect(
-      interfaceFile({
+      schemaFile({
         name: 'MySchema',
         schema: {
           type: 'array',

@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { SimpleTestEntity, ComplexTestEntity } from './schema';
+import type { SimpleTestEntity, ComplexTestEntity } from './schema';
 
 export const TestCaseApi = {
   testCaseGetRequiredParameters: (requiredPathItemPathParam: string, body: SimpleTestEntity | undefined, queryParameters: {'requiredPathItemQueryParam': string,

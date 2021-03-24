@@ -719,6 +719,21 @@
             }
           }
         }
+      },
+      "CyclicParent": {
+        "type": "object",
+        "properties": {
+          "children": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CyclicChild" }
+          }
+        }
+      },
+      "CyclicChild": {
+        "type": "object",
+        "properties": {
+          "parent": { "$ref": "#/components/schemas/CyclicParent" }
+        }
       }
     }
   }

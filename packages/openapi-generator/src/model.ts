@@ -42,10 +42,7 @@ export function hasNotSchema(schema: OpenApiSchema | undefined): boolean {
   }
   return Object.values(schema)
     .filter(value => typeof value === 'object')
-    .reduce(
-      (containsNotSchema, value) => containsNotSchema || hasNotSchema(value),
-      false
-    );
+    .some(value => hasNotSchema(value));
 }
 
 /**

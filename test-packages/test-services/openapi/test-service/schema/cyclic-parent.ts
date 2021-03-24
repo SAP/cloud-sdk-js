@@ -3,5 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-    import type { SimpleTestEntity } from './simple-test-entity';
-    export type OtherSimpleTestEntity = SimpleTestEntity;
+    import type { CyclicChild } from './cyclic-child';
+    export type CyclicParent = {
+      'children'?: CyclicChild[];
+    } | Record<string, any>;

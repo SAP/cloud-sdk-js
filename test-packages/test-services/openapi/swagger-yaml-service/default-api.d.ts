@@ -1,5 +1,5 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { TestEntity } from './schema';
+import type { TestEntity } from './schema';
 export declare const DefaultApi: {
     postEntity: (pathParam: string, queryParameters?: {
         queryParam?: string | undefined;

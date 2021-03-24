@@ -1,4 +1,4 @@
-import { SimpleTestEntity } from './simple-test-entity';
+import type { SimpleTestEntity } from './simple-test-entity';
 export declare type TestEntity = {
     'keyProperty': string;
     'stringProperty'?: string;

@@ -1,5 +1,5 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { TestEntity } from './schema';
+import type { TestEntity } from './schema';
 export declare const EntityApi: {
     getAllEntities: (queryParameters?: {
         stringParameter?: string | undefined;

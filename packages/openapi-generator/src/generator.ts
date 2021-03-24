@@ -22,7 +22,7 @@ import {
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
-import { readServiceMapping, VdmMapping } from './service-mapping';
+import { readServiceMapping, ServiceMapping } from './service-mapping';
 import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
 
@@ -31,8 +31,8 @@ const logger = createLogger('openapi-generator');
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Main entry point for OpenApi client generation.
- * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
+ * Main entry point for the OpenAPI client generation.
+ * Generates models and API files.
  * @param options Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
@@ -53,7 +53,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       parseServiceName(inputFilePath)
     );
 
-    return generateFromFile(
+    return generateService(
       inputFilePath,
       options,
       vdmMapping,
@@ -64,19 +64,16 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 }
 
 /**
- * Generate sources for the wrapped SAP Cloud SDK Api.
+ * Generate sources.
  * @param serviceDir Directory to generate the service to.
  * @param openApiDocument Parsed service.
- * @param options Generation options
+ * @param options Generation options.
  */
-async function generateSDKSources(
+async function generateSources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
   options: GeneratorOptions
 ): Promise<void> {
-  // TODO: This isn't really "request builder" anymore
-  logger.info(`Generating request builder in ${serviceDir}.`);
-  // TODO: what about overwrite?
   if (openApiDocument.schemas.length) {
     const modelDir = resolve(serviceDir, 'model');
     await createInterfaceFiles(modelDir, openApiDocument);
@@ -166,16 +163,16 @@ function parseServiceName(filePath: string): string {
 }
 
 /**
- * Generates an OpenAPI Service from a file.
- * @param filePath The filepath where the service to generate is located.
- * @param options  Options to configure generation.
- * @param vdmMapping The vdmMapping for the OpenAPI generation.
+ * Generates an OpenAPI service from a file.
+ * @param filePath The file path where the service to generate is located.
+ * @param options Options to configure generation.
+ * @param serviceMapping The serviceMapping for the OpenAPI generation.
  * @param serviceName The unique service name to be used.
  */
-async function generateFromFile(
+async function generateService(
   filePath: string,
   options: GeneratorOptions,
-  vdmMapping: VdmMapping,
+  serviceMapping: ServiceMapping,
   serviceName: string
 ): Promise<void> {
   const serviceDir = resolve(options.outputDir, serviceName);
@@ -194,7 +191,7 @@ async function generateFromFile(
     openApiDocument,
     serviceName,
     filePath,
-    vdmMapping
+    serviceMapping
   );
 
   if (!parsedOpenApiDocument.apis.length) {
@@ -210,7 +207,7 @@ async function generateFromFile(
     JSON.stringify(openApiDocument, null, 2)
   );
   // await generateOpenApiService(convertedInputFilePath, serviceDir);
-  await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
+  await generateSources(serviceDir, parsedOpenApiDocument, options);
 }
 
 /**
@@ -243,7 +240,7 @@ export async function getSdkVersion(): Promise<string> {
   ).version;
 }
 
-// TODO 1728 move to a new package for reduce code duplication.
+// TODO 1728 move to a new package to reduce code duplication.
 async function copyAdditionalFiles(
   additionalFiles: string,
   serviceDir: string

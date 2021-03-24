@@ -3,15 +3,23 @@ import { parse, resolve } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { pascalCase, removeFileExtension } from '@sap-cloud-sdk/util';
 import { OpenApiDocument, OpenApiNamedSchema } from '../openapi-types';
-import { VdmMapping } from '../service-mapping';
+import { ServiceMapping } from '../service-mapping';
 import { parseSchema } from './schema';
 import { parseApis } from './api';
 
+/**
+ * Parse the original OpenAPI document and return an SDK compliant document.
+ * @param fileContent The OpenAPI document representation.
+ * @param serviceName The name of the service.
+ * @param filePath The path of the OpenAPI document.
+ * @param serviceMapping A file representing a custom mapping of directory and npm package names.
+ * @returns The parsed document
+ */
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
   serviceName: string,
   filePath: string,
-  vdmMapping: VdmMapping
+  serviceMapping: ServiceMapping
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
@@ -20,11 +28,11 @@ export async function parseOpenApiDocument(
   return {
     apis: parseApis(document, refs),
     serviceName: pascalCase(serviceName),
-    npmPackageName: vdmMapping[originalFileName]
-      ? vdmMapping[originalFileName].npmPackageName
+    npmPackageName: serviceMapping[originalFileName]
+      ? serviceMapping[originalFileName].npmPackageName
       : originalFileName,
-    directoryName: vdmMapping[originalFileName]
-      ? vdmMapping[originalFileName].directoryName
+    directoryName: serviceMapping[originalFileName]
+      ? serviceMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
     schemas: parseSchemas(document)

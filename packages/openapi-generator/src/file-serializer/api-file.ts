@@ -4,6 +4,11 @@ import { collectRefs, hasNotSchema, parseTypeNameFromRef } from '../model';
 import { serializeOperation } from './operation';
 import { Import, serializeImports } from './imports';
 
+/**
+ * Serialize an API representation to a string representing the resulting API file.
+ * @param api Represenation of an API.
+ * @returns The serialized API file contents.
+ */
 export function apiFile(api: OpenApiApi): string {
   const imports = serializeImports(getImports(api));
   return codeBlock`

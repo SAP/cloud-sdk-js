@@ -8,6 +8,11 @@ import { Method } from '../openapi-types';
 import { operationNameExtension } from '../extensions';
 import { OperationInfo } from './operation-info';
 
+/**
+ * Ensure uniqueness of the operation names.
+ * @param operations Original information on the operations, that are relevant for parsing.
+ * @returns The original parsing information with unique operation IDs.
+ */
 export function ensureUniqueOperationIds(
   operations: OperationInfo[]
 ): OperationInfo[] {
@@ -27,6 +32,13 @@ export function ensureUniqueOperationIds(
   return [...operationsWithUniqueNames, ...renamedOperations];
 }
 
+/**
+ * Give all given operations an initial name.
+ * All operations with an extension will be renamed.
+ * Operations that don't have a name thereafter, will be named based on their method and path pattern.
+ * @param operations Original information on the operations, that are relevant for parsing.
+ * @returns Operation information, where every operation has an operationId.
+ */
 export function nameOperations(operations: OperationInfo[]): OperationInfo[] {
   const [operationsWithExtensions, operationsWithoutExtensions] = partition(
     operations,

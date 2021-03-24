@@ -9,6 +9,11 @@ import {
 import { serializeSchema } from './schema';
 import { Import, serializeImports } from './imports';
 
+/**
+ * Serialize a schema representation to a string representing the according interface file contents.
+ * @param operationInfo A named schema.
+ * @returns The serialized interface file contents.
+ */
 export function interfaceFile({ name, schema }: OpenApiNamedSchema): string {
   const imports = serializeImports(getImports(schema));
 

@@ -17,6 +17,11 @@ import {
   isNotSchema
 } from '../model';
 
+/**
+ * Serialize a schema.
+ * @param schema Parsed schema to be serialized.
+ * @returns The serialized schema
+ */
 export function serializeSchema(schema: OpenApiSchema): string {
   if (isReferenceObject(schema)) {
     return parseTypeNameFromRef(schema);

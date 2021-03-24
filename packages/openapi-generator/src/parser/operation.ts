@@ -12,6 +12,13 @@ import { resolveObject } from './refs';
 import { parseSchema } from './schema';
 import { parseResponses } from './responses';
 
+/**
+ * Parse an operation info into a serialization-ready object.
+ * @param operationInfo Parsing relevant information on an operation.
+ * @param pathItem The path item object, the operation occurred in.
+ * @param refs List of crossreferences that can occur in the document.
+ * @returns A flat list of parsed operations.
+ */
 export function parseOperation(
   pathPattern: string,
   pathItem: OpenAPIV3.PathItemObject,

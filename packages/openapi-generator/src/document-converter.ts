@@ -8,7 +8,7 @@ const { readFile } = promises;
 
 /**
  * Convert an OpenAPI document to ensure smooth parsing and generation thereafter.
- * Documents are expected to be formatted as JSON and compliant with OpenAPI version 3.
+ * Documents are transformed to JSON and compliant with OpenAPI version 3.
  * @param filePath File content of the original spec.
  */
 export async function convertOpenApiSpec(
@@ -20,7 +20,7 @@ export async function convertOpenApiSpec(
 
 /**
  * Parse a JSON or YAML file and return it as JSON.
- * @param filePath Path to the file
+ * @param filePath Path to the file.
  * @returns JSON representation of the given file.
  */
 export async function parseFileAsJson(

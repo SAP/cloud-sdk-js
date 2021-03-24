@@ -8,7 +8,7 @@ import { parseMediaType } from './media-type';
  * Parse the request body.
  * @param requestBody Original request body to parse.
  * @param refs List of cross references that can occur in the document.
- * @returns The parsed request body.
+ * @returns The parsed request body schema.
  */
 export function parseRequestBody(
   requestBody:

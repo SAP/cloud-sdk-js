@@ -3,6 +3,10 @@ import { AxiosResponse } from 'axios';
 import { Destination, DestinationNameAndJwt } from '../connectivity/scp-cf';
 import { executeHttpRequest, HttpResponse, Method } from '../http-client';
 
+/**
+ * Request builder for OpenAPI requests.
+ * @typeParam ResponseT Type of the response for the request.
+ */
 export class OpenApiRequestBuilder<ResponseT = any> {
   private customHeaders: Record<string, string> = {};
 

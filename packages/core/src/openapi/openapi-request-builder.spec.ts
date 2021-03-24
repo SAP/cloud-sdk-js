@@ -8,6 +8,10 @@ const destination = {
 };
 
 describe('openapi-request-builder', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('executeRaw executes a request without parameters', () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     requestBuilder.executeRaw(destination);
@@ -53,6 +57,20 @@ describe('openapi-request-builder', () => {
       data: {
         limit: 100
       }
+    });
+  });
+
+  it('addCustomHeaders', () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test');
+    requestBuilder
+      .addCustomHeaders({ myCustomHeader: 'custom-header' })
+      .executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
+      method: 'get',
+      url: '/test',
+      headers: { mycustomheader: 'custom-header' },
+      params: undefined,
+      data: undefined
     });
   });
 });

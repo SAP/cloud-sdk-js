@@ -59,6 +59,7 @@ export function clientCredentialsGrant(
 }
 
 /**
+ * @deprecated Since v1.XX.X Use [[jwtBearerTokenGrant]] instead.
  * Executes a user token grant request against the given URI.
  *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
@@ -93,12 +94,13 @@ export function userTokenGrant(
 }
 
 /**
+ * @deprecated Since v1.XX.X Use [[jwtBearerTokenGrant]] instead.
  * Executes a refresh token grant request against the given URI.
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
  * If the first parameter is an URI, the response will not be verified.
  *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
- * @param clientCredentials - The credentials (client_id, client_secret) if the target XSUAA service instance.
+ * @param clientCredentials - The credentials (client_id, client_secret) of the target XSUAA service instance.
  * @param refreshToken - The refresh token that should be used to generate a new access token.
  * @param options - Options to use by retrieving access token.
  * @returns A promise resolving to the response of the XSUAA service.
@@ -124,6 +126,32 @@ export function refreshTokenGrant(
     .then(resp => resp.data as UserTokenResponse)
     .catch(error =>
       Promise.reject(accessTokenError(error, GrantType.REFRESH_TOKEN))
+    );
+}
+
+export function jwtBearerTokenGrant (
+  tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
+  clientCredentials: ClientCredentials,
+  access_token: string,
+  options?: ResilienceOptions
+): Promise<ClientCredentialsResponse> {
+  const authHeader = headerForClientCredentials(clientCredentials);
+  const body = objectToXWwwUrlEncodedBodyString({
+    client_id: clientCredentials.username,
+    assertion: access_token,
+    grant_type: GrantType.JWT_BEARER_TOKEN,
+    response_type: 'token'
+  });
+
+  return post(
+    tokenServiceUrlOrXsuaaServiceCredentials,
+    authHeader,
+    body,
+    options
+  )
+  .then(resp => resp.data as ClientCredentialsResponse)
+  .catch(error =>
+    Promise.reject(accessTokenError(error, GrantType.JWT_BEARER_TOKEN))
     );
 }
 
@@ -263,7 +291,8 @@ function objectToXWwwUrlEncodedBodyString(
 enum GrantType {
   USER_TOKEN = 'user_token',
   REFRESH_TOKEN = 'refresh_token',
-  CLIENT_CREDENTIALS = 'client_credentials'
+  CLIENT_CREDENTIALS = 'client_credentials',
+  JWT_BEARER_TOKEN = 'urn:ietf:params:oauth:grant-type:jwt-bearer'
 }
 
 function getTokenServiceUrl(
@@ -292,5 +321,6 @@ function getInstanceCircuitBreaker(breaker?: any | undefined): any {
 const grantTypeMapper = {
   user_token: 'User token',
   refresh_token: 'Refresh token',
-  client_credentials: 'Client credentials'
+  client_credentials: 'Client credentials',
+  'urn:ietf:params:oauth:grant-type:jwt-bearer': 'JWT token'
 };

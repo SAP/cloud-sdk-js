@@ -64,8 +64,7 @@
     "glob": "^7.1.6",
     "js-yaml": "^4.0.0",
     "openapi-types": "^7.0.1",
-    "swagger2openapi": "^7.0.4",
-    "voca": "^1.4.0"
+    "swagger2openapi": "^7.0.4"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",

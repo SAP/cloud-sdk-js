@@ -6,12 +6,12 @@ import { Destination, Protocol } from '../connectivity';
 import {
   DestinationHttpRequestConfig,
   HttpMethod,
-  HttpRequest
+  HttpRequest, HttpRequestConfig
 } from './http-client-types';
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  executeHttpRequest, xCsrfTokenHeaderKey
+  executeHttpRequest, shouldHandleCsrfToken, xCsrfTokenHeaderKey
 } from './http-client';
 
 describe('generic http client', () => {
@@ -351,6 +351,26 @@ describe('generic http client', () => {
       await expect(
         executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
       ).resolves.not.toThrow();
+    });
+  });
+
+  describe('shouldHandleCsrfToken', () => {
+    it('should not handle csrf token for get request', () => {
+      const request = { method: 'get' } as HttpRequestConfig;
+      const options = { fetchCsrfToken: true };
+      expect(shouldHandleCsrfToken(request, options)).toEqual(false);
+    });
+
+    it('should not handle csrf token when fetchCsrfToken is false',  () => {
+      const request = { method: 'post' } as HttpRequestConfig;
+      const options = { fetchCsrfToken: false };
+      expect(shouldHandleCsrfToken(request, options)).toEqual(false);
+    });
+
+    it('should handle csrf token for non-get request when fetchCsrfToken is true',  () => {
+      const request = { method: 'patch' } as HttpRequestConfig;
+      const options = { fetchCsrfToken: true };
+      expect(shouldHandleCsrfToken(request, options)).toEqual(true);
     });
   });
 });

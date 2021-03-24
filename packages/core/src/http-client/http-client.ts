@@ -237,7 +237,7 @@ function buildHttpRequestOptions(httpRequestOptions?: HttpRequestOptions): HttpR
     : getDefaultHttpRequestOptions();
 }
 
-function shouldHandleCsrfToken(requestConfig: HttpRequestConfig, options: HttpRequestOptions): boolean {
+export function shouldHandleCsrfToken(requestConfig: HttpRequestConfig, options: HttpRequestOptions): boolean {
   return !!options.fetchCsrfToken && requestConfig.method !== 'get' && requestConfig.method !== 'GET';
 }
 

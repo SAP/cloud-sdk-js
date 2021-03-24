@@ -24,13 +24,7 @@ export function parseApis(
       name,
       operations: ensureUniqueOperationIds(
         nameOperations(operations)
-      ).map(operationInfo =>
-        parseOperation(
-          operationInfo,
-          getPathItem(document, operationInfo.pathPattern),
-          refs
-        )
-      )
+      ).map(operationInfo => parseOperation(operationInfo, refs))
     })
   );
 }
@@ -53,10 +47,9 @@ function getApiNameForOperation(
   { operation, pathPattern }: OperationInfo,
   document: OpenAPIV3.Document
 ): string {
-  const pathItem = getPathItem(document, pathPattern);
   const originalApiName =
     operation[apiNameExtension] ||
-    pathItem[apiNameExtension] ||
+    getPathItem(document, pathPattern)[apiNameExtension] ||
     document[apiNameExtension] ||
     operation.tags?.[0] ||
     defaultApiName;
@@ -88,6 +81,7 @@ function getAllOperations(
             pathPattern,
             // We can assume that the operation exists as non existing operations where filtered before.
             operation: pathItem[method]!,
+            pathItemParameters: pathItem.parameters || [],
             method
           }))
     )

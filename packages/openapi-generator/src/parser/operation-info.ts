@@ -18,4 +18,8 @@ export interface OperationInfo {
    * HTTP method for the operation as given in the OpenAPI document.
    */
   method: Method;
+  /**
+   * Parameters from the path items.
+   */
+  pathItemParameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[];
 }

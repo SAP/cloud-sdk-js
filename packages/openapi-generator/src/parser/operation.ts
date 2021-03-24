@@ -21,14 +21,13 @@ import { OperationInfo } from './operation-info';
  * @returns A flat list of parsed operations.
  */
 export function parseOperation(
-  { operation, pathPattern, method }: OperationInfo,
-  pathItem: OpenAPIV3.PathItemObject,
+  { operation, pathPattern, method, pathItemParameters }: OperationInfo,
   refs: $Refs
 ): OpenApiOperation {
   const requestBody = parseRequestBody(operation.requestBody, refs);
   const response = parseResponses(operation.responses, refs);
   const relevantParameters = getRelevantParameters(
-    [...(pathItem.parameters || []), ...(operation.parameters || [])],
+    [...(pathItemParameters || []), ...(operation.parameters || [])],
     refs
   );
 

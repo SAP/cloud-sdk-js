@@ -21,7 +21,7 @@ export function parseSchema(
   schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined
 ): OpenApiSchema {
   if (!schema) {
-    logger.warn("No schema provided, continuing with 'any'.");
+    logger.debug("No schema provided, continuing with 'any'.");
     return { type: 'any' };
   }
 

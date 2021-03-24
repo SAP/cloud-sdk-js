@@ -181,7 +181,6 @@ async function generateService(
     );
     return;
   }
-  const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceName,
@@ -197,11 +196,6 @@ async function generateService(
   }
 
   await mkdir(serviceDir, { recursive: true });
-  await writeFile(
-    convertedInputFilePath,
-    JSON.stringify(openApiDocument, null, 2)
-  );
-  // await generateOpenApiService(convertedInputFilePath, serviceDir);
   await generateSources(serviceDir, parsedOpenApiDocument, options);
 }
 

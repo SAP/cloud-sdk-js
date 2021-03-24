@@ -23,7 +23,7 @@ exports.EntityApi = {
     deleteEntity: function (body) { return new core_1.OpenApiRequestBuilder('delete', '/entities', {
         body: body
     }); },
-    getEntityByKey: function (entityId) { return new core_1.OpenApiRequestBuilder('get', "/entities/" + entityId); },
+    getEntityByKey: function (entityId) { return new core_1.OpenApiRequestBuilder('get', '/entities/{entityId}'); },
     countEntities: function () { return new core_1.OpenApiRequestBuilder('get', '/entities/count'); }
 };
 //# sourceMappingURL=entity-api.js.map

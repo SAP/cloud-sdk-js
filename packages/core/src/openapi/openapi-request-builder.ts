@@ -8,11 +8,11 @@ import { executeHttpRequest, HttpResponse, Method } from '../http-client';
  * @typeParam ResponseT Type of the response for the request.
  */
 export class OpenApiRequestBuilder<ResponseT = any> {
-  private customHeaders: Record<string, string> = {};
-
   private static isPlaceholder(pathPart: string): boolean {
     return /^\{.+\}$/.test(pathPart);
   }
+
+  private customHeaders: Record<string, string> = {};
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.

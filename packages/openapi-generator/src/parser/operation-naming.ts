@@ -7,7 +7,6 @@ import {
 import { Method } from '../openapi-types';
 import { operationNameExtension } from '../extensions';
 import { OperationInfo } from './operation-info';
-import { OpenAPIV3 } from 'openapi-types';
 
 /**
  * Ensure uniqueness of the operation names.

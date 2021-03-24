@@ -16,7 +16,6 @@ import { OperationInfo } from './operation-info';
 /**
  * Parse an operation info into a serialization-ready object.
  * @param operationInfo Parsing relevant information on an operation.
- * @param pathItem The path item object, the operation occurred in.
  * @param refs List of crossreferences that can occur in the document.
  * @returns A flat list of parsed operations.
  */

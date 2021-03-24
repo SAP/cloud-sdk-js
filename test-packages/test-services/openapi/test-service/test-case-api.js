@@ -8,15 +8,15 @@ exports.TestCaseApi = void 0;
  */
 var core_1 = require("@sap-cloud-sdk/core");
 exports.TestCaseApi = {
-    testCaseGetRequiredParameters: function (requiredPathItemPathParam, body, queryParameters) { return new core_1.OpenApiRequestBuilder('get', "/test-cases/parameters/required-parameters/" + requiredPathItemPathParam, {
+    testCaseGetRequiredParameters: function (requiredPathItemPathParam, body, queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}', {
         body: body,
         queryParameters: queryParameters
     }); },
-    testCasePostRequiredParameters: function (requiredPathItemPathParam, body, queryParameters) { return new core_1.OpenApiRequestBuilder('post', "/test-cases/parameters/required-parameters/" + requiredPathItemPathParam, {
+    testCasePostRequiredParameters: function (requiredPathItemPathParam, body, queryParameters) { return new core_1.OpenApiRequestBuilder('post', '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}', {
         body: body,
         queryParameters: queryParameters
     }); },
-    testCaseGetDuplicateParameters: function (duplicateParam, queryParameters) { return new core_1.OpenApiRequestBuilder('get', "/test-cases/parameters/" + duplicateParam, {
+    testCaseGetDuplicateParameters: function (duplicateParam, queryParameters) { return new core_1.OpenApiRequestBuilder('get', '/test-cases/parameters/{duplicateParam}', {
         queryParameters: queryParameters
     }); },
     duplicateOperationId: function () { return new core_1.OpenApiRequestBuilder('get', '/test-cases/duplicate-operation-ids'); },

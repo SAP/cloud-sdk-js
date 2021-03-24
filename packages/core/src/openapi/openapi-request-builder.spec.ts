@@ -82,7 +82,7 @@ describe('openapi-request-builder', () => {
     await expect(() =>
       requestBuilder.executeRaw(destination)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Cannot execute request, no path parameter provided for 'id'."`
+      '"Cannot execute request, no path parameter provided for \'id\'."'
     );
   });
 

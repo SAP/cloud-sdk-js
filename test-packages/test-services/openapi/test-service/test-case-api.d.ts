@@ -1,5 +1,5 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { SimpleTestEntity, ComplexTestEntity } from './model';
+import { SimpleTestEntity, ComplexTestEntity } from './schema';
 export declare const TestCaseApi: {
     testCaseGetRequiredParameters: (requiredPathItemPathParam: string, body: SimpleTestEntity | undefined, queryParameters: {
         'requiredPathItemQueryParam': string;

@@ -3,5 +3,8 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-    export * from './default-api';
-    export * from './schema';
+    
+    export type TestEntity = {
+      'stringProperty'?: string;
+      'integerProperty'?: number;
+    } | Record<string, any>;

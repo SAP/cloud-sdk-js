@@ -52,6 +52,6 @@ export function packageJson(
 }
 
 export const genericDescription = (packageName: string): string =>
-  `SAP Cloud SDK for JavaScript: Pre-generated client for OpenAPI service ${packageName
+  `SAP Cloud SDK for JavaScript: Generated client for OpenAPI service ${packageName
     .split('-')
     .join(' ')}`;

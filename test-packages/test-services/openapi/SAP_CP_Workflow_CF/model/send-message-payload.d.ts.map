@@ -1,0 +1,1 @@
+{"version":3,"file":"send-message-payload.d.ts","sourceRoot":"","sources":["send-message-payload.ts"],"names":[],"mappings":"AAMM,oBAAY,kBAAkB,GAAG;IACjC,SAAS,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC;IAChC,cAAc,EAAE,MAAM,CAAC;IACvB,oBAAoB,CAAC,EAAE,MAAM,CAAC;IAC9B,sBAAsB,CAAC,EAAE,MAAM,CAAC;IAChC,aAAa,CAAC,EAAE,MAAM,CAAC;CACxB,GAAG,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC"}

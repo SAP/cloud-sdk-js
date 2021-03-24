@@ -8,11 +8,6 @@ import { Method } from '../openapi-types';
 import { operationNameExtension } from '../extensions';
 import { OperationInfo } from './operation-info';
 
-/**
- * Modify each operation to contain a unique `operationId`.
- * @param openApiDocument OpenAPI JSON document.
- * @returns The modified document.
- */
 export function ensureUniqueOperationIds(
   operations: OperationInfo[]
 ): OperationInfo[] {

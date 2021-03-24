@@ -1,0 +1,50 @@
+import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+import { TaskInstance, UpdateTaskInstancePayload, CustomAttribute, AttachmentsContext, FormMetadata, FormModel } from './model';
+export declare const UserTaskInstancesApi: {
+    getV1TaskInstances: (queryParameters?: {
+        $skip?: number | undefined;
+        $top?: number | undefined;
+        $inlinecount?: "none" | "allpages" | undefined;
+        $expand?: "attributes" | undefined;
+        $orderby?: "claimedAt asc" | "claimedAt desc" | "completedAt asc" | "completedAt desc" | "createdAt asc" | "createdAt desc" | "lastChangedAt asc" | "lastChangedAt desc" | "dueDate asc" | "dueDate desc" | "subject asc" | "subject desc" | "description asc" | "description desc" | "activityId asc" | "activityId desc" | "id asc" | "id desc" | "processor asc" | "processor desc" | "workflowDefinitionId asc" | "workflowDefinitionId desc" | "workflowInstanceId asc" | "workflowInstanceId desc" | "priority asc" | "priority desc" | undefined;
+        workflowInstanceId?: string | undefined;
+        workflowDefinitionId?: string | undefined;
+        processor?: string | undefined;
+        id?: string | undefined;
+        activityId?: string | undefined;
+        description?: string | undefined;
+        subject?: string | undefined;
+        createdAt?: string | undefined;
+        createdFrom?: string | undefined;
+        createdUpTo?: string | undefined;
+        claimedAt?: string | undefined;
+        claimedFrom?: string | undefined;
+        claimedUpTo?: string | undefined;
+        completedAt?: string | undefined;
+        completedFrom?: string | undefined;
+        completedUpTo?: string | undefined;
+        lastChangedAt?: string | undefined;
+        lastChangedFrom?: string | undefined;
+        lastChangedUpTo?: string | undefined;
+        dueDate?: string | undefined;
+        dueDateFrom?: string | undefined;
+        dueDateUpTo?: string | undefined;
+        priority?: "VERY_HIGH" | "HIGH" | "MEDIUM" | "LOW" | undefined;
+        status?: "READY" | "RESERVED" | "CANCELED" | "COMPLETED" | undefined;
+        recipientUsers?: string | undefined;
+        recipientGroups?: string | undefined;
+        containsText?: string | undefined;
+        'attributes.ExampleCustomAttribute'?: string | undefined;
+        definitionId?: string | undefined;
+    } | undefined) => OpenApiRequestBuilder<TaskInstance[]>;
+    getV1TaskInstancesByTaskInstanceId: (taskInstanceId: string, queryParameters?: {
+        $expand?: "attributes" | undefined;
+    } | undefined) => OpenApiRequestBuilder<TaskInstance>;
+    updateV1TaskInstancesByTaskInstanceId: (taskInstanceId: string, body: UpdateTaskInstancePayload) => OpenApiRequestBuilder<any>;
+    getV1TaskInstancesAttributesByTaskInstanceId: (taskInstanceId: string) => OpenApiRequestBuilder<CustomAttribute[]>;
+    getV1TaskInstancesContextByTaskInstanceId: (taskInstanceId: string) => OpenApiRequestBuilder<Record<string, any>>;
+    getV1TaskInstancesAttachmentsByTaskInstanceId: (taskInstanceId: string) => OpenApiRequestBuilder<AttachmentsContext>;
+    getV1TaskInstancesFormByTaskInstanceId: (taskInstanceId: string) => OpenApiRequestBuilder<FormMetadata>;
+    getV1TaskInstancesFormModelByTaskInstanceId: (taskInstanceId: string) => OpenApiRequestBuilder<FormModel>;
+};
+//# sourceMappingURL=user-task-instances-api.d.ts.map

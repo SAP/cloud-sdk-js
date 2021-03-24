@@ -480,6 +480,35 @@
         }
       }
     },
+    "/test-cases/reserved-keywords/{const}": {
+      "get": {
+        "tags": ["test case"],
+        "operationId": "export",
+        "parameters": [
+          {
+            "name": "const",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "const",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
     "/test-cases/special-tag": {
       "get": {
         "operationId": "tag with dot",

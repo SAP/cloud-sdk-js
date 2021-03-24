@@ -39,6 +39,7 @@ describe('serializeOperation', () => {
         'get',
         'test/{id}/{subId}',
         {
+              pathParameters: { id, subId },
               queryParameters
             }
       )"
@@ -67,7 +68,10 @@ describe('serializeOperation', () => {
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
         'delete',
-        'test/{id}'
+        'test/{id}',
+        {
+              pathParameters: { id }
+            }
       )"
     `);
   });
@@ -132,6 +136,7 @@ describe('serializeOperation', () => {
         'post',
         'test/{id}',
         {
+              pathParameters: { id },
               body
             }
       )"

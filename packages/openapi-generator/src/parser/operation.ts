@@ -12,11 +12,12 @@ import { resolveObject } from './refs';
 import { parseSchema } from './schema';
 import { parseResponses } from './responses';
 import { OperationInfo } from './operation-info';
+import { reservedJsKeywords } from './reserved-words';
 
 /**
  * Parse an operation info into a serialization-ready object.
  * @param operationInfo Parsing relevant information on an operation.
- * @param refs List of crossreferences that can occur in the document.
+ * @param refs List of cross references that can occur in the document.
  * @returns A flat list of parsed operations.
  */
 export function parseOperation(
@@ -119,7 +120,8 @@ export function parsePathParameters(
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
   const nameGenerator = new UniqueNameGenerator('', [
     'body',
-    'queryParameters'
+    'queryParameters',
+    ...reservedJsKeywords
   ]);
 
   return parseParameters(sortedPathParameters).map(param => ({

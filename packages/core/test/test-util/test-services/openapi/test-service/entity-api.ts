@@ -51,7 +51,10 @@ export const EntityApi = {
   ),
   getEntityByKey: (entityId: string) => new OpenApiRequestBuilder<any>(
     'get',
-    '/entities/{entityId}'
+    '/entities/{entityId}',
+    {
+          pathParameters: { entityId }
+        }
   ),
   countEntities: () => new OpenApiRequestBuilder<number>(
     'get',

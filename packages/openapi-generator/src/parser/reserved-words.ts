@@ -42,35 +42,3 @@ export const reservedJsKeywords: readonly string[] = [
   'with',
   'yield'
 ] as const;
-
-export const reservedServiceKeywords = [
-  'BinaryField',
-  'NumberField',
-  'Moment',
-  'BigNumber',
-  'BigNumberField',
-  'StringField',
-  'DateField',
-  'AllFields',
-  'CustomField',
-  'Entity',
-  'EntityBuilderType',
-  'Field',
-  'Selectable',
-  'OneToOneLink',
-  'BooleanField',
-  'Link',
-  'Time',
-  'TimeField'
-] as const;
-
-export const reservedVdmKeywords = [
-  'builder',
-  'entityBuilder',
-  'requestBuilder'
-] as const;
-
-export const defaultReservedWords = [
-  ...Object.getOwnPropertyNames(Object.prototype),
-  ...reservedVdmKeywords
-] as const;

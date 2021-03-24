@@ -18,6 +18,9 @@ export declare const TestCaseApi: {
     }) => OpenApiRequestBuilder<any>;
     duplicateOperationId: () => OpenApiRequestBuilder<any>;
     duplicateOperationId1: () => OpenApiRequestBuilder<any>;
+    export: (const1: string, queryParameters: {
+        'const': string;
+    }) => OpenApiRequestBuilder<any>;
     complexSchemas: (body: ComplexTestEntity | undefined) => OpenApiRequestBuilder<any>;
     getTestCasesNoOperationId: () => OpenApiRequestBuilder<any>;
     duplicateOperationId2: () => OpenApiRequestBuilder<any>;

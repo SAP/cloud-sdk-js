@@ -14,6 +14,7 @@ export const TestCaseApi = {
     'get',
     '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}',
     {
+          pathParameters: { requiredPathItemPathParam },
           body,
           queryParameters
         }
@@ -25,6 +26,7 @@ export const TestCaseApi = {
     'post',
     '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}',
     {
+          pathParameters: { requiredPathItemPathParam },
           body,
           queryParameters
         }
@@ -33,6 +35,7 @@ export const TestCaseApi = {
     'get',
     '/test-cases/parameters/{duplicateParam}',
     {
+          pathParameters: { duplicateParam },
           queryParameters
         }
   ),
@@ -43,6 +46,14 @@ export const TestCaseApi = {
   duplicateOperationId1: () => new OpenApiRequestBuilder<any>(
     'patch',
     '/test-cases/duplicate-operation-ids'
+  ),
+  export: (const1: string, queryParameters: {'const': string}) => new OpenApiRequestBuilder<any>(
+    'get',
+    '/test-cases/reserved-keywords/{const1}',
+    {
+          pathParameters: { const1 },
+          queryParameters
+        }
   ),
   complexSchemas: (body: ComplexTestEntity | undefined) => new OpenApiRequestBuilder<any>(
     'get',

@@ -9,9 +9,11 @@ exports.DefaultApi = void 0;
 var core_1 = require("@sap-cloud-sdk/core");
 exports.DefaultApi = {
     postEntity: function (pathParam, queryParameters) { return new core_1.OpenApiRequestBuilder('post', '/entities/{pathParam}', {
+        pathParameters: { pathParam: pathParam },
         queryParameters: queryParameters
     }); },
     patchEntity: function (pathParam, body) { return new core_1.OpenApiRequestBuilder('patch', '/entities/{pathParam}', {
+        pathParameters: { pathParam: pathParam },
         body: body
     }); }
 };

@@ -80,6 +80,12 @@ function serializeParamsForRequestBuilder(
 ): string | undefined {
   const params: string[] = [];
 
+  if (operation.pathParameters.length) {
+    const pathParamStr = `pathParameters: { ${operation.pathParameters
+      .map(param => param.name)
+      .join(', ')} }`;
+    params.push(pathParamStr);
+  }
   if (operation.requestBody) {
     params.push('body');
   }

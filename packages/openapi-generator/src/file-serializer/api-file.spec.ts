@@ -31,7 +31,10 @@ describe('apiFile', () => {
       export const TestApi = {
         getFn: (id: string) => new OpenApiRequestBuilder<any>(
           'get',
-          'test/{id}'
+          'test/{id}',
+          {
+                pathParameters: { id }
+              }
         )
       };"
     `);

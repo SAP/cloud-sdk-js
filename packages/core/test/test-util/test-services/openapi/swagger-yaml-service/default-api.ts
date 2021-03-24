@@ -11,6 +11,7 @@ export const DefaultApi = {
     'post',
     '/entities/{pathParam}',
     {
+          pathParameters: { pathParam },
           queryParameters
         }
   ),
@@ -18,6 +19,7 @@ export const DefaultApi = {
     'patch',
     '/entities/{pathParam}',
     {
+          pathParameters: { pathParam },
           body
         }
   )

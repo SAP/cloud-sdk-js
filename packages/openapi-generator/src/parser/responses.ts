@@ -7,7 +7,7 @@ import { parseMediaType } from './media-type';
 /**
  * Parse the type of the responses in an operation.
  * @param responses Original responses object.
- * @param refs List of crossreferences that can occur in the document.
+ * @param refs List of cross references that can occur in the document.
  * @returns The parsed response schema.
  */
 export function parseResponses(

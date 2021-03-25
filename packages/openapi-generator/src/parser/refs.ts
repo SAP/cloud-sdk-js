@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
-import { isReferenceObject } from '../model';
+import { isReferenceObject } from '../schema-util';
 
 /**
  * Check whether the given object is a reference object and resolve if necessary.

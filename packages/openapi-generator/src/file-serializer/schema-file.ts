@@ -5,7 +5,7 @@ import {
   hasNotSchema,
   parseTypeNameFromRef,
   parseFileNameFromRef
-} from '../model';
+} from '../schema-util';
 import { serializeSchema } from './schema';
 import { Import, serializeImports } from './imports';
 

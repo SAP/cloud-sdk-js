@@ -3,7 +3,7 @@ import {
   hasNotSchema,
   parseFileNameFromRef,
   parseTypeNameFromRef
-} from './model';
+} from './schema-util';
 
 describe('parseTypeNameFromRef', () => {
   it('gets the last part of a reference as type name', () => {

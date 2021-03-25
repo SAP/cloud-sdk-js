@@ -1,6 +1,10 @@
 import { codeBlock, unique } from '@sap-cloud-sdk/util';
 import { OpenApiApi, OpenApiOperation } from '../openapi-types';
-import { collectRefs, hasNotSchema, parseTypeNameFromRef } from '../model';
+import {
+  collectRefs,
+  hasNotSchema,
+  parseTypeNameFromRef
+} from '../schema-util';
 import { serializeOperation } from './operation';
 import { Import, serializeImports } from './imports';
 

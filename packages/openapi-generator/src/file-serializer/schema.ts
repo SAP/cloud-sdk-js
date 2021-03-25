@@ -15,7 +15,7 @@ import {
   isAllOfSchema,
   isAnyOfSchema,
   isNotSchema
-} from '../model';
+} from '../schema-util';
 
 /**
  * Serialize a schema.

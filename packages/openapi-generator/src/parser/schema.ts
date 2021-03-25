@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
-import { isReferenceObject } from '../model';
+import { isReferenceObject } from '../schema-util';
 import {
   OpenApiArraySchema,
   OpenApiEnumSchema,

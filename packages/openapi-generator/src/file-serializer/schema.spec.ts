@@ -169,5 +169,5 @@ it('serializeSchema serializes not schema', () => {
     serializeSchema({
       not: { type: 'string' }
     })
-  ).toEqual('Except<any, string>');
+  ).toEqual('Except<T, string>');
 });

@@ -7,20 +7,14 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import type { TestEntity } from './schema';
 
 export const DefaultApi = {
-  postEntity: (pathParam: string, queryParameters?: {'queryParam'?: string}) => new OpenApiRequestBuilder<TestEntity[]>(
-    'post',
-    '/entities/{pathParam}',
-    {
-          pathParameters: { pathParam },
-          queryParameters
-        }
-  ),
-  patchEntity: (pathParam: string, body: TestEntity | undefined) => new OpenApiRequestBuilder<string>(
-    'patch',
-    '/entities/{pathParam}',
-    {
-          pathParameters: { pathParam },
-          body
-        }
-  )
+  postEntity: (pathParam: string, queryParameters?: { queryParam?: string }) =>
+    new OpenApiRequestBuilder<TestEntity[]>('post', '/entities/{pathParam}', {
+      pathParameters: { pathParam },
+      queryParameters
+    }),
+  patchEntity: (pathParam: string, body: TestEntity | undefined) =>
+    new OpenApiRequestBuilder<string>('patch', '/entities/{pathParam}', {
+      pathParameters: { pathParam },
+      body
+    })
 };

@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [http-client] Added an option to the generic http client, so users are able to delegate the csrf token handling for non-get requests.
 
 ## Improvements
 

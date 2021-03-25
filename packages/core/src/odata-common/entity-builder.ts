@@ -24,8 +24,8 @@ type FromJsonType<JsonT> = {
     ? (U extends Record<string, any>
       ? FromJsonType<U>[] // one-to-many navigation properties
       : JsonT[P]) // collection type
-    : (JsonT[P] extends Record<string, any> | null | undefined
-      ? FromJsonType<JsonT[P]> | null | undefined // one-to-one navigation properties
+    : (JsonT[P] extends Record<string, any>
+      ? FromJsonType<JsonT[P]>// one-to-one navigation properties
       : JsonT[P]); // else
 };
 

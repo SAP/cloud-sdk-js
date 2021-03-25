@@ -17,73 +17,115 @@ import { TestEntity } from '../model';
  * DefaultApi - axios parameter creator
  * @export
  */
-export declare const DefaultApiAxiosParamCreator: (configuration?: Configuration | undefined) => {
-    /**
-     *
-     * @summary Test PATCH
-     * @param {string} pathParam
-     * @param {TestEntity} [testEntity]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    patchEntity: (pathParam: string, testEntity?: TestEntity | undefined, options?: any) => Promise<RequestArgs>;
-    /**
-     * Test POST
-     * @summary Test POST
-     * @param {string} pathParam
-     * @param {string} [queryParam]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    postEntity: (pathParam: string, queryParam?: string | undefined, options?: any) => Promise<RequestArgs>;
+export declare const DefaultApiAxiosParamCreator: (
+  configuration?: Configuration | undefined
+) => {
+  /**
+   *
+   * @summary Test PATCH
+   * @param {string} pathParam
+   * @param {TestEntity} [testEntity]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  patchEntity: (
+    pathParam: string,
+    testEntity?: TestEntity | undefined,
+    options?: any
+  ) => Promise<RequestArgs>;
+  /**
+   * Test POST
+   * @summary Test POST
+   * @param {string} pathParam
+   * @param {string} [queryParam]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  postEntity: (
+    pathParam: string,
+    queryParam?: string | undefined,
+    options?: any
+  ) => Promise<RequestArgs>;
 };
 /**
  * DefaultApi - functional programming interface
  * @export
  */
-export declare const DefaultApiFp: (configuration?: Configuration | undefined) => {
-    /**
-     *
-     * @summary Test PATCH
-     * @param {string} pathParam
-     * @param {TestEntity} [testEntity]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    patchEntity(pathParam: string, testEntity?: TestEntity | undefined, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<string>>;
-    /**
-     * Test POST
-     * @summary Test POST
-     * @param {string} pathParam
-     * @param {string} [queryParam]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    postEntity(pathParam: string, queryParam?: string | undefined, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<TestEntity>>>;
+export declare const DefaultApiFp: (
+  configuration?: Configuration | undefined
+) => {
+  /**
+   *
+   * @summary Test PATCH
+   * @param {string} pathParam
+   * @param {TestEntity} [testEntity]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  patchEntity(
+    pathParam: string,
+    testEntity?: TestEntity | undefined,
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<string>
+  >;
+  /**
+   * Test POST
+   * @summary Test POST
+   * @param {string} pathParam
+   * @param {string} [queryParam]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  postEntity(
+    pathParam: string,
+    queryParam?: string | undefined,
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<Array<TestEntity>>
+  >;
 };
 /**
  * DefaultApi - factory interface
  * @export
  */
-export declare const DefaultApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    /**
-     *
-     * @summary Test PATCH
-     * @param {string} pathParam
-     * @param {TestEntity} [testEntity]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    patchEntity(pathParam: string, testEntity?: TestEntity | undefined, options?: any): AxiosPromise<string>;
-    /**
-     * Test POST
-     * @summary Test POST
-     * @param {string} pathParam
-     * @param {string} [queryParam]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    postEntity(pathParam: string, queryParam?: string | undefined, options?: any): AxiosPromise<Array<TestEntity>>;
+export declare const DefaultApiFactory: (
+  configuration?: Configuration | undefined,
+  basePath?: string | undefined,
+  axios?: AxiosInstance | undefined
+) => {
+  /**
+   *
+   * @summary Test PATCH
+   * @param {string} pathParam
+   * @param {TestEntity} [testEntity]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  patchEntity(
+    pathParam: string,
+    testEntity?: TestEntity | undefined,
+    options?: any
+  ): AxiosPromise<string>;
+  /**
+   * Test POST
+   * @summary Test POST
+   * @param {string} pathParam
+   * @param {string} [queryParam]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  postEntity(
+    pathParam: string,
+    queryParam?: string | undefined,
+    options?: any
+  ): AxiosPromise<Array<TestEntity>>;
 };
 /**
  * DefaultApi - object-oriented interface
@@ -92,25 +134,33 @@ export declare const DefaultApiFactory: (configuration?: Configuration | undefin
  * @extends {BaseAPI}
  */
 export declare class DefaultApi extends BaseAPI {
-    /**
-     *
-     * @summary Test PATCH
-     * @param {string} pathParam
-     * @param {TestEntity} [testEntity]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    patchEntity(pathParam: string, testEntity?: TestEntity, options?: any): Promise<import("axios").AxiosResponse<string>>;
-    /**
-     * Test POST
-     * @summary Test POST
-     * @param {string} pathParam
-     * @param {string} [queryParam]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    postEntity(pathParam: string, queryParam?: string, options?: any): Promise<import("axios").AxiosResponse<TestEntity[]>>;
+  /**
+   *
+   * @summary Test PATCH
+   * @param {string} pathParam
+   * @param {TestEntity} [testEntity]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  patchEntity(
+    pathParam: string,
+    testEntity?: TestEntity,
+    options?: any
+  ): Promise<import('axios').AxiosResponse<string>>;
+  /**
+   * Test POST
+   * @summary Test POST
+   * @param {string} pathParam
+   * @param {string} [queryParam]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  postEntity(
+    pathParam: string,
+    queryParam?: string,
+    options?: any
+  ): Promise<import('axios').AxiosResponse<TestEntity[]>>;
 }
 //# sourceMappingURL=default-api.d.ts.map

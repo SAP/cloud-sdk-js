@@ -15,17 +15,17 @@
  * @interface TestEntity
  */
 export interface TestEntity {
-    /**
-     * A string property
-     * @type {string}
-     * @memberof TestEntity
-     */
-    stringProperty?: string;
-    /**
-     * An integer property
-     * @type {number}
-     * @memberof TestEntity
-     */
-    integerProperty?: number;
+  /**
+   * A string property
+   * @type {string}
+   * @memberof TestEntity
+   */
+  stringProperty?: string;
+  /**
+   * An integer property
+   * @type {number}
+   * @memberof TestEntity
+   */
+  integerProperty?: number;
 }
 //# sourceMappingURL=test-entity.d.ts.map

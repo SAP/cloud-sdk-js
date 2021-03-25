@@ -6,10 +6,10 @@
 import { OpenApiRequestBuilder } from '../../../../../src';
 import { TagSpaceApi } from './openapi/api';
 
-
 export const TestServiceTagSpaceApi = {
-  tagWithSpace: () => new OpenApiRequestBuilder<TagSpaceApi, 'tagWithSpace'>(
-    TagSpaceApi,
-    'tagWithSpace'
-  )
+  tagWithSpace: () =>
+    new OpenApiRequestBuilder<TagSpaceApi, 'tagWithSpace'>(
+      TagSpaceApi,
+      'tagWithSpace'
+    )
 };

@@ -6,10 +6,7 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { TagDotApi } from './openapi/api';
 
-
 export const TestServiceTagDotApi = {
-  tagWithDot: () => new OpenApiRequestBuilder<TagDotApi, 'tagWithDot'>(
-    TagDotApi,
-    'tagWithDot'
-  )
+  tagWithDot: () =>
+    new OpenApiRequestBuilder<TagDotApi, 'tagWithDot'>(TagDotApi, 'tagWithDot')
 };

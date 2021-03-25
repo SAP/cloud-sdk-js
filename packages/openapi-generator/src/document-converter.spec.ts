@@ -51,10 +51,7 @@ describe('convertDocWithApiNameTag', () => {
 
     expect(newSpec).toEqual({
       ...emptyApiDefinition,
-      tags: [
-        { name: 'api1' },
-        { name: 'api2' }
-      ],
+      tags: [{ name: 'api1' }, { name: 'api2' }],
       paths: {
         '/pattern1': {
           'x-sap-cloud-sdk-api-name': 'api1',
@@ -129,10 +126,7 @@ describe('convertDocWithApiNameTag', () => {
 
     expect(newSpec).toEqual({
       ...emptyApiDefinition,
-      tags: [
-        { name: 'default' },
-        { name: 'tag' }
-      ],
+      tags: [{ name: 'default' }, { name: 'tag' }],
       paths: {
         '/pattern1': {
           get: {
@@ -396,7 +390,7 @@ describe('convertDocToUniqueOperationIds', () => {
             operationId: 'id'
           },
           post: {
-            'x-sap-cloud-sdk-operation-name': 'nicePostName',
+            'x-sap-cloud-sdk-operation-name': 'nicePostName'
           }
         }
       }

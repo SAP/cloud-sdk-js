@@ -4,12 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLinkRequestBuilder';
-import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '@sap-cloud-sdk/core';
+import {
+  AllFields,
+  CustomFieldV2,
+  EntityBuilderType,
+  EntityV2,
+  Field,
+  StringField
+} from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityOtherMultiLink extends EntityV2 implements TestEntityOtherMultiLinkType {
+export class TestEntityOtherMultiLink
+  extends EntityV2
+  implements TestEntityOtherMultiLinkType {
   /**
    * Technical entity name for TestEntityOtherMultiLink.
    */
@@ -27,7 +36,10 @@ export class TestEntityOtherMultiLink extends EntityV2 implements TestEntityOthe
    * Returns an entity builder to construct instances of `TestEntityOtherMultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
-  static builder(): EntityBuilderType<TestEntityOtherMultiLink, TestEntityOtherMultiLinkType> {
+  static builder(): EntityBuilderType<
+    TestEntityOtherMultiLink,
+    TestEntityOtherMultiLinkType
+  > {
     return EntityV2.entityBuilder(TestEntityOtherMultiLink);
   }
 
@@ -44,7 +56,9 @@ export class TestEntityOtherMultiLink extends EntityV2 implements TestEntityOthe
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
-  static customField(fieldName: string): CustomFieldV2<TestEntityOtherMultiLink> {
+  static customField(
+    fieldName: string
+  ): CustomFieldV2<TestEntityOtherMultiLink> {
     return EntityV2.customFieldSelector(fieldName, TestEntityOtherMultiLink);
   }
 
@@ -66,7 +80,11 @@ export namespace TestEntityOtherMultiLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityOtherMultiLink> = new StringField('KeyProperty', TestEntityOtherMultiLink, 'Edm.String');
+  export const KEY_PROPERTY: StringField<TestEntityOtherMultiLink> = new StringField(
+    'KeyProperty',
+    TestEntityOtherMultiLink,
+    'Edm.String'
+  );
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */
@@ -76,16 +94,29 @@ export namespace TestEntityOtherMultiLink {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityOtherMultiLink> = new AllFields('*', TestEntityOtherMultiLink);
+  export const ALL_FIELDS: AllFields<TestEntityOtherMultiLink> = new AllFields(
+    '*',
+    TestEntityOtherMultiLink
+  );
   /**
    * All key fields of the TestEntityOtherMultiLink entity.
    */
-  export const _keyFields: Array<Field<TestEntityOtherMultiLink>> = [TestEntityOtherMultiLink.KEY_PROPERTY];
+  export const _keyFields: Array<Field<TestEntityOtherMultiLink>> = [
+    TestEntityOtherMultiLink.KEY_PROPERTY
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
    */
-  export const _keys: { [keys: string]: Field<TestEntityOtherMultiLink> } = TestEntityOtherMultiLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntityOtherMultiLink> }, field: Field<TestEntityOtherMultiLink>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntityOtherMultiLink>;
+  } = TestEntityOtherMultiLink._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntityOtherMultiLink> },
+      field: Field<TestEntityOtherMultiLink>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

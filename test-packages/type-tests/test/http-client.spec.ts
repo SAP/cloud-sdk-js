@@ -7,4 +7,7 @@ import {
 executeHttpRequest({ url: 'https://example.com' }, { method: 'get' });
 
 // $ExpectType Promise<HttpRequestAndResponse>
-executeHttpRequestReturnRequestAndResponse({ url: 'https://example.com' }, { method: 'get' });
+executeHttpRequestReturnRequestAndResponse(
+  { url: 'https://example.com' },
+  { method: 'get' }
+);

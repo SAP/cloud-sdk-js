@@ -3,7 +3,7 @@ const originalFS = jest.requireActual('fs');
 
 let mockingIsOn = false;
 let mockReadDirSync = [];
-let mockReadFileSync = "";
+let mockReadFileSync = '';
 
 function switchMockOn() {
   mockingIsOn = true;
@@ -13,7 +13,7 @@ function switchMockOff() {
   mockingIsOn = false;
 }
 
-function setReadDirSync( files) {
+function setReadDirSync(files) {
   mockReadDirSync = files;
 }
 
@@ -33,7 +33,7 @@ function readFileSync(filePath, encoding) {
     return originalFS.readFileSync(filePath, encoding);
   }
   return mockReadFileSync;
-};
+}
 
 //Take default for all which is not mocked
 for (var prop in mockedFS) {

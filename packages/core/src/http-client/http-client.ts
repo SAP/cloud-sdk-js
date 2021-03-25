@@ -13,7 +13,8 @@ import { getAgentConfig } from './http-agent';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
-  HttpRequest, HttpRequestAndResponse,
+  HttpRequest,
+  HttpRequestAndResponse,
   HttpRequestConfig,
   HttpResponse
 } from './http-client-types';
@@ -134,7 +135,9 @@ export const executeHttpRequest = execute(executeWithAxios);
  * @param requestConfig - Any object representing an HTTP request.
  * @returns An [[HttpRequestAndResponse]].
  */
-export const executeHttpRequestReturnRequestAndResponse = execute(executeWithAxiosReturnRequestAndResponse);
+export const executeHttpRequestReturnRequestAndResponse = execute(
+  executeWithAxiosReturnRequestAndResponse
+);
 
 function buildDestinationHttpRequestConfig(
   destination: Destination,
@@ -193,7 +196,7 @@ function merge<T extends HttpRequestConfig>(
   };
 }
 
-function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest{
+function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest {
   return { ...getAxiosConfigWithDefaults(), ...request };
 }
 
@@ -201,11 +204,13 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
   return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 
-function executeWithAxiosReturnRequestAndResponse(request: HttpRequest): Promise<HttpRequestAndResponse> {
+function executeWithAxiosReturnRequestAndResponse(
+  request: HttpRequest
+): Promise<HttpRequestAndResponse> {
   const merged = mergeRequestWithAxiosDefaults(request);
-  return axios.request(merged).then(
-    res => ({ request: merged, response: res })
-  );
+  return axios
+    .request(merged)
+    .then(res => ({ request: merged, response: res }));
 }
 
 /**

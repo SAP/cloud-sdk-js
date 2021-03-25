@@ -17,196 +17,310 @@ import { TestEntity } from '../model';
  * EntityApi - axios parameter creator
  * @export
  */
-export declare const EntityApiAxiosParamCreator: (configuration?: Configuration | undefined) => {
-    /**
-     * Count entities
-     * @summary Count entities
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    countEntities: (options?: any) => Promise<RequestArgs>;
-    /**
-     * Create entity
-     * @summary Create entity
-     * @param {TestEntity} [testEntity] Entity to create
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createEntity: (testEntity?: TestEntity | undefined, options?: any) => Promise<RequestArgs>;
-    /**
-     *
-     * @param {Array<string>} [requestBody]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    deleteEntity: (requestBody?: string[] | undefined, options?: any) => Promise<RequestArgs>;
-    /**
-     * Get all entities
-     * @summary Get entities
-     * @param {string} [stringParameter] A parameter of type string
-     * @param {number} [integerParameter] A parameter of type integer
-     * @param {string} [$dollarParameter] A parameter that contains $
-     * @param {string} [dotParameter] A parameter that contains . in the middle
-     * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
-     * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
-     * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
-     * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getAllEntities: (stringParameter?: string | undefined, integerParameter?: number | undefined, $dollarParameter?: string | undefined, dotParameter?: string | undefined, enumStringParameter?: "value1" | "value2" | undefined, enumInt32Parameter?: 1 | 2 | undefined, enumDoubleParameter?: 1 | 2 | undefined, enumBooleanParameter?: boolean | undefined, options?: any) => Promise<RequestArgs>;
-    /**
-     * Get entity by id
-     * @summary Get entity by id
-     * @param {string} entityId Key property of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getEntityByKey: (entityId: string, options?: any) => Promise<RequestArgs>;
-    /**
-     *
-     * @param {object} [body]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    updateEntity: (body?: object | undefined, options?: any) => Promise<RequestArgs>;
-    /**
-     *
-     * @param {Array<TestEntity>} [testEntity]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    updateEntityWithPut: (testEntity?: TestEntity[] | undefined, options?: any) => Promise<RequestArgs>;
+export declare const EntityApiAxiosParamCreator: (
+  configuration?: Configuration | undefined
+) => {
+  /**
+   * Count entities
+   * @summary Count entities
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  countEntities: (options?: any) => Promise<RequestArgs>;
+  /**
+   * Create entity
+   * @summary Create entity
+   * @param {TestEntity} [testEntity] Entity to create
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  createEntity: (
+    testEntity?: TestEntity | undefined,
+    options?: any
+  ) => Promise<RequestArgs>;
+  /**
+   *
+   * @param {Array<string>} [requestBody]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  deleteEntity: (
+    requestBody?: string[] | undefined,
+    options?: any
+  ) => Promise<RequestArgs>;
+  /**
+   * Get all entities
+   * @summary Get entities
+   * @param {string} [stringParameter] A parameter of type string
+   * @param {number} [integerParameter] A parameter of type integer
+   * @param {string} [$dollarParameter] A parameter that contains $
+   * @param {string} [dotParameter] A parameter that contains . in the middle
+   * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
+   * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
+   * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
+   * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  getAllEntities: (
+    stringParameter?: string | undefined,
+    integerParameter?: number | undefined,
+    $dollarParameter?: string | undefined,
+    dotParameter?: string | undefined,
+    enumStringParameter?: 'value1' | 'value2' | undefined,
+    enumInt32Parameter?: 1 | 2 | undefined,
+    enumDoubleParameter?: 1 | 2 | undefined,
+    enumBooleanParameter?: boolean | undefined,
+    options?: any
+  ) => Promise<RequestArgs>;
+  /**
+   * Get entity by id
+   * @summary Get entity by id
+   * @param {string} entityId Key property of the entity
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  getEntityByKey: (entityId: string, options?: any) => Promise<RequestArgs>;
+  /**
+   *
+   * @param {object} [body]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  updateEntity: (
+    body?: object | undefined,
+    options?: any
+  ) => Promise<RequestArgs>;
+  /**
+   *
+   * @param {Array<TestEntity>} [testEntity]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  updateEntityWithPut: (
+    testEntity?: TestEntity[] | undefined,
+    options?: any
+  ) => Promise<RequestArgs>;
 };
 /**
  * EntityApi - functional programming interface
  * @export
  */
-export declare const EntityApiFp: (configuration?: Configuration | undefined) => {
-    /**
-     * Count entities
-     * @summary Count entities
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    countEntities(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<number>>;
-    /**
-     * Create entity
-     * @summary Create entity
-     * @param {TestEntity} [testEntity] Entity to create
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createEntity(testEntity?: TestEntity | undefined, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
-    /**
-     *
-     * @param {Array<string>} [requestBody]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    deleteEntity(requestBody?: string[] | undefined, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
-    /**
-     * Get all entities
-     * @summary Get entities
-     * @param {string} [stringParameter] A parameter of type string
-     * @param {number} [integerParameter] A parameter of type integer
-     * @param {string} [$dollarParameter] A parameter that contains $
-     * @param {string} [dotParameter] A parameter that contains . in the middle
-     * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
-     * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
-     * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
-     * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getAllEntities(stringParameter?: string | undefined, integerParameter?: number | undefined, $dollarParameter?: string | undefined, dotParameter?: string | undefined, enumStringParameter?: "value1" | "value2" | undefined, enumInt32Parameter?: 1 | 2 | undefined, enumDoubleParameter?: 1 | 2 | undefined, enumBooleanParameter?: boolean | undefined, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<TestEntity>>>;
-    /**
-     * Get entity by id
-     * @summary Get entity by id
-     * @param {string} entityId Key property of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getEntityByKey(entityId: string, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Array<TestEntity>>>;
-    /**
-     *
-     * @param {object} [body]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    updateEntity(body?: object | undefined, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
-    /**
-     *
-     * @param {Array<TestEntity>} [testEntity]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    updateEntityWithPut(testEntity?: TestEntity[] | undefined, options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+export declare const EntityApiFp: (
+  configuration?: Configuration | undefined
+) => {
+  /**
+   * Count entities
+   * @summary Count entities
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  countEntities(
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<number>
+  >;
+  /**
+   * Create entity
+   * @summary Create entity
+   * @param {TestEntity} [testEntity] Entity to create
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  createEntity(
+    testEntity?: TestEntity | undefined,
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<void>
+  >;
+  /**
+   *
+   * @param {Array<string>} [requestBody]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  deleteEntity(
+    requestBody?: string[] | undefined,
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<void>
+  >;
+  /**
+   * Get all entities
+   * @summary Get entities
+   * @param {string} [stringParameter] A parameter of type string
+   * @param {number} [integerParameter] A parameter of type integer
+   * @param {string} [$dollarParameter] A parameter that contains $
+   * @param {string} [dotParameter] A parameter that contains . in the middle
+   * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
+   * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
+   * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
+   * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  getAllEntities(
+    stringParameter?: string | undefined,
+    integerParameter?: number | undefined,
+    $dollarParameter?: string | undefined,
+    dotParameter?: string | undefined,
+    enumStringParameter?: 'value1' | 'value2' | undefined,
+    enumInt32Parameter?: 1 | 2 | undefined,
+    enumDoubleParameter?: 1 | 2 | undefined,
+    enumBooleanParameter?: boolean | undefined,
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<Array<TestEntity>>
+  >;
+  /**
+   * Get entity by id
+   * @summary Get entity by id
+   * @param {string} entityId Key property of the entity
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  getEntityByKey(
+    entityId: string,
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<Array<TestEntity>>
+  >;
+  /**
+   *
+   * @param {object} [body]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  updateEntity(
+    body?: object | undefined,
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<void>
+  >;
+  /**
+   *
+   * @param {Array<TestEntity>} [testEntity]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  updateEntityWithPut(
+    testEntity?: TestEntity[] | undefined,
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<void>
+  >;
 };
 /**
  * EntityApi - factory interface
  * @export
  */
-export declare const EntityApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    /**
-     * Count entities
-     * @summary Count entities
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    countEntities(options?: any): AxiosPromise<number>;
-    /**
-     * Create entity
-     * @summary Create entity
-     * @param {TestEntity} [testEntity] Entity to create
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createEntity(testEntity?: TestEntity | undefined, options?: any): AxiosPromise<void>;
-    /**
-     *
-     * @param {Array<string>} [requestBody]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    deleteEntity(requestBody?: string[] | undefined, options?: any): AxiosPromise<void>;
-    /**
-     * Get all entities
-     * @summary Get entities
-     * @param {string} [stringParameter] A parameter of type string
-     * @param {number} [integerParameter] A parameter of type integer
-     * @param {string} [$dollarParameter] A parameter that contains $
-     * @param {string} [dotParameter] A parameter that contains . in the middle
-     * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
-     * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
-     * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
-     * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getAllEntities(stringParameter?: string | undefined, integerParameter?: number | undefined, $dollarParameter?: string | undefined, dotParameter?: string | undefined, enumStringParameter?: "value1" | "value2" | undefined, enumInt32Parameter?: 1 | 2 | undefined, enumDoubleParameter?: 1 | 2 | undefined, enumBooleanParameter?: boolean | undefined, options?: any): AxiosPromise<Array<TestEntity>>;
-    /**
-     * Get entity by id
-     * @summary Get entity by id
-     * @param {string} entityId Key property of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getEntityByKey(entityId: string, options?: any): AxiosPromise<Array<TestEntity>>;
-    /**
-     *
-     * @param {object} [body]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    updateEntity(body?: object | undefined, options?: any): AxiosPromise<void>;
-    /**
-     *
-     * @param {Array<TestEntity>} [testEntity]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    updateEntityWithPut(testEntity?: TestEntity[] | undefined, options?: any): AxiosPromise<void>;
+export declare const EntityApiFactory: (
+  configuration?: Configuration | undefined,
+  basePath?: string | undefined,
+  axios?: AxiosInstance | undefined
+) => {
+  /**
+   * Count entities
+   * @summary Count entities
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  countEntities(options?: any): AxiosPromise<number>;
+  /**
+   * Create entity
+   * @summary Create entity
+   * @param {TestEntity} [testEntity] Entity to create
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  createEntity(
+    testEntity?: TestEntity | undefined,
+    options?: any
+  ): AxiosPromise<void>;
+  /**
+   *
+   * @param {Array<string>} [requestBody]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  deleteEntity(
+    requestBody?: string[] | undefined,
+    options?: any
+  ): AxiosPromise<void>;
+  /**
+   * Get all entities
+   * @summary Get entities
+   * @param {string} [stringParameter] A parameter of type string
+   * @param {number} [integerParameter] A parameter of type integer
+   * @param {string} [$dollarParameter] A parameter that contains $
+   * @param {string} [dotParameter] A parameter that contains . in the middle
+   * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
+   * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
+   * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
+   * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  getAllEntities(
+    stringParameter?: string | undefined,
+    integerParameter?: number | undefined,
+    $dollarParameter?: string | undefined,
+    dotParameter?: string | undefined,
+    enumStringParameter?: 'value1' | 'value2' | undefined,
+    enumInt32Parameter?: 1 | 2 | undefined,
+    enumDoubleParameter?: 1 | 2 | undefined,
+    enumBooleanParameter?: boolean | undefined,
+    options?: any
+  ): AxiosPromise<Array<TestEntity>>;
+  /**
+   * Get entity by id
+   * @summary Get entity by id
+   * @param {string} entityId Key property of the entity
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  getEntityByKey(
+    entityId: string,
+    options?: any
+  ): AxiosPromise<Array<TestEntity>>;
+  /**
+   *
+   * @param {object} [body]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  updateEntity(body?: object | undefined, options?: any): AxiosPromise<void>;
+  /**
+   *
+   * @param {Array<TestEntity>} [testEntity]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  updateEntityWithPut(
+    testEntity?: TestEntity[] | undefined,
+    options?: any
+  ): AxiosPromise<void>;
 };
 /**
  * EntityApi - object-oriented interface
@@ -215,71 +329,96 @@ export declare const EntityApiFactory: (configuration?: Configuration | undefine
  * @extends {BaseAPI}
  */
 export declare class EntityApi extends BaseAPI {
-    /**
-     * Count entities
-     * @summary Count entities
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EntityApi
-     */
-    countEntities(options?: any): Promise<import("axios").AxiosResponse<number>>;
-    /**
-     * Create entity
-     * @summary Create entity
-     * @param {TestEntity} [testEntity] Entity to create
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EntityApi
-     */
-    createEntity(testEntity?: TestEntity, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    /**
-     *
-     * @param {Array<string>} [requestBody]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EntityApi
-     */
-    deleteEntity(requestBody?: Array<string>, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    /**
-     * Get all entities
-     * @summary Get entities
-     * @param {string} [stringParameter] A parameter of type string
-     * @param {number} [integerParameter] A parameter of type integer
-     * @param {string} [$dollarParameter] A parameter that contains $
-     * @param {string} [dotParameter] A parameter that contains . in the middle
-     * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
-     * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
-     * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
-     * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EntityApi
-     */
-    getAllEntities(stringParameter?: string, integerParameter?: number, $dollarParameter?: string, dotParameter?: string, enumStringParameter?: 'value1' | 'value2', enumInt32Parameter?: 1 | 2, enumDoubleParameter?: 1 | 2, enumBooleanParameter?: boolean, options?: any): Promise<import("axios").AxiosResponse<TestEntity[]>>;
-    /**
-     * Get entity by id
-     * @summary Get entity by id
-     * @param {string} entityId Key property of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EntityApi
-     */
-    getEntityByKey(entityId: string, options?: any): Promise<import("axios").AxiosResponse<TestEntity[]>>;
-    /**
-     *
-     * @param {object} [body]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EntityApi
-     */
-    updateEntity(body?: object, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    /**
-     *
-     * @param {Array<TestEntity>} [testEntity]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EntityApi
-     */
-    updateEntityWithPut(testEntity?: Array<TestEntity>, options?: any): Promise<import("axios").AxiosResponse<void>>;
+  /**
+   * Count entities
+   * @summary Count entities
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof EntityApi
+   */
+  countEntities(options?: any): Promise<import('axios').AxiosResponse<number>>;
+  /**
+   * Create entity
+   * @summary Create entity
+   * @param {TestEntity} [testEntity] Entity to create
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof EntityApi
+   */
+  createEntity(
+    testEntity?: TestEntity,
+    options?: any
+  ): Promise<import('axios').AxiosResponse<void>>;
+  /**
+   *
+   * @param {Array<string>} [requestBody]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof EntityApi
+   */
+  deleteEntity(
+    requestBody?: Array<string>,
+    options?: any
+  ): Promise<import('axios').AxiosResponse<void>>;
+  /**
+   * Get all entities
+   * @summary Get entities
+   * @param {string} [stringParameter] A parameter of type string
+   * @param {number} [integerParameter] A parameter of type integer
+   * @param {string} [$dollarParameter] A parameter that contains $
+   * @param {string} [dotParameter] A parameter that contains . in the middle
+   * @param {'value1' | 'value2'} [enumStringParameter] A parameter of type enum with string
+   * @param {1 | 2} [enumInt32Parameter] A parameter of type enum with int 32
+   * @param {1 | 2} [enumDoubleParameter] A parameter of type enum with double
+   * @param {boolean} [enumBooleanParameter] A parameter of type enum with boolean
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof EntityApi
+   */
+  getAllEntities(
+    stringParameter?: string,
+    integerParameter?: number,
+    $dollarParameter?: string,
+    dotParameter?: string,
+    enumStringParameter?: 'value1' | 'value2',
+    enumInt32Parameter?: 1 | 2,
+    enumDoubleParameter?: 1 | 2,
+    enumBooleanParameter?: boolean,
+    options?: any
+  ): Promise<import('axios').AxiosResponse<TestEntity[]>>;
+  /**
+   * Get entity by id
+   * @summary Get entity by id
+   * @param {string} entityId Key property of the entity
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof EntityApi
+   */
+  getEntityByKey(
+    entityId: string,
+    options?: any
+  ): Promise<import('axios').AxiosResponse<TestEntity[]>>;
+  /**
+   *
+   * @param {object} [body]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof EntityApi
+   */
+  updateEntity(
+    body?: object,
+    options?: any
+  ): Promise<import('axios').AxiosResponse<void>>;
+  /**
+   *
+   * @param {Array<TestEntity>} [testEntity]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof EntityApi
+   */
+  updateEntityWithPut(
+    testEntity?: Array<TestEntity>,
+    options?: any
+  ): Promise<import('axios').AxiosResponse<void>>;
 }
 //# sourceMappingURL=entity-api.d.ts.map

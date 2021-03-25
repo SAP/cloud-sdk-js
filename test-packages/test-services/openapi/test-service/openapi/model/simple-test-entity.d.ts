@@ -15,11 +15,11 @@
  * @interface SimpleTestEntity
  */
 export interface SimpleTestEntity {
-    /**
-     *
-     * @type {string}
-     * @memberof SimpleTestEntity
-     */
-    stringProperty: string;
+  /**
+   *
+   * @type {string}
+   * @memberof SimpleTestEntity
+   */
+  stringProperty: string;
 }
 //# sourceMappingURL=simple-test-entity.d.ts.map

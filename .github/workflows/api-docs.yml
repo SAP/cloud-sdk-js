@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-    - 'docs/**'
+      - 'docs/**'
 
 jobs:
   push-to-documentation-branch:

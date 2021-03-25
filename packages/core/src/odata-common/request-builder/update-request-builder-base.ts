@@ -196,7 +196,8 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
   protected async executeRequest(
     request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
   ): Promise<EntityT> {
-    return this.executeRequestRaw(request)
+    return (
+      this.executeRequestRaw(request)
         // Update returns 204 hence the data from the request is used to build entity for return
         .then(requestResponse => {
           const eTag =
@@ -209,7 +210,8 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
         })
         .catch(error => {
           throw new ErrorWithCause('OData update request failed!', error);
-        });
+        })
+    );
   }
 
   protected async executeRequestRaw(

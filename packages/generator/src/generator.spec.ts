@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import { FunctionDeclaration, SourceFile } from 'ts-morph';
 import { createOptions } from '../test/test-util/create-generator-options';
 import {
@@ -5,6 +6,7 @@ import {
   getFunctionImportDeclarations,
   getGeneratedFiles
 } from '../test/test-util/generator';
+import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { generateProject } from './generator';
 import { GeneratorOptions } from './generator-options';
 import * as csnGeneration from './service/csn';
@@ -14,7 +16,8 @@ describe('generator', () => {
     it('copies the additional files matching the glob.', async () => {
       const project = await generateProject(
         createOptions({
-          inputDir: '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+          inputDir:resolve(oDataServiceSpecs,'v2','API_TEST_SRV'),
+          forceOverwrite: true,
           additionalFiles: '../../test-resources/*.md'
         })
       );
@@ -28,26 +31,27 @@ describe('generator', () => {
       ).toBeDefined();
     });
 
-    it('generates the api hub metadata',async ()=>{
+    it('generates the api hub metadata and writes to the input folder',async ()=>{
       const project = await generateProject(
         createOptions({
-          inputDir: '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+          inputDir:resolve(oDataServiceSpecs,'v2','API_TEST_SRV'),
+          forceOverwrite: true,
           generateSdkMetadata:true
         })
       );
       const sourceFiles = project!.getSourceFiles();
-      expect(
-        sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-client-js.json')
-      ).toBeDefined();
-      expect(
-        sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV-header.json')
-      ).toBeDefined();
+      const clientFile = sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV_CLIENT_JS.json');
+      const headerFile = sourceFiles.find(file => file.getBaseName() === 'API_TEST_SRV_HEADER.json');
+
+      [clientFile,headerFile].forEach(file=>{
+        expect(file).toBeDefined();
+        expect(file!.getDirectoryPath()).toMatch(resolve(oDataServiceSpecs,'v2','API_TEST_SRV','sdk-metadata'));
+      });
     });
   });
   describe('edmx-to-csn', () => {
     const testGeneratorOptions: GeneratorOptions = createOptions({
-      inputDir:
-        '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx',
+      inputDir:resolve(oDataServiceSpecs,'v2','API_TEST_SRV','API_TEST_SRV.edmx'),
       outputDir: 'foo',
       generateCSN: true
     });

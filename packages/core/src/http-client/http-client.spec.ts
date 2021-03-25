@@ -6,12 +6,12 @@ import { Destination, Protocol } from '../connectivity';
 import {
   DestinationHttpRequestConfig,
   HttpMethod,
-  HttpRequest
+  HttpRequest, HttpRequestConfig
 } from './http-client-types';
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  executeHttpRequest, executeHttpRequestReturnRequestAndResponse
+  executeHttpRequest, shouldHandleCsrfToken, xCsrfTokenHeaderKey
 } from './http-client';
 
 describe('generic http client', () => {
@@ -305,28 +305,72 @@ describe('generic http client', () => {
         })
       ).rejects.toThrowErrorMatchingSnapshot();
     });
-  });
 
-  describe('executeRawHttpRequest', () => {
-    beforeAll(() => {
-      nock.cleanAll();
-    });
-
-    it('takes a generic HTTP request and executes it', async () => {
-      const rawResponse = { res: 'ult' };
-      nock('https://example.com')
+    it('fetches csrf token headers when fetchCsrfToken is true', async () => {
+      const csrfToken = 'some-csrf-token';
+      nock('https://example.com', {
+        reqheaders: {
+          [xCsrfTokenHeaderKey]: 'Fetch',
+          'content-type': 'application/json',
+          accept: 'application/json',
+          authorization: 'custom-auth-header',
+          'sap-client': '001'
+        }
+      })
         .get('/api/entity')
-        .reply(200, rawResponse);
+        .reply(200, {}, { [xCsrfTokenHeaderKey]: csrfToken });
 
-      const config = {
-        method: HttpMethod.GET,
-        url: '/api/entity'
+      nock('https://example.com', {
+        reqheaders: {
+          [xCsrfTokenHeaderKey]: csrfToken,
+          'content-type': 'application/json',
+          accept: 'application/json',
+          authorization: 'custom-auth-header',
+          'sap-client': '001'
+        }
+      })
+        .post('/api/entity', {
+          a: 1
+        })
+        .reply(200);
+
+      const config: HttpRequest = {
+        baseURL: 'https://example.com',
+        method: HttpMethod.POST,
+        url: '/api/entity',
+        headers: {
+          authorization: 'custom-auth-header',
+          'content-type': 'application/json',
+          accept: 'application/json',
+        },
+        data: {
+          a: 1
+        }
       };
 
-      const reqRes = await executeHttpRequestReturnRequestAndResponse(httpsDestination, config);
-      expect(reqRes.response.data).toEqual(rawResponse);
-      expect(reqRes.request.method).toBe(HttpMethod.GET);
-      expect(reqRes.request.baseURL).toBe('https://example.com');
+      await expect(
+        executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
+      ).resolves.not.toThrow();
+    });
+  });
+
+  describe('shouldHandleCsrfToken', () => {
+    it('should not handle csrf token for get request', () => {
+      const request = { method: 'get' } as HttpRequestConfig;
+      const options = { fetchCsrfToken: true };
+      expect(shouldHandleCsrfToken(request, options)).toEqual(false);
+    });
+
+    it('should not handle csrf token when fetchCsrfToken is false',  () => {
+      const request = { method: 'post' } as HttpRequestConfig;
+      const options = { fetchCsrfToken: false };
+      expect(shouldHandleCsrfToken(request, options)).toEqual(false);
+    });
+
+    it('should handle csrf token for non-get request when fetchCsrfToken is true',  () => {
+      const request = { method: 'patch' } as HttpRequestConfig;
+      const options = { fetchCsrfToken: true };
+      expect(shouldHandleCsrfToken(request, options)).toEqual(true);
     });
   });
 });

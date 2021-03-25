@@ -24,8 +24,8 @@ export async function sdkMetaDataJS(service: VdmServiceMetadata,options: Generat
 export function getSdkMetadataFileNames(service: VdmServiceMetadata): {clientFileName: string;headerFileName: string}{
   const name = service.originalFileName;
   return{
-    clientFileName:`${name}-client-js.json`,
-    headerFileName:`${name}-header.json`
+    clientFileName:`${name}_CLIENT_JS.json`,
+    headerFileName:`${name}_HEADER.json`
   };
 }
 

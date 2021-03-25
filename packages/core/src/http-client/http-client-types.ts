@@ -62,6 +62,7 @@ interface KnownHttpResponseFields {
   data: any;
   status: number;
   headers: any;
+  request: any;
 }
 
 export interface HttpResponse extends KnownHttpResponseFields {
@@ -75,7 +76,6 @@ export interface HttpReponse extends KnownHttpResponseFields {
   [otherKey: string]: any;
 }
 
-export interface HttpRequestAndResponse{
-  request: HttpRequest;
-  response: HttpResponse;
+export interface HttpRequestOptions{
+  fetchCsrfToken?: boolean;
 }

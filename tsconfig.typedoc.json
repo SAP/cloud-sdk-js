@@ -8,7 +8,10 @@
     "./packages/openapi-generator/**/*",
     "./packages/test-util/**/*"
   ],
-  "exclude": ["./packages/core/test/test-util/test-services", "**/*.spec.ts"],
+  "exclude": [
+    "./packages/core/test/test-util/test-services",
+    "**/*.spec.ts"
+  ],
   "references": [
     {
       "path": "./packages/util"

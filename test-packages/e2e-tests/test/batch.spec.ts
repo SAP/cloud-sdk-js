@@ -28,7 +28,9 @@ describe('batch', () => {
       .withSubRequestPathType('relativeToEntity')
       .execute(destination);
 
-    const [deleteRes] = await batch(changeset(deleteRequestBuilder))
+    const [deleteRes] = await batch(
+      changeset(deleteRequestBuilder)
+    )
       .withSubRequestPathType('relativeToEntity')
       .execute(destination);
 

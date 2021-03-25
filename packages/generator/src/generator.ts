@@ -1,5 +1,5 @@
 import { PathLike } from 'fs';
-import { resolve, basename, dirname } from 'path';
+import { resolve, basename,dirname } from 'path';
 import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
@@ -45,16 +45,8 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
-import {
-  getSdkMetadataFileNames,
-  sdkMetaDataHeader,
-  sdkMetaDataJS
-} from './sdk-metadata/sdk-metadata';
-import {
-  getGeneratorVersion,
-  getServiceDescription,
-  getVersionForClient
-} from './sdk-metadata/pregenerated-lib';
+import { getSdkMetadataFileNames, sdkMetaDataHeader, sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
+import { getGeneratorVersion, getServiceDescription, getVersionForClient } from './sdk-metadata/pregenerated-lib';
 
 const logger = createLogger({
   package: 'generator',
@@ -326,27 +318,19 @@ export async function generateSourcesForService(
     }
   }
 
-  if (options.generateSdkMetadata) {
-    const { clientFileName, headerFileName } = getSdkMetadataFileNames(service);
-    logger.info(`Generating sdk header metatdata ${headerFileName}...`);
-    const metadataDir = project.createDirectory(
-      resolve(dirname(service.edmxPath.toString()), 'sdk-metadata')
+  if(options.generateSdkMetadata){
+    const { clientFileName,headerFileName } = getSdkMetadataFileNames(service);
+    logger.info(
+      `Generating sdk header metatdata ${headerFileName}...`
     );
+     const metadataDir = project.createDirectory(resolve(dirname(service.edmxPath.toString()),'sdk-metadata'));
 
-    otherFile(
-      metadataDir,
-      headerFileName,
-      JSON.stringify(await sdkMetaDataHeader(service, options), null, 2),
-      options.forceOverwrite
-    );
+    otherFile(metadataDir, headerFileName, JSON.stringify(await sdkMetaDataHeader(service,options),null,2), options.forceOverwrite);
 
-    logger.info(`Generating sdk client metatdata ${clientFileName}...`);
-    otherFile(
-      metadataDir,
-      clientFileName,
-      JSON.stringify(await sdkMetaDataJS(service, options), null, 2),
-      options.forceOverwrite
+    logger.info(
+      `Generating sdk client metatdata ${clientFileName}...`
     );
+    otherFile(metadataDir, clientFileName, JSON.stringify(await sdkMetaDataJS(service,options),null,2), options.forceOverwrite);
   }
 }
 

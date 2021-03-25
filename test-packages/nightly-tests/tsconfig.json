@@ -2,9 +2,16 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "es2017",
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "types": ["node", "jest", "jest-extended"]
   },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules/**/*"]
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules/**/*"
+  ]
 }

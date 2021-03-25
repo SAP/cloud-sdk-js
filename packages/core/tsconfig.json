@@ -6,8 +6,18 @@
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "composite": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "dist/**/*",
+    "test/**/*",
+    "**/*.spec.ts",
+    "node_modules/**/*"
+  ],
   "files": [],
-  "references": [{ "path": "../util" }, { "path": "../analytics" }]
+  "references": [
+    {"path": "../util"},
+    {"path": "../analytics"}
+  ]
 }

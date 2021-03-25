@@ -32,7 +32,7 @@ export class ODataBatchRequestBuilder extends BatchRequestBuilder {
     options?: DestinationOptions
   ): Promise<BatchResponse[]> {
     return this.executeRaw(destination, options)
-      .then(response => parseBatchResponse(response))
+      .then((response) => parseBatchResponse(response))
       .then(parsedResponse =>
         deserializeBatchResponse(
           parsedResponse,

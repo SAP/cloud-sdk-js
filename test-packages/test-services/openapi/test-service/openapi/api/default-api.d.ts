@@ -16,77 +16,55 @@ import { RequestArgs, BaseAPI } from '../base';
  * DefaultApi - axios parameter creator
  * @export
  */
-export declare const DefaultApiAxiosParamCreator: (
-  configuration?: Configuration | undefined
-) => {
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   */
-  defaultTag: (options?: any) => Promise<RequestArgs>;
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   */
-  noTag: (options?: any) => Promise<RequestArgs>;
+export declare const DefaultApiAxiosParamCreator: (configuration?: Configuration | undefined) => {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    defaultTag: (options?: any) => Promise<RequestArgs>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    noTag: (options?: any) => Promise<RequestArgs>;
 };
 /**
  * DefaultApi - functional programming interface
  * @export
  */
-export declare const DefaultApiFp: (
-  configuration?: Configuration | undefined
-) => {
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   */
-  defaultTag(
-    options?: any
-  ): Promise<
-    (
-      axios?: AxiosInstance | undefined,
-      basePath?: string | undefined
-    ) => AxiosPromise<void>
-  >;
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   */
-  noTag(
-    options?: any
-  ): Promise<
-    (
-      axios?: AxiosInstance | undefined,
-      basePath?: string | undefined
-    ) => AxiosPromise<void>
-  >;
+export declare const DefaultApiFp: (configuration?: Configuration | undefined) => {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    defaultTag(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    noTag(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
 };
 /**
  * DefaultApi - factory interface
  * @export
  */
-export declare const DefaultApiFactory: (
-  configuration?: Configuration | undefined,
-  basePath?: string | undefined,
-  axios?: AxiosInstance | undefined
-) => {
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   */
-  defaultTag(options?: any): AxiosPromise<void>;
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   */
-  noTag(options?: any): AxiosPromise<void>;
+export declare const DefaultApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    defaultTag(options?: any): AxiosPromise<void>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    noTag(options?: any): AxiosPromise<void>;
 };
 /**
  * DefaultApi - object-oriented interface
@@ -95,19 +73,19 @@ export declare const DefaultApiFactory: (
  * @extends {BaseAPI}
  */
 export declare class DefaultApi extends BaseAPI {
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof DefaultApi
-   */
-  defaultTag(options?: any): Promise<import('axios').AxiosResponse<void>>;
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof DefaultApi
-   */
-  noTag(options?: any): Promise<import('axios').AxiosResponse<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    defaultTag(options?: any): Promise<import("axios").AxiosResponse<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    noTag(options?: any): Promise<import("axios").AxiosResponse<void>>;
 }
 //# sourceMappingURL=default-api.d.ts.map

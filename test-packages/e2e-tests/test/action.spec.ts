@@ -19,9 +19,9 @@ describe('action', () => {
   });
 
   it('should return single number', async () => {
-    const response = await createTestEntityByIdReturnId({
-      id: entityKey
-    }).execute(destination);
+    const response = await createTestEntityByIdReturnId({ id: entityKey }).execute(
+      destination
+    );
     expect(response).toBe(entityKey);
   });
 });

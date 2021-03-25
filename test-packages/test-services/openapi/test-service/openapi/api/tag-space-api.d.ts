@@ -16,52 +16,37 @@ import { RequestArgs, BaseAPI } from '../base';
  * TagSpaceApi - axios parameter creator
  * @export
  */
-export declare const TagSpaceApiAxiosParamCreator: (
-  configuration?: Configuration | undefined
-) => {
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   */
-  tagWithSpace: (options?: any) => Promise<RequestArgs>;
+export declare const TagSpaceApiAxiosParamCreator: (configuration?: Configuration | undefined) => {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    tagWithSpace: (options?: any) => Promise<RequestArgs>;
 };
 /**
  * TagSpaceApi - functional programming interface
  * @export
  */
-export declare const TagSpaceApiFp: (
-  configuration?: Configuration | undefined
-) => {
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   */
-  tagWithSpace(
-    options?: any
-  ): Promise<
-    (
-      axios?: AxiosInstance | undefined,
-      basePath?: string | undefined
-    ) => AxiosPromise<void>
-  >;
+export declare const TagSpaceApiFp: (configuration?: Configuration | undefined) => {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    tagWithSpace(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
 };
 /**
  * TagSpaceApi - factory interface
  * @export
  */
-export declare const TagSpaceApiFactory: (
-  configuration?: Configuration | undefined,
-  basePath?: string | undefined,
-  axios?: AxiosInstance | undefined
-) => {
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   */
-  tagWithSpace(options?: any): AxiosPromise<void>;
+export declare const TagSpaceApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    tagWithSpace(options?: any): AxiosPromise<void>;
 };
 /**
  * TagSpaceApi - object-oriented interface
@@ -70,12 +55,12 @@ export declare const TagSpaceApiFactory: (
  * @extends {BaseAPI}
  */
 export declare class TagSpaceApi extends BaseAPI {
-  /**
-   *
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof TagSpaceApi
-   */
-  tagWithSpace(options?: any): Promise<import('axios').AxiosResponse<void>>;
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TagSpaceApi
+     */
+    tagWithSpace(options?: any): Promise<import("axios").AxiosResponse<void>>;
 }
 //# sourceMappingURL=tag-space-api.d.ts.map

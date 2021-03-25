@@ -6,7 +6,17 @@
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "composite": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],
-  "references": [{ "path": "../core" }, { "path": "../util" }]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "dist/**/*",
+    "test/**/*",
+    "**/*.spec.ts",
+    "node_modules/**/*"
+  ],
+  "references": [
+    {"path": "../core"},
+    {"path": "../util"}
+  ]
 }

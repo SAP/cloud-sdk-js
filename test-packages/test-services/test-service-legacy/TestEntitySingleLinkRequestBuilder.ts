@@ -3,14 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  RequestBuilder,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder
-} from '@sap-cloud-sdk/core';
+import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntitySingleLink } from './TestEntitySingleLink';
 
 /**
@@ -23,9 +16,7 @@ export class TestEntitySingleLinkRequestBuilder extends RequestBuilder<TestEntit
    * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
    */
   getByKey(keyProperty: string): GetByKeyRequestBuilder<TestEntitySingleLink> {
-    return new GetByKeyRequestBuilder(TestEntitySingleLink, {
-      KeyProperty: keyProperty
-    });
+    return new GetByKeyRequestBuilder(TestEntitySingleLink, { KeyProperty: keyProperty });
   }
 
   /**
@@ -41,9 +32,7 @@ export class TestEntitySingleLinkRequestBuilder extends RequestBuilder<TestEntit
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntitySingleLink`.
    */
-  create(
-    entity: TestEntitySingleLink
-  ): CreateRequestBuilder<TestEntitySingleLink> {
+  create(entity: TestEntitySingleLink): CreateRequestBuilder<TestEntitySingleLink> {
     return new CreateRequestBuilder(TestEntitySingleLink, entity);
   }
 
@@ -52,9 +41,7 @@ export class TestEntitySingleLinkRequestBuilder extends RequestBuilder<TestEntit
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntitySingleLink`.
    */
-  update(
-    entity: TestEntitySingleLink
-  ): UpdateRequestBuilder<TestEntitySingleLink> {
+  update(entity: TestEntitySingleLink): UpdateRequestBuilder<TestEntitySingleLink> {
     return new UpdateRequestBuilder(TestEntitySingleLink, entity);
   }
 
@@ -69,15 +56,8 @@ export class TestEntitySingleLinkRequestBuilder extends RequestBuilder<TestEntit
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntitySingleLink` by taking the entity as a parameter.
    */
-  delete(
-    entity: TestEntitySingleLink
-  ): DeleteRequestBuilder<TestEntitySingleLink>;
+  delete(entity: TestEntitySingleLink): DeleteRequestBuilder<TestEntitySingleLink>;
   delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntitySingleLink> {
-    return new DeleteRequestBuilder(
-      TestEntitySingleLink,
-      keyPropertyOrEntity instanceof TestEntitySingleLink
-        ? keyPropertyOrEntity
-        : { KeyProperty: keyPropertyOrEntity! }
-    );
+    return new DeleteRequestBuilder(TestEntitySingleLink, keyPropertyOrEntity instanceof TestEntitySingleLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
   }
 }

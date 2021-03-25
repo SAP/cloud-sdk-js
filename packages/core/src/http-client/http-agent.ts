@@ -50,8 +50,8 @@ function createProxyAgent(
     throw new Error(
       `The destination proxy configuration: ${destination.proxyConfiguration} is undefined.`
     );
-  }
-  return proxyAgent(destination, options);
+ }
+  return proxyAgent(destination,options);
 }
 
 const trustAllOptions = (destination: Destination) => (
@@ -82,9 +82,9 @@ const certificateOptions = (destination: Destination) => (
  * @returns options which can be used later by tls.createSecureContext() e.g. pfx and passphrase. or {} if protocol is not https or no client information are in the defintaion.
  * @hidden
  */
-function getCertificateOption(destination: Destination): Record<string, any> {
+function getCertificateOption(destination: Destination): Record<string, any>  {
   // http case: no certificate needed
-  if (getProtocolOrDefault(destination) === Protocol.HTTP) {
+  if(getProtocolOrDefault(destination) === Protocol.HTTP){
     if (destination.isTrustingAllCertificates) {
       logger.warn('"isTrustingAllCertificates" is not available for HTTP.');
     }

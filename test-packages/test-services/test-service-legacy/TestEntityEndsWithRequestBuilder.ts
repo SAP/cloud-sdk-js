@@ -3,14 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  RequestBuilder,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder
-} from '@sap-cloud-sdk/core';
+import { RequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/core';
 import { TestEntityEndsWith } from './TestEntityEndsWith';
 
 /**
@@ -23,9 +16,7 @@ export class TestEntityEndsWithRequestBuilder extends RequestBuilder<TestEntityE
    * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
    */
   getByKey(keyProperty: string): GetByKeyRequestBuilder<TestEntityEndsWith> {
-    return new GetByKeyRequestBuilder(TestEntityEndsWith, {
-      KeyProperty: keyProperty
-    });
+    return new GetByKeyRequestBuilder(TestEntityEndsWith, { KeyProperty: keyProperty });
   }
 
   /**
@@ -67,11 +58,6 @@ export class TestEntityEndsWithRequestBuilder extends RequestBuilder<TestEntityE
    */
   delete(entity: TestEntityEndsWith): DeleteRequestBuilder<TestEntityEndsWith>;
   delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntityEndsWith> {
-    return new DeleteRequestBuilder(
-      TestEntityEndsWith,
-      keyPropertyOrEntity instanceof TestEntityEndsWith
-        ? keyPropertyOrEntity
-        : { KeyProperty: keyPropertyOrEntity! }
-    );
+    return new DeleteRequestBuilder(TestEntityEndsWith, keyPropertyOrEntity instanceof TestEntityEndsWith ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
   }
 }

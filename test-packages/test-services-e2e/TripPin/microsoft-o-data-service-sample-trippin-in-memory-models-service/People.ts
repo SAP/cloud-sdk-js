@@ -7,19 +7,7 @@ import { PeopleRequestBuilder } from './PeopleRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import { Location } from './Location';
 import { PersonGender } from './PersonGender';
-import {
-  AllFields,
-  BigNumberField,
-  CollectionField,
-  CustomFieldV4,
-  EntityBuilderType,
-  EntityV4,
-  EnumField,
-  Field,
-  OneToManyLink,
-  OneToOneLink,
-  StringField
-} from '@sap-cloud-sdk/core';
+import { AllFields, BigNumberField, CollectionField, CustomFieldV4, EntityBuilderType, EntityV4, EnumField, Field, OneToManyLink, OneToOneLink, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -32,8 +20,7 @@ export class People extends EntityV4 implements PeopleType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath =
-    'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * User Name.
    */
@@ -127,45 +114,27 @@ export namespace People {
    * Static representation of the [[userName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const USER_NAME: StringField<People> = new StringField(
-    'UserName',
-    People,
-    'Edm.String'
-  );
+  export const USER_NAME: StringField<People> = new StringField('UserName', People, 'Edm.String');
   /**
    * Static representation of the [[firstName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const FIRST_NAME: StringField<People> = new StringField(
-    'FirstName',
-    People,
-    'Edm.String'
-  );
+  export const FIRST_NAME: StringField<People> = new StringField('FirstName', People, 'Edm.String');
   /**
    * Static representation of the [[lastName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LAST_NAME: StringField<People> = new StringField(
-    'LastName',
-    People,
-    'Edm.String'
-  );
+  export const LAST_NAME: StringField<People> = new StringField('LastName', People, 'Edm.String');
   /**
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const EMAILS: CollectionField<
-    People,
-    'Edm.String'
-  > = new CollectionField('Emails', People, 'Edm.String');
+  export const EMAILS: CollectionField<People, 'Edm.String'> = new CollectionField('Emails', People, 'Edm.String');
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ADDRESS_INFO: CollectionField<
-    People,
-    Location
-  > = new CollectionField('AddressInfo', People, Location);
+  export const ADDRESS_INFO: CollectionField<People, Location> = new CollectionField('AddressInfo', People, Location);
   /**
    * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -175,41 +144,21 @@ export namespace People {
    * Static representation of the [[concurrency]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const CONCURRENCY: BigNumberField<People> = new BigNumberField(
-    'Concurrency',
-    People,
-    'Edm.Int64'
-  );
+  export const CONCURRENCY: BigNumberField<People> = new BigNumberField('Concurrency', People, 'Edm.Int64');
   /**
    * Static representation of the one-to-many navigation property [[friends]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const FRIENDS: OneToManyLink<People, People> = new OneToManyLink(
-    'Friends',
-    People,
-    People
-  );
+  export const FRIENDS: OneToManyLink<People, People> = new OneToManyLink('Friends', People, People);
   /**
    * Static representation of the one-to-one navigation property [[photo]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const PHOTO: OneToOneLink<People, Photos> = new OneToOneLink(
-    'Photo',
-    People,
-    Photos
-  );
+  export const PHOTO: OneToOneLink<People, Photos> = new OneToOneLink('Photo', People, Photos);
   /**
    * All fields of the People entity.
    */
-  export const _allFields: Array<
-    | StringField<People>
-    | CollectionField<People, 'Edm.String'>
-    | CollectionField<People, Location>
-    | EnumField<People>
-    | BigNumberField<People>
-    | OneToManyLink<People, People>
-    | OneToOneLink<People, Photos>
-  > = [
+  export const _allFields: Array<StringField<People> | CollectionField<People, 'Edm.String'> | CollectionField<People, Location> | EnumField<People> | BigNumberField<People> | OneToManyLink<People, People> | OneToOneLink<People, Photos>> = [
     People.USER_NAME,
     People.FIRST_NAME,
     People.LAST_NAME,
@@ -231,13 +180,8 @@ export namespace People {
   /**
    * Mapping of all key field names to the respective static field property People.
    */
-  export const _keys: {
-    [keys: string]: Field<People>;
-  } = People._keyFields.reduce(
-    (acc: { [keys: string]: Field<People> }, field: Field<People>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<People> } = People._keyFields.reduce((acc: { [keys: string]: Field<People> }, field: Field<People>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

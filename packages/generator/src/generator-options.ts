@@ -152,8 +152,9 @@ export const generatorOptionsCli: KeysToOptions = {
     default: false,
     hidden: true
   },
-  generateSdkMetadata: {
-    describe: 'When set to true, SDK metadata for the API hub is generated.',
+    generateSdkMetadata: {
+    describe:
+      'When set to true, SDK metadata for the API hub is generated.',
     type: 'boolean',
     default: false,
     hidden: true

@@ -4,11 +4,7 @@ import { Selectable } from '../selectable/selectable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../request';
-import {
-  Destination,
-  DestinationNameAndJwt,
-  DestinationOptions
-} from '../../connectivity/scp-cf/destination';
+import { Destination, DestinationNameAndJwt, DestinationOptions } from '../../connectivity/scp-cf/destination';
 import { HttpResponse } from '../../http-client';
 
 export abstract class GetRequestBuilder<
@@ -59,8 +55,9 @@ export abstract class GetRequestBuilder<
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpResponse> {
-    return this.build(destination, options).then(request => request.execute());
+  ): Promise<HttpResponse>{
+    return this.build(destination, options)
+      .then(request => request.execute());
   }
 }
 

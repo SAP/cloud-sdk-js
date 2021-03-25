@@ -5,8 +5,7 @@ import { ODataBatchRequestConfig } from '../../request/odata-batch-request-confi
 import { Constructable, Entity } from '../../entity';
 import {
   Destination,
-  DestinationNameAndJwt,
-  DestinationOptions,
+  DestinationNameAndJwt, DestinationOptions,
   DestinationRetrievalOptions
 } from '../../../connectivity/scp-cf';
 import { ODataRequest } from '../../request/odata-request';
@@ -69,8 +68,9 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpResponse> {
-    return this.build(destination, options).then(request => request.execute());
+  ): Promise<HttpResponse>{
+    return this.build(destination, options)
+      .then(request => request.execute());
   }
 
   private setPayload(

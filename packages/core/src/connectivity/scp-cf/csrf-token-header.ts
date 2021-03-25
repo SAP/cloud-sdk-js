@@ -59,32 +59,22 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
   return executeHttpRequest(destination, appendSlash(axiosConfig))
     .then(response => response.headers)
     .catch(e1 => {
-      logger.error(
-        new ErrorWithCause(
-          'Initial try to fetch CSRF token failed - retry without slash at ',
-          e1
-        )
-      );
-      return executeHttpRequest(destination, removeSlash(axiosConfig))
-        .then(response => response.headers)
-        .catch(e2 => {
-          throw new ErrorWithCause(
-            'Also second try to fetch SRF token failed - No CSRF token fetched.',
-            e2
-          );
-        });
+      logger.error(new ErrorWithCause('Initial try to fetch CSRF token failed - retry without slash at ',e1));
+      return executeHttpRequest(destination, removeSlash(axiosConfig)).then(response=>response.headers).catch(e2=>{
+throw new ErrorWithCause('Also second try to fetch SRF token failed - No CSRF token fetched.',e2);
+});
     });
 }
 
-function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {
-  if (!requestConfig.url!.endsWith('/')) {
+function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig{
+  if(!requestConfig.url!.endsWith('/')){
     requestConfig.url = `${requestConfig.url}/`;
   }
   return requestConfig;
 }
 
-function removeSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {
-  if (requestConfig.url!.endsWith('/')) {
+function removeSlash(requestConfig: HttpRequestConfig): HttpRequestConfig{
+  if(requestConfig.url!.endsWith('/')){
     requestConfig.url = removeTrailingSlashes(requestConfig.url!);
   }
   return requestConfig;

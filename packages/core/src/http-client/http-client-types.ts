@@ -76,6 +76,6 @@ export interface HttpReponse extends KnownHttpResponseFields {
   [otherKey: string]: any;
 }
 
-export interface HttpRequestOptions {
+export interface HttpRequestOptions{
   fetchCsrfToken?: boolean;
 }

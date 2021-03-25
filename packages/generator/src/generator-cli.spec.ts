@@ -5,7 +5,7 @@ import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(__dirname, 'generator-cli.ts');
-  const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
+  const inputDir = path.resolve(oDataServiceSpecs,'v2','API_TEST_SRV');
   const outputDir = path.resolve(__dirname, '../test/generator-test-output');
 
   beforeEach(() => {

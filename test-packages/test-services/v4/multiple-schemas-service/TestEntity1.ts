@@ -6,16 +6,7 @@
 import { TestEntity1RequestBuilder } from './TestEntity1RequestBuilder';
 import { TestComplexType1, TestComplexType1Field } from './TestComplexType1';
 import { TestEnumType1 } from './TestEnumType1';
-import {
-  AllFields,
-  CustomFieldV4,
-  EntityBuilderType,
-  EntityV4,
-  EnumField,
-  Field,
-  NumberField,
-  StringField
-} from '@sap-cloud-sdk/core';
+import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, EnumField, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntity1" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -95,45 +86,26 @@ export namespace TestEntity1 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity1> = new StringField(
-    'KeyPropertyString',
-    TestEntity1,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY_STRING: StringField<TestEntity1> = new StringField('KeyPropertyString', TestEntity1, 'Edm.String');
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY: NumberField<TestEntity1> = new NumberField(
-    'Int16Property',
-    TestEntity1,
-    'Edm.Int16'
-  );
+  export const INT_16_PROPERTY: NumberField<TestEntity1> = new NumberField('Int16Property', TestEntity1, 'Edm.Int16');
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY: EnumField<TestEntity1> = new EnumField(
-    'EnumProperty',
-    TestEntity1
-  );
+  export const ENUM_PROPERTY: EnumField<TestEntity1> = new EnumField('EnumProperty', TestEntity1);
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY: TestComplexType1Field<TestEntity1> = new TestComplexType1Field(
-    'ComplexTypeProperty',
-    TestEntity1
-  );
+  export const COMPLEX_TYPE_PROPERTY: TestComplexType1Field<TestEntity1> = new TestComplexType1Field('ComplexTypeProperty', TestEntity1);
   /**
    * All fields of the TestEntity1 entity.
    */
-  export const _allFields: Array<
-    | StringField<TestEntity1>
-    | NumberField<TestEntity1>
-    | EnumField<TestEntity1>
-    | TestComplexType1Field<TestEntity1>
-  > = [
+  export const _allFields: Array<StringField<TestEntity1> | NumberField<TestEntity1> | EnumField<TestEntity1> | TestComplexType1Field<TestEntity1>> = [
     TestEntity1.KEY_PROPERTY_STRING,
     TestEntity1.INT_16_PROPERTY,
     TestEntity1.ENUM_PROPERTY,
@@ -142,29 +114,16 @@ export namespace TestEntity1 {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity1> = new AllFields(
-    '*',
-    TestEntity1
-  );
+  export const ALL_FIELDS: AllFields<TestEntity1> = new AllFields('*', TestEntity1);
   /**
    * All key fields of the TestEntity1 entity.
    */
-  export const _keyFields: Array<Field<TestEntity1>> = [
-    TestEntity1.KEY_PROPERTY_STRING
-  ];
+  export const _keyFields: Array<Field<TestEntity1>> = [TestEntity1.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity1.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntity1>;
-  } = TestEntity1._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntity1> },
-      field: Field<TestEntity1>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntity1> } = TestEntity1._keyFields.reduce((acc: { [keys: string]: Field<TestEntity1> }, field: Field<TestEntity1>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

@@ -1,12 +1,7 @@
 import { basename } from 'path';
 import { parse, resolve, $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import {
-  flatten,
-  pascalCase,
-  removeFileExtension,
-  unique
-} from '@sap-cloud-sdk/util';
+import { flatten, pascalCase, removeFileExtension, unique } from '@sap-cloud-sdk/util';
 import { OpenApiOperation, OpenApiDocument, methods } from '../openapi-types';
 import { VdmMapping } from '../service-mapping';
 import { parseOperation } from './operation';

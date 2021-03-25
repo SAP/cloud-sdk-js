@@ -14,7 +14,6 @@ export function createRefs(
 }
 
 export const emptyObjectSchema = {
-  type: 'object',
-  additionalProperties: true,
+  additionalProperties: { type: 'any' },
   properties: []
 };

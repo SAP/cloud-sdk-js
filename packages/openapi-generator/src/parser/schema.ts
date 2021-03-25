@@ -77,8 +77,7 @@ function parseArraySchema(
   schema: OpenAPIV3.ArraySchemaObject
 ): OpenApiArraySchema {
   return {
-    type: 'array',
-    uniqueItems: !!schema.uniqueItems,
+    uniqueItems: schema.uniqueItems,
     items: parseSchema(schema.items)
   };
 }
@@ -92,20 +91,24 @@ function parseObjectSchema(
   schema: OpenAPIV3.NonArraySchemaObject
 ): OpenApiObjectSchema {
   const properties = parseObjectSchemaProperties(schema);
-  const additionalProperties =
-    typeof schema.additionalProperties === 'object'
-      ? !Object.keys(schema.additionalProperties).length
-        ? true
-        : parseSchema(schema.additionalProperties)
-      : schema.additionalProperties ?? true;
-  if (!properties.length && !additionalProperties) {
-    throw new Error(
-      'Could not parse object schema without neither properties nor additional properties.'
-    );
+
+  if (schema.additionalProperties === false) {
+    if (!properties.length) {
+      throw new Error(
+        'Could not parse object schema without neither properties nor additional properties.'
+      );
+    }
+
+    return { properties };
   }
 
+  const additionalProperties =
+    typeof schema.additionalProperties === 'object' &&
+    Object.keys(schema.additionalProperties).length
+      ? parseSchema(schema.additionalProperties)
+      : { type: 'any' };
+
   return {
-    type: 'object',
     properties,
     additionalProperties
   };

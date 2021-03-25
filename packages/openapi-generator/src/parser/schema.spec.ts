@@ -20,8 +20,7 @@ describe('parseSchema', () => {
     };
 
     expect(parseSchema(schema)).toEqual({
-      ...schema,
-      uniqueItems: false
+      items: { type: 'string' }
     });
   });
 
@@ -31,7 +30,10 @@ describe('parseSchema', () => {
       uniqueItems: true,
       items: { type: 'string' }
     };
-    expect(parseSchema(schema)).toEqual(schema);
+    expect(parseSchema(schema)).toEqual({
+      uniqueItems: true,
+      items: { type: 'string' }
+    });
   });
 
   it('parses array schema with nested object schema', () => {
@@ -41,7 +43,7 @@ describe('parseSchema', () => {
       items: { type: 'object' }
     };
     expect(parseSchema(schema)).toEqual({
-      ...schema,
+      uniqueItems: true,
       items: emptyObjectSchema
     });
   });
@@ -59,17 +61,14 @@ describe('parseSchema', () => {
       }
     };
     expect(parseSchema(schema)).toEqual({
-      type: 'object',
       properties: [
         { name: 'simpleProperty', required: true, schema: { type: 'string' } },
         {
           name: 'nestedObjectProperty',
           required: false,
           schema: {
-            type: 'object',
             additionalProperties: {
-              type: 'object',
-              additionalProperties: true,
+              additionalProperties: { type: 'any' },
               properties: [
                 {
                   name: 'simpleProperty',
@@ -82,7 +81,7 @@ describe('parseSchema', () => {
           }
         }
       ],
-      additionalProperties: true
+      additionalProperties: { type: 'any' }
     });
   });
 

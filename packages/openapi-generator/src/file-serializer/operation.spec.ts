@@ -61,7 +61,10 @@ describe('serializeOperation', () => {
         }
       ],
       queryParameters: [],
-      response: { type: 'object', additionalProperties: true, properties: [] },
+      response: {
+        additionalProperties: { type: 'any' },
+        properties: []
+      },
       pathPattern: 'test/{id}'
     };
 
@@ -123,9 +126,8 @@ describe('serializeOperation', () => {
       requestBody: {
         required: true,
         schema: {
-          type: 'object',
           properties: [],
-          additionalProperties: true
+          additionalProperties: { type: 'any' }
         }
       },
       response: { type: 'any' },

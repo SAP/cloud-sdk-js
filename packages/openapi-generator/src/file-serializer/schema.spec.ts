@@ -12,7 +12,6 @@ describe('serializeSchema for object schemas', () => {
   it('serializes object schema with nested properties and no additional properties', () => {
     expect(
       serializeSchema({
-        type: 'object',
         properties: [
           {
             name: 'simpleProperty',
@@ -23,19 +22,16 @@ describe('serializeSchema for object schemas', () => {
             name: 'nested-property',
             required: false,
             schema: {
-              type: 'object',
               properties: [
                 {
                   name: 'stringProperty',
                   required: false,
                   schema: { type: 'string' }
                 }
-              ],
-              additionalProperties: false
+              ]
             }
           }
-        ],
-        additionalProperties: false
+        ]
       })
     ).toMatchInlineSnapshot(`
       "{
@@ -50,9 +46,8 @@ describe('serializeSchema for object schemas', () => {
   it('serializes object schema without properties, but additional properties', () => {
     expect(
       serializeSchema({
-        type: 'object',
         properties: [],
-        additionalProperties: true
+        additionalProperties: { type: 'any' }
       })
     ).toEqual('Record<string, any>');
   });
@@ -60,7 +55,6 @@ describe('serializeSchema for object schemas', () => {
   it('serializes object schema without properties, but specific additional properties', () => {
     expect(
       serializeSchema({
-        type: 'object',
         properties: [],
         additionalProperties: { type: 'string' }
       })
@@ -70,9 +64,7 @@ describe('serializeSchema for object schemas', () => {
   it('serializes object schema without properties and no additional properties', () => {
     expect(
       serializeSchema({
-        type: 'object',
-        properties: [],
-        additionalProperties: false
+        properties: []
       })
     ).toEqual('Record<string, any>');
   });
@@ -80,7 +72,6 @@ describe('serializeSchema for object schemas', () => {
   it('serializes object schema with properties and additional properties', () => {
     expect(
       serializeSchema({
-        type: 'object',
         properties: [
           {
             name: 'simpleProperty',
@@ -102,9 +93,8 @@ describe('serializeSchema for array schemas', () => {
   it('serializes array schema with nested array', () => {
     expect(
       serializeSchema({
-        type: 'array',
         uniqueItems: false,
-        items: { type: 'array', items: { type: 'string' } }
+        items: { items: { type: 'string' } }
       })
     ).toEqual('string[][]');
   });
@@ -112,7 +102,6 @@ describe('serializeSchema for array schemas', () => {
   it('serializes array schema with unique items', () => {
     expect(
       serializeSchema({
-        type: 'array',
         uniqueItems: true,
         items: { type: 'string' }
       })
@@ -169,5 +158,5 @@ it('serializeSchema serializes not schema', () => {
     serializeSchema({
       not: { type: 'string' }
     })
-  ).toEqual('Except<T, string>');
+  ).toEqual('Except<any, string>');
 });

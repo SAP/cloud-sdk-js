@@ -44,7 +44,6 @@ describe('hasNotSchema', () => {
         oneOf: [
           { type: 'string' },
           {
-            type: 'object',
             properties: [
               {
                 name: 'notProperty',
@@ -72,7 +71,6 @@ describe('hasNotSchema', () => {
         oneOf: [
           { type: 'string' },
           {
-            type: 'object',
             properties: [
               {
                 name: 'notProperty',
@@ -98,7 +96,6 @@ describe('collectRefs', () => {
         allOf: [
           { type: 'string' },
           {
-            type: 'object',
             properties: [
               {
                 name: 'refProperty',

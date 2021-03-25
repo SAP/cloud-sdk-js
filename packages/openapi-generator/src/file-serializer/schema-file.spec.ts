@@ -1,11 +1,10 @@
 import { schemaFile } from './schema-file';
 describe('interface-file', () => {
-  it('serializes interface file for schema', () => {
+  it('serializes schema file for schema', () => {
     expect(
       schemaFile({
         name: 'MySchema',
         schema: {
-          type: 'object',
           properties: [
             {
               name: 'string-property',
@@ -25,12 +24,11 @@ describe('interface-file', () => {
     `);
   });
 
-  it('serializes interface file for schema including references', () => {
+  it('serializes schema file for schema including references', () => {
     expect(
       schemaFile({
         name: 'MySchema',
         schema: {
-          type: 'object',
           properties: [
             {
               name: 'otherSchema1',
@@ -59,12 +57,11 @@ describe('interface-file', () => {
     `);
   });
 
-  it('serializes interface file for schema including not schema', () => {
+  it('serializes schema file for schema including not schema', () => {
     expect(
       schemaFile({
         name: 'MySchema',
         schema: {
-          type: 'array',
           items: { not: { type: 'integer' } }
         }
       })

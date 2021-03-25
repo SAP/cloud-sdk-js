@@ -60,7 +60,7 @@ export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
  * @returns True if the object is an array schema, false otherwise.
  */
 export function isArraySchema(obj: any): obj is OpenApiArraySchema {
-  return obj?.type === 'array';
+  return obj?.items;
 }
 
 /**
@@ -69,7 +69,7 @@ export function isArraySchema(obj: any): obj is OpenApiArraySchema {
  * @returns True if the object is an object schema, false otherwise.
  */
 export function isObjectSchema(obj: any): obj is OpenApiObjectSchema {
-  return obj?.type === 'object';
+  return obj?.properties;
 }
 
 /**

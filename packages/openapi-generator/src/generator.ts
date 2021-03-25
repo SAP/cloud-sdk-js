@@ -74,9 +74,11 @@ async function generateSources(
   openApiDocument: OpenApiDocument,
   options: GeneratorOptions
 ): Promise<void> {
+  await mkdir(serviceDir, { recursive: true });
+
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
-    await createInterfaceFiles(schemaDir, openApiDocument);
+    await createSchemaFiles(schemaDir, openApiDocument);
     await createFile(
       schemaDir,
       'index.ts',
@@ -136,7 +138,7 @@ async function createApis(
   );
 }
 
-async function createInterfaceFiles(
+async function createSchemaFiles(
   dir: string,
   openApiDocument: OpenApiDocument
 ): Promise<void> {
@@ -159,13 +161,13 @@ function parseServiceName(filePath: string): string {
 
 /**
  * Generates an OpenAPI service from a file.
- * @param filePath The file path where the service to generate is located.
+ * @param inputFilePath The file path where the service to generate is located.
  * @param options Options to configure generation.
  * @param serviceMapping The serviceMapping for the OpenAPI generation.
  * @param serviceName The unique service name to be used.
  */
 async function generateService(
-  filePath: string,
+  inputFilePath: string,
   options: GeneratorOptions,
   serviceMapping: ServiceMapping,
   serviceName: string
@@ -174,28 +176,27 @@ async function generateService(
 
   let openApiDocument;
   try {
-    openApiDocument = await convertOpenApiSpec(filePath);
+    openApiDocument = await convertOpenApiSpec(inputFilePath);
   } catch (err) {
     logger.error(
-      `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
+      `Could not convert document at ${inputFilePath} to the format needed for parsing and generation. Skipping service generation.`
     );
     return;
   }
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceName,
-    filePath,
+    inputFilePath,
     serviceMapping
   );
 
   if (!parsedOpenApiDocument.apis.length) {
     logger.warn(
-      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${filePath}`
+      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${inputFilePath}`
     );
     return;
   }
 
-  await mkdir(serviceDir, { recursive: true });
   await generateSources(serviceDir, parsedOpenApiDocument, options);
 }
 

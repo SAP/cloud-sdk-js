@@ -10,7 +10,10 @@ parameterCannotBeNumber('test');
 // $ExpectError
 parameterCannotBeNumber(2);
 
-type Disallowed = { a: string };
+interface Disallowed {
+  a: string;
+}
+
 function parameterCannotBeDisallowedObject<T>(param: Except<T, Disallowed>): T {
   return param;
 }

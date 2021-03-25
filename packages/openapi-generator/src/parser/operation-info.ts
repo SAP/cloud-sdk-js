@@ -13,7 +13,7 @@ import { Method } from '../openapi-types';
  *  }
  * Each path (pattern), e. g. "my/path-pattern", can define operations for multiple HTTP methods.
  * Each of those operations are then referenced by the same path and can have shared parameters defined on the path.
- */ 
+ */
 export interface OperationInfo {
   /**
    * Path pattern as given in the original OpenAPI document.

@@ -9,7 +9,9 @@
     "esModuleInterop": true
   },
   "files": [
-    "index.ts","../../../scripts/get-changelog.ts","../../../scripts/util.ts"
+    "index.ts",
+    "../../../scripts/get-changelog.ts",
+    "../../../scripts/util.ts"
   ],
   "exclude": []
 }

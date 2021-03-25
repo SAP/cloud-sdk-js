@@ -1,4 +1,5 @@
 # Release Process
+
 All SAP Cloud SDK modules will be published with the same version regardless whether there were changes within the particular packages or not.
 
 ## Preparations for a Release
@@ -7,6 +8,7 @@ Ensure that the changelog is up to date and correct.
 Move up high priority changes, so that they are easier to spot.
 
 ## How to bump a version
+
 The release process can only be triggered by owners of the repository.
 If you are not in the owner list you will not be able to proceed.
 
@@ -18,16 +20,18 @@ If the build is successful a Github release will be drafted.
 The name of the release will be the name of the tag.
 
 ## How to trigger a release
+
 The information from the CHANGELOG.md is automatically copied as description for the draft.
 If you are not happy with this, adjust the release notes on this tag, but keep in mind to also update the CHANGELOG.md.
 ![Adjust release notes](../img/adjust-notes.png)
 
- Once all checks have passed, you can publish the release by pressing the green "Publish" button.
- This will trigger the release pipeline, that publishes all modules to npm.
+Once all checks have passed, you can publish the release by pressing the green "Publish" button.
+This will trigger the release pipeline, that publishes all modules to npm.
 
- As a last follow-up task you can adjust the value for the release date in the CHANGELOG.md and if you already have the link to the blog post as well.
+As a last follow-up task you can adjust the value for the release date in the CHANGELOG.md and if you already have the link to the blog post as well.
 
 ### What to do when the build fails
+
 You should only trigger a release, when the last build on the main branch succeeded.
 If the pipeline still fails for some reason, remove the tag on Github (and locally if you pulled it), before fixing the issue.
 Once the issue is fixed, you will have to create a tag manually.

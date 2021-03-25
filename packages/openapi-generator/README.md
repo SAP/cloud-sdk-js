@@ -1,6 +1,8 @@
 <!-- sap-cloud-sdk-logo -->
 <!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
+
 <!-- sap-cloud-sdk-logo-stop -->
 
 # @sap-cloud-sdk/openapi-generator (Beta)
@@ -15,10 +17,13 @@ The official OpenAPI generator is Java based, therefore you need to have a Java 
 ```bash
 $ npm install @sap-cloud-sdk/openapi-generator
 ```
+
 ## Usage (CLI)
+
 <!-- commands -->
-* [`generate-openapi-client autocomplete [SHELL]`](#generate-openapi-client-autocomplete-shell)
-* [`generate-openapi-client help [COMMAND]`](#generate-openapi-client-help-command)
+
+- [`generate-openapi-client autocomplete [SHELL]`](#generate-openapi-client-autocomplete-shell)
+- [`generate-openapi-client help [COMMAND]`](#generate-openapi-client-help-command)
 
 ## `generate-openapi-client autocomplete [SHELL]`
 
@@ -59,9 +64,11 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+
 <!-- commandsstop -->
 
 # Usage (programatically)
+
 ```ts
 import { generate } from '@sap-cloud-sdk/openapi-generator';
 
@@ -80,6 +87,7 @@ For more detailed overview visit our [generator documentation](https://sap.githu
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+
 ## Support
 
 The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).
@@ -111,4 +119,5 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 ## License
 
 The SAP Cloud SDK is released under the [Apache License Version 2.0.](http://www.apache.org/licenses/)
+
 <!-- sap-cloud-sdk-common-readme-stop -->

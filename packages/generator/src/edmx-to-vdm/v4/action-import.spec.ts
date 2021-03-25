@@ -118,13 +118,12 @@ describe('action-import', () => {
 
     const formatter = getFormatter();
     const service = createServiceMetadataWithActionImportLinksToUndefinedAction();
-    generateActionImportsV4(
-      service,
-      [],
-      [],
-      formatter
+    generateActionImportsV4(service, [], [], formatter);
+    expect(warnSpy).toBeCalledWith(
+      expect.stringContaining(
+        'Could not find actions referenced by the following action imports.'
+      )
     );
-    expect(warnSpy).toBeCalledWith(expect.stringContaining('Could not find actions referenced by the following action imports.'));
   });
 
   it('should not log with warning message, when all actions referenced by action imports are found', () => {
@@ -134,12 +133,7 @@ describe('action-import', () => {
     const formatter = getFormatter();
     const service = createServiceWithActions();
     const entities = generateEntitiesV4(service, [], [], formatter);
-    generateActionImportsV4(
-      service,
-      entities,
-      [],
-      formatter
-    );
+    generateActionImportsV4(service, entities, [], formatter);
     expect(warnSpy).not.toBeCalled();
   });
 });

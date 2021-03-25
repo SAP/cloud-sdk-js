@@ -6,14 +6,12 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import { DefaultApi } from './openapi/api';
 
-
 export const TestServiceDefaultApi = {
-  noTag: () => new OpenApiRequestBuilder<DefaultApi, 'noTag'>(
-    DefaultApi,
-    'noTag'
-  ),
-  defaultTag: () => new OpenApiRequestBuilder<DefaultApi, 'defaultTag'>(
-    DefaultApi,
-    'defaultTag'
-  )
+  noTag: () =>
+    new OpenApiRequestBuilder<DefaultApi, 'noTag'>(DefaultApi, 'noTag'),
+  defaultTag: () =>
+    new OpenApiRequestBuilder<DefaultApi, 'defaultTag'>(
+      DefaultApi,
+      'defaultTag'
+    )
 };

@@ -13,9 +13,9 @@ The Error object returned from the method is the plain ES error object:
 
 ```typescript
 interface Error {
-    name: string;
-    message: string;
-    stack?: string;
+  name: string;
+  message: string;
+  stack?: string;
 }
 ```
 
@@ -45,44 +45,48 @@ Error: Request failed with status code 400
     at processTicksAndRejections (internal/process/task_queues.js:84:21)
 ```
 
-but it is totally unstructured and a pure string. 
+but it is totally unstructured and a pure string.
 The issue raised by the customer asked to have the root cause in a more structured way like:
 
 ```typescript
 interface HttpError {
-    name: string;
-    statucCode:number
-    message: string;    
+  name: string;
+  statucCode: number;
+  message: string;
 }
 ```
+
 This ADR decides the way to improve the situation for the customer.
 
 ## Options
 
 ### Option A: Extending the Error interface/object
 
-We could extend the Error object: 
+We could extend the Error object:
 
 ```typescript
-class HttpError extends Error{
+class HttpError extends Error {
   constructor(...args) {
-    super(...args); 
-    this.name = "HttpError"; 
+    super(...args);
+    this.name = 'HttpError';
   }
 }
 ```
+
 and return a more concrete Error in the `errorWithCause` method.
 There is a `isAxiosError` to detect HTTP errors [see here](https://github.com/axios/axios/pull/1419)
 
 Pros:
+
 - Typed information specific to error: Http, IO, ...
 - Detailed information like HttpStatus etc can be accessed easily.
 
 Cons:
+
 - Not very JavaScripty
 - We need to find the right type in the `errorWithCause` -> big exception mapper factory
 - The consumer needs some kind of "down cast" to find the actual error type returned (catch blocks, instanceof check)
-This becomes even more problematic since there are no `throws declaration` possible.
+  This becomes even more problematic since there are no `throws declaration` possible.
 
 ### Option B: Include the original error
 
@@ -90,27 +94,29 @@ We could include an `originalError` object which contains the original error whi
 
 ```typescript
 class ErrorWithRoot extends Error {
-    name: string;
-    message: string;
-    stack?: string;
-    originalError?: Error;
-    get rootError(): Error | undefined {
-      //recursibly check if originalError is of type ErrorWithRoot and return the first non  ErrorWithRoot error in this chain.
-      if(this.originalError instanceof ErrorWithRoot){
-        return this.originalError.rootError
-      }  
-      return this.originalError;
+  name: string;
+  message: string;
+  stack?: string;
+  originalError?: Error;
+  get rootError(): Error | undefined {
+    //recursibly check if originalError is of type ErrorWithRoot and return the first non  ErrorWithRoot error in this chain.
+    if (this.originalError instanceof ErrorWithRoot) {
+      return this.originalError.rootError;
     }
+    return this.originalError;
+  }
 }
 ```
 
-In addition we also add a getter `rootError` which handles chained ErrorWithRoot.  
+In addition we also add a getter `rootError` which handles chained ErrorWithRoot.
 
 Pros:
-- You can access the original and root error  quickly
+
+- You can access the original and root error quickly
 - No inheritance
 
 Cons:
+
 - A check if the property is there is needed
 - Also here some kind of down cast is needed by the customer to get the information on the original error.
 
@@ -119,60 +125,76 @@ Cons:
 In the API discussion [ADR](https://github.com/SAP/cloud-sdk-js/pull/709) we discussed a change to include more request and response data:
 
 ```typescript
-const [buPa, req, res]: [BusinessPartner, Request, Response] = await BusinessPartner.requestBuilder().getAll().executeRaw(destination);
+const [buPa, req, res]: [
+  BusinessPartner,
+  Request,
+  Response
+] = await BusinessPartner.requestBuilder().getAll().executeRaw(destination);
 ```
 
-One could include a `httpNoThrow` flag to the `execute` methods. 
-If switched on the request builder will not throw HTTP related error but include them in the return. 
+One could include a `httpNoThrow` flag to the `execute` methods.
+If switched on the request builder will not throw HTTP related error but include them in the return.
 
 ```typescript
-const [buPa, httpError]: [BusinessPartner, HttpError] = await BusinessPartner.requestBuilder().httpNoThrow().getAll().execute(destination);
+const [buPa, httpError]: [
+  BusinessPartner,
+  HttpError
+] = await BusinessPartner.requestBuilder()
+  .httpNoThrow()
+  .getAll()
+  .execute(destination);
 ```
 
-The `httpError` object contains information on  HTTP errors appearing during the request. 
+The `httpError` object contains information on HTTP errors appearing during the request.
 
 Pros:
+
 - Information on Http Errors typed
-- No casting needed 
+- No casting needed
 
 Cons:
+
 - Errors are handled differently (Http vs. deserializing errors for example).
 
 ### Option D: Introduce `failable` return types
 
 This pattern](https://medium.com/@dhruvrajvanshi/making-exceptions-type-safe-in-typescript-c4d200ee78e9) is a failable type:
-```typescript
-type Failable<ResultType, ErrorType=Error> = {
-  isError: true;
-  error: ErrorType;
-} | {
-  isError: false;
-  value: ResultType;
-}
-``` 
-
-Introducing such  types is a bit like a throw declaration and you can list the errors which are appearing.
 
 ```typescript
-function execute():Failable<BusinessPartner,AxiosError| ParseError | Error>
+type Failable<ResultType, ErrorType = Error> =
+  | {
+      isError: true;
+      error: ErrorType;
+    }
+  | {
+      isError: false;
+      value: ResultType;
+    };
+```
+
+Introducing such types is a bit like a throw declaration and you can list the errors which are appearing.
+
+```typescript
+function execute(): Failable<BusinessPartner, AxiosError | ParseError | Error>;
 ```
 
 Note that his also goes a bit in the direction of checked exceptions but you have union types and can define type aliases which avoid that you have to change a zillion files you add one more error cause.
 
 Pros:
+
 - Error handling strongly typed
 - Errors are clearly handled by return not catch
 
 Cons:
+
 - People are not used to this pattern but expect to catch stuff
 - The customer needs to check the possible types (down cast problem from above)
 - Breaking API change
 
-
 ## Decision
 
 We take option B.
-Check convention on MDN how what to throw i.e. should you extend from the error object. 
+Check convention on MDN how what to throw i.e. should you extend from the error object.
 Also adjust the name `ErrorWithRoot` to something better.
 
 The colleagues from exchange rate lib had problems with the [prototype chain](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html#support-for-newtarget).

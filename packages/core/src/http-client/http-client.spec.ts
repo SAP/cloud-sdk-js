@@ -6,12 +6,15 @@ import { Destination, Protocol } from '../connectivity';
 import {
   DestinationHttpRequestConfig,
   HttpMethod,
-  HttpRequest, HttpRequestConfig
+  HttpRequest,
+  HttpRequestConfig
 } from './http-client-types';
 import {
   addDestinationToRequestConfig,
   buildHttpRequest,
-  executeHttpRequest, shouldHandleCsrfToken, xCsrfTokenHeaderKey
+  executeHttpRequest,
+  shouldHandleCsrfToken,
+  xCsrfTokenHeaderKey
 } from './http-client';
 
 describe('generic http client', () => {
@@ -341,7 +344,7 @@ describe('generic http client', () => {
         headers: {
           authorization: 'custom-auth-header',
           'content-type': 'application/json',
-          accept: 'application/json',
+          accept: 'application/json'
         },
         data: {
           a: 1
@@ -361,13 +364,13 @@ describe('generic http client', () => {
       expect(shouldHandleCsrfToken(request, options)).toEqual(false);
     });
 
-    it('should not handle csrf token when fetchCsrfToken is false',  () => {
+    it('should not handle csrf token when fetchCsrfToken is false', () => {
       const request = { method: 'post' } as HttpRequestConfig;
       const options = { fetchCsrfToken: false };
       expect(shouldHandleCsrfToken(request, options)).toEqual(false);
     });
 
-    it('should handle csrf token for non-get request when fetchCsrfToken is true',  () => {
+    it('should handle csrf token for non-get request when fetchCsrfToken is true', () => {
       const request = { method: 'patch' } as HttpRequestConfig;
       const options = { fetchCsrfToken: true };
       expect(shouldHandleCsrfToken(request, options)).toEqual(true);

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -12,5 +12,5 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, '__esModule', { value: true });
 //# sourceMappingURL=test-entity.js.map

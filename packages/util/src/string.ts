@@ -48,5 +48,7 @@ export function trim(string: string): string {
  * @returns String without extension.
  */
 export function removeFileExtension(string: string): string {
-  return string.includes('.') ? string.split('.').slice(0, -1).join('.') : string;
+  return string.includes('.')
+    ? string.split('.').slice(0, -1).join('.')
+    : string;
 }

@@ -16,37 +16,52 @@ import { RequestArgs, BaseAPI } from '../base';
  * TagDotApi - axios parameter creator
  * @export
  */
-export declare const TagDotApiAxiosParamCreator: (configuration?: Configuration | undefined) => {
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    tagWithDot: (options?: any) => Promise<RequestArgs>;
+export declare const TagDotApiAxiosParamCreator: (
+  configuration?: Configuration | undefined
+) => {
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  tagWithDot: (options?: any) => Promise<RequestArgs>;
 };
 /**
  * TagDotApi - functional programming interface
  * @export
  */
-export declare const TagDotApiFp: (configuration?: Configuration | undefined) => {
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    tagWithDot(options?: any): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>>;
+export declare const TagDotApiFp: (
+  configuration?: Configuration | undefined
+) => {
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  tagWithDot(
+    options?: any
+  ): Promise<
+    (
+      axios?: AxiosInstance | undefined,
+      basePath?: string | undefined
+    ) => AxiosPromise<void>
+  >;
 };
 /**
  * TagDotApi - factory interface
  * @export
  */
-export declare const TagDotApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    tagWithDot(options?: any): AxiosPromise<void>;
+export declare const TagDotApiFactory: (
+  configuration?: Configuration | undefined,
+  basePath?: string | undefined,
+  axios?: AxiosInstance | undefined
+) => {
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   */
+  tagWithDot(options?: any): AxiosPromise<void>;
 };
 /**
  * TagDotApi - object-oriented interface
@@ -55,12 +70,12 @@ export declare const TagDotApiFactory: (configuration?: Configuration | undefine
  * @extends {BaseAPI}
  */
 export declare class TagDotApi extends BaseAPI {
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TagDotApi
-     */
-    tagWithDot(options?: any): Promise<import("axios").AxiosResponse<void>>;
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof TagDotApi
+   */
+  tagWithDot(options?: any): Promise<import('axios').AxiosResponse<void>>;
 }
 //# sourceMappingURL=tag-dot-api.d.ts.map

@@ -82,11 +82,9 @@ export class UpdateRequestBuilder<EntityT extends Entity>
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse | undefined> {
+  ): Promise<HttpRequestAndResponse| undefined> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
-      logger.info(
-        'The request is not executed because no properties of the entity are modified.'
-      );
+      logger.info('The request is not executed because no properties of the entity are modified.');
       return;
     }
 

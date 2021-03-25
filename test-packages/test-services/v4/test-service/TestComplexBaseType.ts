@@ -3,15 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  ComplexTypeField,
-  ComplexTypeStringPropertyField,
-  ConstructorOrField,
-  EntityV4,
-  FieldType,
-  PropertyMetadata,
-  deserializeComplexTypeV4
-} from '@sap-cloud-sdk/core';
+import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
 
 /**
  * TestComplexBaseType
@@ -35,18 +27,12 @@ export function createTestComplexBaseType(json: any): TestComplexBaseType {
  * TestComplexBaseTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestComplexBaseTypeField<
-  EntityT extends EntityV4
-> extends ComplexTypeField<EntityT, TestComplexBaseType> {
+export class TestComplexBaseTypeField<EntityT extends EntityV4> extends ComplexTypeField<EntityT, TestComplexBaseType> {
   /**
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'BaseStringProperty',
-    this,
-    'Edm.String'
-  );
+  baseStringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('BaseStringProperty', this, 'Edm.String');
 
   /**
    * Creates an instance of TestComplexBaseTypeField.
@@ -63,21 +49,17 @@ export namespace TestComplexBaseType {
   /**
    * Metadata information on all properties of the `TestComplexBaseType` complex type.
    */
-  export const _propertyMetadata: PropertyMetadata<TestComplexBaseType>[] = [
-    {
-      originalName: 'BaseStringProperty',
-      name: 'baseStringProperty',
-      type: 'Edm.String',
-      isCollection: false
-    }
-  ];
+  export const _propertyMetadata: PropertyMetadata<TestComplexBaseType>[] = [{
+    originalName: 'BaseStringProperty',
+    name: 'baseStringProperty',
+    type: 'Edm.String',
+    isCollection: false
+  }];
 
   /**
    * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
    */
-  export function build(json: {
-    [keys: string]: FieldType;
-  }): TestComplexBaseType {
+  export function build(json: { [keys: string]: FieldType }): TestComplexBaseType {
     return deserializeComplexTypeV4(json, TestComplexBaseType);
   }
 }

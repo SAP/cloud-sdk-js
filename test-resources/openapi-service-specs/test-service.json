@@ -26,7 +26,9 @@
   "paths": {
     "/entities": {
       "get": {
-        "tags": ["entity"],
+        "tags": [
+          "entity"
+        ],
         "summary": "Get entities",
         "description": "Get all entities",
         "operationId": "getAllEntities",
@@ -87,7 +89,10 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["value1", "value2"]
+              "enum": [
+                "value1",
+                "value2"
+              ]
             }
           },
           {
@@ -98,7 +103,10 @@
             "schema": {
               "type": "integer",
               "format": "int32",
-              "enum": [1, 2]
+              "enum": [
+                1,
+                2
+              ]
             }
           },
           {
@@ -109,7 +117,10 @@
             "schema": {
               "type": "number",
               "format": "double",
-              "enum": [1, 2]
+              "enum": [
+                1,
+                2
+              ]
             }
           },
           {
@@ -119,7 +130,10 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "enum": ["true", "false"]
+              "enum": [
+                "true",
+                "false"
+              ]
             }
           }
         ],
@@ -143,7 +157,9 @@
         }
       },
       "post": {
-        "tags": ["entity"],
+        "tags": [
+          "entity"
+        ],
         "summary": "Create entity",
         "description": "Create entity",
         "operationId": "createEntity",
@@ -170,7 +186,9 @@
         }
       },
       "patch": {
-        "tags": ["entity"],
+        "tags": [
+          "entity"
+        ],
         "operationId": "updateEntity",
         "requestBody": {
           "content": {
@@ -188,7 +206,9 @@
         }
       },
       "delete": {
-        "tags": ["entity"],
+        "tags": [
+          "entity"
+        ],
         "operationId": "deleteEntity",
         "requestBody": {
           "content": {
@@ -209,7 +229,9 @@
         }
       },
       "put": {
-        "tags": ["entity"],
+        "tags": [
+          "entity"
+        ],
         "operationId": "updateEntityWithPut",
         "requestBody": {
           "content": {
@@ -232,7 +254,9 @@
     },
     "/entities/{entityId}": {
       "get": {
-        "tags": ["entity"],
+        "tags": [
+          "entity"
+        ],
         "summary": "Get entity by id",
         "description": "Get entity by id",
         "operationId": "getEntityByKey",
@@ -271,7 +295,9 @@
     },
     "/entities/count": {
       "get": {
-        "tags": ["entity"],
+        "tags": [
+          "entity"
+        ],
         "summary": "Count entities",
         "description": "Count entities",
         "operationId": "countEntities",
@@ -321,7 +347,9 @@
         }
       ],
       "get": {
-        "tags": ["test case"],
+        "tags": [
+          "test case"
+        ],
         "operationId": "testCaseGetRequiredParameters",
         "parameters": [
           {
@@ -366,7 +394,9 @@
         }
       },
       "post": {
-        "tags": ["test case"],
+        "tags": [
+          "test case"
+        ],
         "operationId": "testCasePostRequiredParameters",
         "requestBody": {
           "required": true,
@@ -405,7 +435,9 @@
     },
     "/test-cases/parameters/{duplicateParam}": {
       "get": {
-        "tags": ["test case"],
+        "tags": [
+          "test case"
+        ],
         "operationId": "testCaseGetDuplicateParameters",
         "parameters": [
           {
@@ -434,7 +466,9 @@
     },
     "/test-cases/no-operation-id": {
       "get": {
-        "tags": ["test case"],
+        "tags": [
+          "test case"
+        ],
         "responses": {
           "201": {
             "description": "no content"
@@ -444,7 +478,9 @@
     },
     "/test-cases/duplicate-operation-ids": {
       "get": {
-        "tags": ["test case"],
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId",
         "responses": {
           "201": {
@@ -453,7 +489,9 @@
         }
       },
       "post": {
-        "tags": ["test case"],
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId",
         "responses": {
           "201": {
@@ -462,7 +500,9 @@
         }
       },
       "put": {
-        "tags": ["test case"],
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId_1",
         "responses": {
           "201": {
@@ -471,7 +511,9 @@
         }
       },
       "patch": {
-        "tags": ["test case"],
+        "tags": [
+          "test case"
+        ],
         "operationId": "duplicateOperationId1",
         "responses": {
           "201": {
@@ -483,7 +525,9 @@
     "/test-cases/special-tag": {
       "get": {
         "operationId": "tag with dot",
-        "tags": ["tag.dot"],
+        "tags": [
+          "tag.dot"
+        ],
         "responses": {
           "201": {
             "description": "no content"
@@ -492,7 +536,9 @@
       },
       "post": {
         "operationId": "tag with space",
-        "tags": ["tag space"],
+        "tags": [
+          "tag space"
+        ],
         "responses": {
           "201": {
             "description": "no content"
@@ -510,7 +556,9 @@
         }
       },
       "post": {
-        "tags": ["default"],
+        "tags": [
+          "default"
+        ],
         "operationId": "defaultTag",
         "responses": {
           "201": {
@@ -531,7 +579,9 @@
       },
       "post": {
         "x-sap-cloud-sdk-operation-name": "nicePostFunction",
-        "tags": ["default"],
+        "tags": [
+          "default"
+        ],
         "operationId": "testCasesExtensionPost",
         "responses": {
           "201": {
@@ -545,7 +595,9 @@
     "schemas": {
       "TestEntity": {
         "type": "object",
-        "required": ["keyProperty"],
+        "required": [
+          "keyProperty"
+        ],
         "properties": {
           "keyProperty": {
             "type": "string",
@@ -600,7 +652,9 @@
       },
       "SimpleTestEntity": {
         "type": "object",
-        "required": ["stringProperty"],
+        "required": [
+          "stringProperty"
+        ],
         "properties": {
           "stringProperty": {
             "type": "string",

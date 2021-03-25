@@ -1,13 +1,7 @@
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { mockedConnectivityServiceProxyConfig } from '../../test/test-util/environment-mocks';
-import {
-  Destination,
-  getProtocolOrDefault,
-  Protocol,
-  proxyAgent,
-  ProxyConfiguration
-} from '../connectivity';
+import { Destination, getProtocolOrDefault, Protocol, proxyAgent, ProxyConfiguration } from '../connectivity';
 import { getAgentConfig, getUrlProtocol } from './http-agent';
 
 describe('createAgent', () => {
@@ -38,10 +32,7 @@ describe('createAgent', () => {
 
   it('returns a proxy agent if there is a proxy setting on the destination', () => {
     expect(getAgentConfig(proxyDestination)['httpsAgent']).toEqual(
-      new HttpsProxyAgent({
-        ...mockedConnectivityServiceProxyConfig,
-        rejectUnauthorized: true
-      })
+      new HttpsProxyAgent({ ...mockedConnectivityServiceProxyConfig,        rejectUnauthorized:true })
     );
   });
 
@@ -74,12 +65,7 @@ describe('createAgent', () => {
       getAgentConfig({ ...proxyDestination, ...trustAllDestination })[
         'httpsAgent'
       ]
-    ).toEqual(
-      new HttpsProxyAgent({
-        ...mockedConnectivityServiceProxyConfig,
-        rejectUnauthorized: false
-      })
-    );
+    ).toEqual(new HttpsProxyAgent({ ...mockedConnectivityServiceProxyConfig,rejectUnauthorized:false }));
   });
 
   it('should return the http protocol', () => {
@@ -112,10 +98,10 @@ describe('createAgent', () => {
   });
 
   it('should return a proxy-agent with the same protocol as the destination.', () => {
-    const proxyConfiguration: ProxyConfiguration = {
+    const proxyConfiguration: ProxyConfiguration= {
       host: 'some.host.com',
-      port: 4711,
-      protocol: Protocol.HTTPS
+        port: 4711,
+        protocol: Protocol.HTTPS
     };
     const destHttpWithProxy: Destination = {
       url: 'http://example.com',

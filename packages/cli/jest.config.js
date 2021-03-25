@@ -4,6 +4,6 @@ module.exports = {
   ...commonConfig,
   displayName: 'cli',
   testRunner: 'jest-circus/runner',
-  testPathIgnorePatterns: ['/test/test-output/', '/test/nest', '/test/express'],
+  testPathIgnorePatterns: ['/test/test-output/','/test/nest','/test/express'],
   setupFilesAfterEnv: ['jest-extended']
 };

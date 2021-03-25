@@ -4,14 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
-import {
-  AllFields,
-  CustomFieldV4,
-  EntityBuilderType,
-  EntityV4,
-  Field,
-  StringField
-} from '@sap-cloud-sdk/core';
+import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -24,8 +17,7 @@ export class Airlines extends EntityV4 implements AirlinesType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath =
-    'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * Airline Code.
    */
@@ -79,20 +71,12 @@ export namespace Airlines {
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const AIRLINE_CODE: StringField<Airlines> = new StringField(
-    'AirlineCode',
-    Airlines,
-    'Edm.String'
-  );
+  export const AIRLINE_CODE: StringField<Airlines> = new StringField('AirlineCode', Airlines, 'Edm.String');
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME: StringField<Airlines> = new StringField(
-    'Name',
-    Airlines,
-    'Edm.String'
-  );
+  export const NAME: StringField<Airlines> = new StringField('Name', Airlines, 'Edm.String');
   /**
    * All fields of the Airlines entity.
    */
@@ -111,13 +95,8 @@ export namespace Airlines {
   /**
    * Mapping of all key field names to the respective static field property Airlines.
    */
-  export const _keys: {
-    [keys: string]: Field<Airlines>;
-  } = Airlines._keyFields.reduce(
-    (acc: { [keys: string]: Field<Airlines> }, field: Field<Airlines>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<Airlines> } = Airlines._keyFields.reduce((acc: { [keys: string]: Field<Airlines> }, field: Field<Airlines>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

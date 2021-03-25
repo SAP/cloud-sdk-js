@@ -1,6 +1,6 @@
 ## Why is moment imported differently?
 
-When you see moment imports you see something like: `import moment from 'moment'`
+When you see moment imports you see something like: `import moment from 'moment'` 
 and then when it is used: `moment.Moment`.
 
 The reason for this is a missing `export as namespace moment` in the type definition of moment.

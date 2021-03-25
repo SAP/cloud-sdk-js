@@ -13,3 +13,4 @@ This package contains the OpenAPI client for the SwaggerYamlService.
 - [Product page of the SAP Cloud SDK](https://developers.sap.com/topics/cloud-sdk.html)
 - [SAP Cloud SDK Continuous Delivery Toolkit](https://github.com/SAP/cloud-s4-sdk-pipeline)
 - [Example Applications using the SAP Cloud SDK](https://github.com/SAP/cloud-s4-sdk-examples)
+    

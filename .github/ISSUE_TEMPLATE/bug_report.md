@@ -13,7 +13,6 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-
 1. Set up ...
 2. Execute ...
 3. Confirm ...
@@ -26,10 +25,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Used Versions:**
-
-- node version via `node -v`
-- npm version via `npm -v`
-- SAP Cloud SDK version you used as dependency
+ - node version via `node -v`
+ - npm version via `npm -v`
+ - SAP Cloud SDK version you used as dependency
 
 **Code Examples**
 If applicable, add code snippets as examples to help explain your problem. Please remove sensitive information.

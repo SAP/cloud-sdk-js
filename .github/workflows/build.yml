@@ -6,7 +6,7 @@ on:
     branches: [main]
     tags: ['v*']
     paths-ignore:
-      - 'docs/**'
+    - 'docs/**'
 
 jobs:
   tests:

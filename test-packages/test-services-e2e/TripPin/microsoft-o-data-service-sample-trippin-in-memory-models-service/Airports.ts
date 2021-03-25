@@ -5,14 +5,7 @@
  */
 import { AirportsRequestBuilder } from './AirportsRequestBuilder';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
-import {
-  AllFields,
-  CustomFieldV4,
-  EntityBuilderType,
-  EntityV4,
-  Field,
-  StringField
-} from '@sap-cloud-sdk/core';
+import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -25,8 +18,7 @@ export class Airports extends EntityV4 implements AirportsType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath =
-    'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * Icao Code.
    */
@@ -90,43 +82,26 @@ export namespace Airports {
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ICAO_CODE: StringField<Airports> = new StringField(
-    'IcaoCode',
-    Airports,
-    'Edm.String'
-  );
+  export const ICAO_CODE: StringField<Airports> = new StringField('IcaoCode', Airports, 'Edm.String');
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME: StringField<Airports> = new StringField(
-    'Name',
-    Airports,
-    'Edm.String'
-  );
+  export const NAME: StringField<Airports> = new StringField('Name', Airports, 'Edm.String');
   /**
    * Static representation of the [[iataCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const IATA_CODE: StringField<Airports> = new StringField(
-    'IataCode',
-    Airports,
-    'Edm.String'
-  );
+  export const IATA_CODE: StringField<Airports> = new StringField('IataCode', Airports, 'Edm.String');
   /**
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LOCATION: AirportLocationField<Airports> = new AirportLocationField(
-    'Location',
-    Airports
-  );
+  export const LOCATION: AirportLocationField<Airports> = new AirportLocationField('Location', Airports);
   /**
    * All fields of the Airports entity.
    */
-  export const _allFields: Array<
-    StringField<Airports> | AirportLocationField<Airports>
-  > = [
+  export const _allFields: Array<StringField<Airports> | AirportLocationField<Airports>> = [
     Airports.ICAO_CODE,
     Airports.NAME,
     Airports.IATA_CODE,
@@ -143,13 +118,8 @@ export namespace Airports {
   /**
    * Mapping of all key field names to the respective static field property Airports.
    */
-  export const _keys: {
-    [keys: string]: Field<Airports>;
-  } = Airports._keyFields.reduce(
-    (acc: { [keys: string]: Field<Airports> }, field: Field<Airports>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<Airports> } = Airports._keyFields.reduce((acc: { [keys: string]: Field<Airports> }, field: Field<Airports>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

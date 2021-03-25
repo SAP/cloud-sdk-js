@@ -19,9 +19,9 @@ paths:
       operationId: postEntity
       description: Test POST
       parameters:
-        - in: query
-          name: queryParam
-          type: string
+      - in: query
+        name: queryParam
+        type: string
       responses:
         '200':
           description: Success

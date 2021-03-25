@@ -44,9 +44,8 @@ export abstract class ActionFunctionImportRequestBuilder<
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<ReturnT> {
-    return this.executeRaw(destination, options).then(({ response }) =>
-      this.responseTransformer(response.data)
-    );
+    return this.executeRaw(destination, options)
+      .then(({ response }) => this.responseTransformer(response.data));
   }
 
   /**
@@ -59,10 +58,9 @@ export abstract class ActionFunctionImportRequestBuilder<
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse> {
-    return this.build(destination, options).then(request =>
-      request.executeRaw()
-    );
+  ): Promise<HttpRequestAndResponse>{
+    return this.build(destination, options)
+      .then(request => request.executeRaw());
   }
 }
 

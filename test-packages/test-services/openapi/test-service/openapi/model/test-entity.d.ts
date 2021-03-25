@@ -16,65 +16,65 @@ import { SimpleTestEntity } from './simple-test-entity';
  * @interface TestEntity
  */
 export interface TestEntity {
-  /**
-   *
-   * @type {string}
-   * @memberof TestEntity
-   */
-  keyProperty: string;
-  /**
-   *
-   * @type {string}
-   * @memberof TestEntity
-   */
-  stringProperty?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof TestEntity
-   */
-  dateProperty?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof TestEntity
-   */
-  dateTimeProperty?: string;
-  /**
-   *
-   * @type {number}
-   * @memberof TestEntity
-   */
-  int32Property?: number;
-  /**
-   *
-   * @type {number}
-   * @memberof TestEntity
-   */
-  int64Property?: number;
-  /**
-   *
-   * @type {number}
-   * @memberof TestEntity
-   */
-  floatProperty?: number;
-  /**
-   *
-   * @type {number}
-   * @memberof TestEntity
-   */
-  doubleProperty?: number;
-  /**
-   *
-   * @type {SimpleTestEntity}
-   * @memberof TestEntity
-   */
-  linkedSimpleTestEntity?: SimpleTestEntity;
-  /**
-   *
-   * @type {Array<SimpleTestEntity>}
-   * @memberof TestEntity
-   */
-  linkedSimpleTestEntityCollection?: Array<SimpleTestEntity>;
+    /**
+     *
+     * @type {string}
+     * @memberof TestEntity
+     */
+    keyProperty: string;
+    /**
+     *
+     * @type {string}
+     * @memberof TestEntity
+     */
+    stringProperty?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof TestEntity
+     */
+    dateProperty?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof TestEntity
+     */
+    dateTimeProperty?: string;
+    /**
+     *
+     * @type {number}
+     * @memberof TestEntity
+     */
+    int32Property?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof TestEntity
+     */
+    int64Property?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof TestEntity
+     */
+    floatProperty?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof TestEntity
+     */
+    doubleProperty?: number;
+    /**
+     *
+     * @type {SimpleTestEntity}
+     * @memberof TestEntity
+     */
+    linkedSimpleTestEntity?: SimpleTestEntity;
+    /**
+     *
+     * @type {Array<SimpleTestEntity>}
+     * @memberof TestEntity
+     */
+    linkedSimpleTestEntityCollection?: Array<SimpleTestEntity>;
 }
 //# sourceMappingURL=test-entity.d.ts.map

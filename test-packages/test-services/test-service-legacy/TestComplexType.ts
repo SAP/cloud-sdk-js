@@ -5,24 +5,8 @@
  */
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import {
-  TestNestedComplexType,
-  TestNestedComplexTypeField
-} from './TestNestedComplexType';
-import {
-  ComplexTypeBigNumberPropertyField,
-  ComplexTypeBooleanPropertyField,
-  ComplexTypeDatePropertyField,
-  ComplexTypeField,
-  ComplexTypeNumberPropertyField,
-  ComplexTypeStringPropertyField,
-  ComplexTypeTimePropertyField,
-  Entity,
-  FieldType,
-  Time,
-  createComplexType,
-  edmToTs
-} from '@sap-cloud-sdk/core';
+import { TestNestedComplexType, TestNestedComplexTypeField } from './TestNestedComplexType';
+import { ComplexTypeBigNumberPropertyField, ComplexTypeBooleanPropertyField, ComplexTypeDatePropertyField, ComplexTypeField, ComplexTypeNumberPropertyField, ComplexTypeStringPropertyField, ComplexTypeTimePropertyField, Entity, FieldType, Time, createComplexType, edmToTs } from '@sap-cloud-sdk/core';
 
 /**
  * TestComplexType
@@ -121,208 +105,108 @@ export function createTestComplexType_1(json: any): TestComplexType {
  * TestComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class TestComplexTypeField<
-  EntityT extends Entity
-> extends ComplexTypeField<EntityT> {
+export class TestComplexTypeField<EntityT extends Entity> extends ComplexTypeField<EntityT> {
   /**
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'StringProperty',
-    this,
-    'Edm.String'
-  );
+  stringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('StringProperty', this, 'Edm.String');
   /**
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: ComplexTypeBooleanPropertyField<EntityT> = new ComplexTypeBooleanPropertyField(
-    'BooleanProperty',
-    this,
-    'Edm.Boolean'
-  );
+  booleanProperty: ComplexTypeBooleanPropertyField<EntityT> = new ComplexTypeBooleanPropertyField('BooleanProperty', this, 'Edm.Boolean');
   /**
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'GuidProperty',
-    this,
-    'Edm.Guid'
-  );
+  guidProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('GuidProperty', this, 'Edm.Guid');
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int16Property: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'Int16Property',
-    this,
-    'Edm.Int16'
-  );
+  int16Property: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('Int16Property', this, 'Edm.Int16');
   /**
    * Representation of the [[TestComplexType.int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int32Property: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'Int32Property',
-    this,
-    'Edm.Int32'
-  );
+  int32Property: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('Int32Property', this, 'Edm.Int32');
   /**
    * Representation of the [[TestComplexType.int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int64Property: ComplexTypeBigNumberPropertyField<EntityT> = new ComplexTypeBigNumberPropertyField(
-    'Int64Property',
-    this,
-    'Edm.Int64'
-  );
+  int64Property: ComplexTypeBigNumberPropertyField<EntityT> = new ComplexTypeBigNumberPropertyField('Int64Property', this, 'Edm.Int64');
   /**
    * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  decimalProperty: ComplexTypeBigNumberPropertyField<EntityT> = new ComplexTypeBigNumberPropertyField(
-    'DecimalProperty',
-    this,
-    'Edm.Decimal'
-  );
+  decimalProperty: ComplexTypeBigNumberPropertyField<EntityT> = new ComplexTypeBigNumberPropertyField('DecimalProperty', this, 'Edm.Decimal');
   /**
    * Representation of the [[TestComplexType.singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  singleProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'SingleProperty',
-    this,
-    'Edm.Single'
-  );
+  singleProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('SingleProperty', this, 'Edm.Single');
   /**
    * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  doubleProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'DoubleProperty',
-    this,
-    'Edm.Double'
-  );
+  doubleProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('DoubleProperty', this, 'Edm.Double');
   /**
    * Representation of the [[TestComplexType.floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  floatProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'FloatProperty',
-    this,
-    'Edm.Float'
-  );
+  floatProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('FloatProperty', this, 'Edm.Float');
   /**
    * Representation of the [[TestComplexType.timeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeProperty: ComplexTypeTimePropertyField<EntityT> = new ComplexTypeTimePropertyField(
-    'TimeProperty',
-    this,
-    'Edm.Time'
-  );
+  timeProperty: ComplexTypeTimePropertyField<EntityT> = new ComplexTypeTimePropertyField('TimeProperty', this, 'Edm.Time');
   /**
    * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField(
-    'DateTimeProperty',
-    this,
-    'Edm.DateTime'
-  );
+  dateTimeProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField('DateTimeProperty', this, 'Edm.DateTime');
   /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeOffSetProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField(
-    'DateTimeOffSetProperty',
-    this,
-    'Edm.DateTimeOffset'
-  );
+  dateTimeOffSetProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField('DateTimeOffSetProperty', this, 'Edm.DateTimeOffset');
   /**
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  byteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'ByteProperty',
-    this,
-    'Edm.Byte'
-  );
+  byteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('ByteProperty', this, 'Edm.Byte');
   /**
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  sByteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'SByteProperty',
-    this,
-    'Edm.SByte'
-  );
+  sByteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField('SByteProperty', this, 'Edm.SByte');
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty: TestNestedComplexTypeField<EntityT> = new TestNestedComplexTypeField(
-    'ComplexTypeProperty',
-    this
-  );
+  complexTypeProperty: TestNestedComplexTypeField<EntityT> = new TestNestedComplexTypeField('ComplexTypeProperty', this);
 }
 
 export namespace TestComplexType {
   export function build(json: { [keys: string]: FieldType }): TestComplexType {
     return createComplexType(json, {
-      StringProperty: (stringProperty: string) => ({
-        stringProperty: edmToTs(stringProperty, 'Edm.String')
-      }),
-      BooleanProperty: (booleanProperty: boolean) => ({
-        booleanProperty: edmToTs(booleanProperty, 'Edm.Boolean')
-      }),
-      GuidProperty: (guidProperty: string) => ({
-        guidProperty: edmToTs(guidProperty, 'Edm.Guid')
-      }),
-      Int16Property: (int16Property: number) => ({
-        int16Property: edmToTs(int16Property, 'Edm.Int16')
-      }),
-      Int32Property: (int32Property: number) => ({
-        int32Property: edmToTs(int32Property, 'Edm.Int32')
-      }),
-      Int64Property: (int64Property: BigNumber) => ({
-        int64Property: edmToTs(int64Property, 'Edm.Int64')
-      }),
-      DecimalProperty: (decimalProperty: BigNumber) => ({
-        decimalProperty: edmToTs(decimalProperty, 'Edm.Decimal')
-      }),
-      SingleProperty: (singleProperty: number) => ({
-        singleProperty: edmToTs(singleProperty, 'Edm.Single')
-      }),
-      DoubleProperty: (doubleProperty: number) => ({
-        doubleProperty: edmToTs(doubleProperty, 'Edm.Double')
-      }),
-      FloatProperty: (floatProperty: number) => ({
-        floatProperty: edmToTs(floatProperty, 'Edm.Float')
-      }),
-      TimeProperty: (timeProperty: Time) => ({
-        timeProperty: edmToTs(timeProperty, 'Edm.Time')
-      }),
-      DateTimeProperty: (dateTimeProperty: Moment) => ({
-        dateTimeProperty: edmToTs(dateTimeProperty, 'Edm.DateTime')
-      }),
-      DateTimeOffSetProperty: (dateTimeOffSetProperty: Moment) => ({
-        dateTimeOffSetProperty: edmToTs(
-          dateTimeOffSetProperty,
-          'Edm.DateTimeOffset'
-        )
-      }),
-      ByteProperty: (byteProperty: number) => ({
-        byteProperty: edmToTs(byteProperty, 'Edm.Byte')
-      }),
-      SByteProperty: (sByteProperty: number) => ({
-        sByteProperty: edmToTs(sByteProperty, 'Edm.SByte')
-      }),
-      ComplexTypeProperty: (complexTypeProperty: TestNestedComplexType) => ({
-        complexTypeProperty: TestNestedComplexType.build(complexTypeProperty)
-      })
+      StringProperty: (stringProperty: string) => ({ stringProperty: edmToTs(stringProperty, 'Edm.String') }),
+      BooleanProperty: (booleanProperty: boolean) => ({ booleanProperty: edmToTs(booleanProperty, 'Edm.Boolean') }),
+      GuidProperty: (guidProperty: string) => ({ guidProperty: edmToTs(guidProperty, 'Edm.Guid') }),
+      Int16Property: (int16Property: number) => ({ int16Property: edmToTs(int16Property, 'Edm.Int16') }),
+      Int32Property: (int32Property: number) => ({ int32Property: edmToTs(int32Property, 'Edm.Int32') }),
+      Int64Property: (int64Property: BigNumber) => ({ int64Property: edmToTs(int64Property, 'Edm.Int64') }),
+      DecimalProperty: (decimalProperty: BigNumber) => ({ decimalProperty: edmToTs(decimalProperty, 'Edm.Decimal') }),
+      SingleProperty: (singleProperty: number) => ({ singleProperty: edmToTs(singleProperty, 'Edm.Single') }),
+      DoubleProperty: (doubleProperty: number) => ({ doubleProperty: edmToTs(doubleProperty, 'Edm.Double') }),
+      FloatProperty: (floatProperty: number) => ({ floatProperty: edmToTs(floatProperty, 'Edm.Float') }),
+      TimeProperty: (timeProperty: Time) => ({ timeProperty: edmToTs(timeProperty, 'Edm.Time') }),
+      DateTimeProperty: (dateTimeProperty: Moment) => ({ dateTimeProperty: edmToTs(dateTimeProperty, 'Edm.DateTime') }),
+      DateTimeOffSetProperty: (dateTimeOffSetProperty: Moment) => ({ dateTimeOffSetProperty: edmToTs(dateTimeOffSetProperty, 'Edm.DateTimeOffset') }),
+      ByteProperty: (byteProperty: number) => ({ byteProperty: edmToTs(byteProperty, 'Edm.Byte') }),
+      SByteProperty: (sByteProperty: number) => ({ sByteProperty: edmToTs(sByteProperty, 'Edm.SByte') }),
+      ComplexTypeProperty: (complexTypeProperty: TestNestedComplexType) => ({ complexTypeProperty: TestNestedComplexType.build(complexTypeProperty) })
     });
   }
 }

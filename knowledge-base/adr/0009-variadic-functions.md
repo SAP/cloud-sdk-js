@@ -24,9 +24,7 @@ doSomething([])
 doSomething([a])
 doSomething([a,b])
 ```
-
 in addition to the already possible:
-
 ```
 doSomething()
 doSomething('a')
@@ -36,7 +34,6 @@ doSomething('a','b')
 ## Solution
 
 We use method overloading:
-
 ```
 function functionWithVariableArguments(...varargs: string[]);
 function functionWithVariableArguments(array: string[]);

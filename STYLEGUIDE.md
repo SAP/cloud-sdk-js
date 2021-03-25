@@ -5,7 +5,6 @@ Most of the rules are being checked by lint, but not all of them can be checked.
 Those that are checked by lint are marked by the following symbol: ✓.
 
 #### Table of Contents
-
 - [Naming](#naming)
   - [Use kebap case for file names](#use-kebap-case-for-file-names)
   - [Use camel case for variable names ✓](#use-camel-case-for-variable-names-)
@@ -44,24 +43,21 @@ Those that are checked by lint are marked by the following symbol: ✓.
 ## Naming
 
 ### Use kebap case for file names
-
 Use kebap case for all file names and directories, except for generated files and markdown files, that are not in the knowledge base.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use camel case */
-someDir / someClass.ts;
+someDir/someClass.ts
 
 /* Don't use pascal case */
-SomeDir / SomeClass.ts;
+SomeDir/SomeClass.ts
 
 /* Don't use snake case */
-some_dir / some_class.ts;
+some_dir/some_class.ts
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use kebap case */
 some-dir/some-class.ts
@@ -72,12 +68,10 @@ node_modules/dependency/index.js
 ```
 
 ### Use camel case for variable names ✓
-
 This is common in most JavaScript/TypeScript projects.
 This rule applies to **all** variables, even static ones or reusable constants.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use uppercase snake case */
 const FOO_BAR = 'foo';
@@ -93,7 +87,6 @@ class FooBar {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use camel case */
 const fooBar = 'foo';
@@ -105,11 +98,9 @@ class FooBar {
 ```
 
 ### Use pascal case for classes ✓
-
 Pascal case is common in most JavaScript/TypeScript projects for classes.
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use pascal case */
 class FooBar {
@@ -118,13 +109,11 @@ class FooBar {
 ```
 
 ### Use pascal case for interface names and don't prefix them
-
 Pascal case is common in most JavaScript/TypeScript projects for interfaces.
 Don't prefix interfaces with the hungarian notation 'I' (or other prefixes).
 If you have a class with the same name as an interface, consider a more general name for the interface or a more specific name for the class - if they are different things it should be possible to name them differently.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use 'I' prefix (or any other prefixes) */
 interface IFooBar {
@@ -133,7 +122,6 @@ interface IFooBar {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use pascal case without prefix */
 interface FooBar {
@@ -147,11 +135,9 @@ interface Foo extends FooType {
 ```
 
 ### Use pascal case for enums and enum properties
-
 Pascal case is common in most JavaScript/TypeScript projects for enums and enum properties.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use upper case snake case for enums and enum properties */
 enum SomeEnum {
@@ -167,7 +153,6 @@ enum SomeEnum {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use pascal case */
 enum SomeEnum {
@@ -177,31 +162,26 @@ enum SomeEnum {
 ```
 
 ### Use camel case for acronyms
-
 In case you want to use an acronym in a variable name, class, interface, enum, function or other names use camel case.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use upper case */
 function parseJSON() { ... }
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use camel case */
 function parseJson() { ... }
 ```
 
 ### Use verbs in function names
-
 Every function should do something and that action should be described with a verb.
 The verb should fit the return type and value.
 An exception to this can be methods, that operate on an instance directly, e. g. `instance.toString()`, `instance.asObject()`.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use functions without verb */
 function toFoo(): Foo {
@@ -217,7 +197,6 @@ function isFoo(): void {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use functions with verbs */
 function transformToFoo(): Foo {
@@ -254,15 +233,13 @@ class FooBar {
 Use single quotes, unless not possible otherwise, e. g. when your string contains single quotes.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use double quotes */
-const foo = 'foo';
+const foo = "foo";
 ```
 
 ✅ Examples of **correct** code:
-
-````ts
+```ts
 /* Use single quotes */
 const foo = 'foo';
 
@@ -282,10 +259,9 @@ const foo = 'foo ' + bar + ' bar';
 
 /* Gray area: If template literals become too complex, don't use them. */
 const foo = `foo ${fn(`${bar}bar`)}`;
-````
+```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Concatenate strings using template literals */
 const foo = `foo ${bar} bar`;
@@ -297,7 +273,6 @@ const foo = `foo ${fn(bar + 'bar')}`;
 ## Arrays
 
 ### Use `.forEach` and other array functions rather than `for`
-
 Use the functional language concepts of JavaScript in favor of the imperative ones, when possible.
 Use the correct function for your use case (e. g. `.map`, `.reduce`, `.filter`, `.find`, `.some`, `.every`).
 In some cases it makes sense to resort to the imperative `for`, for example, when performance is of the essence, if you have to iterate over every n-th element or if you want to execute asynchronous actions sequentially.
@@ -307,7 +282,6 @@ If the callback is asynchronous it will still be invoked sequentially, but its a
 Do not use `.forEach` if you need sequential invocation or move the parts that have to be executed sequentially up before any asynchronous actions are executed.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use for ... of if you can use .forEach */
 for (const item of array) {
@@ -322,7 +296,6 @@ array.forEach(item => {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use .forEach if possible */
 array.forEach(item => {
@@ -336,11 +309,9 @@ const result = array.map(item => item.property);
 ## `null` and `undefined`
 
 ### Use optional parameters for optional values
-
 Use optional parameters, if there is a default value or if it semantically makes sense to omit the parameters when consuming the API.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use explicit undefined if the parameter is semantically optional */
 function foo(options: Options | undefined) {
@@ -349,7 +320,6 @@ function foo(options: Options | undefined) {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use optional parameter if the parameter is semantically optional */
 function foo(options?: Options) {
@@ -363,12 +333,10 @@ function foo(options: Options = {}) {
 ```
 
 ### Use `undefined` for explicit absence of values
-
 If a value semantically is not optional prefer using `undefined` for values that do not exist or are not defined instead of `null`.
 Do not use optional parameters in those cases either, because the function should not be callable without this parameter.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use null for non-existent values */
 function foo(obj: SomeType | null) {
@@ -382,7 +350,6 @@ function foo(obj?: SomeType) {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use undefined for non-existent values */
 function foo(obj: SomeType | undefined) {
@@ -391,13 +358,11 @@ function foo(obj: SomeType | undefined) {
 ```
 
 ### Use `null` for intentional explicit absence of values or if it is part of an external API
-
 If a value can both be non-existent and intentionally absent and those states are semantically different it may make sense to allow the usage of `null`.
 Those cases should however be rather rare and are more common when calling external APIs, e. g. through HTTP requests.
 Consider whether there is a better API design that might avoid this.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use null for absence in general */
 function foo(obj?: SomeType | null) {
@@ -408,7 +373,6 @@ function foo(obj?: SomeType | null) {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use null if it semantically makes sense and is different from undefined */
 function foo(obj: SomeType | null | undefined) {
@@ -421,14 +385,12 @@ function foo(obj: SomeType | null | undefined) {
 ```
 
 ### Use truthy/falsy checks where possible
-
 In most cases it is possible to check for truthiness/falsiness instead of explicitly comparing values.
 This should be used when possible, but carefully considered in cases where falsy values are valid and therefore semantically truthy values, e. g. 0, ''.
 Therefore, when checking for existence of primitives, don't use truthy/falsy checks.
 Of course, more fine granular checks should be applied if semantically needed.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use explicit comparison with undefined for objects */
 if(obj !== undefined) { ... }
@@ -449,7 +411,6 @@ if(someString !== '') { ... }
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use truthy/falsy check for objects */
 if(obj) { ... }
@@ -467,12 +428,10 @@ if(someString) { ... }
 ## White space
 
 ### Indentation: Use 2 spaces, not tabs ✓
-
 Use 2 spaces for indentation in all code files, unless not possible for some reason.
 Don't use tabs.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use 4 spaces */
 arr.forEach(item => {
@@ -486,7 +445,6 @@ arr.forEach(item => {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use 2 spaces */
 arr.forEach(item => {
@@ -499,7 +457,6 @@ arr.forEach(item => {
 Add exactly one empty line before and after every function definition.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't add no lines */
 function foo() {
@@ -521,7 +478,6 @@ function bar() {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Add one line */
 function foo() {
@@ -536,13 +492,11 @@ function bar() {
 ## Comments
 
 ### Document public API with TypeDoc comments
-
 API that is exposed publicly, should be fully documented.
 TypeDoc comments should start with `/**`.
 Functions that return something should specify the return value with `@returns`.
 Parameters should not have type annotations as those can be inherently retrieved from the TypeScript code.
 Documentation comments should have the following structure:
-
 1. If necessary, one line for deprecation.
 2. Description, that can extend over multiple lines.
 3. If necessary, one line per type parameter.
@@ -552,12 +506,10 @@ Documentation comments should have the following structure:
 There should be no empty lines in between, except if it is part of the description.
 
 ### Use `@deprecated` tag for deprecation
-
 When deprecating public API, this is done through the TypeDoc comments.
 The first line of the comment should start with `@deprecated` followed by a note mentioning since which version this is deprecated (e. g. `Since v1.0.0.`) and a note of what to use instead (or alternatively that it won't be replaced).
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't leave out from which version on this is deprecated */
 /**
@@ -571,7 +523,6 @@ The first line of the comment should start with `@deprecated` followed by a note
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Add all deprecation information */
 /**
@@ -580,14 +531,12 @@ The first line of the comment should start with `@deprecated` followed by a note
 ```
 
 ### Don't reference types in parameters and type parameters
-
 In JSDoc it is common to specify the types of parameters and type parameters as JavaScript has no types.
 In TypeDoc this is not necessary, because TypeScript inherently has types and those should not differ between the implementation and documentation.
 A parameter or type parameter line should start with `@param` or `@typeparam`, followed by the (type) parameter name, a dash, and the description.
 The description should end with a full stop.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use types for the parameters */
 /**
@@ -606,7 +555,6 @@ The description should end with a full stop.
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Apply all rules from above */
 /**
@@ -615,7 +563,6 @@ The description should end with a full stop.
 ```
 
 ### Use @returns if a function has a return value ✓
-
 Functions that return something should have an `@returns` statement in the documentation, followed by a description of the return value.
 The description should end with a full stop.
 Similar to parameters, return types should not be referenced in the documentation.
@@ -624,7 +571,6 @@ The only exceptions are asynchronous functions that return `Promise<void>`.
 They technically return a promise, which does not need an extra description.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use types in the documentation */
 /**
@@ -643,7 +589,6 @@ They technically return a promise, which does not need an extra description.
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Apply all rules from above */
 /**
@@ -651,32 +596,28 @@ They technically return a promise, which does not need an extra description.
  */
 ```
 
+
 ## Tests
 
 ### Use .spec in test file names
-
 Use `.spec` not `.test` to differentiate test files.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use .test.ts */
-test - file.test.ts;
+test-file.test.ts
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use .spec.ts */
-test - file.spec.ts;
+test-file.spec.ts
 ```
 
 ### Use it and describe notation
-
 Use `describe` and `it`, not `test`.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use test */
 test('Test Suite', () => {
@@ -687,7 +628,6 @@ test('Test Suite', () => {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use describe and it */
 describe('Test Suite', () => {
@@ -698,36 +638,34 @@ describe('Test Suite', () => {
 ```
 
 ### Put unit test files next to source files
-
 Create test files next to productive code, instead of a separate test directory.
 This makes it easier to keep the file structures in sync and find tests for a unit of code.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't create a separate test directory */
-src / some - unit.ts;
-test / some - unit.spec.ts;
+src/
+  some-unit.ts
+test/
+  some-unit.spec.ts
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Create test files next to productive files */
-src / some - unit.ts;
-some - unit.spec.ts;
+src/
+  some-unit.ts
+  some-unit.spec.ts
 ```
 
 ## Promises
 
 ### Use `async`/`await` rather than `.then`
-
 In most cases the more modern `async`/`await` notation, makes code a bit easier to read, therefore this is the preferred way.
 However, there are some cases where `.then` is equally as good and potentially even less error-prone - in those cases both options are fine.
 This is especially the case if you have multiple asynchronous calls, that have common error handling (check the correct code examples).
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use .then by default */
 function getBar() {
@@ -736,7 +674,6 @@ function getBar() {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use async/await as a default */
 async function getBar() {
@@ -748,7 +685,7 @@ async function foo() {
   try {
     await asyncWait1();
     return await asyncWait2(); // If you want to handle the error in foo, this await is necessary!
-  } catch (err) {
+  } catch(err) {
     handleError(err);
   }
 }
@@ -767,24 +704,22 @@ When handling errors using `async`/`await`, be aware of the context of your `cat
 Invoke `.catch` when handling an error of one asynchronous call, use `try ... catch` for multiple asynchronous calls.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Avoid try ... catch for one asynchrounous call */
 function foo() {
   try {
     return await asyncWait();
-  } catch (err) {
+  } catch(err) {
     handleError(err);
   }
 }
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use .catch for one asynchrounous call */
 function foo() {
-  return asyncWait().catch(err => handleError(err));
+  return asyncWait().catch(err => handleError(err))
 }
 
 /* Use try ... catch for multiple asynchrounous calls */
@@ -792,21 +727,18 @@ async function foo() {
   try {
     await asyncWait1();
     return await asyncWait2(); // If you want to handle the error in foo, this await is necessary!
-  } catch (err) {
+  } catch(err) {
     handleError(err);
   }
 }
 ```
-
 ## Functions
 
 ### Use arrow functions for callbacks
-
 Use arrow functions for callbacks, unless the callbacks rely on `this`.
 In those cases feel free to use a function.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't use functions in callbacks */
 arr.forEach(function(item) {
@@ -815,16 +747,13 @@ arr.forEach(function(item) {
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use arrow functions in callbacks */
 arr.forEach(item => {
   ...
 });
 ```
-
 ### Use function declarations to reference functions by name
-
 Arrow functions require less boilerplate code than function declarations, especially if the function returns something directly, e. g. in one-liners.
 For more complex functions, there is no significant difference.
 Arrow functions cannot be named and therefore have to be assigned to variables - much like function expressions.
@@ -834,19 +763,17 @@ This becomes especially relevant when exposing an API, as many IDEs visualize va
 An exception to this rule might be simple arrow functions that are only defined within the scope of another function.
 
 ❌ Examples of **incorrect** code:
-
 ```ts
 /* Don't assign arrow functions to variables */
-const fn = foo => foo.bar;
+const fn = (foo) => foo.bar;
 
 /* Don't assign unnamed functions to variables */
 const fn = function (foo) {
   return foo.bar;
-};
+}
 ```
 
 ✅ Examples of **correct** code:
-
 ```ts
 /* Use function declarations to reference functions by name */
 function fn(foo) {

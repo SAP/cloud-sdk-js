@@ -67,14 +67,12 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<void> {
-    return (
-      this.executeRaw(destination, options)
+    return this.executeRaw(destination, options)
         // Transform response to void
         .then(() => Promise.resolve())
         .catch(error => {
           throw new ErrorWithCause('OData delete request failed!', error);
-        })
-    );
+        });
   }
 
   /**
@@ -87,10 +85,9 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse> {
-    return this.build(destination, options).then(request =>
-      request.executeRaw()
-    );
+  ): Promise<HttpRequestAndResponse>{
+    return this.build(destination, options)
+      .then(request => request.executeRaw());
   }
 
   abstract setVersionIdentifier(eTag: string): this;

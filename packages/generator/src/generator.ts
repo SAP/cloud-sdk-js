@@ -45,16 +45,8 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
-import {
-  getSdkMetadataFileNames,
-  sdkMetaDataHeader,
-  sdkMetaDataJS
-} from './sdk-metadata/sdk-metadata';
-import {
-  getGeneratorVersion,
-  getServiceDescription,
-  getVersionForClient
-} from './sdk-metadata/pregenerated-lib';
+import { getSdkMetadataFileNames, sdkMetaDataHeader, sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
+import { getGeneratorVersion, getServiceDescription, getVersionForClient } from './sdk-metadata/pregenerated-lib';
 
 const logger = createLogger({
   package: 'generator',
@@ -326,23 +318,17 @@ export async function generateSourcesForService(
     }
   }
 
-  if (options.generateSdkMetadata) {
-    const { clientFileName, headerFileName } = getSdkMetadataFileNames(service);
-    logger.info(`Generating sdk header metatdata ${headerFileName}...`);
-    otherFile(
-      serviceDir,
-      headerFileName,
-      JSON.stringify(await sdkMetaDataHeader(service, options)),
-      options.forceOverwrite
+  if(options.generateSdkMetadata){
+    const { clientFileName,headerFileName } = getSdkMetadataFileNames(service);
+    logger.info(
+      `Generating sdk header metatdata ${headerFileName}...`
     );
+    otherFile(serviceDir, headerFileName, JSON.stringify(await sdkMetaDataHeader(service,options)), options.forceOverwrite);
 
-    logger.info(`Generating sdk client metatdata ${clientFileName}...`);
-    otherFile(
-      serviceDir,
-      clientFileName,
-      JSON.stringify(await sdkMetaDataJS(service, options)),
-      options.forceOverwrite
+    logger.info(
+      `Generating sdk client metatdata ${clientFileName}...`
     );
+    otherFile(serviceDir, clientFileName, JSON.stringify(await sdkMetaDataJS(service,options)), options.forceOverwrite);
   }
 }
 

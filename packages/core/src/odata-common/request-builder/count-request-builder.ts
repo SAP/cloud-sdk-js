@@ -38,12 +38,13 @@ export class CountRequestBuilder<
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<number> {
-    return this.executeRaw(destination, options).then(({ response }) => {
-      if (typeof response.data !== 'number') {
-        throw new Error('Count request did not return a bare number.');
-      }
-      return response.data;
-    });
+    return this.executeRaw(destination, options)
+      .then(({ response }) => {
+        if (typeof response.data !== 'number') {
+          throw new Error('Count request did not return a bare number.');
+        }
+        return response.data;
+      });
   }
 
   /**
@@ -56,9 +57,8 @@ export class CountRequestBuilder<
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse> {
-    return this.build(destination, options).then(request =>
-      request.executeRaw()
-    );
+  ): Promise<HttpRequestAndResponse>{
+    return this.build(destination, options)
+      .then(request => request.executeRaw());
   }
 }

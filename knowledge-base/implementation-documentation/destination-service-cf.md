@@ -3,7 +3,7 @@
 This document aims to give a concise but complete overview of the communication flows necessary to retrieve destinations from the Cloud Foundry destination service.
 The listed steps are implemented by the SDK.
 
-For this document, consider the setup of a multi-tenant application, i.e. one _provider_ application (and its corresponding tenant) and n _subscriber_ tenants.
+For this document, consider the setup of a multi-tenant application, i.e. one *provider* application (and its corresponding tenant) and n *subscriber* tenants.
 We will call provider tenant `prov` and the exemplary subscriber tenant `sub`.
 
 In general, both the provider and the subscriber are able to define destinations.
@@ -28,46 +28,39 @@ So for each of these possibilities, we need to get an access token and then retr
 Let's consider provider + subaccount first, as a "sensible default".
 
 1. Get an access token:
-
-- get the URI of the XSUAA service from env.VCAP_SERVICES
-- get the client_id and client_secret of the destination service from env.VCAP_SERVICES
-- execute a clientCredentialsGrant request
-
-```
-curl -X POST \
-  https://prov.authentication.sap.hana.ondemand.com/oauth/token \
-  -H 'Accept: application/json' \
-  -H 'Authorization: <CLIENT_ID:CLIENT_SECRET>' \
-  -H 'Cache-Control: no-cache' \
-  -H 'Content-Type: application/x-www-form-urlencoded' \
-  -d 'client_id=CLIENT_ID&grant_type=client_credentials'
-```
-
-- this will return something like:
-
-```
-{
-  "access_token": "some.token.value",
-  "token_type": "bearer",
-  "expires_in": 43199,
-  "scope": "uaa.resource destination-xsappname!b433.Read destination-xsappname!b433.Modify",
-  "jti": "somestring"
-}
-```
-
+  * get the URI of the XSUAA service from env.VCAP_SERVICES
+  * get the client_id and client_secret of the destination service from env.VCAP_SERVICES
+  * execute a clientCredentialsGrant request
+  ```
+  curl -X POST \
+    https://prov.authentication.sap.hana.ondemand.com/oauth/token \
+    -H 'Accept: application/json' \
+    -H 'Authorization: <CLIENT_ID:CLIENT_SECRET>' \
+    -H 'Cache-Control: no-cache' \
+    -H 'Content-Type: application/x-www-form-urlencoded' \
+    -d 'client_id=CLIENT_ID&grant_type=client_credentials'
+  ```
+  * this will return something like:
+  ```
+  {
+    "access_token": "some.token.value",
+    "token_type": "bearer",
+    "expires_in": 43199,
+    "scope": "uaa.resource destination-xsappname!b433.Read destination-xsappname!b433.Modify",
+    "jti": "somestring"
+  }
+  ```
 2. Get destinations using the retrieved token:
+  * The destination service has three endpoints for retrieving destinations: `instanceDestinations`, `subaccountDestinations`, and `destinations/{name}`. We obviously choose `subaccountDestinations`.
+  * Execute the following call:
+  ```
+  curl -X GET \
+  https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations \
+  -H 'Authorization: Bearer some.token.value' \
+  -H 'Cache-Control: no-cache'
+  ```
 
-- The destination service has three endpoints for retrieving destinations: `instanceDestinations`, `subaccountDestinations`, and `destinations/{name}`. We obviously choose `subaccountDestinations`.
-- Execute the following call:
-
-```
-curl -X GET \
-https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations \
--H 'Authorization: Bearer some.token.value' \
--H 'Cache-Control: no-cache'
-```
-
-That's the basic flow!
+That's the basic flow! 
 For instanceDestinations, simply use the other endpoint.
 
 In order to retrieve subscriber destinations, we can do the same with only a little change to how we get an access token.
@@ -77,7 +70,7 @@ This nets us an access token that, when used for the destination service, will g
 
 Finally, there's one more relevant case for us.
 Suppose you have a destination with authentication type Basic.
-Then you will get the username and password directly when retrieving it as instance/subaccount destination.
+Then you will get the username and password directly when retrieving it as instance/subaccount destination. 
 For destinations with autentication type OAuth2SAMLBearerAssertion (aka destinations that are S/4 system and for which principal propagation should be used), we need to trigger the propagation of the principal.
 We do this by calling the destination service's `destination/{name}` endpoint for the given destination.
 However, since we want to propagate the principal (i.e. the user on whose behalf we are retrieving the destination), we need some kind of access token that reflects this user.

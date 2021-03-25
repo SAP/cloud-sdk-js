@@ -6,15 +6,14 @@
 import { OpenApiRequestBuilder } from '../../../../../src';
 import { ExtensionApi } from './openapi/api';
 
+
 export const TestServiceExtensionApi = {
-  niceGetFunction: () =>
-    new OpenApiRequestBuilder<ExtensionApi, 'niceGetFunction'>(
-      ExtensionApi,
-      'niceGetFunction'
-    ),
-  nicePostFunction: () =>
-    new OpenApiRequestBuilder<ExtensionApi, 'nicePostFunction'>(
-      ExtensionApi,
-      'nicePostFunction'
-    )
+  niceGetFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'niceGetFunction'>(
+    ExtensionApi,
+    'niceGetFunction'
+  ),
+  nicePostFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'nicePostFunction'>(
+    ExtensionApi,
+    'nicePostFunction'
+  )
 };

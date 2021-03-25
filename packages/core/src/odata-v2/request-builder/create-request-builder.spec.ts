@@ -216,10 +216,9 @@ describe('CreateRequestBuilder', () => {
         .stringProperty(stringProp)
         .build();
 
-      const actual = await new CreateRequestBuilder(
-        TestEntity,
-        entity
-      ).executeRaw(defaultDestination);
+      const actual = await new CreateRequestBuilder(TestEntity, entity).executeRaw(
+        defaultDestination
+      );
 
       expect(actual.response.data.d).toEqual(postBody);
       expect(actual.request.method).toBe('post');

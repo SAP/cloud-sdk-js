@@ -1,7 +1,6 @@
 # Dynamic log levels
 
 We should provide a functionality to set the log levels of the sdk loggers dynamically this means:
-
 - No code change
 - No application restart
 
@@ -11,7 +10,6 @@ We expect that the setting of the env variables works on CF via [cf set-env name
 as expected and the variable is then accessible on the node servier via `process.env`.
 
 The env check should be flexible:
-
 - If you set `logger.cloud.sdk=debug` all logger shold log debug and below.
 - If you set `logger.cloud.sdk.core=warn` all logger of the package core should log warn and below.
 - If you set `logger.cloud.sdk.core.count-request-config=debug` only the logger of the count request builder is changed.
@@ -25,11 +23,11 @@ logger.error('Some Error')
 LoggerWrapper{
     error:('message')=>{
       if(doSomeEnvCheck()){
-      //delegate to winsston error
-      }
+      //delegate to winsston error  
+      } 
     }
 }
-```
+``` 
 
 ## Conclusion:
 
@@ -42,20 +40,17 @@ It seems like the [cf-nodejs-logging-support](https://github.com/SAP/cf-nodejs-l
 
 The lib [cf-nodejs-logging-support](https://github.com/SAP/cf-nodejs-logging-support) does not cover what we want to achieve.
 A context bound logging is acheived via binding to the `req,res` object:
-
 ```js
 const server = http.createServer((req, res) => {
-  //binds logging to the given request for request tracking
-  log.logNetwork(req, res);
-
-  // Context bound custom message
-  req.logger.info('request bound information:');
-  res.end('ok');
+    //binds logging to the given request for request tracking
+    log.logNetwork(req, res);
+    
+    // Context bound custom message
+    req.logger.info("request bound information:");
+    res.end('ok');
 });
 ```
-
 Dynamic log level adjustment is done via a `header` field:
-
 ```json
 {
   "issuer": "<valid e-mail address>",
@@ -64,17 +59,15 @@ Dynamic log level adjustment is done via a `header` field:
   "exp": 1506188927
 }
 ```
-
 We should also consider the level from the header as an additional option to set the log level.
 Also we can perhaps use methods to extract the fields:
-
 - correlation_id
 - request_id
 - tenant_id
 - tenant_subdomain
-  from the request.
+from the request.
 
 ### Work on frontend
 
-The wrapping and reading of env variables should cause no problems on the frontend.
+The wrapping and reading of env variables should cause no problems on the frontend. 
 The logging lib will be used only partially with very simple methods.

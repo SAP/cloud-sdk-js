@@ -35,6 +35,8 @@ async function createApi() {
     await mockTestEntity(schema)
   ];
 
+  entities[0].keyProperty = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+
   api.register({
     getAllEntities: (c, req, res) => res.status(200).json(entities),
     countEntities: (c, req, res) => res.status(200).json(entities.length),

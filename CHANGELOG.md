@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [openapi-generator] Replace the underlying Java-based OpenAPI generator with a custom implementation. 
 
 ## New Functionality
 

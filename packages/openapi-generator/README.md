@@ -20,10 +20,10 @@ $ npm install @sap-cloud-sdk/openapi-generator
 
 ## Usage (CLI)
 
+<!-- prettier-ignore-start -->
 <!-- commands -->
-
-- [`generate-openapi-client autocomplete [SHELL]`](#generate-openapi-client-autocomplete-shell)
-- [`generate-openapi-client help [COMMAND]`](#generate-openapi-client-help-command)
+* [`generate-openapi-client autocomplete [SHELL]`](#generate-openapi-client-autocomplete-shell)
+* [`generate-openapi-client help [COMMAND]`](#generate-openapi-client-help-command)
 
 ## `generate-openapi-client autocomplete [SHELL]`
 
@@ -64,8 +64,8 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
-
 <!-- commandsstop -->
+<!-- prettier-ignore-end -->
 
 # Usage (programatically)
 

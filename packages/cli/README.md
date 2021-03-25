@@ -18,17 +18,17 @@ $ npm install @sap-cloud-sdk/cli
 
 ## Usage
 
+<!-- prettier-ignore-start -->
 <!-- commands -->
-
-- [`sap-cloud-sdk add-approuter [PROJECTDIR]`](#sap-cloud-sdk-add-approuter-projectdir)
-- [`sap-cloud-sdk add-cds [PROJECTDIR]`](#sap-cloud-sdk-add-cds-projectdir)
-- [`sap-cloud-sdk add-cx-server [PROJECTDIR]`](#sap-cloud-sdk-add-cx-server-projectdir)
-- [`sap-cloud-sdk autocomplete [SHELL]`](#sap-cloud-sdk-autocomplete-shell)
-- [`sap-cloud-sdk generate-odata-client`](#sap-cloud-sdk-generate-odata-client)
-- [`sap-cloud-sdk help [COMMAND]`](#sap-cloud-sdk-help-command)
-- [`sap-cloud-sdk help-page`](#sap-cloud-sdk-help-page)
-- [`sap-cloud-sdk init [PROJECTDIR]`](#sap-cloud-sdk-init-projectdir)
-- [`sap-cloud-sdk package [PROJECTDIR]`](#sap-cloud-sdk-package-projectdir)
+* [`sap-cloud-sdk add-approuter [PROJECTDIR]`](#sap-cloud-sdk-add-approuter-projectdir)
+* [`sap-cloud-sdk add-cds [PROJECTDIR]`](#sap-cloud-sdk-add-cds-projectdir)
+* [`sap-cloud-sdk add-cx-server [PROJECTDIR]`](#sap-cloud-sdk-add-cx-server-projectdir)
+* [`sap-cloud-sdk autocomplete [SHELL]`](#sap-cloud-sdk-autocomplete-shell)
+* [`sap-cloud-sdk generate-odata-client`](#sap-cloud-sdk-generate-odata-client)
+* [`sap-cloud-sdk help [COMMAND]`](#sap-cloud-sdk-help-command)
+* [`sap-cloud-sdk help-page`](#sap-cloud-sdk-help-page)
+* [`sap-cloud-sdk init [PROJECTDIR]`](#sap-cloud-sdk-init-projectdir)
+* [`sap-cloud-sdk package [PROJECTDIR]`](#sap-cloud-sdk-package-projectdir)
 
 ## `sap-cloud-sdk add-approuter [PROJECTDIR]`
 
@@ -297,8 +297,8 @@ EXAMPLES
 ```
 
 _See code: [src/commands/package.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.40.0/src/commands/package.ts)_
-
 <!-- commandsstop -->
+<!-- prettier-ignore-end -->
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->

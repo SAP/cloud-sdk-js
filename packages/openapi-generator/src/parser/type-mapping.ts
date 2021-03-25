@@ -33,7 +33,8 @@ const typeMapping = {
   UUID: 'string',
   URI: 'string',
   Error: 'Error',
-  AnyType: 'any'
+  AnyType: 'any',
+  any: 'any'
 };
 
 /**
@@ -44,7 +45,7 @@ const typeMapping = {
 export function getType(originalType: string | undefined): string {
   const type = originalType ? typeMapping[originalType] : 'any';
   if (!type) {
-    logger.warn(
+    logger.debug(
       `Could not map type '${originalType}' to a native type. Using any.`
     );
     return 'any';

@@ -1,15 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SwaggerYamlServiceDefaultApi = void 0;
+exports.DefaultApi = void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var core_1 = require("@sap-cloud-sdk/core");
-var api_1 = require("./openapi/api");
-exports.SwaggerYamlServiceDefaultApi = {
-    postEntity: function (args) { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'postEntity', args.pathParam, args.queryParam); },
-    patchEntity: function (args) { return new core_1.OpenApiRequestBuilder(api_1.DefaultApi, 'patchEntity', args.pathParam, args.body); }
+exports.DefaultApi = {
+    postEntity: function (pathParam, queryParameters) { return new core_1.OpenApiRequestBuilder('post', '/entities/{pathParam}', {
+        pathParameters: { pathParam: pathParam },
+        queryParameters: queryParameters
+    }); },
+    patchEntity: function (pathParam, body) { return new core_1.OpenApiRequestBuilder('patch', '/entities/{pathParam}', {
+        pathParameters: { pathParam: pathParam },
+        body: body
+    }); }
 };
 //# sourceMappingURL=default-api.js.map

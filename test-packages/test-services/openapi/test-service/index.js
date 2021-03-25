@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-__exportStar(require("./openapi/model"), exports);
 __exportStar(require("./entity-api"), exports);
 __exportStar(require("./test-case-api"), exports);
 __exportStar(require("./tag-dot-api"), exports);
 __exportStar(require("./tag-space-api"), exports);
 __exportStar(require("./default-api"), exports);
 __exportStar(require("./extension-api"), exports);
+__exportStar(require("./schema"), exports);
 //# sourceMappingURL=index.js.map

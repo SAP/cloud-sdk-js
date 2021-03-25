@@ -1,59 +1,102 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { OpenApiRequestBuilder } from './openapi-request-builder';
+jest.mock('../http-client');
 
-const rawResponse = {
-  data: 1
-} as AxiosResponse<number>;
-class TestApi {
-  constructor(public axiosConfig: AxiosRequestConfig) {}
-  fn: () => Promise<AxiosResponse<number>> = async () => rawResponse;
-  nonAxiosResponse = async () => 1;
-}
+import * as httpClient from '../http-client';
+import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {
   url: 'http://example.com'
 };
 
 describe('openapi-request-builder', () => {
-  it('executes request', async () => {
-    const requestBuilder = new OpenApiRequestBuilder(TestApi, 'fn');
-    const response = await requestBuilder.execute(destination);
-
-    expect(response).toEqual(rawResponse.data);
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
-  it('executes a raw request', async () => {
-    const requestBuilder = new OpenApiRequestBuilder(TestApi, 'fn');
-    const response = await requestBuilder.executeRaw(destination);
-
-    expect(response).toEqual(rawResponse);
+  it('executeRaw executes a request without parameters', () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test');
+    requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
+      method: 'get',
+      url: '/test',
+      headers: {},
+      params: undefined,
+      data: undefined
+    });
   });
 
-  it('throws an error if the given function does not exist', async () => {
-    // This cannot happen in TS
-    const requestBuilder = new OpenApiRequestBuilder(
-      TestApi,
-      'notAFunction' as any
-    );
+  it('executeRaw executes a request with query parameters', () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test', {
+      queryParameters: {
+        limit: 100
+      }
+    });
+    requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
+      method: 'get',
+      url: '/test',
+      headers: {},
+      params: {
+        limit: 100
+      },
+      data: undefined
+    });
+  });
+
+  it('executeRaw executes a request with body', () => {
+    const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
+      body: {
+        limit: 100
+      }
+    });
+    requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
+      method: 'post',
+      url: '/test',
+      headers: {},
+      params: undefined,
+      data: {
+        limit: 100
+      }
+    });
+  });
+
+  it('addCustomHeaders', () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test');
+    requestBuilder
+      .addCustomHeaders({ myCustomHeader: 'custom-header' })
+      .executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
+      method: 'get',
+      url: '/test',
+      headers: { mycustomheader: 'custom-header' },
+      params: undefined,
+      data: undefined
+    });
+  });
+
+  it('throws an error if the path parameters do not match the path pattern', async () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
+      pathParameters: { test: 'test' }
+    });
 
     await expect(() =>
-      requestBuilder.execute(destination)
+      requestBuilder.executeRaw(destination)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not execute request. \'notAFunction\' is not a function of TestApi."'
+      '"Cannot execute request, no path parameter provided for \'id\'."'
     );
   });
 
-  it('throws an error if the response is not an axios response', async () => {
-    // This should never happen
-    const requestBuilder = new OpenApiRequestBuilder(
-      TestApi,
-      'nonAxiosResponse'
-    );
-
-    await expect(() =>
-      requestBuilder.execute(destination)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      "\"Cannot use 'in' operator to search for 'data' in 1\""
-    );
+  it('encodes path parameters', () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
+      pathParameters: { id: '#test' }
+    });
+    requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
+      method: 'get',
+      url: '/test/%23test',
+      headers: {},
+      params: undefined,
+      data: undefined
+    });
   });
 });

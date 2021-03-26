@@ -47,13 +47,20 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   async executeRaw(
     destination: Destination | DestinationNameAndJwt
   ): Promise<HttpResponse> {
-    return executeHttpRequest(destination, {
-      method: this.method,
-      url: this.getPath(),
-      headers: this.customHeaders,
-      params: this.parameters?.queryParameters,
-      data: this.parameters?.body
-    });
+    const fetchCsrfToken = ['post', 'put', 'patch', 'delete'].includes(
+      this.method.toLowerCase()
+    );
+    return executeHttpRequest(
+      destination,
+      {
+        method: this.method,
+        url: this.getPath(),
+        headers: this.customHeaders,
+        params: this.parameters?.queryParameters,
+        data: this.parameters?.body
+      },
+      { fetchCsrfToken }
+    );
   }
 
   /**

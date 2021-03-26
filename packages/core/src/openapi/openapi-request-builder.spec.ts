@@ -15,13 +15,17 @@ describe('openapi-request-builder', () => {
   it('executeRaw executes a request without parameters', () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
-      method: 'get',
-      url: '/test',
-      headers: {},
-      params: undefined,
-      data: undefined
-    });
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      destination,
+      {
+        method: 'get',
+        url: '/test',
+        headers: {},
+        params: undefined,
+        data: undefined
+      },
+      { fetchCsrfToken: false }
+    );
   });
 
   it('executeRaw executes a request with query parameters', () => {
@@ -31,15 +35,19 @@ describe('openapi-request-builder', () => {
       }
     });
     requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
-      method: 'get',
-      url: '/test',
-      headers: {},
-      params: {
-        limit: 100
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      destination,
+      {
+        method: 'get',
+        url: '/test',
+        headers: {},
+        params: {
+          limit: 100
+        },
+        data: undefined
       },
-      data: undefined
-    });
+      { fetchCsrfToken: false }
+    );
   });
 
   it('executeRaw executes a request with body', () => {
@@ -49,15 +57,19 @@ describe('openapi-request-builder', () => {
       }
     });
     requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
-      method: 'post',
-      url: '/test',
-      headers: {},
-      params: undefined,
-      data: {
-        limit: 100
-      }
-    });
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      destination,
+      {
+        method: 'post',
+        url: '/test',
+        headers: {},
+        params: undefined,
+        data: {
+          limit: 100
+        }
+      },
+      { fetchCsrfToken: true }
+    );
   });
 
   it('addCustomHeaders', () => {
@@ -65,13 +77,17 @@ describe('openapi-request-builder', () => {
     requestBuilder
       .addCustomHeaders({ myCustomHeader: 'custom-header' })
       .executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
-      method: 'get',
-      url: '/test',
-      headers: { mycustomheader: 'custom-header' },
-      params: undefined,
-      data: undefined
-    });
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      destination,
+      {
+        method: 'get',
+        url: '/test',
+        headers: { mycustomheader: 'custom-header' },
+        params: undefined,
+        data: undefined
+      },
+      { fetchCsrfToken: false }
+    );
   });
 
   it('throws an error if the path parameters do not match the path pattern', async () => {
@@ -91,12 +107,16 @@ describe('openapi-request-builder', () => {
       pathParameters: { id: '#test' }
     });
     requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(destination, {
-      method: 'get',
-      url: '/test/%23test',
-      headers: {},
-      params: undefined,
-      data: undefined
-    });
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      destination,
+      {
+        method: 'get',
+        url: '/test/%23test',
+        headers: {},
+        params: undefined,
+        data: undefined
+      },
+      { fetchCsrfToken: false }
+    );
   });
 });

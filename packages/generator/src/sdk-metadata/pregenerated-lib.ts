@@ -44,7 +44,7 @@ export async function isPublishedNpmPackage(
   service: VdmServiceMetadata
 ): Promise<boolean> {
   try {
-    const response = await executeHttpRequest(
+    await executeHttpRequest(
       { url: 'http://registry.npmjs.org/' },
       { method: 'get', url: service.npmPackageName }
     );

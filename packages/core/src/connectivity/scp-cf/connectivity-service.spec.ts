@@ -1,4 +1,3 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import {
   mockConnectivityServiceBinding,
   mockedConnectivityServiceProxyConfig,
@@ -12,8 +11,6 @@ import { mockServiceToken } from '../../../test/test-util/token-accessor-mocks';
 import { mockClientCredentialsGrantCall } from '../../../test/test-util/xsuaa-service-mocks';
 import { Destination } from './destination';
 import { addProxyConfiguration } from './connectivity-service';
-
-const testLogger = createLogger('test');
 
 describe('connectivity-service', () => {
   afterEach(() => {

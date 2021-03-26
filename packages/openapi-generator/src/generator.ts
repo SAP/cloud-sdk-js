@@ -26,7 +26,7 @@ import { readServiceMapping, ServiceMapping } from './service-mapping';
 import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
 
-const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promisesFs;
+const { readdir, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**

@@ -23,6 +23,9 @@ builder.fromJson({ unknownProperty: '1' });
 // $ExpectType TestEntity
 builder.fromJson({ stringProperty: null });
 
+// $ExpectType TestEntity
+builder.fromJson({ stringProperty: undefined });
+
 // $ExpectError
 builder.fromJson({ stringProperty: 1 });
 
@@ -30,6 +33,11 @@ builder.fromJson({ stringProperty: 1 });
 // $ExpectType TestEntity
 builder.fromJson({
   toSingleLink: null
+});
+
+// $ExpectType TestEntity
+builder.fromJson({
+  toSingleLink: undefined
 });
 
 // $ExpectType TestEntity
@@ -59,6 +67,14 @@ builder.fromJson({
     toSingleLink: null
   }
 });
+
+// $ExpectType TestEntity
+builder.fromJson({
+  toSingleLink: {
+    toSingleLink: undefined
+  }
+});
+
 // $ExpectType TestEntity
 builder.fromJson({
   toSingleLink: {
@@ -67,6 +83,7 @@ builder.fromJson({
     }
   }
 });
+
 // $ExpectType TestEntity
 builder.fromJson({
   toSingleLink: {

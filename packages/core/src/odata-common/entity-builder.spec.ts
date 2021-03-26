@@ -218,5 +218,13 @@ describe('EntityBuilder', () => {
       const expectedEntity = TestEntity.builder().toSingleLink(null).build();
       expect(entity).toStrictEqual(expectedEntity);
     });
+
+    it('should build an entity from json with one-to-one navigation properties being undefined', () => {
+      const entity = TestEntity.builder().fromJson({
+        toSingleLink: undefined
+      });
+      const expectedEntity = TestEntity.builder().toSingleLink(undefined).build();
+      expect(entity).toStrictEqual(expectedEntity);
+    });
   });
 });

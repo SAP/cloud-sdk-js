@@ -271,67 +271,67 @@ describe('EntityBuilder', () => {
       //   }
       // });
       //
-      const eML1 = TestEntity.builder().fromJson({
-        toMultiLink: []
-      });
-
-      const eML2 = TestEntity.builder().fromJson({
-        toMultiLink: [{
-          stringProperty: ''
-        }]
-      });
-
-      const eML3 = TestEntity.builder().fromJson({
-        toMultiLink: [{
-          unknownProperty: ''
-        }]
-      });
-
-      const eML11 = TestEntity.builder().fromJson({
-        toMultiLink: [{
-          toMultiLink: []
-        }]
-      });
-
-      const eML12 = TestEntity.builder().fromJson({
-        toMultiLink: [{
-          toMultiLink: [{
-            stringProperty: ''
-          }]
-        }]
-      });
-
-      const eML13 = TestEntity.builder().fromJson({
-        toMultiLink: [{
-          toMultiLink: [{
-            unknownProperty: ''
-          }]
-        }]
-      });
-
-      const eML9 = TestEntity.builder().fromJson({
-        toMultiLink: [{
-          stringProperty: 1
-        }]
-      });
-
-      const eML8 = TestEntity.builder().fromJson({
-        toMultiLink: [1]
-      });
-
-      const eML91 = TestEntity.builder().fromJson({
-        toMultiLink: [{
-          toMultiLink1: [{
-            stringProperty: 1
-          }]
-        }]
-      });
-
-      const eML92 = TestEntity.builder().fromJson({
-        toMultiLink: [{
-          toMultiLink1: [1]
-        }]
-      });
+      // const eML1 = TestEntity.builder().fromJson({
+      //   toMultiLink: []
+      // });
+      //
+      // const eML2 = TestEntity.builder().fromJson({
+      //   toMultiLink: [{
+      //     stringProperty: ''
+      //   }]
+      // });
+      //
+      // const eML3 = TestEntity.builder().fromJson({
+      //   toMultiLink: [{
+      //     unknownProperty: ''
+      //   }]
+      // });
+      //
+      // const eML11 = TestEntity.builder().fromJson({
+      //   toMultiLink: [{
+      //     toMultiLink: []
+      //   }]
+      // });
+      //
+      // const eML12 = TestEntity.builder().fromJson({
+      //   toMultiLink: [{
+      //     toMultiLink: [{
+      //       stringProperty: ''
+      //     }]
+      //   }]
+      // });
+      //
+      // const eML13 = TestEntity.builder().fromJson({
+      //   toMultiLink: [{
+      //     toMultiLink: [{
+      //       unknownProperty: ''
+      //     }]
+      //   }]
+      // });
+      //
+      // const eML9 = TestEntity.builder().fromJson({
+      //   toMultiLink: [{
+      //     stringProperty: 1
+      //   }]
+      // });
+      //
+      // const eML8 = TestEntity.builder().fromJson({
+      //   toMultiLink: [1]
+      // });
+      //
+      // const eML91 = TestEntity.builder().fromJson({
+      //   toMultiLink: [{
+      //     toMultiLink1: [{
+      //       stringProperty: 1
+      //     }]
+      //   }]
+      // });
+      //
+      // const eML92 = TestEntity.builder().fromJson({
+      //   toMultiLink: [{
+      //     toMultiLink1: [1]
+      //   }]
+      // });
     });
   });
 });

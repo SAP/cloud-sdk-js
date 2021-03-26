@@ -4,7 +4,15 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
-import { ComplexTypeField, ComplexTypeStringPropertyField, ConstructorOrField, EntityV4, FieldType, PropertyMetadata, deserializeComplexTypeV4 } from '@sap-cloud-sdk/core';
+import {
+  ComplexTypeField,
+  ComplexTypeStringPropertyField,
+  ConstructorOrField,
+  EntityV4,
+  FieldType,
+  PropertyMetadata,
+  deserializeComplexTypeV4
+} from '@sap-cloud-sdk/core';
 
 /**
  * Location
@@ -31,12 +39,19 @@ export function createLocation(json: any): Location {
  * LocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class LocationField<EntityT extends EntityV4> extends ComplexTypeField<EntityT, Location> {
+export class LocationField<EntityT extends EntityV4> extends ComplexTypeField<
+  EntityT,
+  Location
+> {
   /**
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField('Address', this, 'Edm.String');
+  address: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
+    'Address',
+    this,
+    'Edm.String'
+  );
   /**
    * Representation of the [[Location.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -58,17 +73,20 @@ export namespace Location {
   /**
    * Metadata information on all properties of the `Location` complex type.
    */
-  export const _propertyMetadata: PropertyMetadata<Location>[] = [{
-    originalName: 'Address',
-    name: 'address',
-    type: 'Edm.String',
-    isCollection: false
-  }, {
-    originalName: 'City',
-    name: 'city',
-    type: City,
-    isCollection: false
-  }];
+  export const _propertyMetadata: PropertyMetadata<Location>[] = [
+    {
+      originalName: 'Address',
+      name: 'address',
+      type: 'Edm.String',
+      isCollection: false
+    },
+    {
+      originalName: 'City',
+      name: 'city',
+      type: City,
+      isCollection: false
+    }
+  ];
 
   /**
    * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.

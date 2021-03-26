@@ -24,7 +24,10 @@ describe('entity interface generator', () => {
         `${numberOfEggs.jsType} | null`
       ],
       [`${breakfastTime.instancePropertyName}`, breakfastTime.jsType],
-      [`${toBrunch.instancePropertyName}?`, `${toBrunch.toEntityClassName}Type | null`]
+      [
+        `${toBrunch.instancePropertyName}?`,
+        `${toBrunch.toEntityClassName}Type | null`
+      ]
     ]);
   });
 });

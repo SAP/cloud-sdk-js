@@ -215,9 +215,7 @@ describe('EntityBuilder', () => {
       const entity = TestEntity.builder().fromJson({
         toSingleLink: null
       });
-      const expectedEntity = TestEntity.builder()
-        .toSingleLink(null)
-        .build();
+      const expectedEntity = TestEntity.builder().toSingleLink(null).build();
       expect(entity).toStrictEqual(expectedEntity);
     });
   });

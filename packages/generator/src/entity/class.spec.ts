@@ -28,7 +28,10 @@ describe('entity class generator', () => {
       [`${entityName.instancePropertyName}!`, entityName.jsType],
       [`${numberOfEggs.instancePropertyName}?`, numberOfEggs.jsType],
       [`${breakfastTime.instancePropertyName}!`, breakfastTime.jsType],
-      [`${toBrunch.instancePropertyName}?`, `${toBrunch.toEntityClassName} | null`]
+      [
+        `${toBrunch.instancePropertyName}?`,
+        `${toBrunch.toEntityClassName} | null`
+      ]
     ]);
 
     expect(classDeclaration.methods!.map(method => method.name)).toEqual([

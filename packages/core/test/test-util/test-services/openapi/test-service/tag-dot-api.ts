@@ -6,8 +6,6 @@
 import { OpenApiRequestBuilder } from '../../../../../src';
 
 export const TagDotApi = {
-  tagWithDot: () => new OpenApiRequestBuilder<any>(
-    'get',
-    '/test-cases/special-tag'
-  )
+  tagWithDot: () =>
+    new OpenApiRequestBuilder<any>('get', '/test-cases/special-tag')
 };

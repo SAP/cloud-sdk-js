@@ -17,6 +17,7 @@ const logger = createLogger({
  * It also allows setting unknown properties, which will be treated as custom fields.
  * @typeparam JsonT JSON type of the entity
  */
+// prettier-ignore
 type FromJsonType<JsonT> = {
   [key: string]: any; // custom properties
 } & {

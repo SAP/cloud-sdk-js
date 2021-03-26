@@ -90,22 +90,28 @@ builder.fromJson({
 
 // $ExpectType TestEntity
 builder.fromJson({
-  toMultiLink: [{
-    stringProperty: ''
-  }]
+  toMultiLink: [
+    {
+      stringProperty: ''
+    }
+  ]
 });
 
 // $ExpectType TestEntity
 builder.fromJson({
-  toMultiLink: [{
-    unknownProperty: ''
-  }]
+  toMultiLink: [
+    {
+      unknownProperty: ''
+    }
+  ]
 });
 
 builder.fromJson({
-  toMultiLink: [{
-    stringProperty: 1 // $ExpectError
-  }]
+  toMultiLink: [
+    {
+      stringProperty: 1 // $ExpectError
+    }
+  ]
 });
 
 builder.fromJson({
@@ -115,37 +121,53 @@ builder.fromJson({
 // <!--------- nested multi link starts --------->
 // $ExpectType TestEntity
 builder.fromJson({
-  toMultiLink: [{
-    toMultiLink: []
-  }]
+  toMultiLink: [
+    {
+      toMultiLink: []
+    }
+  ]
 });
 // $ExpectType TestEntity
 builder.fromJson({
-  toMultiLink: [{
-    toMultiLink: [{
-      stringProperty: ''
-    }]
-  }]
+  toMultiLink: [
+    {
+      toMultiLink: [
+        {
+          stringProperty: ''
+        }
+      ]
+    }
+  ]
 });
 // $ExpectType TestEntity
 builder.fromJson({
-  toMultiLink: [{
-    toMultiLink: [{
-      unknownProperty: ''
-    }]
-  }]
+  toMultiLink: [
+    {
+      toMultiLink: [
+        {
+          unknownProperty: ''
+        }
+      ]
+    }
+  ]
 });
 
 builder.fromJson({
-  toMultiLink: [{
-    toMultiLink: [{
-      stringProperty: 1 // $ExpectError
-    }]
-  }]
+  toMultiLink: [
+    {
+      toMultiLink: [
+        {
+          stringProperty: 1 // $ExpectError
+        }
+      ]
+    }
+  ]
 });
 
 builder.fromJson({
-  toMultiLink: [{
-    toMultiLink: [1] // $ExpectError
-  }]
+  toMultiLink: [
+    {
+      toMultiLink: [1] // $ExpectError
+    }
+  ]
 });

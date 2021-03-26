@@ -21,12 +21,12 @@ type FromJsonType<JsonT> = {
   [key: string]: any; // custom properties
 } & {
   [P in keyof JsonT]?: JsonT[P] extends (infer U)[]
-    ? U extends Record<string, any>
+    ? (U extends Record<string, any>
       ? FromJsonType<U>[] // one-to-many navigation properties
-      : JsonT[P] // collection type
-    : JsonT[P] extends Record<string, any>
-    ? FromJsonType<JsonT[P]> // one-to-one navigation properties
-    : JsonT[P]; // else
+      : JsonT[P]) // collection type
+    : (JsonT[P] extends Record<string, any> | null | undefined
+      ? FromJsonType<JsonT[P]> | null | undefined // one-to-one navigation properties
+      : JsonT[P]); // else
 };
 
 /**

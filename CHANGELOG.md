@@ -15,7 +15,7 @@
 ## Compatibility Notes
 
 - [openapi-generator] Replace the underlying Java-based OpenAPI generator with a custom implementation. 
-- [odata-generator] The type of one-to-one navigation properties becomes optional.
+- [odata-generator] The type of one-to-one navigation properties is now optional.
 
 ## New Functionality
 

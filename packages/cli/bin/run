@@ -11,6 +11,4 @@ if (dev) {
 }
 
 const command = require(`../${dev ? 'src' : 'dist'}`);
-  command.run()
-  .catch(require('@oclif/errors/handle'));
-
+command.run().catch(require('@oclif/errors/handle'));

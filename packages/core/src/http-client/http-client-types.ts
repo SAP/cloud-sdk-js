@@ -7,7 +7,10 @@ export interface DestinationHttpRequestConfig {
   httpsAgent?: http.Agent;
 }
 
-type Method =
+/**
+ * HTTP Methods supported by the http-client.
+ */
+export type Method =
   | 'get'
   | 'GET'
   | 'delete'
@@ -74,4 +77,8 @@ export interface HttpResponse extends KnownHttpResponseFields {
  */
 export interface HttpReponse extends KnownHttpResponseFields {
   [otherKey: string]: any;
+}
+
+export interface HttpRequestOptions {
+  fetchCsrfToken?: boolean;
 }

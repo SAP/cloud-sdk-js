@@ -4,36 +4,35 @@ import { promises as promisesFs } from 'fs';
 import { resolve, parse, basename, join } from 'path';
 import {
   createLogger,
-  ErrorWithCause,
-  UniqueNameGenerator
+  UniqueNameGenerator,
+  kebabCase
 } from '@sap-cloud-sdk/util';
-import execa = require('execa');
-import voca from 'voca';
 import { GlobSync } from 'glob';
 import { GeneratorOptions } from './options';
 import {
   apiFile,
-  indexFile,
   packageJson,
   genericDescription,
-  readme
-} from './wrapper-files';
-import { OpenApiDocument, OpenApiOperation } from './openapi-types';
+  readme,
+  apiIndexFile,
+  schemaIndexFile,
+  tsconfigJson,
+  schemaFile
+} from './file-serializer';
+import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
-import { readServiceMapping, VdmMapping } from './service-mapping';
-import { tsconfigJson } from './wrapper-files/tsconfig-json';
+import { readServiceMapping, ServiceMapping } from './service-mapping';
 import { transpileDirectory } from './generator-utils';
-import { createFile } from './wrapper-files/create-file';
-import { copyFile } from './wrapper-files/copy-file';
+import { createFile, copyFile } from './file-writer';
 
 const { readdir, writeFile, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Main entry point for OpenApi client generation.
- * Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.
+ * Main entry point for the OpenAPI client generation.
+ * Generates models and API files.
  * @param options Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
@@ -54,7 +53,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       parseServiceName(inputFilePath)
     );
 
-    return generateFromFile(
+    return generateService(
       inputFilePath,
       options,
       vdmMapping,
@@ -65,20 +64,32 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 }
 
 /**
- * Generate sources for the wrapped SAP Cloud SDK Api.
+ * Generate sources.
  * @param serviceDir Directory to generate the service to.
  * @param openApiDocument Parsed service.
- * @param options Generation options
+ * @param options Generation options.
  */
-async function generateSDKSources(
+async function generateSources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
   options: GeneratorOptions
 ): Promise<void> {
-  logger.info(`Generating request builder in ${serviceDir}.`);
-  // TODO: what about overwrite?
+  await mkdir(serviceDir, { recursive: true });
+
+  if (openApiDocument.schemas.length) {
+    const schemaDir = resolve(serviceDir, 'schema');
+    await createSchemaFiles(schemaDir, openApiDocument);
+    await createFile(
+      schemaDir,
+      'index.ts',
+      schemaIndexFile(openApiDocument),
+      true
+    );
+  }
+
   await createApis(serviceDir, openApiDocument);
-  await createFile(serviceDir, 'index.ts', indexFile(openApiDocument), true);
+  await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
+
   if (options.generatePackageJson) {
     logger.debug(`Generating package.json in ${serviceDir}.`);
 
@@ -121,83 +132,22 @@ async function createApis(
   openApiDocument: OpenApiDocument
 ): Promise<void> {
   await Promise.all(
-    openApiDocument.tags.map(tag =>
-      createFile(
-        serviceDir,
-        buildApiFileName(tag),
-        apiFile(
-          openApiDocument.serviceName,
-          tag,
-          findOperationsWithTag(openApiDocument, tag)
-        ),
-        true
-      )
+    openApiDocument.apis.map(api =>
+      createFile(serviceDir, `${kebabCase(api.name)}.ts`, apiFile(api), true)
     )
   );
 }
 
-function findOperationsWithTag(
-  openApiDocument: OpenApiDocument,
-  tag: string
-): OpenApiOperation[] {
-  return openApiDocument.operations.filter(operation =>
-    operation.tags.includes(tag)
+async function createSchemaFiles(
+  dir: string,
+  openApiDocument: OpenApiDocument
+): Promise<void> {
+  await mkdir(dir, { recursive: true });
+  await Promise.all(
+    openApiDocument.schemas.map(schema =>
+      createFile(dir, `${kebabCase(schema.name)}.ts`, schemaFile(schema), true)
+    )
   );
-}
-
-function buildApiFileName(apiName: string) {
-  return `${voca.kebabCase(apiName + 'Api')}.ts`;
-}
-
-/**
- * Generate an OpenApiClient using the OpenApi Generator CLI.
- * @param inputFilePath Location of the spec file.
- * @param serviceDir Directory to generate the service to. The resulting client will be created in `serviceDir/openapi`
- */
-async function generateOpenApiService(
-  inputFilePath: string,
-  serviceDir: string
-) {
-  // TODO: what about overwrite?
-  const generationArguments = [
-    'openapi-generator-cli',
-    'generate',
-    '--input-spec',
-    inputFilePath,
-    '--generator-name',
-    'typescript-axios',
-    '--output',
-    resolve(serviceDir, 'openapi'),
-    '--template-dir',
-    resolve(__dirname, './templates'),
-    '--api-package',
-    'api',
-    '--model-package',
-    'model',
-    '--additional-properties',
-    'withSeparateModelsAndApi=true',
-    '--skip-validate-spec'
-  ];
-
-  logger.debug(`OpenAPI generator CLI arguments: ${generationArguments}`);
-
-  try {
-    const response = await execa('npx', generationArguments, {
-      cwd: resolve(__dirname, '..')
-    });
-    if (response.stderr) {
-      throw new Error(response.stderr);
-    }
-    logger.info(
-      `Successfully generated a client using the OpenApi generator CLI ${response.stdout}`
-    );
-  } catch (err) {
-    // The generator execution creates strange error objects, hence we add the method here:
-    const errorMessage = `Could not generate the OpenApi client using the OpenApi generator CLI: ${
-      err.message || err.stderr || err.shortMessage
-    }`;
-    throw new ErrorWithCause(errorMessage, err);
-  }
 }
 
 /**
@@ -210,52 +160,44 @@ function parseServiceName(filePath: string): string {
 }
 
 /**
- * Generates an OpenAPI Service from a file.
- * @param filePath The filepath where the service to generate is located.
- * @param options  Options to configure generation.
- * @param vdmMapping The vdmMapping for the OpenAPI generation.
- * @param uniqueServiceName The uniqueServiceName to be used.
+ * Generates an OpenAPI service from a file.
+ * @param inputFilePath The file path where the service to generate is located.
+ * @param options Options to configure generation.
+ * @param serviceMapping The serviceMapping for the OpenAPI generation.
+ * @param serviceName The unique service name to be used.
  */
-async function generateFromFile(
-  filePath: string,
+async function generateService(
+  inputFilePath: string,
   options: GeneratorOptions,
-  vdmMapping: VdmMapping,
-  uniqueServiceName: string
+  serviceMapping: ServiceMapping,
+  serviceName: string
 ): Promise<void> {
-  const serviceName = uniqueServiceName;
   const serviceDir = resolve(options.outputDir, serviceName);
 
   let openApiDocument;
   try {
-    openApiDocument = await convertOpenApiSpec(filePath);
+    openApiDocument = await convertOpenApiSpec(inputFilePath);
   } catch (err) {
     logger.error(
-      `Could not convert document at ${filePath} to the format needed for parsing and generation. Skipping service generation.`
+      `Could not convert document at ${inputFilePath} to the format needed for parsing and generation. Skipping service generation.`
     );
     return;
   }
-  const convertedInputFilePath = resolve(serviceDir, 'open-api.json');
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceName,
-    filePath,
-    vdmMapping
+    inputFilePath,
+    serviceMapping
   );
 
-  if (!parsedOpenApiDocument.operations.length) {
+  if (!parsedOpenApiDocument.apis.length) {
     logger.warn(
-      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${filePath}`
+      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${inputFilePath}`
     );
     return;
   }
 
-  await mkdir(serviceDir, { recursive: true });
-  await writeFile(
-    convertedInputFilePath,
-    JSON.stringify(openApiDocument, null, 2)
-  );
-  await generateOpenApiService(convertedInputFilePath, serviceDir);
-  await generateSDKSources(serviceDir, parsedOpenApiDocument, options);
+  await generateSources(serviceDir, parsedOpenApiDocument, options);
 }
 
 /**
@@ -288,7 +230,7 @@ export async function getSdkVersion(): Promise<string> {
   ).version;
 }
 
-// TODO 1728 move to a new package for reduce code duplication.
+// TODO 1728 move to a new package to reduce code duplication.
 async function copyAdditionalFiles(
   additionalFiles: string,
   serviceDir: string

@@ -4,12 +4,10 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { TagSpaceApi } from './openapi/api';
 
-
-export const TestServiceTagSpaceApi = {
-  tagWithSpace: () => new OpenApiRequestBuilder<TagSpaceApi, 'tagWithSpace'>(
-    TagSpaceApi,
-    'tagWithSpace'
+export const TagSpaceApi = {
+  tagWithSpace: () => new OpenApiRequestBuilder<any>(
+    'post',
+    '/test-cases/special-tag'
   )
 };

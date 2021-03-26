@@ -1,25 +1,6 @@
-import { last, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs } from '@apidevtools/swagger-parser';
-
-/**
- * Type guard to check whether an object is of type `OpenAPIV3.ReferenceObject`.
- * @param obj Object to check.
- * @returns True if the object is a reference object, false otherwise.
- */
-export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
-  return !!obj?.$ref;
-}
-
-/**
- * Parse the type name of a reference object.
- * @param obj Reference object to get the type name from.
- * @returns Parsed type name.
- */
-export function parseTypeName(obj: OpenAPIV3.ReferenceObject): string {
-  // TODO: How do we know that this is correct?
-  return pascalCase(last(obj.$ref.split('/'))!);
-}
+import { isReferenceObject } from '../schema-util';
 
 /**
  * Check whether the given object is a reference object and resolve if necessary.

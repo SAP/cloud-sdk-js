@@ -90,7 +90,7 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
     options?: DestinationOptions
   ): Promise<EntityT> {
     return this.executeRaw(destination, options)
-      .then((response) =>
+      .then(response =>
         this.deserializer.deserializeEntity(
           this.responseDataAccessor.getSingleResult(response.data),
           this._entityConstructor,
@@ -112,9 +112,8 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpResponse>{
-    return this.build(destination, options)
-      .then(request => request.execute());
+  ): Promise<HttpResponse> {
+    return this.build(destination, options).then(request => request.execute());
   }
 }
 

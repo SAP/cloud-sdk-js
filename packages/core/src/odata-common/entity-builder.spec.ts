@@ -217,6 +217,121 @@ describe('EntityBuilder', () => {
       });
       const expectedEntity = TestEntity.builder().toSingleLink(null).build();
       expect(entity).toStrictEqual(expectedEntity);
+
+      // const eN1 = TestEntity.builder().fromJson({ stringProperty: null });
+      // const eN9 = TestEntity.builder().fromJson({ stringProperty: 1 });
+      //
+      // const eC1 = TestEntity.builder().fromJson({ collectionProperty: ['1'] });
+      // const eC2 = TestEntity.builder().fromJson({ collectionProperty: null });
+      // const eC8 = TestEntity.builder().fromJson({ collectionProperty: [1] });
+      // const eC9 = TestEntity.builder().fromJson({ collectionProperty: 1 });
+      //
+      // const eSL1 = TestEntity.builder().fromJson({
+      //   toSingleLink: null
+      // });
+      // const eSl2 = TestEntity.builder().fromJson({
+      //   toSingleLink: {
+      //     stringProperty: ''
+      //   }
+      // });
+      // const eSl3 = TestEntity.builder().fromJson({
+      //   toSingleLink: {
+      //     unknownProperty: ''
+      //   }
+      // });
+      // const eSl11 = TestEntity.builder().fromJson({
+      //   toSingleLink: {
+      //     toSingleLink: null
+      //   }
+      // });
+      // const eSl12 = TestEntity.builder().fromJson({
+      //   toSingleLink: {
+      //     toSingleLink: {
+      //       stringProperty: ''
+      //     }
+      //   }
+      // });
+      // const eSl13 = TestEntity.builder().fromJson({
+      //   toSingleLink: {
+      //     toSingleLink: {
+      //       unknownProperty: ''
+      //     }
+      //   }
+      // });
+      // const eSl9 = TestEntity.builder().fromJson({
+      //   toSingleLink: {
+      //     stringProperty: 1
+      //   }
+      // });
+      // const eSl91 = TestEntity.builder().fromJson({
+      //   toSingleLink: {
+      //     toSingleLink: {
+      //       stringProperty: 1
+      //     }
+      //   }
+      // });
+      //
+      const eML1 = TestEntity.builder().fromJson({
+        toMultiLink: []
+      });
+
+      const eML2 = TestEntity.builder().fromJson({
+        toMultiLink: [{
+          stringProperty: ''
+        }]
+      });
+
+      const eML3 = TestEntity.builder().fromJson({
+        toMultiLink: [{
+          unknownProperty: ''
+        }]
+      });
+
+      const eML11 = TestEntity.builder().fromJson({
+        toMultiLink: [{
+          toMultiLink: []
+        }]
+      });
+
+      const eML12 = TestEntity.builder().fromJson({
+        toMultiLink: [{
+          toMultiLink: [{
+            stringProperty: ''
+          }]
+        }]
+      });
+
+      const eML13 = TestEntity.builder().fromJson({
+        toMultiLink: [{
+          toMultiLink: [{
+            unknownProperty: ''
+          }]
+        }]
+      });
+
+      const eML9 = TestEntity.builder().fromJson({
+        toMultiLink: [{
+          stringProperty: 1
+        }]
+      });
+
+      const eML8 = TestEntity.builder().fromJson({
+        toMultiLink: [1]
+      });
+
+      const eML91 = TestEntity.builder().fromJson({
+        toMultiLink: [{
+          toMultiLink1: [{
+            stringProperty: 1
+          }]
+        }]
+      });
+
+      const eML92 = TestEntity.builder().fromJson({
+        toMultiLink: [{
+          toMultiLink1: [1]
+        }]
+      });
     });
   });
 });

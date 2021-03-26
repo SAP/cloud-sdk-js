@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`documentation-block create multi line documentation with arguments 1`] = `
+"/**
+ * First line
+ * Second line
+ * argumentThirdLine1 text third line argumentThirdLine2
+ * Forth line
+*/"
+`;
+
+exports[`documentation-block creates multi line documentation in block form 1`] = `
+"/**
+ * First line
+ * Second line
+ * Third line
+*/"
+`;
+
+exports[`documentation-block handles new lines in arguments 1`] = `
+"/**
+ * A single line of documentaiton with new lines in argument
+ * First Line
+ * Second Line
+ * Third Line.
+*/"
+`;
+
+exports[`documentation-block keeps internal empty lines 1`] = `
+"/**
+ * Line Before empty line.
+ *
+ * Line After empty line.
+*/"
+`;

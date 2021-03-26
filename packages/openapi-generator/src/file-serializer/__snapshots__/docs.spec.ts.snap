@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`docs creates a description if not present 1`] = `
+"/**
+ * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
+ * 
+ * @returns string
+*/"
+`;
+
+exports[`docs creates documentation for the api 1`] = `
+"/**
+ * Representation of the TestApi API.
+ * This API is part of the TestService service.
+ * 
+ * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+*/"
+`;
+
+exports[`docs creates documentation with path parameters 1`] = `
+"/**
+ * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
+ * 
+ * @parameter pathParameter1 
+ * @parameter pathParameter2 
+ * @returns string
+*/"
+`;
+
+exports[`docs creates documentation with query parameters 1`] = `
+"/**
+ * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
+ * 
+ * @param queryParameters Optional object containing the query parameters.
+ * @returns string
+*/"
+`;

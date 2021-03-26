@@ -1,5 +1,5 @@
 import { codeBlock, unique } from '@sap-cloud-sdk/util';
-import { OpenApiApi, OpenApiOperation } from '../openapi-types';
+import { OpenApiApi, OpenApiDocument, OpenApiOperation } from '../openapi-types';
 import {
   collectRefs,
   hasNotSchema,
@@ -7,17 +7,20 @@ import {
 } from '../schema-util';
 import { serializeOperation } from './operation';
 import { Import, serializeImports } from './imports';
+import { apiDocumentation } from './docs';
+import {EOL} from 'os'
 
 /**
  * Serialize an API representation to a string representing the resulting API file.
  * @param api Represenation of an API.
+ * @param document Representation of the Document used the generated documentation.
  * @returns The serialized API file contents.
  */
-export function apiFile(api: OpenApiApi): string {
+export function apiFile(api: OpenApiApi, document?: OpenApiDocument): string {
   const imports = serializeImports(getImports(api));
   return codeBlock`
 ${imports}
-
+${document ? `${EOL}${apiDocumentation(api,document)}`:''}
 export const ${api.name} = {
   ${api.operations.map(operation => serializeOperation(operation)).join(',\n')}
 };

@@ -87,4 +87,38 @@ describe('apiFile', () => {
       };"
     `);
   });
+
+  it('creates a api File with documentation',()=>{
+    const api: OpenApiApi = {
+      name: 'TestApi',
+      operations: [
+        {
+          operationId: 'getFn',
+          method: 'get',
+          tags: [],
+          pathParameters: [],
+          queryParameters: [],
+          response: { type: 'any' },
+          pathPattern: 'test'
+        }
+      ]
+    };
+
+    expect(apiFile(api,{serviceName: 'TestService'}as any)).toMatchInlineSnapshot(`
+      "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+
+      /**
+       * Representation of the TestApi API.
+       * This API is part of the TestService service.
+       * 
+       * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+      */
+      export const TestApi = {
+        getFn: () => new OpenApiRequestBuilder<any>(
+          'get',
+          'test'
+        )
+      };"
+    `);
+})
 });

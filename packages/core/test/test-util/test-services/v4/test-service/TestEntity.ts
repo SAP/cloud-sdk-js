@@ -183,7 +183,7 @@ export class TestEntity extends EntityV4 implements TestEntityType {
   /**
    * One-to-one navigation property to the [[TestEntitySingleLink]] entity.
    */
-  toSingleLink!: TestEntitySingleLink;
+  toSingleLink?: TestEntitySingleLink | null;
 
   /**
    * Returns an entity builder to construct instances of `TestEntity`.
@@ -257,7 +257,7 @@ export interface TestEntityType {
   enumCollectionProperty?: TestEnumType[] | null;
   toMultiLink: TestEntityMultiLinkType[];
   toOtherMultiLink: TestEntityMultiLinkType[];
-  toSingleLink: TestEntitySingleLinkType;
+  toSingleLink?: TestEntitySingleLinkType | null;
 }
 
 export namespace TestEntity {

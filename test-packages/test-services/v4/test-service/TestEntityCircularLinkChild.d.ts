@@ -30,7 +30,7 @@ export declare class TestEntityCircularLinkChild
   /**
    * One-to-one navigation property to the [[TestEntityCircularLinkParent]] entity.
    */
-  toParent: TestEntityCircularLinkParent;
+  toParent?: TestEntityCircularLinkParent | null;
   /**
    * Returns an entity builder to construct instances of `TestEntityCircularLinkChild`.
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
@@ -66,7 +66,7 @@ import {
 } from './TestEntityCircularLinkParent';
 export interface TestEntityCircularLinkChildType {
   keyProperty: string;
-  toParent: TestEntityCircularLinkParentType;
+  toParent?: TestEntityCircularLinkParentType | null;
 }
 export declare namespace TestEntityCircularLinkChild {
   /**

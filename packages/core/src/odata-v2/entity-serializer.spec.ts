@@ -148,4 +148,16 @@ describe('entity-serializer', () => {
       to_MultiLink: [{ custom: 'custom' }]
     });
   });
+
+  it('should serialize null value', () => {
+    const testEntity = TestEntity.builder()
+      .stringProperty(null)
+      .toSingleLink(null)
+      .build();
+
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+      StringProperty: null,
+      to_SingleLink: null
+    });
+  });
 });

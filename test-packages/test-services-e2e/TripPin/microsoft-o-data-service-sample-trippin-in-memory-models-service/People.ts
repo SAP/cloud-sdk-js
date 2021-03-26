@@ -72,7 +72,7 @@ export class People extends EntityV4 implements PeopleType {
   /**
    * One-to-one navigation property to the [[Photos]] entity.
    */
-  photo!: Photos;
+  photo?: Photos | null;
 
   /**
    * Returns an entity builder to construct instances of `People`.
@@ -119,7 +119,7 @@ export interface PeopleType {
   gender?: PersonGender | null;
   concurrency: BigNumber;
   friends: PeopleType[];
-  photo: PhotosType;
+  photo?: PhotosType | null;
 }
 
 export namespace People {

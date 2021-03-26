@@ -37,7 +37,7 @@ export class TestEntityCircularLinkParent
   /**
    * One-to-one navigation property to the [[TestEntityCircularLinkChild]] entity.
    */
-  toFirstChild!: TestEntityCircularLinkChild;
+  toFirstChild?: TestEntityCircularLinkChild | null;
   /**
    * One-to-many navigation property to the [[TestEntityCircularLinkChild]] entity.
    */
@@ -92,7 +92,7 @@ import {
 
 export interface TestEntityCircularLinkParentType {
   keyProperty: string;
-  toFirstChild: TestEntityCircularLinkChildType;
+  toFirstChild?: TestEntityCircularLinkChildType | null;
   toChildren: TestEntityCircularLinkChildType[];
 }
 

@@ -58,7 +58,7 @@ export declare class TestEntityMultiLink
   /**
    * One-to-one navigation property to the [[TestEntityLvl2SingleLink]] entity.
    */
-  toSingleLink: TestEntityLvl2SingleLink;
+  toSingleLink?: TestEntityLvl2SingleLink | null;
   /**
    * Returns an entity builder to construct instances of `TestEntityMultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
@@ -101,7 +101,7 @@ export interface TestEntityMultiLinkType {
   guidProperty?: string | null;
   int16Property?: number | null;
   toMultiLink: TestEntityLvl2MultiLinkType[];
-  toSingleLink: TestEntityLvl2SingleLinkType;
+  toSingleLink?: TestEntityLvl2SingleLinkType | null;
 }
 export declare namespace TestEntityMultiLink {
   /**

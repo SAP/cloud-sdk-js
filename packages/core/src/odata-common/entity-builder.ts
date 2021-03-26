@@ -17,16 +17,17 @@ const logger = createLogger({
  * It also allows setting unknown properties, which will be treated as custom fields.
  * @typeparam JsonT JSON type of the entity
  */
+// prettier-ignore
 type FromJsonType<JsonT> = {
-  [key: string]: any;
+  [key: string]: any; // custom properties
 } & {
   [P in keyof JsonT]?: JsonT[P] extends (infer U)[]
     ? U extends Record<string, any>
-      ? FromJsonType<U>[]
-      : JsonT[P]
-    : JsonT[P] extends Record<string, any>
-    ? FromJsonType<JsonT[P]>
-    : JsonT[P];
+      ? FromJsonType<U>[] // one-to-many navigation properties
+      : JsonT[P] // collection type
+    : JsonT[P] extends Record<string, any> | null | undefined
+      ? FromJsonType<JsonT[P]> | null | undefined // one-to-one navigation properties or complex type
+      : JsonT[P]; // else
 };
 
 /**
@@ -79,9 +80,10 @@ export class EntityBuilder<EntityT extends Entity, JsonT> {
     );
 
     entityEntries.forEach(([key, value]) => {
-      const propertyValue = isNavigationProperty(key, entityConstructor)
-        ? buildNavigationPropertyFromJson(key, value, entityConstructor)
-        : value;
+      const propertyValue =
+        isNavigationProperty(key, entityConstructor) && !!value
+          ? buildNavigationPropertyFromJson(key, value, entityConstructor)
+          : value;
 
       entityBuilder[key](propertyValue);
     });

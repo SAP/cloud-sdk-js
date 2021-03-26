@@ -36,7 +36,7 @@ export class TestEntityCircularLinkChild
   /**
    * One-to-one navigation property to the [[TestEntityCircularLinkParent]] entity.
    */
-  toParent!: TestEntityCircularLinkParent;
+  toParent?: TestEntityCircularLinkParent | null;
 
   /**
    * Returns an entity builder to construct instances of `TestEntityCircularLinkChild`.
@@ -84,7 +84,7 @@ import {
 
 export interface TestEntityCircularLinkChildType {
   keyProperty: string;
-  toParent: TestEntityCircularLinkParentType;
+  toParent?: TestEntityCircularLinkParentType | null;
 }
 
 export namespace TestEntityCircularLinkChild {

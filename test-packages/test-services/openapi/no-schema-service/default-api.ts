@@ -6,8 +6,5 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
 export const DefaultApi = {
-  get: () => new OpenApiRequestBuilder<any>(
-    'get',
-    '/'
-  )
+  get: () => new OpenApiRequestBuilder<any>('get', '/')
 };

@@ -29,4 +29,4 @@ registry.getDestinationServiceCB('name');
 ## Decision
 
 We currently see no customer demand for a feature like this.
-We will revisit this topic if necessary. 
+We will revisit this topic if necessary.

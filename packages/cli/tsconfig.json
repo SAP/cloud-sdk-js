@@ -9,15 +9,8 @@
     "lib": ["dom"],
     "target": "es2017"
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "dist/**/*",
-    "test/**/*",
-    "**/*.spec.ts",
-    "node_modules/**/*"
-  ],
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],
   "files": [],
-  "references": [  ]
+  "references": []
 }

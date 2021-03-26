@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "esModuleInterop" : true,
+    "esModuleInterop": true,
     "lib": ["es6"],
     "strict": true,
     "noEmit": true
   },
-  "references": [
-    {"path": "../../../packages/core"}
-  ]
+  "references": [{ "path": "../../../packages/core" }]
 }

@@ -1,6 +1,8 @@
 {
-  "systems": [{
-    "alias": "EXAMPLE",
-    "uri": "https://example.com"
-  }]
+  "systems": [
+    {
+      "alias": "EXAMPLE",
+      "uri": "https://example.com"
+    }
+  ]
 }

@@ -1,13 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.functionImports = exports.returnSapCloudSdk = exports.returnInt = exports.returnCollection = exports.getByKey = exports.getAll = exports.concatStrings = void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require("@sap-cloud-sdk/core");
-var TestEntity_1 = require("./TestEntity");
+var core_1 = require('@sap-cloud-sdk/core');
+var TestEntity_1 = require('./TestEntity');
 /**
  * Concat Strings.
  *
@@ -15,11 +15,28 @@ var TestEntity_1 = require("./TestEntity");
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function concatStrings(parameters) {
-    var params = {
-        str1: new core_1.FunctionImportParameter('Str1', 'Edm.String', parameters.str1),
-        str2: new core_1.FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
-    };
-    return new core_1.FunctionImportRequestBuilderV4('/odata/test-service', 'concatStrings', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.String'); }); }, params);
+  var params = {
+    str1: new core_1.FunctionImportParameter(
+      'Str1',
+      'Edm.String',
+      parameters.str1
+    ),
+    str2: new core_1.FunctionImportParameter(
+      'Str2',
+      'Edm.String',
+      parameters.str2
+    )
+  };
+  return new core_1.FunctionImportRequestBuilderV4(
+    '/odata/test-service',
+    'concatStrings',
+    function (data) {
+      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
+        return core_1.edmToTsV4(val.value, 'Edm.String');
+      });
+    },
+    params
+  );
 }
 exports.concatStrings = concatStrings;
 /**
@@ -29,8 +46,18 @@ exports.concatStrings = concatStrings;
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function getAll(parameters) {
-    var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/odata/test-service', 'getAll', function (data) { return core_1.transformReturnValueForEntityListV4(data, TestEntity_1.TestEntity); }, params);
+  var params = {};
+  return new core_1.FunctionImportRequestBuilderV4(
+    '/odata/test-service',
+    'getAll',
+    function (data) {
+      return core_1.transformReturnValueForEntityListV4(
+        data,
+        TestEntity_1.TestEntity
+      );
+    },
+    params
+  );
 }
 exports.getAll = getAll;
 /**
@@ -40,10 +67,24 @@ exports.getAll = getAll;
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function getByKey(parameters) {
-    var params = {
-        param: new core_1.FunctionImportParameter('param', 'Edm.Int32', parameters.param)
-    };
-    return new core_1.FunctionImportRequestBuilderV4('/odata/test-service', 'getByKey', function (data) { return core_1.transformReturnValueForEntityV4(data, TestEntity_1.TestEntity); }, params);
+  var params = {
+    param: new core_1.FunctionImportParameter(
+      'param',
+      'Edm.Int32',
+      parameters.param
+    )
+  };
+  return new core_1.FunctionImportRequestBuilderV4(
+    '/odata/test-service',
+    'getByKey',
+    function (data) {
+      return core_1.transformReturnValueForEntityV4(
+        data,
+        TestEntity_1.TestEntity
+      );
+    },
+    params
+  );
 }
 exports.getByKey = getByKey;
 /**
@@ -53,10 +94,23 @@ exports.getByKey = getByKey;
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function returnCollection(parameters) {
-    var params = {
-        param: new core_1.FunctionImportParameter('param', 'Edm.Int32', parameters.param)
-    };
-    return new core_1.FunctionImportRequestBuilderV4('/odata/test-service', 'returnCollection', function (data) { return core_1.transformReturnValueForEdmTypeListV4(data, function (val) { return core_1.edmToTsV4(val, 'Edm.Int32'); }); }, params);
+  var params = {
+    param: new core_1.FunctionImportParameter(
+      'param',
+      'Edm.Int32',
+      parameters.param
+    )
+  };
+  return new core_1.FunctionImportRequestBuilderV4(
+    '/odata/test-service',
+    'returnCollection',
+    function (data) {
+      return core_1.transformReturnValueForEdmTypeListV4(data, function (val) {
+        return core_1.edmToTsV4(val, 'Edm.Int32');
+      });
+    },
+    params
+  );
 }
 exports.returnCollection = returnCollection;
 /**
@@ -66,10 +120,23 @@ exports.returnCollection = returnCollection;
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function returnInt(parameters) {
-    var params = {
-        param: new core_1.FunctionImportParameter('param', 'Edm.Int32', parameters.param)
-    };
-    return new core_1.FunctionImportRequestBuilderV4('/odata/test-service', 'returnInt', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.Int32'); }); }, params);
+  var params = {
+    param: new core_1.FunctionImportParameter(
+      'param',
+      'Edm.Int32',
+      parameters.param
+    )
+  };
+  return new core_1.FunctionImportRequestBuilderV4(
+    '/odata/test-service',
+    'returnInt',
+    function (data) {
+      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
+        return core_1.edmToTsV4(val.value, 'Edm.Int32');
+      });
+    },
+    params
+  );
 }
 exports.returnInt = returnInt;
 /**
@@ -79,16 +146,25 @@ exports.returnInt = returnInt;
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
 function returnSapCloudSdk(parameters) {
-    var params = {};
-    return new core_1.FunctionImportRequestBuilderV4('/odata/test-service', 'returnSapCloudSdk', function (data) { return core_1.transformReturnValueForEdmTypeV4(data, function (val) { return core_1.edmToTsV4(val.value, 'Edm.String'); }); }, params);
+  var params = {};
+  return new core_1.FunctionImportRequestBuilderV4(
+    '/odata/test-service',
+    'returnSapCloudSdk',
+    function (data) {
+      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
+        return core_1.edmToTsV4(val.value, 'Edm.String');
+      });
+    },
+    params
+  );
 }
 exports.returnSapCloudSdk = returnSapCloudSdk;
 exports.functionImports = {
-    concatStrings: concatStrings,
-    getAll: getAll,
-    getByKey: getByKey,
-    returnCollection: returnCollection,
-    returnInt: returnInt,
-    returnSapCloudSdk: returnSapCloudSdk
+  concatStrings: concatStrings,
+  getAll: getAll,
+  getByKey: getByKey,
+  returnCollection: returnCollection,
+  returnInt: returnInt,
+  returnSapCloudSdk: returnSapCloudSdk
 };
 //# sourceMappingURL=function-imports.js.map

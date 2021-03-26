@@ -1,16 +1,13 @@
 import execa from 'execa';
 import { createLogger } from '@sap-cloud-sdk/util';
 
-const logger = createLogger({
-  package: 'openapi-generator',
-  messageContext: 'generator-utils'
-});
+const logger = createLogger('openapi-generator');
 
 // TODO 1728: The following is duplicate in the OData generator
 /**
- * Executes the type script compiler for the given directory.
+ * Executes the TypeScript compilation for the given directory.
  * A valid tsconfig.json needs to be present in the directory.
- * @param path - Directory to be compiled
+ * @param path - Directory to be compiled.
  */
 export async function transpileDirectory(path: string): Promise<void> {
   logger.debug(`Transpiling files in the directory: ${path} started.`);

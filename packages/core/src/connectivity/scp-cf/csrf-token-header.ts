@@ -5,7 +5,6 @@ import {
   pickNonNullish,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import { AxiosError } from 'axios';
 import { HttpRequestConfig, executeHttpRequest } from '../../http-client';
 import { Destination, DestinationNameAndJwt } from '../scp-cf';
 import { removeTrailingSlashes } from '../../odata-common/remove-slashes';
@@ -59,41 +58,35 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
   return executeHttpRequest(destination, appendSlash(axiosConfig))
     .then(response => response.headers)
     .catch(e1 => {
-      logger.error(new ErrorWithCause('Initial try to fetch CSRF token failed - retry without slash at ',e1));
-      return executeHttpRequest(destination, removeSlash(axiosConfig)).then(response=>response.headers).catch(e2=>{
-throw new ErrorWithCause('Also second try to fetch SRF token failed - No CSRF token fetched.',e2);
-});
+      logger.error(
+        new ErrorWithCause(
+          'Initial try to fetch CSRF token failed - retry without slash at ',
+          e1
+        )
+      );
+      return executeHttpRequest(destination, removeSlash(axiosConfig))
+        .then(response => response.headers)
+        .catch(e2 => {
+          throw new ErrorWithCause(
+            'Also second try to fetch SRF token failed - No CSRF token fetched.',
+            e2
+          );
+        });
     });
 }
 
-function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig{
-  if(!requestConfig.url!.endsWith('/')){
+function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {
+  if (!requestConfig.url!.endsWith('/')) {
     requestConfig.url = `${requestConfig.url}/`;
   }
   return requestConfig;
 }
 
-function removeSlash(requestConfig: HttpRequestConfig): HttpRequestConfig{
-  if(requestConfig.url!.endsWith('/')){
+function removeSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {
+  if (requestConfig.url!.endsWith('/')) {
     requestConfig.url = removeTrailingSlashes(requestConfig.url!);
   }
   return requestConfig;
-}
-
-function axiosWorkaround<T extends HttpRequestConfig>(
-  error: AxiosError,
-  axiosConfig: Partial<T>,
-  destination: Destination | DestinationNameAndJwt
-) {
-  if (error.request?._isRedirect && error.request?._options?.path) {
-    logger.warn(
-      'Csrf fetch was redirected and failed. This might be a bug in the underlying request library (https://github.com/axios/axios/issues/3369).\nRetrying with full configuration.'
-    );
-    return makeCsrfRequest(destination, {
-      ...axiosConfig,
-      url: error.request._options.path
-    });
-  }
 }
 
 function validateCsrfTokenResponse(responseHeaders: Record<string, any>) {

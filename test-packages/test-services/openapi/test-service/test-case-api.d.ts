@@ -1,31 +1,45 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { TestCaseApi } from './openapi/api';
-import { SimpleTestEntity } from './openapi/model';
-export declare const TestServiceTestCaseApi: {
-    testCaseGetRequiredParameters: (args: {
-        requiredPathItemQueryParam: string;
-        requiredPathItemPathParam: string;
-        requiredQueryParam: string;
-        optionalQueryParam?: string;
-        optionalPathItemQueryParam?: string;
-        body?: SimpleTestEntity;
-    }) => OpenApiRequestBuilder<TestCaseApi, "testCaseGetRequiredParameters">;
-    testCasePostRequiredParameters: (args: {
-        requiredPathItemQueryParam: string;
-        requiredPathItemPathParam: string;
-        requiredQueryParam: string;
-        body: SimpleTestEntity;
-        optionalPathItemQueryParam?: string;
-        optionalQueryParam?: string;
-    }) => OpenApiRequestBuilder<TestCaseApi, "testCasePostRequiredParameters">;
-    testCaseGetDuplicateParameters: (args: {
-        duplicateParam: string;
-        duplicateParam2: string;
-    }) => OpenApiRequestBuilder<TestCaseApi, "testCaseGetDuplicateParameters">;
-    getTestCasesNoOperationId: () => OpenApiRequestBuilder<TestCaseApi, "getTestCasesNoOperationId">;
-    duplicateOperationId: () => OpenApiRequestBuilder<TestCaseApi, "duplicateOperationId">;
-    duplicateOperationId2: () => OpenApiRequestBuilder<TestCaseApi, "duplicateOperationId2">;
-    duplicateOperationId3: () => OpenApiRequestBuilder<TestCaseApi, "duplicateOperationId3">;
-    duplicateOperationId1: () => OpenApiRequestBuilder<TestCaseApi, "duplicateOperationId1">;
+import type { SimpleTestEntity, ComplexTestEntity } from './schema';
+export declare const TestCaseApi: {
+  testCaseGetRequiredParameters: (
+    requiredPathItemPathParam: string,
+    body: SimpleTestEntity | undefined,
+    queryParameters: {
+      requiredPathItemQueryParam: string;
+      optionalQueryParam?: string;
+      requiredQueryParam: string;
+      optionalPathItemQueryParam?: string;
+    }
+  ) => OpenApiRequestBuilder<any>;
+  testCasePostRequiredParameters: (
+    requiredPathItemPathParam: string,
+    body: SimpleTestEntity,
+    queryParameters: {
+      optionalPathItemQueryParam?: string;
+      requiredPathItemQueryParam: string;
+      optionalQueryParam?: string;
+      requiredQueryParam: string;
+    }
+  ) => OpenApiRequestBuilder<any>;
+  testCaseGetDuplicateParameters: (
+    duplicateParam: string,
+    queryParameters: {
+      duplicateParam: string;
+    }
+  ) => OpenApiRequestBuilder<any>;
+  duplicateOperationId: () => OpenApiRequestBuilder<any>;
+  duplicateOperationId1: () => OpenApiRequestBuilder<any>;
+  export: (
+    const1: string,
+    queryParameters: {
+      const: string;
+    }
+  ) => OpenApiRequestBuilder<any>;
+  complexSchemas: (
+    body: ComplexTestEntity | undefined
+  ) => OpenApiRequestBuilder<any>;
+  getTestCasesNoOperationId: () => OpenApiRequestBuilder<any>;
+  duplicateOperationId2: () => OpenApiRequestBuilder<any>;
+  duplicateOperationId3: () => OpenApiRequestBuilder<any>;
 };
 //# sourceMappingURL=test-case-api.d.ts.map

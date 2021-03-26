@@ -41,3 +41,12 @@ export function pascalCase(str: string): string {
     .map(word => voca.capitalize(word))
     .join('');
 }
+
+/**
+ * Convert a string to kebab case. This format is used e. g. for file names.
+ * @param str - The string to be transformed.
+ * @returns The transformed string.
+ */
+export function kebabCase(str: string): string {
+  return voca.kebabCase(str);
+}

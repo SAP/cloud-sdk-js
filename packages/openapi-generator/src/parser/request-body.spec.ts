@@ -1,113 +1,57 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { OpenAPIV3 } from 'openapi-types';
 import { createRefs } from '../../test/test-util';
-import { parseRequestBody, parseSchemaMetadata } from './request-body';
+import { parseRequestBody } from './request-body';
 
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
     const logger = createLogger('openapi-generator');
-    spyOn(logger, 'warn');
+    spyOn(logger, 'debug');
     expect(parseRequestBody(undefined, await createRefs())).toBeUndefined();
-    expect(logger.warn).not.toHaveBeenCalled();
+    expect(logger.debug).not.toHaveBeenCalled();
   });
 
-  it('returns type from referenced schema', async () => {
+  it('resolves referenced request body schema', async () => {
     const requestBody = {
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/components/schemas/TestEntity'
-          }
-        }
-      }
-    };
-
-    expect(parseRequestBody(requestBody, await createRefs())).toEqual({
-      ...requestBody,
-      parameterName: 'body',
-      parameterType: {
-        isArrayType: false,
-        innerType: 'TestEntity',
-        isInnerTypeReferenceType: true
-      }
-    });
-  });
-
-  it('returns type from referenced schema in reference object', async () => {
-    const requestBody = {
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/components/schemas/TestEntity'
-          }
-        }
-      }
+      $ref: '#/components/requestBodies/RequestBody'
     };
 
     expect(
       parseRequestBody(
-        {
-          $ref: '#/components/requestBodies/Body'
-        },
+        requestBody,
         await createRefs({
           requestBodies: {
-            Body: requestBody
+            RequestBody: {
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'string'
+                  }
+                }
+              }
+            }
           }
         })
       )
     ).toEqual({
-      ...requestBody,
-      parameterName: 'body',
-      parameterType: {
-        isArrayType: false,
-        innerType: 'TestEntity',
-        isInnerTypeReferenceType: true
-      }
+      schema: { type: 'string' },
+      required: false
     });
   });
 
-  it('returns Record<string, any> type from in line schema', async () => {
-    const schema: OpenAPIV3.NonArraySchemaObject = { type: 'object' };
-
-    expect(parseSchemaMetadata(schema)).toEqual({
-      isArrayType: false,
-      innerType: 'Record<string, any>',
-      isInnerTypeReferenceType: false
-    });
-  });
-
-  it('returns string array type from inline schema', async () => {
-    const schema: OpenAPIV3.ArraySchemaObject = {
-      type: 'array',
-      items: {
-        type: 'string'
-      }
+  it('resolves referenced schema', async () => {
+    const schema = {
+      $ref: '#/components/schemas/TestEntity'
+    };
+    const requestBody = {
+      content: {
+        'application/json': { schema }
+      },
+      required: true
     };
 
-    expect(parseSchemaMetadata(schema)).toEqual({
-      isArrayType: true,
-      innerType: 'string',
-      isInnerTypeReferenceType: false,
-      arrayLevel: 1
-    });
-  });
-
-  it('returns nested array type from inline schema', async () => {
-    const schema: OpenAPIV3.ArraySchemaObject = {
-      type: 'array',
-      items: {
-        type: 'array',
-        items: {
-          type: 'string'
-        }
-      }
-    };
-
-    expect(parseSchemaMetadata(schema)).toEqual({
-      isArrayType: true,
-      innerType: 'string',
-      isInnerTypeReferenceType: false,
-      arrayLevel: 2
+    expect(parseRequestBody(requestBody, await createRefs())).toEqual({
+      schema,
+      required: true
     });
   });
 });

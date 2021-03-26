@@ -1,14 +1,17 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { DefaultApi } from './openapi/api';
-import { TestEntity } from './openapi/model';
-export declare const SwaggerYamlServiceDefaultApi: {
-    postEntity: (args: {
-        pathParam: string;
-        queryParam?: string;
-    }) => OpenApiRequestBuilder<DefaultApi, "postEntity">;
-    patchEntity: (args: {
-        pathParam: string;
-        body?: TestEntity;
-    }) => OpenApiRequestBuilder<DefaultApi, "patchEntity">;
+import type { TestEntity } from './schema';
+export declare const DefaultApi: {
+  postEntity: (
+    pathParam: string,
+    queryParameters?:
+      | {
+          queryParam?: string | undefined;
+        }
+      | undefined
+  ) => OpenApiRequestBuilder<TestEntity[]>;
+  patchEntity: (
+    pathParam: string,
+    body: TestEntity | undefined
+  ) => OpenApiRequestBuilder<string>;
 };
 //# sourceMappingURL=default-api.d.ts.map

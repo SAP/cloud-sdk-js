@@ -1,6 +1,10 @@
 import * as http from 'http';
 import * as https from 'https';
-import { createLogger, ErrorWithCause, pickIgnoreCase } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  ErrorWithCause,
+  pickIgnoreCase
+} from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import {
   buildCsrfHeaders,
@@ -15,7 +19,8 @@ import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
   HttpRequest,
-  HttpRequestConfig, HttpRequestOptions,
+  HttpRequestConfig,
+  HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
 
@@ -93,7 +98,11 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
       requestConfig.headers
     );
     const request = merge(destinationRequestConfig, requestConfig);
-    request.headers = await addCsrfTokenToHeader(destination, request, httpRequestOptions);
+    request.headers = await addCsrfTokenToHeader(
+      destination,
+      request,
+      httpRequestOptions
+    );
     return executeFn(request);
   };
 }
@@ -125,13 +134,16 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  *
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
+ * @param options - An [[HttpRequestOptions]] of the http request for configuring e.g., csrf token delegation. By default, the SDK will not fetch the csrf token.
  * @returns A promise resolving to an [[HttpResponse]].
  */
-export const executeHttpRequest: <T extends HttpRequestConfig>(
+export function executeHttpRequest<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: T,
   options?: HttpRequestOptions
-) => Promise<HttpResponse>  = execute(executeWithAxios);
+): Promise<HttpResponse> {
+  return execute(executeWithAxios)(destination, requestConfig, options);
+}
 
 function buildDestinationHttpRequestConfig(
   destination: Destination,
@@ -190,7 +202,7 @@ function merge<T extends HttpRequestConfig>(
   };
 }
 
-function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest{
+function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest {
   return { ...getAxiosConfigWithDefaults(), ...request };
 }
 
@@ -228,17 +240,26 @@ function getDefaultHttpRequestOptions(): HttpRequestOptions {
   };
 }
 
-function buildHttpRequestOptions(httpRequestOptions?: HttpRequestOptions): HttpRequestOptions{
-  return httpRequestOptions?
-    {
-      ...getDefaultHttpRequestOptions(),
-      ...httpRequestOptions
-    }
+function buildHttpRequestOptions(
+  httpRequestOptions?: HttpRequestOptions
+): HttpRequestOptions {
+  return httpRequestOptions
+    ? {
+        ...getDefaultHttpRequestOptions(),
+        ...httpRequestOptions
+      }
     : getDefaultHttpRequestOptions();
 }
 
-export function shouldHandleCsrfToken(requestConfig: HttpRequestConfig, options: HttpRequestOptions): boolean {
-  return !!options.fetchCsrfToken && requestConfig.method !== 'get' && requestConfig.method !== 'GET';
+export function shouldHandleCsrfToken(
+  requestConfig: HttpRequestConfig,
+  options: HttpRequestOptions
+): boolean {
+  return (
+    !!options.fetchCsrfToken &&
+    requestConfig.method !== 'get' &&
+    requestConfig.method !== 'GET'
+  );
 }
 
 export const xCsrfTokenHeaderKey = 'x-csrf-token';
@@ -248,25 +269,23 @@ async function getCsrfHeaders(
   headers: Record<string, string>,
   url: string
 ): Promise<Record<string, any>> {
-  const csrfHeaders = pickIgnoreCase(
-    headers,
-    xCsrfTokenHeaderKey
-  );
+  const csrfHeaders = pickIgnoreCase(headers, xCsrfTokenHeaderKey);
   return Object.keys(csrfHeaders).length
     ? csrfHeaders
     : buildCsrfHeaders(destination, {
-      headers,
-      url
-    });
+        headers,
+        url
+      });
 }
 
-async function addCsrfTokenToHeader(destination: Destination | DestinationNameAndJwt,
-                 request: HttpRequestConfig & DestinationHttpRequestConfig,
-                 httpRequestOptions?: HttpRequestOptions): Promise<Record<string, string>>{
+async function addCsrfTokenToHeader(
+  destination: Destination | DestinationNameAndJwt,
+  request: HttpRequestConfig & DestinationHttpRequestConfig,
+  httpRequestOptions?: HttpRequestOptions
+): Promise<Record<string, string>> {
   const options = buildHttpRequestOptions(httpRequestOptions);
   const csrfHeaders = shouldHandleCsrfToken(request, options)
     ? await getCsrfHeaders(destination, request.headers, request.url!)
     : {};
   return { ...request.headers, ...csrfHeaders };
 }
-

@@ -1,7 +1,6 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { ExtensionApi } from './openapi/api';
-export declare const TestServiceExtensionApi: {
-    niceGetFunction: () => OpenApiRequestBuilder<ExtensionApi, "niceGetFunction">;
-    nicePostFunction: () => OpenApiRequestBuilder<ExtensionApi, "nicePostFunction">;
+export declare const ExtensionApi: {
+  niceGetFunction: () => OpenApiRequestBuilder<any>;
+  nicePostFunction: () => OpenApiRequestBuilder<any>;
 };
 //# sourceMappingURL=extension-api.d.ts.map

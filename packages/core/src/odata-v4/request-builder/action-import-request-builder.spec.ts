@@ -89,9 +89,9 @@ describe('action import request builder', () => {
         )
         .reply(204, {});
 
-      const actual = await testActionImportNoParameterNoReturnType({}).executeRaw(
-        destination
-      );
+      const actual = await testActionImportNoParameterNoReturnType(
+        {}
+      ).executeRaw(destination);
       expect(actual.data).toEqual({});
       expect(actual.request.method).toBe('POST');
     });

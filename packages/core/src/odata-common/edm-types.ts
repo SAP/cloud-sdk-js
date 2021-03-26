@@ -28,6 +28,7 @@ export type ExclusiveEdmTypeV4 =
   | 'Edm.Enum';
 
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of typescript.
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =
   | EdmTypeCommon
   | ExclusiveEdmTypeV2

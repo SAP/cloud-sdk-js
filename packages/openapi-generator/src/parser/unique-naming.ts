@@ -7,7 +7,7 @@ import { UniqueNameGenerator, camelCase } from '@sap-cloud-sdk/util';
  * @param getName Function to get the name of an item. Retrieves the `name` property by default.
  * @param setName Function to set the name of an item. Sets the name property by default.
  * @param formatName Function to transform the name when fining a unique name. Defaults to camel case.
- * @returns The original parsing information with unique operation IDs.
+ * @returns The given items with unique names.
  */
 export function ensureUniqueNames<ItemT>(
   items: ItemT[],
@@ -17,25 +17,23 @@ export function ensureUniqueNames<ItemT>(
   },
   formatName: (name: string) => string = name => camelCase(name)
 ): ItemT[] {
-  const {
-    unique: uniqueItems,
-    duplicate: duplicateItems
-  } = partitionNamedAndDuplicate(items, getName);
+  const uniqueItems = getUniquelyNamedItems(items, getName);
 
   const nameGenerator = new UniqueNameGenerator(
     '',
     uniqueItems.map(item => getName(item))
   );
 
-  const renamedDuplicateItems = duplicateItems.map(item => {
-    setName(
-      item,
-      nameGenerator.generateAndSaveUniqueName(formatName(getName(item)))
-    );
+  const uniqueNames = uniqueItems.map(item => getName(item));
+  return items.map(item => {
+    const name = getName(item);
+    if (uniqueNames.length && uniqueNames[0] === name) {
+      uniqueNames.shift();
+    } else {
+      setName(item, nameGenerator.generateAndSaveUniqueName(formatName(name)));
+    }
     return item;
   });
-
-  return [...uniqueItems, ...renamedDuplicateItems];
 }
 
 function isDuplicateName(uniqueNames: string[], name: string): boolean {
@@ -48,32 +46,23 @@ function isDuplicateName(uniqueNames: string[], name: string): boolean {
 }
 
 /**
- * Partition items into an object with two lists - one conaining the items that have unique names and one containing the items that have duplicate or potentially duplicate names.
+ * Get the items with unique names within a list of items.
  * @param items Named items.
  * @param getName Function to get the name of an item. Retrieves the `name` property by default.
  * @returns An object containing the unique operations, denoted by `unique` and operations with (potentially) duplicate names, denoted by `duplicate`.
  */
-function partitionNamedAndDuplicate<ItemT>(
+function getUniquelyNamedItems<ItemT>(
   items: ItemT[],
   getName: (item: ItemT) => string = item => item['name']
-): {
-  unique: ItemT[];
-  duplicate: ItemT[];
-} {
-  const unique: ItemT[] = [];
-  const duplicate: ItemT[] = [];
-  items.forEach(item => {
-    if (
-      isDuplicateName(
+): ItemT[] {
+  return items.reduce(
+    (unique, item) =>
+      !isDuplicateName(
         unique.map(uniqueItem => getName(uniqueItem)),
         getName(item)
       )
-    ) {
-      duplicate.push(item);
-    } else {
-      unique.push(item);
-    }
-  });
-
-  return { unique, duplicate };
+        ? [...unique, item]
+        : unique,
+    [] as ItemT[]
+  );
 }

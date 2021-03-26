@@ -24,7 +24,6 @@
     }
   ],
   "paths": {
-    
     "/entities": {
       "get": {
         "tags": ["entity"],

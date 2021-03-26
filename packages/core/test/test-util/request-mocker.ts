@@ -165,15 +165,17 @@ interface MockHeaderRequestParams {
   request;
   host?: string;
   responseHeaders?: Record<string, any>;
+  path?: string;
 }
 
 export function mockHeaderRequest({
   request,
   host = defaultHost,
-  responseHeaders = mockedBuildHeaderResponse
+  responseHeaders = mockedBuildHeaderResponse,
+  path
 }: MockHeaderRequestParams) {
   return nock(host)
-    .get(request.serviceUrl())
+    .get(path ? `${request.serviceUrl()}/${path}` : request.resourceUrl())
     .reply(200, undefined, responseHeaders);
 }
 
@@ -194,7 +196,7 @@ export function mockRequest(
 ) {
   const request = new ODataRequest(requestConfig, destination);
 
-  mockHeaderRequest({ request });
+  mockHeaderRequest({ request, path });
 
   return nock(host, getRequestHeaders(method, additionalHeaders))
     [method](

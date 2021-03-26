@@ -7,7 +7,6 @@ import {
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import {
-  buildCsrfHeaders,
   buildHeadersForDestination,
   Destination,
   DestinationNameAndJwt,
@@ -23,6 +22,7 @@ import {
   HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
+import { buildCsrfHeaders } from './csrf-token-header';
 
 const logger = createLogger({
   package: 'core',

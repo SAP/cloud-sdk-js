@@ -5,9 +5,13 @@ import {
   pickNonNullish,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import { HttpRequestConfig, executeHttpRequest } from '../../http-client';
-import { Destination, DestinationNameAndJwt } from '../scp-cf';
-import { removeTrailingSlashes } from '../../odata-common/remove-slashes';
+import { removeTrailingSlashes } from '../odata-common/remove-slashes';
+import {
+  Destination,
+  DestinationNameAndJwt
+} from '../connectivity/scp-cf/destination';
+import { HttpRequestConfig } from './http-client-types';
+import { executeHttpRequest } from './http-client';
 
 const logger = createLogger({
   package: 'core',

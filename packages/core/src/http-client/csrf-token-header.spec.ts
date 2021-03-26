@@ -5,10 +5,10 @@ import {
   defaultDestination,
   defaultHost,
   mockHeaderRequest
-} from '../../../test/test-util/request-mocker';
-import { createCreateRequest } from '../../../test/test-util/create-requests';
+} from '../../test/test-util/request-mocker';
+import { createCreateRequest } from '../../test/test-util/create-requests';
+import { Destination } from '../connectivity/scp-cf/destination';
 import { buildCsrfHeaders } from './csrf-token-header';
-import { Destination } from './destination';
 
 const standardHeaders = {
   accept: 'application/json',

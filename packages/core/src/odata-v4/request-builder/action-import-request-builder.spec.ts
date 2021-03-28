@@ -1,8 +1,4 @@
 import nock from 'nock';
-import {
-  defaultDestination,
-  mockCsrfTokenRequest
-} from '../../../test/test-util/request-mocker';
 import { Destination } from '../../../src/connectivity';
 import {
   testActionImportMultipleParameterComplexReturnType,
@@ -26,7 +22,11 @@ const destination: Destination = {
 
 describe('action import request builder', () => {
   it('should call simple action.', async () => {
-    mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
+    nock(host)
+      .get(
+        `${servicePath}/TestActionImportNoParameterNoReturnType?$format=json`
+      )
+      .reply(204);
 
     nock(host)
       .post(
@@ -41,7 +41,9 @@ describe('action import request builder', () => {
   });
 
   it('is possible to call actions with unknown edm types', async () => {
-    mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
+    nock(host)
+      .get(`${servicePath}/TestActionImportUnsupportedEdmTypes?$format=json`)
+      .reply(204);
     const responseValue = 'SomeUntypedResponse';
     const response = { value: responseValue };
 
@@ -58,7 +60,11 @@ describe('action import request builder', () => {
   });
 
   it('should call an action and parse the response', async () => {
-    mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
+    nock(host)
+      .get(
+        `${servicePath}/TestActionImportMultipleParameterComplexReturnType?$format=json`
+      )
+      .reply(204);
 
     const tsBody = { stringParam: 'LaLa', nonNullableStringParam: 'LuLu' };
     const tsResponse = { stringProperty: 'someResponseValue' };
@@ -81,7 +87,11 @@ describe('action import request builder', () => {
 
   describe('executeRaw', () => {
     it('returns request and raw response', async () => {
-      mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
+      nock(host)
+        .get(
+          `${servicePath}/TestActionImportNoParameterNoReturnType?$format=json`
+        )
+        .reply(204);
 
       nock(host)
         .post(

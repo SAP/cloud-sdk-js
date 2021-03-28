@@ -24,7 +24,8 @@ describe('CreateRequestBuilder', () => {
     const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
     mockCreateRequest({
-      body: postBody
+      body: postBody,
+      path: 'A_TestEntity'
     });
 
     const entity = TestEntity.builder()
@@ -49,6 +50,7 @@ describe('CreateRequestBuilder', () => {
 
     mockCreateRequest({
       body: postBody,
+      path: 'A_TestEntity',
       responseBody: {
         ...postBody,
         __metadata: { etag: eTag }
@@ -69,7 +71,8 @@ describe('CreateRequestBuilder', () => {
     const postBody = { to_SingleLink: { StringProperty: stringProp } };
 
     mockCreateRequest({
-      body: postBody
+      body: postBody,
+      path: 'A_TestEntity'
     });
 
     const entity = TestEntity.builder()
@@ -95,6 +98,7 @@ describe('CreateRequestBuilder', () => {
 
     mockCreateRequest({
       body: { to_MultiLink: linkedEntityBody },
+      path: 'A_TestEntity',
       responseBody: { to_MultiLink: { results: linkedEntityBody } }
     });
 
@@ -131,7 +135,8 @@ describe('CreateRequestBuilder', () => {
     };
 
     mockCreateRequest({
-      body: postBody
+      body: postBody,
+      path: 'A_TestEntity'
     });
 
     const entity = TestEntity.builder()
@@ -208,7 +213,8 @@ describe('CreateRequestBuilder', () => {
       const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
       mockCreateRequest({
-        body: postBody
+        body: postBody,
+        path: 'A_TestEntity'
       });
 
       const entity = TestEntity.builder()

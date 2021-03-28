@@ -31,6 +31,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    *
    * @param config - Configuration of the request
    * @param _destination - Destination to setup the request against
+   * @param fetchCsrfToken - Destination to setup the request against
    * @memberof ODataRequest
    */
   constructor(
@@ -232,7 +233,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       url: this.relativeUrl(),
       method: this.config.method,
       data: this.config.payload
-    }, { fetchCsrfToken: true }).catch(error => {
+    }, { fetchCsrfToken: this.config.fetchCsrfToken }).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());
     });
   }

@@ -14,7 +14,7 @@ import { testPostRequestOutcome } from '../../../test/test-util/testPostRequestO
 import { CreateRequestBuilder } from './create-request-builder';
 
 describe('CreateRequestBuilder', () => {
-  afterAll(() => {
+  afterEach(() => {
     nock.cleanAll();
   });
 

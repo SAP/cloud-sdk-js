@@ -29,6 +29,12 @@ describe('apiFile', () => {
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
       export const TestApi = {
+        /**
+         * Makes a get request to the 'test/{id}' endpoint and returns a 'any'
+         * 
+         * @param id Path parameter number 1
+         * @returns any
+        */
         getFn: (id: string) => new OpenApiRequestBuilder<any>(
           'get',
           'test/{id}',
@@ -73,10 +79,21 @@ describe('apiFile', () => {
       import type { RefType, ResponseType } from './schema';
 
       export const TestApi = {
+        /**
+         * Makes a get request to the 'test' endpoint and returns a 'string'
+         * 
+         * @returns string
+        */
         getFn: () => new OpenApiRequestBuilder<string>(
           'get',
           'test'
         ),
+        /**
+         * Makes a post request to the 'test' endpoint and returns a 'ResponseType'
+         * 
+         * @param body Object containing the request body of type 'RefType'
+         * @returns ResponseType
+        */
         createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
           'post',
           'test',

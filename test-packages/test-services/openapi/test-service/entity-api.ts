@@ -6,7 +6,19 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import type { TestEntity } from './schema';
 
+/**
+ * Representation of the EntityApi API.
+ * This API is part of the TestService service.
+ * 
+ * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+*/
 export const EntityApi = {
+  /**
+   * Get all entities
+   * 
+   * @param queryParameters Optional object containing the query parameters.
+   * @returns TestEntity[]
+  */
   getAllEntities: (queryParameters?: {'stringParameter'?: string,
   'integerParameter'?: number,
   '$dollarParameter'?: string,
@@ -21,6 +33,12 @@ export const EntityApi = {
           queryParameters
         }
   ),
+  /**
+   * Makes a put request to the '/entities' endpoint and returns a 'any'
+   * 
+   * @param body Optional object containing the request body of type 'TestEntity[]'
+   * @returns any
+  */
   updateEntityWithPut: (body: TestEntity[] | undefined) => new OpenApiRequestBuilder<any>(
     'put',
     '/entities',
@@ -28,6 +46,12 @@ export const EntityApi = {
           body
         }
   ),
+  /**
+   * Create entity
+   * 
+   * @param body Optional object containing the request body of type 'TestEntity'
+   * @returns any
+  */
   createEntity: (body: TestEntity | undefined) => new OpenApiRequestBuilder<any>(
     'post',
     '/entities',
@@ -35,6 +59,12 @@ export const EntityApi = {
           body
         }
   ),
+  /**
+   * Makes a patch request to the '/entities' endpoint and returns a 'any'
+   * 
+   * @param body Optional object containing the request body of type 'Record<string, any>'
+   * @returns any
+  */
   updateEntity: (body: Record<string, any> | undefined) => new OpenApiRequestBuilder<any>(
     'patch',
     '/entities',
@@ -42,6 +72,12 @@ export const EntityApi = {
           body
         }
   ),
+  /**
+   * Makes a delete request to the '/entities' endpoint and returns a 'any'
+   * 
+   * @param body Optional object containing the request body of type 'string[]'
+   * @returns any
+  */
   deleteEntity: (body: string[] | undefined) => new OpenApiRequestBuilder<any>(
     'delete',
     '/entities',
@@ -49,6 +85,12 @@ export const EntityApi = {
           body
         }
   ),
+  /**
+   * Get entity by id
+   * 
+   * @param entityId Key property of the entity
+   * @returns any
+  */
   getEntityByKey: (entityId: string) => new OpenApiRequestBuilder<any>(
     'get',
     '/entities/{entityId}',
@@ -56,6 +98,11 @@ export const EntityApi = {
           pathParameters: { entityId }
         }
   ),
+  /**
+   * Count entities
+   * 
+   * @returns number
+  */
   countEntities: () => new OpenApiRequestBuilder<number>(
     'get',
     '/entities/count'

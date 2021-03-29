@@ -34,7 +34,7 @@ describe('docs',()=>{
 
   it('uses path parameter descriptionif present',()=>{
     const operation = getOperation();
-    operation.pathParameters = [{ name:'pathParameter1',description: 'This is my parameter description'}] as any;
+    operation.pathParameters = [{ name:'pathParameter1',description: 'This is my parameter description' }] as any;
     expect(operationDocumentation(operation)).toMatch(/This is my parameter description/);
   });
 

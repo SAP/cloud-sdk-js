@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { codeBlock, unique } from '@sap-cloud-sdk/util';
 import { OpenApiApi, OpenApiDocument, OpenApiOperation } from '../openapi-types';
 import {
@@ -8,7 +9,6 @@ import {
 import { serializeOperation } from './operation';
 import { Import, serializeImports } from './imports';
 import { apiDocumentation } from './docs';
-import {EOL} from 'os'
 
 /**
  * Serialize an API representation to a string representing the resulting API file.

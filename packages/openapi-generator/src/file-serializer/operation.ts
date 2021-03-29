@@ -1,6 +1,7 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
 import { OpenApiOperation } from '../openapi-types';
 import { serializeSchema } from './schema';
+import { operationDocumentation } from './docs';
 
 /**
  * Serialize an operation to a string.
@@ -18,6 +19,7 @@ export function serializeOperation(operation: OpenApiOperation): string {
     requestBuilderParams.push(bodyAndQueryParams);
   }
   return codeBlock`
+${operationDocumentation(operation)}
 ${operation.operationId}: (${serializeOperationSignature(
     operation
   )}) => new OpenApiRequestBuilder<${serializeSchema(operation.response)}>(

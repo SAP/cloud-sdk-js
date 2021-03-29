@@ -88,7 +88,7 @@ describe('apiFile', () => {
     `);
   });
 
-  it('creates a api File with documentation',()=>{
+  it('creates a api File with documentation', () => {
     const api: OpenApiApi = {
       name: 'TestApi',
       operations: [
@@ -104,7 +104,8 @@ describe('apiFile', () => {
       ]
     };
 
-    expect(apiFile(api,{serviceName: 'TestService'}as any)).toMatchInlineSnapshot(`
+    expect(apiFile(api, { serviceName: 'TestService' } as any))
+      .toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
       /**
@@ -114,11 +115,16 @@ describe('apiFile', () => {
        * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
       */
       export const TestApi = {
+        /**
+         * Makes a get request to the 'test' endpoint and returns a 'any'
+         * 
+         * @returns any
+        */
         getFn: () => new OpenApiRequestBuilder<any>(
           'get',
           'test'
         )
       };"
     `);
-})
+  });
 });

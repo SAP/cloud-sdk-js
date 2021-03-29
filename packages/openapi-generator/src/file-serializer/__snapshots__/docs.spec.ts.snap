@@ -17,17 +17,26 @@ exports[`docs creates documentation for the api 1`] = `
 */"
 `;
 
-exports[`docs creates documentation with path parameters 1`] = `
+exports[`docs creates documentation with body parameter 1`] = `
 "/**
  * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
  * 
- * @parameter pathParameter1 
- * @parameter pathParameter2 
+ * @param body Object containing the request body of type 'string'
  * @returns string
 */"
 `;
 
-exports[`docs creates documentation with query parameters 1`] = `
+exports[`docs creates documentation with path parameters 1`] = `
+"/**
+ * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
+ * 
+ * @param pathParameter1 Path parameter number 1
+ * @param pathParameter2 Path parameter number 2
+ * @returns string
+*/"
+`;
+
+exports[`docs creates documentation with query parameters object 1`] = `
 "/**
  * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
  * 

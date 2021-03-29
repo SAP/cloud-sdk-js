@@ -28,6 +28,8 @@ export declare const TestCaseApi: {
     }
   ) => OpenApiRequestBuilder<any>;
   duplicateOperationId: () => OpenApiRequestBuilder<any>;
+  duplicateOperationId2: () => OpenApiRequestBuilder<any>;
+  duplicateOperationId3: () => OpenApiRequestBuilder<any>;
   duplicateOperationId1: () => OpenApiRequestBuilder<any>;
   export: (
     const1: string,
@@ -39,7 +41,5 @@ export declare const TestCaseApi: {
     body: ComplexTestEntity | undefined
   ) => OpenApiRequestBuilder<any>;
   getTestCasesNoOperationId: () => OpenApiRequestBuilder<any>;
-  duplicateOperationId2: () => OpenApiRequestBuilder<any>;
-  duplicateOperationId3: () => OpenApiRequestBuilder<any>;
 };
 //# sourceMappingURL=test-case-api.d.ts.map

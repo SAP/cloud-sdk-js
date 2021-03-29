@@ -21,7 +21,7 @@ export function documentationBlock(
   ...args: string[]
 ): string {
   let adjustedStrings = strings.raw as string[];
-  adjustedStrings =removeSpaceNewLineStartAndEnd(adjustedStrings);
+  adjustedStrings = removeSpaceNewLineStartAndEnd(adjustedStrings);
   adjustedStrings = replaceAllWhiteSpacesBySingleOne(adjustedStrings);
   adjustedStrings = removeWhiteSpaceAroundNewLine(adjustedStrings);
   adjustedStrings = addStarAfterNewLine(adjustedStrings);
@@ -29,31 +29,43 @@ export function documentationBlock(
 
   let adjustedArgs = removeIllegaCharacter(args);
   adjustedArgs = addStarAfterNewLine(adjustedArgs);
-const result =  [`/**${EOL} * `,...zip(adjustedStrings,adjustedArgs),`${EOL}*/`].join('');
+  const result = [
+    `/**${EOL} * `,
+    ...zip(adjustedStrings, adjustedArgs),
+    `${EOL}*/`
+  ].join('');
   return result;
 }
 
-function removeSpaceNewLineStartAndEnd(strings: string[]): string[]{
-  const startRemoved =   strings.map((str,i)=>i===0 ? str.replace(/^[\s]+/g,''):str);
-    const bothRemoved = startRemoved.map((str,i)=>i===strings.length - 1 ?str.replace(/[\s]*$/g,''):str);
+function removeSpaceNewLineStartAndEnd(strings: string[]): string[] {
+  const startRemoved = strings.map((str, i) =>
+    i === 0 ? str.replace(/^[\s]+/g, '') : str
+  );
+  const bothRemoved = startRemoved.map((str, i) =>
+    i === strings.length - 1 ? str.replace(/[\s]*$/g, '') : str
+  );
   return bothRemoved;
 }
 
-function addStarAfterNewLine(strings: string[]): string[]{
-  return strings.map(str=>str.replace(/\n/g,`${EOL} * `));
+function addStarAfterNewLine(strings: string[]): string[] {
+  return strings.map(str => str.replace(/\n/g, `${EOL} * `));
 }
 
-function removeWhiteSpaceAroundNewLine(strings: string[]): string[]{
-  return strings.map(str=>str.replace(/ *\n */g,`${EOL}`));
+function removeWhiteSpaceAroundNewLine(strings: string[]): string[] {
+  return strings.map(str => str.replace(/ *\n */g, `${EOL}`));
 }
 
 function replaceAllWhiteSpacesBySingleOne(strings: string[]): string[] {
-return strings.map(str=>str.replace(/ +/g,' '));// .map(str=>str.trimStart().trimEnd())
+  return strings.map(str => str.replace(/ +/g, ' ')); // .map(str=>str.trimStart().trimEnd())
 }
 
-function removeIllegaCharacter(strings: string[]): string[]{
-  if(strings.some(str=>str.includes('*/'))){
-    logger.warn(`The documentation block ${strings.join('')} contained illegal characters which have been removed.`);
+function removeIllegaCharacter(strings: string[]): string[] {
+  if (strings.some(str => str.includes('*/'))) {
+    logger.warn(
+      `The documentation block ${strings.join(
+        ''
+      )} contained illegal characters which have been removed.`
+    );
   }
-  return strings.map(str=>str.replace(/\*\//g,''));
+  return strings.map(str => str.replace(/\*\//g, ''));
 }

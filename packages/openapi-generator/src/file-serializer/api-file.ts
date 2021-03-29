@@ -1,6 +1,10 @@
 import { EOL } from 'os';
 import { codeBlock, unique } from '@sap-cloud-sdk/util';
-import { OpenApiApi, OpenApiDocument, OpenApiOperation } from '../openapi-types';
+import {
+  OpenApiApi,
+  OpenApiDocument,
+  OpenApiOperation
+} from '../openapi-types';
 import {
   collectRefs,
   hasNotSchema,
@@ -20,7 +24,7 @@ export function apiFile(api: OpenApiApi, document?: OpenApiDocument): string {
   const imports = serializeImports(getImports(api));
   return codeBlock`
 ${imports}
-${document ? `${EOL}${apiDocumentation(api,document)}`:''}
+${document ? `${EOL}${apiDocumentation(api, document)}` : ''}
 export const ${api.name} = {
   ${api.operations.map(operation => serializeOperation(operation)).join(',\n')}
 };

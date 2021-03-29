@@ -29,7 +29,7 @@ exports[`documentation-block handles new lines in arguments 1`] = `
 exports[`documentation-block keeps internal empty lines 1`] = `
 "/**
  * Line Before empty line.
- *
+ * 
  * Line After empty line.
 */"
 `;

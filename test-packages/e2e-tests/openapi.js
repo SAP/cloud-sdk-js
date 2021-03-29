@@ -38,7 +38,17 @@ async function createApi() {
   entities[0].keyProperty = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
 
   api.register({
-    getAllEntities: (c, req, res) => res.status(200).json(entities),
+    getAllEntities: (c, req, res) => {
+      const hasCsrfFetchHeader = Object.entries(c.request.headers).some(
+        ([key, value]) =>
+          key.toLowerCase() === 'x-csrf-token' &&
+          value.toLowerCase() === 'fetch'
+      );
+      if (hasCsrfFetchHeader) {
+        return res.status(200).set('x-csrf-token', 'e2e-test-token').end();
+      }
+      return res.status(200).json(entities);
+    },
     countEntities: (c, req, res) => res.status(200).json(entities.length),
     getEntityByKey: (c, req, res) => {
       const entityId = c.request.params.entityId;
@@ -49,14 +59,23 @@ async function createApi() {
       return res.status(400).json({ err: 'Bad request' });
     },
     createEntity: (c, req, res) => {
-      entities.push(c.request.requestBody);
-      return res.status(201).end();
+      const hasCsrfHeader = Object.entries(c.request.headers).some(
+        ([key, value]) =>
+          key.toLowerCase() === 'x-csrf-token' &&
+          value.toLowerCase() === 'e2e-test-token'
+      );
+      if (hasCsrfHeader) {
+        entities.push(c.request.requestBody);
+        return res.status(201).end();
+      }
+      return res.status(400).json({ err: 'Invalid or missing CSRF token.' });
     },
     validationFail: (c, req, res) => {
-      console.log('fail');
       res.status(400).json({ err: c.validation.errors });
     },
-    notFound: (c, req, res) => res.status(404).json({ err: 'not found' })
+    notFound: (c, req, res) => {
+      return res.status(404).json({ err: 'not found' });
+    }
   });
 
   api.init();

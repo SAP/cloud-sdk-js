@@ -4,12 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
-import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '@sap-cloud-sdk/core';
+import {
+  AllFields,
+  CustomFieldV2,
+  EntityBuilderType,
+  EntityV2,
+  Field,
+  StringField
+} from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
-export class TestEntityEndsWithSomethingElse extends EntityV2 implements TestEntityEndsWithSomethingElseType {
+export class TestEntityEndsWithSomethingElse
+  extends EntityV2
+  implements TestEntityEndsWithSomethingElseType {
   /**
    * Technical entity name for TestEntityEndsWithSomethingElse.
    */
@@ -27,7 +36,10 @@ export class TestEntityEndsWithSomethingElse extends EntityV2 implements TestEnt
    * Returns an entity builder to construct instances of `TestEntityEndsWithSomethingElse`.
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
-  static builder(): EntityBuilderType<TestEntityEndsWithSomethingElse, TestEntityEndsWithSomethingElseType> {
+  static builder(): EntityBuilderType<
+    TestEntityEndsWithSomethingElse,
+    TestEntityEndsWithSomethingElseType
+  > {
     return EntityV2.entityBuilder(TestEntityEndsWithSomethingElse);
   }
 
@@ -44,8 +56,13 @@ export class TestEntityEndsWithSomethingElse extends EntityV2 implements TestEnt
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
-  static customField(fieldName: string): CustomFieldV2<TestEntityEndsWithSomethingElse> {
-    return EntityV2.customFieldSelector(fieldName, TestEntityEndsWithSomethingElse);
+  static customField(
+    fieldName: string
+  ): CustomFieldV2<TestEntityEndsWithSomethingElse> {
+    return EntityV2.customFieldSelector(
+      fieldName,
+      TestEntityEndsWithSomethingElse
+    );
   }
 
   /**
@@ -66,26 +83,43 @@ export namespace TestEntityEndsWithSomethingElse {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityEndsWithSomethingElse> = new StringField('KeyProperty', TestEntityEndsWithSomethingElse, 'Edm.String');
+  export const KEY_PROPERTY: StringField<TestEntityEndsWithSomethingElse> = new StringField(
+    'KeyProperty',
+    TestEntityEndsWithSomethingElse,
+    'Edm.String'
+  );
   /**
    * All fields of the TestEntityEndsWithSomethingElse entity.
    */
-  export const _allFields: Array<StringField<TestEntityEndsWithSomethingElse>> = [
-    TestEntityEndsWithSomethingElse.KEY_PROPERTY
-  ];
+  export const _allFields: Array<
+    StringField<TestEntityEndsWithSomethingElse>
+  > = [TestEntityEndsWithSomethingElse.KEY_PROPERTY];
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityEndsWithSomethingElse> = new AllFields('*', TestEntityEndsWithSomethingElse);
+  export const ALL_FIELDS: AllFields<TestEntityEndsWithSomethingElse> = new AllFields(
+    '*',
+    TestEntityEndsWithSomethingElse
+  );
   /**
    * All key fields of the TestEntityEndsWithSomethingElse entity.
    */
-  export const _keyFields: Array<Field<TestEntityEndsWithSomethingElse>> = [TestEntityEndsWithSomethingElse.KEY_PROPERTY];
+  export const _keyFields: Array<Field<TestEntityEndsWithSomethingElse>> = [
+    TestEntityEndsWithSomethingElse.KEY_PROPERTY
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntityEndsWithSomethingElse.
    */
-  export const _keys: { [keys: string]: Field<TestEntityEndsWithSomethingElse> } = TestEntityEndsWithSomethingElse._keyFields.reduce((acc: { [keys: string]: Field<TestEntityEndsWithSomethingElse> }, field: Field<TestEntityEndsWithSomethingElse>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntityEndsWithSomethingElse>;
+  } = TestEntityEndsWithSomethingElse._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntityEndsWithSomethingElse> },
+      field: Field<TestEntityEndsWithSomethingElse>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

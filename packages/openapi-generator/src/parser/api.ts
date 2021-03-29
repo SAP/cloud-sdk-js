@@ -5,7 +5,8 @@ import { methods, OpenApiApi } from '../openapi-types';
 import { apiNameExtension, defaultApiName } from '../extensions';
 import { parseOperation } from './operation';
 import { OperationInfo } from './operation-info';
-import { ensureUniqueOperationIds, nameOperations } from './operation-naming';
+import { nameOperations } from './operation-naming';
+import { ensureUniqueNames } from './unique-naming';
 
 /**
  * Collect and parse all APIs of an `OpenAPIV3.Document`.
@@ -22,8 +23,13 @@ export function parseApis(
   return Object.entries(operationsByApis).map(
     ([name, operations]: [string, OperationInfo[]]) => ({
       name,
-      operations: ensureUniqueOperationIds(
-        nameOperations(operations)
+      operations: ensureUniqueNames(
+        nameOperations(operations),
+        // All operations got an operationId in the line before
+        ({ operation }) => operation.operationId!,
+        (operationInfo, operationId) => {
+          operationInfo.operation.operationId = operationId;
+        }
       ).map(operationInfo => parseOperation(operationInfo, refs))
     })
   );

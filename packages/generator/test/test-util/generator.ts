@@ -25,7 +25,7 @@ export async function getGeneratedFiles(
 ): Promise<SourceFile[]> {
   const project = await generateProject(
     createOptions({
-      inputDir: resolve(oDataServiceSpecs,oDataVersion,'API_TEST_SRV'),
+      inputDir: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
       useSwagger: false
     })
   );

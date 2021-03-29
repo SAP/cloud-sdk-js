@@ -19,7 +19,8 @@
 
 ## New Functionality
 
-- [http-client] Added an option to the generic http client, so users are able to delegate the csrf token handling for non-get requests.
+- [http-client] Add a `fetchCsrfToken` option to `executeHttpRequest` to allow automatic fetching of CSRF tokens for write operations.
+- [openapi-generator] Fetch CSRF tokens for write operations automatically.
 
 ## Improvements
 

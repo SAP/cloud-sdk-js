@@ -14,7 +14,6 @@ import {
   buildHttpRequest,
   executeHttpRequest,
   shouldHandleCsrfToken,
-  xCsrfTokenHeaderKey
 } from './http-client';
 
 describe('generic http client', () => {
@@ -313,7 +312,7 @@ describe('generic http client', () => {
       const csrfToken = 'some-csrf-token';
       nock('https://example.com', {
         reqheaders: {
-          [xCsrfTokenHeaderKey]: 'Fetch',
+          'x-csrf-token': 'Fetch',
           'content-type': 'application/json',
           accept: 'application/json',
           authorization: 'custom-auth-header',
@@ -321,11 +320,11 @@ describe('generic http client', () => {
         }
       })
         .get('/api/entity')
-        .reply(200, {}, { [xCsrfTokenHeaderKey]: csrfToken });
+        .reply(200, {}, { 'x-csrf-token': csrfToken });
 
       nock('https://example.com', {
         reqheaders: {
-          [xCsrfTokenHeaderKey]: csrfToken,
+          'x-csrf-token': csrfToken,
           'content-type': 'application/json',
           accept: 'application/json',
           authorization: 'custom-auth-header',
@@ -351,9 +350,10 @@ describe('generic http client', () => {
         }
       };
 
-      await expect(
-        executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
-      ).resolves.not.toThrow();
+      // await expect(
+      //   executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
+      // ).resolves.not.toThrow();
+      await executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true });
     });
   });
 

@@ -262,14 +262,12 @@ export function shouldHandleCsrfToken(
   );
 }
 
-export const xCsrfTokenHeaderKey = 'x-csrf-token';
-
 async function getCsrfHeaders(
   destination: Destination | DestinationNameAndJwt,
   headers: Record<string, string>,
   url: string
 ): Promise<Record<string, any>> {
-  const csrfHeaders = pickIgnoreCase(headers, xCsrfTokenHeaderKey);
+  const csrfHeaders = pickIgnoreCase(headers, 'x-csrf-token');
   return Object.keys(csrfHeaders).length
     ? csrfHeaders
     : buildCsrfHeaders(destination, {

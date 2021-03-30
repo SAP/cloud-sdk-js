@@ -90,7 +90,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
 }
 
 function hasCsrfToken(e1): boolean{
-  return e1.isAxiosError && (e1.response.headers)['x-csrf-token'];
+  return e1.isAxiosError &&  e1.response?.headers && e1.response.headers['x-csrf-token'];
 }
 
 function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {

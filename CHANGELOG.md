@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
-- Depracted `userApprovedServiceToken`, `refreshTokenGrant` and `userTokenGrant`
+- Deprecated `userApprovedServiceToken`, `refreshTokenGrant` and `userTokenGrant`
 
 ## New Functionality
 

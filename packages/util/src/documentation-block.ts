@@ -56,7 +56,7 @@ function removeWhiteSpaceAroundNewLine(strings: string[]): string[] {
 }
 
 function replaceAllWhiteSpacesBySingleOne(strings: string[]): string[] {
-  return strings.map(str => str.replace(/ +/g, ' ')); // .map(str=>str.trimStart().trimEnd())
+  return strings.map(str => str.replace(/ +/g, ' '));
 }
 
 function removeIllegaCharacter(strings: string[]): string[] {

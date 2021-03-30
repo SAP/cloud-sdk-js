@@ -1,8 +1,8 @@
 import nock from 'nock';
 import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
 import {
+  mockJwtBearerToken,
   mockServiceToken,
-  mockUserApprovedServiceToken
 } from '../../../../test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
@@ -11,12 +11,12 @@ import {
   mockVerifyJwt
 } from '../../../../test/test-util/destination-service-mocks';
 import {
+  providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
+  subscriberJwtBearerToken,
   subscriberServiceToken,
-  subscriberUserJwt,
-  userApprovedProviderServiceToken,
-  userApprovedSubscriberServiceToken
+  subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
@@ -51,7 +51,7 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
@@ -66,7 +66,7 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(userApprovedSubscriberServiceToken).headers
+          wrapJwtInHeader(subscriberJwtBearerToken).headers
         )
       ];
 
@@ -82,7 +82,7 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(
@@ -97,7 +97,7 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(userApprovedProviderServiceToken).headers
+          wrapJwtInHeader(providerJwtBearerToken).headers
         )
       ];
 
@@ -188,7 +188,7 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
@@ -220,7 +220,7 @@ describe('authentication types', () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
-    mockUserApprovedServiceToken();
+    mockJwtBearerToken();
 
     const httpMocks = [
       mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
@@ -250,7 +250,7 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
@@ -265,7 +265,7 @@ describe('authentication types', () => {
           oauthUserTokenExchangeSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(userApprovedProviderServiceToken).headers
+          wrapJwtInHeader(providerJwtBearerToken).headers
         )
       ];
 
@@ -281,7 +281,7 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
@@ -316,7 +316,7 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
@@ -353,7 +353,7 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
@@ -386,7 +386,7 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),

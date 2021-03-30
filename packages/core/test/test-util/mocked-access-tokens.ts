@@ -69,3 +69,25 @@ const subscriberUserPayload = {
 };
 
 export const subscriberUserJwt = signedJwt(subscriberUserPayload);
+
+const subscriberJwtTokenPayload = {
+  iat,
+  iss: subscriberXsuaaUrl,
+  zid: TestTenants.SUBSCRIBER,
+  user_id: 'jwt-sub'
+};
+
+const providerJwtTokenPayload = {
+  iat,
+  iss: providerXsuaaUrl,
+  zid: TestTenants.PROVIDER,
+  user_id: 'jwt-prov'
+};
+
+export const providerJwtBearerToken = signedJwt(
+  providerJwtTokenPayload
+);
+
+export const subscriberJwtBearerToken = signedJwt(
+  subscriberJwtTokenPayload
+);

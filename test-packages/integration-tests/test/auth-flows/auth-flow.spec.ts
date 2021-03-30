@@ -5,9 +5,6 @@ import {
   serviceToken,
   userApprovedServiceToken,
   wrapJwtInHeader,
-  getDestinationFromDestinationService,
-  alwaysProvider,
-  jwtBearerTokenGrant,
   jwtBearerToken
 } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
@@ -168,7 +165,7 @@ describe('OAuth flows', () => {
     expect(response.status).toBe(200);
   }, 60000);
 
-  xit('JwtBearerTokenGrant: Provider Destination & Provider Token', async () => {
+  xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
     const jwtToken = await jwtBearerToken(
       accessToken.provider,
       destinationService

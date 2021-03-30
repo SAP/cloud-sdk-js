@@ -2,7 +2,9 @@ import * as tokenAccessor from '../../src/connectivity/scp-cf/token-accessor';
 import { decodeJwt } from '../../src/connectivity/scp-cf';
 import { TestTenants } from './environment-mocks';
 import {
+  providerJwtBearerToken,
   providerServiceToken,
+  subscriberJwtBearerToken,
   subscriberServiceToken,
   userApprovedProviderServiceToken,
   userApprovedSubscriberServiceToken
@@ -37,4 +39,15 @@ export function mockUserApprovedServiceToken() {
       }
       return Promise.resolve(userApprovedProviderServiceToken);
     });
+}
+
+export function mockJwtBearerToken() {
+  return jest
+  .spyOn(tokenAccessor, 'jwtBearerToken')
+  .mockImplementation(userJwt => {
+    if (decodeJwt(userJwt).zid === TestTenants.SUBSCRIBER) {
+      return Promise.resolve(subscriberJwtBearerToken);
+    }
+    return Promise.resolve(providerJwtBearerToken);
+  });
 }

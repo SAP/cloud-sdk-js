@@ -18,7 +18,6 @@ import {
 } from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
 import { privateKey } from '@sap-cloud-sdk/core/test/test-util/keys';
 import { mockClientCredentialsGrantCall } from '@sap-cloud-sdk/core/test/test-util/xsuaa-service-mocks';
-import { mockCsrfTokenRequest } from '@sap-cloud-sdk/core/test/test-util/request-mocker';
 import { destinationName } from '@sap-cloud-sdk/core/test/test-util/example-destination-service-responses';
 import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
@@ -39,6 +38,11 @@ const providerToken = jwt.sign(
     algorithm: 'RS512'
   }
 );
+
+const mockedBuildHeaderResponse = {
+  'x-csrf-token': 'mocked-x-csrf-token',
+  'set-cookie': ['mocked-cookie-0', 'mocked-cookie-1']
+};
 
 let destination;
 
@@ -232,14 +236,24 @@ describe('Request Builder', () => {
 
   it('should resolve for create request', async () => {
     const response = singleTestEntityResponse();
-
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
     nock(destination.url, {
       reqheaders: {
         authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
-        cookie: 'key1=val1;key2=val2;key3=val3'
+        'x-csrf-token': 'Fetch'
+      }
+    })
+      .get(`${servicePath}/${entityName}`)
+      .reply(200, undefined, mockedBuildHeaderResponse);
+
+    nock(destination.url, {
+      reqheaders: {
+        authorization: basicHeader(destination.username, destination.password),
+        accept: 'application/json',
+        'content-type': 'application/json',
+        'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token'],
+        cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
       .post(`${servicePath}/${entityName}`, {
@@ -262,14 +276,27 @@ describe('Request Builder', () => {
     await expect(request).resolves.not.toThrow();
   });
 
-  it('should resolve when creating a child entity of another enitity', async () => {
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
+  it('should resolve when creating a child entity of another entity', async () => {
     nock(destination.url, {
       reqheaders: {
         authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
-        cookie: 'key1=val1;key2=val2;key3=val3'
+        'x-csrf-token': 'Fetch'
+      }
+    })
+      .get(
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)/to_MultiLink`
+      )
+      .reply(200, undefined, mockedBuildHeaderResponse);
+
+    nock(destination.url, {
+      reqheaders: {
+        authorization: basicHeader(destination.username, destination.password),
+        accept: 'application/json',
+        'content-type': 'application/json',
+        'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token'],
+        cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
       .post(
@@ -293,14 +320,26 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for update request', async () => {
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
+    nock(destination.url, {
+      reqheaders: {
+        authorization: basicHeader(destination.username, destination.password),
+        accept: 'application/json',
+        'content-type': 'application/json',
+        'x-csrf-token': 'Fetch'
+      }
+    })
+      .get(
+        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+      )
+      .reply(200, undefined, mockedBuildHeaderResponse);
 
     nock(destination.url, {
       reqheaders: {
         authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
-        cookie: 'key1=val1;key2=val2;key3=val3'
+        'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token'],
+        cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
       .patch(
@@ -338,14 +377,26 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for delete with keys', async () => {
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
+    nock(destination.url, {
+      reqheaders: {
+        authorization: basicHeader(destination.username, destination.password),
+        accept: 'application/json',
+        'content-type': 'application/json',
+        'x-csrf-token': 'Fetch'
+      }
+    })
+      .get(
+        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+      )
+      .reply(200, undefined, mockedBuildHeaderResponse);
 
     nock(destination.url, {
       reqheaders: {
         authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
-        cookie: 'key1=val1;key2=val2;key3=val3'
+        'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token'],
+        cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
       .delete(
@@ -361,7 +412,18 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for delete with entity', async () => {
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
+    nock(destination.url, {
+      reqheaders: {
+        authorization: basicHeader(destination.username, destination.password),
+        accept: 'application/json',
+        'content-type': 'application/json',
+        'x-csrf-token': 'Fetch'
+      }
+    })
+      .get(
+        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+      )
+      .reply(200, undefined, mockedBuildHeaderResponse);
 
     const entity = TestEntity.builder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
@@ -374,8 +436,9 @@ describe('Request Builder', () => {
         authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
-        cookie: 'key1=val1;key2=val2;key3=val3',
-        'if-match': 'something-new'
+        'if-match': 'something-new',
+        'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token'],
+        cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
       .delete(
@@ -400,7 +463,7 @@ describe('Request Builder', () => {
         'sap-client': destination.sapClient as string
       }
     })
-      .get(servicePath)
+      .get(`${servicePath}/${entityName}`)
       .reply(200, undefined, undefined);
 
     nock(destination.url, {

@@ -9,7 +9,7 @@ const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const csrfToken = 'CSRFTOKEN';
 const entityName = TestEntity._entityName;
 
-function mockCsrfTokenRequest(host: string, sapClient: string) {
+function mockCsrfTokenRequest(host: string, sapClient: string, path?: string) {
   nock(host, {
     reqheaders: {
       authorization: basicHeaderCSRF,
@@ -17,7 +17,7 @@ function mockCsrfTokenRequest(host: string, sapClient: string) {
       'sap-client': sapClient
     }
   })
-    .get(servicePath)
+    .get(path? `${servicePath}/${path}`: servicePath)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
@@ -59,7 +59,7 @@ describe('Custom Fields', () => {
     expect(actual).toBe('InjectedCustomField');
   });
 
-  it('should be selactable', async () => {
+  it('should be selectable', async () => {
     nock(destination.url, {
       reqheaders: {
         authorization: basicHeader(
@@ -108,7 +108,7 @@ describe('Custom Fields', () => {
   });
 
   it('should resolve for update requests', async () => {
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
+    mockCsrfTokenRequest(destination.url, destination.sapClient!, `${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`);
 
     nock(destination.url, {
       reqheaders: {
@@ -156,7 +156,7 @@ describe('Custom Fields', () => {
   });
 
   it('should resolve for create requests', async () => {
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
+    mockCsrfTokenRequest(destination.url, destination.sapClient!, entityName);
     const response = singleTestEntityResponse();
 
     nock(destination.url, {

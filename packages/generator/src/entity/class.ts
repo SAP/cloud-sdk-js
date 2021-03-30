@@ -111,8 +111,8 @@ function navProperty(
   }
   return {
     kind: StructureKind.Property,
-    name: navProp.instancePropertyName + '!',
-    type: entity.className + (navProp.isCollection ? '[]' : ''),
+    name: navProp.instancePropertyName + (navProp.isCollection ? '!' : '?'),
+    type: entity.className + (navProp.isCollection ? '[]' : ' | null'),
     docs: [addLeadingNewline(getNavPropertyDescription(navProp))]
   };
 }

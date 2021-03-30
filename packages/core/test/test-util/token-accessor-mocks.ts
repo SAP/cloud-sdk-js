@@ -43,11 +43,11 @@ export function mockUserApprovedServiceToken() {
 
 export function mockJwtBearerToken() {
   return jest
-  .spyOn(tokenAccessor, 'jwtBearerToken')
-  .mockImplementation(userJwt => {
-    if (decodeJwt(userJwt).zid === TestTenants.SUBSCRIBER) {
-      return Promise.resolve(subscriberJwtBearerToken);
-    }
-    return Promise.resolve(providerJwtBearerToken);
-  });
+    .spyOn(tokenAccessor, 'jwtBearerToken')
+    .mockImplementation(userJwt => {
+      if (decodeJwt(userJwt).zid === TestTenants.SUBSCRIBER) {
+        return Promise.resolve(subscriberJwtBearerToken);
+      }
+      return Promise.resolve(providerJwtBearerToken);
+    });
 }

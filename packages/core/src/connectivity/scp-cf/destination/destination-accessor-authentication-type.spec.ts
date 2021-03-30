@@ -2,7 +2,7 @@ import nock from 'nock';
 import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
-  mockServiceToken,
+  mockServiceToken
 } from '../../../../test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,

@@ -16,7 +16,10 @@ import {
   refreshTokenGrant,
   userTokenGrant
 } from './xsuaa-service';
-import { ClientCredentialsResponse, UserTokenResponse } from './xsuaa-service-types';
+import {
+  ClientCredentialsResponse,
+  UserTokenResponse
+} from './xsuaa-service-types';
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.

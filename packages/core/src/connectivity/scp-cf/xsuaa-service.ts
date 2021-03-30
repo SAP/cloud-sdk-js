@@ -138,7 +138,7 @@ export function refreshTokenGrant(
  * @param options - Options to use by retrieving access token.
  * @returns A promise resolving to the response of the XSUAA service.
  */
-export function jwtBearerTokenGrant (
+export function jwtBearerTokenGrant(
   tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
   clientCredentials: ClientCredentials,
   userJwt: string,
@@ -158,9 +158,9 @@ export function jwtBearerTokenGrant (
     body,
     options
   )
-  .then(resp => resp.data as ClientCredentialsResponse)
-  .catch(error =>
-    Promise.reject(accessTokenError(error, GrantType.JWT_BEARER_TOKEN))
+    .then(resp => resp.data as ClientCredentialsResponse)
+    .catch(error =>
+      Promise.reject(accessTokenError(error, GrantType.JWT_BEARER_TOKEN))
     );
 }
 

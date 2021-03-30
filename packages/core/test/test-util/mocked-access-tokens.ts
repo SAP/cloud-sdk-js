@@ -84,10 +84,6 @@ const providerJwtTokenPayload = {
   user_id: 'jwt-prov'
 };
 
-export const providerJwtBearerToken = signedJwt(
-  providerJwtTokenPayload
-);
+export const providerJwtBearerToken = signedJwt(providerJwtTokenPayload);
 
-export const subscriberJwtBearerToken = signedJwt(
-  subscriberJwtTokenPayload
-);
+export const subscriberJwtBearerToken = signedJwt(subscriberJwtTokenPayload);

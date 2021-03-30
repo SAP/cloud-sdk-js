@@ -62,7 +62,10 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
   return executeHttpRequest(destination, appendSlash(axiosConfig))
     .then(response => response.headers)
     .catch(e1 => {
-      logger.error(
+      if(hasCsrfToken(e1)){
+        return e1.response.headers;
+      }
+      logger.warn(
         new ErrorWithCause(
           'Initial try to fetch CSRF token failed - retry without slash at ',
           e1
@@ -71,12 +74,23 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
       return executeHttpRequest(destination, removeSlash(axiosConfig))
         .then(response => response.headers)
         .catch(e2 => {
-          throw new ErrorWithCause(
-            'Also second try to fetch SRF token failed - No CSRF token fetched.',
-            e2
+          if(hasCsrfToken(e2)){
+            return e2.response.headers;
+          }
+          logger.warn(
+            new ErrorWithCause(
+              'Also second try to fetch CSRF token failed - No CSRF token fetched.',
+              e2
+            )
           );
+          //todo suggest to disable csrf token handling
+          return {};
         });
     });
+}
+
+function hasCsrfToken(e1): boolean{
+  return e1.isAxiosError && (e1.response.headers)['x-csrf-token'];
 }
 
 function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {

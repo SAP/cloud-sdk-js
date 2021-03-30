@@ -144,7 +144,7 @@ describe('entity-serializer', () => {
       .build()
       .setOrInitializeRemoteState();
     testEntity.setCustomField('custom', 'newCustom');
-    testEntity.toSingleLink.booleanProperty = false;
+    testEntity.toSingleLink!.booleanProperty = false;
     expect(serializeEntity(testEntity, TestEntity, true)).toEqual({
       custom: 'newCustom',
       to_SingleLink: {

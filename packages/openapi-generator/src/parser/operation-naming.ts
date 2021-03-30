@@ -1,38 +1,7 @@
-import {
-  partition,
-  UniqueNameGenerator,
-  pascalCase,
-  camelCase
-} from '@sap-cloud-sdk/util';
+import { partition, pascalCase, camelCase } from '@sap-cloud-sdk/util';
 import { Method } from '../openapi-types';
 import { operationNameExtension } from '../extensions';
 import { OperationInfo } from './operation-info';
-
-/**
- * Ensure uniqueness of the operation names.
- * @param operations Original information on the operations, that are relevant for parsing.
- * @returns The original parsing information with unique operation IDs.
- */
-export function ensureUniqueOperationIds(
-  operations: OperationInfo[]
-): OperationInfo[] {
-  const {
-    unique: operationsWithUniqueNames,
-    duplicate: operationsWithDuplicateNames
-  } = partitionNamedOperationsToUniqueAndDuplicate(operations);
-
-  const nameGenerator = new UniqueNameGenerator(
-    '',
-    operationsWithUniqueNames.map(({ operation }) => operation.operationId!)
-  );
-
-  const renamedOperations = renameOperations(
-    operationsWithDuplicateNames,
-    ({ operation }) =>
-      nameGenerator.generateAndSaveUniqueName(camelCase(operation.operationId!))
-  );
-  return [...operationsWithUniqueNames, ...renamedOperations];
-}
 
 /**
  * Give all given operations an initial name.
@@ -103,47 +72,6 @@ function renameOperations(
     operationInfo.operation.operationId = renameFn(operationInfo);
     return operationInfo;
   });
-}
-
-function isDuplicateOperationName(
-  uniqueOperationNames: string[],
-  operationName: string
-): boolean {
-  return (
-    // is already in unique names
-    uniqueOperationNames.includes(operationName) ||
-    // differs when transformed to camel case - can potentially become duplicate
-    camelCase(operationName) !== operationName
-  );
-}
-
-/**
- * Partition operations into an object with two lists - one conaining the operations that have unique names and one containint the operations that have duplicate or potentially duplicate names.
- * @param namedOperations Operations with an operationId.
- * @returns An object containing the unique operations, denoted by `unique` and operations with (potentially) duplicate names, denoted by `duplicate`.
- */
-function partitionNamedOperationsToUniqueAndDuplicate(
-  namedOperations: OperationInfo[]
-): {
-  unique: OperationInfo[];
-  duplicate: OperationInfo[];
-} {
-  const unique: OperationInfo[] = [];
-  const duplicate: OperationInfo[] = [];
-  namedOperations.forEach(operationInfo => {
-    if (
-      isDuplicateOperationName(
-        unique.map(op => op.operation.operationId!),
-        operationInfo.operation.operationId!
-      )
-    ) {
-      duplicate.push(operationInfo);
-    } else {
-      unique.push(operationInfo);
-    }
-  });
-
-  return { unique, duplicate };
 }
 
 export function getOperationNameFromPatternAndMethod(

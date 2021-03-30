@@ -62,6 +62,16 @@ export const TestCaseApi = {
       'get',
       '/test-cases/duplicate-operation-ids'
     ),
+  duplicateOperationId2: () =>
+    new OpenApiRequestBuilder<any>(
+      'put',
+      '/test-cases/duplicate-operation-ids'
+    ),
+  duplicateOperationId3: () =>
+    new OpenApiRequestBuilder<any>(
+      'post',
+      '/test-cases/duplicate-operation-ids'
+    ),
   duplicateOperationId1: () =>
     new OpenApiRequestBuilder<any>(
       'patch',
@@ -81,15 +91,5 @@ export const TestCaseApi = {
       body
     }),
   getTestCasesNoOperationId: () =>
-    new OpenApiRequestBuilder<any>('get', '/test-cases/no-operation-id'),
-  duplicateOperationId2: () =>
-    new OpenApiRequestBuilder<any>(
-      'put',
-      '/test-cases/duplicate-operation-ids'
-    ),
-  duplicateOperationId3: () =>
-    new OpenApiRequestBuilder<any>(
-      'post',
-      '/test-cases/duplicate-operation-ids'
-    )
+    new OpenApiRequestBuilder<any>('get', '/test-cases/no-operation-id')
 };

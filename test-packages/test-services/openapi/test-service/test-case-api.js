@@ -58,6 +58,18 @@ exports.TestCaseApi = {
       '/test-cases/duplicate-operation-ids'
     );
   },
+  duplicateOperationId2: function () {
+    return new core_1.OpenApiRequestBuilder(
+      'put',
+      '/test-cases/duplicate-operation-ids'
+    );
+  },
+  duplicateOperationId3: function () {
+    return new core_1.OpenApiRequestBuilder(
+      'post',
+      '/test-cases/duplicate-operation-ids'
+    );
+  },
   duplicateOperationId1: function () {
     return new core_1.OpenApiRequestBuilder(
       'patch',
@@ -87,18 +99,6 @@ exports.TestCaseApi = {
     return new core_1.OpenApiRequestBuilder(
       'get',
       '/test-cases/no-operation-id'
-    );
-  },
-  duplicateOperationId2: function () {
-    return new core_1.OpenApiRequestBuilder(
-      'put',
-      '/test-cases/duplicate-operation-ids'
-    );
-  },
-  duplicateOperationId3: function () {
-    return new core_1.OpenApiRequestBuilder(
-      'post',
-      '/test-cases/duplicate-operation-ids'
     );
   }
 };

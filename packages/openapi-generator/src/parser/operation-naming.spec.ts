@@ -1,24 +1,9 @@
 import { operationNameExtension } from '../extensions';
 import { OperationInfo } from './operation-info';
 import {
-  ensureUniqueOperationIds,
   getOperationNameFromPatternAndMethod,
   nameOperations
 } from './operation-naming';
-
-it('ensureUniqueOperationIds replaces duplicate names, while prioritizing original names', () => {
-  const uniqueOperations = ensureUniqueOperationIds([
-    { operation: { operationId: 'getX', summary: 'operation1' } },
-    { operation: { operationId: 'getX', summary: 'operation2' } },
-    { operation: { operationId: 'getX1', summary: 'operation3' } }
-  ] as OperationInfo[]);
-
-  expect(uniqueOperations.map(({ operation }) => operation)).toEqual([
-    { operationId: 'getX', summary: 'operation1' },
-    { operationId: 'getX1', summary: 'operation3' },
-    { operationId: 'getX2', summary: 'operation2' }
-  ]);
-});
 
 it('nameOperations adds retrieves initial names for operations', () => {
   const uniqueOperations = nameOperations([

@@ -35,7 +35,7 @@ jobs:
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since origin/main
+      - run: yarn lerna run compile
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn test:unit
         env:

@@ -5,12 +5,15 @@ import { parseSchema } from './schema';
 describe('parseSchema', () => {
   it('parses reference schema', () => {
     const schema = { $ref: 'test' };
-    expect(parseSchema(schema)).toEqual(schema);
+    expect(parseSchema(schema, { test: 'Test' })).toEqual({
+      ...schema,
+      schemaName: 'Test'
+    });
   });
 
   it('parses simple schema', () => {
     const schema: OpenAPIV3.SchemaObject = { type: 'string' };
-    expect(parseSchema(schema)).toEqual(schema);
+    expect(parseSchema(schema, {})).toEqual(schema);
   });
 
   it('parses array schema', () => {
@@ -19,7 +22,7 @@ describe('parseSchema', () => {
       items: { type: 'string' }
     };
 
-    expect(parseSchema(schema)).toEqual({
+    expect(parseSchema(schema, {})).toEqual({
       items: { type: 'string' }
     });
   });
@@ -30,7 +33,7 @@ describe('parseSchema', () => {
       uniqueItems: true,
       items: { type: 'string' }
     };
-    expect(parseSchema(schema)).toEqual({
+    expect(parseSchema(schema, {})).toEqual({
       uniqueItems: true,
       items: { type: 'string' }
     });
@@ -42,7 +45,7 @@ describe('parseSchema', () => {
       uniqueItems: true,
       items: { type: 'object' }
     };
-    expect(parseSchema(schema)).toEqual({
+    expect(parseSchema(schema, {})).toEqual({
       uniqueItems: true,
       items: emptyObjectSchema
     });
@@ -60,7 +63,7 @@ describe('parseSchema', () => {
         }
       }
     };
-    expect(parseSchema(schema)).toEqual({
+    expect(parseSchema(schema, {})).toEqual({
       properties: [
         { name: 'simpleProperty', required: true, schema: { type: 'string' } },
         {
@@ -87,11 +90,14 @@ describe('parseSchema', () => {
 
   it('throws an error if there are neither propertes nor additional properties', () => {
     expect(() =>
-      parseSchema({
-        type: 'object',
-        additionalProperties: false,
-        properties: {}
-      })
+      parseSchema(
+        {
+          type: 'object',
+          additionalProperties: false,
+          properties: {}
+        },
+        {}
+      )
     ).toThrowErrorMatchingInlineSnapshot(
       '"Could not parse object schema without neither properties nor additional properties."'
     );
@@ -102,7 +108,7 @@ describe('parseSchema', () => {
       enum: ['1', '2', '3'],
       type: 'number'
     };
-    expect(parseSchema(schema)).toEqual(schema);
+    expect(parseSchema(schema, {})).toEqual(schema);
   });
 
   it('parses string enum schema', () => {
@@ -110,7 +116,7 @@ describe('parseSchema', () => {
       enum: ['one', 'two', 'three'],
       type: 'string'
     };
-    expect(parseSchema(schema)).toEqual({
+    expect(parseSchema(schema, {})).toEqual({
       type: 'string',
       enum: ["'one'", "'two'", "'three'"]
     });
@@ -128,7 +134,7 @@ describe('parseSchema', () => {
         }
       ]
     };
-    expect(parseSchema(schema)).toEqual({
+    expect(parseSchema(schema, {})).toEqual({
       oneOf: [
         emptyObjectSchema,
         {
@@ -145,7 +151,7 @@ describe('parseSchema', () => {
     const schema: OpenAPIV3.SchemaObject = {
       not: { type: 'object' }
     };
-    expect(parseSchema(schema)).toEqual({
+    expect(parseSchema(schema, {})).toEqual({
       not: emptyObjectSchema
     });
   });

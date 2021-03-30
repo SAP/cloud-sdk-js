@@ -154,7 +154,7 @@ describe('serializeOperation', () => {
       queryParameters: [],
       requestBody: {
         required: false,
-        schema: { $ref: '#/components/schemas/RefType' }
+        schema: { $ref: '#/components/schemas/RefType', schemaName: 'RefType' }
       },
       response: { type: 'string' },
       pathPattern: 'test'

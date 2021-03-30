@@ -17,10 +17,12 @@ export function serializeOperation(operation: OpenApiOperation): string {
   if (bodyAndQueryParams) {
     requestBuilderParams.push(bodyAndQueryParams);
   }
+
+  const responseType = serializeSchema(operation.response);
   return codeBlock`
 ${operation.operationId}: (${serializeOperationSignature(
     operation
-  )}) => new OpenApiRequestBuilder<${serializeSchema(operation.response)}>(
+  )}) => new OpenApiRequestBuilder<${responseType}>(
   ${requestBuilderParams.join(',\n')}
 )`;
 }

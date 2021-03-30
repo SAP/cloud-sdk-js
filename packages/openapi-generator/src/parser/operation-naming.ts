@@ -1,7 +1,7 @@
 import { partition, pascalCase, camelCase } from '@sap-cloud-sdk/util';
 import { Method } from '../openapi-types';
 import { operationNameExtension } from '../extensions';
-import { OperationInfo } from './operation-info';
+import { OperationInfo } from './parsing-info';
 
 /**
  * Give all given operations an initial name.

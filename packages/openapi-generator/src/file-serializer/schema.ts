@@ -7,7 +7,6 @@ import {
 import { getType } from '../parser/type-mapping';
 import {
   isReferenceObject,
-  parseTypeNameFromRef,
   isArraySchema,
   isObjectSchema,
   isEnumSchema,
@@ -24,7 +23,7 @@ import {
  */
 export function serializeSchema(schema: OpenApiSchema): string {
   if (isReferenceObject(schema)) {
-    return parseTypeNameFromRef(schema);
+    return schema.schemaName;
   }
   if (isArraySchema(schema)) {
     const type = serializeSchema(schema.items);
@@ -62,7 +61,7 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
     !schema.properties.length &&
     typeof schema.additionalProperties !== 'object'
   ) {
-    return serializeRecordSchema();
+    return 'Record<string, any>';
   }
 
   const types: string[] = [];
@@ -71,7 +70,9 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
   }
 
   if (schema.additionalProperties) {
-    types.push(serializeRecordSchema(schema.additionalProperties));
+    types.push(
+      `Record<string, ${serializeSchema(schema.additionalProperties)}>`
+    );
   }
 
   return types.join(' | ');
@@ -91,13 +92,4 @@ function serializeObjectSchemaForProperties(
         )
         .join('\n')}
     }`;
-}
-
-function serializeRecordSchema(
-  additionalProperties: true | OpenApiSchema = true
-): string {
-  if (typeof additionalProperties === 'object') {
-    return codeBlock`Record<string, ${serializeSchema(additionalProperties)}>`;
-  }
-  return codeBlock`Record<string, any>`;
 }

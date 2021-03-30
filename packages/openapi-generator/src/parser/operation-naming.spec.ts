@@ -1,5 +1,5 @@
 import { operationNameExtension } from '../extensions';
-import { OperationInfo } from './operation-info';
+import { OperationInfo } from './parsing-info';
 import {
   getOperationNameFromPatternAndMethod,
   nameOperations

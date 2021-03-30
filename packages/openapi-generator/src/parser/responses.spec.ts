@@ -4,7 +4,11 @@ import { parseResponses } from './responses';
 describe('parseResponses', () => {
   it('parses response schema without content', async () => {
     expect(
-      parseResponses({ 200: { description: 'A response' } }, await createRefs())
+      parseResponses(
+        { 200: { description: 'A response' } },
+        await createRefs(),
+        {}
+      )
     ).toEqual({
       type: 'any'
     });
@@ -21,7 +25,8 @@ describe('parseResponses', () => {
             }
           }
         },
-        await createRefs()
+        await createRefs(),
+        {}
       )
     ).toEqual({
       type: 'string'
@@ -47,10 +52,14 @@ describe('parseResponses', () => {
             }
           }
         },
-        await createRefs()
+        await createRefs(),
+        { '#/components/schema/RefType': 'RefType' }
       )
     ).toEqual({
-      anyOf: [{ type: 'string' }, { $ref: '#/components/schema/RefType' }]
+      anyOf: [
+        { type: 'string' },
+        { $ref: '#/components/schema/RefType', schemaName: 'RefType' }
+      ]
     });
   });
 });

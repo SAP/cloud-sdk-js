@@ -32,3 +32,9 @@ export interface OperationInfo {
    */
   pathItemParameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[];
 }
+
+export interface SchemaInfo {
+  refPath: string;
+  name: string;
+  schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
+}

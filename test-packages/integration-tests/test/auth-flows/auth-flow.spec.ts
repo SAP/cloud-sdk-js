@@ -4,7 +4,11 @@ import {
   getService,
   serviceToken,
   userApprovedServiceToken,
-  wrapJwtInHeader
+  wrapJwtInHeader,
+  getDestinationFromDestinationService,
+  alwaysProvider,
+  jwtBearerTokenGrant,
+  jwtBearerToken
 } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import {
@@ -47,7 +51,7 @@ describe('OAuth flows', () => {
     const result = await BusinessPartner.requestBuilder()
       .getAll()
       .top(1)
-      .execute(destination);
+      .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -162,5 +166,25 @@ describe('OAuth flows', () => {
     );
 
     expect(response.status).toBe(200);
+  }, 60000);
+
+  xit('JwtBearerTokenGrant: Provider Destination & Provider Token', async () => {
+    const jwtToken = await jwtBearerToken(
+      accessToken.provider,
+      destinationService
+    );
+
+    const destination = await fetchDestination(
+      destinationService!.credentials.uri,
+      jwtToken,
+      systems.s4.providerOAuth2SAMLBearerAssertion
+    );
+    expect(destination.authTokens![0].error).toBeNull();
+
+    const result = await BusinessPartner.requestBuilder()
+      .getAll()
+      .top(1)
+      .execute(destination!);
+    expect(result.length).toBe(1);
   }, 60000);
 });

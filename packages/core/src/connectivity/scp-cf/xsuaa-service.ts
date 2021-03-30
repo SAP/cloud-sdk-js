@@ -129,16 +129,25 @@ export function refreshTokenGrant(
     );
 }
 
+/**
+ * Executes a JWT bearer token trant request against the given URI.
+ *
+ * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
+ * @param clientCredentials - The credentials (client_id, client_secret) of the target XSUAA service instance.
+ * @param userJwt - The JWT of the user on whose behalf the request is executed.
+ * @param options - Options to use by retrieving access token.
+ * @returns A promise resolving to the response of the XSUAA service.
+ */
 export function jwtBearerTokenGrant (
   tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
   clientCredentials: ClientCredentials,
-  access_token: string,
+  userJwt: string,
   options?: ResilienceOptions
 ): Promise<ClientCredentialsResponse> {
   const authHeader = headerForClientCredentials(clientCredentials);
   const body = objectToXWwwUrlEncodedBodyString({
     client_id: clientCredentials.username,
-    assertion: access_token,
+    assertion: userJwt,
     grant_type: GrantType.JWT_BEARER_TOKEN,
     response_type: 'token'
   });

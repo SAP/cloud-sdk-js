@@ -20,7 +20,7 @@ export function schemaFile({ name, schema }: OpenApiNamedSchema): string {
 
   return codeBlock`    
     ${imports}
-    ${schemaDocumentation({ name,schema })}
+    ${schemaDocumentation({ name, schema })}
     export type ${name} = ${serializeSchema(schema)};
   `;
 }

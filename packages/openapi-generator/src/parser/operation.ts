@@ -36,14 +36,14 @@ export function parseOperation(
     parameter => parameter.in === 'path'
   );
 
-  const pathParameters = parsePathParameters(pathParams, pathPattern,refs);
+  const pathParameters = parsePathParameters(pathParams, pathPattern, refs);
 
   return {
     ...operation,
     method,
     requestBody,
     response,
-    queryParameters: parseParameters(queryParams,refs),
+    queryParameters: parseParameters(queryParams, refs),
     pathParameters,
     pathPattern: parsePathPattern(pathPattern, pathParameters),
     operationId: operation.operationId!,
@@ -125,7 +125,7 @@ export function parsePathParameters(
     ...reservedJsKeywords
   ]);
 
-  return parseParameters(sortedPathParameters,refs).map(param => ({
+  return parseParameters(sortedPathParameters, refs).map(param => ({
     ...param,
     name: nameGenerator.generateAndSaveUniqueName(camelCase(param.originalName))
   }));
@@ -138,6 +138,6 @@ export function parseParameters(
   return pathParameters.map(param => ({
     ...param,
     originalName: param.name,
-    schema: parseSchema(param.schema,refs)
+    schema: parseSchema(param.schema, refs)
   }));
 }

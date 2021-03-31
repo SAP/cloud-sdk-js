@@ -8,16 +8,14 @@ exports.EntityApi = void 0;
  */
 var core_1 = require('@sap-cloud-sdk/core');
 /**
- * Representation of the EntityApi API.
- * This API is part of the TestService service.
- *
- * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+ * Representation of the 'EntityApi'.
+ * This API is part of the 'TestService' service.
  */
 exports.EntityApi = {
   /**
    * Get all entities
    *
-   * @param queryParameters Optional object containing the query parameters.
+   * @param queryParameters Object containing the query parameters.
    * @returns TestEntity[]
    */
   getAllEntities: function (queryParameters) {
@@ -28,7 +26,7 @@ exports.EntityApi = {
   /**
    * Makes a put request to the '/entities' endpoint and returns a 'any'
    *
-   * @param body Optional object containing the request body of type 'TestEntity[]'
+   * @param body Request body
    * @returns any
    */
   updateEntityWithPut: function (body) {
@@ -39,7 +37,7 @@ exports.EntityApi = {
   /**
    * Create entity
    *
-   * @param body Optional object containing the request body of type 'TestEntity'
+   * @param body Entity to create
    * @returns any
    */
   createEntity: function (body) {
@@ -50,7 +48,7 @@ exports.EntityApi = {
   /**
    * Makes a patch request to the '/entities' endpoint and returns a 'any'
    *
-   * @param body Optional object containing the request body of type 'Record<string, any>'
+   * @param body Request body
    * @returns any
    */
   updateEntity: function (body) {
@@ -61,7 +59,7 @@ exports.EntityApi = {
   /**
    * Makes a delete request to the '/entities' endpoint and returns a 'any'
    *
-   * @param body Optional object containing the request body of type 'string[]'
+   * @param body Request body
    * @returns any
    */
   deleteEntity: function (body) {

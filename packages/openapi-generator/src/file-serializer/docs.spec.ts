@@ -1,5 +1,9 @@
 import { OpenApiOperation } from '../openapi-types';
-import { apiDocumentation, operationDocumentation, schemaDocumentation } from './docs';
+import {
+  apiDocumentation,
+  operationDocumentation,
+  schemaDocumentation
+} from './docs';
 
 describe('docs', () => {
   function getOperation(): OpenApiOperation {
@@ -14,10 +18,7 @@ describe('docs', () => {
 
   it('creates documentation for the api', () => {
     expect(
-      apiDocumentation(
-        { name: 'TestApi' } as any,
-        'TestService'
-      )
+      apiDocumentation({ name: 'TestApi' } as any, 'TestService')
     ).toMatchSnapshot();
   });
 
@@ -73,7 +74,11 @@ describe('docs', () => {
 
   it('uses the body description if present', () => {
     const operation = getOperation();
-    operation.requestBody = { schema: { type: 'string' },description:'My body description', required: true };
+    operation.requestBody = {
+      schema: { type: 'string' },
+      description: 'My body description',
+      required: true
+    };
     expect(operationDocumentation(operation)).toMatch(/My body description/);
   });
 
@@ -91,11 +96,16 @@ describe('docs', () => {
     );
   });
 
-  it('creates schema documentation',()=>{
-    expect(schemaDocumentation({ name:'mySchema' } as any)).toMatchSnapshot();
+  it('creates schema documentation', () => {
+    expect(schemaDocumentation({ name: 'mySchema' } as any)).toMatchSnapshot();
   });
 
-  it('uses the schema description documentation if present',()=>{
-    expect(schemaDocumentation({ name:'mySchema',description:'My schmema description.' } as any)).toMatch(/My schmema description/);
+  it('uses the schema description documentation if present', () => {
+    expect(
+      schemaDocumentation({
+        name: 'mySchema',
+        description: 'My schmema description.'
+      } as any)
+    ).toMatch(/My schmema description/);
   });
 });

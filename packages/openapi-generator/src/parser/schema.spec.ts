@@ -6,18 +6,24 @@ import { parseSchema } from './schema';
 describe('parseSchema', () => {
   it('parses reference schema', () => {
     const schema = { $ref: 'test' };
-    expect(parseSchema(schema,{}as any)).toEqual(schema);
+    expect(parseSchema(schema, {} as any)).toEqual(schema);
   });
 
   it('parses simple schema', () => {
     const schema: OpenAPIV3.SchemaObject = { type: 'string' };
-    expect(parseSchema(schema,{}as any)).toEqual(schema);
+    expect(parseSchema(schema, {} as any)).toEqual(schema);
   });
 
-  it('parses simple schema with description', async() => {
-    const schema: OpenAPIV3.SchemaObject = { type: 'object', properties:{ prop1:{ description:'My Description',type:'string' } } };
+  it('parses simple schema with description', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      type: 'object',
+      properties: { prop1: { description: 'My Description', type: 'string' } }
+    };
     const refs = await createRefs({});
-    expect((parseSchema(schema,refs) as OpenApiObjectSchema).properties[0].description).toBe('My Description');
+    expect(
+      (parseSchema(schema, refs) as OpenApiObjectSchema).properties[0]
+        .description
+    ).toBe('My Description');
   });
 
   it('parses array schema', () => {
@@ -26,7 +32,7 @@ describe('parseSchema', () => {
       items: { type: 'string' }
     };
 
-    expect(parseSchema(schema,{}as any)).toEqual({
+    expect(parseSchema(schema, {} as any)).toEqual({
       items: { type: 'string' }
     });
   });
@@ -37,7 +43,7 @@ describe('parseSchema', () => {
       uniqueItems: true,
       items: { type: 'string' }
     };
-    expect(parseSchema(schema,{}as any)).toEqual({
+    expect(parseSchema(schema, {} as any)).toEqual({
       uniqueItems: true,
       items: { type: 'string' }
     });
@@ -49,7 +55,7 @@ describe('parseSchema', () => {
       uniqueItems: true,
       items: { type: 'object' }
     };
-    expect(parseSchema(schema,{}as any)).toEqual({
+    expect(parseSchema(schema, {} as any)).toEqual({
       uniqueItems: true,
       items: emptyObjectSchema
     });
@@ -67,7 +73,7 @@ describe('parseSchema', () => {
         }
       }
     };
-    expect(parseSchema(schema,{}as any)).toEqual({
+    expect(parseSchema(schema, {} as any)).toEqual({
       properties: [
         { name: 'simpleProperty', required: true, schema: { type: 'string' } },
         {
@@ -94,11 +100,14 @@ describe('parseSchema', () => {
 
   it('throws an error if there are neither propertes nor additional properties', () => {
     expect(() =>
-      parseSchema({
-        type: 'object',
-        additionalProperties: false,
-        properties: {}
-      },{}as any)
+      parseSchema(
+        {
+          type: 'object',
+          additionalProperties: false,
+          properties: {}
+        },
+        {} as any
+      )
     ).toThrowErrorMatchingInlineSnapshot(
       '"Could not parse object schema without neither properties nor additional properties."'
     );
@@ -109,7 +118,7 @@ describe('parseSchema', () => {
       enum: ['1', '2', '3'],
       type: 'number'
     };
-    expect(parseSchema(schema,{}as any)).toEqual(schema);
+    expect(parseSchema(schema, {} as any)).toEqual(schema);
   });
 
   it('parses string enum schema', () => {
@@ -117,7 +126,7 @@ describe('parseSchema', () => {
       enum: ['one', 'two', 'three'],
       type: 'string'
     };
-    expect(parseSchema(schema,{}as any)).toEqual({
+    expect(parseSchema(schema, {} as any)).toEqual({
       type: 'string',
       enum: ["'one'", "'two'", "'three'"]
     });
@@ -135,7 +144,7 @@ describe('parseSchema', () => {
         }
       ]
     };
-    expect(parseSchema(schema,{}as any)).toEqual({
+    expect(parseSchema(schema, {} as any)).toEqual({
       oneOf: [
         emptyObjectSchema,
         {
@@ -152,7 +161,7 @@ describe('parseSchema', () => {
     const schema: OpenAPIV3.SchemaObject = {
       not: { type: 'object' }
     };
-    expect(parseSchema(schema,{}as any)).toEqual({
+    expect(parseSchema(schema, {} as any)).toEqual({
       not: emptyObjectSchema
     });
   });

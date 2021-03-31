@@ -34,7 +34,7 @@ export function parseSchema(
   }
 
   if (schema.type === 'array') {
-    return parseArraySchema(schema,refs);
+    return parseArraySchema(schema, refs);
   }
 
   if (
@@ -42,7 +42,7 @@ export function parseSchema(
     schema.properties ||
     'additionalProperties' in schema
   ) {
-    return parseObjectSchema(schema,refs);
+    return parseObjectSchema(schema, refs);
   }
 
   if (schema.enum?.length) {
@@ -50,20 +50,20 @@ export function parseSchema(
   }
 
   if (schema.oneOf?.length) {
-    return parseXOfSchema(schema, 'oneOf',refs);
+    return parseXOfSchema(schema, 'oneOf', refs);
   }
 
   if (schema.allOf?.length) {
-    return parseXOfSchema(schema, 'allOf',refs);
+    return parseXOfSchema(schema, 'allOf', refs);
   }
 
   if (schema.anyOf?.length) {
-    return parseXOfSchema(schema, 'anyOf',refs);
+    return parseXOfSchema(schema, 'anyOf', refs);
   }
 
   if (schema.not) {
     return {
-      not: parseSchema(schema.not,refs)
+      not: parseSchema(schema.not, refs)
     };
   }
 
@@ -84,7 +84,7 @@ function parseArraySchema(
 ): OpenApiArraySchema {
   return {
     uniqueItems: schema.uniqueItems,
-    items: parseSchema(schema.items,refs)
+    items: parseSchema(schema.items, refs)
   };
 }
 
@@ -98,7 +98,7 @@ function parseObjectSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
   refs: SwaggerParser.$Refs
 ): OpenApiObjectSchema {
-  const properties = parseObjectSchemaProperties(schema,refs);
+  const properties = parseObjectSchemaProperties(schema, refs);
 
   if (schema.additionalProperties === false) {
     if (!properties.length) {
@@ -113,7 +113,7 @@ function parseObjectSchema(
   const additionalProperties =
     typeof schema.additionalProperties === 'object' &&
     Object.keys(schema.additionalProperties).length
-      ? parseSchema(schema.additionalProperties,refs)
+      ? parseSchema(schema.additionalProperties, refs)
       : { type: 'any' };
 
   return {
@@ -136,8 +136,8 @@ function parseObjectSchemaProperties(
     (props, [propName, propSchema]) => [
       ...props,
       {
-        schema: parseSchema(propSchema,refs),
-        description: resolveObject(propSchema,refs)?.description,
+        schema: parseSchema(propSchema, refs),
+        description: resolveObject(propSchema, refs)?.description,
         name: propName,
         required: schema.required?.includes(propName) || false
       }
@@ -176,6 +176,6 @@ function parseXOfSchema(
   refs: SwaggerParser.$Refs
 ): any {
   return {
-    [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry,refs))
+    [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry, refs))
   };
 }

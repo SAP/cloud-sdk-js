@@ -16,7 +16,7 @@ export function parseApplicationJsonMediaType(
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
     | undefined,
-    refs: SwaggerParser.$Refs,
+  refs: SwaggerParser.$Refs
 ): OpenApiSchema | undefined {
   if (bodyOrResponseObject) {
     const mediaType = getMediaTypeObject(
@@ -25,7 +25,7 @@ export function parseApplicationJsonMediaType(
     );
     const schema = mediaType?.schema;
     if (schema) {
-      return parseSchema(schema,refs);
+      return parseSchema(schema, refs);
     }
   }
 }
@@ -39,7 +39,10 @@ export function parseMediaType(
 ): OpenApiSchema | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
-    const jsonMediaType = parseApplicationJsonMediaType(bodyOrResponseObject,refs);
+    const jsonMediaType = parseApplicationJsonMediaType(
+      bodyOrResponseObject,
+      refs
+    );
 
     if (!jsonMediaType) {
       logger.debug(

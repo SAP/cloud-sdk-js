@@ -8,18 +8,16 @@ exports.TestCaseApi = void 0;
  */
 var core_1 = require('@sap-cloud-sdk/core');
 /**
- * Representation of the TestCaseApi API.
- * This API is part of the TestService service.
- *
- * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+ * Representation of the 'TestCaseApi'.
+ * This API is part of the 'TestService' service.
  */
 exports.TestCaseApi = {
   /**
    * Makes a get request to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint and returns a 'any'
    *
-   * @param requiredPathItemPathParam Path parameter number 1
-   * @param body Optional object containing the request body of type 'SimpleTestEntity'
-   * @param queryParameters Optional object containing the query parameters.
+   * @param requiredPathItemPathParam Path parameter with the original name requiredPathItemPathParam
+   * @param body Request body
+   * @param queryParameters Object containing the query parameters.
    * @returns any
    */
   testCaseGetRequiredParameters: function (
@@ -42,9 +40,9 @@ exports.TestCaseApi = {
   /**
    * Makes a post request to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint and returns a 'any'
    *
-   * @param requiredPathItemPathParam Path parameter number 1
-   * @param body Object containing the request body of type 'SimpleTestEntity'
-   * @param queryParameters Optional object containing the query parameters.
+   * @param requiredPathItemPathParam Path parameter with the original name requiredPathItemPathParam
+   * @param body Request body
+   * @param queryParameters Object containing the query parameters.
    * @returns any
    */
   testCasePostRequiredParameters: function (
@@ -67,8 +65,8 @@ exports.TestCaseApi = {
   /**
    * Makes a get request to the '/test-cases/parameters/{duplicateParam}' endpoint and returns a 'any'
    *
-   * @param duplicateParam Path parameter number 1
-   * @param queryParameters Optional object containing the query parameters.
+   * @param duplicateParam Path parameter with the original name duplicateParam
+   * @param queryParameters Object containing the query parameters.
    * @returns any
    */
   testCaseGetDuplicateParameters: function (duplicateParam, queryParameters) {
@@ -128,8 +126,8 @@ exports.TestCaseApi = {
   /**
    * Makes a get request to the '/test-cases/reserved-keywords/{const1}' endpoint and returns a 'any'
    *
-   * @param const1 Path parameter number 1
-   * @param queryParameters Optional object containing the query parameters.
+   * @param const1 Path parameter with the original name const
+   * @param queryParameters Object containing the query parameters.
    * @returns any
    */
   export: function (const1, queryParameters) {
@@ -145,7 +143,7 @@ exports.TestCaseApi = {
   /**
    * Makes a get request to the '/test-cases/complex-schemas' endpoint and returns a 'any'
    *
-   * @param body Optional object containing the request body of type 'ComplexTestEntity'
+   * @param body Request body
    * @returns any
    */
   complexSchemas: function (body) {

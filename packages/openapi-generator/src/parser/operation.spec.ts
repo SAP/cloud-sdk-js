@@ -80,18 +80,21 @@ describe('getRelevantParameters', () => {
 
 describe('parseParameters', () => {
   it('returns empty arrays if there are no parameters', async () => {
-    expect(parseParameters([],{}as any)).toEqual([]);
+    expect(parseParameters([], {} as any)).toEqual([]);
   });
 
   it('parses the parameter schema', async () => {
     expect(
-      parseParameters([
-        {
-          name: 'pathParam',
-          in: 'path',
-          schema: { type: 'object' }
-        }
-      ],{}as any)
+      parseParameters(
+        [
+          {
+            name: 'pathParam',
+            in: 'path',
+            schema: { type: 'object' }
+          }
+        ],
+        {} as any
+      )
     ).toEqual([
       {
         name: 'pathParam',
@@ -105,12 +108,12 @@ describe('parseParameters', () => {
 
 describe('parsePathParameters', () => {
   it('returns empty arrays if there are no parameters', async () => {
-    expect(parsePathParameters([], '/test',{}as any)).toEqual([]);
+    expect(parsePathParameters([], '/test', {} as any)).toEqual([]);
   });
 
   it('throws an error if the parameters do not match the path pattern', async () => {
     expect(() =>
-      parsePathParameters([], '/test/{id}',{}as any)
+      parsePathParameters([], '/test/{id}', {} as any)
     ).toThrowErrorMatchingInlineSnapshot(
       '"Path parameter \'id\' provided in path is missing in path parameters."'
     );
@@ -140,7 +143,8 @@ describe('parsePathParameters', () => {
     expect(
       parsePathParameters(
         [pathParam1, pathParam2, pathParam3, pathParam4],
-        '/root/{path-param}/{pathParam}/path/{PathParam1}/sub-path/{path_param}',{}as any
+        '/root/{path-param}/{pathParam}/path/{PathParam1}/sub-path/{path_param}',
+        {} as any
       )
     ).toEqual(
       [pathParam3, pathParam1, pathParam2, pathParam4].map((param, i) => ({

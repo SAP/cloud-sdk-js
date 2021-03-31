@@ -1,16 +1,14 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import type { TestEntity } from './schema';
 /**
- * Representation of the EntityApi API.
- * This API is part of the TestService service.
- *
- * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+ * Representation of the 'EntityApi'.
+ * This API is part of the 'TestService' service.
  */
 export declare const EntityApi: {
   /**
    * Get all entities
    *
-   * @param queryParameters Optional object containing the query parameters.
+   * @param queryParameters Object containing the query parameters.
    * @returns TestEntity[]
    */
   getAllEntities: (
@@ -30,7 +28,7 @@ export declare const EntityApi: {
   /**
    * Makes a put request to the '/entities' endpoint and returns a 'any'
    *
-   * @param body Optional object containing the request body of type 'TestEntity[]'
+   * @param body Request body
    * @returns any
    */
   updateEntityWithPut: (
@@ -39,14 +37,14 @@ export declare const EntityApi: {
   /**
    * Create entity
    *
-   * @param body Optional object containing the request body of type 'TestEntity'
+   * @param body Entity to create
    * @returns any
    */
   createEntity: (body: TestEntity | undefined) => OpenApiRequestBuilder<any>;
   /**
    * Makes a patch request to the '/entities' endpoint and returns a 'any'
    *
-   * @param body Optional object containing the request body of type 'Record<string, any>'
+   * @param body Request body
    * @returns any
    */
   updateEntity: (
@@ -55,7 +53,7 @@ export declare const EntityApi: {
   /**
    * Makes a delete request to the '/entities' endpoint and returns a 'any'
    *
-   * @param body Optional object containing the request body of type 'string[]'
+   * @param body Request body
    * @returns any
    */
   deleteEntity: (body: string[] | undefined) => OpenApiRequestBuilder<any>;

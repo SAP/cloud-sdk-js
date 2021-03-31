@@ -6,10 +6,8 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
 /**
- * Representation of the DefaultApi API.
- * This API is part of the NoSchemaService service.
- *
- * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+ * Representation of the 'DefaultApi'.
+ * This API is part of the 'NoSchemaService' service.
  */
 export const DefaultApi = {
   /**

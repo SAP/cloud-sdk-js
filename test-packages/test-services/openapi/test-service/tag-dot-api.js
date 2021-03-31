@@ -8,10 +8,8 @@ exports.TagDotApi = void 0;
  */
 var core_1 = require('@sap-cloud-sdk/core');
 /**
- * Representation of the TagDotApi API.
- * This API is part of the TestService service.
- *
- * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+ * Representation of the 'TagDotApi'.
+ * This API is part of the 'TestService' service.
  */
 exports.TagDotApi = {
   /**

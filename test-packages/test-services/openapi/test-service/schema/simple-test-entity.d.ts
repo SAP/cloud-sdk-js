@@ -1,3 +1,6 @@
+/**
+ * Representation of the 'SimpleTestEntity' schema
+ */
 export declare type SimpleTestEntity =
   | {
       stringProperty: string;

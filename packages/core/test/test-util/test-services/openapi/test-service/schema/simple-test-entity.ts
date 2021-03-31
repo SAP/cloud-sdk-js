@@ -4,6 +4,9 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
+/**
+ * Representation of the 'SimpleTestEntity' schema
+ */
 export type SimpleTestEntity =
   | {
       stringProperty: string;

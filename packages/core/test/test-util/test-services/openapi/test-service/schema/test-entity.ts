@@ -4,6 +4,9 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import type { SimpleTestEntity } from './simple-test-entity';
+/**
+ * Representation of the 'TestEntity' schema
+ */
 export type TestEntity =
   | {
       keyProperty: string;
@@ -14,6 +17,9 @@ export type TestEntity =
       int64Property?: number;
       floatProperty?: number;
       doubleProperty?: number;
+      /**
+       * SimpleTestEntity schema
+       */
       linkedSimpleTestEntity?: SimpleTestEntity;
       linkedSimpleTestEntityCollection?: SimpleTestEntity[];
     }

@@ -7,17 +7,15 @@ import { OpenApiRequestBuilder } from '../../../../../src';
 import type { TestEntity } from './schema';
 
 /**
- * Representation of the DefaultApi API.
- * This API is part of the SwaggerYamlService service.
- *
- * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+ * Representation of the 'DefaultApi'.
+ * This API is part of the 'SwaggerYamlService' service.
  */
 export const DefaultApi = {
   /**
    * Test POST
    *
-   * @param pathParam Path parameter number 1
-   * @param queryParameters Optional object containing the query parameters.
+   * @param pathParam Path parameter with the original name pathParam
+   * @param queryParameters Object containing the query parameters.
    * @returns TestEntity[]
    */
   postEntity: (pathParam: string, queryParameters?: { queryParam?: string }) =>
@@ -28,8 +26,8 @@ export const DefaultApi = {
   /**
    * Makes a patch request to the '/entities/{pathParam}' endpoint and returns a 'string'
    *
-   * @param pathParam Path parameter number 1
-   * @param body Optional object containing the request body of type 'TestEntity'
+   * @param pathParam Path parameter with the original name pathParam
+   * @param body Request body
    * @returns string
    */
   patchEntity: (pathParam: string, body: TestEntity | undefined) =>

@@ -36,19 +36,19 @@ export async function parseOpenApiDocument(
       ? serviceMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
-    schemas: parseSchemas(document,refs)
+    schemas: parseSchemas(document, refs)
   };
 }
 
 export function parseSchemas(
   document: OpenAPIV3.Document,
-refs: SwaggerParser.$Refs
+  refs: SwaggerParser.$Refs
 ): OpenApiNamedSchema[] {
   return Object.entries(document.components?.schemas || {}).map(
     ([name, schema]) => ({
       name,
-      schema: parseSchema(schema,refs),
-      description: resolveObject(schema,refs).description
+      schema: parseSchema(schema, refs),
+      description: resolveObject(schema, refs).description
     })
   );
 }

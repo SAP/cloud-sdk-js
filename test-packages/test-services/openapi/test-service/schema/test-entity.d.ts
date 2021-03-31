@@ -1,4 +1,7 @@
 import type { SimpleTestEntity } from './simple-test-entity';
+/**
+ * Representation of the 'TestEntity' schema
+ */
 export declare type TestEntity =
   | {
       keyProperty: string;
@@ -9,6 +12,9 @@ export declare type TestEntity =
       int64Property?: number;
       floatProperty?: number;
       doubleProperty?: number;
+      /**
+       * SimpleTestEntity schema
+       */
       linkedSimpleTestEntity?: SimpleTestEntity;
       linkedSimpleTestEntityCollection?: SimpleTestEntity[];
     }

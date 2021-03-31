@@ -86,8 +86,10 @@ function serializeObjectSchemaForProperties(
       ${properties
         .map(
           property =>
-             schemaPropertyDocumentation(property)+
-             `'${property.name}'${property.required ? '' : '?'}: ${serializeSchema(property.schema)};`
+            schemaPropertyDocumentation(property) +
+            `'${property.name}'${
+              property.required ? '' : '?'
+            }: ${serializeSchema(property.schema)};`
         )
         .join(EOL)}
     }`;

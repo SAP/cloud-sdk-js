@@ -130,7 +130,7 @@ export function refreshTokenGrant(
 }
 
 /**
- * Executes a JWT bearer token trant request against the given URI.
+ * Executes a JWT bearer token grant request against the given URI.
  *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
  * @param clientCredentials - The credentials (client_id, client_secret) of the target XSUAA service instance.

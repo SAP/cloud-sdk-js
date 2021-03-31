@@ -20,6 +20,10 @@ export function documentationBlock(
   strings: TemplateStringsArray,
   ...args: string[]
 ): string {
+  if (isCodeBlockEmpty(strings.raw, args)) {
+    return '';
+  }
+
   let adjustedStrings = strings.raw as string[];
   adjustedStrings = removeSpaceNewLineStartAndEnd(adjustedStrings);
   adjustedStrings = replaceAllWhiteSpacesBySingleOne(adjustedStrings);
@@ -45,6 +49,17 @@ function removeSpaceNewLineStartAndEnd(strings: string[]): string[] {
     i === strings.length - 1 ? str.replace(/[\s]*$/g, '') : str
   );
   return bothRemoved;
+}
+
+function isCodeBlockEmpty(strings: readonly string[], args: string[]): boolean {
+  const stringsHaveContent = strings.some(
+    str => str.replace(/\s*/g, '') !== ''
+  );
+  const argsHaveContent = args.some(arg => arg.replace(/\s*/g, '') !== '');
+  if (!stringsHaveContent && !argsHaveContent) {
+    return true;
+  }
+  return false;
 }
 
 function addStarAfterNewLine(strings: string[]): string[] {

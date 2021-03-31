@@ -2,9 +2,18 @@ import { EOL } from 'os';
 import { documentationBlock } from './documentation-block';
 
 describe('documentation-block', () => {
-  it('creates empty documentation block', () => {
-    const actual = documentationBlock``;
-    expect(actual).toBe(`/**${EOL} * ${EOL} */`);
+  it('creates empty string for empty documentation block', () => {
+    let actual = documentationBlock``;
+    expect(actual).toBe('');
+
+    const empty = `
+       
+    `;
+    actual = documentationBlock`   
+    ${empty}
+    
+     `;
+    expect(actual).toBe('');
   });
 
   it('removes empty lines in beginning and and of documentation block', () => {

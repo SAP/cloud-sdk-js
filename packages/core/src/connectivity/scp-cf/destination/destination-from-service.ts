@@ -6,7 +6,7 @@ import {
   proxyStrategy
 } from '../proxy-util';
 import { IsolationStrategy } from '../cache';
-import { serviceToken, userApprovedServiceToken } from '../token-accessor';
+import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
   getDestinationService,
@@ -259,7 +259,7 @@ class DestinationFromServiceRetriever {
         `OAuth2UserTokenExchange flow started without user exchange token for destination ${this.name} of the provider account.`
       );
       return {
-        authHeaderJwt: await userApprovedServiceToken(
+        authHeaderJwt: await jwtBearerToken(
           this.options.userJwt,
           getDestinationService(),
           this.options
@@ -349,7 +349,7 @@ class DestinationFromServiceRetriever {
         'No user token (JWT) has been provided! This is strictly necessary for principal propagation.'
       );
     }
-    const accessToken = await userApprovedServiceToken(
+    const accessToken = await jwtBearerToken(
       this.options.userJwt,
       destinationService,
       this.options

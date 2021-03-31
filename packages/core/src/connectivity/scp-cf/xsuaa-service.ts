@@ -328,8 +328,8 @@ function getInstanceCircuitBreaker(breaker?: any | undefined): any {
 }
 
 const grantTypeMapper = {
-  user_token: 'User token',
-  refresh_token: 'Refresh token',
-  client_credentials: 'Client credentials',
-  'urn:ietf:params:oauth:grant-type:jwt-bearer': 'JWT token'
+  [GrantType.USER_TOKEN]: 'User token',
+  [GrantType.REFRESH_TOKEN]: 'Refresh token',
+  [GrantType.CLIENT_CREDENTIALS]: 'Client credentials',
+  [GrantType.JWT_BEARER_TOKEN]: 'JWT token'
 };

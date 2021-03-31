@@ -122,6 +122,16 @@ describe('parseSchema', () => {
     });
   });
 
+  it("parses enum schema with 'string' as default", () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      enum: ['one', 'two', 'three']
+    };
+    expect(parseSchema(schema)).toEqual({
+      type: 'string',
+      enum: ["'one'", "'two'", "'three'"]
+    });
+  });
+
   it('parses oneOf, anyOf, allOf schemas', () => {
     const schema: OpenAPIV3.SchemaObject = {
       oneOf: [

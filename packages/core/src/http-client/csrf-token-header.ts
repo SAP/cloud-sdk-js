@@ -83,7 +83,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
               e2
             )
           );
-          // todo suggest to disable csrf token handling
+          // todo suggest to disable csrf token handling when the api is implemented
           return {};
         });
     });

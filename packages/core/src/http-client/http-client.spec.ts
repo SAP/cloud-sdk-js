@@ -3,6 +3,7 @@ import Axios from 'axios';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination, Protocol } from '../connectivity';
+import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
   HttpMethod,
@@ -353,6 +354,92 @@ describe('generic http client', () => {
       await expect(
         executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
       ).resolves.not.toThrow();
+    });
+
+    it('fetches csrf token headers even the status of the response is not 2xx', async () => {
+      const csrfToken = 'some-csrf-token';
+      nock('https://example.com', {
+        reqheaders: {
+          'x-csrf-token': 'Fetch',
+          'content-type': 'application/json',
+          accept: 'application/json',
+          authorization: 'custom-auth-header',
+          'sap-client': '001'
+        }
+      })
+        .get('/api/entity')
+        .reply(405, {}, { 'x-csrf-token': csrfToken });
+
+      nock('https://example.com', {
+        reqheaders: {
+          'x-csrf-token': csrfToken,
+          'content-type': 'application/json',
+          accept: 'application/json',
+          authorization: 'custom-auth-header',
+          'sap-client': '001'
+        }
+      })
+        .post('/api/entity', {
+          a: 1
+        })
+        .reply(200);
+
+      const config: HttpRequest = {
+        baseURL: 'https://example.com',
+        method: HttpMethod.POST,
+        url: '/api/entity',
+        headers: {
+          authorization: 'custom-auth-header',
+          'content-type': 'application/json',
+          accept: 'application/json'
+        },
+        data: {
+          a: 1
+        }
+      };
+
+      await expect(
+        executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
+      ).resolves.not.toThrow();
+    });
+
+    it('should not fetch csrf token headers when fetchCsrfToken is true and the the request contains the token in the header', async () => {
+      const csrfToken = 'some-csrf-token';
+
+      nock('https://example.com', {
+        reqheaders: {
+          'x-csrf-token': csrfToken,
+          'content-type': 'application/json',
+          accept: 'application/json',
+          authorization: 'custom-auth-header',
+          'sap-client': '001'
+        }
+      })
+        .post('/api/entity', {
+          a: 1
+        })
+        .reply(200);
+
+      const config: HttpRequest = {
+        baseURL: 'https://example.com',
+        method: HttpMethod.POST,
+        url: '/api/entity',
+        headers: {
+          authorization: 'custom-auth-header',
+          'content-type': 'application/json',
+          accept: 'application/json',
+          'x-csrf-token': csrfToken
+        },
+        data: {
+          a: 1
+        }
+      };
+
+      spyOn(csrfHeaders, 'buildCsrfHeaders');
+      await executeHttpRequest(httpsDestination, config, {
+        fetchCsrfToken: true
+      });
+      expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
     });
   });
 

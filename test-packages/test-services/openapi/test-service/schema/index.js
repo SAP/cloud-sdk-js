@@ -32,6 +32,7 @@ __exportStar(require('./test-entity'), exports);
 __exportStar(require('./simple-test-entity'), exports);
 __exportStar(require('./other-simple-test-entity'), exports);
 __exportStar(require('./simple-test-entity-with-symbols'), exports);
+__exportStar(require('./simple-test-entity-with-symbols-1'), exports);
 __exportStar(require('./complex-test-entity'), exports);
 __exportStar(require('./cyclic-parent'), exports);
 __exportStar(require('./cyclic-child'), exports);

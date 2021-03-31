@@ -682,6 +682,9 @@
       "simple-test-entity«WITH_Symbols»": {
         "$ref": "#/components/schemas/SimpleTestEntity"
       },
+      "simple-test-entity<WITH_Symbols>": {
+        "$ref": "#/components/schemas/SimpleTestEntity"
+      },
       "ComplexTestEntity": {
         "properties": {
           "referenceProperty": {

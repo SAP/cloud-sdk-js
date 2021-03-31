@@ -62,7 +62,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
   return executeHttpRequest(destination, appendSlash(axiosConfig))
     .then(response => response.headers)
     .catch(e1 => {
-      if(hasCsrfToken(e1)){
+      if (hasCsrfToken(e1)) {
         return e1.response.headers;
       }
       logger.warn(
@@ -74,7 +74,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
       return executeHttpRequest(destination, removeSlash(axiosConfig))
         .then(response => response.headers)
         .catch(e2 => {
-          if(hasCsrfToken(e2)){
+          if (hasCsrfToken(e2)) {
             return e2.response.headers;
           }
           logger.warn(
@@ -83,14 +83,18 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
               e2
             )
           );
-          //todo suggest to disable csrf token handling
+          // todo suggest to disable csrf token handling
           return {};
         });
     });
 }
 
-function hasCsrfToken(e1): boolean{
-  return e1.isAxiosError &&  e1.response?.headers && e1.response.headers['x-csrf-token'];
+function hasCsrfToken(e1): boolean {
+  return (
+    e1.isAxiosError &&
+    e1.response?.headers &&
+    e1.response.headers['x-csrf-token']
+  );
 }
 
 function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {

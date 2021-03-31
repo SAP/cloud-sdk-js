@@ -1,7 +1,6 @@
 import nock from 'nock';
 import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
 import { basicHeader } from '@sap-cloud-sdk/core';
-import { mockCsrfTokenRequest } from '@sap-cloud-sdk/core/test/test-util/request-mocker';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response-v4';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response-v4';
 
@@ -107,7 +106,8 @@ describe('Request Builder', () => {
       }
     })
       .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`)
+        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
+      )
       .reply(200, undefined, mockedBuildHeaderResponse);
 
     nock(destination.url, {

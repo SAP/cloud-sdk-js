@@ -81,7 +81,10 @@ describe('OAuth flows', () => {
       systems.s4.providerBasic
     );
 
-    const buPa = BusinessPartner.builder().businessPartnerCategory('1').lastName('name').build();
+    const buPa = BusinessPartner.builder()
+      .businessPartnerCategory('1')
+      .lastName('name')
+      .build();
     const result = await BusinessPartner.requestBuilder()
       .create(buPa)
       .execute(destination);

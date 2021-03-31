@@ -13,7 +13,7 @@ import {
   addDestinationToRequestConfig,
   buildHttpRequest,
   executeHttpRequest,
-  shouldHandleCsrfToken,
+  shouldHandleCsrfToken
 } from './http-client';
 
 describe('generic http client', () => {
@@ -350,10 +350,9 @@ describe('generic http client', () => {
         }
       };
 
-      // await expect(
-      //   executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
-      // ).resolves.not.toThrow();
-      await executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true });
+      await expect(
+        executeHttpRequest(httpsDestination, config, { fetchCsrfToken: true })
+      ).resolves.not.toThrow();
     });
   });
 

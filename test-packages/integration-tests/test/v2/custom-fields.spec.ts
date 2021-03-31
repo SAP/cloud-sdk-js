@@ -17,7 +17,7 @@ function mockCsrfTokenRequest(host: string, sapClient: string, path?: string) {
       'sap-client': sapClient
     }
   })
-    .get(path? `${servicePath}/${path}`: servicePath)
+    .get(path ? `${servicePath}/${path}` : servicePath)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
@@ -108,7 +108,11 @@ describe('Custom Fields', () => {
   });
 
   it('should resolve for update requests', async () => {
-    mockCsrfTokenRequest(destination.url, destination.sapClient!, `${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`);
+    mockCsrfTokenRequest(
+      destination.url,
+      destination.sapClient!,
+      `${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+    );
 
     nock(destination.url, {
       reqheaders: {

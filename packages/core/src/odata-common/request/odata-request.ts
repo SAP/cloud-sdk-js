@@ -228,12 +228,16 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequest(destination, {
-      headers: await this.headers(),
-      url: this.relativeUrl(),
-      method: this.config.method,
-      data: this.config.payload
-    }, { fetchCsrfToken: this.config.fetchCsrfToken }).catch(error => {
+    return executeHttpRequest(
+      destination,
+      {
+        headers: await this.headers(),
+        url: this.relativeUrl(),
+        method: this.config.method,
+        data: this.config.payload
+      },
+      { fetchCsrfToken: this.config.fetchCsrfToken }
+    ).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());
     });
   }

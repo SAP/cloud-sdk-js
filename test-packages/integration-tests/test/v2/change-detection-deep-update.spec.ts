@@ -139,11 +139,14 @@ describe('deep-update and change detection', () => {
         cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
-      .patch(`${TestEntity._defaultServicePath}/A_TestEntity(KeyPropertyGuid=guid%27${testEntityKeyPropGuid}%27,KeyPropertyString=%27${testEntityKeyPropString}%27)`,       {
-        StringProperty: 'no',
-        to_SingleLink: { StringProperty: 'abc' },
-        ComplexTypeProperty: { BooleanProperty: true, StringProperty: 'test' }
-      })
+      .patch(
+        `${TestEntity._defaultServicePath}/A_TestEntity(KeyPropertyGuid=guid%27${testEntityKeyPropGuid}%27,KeyPropertyString=%27${testEntityKeyPropString}%27)`,
+        {
+          StringProperty: 'no',
+          to_SingleLink: { StringProperty: 'abc' },
+          ComplexTypeProperty: { BooleanProperty: true, StringProperty: 'test' }
+        }
+      )
       .reply(204);
 
     const request = TestEntity.requestBuilder()

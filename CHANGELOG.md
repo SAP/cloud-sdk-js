@@ -32,6 +32,7 @@
 
 - [odata-generator] Fix a type error of one-to-one navigation properties, so they can set `null` as valid values.
 - [core] Fix a runtime error of `fromJson` function, when passing an object containing one-to-one navigation properties with `null` value.
+- [batch] Fix wrong double encoding of filter values.
 
 
 # 1.40.0

@@ -39,6 +39,10 @@ describe('batch request serializer', () => {
       ).toMatchSnapshot();
     });
 
+    it('encodes user provided filter parameters only once',()=>{
+      expect(serializeRequest(TestEntity.requestBuilder().getAll().filter(TestEntity.STRING_PROPERTY.equals('with EmptySpace')))).toMatch(/filter=\(StringProperty eq 'with%20EmptySpace'\)/);
+    });
+
     it('serializes getAll request with custom headers', () => {
       expect(
         serializeRequest(

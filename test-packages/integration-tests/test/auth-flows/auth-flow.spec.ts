@@ -49,7 +49,7 @@ describe('OAuth flows', () => {
     const result = await BusinessPartner.requestBuilder()
       .getAll()
       .top(1)
-      .execute(destination!);
+      .execute(destination);
     expect(result.length).toBe(1);
   }, 60000);
 
@@ -186,7 +186,7 @@ describe('OAuth flows', () => {
     const result = await BusinessPartner.requestBuilder()
       .getAll()
       .top(1)
-      .execute(destination!);
+      .execute(destination);
     expect(result.length).toBe(1);
   }, 60000);
 });

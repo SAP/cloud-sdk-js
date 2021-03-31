@@ -14,11 +14,13 @@
 
 ## Compatibility Notes
 
+- [core] Deprecated `userApprovedServiceToken`, `refreshTokenGrant` and `userTokenGrant`.
 - [openapi-generator] Replace the underlying Java-based OpenAPI generator with a custom implementation. 
 - [odata-generator] The type of one-to-one navigation properties is now optional.
 
 ## New Functionality
 
+- [core] Added support for `jwtBearerToken` and `jwtBearerTokenGrant` authorization.
 - [http-client] Add a `fetchCsrfToken` option to `executeHttpRequest` to allow automatic fetching of CSRF tokens for write operations.
 - [openapi-generator] Fetch CSRF tokens for write operations automatically.
 

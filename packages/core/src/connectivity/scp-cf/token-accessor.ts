@@ -12,10 +12,14 @@ import { ResilienceOptions } from './resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
 import {
   clientCredentialsGrant,
+  jwtBearerTokenGrant,
   refreshTokenGrant,
   userTokenGrant
 } from './xsuaa-service';
-import { UserTokenResponse } from './xsuaa-service-types';
+import {
+  ClientCredentialsResponse,
+  UserTokenResponse
+} from './xsuaa-service-types';
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -77,6 +81,7 @@ export async function serviceToken(
 }
 
 /**
+ * @deprecated Since v1.41.0 Use [[jwtBearerToken]] instead.
  * Returns a user approved access token that can be used to call the given service on behalf of the given user. The token is fetched via user token + refresh token grant.
  * This can be necessary for scenarios in which a token for a service is required, but the service needs
  * to know about the user on whose behalf the request is performed (for example to let the destination
@@ -112,6 +117,40 @@ export async function userApprovedServiceToken(
     .catch(error => {
       throw new ErrorWithCause(
         `Fetching a user approved access token for service "${resolvedService.label}" failed!`,
+        error
+      );
+    });
+}
+
+/**
+ * Returns a jwt bearer token that can be used to call the given service.
+ * The token is fetched via a JWT bearer token grant using the user token + client credentials.
+ *
+ * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
+ *
+ * @param userJwt  - The JWT of the user for whom the access token should be fetched
+ * @param service  - The type of the service or an instance of [[Service]].
+ * @param options - Options to influence resilience behaviour (see [[ResilienceOptions]]). By defaul,t usage of a circuit breaker is enabled.
+ * @returns A jwt bearer token.
+ */
+export async function jwtBearerToken(
+  userJwt: string,
+  service: string | Service,
+  options?: ResilienceOptions
+): Promise<string> {
+  const xsuaa = multiTenantXsuaaCredentials(userJwt);
+  const resolvedService = resolveService(service);
+  const serviceCreds = extractClientCredentials(resolvedService.credentials);
+  const opts: ResilienceOptions = {
+    enableCircuitBreaker: true,
+    ...options
+  };
+
+  return jwtBearerTokenGrant(xsuaa, serviceCreds, userJwt, opts)
+    .then((response: ClientCredentialsResponse) => response.access_token)
+    .catch(error => {
+      throw new ErrorWithCause(
+        `Fetching a JWT Bearer Token for service "${resolvedService.label}" failed!`,
         error
       );
     });

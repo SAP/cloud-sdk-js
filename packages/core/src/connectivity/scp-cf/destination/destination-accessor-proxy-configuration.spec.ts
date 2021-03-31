@@ -4,8 +4,8 @@ import {
   mockServiceBindings
 } from '../../../../test/test-util/environment-mocks';
 import {
-  mockServiceToken,
-  mockUserApprovedServiceToken
+  mockJwtBearerToken,
+  mockServiceToken
 } from '../../../../test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
@@ -35,7 +35,7 @@ describe('proxy configuration', () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
-    mockUserApprovedServiceToken();
+    mockJwtBearerToken();
 
     const httpMocks = [
       mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
@@ -64,7 +64,7 @@ describe('proxy configuration', () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
-    mockUserApprovedServiceToken();
+    mockJwtBearerToken();
 
     const httpMocks = [
       mockInstanceDestinationsCall(

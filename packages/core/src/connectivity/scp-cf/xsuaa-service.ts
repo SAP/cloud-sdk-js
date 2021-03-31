@@ -59,7 +59,7 @@ export function clientCredentialsGrant(
 }
 
 /**
- * @deprecated Since v1.XX.X Use [[jwtBearerTokenGrant]] instead.
+ * @deprecated Since v1.41.0 Use [[jwtBearerTokenGrant]] instead.
  * Executes a user token grant request against the given URI.
  *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
@@ -94,7 +94,7 @@ export function userTokenGrant(
 }
 
 /**
- * @deprecated Since v1.XX.X Use [[jwtBearerTokenGrant]] instead.
+ * @deprecated Since v1.41.0 Use [[jwtBearerTokenGrant]] instead.
  * Executes a refresh token grant request against the given URI.
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
  * If the first parameter is an URI, the response will not be verified.

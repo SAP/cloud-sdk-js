@@ -81,7 +81,7 @@ export async function serviceToken(
 }
 
 /**
- * @deprecated Since v1.XX.X Use [[jwtBearerToken]] instead.
+ * @deprecated Since v1.41.0 Use [[jwtBearerToken]] instead.
  * Returns a user approved access token that can be used to call the given service on behalf of the given user. The token is fetched via user token + refresh token grant.
  * This can be necessary for scenarios in which a token for a service is required, but the service needs
  * to know about the user on whose behalf the request is performed (for example to let the destination

@@ -1,8 +1,7 @@
 import { EOL } from 'os';
 import { documentationBlock } from '@sap-cloud-sdk/util';
 import {
-  OpenApiApi,
-  OpenApiDocument,
+  OpenApiApi, OpenApiNamedSchema, OpenApiObjectSchemaProperty,
   OpenApiOperation,
   OpenApiParameter,
   OpenApiRequestBody
@@ -11,13 +10,11 @@ import { serializeSchema } from './schema';
 
 export function apiDocumentation(
   api: OpenApiApi,
-  document: OpenApiDocument
+  serviceName: string
 ): string {
   return documentationBlock`
-  Representation of the ${api.name} API.
-  This API is part of the ${document.serviceName} service.
-  
-  This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
+  Representation of the '${api.name}'.
+  This API is part of the '${serviceName}' service.
   `;
 }
 
@@ -31,20 +28,26 @@ export function operationDocumentation(operation: OpenApiOperation): string {
   }
   if (operation.queryParameters.length > 0) {
     signature.push(
-      '@param queryParameters Optional object containing the query parameters.'
+      '@param queryParameters Object containing the query parameters.'
     );
   }
   signature.push(`@returns ${serializeSchema(operation.response)}`);
 
   return documentationBlock`
-  ${
-    operation.description
-      ? operation.description
-      : getOperationDescriptionText(operation)
-  }
+  ${getOperationDescriptionText(operation)}
   
   ${signature.join(EOL)}
   `;
+}
+
+export function schemaDocumentation(schema: OpenApiNamedSchema): string{
+  return documentationBlock`
+  ${schema.description || `Representation of the '${schema.name}' schema`}
+  `;
+}
+
+export function schemaPropertyDocumentation(schema: OpenApiObjectSchemaProperty): string{
+return schema.description ? documentationBlock`${schema.description}`+EOL : '';
 }
 
 function getSignatureOfPathParameters(
@@ -53,18 +56,20 @@ function getSignatureOfPathParameters(
   return parameters.map(
     (parameter, i) =>
       `@param ${parameter.name} ${
-        parameter.description || `Path parameter number ${i + 1}`
+        parameter.description || `Path parameter with the original name ${parameter.originalName}`
       }`
   );
 }
 
 function getSignatureOfBody(body: OpenApiRequestBody): string {
-  return `@param body ${
-    body.required ? 'Object' : 'Optional object'
-  } containing the request body of type '${serializeSchema(body.schema)}'`;
+  return `@param body ${body.description || 'Request body'}`;
 }
 
 function getOperationDescriptionText(operation: OpenApiOperation): string {
+  if(operation.description){
+    return operation.description;
+  }
+
   return `Makes a ${operation.method} request to the '${
     operation.pathPattern
   }' endpoint and returns a '${serializeSchema(operation.response)}'`;

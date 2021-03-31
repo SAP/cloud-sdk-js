@@ -32,9 +32,9 @@ describe('apiFile', () => {
         /**
          * Makes a get request to the 'test/{id}' endpoint and returns a 'any'
          * 
-         * @param id Path parameter number 1
+         * @param id Path parameter with the original name id
          * @returns any
-        */
+         */
         getFn: (id: string) => new OpenApiRequestBuilder<any>(
           'get',
           'test/{id}',
@@ -83,7 +83,7 @@ describe('apiFile', () => {
          * Makes a get request to the 'test' endpoint and returns a 'string'
          * 
          * @returns string
-        */
+         */
         getFn: () => new OpenApiRequestBuilder<string>(
           'get',
           'test'
@@ -91,9 +91,9 @@ describe('apiFile', () => {
         /**
          * Makes a post request to the 'test' endpoint and returns a 'ResponseType'
          * 
-         * @param body Object containing the request body of type 'RefType'
+         * @param body Request body
          * @returns ResponseType
-        */
+         */
         createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
           'post',
           'test',
@@ -126,17 +126,15 @@ describe('apiFile', () => {
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 
       /**
-       * Representation of the TestApi API.
-       * This API is part of the TestService service.
-       * 
-       * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
-      */
+       * Representation of the 'TestApi'.
+       * This API is part of the 'TestService' service.
+       */
       export const TestApi = {
         /**
          * Makes a get request to the 'test' endpoint and returns a 'any'
          * 
          * @returns any
-        */
+         */
         getFn: () => new OpenApiRequestBuilder<any>(
           'get',
           'test'

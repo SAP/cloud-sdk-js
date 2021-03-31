@@ -1,46 +1,50 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`docs creates a description if not present 1`] = `
+exports[`docs creates a description for operations if not present 1`] = `
 "/**
  * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
  * 
  * @returns string
-*/"
+ */"
 `;
 
 exports[`docs creates documentation for the api 1`] = `
 "/**
- * Representation of the TestApi API.
- * This API is part of the TestService service.
- * 
- * This API client has been created automatically using the SAP Cloud SDK - do not edit manually.
-*/"
+ * Representation of the 'TestApi'.
+ * This API is part of the 'TestService' service.
+ */"
 `;
 
 exports[`docs creates documentation with body parameter 1`] = `
 "/**
  * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
  * 
- * @param body Object containing the request body of type 'string'
+ * @param body Request body
  * @returns string
-*/"
+ */"
 `;
 
 exports[`docs creates documentation with path parameters 1`] = `
 "/**
  * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
  * 
- * @param pathParameter1 Path parameter number 1
- * @param pathParameter2 Path parameter number 2
+ * @param pathParameter1 Path parameter with the original name undefined
+ * @param pathParameter2 Path parameter with the original name undefined
  * @returns string
-*/"
+ */"
 `;
 
 exports[`docs creates documentation with query parameters object 1`] = `
 "/**
  * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
  * 
- * @param queryParameters Optional object containing the query parameters.
+ * @param queryParameters Object containing the query parameters.
  * @returns string
-*/"
+ */"
+`;
+
+exports[`docs creates schema documentation 1`] = `
+"/**
+ * Representation of the 'mySchema' schema
+ */"
 `;

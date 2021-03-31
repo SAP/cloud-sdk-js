@@ -8,6 +8,7 @@ import {
 } from '../schema-util';
 import { serializeSchema } from './schema';
 import { Import, serializeImports } from './imports';
+import { schemaDocumentation } from './docs';
 
 /**
  * Serialize a schema representation to a string representing the according schema file contents.
@@ -17,8 +18,9 @@ import { Import, serializeImports } from './imports';
 export function schemaFile({ name, schema }: OpenApiNamedSchema): string {
   const imports = serializeImports(getImports(schema));
 
-  return codeBlock`
+  return codeBlock`    
     ${imports}
+    ${schemaDocumentation({ name,schema })}
     export type ${name} = ${serializeSchema(schema)};
   `;
 }

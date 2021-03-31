@@ -35,7 +35,15 @@ describe('serializeOperation', () => {
       pathPattern: 'test/{id}/{subId}'
     };
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
+      "/**
+       * Makes a get request to the 'test/{id}/{subId}' endpoint and returns a 'string'
+       * 
+       * @param id Path parameter with the original name id
+       * @param subId Path parameter with the original name subId
+       * @param queryParameters Object containing the query parameters.
+       * @returns string
+       */
+      getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
         'get',
         'test/{id}/{subId}',
         {
@@ -69,7 +77,13 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
+      "/**
+       * Makes a delete request to the 'test/{id}' endpoint and returns a 'Record<string, any>'
+       * 
+       * @param id Path parameter with the original name id
+       * @returns Record<string, any>
+       */
+      deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
         'delete',
         'test/{id}',
         {
@@ -98,7 +112,13 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "getFn: (queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
+      "/**
+       * Makes a get request to the 'test' endpoint and returns a 'any'
+       * 
+       * @param queryParameters Object containing the query parameters.
+       * @returns any
+       */
+      getFn: (queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
         'get',
         'test',
         {
@@ -134,7 +154,14 @@ describe('serializeOperation', () => {
       pathPattern: 'test/{id}'
     };
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
+      "/**
+       * Makes a post request to the 'test/{id}' endpoint and returns a 'any'
+       * 
+       * @param id Path parameter with the original name id
+       * @param body Request body
+       * @returns any
+       */
+      createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
         'post',
         'test/{id}',
         {
@@ -161,7 +188,13 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
+      "/**
+       * Makes a post request to the 'test' endpoint and returns a 'string'
+       * 
+       * @param body Request body
+       * @returns string
+       */
+      fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
         'post',
         'test',
         {

@@ -4,7 +4,7 @@ import { documentationBlock } from './documentation-block';
 describe('documentation-block', () => {
   it('creates empty documentation block', () => {
     const actual = documentationBlock``;
-    expect(actual).toBe(`/**${EOL} * ${EOL}*/`);
+    expect(actual).toBe(`/**${EOL} * ${EOL} */`);
   });
 
   it('removes empty lines in beginning and and of documentation block', () => {
@@ -14,7 +14,7 @@ describe('documentation-block', () => {
     
     
     `;
-    expect(actual).toBe(`/**${EOL} * some content.${EOL}*/`);
+    expect(actual).toBe(`/**${EOL} * some content.${EOL} */`);
   });
 
   it('keeps internal empty lines', () => {
@@ -31,14 +31,14 @@ describe('documentation-block', () => {
 
   it('creates single line documentation', () => {
     const actual = documentationBlock`A single line of documentaiton.`;
-    expect(actual).toBe(`/**${EOL} * A single line of documentaiton.${EOL}*/`);
+    expect(actual).toBe(`/**${EOL} * A single line of documentaiton.${EOL} */`);
   });
 
   it('creates single line documentation with single argument', () => {
     const argument = 'myArgument';
     const actual = documentationBlock`Some text before ${argument} my text after.`;
     expect(actual).toBe(
-      `/**${EOL} * Some text before myArgument my text after.${EOL}*/`
+      `/**${EOL} * Some text before myArgument my text after.${EOL} */`
     );
   });
 
@@ -47,7 +47,7 @@ describe('documentation-block', () => {
     const argument2 = 'myArgument2';
     const actual = documentationBlock`${argument1} Some text before ${argument2} my text after.`;
     expect(actual).toBe(
-      `/**${EOL} * myArgument1 Some text before myArgument2 my text after.${EOL}*/`
+      `/**${EOL} * myArgument1 Some text before myArgument2 my text after.${EOL} */`
     );
   });
 
@@ -84,7 +84,7 @@ describe('documentation-block', () => {
   it('masks */ character', () => {
     const actual = documentationBlock`A single line of */ documentaiton with illegal */.`;
     expect(actual).toBe(
-      `/**${EOL} * A single line of  documentaiton with illegal .${EOL}*/`
+      `/**${EOL} * A single line of  documentaiton with illegal .${EOL} */`
     );
   });
 });

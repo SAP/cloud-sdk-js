@@ -1,4 +1,4 @@
-import { $Refs } from '@apidevtools/swagger-parser';
+import SwaggerParser, { $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import {
   camelCase,
@@ -36,14 +36,14 @@ export function parseOperation(
     parameter => parameter.in === 'path'
   );
 
-  const pathParameters = parsePathParameters(pathParams, pathPattern);
+  const pathParameters = parsePathParameters(pathParams, pathPattern,refs);
 
   return {
     ...operation,
     method,
     requestBody,
     response,
-    queryParameters: parseParameters(queryParams),
+    queryParameters: parseParameters(queryParams,refs),
     pathParameters,
     pathPattern: parsePathPattern(pathPattern, pathParameters),
     operationId: operation.operationId!,
@@ -115,7 +115,8 @@ export function parsePathPattern(
 
 export function parsePathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
-  pathPattern: string
+  pathPattern: string,
+  refs: SwaggerParser.$Refs
 ): OpenApiParameter[] {
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
   const nameGenerator = new UniqueNameGenerator('', [
@@ -124,18 +125,19 @@ export function parsePathParameters(
     ...reservedJsKeywords
   ]);
 
-  return parseParameters(sortedPathParameters).map(param => ({
+  return parseParameters(sortedPathParameters,refs).map(param => ({
     ...param,
     name: nameGenerator.generateAndSaveUniqueName(camelCase(param.originalName))
   }));
 }
 
 export function parseParameters(
-  pathParameters: OpenAPIV3.ParameterObject[]
+  pathParameters: OpenAPIV3.ParameterObject[],
+  refs: SwaggerParser.$Refs
 ): OpenApiParameter[] {
   return pathParameters.map(param => ({
     ...param,
     originalName: param.name,
-    schema: parseSchema(param.schema)
+    schema: parseSchema(param.schema,refs)
   }));
 }

@@ -32,7 +32,7 @@ export function documentationBlock(
   const result = [
     `/**${EOL} * `,
     ...zip(adjustedStrings, adjustedArgs),
-    `${EOL}*/`
+    `${EOL} */`
   ].join('');
   return result;
 }

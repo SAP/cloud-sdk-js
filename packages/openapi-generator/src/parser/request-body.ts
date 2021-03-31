@@ -18,10 +18,11 @@ export function parseRequestBody(
   refs: $Refs
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = resolveObject(requestBody, refs);
-  const schema = parseMediaType(resolvedRequestBody);
+  const schema = parseMediaType(resolvedRequestBody,refs);
   if (schema && resolvedRequestBody) {
     return {
       required: !!resolvedRequestBody.required,
+      description: resolvedRequestBody.description,
       schema
     };
   }

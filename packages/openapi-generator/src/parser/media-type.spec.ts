@@ -6,7 +6,7 @@ describe('parseApplicationJsonMediaType', () => {
     expect(
       parseApplicationJsonMediaType({
         content: { 'application/xml': { schema: { type: 'string' } } }
-      })
+      },{}as any)
     ).toBeUndefined();
   });
 
@@ -14,21 +14,21 @@ describe('parseApplicationJsonMediaType', () => {
     expect(
       parseApplicationJsonMediaType({
         content: { 'application/json': { schema: { type: 'object' } } }
-      })
+      },{}as any)
     ).toEqual(emptyObjectSchema);
   });
 });
 
 describe('parseMediaType', () => {
   it('returns undefined if there is no media type at all', () => {
-    expect(parseMediaType(undefined)).toBeUndefined();
+    expect(parseMediaType(undefined,{}as any)).toBeUndefined();
   });
 
   it('returns any schema if there are other schemas', () => {
     expect(
       parseMediaType({
         content: { 'application/xml': { schema: { type: 'string' } } }
-      })
+      },{}as any)
     ).toEqual({ type: 'any' });
   });
 
@@ -36,7 +36,7 @@ describe('parseMediaType', () => {
     expect(
       parseMediaType({
         content: { 'application/json': { schema: { type: 'object' } } }
-      })
+      },{}as any)
     ).toEqual(emptyObjectSchema);
   });
 
@@ -47,7 +47,7 @@ describe('parseMediaType', () => {
           'application/json': { schema: { type: 'object' } },
           'application/xml': { schema: { type: 'string' } }
         }
-      })
+      },{}as any)
     ).toEqual({ anyOf: [emptyObjectSchema, { type: 'any' }] });
   });
 });

@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { codeBlock } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
@@ -16,6 +17,7 @@ import {
   isAnyOfSchema,
   isNotSchema
 } from '../schema-util';
+import { schemaPropertyDocumentation } from './docs';
 
 /**
  * Serialize a schema.
@@ -84,12 +86,10 @@ function serializeObjectSchemaForProperties(
       ${properties
         .map(
           property =>
-            [
-              `'${property.name}'${property.required ? '' : '?'}`,
-              serializeSchema(property.schema)
-            ].join(': ') + ';'
+             schemaPropertyDocumentation(property)+
+             `'${property.name}'${property.required ? '' : '?'}: ${serializeSchema(property.schema)};`
         )
-        .join('\n')}
+        .join(EOL)}
     }`;
 }
 

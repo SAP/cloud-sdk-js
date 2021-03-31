@@ -1,5 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
+import SwaggerParser from '@apidevtools/swagger-parser';
 import { OpenApiSchema } from '../openapi-types';
 import { parseSchema } from './schema';
 
@@ -7,13 +8,15 @@ const logger = createLogger('openapi-generator');
 /**
  * Parse the type of a resolved request body or response object.
  * @param bodyOrResponseObject The request body or response object to parse the type from.
+ * @param refs References to the schema components.
  * @returns The type name of the request body if there is one.
  */
 export function parseApplicationJsonMediaType(
   bodyOrResponseObject:
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
-    | undefined
+    | undefined,
+    refs: SwaggerParser.$Refs,
 ): OpenApiSchema | undefined {
   if (bodyOrResponseObject) {
     const mediaType = getMediaTypeObject(
@@ -22,7 +25,7 @@ export function parseApplicationJsonMediaType(
     );
     const schema = mediaType?.schema;
     if (schema) {
-      return parseSchema(schema);
+      return parseSchema(schema,refs);
     }
   }
 }
@@ -31,11 +34,12 @@ export function parseMediaType(
   bodyOrResponseObject:
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
-    | undefined
+    | undefined,
+  refs: SwaggerParser.$Refs
 ): OpenApiSchema | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
-    const jsonMediaType = parseApplicationJsonMediaType(bodyOrResponseObject);
+    const jsonMediaType = parseApplicationJsonMediaType(bodyOrResponseObject,refs);
 
     if (!jsonMediaType) {
       logger.debug(

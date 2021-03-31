@@ -60,9 +60,10 @@ export function serializeRequest(
     'Content-Type: application/http',
     'Content-Transfer-Encoding: binary',
     '',
-    `${request.requestConfig.method.toUpperCase()} ${
-      getUrl(odataRequest, options.subRequestPathType)
-    } HTTP/1.1`,
+    `${request.requestConfig.method.toUpperCase()} ${getUrl(
+      odataRequest,
+      options.subRequestPathType
+    )} HTTP/1.1`,
     ...(requestHeaders.length ? requestHeaders : ['']),
     '',
     ...getPayload(request),

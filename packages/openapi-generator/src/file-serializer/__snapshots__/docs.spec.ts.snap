@@ -2,9 +2,9 @@
 
 exports[`docs creates a description for operations if not present 1`] = `
 "/**
- * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
+ * Makes a GET request to the 'my/Api' endpoint and returns a 'MyResponseType'
  * 
- * @returns string
+ * @returns MyResponseType
  */"
 `;
 
@@ -17,29 +17,29 @@ exports[`docs creates documentation for the api 1`] = `
 
 exports[`docs creates documentation with body parameter 1`] = `
 "/**
- * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
+ * Makes a GET request to the 'my/Api' endpoint and returns a 'MyResponseType'
  * 
  * @param body Request body
- * @returns string
+ * @returns MyResponseType
  */"
 `;
 
 exports[`docs creates documentation with path parameters 1`] = `
 "/**
- * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
+ * Makes a GET request to the 'my/Api' endpoint and returns a 'MyResponseType'
  * 
  * @param pathParameter1 Path parameter with the original name undefined
  * @param pathParameter2 Path parameter with the original name undefined
- * @returns string
+ * @returns MyResponseType
  */"
 `;
 
 exports[`docs creates documentation with query parameters object 1`] = `
 "/**
- * Makes a GET request to the 'my/Api' endpoint and returns a 'string'
+ * Makes a GET request to the 'my/Api' endpoint and returns a 'MyResponseType'
  * 
  * @param queryParameters Object containing the query parameters.
- * @returns string
+ * @returns MyResponseType
  */"
 `;
 

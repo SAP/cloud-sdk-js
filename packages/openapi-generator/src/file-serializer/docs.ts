@@ -1,6 +1,6 @@
 import { EOL } from 'os';
 import { documentationBlock } from '@sap-cloud-sdk/util';
-import {
+import type {
   OpenApiApi,
   OpenApiNamedSchema,
   OpenApiObjectSchemaProperty,
@@ -8,7 +8,6 @@ import {
   OpenApiParameter,
   OpenApiRequestBody
 } from '../openapi-types';
-import { serializeSchema } from './schema';
 
 export function apiDocumentation(api: OpenApiApi, serviceName: string): string {
   return documentationBlock`
@@ -17,7 +16,10 @@ export function apiDocumentation(api: OpenApiApi, serviceName: string): string {
   `;
 }
 
-export function operationDocumentation(operation: OpenApiOperation): string {
+export function operationDocumentation(
+  operation: OpenApiOperation,
+  operationResponseType: string
+): string {
   const signature: string[] = [];
   if (operation.pathParameters.length > 0) {
     signature.push(...getSignatureOfPathParameters(operation.pathParameters));
@@ -30,10 +32,10 @@ export function operationDocumentation(operation: OpenApiOperation): string {
       '@param queryParameters Object containing the query parameters.'
     );
   }
-  signature.push(`@returns ${serializeSchema(operation.response)}`);
+  signature.push(`@returns ${operationResponseType}`);
 
   return documentationBlock`
-  ${getOperationDescriptionText(operation)}
+  ${getOperationDescriptionText(operation, operationResponseType)}
   
   ${signature.join(EOL)}
   `;
@@ -69,12 +71,13 @@ function getSignatureOfBody(body: OpenApiRequestBody): string {
   return `@param body ${body.description || 'Request body'}`;
 }
 
-function getOperationDescriptionText(operation: OpenApiOperation): string {
+function getOperationDescriptionText(
+  operation: OpenApiOperation,
+  operationResponseType: string
+): string {
   if (operation.description) {
     return operation.description;
   }
 
-  return `Makes a ${operation.method} request to the '${
-    operation.pathPattern
-  }' endpoint and returns a '${serializeSchema(operation.response)}'`;
+  return `Makes a ${operation.method} request to the '${operation.pathPattern}' endpoint and returns a '${operationResponseType}'`;
 }

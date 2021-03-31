@@ -2,7 +2,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import { isReferenceObject } from '../schema-util';
-import {
+import type {
   OpenApiArraySchema,
   OpenApiEnumSchema,
   OpenApiObjectSchema,

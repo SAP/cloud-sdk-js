@@ -13,7 +13,7 @@ import {
 } from './openapi-types';
 
 /**
- * Collect all reference schemas within a schema.
+ * Collect all unique reference schemas within a schema.
  * @param schema Parsed schema to retrieve all references for.
  * @returns Returns a list of unique reference schemas within a schema.
  */
@@ -25,8 +25,9 @@ export function collectRefs(
 
 /**
  * Collect all reference schemas within a schema.
+ * The resulting list of references might contain duplicates.
  * @param schema Parsed schema to retrieve all references for.
- * @returns Returns a list of reference schemas within a schema.
+ * @returns Returns a list of reference schemas within a schema. Might contain duplicates.
  */
 function collectAllRefs(
   schema: OpenApiSchema | undefined

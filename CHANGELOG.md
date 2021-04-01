@@ -14,11 +14,13 @@
 
 ## Compatibility Notes
 
+- [core] Deprecated `userApprovedServiceToken`, `refreshTokenGrant` and `userTokenGrant`.
 - [openapi-generator] Replace the underlying Java-based OpenAPI generator with a custom implementation. 
 - [odata-generator] The type of one-to-one navigation properties is now optional.
 
 ## New Functionality
 
+- [core] Added support for `jwtBearerToken` and `jwtBearerTokenGrant` authorization.
 - [http-client] Add a `fetchCsrfToken` option to `executeHttpRequest` to allow automatic fetching of CSRF tokens for write operations.
 - [openapi-generator] Fetch CSRF tokens for write operations automatically.
 
@@ -30,6 +32,8 @@
 
 - [odata-generator] Fix a type error of one-to-one navigation properties, so they can set `null` as valid values.
 - [core] Fix a runtime error of `fromJson` function, when passing an object containing one-to-one navigation properties with `null` value.
+- [odata-batch] Fix wrong double encoding of filter values in batch requests.
+- [openapi-generator] Use string as default type for enums.
 
 
 # 1.40.0

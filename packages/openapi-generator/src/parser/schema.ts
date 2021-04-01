@@ -154,7 +154,7 @@ function parseObjectSchemaProperties(
 function parseEnumSchema(
   schema: OpenAPIV3.NonArraySchemaObject
 ): OpenApiEnumSchema {
-  const type = getType(schema.type);
+  const type = schema.type ? getType(schema.type) : 'string';
   return {
     type,
     enum: (schema.enum || []).map(entry =>

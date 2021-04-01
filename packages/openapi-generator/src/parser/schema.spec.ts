@@ -136,7 +136,7 @@ describe('parseSchema', () => {
     const schema: OpenAPIV3.SchemaObject = {
       enum: ['one', 'two', 'three']
     };
-    expect(parseSchema(schema)).toEqual({
+    expect(parseSchema(schema, {} as any)).toEqual({
       type: 'string',
       enum: ["'one'", "'two'", "'three'"]
     });

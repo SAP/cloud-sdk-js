@@ -97,6 +97,13 @@ describe('schema-file', () => {
               schema: {
                 type: 'string'
               }
+            },
+            {
+              name: 'string-property-no-description',
+              required: true,
+              schema: {
+                type: 'string'
+              }
             }
           ]
         }
@@ -111,6 +118,7 @@ describe('schema-file', () => {
              * My description
              */
             'string-property': string;
+            'string-property-no-description': string;
           };"
     `);
   });

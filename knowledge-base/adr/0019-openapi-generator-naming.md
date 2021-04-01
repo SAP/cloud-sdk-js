@@ -62,7 +62,7 @@ Names will be transformed to camel case, duplicate names will cause generation t
 ### Property and query parameter naming
 
 Keep the names as provided per the specification.
-No camel case renaming is done.
+No camel case renaming is done to avoid the original name corner cases discussed above.
 
 ## Consequences
 

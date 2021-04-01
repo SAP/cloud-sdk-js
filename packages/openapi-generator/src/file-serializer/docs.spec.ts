@@ -1,9 +1,7 @@
 import { OpenApiOperation } from '../openapi-types';
-import {
-  apiDocumentation,
-  operationDocumentation,
-  schemaDocumentation
-} from './docs';
+import { apiDocumentation } from './api-file';
+import { operationDocumentation } from './operation';
+import { schemaDocumentation } from './schema';
 
 describe('docs', () => {
   function getOperation(): OpenApiOperation {
@@ -25,7 +23,7 @@ describe('docs', () => {
   it('creates a description for operations if not present', () => {
     const operation = getOperation();
     expect(
-      operationDocumentation(operation, 'MyResponseType')
+      operationDocumentation(operation)
     ).toMatchSnapshot();
   });
 
@@ -34,7 +32,7 @@ describe('docs', () => {
       ...getOperation(),
       description: 'This is my Operation.'
     };
-    expect(operationDocumentation(operation, 'MyResponseType')).toMatch(
+    expect(operationDocumentation(operation)).toMatch(
       /This is my Operation/
     );
   });
@@ -43,10 +41,10 @@ describe('docs', () => {
     const operation = getOperation();
     operation.pathParameters = [
       { name: 'pathParameter1' },
-      { name: 'pathParameter2' }
+      { name: 'path-parameter-2' }
     ] as any;
     expect(
-      operationDocumentation(operation, 'MyResponseType')
+      operationDocumentation(operation)
     ).toMatchSnapshot();
   });
 
@@ -58,7 +56,7 @@ describe('docs', () => {
         description: 'This is my parameter description'
       }
     ] as any;
-    expect(operationDocumentation(operation, 'MyResponseType')).toMatch(
+    expect(operationDocumentation(operation)).toMatch(
       /This is my parameter description/
     );
   });
@@ -70,7 +68,7 @@ describe('docs', () => {
       { name: 'queryParameter2' }
     ] as any;
     expect(
-      operationDocumentation(operation, 'MyResponseType')
+      operationDocumentation(operation)
     ).toMatchSnapshot();
   });
 
@@ -78,7 +76,7 @@ describe('docs', () => {
     const operation = getOperation();
     operation.requestBody = { schema: { type: 'string' }, required: true };
     expect(
-      operationDocumentation(operation, 'MyResponseType')
+      operationDocumentation(operation)
     ).toMatchSnapshot();
   });
 
@@ -89,7 +87,7 @@ describe('docs', () => {
       description: 'My body description',
       required: true
     };
-    expect(operationDocumentation(operation, 'MyResponseType')).toMatch(
+    expect(operationDocumentation(operation)).toMatch(
       /My body description/
     );
   });
@@ -103,7 +101,7 @@ describe('docs', () => {
       { name: 'queryParameter2' }
     ] as any;
     operation.requestBody = { schema: { type: 'string' }, required: true };
-    expect(operationDocumentation(operation, 'MyResponseType')).toMatch(
+    expect(operationDocumentation(operation)).toMatch(
       /@param pathParameter1.*\s.*@param body.*\s.*@param queryParameters.*\s.*@returns/
     );
   });

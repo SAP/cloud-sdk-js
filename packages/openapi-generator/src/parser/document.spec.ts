@@ -2,8 +2,6 @@ import { OpenAPIV3 } from 'openapi-types';
 import { createRefs, emptyDocument } from '../../test/test-util';
 import { OpenApiObjectSchema } from '../openapi-types';
 import { parseOpenApiDocument, parseSchemas } from './document';
-import ResponseObject = OpenAPIV3.ResponseObject;
-import ComponentsObject = OpenAPIV3.ComponentsObject;
 
 describe('parseOpenApiDocument', () => {
   it('does not modify input service specification', () => {

@@ -1,7 +1,11 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
-import { OpenApiOperation } from '../openapi-types';
+import { EOL } from 'os';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
+import {
+  OpenApiOperation,
+  OpenApiParameter,
+  OpenApiRequestBody
+} from '../openapi-types';
 import { serializeSchema } from './schema';
-import { operationDocumentation } from './docs';
 
 /**
  * Serialize an operation to a string.
@@ -20,7 +24,7 @@ export function serializeOperation(operation: OpenApiOperation): string {
   }
   const responseType = serializeSchema(operation.response);
   return codeBlock`
-${operationDocumentation(operation, responseType)}
+${operationDocumentation(operation)}
 ${operation.operationId}: (${serializeOperationSignature(
     operation
   )}) => new OpenApiRequestBuilder<${responseType}>(
@@ -100,4 +104,53 @@ function serializeParamsForRequestBuilder(
       ${params.join(',\n')}
     }`;
   }
+}
+
+export function operationDocumentation(operation: OpenApiOperation): string {
+  const signature: string[] = [];
+  if (operation.pathParameters.length) {
+    signature.push(...getSignatureOfPathParameters(operation.pathParameters));
+  }
+  if (operation.requestBody) {
+    signature.push(getSignatureOfBody(operation.requestBody));
+  }
+  if (operation.queryParameters.length > 0) {
+    signature.push(
+      `@param queryParameters Object containing the following keys: ${operation.queryParameters
+        .map(param => `${param.name}`)
+        .join(', ')}.`
+    );
+  }
+  signature.push(
+    '@returns OpenApiRequestBuilder Use the execute() method to trigger the request.'
+  );
+
+  return documentationBlock`
+  ${getOperationDescriptionText(operation)}  
+  ${signature.join(EOL)}
+  `;
+}
+
+function getSignatureOfPathParameters(
+  parameters: OpenApiParameter[]
+): string[] {
+  return parameters.map(
+    parameter =>
+      `@param ${parameter.name} ${
+        parameter.description ||
+        `Path parameter.`
+      }`
+  );
+}
+
+function getSignatureOfBody(body: OpenApiRequestBody): string {
+  return `@param body ${body.description || 'Request body.'}`;
+}
+
+function getOperationDescriptionText(operation: OpenApiOperation): string {
+  if (operation.description) {
+    return operation.description;
+  }
+
+  return `Create a request builder for execution of ${operation.method} requests to the '${operation.pathPattern}' endpoint.`;
 }

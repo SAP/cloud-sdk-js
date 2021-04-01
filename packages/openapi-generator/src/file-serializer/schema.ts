@@ -1,9 +1,10 @@
 import { EOL } from 'os';
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
   OpenApiObjectSchema,
-  OpenApiObjectSchemaProperty
+  OpenApiObjectSchemaProperty,
+  OpenApiNamedSchema
 } from '../openapi-types';
 import { getType } from '../parser/type-mapping';
 import {
@@ -17,7 +18,6 @@ import {
   isAnyOfSchema,
   isNotSchema
 } from '../schema-util';
-import { schemaPropertyDocumentation } from './docs';
 
 /**
  * Serialize a schema.
@@ -84,15 +84,28 @@ function serializeObjectSchemaForProperties(
 ): string {
   return codeBlock`{
       ${properties
-        .map(
-          property =>
-            schemaPropertyDocumentation(property) +
-            `'${property.name}'${
-              property.required ? '' : '?'
-            }: ${serializeSchema(property.schema)};`
-        )
+        .map(property => serializePropertyWithDocumentation(property))
         .join(EOL)}
     }`;
+}
+
+function serializeProperty(name: string, required: boolean, type: string) {
+  return `'${name}'${required ? '' : '?'}: ${type};`;
+}
+
+function serializePropertyWithDocumentation(
+  property: OpenApiObjectSchemaProperty
+) {
+  const documentation = schemaPropertyDocumentation(property);
+  const serialized = serializeProperty(
+    property.name,
+    property.required,
+    serializeSchema(property.schema)
+  );
+  if (documentation) {
+    return [documentation, serialized].join(EOL);
+  }
+  return serialized;
 }
 
 function serializeRecordSchema(
@@ -102,4 +115,16 @@ function serializeRecordSchema(
     return codeBlock`Record<string, ${serializeSchema(additionalProperties)}>`;
   }
   return codeBlock`Record<string, any>`;
+}
+
+export function schemaDocumentation(schema: OpenApiNamedSchema): string {
+  return documentationBlock`
+  ${schema.description || `Representation of the '${schema.name}' schema.`}
+  `;
+}
+
+export function schemaPropertyDocumentation(
+  schema: OpenApiObjectSchemaProperty
+): string {
+  return schema.description ? documentationBlock`${schema.description}` : '';
 }

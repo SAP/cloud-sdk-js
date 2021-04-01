@@ -2,9 +2,8 @@
 
 exports[`docs creates a description for operations if not present 1`] = `
 "/**
- * Makes a GET request to the 'my/Api' endpoint and returns a 'MyResponseType'
- * 
- * @returns MyResponseType
+ * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
+ * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
  */"
 `;
 
@@ -17,34 +16,31 @@ exports[`docs creates documentation for the api 1`] = `
 
 exports[`docs creates documentation with body parameter 1`] = `
 "/**
- * Makes a GET request to the 'my/Api' endpoint and returns a 'MyResponseType'
- * 
- * @param body Request body
- * @returns MyResponseType
+ * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
+ * @param body Request body.
+ * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
  */"
 `;
 
 exports[`docs creates documentation with path parameters 1`] = `
 "/**
- * Makes a GET request to the 'my/Api' endpoint and returns a 'MyResponseType'
- * 
- * @param pathParameter1 Path parameter with the original name undefined
- * @param pathParameter2 Path parameter with the original name undefined
- * @returns MyResponseType
+ * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
+ * @param pathParameter1 Path parameter.
+ * @param path-parameter-2 Path parameter.
+ * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
  */"
 `;
 
 exports[`docs creates documentation with query parameters object 1`] = `
 "/**
- * Makes a GET request to the 'my/Api' endpoint and returns a 'MyResponseType'
- * 
- * @param queryParameters Object containing the query parameters.
- * @returns MyResponseType
+ * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
+ * @param queryParameters Object containing the following keys: queryParameter1, queryParameter2.
+ * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
  */"
 `;
 
 exports[`docs creates schema documentation 1`] = `
 "/**
- * Representation of the 'mySchema' schema
+ * Representation of the 'mySchema' schema.
  */"
 `;

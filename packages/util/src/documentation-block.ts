@@ -66,10 +66,6 @@ function removeWhiteSpaceAroundNewLine(strings: string[]): string[] {
   return strings.map(str => str.replace(/ *\n */g, `${EOL}`));
 }
 
-function replaceAllWhiteSpacesBySingleOne(strings: string[]): string[] {
-  return strings.map(str => str.replace(/ +/g, ' '));
-}
-
 function maskProblematicCharacters(strings: string[]): string[] {
   if (strings.some(str => str.includes('*/'))) {
     logger.warn(

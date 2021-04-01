@@ -74,7 +74,7 @@ describe('documentation-block', () => {
     const argumentThirdLine1 = 'argumentThirdLine1';
     const argumentThirdLine2 = 'argumentThirdLine2';
     const actual = documentationBlock`
-      First line 
+      First line ${argumentFirstLine}
          Second line
       ${argumentThirdLine1} text third line ${argumentThirdLine2}   
        Forth line`;

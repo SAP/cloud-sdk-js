@@ -1,10 +1,6 @@
 import { EOL } from 'os';
-import { codeBlock, unique } from '@sap-cloud-sdk/util';
-import {
-  OpenApiApi,
-  OpenApiDocument,
-  OpenApiOperation
-} from '../openapi-types';
+import { codeBlock, documentationBlock, unique } from '@sap-cloud-sdk/util';
+import { OpenApiApi, OpenApiOperation } from '../openapi-types';
 import {
   collectRefs,
   hasNotSchema,
@@ -12,23 +8,24 @@ import {
 } from '../schema-util';
 import { serializeOperation } from './operation';
 import { Import, serializeImports } from './imports';
-import { apiDocumentation } from './docs';
 
 /**
  * Serialize an API representation to a string representing the resulting API file.
  * @param api Represenation of an API.
- * @param document Representation of the Document used the generated documentation.
+ * @param serviceName Service name for which the API is created.
  * @returns The serialized API file contents.
  */
-export function apiFile(api: OpenApiApi, document?: OpenApiDocument): string {
+export function apiFile(api: OpenApiApi, serviceName: string): string {
   const imports = serializeImports(getImports(api));
-  return codeBlock`
-${imports}
-${document ? `${EOL}${apiDocumentation(api, document.serviceName)}` : ''}
-export const ${api.name} = {
-  ${api.operations.map(operation => serializeOperation(operation)).join(',\n')}
-};
-`;
+  const apiDoc = apiDocumentation(api, serviceName);
+  const apiContent = codeBlock`
+  export const ${api.name} = {
+    ${api.operations
+      .map(operation => serializeOperation(operation))
+      .join(',\n')}
+  };`;
+
+  return [imports, apiDoc, apiContent].join(EOL);
 }
 
 /**
@@ -74,4 +71,11 @@ function getImports(api: OpenApiApi): Import[] {
   }
 
   return [coreImports, refImports];
+}
+
+export function apiDocumentation(api: OpenApiApi, serviceName: string): string {
+  return documentationBlock`
+  Representation of the '${api.name}'.
+  This API is part of the '${serviceName}' service.
+  `;
 }

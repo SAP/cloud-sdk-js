@@ -20,59 +20,58 @@ export function documentationBlock(
   strings: TemplateStringsArray,
   ...args: string[]
 ): string {
-  if (isCodeBlockEmpty(strings.raw, args)) {
+  const textIndentation = getIndentation(strings.raw);
+  const argsWithIndentation = addIndentationToArgumnets(args, textIndentation);
+
+  let content = zip(strings.raw as string[], argsWithIndentation).join('');
+  if (!content) {
     return '';
   }
+  content = maskProblematicCharacters(content);
+  const lines = content.split(EOL);
+  const withIndentation = adjustIndentation(lines, textIndentation);
+  const withStars = withIndentation.join(`${EOL} * `);
 
-  let adjustedStrings = strings.raw as string[];
-  adjustedStrings = removeSpaceNewLineStartAndEnd(adjustedStrings);
-  adjustedStrings = removeWhiteSpaceAroundNewLine(adjustedStrings);
-  adjustedStrings = addStarAfterNewLine(adjustedStrings);
-  adjustedStrings = maskProblematicCharacters(adjustedStrings);
-
-  let adjustedArgs = maskProblematicCharacters(args);
-  adjustedArgs = addStarAfterNewLine(adjustedArgs);
-
-  const content = zip(adjustedStrings, adjustedArgs).join('');
-  return ['/**', ` * ${content}`, ' */'].join(EOL);
+  const result = ['/**', ` * ${withStars}`, ' */'].join(EOL);
+  return result;
 }
 
 /*
-This trimming ensures that if there are new lines in the beginning and end of a code block these are removed.
+ The arguments do not contain any indentation so this is added here.
  */
-function removeSpaceNewLineStartAndEnd(strings: string[]): string[] {
-  const trimmed = [...strings];
-  if (trimmed.length) {
-    trimmed[0] = trimmed[0].trimStart();
-    const lastIndex = trimmed.length - 1;
-    trimmed[lastIndex] = trimmed[lastIndex].trimEnd();
-  }
-  return trimmed;
-}
-
-function isCodeBlockEmpty(strings: readonly string[], args: string[]): boolean {
-  const stringsHaveContent = strings.some(
-    str => str.replace(/\s*/g, '') !== ''
+function addIndentationToArgumnets(
+  args: string[],
+  textIndentation: number
+): string[] {
+  const argsWithIndentation = args.map(arg =>
+    arg.replace(/\n/g, EOL + ' '.repeat(textIndentation))
   );
-  const argsHaveContent = args.some(arg => arg.replace(/\s*/g, '') !== '');
-  return !stringsHaveContent && !argsHaveContent;
+  return argsWithIndentation;
 }
 
-function addStarAfterNewLine(strings: string[]): string[] {
-  return strings.map(str => str.replace(/\n/g, `${EOL} * `));
+/*
+ Takes the first text line as reference and does indentation with respect to this line.
+ */
+function adjustIndentation(lines: string[], textIndentation: number): string[] {
+  return lines.map(str => str.slice(textIndentation));
 }
 
-function removeWhiteSpaceAroundNewLine(strings: string[]): string[] {
-  return strings.map(str => str.replace(/ *\n */g, `${EOL}`));
+/*
+Searches for the first line containing text and returns the number of white spaces
+ */
+function getIndentation(strings: readonly string[]): number {
+  const firstLineWithText = strings[0];
+  const removeStarting = firstLineWithText?.replace(/^\n*/g, '');
+  const countEmptySpaces = removeStarting?.search(/\S/);
+  return countEmptySpaces > 0 ? countEmptySpaces : 0;
 }
 
-function maskProblematicCharacters(strings: string[]): string[] {
-  if (strings.some(str => str.includes('*/'))) {
+function maskProblematicCharacters(str: string): string {
+  if (str.includes('*/')) {
     logger.warn(
-      `The documentation block ${strings.join(
-        ''
+      `The documentation block ${str}'
       )} contained */ in the text will be masked as \\*\\/.`
     );
   }
-  return strings.map(str => str.replace(/\*\//g, '\\*\\/'));
+  return str.replace(/\*\//g, '\\*\\/');
 }

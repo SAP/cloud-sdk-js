@@ -1,5 +1,5 @@
 import { OpenApiApi } from '../openapi-types';
-import { apiFile } from './api-file';
+import { apiDocumentation, apiFile } from './api-file';
 
 describe('apiFile', () => {
   it('apiFile serializes api file with one operation and no references', () => {
@@ -140,6 +140,16 @@ describe('apiFile', () => {
             'test'
           )
         };"
+    `);
+  });
+
+  it('creates documentation for the api', () => {
+    expect(apiDocumentation({ name: 'TestApi' } as any, 'TestService'))
+      .toMatchInlineSnapshot(`
+      "/**
+       * Representation of the 'TestApi'.
+       * This API is part of the 'TestService' service.
+       */"
     `);
   });
 });

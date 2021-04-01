@@ -130,7 +130,7 @@ function parseObjectSchemaProperties(
       {
         schema: parseSchema(propSchema),
         description: isReferenceObject(propSchema)
-          ? 'Use PR 1160 Mapping here later'
+          ? undefined
           : propSchema.description,
         name: propName,
         required: schema.required?.includes(propName) || false

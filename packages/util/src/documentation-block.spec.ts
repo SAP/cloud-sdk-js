@@ -18,23 +18,11 @@ describe('documentation-block', () => {
     expect(actual).toBe('');
   });
 
-  it('removes empty lines in beginning and and of documentation block', () => {
-    const actual = documentationBlock` 
-    
-    some content.
-    
-    
-    `;
-    expect(actual).toBe(`/**${EOL} * some content.${EOL} */`);
-  });
-
   it('keeps internal empty lines', () => {
-    const actual = documentationBlock` 
-    
+    const actual = documentationBlock`
     Line Before empty line.
     
     Line After empty line.
-    
     
     `;
     expect(actual).toMatchSnapshot();
@@ -87,7 +75,8 @@ describe('documentation-block', () => {
       'Second Line',
       'Third Line'
     ].join(EOL);
-    const actual = documentationBlock`A single line of documentaiton with new lines in argument
+    const actual = documentationBlock`
+    A single line of documentaiton with new lines in argument
     ${argumentWithNewLines}.`;
     expect(actual).toMatchSnapshot();
   });
@@ -97,5 +86,13 @@ describe('documentation-block', () => {
     expect(actual).toBe(
       `/**${EOL} * A single line of \\*\\/ documentaiton with illegal \\*\\/.${EOL} */`
     );
+  });
+
+  it('allows for indentation of content', () => {
+    const actual = documentationBlock`
+    First line
+         Second line with indentation   
+  Third line with identation`;
+    expect(actual).toMatchSnapshot();
   });
 });

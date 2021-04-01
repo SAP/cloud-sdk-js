@@ -1,4 +1,5 @@
-import { schemaFile } from './schema-file';
+import { schemaDocumentation, schemaFile } from './schema-file';
+import { schemaPropertyDocumentation } from './schema';
 describe('schema-file', () => {
   it('serializes schema file for schema', () => {
     expect(
@@ -120,6 +121,36 @@ describe('schema-file', () => {
             'string-property': string;
             'string-property-no-description': string;
           };"
+    `);
+  });
+
+  it('creates schema documentation', () => {
+    expect(schemaDocumentation({ name: 'mySchema' } as any))
+      .toMatchInlineSnapshot(`
+      "/**
+       * Representation of the 'mySchema' schema.
+       */"
+    `);
+  });
+
+  it('uses the schema description documentation if present', () => {
+    expect(
+      schemaDocumentation({
+        name: 'mySchema',
+        description: 'My schmema description.'
+      } as any)
+    ).toMatch(/My schmema description/);
+  });
+
+  it('creates a schema property documentation', () => {
+    expect(
+      schemaPropertyDocumentation({
+        description: 'My property Description.'
+      } as any)
+    ).toMatchInlineSnapshot(`
+      "/**
+       * My property Description.
+       */"
     `);
   });
 });

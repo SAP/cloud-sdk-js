@@ -73,7 +73,7 @@ function replaceAllWhiteSpacesBySingleOne(strings: string[]): string[] {
   return strings.map(str => str.replace(/ +/g, ' '));
 }
 
-function removeIllegaCharacter(strings: string[]): string[] {
+function removeIllegalCharacters(strings: string[]): string[] {
   if (strings.some(str => str.includes('*/'))) {
     logger.warn(
       `The documentation block ${strings.join(

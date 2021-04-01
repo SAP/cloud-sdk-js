@@ -5,9 +5,8 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
  */
 export declare const DefaultApi: {
   /**
-   * Makes a get request to the '/' endpoint and returns a 'any'
-   *
-   * @returns any
+   * Create a request builder for execution of get requests to the '/' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   get: () => OpenApiRequestBuilder<any>;
 };

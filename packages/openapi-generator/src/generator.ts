@@ -136,7 +136,7 @@ async function createApis(
       createFile(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
-        apiFile(api, openApiDocument),
+        apiFile(api, openApiDocument.serviceName),
         true
       )
     )

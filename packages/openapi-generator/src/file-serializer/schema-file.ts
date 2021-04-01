@@ -1,4 +1,4 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { OpenApiNamedSchema, OpenApiSchema } from '../openapi-types';
 import {
   collectRefs,
@@ -8,7 +8,6 @@ import {
 } from '../schema-util';
 import { serializeSchema } from './schema';
 import { Import, serializeImports } from './imports';
-import { schemaDocumentation } from './docs';
 
 /**
  * Serialize a schema representation to a string representing the according schema file contents.
@@ -38,4 +37,10 @@ function getImports(schema: OpenApiSchema): Import[] {
     ];
   }
   return refImports;
+}
+
+export function schemaDocumentation(schema: OpenApiNamedSchema): string {
+  return documentationBlock`
+  ${schema.description || `Representation of the '${schema.name}' schema.`}
+  `;
 }

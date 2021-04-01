@@ -7,10 +7,9 @@ import type { TestEntity } from './schema';
 export declare const DefaultApi: {
   /**
    * Test POST
-   *
-   * @param pathParam Path parameter with the original name pathParam
-   * @param queryParameters Object containing the query parameters.
-   * @returns TestEntity[]
+   * @param pathParam Path parameter.
+   * @param queryParameters Object containing the following keys: queryParam.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   postEntity: (
     pathParam: string,
@@ -21,11 +20,10 @@ export declare const DefaultApi: {
       | undefined
   ) => OpenApiRequestBuilder<TestEntity[]>;
   /**
-   * Makes a patch request to the '/entities/{pathParam}' endpoint and returns a 'string'
-   *
-   * @param pathParam Path parameter with the original name pathParam
-   * @param body Request body
-   * @returns string
+   * Create a request builder for execution of patch requests to the '/entities/{pathParam}' endpoint.
+   * @param pathParam Path parameter.
+   * @param body Request body.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   patchEntity: (
     pathParam: string,

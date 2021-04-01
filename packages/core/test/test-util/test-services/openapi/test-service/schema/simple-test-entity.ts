@@ -5,7 +5,7 @@
  */
 
 /**
- * Representation of the 'SimpleTestEntity' schema
+ * Representation of the 'SimpleTestEntity' schema.
  */
 export type SimpleTestEntity =
   | {

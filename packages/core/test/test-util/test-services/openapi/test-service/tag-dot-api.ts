@@ -4,16 +4,14 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '../../../../../src';
-
 /**
  * Representation of the 'TagDotApi'.
  * This API is part of the 'TestService' service.
  */
 export const TagDotApi = {
   /**
-   * Makes a get request to the '/test-cases/special-tag' endpoint and returns a 'any'
-   *
-   * @returns any
+   * Create a request builder for execution of get requests to the '/test-cases/special-tag' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   tagWithDot: () =>
     new OpenApiRequestBuilder<any>('get', '/test-cases/special-tag')

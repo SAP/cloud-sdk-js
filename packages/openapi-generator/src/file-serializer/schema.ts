@@ -3,8 +3,7 @@ import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
   OpenApiObjectSchema,
-  OpenApiObjectSchemaProperty,
-  OpenApiNamedSchema
+  OpenApiObjectSchemaProperty
 } from '../openapi-types';
 import { getType } from '../parser/type-mapping';
 import {
@@ -115,12 +114,6 @@ function serializeRecordSchema(
     return codeBlock`Record<string, ${serializeSchema(additionalProperties)}>`;
   }
   return codeBlock`Record<string, any>`;
-}
-
-export function schemaDocumentation(schema: OpenApiNamedSchema): string {
-  return documentationBlock`
-  ${schema.description || `Representation of the '${schema.name}' schema.`}
-  `;
 }
 
 export function schemaPropertyDocumentation(

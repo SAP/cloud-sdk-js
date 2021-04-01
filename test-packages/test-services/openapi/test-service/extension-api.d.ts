@@ -5,15 +5,13 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
  */
 export declare const ExtensionApi: {
   /**
-   * Makes a get request to the '/test-cases/extension' endpoint and returns a 'any'
-   *
-   * @returns any
+   * Create a request builder for execution of get requests to the '/test-cases/extension' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   niceGetFunction: () => OpenApiRequestBuilder<any>;
   /**
-   * Makes a post request to the '/test-cases/extension' endpoint and returns a 'any'
-   *
-   * @returns any
+   * Create a request builder for execution of post requests to the '/test-cases/extension' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   nicePostFunction: () => OpenApiRequestBuilder<any>;
 };

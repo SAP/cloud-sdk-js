@@ -1,5 +1,5 @@
 /**
- * Representation of the 'SimpleTestEntity' schema
+ * Representation of the 'SimpleTestEntity' schema.
  */
 export declare type SimpleTestEntity =
   | {

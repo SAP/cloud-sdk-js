@@ -136,10 +136,7 @@ function getSignatureOfPathParameters(
 ): string[] {
   return parameters.map(
     parameter =>
-      `@param ${parameter.name} ${
-        parameter.description ||
-        `Path parameter.`
-      }`
+      `@param ${parameter.name} ${parameter.description || 'Path parameter.'}`
   );
 }
 

@@ -13,17 +13,15 @@ var core_1 = require('@sap-cloud-sdk/core');
  */
 exports.DefaultApi = {
   /**
-   * Makes a get request to the '/test-cases/default-tag' endpoint and returns a 'any'
-   *
-   * @returns any
+   * Create a request builder for execution of get requests to the '/test-cases/default-tag' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   noTag: function () {
     return new core_1.OpenApiRequestBuilder('get', '/test-cases/default-tag');
   },
   /**
-   * Makes a post request to the '/test-cases/default-tag' endpoint and returns a 'any'
-   *
-   * @returns any
+   * Create a request builder for execution of post requests to the '/test-cases/default-tag' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   defaultTag: function () {
     return new core_1.OpenApiRequestBuilder('post', '/test-cases/default-tag');

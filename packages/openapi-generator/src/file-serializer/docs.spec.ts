@@ -1,7 +1,8 @@
 import { OpenApiOperation } from '../openapi-types';
 import { apiDocumentation } from './api-file';
 import { operationDocumentation } from './operation';
-import { schemaDocumentation } from './schema';
+import { schemaDocumentation } from './schema-file';
+import { schemaPropertyDocumentation } from './schema';
 
 describe('docs', () => {
   function getOperation(): OpenApiOperation {
@@ -22,9 +23,7 @@ describe('docs', () => {
 
   it('creates a description for operations if not present', () => {
     const operation = getOperation();
-    expect(
-      operationDocumentation(operation)
-    ).toMatchSnapshot();
+    expect(operationDocumentation(operation)).toMatchSnapshot();
   });
 
   it('uses the description for operations if present', () => {
@@ -32,9 +31,7 @@ describe('docs', () => {
       ...getOperation(),
       description: 'This is my Operation.'
     };
-    expect(operationDocumentation(operation)).toMatch(
-      /This is my Operation/
-    );
+    expect(operationDocumentation(operation)).toMatch(/This is my Operation/);
   });
 
   it('creates documentation with path parameters', () => {
@@ -43,9 +40,7 @@ describe('docs', () => {
       { name: 'pathParameter1' },
       { name: 'path-parameter-2' }
     ] as any;
-    expect(
-      operationDocumentation(operation)
-    ).toMatchSnapshot();
+    expect(operationDocumentation(operation)).toMatchSnapshot();
   });
 
   it('uses path parameter description if present', () => {
@@ -67,17 +62,13 @@ describe('docs', () => {
       { name: 'queryParameter1' },
       { name: 'queryParameter2' }
     ] as any;
-    expect(
-      operationDocumentation(operation)
-    ).toMatchSnapshot();
+    expect(operationDocumentation(operation)).toMatchSnapshot();
   });
 
   it('creates documentation with body parameter', () => {
     const operation = getOperation();
     operation.requestBody = { schema: { type: 'string' }, required: true };
-    expect(
-      operationDocumentation(operation)
-    ).toMatchSnapshot();
+    expect(operationDocumentation(operation)).toMatchSnapshot();
   });
 
   it('uses the body description if present', () => {
@@ -87,9 +78,7 @@ describe('docs', () => {
       description: 'My body description',
       required: true
     };
-    expect(operationDocumentation(operation)).toMatch(
-      /My body description/
-    );
+    expect(operationDocumentation(operation)).toMatch(/My body description/);
   });
 
   it('creates the signature in order path parameter, body, queryParameter and returns last', () => {
@@ -117,5 +106,11 @@ describe('docs', () => {
         description: 'My schmema description.'
       } as any)
     ).toMatch(/My schmema description/);
+  });
+
+  it('creates a schema property documentation', () => {
+    expect(
+      schemaPropertyDocumentation({ description: 'My propert' } as any)
+    ).toMatchSnapshot();
   });
 });

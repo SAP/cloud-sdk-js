@@ -19,7 +19,7 @@ describe('schema-file', () => {
     ).toMatchInlineSnapshot(`
       "    
           /**
-           * Representation of the 'MySchema' schema
+           * Representation of the 'MySchema' schema.
            */
           export type MySchema = {
             'string-property': string;
@@ -55,7 +55,7 @@ describe('schema-file', () => {
       "    import type { OtherSchema1 } from './other-schema-1';
           import type { OtherSchema2 } from './other-schema-2';
           /**
-           * Representation of the 'MySchema' schema
+           * Representation of the 'MySchema' schema.
            */
           export type MySchema = {
             'otherSchema1': OtherSchema1;
@@ -78,7 +78,7 @@ describe('schema-file', () => {
     ).toMatchInlineSnapshot(`
       "    import { Except } from '@sap-cloud-sdk/core';
           /**
-           * Representation of the 'MySchema' schema
+           * Representation of the 'MySchema' schema.
            */
           export type MySchema = Except<any, number>[];"
     `);
@@ -104,7 +104,7 @@ describe('schema-file', () => {
     ).toMatchInlineSnapshot(`
       "    
           /**
-           * Representation of the 'MySchema' schema
+           * Representation of the 'MySchema' schema.
            */
           export type MySchema = {
             /**

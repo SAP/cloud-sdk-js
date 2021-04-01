@@ -25,24 +25,26 @@ describe('apiFile', () => {
         }
       ]
     };
-    expect(apiFile(api)).toMatchInlineSnapshot(`
+    expect(apiFile(api, 'MyserviceName')).toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-
-      export const TestApi = {
-        /**
-         * Makes a get request to the 'test/{id}' endpoint and returns a 'any'
-         * 
-         * @param id Path parameter with the original name id
-         * @returns any
-         */
-        getFn: (id: string) => new OpenApiRequestBuilder<any>(
-          'get',
-          'test/{id}',
-          {
-                pathParameters: { id }
-              }
-        )
-      };"
+      /**
+       * Representation of the 'TestApi'.
+       * This API is part of the 'MyserviceName' service.
+       */
+        export const TestApi = {
+          /**
+           * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
+           * @param id Path parameter.
+           * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+           */
+          getFn: (id: string) => new OpenApiRequestBuilder<any>(
+            'get',
+            'test/{id}',
+            {
+                  pathParameters: { id }
+                }
+          )
+        };"
     `);
   });
 
@@ -74,34 +76,35 @@ describe('apiFile', () => {
         }
       ]
     };
-    expect(apiFile(api)).toMatchInlineSnapshot(`
+    expect(apiFile(api, 'MyserviceName')).toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
       import type { RefType, ResponseType } from './schema';
-
-      export const TestApi = {
-        /**
-         * Makes a get request to the 'test' endpoint and returns a 'string'
-         * 
-         * @returns string
-         */
-        getFn: () => new OpenApiRequestBuilder<string>(
-          'get',
-          'test'
-        ),
-        /**
-         * Makes a post request to the 'test' endpoint and returns a 'ResponseType'
-         * 
-         * @param body Request body
-         * @returns ResponseType
-         */
-        createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
-          'post',
-          'test',
-          {
-                body
-              }
-        )
-      };"
+      /**
+       * Representation of the 'TestApi'.
+       * This API is part of the 'MyserviceName' service.
+       */
+        export const TestApi = {
+          /**
+           * Create a request builder for execution of get requests to the 'test' endpoint.
+           * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+           */
+          getFn: () => new OpenApiRequestBuilder<string>(
+            'get',
+            'test'
+          ),
+          /**
+           * Create a request builder for execution of post requests to the 'test' endpoint.
+           * @param body Request body.
+           * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+           */
+          createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
+            'post',
+            'test',
+            {
+                  body
+                }
+          )
+        };"
     `);
   });
 
@@ -121,25 +124,22 @@ describe('apiFile', () => {
       ]
     };
 
-    expect(apiFile(api, { serviceName: 'TestService' } as any))
-      .toMatchInlineSnapshot(`
+    expect(apiFile(api, 'TestService')).toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-
       /**
        * Representation of the 'TestApi'.
        * This API is part of the 'TestService' service.
        */
-      export const TestApi = {
-        /**
-         * Makes a get request to the 'test' endpoint and returns a 'any'
-         * 
-         * @returns any
-         */
-        getFn: () => new OpenApiRequestBuilder<any>(
-          'get',
-          'test'
-        )
-      };"
+        export const TestApi = {
+          /**
+           * Create a request builder for execution of get requests to the 'test' endpoint.
+           * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+           */
+          getFn: () => new OpenApiRequestBuilder<any>(
+            'get',
+            'test'
+          )
+        };"
     `);
   });
 });

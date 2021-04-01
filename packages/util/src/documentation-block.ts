@@ -56,10 +56,7 @@ function isCodeBlockEmpty(strings: readonly string[], args: string[]): boolean {
     str => str.replace(/\s*/g, '') !== ''
   );
   const argsHaveContent = args.some(arg => arg.replace(/\s*/g, '') !== '');
-  if (!stringsHaveContent && !argsHaveContent) {
-    return true;
-  }
-  return false;
+  return !stringsHaveContent && !argsHaveContent;
 }
 
 function addStarAfterNewLine(strings: string[]): string[] {

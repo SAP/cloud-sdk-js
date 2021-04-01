@@ -41,6 +41,9 @@ export function documentationBlock(
   return result;
 }
 
+/*
+This trimming ensures that if there are new lines in the beginning and end of a code block these are removed.
+ */
 function removeSpaceNewLineStartAndEnd(strings: string[]): string[] {
   const trimmed = [...strings];
   if (trimmed.length) {

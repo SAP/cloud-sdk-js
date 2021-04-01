@@ -18,7 +18,7 @@ export type TestEntity =
       floatProperty?: number;
       doubleProperty?: number;
       /**
-       * SimpleTestEntity schema
+       * Use PR 1160 Mapping here later
        */
       linkedSimpleTestEntity?: SimpleTestEntity;
       linkedSimpleTestEntityCollection?: SimpleTestEntity[];

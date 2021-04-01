@@ -90,7 +90,7 @@ describe('parseOpenApiDocument', () => {
     expect(objectSchema!.description).toBe('Object Description');
     expect(
       (objectSchema!.schema as OpenApiObjectSchema).properties[0].description
-    ).toBe('Property Description');
+    ).toBe('Use PR 1160 Mapping here later');
     expect(propertySchema!.description).toBe('Property Description');
   });
 

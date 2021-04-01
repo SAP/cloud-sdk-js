@@ -84,7 +84,7 @@ describe('schema-file', () => {
     `);
   });
 
-  it('serializes schema file for schema with description', () => {
+  it('serializes simple schema file for schema with description', () => {
     expect(
       schemaFile({
         name: 'MySchema',

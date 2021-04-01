@@ -18,7 +18,7 @@ export function parseRequestBody(
   refs: $Refs
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = resolveObject(requestBody, refs);
-  const schema = parseMediaType(resolvedRequestBody, refs);
+  const schema = parseMediaType(resolvedRequestBody);
   if (schema && resolvedRequestBody) {
     return {
       required: !!resolvedRequestBody.required,

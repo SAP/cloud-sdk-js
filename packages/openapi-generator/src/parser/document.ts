@@ -47,7 +47,7 @@ export function parseSchemas(
   return Object.entries(document.components?.schemas || {}).map(
     ([name, schema]) => ({
       name,
-      schema: parseSchema(schema, refs),
+      schema: parseSchema(schema),
       description: resolveObject(schema, refs).description
     })
   );

@@ -12,7 +12,7 @@ import type { TestEntity } from './test-entity';
 export type ComplexTestEntity =
   | {
       /**
-       * SimpleTestEntity schema
+       * Use PR 1160 Mapping here later
        */
       referenceProperty?: SimpleTestEntity;
       arrayProperty?:

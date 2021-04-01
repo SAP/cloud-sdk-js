@@ -21,7 +21,7 @@ export function operationDocumentation(
   operationResponseType: string
 ): string {
   const signature: string[] = [];
-  if (operation.pathParameters.length > 0) {
+  if (operation.pathParameters.length) {
     signature.push(...getSignatureOfPathParameters(operation.pathParameters));
   }
   if (operation.requestBody) {

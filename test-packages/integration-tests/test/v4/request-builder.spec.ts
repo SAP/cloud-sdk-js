@@ -19,6 +19,17 @@ const mockedBuildHeaderResponse = {
   'set-cookie': ['mocked-cookie-0', 'mocked-cookie-1']
 };
 
+function mockCsrfTokenRequest(path?: string) {
+  nock(destination.url, {
+    reqheaders: {
+      authorization: basicHeader(destination.username, destination.password),
+      'x-csrf-token': 'Fetch'
+    }
+  })
+    .get(path ? `${servicePath}/${path}` : servicePath)
+    .reply(200, '', mockedBuildHeaderResponse);
+}
+
 describe('Request Builder', () => {
   beforeEach(() => {
     delete process.env.destinations;
@@ -56,16 +67,7 @@ describe('Request Builder', () => {
 
   it('should resolve for getByKey request', async () => {
     const response = singleTestEntityResponse();
-    nock(destination.url, {
-      reqheaders: {
-        authorization: basicHeader(destination.username, destination.password),
-        accept: 'application/json',
-        'content-type': 'application/json',
-        'x-csrf-token': 'Fetch'
-      }
-    })
-      .get(`${servicePath}/${entityName}`)
-      .reply(200, undefined, mockedBuildHeaderResponse);
+    mockCsrfTokenRequest(entityName);
 
     nock(destination.url, {
       reqheaders: {
@@ -97,18 +99,9 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for update request', async () => {
-    nock(destination.url, {
-      reqheaders: {
-        authorization: basicHeader(destination.username, destination.password),
-        accept: 'application/json',
-        'content-type': 'application/json',
-        'x-csrf-token': 'Fetch'
-      }
-    })
-      .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
-      )
-      .reply(200, undefined, mockedBuildHeaderResponse);
+    mockCsrfTokenRequest(
+      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
+    );
 
     nock(destination.url, {
       reqheaders: {
@@ -141,18 +134,9 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for delete request using key fields', async () => {
-    nock(destination.url, {
-      reqheaders: {
-        authorization: basicHeader(destination.username, destination.password),
-        accept: 'application/json',
-        'content-type': 'application/json',
-        'x-csrf-token': 'Fetch'
-      }
-    })
-      .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
-      )
-      .reply(200, undefined, mockedBuildHeaderResponse);
+    mockCsrfTokenRequest(
+      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
+    );
 
     const entity = TestEntity.builder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')

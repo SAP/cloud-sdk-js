@@ -4,10 +4,10 @@ import {
   defaultBasicCredentials,
   defaultDestination,
   defaultHost,
-  mockHeaderRequest
-} from '../../test/test-util/request-mocker';
-import { createCreateRequest } from '../../test/test-util/create-requests';
-import { Destination } from '../connectivity/scp-cf/destination';
+  mockHeaderRequest,
+  createCreateRequest
+} from '../../test/test-util';
+import { Destination } from '../connectivity/scp-cf';
 import { buildCsrfHeaders } from './csrf-token-header';
 
 const standardHeaders = {

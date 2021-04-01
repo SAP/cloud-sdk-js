@@ -44,6 +44,17 @@ const mockedBuildHeaderResponse = {
   'set-cookie': ['mocked-cookie-0', 'mocked-cookie-1']
 };
 
+function mockCsrfTokenRequest(path?: string) {
+  nock(destination.url, {
+    reqheaders: {
+      authorization: basicHeader(destination.username, destination.password),
+      'x-csrf-token': 'Fetch'
+    }
+  })
+    .get(path ? `${servicePath}/${path}` : servicePath)
+    .reply(200, '', mockedBuildHeaderResponse);
+}
+
 let destination;
 
 describe('Request Builder', () => {
@@ -236,16 +247,7 @@ describe('Request Builder', () => {
 
   it('should resolve for create request', async () => {
     const response = singleTestEntityResponse();
-    nock(destination.url, {
-      reqheaders: {
-        authorization: basicHeader(destination.username, destination.password),
-        accept: 'application/json',
-        'content-type': 'application/json',
-        'x-csrf-token': 'Fetch'
-      }
-    })
-      .get(`${servicePath}/${entityName}`)
-      .reply(200, undefined, mockedBuildHeaderResponse);
+    mockCsrfTokenRequest(entityName);
 
     nock(destination.url, {
       reqheaders: {
@@ -277,18 +279,9 @@ describe('Request Builder', () => {
   });
 
   it('should resolve when creating a child entity of another entity', async () => {
-    nock(destination.url, {
-      reqheaders: {
-        authorization: basicHeader(destination.username, destination.password),
-        accept: 'application/json',
-        'content-type': 'application/json',
-        'x-csrf-token': 'Fetch'
-      }
-    })
-      .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)/to_MultiLink`
-      )
-      .reply(200, undefined, mockedBuildHeaderResponse);
+    mockCsrfTokenRequest(
+      `${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)/to_MultiLink`
+    );
 
     nock(destination.url, {
       reqheaders: {
@@ -320,18 +313,9 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for update request', async () => {
-    nock(destination.url, {
-      reqheaders: {
-        authorization: basicHeader(destination.username, destination.password),
-        accept: 'application/json',
-        'content-type': 'application/json',
-        'x-csrf-token': 'Fetch'
-      }
-    })
-      .get(
-        `${servicePath}/${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
-      )
-      .reply(200, undefined, mockedBuildHeaderResponse);
+    mockCsrfTokenRequest(
+      `${entityName}(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
+    );
 
     nock(destination.url, {
       reqheaders: {
@@ -377,18 +361,9 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for delete with keys', async () => {
-    nock(destination.url, {
-      reqheaders: {
-        authorization: basicHeader(destination.username, destination.password),
-        accept: 'application/json',
-        'content-type': 'application/json',
-        'x-csrf-token': 'Fetch'
-      }
-    })
-      .get(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
-      )
-      .reply(200, undefined, mockedBuildHeaderResponse);
+    mockCsrfTokenRequest(
+      'A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)'
+    );
 
     nock(destination.url, {
       reqheaders: {
@@ -412,18 +387,9 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for delete with entity', async () => {
-    nock(destination.url, {
-      reqheaders: {
-        authorization: basicHeader(destination.username, destination.password),
-        accept: 'application/json',
-        'content-type': 'application/json',
-        'x-csrf-token': 'Fetch'
-      }
-    })
-      .get(
-        `${servicePath}/A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)`
-      )
-      .reply(200, undefined, mockedBuildHeaderResponse);
+    mockCsrfTokenRequest(
+      'A_TestEntity(KeyPropertyGuid=guid%27aaaabbbb-cccc-dddd-eeee-ffff00001111%27,KeyPropertyString=%27abcd1234%27)'
+    );
 
     const entity = TestEntity.builder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')

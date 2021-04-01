@@ -1,5 +1,5 @@
 import { ODataRequest, ODataRequestConfig } from '../../odata-common';
-import { buildCsrfHeaders } from '../../http-client/csrf-token-header';
+import { buildCsrfHeaders } from '../../http-client';
 
 /**
  * @deprecated Since v1.20.0, use [[buildCsrfHeaders]] instead.

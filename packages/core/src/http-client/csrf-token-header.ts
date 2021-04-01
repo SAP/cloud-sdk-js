@@ -5,6 +5,7 @@ import {
   pickNonNullish,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
+import { AxiosError } from 'axios';
 import { removeTrailingSlashes } from '../odata-common/remove-slashes';
 import {
   Destination,
@@ -59,28 +60,30 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
 
   // The S/4 does a redirect if the CSRF token is fetched in case the '/' is not in the URL.
   // TODO: remove once https://github.com/axios/axios/issues/3369 is really fixed. Issue is closed but problem stays.
-  return executeHttpRequest(destination, appendSlash(axiosConfig))
+  const requestConfigWithTrailingSlash = appendSlash(axiosConfig);
+  return executeHttpRequest(destination, requestConfigWithTrailingSlash)
     .then(response => response.headers)
-    .catch(e1 => {
-      if (hasCsrfToken(e1)) {
-        return e1.response.headers;
+    .catch(error1 => {
+      if (hasCsrfToken(error1)) {
+        return getResponseHeadersFromAxiosError(error1);
       }
       logger.warn(
         new ErrorWithCause(
-          'Initial try to fetch CSRF token failed - retry without slash at ',
-          e1
+          `First attempt to fetch CSRF token failed with the url: ${requestConfigWithTrailingSlash.url}. Retrying without trailing slash.`,
+          error1
         )
       );
-      return executeHttpRequest(destination, removeSlash(axiosConfig))
+      const requestConfigWithOutTrailingSlash = removeSlash(axiosConfig);
+      return executeHttpRequest(destination, requestConfigWithOutTrailingSlash)
         .then(response => response.headers)
-        .catch(e2 => {
-          if (hasCsrfToken(e2)) {
-            return e2.response.headers;
+        .catch(error2 => {
+          if (hasCsrfToken(error2)) {
+            return getResponseHeadersFromAxiosError(error2);
           }
           logger.warn(
             new ErrorWithCause(
-              'Also second try to fetch CSRF token failed - No CSRF token fetched.',
-              e2
+              `Second attempt to fetch CSRF token failed with the url: ${requestConfigWithOutTrailingSlash.url}. No CSRF token fetched.`,
+              error2
             )
           );
           // todo suggest to disable csrf token handling when the api is implemented
@@ -89,12 +92,18 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
     });
 }
 
-function hasCsrfToken(e1): boolean {
-  return (
-    e1.isAxiosError &&
-    e1.response?.headers &&
-    e1.response.headers['x-csrf-token']
-  );
+// In general, the valid csrf token head can also be found in a non-2xx request.
+// For a non-2xx response, axios will throw an error so we have to check whether the error contains the token.
+function hasCsrfToken(error: any): boolean {
+  return error.isAxiosError && hasCsrfTokenInAxiosError(error);
+}
+
+function hasCsrfTokenInAxiosError(error: AxiosError): boolean {
+  return error.response?.headers?.['x-csrf-token'];
+}
+
+function getResponseHeadersFromAxiosError(error: AxiosError) {
+  return error.response!.headers;
 }
 
 function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {

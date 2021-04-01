@@ -20,7 +20,7 @@ const logger = createLogger('openapi-generator');
  * @param refs References to the schema components.
  * @returns The parsed schema.
  */
-export function parseSchema(
+export function parseSchema(//dummychange
   schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined,
   refs: SwaggerParser.$Refs
 ): OpenApiSchema {

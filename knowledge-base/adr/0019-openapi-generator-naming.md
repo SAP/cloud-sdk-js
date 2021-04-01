@@ -44,7 +44,8 @@ This extension can be set on on multiple levels:
 - document root, causing all operations in the document to be treated as part of the given API.
 
 All names are transformed to pascal case (`SomeApi`).
-API names are formed by removing "api" suffix (case independant and only if available) and adding "Api".
+API names are formed by appending an "Api" suffix.
+If the original name ends with an "api" suffix (case independent), the original suffix is removed prior to appending "Api".
 Examples:
 
 - `my-api` => `MyApi`

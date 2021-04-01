@@ -26,7 +26,6 @@ export function documentationBlock(
 
   let adjustedStrings = strings.raw as string[];
   adjustedStrings = removeSpaceNewLineStartAndEnd(adjustedStrings);
-  adjustedStrings = replaceAllWhiteSpacesBySingleOne(adjustedStrings);
   adjustedStrings = removeWhiteSpaceAroundNewLine(adjustedStrings);
   adjustedStrings = addStarAfterNewLine(adjustedStrings);
   adjustedStrings = removeIllegaCharacter(adjustedStrings);

@@ -20,11 +20,15 @@ export function documentationBlock(
   strings: TemplateStringsArray,
   ...args: string[]
 ): string {
-  const textIndentation = getIndentation(strings.raw);
+  const firstLineNewLineRemoved = removeLeadingEmptyLines(strings.raw[0]);
+  const textIndentation = getIndentation(firstLineNewLineRemoved);
   const argsWithIndentation = addIndentationToArgumnets(args, textIndentation);
 
-  let content = zip(strings.raw as string[], argsWithIndentation).join('');
-  if (!content) {
+  let content = zip(
+    [firstLineNewLineRemoved, ...strings.raw.slice(1)],
+    argsWithIndentation
+  ).join('');
+  if (!content.match(/\w/)) {
     return '';
   }
   content = maskProblematicCharacters(content);
@@ -34,6 +38,17 @@ export function documentationBlock(
 
   const result = ['/**', ` * ${withStars}`, ' */'].join(EOL);
   return result;
+}
+
+/*
+Inirial new lines are unintentional when you make documentationBlock`
+myContent
+`
+ */
+function removeLeadingEmptyLines(firstLine: string): string {
+  const lines = firstLine.split(EOL);
+  const indexFirstNonEmpty = lines.findIndex(str => str.match(/\w/)) || 0;
+  return lines.splice(indexFirstNonEmpty).join(EOL);
 }
 
 /*
@@ -59,9 +74,8 @@ function adjustIndentation(lines: string[], textIndentation: number): string[] {
 /*
 Searches for the first line containing text and returns the number of white spaces
  */
-function getIndentation(strings: readonly string[]): number {
-  const firstLineWithText = strings[0];
-  const removeStarting = firstLineWithText?.replace(/^\n*/g, '');
+function getIndentation(firstLine: string): number {
+  const removeStarting = firstLine?.replace(/^\n*/g, '');
   const countEmptySpaces = removeStarting?.search(/\S/);
   return countEmptySpaces > 0 ? countEmptySpaces : 0;
 }

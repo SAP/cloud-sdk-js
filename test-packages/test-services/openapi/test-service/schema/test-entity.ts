@@ -17,9 +17,6 @@ export type TestEntity =
       int64Property?: number;
       floatProperty?: number;
       doubleProperty?: number;
-      /**
-       * Use PR 1160 Mapping here later
-       */
       linkedSimpleTestEntity?: SimpleTestEntity;
       linkedSimpleTestEntityCollection?: SimpleTestEntity[];
     }

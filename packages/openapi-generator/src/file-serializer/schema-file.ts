@@ -40,7 +40,7 @@ function getImports(schema: OpenApiSchema): Import[] {
 }
 
 export function schemaDocumentation(schema: OpenApiNamedSchema): string {
-  return documentationBlock`
-  ${schema.description || `Representation of the '${schema.name}' schema.`}
-  `;
+  return documentationBlock`${
+    schema.description || `Representation of the '${schema.name}' schema.`
+  }`;
 }

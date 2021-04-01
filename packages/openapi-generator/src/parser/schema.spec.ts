@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { createRefs, emptyObjectSchema } from '../../test/test-util';
+import { emptyObjectSchema } from '../../test/test-util';
 import { OpenApiObjectSchema } from '../openapi-types';
 import { parseSchema } from './schema';
 
@@ -19,7 +19,6 @@ describe('parseSchema', () => {
       type: 'object',
       properties: { prop1: { description: 'My Description', type: 'string' } }
     };
-    const refs = await createRefs({});
     expect(
       (parseSchema(schema) as OpenApiObjectSchema).properties[0].description
     ).toBe('My Description');

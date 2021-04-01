@@ -9,9 +9,6 @@ import type { CyclicParent } from './cyclic-parent';
  */
 export type CyclicChild =
   | {
-      /**
-       * Use PR 1160 Mapping here later
-       */
       parent?: CyclicParent;
     }
   | Record<string, any>;

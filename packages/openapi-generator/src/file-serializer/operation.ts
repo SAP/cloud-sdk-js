@@ -123,11 +123,8 @@ export function operationDocumentation(operation: OpenApiOperation): string {
   signature.push(
     '@returns OpenApiRequestBuilder Use the execute() method to trigger the request.'
   );
-
-  return documentationBlock`
-  ${getOperationDescriptionText(operation)}  
-  ${signature.join(EOL)}
-  `;
+  const lines = [getOperationDescriptionText(operation), ...signature];
+  return documentationBlock`${lines.join(EOL)}`;
 }
 
 function getSignatureOfPathParameters(

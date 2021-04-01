@@ -76,6 +76,5 @@ function getImports(api: OpenApiApi): Import[] {
 export function apiDocumentation(api: OpenApiApi, serviceName: string): string {
   return documentationBlock`
   Representation of the '${api.name}'.
-  This API is part of the '${serviceName}' service.
-  `;
+  This API is part of the '${serviceName}' service.`;
 }

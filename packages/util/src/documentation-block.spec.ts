@@ -18,6 +18,14 @@ describe('documentation-block', () => {
     expect(actual).toBe('');
   });
 
+  it('removes leading empty lines', () => {
+    const actual = documentationBlock`
+      
+    
+    some Content`;
+    expect(actual).toMatchSnapshot();
+  });
+
   it('keeps internal empty lines', () => {
     const actual = documentationBlock`
     Line Before empty line.

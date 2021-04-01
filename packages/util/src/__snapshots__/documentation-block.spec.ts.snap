@@ -2,19 +2,17 @@
 
 exports[`documentation-block allows for indentation of content 1`] = `
 "/**
- *
  * First line
- *      Second line with indentation
+ *      Second line with indentation   
  * ird line with identation
  */"
 `;
 
 exports[`documentation-block create multi line documentation with arguments 1`] = `
 "/**
- *
  * First line argumentFirstLine
  *    Second line
- * argumentThirdLine1 text third line argumentThirdLine2
+ * argumentThirdLine1 text third line argumentThirdLine2   
  *  Forth line
  */"
 `;
@@ -22,14 +20,13 @@ exports[`documentation-block create multi line documentation with arguments 1`] 
 exports[`documentation-block creates multi line documentation in block form 1`] = `
 "/**
  * First line
- *       Second line
+ *       Second line   
  *     Third line
  */"
 `;
 
 exports[`documentation-block handles new lines in arguments 1`] = `
 "/**
- *
  * A single line of documentaiton with new lines in argument
  * First Line
  * Second Line
@@ -39,11 +36,16 @@ exports[`documentation-block handles new lines in arguments 1`] = `
 
 exports[`documentation-block keeps internal empty lines 1`] = `
 "/**
- * 
  * Line Before empty line.
  * 
  * Line After empty line.
  * 
  * 
+ */"
+`;
+
+exports[`documentation-block removes leading empty lines 1`] = `
+"/**
+ * some Content
  */"
 `;

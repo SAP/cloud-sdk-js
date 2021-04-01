@@ -11,8 +11,8 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '../connectivity/scp-cf/destination';
+import { executeHttpRequest } from '../http-client';
 import { HttpRequestConfig } from './http-client-types';
-import { executeHttpRequest } from './http-client';
 
 const logger = createLogger({
   package: 'core',

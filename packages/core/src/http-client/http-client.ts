@@ -13,6 +13,7 @@ import {
   toDestinationNameUrl,
   useOrFetchDestination
 } from '../connectivity/scp-cf';
+import { buildCsrfHeaders } from '../http-client';
 import { getAgentConfig } from './http-agent';
 import {
   DestinationHttpRequestConfig,
@@ -22,7 +23,6 @@ import {
   HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
-import { buildCsrfHeaders } from './csrf-token-header';
 
 const logger = createLogger({
   package: 'core',

@@ -28,16 +28,13 @@ export function documentationBlock(
   adjustedStrings = removeSpaceNewLineStartAndEnd(adjustedStrings);
   adjustedStrings = removeWhiteSpaceAroundNewLine(adjustedStrings);
   adjustedStrings = addStarAfterNewLine(adjustedStrings);
-  adjustedStrings = removeIllegaCharacter(adjustedStrings);
+  adjustedStrings = maskProblematicCharacters(adjustedStrings);
 
-  let adjustedArgs = removeIllegaCharacter(args);
+  let adjustedArgs = maskProblematicCharacters(args);
   adjustedArgs = addStarAfterNewLine(adjustedArgs);
-  const result = [
-    `/**${EOL} * `,
-    ...zip(adjustedStrings, adjustedArgs),
-    `${EOL} */`
-  ].join('');
-  return result;
+
+  const content = zip(adjustedStrings, adjustedArgs).join('');
+  return ['/**', ` * ${content}`, ' */'].join(EOL);
 }
 
 /*
@@ -73,13 +70,13 @@ function replaceAllWhiteSpacesBySingleOne(strings: string[]): string[] {
   return strings.map(str => str.replace(/ +/g, ' '));
 }
 
-function removeIllegaCharacter(strings: string[]): string[] {
+function maskProblematicCharacters(strings: string[]): string[] {
   if (strings.some(str => str.includes('*/'))) {
     logger.warn(
       `The documentation block ${strings.join(
         ''
-      )} contained illegal characters which have been removed.`
+      )} contained */ in the text will be masked as \\*\\/.`
     );
   }
-  return strings.map(str => str.replace(/\*\//g, ''));
+  return strings.map(str => str.replace(/\*\//g, '\\*\\/'));
 }

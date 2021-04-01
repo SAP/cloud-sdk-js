@@ -3,13 +3,15 @@ import { documentationBlock } from './documentation-block';
 
 describe('documentation-block', () => {
   it('creates empty string for empty documentation block', () => {
-    let actual = documentationBlock``;
+    const actual = documentationBlock``;
     expect(actual).toBe('');
+  });
 
+  it('creates empty string for documentation block consisting of whitespace', () => {
     const empty = `
        
     `;
-    actual = documentationBlock`   
+    const actual = documentationBlock`   
     ${empty}
     
      `;
@@ -93,7 +95,7 @@ describe('documentation-block', () => {
   it('masks */ character', () => {
     const actual = documentationBlock`A single line of */ documentaiton with illegal */.`;
     expect(actual).toBe(
-      `/**${EOL} * A single line of  documentaiton with illegal .${EOL} */`
+      `/**${EOL} * A single line of \\*\\/ documentaiton with illegal \\*\\/.${EOL} */`
     );
   });
 });

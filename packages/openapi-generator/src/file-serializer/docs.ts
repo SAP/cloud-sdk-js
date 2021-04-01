@@ -27,7 +27,7 @@ export function operationDocumentation(
   if (operation.requestBody) {
     signature.push(getSignatureOfBody(operation.requestBody));
   }
-  if (operation.queryParameters.length > 0) {
+  if (operation.queryParameters.length) {
     signature.push(
       '@param queryParameters Object containing the query parameters.'
     );

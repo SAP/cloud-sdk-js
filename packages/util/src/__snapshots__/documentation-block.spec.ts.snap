@@ -2,7 +2,7 @@
 
 exports[`documentation-block create multi line documentation with arguments 1`] = `
 "/**
- * First line
+ * First line argumentFirstLine
  * Second line
  * argumentThirdLine1 text third line argumentThirdLine2
  * Forth line

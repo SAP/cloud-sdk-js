@@ -56,6 +56,11 @@ Examples:
 
 Operations are named based on their given `operationId`.
 If no `operationId` is given the name is parsed from the method and the path under which the operation occured.
+Example: 
+
+- path: `entity/{id}`
+- method: `get`
+- resulting name: `getEntityById`
 Users can set specific operation names using the `x-sap-cloud-sdk-operation-name` extension.
 This extension can be set on the operation only.
 Names will be transformed to camel case, duplicate names will cause generation to fail.

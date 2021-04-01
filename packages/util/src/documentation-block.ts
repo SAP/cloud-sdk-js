@@ -42,13 +42,13 @@ export function documentationBlock(
 }
 
 function removeSpaceNewLineStartAndEnd(strings: string[]): string[] {
-  const startRemoved = strings.map((str, i) =>
-    i === 0 ? str.replace(/^[\s]+/g, '') : str
-  );
-  const bothRemoved = startRemoved.map((str, i) =>
-    i === strings.length - 1 ? str.replace(/[\s]*$/g, '') : str
-  );
-  return bothRemoved;
+  const trimmed = [...strings];
+  if (trimmed.length) {
+    trimmed[0] = trimmed[0].trimStart();
+    const lastIndex = trimmed.length - 1;
+    trimmed[lastIndex] = trimmed[lastIndex].trimEnd();
+  }
+  return trimmed;
 }
 
 function isCodeBlockEmpty(strings: readonly string[], args: string[]): boolean {

@@ -50,7 +50,7 @@ describe('Add CDS', () => {
         expect(values[2]).toContain('cat-service.cds');
       });
     },
-    TimeThresholds.SHORT
+    TimeThresholds.MEDIUM
   );
 
   it(

@@ -20,28 +20,30 @@ export function documentationBlock(
   strings: TemplateStringsArray,
   ...args: string[]
 ): string {
-  const firstLineNewLineRemoved = removeLeadingEmptyLines(strings.raw[0]);
-  const textIndentation = getIndentation(firstLineNewLineRemoved);
+  const firstLineTrimmed = removeLeadingEmptyLines(strings.raw[0]);
+  const textIndentation = getIndentation(firstLineTrimmed);
   const argsWithIndentation = addIndentationToArgumnets(args, textIndentation);
 
   let content = zip(
-    [firstLineNewLineRemoved, ...strings.raw.slice(1)],
+    [firstLineTrimmed, ...strings.raw.slice(1)],
     argsWithIndentation
   ).join('');
+
+  // If no text is given return just empty string.
   if (!content.match(/\w/)) {
     return '';
   }
   content = maskProblematicCharacters(content);
-  const lines = content.split(EOL);
-  const withIndentation = adjustIndentation(lines, textIndentation);
-  const withStars = withIndentation.join(`${EOL} * `);
+  let lines = content.split(EOL);
+  lines = adjustIndentation(lines, textIndentation);
+  content = lines.join(`${EOL} * `);
 
-  const result = ['/**', ` * ${withStars}`, ' */'].join(EOL);
+  const result = ['/**', ` * ${content}`, ' */'].join(EOL);
   return result;
 }
 
 /*
-Inirial new lines are unintentional when you make documentationBlock`
+New lines at the beginning are mainly unintentional when you make documentationBlock`
 myContent
 `
  */
@@ -52,7 +54,7 @@ function removeLeadingEmptyLines(firstLine: string): string {
 }
 
 /*
- The arguments do not contain any indentation so this is added here.
+ The arguments do not contain any indentation so this is added via this method.
  */
 function addIndentationToArgumnets(
   args: string[],
@@ -72,7 +74,7 @@ function adjustIndentation(lines: string[], textIndentation: number): string[] {
 }
 
 /*
-Searches for the first line containing text and returns the number of white spaces
+ Searches for the first line containing text and returns the number of white spaces in that line.
  */
 function getIndentation(firstLine: string): number {
   const removeStarting = firstLine?.replace(/^\n*/g, '');

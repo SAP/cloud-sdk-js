@@ -12,7 +12,7 @@ export const multiRetrieveRequest = () =>
     '--batch_.*',
     ...getByKeyRequest,
     '--batch_.*--'
-  ].join(EOL);
+  ].join('\r\n');
 
 export const multiChangesetBatchRequest = () =>
   [
@@ -21,7 +21,7 @@ export const multiChangesetBatchRequest = () =>
     '--batch_.*',
     ...multiChangesetRequest,
     '--batch_.*'
-  ].join(EOL);
+  ].join('\r\n');
 
 export const mixedBatchRequest = () =>
   [
@@ -30,7 +30,7 @@ export const mixedBatchRequest = () =>
     '--batch_.*',
     ...singleChangesetRequest,
     '--batch_.*--'
-  ].join(EOL);
+  ].join('\r\n');
 
 export const mixedErrorRequest = () =>
   [
@@ -44,4 +44,4 @@ export const mixedErrorRequest = () =>
     ...singleChangesetRequest,
     '--batch_.*--',
     ''
-  ].join(EOL);
+  ].join('\r\n');

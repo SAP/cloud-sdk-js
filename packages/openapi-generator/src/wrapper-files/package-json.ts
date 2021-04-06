@@ -1,3 +1,5 @@
+import { EOL } from 'os';
+
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Generate the package.json for an openapi client so it can be released as an npm module.
@@ -47,7 +49,7 @@ export function packageJson(
       },
       null,
       2
-    ) + '\n'
+    ) + EOL
   );
 }
 

@@ -1,7 +1,7 @@
+import { EOL } from 'os';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmActionImport, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
-
 const parameterName = 'parameters';
 
 export function actionImportFunction(
@@ -27,10 +27,10 @@ export function actionImportFunction(
     statements: getActionImportStatements(actionImport, service),
     docs: [
       [
-        `${actionImport.description}\n`,
+        `${actionImport.description}${EOL}`,
         '@param parameters - Object containing all parameters for the action import.',
         '@returns A request builder that allows to overwrite some of the values and execute the resulting request.'
-      ].join('\n')
+      ].join(EOL)
     ]
   };
 }
@@ -41,12 +41,12 @@ function getActionImportStatements(
 ): string {
   const context = actionImport.parameters
     ? actionImport.parameters.reduce((cumulator, currentParameters) => {
-        if (cumulator !== 'const params = {\n') {
-          cumulator += ',\n';
+        if (cumulator !== `const params = {${EOL}`) {
+          cumulator += ','+EOL;
         }
         cumulator += `${currentParameters.parameterName}: new ActionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
         return cumulator;
-      }, 'const params = {\n') + '\n}'
+      }, `const params = {'${EOL}`) + `${EOL}}`
     : '{}';
 
   const parameters = getRequestBuilderArgumentsBase(actionImport, service);
@@ -54,5 +54,5 @@ function getActionImportStatements(
     ', '
   )});`;
 
-  return context + '\n\n' + returnStatement;
+  return context + EOL+EOL + returnStatement;
 }

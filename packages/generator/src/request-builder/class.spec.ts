@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { VdmProperty } from '../vdm-types';
 import { breakfastEntity } from '../../test/test-util/data-model';
 import { requestBuilderClass } from './class';
@@ -18,7 +19,7 @@ describe('request builder class', () => {
       name: 'getByKey',
       returnType: 'GetByKeyRequestBuilderV2<Breakfast>',
       statements:
-        'return new GetByKeyRequestBuilderV2(Breakfast, {EntityName: entityName,\nBreakfastTime: breakfastTime});',
+        `return new GetByKeyRequestBuilderV2(Breakfast, {EntityName: entityName,${EOL}BreakfastTime: breakfastTime});`,
       parameters: [
         { name: 'entityName', type: 'string' },
         { name: 'breakfastTime', type: 'Time' }
@@ -82,7 +83,7 @@ describe('request builder class', () => {
       name: 'getByKey',
       returnType: 'GetByKeyRequestBuilderV4<Breakfast>',
       statements:
-        'return new GetByKeyRequestBuilderV4(Breakfast, {EntityName: entityName,\nBreakfastTime: breakfastTime,\nWith: pWith});',
+        `return new GetByKeyRequestBuilderV4(Breakfast, {EntityName: entityName,${EOL}BreakfastTime: breakfastTime,${EOL}With: pWith});`,
       parameters: params
     };
 
@@ -95,7 +96,7 @@ describe('request builder class', () => {
       name: 'delete',
       returnType: 'DeleteRequestBuilderV4<Breakfast>',
       statements:
-        'return new DeleteRequestBuilderV4(Breakfast, entityNameOrEntity instanceof Breakfast ? entityNameOrEntity : {EntityName: entityNameOrEntity!,\nBreakfastTime: breakfastTime!,\nWith: pWith!});',
+        `return new DeleteRequestBuilderV4(Breakfast, entityNameOrEntity instanceof Breakfast ? entityNameOrEntity : {EntityName: entityNameOrEntity!,${EOL}BreakfastTime: breakfastTime!,${EOL}With: pWith!});`,
       parameters: deleteParams
     };
     expect(methods).toEqual([getByKeyRequestBuilder, deleteRequestBuilder]);

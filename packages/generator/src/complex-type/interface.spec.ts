@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { StructureKind } from 'ts-morph';
 import {
   complexMeal,
@@ -18,17 +19,17 @@ describe('interface', () => {
           name: 'complexity',
           type: 'string',
           hasQuestionToken: false,
-          docs: ['\nsomething something very good']
+          docs: [`${EOL}something something very good`]
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
           type: 'number',
           hasQuestionToken: false,
-          docs: ['\nsomething something very much']
+          docs: [`${EOL}something something very much`]
         }
       ],
-      docs: ['\nComplexMealType']
+      docs: [`${EOL}ComplexMealType`]
     });
   });
 
@@ -44,17 +45,17 @@ describe('interface', () => {
           name: 'complexDesert',
           type: 'ComplexDesert',
           hasQuestionToken: false,
-          docs: ['\nthe desert']
+          docs: [`${EOL}the desert`]
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
           type: 'number',
           hasQuestionToken: false,
-          docs: ['\nsomething something very much']
+          docs: [`${EOL}something something very much`]
         }
       ],
-      docs: ['\nComplexMealWithDesertType']
+      docs: [`${EOL}ComplexMealWithDesertType`]
     });
   });
 });

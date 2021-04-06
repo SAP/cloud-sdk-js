@@ -2,6 +2,7 @@
  * @experimental This API is experimental and might change in newer versions. Use with caution.
 
  */
+import { EOL } from 'os';
 import { readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from '../options';
 
@@ -26,5 +27,5 @@ export function tsconfigJson(options: GeneratorOptions): string {
   if (options.tsConfig) {
     tsConfig = readJSON(options.tsConfig) as any;
   }
-  return JSON.stringify(tsConfig, null, 2) + '\n';
+  return JSON.stringify(tsConfig, null, 2) + EOL;
 }

@@ -2,6 +2,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { EOL } from 'os';
 import { recordWarning } from '../utils';
 
 export function modifyGitIgnore(projectDir: string, addCds: boolean): void {
@@ -27,7 +28,7 @@ export function modifyGitIgnore(projectDir: string, addCds: boolean): void {
         filePath => !fileContent.includes(filePath)
       );
       const newFileContent =
-        fileContent + (newPaths.length ? `\n${newPaths.join('\n')}\n` : '');
+        fileContent + (newPaths.length ? `${EOL}${newPaths.join(EOL)}${EOL}` : '');
 
       fs.writeFileSync(pathToGitignore, newFileContent, 'utf8');
     } catch (error) {

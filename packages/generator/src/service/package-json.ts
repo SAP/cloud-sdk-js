@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { getGeneratorVersion } from '../sdk-metadata/pregenerated-lib';
 
 export function packageJson(
@@ -49,6 +50,6 @@ export function packageJson(
       },
       null,
       2
-    ) + '\n'
+    ) + EOL
   );
 }

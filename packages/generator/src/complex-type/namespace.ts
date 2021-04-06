@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import {
   FunctionDeclarationStructure,
   NamespaceDeclarationStructure,
@@ -37,7 +38,7 @@ function factoryFunction(
     });`,
     isExported: true,
     docs: [
-      '\n@deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'
+      `${EOL}@deprecated Since v1.25.0. Use \`deserializeComplexTypeV2\` or \`deserializeComplexTypeV4\` of the \`@sap-cloud-sdk/core\` package instead.`
     ]
   };
 }
@@ -83,7 +84,7 @@ function propertyMetadata(
       }
     ],
     docs: [
-      `\nMetadata information on all properties of the \`${complexType.typeName}\` complex type.`
+      `${EOL}Metadata information on all properties of the \`${complexType.typeName}\` complex type.`
     ],
     isExported: true
   };

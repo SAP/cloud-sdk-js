@@ -1,4 +1,5 @@
 import { resolve, relative } from 'path';
+import { EOL } from 'os';
 import { apiDocsDir, jsonStringify, transformFile, version } from './util';
 
 function updateRootPackageJson() {
@@ -13,11 +14,11 @@ function updateRootPackageJson() {
 function updateDocumentationMd() {
   transformFile(resolve('DOCUMENTATION.md'), documentation =>
     documentation
-      .split('\n')
+      .split(EOL)
       .map(line =>
         line.startsWith('## Version:') ? `## Version: ${version}` : line
       )
-      .join('\n')
+      .join(EOL)
   );
 }
 
@@ -53,22 +54,22 @@ const nextChangelogTemplate = [
     '## Improvements',
     '## Fixed Issues',
     ''
-  ].join(['', '', '-', '', ''].join('\n'))
-].join('\n');
+  ].join(['', '', '-', '', ''].join(EOL))
+].join(EOL);
 
 function transformChangeLog(changelog) {
-  const [comments, versionSections] = changelog.split('\n# Next');
+  const [comments, versionSections] = changelog.split(`${EOL}# Next`);
   const [
     latestVersionSection,
     ...previousVersionSections
-  ] = versionSections.split('\n# ');
-  const [, ...changelogCategories] = latestVersionSection.split('\n## ');
+  ] = versionSections.split(`${EOL}# `);
+  const [, ...changelogCategories] = latestVersionSection.split(`${EOL}## `);
   const usedCategories = changelogCategories
     .map(category => {
-      const [title, ...logLines] = category.split('\n');
+      const [title, ...logLines] = category.split(EOL);
       const logs = logLines.filter(line => line && line !== '-');
       if (logs.length) {
-        return [`## ${title}`, '', ...logs, ''].join('\n');
+        return [`## ${title}`, '', ...logs, ''].join(EOL);
       }
     })
     .filter(category => category);
@@ -84,7 +85,7 @@ function transformChangeLog(changelog) {
     '',
     ...usedCategories,
     ...previousVersionSections.map(section => `# ${section}`)
-  ].join('\n');
+  ].join(EOL);
 }
 
 function updateChangelog() {

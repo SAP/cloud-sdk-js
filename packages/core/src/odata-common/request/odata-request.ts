@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import {
   ErrorWithCause,
   mergeIgnoreCase,
@@ -23,7 +24,6 @@ import {
 } from '../../http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
-
 /**
  * OData request configuration for an entity type.
  *
@@ -281,5 +281,5 @@ function messageFromS4ErrorResponse(error): string {
     propertyExists(error.response.data.error, 'message', 'value')
       ? error.response.data.error.message.value
       : ''
-  }\n${JSON.stringify(error.response.data.error)}`;
+  }${EOL}${JSON.stringify(error.response.data.error)}`;
 }

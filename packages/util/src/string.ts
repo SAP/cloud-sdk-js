@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 /**
  * Encode a string to a base64 encoded string.
  * @param str String to encode.
@@ -13,11 +14,11 @@ export function encodeBase64(str: string): string {
  * @returns String without whitespace on the left side.
  */
 export function trimLeft(string: string): string {
-  let subStrings = string.split('\n');
+  let subStrings = string.split(EOL);
   if (!subStrings[0].trim()) {
     subStrings = subStrings.slice(1);
   }
-  return subStrings.join('\n');
+  return subStrings.join(EOL);
 }
 
 /**
@@ -26,11 +27,11 @@ export function trimLeft(string: string): string {
  * @returns String without whitespace on the right side.
  */
 export function trimRight(string: string): string {
-  let subStrings = string.split('\n');
+  let subStrings = string.split(EOL);
   if (!subStrings[subStrings.length - 1].trim()) {
     subStrings = subStrings.slice(0, -1);
   }
-  return subStrings.join('\n');
+  return subStrings.join(EOL);
 }
 
 /**

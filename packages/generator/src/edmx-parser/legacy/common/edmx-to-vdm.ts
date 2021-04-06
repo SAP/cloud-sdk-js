@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import {
   pascalCase,
   createLogger,
@@ -259,7 +260,7 @@ function longDescription(
   if (documented.Documentation) {
     const summmary = ensureString(documented.Documentation.Summary);
     const longDesc = ensureString(documented.Documentation.LongDescription);
-    docs = `${summmary}\n${longDesc}`.trim();
+    docs = `${summmary}${EOL}${longDesc}`.trim();
   }
   if (!docs && described) {
     docs = ensureString(described.description);
@@ -273,7 +274,7 @@ function propertyDescription(
 ): string {
   const short = shortPropertyDescription(property, swaggerProperty);
   const long = longDescription(property, swaggerProperty);
-  return `${short}\n${long}`.trim();
+  return `${short}${EOL}${long}`.trim();
 }
 
 function parameterDescription(

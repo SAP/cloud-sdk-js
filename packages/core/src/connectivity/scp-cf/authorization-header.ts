@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import {
   isNullish,
   createLogger,
@@ -117,7 +118,7 @@ function headerFromTokens(
         'The destination tried to provide authorization tokens but failed in all cases. This is most likely due to misconfiguration.',
         'Original error messages:',
         ...authTokens.map(token => token.error)
-      ].join('\n')
+      ].join(EOL)
     );
   }
   const authToken = usableTokens[0];

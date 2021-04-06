@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { unique } from '@sap-cloud-sdk/util';
 import {
   NamespaceDeclarationStructure,
@@ -150,7 +151,7 @@ function allFields(
               )
             )
             .map(name => `${entity.className}.${name}`)
-            .join(', \n')}
+            .join(`, ${EOL}`)}
           ]`
       }
     ],

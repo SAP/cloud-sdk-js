@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { codeBlock } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { OpenApiDocument } from '../openapi-types';
@@ -13,7 +14,7 @@ export function indexFile(openApiDocument: OpenApiDocument): string {
 export * from './openapi/model';
 ${getApiFilesForIndex(openApiDocument)
   .map(api => exportAll(api))
-  .join('\n')}
+  .join(EOL)}
 `;
 }
 

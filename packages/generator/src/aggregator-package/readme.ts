@@ -1,6 +1,6 @@
+import { EOL } from 'os';
 import { helpfulLinksSection } from '../service';
 import { VdmServiceMetadata } from '../vdm-types';
-
 export function readme(
   services: VdmServiceMetadata[],
   npmPackageName: string
@@ -13,5 +13,5 @@ export function readme(
     '',
     ...helpfulLinksSection(),
     ''
-  ].join('\n');
+  ].join(EOL);
 }

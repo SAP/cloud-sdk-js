@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { StructureKind } from 'ts-morph';
 import {
   complexMeal,
@@ -22,7 +23,7 @@ describe('field-type-class', () => {
           initializer:
             "new ComplexTypeStringPropertyField('Complexity', this, 'Edm.String')",
           docs: [
-            "Representation of the [[ComplexMealType.complexity]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            `Representation of the [[ComplexMealType.complexity]] property for query construction.${EOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
         },
         {
@@ -32,12 +33,12 @@ describe('field-type-class', () => {
           initializer:
             "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
           docs: [
-            "Representation of the [[ComplexMealType.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            `Representation of the [[ComplexMealType.amount]] property for query construction.${EOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
         }
       ],
       docs: [
-        'ComplexMealField\n@typeparam EntityT - Type of the entity the complex type field belongs to.'
+        `ComplexMealField${EOL}@typeparam EntityT - Type of the entity the complex type field belongs to.`
       ],
       ctors: [
         {
@@ -53,7 +54,7 @@ describe('field-type-class', () => {
           ],
           statements: ['super(fieldName, fieldOf, ComplexMealType);'],
           docs: [
-            '\nCreates an instance of ComplexMealField.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.'
+            `${EOL}Creates an instance of ComplexMealField.${EOL}${EOL}@param fieldName - Actual name of the field as used in the OData request.${EOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
           ]
         }
       ]
@@ -74,7 +75,7 @@ describe('field-type-class', () => {
           type: 'ComplexDesertField<EntityT>',
           initializer: "new ComplexDesertField('ComplexDesert', this)",
           docs: [
-            "Representation of the [[ComplexMealWithDesertType.complexDesert]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            `Representation of the [[ComplexMealWithDesertType.complexDesert]] property for query construction.${EOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
         },
         {
@@ -84,7 +85,7 @@ describe('field-type-class', () => {
           initializer:
             "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
           docs: [
-            "Representation of the [[ComplexMealWithDesertType.amount]] property for query construction.\nUse to reference this property in query operations such as 'filter' in the fluent request API."
+            `Representation of the [[ComplexMealWithDesertType.amount]] property for query construction.${EOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
         }
       ],
@@ -102,7 +103,7 @@ describe('field-type-class', () => {
           ],
           statements: ['super(fieldName, fieldOf, ComplexMealWithDesertType);'],
           docs: [
-            '\nCreates an instance of ComplexMealWithDesertField.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.'
+            `${EOL}Creates an instance of ComplexMealWithDesertField.${EOL}${EOL}@param fieldName - Actual name of the field as used in the OData request.${EOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
           ]
         }
       ],

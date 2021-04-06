@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { packageJson } from './package-json';
 
 describe('package-json', () => {
@@ -12,23 +13,23 @@ describe('package-json', () => {
       '1.17.4-alpha.8'
     );
     const expected =
-      '{\n' +
-      '  "name": "@sap/cloud-sdk-vdm",\n' +
-      '  "version": "2.0.0",\n' +
-      '  "description": "SAP Cloud SDK for JavaScript: Complete Virtual Data Model (VDM)",\n' +
-      '  "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",\n' +
-      '  "repository": {\n' +
-      '    "type": "git",\n' +
-      '    "url": ""\n' +
-      '  },\n' +
-      '  "dependencies": {\n' +
-      '    "@sap/cloud-sdk-vdm-business-area-service": "^2.0.0",\n' +
-      '    "@sap/cloud-sdk-vdm-business-partner-service": "^2.0.0"\n' +
-      '  },\n' +
-      '  "peerDependencies": {\n' +
-      '    "@sap-cloud-sdk/core": "^1.17.4-alpha.8"\n' +
-      '  }\n' +
-      '}\n';
+      '{' + EOL +
+      '  "name": "@sap/cloud-sdk-vdm",' + EOL +
+      '  "version": "2.0.0",' + EOL+
+      '  "description": "SAP Cloud SDK for JavaScript: Complete Virtual Data Model (VDM)",' + EOL +
+      '  "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",' +EOL+
+      '  "repository": {' +EOL+
+      '    "type": "git",' +EOL+
+      '    "url": ""' +EOL+
+      '  },' +EOL+
+      '  "dependencies": {' +EOL+
+      '    "@sap/cloud-sdk-vdm-business-area-service": "^2.0.0",' +EOL+
+      '    "@sap/cloud-sdk-vdm-business-partner-service": "^2.0.0"' +EOL+
+      '  },' +EOL+
+      '  "peerDependencies": {' +EOL+
+      '    "@sap-cloud-sdk/core": "^1.17.4-alpha.8"' +EOL+
+      '  }' +EOL+
+      '}'+EOL;
     expect(actual).toEqual(expected);
   });
 });

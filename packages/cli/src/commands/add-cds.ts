@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { EOL } from 'os';
 import { Command, flags } from '@oclif/command';
 import cli from 'cli-ux';
 import Listr from 'listr';
@@ -13,7 +14,6 @@ import {
   getProjectNameFromManifest,
   getTemplatePaths
 } from '../utils';
-
 export default class AddCds extends Command {
   static description = 'Setup your Cloud Foundry app to use a CDS service';
   static examples = ['$ sap-cloud-sdk add-cds'];
@@ -137,7 +137,7 @@ export default class AddCds extends Command {
         '  .in(<your-express-app>)',
         '',
         'For other frameworks please refer to the documentation.'
-      ].join('\n')
+      ].join(EOL)
     );
   }
 }

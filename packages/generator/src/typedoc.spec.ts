@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import {
   getFunctionDoc,
   getNavPropertyDescription,
@@ -9,7 +10,7 @@ describe('typedoc', () => {
   it('get normal property description', () => {
     const property: VdmProperty = {
       originalName: 'OnePropertyName',
-      description: '\n  entity info',
+      description: `${EOL}  entity info`,
       jsType: 'string',
       edmType: 'Edm:String',
       nullable: true,
@@ -69,7 +70,7 @@ describe('typedoc', () => {
       ],
       returns: { type: 'string', description: returnDescription }
     });
-    const expected = `function description\n@param ${paramName} ${paramDescription}\n@returns ${returnDescription}`;
+    const expected = `function description${EOL}@param ${paramName} ${paramDescription}${EOL}@returns ${returnDescription}`;
     expect(actual).toBe(expected);
   });
 
@@ -87,7 +88,7 @@ describe('typedoc', () => {
       isCollection: false
     };
     expect(getPropertyDescription(property, { nullable: true })).toBe(
-      'Property Description\n@nullable'
+      `Property Description${EOL}@nullable`
     );
   });
 });

@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { orderBreakfast } from '../../test/test-util/data-model';
 import { exportStatement } from './export-statement';
 
@@ -8,7 +9,7 @@ describe('export-statement', () => {
     expect(actual.declarationKind).toEqual('const');
     expect(actual.isExported).toBeTruthy();
     expect(actual.declarations).toEqual([
-      { name: 'functionImports', initializer: '{\norderBreakfast\n}' }
+      { name: 'functionImports', initializer: `{\norderBreakfast${EOL}}` }
     ]);
   });
 });

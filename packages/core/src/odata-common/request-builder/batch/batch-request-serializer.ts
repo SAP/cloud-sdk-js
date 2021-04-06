@@ -1,5 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { EOL } from 'os';
 import voca from 'voca';
 import { ODataRequest } from '../../request/odata-request';
 import { ODataRequestConfig } from '../../request/odata-request-config';
@@ -27,9 +28,9 @@ export function serializeChangeSet(
       `--${changeSet.boundary}`,
       changeSet.requests
         .map(request => serializeRequest(request, options))
-        .join(`\n--${changeSet.boundary}\n`),
+        .join(`${EOL}--${changeSet.boundary}${EOL}`),
       `--${changeSet.boundary}--`
-    ].join('\n');
+    ].join(EOL);
   }
 }
 
@@ -67,7 +68,7 @@ export function serializeRequest(
     '',
     ...getPayload(request),
     ''
-  ].join('\n');
+  ].join(EOL);
 }
 
 function getUrl<ConfigT extends ODataRequestConfig>(
@@ -117,7 +118,7 @@ export function serializeBatchRequest(
         : serializeChangeSet(subRequest, options)
     )
     .filter(validRequest => !!validRequest)
-    .join(`\n--${request.requestConfig.boundary}\n`);
+    .join(`${EOL}--${request.requestConfig.boundary}${EOL}`);
 
   const serializedBatchRequest = serializedSubRequests
     ? [
@@ -125,7 +126,7 @@ export function serializeBatchRequest(
         serializedSubRequests,
         `--${request.requestConfig.boundary}--`,
         ''
-      ].join('\n')
+      ].join(EOL)
     : serializedSubRequests;
 
   // The batch standard expects CRLF line endings for batch requests

@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { trim, encodeBase64, removeFileExtension } from './string';
 
 describe('encodeBase64', () => {
@@ -8,11 +9,11 @@ describe('encodeBase64', () => {
 
 describe('trim', () => {
   it('trims leading and trailing empty lines', () => {
-    expect(trim('\n\nA\n')).toEqual('\nA');
+    expect(trim(`${EOL}${EOL}A${EOL}`)).toEqual(`${EOL}A`);
   });
 
   it('trims two whitespace lines', () => {
-    expect(trim(' \n ')).toEqual('');
+    expect(trim(` ${EOL} `)).toEqual('');
   });
 
   it('removes file extension',()=>{

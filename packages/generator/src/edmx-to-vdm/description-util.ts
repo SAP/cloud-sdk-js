@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot, ensureString } from '../generator-utils';
 import {
@@ -13,7 +14,6 @@ import {
   SwaggerPathParameter,
   SwaggerProperty
 } from '../swagger-parser/swagger-types';
-
 export function longDescription(
   documented: EdmxDocumented,
   described?: SwaggerDescribed
@@ -22,7 +22,7 @@ export function longDescription(
   if (documented.Documentation) {
     const summmary = ensureString(documented.Documentation.Summary);
     const longDesc = ensureString(documented.Documentation.LongDescription);
-    docs = `${summmary}\n${longDesc}`.trim();
+    docs = `${summmary}${EOL}${longDesc}`.trim();
   }
   if (!docs && described) {
     docs = ensureString(described.description);
@@ -48,7 +48,7 @@ export function propertyDescription(
 ): string {
   const short = shortPropertyDescription(property, swaggerProperty);
   const long = longDescription(property, swaggerProperty);
-  return `${short}\n${long}`.trim();
+  return `${short}${EOL}${long}`.trim();
 }
 
 export function parameterDescription(

@@ -1,3 +1,5 @@
+import { EOL } from 'os';
+
 export function packageJson(
   npmPackageName: string,
   dependencies: string[],
@@ -26,6 +28,6 @@ export function packageJson(
       },
       null,
       2
-    ) + '\n'
+    ) + EOL
   );
 }

@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { StructureKind } from 'ts-morph';
 import { orderBreakfast } from '../../test/test-util/data-model';
 import { parametersInterface } from './parameters-interface';
@@ -13,10 +14,10 @@ describe('parameters-interface', () => {
           name: 'withHoneyToast',
           type: 'boolean',
           hasQuestionToken: true,
-          docs: ['\nBreakfast includes a honey toast']
+          docs: [`${EOL}Breakfast includes a honey toast`]
         }
       ],
-      docs: ['\nType of the parameters to be passed to [[orderBreakfast]].']
+      docs: [`${EOL}Type of the parameters to be passed to [[orderBreakfast]].`]
     });
   });
 });

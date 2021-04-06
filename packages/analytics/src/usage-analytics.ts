@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { sep } from 'path';
+import { EOL } from 'os';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import axios, { AxiosResponse } from 'axios';
 import { AnalyticsData, getAnalyticsData } from './analytics-data';
@@ -192,7 +193,7 @@ function printThanksAndDisclaimer(): void {
 }
 
 function printCollectedData(data: AnalyticsData): void {
-  logger.info('The following data has been collected:\n');
+  logger.info(`The following data has been collected:${EOL}`);
   logger.info(JSON.stringify(data, null, 2));
 }
 

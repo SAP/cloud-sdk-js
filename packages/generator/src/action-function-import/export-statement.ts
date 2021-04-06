@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import {
   StructureKind,
   VariableDeclarationKind,
@@ -27,11 +28,11 @@ function exportsInitializer(
 ): string {
   return (
     actionFunctionImports.reduce((initializer, currentImport) => {
-      if (initializer !== '{\n') {
-        initializer += ',\n';
+      if (initializer !== `{${EOL}`) {
+        initializer += `,${EOL}`;
       }
       initializer += `${currentImport.name}`;
       return initializer;
-    }, '{\n') + '\n}'
+    }, `{${EOL}`) + `${EOL}}`
   );
 }

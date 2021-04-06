@@ -15,7 +15,7 @@ export const multiRetrieveResponse = () =>
     '--TEST-RESPONSE',
     ...getByKeyResponse,
     '--TEST-RESPONSE--'
-  ].join('\n');
+  ].join(EOL);
 
 export const multiChangesetBatchResponse = () =>
   [
@@ -24,7 +24,7 @@ export const multiChangesetBatchResponse = () =>
     '--TEST-RESPONSE',
     ...multiChangesetResponse,
     '--TEST-RESPONSE--'
-  ].join('\n');
+  ].join(EOL);
 
 export const mixedBatchResponse = () =>
   [
@@ -33,7 +33,7 @@ export const mixedBatchResponse = () =>
     '--TEST-RESPONSE',
     ...singleChangesetResponse,
     '--TEST-RESPONSE--'
-  ].join('\n');
+  ].join(EOL);
 
 export const mixedErrorResponse = () =>
   [
@@ -46,4 +46,4 @@ export const mixedErrorResponse = () =>
     '--TEST-RESPONSE',
     ...errorChangesetResponse,
     '--TEST-RESPONSE--'
-  ].join('\n');
+  ].join(EOL);

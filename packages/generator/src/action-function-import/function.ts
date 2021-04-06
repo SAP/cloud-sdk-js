@@ -1,8 +1,8 @@
+import { EOL } from 'os';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { caps } from '@sap-cloud-sdk/util';
 import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
-
 const parameterName = 'parameters';
 
 export function functionImportFunction(
@@ -28,10 +28,10 @@ export function functionImportFunction(
     statements: getFunctionImportStatements(functionImport, service),
     docs: [
       [
-        `${functionImport.description}\n`,
+        `${functionImport.description}${EOL}`,
         '@param parameters - Object containing all parameters for the function import.',
         '@returns A request builder that allows to overwrite some of the values and execute the resultng request.'
-      ].join('\n')
+      ].join(EOL)
     ]
   };
 }
@@ -42,12 +42,12 @@ function getFunctionImportStatements(
 ): string {
   const context = functionImport.parameters
     ? functionImport.parameters.reduce((cumulator, currentParameters) => {
-        if (cumulator !== 'const params = {\n') {
-          cumulator += ',\n';
+        if (cumulator !== 'const params = {'+EOL) {
+          cumulator += ','+EOL;
         }
         cumulator += `${currentParameters.parameterName}: new FunctionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
         return cumulator;
-      }, 'const params = {\n') + '\n}'
+      }, 'const params = {'+EOL) + EOL+'}'
     : '{}';
 
   let parameters = getRequestBuilderArgumentsBase(functionImport, service);
@@ -59,5 +59,5 @@ function getFunctionImportStatements(
     service.oDataVersion
   )}(${parameters.join(', ')});`;
 
-  return context + '\n\n' + returnStatement;
+  return context + EOL+EOL + returnStatement;
 }

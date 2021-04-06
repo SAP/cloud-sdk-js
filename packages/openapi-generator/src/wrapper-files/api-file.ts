@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { codeBlock, partition, pascalCase, unique } from '@sap-cloud-sdk/util';
 import { OpenApiOperation, SchemaMetadata } from '../openapi-types';
 
@@ -58,7 +59,7 @@ function getOperations(
 ): string {
   return operations
     .map(operation => getOperation(operation, apiName))
-    .join(',\n');
+    .join(`,${EOL}`);
 }
 
 /**
@@ -74,7 +75,7 @@ function getOperation(operation: OpenApiOperation, apiName: string): string {
     ? codeBlock`args${argsQuestionMark}: {
   ${params
     .map(param => `${param.name}${param.required ? '' : '?'}: ${param.type}`)
-    .join(',\n')}
+    .join(`,${EOL}`)}
 }`
     : '';
   const requestBuilderParams = [
@@ -89,7 +90,7 @@ ${
 }: (${paramsArg}) => new OpenApiRequestBuilder<${apiName}Api, '${
     operation.operationId
   }'>(
-  ${requestBuilderParams.join(',\n')}
+  ${requestBuilderParams.join(`,${EOL}`)}
 )`;
 }
 

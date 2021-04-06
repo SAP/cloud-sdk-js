@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import {
   multiChangesetResponse,
   singleChangesetResponse
@@ -7,7 +8,6 @@ import {
   errorRetrieveResponse
 } from './error-response';
 import { getAllResponse, getByKeyResponse } from './retrieve-response';
-import { EOL } from 'os';
 
 export const multiRetrieveResponse = () =>
   [

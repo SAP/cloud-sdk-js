@@ -1,4 +1,3 @@
-import { EOL } from 'os';
 import {
   multiChangesetRequest,
   singleChangesetRequest

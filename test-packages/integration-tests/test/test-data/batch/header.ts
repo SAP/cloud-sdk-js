@@ -1,3 +1,5 @@
+import { EOL } from 'os';
+
 export const header200 = () =>
   [
     'HTTP/1.1 200 OK',

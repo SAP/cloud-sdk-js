@@ -42,11 +42,11 @@ function getActionImportStatements(
   const context = actionImport.parameters
     ? actionImport.parameters.reduce((cumulator, currentParameters) => {
         if (cumulator !== `const params = {${EOL}`) {
-          cumulator += ',' + EOL;
+          cumulator += `,${EOL}`;
         }
         cumulator += `${currentParameters.parameterName}: new ActionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
         return cumulator;
-      }, `const params = {'${EOL}`) + `${EOL}}`
+      }, `const params = {${EOL}`) + `${EOL}}`
     : '{}';
 
   const parameters = getRequestBuilderArgumentsBase(actionImport, service);

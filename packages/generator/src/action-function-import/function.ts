@@ -42,14 +42,12 @@ function getFunctionImportStatements(
 ): string {
   const context = functionImport.parameters
     ? functionImport.parameters.reduce((cumulator, currentParameters) => {
-        if (cumulator !== 'const params = {' + EOL) {
-          cumulator += ',' + EOL;
+        if (cumulator !== `const params = {${EOL}`) {
+          cumulator += `,${EOL}`;
         }
         cumulator += `${currentParameters.parameterName}: new FunctionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
         return cumulator;
-      }, 'const params = {' + EOL) +
-      EOL +
-      '}'
+      }, `const params = {${EOL}`) + `${EOL}}`
     : '{}';
 
   let parameters = getRequestBuilderArgumentsBase(functionImport, service);

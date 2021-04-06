@@ -42,7 +42,7 @@ function getActionImportStatements(
   const context = actionImport.parameters
     ? actionImport.parameters.reduce((cumulator, currentParameters) => {
         if (cumulator !== `const params = {${EOL}`) {
-          cumulator += ','+EOL;
+          cumulator += ',' + EOL;
         }
         cumulator += `${currentParameters.parameterName}: new ActionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
         return cumulator;
@@ -54,5 +54,5 @@ function getActionImportStatements(
     ', '
   )});`;
 
-  return context + EOL+EOL + returnStatement;
+  return context + EOL + EOL + returnStatement;
 }

@@ -28,7 +28,8 @@ export function modifyGitIgnore(projectDir: string, addCds: boolean): void {
         filePath => !fileContent.includes(filePath)
       );
       const newFileContent =
-        fileContent + (newPaths.length ? `${EOL}${newPaths.join(EOL)}${EOL}` : '');
+        fileContent +
+        (newPaths.length ? `${EOL}${newPaths.join(EOL)}${EOL}` : '');
 
       fs.writeFileSync(pathToGitignore, newFileContent, 'utf8');
     } catch (error) {

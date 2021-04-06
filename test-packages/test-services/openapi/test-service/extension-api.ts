@@ -4,16 +4,10 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { ExtensionApi } from './openapi/api';
 
-
-export const TestServiceExtensionApi = {
-  niceGetFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'niceGetFunction'>(
-    ExtensionApi,
-    'niceGetFunction'
-  ),
-  nicePostFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'nicePostFunction'>(
-    ExtensionApi,
-    'nicePostFunction'
-  )
+export const ExtensionApi = {
+  niceGetFunction: () =>
+    new OpenApiRequestBuilder<any>('get', '/test-cases/extension'),
+  nicePostFunction: () =>
+    new OpenApiRequestBuilder<any>('post', '/test-cases/extension')
 };

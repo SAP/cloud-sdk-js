@@ -1,10 +1,12 @@
 import {
   executeHttpRequest,
-  fetchDestination, getDestination,
+  fetchDestination,
+  getDestination,
   getService,
   serviceToken,
   userApprovedServiceToken,
-  wrapJwtInHeader
+  wrapJwtInHeader,
+  jwtBearerToken
 } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import {
@@ -125,15 +127,19 @@ describe('OAuth flows', () => {
     expect(response.status).toBe(200);
   }, 60000);
 
-  xit('ClientCertificate: Fetches the certificate and uses it',async ()=>{
+  xit('ClientCertificate: Fetches the certificate and uses it', async () => {
     process.env.HTTPS_PROXY = 'http://someHost:1234';
-    process.env.NO_PROXY = 'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token';
+    process.env.NO_PROXY =
+      'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token';
 
     const destination = await getDestination('CC8-HTTP-CERT');
     expect(destination!.certificates!.length).toBe(1);
-    const bps = await BusinessPartner.requestBuilder().getAll().top(5).execute(destination!);
+    const bps = await BusinessPartner.requestBuilder()
+      .getAll()
+      .top(5)
+      .execute(destination!);
     expect(bps.length).toBeGreaterThan(0);
-  },10000);
+  }, 10000);
 
   xit('OAuth2UserTokenExchange: Subscriber destination and Subscriber Jwt', async () => {
     const subscriberDestToken = await serviceToken('destination', {
@@ -162,5 +168,25 @@ describe('OAuth flows', () => {
     );
 
     expect(response.status).toBe(200);
+  }, 60000);
+
+  xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
+    const jwtToken = await jwtBearerToken(
+      accessToken.provider,
+      destinationService
+    );
+
+    const destination = await fetchDestination(
+      destinationService!.credentials.uri,
+      jwtToken,
+      systems.s4.providerOAuth2SAMLBearerAssertion
+    );
+    expect(destination.authTokens![0].error).toBeNull();
+
+    const result = await BusinessPartner.requestBuilder()
+      .getAll()
+      .top(1)
+      .execute(destination);
+    expect(result.length).toBe(1);
   }, 60000);
 });

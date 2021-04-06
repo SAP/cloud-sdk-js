@@ -7,13 +7,6 @@
     "target": "es2017",
     "composite": true
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "dist/**/*",
-    "test/**/*",
-    "**/*.spec.ts",
-    "node_modules/**/*"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"]
 }

@@ -43,7 +43,7 @@ function replaceContentUsingTags(
 ) {
   return fileContent.replace(
     new RegExp(`${startTag}(?:.|\n)*${endTag}`),
-    `${startTag}${EOL}${infoNoManualEdit}${EOL}${replacement}${endTag}`
+    `${startTag}${EOL}${infoNoManualEdit}${EOL}${EOL}${replacement}${endTag}`
   );
 }
 

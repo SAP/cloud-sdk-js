@@ -4,71 +4,92 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { TestCaseApi } from './openapi/api';
-import { SimpleTestEntity } from './openapi/model';
+import type { SimpleTestEntity, ComplexTestEntity } from './schema';
 
-export const TestServiceTestCaseApi = {
-  testCaseGetRequiredParameters: (args: {
-    requiredPathItemQueryParam: string,
+export const TestCaseApi = {
+  testCaseGetRequiredParameters: (
     requiredPathItemPathParam: string,
-    requiredQueryParam: string,
-    optionalQueryParam?: string,
-    optionalPathItemQueryParam?: string,
-    body?: SimpleTestEntity
-  }) => new OpenApiRequestBuilder<TestCaseApi, 'testCaseGetRequiredParameters'>(
-    TestCaseApi,
-    'testCaseGetRequiredParameters',
-    args.requiredPathItemQueryParam,
-    args.requiredPathItemPathParam,
-    args.requiredQueryParam,
-    args.optionalQueryParam,
-    args.optionalPathItemQueryParam,
-    args.body
-  ),
-  testCasePostRequiredParameters: (args: {
-    requiredPathItemQueryParam: string,
+    body: SimpleTestEntity | undefined,
+    queryParameters: {
+      requiredPathItemQueryParam: string;
+      optionalQueryParam?: string;
+      requiredQueryParam: string;
+      optionalPathItemQueryParam?: string;
+    }
+  ) =>
+    new OpenApiRequestBuilder<any>(
+      'get',
+      '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}',
+      {
+        pathParameters: { requiredPathItemPathParam },
+        body,
+        queryParameters
+      }
+    ),
+  testCasePostRequiredParameters: (
     requiredPathItemPathParam: string,
-    requiredQueryParam: string,
     body: SimpleTestEntity,
-    optionalPathItemQueryParam?: string,
-    optionalQueryParam?: string
-  }) => new OpenApiRequestBuilder<TestCaseApi, 'testCasePostRequiredParameters'>(
-    TestCaseApi,
-    'testCasePostRequiredParameters',
-    args.requiredPathItemQueryParam,
-    args.requiredPathItemPathParam,
-    args.requiredQueryParam,
-    args.body,
-    args.optionalPathItemQueryParam,
-    args.optionalQueryParam
-  ),
-  testCaseGetDuplicateParameters: (args: {
+    queryParameters: {
+      optionalPathItemQueryParam?: string;
+      requiredPathItemQueryParam: string;
+      optionalQueryParam?: string;
+      requiredQueryParam: string;
+    }
+  ) =>
+    new OpenApiRequestBuilder<any>(
+      'post',
+      '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}',
+      {
+        pathParameters: { requiredPathItemPathParam },
+        body,
+        queryParameters
+      }
+    ),
+  testCaseGetDuplicateParameters: (
     duplicateParam: string,
-    duplicateParam2: string
-  }) => new OpenApiRequestBuilder<TestCaseApi, 'testCaseGetDuplicateParameters'>(
-    TestCaseApi,
-    'testCaseGetDuplicateParameters',
-    args.duplicateParam,
-    args.duplicateParam2
-  ),
-  getTestCasesNoOperationId: () => new OpenApiRequestBuilder<TestCaseApi, 'getTestCasesNoOperationId'>(
-    TestCaseApi,
-    'getTestCasesNoOperationId'
-  ),
-  duplicateOperationId: () => new OpenApiRequestBuilder<TestCaseApi, 'duplicateOperationId'>(
-    TestCaseApi,
-    'duplicateOperationId'
-  ),
-  duplicateOperationId2: () => new OpenApiRequestBuilder<TestCaseApi, 'duplicateOperationId2'>(
-    TestCaseApi,
-    'duplicateOperationId2'
-  ),
-  duplicateOperationId3: () => new OpenApiRequestBuilder<TestCaseApi, 'duplicateOperationId3'>(
-    TestCaseApi,
-    'duplicateOperationId3'
-  ),
-  duplicateOperationId1: () => new OpenApiRequestBuilder<TestCaseApi, 'duplicateOperationId1'>(
-    TestCaseApi,
-    'duplicateOperationId1'
-  )
+    queryParameters: { duplicateParam: string }
+  ) =>
+    new OpenApiRequestBuilder<any>(
+      'get',
+      '/test-cases/parameters/{duplicateParam}',
+      {
+        pathParameters: { duplicateParam },
+        queryParameters
+      }
+    ),
+  duplicateOperationId: () =>
+    new OpenApiRequestBuilder<any>(
+      'get',
+      '/test-cases/duplicate-operation-ids'
+    ),
+  duplicateOperationId2: () =>
+    new OpenApiRequestBuilder<any>(
+      'put',
+      '/test-cases/duplicate-operation-ids'
+    ),
+  duplicateOperationId3: () =>
+    new OpenApiRequestBuilder<any>(
+      'post',
+      '/test-cases/duplicate-operation-ids'
+    ),
+  duplicateOperationId1: () =>
+    new OpenApiRequestBuilder<any>(
+      'patch',
+      '/test-cases/duplicate-operation-ids'
+    ),
+  export: (const1: string, queryParameters: { const: string }) =>
+    new OpenApiRequestBuilder<any>(
+      'get',
+      '/test-cases/reserved-keywords/{const1}',
+      {
+        pathParameters: { const1 },
+        queryParameters
+      }
+    ),
+  complexSchemas: (body: ComplexTestEntity | undefined) =>
+    new OpenApiRequestBuilder<any>('get', '/test-cases/complex-schemas', {
+      body
+    }),
+  getTestCasesNoOperationId: () =>
+    new OpenApiRequestBuilder<any>('get', '/test-cases/no-operation-id')
 };

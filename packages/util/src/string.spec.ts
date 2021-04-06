@@ -16,7 +16,7 @@ describe('trim', () => {
     expect(trim(` ${EOL} `)).toEqual('');
   });
 
-  it('removes file extension',()=>{
+  it('removes file extension', () => {
     expect(removeFileExtension('test')).toBe('test');
     expect(removeFileExtension('test.png')).toBe('test');
     expect(removeFileExtension('one.test.png')).toBe('one.test');

@@ -1,7 +1,7 @@
 {
   "name": "swagger-yaml-service",
   "version": "1.2.3",
-  "description": "SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for OpenAPI service swagger yaml service",
+  "description": "SAP Cloud SDK for JavaScript: Generated client for OpenAPI service swagger yaml service",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
   "main": "./index.js",
   "types": "./index.d.ts",
@@ -23,10 +23,10 @@
     "doc": "npx typedoc"
   },
   "dependencies": {
-    "../../../../../src": "^1.39.0"
+    "../../../../../src": "^1.41.0"
   },
   "peerDependencies": {
-    "@sap-cloud-sdk/core": "^1.39.0"
+    "@sap-cloud-sdk/core": "^1.41.0"
   },
   "devDependencies": {
     "typedoc": "^0.17.0",

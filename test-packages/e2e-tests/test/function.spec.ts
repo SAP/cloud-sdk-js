@@ -1,7 +1,9 @@
 import {
   returnSapCloudSdk,
   concatStrings,
-  getByKey, getAll, returnCollection
+  getByKey,
+  getAll,
+  returnCollection
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/function-imports';
 
 const url = 'http://localhost:4004/';

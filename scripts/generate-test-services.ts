@@ -33,6 +33,7 @@ const generatorConfigOData = {
   generateTypedocJson: false,
   generatePackageJson: false,
   generateCSN: false,
+  generateSdkMetadata: false,
   // Unnecessary options
   sdkAfterVersionScript: false,
   s4hanaCloud: false

@@ -47,7 +47,7 @@ describe('batch response transformer', () => {
     const batchTransformerCollection = new BatchResponseDeserializer(
       entityToConstructorMap,
       {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
         isCollectionResult: input => true,
         getCollectionResult: input => input.d.results
       } as ResponseDataAccessor,
@@ -57,7 +57,7 @@ describe('batch response transformer', () => {
     const batchTransformerSingle = new BatchResponseDeserializer(
       entityToConstructorMap,
       {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
         isCollectionResult: input => false,
         getSingleResult: input => input.d
       } as ResponseDataAccessor,

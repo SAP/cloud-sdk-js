@@ -206,9 +206,27 @@ describe('EntityBuilder', () => {
       const entity = TestEntity.builder().fromJson(entityJson);
 
       expect(entity).toStrictEqual(expectedEntity);
-      expect(entity.toSingleLink.getCustomFields()).toEqual(
-        expectedEntity.toSingleLink.getCustomFields()
+      expect(entity.toSingleLink!.getCustomFields()).toEqual(
+        expectedEntity.toSingleLink!.getCustomFields()
       );
+    });
+
+    it('should build an entity from json with one-to-one navigation properties being null', () => {
+      const entity = TestEntity.builder().fromJson({
+        toSingleLink: null
+      });
+      const expectedEntity = TestEntity.builder().toSingleLink(null).build();
+      expect(entity).toStrictEqual(expectedEntity);
+    });
+
+    it('should build an entity from json with one-to-one navigation properties being undefined', () => {
+      const entity = TestEntity.builder().fromJson({
+        toSingleLink: undefined
+      });
+      const expectedEntity = TestEntity.builder()
+        .toSingleLink(undefined)
+        .build();
+      expect(entity).toStrictEqual(expectedEntity);
     });
   });
 });

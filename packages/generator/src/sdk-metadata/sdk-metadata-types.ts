@@ -68,13 +68,13 @@ export interface GenerationAndUsage {
   links: Links;
 }
 
-type UrlString = string;
+export type UrlString = string;
 /**
  * Type representing a DateTimeString in unix timestamp format: "/Date(1612342001106)/"
  */
-type DateTimeString = string;
+export type DateTimeString = string;
 
 /**
  * String fields containing a text formatted with multiple lines.
  */
-type MultiLineText = string;
+export type MultiLineText = string;

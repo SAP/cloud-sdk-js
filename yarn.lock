@@ -1709,6 +1709,13 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@sap/cds-compiler@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.1.4.tgz#7614117c937072260198fcc3ce111bc218875ce8"
+  integrity sha512-d9Yn2JpwqDoRlnROpHYQfhD/Lga2hcZw5GUwZOcNcBPzXyCrIws59D0qj+4j08OxsBJgNa8TcwDVcfhmYYJLug==
+  dependencies:
+    antlr4 "4.8.0"
+
 "@sap/cds-compiler@~1.50.0":
   version "1.50.0"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-1.50.0.tgz#4c2fdc6ecacb9d659a08ef6adf0c920b5d6cb214"
@@ -1759,6 +1766,15 @@
     "@sap-cloud-sdk/util" "^1.18.1"
     "@sap/cds-foss" "^2.2.0"
 
+"@sap/cds-runtime@~3.0.3":
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-3.0.4.tgz#3160d9d621580a7c14fa828f311515dbdd21f9db"
+  integrity sha512-4awS8CyCMA0uyr6QgJp5WO/8XyBEhi8KAAG1cH0RkEx63Q0R2qe4EJw65IxU3ZCjkUe0l7IYE6sl8+tNX4havg==
+  dependencies:
+    "@sap-cloud-sdk/core" "^1.18.1"
+    "@sap-cloud-sdk/util" "^1.18.1"
+    "@sap/cds-foss" "^2.2.0"
+
 "@sap/cds-sidecar-client@^1.1.6":
   version "1.1.12"
   resolved "https://registry.npmjs.org/@sap/cds-sidecar-client/-/cds-sidecar-client-1.1.12.tgz#2c2df254e95c09f83c578e4d6d5ec0f87db5b308"
@@ -1767,7 +1783,7 @@
     fs-extra "9.0.1"
     got "10.7.0"
 
-"@sap/cds@^4.4.7", "@sap/cds@^4.6.5":
+"@sap/cds@^4.6.5":
   version "4.6.5"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.6.5.tgz#4c70c137795aef6a62d21502ff9fe5a47ecfbfaa"
   integrity sha512-JTSv1z71Arz9JZdc0OWnnNibIvfJldjzFQOcm/EoKmVfeJ6dfTjNseT6YJrQf3lEzYFjojCMaj2fi45F6/dSWw==
@@ -1775,6 +1791,15 @@
     "@sap/cds-compiler" "~1.50.0"
     "@sap/cds-foss" "^2"
     "@sap/cds-runtime" "~2.9.0"
+
+"@sap/cds@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.0.4.tgz#298427b2cc7551098edcb3c98b4f370d42cedd33"
+  integrity sha512-1gn0g0AN8OfLUwSbo0cy1GrbCBeIGBYONAd3JmkkngOw10z+6d/hhk3LcPTkN9Za6c6pC/DJHugURuE0stwJXw==
+  dependencies:
+    "@sap/cds-compiler" "^2.1.4"
+    "@sap/cds-foss" "^2"
+    "@sap/cds-runtime" "~3.0.3"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
   version "1.24.0"
@@ -8000,9 +8025,9 @@ neo-async@^2.6.0:
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
 netmask@^2.0.1, "netmask@^2.0.1 ":
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.1.tgz#5a5cbdcbb7b6de650870e15e83d3e9553a414cf4"
-  integrity sha512-gB8eG6ubxz67c7O2gaGiyWdRUIbH61q7anjgueDqCC9kvIs/b4CTtCMaQKeJbv1/Y7FT19I4zKwYmjnjInRQsg==
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
+  integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
 nice-try@^1.0.4:
   version "1.0.5"

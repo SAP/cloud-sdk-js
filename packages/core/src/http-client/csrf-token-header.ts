@@ -5,7 +5,6 @@ import {
   pickNonNullish,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import { AxiosError } from 'axios';
 import { removeTrailingSlashes } from '../odata-common/remove-slashes';
 import {
   Destination,
@@ -64,8 +63,9 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
   return executeHttpRequest(destination, requestConfigWithTrailingSlash)
     .then(response => response.headers)
     .catch(error1 => {
-      if (hasCsrfToken(error1)) {
-        return getResponseHeadersFromAxiosError(error1);
+      const headers1 = getResponseHeadersFromError(error1);
+      if (hasCsrfToken(headers1)) {
+        return headers1;
       }
       logger.warn(
         new ErrorWithCause(
@@ -77,8 +77,9 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
       return executeHttpRequest(destination, requestConfigWithOutTrailingSlash)
         .then(response => response.headers)
         .catch(error2 => {
-          if (hasCsrfToken(error2)) {
-            return getResponseHeadersFromAxiosError(error2);
+          const headers2 = getResponseHeadersFromError(error2);
+          if (hasCsrfToken(headers2)) {
+            return headers2;
           }
           logger.warn(
             new ErrorWithCause(
@@ -86,24 +87,19 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
               error2
             )
           );
-          // todo suggest to disable csrf token handling when the api is implemented
+          // todo suggest to disable csrf token handling when the API is implemented
           return {};
         });
     });
 }
 
-// In general, the valid csrf token head can also be found in a non-2xx request.
-// For a non-2xx response, axios will throw an error so we have to check whether the error contains the token.
-function hasCsrfToken(error: any): boolean {
-  return error.isAxiosError && hasCsrfTokenInAxiosError(error);
+function hasCsrfToken(headers: Record<string, any>): boolean {
+  return !!headers['x-csrf-token'];
 }
 
-function hasCsrfTokenInAxiosError(error: AxiosError): boolean {
-  return error.response?.headers?.['x-csrf-token'];
-}
-
-function getResponseHeadersFromAxiosError(error: AxiosError) {
-  return error.response!.headers;
+// Non-2xx responses can contain valid csrf tokens in their headers.
+function getResponseHeadersFromError(error: any): Record<string, any> {
+  return error.response?.headers || {};
 }
 
 function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {

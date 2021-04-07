@@ -58,7 +58,7 @@ describe('pregenerated-lib', () => {
         npmPackageName: '@sap/non-existing-service'
       } as VdmServiceMetadata)
     ).toBe(false);
-  }, 10000);
+  }, 30000);
 
   it('[E2E] return pregenerated lib information', async () => {
     const result = await getPregeneratedLibrary(

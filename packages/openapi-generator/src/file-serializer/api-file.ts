@@ -1,5 +1,4 @@
-import { EOL } from 'os';
-import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
   OpenApiApi,
   OpenApiOperation,
@@ -24,7 +23,7 @@ export const ${api.name} = {
 };
 `;
 
-  return [imports, apiDoc, apiContent].join(EOL);
+  return [imports, apiDoc, apiContent].join(unixEOL);
 }
 
 /**

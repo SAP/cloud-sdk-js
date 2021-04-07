@@ -1,5 +1,4 @@
-import { EOL } from 'os';
-import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
   OpenApiOperation,
   OpenApiParameter,
@@ -126,7 +125,7 @@ export function operationDocumentation(operation: OpenApiOperation): string {
     '@returns OpenApiRequestBuilder Use the execute() method to trigger the request.'
   );
   const lines = [getOperationDescriptionText(operation), ...signature];
-  return documentationBlock`${lines.join(EOL)}`;
+  return documentationBlock`${lines.join(unixEOL)}`;
 }
 
 function getSignatureOfPathParameters(

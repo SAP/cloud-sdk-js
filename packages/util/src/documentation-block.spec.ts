@@ -38,7 +38,9 @@ describe('documentation-block', () => {
 
   it('creates single line documentation', () => {
     const actual = documentationBlock`A single line of documentaiton.`;
-    expect(actual).toBe(`/**${unixEOL} * A single line of documentaiton.${unixEOL} */`);
+    expect(actual).toBe(
+      `/**${unixEOL} * A single line of documentaiton.${unixEOL} */`
+    );
   });
 
   it('creates single line documentation with single argument', () => {

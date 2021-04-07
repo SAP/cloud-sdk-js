@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
+import { unixEOL } from './string-formatter';
 import { trim, encodeBase64, removeFileExtension } from './string';
 
 describe('encodeBase64', () => {

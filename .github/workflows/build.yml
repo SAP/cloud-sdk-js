@@ -56,11 +56,10 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since origin/main
+      - run: yarn lerna run compile
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn lint
         name: Static Code Check
@@ -92,11 +91,10 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since origin/main
+      - run: yarn lerna run compile
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn test:e2e
   canary-release:
@@ -115,11 +113,10 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since origin/main
+      - run: yarn lerna run compile
         if: steps.cache.outputs.cache-hit == 'true'
       - name: Canary Release
         run: |
@@ -144,11 +141,10 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since origin/main
+      - run: yarn lerna run compile
         if: steps.cache.outputs.cache-hit == 'true'
       - uses: ./.github/actions/get-changelog
         name: Get Changelog

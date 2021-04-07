@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { sep } from 'path';
 import mock from 'mock-fs';
 import { swaggerPathForEdmx } from './input-path-provider';
 
@@ -11,7 +11,7 @@ describe('swaggerPathForEdmx', () => {
       }
     });
     expect(swaggerPathForEdmx('/service-specs/service.edmx')).toEqual(
-      resolve('service-specs', 'service.json')
+      `${sep}service-specs${sep}service.json`
     );
     mock.restore();
   });
@@ -24,7 +24,7 @@ describe('swaggerPathForEdmx', () => {
       }
     });
     expect(swaggerPathForEdmx('/service-specs/service.edmx')).toEqual(
-      resolve('service-specs', 'service.json')
+      `${sep}service-specs${sep}service.JSON`
     );
     mock.restore();
   });

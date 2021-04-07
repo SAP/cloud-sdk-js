@@ -49,8 +49,8 @@ describe('generator', () => {
 
       [clientFile, headerFile].forEach(file => {
         expect(file).toBeDefined();
-        expect(file!.getDirectoryPath()).toBe(
-          resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV', 'sdk-metadata')
+        expect(file!.getDirectoryPath()).toMatch(
+          /test-resources\/odata-service-specs\/v2\/API_TEST_SRV\/sdk-metadata/
         );
       });
     });

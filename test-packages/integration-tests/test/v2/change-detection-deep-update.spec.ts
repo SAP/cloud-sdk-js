@@ -52,11 +52,6 @@ function mockUpdateRequest(
     .reply(204);
 }
 
-const mockedBuildHeaderResponse = {
-  'x-csrf-token': 'mocked-x-csrf-token',
-  'set-cookie': ['mocked-cookie-0', 'mocked-cookie-1']
-};
-
 describe('deep-update and change detection', () => {
   const destination = {
     url: 'https://example.com',

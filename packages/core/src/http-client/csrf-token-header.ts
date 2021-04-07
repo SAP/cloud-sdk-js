@@ -69,7 +69,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
       }
       logger.warn(
         new ErrorWithCause(
-          `First attempt to fetch CSRF token failed with the url: ${requestConfigWithTrailingSlash.url}. Retrying without trailing slash.`,
+          `First attempt to fetch CSRF token failed with the URL: ${requestConfigWithTrailingSlash.url}. Retrying without trailing slash.`,
           error1
         )
       );
@@ -82,7 +82,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
           }
           logger.warn(
             new ErrorWithCause(
-              `Second attempt to fetch CSRF token failed with the url: ${requestConfigWithOutTrailingSlash.url}. No CSRF token fetched.`,
+              `Second attempt to fetch CSRF token failed with the URL: ${requestConfigWithOutTrailingSlash.url}. No CSRF token fetched.`,
               error2
             )
           );

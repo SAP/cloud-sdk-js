@@ -1,4 +1,5 @@
-import { schemaFile } from './schema-file';
+import { schemaDocumentation, schemaFile } from './schema-file';
+import { schemaPropertyDocumentation } from './schema';
 describe('schemaFile', () => {
   it('serializes schema file for schema', () => {
     expect(

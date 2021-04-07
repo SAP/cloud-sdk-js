@@ -1,7 +1,6 @@
 import { resolve } from 'path';
 import { promises, readFileSync } from 'fs';
-import { unixEOL } from '@sap-cloud-sdk/util'
-import { createLogger } from '@sap-cloud-sdk/util';
+import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
 import { getProductiveLernaModules } from './util';
 
 const startTagCommonReadme = '<!-- sap-cloud-sdk-common-readme -->';

@@ -1,4 +1,4 @@
-import { unixEOL } from './string-formatter'
+import { unixEOL } from './string-formatter';
 import { zip } from './array';
 import { trim, trimRight } from './string';
 /**

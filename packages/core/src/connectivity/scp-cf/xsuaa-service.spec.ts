@@ -1,5 +1,5 @@
 import { fail } from 'assert';
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import { providerXsuaaUrl } from '../../../test/test-util/environment-mocks';
 import {

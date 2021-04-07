@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { orderBreakfast } from '../../test/test-util/data-model';
 import { exportStatement } from './export-statement';
 

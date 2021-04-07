@@ -1,5 +1,5 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
 import {
+  unixEOL,
   ErrorWithCause,
   mergeIgnoreCase,
   pickIgnoreCase,

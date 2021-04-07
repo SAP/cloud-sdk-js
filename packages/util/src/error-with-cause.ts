@@ -1,4 +1,4 @@
-import {unixEOL} from './string-formatter'
+import { unixEOL } from './string-formatter';
 /**
  * Represents an error that was caused by another error.
  */

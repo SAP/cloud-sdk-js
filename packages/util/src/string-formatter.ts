@@ -5,12 +5,12 @@ import voca from 'voca';
  * We do not consider if the generator is executed on windows or unix systems.
  * It will always be \n to have consistent clients between operating systems.
  */
-export const unixEOL = '\n'
+export const unixEOL = '\n';
 
 /**
  * For request payloads etc. it is convention to use the \r\n new line.
  */
-export const webEOL = `\r\n`
+export const webEOL = '\r\n';
 /**
  * Convert a string to the uppercase snake case. This format is used e. g. for static properties on entity classes.
  *

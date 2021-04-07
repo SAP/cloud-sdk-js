@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { ODataRequest } from '../../request/odata-request';
 import { ODataRequestConfig } from '../../request/odata-request-config';

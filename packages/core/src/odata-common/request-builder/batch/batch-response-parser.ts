@@ -3,7 +3,9 @@ import {
   last,
   createLogger,
   pickValueIgnoreCase,
-  ErrorWithCause, webEOL, unixEOL
+  ErrorWithCause,
+  webEOL,
+  unixEOL
 } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '../../../http-client';
 

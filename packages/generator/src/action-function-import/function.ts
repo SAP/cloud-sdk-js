@@ -1,6 +1,5 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL, caps } from '@sap-cloud-sdk/util';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
-import { caps } from '@sap-cloud-sdk/util';
 import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 const parameterName = 'parameters';

@@ -1,4 +1,4 @@
-import { unixEOL } from './string-formatter'
+import { unixEOL } from './string-formatter';
 /**
  * Encode a string to a base64 encoded string.
  * @param str String to encode.

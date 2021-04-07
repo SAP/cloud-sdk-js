@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { VdmProperty } from '../vdm-types';
 import { breakfastEntity } from '../../test/test-util/data-model';
 import { requestBuilderClass } from './class';

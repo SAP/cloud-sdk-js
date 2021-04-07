@@ -1,7 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util'
-import { createLogger } from '@sap-cloud-sdk/util';
+import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
 import { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
 const logger = createLogger({
   package: 'generator',

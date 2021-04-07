@@ -1,5 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
-import { titleFormat } from '@sap-cloud-sdk/util';
+import { unixEOL, titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot } from './generator-utils';
 import {
   VdmComplexType,

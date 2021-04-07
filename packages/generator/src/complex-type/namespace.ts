@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL, caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
   FunctionDeclarationStructure,
   NamespaceDeclarationStructure,
@@ -6,7 +6,6 @@ import {
   VariableDeclarationKind,
   VariableStatementStructure
 } from 'ts-morph';
-import { caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
 import { VdmComplexType } from '../vdm-types';
 
 export function complexTypeNamespace(

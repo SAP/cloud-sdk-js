@@ -1,5 +1,5 @@
 import { resolve, relative } from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { apiDocsDir, jsonStringify, transformFile, version } from './util';
 
 function updateRootPackageJson() {
@@ -63,7 +63,9 @@ function transformChangeLog(changelog) {
     latestVersionSection,
     ...previousVersionSections
   ] = versionSections.split(`${unixEOL}# `);
-  const [, ...changelogCategories] = latestVersionSection.split(`${unixEOL}## `);
+  const [, ...changelogCategories] = latestVersionSection.split(
+    `${unixEOL}## `
+  );
   const usedCategories = changelogCategories
     .map(category => {
       const [title, ...logLines] = category.split(unixEOL);

@@ -2,7 +2,7 @@
 jest.mock('../utils/warnings');
 
 import * as path from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import * as fs from 'fs-extra';
 import { getWarnings, recordWarning } from '../utils/warnings';
 import {

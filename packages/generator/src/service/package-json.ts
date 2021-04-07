@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { getGeneratorVersion } from '../sdk-metadata/pregenerated-lib';
 
 export function packageJson(

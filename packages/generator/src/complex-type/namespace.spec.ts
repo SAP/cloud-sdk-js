@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import {
   complexMeal,

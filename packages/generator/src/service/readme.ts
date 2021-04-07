@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { VdmServiceMetadata } from '../vdm-types';
 
 function title(service: VdmServiceMetadata): string {

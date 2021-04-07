@@ -1,7 +1,7 @@
 import { promises } from 'fs';
 import { join } from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util'
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { unixEOL, codeBlock } from '@sap-cloud-sdk/util';
+
 const { writeFile } = promises;
 
 /**

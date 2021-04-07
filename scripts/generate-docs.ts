@@ -7,7 +7,7 @@ import {
   writeFileSync
 } from 'fs';
 import { resolve, basename, extname } from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import compareVersions from 'compare-versions';
 import { jsonStringify, transformFile } from './util';
 const apiDocPath = resolve('docs', 'api');

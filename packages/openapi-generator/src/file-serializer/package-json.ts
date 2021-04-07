@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.

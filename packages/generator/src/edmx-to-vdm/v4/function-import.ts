@@ -1,5 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
-import { createLogger } from '@sap-cloud-sdk/util';
+import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';

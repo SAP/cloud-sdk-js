@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL, ODataVersion, caps } from '@sap-cloud-sdk/util';
 import {
   ClassDeclarationStructure,
   MethodDeclarationOverloadStructure,
@@ -7,7 +7,6 @@ import {
   ParameterDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import { ODataVersion, caps } from '@sap-cloud-sdk/util';
 import {
   addLeadingNewline,
   getFunctionDoc,

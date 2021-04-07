@@ -1,6 +1,6 @@
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import nock = require('nock');
 import {
   publicKey,

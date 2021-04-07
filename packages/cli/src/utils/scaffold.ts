@@ -11,8 +11,8 @@ import { resolve } from 'path';
 import cli from 'cli-ux';
 import execa from 'execa';
 import rm from 'rimraf';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { recordWarning } from '../utils';
-import { unixEOL } from '@sap-cloud-sdk/util'
 
 export async function shouldBuildScaffold(
   projectDir: string,

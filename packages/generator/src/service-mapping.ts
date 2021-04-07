@@ -1,5 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
-import { createLogger, readJSON } from '@sap-cloud-sdk/util';
+import { unixEOL, createLogger, readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './generator-options';
 import { VdmServiceMetadata } from './vdm-types';
 import { servicePathFromSwagger } from './swagger-parser/swagger-util';

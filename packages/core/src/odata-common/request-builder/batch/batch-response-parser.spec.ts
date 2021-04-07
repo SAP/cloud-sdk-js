@@ -1,7 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { unixEOL } from '@sap-cloud-sdk/util'
-import { createLogger } from '@sap-cloud-sdk/util';
+import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '../../../http-client';
 import {
   detectNewLineSymbol,

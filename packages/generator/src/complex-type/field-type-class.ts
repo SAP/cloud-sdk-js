@@ -1,10 +1,9 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL, caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   ClassDeclarationStructure,
   PropertyDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   getComplexTypeFieldDescription,
   getComplexTypePropertyDescription

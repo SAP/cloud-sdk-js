@@ -1,4 +1,4 @@
-import { unixEOL } from '@sap-cloud-sdk/util'
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { OpenApiDocument } from '../openapi-types';
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.

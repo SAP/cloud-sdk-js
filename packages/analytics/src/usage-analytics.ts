@@ -1,7 +1,6 @@
 import { readFileSync } from 'fs';
 import { sep } from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util'
-import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { unixEOL, createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import axios, { AxiosResponse } from 'axios';
 import { AnalyticsData, getAnalyticsData } from './analytics-data';
 import {

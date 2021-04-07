@@ -1,6 +1,5 @@
 import { resolve } from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util'
-import { readJSON } from '@sap-cloud-sdk/util';
+import { unixEOL, readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from '../options';
 import { tsconfigJson } from './tsconfig-json';
 

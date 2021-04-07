@@ -6,6 +6,8 @@ import { OpenApiDocument, OpenApiNamedSchema } from '../openapi-types';
 import { ServiceMapping } from '../service-mapping';
 import { parseSchema } from './schema';
 import { parseApis } from './api';
+import { ensureUniqueNames } from './unique-naming';
+import { SchemaInfo } from './parsing-info';
 
 /**
  * Parse the original OpenAPI document and return an SDK compliant document.
@@ -25,8 +27,11 @@ export async function parseOpenApiDocument(
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
   const originalFileName = removeFileExtension(basename(filePath));
+  const schemaInfo = parseSchemaInfo(document);
+  const schemaRefMapping = parseSchemaRefMapping(schemaInfo);
+
   return {
-    apis: parseApis(document, refs),
+    apis: parseApis(document, refs, schemaRefMapping),
     serviceName: pascalCase(serviceName),
     npmPackageName: serviceMapping[originalFileName]
       ? serviceMapping[originalFileName].npmPackageName
@@ -35,17 +40,42 @@ export async function parseOpenApiDocument(
       ? serviceMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
-    schemas: parseSchemas(document)
+    schemas: parseSchemas(schemaInfo, schemaRefMapping)
   };
 }
 
-export function parseSchemas(
-  document: OpenAPIV3.Document
-): OpenApiNamedSchema[] {
-  return Object.entries(document.components?.schemas || {}).map(
+function parseSchemaInfo(document: OpenAPIV3.Document): SchemaInfo[] {
+  const schemaInfo = Object.entries(document.components?.schemas || {}).map(
     ([name, schema]) => ({
       name,
-      schema: parseSchema(schema)
+      refPath: `#/components/schemas/${name}`,
+      schema
     })
+  );
+
+  return ensureUniqueNames(schemaInfo, {
+    formatName: pascalCase
+  });
+}
+
+function parseSchemas(
+  schemaInfo: SchemaInfo[],
+  schemaRefMapping: Record<string, string>
+): OpenApiNamedSchema[] {
+  return schemaInfo.map(({ name, schema }) => ({
+    name,
+    schema: parseSchema(schema, schemaRefMapping)
+  }));
+}
+
+function parseSchemaRefMapping(
+  schemaInfo: SchemaInfo[]
+): Record<string, string> {
+  return schemaInfo.reduce(
+    (mapping, { refPath, name }) => ({
+      ...mapping,
+      [refPath]: name
+    }),
+    {}
   );
 }

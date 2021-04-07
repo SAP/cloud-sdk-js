@@ -1,5 +1,9 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import type { SimpleTestEntity, ComplexTestEntity } from './schema';
+import type {
+  SimpleTestEntity,
+  ComplexTestEntity,
+  SimpleTestEntityWITHSymbols
+} from './schema';
 export declare const TestCaseApi: {
   testCaseGetRequiredParameters: (
     requiredPathItemPathParam: string,
@@ -39,6 +43,9 @@ export declare const TestCaseApi: {
   ) => OpenApiRequestBuilder<any>;
   complexSchemas: (
     body: ComplexTestEntity | undefined
+  ) => OpenApiRequestBuilder<any>;
+  useNameWithSymbols: (
+    body: SimpleTestEntityWITHSymbols | undefined
   ) => OpenApiRequestBuilder<any>;
   getTestCasesNoOperationId: () => OpenApiRequestBuilder<any>;
 };

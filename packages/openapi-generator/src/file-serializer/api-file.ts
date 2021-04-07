@@ -1,10 +1,10 @@
-import { codeBlock, unique } from '@sap-cloud-sdk/util';
-import { OpenApiApi, OpenApiOperation } from '../openapi-types';
+import { codeBlock } from '@sap-cloud-sdk/util';
 import {
-  collectRefs,
-  hasNotSchema,
-  parseTypeNameFromRef
-} from '../schema-util';
+  OpenApiApi,
+  OpenApiOperation,
+  OpenApiReferenceSchema
+} from '../openapi-types';
+import { collectRefs, getUniqueRefs, hasNotSchema } from '../schema-util';
 import { serializeOperation } from './operation';
 import { Import, serializeImports } from './imports';
 
@@ -25,19 +25,22 @@ export const ${api.name} = {
 }
 
 /**
- * Get the reference types for all request body types in the given operation list.
+ * Get the unique reference schemas for all request body types in the given operation list.
  * @param operations The given operation list.
- * @returns The list of body types.
+ * @returns The list of unique referenced body type schemas.
  */
-function collectRefsFromOperations(operations: OpenApiOperation[]): string[] {
-  return operations.reduce(
-    (referenceTypes, operation) =>
-      unique([
+function collectRefsFromOperations(
+  operations: OpenApiOperation[]
+): OpenApiReferenceSchema[] {
+  return getUniqueRefs(
+    operations.reduce(
+      (referenceTypes, operation) => [
         ...referenceTypes,
         ...collectRefs(operation.requestBody?.schema),
         ...collectRefs(operation.response)
-      ]),
-    []
+      ],
+      []
+    )
   );
 }
 
@@ -49,8 +52,8 @@ function hasNotSchemaInOperations(operations: OpenApiOperation[]): boolean {
 }
 
 function getImports(api: OpenApiApi): Import[] {
-  const refs = collectRefsFromOperations(api.operations).map(requestBodyType =>
-    parseTypeNameFromRef(requestBodyType)
+  const refs = collectRefsFromOperations(api.operations).map(
+    requestBodyType => requestBodyType.schemaName
   );
 
   const refImports = {

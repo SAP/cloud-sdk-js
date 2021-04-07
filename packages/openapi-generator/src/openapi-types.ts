@@ -157,7 +157,7 @@ export interface OpenApiRequestBody {
  * Represents all possible Types of schemas.
  */
 export type OpenApiSchema =
-  | OpenAPIV3.ReferenceObject
+  | OpenApiReferenceSchema
   | OpenApiArraySchema
   | OpenApiSimpleSchema
   | OpenApiObjectSchema
@@ -180,6 +180,16 @@ export interface OpenApiNamedSchema {
    * The schema.
    */
   schema: OpenApiSchema;
+}
+
+/**
+ * Represents an object that can be referenced by the given path.
+ */
+export interface WithRefPath {
+  /**
+   * Path as referenced in reference objects.
+   */
+  refPath: string;
 }
 
 /**
@@ -279,4 +289,14 @@ export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
    * Denotes whether the parameter is required for the according object.
    */
   required: boolean;
+}
+
+/**
+ * Represents a schema referencing another schema by name.
+ */
+export interface OpenApiReferenceSchema extends OpenAPIV3.ReferenceObject {
+  /**
+   * Name of the referenced schema;
+   */
+  schemaName: string;
 }

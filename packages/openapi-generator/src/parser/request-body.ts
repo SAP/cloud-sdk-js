@@ -8,6 +8,7 @@ import { parseMediaType } from './media-type';
  * Parse the request body.
  * @param requestBody Original request body to parse.
  * @param refs List of cross references that can occur in the document.
+ * @param schemaRefMapping Mapping between references and parsed names of the schemas.
  * @returns The parsed request body schema.
  */
 export function parseRequestBody(
@@ -15,10 +16,11 @@ export function parseRequestBody(
     | OpenAPIV3.ReferenceObject
     | OpenAPIV3.RequestBodyObject
     | undefined,
-  refs: $Refs
+  refs: $Refs,
+  schemaRefMapping: Record<string, string>
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = resolveObject(requestBody, refs);
-  const schema = parseMediaType(resolvedRequestBody);
+  const schema = parseMediaType(resolvedRequestBody, schemaRefMapping);
   if (schema && resolvedRequestBody) {
     return {
       required: !!resolvedRequestBody.required,

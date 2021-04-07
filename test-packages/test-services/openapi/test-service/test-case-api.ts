@@ -4,7 +4,11 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import type { SimpleTestEntity, ComplexTestEntity } from './schema';
+import type {
+  SimpleTestEntity,
+  ComplexTestEntity,
+  SimpleTestEntityWITHSymbols
+} from './schema';
 
 export const TestCaseApi = {
   testCaseGetRequiredParameters: (
@@ -88,6 +92,10 @@ export const TestCaseApi = {
     ),
   complexSchemas: (body: ComplexTestEntity | undefined) =>
     new OpenApiRequestBuilder<any>('get', '/test-cases/complex-schemas', {
+      body
+    }),
+  useNameWithSymbols: (body: SimpleTestEntityWITHSymbols | undefined) =>
+    new OpenApiRequestBuilder<any>('post', '/test-cases/complex-schemas', {
       body
     }),
   getTestCasesNoOperationId: () =>

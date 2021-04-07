@@ -1,5 +1,5 @@
 import { schemaFile } from './schema-file';
-describe('interface-file', () => {
+describe('schemaFile', () => {
   it('serializes schema file for schema', () => {
     expect(
       schemaFile({
@@ -34,14 +34,16 @@ describe('interface-file', () => {
               name: 'otherSchema1',
               required: true,
               schema: {
-                $ref: '#/components/schema/OtherSchema1'
+                $ref: '#/components/schema/OtherSchema1',
+                schemaName: 'OtherSchema1'
               }
             },
             {
               name: 'otherSchema2',
               required: true,
               schema: {
-                $ref: '#/components/schema/OtherSchema2'
+                $ref: '#/components/schema/OtherSchema2',
+                schemaName: 'OtherSchema2'
               }
             }
           ]

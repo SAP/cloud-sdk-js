@@ -4,7 +4,14 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-
+/**
+ * Representation of the 'DefaultApi'.
+ * This API is part of the 'NoSchemaService' service.
+ */
 export const DefaultApi = {
+  /**
+   * Create a request builder for execution of get requests to the '/' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
   get: () => new OpenApiRequestBuilder<any>('get', '/')
 };

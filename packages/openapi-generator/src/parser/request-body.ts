@@ -24,6 +24,7 @@ export function parseRequestBody(
   if (schema && resolvedRequestBody) {
     return {
       required: !!resolvedRequestBody.required,
+      description: resolvedRequestBody.description,
       schema
     };
   }

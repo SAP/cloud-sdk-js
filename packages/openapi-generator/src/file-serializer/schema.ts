@@ -1,4 +1,5 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { EOL } from 'os';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
   OpenApiObjectSchema,
@@ -83,13 +84,32 @@ function serializeObjectSchemaForProperties(
 ): string {
   return codeBlock`{
       ${properties
-        .map(
-          property =>
-            [
-              `'${property.name}'${property.required ? '' : '?'}`,
-              serializeSchema(property.schema)
-            ].join(': ') + ';'
-        )
-        .join('\n')}
+        .map(property => serializePropertyWithDocumentation(property))
+        .join(EOL)}
     }`;
+}
+
+function serializeProperty(name: string, required: boolean, type: string) {
+  return `'${name}'${required ? '' : '?'}: ${type};`;
+}
+
+function serializePropertyWithDocumentation(
+  property: OpenApiObjectSchemaProperty
+) {
+  const documentation = schemaPropertyDocumentation(property);
+  const serialized = serializeProperty(
+    property.name,
+    property.required,
+    serializeSchema(property.schema)
+  );
+  if (documentation) {
+    return [documentation, serialized].join(EOL);
+  }
+  return serialized;
+}
+
+export function schemaPropertyDocumentation(
+  schema: OpenApiObjectSchemaProperty
+): string {
+  return schema.description ? documentationBlock`${schema.description}` : '';
 }

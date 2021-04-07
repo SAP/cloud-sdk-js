@@ -151,6 +151,11 @@ export interface OpenApiRequestBody {
    * Schema of the body.
    */
   schema: OpenApiSchema;
+
+  /**
+   * Description of the body
+   */
+  description?: string;
 }
 
 /**
@@ -180,6 +185,11 @@ export interface OpenApiNamedSchema {
    * The schema.
    */
   schema: OpenApiSchema;
+
+  /**
+   * Description of the schema.
+   */
+  description?: string;
 }
 
 /**

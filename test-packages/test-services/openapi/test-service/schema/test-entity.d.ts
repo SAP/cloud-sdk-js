@@ -1,4 +1,7 @@
 import type { SimpleTestEntity } from './simple-test-entity';
+/**
+ * Representation of the 'TestEntity' schema.
+ */
 export declare type TestEntity =
   | {
       keyProperty: string;

@@ -1,5 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { emptyObjectSchema } from '../../test/test-util';
+import { OpenApiObjectSchema } from '../openapi-types';
 import { parseSchema } from './schema';
 
 describe('parseSchema', () => {
@@ -14,6 +15,17 @@ describe('parseSchema', () => {
   it('parses simple schema', () => {
     const schema: OpenAPIV3.SchemaObject = { type: 'string' };
     expect(parseSchema(schema, {})).toEqual(schema);
+  });
+
+  it('parses simple schema with description', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      type: 'object',
+      properties: { prop1: { description: 'My Description', type: 'string' } }
+    };
+    expect(
+      (parseSchema(schema, {} as any) as OpenApiObjectSchema).properties[0]
+        .description
+    ).toBe('My Description');
   });
 
   it('parses array schema', () => {

@@ -4,6 +4,9 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import type { CyclicParent } from './cyclic-parent';
+/**
+ * Representation of the 'CyclicChild' schema.
+ */
 export type CyclicChild =
   | {
       parent?: CyclicParent;

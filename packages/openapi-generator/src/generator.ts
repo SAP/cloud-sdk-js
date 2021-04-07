@@ -133,7 +133,12 @@ async function createApis(
 ): Promise<void> {
   await Promise.all(
     openApiDocument.apis.map(api =>
-      createFile(serviceDir, `${kebabCase(api.name)}.ts`, apiFile(api), true)
+      createFile(
+        serviceDir,
+        `${kebabCase(api.name)}.ts`,
+        apiFile(api, openApiDocument.serviceName),
+        true
+      )
     )
   );
 }

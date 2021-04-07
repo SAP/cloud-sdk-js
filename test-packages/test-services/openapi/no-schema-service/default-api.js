@@ -7,7 +7,15 @@ exports.DefaultApi = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var core_1 = require('@sap-cloud-sdk/core');
+/**
+ * Representation of the 'DefaultApi'.
+ * This API is part of the 'NoSchemaService' service.
+ */
 exports.DefaultApi = {
+  /**
+   * Create a request builder for execution of get requests to the '/' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
   get: function () {
     return new core_1.OpenApiRequestBuilder('get', '/');
   }

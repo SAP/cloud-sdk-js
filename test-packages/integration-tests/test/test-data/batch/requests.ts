@@ -1,9 +1,9 @@
+import { webEOL } from '@sap-cloud-sdk/util';
 import {
   multiChangesetRequest,
   singleChangesetRequest
 } from './changeset-request';
 import { getAllRequest, getByKeyRequest } from './retrieve-request';
-import { webEOL } from '@sap-cloud-sdk/util';
 
 export const multiRetrieveRequest = () =>
   [

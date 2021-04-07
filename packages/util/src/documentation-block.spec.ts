@@ -1,5 +1,5 @@
-import { EOL } from 'os';
 import { documentationBlock } from './documentation-block';
+import { unixEOL } from './string-formatter';
 
 describe('documentation-block', () => {
   it('creates empty string for empty documentation block', () => {
@@ -38,14 +38,14 @@ describe('documentation-block', () => {
 
   it('creates single line documentation', () => {
     const actual = documentationBlock`A single line of documentaiton.`;
-    expect(actual).toBe(`/**${EOL} * A single line of documentaiton.${EOL} */`);
+    expect(actual).toBe(`/**${unixEOL} * A single line of documentaiton.${unixEOL} */`);
   });
 
   it('creates single line documentation with single argument', () => {
     const argument = 'myArgument';
     const actual = documentationBlock`Some text before ${argument} my text after.`;
     expect(actual).toBe(
-      `/**${EOL} * Some text before myArgument my text after.${EOL} */`
+      `/**${unixEOL} * Some text before myArgument my text after.${unixEOL} */`
     );
   });
 
@@ -54,7 +54,7 @@ describe('documentation-block', () => {
     const argument2 = 'myArgument2';
     const actual = documentationBlock`${argument1} Some text before ${argument2} my text after.`;
     expect(actual).toBe(
-      `/**${EOL} * myArgument1 Some text before myArgument2 my text after.${EOL} */`
+      `/**${unixEOL} * myArgument1 Some text before myArgument2 my text after.${unixEOL} */`
     );
   });
 
@@ -82,7 +82,7 @@ describe('documentation-block', () => {
       'First Line',
       'Second Line',
       'Third Line'
-    ].join(EOL);
+    ].join(unixEOL);
     const actual = documentationBlock`
     A single line of documentaiton with new lines in argument
     ${argumentWithNewLines}.`;
@@ -92,7 +92,7 @@ describe('documentation-block', () => {
   it('masks */ character', () => {
     const actual = documentationBlock`A single line of */ documentaiton with illegal */.`;
     expect(actual).toBe(
-      `/**${EOL} * A single line of \\*\\/ documentaiton with illegal \\*\\/.${EOL} */`
+      `/**${unixEOL} * A single line of \\*\\/ documentaiton with illegal \\*\\/.${unixEOL} */`
     );
   });
 

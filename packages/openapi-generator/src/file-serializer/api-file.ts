@@ -1,4 +1,5 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { EOL } from 'os';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import {
   OpenApiApi,
   OpenApiOperation,
@@ -7,14 +8,11 @@ import {
 import { collectRefs, getUniqueRefs, hasNotSchema } from '../schema-util';
 import { serializeOperation } from './operation';
 import { Import, serializeImports } from './imports';
-import { EOL } from 'os';
-import { codeBlock, documentationBlock, unique } from '@sap-cloud-sdk/util';
-import { OpenApiApi, OpenApiOperation } from '../openapi-types';
 
 /**
  * Serialize an API representation to a string representing the resulting API file.
  * @param api Represenation of an API.
- *  * @param serviceName Service name for which the API is created.
+ * @param serviceName Service name for which the API is created.
  * @returns The serialized API file contents.
  */
 export function apiFile(api: OpenApiApi, serviceName: string): string {

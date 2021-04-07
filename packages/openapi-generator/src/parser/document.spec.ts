@@ -1,10 +1,7 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { emptyDocument } from '../../test/test-util';
-import { parseOpenApiDocument } from './document';
-import { OpenAPIV3 } from 'openapi-types';
-import { createRefs, emptyDocument } from '../../test/test-util';
 import { OpenApiObjectSchema } from '../openapi-types';
-import { parseOpenApiDocument, parseSchemas } from './document';
+import { parseOpenApiDocument } from './document';
 
 describe('parseOpenApiDocument', () => {
   it('does not modify input service specification', () => {
@@ -67,7 +64,7 @@ describe('parseOpenApiDocument', () => {
     ]);
   });
 
-  it('parses simple schema with description', () => {
+  it('parses simple schema with description', async () => {
     const components: OpenAPIV3.ComponentsObject = {
       schemas: {
         SimpleSchema: {
@@ -77,12 +74,18 @@ describe('parseOpenApiDocument', () => {
       }
     };
 
-    const input: OpenAPIV3.Document = getDocument(
+    const document: OpenAPIV3.Document = getDocument(
       getResponse('SimpleSchema'),
       components
     );
 
-    expect(parseSchemas(input, {} as any)).toStrictEqual([
+    const parsed = await parseOpenApiDocument(
+      document,
+      'myService',
+      'myFile.json',
+      {}
+    );
+    expect(parsed.schemas).toStrictEqual([
       {
         description: 'Schema Description',
         name: 'SimpleSchema',
@@ -110,14 +113,21 @@ describe('parseOpenApiDocument', () => {
       }
     };
 
-    const input: OpenAPIV3.Document = getDocument(
+    const document: OpenAPIV3.Document = getDocument(
       getResponse('ObjectSchema'),
       components
     );
 
-    const parsed = parseSchemas(input, await createRefs(components));
-    const objectSchema = parsed.find(schema => schema.name === 'ObjectSchema');
-    const propertySchema = parsed.find(
+    const parsed = await parseOpenApiDocument(
+      document,
+      'myService',
+      'myFile.json',
+      {}
+    );
+    const objectSchema = parsed.schemas.find(
+      schema => schema.name === 'ObjectSchema'
+    );
+    const propertySchema = parsed.schemas.find(
       schema => schema.name === 'PropertySchema'
     );
     expect(objectSchema!.description).toBe('Object Description');
@@ -143,13 +153,20 @@ describe('parseOpenApiDocument', () => {
       }
     };
 
-    const input: OpenAPIV3.Document = getDocument(
+    const document: OpenAPIV3.Document = getDocument(
       getResponse('ObjectSchema'),
       components
     );
 
-    const parsed = parseSchemas(input, await createRefs(components));
-    const objectSchema = parsed.find(schema => schema.name === 'ObjectSchema');
+    const parsed = await parseOpenApiDocument(
+      document,
+      'myService',
+      'myFile.json',
+      {}
+    );
+    const objectSchema = parsed.schemas.find(
+      schema => schema.name === 'ObjectSchema'
+    );
     expect(objectSchema!.description).toBe('Object Description');
     expect(
       (objectSchema!.schema as OpenApiObjectSchema).properties[0].description

@@ -1,4 +1,5 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { EOL } from 'os';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
   OpenApiObjectSchema,
@@ -7,7 +8,6 @@ import {
 import { getType } from '../parser/type-mapping';
 import {
   isReferenceObject,
-  parseTypeNameFromRef,
   isArraySchema,
   isObjectSchema,
   isEnumSchema,
@@ -84,8 +84,8 @@ function serializeObjectSchemaForProperties(
 ): string {
   return codeBlock`{
       ${properties
-    .map(property => serializePropertyWithDocumentation(property))
-    .join(EOL)}
+        .map(property => serializePropertyWithDocumentation(property))
+        .join(EOL)}
     }`;
 }
 
@@ -106,15 +106,6 @@ function serializePropertyWithDocumentation(
     return [documentation, serialized].join(EOL);
   }
   return serialized;
-}
-
-function serializeRecordSchema(
-  additionalProperties: true | OpenApiSchema = true
-): string {
-  if (typeof additionalProperties === 'object') {
-    return codeBlock`Record<string, ${serializeSchema(additionalProperties)}>`;
-  }
-  return codeBlock`Record<string, any>`;
 }
 
 export function schemaPropertyDocumentation(

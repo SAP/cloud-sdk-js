@@ -1,6 +1,6 @@
 import { promises } from 'fs';
 import { join } from 'path';
-import { codeBlock, getCopyrightHeader } from '@sap-cloud-sdk/util';
+import { codeBlock } from '@sap-cloud-sdk/util';
 const { writeFile } = promises;
 
 /**
@@ -36,4 +36,15 @@ ${getCopyrightHeader()}
 ${content}
 ` + '\n'
   );
+}
+
+// TODO 1728 move to a new package for reduce code duplication.
+function getCopyrightHeader(): string {
+  return codeBlock`
+/*
+ * Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
+ `;
 }

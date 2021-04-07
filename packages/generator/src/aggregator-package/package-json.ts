@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 
 export function packageJson(
   npmPackageName: string,
@@ -28,6 +28,6 @@ export function packageJson(
       },
       null,
       2
-    ) + EOL
+    ) + unixEOL
   );
 }

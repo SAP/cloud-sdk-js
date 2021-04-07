@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { recordWarning } from '../utils';
 
 export function modifyGitIgnore(projectDir: string, addCds: boolean): void {
@@ -29,7 +29,7 @@ export function modifyGitIgnore(projectDir: string, addCds: boolean): void {
       );
       const newFileContent =
         fileContent +
-        (newPaths.length ? `${EOL}${newPaths.join(EOL)}${EOL}` : '');
+        (newPaths.length ? `${unixEOL}${newPaths.join(unixEOL)}${unixEOL}` : '');
 
       fs.writeFileSync(pathToGitignore, newFileContent, 'utf8');
     } catch (error) {

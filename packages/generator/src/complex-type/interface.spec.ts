@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { StructureKind } from 'ts-morph';
 import {
   complexMeal,
@@ -19,17 +19,17 @@ describe('interface', () => {
           name: 'complexity',
           type: 'string',
           hasQuestionToken: false,
-          docs: [`${EOL}something something very good`]
+          docs: [`${unixEOL}something something very good`]
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
           type: 'number',
           hasQuestionToken: false,
-          docs: [`${EOL}something something very much`]
+          docs: [`${unixEOL}something something very much`]
         }
       ],
-      docs: [`${EOL}ComplexMealType`]
+      docs: [`${unixEOL}ComplexMealType`]
     });
   });
 
@@ -45,17 +45,17 @@ describe('interface', () => {
           name: 'complexDesert',
           type: 'ComplexDesert',
           hasQuestionToken: false,
-          docs: [`${EOL}the desert`]
+          docs: [`${unixEOL}the desert`]
         },
         {
           kind: StructureKind.PropertySignature,
           name: 'amount',
           type: 'number',
           hasQuestionToken: false,
-          docs: [`${EOL}something something very much`]
+          docs: [`${unixEOL}something something very much`]
         }
       ],
-      docs: [`${EOL}ComplexMealWithDesertType`]
+      docs: [`${unixEOL}ComplexMealWithDesertType`]
     });
   });
 });

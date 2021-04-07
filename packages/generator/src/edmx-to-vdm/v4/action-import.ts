@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
@@ -63,7 +63,7 @@ function joinActionImportData(
       `Could not find actions referenced by the following action imports. Skipping code generation: 
 ${actionImportsWithoutActions
   .map(f => `${f.Name} => ${f.Action}`)
-  .join(`, ${EOL}`)}`
+  .join(`, ${unixEOL}`)}`
     );
   }
 

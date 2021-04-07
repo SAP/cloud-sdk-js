@@ -1,6 +1,6 @@
 import { promises } from 'fs';
 import { join } from 'path';
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { codeBlock } from '@sap-cloud-sdk/util';
 const { writeFile } = promises;
 
@@ -39,6 +39,6 @@ function wrapContent(content: string): string {
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 ${content}
-` + EOL
+` + unixEOL
   );
 }

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { Command, flags } from '@oclif/command';
 import cli from 'cli-ux';
 import Listr from 'listr';
@@ -137,7 +137,7 @@ export default class AddCds extends Command {
         '  .in(<your-express-app>)',
         '',
         'For other frameworks please refer to the documentation.'
-      ].join(EOL)
+      ].join(unixEOL)
     );
   }
 }

@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from '../options';
 import { tsconfigJson } from './tsconfig-json';
@@ -15,7 +15,7 @@ describe('tsconfigJson', () => {
       __dirname,
       '../../../../test-resources/openapi-service-specs/tsconfig.json'
     );
-    const expected = JSON.stringify(readJSON(pathTsConfig), null, 2) + EOL;
+    const expected = JSON.stringify(readJSON(pathTsConfig), null, 2) + unixEOL;
     expect(
       tsconfigJson({ tsConfig: pathTsConfig } as GeneratorOptions)
     ).toEqual(expected);

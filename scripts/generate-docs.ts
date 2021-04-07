@@ -7,7 +7,7 @@ import {
   writeFileSync
 } from 'fs';
 import { resolve, basename, extname } from 'path';
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import compareVersions from 'compare-versions';
 import { jsonStringify, transformFile } from './util';
 const apiDocPath = resolve('docs', 'api');
@@ -89,7 +89,7 @@ function insertCopyrightAndTracking() {
     const trackingTag =
       '<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>';
     transformFile(filePath, file => {
-      const lines = file.split(EOL);
+      const lines = file.split(unixEOL);
       // Inplace insert the copyright div before the line including </footer> #yikes
       lines.splice(
         lines.findIndex(line => line.includes('</footer>')),
@@ -101,7 +101,7 @@ function insertCopyrightAndTracking() {
         0,
         trackingTag
       );
-      return lines.join(EOL);
+      return lines.join(unixEOL);
     });
   });
 }
@@ -134,7 +134,7 @@ function validateLogs(generationLogs) {
     'Found invalid symbol reference(s) in JSDocs, they will not render as links in the generated documentation.';
   const [, invalidLinks] = generationLogs.split(invalidLinksMessage);
   if (invalidLinks) {
-    throw Error(`Error: ${invalidLinksMessage}${EOL}${invalidLinks}`);
+    throw Error(`Error: ${invalidLinksMessage}${unixEOL}${invalidLinks}`);
   }
 }
 

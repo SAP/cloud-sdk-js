@@ -1,5 +1,4 @@
-import { EOL } from 'os';
-
+import {unixEOL} from './string-formatter'
 /**
  * Represents an error that was caused by another error.
  */
@@ -18,7 +17,7 @@ export class ErrorWithCause extends Error {
 
     // Stack is a non-standard property according to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types
     if (this.stack && cause?.stack) {
-      this.stack = `${this.stack}${EOL}Caused by:${EOL}${cause.stack}`;
+      this.stack = `${this.stack}${unixEOL}Caused by:${unixEOL}${cause.stack}`;
     }
   }
 

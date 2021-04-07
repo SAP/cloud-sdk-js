@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { createLogger, readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './generator-options';
 import { VdmServiceMetadata } from './vdm-types';
@@ -42,7 +42,7 @@ export function serviceMapping(services: VdmServiceMetadata[]): VdmMapping {
 }
 
 export function serviceMappingFile(services: VdmServiceMetadata[]): string {
-  return JSON.stringify(serviceMapping(services), null, 2) + EOL;
+  return JSON.stringify(serviceMapping(services), null, 2) + unixEOL;
 }
 
 export function getServicePath(

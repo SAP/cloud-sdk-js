@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { OpenApiDocument } from '../openapi-types';
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -11,7 +11,7 @@ export function readme(openApiDocument: OpenApiDocument): string {
 
 This package contains the OpenAPI client for the ${openApiDocument.serviceName}.
 
-${helpfulLinksSection().join(EOL)}
+${helpfulLinksSection().join(unixEOL)}
     
 `;
 }

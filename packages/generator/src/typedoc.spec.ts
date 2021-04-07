@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import {
   getFunctionDoc,
   getNavPropertyDescription,
@@ -10,7 +10,7 @@ describe('typedoc', () => {
   it('get normal property description', () => {
     const property: VdmProperty = {
       originalName: 'OnePropertyName',
-      description: `${EOL}  entity info`,
+      description: `${unixEOL}  entity info`,
       jsType: 'string',
       edmType: 'Edm:String',
       nullable: true,
@@ -70,7 +70,7 @@ describe('typedoc', () => {
       ],
       returns: { type: 'string', description: returnDescription }
     });
-    const expected = `function description${EOL}@param ${paramName} ${paramDescription}${EOL}@returns ${returnDescription}`;
+    const expected = `function description${unixEOL}@param ${paramName} ${paramDescription}${unixEOL}@returns ${returnDescription}`;
     expect(actual).toBe(expected);
   });
 
@@ -88,7 +88,7 @@ describe('typedoc', () => {
       isCollection: false
     };
     expect(getPropertyDescription(property, { nullable: true })).toBe(
-      `Property Description${EOL}@nullable`
+      `Property Description${unixEOL}@nullable`
     );
   });
 });

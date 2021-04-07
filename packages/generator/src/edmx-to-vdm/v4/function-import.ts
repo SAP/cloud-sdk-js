@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common';
@@ -64,7 +64,7 @@ function joinFunctionImportData(
     logger.warn(
       `Could not find functions referenced by the following function imports. Skipping code generation: ${functionImportsWithoutFunctions
         .map(f => `${f.Name} => ${f.Function}`)
-        .join(`, ${EOL}`)}`
+        .join(`, ${unixEOL}`)}`
     );
   }
   return joinedFunctionImportData;

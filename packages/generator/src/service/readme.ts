@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { VdmServiceMetadata } from '../vdm-types';
 
 function title(service: VdmServiceMetadata): string {
@@ -70,5 +70,5 @@ export function readme(
     '',
     ...helpfulLinksSection(),
     ''
-  ].join(EOL);
+  ].join(unixEOL);
 }

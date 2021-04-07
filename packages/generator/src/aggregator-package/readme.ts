@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { helpfulLinksSection } from '../service';
 import { VdmServiceMetadata } from '../vdm-types';
 export function readme(
@@ -13,5 +13,5 @@ export function readme(
     '',
     ...helpfulLinksSection(),
     ''
-  ].join(EOL);
+  ].join(unixEOL);
 }

@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import {
   ClassDeclarationStructure,
   PropertyDeclarationStructure,
@@ -41,7 +41,7 @@ export function fieldTypeClass(
           }
         ],
         docs: [
-          `${EOL}Creates an instance of ${complexType.fieldType}.${EOL}${EOL}@param fieldName - Actual name of the field as used in the OData request.${EOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
+          `${unixEOL}Creates an instance of ${complexType.fieldType}.${unixEOL}${unixEOL}@param fieldName - Actual name of the field as used in the OData request.${unixEOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
         ],
         statements: [`super(fieldName, fieldOf, ${complexType.typeName});`]
       }

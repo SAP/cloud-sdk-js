@@ -2,7 +2,7 @@
 jest.mock('../utils/warnings');
 
 import * as path from 'path';
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import * as fs from 'fs-extra';
 import { getWarnings, recordWarning } from '../utils/warnings';
 import {
@@ -129,7 +129,7 @@ describe('Init', () => {
       const gitignoreEntries = (
         await fs.readFile(`${projectDir}/.gitignore`, 'utf8')
       )
-        .split(EOL)
+        .split(unixEOL)
         .filter(entry => entry !== '');
 
       expect(gitignoreEntries).toIncludeAllMembers([

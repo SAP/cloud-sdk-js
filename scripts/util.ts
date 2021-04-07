@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import execa = require('execa');
 
 export const version = JSON.parse(readFileSync('lerna.json', 'utf8')).version;
@@ -17,7 +17,7 @@ export function transformFile(
 }
 
 export function jsonStringify(json: any): string {
-  return JSON.stringify(json, null, 2) + EOL;
+  return JSON.stringify(json, null, 2) + unixEOL;
 }
 
 export function openFile(filePath: string): string {

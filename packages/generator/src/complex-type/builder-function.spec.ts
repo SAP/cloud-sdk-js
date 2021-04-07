@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { StructureKind } from 'ts-morph';
 import {
   complexMeal,
@@ -16,7 +16,7 @@ describe('builder-function', () => {
       returnType: 'ComplexMealType',
       statements: 'return ComplexMealType.build(json);',
       docs: [
-        `${EOL}@deprecated Since v1.6.0. Use [[ComplexMealType.build]] instead.`
+        `${unixEOL}@deprecated Since v1.6.0. Use [[ComplexMealType.build]] instead.`
       ]
     });
   });
@@ -31,7 +31,7 @@ describe('builder-function', () => {
       returnType: 'ComplexMealWithDesertType',
       statements: 'return ComplexMealWithDesertType.build(json);',
       docs: [
-        `${EOL}@deprecated Since v1.6.0. Use [[ComplexMealWithDesertType.build]] instead.`
+        `${unixEOL}@deprecated Since v1.6.0. Use [[ComplexMealWithDesertType.build]] instead.`
       ]
     });
   });

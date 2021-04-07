@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 
 export function tsConfig(): string {
   return (
@@ -22,6 +22,6 @@ export function tsConfig(): string {
       },
       null,
       2
-    ) + EOL
+    ) + unixEOL
   );
 }

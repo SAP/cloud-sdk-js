@@ -1,5 +1,5 @@
 import { resolve, relative } from 'path';
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { apiDocsDir, jsonStringify, transformFile, version } from './util';
 
 function updateRootPackageJson() {
@@ -14,11 +14,11 @@ function updateRootPackageJson() {
 function updateDocumentationMd() {
   transformFile(resolve('DOCUMENTATION.md'), documentation =>
     documentation
-      .split(EOL)
+      .split(unixEOL)
       .map(line =>
         line.startsWith('## Version:') ? `## Version: ${version}` : line
       )
-      .join(EOL)
+      .join(unixEOL)
   );
 }
 
@@ -54,22 +54,22 @@ const nextChangelogTemplate = [
     '## Improvements',
     '## Fixed Issues',
     ''
-  ].join(['', '', '-', '', ''].join(EOL))
-].join(EOL);
+  ].join(['', '', '-', '', ''].join(unixEOL))
+].join(unixEOL);
 
 function transformChangeLog(changelog) {
-  const [comments, versionSections] = changelog.split(`${EOL}# Next`);
+  const [comments, versionSections] = changelog.split(`${unixEOL}# Next`);
   const [
     latestVersionSection,
     ...previousVersionSections
-  ] = versionSections.split(`${EOL}# `);
-  const [, ...changelogCategories] = latestVersionSection.split(`${EOL}## `);
+  ] = versionSections.split(`${unixEOL}# `);
+  const [, ...changelogCategories] = latestVersionSection.split(`${unixEOL}## `);
   const usedCategories = changelogCategories
     .map(category => {
-      const [title, ...logLines] = category.split(EOL);
+      const [title, ...logLines] = category.split(unixEOL);
       const logs = logLines.filter(line => line && line !== '-');
       if (logs.length) {
-        return [`## ${title}`, '', ...logs, ''].join(EOL);
+        return [`## ${title}`, '', ...logs, ''].join(unixEOL);
       }
     })
     .filter(category => category);
@@ -85,7 +85,7 @@ function transformChangeLog(changelog) {
     '',
     ...usedCategories,
     ...previousVersionSections.map(section => `# ${section}`)
-  ].join(EOL);
+  ].join(unixEOL);
 }
 
 function updateChangelog() {

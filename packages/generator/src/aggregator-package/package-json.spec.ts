@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { packageJson } from './package-json';
 
 describe('package-json', () => {
@@ -14,39 +14,39 @@ describe('package-json', () => {
     );
     const expected =
       '{' +
-      EOL +
+      unixEOL +
       '  "name": "@sap/cloud-sdk-vdm",' +
-      EOL +
+      unixEOL +
       '  "version": "2.0.0",' +
-      EOL +
+      unixEOL +
       '  "description": "SAP Cloud SDK for JavaScript: Complete Virtual Data Model (VDM)",' +
-      EOL +
+      unixEOL +
       '  "homepage": "https://sap.github.io/cloud-sdk/docs/js/getting-started",' +
-      EOL +
+      unixEOL +
       '  "repository": {' +
-      EOL +
+      unixEOL +
       '    "type": "git",' +
-      EOL +
+      unixEOL +
       '    "url": ""' +
-      EOL +
+      unixEOL +
       '  },' +
-      EOL +
+      unixEOL +
       '  "dependencies": {' +
-      EOL +
+      unixEOL +
       '    "@sap/cloud-sdk-vdm-business-area-service": "^2.0.0",' +
-      EOL +
+      unixEOL +
       '    "@sap/cloud-sdk-vdm-business-partner-service": "^2.0.0"' +
-      EOL +
+      unixEOL +
       '  },' +
-      EOL +
+      unixEOL +
       '  "peerDependencies": {' +
-      EOL +
+      unixEOL +
       '    "@sap-cloud-sdk/core": "^1.17.4-alpha.8"' +
-      EOL +
+      unixEOL +
       '  }' +
-      EOL +
+      unixEOL +
       '}' +
-      EOL;
+      unixEOL;
     expect(actual).toEqual(expected);
   });
 });

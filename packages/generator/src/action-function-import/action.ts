@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmActionImport, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
@@ -27,10 +27,10 @@ export function actionImportFunction(
     statements: getActionImportStatements(actionImport, service),
     docs: [
       [
-        `${actionImport.description}${EOL}`,
+        `${actionImport.description}${unixEOL}`,
         '@param parameters - Object containing all parameters for the action import.',
         '@returns A request builder that allows to overwrite some of the values and execute the resulting request.'
-      ].join(EOL)
+      ].join(unixEOL)
     ]
   };
 }
@@ -41,12 +41,12 @@ function getActionImportStatements(
 ): string {
   const context = actionImport.parameters
     ? actionImport.parameters.reduce((cumulator, currentParameters) => {
-        if (cumulator !== `const params = {${EOL}`) {
-          cumulator += `,${EOL}`;
+        if (cumulator !== `const params = {${unixEOL}`) {
+          cumulator += `,${unixEOL}`;
         }
         cumulator += `${currentParameters.parameterName}: new ActionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
         return cumulator;
-      }, `const params = {${EOL}`) + `${EOL}}`
+      }, `const params = {${unixEOL}`) + `${unixEOL}}`
     : '{}';
 
   const parameters = getRequestBuilderArgumentsBase(actionImport, service);
@@ -54,5 +54,5 @@ function getActionImportStatements(
     ', '
   )});`;
 
-  return context + EOL + EOL + returnStatement;
+  return context + unixEOL + unixEOL + returnStatement;
 }

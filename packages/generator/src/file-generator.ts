@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
 const logger = createLogger({
@@ -61,6 +61,6 @@ function addFileComment(content: SourceFileStructure): SourceFileStructure {
     ' * This is a generated file powered by the SAP Cloud SDK for JavaScript.',
     ' */',
     ''
-  ].join(EOL);
+  ].join(unixEOL);
   return content;
 }

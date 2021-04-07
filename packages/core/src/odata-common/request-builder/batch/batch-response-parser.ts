@@ -3,7 +3,7 @@ import {
   last,
   createLogger,
   pickValueIgnoreCase,
-  ErrorWithCause
+  ErrorWithCause, webEOL, unixEOL
 } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '../../../http-client';
 
@@ -18,11 +18,11 @@ const logger = createLogger({
  * @returns The system dependent line break
  */
 export function detectNewLineSymbol(str: string): string {
-  if (str.includes('\r\n')) {
-    return '\r\n';
+  if (str.includes(webEOL)) {
+    return webEOL;
   }
-  if (str.includes('\n')) {
-    return '\n';
+  if (str.includes(unixEOL)) {
+    return unixEOL;
   }
   throw new Error('Cannot detect line breaks in the batch response body.');
 }

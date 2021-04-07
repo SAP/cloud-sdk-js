@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import {
   FunctionDeclarationStructure,
   NamespaceDeclarationStructure,
@@ -38,7 +38,7 @@ function factoryFunction(
     });`,
     isExported: true,
     docs: [
-      `${EOL}@deprecated Since v1.25.0. Use \`deserializeComplexTypeV2\` or \`deserializeComplexTypeV4\` of the \`@sap-cloud-sdk/core\` package instead.`
+      `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexTypeV2\` or \`deserializeComplexTypeV4\` of the \`@sap-cloud-sdk/core\` package instead.`
     ]
   };
 }
@@ -84,7 +84,7 @@ function propertyMetadata(
       }
     ],
     docs: [
-      `${EOL}Metadata information on all properties of the \`${complexType.typeName}\` complex type.`
+      `${unixEOL}Metadata information on all properties of the \`${complexType.typeName}\` complex type.`
     ],
     isExported: true
   };

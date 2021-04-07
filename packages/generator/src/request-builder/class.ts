@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import {
   ClassDeclarationStructure,
   MethodDeclarationOverloadStructure,
@@ -333,7 +333,7 @@ function deleteRequestBuilderStatements(
   );
   const keys = entity.keys
     .map((key, index) => `${key.originalName}: ${params[index]}!`)
-    .join(`,${EOL}`);
+    .join(`,${unixEOL}`);
   return `return new DeleteRequestBuilder${caps(oDataVersion)}(${
     entity.className
   }, ${params[0]} instanceof ${entity.className} ? ${params[0]} : {${keys}});`;
@@ -346,7 +346,7 @@ function buildParametrizedStatements(
 ) {
   const params = entity.keys
     .map(key => `${key.originalName}: ${key.propertyNameAsParam}`)
-    .join(`,${EOL}`);
+    .join(`,${unixEOL}`);
   return `return new ${requestBuilder}${caps(oDataVersion)}(${
     entity.className
   }, {${params}});`;

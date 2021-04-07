@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
@@ -49,7 +49,7 @@ export function packageJson(
       },
       null,
       2
-    ) + EOL
+    ) + unixEOL
   );
 }
 

@@ -1,6 +1,6 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 jest.mock('../../src/utils/warnings');
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import fs from 'fs-extra';
 import {
   deleteAsync,
@@ -31,7 +31,7 @@ describe('Git Ignore Utils', () => {
 
       const gitIgnoreContent = (
         await fs.readFile(`${projectDir}/.gitignore`, { encoding: 'utf8' })
-      ).split(EOL);
+      ).split(unixEOL);
       expect(gitIgnoreContent).toIncludeAllMembers([
         '/s4hana_pipeline',
         'credentials.json'
@@ -53,7 +53,7 @@ describe('Git Ignore Utils', () => {
 
       const gitIgnoreContent = (
         await fs.readFile(`${projectDir}/.gitignore`, { encoding: 'utf8' })
-      ).split(EOL);
+      ).split(unixEOL);
       expect(gitIgnoreContent).toIncludeAllMembers(['gen/', '*.db']);
     },
     TimeThresholds.EXTRA_SHORT
@@ -72,13 +72,13 @@ describe('Git Ignore Utils', () => {
       foobar
 
       !@#$%^&^
-      ${EOL}`
+      ${unixEOL}`
       );
       modifyGitIgnore(projectDir, false);
 
       const gitIgnoreContent = (
         await fs.readFile(`${projectDir}/.gitignore`, { encoding: 'utf8' })
-      ).split(EOL);
+      ).split(unixEOL);
       expect(gitIgnoreContent).toIncludeAllMembers([
         '/s4hana_pipeline',
         'myPath',

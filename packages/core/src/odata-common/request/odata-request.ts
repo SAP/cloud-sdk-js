@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import {
   ErrorWithCause,
   mergeIgnoreCase,
@@ -278,5 +278,5 @@ function messageFromS4ErrorResponse(error): string {
     propertyExists(error.response.data.error, 'message', 'value')
       ? error.response.data.error.message.value
       : ''
-  }${EOL}${JSON.stringify(error.response.data.error)}`;
+  }${unixEOL}${JSON.stringify(error.response.data.error)}`;
 }

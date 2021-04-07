@@ -8,11 +8,12 @@ import {
   existsSync
 } from 'fs';
 import { resolve } from 'path';
-import { EOL } from 'os';
 import cli from 'cli-ux';
 import execa from 'execa';
 import rm from 'rimraf';
 import { recordWarning } from '../utils';
+import { unixEOL } from '@sap-cloud-sdk/util'
+
 export async function shouldBuildScaffold(
   projectDir: string,
   doBuildScaffold: boolean,
@@ -154,7 +155,7 @@ export function addCatalogueModule(pathToAppModuleTs: string): void {
   const moduleName = 'CatalogueModule';
   const importToAdd = `import { ${moduleName} } from './catalogue/catalogue.module';`;
   const modifiedAppModuleTs = appModuleTs
-    .replace('@Module', [importToAdd, '@Module'].join(`${EOL}${EOL}`))
+    .replace('@Module', [importToAdd, '@Module'].join(`${unixEOL}${unixEOL}`))
     .replace('imports: []', `imports: [${moduleName}]`);
 
   if (!modifiedAppModuleTs.includes(`imports: [${moduleName}]`)) {

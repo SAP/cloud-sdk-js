@@ -1,4 +1,4 @@
-import { EOL } from 'os';
+import { unixEOL } from '@sap-cloud-sdk/util'
 import { titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot, ensureString } from '../generator-utils';
 import {
@@ -22,7 +22,7 @@ export function longDescription(
   if (documented.Documentation) {
     const summmary = ensureString(documented.Documentation.Summary);
     const longDesc = ensureString(documented.Documentation.LongDescription);
-    docs = `${summmary}${EOL}${longDesc}`.trim();
+    docs = `${summmary}${unixEOL}${longDesc}`.trim();
   }
   if (!docs && described) {
     docs = ensureString(described.description);
@@ -48,7 +48,7 @@ export function propertyDescription(
 ): string {
   const short = shortPropertyDescription(property, swaggerProperty);
   const long = longDescription(property, swaggerProperty);
-  return `${short}${EOL}${long}`.trim();
+  return `${short}${unixEOL}${long}`.trim();
 }
 
 export function parameterDescription(

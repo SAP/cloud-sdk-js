@@ -23,7 +23,8 @@ describe('parseSchema', () => {
       properties: { prop1: { description: 'My Description', type: 'string' } }
     };
     expect(
-      (parseSchema(schema) as OpenApiObjectSchema).properties[0].description
+      (parseSchema(schema, {} as any) as OpenApiObjectSchema).properties[0]
+        .description
     ).toBe('My Description');
   });
 

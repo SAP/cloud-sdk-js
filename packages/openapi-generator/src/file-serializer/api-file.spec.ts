@@ -31,20 +31,20 @@ describe('apiFile', () => {
        * Representation of the 'TestApi'.
        * This API is part of the 'MyserviceName' service.
        */
-        export const TestApi = {
-          /**
-           * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
-           * @param id Path parameter.
-           * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
-           */
-          getFn: (id: string) => new OpenApiRequestBuilder<any>(
-            'get',
-            'test/{id}',
-            {
-                  pathParameters: { id }
-                }
-          )
-        };"
+      export const TestApi = {
+        /**
+         * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
+         * @param id Path parameter.
+         * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+         */
+        getFn: (id: string) => new OpenApiRequestBuilder<any>(
+          'get',
+          'test/{id}',
+          {
+                pathParameters: { id }
+              }
+        )
+      };"
     `);
   });
 
@@ -89,28 +89,28 @@ describe('apiFile', () => {
        * Representation of the 'TestApi'.
        * This API is part of the 'MyserviceName' service.
        */
-        export const TestApi = {
-          /**
-           * Create a request builder for execution of get requests to the 'test' endpoint.
-           * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
-           */
-          getFn: () => new OpenApiRequestBuilder<string>(
-            'get',
-            'test'
-          ),
-          /**
-           * Create a request builder for execution of post requests to the 'test' endpoint.
-           * @param body Request body.
-           * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
-           */
-          createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
-            'post',
-            'test',
-            {
-                  body
-                }
-          )
-        };"
+      export const TestApi = {
+        /**
+         * Create a request builder for execution of get requests to the 'test' endpoint.
+         * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+         */
+        getFn: () => new OpenApiRequestBuilder<string>(
+          'get',
+          'test'
+        ),
+        /**
+         * Create a request builder for execution of post requests to the 'test' endpoint.
+         * @param body Request body.
+         * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+         */
+        createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
+          'post',
+          'test',
+          {
+                body
+              }
+        )
+      };"
     `);
   });
 
@@ -136,16 +136,16 @@ describe('apiFile', () => {
        * Representation of the 'TestApi'.
        * This API is part of the 'TestService' service.
        */
-        export const TestApi = {
-          /**
-           * Create a request builder for execution of get requests to the 'test' endpoint.
-           * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
-           */
-          getFn: () => new OpenApiRequestBuilder<any>(
-            'get',
-            'test'
-          )
-        };"
+      export const TestApi = {
+        /**
+         * Create a request builder for execution of get requests to the 'test' endpoint.
+         * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+         */
+        getFn: () => new OpenApiRequestBuilder<any>(
+          'get',
+          'test'
+        )
+      };"
     `);
   });
 

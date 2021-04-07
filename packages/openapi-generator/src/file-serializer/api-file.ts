@@ -19,8 +19,6 @@ export function apiFile(api: OpenApiApi, serviceName: string): string {
   const imports = serializeImports(getImports(api));
   const apiDoc = apiDocumentation(api, serviceName);
   const apiContent = codeBlock`
-${imports}
-
 export const ${api.name} = {
   ${api.operations.map(operation => serializeOperation(operation)).join(',\n')}
 };

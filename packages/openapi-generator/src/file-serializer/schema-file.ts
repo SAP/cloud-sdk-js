@@ -3,7 +3,6 @@ import { OpenApiNamedSchema, OpenApiSchema } from '../openapi-types';
 import {
   collectRefs,
   hasNotSchema,
-  parseTypeNameFromRef,
   parseFileNameFromRef
 } from '../schema-util';
 import { serializeSchema } from './schema';
@@ -25,7 +24,7 @@ export function schemaFile({ name, schema }: OpenApiNamedSchema): string {
 
 function getImports(schema: OpenApiSchema): Import[] {
   const refImports = collectRefs(schema).map(ref => ({
-    names: [parseTypeNameFromRef(ref)],
+    names: [ref.schemaName],
     typeOnly: true,
     moduleIdentifier: `./${parseFileNameFromRef(ref)}`
   }));

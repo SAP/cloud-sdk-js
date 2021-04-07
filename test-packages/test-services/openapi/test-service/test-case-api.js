@@ -95,6 +95,15 @@ exports.TestCaseApi = {
       }
     );
   },
+  useNameWithSymbols: function (body) {
+    return new core_1.OpenApiRequestBuilder(
+      'post',
+      '/test-cases/complex-schemas',
+      {
+        body: body
+      }
+    );
+  },
   getTestCasesNoOperationId: function () {
     return new core_1.OpenApiRequestBuilder(
       'get',

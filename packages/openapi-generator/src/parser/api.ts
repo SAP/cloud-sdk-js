@@ -4,7 +4,7 @@ import { OpenAPIV3 } from 'openapi-types';
 import { methods, OpenApiApi } from '../openapi-types';
 import { apiNameExtension, defaultApiName } from '../extensions';
 import { parseOperation } from './operation';
-import { OperationInfo } from './operation-info';
+import { OperationInfo } from './parsing-info';
 import { nameOperations } from './operation-naming';
 import { ensureUniqueNames } from './unique-naming';
 
@@ -12,11 +12,13 @@ import { ensureUniqueNames } from './unique-naming';
  * Collect and parse all APIs of an `OpenAPIV3.Document`.
  * @param document The OpenApi document to parse.
  * @param refs List of cross references that can occur in the document.
+ * @param schemaRefMapping Mapping between references and parsed names of the schemas.
  * @returns A flat list of parsed APIs.
  */
 export function parseApis(
   document: OpenAPIV3.Document,
-  refs: $Refs
+  refs: $Refs,
+  schemaRefMapping: Record<string, string>
 ): OpenApiApi[] {
   const operationsByApis = getOperationsByApis(document);
 
@@ -26,11 +28,15 @@ export function parseApis(
       operations: ensureUniqueNames(
         nameOperations(operations),
         // All operations got an operationId in the line before
-        ({ operation }) => operation.operationId!,
-        (operationInfo, operationId) => {
-          operationInfo.operation.operationId = operationId;
+        {
+          getName: ({ operation }) => operation.operationId!,
+          setName: (operationInfo, operationId) => {
+            operationInfo.operation.operationId = operationId;
+          }
         }
-      ).map(operationInfo => parseOperation(operationInfo, refs))
+      ).map(operationInfo =>
+        parseOperation(operationInfo, refs, schemaRefMapping)
+      )
     })
   );
 }

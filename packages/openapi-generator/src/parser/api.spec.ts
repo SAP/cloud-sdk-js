@@ -5,7 +5,9 @@ import { parseApis } from './api';
 
 describe('parseApis', () => {
   it('parses APIs without paths', async () => {
-    expect(parseApis(emptyDocument, await createRefs({}))).toStrictEqual([]);
+    expect(parseApis(emptyDocument, await createRefs({}), {})).toStrictEqual(
+      []
+    );
   });
 
   it('parses APIs based on tags', async () => {
@@ -39,7 +41,7 @@ describe('parseApis', () => {
         }
       }
     };
-    expect(parseApis(document, await createRefs({}))).toStrictEqual([
+    expect(parseApis(document, await createRefs({}), {})).toStrictEqual([
       {
         name: 'Api1Api',
         operations: [
@@ -101,7 +103,7 @@ describe('parseApis', () => {
         }
       }
     };
-    expect(parseApis(document, await createRefs({}))).toStrictEqual([
+    expect(parseApis(document, await createRefs({}), {})).toStrictEqual([
       {
         name: 'OperationWithTagApi',
         operations: [
@@ -150,7 +152,7 @@ describe('parseApis', () => {
         }
       }
     };
-    expect(parseApis(document, await createRefs({}))).toStrictEqual([
+    expect(parseApis(document, await createRefs({}), {})).toStrictEqual([
       {
         name: 'RootApi',
         operations: [

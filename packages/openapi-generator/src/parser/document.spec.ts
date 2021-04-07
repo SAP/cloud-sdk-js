@@ -1,3 +1,4 @@
+import { OpenAPIV3 } from 'openapi-types';
 import { emptyDocument } from '../../test/test-util';
 import { parseOpenApiDocument } from './document';
 
@@ -22,7 +23,7 @@ describe('parseOpenApiDocument', () => {
       'openapi/test-service.json',
       {
         'test-service': {
-          npmPackageName: '@sap/cloud-sdk-openapi-vdm-test-service',
+          npmPackageName: '@sap/cloud-sdk-openapi-test-service',
           directoryName: 'test-service'
         }
       }
@@ -30,5 +31,35 @@ describe('parseOpenApiDocument', () => {
 
     expect(input).toStrictEqual(clonedInput);
     expect(parsedDocument).not.toBe(input);
+  });
+
+  it('parses unique api names', async () => {
+    const input: OpenAPIV3.Document = {
+      ...emptyDocument,
+      paths: {},
+      components: {
+        schemas: {
+          'my-schema': { type: 'string' },
+          MySchema: { type: 'number' }
+        }
+      }
+    };
+
+    const parsedDocument = await parseOpenApiDocument(
+      input,
+      'TestService',
+      'openapi/test-service.json',
+      {
+        'test-service': {
+          npmPackageName: '@sap/cloud-sdk-openapi-test-service',
+          directoryName: 'test-service'
+        }
+      }
+    );
+
+    expect(parsedDocument.schemas.map(schema => schema.name)).toEqual([
+      'MySchema1',
+      'MySchema'
+    ]);
   });
 });

@@ -4194,9 +4194,9 @@ dts-critic@latest:
     yargs "^15.3.1"
 
 dtslint@^4.0.0:
-  version "4.0.8"
-  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.0.8.tgz#af66d0a068ceb9e522041605849a1741627e2e3d"
-  integrity sha512-ypMFCfHwWmbELC1xXS3dJ+tPt/iAc6emWpIdavtV7ubsmzc9wVd2joa7RS/3yQ9g9EPBwylIWMSMf/bItS1Dbw==
+  version "4.0.9"
+  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.0.9.tgz#81183764d6a8c5f16cb870f99a0b20dfcd999f04"
+  integrity sha512-CzDukRUxlmLEYhg0OexdcQNelhEJuoFnulbt0BKlOdvVAypuRp/3GuBbNTyUrHr7rMHI+JUoLCI4o8xv2tyt/w==
   dependencies:
     "@definitelytyped/header-parser" latest
     "@definitelytyped/typescript-versions" latest
@@ -8000,9 +8000,9 @@ neo-async@^2.6.0:
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
 netmask@^2.0.1, "netmask@^2.0.1 ":
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.1.tgz#5a5cbdcbb7b6de650870e15e83d3e9553a414cf4"
-  integrity sha512-gB8eG6ubxz67c7O2gaGiyWdRUIbH61q7anjgueDqCC9kvIs/b4CTtCMaQKeJbv1/Y7FT19I4zKwYmjnjInRQsg==
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
+  integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
 nice-try@^1.0.4:
   version "1.0.5"

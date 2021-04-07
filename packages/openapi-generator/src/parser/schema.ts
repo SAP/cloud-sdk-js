@@ -146,6 +146,9 @@ function parseObjectSchemaProperties(
       ...props,
       {
         schema: parseSchema(propSchema, schemaRefMapping),
+        description: isReferenceObject(propSchema)
+          ? undefined
+          : propSchema.description,
         name: propName,
         required: schema.required?.includes(propName) || false
       }

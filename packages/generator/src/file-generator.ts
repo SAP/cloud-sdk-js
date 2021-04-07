@@ -1,7 +1,8 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
+
 const logger = createLogger({
   package: 'generator',
   messageContext: 'file-generator'
@@ -53,13 +54,17 @@ export function copyFile(
 }
 
 function addFileComment(content: SourceFileStructure): SourceFileStructure {
-  content.leadingTrivia = [
-    '/*',
-    ' * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.',
-    ' *',
-    ' * This is a generated file powered by the SAP Cloud SDK for JavaScript.',
-    ' */',
-    ''
-  ].join(unixEOL);
+  content.leadingTrivia = getCopyrightHeader();
   return content;
+}
+
+// TODO 1728 move to a new package for reduce code duplication.
+function getCopyrightHeader(): string {
+  return codeBlock`
+/*
+ * Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
+ `;
 }

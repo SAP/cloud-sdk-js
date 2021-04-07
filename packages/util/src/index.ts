@@ -6,6 +6,7 @@
 
 export * from './array';
 export * from './code-block';
+export * from './documentation-block';
 export * from './constants';
 export * from './equal';
 export * from './error';

@@ -1,1 +1,1 @@
-{"version":3,"file":"cyclic-parent.d.ts","sourceRoot":"","sources":["cyclic-parent.ts"],"names":[],"mappings":"AAKI,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,gBAAgB,CAAC;AAClD,oBAAY,YAAY,GAAG;IACzB,UAAU,CAAC,EAAE,WAAW,EAAE,CAAC;CAC5B,GAAG,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC"}
+{"version":3,"file":"cyclic-parent.d.ts","sourceRoot":"","sources":["cyclic-parent.ts"],"names":[],"mappings":"AAKI,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,gBAAgB,CAAC;AAClD;;GAEG;AACH,oBAAY,YAAY,GAAG;IACzB,UAAU,CAAC,EAAE,WAAW,EAAE,CAAC;CAC5B,GAAG,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC"}

@@ -1,5 +1,5 @@
 import { basename } from 'path';
-import { parse, resolve } from '@apidevtools/swagger-parser';
+import SwaggerParser, { parse, resolve } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { pascalCase, removeFileExtension } from '@sap-cloud-sdk/util';
 import { OpenApiDocument, OpenApiNamedSchema } from '../openapi-types';
@@ -8,6 +8,7 @@ import { parseSchema } from './schema';
 import { parseApis } from './api';
 import { ensureUniqueNames } from './unique-naming';
 import { SchemaInfo } from './parsing-info';
+import { resolveObject } from './refs';
 
 /**
  * Parse the original OpenAPI document and return an SDK compliant document.
@@ -40,7 +41,7 @@ export async function parseOpenApiDocument(
       ? serviceMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
-    schemas: parseSchemas(schemaInfo, schemaRefMapping)
+    schemas: parseSchemas(schemaInfo, schemaRefMapping, refs)
   };
 }
 
@@ -58,13 +59,15 @@ function parseSchemaInfo(document: OpenAPIV3.Document): SchemaInfo[] {
   });
 }
 
-function parseSchemas(
+export function parseSchemas(
   schemaInfo: SchemaInfo[],
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: Record<string, string>,
+  refs: SwaggerParser.$Refs
 ): OpenApiNamedSchema[] {
   return schemaInfo.map(({ name, schema }) => ({
     name,
-    schema: parseSchema(schema, schemaRefMapping)
+    schema: parseSchema(schema, schemaRefMapping),
+    description: resolveObject(schema, refs).description
   }));
 }
 

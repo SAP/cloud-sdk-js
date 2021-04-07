@@ -36,5 +36,5 @@ describe('generation-and-usage', () => {
     await execa('tsc', [tsFile, '--esModuleInterop'], { cwd: __dirname });
     await expect(readFile(resolve(__dirname, jsFile))).resolves;
     [tsFile, jsFile].map(file => removeSync(resolve(__dirname, file)));
-  }, 20000);
+  }, 60000);
 });

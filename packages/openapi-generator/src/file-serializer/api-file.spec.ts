@@ -69,10 +69,16 @@ describe('apiFile', () => {
           queryParameters: [],
           requestBody: {
             required: true,
-            schema: { $ref: '#/components/schemas/RefType' }
+            schema: {
+              $ref: '#/components/schemas/RefType',
+              schemaName: 'RefType'
+            }
           },
           pathPattern: 'test',
-          response: { $ref: '#/components/schemas/ResponseType' }
+          response: {
+            $ref: '#/components/schemas/ResponseType',
+            schemaName: 'ResponseType'
+          }
         }
       ]
     };

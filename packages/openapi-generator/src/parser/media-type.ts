@@ -7,13 +7,15 @@ const logger = createLogger('openapi-generator');
 /**
  * Parse the type of a resolved request body or response object.
  * @param bodyOrResponseObject The request body or response object to parse the type from.
+ * @param schemaRefMapping Mapping between references and parsed names of the schemas.
  * @returns The type name of the request body if there is one.
  */
 export function parseApplicationJsonMediaType(
   bodyOrResponseObject:
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
-    | undefined
+    | undefined,
+  schemaRefMapping: Record<string, string>
 ): OpenApiSchema | undefined {
   if (bodyOrResponseObject) {
     const mediaType = getMediaTypeObject(
@@ -22,7 +24,7 @@ export function parseApplicationJsonMediaType(
     );
     const schema = mediaType?.schema;
     if (schema) {
-      return parseSchema(schema);
+      return parseSchema(schema, schemaRefMapping);
     }
   }
 }
@@ -31,11 +33,15 @@ export function parseMediaType(
   bodyOrResponseObject:
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
-    | undefined
+    | undefined,
+  schemaRefMapping: Record<string, string>
 ): OpenApiSchema | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
-    const jsonMediaType = parseApplicationJsonMediaType(bodyOrResponseObject);
+    const jsonMediaType = parseApplicationJsonMediaType(
+      bodyOrResponseObject,
+      schemaRefMapping
+    );
 
     if (!jsonMediaType) {
       logger.debug(

@@ -1,5 +1,4 @@
-import { EOL } from 'os';
-import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
+import { codeBlock } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
   OpenApiObjectSchema,
@@ -25,7 +24,7 @@ import {
  */
 export function serializeSchema(schema: OpenApiSchema): string {
   if (isReferenceObject(schema)) {
-    return parseTypeNameFromRef(schema);
+    return schema.schemaName;
   }
   if (isArraySchema(schema)) {
     const type = serializeSchema(schema.items);
@@ -63,7 +62,7 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
     !schema.properties.length &&
     typeof schema.additionalProperties !== 'object'
   ) {
-    return serializeRecordSchema();
+    return 'Record<string, any>';
   }
 
   const types: string[] = [];
@@ -72,7 +71,9 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
   }
 
   if (schema.additionalProperties) {
-    types.push(serializeRecordSchema(schema.additionalProperties));
+    types.push(
+      `Record<string, ${serializeSchema(schema.additionalProperties)}>`
+    );
   }
 
   return types.join(' | ');
@@ -83,8 +84,8 @@ function serializeObjectSchemaForProperties(
 ): string {
   return codeBlock`{
       ${properties
-        .map(property => serializePropertyWithDocumentation(property))
-        .join(EOL)}
+    .map(property => serializePropertyWithDocumentation(property))
+    .join(EOL)}
     }`;
 }
 

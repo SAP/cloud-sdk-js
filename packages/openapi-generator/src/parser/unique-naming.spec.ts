@@ -1,9 +1,5 @@
 import { pascalCase } from '@sap-cloud-sdk/util';
-import {
-  ensureUniqueNames,
-  getNameDefault,
-  setNameDefault
-} from './unique-naming';
+import { ensureUniqueNames } from './unique-naming';
 
 it('ensureUniqueNames replaces duplicate names using defaults (getName, setName, formatName)', () => {
   const uniqueItems = ensureUniqueNames([
@@ -26,9 +22,9 @@ it('ensureUniqueNames replaces duplicate names using pascal case', () => {
       { name: 'SomeDuplicateName', id: '2' },
       { name: 'someDuplicateName', id: '3' }
     ],
-    getNameDefault,
-    setNameDefault,
-    pascalCase
+    {
+      formatName: pascalCase
+    }
   );
 
   expect(uniqueItems).toEqual([
@@ -45,9 +41,11 @@ it('ensureUniqueNames replaces duplicate names for operations', () => {
       { operation: { operationId: 'getX', summary: 'operation2' } },
       { operation: { operationId: 'getX1', summary: 'operation3' } }
     ],
-    ({ operation }) => operation.operationId!,
-    (operationInfo, operationId) => {
-      operationInfo.operation.operationId = operationId;
+    {
+      getName: ({ operation }) => operation.operationId!,
+      setName: (operationInfo, operationId) => {
+        operationInfo.operation.operationId = operationId;
+      }
     }
   );
 

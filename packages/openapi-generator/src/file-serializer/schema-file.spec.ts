@@ -1,6 +1,5 @@
-import { schemaDocumentation, schemaFile } from './schema-file';
-import { schemaPropertyDocumentation } from './schema';
-describe('schema-file', () => {
+import { schemaFile } from './schema-file';
+describe('schemaFile', () => {
   it('serializes schema file for schema', () => {
     expect(
       schemaFile({
@@ -38,7 +37,8 @@ describe('schema-file', () => {
               name: 'otherSchema1',
               required: true,
               schema: {
-                $ref: '#/components/schema/OtherSchema1'
+                $ref: '#/components/schema/OtherSchema1',
+                schemaName: 'OtherSchema1'
               }
             },
             {
@@ -46,7 +46,8 @@ describe('schema-file', () => {
               description: 'Description other Schema 2',
               required: true,
               schema: {
-                $ref: '#/components/schema/OtherSchema2'
+                $ref: '#/components/schema/OtherSchema2',
+                schemaName: 'OtherSchema2'
               }
             }
           ]

@@ -31,7 +31,6 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'

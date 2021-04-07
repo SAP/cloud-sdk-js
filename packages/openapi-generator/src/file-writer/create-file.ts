@@ -1,6 +1,6 @@
 import { promises } from 'fs';
 import { join } from 'path';
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, getCopyrightHeader } from '@sap-cloud-sdk/util';
 const { writeFile } = promises;
 
 /**
@@ -32,11 +32,7 @@ export async function createFile(
 function wrapContent(content: string): string {
   return (
     codeBlock`
-/*
- * Copyright (c) ${new Date().getFullYear()} SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
+${getCopyrightHeader()}
 ${content}
 ` + '\n'
   );

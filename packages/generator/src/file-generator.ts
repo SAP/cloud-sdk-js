@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, getCopyrightHeader } from '@sap-cloud-sdk/util';
 import { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
 
 const logger = createLogger({
@@ -54,13 +54,6 @@ export function copyFile(
 }
 
 function addFileComment(content: SourceFileStructure): SourceFileStructure {
-  content.leadingTrivia = [
-    '/*',
-    ' * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.',
-    ' *',
-    ' * This is a generated file powered by the SAP Cloud SDK for JavaScript.',
-    ' */',
-    ''
-  ].join('\n');
+  content.leadingTrivia = getCopyrightHeader();
   return content;
 }

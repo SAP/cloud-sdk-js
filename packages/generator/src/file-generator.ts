@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { codeBlock, createLogger } from '@sap-cloud-sdk/util';
 import { Directory, SourceFile, SourceFileStructure } from 'ts-morph';
 
 const logger = createLogger({

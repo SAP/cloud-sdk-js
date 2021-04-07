@@ -3,7 +3,7 @@ import { Destination } from './destination';
 import { buildHeadersForDestination } from './header-builder-for-destination';
 import { checkHeaders } from './authorization-header.spec';
 
-describe('', () => {
+describe('header builder for destination', () => {
   it('warns if the destination and request config contains authorization information.', () => {
     const destination: Destination = {
       url: '',
@@ -38,5 +38,15 @@ describe('', () => {
 
     const headers = await buildHeadersForDestination(destination);
     checkHeaders(headers);
+  });
+
+  it('adds location id headers if there is a cloudConnectorLocationId in the destination', async () => {
+    const destination = {
+      url: 'url',
+      cloudConnectorLocationId: 'locationId'
+    } as Destination;
+
+    const headers = await buildHeadersForDestination(destination);
+    expect(headers['SAP-Connectivity-SCC-Location_ID']).toBe('locationId');
   });
 });

@@ -53,7 +53,7 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  xit('BasicAuth: Provider Destination & Provider Token', async () => {
+  xit('BasicAuth: Provider Destination & Provider Token + GET request', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider
     });
@@ -69,6 +69,27 @@ describe('OAuth flows', () => {
       .top(1)
       .execute(destination);
     expect(result.length).toBe(1);
+  }, 60000);
+
+  xit('BasicAuth: Provider Destination & Provider Token + PUT request (csrf token)', async () => {
+    const clientGrant = await serviceToken('destination', {
+      userJwt: accessToken.provider
+    });
+
+    const destination = await fetchDestination(
+      destinationService!.credentials.uri,
+      clientGrant,
+      systems.s4.providerBasic
+    );
+
+    const buPa = BusinessPartner.builder()
+      .businessPartnerCategory('1')
+      .lastName('name')
+      .build();
+    const result = await BusinessPartner.requestBuilder()
+      .create(buPa)
+      .execute(destination);
+    expect(result.lastName).toBe('name');
   }, 60000);
 
   xit('BasicAuth: Subscriber Destination & Subscriber Token', async () => {

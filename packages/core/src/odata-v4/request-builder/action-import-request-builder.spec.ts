@@ -1,8 +1,4 @@
 import nock from 'nock';
-import {
-  defaultDestination,
-  mockCsrfTokenRequest
-} from '../../../test/test-util/request-mocker';
 import { Destination } from '../../../src/connectivity';
 import {
   testActionImportMultipleParameterComplexReturnType,
@@ -24,14 +20,33 @@ const destination: Destination = {
   originalProperties: {}
 };
 
+const mockedBuildHeaderResponse = {
+  'x-csrf-token': 'mocked-x-csrf-token',
+  'set-cookie': ['mocked-cookie-0', 'mocked-cookie-1']
+};
+
+function mockCsrfTokenRequest(path?: string) {
+  nock(host, {
+    reqheaders: {
+      'x-csrf-token': 'Fetch'
+    }
+  })
+    .get(path ? `${servicePath}/${path}` : servicePath)
+    .query({ $format: 'json' })
+    .reply(200, '', mockedBuildHeaderResponse);
+}
+
 describe('action import request builder', () => {
   it('should call simple action.', async () => {
-    mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
+    mockCsrfTokenRequest('TestActionImportNoParameterNoReturnType');
 
-    nock(host)
-      .post(
-        `${servicePath}/TestActionImportNoParameterNoReturnType?$format=json`
-      )
+    nock(host, {
+      reqheaders: {
+        'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token']
+      }
+    })
+      .post(`${servicePath}/TestActionImportNoParameterNoReturnType`)
+      .query({ $format: 'json' })
       .reply(204);
 
     const result = await testActionImportNoParameterNoReturnType({}).execute(
@@ -41,14 +56,16 @@ describe('action import request builder', () => {
   });
 
   it('is possible to call actions with unknown edm types', async () => {
-    mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
     const responseValue = 'SomeUntypedResponse';
     const response = { value: responseValue };
 
+    mockCsrfTokenRequest('TestActionImportUnsupportedEdmTypes');
+
     nock(host)
-      .post(`${servicePath}/TestActionImportUnsupportedEdmTypes?$format=json`, {
+      .post(`${servicePath}/TestActionImportUnsupportedEdmTypes`, {
         SimpleParam: 'someUntypedParameter'
       })
+      .query({ $format: 'json' })
       .reply(200, response);
 
     const result = await testActionImportUnsupportedEdmTypes({
@@ -58,7 +75,7 @@ describe('action import request builder', () => {
   });
 
   it('should call an action and parse the response', async () => {
-    mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
+    mockCsrfTokenRequest('TestActionImportMultipleParameterComplexReturnType');
 
     const tsBody = { stringParam: 'LaLa', nonNullableStringParam: 'LuLu' };
     const tsResponse = { stringProperty: 'someResponseValue' };
@@ -68,9 +85,10 @@ describe('action import request builder', () => {
 
     nock(host)
       .post(
-        `${servicePath}/TestActionImportMultipleParameterComplexReturnType?$format=json`,
+        `${servicePath}/TestActionImportMultipleParameterComplexReturnType`,
         httpBody
       )
+      .query({ $format: 'json' })
       .reply(200, httpResponse);
 
     const result = await testActionImportMultipleParameterComplexReturnType(
@@ -81,12 +99,11 @@ describe('action import request builder', () => {
 
   describe('executeRaw', () => {
     it('returns request and raw response', async () => {
-      mockCsrfTokenRequest(host, defaultDestination.sapClient!, servicePath);
+      mockCsrfTokenRequest('TestActionImportNoParameterNoReturnType');
 
       nock(host)
-        .post(
-          `${servicePath}/TestActionImportNoParameterNoReturnType?$format=json`
-        )
+        .post(`${servicePath}/TestActionImportNoParameterNoReturnType`)
+        .query({ $format: 'json' })
         .reply(204, {});
 
       const actual = await testActionImportNoParameterNoReturnType(

@@ -26,12 +26,6 @@ const mockedBuildHeaderResponse = {
 };
 
 describe('FunctionImportRequestBuilder', () => {
-  beforeEach(() => {
-    nock(defaultHost)
-      .get(serviceUrl)
-      .reply(200, undefined, mockedBuildHeaderResponse);
-  });
-
   it('builds correct url for multiple parameters', async () => {
     const params = {
       stringParam: 'someString',
@@ -61,6 +55,11 @@ describe('FunctionImportRequestBuilder', () => {
   it('executes request with POST', async () => {
     const simpleParam = 't';
     const requestBuilder = testFunctionImportPost({ simpleParam });
+
+    nock(defaultHost)
+      .get(`${serviceUrl}/TestFunctionImportPOST`)
+      .query({ $format: 'json', SimpleParam: `'${simpleParam}'` })
+      .reply(200, undefined, mockedBuildHeaderResponse);
 
     nock(defaultHost)
       .post(`${serviceUrl}/TestFunctionImportPOST`)
@@ -169,6 +168,10 @@ describe('FunctionImportRequestBuilder', () => {
   });
 
   it('return undefined or throw in failure case', async () => {
+    nock(defaultHost)
+      .get(`${serviceUrl}/TestFunctionImportNoReturnType?$format=json`)
+      .reply(200, undefined, mockedBuildHeaderResponse);
+
     nock(defaultHost)
       .post(`${serviceUrl}/TestFunctionImportNoReturnType?$format=json`)
       .reply(200);

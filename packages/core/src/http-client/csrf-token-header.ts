@@ -5,9 +5,13 @@ import {
   pickNonNullish,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import { HttpRequestConfig, executeHttpRequest } from '../../http-client';
-import { Destination, DestinationNameAndJwt } from '../scp-cf';
-import { removeTrailingSlashes } from '../../odata-common/remove-slashes';
+import { removeTrailingSlashes } from '../odata-common/remove-slashes';
+import {
+  Destination,
+  DestinationNameAndJwt
+} from '../connectivity/scp-cf/destination';
+import { executeHttpRequest } from '../http-client';
+import { HttpRequestConfig } from './http-client-types';
 
 const logger = createLogger({
   package: 'core',
@@ -55,24 +59,47 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
 
   // The S/4 does a redirect if the CSRF token is fetched in case the '/' is not in the URL.
   // TODO: remove once https://github.com/axios/axios/issues/3369 is really fixed. Issue is closed but problem stays.
-  return executeHttpRequest(destination, appendSlash(axiosConfig))
+  const requestConfigWithTrailingSlash = appendSlash(axiosConfig);
+  return executeHttpRequest(destination, requestConfigWithTrailingSlash)
     .then(response => response.headers)
-    .catch(e1 => {
-      logger.error(
+    .catch(error1 => {
+      const headers1 = getResponseHeadersFromError(error1);
+      if (hasCsrfToken(headers1)) {
+        return headers1;
+      }
+      logger.warn(
         new ErrorWithCause(
-          'Initial try to fetch CSRF token failed - retry without slash at ',
-          e1
+          `First attempt to fetch CSRF token failed with the URL: ${requestConfigWithTrailingSlash.url}. Retrying without trailing slash.`,
+          error1
         )
       );
-      return executeHttpRequest(destination, removeSlash(axiosConfig))
+      const requestConfigWithOutTrailingSlash = removeSlash(axiosConfig);
+      return executeHttpRequest(destination, requestConfigWithOutTrailingSlash)
         .then(response => response.headers)
-        .catch(e2 => {
-          throw new ErrorWithCause(
-            'Also second try to fetch SRF token failed - No CSRF token fetched.',
-            e2
+        .catch(error2 => {
+          const headers2 = getResponseHeadersFromError(error2);
+          if (hasCsrfToken(headers2)) {
+            return headers2;
+          }
+          logger.warn(
+            new ErrorWithCause(
+              `Second attempt to fetch CSRF token failed with the URL: ${requestConfigWithOutTrailingSlash.url}. No CSRF token fetched.`,
+              error2
+            )
           );
+          // todo suggest to disable csrf token handling when the API is implemented
+          return {};
         });
     });
+}
+
+function hasCsrfToken(headers: Record<string, any>): boolean {
+  return !!headers['x-csrf-token'];
+}
+
+// Non-2xx responses can contain valid csrf tokens in their headers.
+function getResponseHeadersFromError(error: any): Record<string, any> {
+  return error.response?.headers || {};
 }
 
 function appendSlash(requestConfig: HttpRequestConfig): HttpRequestConfig {

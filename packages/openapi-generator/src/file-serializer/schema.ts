@@ -50,7 +50,7 @@ export function serializeSchema(schema: OpenApiSchema): string {
   }
 
   if (isNotSchema(schema)) {
-    return codeBlock`Except<any, ${serializeSchema(schema.not)}>`;
+    return codeBlock`any`;
   }
 
   return getType(schema.type);

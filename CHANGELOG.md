@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [core] Remove experimental `Exclude` type, which was accidentally exposed as non-experimental.
 
 ## New Functionality
 

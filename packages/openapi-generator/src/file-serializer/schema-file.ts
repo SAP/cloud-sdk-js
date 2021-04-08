@@ -1,10 +1,6 @@
 import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { OpenApiNamedSchema } from '../openapi-types';
-import {
-  collectRefs,
-  hasNotSchema,
-  parseFileNameFromRef
-} from '../schema-util';
+import { collectRefs, parseFileNameFromRef } from '../schema-util';
 import { serializeSchema } from './schema';
 import { Import, serializeImports } from './imports';
 
@@ -24,20 +20,13 @@ export function schemaFile(namedSchema: OpenApiNamedSchema): string {
 }
 
 function getImports(namedSchema: OpenApiNamedSchema): Import[] {
-  const refImports = collectRefs(namedSchema.schema)
+  return collectRefs(namedSchema.schema)
     .filter(ref => ref.schemaName !== namedSchema.name)
     .map(ref => ({
       names: [ref.schemaName],
       typeOnly: true,
       moduleIdentifier: `./${parseFileNameFromRef(ref)}`
     }));
-  if (hasNotSchema(namedSchema.schema)) {
-    return [
-      { names: ['Except'], moduleIdentifier: '@sap-cloud-sdk/core' },
-      ...refImports
-    ];
-  }
-  return refImports;
 }
 
 export function schemaDocumentation(schema: OpenApiNamedSchema): string {

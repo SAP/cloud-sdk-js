@@ -14,10 +14,12 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
         node-version: [10.x, 12.x]
         exclude:
           - os: macos-latest
+            node-version: 10.x
+          - os: windows-latest
             node-version: 10.x
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +33,6 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
@@ -56,11 +57,10 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since origin/main
+      - run: yarn lerna run compile
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn lint
         name: Static Code Check
@@ -92,11 +92,10 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since origin/main
+      - run: yarn lerna run compile
         if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn test:e2e
   canary-release:
@@ -115,11 +114,10 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since origin/main
+      - run: yarn lerna run compile
         if: steps.cache.outputs.cache-hit == 'true'
       - name: Canary Release
         run: |
@@ -144,11 +142,10 @@ jobs:
           path: |
             node_modules
             */*/node_modules
-            **/dist
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile --since origin/main
+      - run: yarn lerna run compile
         if: steps.cache.outputs.cache-hit == 'true'
       - uses: ./.github/actions/get-changelog
         name: Get Changelog

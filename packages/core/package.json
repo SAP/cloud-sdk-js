@@ -46,7 +46,7 @@
     "https-proxy-agent": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.0",
-    "opossum": "^5.0.0",
+    "opossum": "^6.0.0",
     "uuid": "^8.2.0",
     "voca": "^1.4.0"
   },

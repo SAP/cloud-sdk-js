@@ -1,3 +1,5 @@
+import { unixEOL } from '@sap-cloud-sdk/util';
+
 export function tsConfig(): string {
   return (
     JSON.stringify(
@@ -20,6 +22,6 @@ export function tsConfig(): string {
       },
       null,
       2
-    ) + '\n'
+    ) + unixEOL
   );
 }

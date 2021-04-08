@@ -1,9 +1,8 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
 import { OpenApiNamedSchema, OpenApiSchema } from '../openapi-types';
 import {
   collectRefs,
   hasNotSchema,
-  parseTypeNameFromRef,
   parseFileNameFromRef
 } from '../schema-util';
 import { serializeSchema } from './schema';
@@ -17,15 +16,16 @@ import { Import, serializeImports } from './imports';
 export function schemaFile({ name, schema }: OpenApiNamedSchema): string {
   const imports = serializeImports(getImports(schema));
 
-  return codeBlock`
+  return codeBlock`    
     ${imports}
+    ${schemaDocumentation({ name, schema })}
     export type ${name} = ${serializeSchema(schema)};
   `;
 }
 
 function getImports(schema: OpenApiSchema): Import[] {
   const refImports = collectRefs(schema).map(ref => ({
-    names: [parseTypeNameFromRef(ref)],
+    names: [ref.schemaName],
     typeOnly: true,
     moduleIdentifier: `./${parseFileNameFromRef(ref)}`
   }));
@@ -36,4 +36,10 @@ function getImports(schema: OpenApiSchema): Import[] {
     ];
   }
   return refImports;
+}
+
+export function schemaDocumentation(schema: OpenApiNamedSchema): string {
+  return documentationBlock`${
+    schema.description || `Representation of the '${schema.name}' schema.`
+  }`;
 }

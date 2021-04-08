@@ -4,9 +4,20 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-
+/**
+ * Representation of the 'DefaultApi'.
+ * This API is part of the 'TestService' service.
+ */
 export const DefaultApi = {
+  /**
+   * Create a request builder for execution of get requests to the '/test-cases/default-tag' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
   noTag: () => new OpenApiRequestBuilder<any>('get', '/test-cases/default-tag'),
+  /**
+   * Create a request builder for execution of post requests to the '/test-cases/default-tag' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
   defaultTag: () =>
     new OpenApiRequestBuilder<any>('post', '/test-cases/default-tag')
 };

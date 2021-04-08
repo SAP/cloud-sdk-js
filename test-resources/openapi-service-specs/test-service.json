@@ -587,6 +587,24 @@
             "description": "no content"
           }
         }
+      },
+      "post": {
+        "tags": ["test case"],
+        "operationId": "useNameWithSymbols",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/simple-test-entity«WITH_Symbols»"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
       }
     }
   },
@@ -659,6 +677,12 @@
         "description": "SimpleTestEntity schema"
       },
       "OtherSimpleTestEntity": {
+        "$ref": "#/components/schemas/SimpleTestEntity"
+      },
+      "simple-test-entity«WITH_Symbols»": {
+        "$ref": "#/components/schemas/SimpleTestEntity"
+      },
+      "simple-test-entity<WITH_Symbols>": {
         "$ref": "#/components/schemas/SimpleTestEntity"
       },
       "ComplexTestEntity": {

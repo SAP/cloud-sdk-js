@@ -1,3 +1,4 @@
+import { unixEOL, ODataVersion, caps } from '@sap-cloud-sdk/util';
 import {
   ClassDeclarationStructure,
   MethodDeclarationOverloadStructure,
@@ -6,7 +7,6 @@ import {
   ParameterDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import { ODataVersion, caps } from '@sap-cloud-sdk/util';
 import {
   addLeadingNewline,
   getFunctionDoc,
@@ -332,7 +332,7 @@ function deleteRequestBuilderStatements(
   );
   const keys = entity.keys
     .map((key, index) => `${key.originalName}: ${params[index]}!`)
-    .join(',\n');
+    .join(`,${unixEOL}`);
   return `return new DeleteRequestBuilder${caps(oDataVersion)}(${
     entity.className
   }, ${params[0]} instanceof ${entity.className} ? ${params[0]} : {${keys}});`;
@@ -345,7 +345,7 @@ function buildParametrizedStatements(
 ) {
   const params = entity.keys
     .map(key => `${key.originalName}: ${key.propertyNameAsParam}`)
-    .join(',\n');
+    .join(`,${unixEOL}`);
   return `return new ${requestBuilder}${caps(oDataVersion)}(${
     entity.className
   }, {${params}});`;

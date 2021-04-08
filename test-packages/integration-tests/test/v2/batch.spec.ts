@@ -44,14 +44,14 @@ function mockCsrfTokenRequest(host: string, sapClient: string) {
       'sap-client': sapClient
     }
   })
-    .get(servicePath)
+    .get(`${servicePath}/$batch`)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
     });
 }
 
-function mockBatchRequest(matchRequestPayload, reponseData) {
+function mockBatchRequest(matchRequestPayload, responseData) {
   mockCsrfTokenRequest(destination.url, destination.sapClient!);
 
   nock(destination.url, {
@@ -63,7 +63,7 @@ function mockBatchRequest(matchRequestPayload, reponseData) {
   })
     .matchHeader('content-type', /multipart\/mixed; boundary=batch_*/)
     .post(`${servicePath}/$batch`, new RegExp(matchRequestPayload))
-    .reply(202, reponseData, {
+    .reply(202, responseData, {
       'Content-Type': 'multipart/mixed; boundary=TEST-RESPONSE'
     });
 }

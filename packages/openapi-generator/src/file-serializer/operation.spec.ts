@@ -1,5 +1,5 @@
 import { OpenApiOperation } from '../openapi-types';
-import { serializeOperation } from './operation';
+import { operationDocumentation, serializeOperation } from './operation';
 
 describe('serializeOperation', () => {
   it('serializes operation with path and query parameters', () => {
@@ -35,7 +35,14 @@ describe('serializeOperation', () => {
       pathPattern: 'test/{id}/{subId}'
     };
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
+      "/**
+       * Create a request builder for execution of get requests to the 'test/{id}/{subId}' endpoint.
+       * @param id Path parameter.
+       * @param subId Path parameter.
+       * @param queryParameters Object containing the following keys: limit.
+       * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+       */
+      getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
         'get',
         'test/{id}/{subId}',
         {
@@ -69,7 +76,12 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
+      "/**
+       * Create a request builder for execution of delete requests to the 'test/{id}' endpoint.
+       * @param id Path parameter.
+       * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+       */
+      deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
         'delete',
         'test/{id}',
         {
@@ -98,7 +110,12 @@ describe('serializeOperation', () => {
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "getFn: (queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
+      "/**
+       * Create a request builder for execution of get requests to the 'test' endpoint.
+       * @param queryParameters Object containing the following keys: limit.
+       * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+       */
+      getFn: (queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
         'get',
         'test',
         {
@@ -134,7 +151,13 @@ describe('serializeOperation', () => {
       pathPattern: 'test/{id}'
     };
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
+      "/**
+       * Create a request builder for execution of post requests to the 'test/{id}' endpoint.
+       * @param id Path parameter.
+       * @param body Request body.
+       * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+       */
+      createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
         'post',
         'test/{id}',
         {
@@ -154,14 +177,19 @@ describe('serializeOperation', () => {
       queryParameters: [],
       requestBody: {
         required: false,
-        schema: { $ref: '#/components/schemas/RefType' }
+        schema: { $ref: '#/components/schemas/RefType', schemaName: 'RefType' }
       },
       response: { type: 'string' },
       pathPattern: 'test'
     };
 
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
-      "fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
+      "/**
+       * Create a request builder for execution of post requests to the 'test' endpoint.
+       * @param body Request body.
+       * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+       */
+      fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
         'post',
         'test',
         {
@@ -169,5 +197,113 @@ describe('serializeOperation', () => {
             }
       )"
     `);
+  });
+
+  function getOperation(): OpenApiOperation {
+    return {
+      response: { type: 'string' },
+      method: 'GET',
+      pathPattern: 'my/Api',
+      pathParameters: [] as any,
+      queryParameters: [] as any
+    } as OpenApiOperation;
+  }
+
+  it('creates a description for operations if not present', () => {
+    const operation = getOperation();
+    expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
+      "/**
+       * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
+       * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+       */"
+    `);
+  });
+
+  it('uses the description for operations if present', () => {
+    const operation = {
+      ...getOperation(),
+      description: 'This is my Operation.'
+    };
+    expect(operationDocumentation(operation)).toMatch(/This is my Operation/);
+  });
+
+  it('creates documentation with path parameters', () => {
+    const operation = getOperation();
+    operation.pathParameters = [
+      { name: 'pathParameter1' },
+      { name: 'path-parameter-2' }
+    ] as any;
+    expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
+      "/**
+       * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
+       * @param pathParameter1 Path parameter.
+       * @param path-parameter-2 Path parameter.
+       * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+       */"
+    `);
+  });
+
+  it('uses path parameter description if present', () => {
+    const operation = getOperation();
+    operation.pathParameters = [
+      {
+        name: 'pathParameter1',
+        description: 'This is my parameter description'
+      }
+    ] as any;
+    expect(operationDocumentation(operation)).toMatch(
+      /This is my parameter description/
+    );
+  });
+
+  it('creates documentation with query parameters object', () => {
+    const operation = getOperation();
+    operation.queryParameters = [
+      { name: 'queryParameter1' },
+      { name: 'queryParameter2' }
+    ] as any;
+    expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
+      "/**
+       * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
+       * @param queryParameters Object containing the following keys: queryParameter1, queryParameter2.
+       * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+       */"
+    `);
+  });
+
+  it('creates documentation with body parameter', () => {
+    const operation = getOperation();
+    operation.requestBody = { schema: { type: 'string' }, required: true };
+    expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
+      "/**
+       * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
+       * @param body Request body.
+       * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+       */"
+    `);
+  });
+
+  it('uses the body description if present', () => {
+    const operation = getOperation();
+    operation.requestBody = {
+      schema: { type: 'string' },
+      description: 'My body description',
+      required: true
+    };
+    expect(operationDocumentation(operation)).toMatch(/My body description/);
+  });
+
+  it('creates the signature in order path parameter, body, queryParameter and returns last', () => {
+    const operation = getOperation();
+    operation.pathParameters = [{ name: 'pathParameter1' }] as any;
+    operation.requestBody = { schema: { type: 'string' }, required: false };
+    operation.queryParameters = [
+      { name: 'queryParameter1' },
+      { name: 'queryParameter2' }
+    ] as any;
+    operation.requestBody = { schema: { type: 'string' }, required: true };
+    expect(operationDocumentation(operation)).toMatch(
+      /@param pathParameter1.*\s.*@param body.*\s.*@param queryParameters.*\s.*@returns/
+    );
   });
 });

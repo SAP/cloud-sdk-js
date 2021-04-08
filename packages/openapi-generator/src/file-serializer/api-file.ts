@@ -1,43 +1,48 @@
-import { codeBlock, unique } from '@sap-cloud-sdk/util';
-import { OpenApiApi, OpenApiOperation } from '../openapi-types';
+import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
-  collectRefs,
-  hasNotSchema,
-  parseTypeNameFromRef
-} from '../schema-util';
+  OpenApiApi,
+  OpenApiOperation,
+  OpenApiReferenceSchema
+} from '../openapi-types';
+import { collectRefs, getUniqueRefs, hasNotSchema } from '../schema-util';
 import { serializeOperation } from './operation';
 import { Import, serializeImports } from './imports';
 
 /**
  * Serialize an API representation to a string representing the resulting API file.
  * @param api Represenation of an API.
+ * @param serviceName Service name for which the API is created.
  * @returns The serialized API file contents.
  */
-export function apiFile(api: OpenApiApi): string {
+export function apiFile(api: OpenApiApi, serviceName: string): string {
   const imports = serializeImports(getImports(api));
-  return codeBlock`
-${imports}
-
+  const apiDoc = apiDocumentation(api, serviceName);
+  const apiContent = codeBlock`
 export const ${api.name} = {
   ${api.operations.map(operation => serializeOperation(operation)).join(',\n')}
 };
 `;
+
+  return [imports, apiDoc, apiContent].join(unixEOL);
 }
 
 /**
- * Get the reference types for all request body types in the given operation list.
+ * Get the unique reference schemas for all request body types in the given operation list.
  * @param operations The given operation list.
- * @returns The list of body types.
+ * @returns The list of unique referenced body type schemas.
  */
-function collectRefsFromOperations(operations: OpenApiOperation[]): string[] {
-  return operations.reduce(
-    (referenceTypes, operation) =>
-      unique([
+function collectRefsFromOperations(
+  operations: OpenApiOperation[]
+): OpenApiReferenceSchema[] {
+  return getUniqueRefs(
+    operations.reduce(
+      (referenceTypes, operation) => [
         ...referenceTypes,
         ...collectRefs(operation.requestBody?.schema),
         ...collectRefs(operation.response)
-      ]),
-    []
+      ],
+      []
+    )
   );
 }
 
@@ -49,8 +54,8 @@ function hasNotSchemaInOperations(operations: OpenApiOperation[]): boolean {
 }
 
 function getImports(api: OpenApiApi): Import[] {
-  const refs = collectRefsFromOperations(api.operations).map(requestBodyType =>
-    parseTypeNameFromRef(requestBodyType)
+  const refs = collectRefsFromOperations(api.operations).map(
+    requestBodyType => requestBodyType.schemaName
   );
 
   const refImports = {
@@ -67,4 +72,10 @@ function getImports(api: OpenApiApi): Import[] {
   }
 
   return [coreImports, refImports];
+}
+
+export function apiDocumentation(api: OpenApiApi, serviceName: string): string {
+  return documentationBlock`
+  Representation of the '${api.name}'.
+  This API is part of the '${serviceName}' service.`;
 }

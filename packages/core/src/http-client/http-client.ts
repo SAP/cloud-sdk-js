@@ -7,13 +7,13 @@ import {
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import {
-  buildCsrfHeaders,
   buildHeadersForDestination,
   Destination,
   DestinationNameAndJwt,
   toDestinationNameUrl,
   useOrFetchDestination
 } from '../connectivity/scp-cf';
+import { buildCsrfHeaders } from '../http-client';
 import { getAgentConfig } from './http-agent';
 import {
   DestinationHttpRequestConfig,
@@ -262,14 +262,12 @@ export function shouldHandleCsrfToken(
   );
 }
 
-export const xCsrfTokenHeaderKey = 'x-csrf-token';
-
 async function getCsrfHeaders(
   destination: Destination | DestinationNameAndJwt,
   headers: Record<string, string>,
   url: string
 ): Promise<Record<string, any>> {
-  const csrfHeaders = pickIgnoreCase(headers, xCsrfTokenHeaderKey);
+  const csrfHeaders = pickIgnoreCase(headers, 'x-csrf-token');
   return Object.keys(csrfHeaders).length
     ? csrfHeaders
     : buildCsrfHeaders(destination, {

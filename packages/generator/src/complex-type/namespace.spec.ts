@@ -1,10 +1,10 @@
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { StructureKind, VariableDeclarationKind } from 'ts-morph';
 import {
   complexMeal,
   complexMealWithDesert
 } from '../../test/test-util/data-model';
 import { complexTypeNamespace } from './namespace';
-
 describe('namespace', () => {
   it('complexTypeSourceFile', () => {
     const actual = complexTypeNamespace(complexMeal, 'v2');
@@ -34,7 +34,7 @@ describe('namespace', () => {
             }
           ],
           docs: [
-            '\nMetadata information on all properties of the `ComplexMealType` complex type.'
+            `${unixEOL}Metadata information on all properties of the \`ComplexMealType\` complex type.`
           ],
           isExported: true
         },
@@ -51,7 +51,7 @@ describe('namespace', () => {
           statements: 'return deserializeComplexTypeV2(json, ComplexMealType);',
           isExported: true,
           docs: [
-            '\n@deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'
+            `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexTypeV2\` or \`deserializeComplexTypeV4\` of the \`@sap-cloud-sdk/core\` package instead.`
           ]
         }
       ]
@@ -86,7 +86,7 @@ describe('namespace', () => {
             }
           ],
           docs: [
-            '\nMetadata information on all properties of the `ComplexMealWithDesertType` complex type.'
+            `${unixEOL}Metadata information on all properties of the \`ComplexMealWithDesertType\` complex type.`
           ],
           isExported: true
         },
@@ -104,7 +104,7 @@ describe('namespace', () => {
             'return deserializeComplexTypeV4(json, ComplexMealWithDesertType);',
           isExported: true,
           docs: [
-            '\n@deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'
+            `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexTypeV2\` or \`deserializeComplexTypeV4\` of the \`@sap-cloud-sdk/core\` package instead.`
           ]
         }
       ]

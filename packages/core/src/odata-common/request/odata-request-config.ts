@@ -16,6 +16,7 @@ const logger = createLogger({
 export abstract class ODataRequestConfig {
   payload: Record<string, any> | string;
   customServicePath: string;
+  fetchCsrfToken = true;
 
   readonly defaultHeaders: Record<string, any> = {
     'content-type': 'application/json',

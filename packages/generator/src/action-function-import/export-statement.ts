@@ -1,3 +1,4 @@
+import { unixEOL } from '@sap-cloud-sdk/util';
 import {
   StructureKind,
   VariableDeclarationKind,
@@ -27,11 +28,11 @@ function exportsInitializer(
 ): string {
   return (
     actionFunctionImports.reduce((initializer, currentImport) => {
-      if (initializer !== '{\n') {
-        initializer += ',\n';
+      if (initializer !== `{${unixEOL}`) {
+        initializer += `,${unixEOL}`;
       }
       initializer += `${currentImport.name}`;
       return initializer;
-    }, '{\n') + '\n}'
+    }, `{${unixEOL}`) + `${unixEOL}}`
   );
 }

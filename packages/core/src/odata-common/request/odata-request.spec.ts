@@ -13,7 +13,9 @@ describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;
   describe('format', () => {
     beforeEach(() => {
-      requestSpy = jest.spyOn(axios, 'request').mockResolvedValue('test');
+      requestSpy = jest
+        .spyOn(axios, 'request')
+        .mockResolvedValue({ 'x-csrf-token': 'test' });
     });
 
     afterEach(() => {
@@ -50,6 +52,7 @@ describe('OData Request', () => {
           ODataDeleteRequestConfig,
           destination
         );
+        request.config.fetchCsrfToken = false;
         await request.execute();
         const expectedJsonHttpsAgent = {
           httpsAgent: expect.objectContaining({
@@ -70,6 +73,7 @@ describe('OData Request', () => {
           ODataDeleteRequestConfig,
           destination
         );
+        request.config.fetchCsrfToken = false;
         await request.execute();
         const expectedJsonHttpsAgent = {
           httpsAgent: expect.objectContaining({

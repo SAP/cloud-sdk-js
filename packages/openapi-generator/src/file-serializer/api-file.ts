@@ -42,7 +42,6 @@ function collectRefsFromOperations(
           ...[
             operation.requestBody?.schema,
             operation.response,
-            ...operation.pathParameters.map(({ schema }) => schema),
             ...operation.queryParameters.map(({ schema }) => schema)
           ]
         )

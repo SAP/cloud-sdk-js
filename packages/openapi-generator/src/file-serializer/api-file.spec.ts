@@ -106,7 +106,7 @@ describe('apiFile', () => {
     };
     expect(apiFile(api, 'MyserviceName')).toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-      import type { PathParameterType, QueryParameterType, RefType, ResponseType } from './schema';
+      import type { QueryParameterType, RefType, ResponseType } from './schema';
       /**
        * Representation of the 'TestApi'.
        * This API is part of the 'MyserviceName' service.

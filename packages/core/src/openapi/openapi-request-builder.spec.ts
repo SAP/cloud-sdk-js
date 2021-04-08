@@ -120,7 +120,7 @@ describe('openapi-request-builder', () => {
     );
   });
 
-  it('addCustomRequestConfigs', () => {
+  it('addCustomRequestConfig', () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     requestBuilder
       .addCustomRequestConfiguration({ responseType: 'arraybuffer' })

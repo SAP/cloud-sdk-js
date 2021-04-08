@@ -5,7 +5,7 @@
  */
 import type { SimpleTestEntity } from './simple-test-entity';
 /**
- * Representation of the 'TestEntity' schema.
+ * TestEntity schema
  */
 export type TestEntity =
   | {

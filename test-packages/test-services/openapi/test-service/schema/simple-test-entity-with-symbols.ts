@@ -5,6 +5,6 @@
  */
 import type { SimpleTestEntity } from './simple-test-entity';
 /**
- * Representation of the 'SimpleTestEntityWITHSymbols' schema.
+ * SimpleTestEntity schema
  */
 export type SimpleTestEntityWITHSymbols = SimpleTestEntity;

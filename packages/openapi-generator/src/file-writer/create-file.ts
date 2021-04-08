@@ -1,6 +1,7 @@
 import { promises } from 'fs';
 import { join } from 'path';
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { unixEOL, codeBlock } from '@sap-cloud-sdk/util';
+
 const { writeFile } = promises;
 
 /**
@@ -34,7 +35,7 @@ function wrapContent(content: string): string {
     codeBlock`
 ${getCopyrightHeader()}
 ${content}
-` + '\n'
+` + unixEOL
   );
 }
 

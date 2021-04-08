@@ -1,5 +1,4 @@
-import { EOL } from 'os';
-import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
   OpenApiObjectSchema,
@@ -85,7 +84,7 @@ function serializeObjectSchemaForProperties(
   return codeBlock`{
       ${properties
         .map(property => serializePropertyWithDocumentation(property))
-        .join(EOL)}
+        .join(unixEOL)}
     }`;
 }
 
@@ -103,7 +102,7 @@ function serializePropertyWithDocumentation(
     serializeSchema(property.schema)
   );
   if (documentation) {
-    return [documentation, serialized].join(EOL);
+    return [documentation, serialized].join(unixEOL);
   }
   return serialized;
 }

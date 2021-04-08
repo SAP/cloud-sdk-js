@@ -1,3 +1,4 @@
+import { unixEOL } from './string-formatter';
 import { errorWithCause } from './error';
 
 describe('errorWithCause', () => {
@@ -6,6 +7,6 @@ describe('errorWithCause', () => {
     const wrapper = errorWithCause('wrapper', cause);
     expect(wrapper instanceof Error).toBeTruthy();
     expect(wrapper.message).toBe('wrapper');
-    expect(wrapper.stack).toContain('Caused by:\nError: cause');
+    expect(wrapper.stack).toContain(`Caused by:${unixEOL}Error: cause`);
   });
 });

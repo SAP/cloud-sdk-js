@@ -1,3 +1,4 @@
+import { unixEOL, caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
   FunctionDeclarationStructure,
   NamespaceDeclarationStructure,
@@ -5,7 +6,6 @@ import {
   VariableDeclarationKind,
   VariableStatementStructure
 } from 'ts-morph';
-import { caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
 import { VdmComplexType } from '../vdm-types';
 
 export function complexTypeNamespace(
@@ -37,7 +37,7 @@ function factoryFunction(
     });`,
     isExported: true,
     docs: [
-      '\n@deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.'
+      `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexTypeV2\` or \`deserializeComplexTypeV4\` of the \`@sap-cloud-sdk/core\` package instead.`
     ]
   };
 }
@@ -83,7 +83,7 @@ function propertyMetadata(
       }
     ],
     docs: [
-      `\nMetadata information on all properties of the \`${complexType.typeName}\` complex type.`
+      `${unixEOL}Metadata information on all properties of the \`${complexType.typeName}\` complex type.`
     ],
     isExported: true
   };

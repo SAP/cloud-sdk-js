@@ -1,10 +1,10 @@
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { StructureKind } from 'ts-morph';
 import {
   complexMeal,
   complexMealWithDesert
 } from '../../test/test-util/data-model';
 import { builderFunction } from './builder-function';
-
 describe('builder-function', () => {
   it('builderFunction', () => {
     const actual = builderFunction(complexMeal);
@@ -16,7 +16,7 @@ describe('builder-function', () => {
       returnType: 'ComplexMealType',
       statements: 'return ComplexMealType.build(json);',
       docs: [
-        '\n@deprecated Since v1.6.0. Use [[ComplexMealType.build]] instead.'
+        `${unixEOL}@deprecated Since v1.6.0. Use [[ComplexMealType.build]] instead.`
       ]
     });
   });
@@ -31,7 +31,7 @@ describe('builder-function', () => {
       returnType: 'ComplexMealWithDesertType',
       statements: 'return ComplexMealWithDesertType.build(json);',
       docs: [
-        '\n@deprecated Since v1.6.0. Use [[ComplexMealWithDesertType.build]] instead.'
+        `${unixEOL}@deprecated Since v1.6.0. Use [[ComplexMealWithDesertType.build]] instead.`
       ]
     });
   });

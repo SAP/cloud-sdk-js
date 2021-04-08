@@ -1,3 +1,4 @@
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { getGeneratorVersion } from '../sdk-metadata/pregenerated-lib';
 
 export function packageJson(
@@ -49,6 +50,6 @@ export function packageJson(
       },
       null,
       2
-    ) + '\n'
+    ) + unixEOL
   );
 }

@@ -1,3 +1,5 @@
+import { unixEOL } from '@sap-cloud-sdk/util';
+
 export function typedocJson(): string {
   return (
     JSON.stringify(
@@ -7,6 +9,6 @@ export function typedocJson(): string {
       },
       null,
       2
-    ) + '\n'
+    ) + unixEOL
   );
 }

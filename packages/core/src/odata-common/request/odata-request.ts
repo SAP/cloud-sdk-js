@@ -1,4 +1,5 @@
 import {
+  unixEOL,
   ErrorWithCause,
   mergeIgnoreCase,
   pickIgnoreCase,
@@ -19,7 +20,6 @@ import {
 import { HttpResponse, executeHttpRequest } from '../../http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
-
 /**
  * OData request configuration for an entity type.
  *
@@ -261,5 +261,5 @@ function messageFromS4ErrorResponse(error): string {
     propertyExists(error.response.data.error, 'message', 'value')
       ? error.response.data.error.message.value
       : ''
-  }\n${JSON.stringify(error.response.data.error)}`;
+  }${unixEOL}${JSON.stringify(error.response.data.error)}`;
 }

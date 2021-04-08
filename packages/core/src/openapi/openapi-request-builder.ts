@@ -69,12 +69,10 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     const fetchCsrfToken = ['post', 'put', 'patch', 'delete'].includes(
       this.method.toLowerCase()
     );
-    const a = filterCustomRequestConfigs(this.customRequestConfigs);
     return executeHttpRequest(
       destination,
       {
-        // ...filterCustomRequestConfigs(this.customRequestConfigs),
-        ...a,
+        ...filterCustomRequestConfigs(this.customRequestConfigs),
         method: this.method,
         url: this.getPath(),
         headers: this.customHeaders,

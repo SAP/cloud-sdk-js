@@ -56,9 +56,31 @@ describe('apiFile', () => {
           operationId: 'getFn',
           method: 'get',
           tags: [],
-          pathParameters: [],
-          queryParameters: [],
-          pathPattern: 'test',
+          pathParameters: [
+            {
+              in: 'path',
+              name: 'id',
+              originalName: 'id',
+              schema: {
+                $ref: '#/components/schemas/PathParameterType',
+                schemaName: 'PathParameterType'
+              },
+              required: true
+            }
+          ],
+          queryParameters: [
+            {
+              in: 'query',
+              name: 'queryParam',
+              originalName: 'queryParam',
+              schema: {
+                $ref: '#/components/schemas/QueryParameterType',
+                schemaName: 'QueryParameterType'
+              },
+              required: true
+            }
+          ],
+          pathPattern: 'test/{id}',
           response: { type: 'string' }
         },
         {
@@ -84,19 +106,25 @@ describe('apiFile', () => {
     };
     expect(apiFile(api, 'MyserviceName')).toMatchInlineSnapshot(`
       "import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-      import type { RefType, ResponseType } from './schema';
+      import type { QueryParameterType, RefType, ResponseType } from './schema';
       /**
        * Representation of the 'TestApi'.
        * This API is part of the 'MyserviceName' service.
        */
       export const TestApi = {
         /**
-         * Create a request builder for execution of get requests to the 'test' endpoint.
+         * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
+         * @param id Path parameter.
+         * @param queryParameters Object containing the following keys: queryParam.
          * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
          */
-        getFn: () => new OpenApiRequestBuilder<string>(
+        getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}) => new OpenApiRequestBuilder<string>(
           'get',
-          'test'
+          'test/{id}',
+          {
+                pathParameters: { id },
+                queryParameters
+              }
         ),
         /**
          * Create a request builder for execution of post requests to the 'test' endpoint.

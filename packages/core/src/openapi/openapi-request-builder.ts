@@ -45,7 +45,8 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Add custom request config to the request.
+   * Add custom request configuration to the request. Typically, this is used when specifying response type for downloading files.
+   * If the custom request configuration contains keys in this list [[defaultDisallowedKeys]], they will be removed.
    *
    * @param requestConfig - Key-value pairs denoting additional custom request config to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.

@@ -120,7 +120,8 @@ export abstract class MethodRequestBuilder<
   }
 
   /**
-   * Add custom request configuration to the request.
+   * Add custom request configuration to the request. Typically, this is used when specifying response type for downloading files.
+   * If the custom request configuration contains keys in this list [[defaultDisallowedKeys]], they will be removed.
    *
    * @param requestConfiguration - Key-value pairs denoting additional custom request configuration to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.

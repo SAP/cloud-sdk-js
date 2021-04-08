@@ -1,3 +1,5 @@
+import { unixEOL } from '@sap-cloud-sdk/util';
+
 export function packageJson(
   npmPackageName: string,
   dependencies: string[],
@@ -26,6 +28,6 @@ export function packageJson(
       },
       null,
       2
-    ) + '\n'
+    ) + unixEOL
   );
 }

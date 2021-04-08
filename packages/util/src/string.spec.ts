@@ -1,3 +1,4 @@
+import { unixEOL } from './string-formatter';
 import { trim, encodeBase64, removeFileExtension } from './string';
 
 describe('encodeBase64', () => {
@@ -8,11 +9,11 @@ describe('encodeBase64', () => {
 
 describe('trim', () => {
   it('trims leading and trailing empty lines', () => {
-    expect(trim('\n\nA\n')).toEqual('\nA');
+    expect(trim(`${unixEOL}${unixEOL}A${unixEOL}`)).toEqual(`${unixEOL}A`);
   });
 
   it('trims two whitespace lines', () => {
-    expect(trim(' \n ')).toEqual('');
+    expect(trim(` ${unixEOL} `)).toEqual('');
   });
 
   it('removes file extension', () => {

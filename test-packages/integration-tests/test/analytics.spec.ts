@@ -11,14 +11,9 @@ describe('usage analytics', () => {
   const hashedProjectIdentifierWithSalt =
     'e2d76b70dcb8ed5fd86e9fadf5052845ae1a0112e99ab96747b03bf78730a7ab';
 
-  const rootConfigPath = resolve(
-    __dirname
-      .split(sep)
-      .reduce((prev, curr) =>
-        prev.endsWith('integration-tests') ? prev : `${prev}${sep}${curr}`
-      ),
-    'sap-cloud-sdk-analytics.json'
-  );
+  // The cwd is different on windows and mac hence the path is set here like this
+  // The findConfigPath calls resolve() which relies on the cwd.
+  const rootConfigPath = resolve(process.cwd(), 'sap-cloud-sdk-analytics.json');
 
   beforeEach(() => {
     jest.spyOn(analytics, 'getAnalyticsData').mockResolvedValue({
@@ -65,7 +60,7 @@ describe('usage analytics', () => {
       idsitesub: 'test-jssdk',
       event_type: 'test_event'
     };
-    const callerPath = '/node_modules'; // Pretend that we are a dependency
+    const callerPath = sep + 'node_modules'; // Pretend that we are a dependency
 
     await expect(
       performUsageAnalytics(callerPath, options)
@@ -91,7 +86,7 @@ describe('usage analytics', () => {
       'utf8'
     );
 
-    const callerPath = '/node_modules'; // Pretend that we're a dependency
+    const callerPath = sep + 'node_modules'; // Pretend that we're a dependency
     await expect(performUsageAnalytics(callerPath)).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
 
@@ -108,7 +103,7 @@ describe('usage analytics', () => {
       )
       .reply(204);
 
-    const callerPath = '/node_modules'; // Pretend that we're a dependency
+    const callerPath = sep + 'node_modules'; // Pretend that we're a dependency
     await expect(performUsageAnalytics(callerPath)).resolves.toBeUndefined();
     expect(swaCall.isDone()).toBe(false); // Since it's otherwise hard to test that the code does do something, we setup the HTTP mock and then assert that it has not been called
   });
@@ -140,7 +135,7 @@ describe('usage analytics', () => {
       idsitesub: 'test-jssdk',
       event_type: 'test_event'
     };
-    const callerPath = '/node_modules'; // Pretend that we are a dependency
+    const callerPath = sep + 'node_modules'; // Pretend that we are a dependency
 
     await expect(
       performUsageAnalytics(callerPath, options)

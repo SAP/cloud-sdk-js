@@ -1,4 +1,4 @@
-import { kebabCase, last, pascalCase, unique } from '@sap-cloud-sdk/util';
+import { kebabCase, last } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import {
   OpenApiAllOfSchema,
@@ -8,24 +8,55 @@ import {
   OpenApiNotSchema,
   OpenApiObjectSchema,
   OpenApiOneOfSchema,
+  OpenApiReferenceSchema,
   OpenApiSchema
 } from './openapi-types';
 
 /**
- * Collect all reference paths within a schema.
+ * Collect all unique reference schemas within a schema.
  * @param schema Parsed schema to retrieve all references for.
- * @returns Returns a list of reference paths within a schema.
+ * @returns Returns a list of unique reference schemas within a schema.
  */
-export function collectRefs(schema: OpenApiSchema | undefined): string[] {
+export function collectRefs(
+  schema: OpenApiSchema | undefined
+): OpenApiReferenceSchema[] {
+  return getUniqueRefs(collectAllRefs(schema));
+}
+
+/**
+ * Collect all reference schemas within a schema.
+ * The resulting list of references might contain duplicates.
+ * @param schema Parsed schema to retrieve all references for.
+ * @returns Returns a list of reference schemas within a schema. Might contain duplicates.
+ */
+function collectAllRefs(
+  schema: OpenApiSchema | undefined
+): OpenApiReferenceSchema[] {
   if (!schema) {
     return [];
   }
   if (isReferenceObject(schema)) {
-    return [schema.$ref];
+    return [schema];
   }
   return Object.values(schema)
     .filter(value => typeof value === 'object')
-    .reduce((refs, value) => unique([...refs, ...collectRefs(value)]), []);
+    .reduce((refs, value) => [...refs, ...collectAllRefs(value)], []);
+}
+
+/**
+ * Reduce a list of reference schemas to a list of unique reference schemas, based on $ref.
+ * @param refs List of reference schemas.
+ * @returns List of unique reference schemas.
+ */
+export function getUniqueRefs(
+  refs: OpenApiReferenceSchema[]
+): OpenApiReferenceSchema[] {
+  return refs.reduce((uniqueRefs: OpenApiReferenceSchema[], collectedRef) => {
+    if (!uniqueRefs.some(ref => ref.$ref === collectedRef.$ref)) {
+      uniqueRefs.push(collectedRef);
+    }
+    return uniqueRefs;
+  }, []);
 }
 
 /**
@@ -117,16 +148,24 @@ export function isNotSchema(obj: any): obj is OpenApiNotSchema {
   return obj?.not;
 }
 
-// TODO: handle duplicates after pascal case => my-type, MyType
 /**
  * Parse the type name of a reference object.
  * @param obj Reference object to get the type name from.
+ * @param schemaRefMapping Mapping between reference paths and schema names.
  * @returns Parsed type name.
  */
 export function parseTypeNameFromRef(
-  obj: OpenAPIV3.ReferenceObject | string
+  obj: OpenAPIV3.ReferenceObject | string,
+  schemaRefMapping: Record<string, string>
 ): string {
-  return pascalCase(parseType(obj));
+  const ref = isReferenceObject(obj) ? obj.$ref : obj;
+  const schemaName = schemaRefMapping[ref];
+  if (!schemaName) {
+    throw new Error(
+      `Could not find schema name for reference path '${ref}'. Schema does not exist.`
+    );
+  }
+  return schemaName;
 }
 
 /**

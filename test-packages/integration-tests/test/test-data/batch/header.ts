@@ -1,3 +1,5 @@
+import { unixEOL } from '@sap-cloud-sdk/util';
+
 export const header200 = () =>
   [
     'HTTP/1.1 200 OK',
@@ -6,7 +8,7 @@ export const header200 = () =>
     'dataserviceversion: 2.0',
     'sap-metadata-last-modified: Thu, 08 Aug 2019 09:56:58 GMT',
     'cache-control: no-store, no-cache'
-  ].join('\n');
+  ].join(unixEOL);
 
 export const header201 = () => [
   'Content-Type: application/http',

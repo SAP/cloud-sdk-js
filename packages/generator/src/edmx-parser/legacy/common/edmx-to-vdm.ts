@@ -1,4 +1,5 @@
 import {
+  unixEOL,
   pascalCase,
   createLogger,
   last,
@@ -259,7 +260,7 @@ function longDescription(
   if (documented.Documentation) {
     const summmary = ensureString(documented.Documentation.Summary);
     const longDesc = ensureString(documented.Documentation.LongDescription);
-    docs = `${summmary}\n${longDesc}`.trim();
+    docs = `${summmary}${unixEOL}${longDesc}`.trim();
   }
   if (!docs && described) {
     docs = ensureString(described.description);
@@ -273,7 +274,7 @@ function propertyDescription(
 ): string {
   const short = shortPropertyDescription(property, swaggerProperty);
   const long = longDescription(property, swaggerProperty);
-  return `${short}\n${long}`.trim();
+  return `${short}${unixEOL}${long}`.trim();
 }
 
 function parameterDescription(

@@ -1,3 +1,4 @@
+import { unixEOL } from '@sap-cloud-sdk/util';
 import {
   multiChangesetResponse,
   singleChangesetResponse
@@ -15,7 +16,7 @@ export const multiRetrieveResponse = () =>
     '--TEST-RESPONSE',
     ...getByKeyResponse,
     '--TEST-RESPONSE--'
-  ].join('\n');
+  ].join(unixEOL);
 
 export const multiChangesetBatchResponse = () =>
   [
@@ -24,7 +25,7 @@ export const multiChangesetBatchResponse = () =>
     '--TEST-RESPONSE',
     ...multiChangesetResponse,
     '--TEST-RESPONSE--'
-  ].join('\n');
+  ].join(unixEOL);
 
 export const mixedBatchResponse = () =>
   [
@@ -33,7 +34,7 @@ export const mixedBatchResponse = () =>
     '--TEST-RESPONSE',
     ...singleChangesetResponse,
     '--TEST-RESPONSE--'
-  ].join('\n');
+  ].join(unixEOL);
 
 export const mixedErrorResponse = () =>
   [
@@ -46,4 +47,4 @@ export const mixedErrorResponse = () =>
     '--TEST-RESPONSE',
     ...errorChangesetResponse,
     '--TEST-RESPONSE--'
-  ].join('\n');
+  ].join(unixEOL);

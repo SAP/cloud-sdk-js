@@ -1,4 +1,4 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
   OpenApiObjectSchema,
@@ -7,7 +7,6 @@ import {
 import { getType } from '../parser/type-mapping';
 import {
   isReferenceObject,
-  parseTypeNameFromRef,
   isArraySchema,
   isObjectSchema,
   isEnumSchema,
@@ -24,7 +23,7 @@ import {
  */
 export function serializeSchema(schema: OpenApiSchema): string {
   if (isReferenceObject(schema)) {
-    return parseTypeNameFromRef(schema);
+    return schema.schemaName;
   }
   if (isArraySchema(schema)) {
     const type = serializeSchema(schema.items);
@@ -62,7 +61,7 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
     !schema.properties.length &&
     typeof schema.additionalProperties !== 'object'
   ) {
-    return serializeRecordSchema();
+    return 'Record<string, any>';
   }
 
   const types: string[] = [];
@@ -71,7 +70,9 @@ function serializeObjectSchema(schema: OpenApiObjectSchema): string {
   }
 
   if (schema.additionalProperties) {
-    types.push(serializeRecordSchema(schema.additionalProperties));
+    types.push(
+      `Record<string, ${serializeSchema(schema.additionalProperties)}>`
+    );
   }
 
   return types.join(' | ');
@@ -82,22 +83,32 @@ function serializeObjectSchemaForProperties(
 ): string {
   return codeBlock`{
       ${properties
-        .map(
-          property =>
-            [
-              `'${property.name}'${property.required ? '' : '?'}`,
-              serializeSchema(property.schema)
-            ].join(': ') + ';'
-        )
-        .join('\n')}
+        .map(property => serializePropertyWithDocumentation(property))
+        .join(unixEOL)}
     }`;
 }
 
-function serializeRecordSchema(
-  additionalProperties: true | OpenApiSchema = true
-): string {
-  if (typeof additionalProperties === 'object') {
-    return codeBlock`Record<string, ${serializeSchema(additionalProperties)}>`;
+function serializeProperty(name: string, required: boolean, type: string) {
+  return `'${name}'${required ? '' : '?'}: ${type};`;
+}
+
+function serializePropertyWithDocumentation(
+  property: OpenApiObjectSchemaProperty
+) {
+  const documentation = schemaPropertyDocumentation(property);
+  const serialized = serializeProperty(
+    property.name,
+    property.required,
+    serializeSchema(property.schema)
+  );
+  if (documentation) {
+    return [documentation, serialized].join(unixEOL);
   }
-  return codeBlock`Record<string, any>`;
+  return serialized;
+}
+
+export function schemaPropertyDocumentation(
+  schema: OpenApiObjectSchemaProperty
+): string {
+  return schema.description ? documentationBlock`${schema.description}` : '';
 }

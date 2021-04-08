@@ -3,6 +3,7 @@ import {
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
+import { basicHeader } from '@sap-cloud-sdk/core';
 import {
   testEntityKeyPropGuid,
   testEntityKeyPropString
@@ -11,7 +12,8 @@ import {
 function mockCsrfTokenRequest(
   host: string,
   authHeader: string,
-  csrfToken: string
+  csrfToken: string,
+  path?: string
 ) {
   nock(host, {
     reqheaders: {
@@ -19,7 +21,11 @@ function mockCsrfTokenRequest(
       'x-csrf-token': 'Fetch'
     }
   })
-    .get(TestEntity._defaultServicePath)
+    .get(
+      path
+        ? `${TestEntity._defaultServicePath}/${path}`
+        : TestEntity._defaultServicePath
+    )
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']
@@ -52,7 +58,7 @@ describe('deep-update and change detection', () => {
     username: 'USERNAME',
     password: 'PASSWORD'
   };
-  const basicHeader = 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=';
+  const testBasicHeader = 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=';
   const csrfToken = 'csrf-token';
 
   it('change detection ignores navigation properties and complex types', async () => {
@@ -74,10 +80,10 @@ describe('deep-update and change detection', () => {
       booleanProperty: true
     };
 
-    mockCsrfTokenRequest(destination.url, basicHeader, csrfToken);
+    mockCsrfTokenRequest(destination.url, testBasicHeader, csrfToken);
     mockUpdateRequest(
       destination.url,
-      basicHeader,
+      testBasicHeader,
       csrfToken,
       `A_TestEntity(KeyPropertyGuid=guid%27${testEntityKeyPropGuid}%27,KeyPropertyString=%27${testEntityKeyPropString}%27)`,
       {
@@ -111,18 +117,31 @@ describe('deep-update and change detection', () => {
       booleanProperty: true
     };
 
-    mockCsrfTokenRequest(destination.url, basicHeader, csrfToken);
-    mockUpdateRequest(
+    mockCsrfTokenRequest(
       destination.url,
-      basicHeader,
+      basicHeader(destination.username, destination.password),
       csrfToken,
-      `A_TestEntity(KeyPropertyGuid=guid%27${testEntityKeyPropGuid}%27,KeyPropertyString=%27${testEntityKeyPropString}%27)`,
-      {
-        StringProperty: 'no',
-        to_SingleLink: { StringProperty: 'abc' },
-        ComplexTypeProperty: { BooleanProperty: true, StringProperty: 'test' }
-      }
+      `A_TestEntity(KeyPropertyGuid=guid%27${testEntityKeyPropGuid}%27,KeyPropertyString=%27${testEntityKeyPropString}%27)`
     );
+
+    nock(destination.url, {
+      reqheaders: {
+        authorization: basicHeader(destination.username, destination.password),
+        accept: 'application/json',
+        'content-type': 'application/json',
+        'x-csrf-token': csrfToken,
+        cookie: 'key1=val1;key2=val2;key3=val3'
+      }
+    })
+      .patch(
+        `${TestEntity._defaultServicePath}/A_TestEntity(KeyPropertyGuid=guid%27${testEntityKeyPropGuid}%27,KeyPropertyString=%27${testEntityKeyPropString}%27)`,
+        {
+          StringProperty: 'no',
+          to_SingleLink: { StringProperty: 'abc' },
+          ComplexTypeProperty: { BooleanProperty: true, StringProperty: 'test' }
+        }
+      )
+      .reply(204);
 
     const request = TestEntity.requestBuilder()
       .update(testEntity)

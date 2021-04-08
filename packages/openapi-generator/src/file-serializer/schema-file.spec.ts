@@ -87,6 +87,34 @@ describe('schemaFile', () => {
     `);
   });
 
+  it('serializes schema file without imports for schema including only self reference', () => {
+    expect(
+      schemaFile({
+        name: 'MySchema',
+        schema: {
+          properties: [
+            {
+              name: 'property',
+              required: false,
+              schema: {
+                $ref: '#/components/schema/MySchema',
+                schemaName: 'MySchema'
+              }
+            }
+          ]
+        }
+      })
+    ).toMatchInlineSnapshot(`
+      "    
+          /**
+           * Representation of the 'MySchema' schema.
+           */
+          export type MySchema = {
+            'property'?: MySchema;
+          };"
+    `);
+  });
+
   it('serializes simple schema file for schema with description', () => {
     expect(
       schemaFile({

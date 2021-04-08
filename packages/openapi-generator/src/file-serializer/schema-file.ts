@@ -1,5 +1,5 @@
 import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
-import { OpenApiNamedSchema, OpenApiSchema } from '../openapi-types';
+import { OpenApiNamedSchema } from '../openapi-types';
 import {
   collectRefs,
   hasNotSchema,
@@ -10,26 +10,28 @@ import { Import, serializeImports } from './imports';
 
 /**
  * Serialize a schema representation to a string representing the according schema file contents.
- * @param operationInfo A named schema.
+ * @param namedSchema A named schema.
  * @returns The serialized schema file contents.
  */
-export function schemaFile({ name, schema }: OpenApiNamedSchema): string {
-  const imports = serializeImports(getImports(schema));
+export function schemaFile(namedSchema: OpenApiNamedSchema): string {
+  const imports = serializeImports(getImports(namedSchema));
 
   return codeBlock`    
     ${imports}
-    ${schemaDocumentation({ name, schema })}
-    export type ${name} = ${serializeSchema(schema)};
+    ${schemaDocumentation(namedSchema)}
+    export type ${namedSchema.name} = ${serializeSchema(namedSchema.schema)};
   `;
 }
 
-function getImports(schema: OpenApiSchema): Import[] {
-  const refImports = collectRefs(schema).map(ref => ({
-    names: [ref.schemaName],
-    typeOnly: true,
-    moduleIdentifier: `./${parseFileNameFromRef(ref)}`
-  }));
-  if (hasNotSchema(schema)) {
+function getImports(namedSchema: OpenApiNamedSchema): Import[] {
+  const refImports = collectRefs(namedSchema.schema)
+    .filter(ref => ref.schemaName !== namedSchema.name)
+    .map(ref => ({
+      names: [ref.schemaName],
+      typeOnly: true,
+      moduleIdentifier: `./${parseFileNameFromRef(ref)}`
+    }));
+  if (hasNotSchema(namedSchema.schema)) {
     return [
       { names: ['Except'], moduleIdentifier: '@sap-cloud-sdk/core' },
       ...refImports

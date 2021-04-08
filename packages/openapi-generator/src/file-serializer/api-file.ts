@@ -38,8 +38,14 @@ function collectRefsFromOperations(
     operations.reduce(
       (referenceTypes, operation) => [
         ...referenceTypes,
-        ...collectRefs(operation.requestBody?.schema),
-        ...collectRefs(operation.response)
+        ...collectRefs(
+          ...[
+            operation.requestBody?.schema,
+            operation.response,
+            ...operation.pathParameters.map(({ schema }) => schema),
+            ...operation.queryParameters.map(({ schema }) => schema)
+          ]
+        )
       ],
       []
     )

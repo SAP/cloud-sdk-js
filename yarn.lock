@@ -1784,9 +1784,9 @@
     "@sap-cloud-sdk/core" "^1.37.1"
 
 "@sap/edm-converters@^1.0.21", "@sap/edm-converters@^1.0.27":
-  version "1.0.40"
-  resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.40.tgz#70232e1eb3cb40ddf8f8d8fb9478e85b093a9ac4"
-  integrity sha512-g97d9pb2xPCBb64qs6l+mw6zDJZBjz/uWuXB7tGZiRJW6M5LhrYHiSlRWd99eU6X6LibLTNPdXdtCcrAlAxuJQ==
+  version "1.0.41"
+  resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.41.tgz#e38cdd69b49ac407ef3c6637f78f1c6ea26ada4d"
+  integrity sha512-Af7L7amlh06YXfOK2ufjKUZXhcuwXSt0uzPDrHbVBvN1lQS8Gj4BxzXTbnskiFweTR2CFuhoqsSaV2r/7l9mYw==
   dependencies:
     commander "=2.19.0"
     multimap "1.1.0"
@@ -8000,9 +8000,9 @@ neo-async@^2.6.0:
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
 netmask@^2.0.1, "netmask@^2.0.1 ":
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.1.tgz#5a5cbdcbb7b6de650870e15e83d3e9553a414cf4"
-  integrity sha512-gB8eG6ubxz67c7O2gaGiyWdRUIbH61q7anjgueDqCC9kvIs/b4CTtCMaQKeJbv1/Y7FT19I4zKwYmjnjInRQsg==
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
+  integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
 nice-try@^1.0.4:
   version "1.0.5"

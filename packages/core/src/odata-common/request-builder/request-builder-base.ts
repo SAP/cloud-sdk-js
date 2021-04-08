@@ -120,13 +120,13 @@ export abstract class MethodRequestBuilder<
   }
 
   /**
-   * Add custom request configs to the request.
+   * Add custom request configuration to the request.
    *
-   * @param requestConfigs - Key-value pairs denoting additional custom request configs to be set in the request.
+   * @param requestConfiguration - Key-value pairs denoting additional custom request configuration to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  addCustomRequestConfigs(requestConfigs: Record<string, string>): this {
-    this.requestConfig.addCustomRequestConfigs(requestConfigs);
+  addCustomRequestConfiguration(requestConfiguration: Record<string, string>): this {
+    this.requestConfig.addCustomRequestConfiguration(requestConfiguration);
     return this;
   }
 

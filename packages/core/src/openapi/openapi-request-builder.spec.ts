@@ -123,7 +123,7 @@ describe('openapi-request-builder', () => {
   it('addCustomRequestConfigs', () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     requestBuilder
-      .addCustomRequestConfigs({ responseType: 'arraybuffer' })
+      .addCustomRequestConfiguration({ responseType: 'arraybuffer' })
       .executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
       destination,

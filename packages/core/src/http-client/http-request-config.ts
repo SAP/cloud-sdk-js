@@ -1,4 +1,4 @@
-import { createLogger, pickWithoutKeys } from '@sap-cloud-sdk/util';
+import { createLogger, exclude } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
   package: 'core',
@@ -6,16 +6,16 @@ const logger = createLogger({
 });
 
 /**
- * Filter disallowed keys from a given custom request configs object.
- * @param customRequestConfigs a given custom request configs object to be filtered
+ * Filter disallowed keys from a given custom request config object.
+ * @param customRequestConfig a given custom request config object to be filtered
  * @param disallowedKeys A list of keys that are not allowed to be customized.
  * @returns Filtered custom request configs object.
  */
-export function filterCustomRequestConfigs(
-  customRequestConfigs: Record<string, string>,
-  disallowedKeys = defaultDisallowedKeysOfCustomRequestConfigs
+export function filterCustomRequestConfig(
+  customRequestConfig: Record<string, string>,
+  disallowedKeys = defaultDisallowedKeys
 ): Record<string, string> {
-  const removedKeys = Object.keys(customRequestConfigs).filter(key =>
+  const removedKeys = Object.keys(customRequestConfig).filter(key =>
     disallowedKeys.includes(key)
   );
   if (removedKeys.length) {
@@ -25,13 +25,13 @@ export function filterCustomRequestConfigs(
       )}`
     );
   }
-  return pickWithoutKeys(disallowedKeys, customRequestConfigs) as Record<
+  return exclude(disallowedKeys, customRequestConfig) as Record<
     string,
     string
   >;
 }
 
-const defaultDisallowedKeysOfCustomRequestConfigs = [
+const defaultDisallowedKeys = [
   'method',
   'url',
   'data',

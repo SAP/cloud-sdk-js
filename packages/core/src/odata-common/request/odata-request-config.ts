@@ -24,7 +24,7 @@ export abstract class ODataRequestConfig {
 
   private _customHeaders: Record<string, string> = {};
   private _customQueryParameters: Record<string, string> = {};
-  private _customRequestConfigs: Record<string, string> = {};
+  private _customRequestConfiguration: Record<string, string> = {};
 
   /**
    * @deprecated Since v1.30.0. Use [[defaultHeaders]] instead.
@@ -89,13 +89,13 @@ export abstract class ODataRequestConfig {
     return this._customQueryParameters;
   }
 
-  set customRequestConfigs(requestConfigs: Record<string, string>) {
-    this._customRequestConfigs = {};
-    this.addCustomRequestConfigs(requestConfigs);
+  set customRequestConfiguration(requestConfiguration: Record<string, string>) {
+    this._customRequestConfiguration = {};
+    this.addCustomRequestConfiguration(requestConfiguration);
   }
 
-  get customRequestConfigs(): Record<string, string> {
-    return this._customRequestConfigs;
+  get customRequestConfiguration(): Record<string, string> {
+    return this._customRequestConfiguration;
   }
 
   /**
@@ -122,13 +122,13 @@ export abstract class ODataRequestConfig {
   }
 
   /**
-   * Add custom request configs to the request.
+   * Add custom request configuration to the request.
    *
-   * @param requestConfigs - Key-value pairs where the key is the name of a request config and the value is the respective value
+   * @param requestConfiguration - Key-value pairs where the key is the name of a request configuration and the value is the respective value
    */
-  addCustomRequestConfigs(requestConfigs: Record<string, string>): void {
-    Object.entries(requestConfigs).forEach(([key, value]) => {
-      this.customRequestConfigs[key] = value;
+  addCustomRequestConfiguration(requestConfiguration: Record<string, string>): void {
+    Object.entries(requestConfiguration).forEach(([key, value]) => {
+      this.customRequestConfiguration[key] = value;
     });
   }
 

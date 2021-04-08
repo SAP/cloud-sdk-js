@@ -106,7 +106,7 @@ export const pick = <T>(keys: string[], obj: T): Partial<T> => {
  * @param obj - object from which the values are taken
  * @returns an object with the selected keys and corresponding values.
  */
-export const pickWithoutKeys = <T>(keys: string[], obj: T): Partial<T> => {
+export const exclude = <T>(keys: string[], obj: T): Partial<T> => {
   const result = {};
   Object.keys(obj).forEach(key => {
     const value = obj[key];

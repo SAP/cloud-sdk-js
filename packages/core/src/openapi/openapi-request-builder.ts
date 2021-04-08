@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 import { Destination, DestinationNameAndJwt } from '../connectivity';
 import {
   executeHttpRequest,
-  filterCustomRequestConfigs,
+  filterCustomRequestConfig,
   HttpResponse,
   Method
 } from '../http-client';
@@ -18,7 +18,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private customHeaders: Record<string, string> = {};
-  private customRequestConfigs: Record<string, string> = {};
+  private customRequestConfiguration: Record<string, string> = {};
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -45,14 +45,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Add custom request configs to the request.
+   * Add custom request config to the request.
    *
-   * @param requestConfigs - Key-value pairs denoting additional custom request configs to be set in the request.
+   * @param requestConfig - Key-value pairs denoting additional custom request config to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  addCustomRequestConfigs(requestConfigs: Record<string, string>): this {
-    Object.entries(requestConfigs).forEach(([key, value]) => {
-      this.customRequestConfigs[key] = value;
+  addCustomRequestConfiguration(requestConfig: Record<string, string>): this {
+    Object.entries(requestConfig).forEach(([key, value]) => {
+      this.customRequestConfiguration[key] = value;
     });
     return this;
   }
@@ -72,7 +72,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     return executeHttpRequest(
       destination,
       {
-        ...filterCustomRequestConfigs(this.customRequestConfigs),
+        ...filterCustomRequestConfig(this.customRequestConfiguration),
         method: this.method,
         url: this.getPath(),
         headers: this.customHeaders,

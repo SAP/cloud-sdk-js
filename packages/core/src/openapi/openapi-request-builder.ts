@@ -51,7 +51,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param requestConfiguration - Key-value pairs denoting additional custom request configuration to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  addCustomRequestConfiguration(requestConfiguration: Record<string, string>): this {
+  addCustomRequestConfiguration(
+    requestConfiguration: Record<string, string>
+  ): this {
     Object.entries(requestConfiguration).forEach(([key, value]) => {
       this.customRequestConfiguration[key] = value;
     });

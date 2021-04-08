@@ -25,10 +25,7 @@ export function filterCustomRequestConfig(
       )}`
     );
   }
-  return exclude(disallowedKeys, customRequestConfig) as Record<
-    string,
-    string
-  >;
+  return exclude(disallowedKeys, customRequestConfig) as Record<string, string>;
 }
 
 /**

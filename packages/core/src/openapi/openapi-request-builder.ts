@@ -1,7 +1,12 @@
 /* eslint-disable max-classes-per-file */
 import { AxiosResponse } from 'axios';
 import { Destination, DestinationNameAndJwt } from '../connectivity';
-import { executeHttpRequest, HttpResponse, Method } from '../http-client';
+import {
+  executeHttpRequest,
+  filterCustomRequestConfigs,
+  HttpResponse,
+  Method
+} from '../http-client';
 
 /**
  * Request builder for OpenAPI requests.
@@ -13,6 +18,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private customHeaders: Record<string, string> = {};
+  private customRequestConfigs: Record<string, string> = {};
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -39,6 +45,19 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
+   * Add custom request configs to the request.
+   *
+   * @param requestConfigs - Key-value pairs denoting additional custom request configs to be set in the request.
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  addCustomRequestConfigs(requestConfigs: Record<string, string>): this {
+    Object.entries(requestConfigs).forEach(([key, value]) => {
+      this.customRequestConfigs[key] = value;
+    });
+    return this;
+  }
+
+  /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination Destination to execute the request against.
@@ -50,9 +69,12 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     const fetchCsrfToken = ['post', 'put', 'patch', 'delete'].includes(
       this.method.toLowerCase()
     );
+    const a = filterCustomRequestConfigs(this.customRequestConfigs);
     return executeHttpRequest(
       destination,
       {
+        // ...filterCustomRequestConfigs(this.customRequestConfigs),
+        ...a,
         method: this.method,
         url: this.getPath(),
         headers: this.customHeaders,

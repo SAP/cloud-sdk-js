@@ -8,7 +8,8 @@ import {
   pickValueIgnoreCase,
   pickNonNullish,
   mergeLeftIgnoreCase,
-  mergeIgnoreCase
+  mergeIgnoreCase,
+  pickWithoutKeys
 } from './object';
 
 describe('propertyExists', () => {
@@ -143,6 +144,23 @@ describe('pickValueIgnoreCase', () => {
 
   it('returns undefined for different equal keys', () => {
     expect(pickValueIgnoreCase(customHeaders, 'differentKey')).toBeUndefined();
+  });
+});
+
+describe('pickWithoutKeys', () => {
+  it('picks elements from an object without keys', () => {
+    const input = { a: 1, b: 2, c: 3, d: 4 };
+    expect(pickWithoutKeys(['b', 'c'], input)).toEqual({ a: 1, d: 4 });
+  });
+
+  it('picks elements ignoring non existing keys', () => {
+    const input = { a: 1, b: 2, c: 3, d: 4 };
+    expect(pickWithoutKeys(['b', 'd', 'f'], input)).toEqual({ a: 1, c: 3 });
+  });
+
+  it('picks elements also with falsy values', () => {
+    const input = { a: 1, b: 2, c: undefined, d: 0 };
+    expect(pickWithoutKeys(['b'], input)).toEqual({ a: 1, c: undefined, d: 0 });
   });
 });
 

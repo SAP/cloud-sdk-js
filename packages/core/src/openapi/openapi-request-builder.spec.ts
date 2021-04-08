@@ -1,6 +1,6 @@
-jest.mock('../http-client');
+jest.mock('../http-client/http-client');
 
-import * as httpClient from '../http-client';
+import * as httpClient from '../http-client/http-client';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {
@@ -115,6 +115,25 @@ describe('openapi-request-builder', () => {
         headers: {},
         params: undefined,
         data: undefined
+      },
+      { fetchCsrfToken: false }
+    );
+  });
+
+  it('addCustomRequestConfigs', () => {
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test');
+    requestBuilder
+      .addCustomRequestConfigs({ responseType: 'arraybuffer' })
+      .executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      destination,
+      {
+        method: 'get',
+        url: '/test',
+        headers: {},
+        params: undefined,
+        data: undefined,
+        responseType: 'arraybuffer'
       },
       { fetchCsrfToken: false }
     );

@@ -119,6 +119,17 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
+  /**
+   * Add custom request configs to the request.
+   *
+   * @param requestConfigs - Key-value pairs denoting additional custom request configs to be set in the request.
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  addCustomRequestConfigs(requestConfigs: Record<string, string>): this {
+    this.requestConfig.addCustomRequestConfigs(requestConfigs);
+    return this;
+  }
+
   build(): ODataRequest<RequestConfigT>;
   build(
     destination: Destination | DestinationNameAndJwt,

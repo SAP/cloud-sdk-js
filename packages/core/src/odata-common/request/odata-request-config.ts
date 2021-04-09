@@ -16,7 +16,6 @@ const logger = createLogger({
 export abstract class ODataRequestConfig {
   payload: Record<string, any> | string;
   customServicePath: string;
-  fetchCsrfToken = true;
 
   readonly defaultHeaders: Record<string, any> = {
     'content-type': 'application/json',
@@ -26,6 +25,7 @@ export abstract class ODataRequestConfig {
   private _customHeaders: Record<string, string> = {};
   private _customQueryParameters: Record<string, string> = {};
   private _customRequestConfiguration: Record<string, string> = {};
+  private _fetchCsrfToken = true;
 
   /**
    * @deprecated Since v1.30.0. Use [[defaultHeaders]] instead.
@@ -97,6 +97,14 @@ export abstract class ODataRequestConfig {
 
   get customRequestConfiguration(): Record<string, string> {
     return this._customRequestConfiguration;
+  }
+
+  set fetchCsrfToken(fetchCsrfToken: boolean) {
+    this._fetchCsrfToken = fetchCsrfToken;
+  }
+
+  get fetchCsrfToken(): boolean {
+    return this._fetchCsrfToken;
   }
 
   /**

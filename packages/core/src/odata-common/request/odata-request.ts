@@ -35,7 +35,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    *
    * @param config - Configuration of the request
    * @param _destination - Destination to setup the request against
-   * @param fetchCsrfToken - Destination to setup the request against
    * @memberof ODataRequest
    */
   constructor(

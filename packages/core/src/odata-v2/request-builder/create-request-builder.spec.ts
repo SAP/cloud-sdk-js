@@ -2,6 +2,7 @@ import nock = require('nock');
 import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
+  defaultHost,
   mockCreateRequest
 } from '../../../test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../test/test-util/test-data';
@@ -204,6 +205,30 @@ describe('CreateRequestBuilder', () => {
     ).execute(defaultDestination);
 
     await expect(createRequest).rejects.toThrowErrorMatchingSnapshot();
+  });
+
+  it('create an entity with csrf token request when the option is set to false', async () => {
+    const keyProp = uuid();
+    const stringProp = 'testStr';
+    const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
+
+    nock(defaultHost)
+      .post(
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
+        postBody
+      )
+      .reply(200, { d: postBody }, {});
+
+    const entity = TestEntity.builder()
+      .keyPropertyGuid(keyProp)
+      .stringProperty(stringProp)
+      .build();
+
+    const actual = await new CreateRequestBuilder(TestEntity, entity)
+      .fetchCsrfToken(false)
+      .execute(defaultDestination);
+
+    testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
 
   describe('executeRaw', () => {

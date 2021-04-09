@@ -19,6 +19,7 @@
 ## New Functionality
 
 - Support custom axios options for all request builders.
+- Support disabling csrf token request as an option for all request builders.
 
 ## Improvements
 

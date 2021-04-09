@@ -132,6 +132,16 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
+  /**
+   * Replace the default value of fetching csrf token configuration with a given value.
+   * @param fetchCsrfToken The new value of the configuration.
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  fetchCsrfToken(fetchCsrfToken: boolean): this {
+    this.requestConfig.fetchCsrfToken = fetchCsrfToken;
+    return this;
+  }
+
   build(): ODataRequest<RequestConfigT>;
   build(
     destination: Destination | DestinationNameAndJwt,

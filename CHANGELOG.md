@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- Support custom axios options for all request builders.
 
 ## Improvements
 

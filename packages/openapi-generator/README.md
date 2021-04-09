@@ -65,7 +65,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2
 <!-- commandsstop -->
 <!-- prettier-ignore-end -->
 
-# Usage (programatically)
+## Usage (programatically)
 
 ```ts
 import { generate } from '@sap-cloud-sdk/openapi-generator';

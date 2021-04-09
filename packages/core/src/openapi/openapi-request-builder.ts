@@ -1,7 +1,12 @@
 /* eslint-disable max-classes-per-file */
 import { AxiosResponse } from 'axios';
 import { Destination, DestinationNameAndJwt } from '../connectivity';
-import { executeHttpRequest, HttpResponse, Method } from '../http-client';
+import {
+  executeHttpRequest,
+  filterCustomRequestConfig,
+  HttpResponse,
+  Method
+} from '../http-client';
 
 /**
  * Request builder for OpenAPI requests.
@@ -13,6 +18,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   private customHeaders: Record<string, string> = {};
+  private customRequestConfiguration: Record<string, string> = {};
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -39,6 +45,22 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
+   * Add custom request configuration to the request. Typically, this is used when specifying response type for downloading files.
+   * If the custom request configuration contains keys in this list [[defaultDisallowedKeys]], they will be removed.
+   *
+   * @param requestConfiguration - Key-value pairs denoting additional custom request configuration options to be set in the request.
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  addCustomRequestConfiguration(
+    requestConfiguration: Record<string, string>
+  ): this {
+    Object.entries(requestConfiguration).forEach(([key, value]) => {
+      this.customRequestConfiguration[key] = value;
+    });
+    return this;
+  }
+
+  /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination Destination to execute the request against.
@@ -53,6 +75,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     return executeHttpRequest(
       destination,
       {
+        ...filterCustomRequestConfig(this.customRequestConfiguration),
         method: this.method,
         url: this.getPath(),
         headers: this.customHeaders,

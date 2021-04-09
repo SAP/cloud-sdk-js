@@ -1,4 +1,4 @@
-import { kebabCase, last } from '@sap-cloud-sdk/util';
+import { flat, kebabCase, last } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import {
   OpenApiAllOfSchema,
@@ -13,14 +13,14 @@ import {
 } from './openapi-types';
 
 /**
- * Collect all unique reference schemas within a schema.
- * @param schema Parsed schema to retrieve all references for.
- * @returns Returns a list of unique reference schemas within a schema.
+ * Collect all unique reference schemas within the given schemas.
+ * @param schemas Parsed schemas to retrieve all references for.
+ * @returns Returns a list of unique reference schemas within the given schemas.
  */
 export function collectRefs(
-  schema: OpenApiSchema | undefined
+  ...schemas: (OpenApiSchema | undefined)[]
 ): OpenApiReferenceSchema[] {
-  return getUniqueRefs(collectAllRefs(schema));
+  return getUniqueRefs(flat(schemas.map(schema => collectAllRefs(schema))));
 }
 
 /**

@@ -79,11 +79,11 @@ describe('schemaFile', () => {
         }
       })
     ).toMatchInlineSnapshot(`
-      "    import { Except } from '@sap-cloud-sdk/core';
+      "    
           /**
            * Representation of the 'MySchema' schema.
            */
-          export type MySchema = Except<any, number>[];"
+          export type MySchema = any[];"
     `);
   });
 

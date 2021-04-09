@@ -45,10 +45,3 @@ export type UnPromisify<T> = T extends Promise<infer U> ? U : T;
  * @typeparam T Type of an instance created by the constructor.
  */
 export type ConstructorType<T> = new (...args: any[]) => T;
-
-/**
- * A type to represent to disallow a given type (DisallowedT).
- * @typeparam T Type to test against the disallowed type.
- * @typeparam DisallowedT The disallowed type.
- */
-export type Except<T, DisallowedT> = T extends DisallowedT ? never : T;

@@ -72,9 +72,6 @@ function getImports(api: OpenApiApi): Import[] {
     names: ['OpenApiRequestBuilder'],
     moduleIdentifier: '@sap-cloud-sdk/core'
   };
-  if (hasNotSchemaInOperations(api.operations)) {
-    coreImports.names.push('Except');
-  }
 
   return [coreImports, refImports];
 }

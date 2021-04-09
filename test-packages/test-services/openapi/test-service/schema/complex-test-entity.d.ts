@@ -1,4 +1,3 @@
-import { Except } from '@sap-cloud-sdk/core';
 import type { SimpleTestEntity } from './simple-test-entity';
 import type { TestEntity } from './test-entity';
 /**
@@ -32,7 +31,7 @@ export declare type ComplexTestEntity =
             additionalProperty?: string;
           }
         | Record<string, any>;
-      notProperty?: Except<any, number>;
+      notProperty?: any;
       objectPropertyWithNoAdditionalProperties?: {
         specifiedProperty?: string;
       };

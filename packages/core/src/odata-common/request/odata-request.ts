@@ -17,7 +17,11 @@ import {
   removeSlashes,
   removeTrailingSlashes
 } from '../remove-slashes';
-import { HttpResponse, executeHttpRequest } from '../../http-client';
+import {
+  HttpResponse,
+  executeHttpRequest,
+  filterCustomRequestConfig
+} from '../../http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 /**
@@ -231,6 +235,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     return executeHttpRequest(
       destination,
       {
+        ...filterCustomRequestConfig(this.config.customRequestConfiguration),
         headers: await this.headers(),
         url: this.relativeUrl(),
         method: this.config.method,

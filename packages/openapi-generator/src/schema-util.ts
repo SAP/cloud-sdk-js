@@ -60,23 +60,6 @@ export function getUniqueRefs(
 }
 
 /**
- * Check whether a schema includes the not schema.
- * @param schema Parsed schema to check.
- * @returns True if the parsed schema contains am not schema, false otherwise.
- */
-export function hasNotSchema(schema: OpenApiSchema | undefined): boolean {
-  if (!schema) {
-    return false;
-  }
-  if (isNotSchema(schema)) {
-    return true;
-  }
-  return Object.values(schema)
-    .filter(value => typeof value === 'object')
-    .some(value => hasNotSchema(value));
-}
-
-/**
  * Type guard to check whether an object is of type `OpenAPIV3.ReferenceObject`.
  * @param obj Object to check.
  * @returns True if the object is a reference object, false otherwise.

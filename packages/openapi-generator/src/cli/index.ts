@@ -1,27 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { resolve } from 'path';
-import { readFileSync } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
-import Command from '@oclif/command';
-import { flags } from '@oclif/parser';
+import { Command, flags } from '@oclif/command';
 import cli from 'cli-ux';
-import { generate } from './generator';
+import { generate } from '../generator';
 
 const logger = createLogger('openapi-generator');
 
 class GenerateOpenApiClient extends Command {
   static description =
-    'Generate an OpenApi client using the connectivity features of the SAP Cloud SDK for JavaScript.';
+    'Generate OpenAPI clients, that use the connectivity features of the SAP Cloud SDK for JavaScript.';
 
-  static examples = [
-    '$ generate-openapi-client -i directoryWithOpenApiFiles -o outputDirectory',
-    '$ generate-openapi-client --help'
-  ];
+  static usage = '--inputDir <inputDirectory> --outputDir <outputDirectory>';
 
-  static version = JSON.parse(
-    readFileSync(resolve(__dirname, '../package.json'), { encoding: 'utf8' })
-  ).version;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  static version = require('../../package.json').version;
 
   static flags = {
     input: flags.string({

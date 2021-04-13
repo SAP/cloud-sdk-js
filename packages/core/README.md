@@ -1,5 +1,5 @@
 <!-- sap-cloud-sdk-logo -->
-<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
@@ -39,7 +39,7 @@ BusinessPartner.requestBuilder()
 For more detailed overview visit our [OData client documentation](https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript).
 
 <!-- sap-cloud-sdk-common-readme -->
-<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 ## Support
 
 The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).

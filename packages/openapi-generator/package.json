@@ -25,18 +25,7 @@
   ],
   "oclif": {
     "bin": "generate-openapi-client",
-    "warn-if-update-available": {
-      "timeoutInDays": 7
-    },
-    "macos": {
-      "identifier": "com.sap.generate-openapi-client"
-    },
-    "plugins": [
-      "@oclif/plugin-help",
-      "@oclif/plugin-autocomplete",
-      "@oclif/plugin-not-found",
-      "@oclif/plugin-warn-if-update-available"
-    ]
+    "commands": "./dist/cli"
   },
   "scripts": {
     "compile": "yarn tsc -b",
@@ -53,10 +42,6 @@
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.14.0",
     "@oclif/parser": "^3.8.4",
-    "@oclif/plugin-autocomplete": "^0.3.0",
-    "@oclif/plugin-help": "^3.2.2",
-    "@oclif/plugin-not-found": "^1.2.3",
-    "@oclif/plugin-warn-if-update-available": "^1.7.0",
     "@sap-cloud-sdk/util": "^1.41.0",
     "@types/js-yaml": "^4.0.0",
     "cli-ux": "^5.4.5",

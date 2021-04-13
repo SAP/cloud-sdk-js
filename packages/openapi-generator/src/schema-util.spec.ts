@@ -1,6 +1,5 @@
 import {
   collectRefs,
-  hasNotSchema,
   parseFileNameFromRef,
   parseTypeNameFromRef
 } from './schema-util';
@@ -49,54 +48,6 @@ describe('parseFileNameFromRef', () => {
     expect(parseFileNameFromRef('#/components/schemas/typeName')).toEqual(
       'type-name'
     );
-  });
-});
-
-describe('hasNotSchema', () => {
-  it('returns true if there is at least one descendant with a not schema', () => {
-    expect(
-      hasNotSchema({
-        oneOf: [
-          { type: 'string' },
-          {
-            properties: [
-              {
-                name: 'notProperty',
-                required: false,
-                schema: { not: { type: 'number' } }
-              }
-            ]
-          }
-        ]
-      })
-    ).toBe(true);
-  });
-
-  it('returns true if the root schema is not schema', () => {
-    expect(
-      hasNotSchema({
-        not: { type: 'string' }
-      })
-    ).toBe(true);
-  });
-
-  it('returns false if there is no not schema', () => {
-    expect(
-      hasNotSchema({
-        oneOf: [
-          { type: 'string' },
-          {
-            properties: [
-              {
-                name: 'notProperty',
-                required: false,
-                schema: { oneOf: [{ type: 'number' }, { type: 'string' }] }
-              }
-            ]
-          }
-        ]
-      })
-    ).toBe(false);
   });
 });
 

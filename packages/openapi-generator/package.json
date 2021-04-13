@@ -41,7 +41,6 @@
     "@apidevtools/swagger-parser": "^10.0.2",
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.14.0",
-    "@oclif/parser": "^3.8.4",
     "@sap-cloud-sdk/util": "^1.41.0",
     "@types/js-yaml": "^4.0.0",
     "cli-ux": "^5.4.5",

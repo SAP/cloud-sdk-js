@@ -225,7 +225,7 @@ describe('CreateRequestBuilder', () => {
       .build();
 
     const actual = await new CreateRequestBuilder(TestEntity, entity)
-      .fetchCsrfToken(false)
+      .skipCsrfTokenFetching()
       .execute(defaultDestination);
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());

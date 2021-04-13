@@ -155,11 +155,30 @@ describe('getFilter for filter functions', () => {
     );
   });
 
+  it('for custom filter function with boolean filter function without eq/ne', () => {
+    const fn = filterFunction(
+      'fn',
+      'boolean',
+      'str'
+    );
+    expect(oDataUri.getFilter(fn, TestEntity).filter).toBe(
+      "fn('str')"
+    );
+  });
+
   it('for custom nested filter function', () => {
     const fnNested = filterFunction('fnNested', 'boolean');
     const fn = filterFunction('fn', 'string', fnNested);
     expect(oDataUri.getFilter(fn.equals('test'), TestEntity).filter).toBe(
       "fn(fnNested()) eq 'test'"
+    );
+  });
+
+  it('for custom filter function with date', () => {
+    const date = moment.utc().year(2000).month(0).date(1).startOf('date');
+    const dateFn = filterFunction('fn', 'int', date).equals(1);
+    expect(oDataUri.getFilter(dateFn, TestEntity).filter).toEqual(
+      "fn(datetimeoffset'2000-01-01T00:00:00.000Z') eq 1"
     );
   });
 
@@ -188,12 +207,22 @@ describe('getFilter for filter functions', () => {
     ).toBe('round(10.1) eq 3M');
   });
 
-  it('for custom filter function with date', () => {
-    const date = moment.utc().year(2000).month(0).date(1).startOf('date');
-    const dateFn = filterFunction('fn', 'int', date).equals(1);
-    expect(oDataUri.getFilter(dateFn, TestEntity).filter).toEqual(
-      "fn(datetimeoffset'2000-01-01T00:00:00.000Z') eq 1"
-    );
+  it('for startsWith filter function with eq/ne', () => {
+    expect(
+      oDataUri.getFilter(
+        filterFunctions.startsWith('string', 'str').equals(false),
+        TestEntity
+      ).filter
+    ).toBe("startswith('string', 'str') eq false");
+  });
+
+  it('for startsWith filter function without eq/ne', () => {
+    expect(
+      oDataUri.getFilter(
+        filterFunctions.startsWith('string', 'str'),
+        TestEntity
+      ).filter
+    ).toBe("startswith('string', 'str')");
   });
 });
 

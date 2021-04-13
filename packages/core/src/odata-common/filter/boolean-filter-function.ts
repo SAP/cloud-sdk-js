@@ -3,6 +3,9 @@ import {
   FilterFunction,
   FilterFunctionParameterType
 } from './filter-function-base';
+import { FieldType } from '../selectable';
+import { Filterable } from './filterable';
+import { Filter } from './filter';
 
 /**
  * Representation of a filter function, that returns a value of type boolean.
@@ -21,4 +24,14 @@ export class BooleanFilterFunction<
   ) {
     super(functionName, parameters, 'Edm.Boolean');
   }
+}
+
+export function isBooleanFilterFunction<EntityT extends Entity>(
+  filterable: Filterable<EntityT>
+): filterable is BooleanFilterFunction<EntityT> {
+  return (
+    typeof filterable['functionName'] !== 'undefined' &&
+    typeof filterable['parameters'] !== 'undefined' &&
+    filterable['edmType'] === 'Edm.Boolean'
+  );
 }

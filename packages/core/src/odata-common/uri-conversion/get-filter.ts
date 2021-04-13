@@ -6,7 +6,7 @@ import {
   isFilterLink,
   isFilter,
   FilterFunction,
-  FilterFunctionParameterType
+  FilterFunctionParameterType, isBooleanFilterFunction
 } from '../filter';
 import { EdmTypeShared } from '../edm-types';
 import { ComplexTypeField, FieldType } from '../selectable';
@@ -140,6 +140,10 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
         filter.operator,
         convertFilterValue(filter.value, filter.edmType!)
       ].join(' ');
+    }
+
+    if (isBooleanFilterFunction(filter)){
+      return filterFunctionToString(filter, parentFieldNames);
     }
 
     if (isFilterLambdaExpression(filter)) {

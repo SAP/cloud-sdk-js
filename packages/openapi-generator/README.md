@@ -20,15 +20,15 @@ $ npm install @sap-cloud-sdk/openapi-generator
 
 <!-- prettier-ignore-start -->
 <!-- commands -->
-* [`generate-openapi-client `](#generate-openapi-client-)
+* [`generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>`](#generate-openapi-client---inputdir-inputdirectory---outputdir-outputdirectory)
 
-## `generate-openapi-client `
+## `generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>`
 
-Generate an OpenApi client using the connectivity features of the SAP Cloud SDK for JavaScript.
+Generate OpenAPI clients, that use the connectivity features of the SAP Cloud SDK for JavaScript.
 
 ```
 USAGE
-  $ generate-openapi-client
+  $ generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>
 
 OPTIONS
   -i, --input=input                            (required) Input directory or file for the OpenApi service definitions.
@@ -52,10 +52,6 @@ OPTIONS
   --versionInPackageJson=versionInPackageJson  By default, when generating package.json file, the generator will set a
                                                version by using the generator version. It can also be set to a specific
                                                version.
-
-EXAMPLES
-  $ generate-openapi-client -i directoryWithOpenApiFiles -o outputDirectory
-  $ generate-openapi-client --help
 ```
 
 _See code: [dist/cli/index.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/dist/cli/index.ts)_

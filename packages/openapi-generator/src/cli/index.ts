@@ -10,12 +10,9 @@ const logger = createLogger('openapi-generator');
 
 class GenerateOpenApiClient extends Command {
   static description =
-    'Generate an OpenApi client using the connectivity features of the SAP Cloud SDK for JavaScript.';
+    'Generate OpenAPI clients, that use the connectivity features of the SAP Cloud SDK for JavaScript.';
 
-  static examples = [
-    '$ generate-openapi-client -i directoryWithOpenApiFiles -o outputDirectory',
-    '$ generate-openapi-client --help'
-  ];
+  static usage = '--inputDir <inputDirectory> --outputDir <outputDirectory>';
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   static version = require('../../package.json').version;

@@ -19,10 +19,11 @@
 ## New Functionality
 
 - Support custom axios options for all request builders.
+- [odata] Support unary operator `not` in the `filter()` of OData request builders.
 
 ## Improvements
 
--
+- [odata] Filter functions with boolean return types can be used directly in the `filter()` of OData request builders without `equals(true)`.
 
 ## Fixed Issues
 

@@ -3,9 +3,7 @@ import {
   FilterFunction,
   FilterFunctionParameterType
 } from './filter-function-base';
-import { FieldType } from '../selectable';
 import { Filterable } from './filterable';
-import { Filter } from './filter';
 
 /**
  * Representation of a filter function, that returns a value of type boolean.

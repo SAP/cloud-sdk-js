@@ -6,7 +6,9 @@ import {
   isFilterLink,
   isFilter,
   FilterFunction,
-  FilterFunctionParameterType, isBooleanFilterFunction
+  FilterFunctionParameterType,
+  isBooleanFilterFunction,
+  isUnaryFilter
 } from '../filter';
 import { EdmTypeShared } from '../edm-types';
 import { ComplexTypeField, FieldType } from '../selectable';
@@ -142,8 +144,16 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       ].join(' ');
     }
 
-    if (isBooleanFilterFunction(filter)){
+    if (isBooleanFilterFunction(filter)) {
       return filterFunctionToString(filter, parentFieldNames);
+    }
+
+    if (isUnaryFilter(filter)) {
+      return `${filter.operator} (${getODataFilterExpression(
+        filter.singleOperand,
+        parentFieldNames,
+        targetEntityConstructor
+      )})`;
     }
 
     if (isFilterLambdaExpression(filter)) {

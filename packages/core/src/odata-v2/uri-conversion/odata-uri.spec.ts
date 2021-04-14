@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
-import { and, filterFunction, or } from '../../odata-common/filter';
+import { and, filterFunction, not, or } from '../../odata-common/filter';
 import {
   testFilterBoolean,
   testFilterGuid,
@@ -20,6 +20,12 @@ describe('getFilter', () => {
         TestEntity
       ).filter
     ).toBe(`(${testFilterString.odataStr} and ${testFilterBoolean.odataStr})`);
+  });
+
+  it('for simple unary filters', () => {
+    expect(
+      oDataUri.getFilter(not(testFilterString.filter), TestEntity).filter
+    ).toBe(`not (${testFilterString.odataStr})`);
   });
 
   it('for nested filters', () => {
@@ -67,6 +73,23 @@ describe('getFilter', () => {
       ).filter
     ).toBe(
       `(${testFilterString.odataStr} and ${testFilterBoolean.odataStr} and (${testFilterString.odataStr} or ${testFilterInt16.odataStr} or (${testFilterSingleLink.odataStr})))`
+    );
+  });
+
+  it('for nested unary filters', () => {
+    expect(
+      oDataUri.getFilter(
+        not(
+          and(
+            testFilterString.filter,
+            testFilterBoolean.filter,
+            not(testFilterString.filter)
+          )
+        ),
+        TestEntity
+      ).filter
+    ).toBe(
+      `not ((${testFilterString.odataStr} and ${testFilterBoolean.odataStr} and not (${testFilterString.odataStr})))`
     );
   });
 
@@ -156,14 +179,8 @@ describe('getFilter for filter functions', () => {
   });
 
   it('for custom filter function with boolean filter function without eq/ne', () => {
-    const fn = filterFunction(
-      'fn',
-      'boolean',
-      'str'
-    );
-    expect(oDataUri.getFilter(fn, TestEntity).filter).toBe(
-      "fn('str')"
-    );
+    const fn = filterFunction('fn', 'boolean', 'str');
+    expect(oDataUri.getFilter(fn, TestEntity).filter).toBe("fn('str')");
   });
 
   it('for custom nested filter function', () => {
@@ -223,6 +240,24 @@ describe('getFilter for filter functions', () => {
         TestEntity
       ).filter
     ).toBe("startswith('string', 'str')");
+  });
+
+  it('for startsWith filter function with not operator with eq/ne', () => {
+    expect(
+      oDataUri.getFilter(
+        not(filterFunctions.startsWith('string', 'str').equals(false)),
+        TestEntity
+      ).filter
+    ).toBe("not (startswith('string', 'str') eq false)");
+  });
+
+  it('for startsWith filter function with not operator without eq/ne', () => {
+    expect(
+      oDataUri.getFilter(
+        not(filterFunctions.startsWith('string', 'str')),
+        TestEntity
+      ).filter
+    ).toBe("not (startswith('string', 'str'))");
   });
 });
 

@@ -138,4 +138,23 @@ describe('openapi-request-builder', () => {
       { fetchCsrfToken: false }
     );
   });
+
+  it('will not fetch csrf token when the config is set to false', () => {
+    const requestBuilder = new OpenApiRequestBuilder(
+      'post',
+      '/test'
+    ).fetchCsrfToken(false);
+    requestBuilder.executeRaw(destination);
+    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+      destination,
+      {
+        method: 'post',
+        url: '/test',
+        headers: {},
+        params: undefined,
+        data: undefined
+      },
+      { fetchCsrfToken: false }
+    );
+  });
 });

@@ -19,6 +19,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   private customHeaders: Record<string, string> = {};
   private customRequestConfiguration: Record<string, string> = {};
+  private _fetchCsrfToken = true;
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
@@ -61,6 +62,16 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
+   * Replace the default value of fetching csrf token configuration with a given value.
+   * @param fetchCsrfToken The new value of the configuration.
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  fetchCsrfToken(fetchCsrfToken: boolean): this {
+    this._fetchCsrfToken = fetchCsrfToken;
+    return this;
+  }
+
+  /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination Destination to execute the request against.
@@ -69,9 +80,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   async executeRaw(
     destination: Destination | DestinationNameAndJwt
   ): Promise<HttpResponse> {
-    const fetchCsrfToken = ['post', 'put', 'patch', 'delete'].includes(
-      this.method.toLowerCase()
-    );
+    const fetchCsrfToken =
+      this._fetchCsrfToken &&
+      ['post', 'put', 'patch', 'delete'].includes(this.method.toLowerCase());
     return executeHttpRequest(
       destination,
       {

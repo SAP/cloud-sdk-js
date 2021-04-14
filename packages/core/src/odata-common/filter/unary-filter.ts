@@ -1,5 +1,5 @@
 import { Entity } from '../entity';
-import { Filterable } from './filterable';
+import { Filterable } from '../filter';
 
 type UnaryFilterOperator = 'not';
 

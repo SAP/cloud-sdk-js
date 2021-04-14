@@ -19,6 +19,8 @@
 ## New Functionality
 
 - Support custom axios options for all request builders.
+- [core] Support custom axios options for all request builders.
+- [core] Support disabling csrf token request as an option for all request builders.
 - [odata] Support unary operator `not` in the `filter()` of OData request builders.
 
 ## Improvements

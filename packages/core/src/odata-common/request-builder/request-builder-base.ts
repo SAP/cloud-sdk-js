@@ -132,6 +132,15 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
+  /**
+   * Skip fetching csrf token for this request, which is typically useful when the csrf token is not required.
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  skipCsrfTokenFetching(): this {
+    this.requestConfig.fetchCsrfToken = false;
+    return this;
+  }
+
   build(): ODataRequest<RequestConfigT>;
   build(
     destination: Destination | DestinationNameAndJwt,

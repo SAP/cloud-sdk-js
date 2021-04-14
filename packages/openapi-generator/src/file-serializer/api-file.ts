@@ -4,7 +4,7 @@ import {
   OpenApiOperation,
   OpenApiReferenceSchema
 } from '../openapi-types';
-import { collectRefs, getUniqueRefs, hasNotSchema } from '../schema-util';
+import { collectRefs, getUniqueRefs } from '../schema-util';
 import { serializeOperation } from './operation';
 import { Import, serializeImports } from './imports';
 
@@ -48,13 +48,6 @@ function collectRefsFromOperations(
       ],
       []
     )
-  );
-}
-
-function hasNotSchemaInOperations(operations: OpenApiOperation[]): boolean {
-  return operations.some(
-    operation => hasNotSchema(operation.requestBody?.schema),
-    false
   );
 }
 

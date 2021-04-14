@@ -1,5 +1,5 @@
 <!-- sap-cloud-sdk-logo -->
-<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
@@ -20,48 +20,41 @@ $ npm install @sap-cloud-sdk/openapi-generator
 
 <!-- prettier-ignore-start -->
 <!-- commands -->
-* [`generate-openapi-client autocomplete [SHELL]`](#generate-openapi-client-autocomplete-shell)
-* [`generate-openapi-client help [COMMAND]`](#generate-openapi-client-help-command)
+* [`generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>`](#generate-openapi-client---inputdir-inputdirectory---outputdir-outputdirectory)
 
-## `generate-openapi-client autocomplete [SHELL]`
+## `generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>`
 
-display autocomplete installation instructions
-
-```
-USAGE
-  $ generate-openapi-client autocomplete [SHELL]
-
-ARGUMENTS
-  SHELL  shell type
-
-OPTIONS
-  -r, --refresh-cache  Refresh cache (ignores displaying instructions)
-
-EXAMPLES
-  $ generate-openapi-client autocomplete
-  $ generate-openapi-client autocomplete bash
-  $ generate-openapi-client autocomplete zsh
-  $ generate-openapi-client autocomplete --refresh-cache
-```
-
-_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v0.3.0/src/commands/autocomplete/index.ts)_
-
-## `generate-openapi-client help [COMMAND]`
-
-display help for generate-openapi-client
+Generate OpenAPI clients, that use the connectivity features of the SAP Cloud SDK for JavaScript.
 
 ```
 USAGE
-  $ generate-openapi-client help [COMMAND]
-
-ARGUMENTS
-  COMMAND  command to show help for
+  $ generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>
 
 OPTIONS
-  --all  see all commands in CLI
+  -i, --input=input                            (required) Input directory or file for the OpenApi service definitions.
+  -o, --outputDir=outputDir                    (required) Output directory for the generated OpenApi client.
+  --clearOutputDir                             Remove all files in the output directory before generation.
+
+  --generateJs                                 By default, the generator will also generate transpiled .js, .js.map,
+                                               .d.ts and .d.ts.map files. When setting to false, the generator will only
+                                               generate .ts files.
+
+  --generatePackageJson                        By default, the generator will generate a package.json file, specifying
+                                               dependencies and scripts for compiling and generating documentation. When
+                                               set to false, the generator will skip the generation of the package.json.
+
+  --serviceMapping=serviceMapping              Configuration file to ensure consistent names between multiple generation
+                                               runs with updated / changed metadata files. By default it will be read
+                                               from the input directory as "service-mapping.json".
+
+  --tsConfig=tsConfig                          tsconfig.json file to overwrite the default "tsconfig.json".
+
+  --versionInPackageJson=versionInPackageJson  By default, when generating package.json file, the generator will set a
+                                               version by using the generator version. It can also be set to a specific
+                                               version.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+_See code: [dist/cli/index.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/dist/cli/index.ts)_
 <!-- commandsstop -->
 <!-- prettier-ignore-end -->
 
@@ -84,7 +77,7 @@ await generate(options);
 For more detailed overview visit our [generator documentation](https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client).
 
 <!-- sap-cloud-sdk-common-readme -->
-<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 ## Support
 
 The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).

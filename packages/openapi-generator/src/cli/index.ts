@@ -22,14 +22,14 @@ class GenerateOpenApiClient extends Command {
       name: 'input',
       char: 'i',
       description:
-        'Input directory or file for the OpenApi service definitions.',
+        'Input directory or file for the OpenAPI service definitions.',
       parse: input => resolve(input),
       required: true
     }),
     outputDir: flags.string({
       name: 'outputDir',
       char: 'o',
-      description: 'Output directory for the generated OpenApi client.',
+      description: 'Output directory for the generated OpenAPI client.',
       parse: input => resolve(input),
       required: true
     }),
@@ -56,7 +56,7 @@ class GenerateOpenApiClient extends Command {
     generateJs: flags.boolean({
       name: 'generateJs',
       description:
-        'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When setting to false, the generator will only generate .ts files.',
+        'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files.',
       default: true,
       required: false
     }),

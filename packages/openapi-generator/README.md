@@ -31,12 +31,12 @@ USAGE
   $ generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>
 
 OPTIONS
-  -i, --input=input                            (required) Input directory or file for the OpenApi service definitions.
-  -o, --outputDir=outputDir                    (required) Output directory for the generated OpenApi client.
+  -i, --input=input                            (required) Input directory or file for the OpenAPI service definitions.
+  -o, --outputDir=outputDir                    (required) Output directory for the generated OpenAPI client.
   --clearOutputDir                             Remove all files in the output directory before generation.
 
   --generateJs                                 By default, the generator will also generate transpiled .js, .js.map,
-                                               .d.ts and .d.ts.map files. When setting to false, the generator will only
+                                               .d.ts and .d.ts.map files. When set to false, the generator will only
                                                generate .ts files.
 
   --generatePackageJson                        By default, the generator will generate a package.json file, specifying

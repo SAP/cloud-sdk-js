@@ -14,16 +14,15 @@ describe('action', () => {
   it('should return entity', async () => {
     const response = await createTestEntityById({ id: entityKey })
       .skipCsrfTokenFetching()
-      .execute(
-      destination
-    );
+      .execute(destination);
     expect(response.keyTestEntity).toBe(entityKey);
   });
 
   it('should return single number', async () => {
     const response = await createTestEntityByIdReturnId({
       id: entityKey
-    }).skipCsrfTokenFetching()
+    })
+      .skipCsrfTokenFetching()
       .execute(destination);
     expect(response).toBe(entityKey);
   });

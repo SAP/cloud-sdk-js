@@ -65,6 +65,11 @@ export const EntityApi = {
       body
     }),
   /**
+   * Head request of entities
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  headEntities: () => new OpenApiRequestBuilder<any>('head', '/entities'),
+  /**
    * Get entity by id
    * @param entityId Key property of the entity
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.

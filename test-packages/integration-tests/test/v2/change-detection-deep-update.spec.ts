@@ -21,7 +21,7 @@ function mockCsrfTokenRequest(
       'x-csrf-token': 'Fetch'
     }
   })
-    .get(
+    .head(
       path
         ? `${TestEntity._defaultServicePath}/${path}`
         : TestEntity._defaultServicePath

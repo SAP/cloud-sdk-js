@@ -24,7 +24,7 @@
 
 ## Improvements
 
-- [odata] Filter functions with boolean return types can be used directly in the `filter()` of OData request builders without `equals(true)`.
+- [odata] Allow using filter functions with boolean return types directly in the `filter()` of OData request builders without `equals(true)`.
 
 ## Fixed Issues
 

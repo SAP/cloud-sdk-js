@@ -103,7 +103,8 @@ export function mockCreateRequestV4(
 
 export function mockDeleteRequest(
   params: MockRequestParams,
-  entityConstructor = TestEntity
+  entityConstructor = TestEntity,
+  headerRequestParams?: MockHeaderRequestParams
 ) {
   const requestConfig = new ODataDeleteRequestConfig(
     entityConstructor,
@@ -175,7 +176,7 @@ export function mockHeaderRequest({
   path
 }: MockHeaderRequestParams) {
   return nock(host)
-    .get(path ? `${request.serviceUrl()}/${path}` : request.serviceUrl())
+    .head(path ? `${request.serviceUrl()}/${path}` : request.serviceUrl())
     .reply(200, undefined, responseHeaders);
 }
 

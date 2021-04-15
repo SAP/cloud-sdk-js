@@ -26,7 +26,7 @@ describe('buildCsrfHeaders', () => {
       'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
     };
 
-    mockHeaderRequest({ request });
+    mockHeaderRequest({ request, method: 'head' });
 
     const expected = {
       cookie: 'mocked-cookie-0;mocked-cookie-2',
@@ -92,7 +92,7 @@ describe('buildCsrfHeaders', () => {
     };
 
     nock(defaultHost)
-      .get(request.serviceUrl() + '/')
+      .head(request.serviceUrl() + '/')
       .reply(200, undefined, mockedHeaders);
 
     const expected = {
@@ -118,7 +118,7 @@ describe('buildCsrfHeaders', () => {
     };
 
     nock(defaultHost)
-      .get(request.serviceUrl() + '/')
+      .head(request.serviceUrl() + '/')
       .reply(500, undefined, mockedHeaders);
 
     nock(defaultHost)

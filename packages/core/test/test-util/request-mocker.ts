@@ -103,8 +103,7 @@ export function mockCreateRequestV4(
 
 export function mockDeleteRequest(
   params: MockRequestParams,
-  entityConstructor = TestEntity,
-  headerRequestParams?: MockHeaderRequestParams
+  entityConstructor = TestEntity
 ) {
   const requestConfig = new ODataDeleteRequestConfig(
     entityConstructor,

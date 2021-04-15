@@ -12,12 +12,15 @@ export async function sdkMetaDataJS(
   service: VdmServiceMetadata,
   options: GeneratorOptions
 ): Promise<Client> {
-  const pregeneratedLibrary = getPregeneratedLibrary(service, options);
-  const generationAndUsage = getGenerationAndUsage(service);
+  const [pregeneratedLibrary, generationAndUsage] = await Promise.all([
+    getPregeneratedLibrary(service, options),
+    getGenerationAndUsage(service)
+  ]);
   return {
     language: 'javascript',
-    pregeneratedLibrary: await pregeneratedLibrary,
-    generationAndUsage: await generationAndUsage
+    serviceStatus: pregeneratedLibrary ? 'certified' : 'verified',
+    pregeneratedLibrary,
+    generationAndUsage
   };
 }
 

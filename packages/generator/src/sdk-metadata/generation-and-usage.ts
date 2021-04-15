@@ -7,7 +7,6 @@ export async function getGenerationAndUsage(
   service: VdmServiceMetadata
 ): Promise<GenerationAndUsage> {
   return {
-    successfulGenerationVerified: true,
     genericUsage: await getGenericUsage(),
     apiSpecificUsage: await getApiSpecificUsage(service),
     links: getLinks(),
@@ -42,5 +41,10 @@ export const linkGenerationDocumentaion =
   'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
 
 export function getGenerationDocumentation(): string {
-  return `Please follow the documentation ${linkGenerationDocumentaion}`;
+  return `<ul>
+<li>Download the API specification to your local computer.</li>
+<li>Install the generator <code>npm install -g @sap-cloud-sdk/generator</code></li>
+<li>Execute the generator <code>generate-odata-client --inputDir path/to/service-spec --outputDir path/to/</code></li>
+</ul>
+For additional information please consider our <a href="${linkGenerationDocumentaion}">documentation</a>`;
 }

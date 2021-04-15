@@ -37,7 +37,7 @@ export function getServiceDescription(
 }
 
 export function getTimeStamp(): string {
-  return `/Date(${new Date().getTime()})/`;
+  return `/Date(${Date.now()})/`;
 }
 
 export async function isPublishedNpmPackage(

@@ -18,6 +18,14 @@ export interface SdkMetadataHeader {
 export interface Client {
   language: 'java' | 'javascript';
   /**
+   * Status of the service.
+   * `certified` means we have a pregeneratedLibrary.
+   * `verified` means we have generated and transpiled the client
+   * `unknown` means we have no information.
+   * @memberof Client
+   */
+  serviceStatus: 'certified' | 'verified' | 'unknown';
+  /**
    * The information on the pregenerated library. Undefined if there is no lib generated
    * @type {PregeneratedLibrary}
    * @memberof Client
@@ -61,7 +69,6 @@ export interface Links {
 }
 
 export interface GenerationAndUsage {
-  successfulGenerationVerified: boolean;
   generationSteps: string;
   apiSpecificUsage: MultiLineText;
   genericUsage: MultiLineText;

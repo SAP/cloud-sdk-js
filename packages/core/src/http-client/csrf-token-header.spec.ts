@@ -26,7 +26,7 @@ describe('buildCsrfHeaders', () => {
       'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
     };
 
-    mockHeaderRequest({ request, method: 'head' });
+    mockHeaderRequest({ request });
 
     const expected = {
       cookie: 'mocked-cookie-0;mocked-cookie-2',

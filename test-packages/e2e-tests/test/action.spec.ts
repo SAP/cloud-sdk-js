@@ -12,7 +12,9 @@ describe('action', () => {
   afterEach(async () => deleteEntity(entityKey, destination));
 
   it('should return entity', async () => {
-    const response = await createTestEntityById({ id: entityKey }).execute(
+    const response = await createTestEntityById({ id: entityKey })
+      .skipCsrfTokenFetching()
+      .execute(
       destination
     );
     expect(response.keyTestEntity).toBe(entityKey);
@@ -21,7 +23,8 @@ describe('action', () => {
   it('should return single number', async () => {
     const response = await createTestEntityByIdReturnId({
       id: entityKey
-    }).execute(destination);
+    }).skipCsrfTokenFetching()
+      .execute(destination);
     expect(response).toBe(entityKey);
   });
 });

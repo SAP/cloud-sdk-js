@@ -63,6 +63,13 @@ exports.EntityApi = {
     });
   },
   /**
+   * Head request of entities
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  headEntities: function () {
+    return new core_1.OpenApiRequestBuilder('head', '/entities');
+  },
+  /**
    * Get entity by id
    * @param entityId Key property of the entity
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.

@@ -26,10 +26,12 @@ describe('batch', () => {
       changeset(create)
     )
       .withSubRequestPathType('relativeToEntity')
+      .skipCsrfTokenFetching()
       .execute(destination);
 
     const [deleteRes] = await batch(changeset(deleteRequestBuilder))
       .withSubRequestPathType('relativeToEntity')
+      .skipCsrfTokenFetching()
       .execute(destination);
 
     expect(retrieveResponse.isSuccess()).toBe(true);

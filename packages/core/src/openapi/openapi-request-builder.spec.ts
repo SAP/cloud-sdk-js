@@ -139,11 +139,11 @@ describe('openapi-request-builder', () => {
     );
   });
 
-  it('will not fetch csrf token when the config is set to false', () => {
+  it('will not fetch csrf token when skipping the csrf token request', () => {
     const requestBuilder = new OpenApiRequestBuilder(
       'post',
       '/test'
-    ).fetchCsrfToken(false);
+    ).skipCsrfTokenFetching();
     requestBuilder.executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
       destination,

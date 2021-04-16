@@ -14,6 +14,7 @@
 
 ## Compatibility Notes
 
+- [test-util] Use `head` method in `mockHeaderRequest()` to align with the core behaviour.
 - [core] Remove experimental `Exclude` type, which was accidentally exposed as non-experimental.
 
 ## New Functionality
@@ -28,7 +29,7 @@
 
 ## Fixed Issues
 
--
+- [core] Use `head` method instead of `get` method when fetching csrf token.
 
 
 # 1.41.0

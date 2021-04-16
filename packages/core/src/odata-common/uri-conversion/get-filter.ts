@@ -6,7 +6,14 @@ import {
   isFilterLink,
   isFilter,
   FilterFunction,
-  FilterFunctionParameterType
+  FilterFunctionParameterType,
+  isBooleanFilterFunction,
+  isUnaryFilter,
+  UnaryFilter,
+  FilterLambdaExpression,
+  FilterList,
+  FilterLink,
+  Filter
 } from '../filter';
 import { EdmTypeShared } from '../edm-types';
 import { ComplexTypeField, FieldType } from '../selectable';
@@ -68,91 +75,50 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     lambdaExpressionLevel = 0
   ): string {
     if (isFilterList(filter)) {
-      let andExp = filter.andFilters
-        .map(subFilter =>
-          getODataFilterExpression(
-            subFilter,
-            parentFieldNames,
-            targetEntityConstructor,
-            lambdaExpressionLevel
-          )
-        )
-        .filter(f => !!f)
-        .join(' and ');
-      andExp = andExp ? `(${andExp})` : andExp;
-
-      let orExp = filter.orFilters
-        .map(subFilter =>
-          getODataFilterExpression(
-            subFilter,
-            parentFieldNames,
-            targetEntityConstructor,
-            lambdaExpressionLevel
-          )
-        )
-        .filter(f => !!f)
-        .join(' or ');
-      orExp = orExp ? `(${orExp})` : orExp;
-
-      const exp: string[] = [];
-      if (andExp) {
-        exp.push(andExp);
-      }
-
-      if (orExp) {
-        exp.push(orExp);
-      }
-
-      return exp.join(' and ');
+      return getODataFilterExpressionForFilterList(
+        filter,
+        parentFieldNames,
+        targetEntityConstructor,
+        lambdaExpressionLevel
+      );
     }
 
     if (isFilterLink(filter)) {
-      let linkExp = filter.filters
-        .map(subFilter =>
-          getODataFilterExpression(
-            subFilter,
-            [...parentFieldNames, filter.link._fieldName],
-            filter.link._linkedEntity,
-            lambdaExpressionLevel
-          )
-        )
-        .filter(f => !!f)
-        .join(' and ');
-      linkExp = linkExp ? `(${linkExp})` : linkExp;
-      return linkExp;
+      return getODataFilterExpressionForFilterLink(
+        filter,
+        parentFieldNames,
+        targetEntityConstructor,
+        lambdaExpressionLevel
+      );
     }
 
     if (isFilter(filter)) {
-      if (typeof filter.field === 'string') {
-        const field = retrieveField(
-          filter.field,
-          targetEntityConstructor,
-          filter.edmType
-        );
-        return [
-          [...parentFieldNames, filter.field].join('/'),
-          filter.operator,
-          convertFilterValue(filter.value, field.edmType)
-        ].join(' ');
-      }
-      return [
-        filterFunctionToString(filter.field, parentFieldNames),
-        filter.operator,
-        convertFilterValue(filter.value, filter.edmType!)
-      ].join(' ');
+      return getODataFilterExpressionForFilter(
+        filter,
+        parentFieldNames,
+        targetEntityConstructor
+      );
+    }
+
+    if (isBooleanFilterFunction(filter)) {
+      return filterFunctionToString(filter, parentFieldNames);
+    }
+
+    if (isUnaryFilter(filter)) {
+      return getODataFilterExpressionForUnaryFilter(
+        filter,
+        parentFieldNames,
+        targetEntityConstructor
+      );
     }
 
     if (isFilterLambdaExpression(filter)) {
-      const alias = `a${lambdaExpressionLevel}`;
-      const filterExp = getODataFilterExpression(
-        filter.filters,
-        [alias],
+      return getODataFilterExpressionForFilterLambdaExpression(
+        filter,
+        parentFieldNames,
         targetEntityConstructor,
-        lambdaExpressionLevel + 1
+        lambdaExpressionLevel
       );
-      return `${parentFieldNames.join('/')}/${
-        filter.lambdaOperator
-      }(${alias}:${filterExp})`;
     }
 
     throw new Error(
@@ -224,6 +190,127 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
           .map(v => uriConverter.convertToUriFormat(v, edmType))
           .join(',')}]`
       : uriConverter.convertToUriFormat(value, edmType);
+  }
+
+  function getODataFilterExpressionForUnaryFilter<FilterEntityT extends Entity>(
+    filter: UnaryFilter<FilterEntityT>,
+    parentFieldNames: string[],
+    targetEntityConstructor: Constructable<any>
+  ): string {
+    return `${filter.operator} (${getODataFilterExpression(
+      filter.singleOperand,
+      parentFieldNames,
+      targetEntityConstructor
+    )})`;
+  }
+
+  function getODataFilterExpressionForFilterLambdaExpression<
+    FilterEntityT extends Entity
+  >(
+    filter: FilterLambdaExpression<FilterEntityT>,
+    parentFieldNames: string[],
+    targetEntityConstructor: Constructable<any>,
+    lambdaExpressionLevel: number
+  ): string {
+    const alias = `a${lambdaExpressionLevel}`;
+    const filterExp = getODataFilterExpression(
+      filter.filters,
+      [alias],
+      targetEntityConstructor,
+      lambdaExpressionLevel + 1
+    );
+    return `${parentFieldNames.join('/')}/${
+      filter.lambdaOperator
+    }(${alias}:${filterExp})`;
+  }
+
+  function getODataFilterExpressionForFilterList<FilterEntityT extends Entity>(
+    filter: FilterList<FilterEntityT>,
+    parentFieldNames: string[],
+    targetEntityConstructor: Constructable<any>,
+    lambdaExpressionLevel: number
+  ): string {
+    let andExp = filter.andFilters
+      .map(subFilter =>
+        getODataFilterExpression(
+          subFilter,
+          parentFieldNames,
+          targetEntityConstructor,
+          lambdaExpressionLevel
+        )
+      )
+      .filter(f => !!f)
+      .join(' and ');
+    andExp = andExp ? `(${andExp})` : andExp;
+
+    let orExp = filter.orFilters
+      .map(subFilter =>
+        getODataFilterExpression(
+          subFilter,
+          parentFieldNames,
+          targetEntityConstructor,
+          lambdaExpressionLevel
+        )
+      )
+      .filter(f => !!f)
+      .join(' or ');
+    orExp = orExp ? `(${orExp})` : orExp;
+
+    const exp: string[] = [];
+    if (andExp) {
+      exp.push(andExp);
+    }
+
+    if (orExp) {
+      exp.push(orExp);
+    }
+
+    return exp.join(' and ');
+  }
+
+  function getODataFilterExpressionForFilterLink<FilterEntityT extends Entity>(
+    filter: FilterLink<FilterEntityT>,
+    parentFieldNames: string[],
+    targetEntityConstructor: Constructable<any>,
+    lambdaExpressionLevel: number
+  ): string {
+    let linkExp = filter.filters
+      .map(subFilter =>
+        getODataFilterExpression(
+          subFilter,
+          [...parentFieldNames, filter.link._fieldName],
+          filter.link._linkedEntity,
+          lambdaExpressionLevel
+        )
+      )
+      .filter(f => !!f)
+      .join(' and ');
+    linkExp = linkExp ? `(${linkExp})` : linkExp;
+    return linkExp;
+  }
+
+  function getODataFilterExpressionForFilter<FilterEntityT extends Entity>(
+    filter: Filter<FilterEntityT, FieldType | FieldType[]>,
+    parentFieldNames: string[],
+    targetEntityConstructor: Constructable<any>
+  ): string {
+    if (typeof filter.field === 'string') {
+      const field = retrieveField(
+        filter.field,
+        targetEntityConstructor,
+        filter.edmType
+      );
+      return [
+        [...parentFieldNames, filter.field].join('/'),
+        filter.operator,
+        convertFilterValue(filter.value, field.edmType)
+      ].join(' ');
+    }
+    return [
+      filterFunctionToString(filter.field, parentFieldNames),
+      filter.operator,
+      convertFilterValue(filter.value, filter.edmType!)
+    ].join(' ');
   }
 
   return {

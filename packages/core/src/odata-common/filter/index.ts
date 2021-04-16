@@ -10,3 +10,4 @@ export * from './number-filter-function';
 export * from './string-filter-function';
 export * from './filter-lambda-expression';
 export * from './orderable-filter-function';
+export * from './unary-filter';

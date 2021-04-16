@@ -4,7 +4,8 @@ it('serializeSchema serializes reference schema', () => {
   expect(
     serializeSchema({
       $ref: '#/components/schemas/my-schema',
-      schemaName: 'MySchema'
+      schemaName: 'MySchema',
+      fileName: 'my-schema'
     })
   ).toEqual('MySchema');
 });
@@ -124,8 +125,16 @@ describe('serializeSchema for xOf schemas', () => {
     expect(
       serializeSchema({
         oneOf: [
-          { $ref: '#/components/schemas/XOr1', schemaName: 'XOr1' },
-          { $ref: '#/components/schemas/XOr2', schemaName: 'XOr2' }
+          {
+            $ref: '#/components/schemas/XOr1',
+            schemaName: 'XOr1',
+            fileName: 'x-or-1'
+          },
+          {
+            $ref: '#/components/schemas/XOr2',
+            schemaName: 'XOr2',
+            fileName: 'x-or-2'
+          }
         ]
       })
     ).toEqual('XOr1 | XOr2');
@@ -137,11 +146,13 @@ describe('serializeSchema for xOf schemas', () => {
         anyOf: [
           {
             $ref: '#/components/schemas/InclusiveOr1',
-            schemaName: 'InclusiveOr1'
+            schemaName: 'InclusiveOr1',
+            fileName: 'inclusive-or-1'
           },
           {
             $ref: '#/components/schemas/InclusiveOr2',
-            schemaName: 'InclusiveOr2'
+            schemaName: 'InclusiveOr2',
+            fileName: 'inclusive-or-2'
           }
         ]
       })
@@ -152,8 +163,16 @@ describe('serializeSchema for xOf schemas', () => {
     expect(
       serializeSchema({
         allOf: [
-          { $ref: '#/components/schemas/And1', schemaName: 'And1' },
-          { $ref: '#/components/schemas/And2', schemaName: 'And2' }
+          {
+            $ref: '#/components/schemas/And1',
+            schemaName: 'And1',
+            fileName: 'and-1'
+          },
+          {
+            $ref: '#/components/schemas/And2',
+            schemaName: 'And2',
+            fileName: 'and-2'
+          }
         ]
       })
     ).toEqual('And1 & And2');

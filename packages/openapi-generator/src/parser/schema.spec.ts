@@ -6,9 +6,12 @@ import { parseSchema } from './schema';
 describe('parseSchema', () => {
   it('parses reference schema', () => {
     const schema = { $ref: 'test' };
-    expect(parseSchema(schema, { test: 'Test' })).toEqual({
+    expect(
+      parseSchema(schema, { test: { schemaName: 'Test', fileName: 'test' } })
+    ).toEqual({
       ...schema,
-      schemaName: 'Test'
+      schemaName: 'Test',
+      fileName: 'test'
     });
   });
 
@@ -98,6 +101,48 @@ describe('parseSchema', () => {
       ],
       additionalProperties: { type: 'any' }
     });
+  });
+
+  it('parses object schema with referenced property description as undefined', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      description: 'Object Description',
+      type: 'object',
+      properties: {
+        prop: {
+          $ref: '#/components/schemas/PropertySchema'
+        }
+      }
+    };
+    expect(
+      (parseSchema(schema, {
+        '#/components/schemas/PropertySchema': {
+          fileName: 'property-schema',
+          schemaName: 'PropertySchema'
+        }
+      }) as OpenApiObjectSchema).properties[0].description
+    ).toBeUndefined();
+  });
+
+  it('parses object schema with inline property description', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      description: 'Object Description',
+      type: 'object',
+      properties: {
+        prop: {
+          description: 'Property Description',
+          type: 'string'
+        }
+      }
+    };
+
+    expect(
+      (parseSchema(schema, {
+        '#/components/schemas/PropertySchema': {
+          fileName: 'property-schema',
+          schemaName: 'PropertySchema'
+        }
+      }) as OpenApiObjectSchema).properties[0].description
+    ).toEqual('Property Description');
   });
 
   it('throws an error if there are neither propertes nor additional properties', () => {

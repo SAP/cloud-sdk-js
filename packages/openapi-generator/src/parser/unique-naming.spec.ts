@@ -43,8 +43,9 @@ it('ensureUniqueNames replaces duplicate names for operations', () => {
     ],
     {
       getName: ({ operation }) => operation.operationId!,
-      setName: (operationInfo, operationId) => {
+      transformItem: (operationInfo, operationId) => {
         operationInfo.operation.operationId = operationId;
+        return operationInfo;
       }
     }
   );

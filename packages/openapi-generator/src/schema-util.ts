@@ -147,7 +147,7 @@ export function getSchemaNamingFromRef(
   const schemaNaming = schemaRefMapping[ref];
   if (!schemaNaming) {
     throw new Error(
-      `Could not find schema name for reference path '${ref}'. Schema does not exist.`
+      `Could not find schema naming for reference path '${ref}'. Schema does not exist.`
     );
   }
   return schemaNaming;

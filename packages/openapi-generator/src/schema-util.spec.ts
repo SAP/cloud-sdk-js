@@ -1,48 +1,41 @@
-import { collectRefs, parseFileNameFromRef } from './schema-util';
+import { OpenApiReferenceSchema } from './openapi-types';
+import { collectRefs, getSchemaNamingFromRef } from './schema-util';
 
-describe('getSchemaNameFromRef', () => {
-  it('gets the type name for reference object from schema reference mapping', () => {
+describe('getSchemaNamingFromRef', () => {
+  it('gets the schema naming for reference object from schema reference mapping', () => {
+    const schemaNaming = {
+      schemaName: 'TypeName',
+      fileName: 'type-name'
+    };
     expect(
-      getSchemaNameFromRef(
+      getSchemaNamingFromRef(
         {
           $ref: '#/components/schemas/typeName'
         },
         {
-          '#/components/schemas/typeName': 'TypeName'
+          '#/components/schemas/typeName': schemaNaming
         }
       )
-    ).toEqual('TypeName');
+    ).toEqual(schemaNaming);
   });
 
-  it('gets the type name for reference path from schema reference mapping', () => {
+  it('gets the schema naming for reference path from schema reference mapping', () => {
+    const schemaNaming = {
+      schemaName: 'TypeName',
+      fileName: 'type-name'
+    };
     expect(
-      getSchemaNameFromRef('#/components/schemas/typeName', {
-        '#/components/schemas/typeName': 'TypeName'
+      getSchemaNamingFromRef('#/components/schemas/typeName', {
+        '#/components/schemas/typeName': schemaNaming
       })
-    ).toEqual('TypeName');
+    ).toEqual(schemaNaming);
   });
 
   it('throws an error for unknown type reference', () => {
     expect(() =>
-      getSchemaNameFromRef('#/components/schemas/typeName', {})
+      getSchemaNamingFromRef('#/components/schemas/typeName', {})
     ).toThrowErrorMatchingInlineSnapshot(
-      '"Could not find schema name for reference path \'#/components/schemas/typeName\'. Schema does not exist."'
-    );
-  });
-});
-
-describe('parseFileNameFromRef', () => {
-  it('gets the last part of a reference as type name', () => {
-    expect(
-      parseFileNameFromRef({
-        $ref: '#/components/schemas/typeName'
-      })
-    ).toEqual('type-name');
-  });
-
-  it('gets the last part of a string as type name', () => {
-    expect(parseFileNameFromRef('#/components/schemas/typeName')).toEqual(
-      'type-name'
+      '"Could not find schema naming for reference path \'#/components/schemas/typeName\'. Schema does not exist."'
     );
   });
 });
@@ -62,22 +55,27 @@ describe('collectRefs', () => {
               {
                 name: 'refProperty',
                 required: false,
-                schema: { $ref: 'ref1', schemaName: 'Ref1' }
+                schema: {
+                  $ref: 'ref1',
+                  schemaName: 'Ref1'
+                } as OpenApiReferenceSchema
               }
             ]
           },
-          { $ref: 'ref2', schemaName: 'Ref2' },
+          { $ref: 'ref2', schemaName: 'Ref2' } as OpenApiReferenceSchema,
           {
-            anyOf: [{ $ref: 'ref3', schemaName: 'Ref3' }]
+            anyOf: [
+              { $ref: 'ref3', schemaName: 'Ref3' } as OpenApiReferenceSchema
+            ]
           },
-          { $ref: 'ref3', schemaName: 'Ref3' }
+          { $ref: 'ref3', schemaName: 'Ref3' } as OpenApiReferenceSchema
         ]
       }).map(ref => ref.$ref)
     ).toStrictEqual(['ref1', 'ref2', 'ref3']);
   });
 
   it('collects one reference if the schema is a reference', () => {
-    const ref = { $ref: 'test', schemaName: 'Test' };
+    const ref = { $ref: 'test', schemaName: 'Test' } as OpenApiReferenceSchema;
     expect(collectRefs(ref)).toEqual([ref]);
   });
 });

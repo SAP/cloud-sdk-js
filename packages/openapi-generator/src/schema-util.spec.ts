@@ -1,13 +1,9 @@
-import {
-  collectRefs,
-  parseFileNameFromRef,
-  parseTypeNameFromRef
-} from './schema-util';
+import { collectRefs, parseFileNameFromRef } from './schema-util';
 
-describe('parseTypeNameFromRef', () => {
+describe('getSchemaNameFromRef', () => {
   it('gets the type name for reference object from schema reference mapping', () => {
     expect(
-      parseTypeNameFromRef(
+      getSchemaNameFromRef(
         {
           $ref: '#/components/schemas/typeName'
         },
@@ -20,7 +16,7 @@ describe('parseTypeNameFromRef', () => {
 
   it('gets the type name for reference path from schema reference mapping', () => {
     expect(
-      parseTypeNameFromRef('#/components/schemas/typeName', {
+      getSchemaNameFromRef('#/components/schemas/typeName', {
         '#/components/schemas/typeName': 'TypeName'
       })
     ).toEqual('TypeName');
@@ -28,7 +24,7 @@ describe('parseTypeNameFromRef', () => {
 
   it('throws an error for unknown type reference', () => {
     expect(() =>
-      parseTypeNameFromRef('#/components/schemas/typeName', {})
+      getSchemaNameFromRef('#/components/schemas/typeName', {})
     ).toThrowErrorMatchingInlineSnapshot(
       '"Could not find schema name for reference path \'#/components/schemas/typeName\'. Schema does not exist."'
     );

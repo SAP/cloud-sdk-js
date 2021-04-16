@@ -4,7 +4,7 @@ import { OpenAPIV3 } from 'openapi-types';
 import { methods, OpenApiApi } from '../openapi-types';
 import { apiNameExtension, defaultApiName } from '../extensions';
 import { parseOperation } from './operation';
-import { OperationInfo } from './parsing-info';
+import { OperationInfo, SchemaRefMapping } from './parsing-info';
 import { nameOperations } from './operation-naming';
 import { ensureUniqueNames } from './unique-naming';
 
@@ -18,7 +18,7 @@ import { ensureUniqueNames } from './unique-naming';
 export function parseApis(
   document: OpenAPIV3.Document,
   refs: $Refs,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiApi[] {
   const operationsByApis = getOperationsByApis(document);
 
@@ -30,8 +30,9 @@ export function parseApis(
         // All operations got an operationId in the line before
         {
           getName: ({ operation }) => operation.operationId!,
-          setName: (operationInfo, operationId) => {
+          transformItem: (operationInfo, operationId) => {
             operationInfo.operation.operationId = operationId;
+            return operationInfo;
           }
         }
       ).map(operationInfo =>

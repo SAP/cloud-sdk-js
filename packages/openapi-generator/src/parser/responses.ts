@@ -3,6 +3,7 @@ import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenApiSchema } from '../openapi-types';
 import { resolveObject } from './refs';
 import { parseMediaType } from './media-type';
+import { SchemaRefMapping } from './parsing-info';
 
 /**
  * Parse the type of the responses in an operation.
@@ -14,7 +15,7 @@ import { parseMediaType } from './media-type';
 export function parseResponses(
   responses: OpenAPIV3.ResponsesObject | undefined,
   refs: $Refs,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiSchema {
   if (responses) {
     const responseSchemas = Object.entries(responses)

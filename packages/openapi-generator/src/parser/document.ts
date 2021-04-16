@@ -1,13 +1,17 @@
 import { basename } from 'path';
 import SwaggerParser, { parse, resolve } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import { pascalCase, removeFileExtension } from '@sap-cloud-sdk/util';
-import { OpenApiDocument, OpenApiNamedSchema } from '../openapi-types';
+import {
+  pascalCase,
+  removeFileExtension,
+  kebabCase
+} from '@sap-cloud-sdk/util';
+import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
 import { ServiceMapping } from '../service-mapping';
 import { parseSchema } from './schema';
 import { parseApis } from './api';
 import { ensureUniqueNames } from './unique-naming';
-import { SchemaInfo } from './parsing-info';
+import { SchemaInfo, SchemaRefMapping } from './parsing-info';
 import { resolveObject } from './refs';
 
 /**
@@ -61,23 +65,33 @@ function parseSchemaInfo(document: OpenAPIV3.Document): SchemaInfo[] {
 
 export function parseSchemas(
   schemaInfo: SchemaInfo[],
-  schemaRefMapping: Record<string, string>,
+  schemaRefMapping: SchemaRefMapping,
   refs: SwaggerParser.$Refs
-): OpenApiNamedSchema[] {
-  return schemaInfo.map(({ name, schema }) => ({
-    name,
+): OpenApiPersistedSchema[] {
+  return schemaInfo.map(({ schema, refPath }) => ({
+    ...schemaRefMapping[refPath],
     schema: parseSchema(schema, schemaRefMapping),
     description: resolveObject(schema, refs).description
   }));
 }
 
-function parseSchemaRefMapping(
-  schemaInfo: SchemaInfo[]
-): Record<string, string> {
-  return schemaInfo.reduce(
-    (mapping, { refPath, name }) => ({
+function parseSchemaRefMapping(schemaInfo: SchemaInfo[]): SchemaRefMapping {
+  const schemaInfoWithFileNames = ensureUniqueNames(schemaInfo, {
+    transformItem: (item, name) => ({
+      ...item,
+      schemaNaming: {
+        schemaName: item.name,
+        fileName: name
+      }
+    }),
+    formatName: kebabCase,
+    reservedWords: ['index']
+  });
+
+  return schemaInfoWithFileNames.reduce(
+    (mapping, { refPath, schemaNaming }) => ({
       ...mapping,
-      [refPath]: name
+      [refPath]: schemaNaming
     }),
     {}
   );

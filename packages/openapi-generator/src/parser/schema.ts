@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
-import { isReferenceObject, parseTypeNameFromRef } from '../schema-util';
+import { isReferenceObject, getSchemaNamingFromRef } from '../schema-util';
 import {
   OpenApiArraySchema,
   OpenApiEnumSchema,
@@ -10,6 +10,7 @@ import {
   OpenApiSchema
 } from '../openapi-types';
 import { getType } from './type-mapping';
+import { SchemaRefMapping } from './parsing-info';
 
 const logger = createLogger('openapi-generator');
 
@@ -21,7 +22,7 @@ const logger = createLogger('openapi-generator');
  */
 export function parseSchema(
   schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiSchema {
   if (!schema) {
     logger.debug("No schema provided, continuing with 'any'.");
@@ -73,11 +74,11 @@ export function parseSchema(
 
 function parseReferenceSchema(
   schema: OpenAPIV3.ReferenceObject,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiReferenceSchema {
   return {
     ...schema,
-    schemaName: parseTypeNameFromRef(schema, schemaRefMapping)
+    ...getSchemaNamingFromRef(schema, schemaRefMapping)
   };
 }
 
@@ -89,7 +90,7 @@ function parseReferenceSchema(
  */
 function parseArraySchema(
   schema: OpenAPIV3.ArraySchemaObject,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiArraySchema {
   return {
     uniqueItems: schema.uniqueItems,
@@ -105,7 +106,7 @@ function parseArraySchema(
  */
 function parseObjectSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiObjectSchema {
   const properties = parseObjectSchemaProperties(schema, schemaRefMapping);
 
@@ -139,7 +140,7 @@ function parseObjectSchema(
  */
 function parseObjectSchemaProperties(
   schema: OpenAPIV3.NonArraySchemaObject,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiObjectSchemaProperty[] {
   return Object.entries(schema.properties || {}).reduce(
     (props, [propName, propSchema]) => [
@@ -183,7 +184,7 @@ function parseEnumSchema(
  */
 function parseXOfSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
-  schemaRefMapping: Record<string, string>,
+  schemaRefMapping: SchemaRefMapping,
   xOf: 'oneOf' | 'allOf' | 'anyOf'
 ): any {
   return {

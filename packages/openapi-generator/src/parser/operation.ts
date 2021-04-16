@@ -11,7 +11,7 @@ import { parseRequestBody } from './request-body';
 import { resolveObject } from './refs';
 import { parseSchema } from './schema';
 import { parseResponses } from './responses';
-import { OperationInfo } from './parsing-info';
+import { OperationInfo, SchemaRefMapping } from './parsing-info';
 import { reservedJsKeywords } from './reserved-words';
 
 /**
@@ -24,7 +24,7 @@ import { reservedJsKeywords } from './reserved-words';
 export function parseOperation(
   { operation, pathPattern, method, pathItemParameters }: OperationInfo,
   refs: $Refs,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiOperation {
   const requestBody = parseRequestBody(
     operation.requestBody,
@@ -126,7 +126,7 @@ export function parsePathPattern(
 export function parsePathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
   pathPattern: string,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiParameter[] {
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
   const nameGenerator = new UniqueNameGenerator('', [
@@ -143,7 +143,7 @@ export function parsePathParameters(
 
 export function parseParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiParameter[] {
   return pathParameters.map(param => ({
     ...param,

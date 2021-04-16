@@ -3,6 +3,7 @@ import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenApiRequestBody } from '../openapi-types';
 import { resolveObject } from './refs';
 import { parseMediaType } from './media-type';
+import { SchemaRefMapping } from './parsing-info';
 
 /**
  * Parse the request body.
@@ -17,7 +18,7 @@ export function parseRequestBody(
     | OpenAPIV3.RequestBodyObject
     | undefined,
   refs: $Refs,
-  schemaRefMapping: Record<string, string>
+  schemaRefMapping: SchemaRefMapping
 ): OpenApiRequestBody | undefined {
   const resolvedRequestBody = resolveObject(requestBody, refs);
   const schema = parseMediaType(resolvedRequestBody, schemaRefMapping);

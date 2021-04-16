@@ -1,4 +1,4 @@
-import { flat, kebabCase, last } from '@sap-cloud-sdk/util';
+import { flat } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import {
   OpenApiAllOfSchema,
@@ -9,8 +9,10 @@ import {
   OpenApiObjectSchema,
   OpenApiOneOfSchema,
   OpenApiReferenceSchema,
-  OpenApiSchema
+  OpenApiSchema,
+  SchemaNaming
 } from './openapi-types';
+import { SchemaRefMapping } from './parser/parsing-info';
 
 /**
  * Collect all unique reference schemas within the given schemas.
@@ -137,32 +139,16 @@ export function isNotSchema(obj: any): obj is OpenApiNotSchema {
  * @param schemaRefMapping Mapping between reference paths and schema names.
  * @returns Parsed type name.
  */
-export function parseTypeNameFromRef(
+export function getSchemaNamingFromRef(
   obj: OpenAPIV3.ReferenceObject | string,
-  schemaRefMapping: Record<string, string>
-): string {
+  schemaRefMapping: SchemaRefMapping
+): SchemaNaming {
   const ref = isReferenceObject(obj) ? obj.$ref : obj;
-  const schemaName = schemaRefMapping[ref];
-  if (!schemaName) {
+  const schemaNaming = schemaRefMapping[ref];
+  if (!schemaNaming) {
     throw new Error(
       `Could not find schema name for reference path '${ref}'. Schema does not exist.`
     );
   }
-  return schemaName;
-}
-
-/**
- * Parse the file name for a serialized reference object.
- * @param obj Reference object to get the type name from.
- * @returns Parsed file name.
- */
-export function parseFileNameFromRef(
-  obj: OpenAPIV3.ReferenceObject | string
-): string {
-  return kebabCase(parseType(obj));
-}
-
-function parseType(obj: OpenAPIV3.ReferenceObject | string): string {
-  const ref = isReferenceObject(obj) ? obj.$ref : obj;
-  return last(ref.split('/'))!;
+  return schemaNaming;
 }

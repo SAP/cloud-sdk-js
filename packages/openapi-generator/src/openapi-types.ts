@@ -31,7 +31,7 @@ export interface OpenApiDocument {
   /**
    * Parsed schemas of the document.
    */
-  schemas: OpenApiNamedSchema[];
+  schemas: OpenApiPersistedSchema[];
 
   /**
    * Parsed APIs of the document.
@@ -193,6 +193,21 @@ export interface OpenApiNamedSchema {
 }
 
 /**
+ * Represents a reference to a schema, that will be saved in a file.
+ */
+export interface OpenApiPersistedSchema extends SchemaNaming {
+  /**
+   * The schema.
+   */
+  schema: OpenApiSchema;
+
+  /**
+   * Description of the schema.
+   */
+  description?: string;
+}
+
+/**
  * Represents an object that can be referenced by the given path.
  */
 export interface WithRefPath {
@@ -304,9 +319,19 @@ export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
 /**
  * Represents a schema referencing another schema by name.
  */
-export interface OpenApiReferenceSchema extends OpenAPIV3.ReferenceObject {
+export type OpenApiReferenceSchema = OpenAPIV3.ReferenceObject & SchemaNaming;
+
+/**
+ * Represents an object containing the parsed names for a schema.
+ */
+export interface SchemaNaming {
   /**
-   * Name of the referenced schema;
+   * Name of the referenced schema.
    */
   schemaName: string;
+
+  /**
+   * File name of the referenced schema file.
+   */
+  fileName: string;
 }

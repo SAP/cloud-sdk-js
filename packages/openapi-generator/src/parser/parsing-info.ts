@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { OperationNameExtended } from '../extensions';
-import { Method } from '../openapi-types';
+import { Method, SchemaNaming } from '../openapi-types';
 
 /**
  * Represents an object holding all relevant information for operation parsing.
@@ -33,8 +33,25 @@ export interface OperationInfo {
   pathItemParameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[];
 }
 
+/**
+ * Represents an object holding all relevant information for schema parsing.
+ */
 export interface SchemaInfo {
+  /**
+   * Path, by which this schema is referenced.
+   */
   refPath: string;
+  /**
+   * Unique name for this schema.
+   */
   name: string;
+  /**
+   * The original schema as in the specification.
+   */
   schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
 }
+
+/**
+ * Type of an object representing a mapping between the reference path (key) and the unique parsed names for the schema.
+ */
+export type SchemaRefMapping = Record<string, SchemaNaming>;

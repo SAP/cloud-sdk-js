@@ -2014,9 +2014,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@>=13.9.8", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.20.9"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.9.tgz#7c6a858a182d4ae18a783ec64c524f793e77b9b5"
-  integrity sha512-gtrprd+idTHgoXrxV2eyeb8OM55k/5tA/KFFeGBX6JBgGXy9i3fiSamjmoRRlpRGmwxpp1aSSF5MFfxKfwnTaQ==
+  version "12.20.10"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.10.tgz#4dcb8a85a8f1211acafb88d72fafc7e3d2685583"
+  integrity sha512-TxCmnSSppKBBOzYzPR2BR25YlX5Oay8z2XGwFBInuA/Co0V9xJhLlW4kjbxKtgeNo3NOMbQP1A5Rc03y+XecPw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -8581,9 +8581,9 @@ openapi-types@^8.0.0:
   integrity sha512-dcHYyCDOAy4QQTrur5Sn1L3lPVspB7rd04Rw/Q7AsMvfV797IiWgmKziFCbq8VhnBoREU/SPPSBDxtK9Biwa1g==
 
 opossum@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.npmjs.org/opossum/-/opossum-6.0.0.tgz#4cfa189365c02bb63d67aec083a1a885081dbba1"
-  integrity sha512-NotTmvlh/6t54vYAkC7ztXYe2qGg+Ssl2p57qpJQ8cyiUXy5TNbORT8YeeY7Wr4Bmyboqlinzp+2046U7QeT4A==
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/opossum/-/opossum-6.0.1.tgz#65b7bae74510c993f115e0aa7dc19375cb39d88b"
+  integrity sha512-mE+ftebLjHQ2Vrl2SKTujcmm50r3PgDRDUQAbPUpLsudzGdTQW5qvf8FlZjp1wb+mgPzeypkmZtKSYzrR4lIAg==
 
 optionator@^0.8.1:
   version "0.8.3"

@@ -29,7 +29,7 @@ describe('sdk-metadata', () => {
       createOptions({ versionInPackageJson: '1.0.0' })
     );
     expect(metaData).toMatchSnapshot();
-    expect(metaData.serviceStatus).toBe('certified');
+    expect(metaData.serviceStatus.status).toBe('certified');
   });
 
   it('[E2E] generates the JS metadata content for services without pregenerated lib', async () => {
@@ -38,7 +38,7 @@ describe('sdk-metadata', () => {
       createOptions({ versionInPackageJson: '1.0.0' })
     );
     expect(metaData).toMatchSnapshot();
-    expect(metaData.serviceStatus).toBe('verified');
+    expect(metaData.serviceStatus.status).toBe('verified');
   });
 
   it('generates the File names', () => {

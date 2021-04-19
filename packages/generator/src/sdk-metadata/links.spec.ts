@@ -5,7 +5,7 @@ describe('links', () => {
   it('[E2E] contains only existing links', async () => {
     const links = getLinks();
     for (const link of Object.values(links)) {
-      await checkUrlExists(link);
+      await checkUrlExists(link.url);
     }
   }, 10000);
 });

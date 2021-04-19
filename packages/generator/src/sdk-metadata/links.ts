@@ -1,4 +1,4 @@
-import { Links } from './sdk-metadata-types';
+import type { Links } from './sdk-metadata-types';
 
 export function getLinks(): Links {
   return {

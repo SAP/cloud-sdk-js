@@ -1,7 +1,7 @@
 import { removeFileExtension } from '@sap-cloud-sdk/util';
 import { VdmServiceMetadata } from '../vdm-types';
 import { GeneratorOptions } from '../generator-options';
-import { Client, SdkMetadataHeader } from './sdk-metadata-types';
+import type { Client, SdkMetadataHeader } from './sdk-metadata-types';
 import {
   getVersionForClient,
   getPregeneratedLibrary

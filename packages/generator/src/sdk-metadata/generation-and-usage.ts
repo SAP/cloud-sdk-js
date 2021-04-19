@@ -1,6 +1,9 @@
 import { VdmServiceMetadata } from '../vdm-types';
 import { getLinks } from './links';
-import { GenerationAndUsage, InstructionWithText } from './sdk-metadata-types';
+import type {
+  GenerationAndUsage,
+  InstructionWithText
+} from './sdk-metadata-types';
 import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
 import { getGeneratorVersion } from './pregenerated-lib';
 

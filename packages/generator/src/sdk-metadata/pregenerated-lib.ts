@@ -7,7 +7,10 @@ import {
   genericDescription,
   s4hanaCloudDescription
 } from '../package-description';
-import { InstructionWithText, PregeneratedLibrary } from './sdk-metadata-types';
+import type {
+  InstructionWithText,
+  PregeneratedLibrary
+} from './sdk-metadata-types';
 
 export const installLibrarySnippetText =
   'Execute the following npm command to install the pregenerated client.';

@@ -34,6 +34,17 @@ it('ensureUniqueNames replaces duplicate names using pascal case', () => {
   ]);
 });
 
+it('ensureUniqueNames replaces duplicate names if they occur in the reserved words', () => {
+  const uniqueItems = ensureUniqueNames(
+    [{ name: 'reserved' }, { name: 'reserved1' }],
+    {
+      reservedWords: ['reserved']
+    }
+  );
+
+  expect(uniqueItems).toEqual([{ name: 'reserved2' }, { name: 'reserved1' }]);
+});
+
 it('ensureUniqueNames replaces duplicate names for operations', () => {
   const uniqueOperations = ensureUniqueNames(
     [

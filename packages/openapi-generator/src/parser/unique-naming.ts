@@ -91,8 +91,9 @@ export function getNameDefault<ItemT>(item: ItemT): string {
 }
 
 /**
- * Default function to set the name of an item.
- * @param item The item to set the name on.
+ * Default function to transform an item.
+ * It sets the `name` property of the item to the given name.
+ * @param item The item to trsansform.
  * @param name The name to set.
  * @returns The renamed item.
  */

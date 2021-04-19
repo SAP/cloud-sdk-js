@@ -50,12 +50,17 @@ describe('getRequestBody', () => {
       required: true
     };
 
+    const schemaNaming = {
+      schemaName: 'TestEntity',
+      fileName: 'test-entity'
+    };
+
     expect(
       parseRequestBody(requestBody, await createRefs(), {
-        '#/components/schemas/TestEntity': 'TestEntity'
+        '#/components/schemas/TestEntity': schemaNaming
       })
     ).toEqual({
-      schema: { ...schema, schemaName: 'TestEntity' },
+      schema: { ...schema, ...schemaNaming },
       required: true
     });
   });

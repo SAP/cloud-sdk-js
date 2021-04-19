@@ -34,6 +34,10 @@ describe('parseResponses', () => {
   });
 
   it('parses response schema from multiple success codes', async () => {
+    const schemaNaming = {
+      schemaName: 'RefType',
+      fileName: 'ref-type'
+    };
     expect(
       parseResponses(
         {
@@ -53,12 +57,14 @@ describe('parseResponses', () => {
           }
         },
         await createRefs(),
-        { '#/components/schema/RefType': 'RefType' }
+        {
+          '#/components/schema/RefType': schemaNaming
+        }
       )
     ).toEqual({
       anyOf: [
         { type: 'string' },
-        { $ref: '#/components/schema/RefType', schemaName: 'RefType' }
+        { $ref: '#/components/schema/RefType', ...schemaNaming }
       ]
     });
   });

@@ -1,10 +1,15 @@
+import {
+  OpenApiObjectSchemaProperty,
+  OpenApiPersistedSchema
+} from '../openapi-types';
 import { schemaDocumentation, schemaFile } from './schema-file';
 import { schemaPropertyDocumentation } from './schema';
 describe('schemaFile', () => {
   it('serializes schema file for schema', () => {
     expect(
       schemaFile({
-        name: 'MySchema',
+        schemaName: 'MySchema',
+        fileName: 'my-schema',
         schema: {
           properties: [
             {
@@ -31,7 +36,8 @@ describe('schemaFile', () => {
   it('serializes schema file for schema including references', () => {
     expect(
       schemaFile({
-        name: 'MySchema',
+        schemaName: 'MySchema',
+        fileName: 'my-schema',
         schema: {
           properties: [
             {
@@ -39,7 +45,8 @@ describe('schemaFile', () => {
               required: true,
               schema: {
                 $ref: '#/components/schema/OtherSchema1',
-                schemaName: 'OtherSchema1'
+                schemaName: 'OtherSchema1',
+                fileName: 'other-schema-1'
               }
             },
             {
@@ -48,7 +55,8 @@ describe('schemaFile', () => {
               required: true,
               schema: {
                 $ref: '#/components/schema/OtherSchema2',
-                schemaName: 'OtherSchema2'
+                schemaName: 'OtherSchema2',
+                fileName: 'other-schema-2'
               }
             }
           ]
@@ -73,7 +81,8 @@ describe('schemaFile', () => {
   it('serializes schema file for schema including not schema', () => {
     expect(
       schemaFile({
-        name: 'MySchema',
+        schemaName: 'MySchema',
+        fileName: 'my-schema',
         schema: {
           items: { not: { type: 'integer' } }
         }
@@ -90,7 +99,8 @@ describe('schemaFile', () => {
   it('serializes schema file without imports for schema including only self reference', () => {
     expect(
       schemaFile({
-        name: 'MySchema',
+        schemaName: 'MySchema',
+        fileName: 'my-schema',
         schema: {
           properties: [
             {
@@ -98,7 +108,8 @@ describe('schemaFile', () => {
               required: false,
               schema: {
                 $ref: '#/components/schema/MySchema',
-                schemaName: 'MySchema'
+                schemaName: 'MySchema',
+                fileName: 'my-schema'
               }
             }
           ]
@@ -118,7 +129,8 @@ describe('schemaFile', () => {
   it('serializes simple schema file for schema with description', () => {
     expect(
       schemaFile({
-        name: 'MySchema',
+        schemaName: 'MySchema',
+        fileName: 'my-schema',
         schema: {
           properties: [
             {
@@ -155,8 +167,9 @@ describe('schemaFile', () => {
   });
 
   it('creates schema documentation', () => {
-    expect(schemaDocumentation({ name: 'mySchema' } as any))
-      .toMatchInlineSnapshot(`
+    expect(
+      schemaDocumentation({ schemaName: 'mySchema' } as OpenApiPersistedSchema)
+    ).toMatchInlineSnapshot(`
       "/**
        * Representation of the 'mySchema' schema.
        */"
@@ -166,9 +179,9 @@ describe('schemaFile', () => {
   it('uses the schema description documentation if present', () => {
     expect(
       schemaDocumentation({
-        name: 'mySchema',
+        schemaName: 'mySchema',
         description: 'My schmema description.'
-      } as any)
+      } as OpenApiPersistedSchema)
     ).toMatch(/My schmema description/);
   });
 
@@ -176,7 +189,7 @@ describe('schemaFile', () => {
     expect(
       schemaPropertyDocumentation({
         description: 'My property Description.'
-      } as any)
+      } as OpenApiObjectSchemaProperty)
     ).toMatchInlineSnapshot(`
       "/**
        * My property Description.

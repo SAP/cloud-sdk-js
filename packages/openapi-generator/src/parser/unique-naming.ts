@@ -1,5 +1,16 @@
 import { UniqueNameGenerator, camelCase } from '@sap-cloud-sdk/util';
 
+/**
+ * Ensure uniqueness of names.
+ * Takes a list of items, identifies duplicate names and renames the duplicate names.
+ * @param items List of items to rename.
+ * @param nameHandler Object containing a name getter and/or setter and/or formatter.
+ * @param nameHandler.getName Function to get the name of an item. Retrieves the `name` property by default.
+ * @param nameHandler.transformItem Function to transform the given item with the new name. Sets the `name` property by default.
+ * @param nameHandler.formatName Function to transform the name when finding a unique name. Defaults to camel case.
+ * @param nameHandler.reservedWords Reserved words that should be handled as duplicates.
+ * @returns The given items with unique names.
+ */
 export function ensureUniqueNames<ItemT, UniqueItemT>(
   items: ItemT[],
   nameHandler: {
@@ -48,7 +59,7 @@ export function ensureUniqueNames<ItemT, UniqueItemT>(
  * @param items Named items.
  * @param getName Function to get the name of an item.
  * @param formatName Function to transform the name when finding a unique name.
- * @param reservedWords Reserved words that should not be handled as duplicates.
+ * @param reservedWords Reserved words that should be handled as duplicates.
  * @returns An object containing the unique operations, denoted by `unique` and operations with (potentially) duplicate names, denoted by `duplicate`.
  */
 function getCorrectlyNamedItems<ItemT>(

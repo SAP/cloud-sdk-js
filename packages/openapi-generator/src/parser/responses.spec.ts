@@ -1,4 +1,4 @@
-import { createRefs } from '../../test/test-util';
+import { createTestRefs } from '../../test/test-util';
 import { parseResponses } from './responses';
 
 describe('parseResponses', () => {
@@ -6,7 +6,7 @@ describe('parseResponses', () => {
     expect(
       parseResponses(
         { 200: { description: 'A response' } },
-        await createRefs(),
+        await createTestRefs(),
         {}
       )
     ).toEqual({
@@ -25,7 +25,7 @@ describe('parseResponses', () => {
             }
           }
         },
-        await createRefs(),
+        await createTestRefs(),
         {}
       )
     ).toEqual({
@@ -56,7 +56,7 @@ describe('parseResponses', () => {
             }
           }
         },
-        await createRefs(),
+        await createTestRefs(),
         {
           '#/components/schema/RefType': schemaNaming
         }

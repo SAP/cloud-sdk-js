@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
-import { isReferenceObject, getSchemaNamingFromRef } from '../schema-util';
+import { isReferenceObject } from '../schema-util';
 import {
   OpenApiArraySchema,
   OpenApiEnumSchema,
@@ -10,19 +10,19 @@ import {
   OpenApiSchema
 } from '../openapi-types';
 import { getType } from './type-mapping';
-import { SchemaRefMapping } from './parsing-info';
+import { OpenApiDocumentRefs } from './refs';
 
 const logger = createLogger('openapi-generator');
 
 /**
  * Parse the original schema or reference object to a serializable schema.
  * @param schema Originally provided schema or reference object.
- * @param schemaRefMapping Mapping between references and parsed names of the schemas.
+ * @param refs Object holding information on references throughout the document.
  * @returns The parsed schema.
  */
 export function parseSchema(
   schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined,
-  schemaRefMapping: SchemaRefMapping
+  refs: OpenApiDocumentRefs
 ): OpenApiSchema {
   if (!schema) {
     logger.debug("No schema provided, continuing with 'any'.");
@@ -30,11 +30,11 @@ export function parseSchema(
   }
 
   if (isReferenceObject(schema)) {
-    return parseReferenceSchema(schema, schemaRefMapping);
+    return parseReferenceSchema(schema, refs);
   }
 
   if (schema.type === 'array') {
-    return parseArraySchema(schema, schemaRefMapping);
+    return parseArraySchema(schema, refs);
   }
 
   if (
@@ -42,7 +42,7 @@ export function parseSchema(
     schema.properties ||
     'additionalProperties' in schema
   ) {
-    return parseObjectSchema(schema, schemaRefMapping);
+    return parseObjectSchema(schema, refs);
   }
 
   if (schema.enum?.length) {
@@ -50,20 +50,20 @@ export function parseSchema(
   }
 
   if (schema.oneOf?.length) {
-    return parseXOfSchema(schema, schemaRefMapping, 'oneOf');
+    return parseXOfSchema(schema, refs, 'oneOf');
   }
 
   if (schema.allOf?.length) {
-    return parseXOfSchema(schema, schemaRefMapping, 'allOf');
+    return parseXOfSchema(schema, refs, 'allOf');
   }
 
   if (schema.anyOf?.length) {
-    return parseXOfSchema(schema, schemaRefMapping, 'anyOf');
+    return parseXOfSchema(schema, refs, 'anyOf');
   }
 
   if (schema.not) {
     return {
-      not: parseSchema(schema.not, schemaRefMapping)
+      not: parseSchema(schema.not, refs)
     };
   }
 
@@ -74,41 +74,41 @@ export function parseSchema(
 
 function parseReferenceSchema(
   schema: OpenAPIV3.ReferenceObject,
-  schemaRefMapping: SchemaRefMapping
+  refs: OpenApiDocumentRefs
 ): OpenApiReferenceSchema {
   return {
     ...schema,
-    ...getSchemaNamingFromRef(schema, schemaRefMapping)
+    ...refs.getSchemaNaming(schema)
   };
 }
 
 /**
  * Parse a schema to an array schema.
  * @param schema Original schema representing an array.
- * @param schemaRefMapping Mapping between references and parsed names of the schemas.
+ * @param refs Object holding information on references throughout the document.
  * @returns The recursively parsed array schema.
  */
 function parseArraySchema(
   schema: OpenAPIV3.ArraySchemaObject,
-  schemaRefMapping: SchemaRefMapping
+  refs: OpenApiDocumentRefs
 ): OpenApiArraySchema {
   return {
     uniqueItems: schema.uniqueItems,
-    items: parseSchema(schema.items, schemaRefMapping)
+    items: parseSchema(schema.items, refs)
   };
 }
 
 /**
  * Parse a schema to an object schema.
  * @param schema Original schema representing an object.
- * @param schemaRefMapping Mapping between references and parsed names of the schemas.
+ * @param refs Object holding information on references throughout the document.
  * @returns The recursively parsed object schema.
  */
 function parseObjectSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
-  schemaRefMapping: SchemaRefMapping
+  refs: OpenApiDocumentRefs
 ): OpenApiObjectSchema {
-  const properties = parseObjectSchemaProperties(schema, schemaRefMapping);
+  const properties = parseObjectSchemaProperties(schema, refs);
 
   if (schema.additionalProperties === false) {
     if (!properties.length) {
@@ -123,7 +123,7 @@ function parseObjectSchema(
   const additionalProperties =
     typeof schema.additionalProperties === 'object' &&
     Object.keys(schema.additionalProperties).length
-      ? parseSchema(schema.additionalProperties, schemaRefMapping)
+      ? parseSchema(schema.additionalProperties, refs)
       : { type: 'any' };
 
   return {
@@ -135,18 +135,18 @@ function parseObjectSchema(
 /**
  * Parse properties of an object as property schemas.
  * @param schema Original schema representing an object.
- * @param schemaRefMapping Mapping between references and parsed names of the schemas.
+ * @param refs Object holding information on references throughout the document.
  * @returns The list of parsed property schemas.
  */
 function parseObjectSchemaProperties(
   schema: OpenAPIV3.NonArraySchemaObject,
-  schemaRefMapping: SchemaRefMapping
+  refs: OpenApiDocumentRefs
 ): OpenApiObjectSchemaProperty[] {
   return Object.entries(schema.properties || {}).reduce(
     (props, [propName, propSchema]) => [
       ...props,
       {
-        schema: parseSchema(propSchema, schemaRefMapping),
+        schema: parseSchema(propSchema, refs),
         description: isReferenceObject(propSchema)
           ? undefined
           : propSchema.description,
@@ -178,18 +178,16 @@ function parseEnumSchema(
 /**
  * Parse a 'oneOf', 'allOf' or 'anyOf' schema.
  * @param schema Original schema to parse.
- * @param schemaRefMapping Mapping between references and parsed names of the schemas.
+ * @param refs Object holding information on references throughout the document.
  * @param xOf Key to identify which schema to parse.
  * @returns The parsed schema based on the given key.
  */
 function parseXOfSchema(
   schema: OpenAPIV3.NonArraySchemaObject,
-  schemaRefMapping: SchemaRefMapping,
+  refs: OpenApiDocumentRefs,
   xOf: 'oneOf' | 'allOf' | 'anyOf'
 ): any {
   return {
-    [xOf]: (schema[xOf] || []).map(entry =>
-      parseSchema(entry, schemaRefMapping)
-    )
+    [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry, refs))
   };
 }

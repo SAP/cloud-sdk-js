@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { OpenApiSchema } from '../openapi-types';
-import { SchemaRefMapping } from './parsing-info';
+import { OpenApiDocumentRefs } from './refs';
 import { parseSchema } from './schema';
 
 const logger = createLogger('openapi-generator');
@@ -16,7 +16,7 @@ export function parseApplicationJsonMediaType(
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
     | undefined,
-  schemaRefMapping: SchemaRefMapping
+  refs: OpenApiDocumentRefs
 ): OpenApiSchema | undefined {
   if (bodyOrResponseObject) {
     const mediaType = getMediaTypeObject(
@@ -25,7 +25,7 @@ export function parseApplicationJsonMediaType(
     );
     const schema = mediaType?.schema;
     if (schema) {
-      return parseSchema(schema, schemaRefMapping);
+      return parseSchema(schema, refs);
     }
   }
 }
@@ -35,13 +35,13 @@ export function parseMediaType(
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
     | undefined,
-  schemaRefMapping: SchemaRefMapping
+  refs: OpenApiDocumentRefs
 ): OpenApiSchema | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
     const jsonMediaType = parseApplicationJsonMediaType(
       bodyOrResponseObject,
-      schemaRefMapping
+      refs
     );
 
     if (!jsonMediaType) {

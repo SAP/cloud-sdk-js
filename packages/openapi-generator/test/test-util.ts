@@ -7,7 +7,7 @@ export const emptyDocument = {
   paths: {}
 } as const;
 
-export function createRefs(
+export function createTestRefs(
   components: OpenAPIV3.ComponentsObject = {}
 ): Promise<$Refs> {
   return resolve({ ...emptyDocument, components });

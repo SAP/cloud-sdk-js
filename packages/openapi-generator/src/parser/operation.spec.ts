@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { createRefs, emptyObjectSchema } from '../../test/test-util';
+import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { OpenApiParameter } from '../openapi-types';
 import {
   parseParameters,
@@ -24,7 +24,7 @@ describe('getRelevantParameters', () => {
             schema: { type: 'string' }
           }
         ],
-        await createRefs()
+        await createTestRefs()
       )
     ).toEqual([]);
   });
@@ -38,7 +38,7 @@ describe('getRelevantParameters', () => {
     expect(
       getRelevantParameters(
         [{ $ref: '#/components/parameters/RefSchema' }],
-        await createRefs({
+        await createTestRefs({
           parameters: {
             RefSchema: refSchema
           }
@@ -72,7 +72,7 @@ describe('getRelevantParameters', () => {
     expect(
       getRelevantParameters(
         [queryParam1, queryParam2, pathParam, queryParam1Replacement],
-        await createRefs()
+        await createTestRefs()
       )
     ).toEqual([queryParam2, pathParam, queryParam1Replacement]);
   });

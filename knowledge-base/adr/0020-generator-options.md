@@ -21,7 +21,7 @@ The name of the generator command is: `generate-X-client` indicating that only o
    Throw an error if input is a directory (with multiple files).
 4. Keep it as is. (decided)
 5. Rename the client:
-   1. `openapi-generator`
+   1. `openapi-generator` (decided)
    2. `sap-cloud-sdk-openapi-generator`
 
 ## Consequences 1

@@ -4,25 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import {
-  AllFields,
-  BooleanField,
-  CustomFieldV4,
-  EntityBuilderType,
-  EntityV4,
-  Field,
-  NumberField,
-  OneToManyLink,
-  OneToOneLink,
-  StringField
-} from '../../../../../src';
+import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, OneToManyLink, OneToOneLink, StringField } from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityMultiLink
-  extends EntityV4
-  implements TestEntityMultiLinkType {
+export class TestEntityMultiLink extends EntityV4 implements TestEntityMultiLinkType {
   /**
    * Technical entity name for TestEntityMultiLink.
    */
@@ -70,10 +57,7 @@ export class TestEntityMultiLink
    * Returns an entity builder to construct instances of `TestEntityMultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
    */
-  static builder(): EntityBuilderType<
-    TestEntityMultiLink,
-    TestEntityMultiLinkType
-  > {
+  static builder(): EntityBuilderType<TestEntityMultiLink, TestEntityMultiLinkType> {
     return EntityV4.entityBuilder(TestEntityMultiLink);
   }
 
@@ -103,14 +87,8 @@ export class TestEntityMultiLink
   }
 }
 
-import {
-  TestEntityLvl2MultiLink,
-  TestEntityLvl2MultiLinkType
-} from './TestEntityLvl2MultiLink';
-import {
-  TestEntityLvl2SingleLink,
-  TestEntityLvl2SingleLinkType
-} from './TestEntityLvl2SingleLink';
+import { TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkType } from './TestEntityLvl2MultiLink';
+import { TestEntityLvl2SingleLink, TestEntityLvl2SingleLinkType } from './TestEntityLvl2SingleLink';
 
 export interface TestEntityMultiLinkType {
   stringProperty?: string | null;
@@ -127,81 +105,41 @@ export namespace TestEntityMultiLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityMultiLink> = new StringField(
-    'StringProperty',
-    TestEntityMultiLink,
-    'Edm.String'
-  );
+  export const STRING_PROPERTY: StringField<TestEntityMultiLink> = new StringField('StringProperty', TestEntityMultiLink, 'Edm.String');
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntityMultiLink> = new BooleanField(
-    'BooleanProperty',
-    TestEntityMultiLink,
-    'Edm.Boolean'
-  );
+  export const BOOLEAN_PROPERTY: BooleanField<TestEntityMultiLink> = new BooleanField('BooleanProperty', TestEntityMultiLink, 'Edm.Boolean');
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntityMultiLink> = new StringField(
-    'GuidProperty',
-    TestEntityMultiLink,
-    'Edm.Guid'
-  );
+  export const GUID_PROPERTY: StringField<TestEntityMultiLink> = new StringField('GuidProperty', TestEntityMultiLink, 'Edm.Guid');
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY: NumberField<TestEntityMultiLink> = new NumberField(
-    'Int16Property',
-    TestEntityMultiLink,
-    'Edm.Int16'
-  );
+  export const INT_16_PROPERTY: NumberField<TestEntityMultiLink> = new NumberField('Int16Property', TestEntityMultiLink, 'Edm.Int16');
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityMultiLink> = new StringField(
-    'KeyProperty',
-    TestEntityMultiLink,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY: StringField<TestEntityMultiLink> = new StringField('KeyProperty', TestEntityMultiLink, 'Edm.String');
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink1]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK_1: OneToManyLink<
-    TestEntityMultiLink,
-    TestEntityLvl2MultiLink
-  > = new OneToManyLink(
-    'to_MultiLink1',
-    TestEntityMultiLink,
-    TestEntityLvl2MultiLink
-  );
+  export const TO_MULTI_LINK_1: OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink> = new OneToManyLink('to_MultiLink1', TestEntityMultiLink, TestEntityLvl2MultiLink);
   /**
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_SINGLE_LINK: OneToOneLink<
-    TestEntityMultiLink,
-    TestEntityLvl2SingleLink
-  > = new OneToOneLink(
-    'to_SingleLink',
-    TestEntityMultiLink,
-    TestEntityLvl2SingleLink
-  );
+  export const TO_SINGLE_LINK: OneToOneLink<TestEntityMultiLink, TestEntityLvl2SingleLink> = new OneToOneLink('to_SingleLink', TestEntityMultiLink, TestEntityLvl2SingleLink);
   /**
    * All fields of the TestEntityMultiLink entity.
    */
-  export const _allFields: Array<
-    | StringField<TestEntityMultiLink>
-    | BooleanField<TestEntityMultiLink>
-    | NumberField<TestEntityMultiLink>
-    | OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink>
-    | OneToOneLink<TestEntityMultiLink, TestEntityLvl2SingleLink>
-  > = [
+  export const _allFields: Array<StringField<TestEntityMultiLink> | BooleanField<TestEntityMultiLink> | NumberField<TestEntityMultiLink> | OneToManyLink<TestEntityMultiLink, TestEntityLvl2MultiLink> | OneToOneLink<TestEntityMultiLink, TestEntityLvl2SingleLink>> = [
     TestEntityMultiLink.STRING_PROPERTY,
     TestEntityMultiLink.BOOLEAN_PROPERTY,
     TestEntityMultiLink.GUID_PROPERTY,
@@ -213,29 +151,16 @@ export namespace TestEntityMultiLink {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityMultiLink> = new AllFields(
-    '*',
-    TestEntityMultiLink
-  );
+  export const ALL_FIELDS: AllFields<TestEntityMultiLink> = new AllFields('*', TestEntityMultiLink);
   /**
    * All key fields of the TestEntityMultiLink entity.
    */
-  export const _keyFields: Array<Field<TestEntityMultiLink>> = [
-    TestEntityMultiLink.KEY_PROPERTY
-  ];
+  export const _keyFields: Array<Field<TestEntityMultiLink>> = [TestEntityMultiLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityMultiLink.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntityMultiLink>;
-  } = TestEntityMultiLink._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntityMultiLink> },
-      field: Field<TestEntityMultiLink>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntityMultiLink> } = TestEntityMultiLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntityMultiLink> }, field: Field<TestEntityMultiLink>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

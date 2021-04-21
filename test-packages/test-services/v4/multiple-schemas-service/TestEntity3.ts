@@ -6,15 +6,7 @@
 import { TestEntity3RequestBuilder } from './TestEntity3RequestBuilder';
 import { TestComplexType2, TestComplexType2Field } from './TestComplexType2';
 import { TestEnumType2 } from './TestEnumType2';
-import {
-  AllFields,
-  CustomFieldV4,
-  EntityBuilderType,
-  EntityV4,
-  EnumField,
-  Field,
-  StringField
-} from '@sap-cloud-sdk/core';
+import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, EnumField, Field, StringField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -88,35 +80,21 @@ export namespace TestEntity3 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity3> = new StringField(
-    'KeyPropertyString',
-    TestEntity3,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY_STRING: StringField<TestEntity3> = new StringField('KeyPropertyString', TestEntity3, 'Edm.String');
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY: EnumField<TestEntity3> = new EnumField(
-    'EnumProperty',
-    TestEntity3
-  );
+  export const ENUM_PROPERTY: EnumField<TestEntity3> = new EnumField('EnumProperty', TestEntity3);
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY: TestComplexType2Field<TestEntity3> = new TestComplexType2Field(
-    'ComplexTypeProperty',
-    TestEntity3
-  );
+  export const COMPLEX_TYPE_PROPERTY: TestComplexType2Field<TestEntity3> = new TestComplexType2Field('ComplexTypeProperty', TestEntity3);
   /**
    * All fields of the TestEntity3 entity.
    */
-  export const _allFields: Array<
-    | StringField<TestEntity3>
-    | EnumField<TestEntity3>
-    | TestComplexType2Field<TestEntity3>
-  > = [
+  export const _allFields: Array<StringField<TestEntity3> | EnumField<TestEntity3> | TestComplexType2Field<TestEntity3>> = [
     TestEntity3.KEY_PROPERTY_STRING,
     TestEntity3.ENUM_PROPERTY,
     TestEntity3.COMPLEX_TYPE_PROPERTY
@@ -124,29 +102,16 @@ export namespace TestEntity3 {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity3> = new AllFields(
-    '*',
-    TestEntity3
-  );
+  export const ALL_FIELDS: AllFields<TestEntity3> = new AllFields('*', TestEntity3);
   /**
    * All key fields of the TestEntity3 entity.
    */
-  export const _keyFields: Array<Field<TestEntity3>> = [
-    TestEntity3.KEY_PROPERTY_STRING
-  ];
+  export const _keyFields: Array<Field<TestEntity3>> = [TestEntity3.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity3.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntity3>;
-  } = TestEntity3._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntity3> },
-      field: Field<TestEntity3>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntity3> } = TestEntity3._keyFields.reduce((acc: { [keys: string]: Field<TestEntity3> }, field: Field<TestEntity3>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

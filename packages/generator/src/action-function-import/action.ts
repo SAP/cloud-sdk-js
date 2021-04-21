@@ -1,13 +1,25 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
-import { VdmActionImport, VdmServiceMetadata } from '../vdm-types';
+import { VdmActionImport, VdmReturnTypeCategory, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
+import { additionalDocForEntityNotDeserializable } from './function';
 const parameterName = 'parameters';
 
 export function actionImportFunction(
   actionImport: VdmActionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
+  const returnType = actionImport.returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+    ?
+    `Omit<ActionImportRequestBuilder<${
+      actionImport.parametersTypeName
+    }, ${actionImport.returnType.returnType}>, 'execute'>`
+    :
+    `ActionImportRequestBuilder<${
+      actionImport.parametersTypeName
+    }, ${actionImport.returnType.returnType}${
+      actionImport.returnType.isCollection ? '[]' : ''
+    }>`;
   return {
     kind: StructureKind.Function,
     name: actionImport.name,
@@ -18,21 +30,20 @@ export function actionImportFunction(
         type: actionImport.parametersTypeName
       }
     ],
-    returnType: `ActionImportRequestBuilder<${
-      actionImport.parametersTypeName
-    }, ${actionImport.returnType.returnType}${
-      actionImport.returnType.isCollection ? '[]' : ''
-    }>`,
-
+    returnType,
     statements: getActionImportStatements(actionImport, service),
     docs: [
       [
-        `${actionImport.description}${unixEOL}`,
+        getDocDescription(actionImport),
         '@param parameters - Object containing all parameters for the action import.',
         '@returns A request builder that allows to overwrite some of the values and execute the resulting request.'
       ].join(unixEOL)
     ]
   };
+}
+
+function getDocDescription(actionImport: VdmActionImport){
+  return `${actionImport.description} ${actionImport.returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE? additionalDocForEntityNotDeserializable:''}${unixEOL}`;
 }
 
 function getActionImportStatements(

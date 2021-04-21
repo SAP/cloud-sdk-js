@@ -1,7 +1,8 @@
-import { unixEOL, caps } from '@sap-cloud-sdk/util';
+import { caps, unixEOL } from '@sap-cloud-sdk/util';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmFunctionImport, VdmReturnTypeCategory, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
+
 const parameterName = 'parameters';
 
 export function functionImportFunction(
@@ -10,9 +11,9 @@ export function functionImportFunction(
 ): FunctionDeclarationStructure {
   const returnType = functionImport.returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
   ?
-    `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
+    `Omit<FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
       functionImport.parametersTypeName
-    }, ${functionImport.returnType.returnType}>`
+    }, ${functionImport.returnType.returnType}>, 'execute'>`
   :
     `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
       functionImport.parametersTypeName
@@ -33,12 +34,17 @@ export function functionImportFunction(
     statements: getFunctionImportStatements(functionImport, service),
     docs: [
       [
-        `${functionImport.description}${unixEOL}`,
+        getDocDescription(functionImport),
         '@param parameters - Object containing all parameters for the function import.',
-        '@returns A request builder that allows to overwrite some of the values and execute the resultng request.'
+        '@returns A request builder that allows to overwrite some of the values and execute the resulting request.'
       ].join(unixEOL)
     ]
   };
+}
+export const additionalDocForEntityNotDeserializable = "The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.";
+
+function getDocDescription(functionImport: VdmFunctionImport){
+  return `${functionImport.description} ${functionImport.returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE? additionalDocForEntityNotDeserializable:''}${unixEOL}`;
 }
 
 function getFunctionImportStatements(

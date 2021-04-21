@@ -69,7 +69,7 @@ describe('pregenerated-lib', () => {
       createOptions()
     );
     // for an existing service like the business partner it should not be undefined the parts are tested independently
-    expect(result).not.toBe(undefined);
+    expect(result).toBeDefined();
   });
 
   it('returns undefined for noon existing service', async () => {
@@ -79,7 +79,7 @@ describe('pregenerated-lib', () => {
       createOptions()
     );
     // for an existing service like the business partner it should not be undefined the parts are tested independently
-    expect(result).toBe(undefined);
+    expect(result).toBeUndefined();
   });
 });
 

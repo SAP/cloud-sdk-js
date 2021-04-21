@@ -1,5 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`url does not fail for existing link 1`] = `undefined`;
+exports[`url does not throw for existing link 1`] = `undefined`;
 
-exports[`url fails for non existing link 1`] = `"Request to https://non.existing.com failed."`;
+exports[`url throws for non existing link 1`] = `"Request to https://non.existing.com failed."`;

@@ -4,14 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { Casetest_1RequestBuilder } from './Casetest_1RequestBuilder';
-import {
-  AllFields,
-  CustomFieldV2,
-  EntityBuilderType,
-  EntityV2,
-  Field,
-  StringField
-} from '../../../../../src';
+import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '../../../../../src';
 
 /**
  * This class represents the entity "A_CASETEST" of service "API_TEST_SRV".
@@ -73,11 +66,7 @@ export namespace Casetest_1 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<Casetest_1> = new StringField(
-    'KeyPropertyString',
-    Casetest_1,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY_STRING: StringField<Casetest_1> = new StringField('KeyPropertyString', Casetest_1, 'Edm.String');
   /**
    * All fields of the Casetest_1 entity.
    */
@@ -87,26 +76,16 @@ export namespace Casetest_1 {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<Casetest_1> = new AllFields(
-    '*',
-    Casetest_1
-  );
+  export const ALL_FIELDS: AllFields<Casetest_1> = new AllFields('*', Casetest_1);
   /**
    * All key fields of the Casetest_1 entity.
    */
-  export const _keyFields: Array<Field<Casetest_1>> = [
-    Casetest_1.KEY_PROPERTY_STRING
-  ];
+  export const _keyFields: Array<Field<Casetest_1>> = [Casetest_1.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property Casetest_1.
    */
-  export const _keys: {
-    [keys: string]: Field<Casetest_1>;
-  } = Casetest_1._keyFields.reduce(
-    (acc: { [keys: string]: Field<Casetest_1> }, field: Field<Casetest_1>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<Casetest_1> } = Casetest_1._keyFields.reduce((acc: { [keys: string]: Field<Casetest_1> }, field: Field<Casetest_1>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

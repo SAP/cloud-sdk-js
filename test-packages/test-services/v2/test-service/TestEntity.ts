@@ -7,23 +7,7 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import {
-  AllFields,
-  AnyField,
-  BigNumberField,
-  BooleanField,
-  CustomFieldV2,
-  DateField,
-  EntityBuilderType,
-  EntityV2,
-  Field,
-  Link,
-  NumberField,
-  OneToOneLink,
-  StringField,
-  Time,
-  TimeField
-} from '@sap-cloud-sdk/core';
+import { AllFields, AnyField, BigNumberField, BooleanField, CustomFieldV2, DateField, EntityBuilderType, EntityV2, Field, Link, NumberField, OneToOneLink, StringField, Time, TimeField } from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -178,18 +162,9 @@ export class TestEntity extends EntityV2 implements TestEntityType {
   }
 }
 
-import {
-  TestEntityMultiLink,
-  TestEntityMultiLinkType
-} from './TestEntityMultiLink';
-import {
-  TestEntityOtherMultiLink,
-  TestEntityOtherMultiLinkType
-} from './TestEntityOtherMultiLink';
-import {
-  TestEntitySingleLink,
-  TestEntitySingleLinkType
-} from './TestEntitySingleLink';
+import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
+import { TestEntityOtherMultiLink, TestEntityOtherMultiLinkType } from './TestEntityOtherMultiLink';
+import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
 
 export interface TestEntityType {
   keyPropertyGuid: string;
@@ -221,213 +196,116 @@ export namespace TestEntity {
    * Static representation of the [[keyPropertyGuid]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_GUID: StringField<TestEntity> = new StringField(
-    'KeyPropertyGuid',
-    TestEntity,
-    'Edm.Guid'
-  );
+  export const KEY_PROPERTY_GUID: StringField<TestEntity> = new StringField('KeyPropertyGuid', TestEntity, 'Edm.Guid');
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity> = new StringField(
-    'KeyPropertyString',
-    TestEntity,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY_STRING: StringField<TestEntity> = new StringField('KeyPropertyString', TestEntity, 'Edm.String');
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntity> = new StringField(
-    'StringProperty',
-    TestEntity,
-    'Edm.String'
-  );
+  export const STRING_PROPERTY: StringField<TestEntity> = new StringField('StringProperty', TestEntity, 'Edm.String');
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntity> = new BooleanField(
-    'BooleanProperty',
-    TestEntity,
-    'Edm.Boolean'
-  );
+  export const BOOLEAN_PROPERTY: BooleanField<TestEntity> = new BooleanField('BooleanProperty', TestEntity, 'Edm.Boolean');
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntity> = new StringField(
-    'GuidProperty',
-    TestEntity,
-    'Edm.Guid'
-  );
+  export const GUID_PROPERTY: StringField<TestEntity> = new StringField('GuidProperty', TestEntity, 'Edm.Guid');
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY: NumberField<TestEntity> = new NumberField(
-    'Int16Property',
-    TestEntity,
-    'Edm.Int16'
-  );
+  export const INT_16_PROPERTY: NumberField<TestEntity> = new NumberField('Int16Property', TestEntity, 'Edm.Int16');
   /**
    * Static representation of the [[int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_32_PROPERTY: NumberField<TestEntity> = new NumberField(
-    'Int32Property',
-    TestEntity,
-    'Edm.Int32'
-  );
+  export const INT_32_PROPERTY: NumberField<TestEntity> = new NumberField('Int32Property', TestEntity, 'Edm.Int32');
   /**
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_64_PROPERTY: BigNumberField<TestEntity> = new BigNumberField(
-    'Int64Property',
-    TestEntity,
-    'Edm.Int64'
-  );
+  export const INT_64_PROPERTY: BigNumberField<TestEntity> = new BigNumberField('Int64Property', TestEntity, 'Edm.Int64');
   /**
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DECIMAL_PROPERTY: BigNumberField<TestEntity> = new BigNumberField(
-    'DecimalProperty',
-    TestEntity,
-    'Edm.Decimal'
-  );
+  export const DECIMAL_PROPERTY: BigNumberField<TestEntity> = new BigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SINGLE_PROPERTY: NumberField<TestEntity> = new NumberField(
-    'SingleProperty',
-    TestEntity,
-    'Edm.Single'
-  );
+  export const SINGLE_PROPERTY: NumberField<TestEntity> = new NumberField('SingleProperty', TestEntity, 'Edm.Single');
   /**
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DOUBLE_PROPERTY: NumberField<TestEntity> = new NumberField(
-    'DoubleProperty',
-    TestEntity,
-    'Edm.Double'
-  );
+  export const DOUBLE_PROPERTY: NumberField<TestEntity> = new NumberField('DoubleProperty', TestEntity, 'Edm.Double');
   /**
    * Static representation of the [[floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const FLOAT_PROPERTY: NumberField<TestEntity> = new NumberField(
-    'FloatProperty',
-    TestEntity,
-    'Edm.Float'
-  );
+  export const FLOAT_PROPERTY: NumberField<TestEntity> = new NumberField('FloatProperty', TestEntity, 'Edm.Float');
   /**
    * Static representation of the [[timeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TIME_PROPERTY: TimeField<TestEntity> = new TimeField(
-    'TimeProperty',
-    TestEntity,
-    'Edm.Time'
-  );
+  export const TIME_PROPERTY: TimeField<TestEntity> = new TimeField('TimeProperty', TestEntity, 'Edm.Time');
   /**
    * Static representation of the [[dateTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_TIME_PROPERTY: DateField<TestEntity> = new DateField(
-    'DateTimeProperty',
-    TestEntity,
-    'Edm.DateTime'
-  );
+  export const DATE_TIME_PROPERTY: DateField<TestEntity> = new DateField('DateTimeProperty', TestEntity, 'Edm.DateTime');
   /**
    * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_TIME_OFF_SET_PROPERTY: DateField<TestEntity> = new DateField(
-    'DateTimeOffSetProperty',
-    TestEntity,
-    'Edm.DateTimeOffset'
-  );
+  export const DATE_TIME_OFF_SET_PROPERTY: DateField<TestEntity> = new DateField('DateTimeOffSetProperty', TestEntity, 'Edm.DateTimeOffset');
   /**
    * Static representation of the [[byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BYTE_PROPERTY: NumberField<TestEntity> = new NumberField(
-    'ByteProperty',
-    TestEntity,
-    'Edm.Byte'
-  );
+  export const BYTE_PROPERTY: NumberField<TestEntity> = new NumberField('ByteProperty', TestEntity, 'Edm.Byte');
   /**
    * Static representation of the [[sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const S_BYTE_PROPERTY: NumberField<TestEntity> = new NumberField(
-    'SByteProperty',
-    TestEntity,
-    'Edm.SByte'
-  );
+  export const S_BYTE_PROPERTY: NumberField<TestEntity> = new NumberField('SByteProperty', TestEntity, 'Edm.SByte');
   /**
    * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: AnyField<TestEntity> = new AnyField(
-    'SomethingTheSDKDoesNotSupport',
-    TestEntity,
-    'Edm.Any'
-  );
+  export const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: AnyField<TestEntity> = new AnyField('SomethingTheSDKDoesNotSupport', TestEntity, 'Edm.Any');
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity> = new TestComplexTypeField(
-    'ComplexTypeProperty',
-    TestEntity
-  );
+  export const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity> = new TestComplexTypeField('ComplexTypeProperty', TestEntity);
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK: Link<TestEntity, TestEntityMultiLink> = new Link(
-    'to_MultiLink',
-    TestEntity,
-    TestEntityMultiLink
-  );
+  export const TO_MULTI_LINK: Link<TestEntity, TestEntityMultiLink> = new Link('to_MultiLink', TestEntity, TestEntityMultiLink);
   /**
    * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_OTHER_MULTI_LINK: Link<
-    TestEntity,
-    TestEntityOtherMultiLink
-  > = new Link('to_OtherMultiLink', TestEntity, TestEntityOtherMultiLink);
+  export const TO_OTHER_MULTI_LINK: Link<TestEntity, TestEntityOtherMultiLink> = new Link('to_OtherMultiLink', TestEntity, TestEntityOtherMultiLink);
   /**
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_SINGLE_LINK: OneToOneLink<
-    TestEntity,
-    TestEntitySingleLink
-  > = new OneToOneLink('to_SingleLink', TestEntity, TestEntitySingleLink);
+  export const TO_SINGLE_LINK: OneToOneLink<TestEntity, TestEntitySingleLink> = new OneToOneLink('to_SingleLink', TestEntity, TestEntitySingleLink);
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<
-    | StringField<TestEntity>
-    | BooleanField<TestEntity>
-    | NumberField<TestEntity>
-    | BigNumberField<TestEntity>
-    | TimeField<TestEntity>
-    | DateField<TestEntity>
-    | AnyField<TestEntity>
-    | TestComplexTypeField<TestEntity>
-    | Link<TestEntity, TestEntityMultiLink>
-    | Link<TestEntity, TestEntityOtherMultiLink>
-    | OneToOneLink<TestEntity, TestEntitySingleLink>
-  > = [
+  export const _allFields: Array<StringField<TestEntity> | BooleanField<TestEntity> | NumberField<TestEntity> | BigNumberField<TestEntity> | TimeField<TestEntity> | DateField<TestEntity> | AnyField<TestEntity> | TestComplexTypeField<TestEntity> | Link<TestEntity, TestEntityMultiLink> | Link<TestEntity, TestEntityOtherMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
@@ -454,27 +332,16 @@ export namespace TestEntity {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity> = new AllFields(
-    '*',
-    TestEntity
-  );
+  export const ALL_FIELDS: AllFields<TestEntity> = new AllFields('*', TestEntity);
   /**
    * All key fields of the TestEntity entity.
    */
-  export const _keyFields: Array<Field<TestEntity>> = [
-    TestEntity.KEY_PROPERTY_GUID,
-    TestEntity.KEY_PROPERTY_STRING
-  ];
+  export const _keyFields: Array<Field<TestEntity>> = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntity>;
-  } = TestEntity._keyFields.reduce(
-    (acc: { [keys: string]: Field<TestEntity> }, field: Field<TestEntity>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntity> } = TestEntity._keyFields.reduce((acc: { [keys: string]: Field<TestEntity> }, field: Field<TestEntity>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

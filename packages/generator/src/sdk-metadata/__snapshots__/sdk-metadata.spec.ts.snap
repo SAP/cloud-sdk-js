@@ -71,7 +71,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
   },
   "serviceStatus": Object {
     "status": "certified",
-    "statusText": "The SDK team has generated a API client and published it under npm.",
+    "statusText": "A pre-generated API client exists.",
   },
 }
 `;

@@ -6,5 +6,7 @@ import axios from 'axios';
  * @returns promise - resolves if the URL exists
  */
 export async function checkUrlExists(url: string): Promise<number> {
-  return axios.request({ url, method: 'HEAD' }).then(response=>response.status);
+  return axios
+    .request({ url, method: 'HEAD' })
+    .then(response => response.status);
 }

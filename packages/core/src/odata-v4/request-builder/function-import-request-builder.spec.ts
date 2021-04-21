@@ -1,15 +1,9 @@
-import nock from 'nock';
 import {
   defaultDestination,
-  defaultHost
 } from '../../../test/test-util/request-mocker';
 import {
-  testFunctionImportMultipleParams,
-  testFunctionImportSharedEntityReturnType, TestFunctionImportSharedEntityReturnTypeParameters
+  testFunctionImportMultipleParams
 } from '../../../test/test-util/test-services/v4/test-service';
-import { FunctionImportRequestBuilderV4 } from './function-import-request-builder';
-
-const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
 
 describe('FunctionImportRequestBuilder', () => {
   it('builds correct url for multiple parameters', async () => {
@@ -26,17 +20,5 @@ describe('FunctionImportRequestBuilder', () => {
     expect(url).toContain(
       `NonNullableStringParam='${params.nonNullableStringParam}'`
     );
-  });
-
-  it('throws an error when shared entity type is used as return type', async () => {
-    nock(defaultHost)
-      .get(`${serviceUrl}/TestFunctionImportSharedEntityReturnType()`)
-      .query({ $format: 'json' })
-      .reply(200, {});
-    const requestBuilder = testFunctionImportSharedEntityReturnType({}) as any;
-
-    await expect(
-      requestBuilder.execute(defaultDestination)
-    ).rejects.toThrowErrorMatchingSnapshot();
   });
 });

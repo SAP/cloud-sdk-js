@@ -37,6 +37,7 @@ describe('sdk-metadata', () => {
       createOptions({ versionInPackageJson: '1.0.0' })
     );
     expect(metaData).toMatchSnapshot();
+    expect(metaData.pregeneratedLibrary).toBeDefined();
     expect(metaData.serviceStatus.status).toBe('certified');
     expect(metaData.serviceStatus.statusText).toBe(
       'A pre-generated API client exists.'
@@ -52,6 +53,7 @@ describe('sdk-metadata', () => {
 
     expect(metaData).toMatchSnapshot();
     expect(metaData.serviceStatus.status).toBe('verified');
+    expect(metaData.pregeneratedLibrary).toBeUndefined();
     expect(metaData.serviceStatus.statusText).toBe(
       'The generation process for this API works.'
     );

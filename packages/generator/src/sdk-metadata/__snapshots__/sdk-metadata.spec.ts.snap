@@ -2,16 +2,23 @@
 
 exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service"`;
 
-exports[`sdk-metadata [E2E] generates the JS metadata content for services with pregenerated lib 1`] = `
+exports[`sdk-metadata generates the File names 1`] = `
+Object {
+  "clientFileName": "MyService_CLIENT_JS.json",
+  "headerFileName": "MyService_HEADER.json",
+}
+`;
+
+exports[`sdk-metadata generates the JS metadata content for services with pregenerated lib 1`] = `
 Object {
   "emergencyObject": undefined,
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
-      "instructions": "import { TestEntity } from '@sap/cloud-sdk-vdm-business-partner-service';
+      "instructions": "import { TestEntity } from 'non-existing-package';
 
 const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find below a usage example for this API.",
+      "text": "Find a usage example for this API below.",
     },
     "generationSteps": Object {
       "instructions": "<ul>
@@ -29,7 +36,7 @@ The steps above will generate a basic TypeScript client. For additional options 
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find below a generic example on execute request with the SDK.",
+      "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
     },
     "links": Object {
       "apiHubTutorial": Object {
@@ -57,26 +64,26 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
   "language": "javascript",
   "pregeneratedLibrary": Object {
     "compatibilityNotes": "",
-    "dependencyName": "@sap/cloud-sdk-vdm-business-partner-service",
+    "dependencyName": "non-existing-package",
     "description": "SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service",
     "generatedAt": "/Date(0)/",
     "installLibrarySteps": Object {
-      "instructions": "npm i @sap/cloud-sdk-vdm-business-partner-service:latest",
+      "instructions": "npm i non-existing-package:latest",
       "text": "Execute the following npm command to install the pregenerated client.",
     },
     "repository": "npm",
-    "repositoryLink": "https://www.npmjs.com/package/@sap/cloud-sdk-vdm-business-partner-service",
+    "repositoryLink": "https://www.npmjs.com/package/non-existing-package",
     "version": "1.0.0",
   },
   "serviceStatus": Object {
     "gettingStartedText": "For this API you have two options to get a typed client. Either you download the pregenerated client from the repository or you generate the client on your own.",
     "status": "certified",
-    "statusText": "The SDK team has generated a API client and published it under npm.",
+    "statusText": "A pre-generated API client exists.",
   },
 }
 `;
 
-exports[`sdk-metadata [E2E] generates the JS metadata content for services without pregenerated lib 1`] = `
+exports[`sdk-metadata generates the JS metadata content for services without pregenerated lib 1`] = `
 Object {
   "emergencyObject": undefined,
   "generationAndUsage": Object {
@@ -85,7 +92,7 @@ Object {
 
 const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find below a usage example for this API.",
+      "text": "Find a usage example for this API below.",
     },
     "generationSteps": Object {
       "instructions": "<ul>
@@ -103,7 +110,7 @@ The steps above will generate a basic TypeScript client. For additional options 
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find below a generic example on execute request with the SDK.",
+      "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
     },
     "links": Object {
       "apiHubTutorial": Object {
@@ -135,13 +142,6 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
     "status": "verified",
     "statusText": "The SDK team has tested the generation process for this API.",
   },
-}
-`;
-
-exports[`sdk-metadata generates the File names 1`] = `
-Object {
-  "clientFileName": "MyService_CLIENT_JS.json",
-  "headerFileName": "MyService_HEADER.json",
 }
 `;
 

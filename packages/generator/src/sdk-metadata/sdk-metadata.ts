@@ -60,8 +60,7 @@ export function sdkMetaDataHeader(
 const ServiceStatusValues: Record<ServiceStatus['status'], ServiceStatus> = {
   certified: {
     status: 'certified',
-    statusText:
-      'The SDK team has generated a API client and published it under npm.',
+    statusText: 'A pre-generated API client exists.',
     gettingStartedText:
       'For this API you have two options to get a typed client. Either you download the pregenerated client from the repository or you generate the client on your own.'
   },

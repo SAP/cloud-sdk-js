@@ -1,8 +1,8 @@
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { executeHttpRequest } from '@sap-cloud-sdk/core';
+import { ErrorWithCause } from './error-with-cause';
 
 /**
- * Checks whether a URL is existing via a get request. Throws an exception if not.
+ * Checks whether a URL is existing via a head request. Throws an exception if not.
  * @param url - URL to be checked
  */
 export async function checkUrlExists(url: string): Promise<void> {

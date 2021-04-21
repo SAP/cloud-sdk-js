@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { executeHttpRequest } from '@sap-cloud-sdk/core';
+import { checkUrlExists } from '@sap-cloud-sdk/util';
 import { VdmServiceMetadata } from '../vdm-types';
 import { GeneratorOptions } from '../generator-options';
 import {
@@ -53,10 +53,7 @@ export async function isPublishedNpmPackage(
   service: VdmServiceMetadata
 ): Promise<boolean> {
   try {
-    await executeHttpRequest(
-      { url: 'http://registry.npmjs.org/' },
-      { method: 'get', url: service.npmPackageName }
-    );
+    await checkUrlExists(`http://registry.npmjs.org/${service.npmPackageName}`);
     return true;
   } catch (e) {
     return false;

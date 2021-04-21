@@ -20,3 +20,4 @@ export * from './string';
 export * from './string-formatter';
 export * from './types';
 export * from './unique-name-generator';
+export * from './url';

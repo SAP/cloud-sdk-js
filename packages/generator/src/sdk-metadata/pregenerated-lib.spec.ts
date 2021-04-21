@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import nock = require('nock');
 import { VdmServiceMetadata } from '../vdm-types';
 import { parseService } from '../service-generator';
 import { createOptions } from '../../test/test-util/create-generator-options';
@@ -47,7 +48,8 @@ describe('pregenerated-lib', () => {
     expect(getTimeStamp()).toMatch(/\/Date\(\d{13,13}\)\//);
   });
 
-  it('[E2E] checks if there is a client published', async () => {
+  it('checks if there is a client published', async () => {
+    nock('http://registry.npmjs.org/').head(/.*/).reply(200);
     expect(
       await isPublishedNpmPackage({
         npmPackageName: '@sap/cloud-sdk-core'
@@ -60,13 +62,24 @@ describe('pregenerated-lib', () => {
     ).toBe(false);
   }, 30000);
 
-  it('[E2E] return pregenerated lib information', async () => {
+  it('returns pregenerated lib information for existing service', async () => {
+    nock('http://registry.npmjs.org/').head(/.*/).reply(200);
     const result = await getPregeneratedLibrary(
-      getTestService('@sap/cloud-sdk-vdm-business-partner-service'),
+      getTestService(),
       createOptions()
     );
     // for an existing service like the business partner it should not be undefined the parts are tested independently
     expect(result).not.toBe(undefined);
+  });
+
+  it('returns undefined for noon existing service', async () => {
+    nock('http://registry.npmjs.org/').head(/.*/).reply(404);
+    const result = await getPregeneratedLibrary(
+      getTestService(),
+      createOptions()
+    );
+    // for an existing service like the business partner it should not be undefined the parts are tested independently
+    expect(result).toBe(undefined);
   });
 });
 

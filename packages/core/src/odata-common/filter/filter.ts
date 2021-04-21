@@ -35,6 +35,7 @@ export type FilterOperatorByType<
  * @typeparam EntityT - Type of the entity to be filtered on
  * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
  */
+// TODO 2.0 rename to BinaryFilter
 export class Filter<
   EntityT extends Entity,
   FieldT extends FieldType | FieldType[]

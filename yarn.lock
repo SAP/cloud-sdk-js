@@ -2014,9 +2014,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@>=13.9.8", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.20.8"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.8.tgz#e8552c505de64739fc997e28920ff4539fc8f185"
-  integrity sha512-uxDkaUGwXNDHu5MHqs+FAsmOjNoNibDF1cu4668QG96mQldQfgV3M+UyntXWWrtXSh13jFxEdNUdoLWH46mLKQ==
+  version "12.20.10"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.10.tgz#4dcb8a85a8f1211acafb88d72fafc7e3d2685583"
+  integrity sha512-TxCmnSSppKBBOzYzPR2BR25YlX5Oay8z2XGwFBInuA/Co0V9xJhLlW4kjbxKtgeNo3NOMbQP1A5Rc03y+XecPw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -4461,9 +4461,9 @@ eslint-plugin-jest@^24.1.3:
     "@typescript-eslint/experimental-utils" "^4.0.1"
 
 eslint-plugin-prettier@^3.1.2:
-  version "3.3.1"
-  resolved "https://registry.npmjs.org/eslint-plugin-prettier/-/eslint-plugin-prettier-3.3.1.tgz#7079cfa2497078905011e6f82e8dd8453d1371b7"
-  integrity sha512-Rq3jkcFY8RYeQLgk2cCwuc0P7SEFwDravPhsJZOQ5N4YI4DSg50NyqJ/9gdZHzQlHf8MvafSesbNJCcP/FF6pQ==
+  version "3.4.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-prettier/-/eslint-plugin-prettier-3.4.0.tgz#cdbad3bf1dbd2b177e9825737fe63b476a08f0c7"
+  integrity sha512-UDK6rJT6INSfcOo545jiaOwB701uAIt2/dR7WnFQoGCVl1/EMqdANBmwUaqqQ45aXprsTGzSa39LI1PyuRBxxw==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
@@ -8581,9 +8581,9 @@ openapi-types@^8.0.0:
   integrity sha512-dcHYyCDOAy4QQTrur5Sn1L3lPVspB7rd04Rw/Q7AsMvfV797IiWgmKziFCbq8VhnBoREU/SPPSBDxtK9Biwa1g==
 
 opossum@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.npmjs.org/opossum/-/opossum-6.0.0.tgz#4cfa189365c02bb63d67aec083a1a885081dbba1"
-  integrity sha512-NotTmvlh/6t54vYAkC7ztXYe2qGg+Ssl2p57qpJQ8cyiUXy5TNbORT8YeeY7Wr4Bmyboqlinzp+2046U7QeT4A==
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/opossum/-/opossum-6.0.1.tgz#65b7bae74510c993f115e0aa7dc19375cb39d88b"
+  integrity sha512-mE+ftebLjHQ2Vrl2SKTujcmm50r3PgDRDUQAbPUpLsudzGdTQW5qvf8FlZjp1wb+mgPzeypkmZtKSYzrR4lIAg==
 
 optionator@^0.8.1:
   version "0.8.3"
@@ -11176,9 +11176,9 @@ triple-beam@^1.2.0, triple-beam@^1.3.0:
   integrity sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==
 
 ts-jest@^26.4.1, ts-jest@^26.4.3:
-  version "26.5.4"
-  resolved "https://registry.npmjs.org/ts-jest/-/ts-jest-26.5.4.tgz#207f4c114812a9c6d5746dd4d1cdf899eafc9686"
-  integrity sha512-I5Qsddo+VTm94SukBJ4cPimOoFZsYTeElR2xy6H2TOVs+NsvgYglW8KuQgKoApOKuaU/Ix/vrF9ebFZlb5D2Pg==
+  version "26.5.5"
+  resolved "https://registry.npmjs.org/ts-jest/-/ts-jest-26.5.5.tgz#e40481b6ee4dd162626ba481a2be05fa57160ea5"
+  integrity sha512-7tP4m+silwt1NHqzNRAPjW1BswnAhopTdc2K3HEkRZjF0ZG2F/e/ypVH0xiZIMfItFtD3CX0XFbwPzp9fIEUVg==
   dependencies:
     bs-logger "0.x"
     buffer-from "1.x"

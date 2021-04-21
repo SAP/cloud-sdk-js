@@ -1,4 +1,3 @@
-import { $Refs } from '@apidevtools/swagger-parser';
 import { flat, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import { methods, OpenApiApi } from '../openapi-types';
@@ -7,37 +6,41 @@ import { parseOperation } from './operation';
 import { OperationInfo } from './parsing-info';
 import { nameOperations } from './operation-naming';
 import { ensureUniqueNames } from './unique-naming';
+import { OpenApiDocumentRefs } from './refs';
 
 /**
  * Collect and parse all APIs of an `OpenAPIV3.Document`.
  * @param document The OpenApi document to parse.
- * @param refs List of cross references that can occur in the document.
- * @param schemaRefMapping Mapping between references and parsed names of the schemas.
+ * @param refs Object representing cross references throughout the document.
  * @returns A flat list of parsed APIs.
  */
 export function parseApis(
   document: OpenAPIV3.Document,
-  refs: $Refs,
-  schemaRefMapping: Record<string, string>
+  refs: OpenApiDocumentRefs
 ): OpenApiApi[] {
   const operationsByApis = getOperationsByApis(document);
 
   return Object.entries(operationsByApis).map(
-    ([name, operations]: [string, OperationInfo[]]) => ({
-      name,
-      operations: ensureUniqueNames(
-        nameOperations(operations),
-        // All operations got an operationId in the line before
-        {
-          getName: ({ operation }) => operation.operationId!,
-          setName: (operationInfo, operationId) => {
-            operationInfo.operation.operationId = operationId;
-          }
+    ([name, operations]: [string, OperationInfo[]]) => {
+      const namedOperations = nameOperations(operations);
+      const operationNames = namedOperations.map(
+        // All operations have been named in the previous step
+        ({ operation }) => operation.operationId!
+      );
+      const uniqueNames = ensureUniqueNames(operationNames);
+      const uniquelyNamedOperations = namedOperations.map(
+        (operationInfo, i) => {
+          operationInfo.operation.operationId = uniqueNames[i];
+          return operationInfo;
         }
-      ).map(operationInfo =>
-        parseOperation(operationInfo, refs, schemaRefMapping)
-      )
-    })
+      );
+      return {
+        name,
+        operations: uniquelyNamedOperations.map(operationInfo =>
+          parseOperation(operationInfo, refs)
+        )
+      };
+    }
   );
 }
 

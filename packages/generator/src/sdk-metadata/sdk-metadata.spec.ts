@@ -19,10 +19,32 @@ describe('sdk-metadata', () => {
     ).toMatchSnapshot();
   });
 
-  it('[E2E] generates the JS metadata content', async () => {
-    await expect(
-      sdkMetaDataJS(service, createOptions({ versionInPackageJson: '1.0.0' }))
-    ).resolves.toMatchSnapshot();
+  it('[E2E] generates the JS metadata content for services with pregenerated lib', async () => {
+    jest.spyOn(global.Date, 'now').mockImplementationOnce(() => 0);
+    const metaData = await sdkMetaDataJS(
+      {
+        ...service,
+        npmPackageName: '@sap/cloud-sdk-vdm-business-partner-service'
+      },
+      createOptions({ versionInPackageJson: '1.0.0' })
+    );
+    expect(metaData).toMatchSnapshot();
+    expect(metaData.serviceStatus.status).toBe('certified');
+    expect(metaData.serviceStatus.statusText).toBe(
+      'The SDK team has generated a API client and published it under npm.'
+    );
+  });
+
+  it('[E2E] generates the JS metadata content for services without pregenerated lib', async () => {
+    const metaData = await sdkMetaDataJS(
+      { ...service, npmPackageName: 'non-existing-package' },
+      createOptions({ versionInPackageJson: '1.0.0' })
+    );
+    expect(metaData).toMatchSnapshot();
+    expect(metaData.serviceStatus.status).toBe('verified');
+    expect(metaData.serviceStatus.statusText).toBe(
+      'The SDK team has tested the generation process for this API.'
+    );
   });
 
   it('generates the File names', () => {

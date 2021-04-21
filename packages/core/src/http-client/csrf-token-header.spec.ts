@@ -92,7 +92,7 @@ describe('buildCsrfHeaders', () => {
     };
 
     nock(defaultHost)
-      .get(request.serviceUrl() + '/')
+      .head(request.serviceUrl() + '/')
       .reply(200, undefined, mockedHeaders);
 
     const expected = {
@@ -118,7 +118,7 @@ describe('buildCsrfHeaders', () => {
     };
 
     nock(defaultHost)
-      .get(request.serviceUrl() + '/')
+      .head(request.serviceUrl() + '/')
       .reply(500, undefined, mockedHeaders);
 
     nock(defaultHost)

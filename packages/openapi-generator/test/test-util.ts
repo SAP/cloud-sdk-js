@@ -1,5 +1,5 @@
-import { resolve, $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
+import { createRefs, OpenApiDocumentRefs } from '../src/parser/refs';
 
 export const emptyDocument = {
   openapi: '3.0.0',
@@ -7,10 +7,10 @@ export const emptyDocument = {
   paths: {}
 } as const;
 
-export function createRefs(
+export function createTestRefs(
   components: OpenAPIV3.ComponentsObject = {}
-): Promise<$Refs> {
-  return resolve({ ...emptyDocument, components });
+): Promise<OpenApiDocumentRefs> {
+  return createRefs({ ...emptyDocument, components });
 }
 
 export const emptyObjectSchema = {

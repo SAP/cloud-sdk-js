@@ -150,7 +150,7 @@ async function createSchemaFiles(
   await mkdir(dir, { recursive: true });
   await Promise.all(
     openApiDocument.schemas.map(schema =>
-      createFile(dir, `${kebabCase(schema.name)}.ts`, schemaFile(schema), true)
+      createFile(dir, `${schema.fileName}.ts`, schemaFile(schema), true)
     )
   );
 }

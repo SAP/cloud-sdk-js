@@ -62,12 +62,11 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   }
 
   /**
-   * Replace the default value of fetching csrf token configuration with a given value.
-   * @param fetchCsrfToken The new value of the configuration.
+   * Skip fetching csrf token for this request, which is typically useful when the csrf token is not required.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  fetchCsrfToken(fetchCsrfToken: boolean): this {
-    this._fetchCsrfToken = fetchCsrfToken;
+  skipCsrfTokenFetching(): this {
+    this._fetchCsrfToken = false;
     return this;
   }
 

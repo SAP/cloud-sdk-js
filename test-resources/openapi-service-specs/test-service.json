@@ -25,6 +25,17 @@
   ],
   "paths": {
     "/entities": {
+      "head": {
+        "tags": ["entity"],
+        "summary": "Head request of entities",
+        "description": "Head request of entities",
+        "operationId": "headEntities",
+        "responses": {
+          "204": {
+            "description": "no content"
+          }
+        }
+      },
       "get": {
         "tags": ["entity"],
         "summary": "Get entities",

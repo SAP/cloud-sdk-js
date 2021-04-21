@@ -14,15 +14,19 @@
 
 ## Compatibility Notes
 
+- [core] Use `HEAD` instead of `GET` when fetching CSRF tokens. Change the URL for CSRF token fetching in OData requests from the service URL to the request URL. 
+- [test-util] Use `HEAD` for `mockHeaderRequest()` to align with the core behaviour.
 - [core] Remove experimental `Exclude` type, which was accidentally exposed as non-experimental.
 
 ## New Functionality
 
 - [core] Support custom axios options for all request builders.
 - [core] Support disabling csrf token request as an option for all request builders.
+- [odata] Support unary operator `not` in the `filter()` of OData request builders.
 
 ## Improvements
 
+- [odata] Allow using filter functions with boolean return types directly in the `filter()` of OData request builders without `equals(true)`.
 - [odata-generator] When calling a function/action import that has entity return type referenced by multiple entity sets, an exception is thrown instead of deserializing the response with the first entity set.
 - [odata-generator] When an entity type is shared by multiple entity sets and is used as the return type of function/action imports, an exception will be thrown with the recommendation to use `executeRaw` instead of `execute`.
 

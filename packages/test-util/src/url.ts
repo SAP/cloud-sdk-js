@@ -7,7 +7,7 @@ import { executeHttpRequest } from '@sap-cloud-sdk/core';
  */
 export async function checkUrlExists(url: string): Promise<void> {
   try {
-    const response = await executeHttpRequest({ url }, { method: 'get' });
+    const response = await executeHttpRequest({ url }, { method: 'head' });
     if (response.status !== 200) {
       throw new Error(
         `Reques to ${url} failed with status: ${response.status}`

@@ -66,13 +66,13 @@ const ServiceStatusValues: Record<ServiceStatus['status'], ServiceStatus> = {
   },
   verified: {
     status: 'verified',
-    statusText: 'The SDK team has tested the generation process for this API.',
+    statusText: 'The generation process for this API works.',
     gettingStartedText:
       'For this API no pregenerated published client exists. Follow the generation steps to create a client on your own.'
   },
   unknown: {
     status: 'unknown',
-    statusText: 'The SDK has not investigated this service',
+    statusText: 'No information for this service present.',
     gettingStartedText: ''
   }
 };

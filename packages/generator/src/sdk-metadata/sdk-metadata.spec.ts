@@ -33,10 +33,7 @@ describe('sdk-metadata', () => {
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);
 
     const metaData = await sdkMetaDataJS(
-      {
-        ...service,
-        npmPackageName: 'non-existing-package'
-      },
+      service,
       createOptions({ versionInPackageJson: '1.0.0' })
     );
     expect(metaData).toMatchSnapshot();
@@ -48,7 +45,7 @@ describe('sdk-metadata', () => {
 
   it('generates the JS metadata content for services without pregenerated lib', async () => {
     const metaData = await sdkMetaDataJS(
-      { ...service, npmPackageName: 'non-existing-package' },
+      service,
       createOptions({ versionInPackageJson: '1.0.0' })
     );
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);
@@ -56,7 +53,7 @@ describe('sdk-metadata', () => {
     expect(metaData).toMatchSnapshot();
     expect(metaData.serviceStatus.status).toBe('verified');
     expect(metaData.serviceStatus.statusText).toBe(
-      'The SDK team has tested the generation process for this API.'
+      'The generation process for this API works.'
     );
   });
 });

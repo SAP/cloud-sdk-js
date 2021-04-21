@@ -2,107 +2,70 @@ import { UniqueNameGenerator, camelCase } from '@sap-cloud-sdk/util';
 
 /**
  * Ensure uniqueness of names.
- * Takes a list of items, identifies duplicate names and renames the duplicate names.
- * @param items List of items to rename.
- * @param nameHandler Object containing a name getter and/or setter and/or formatter.
- * @param nameHandler.getName Function to get the name of an item. Retrieves the `name` property by default.
- * @param nameHandler.transformItem Function to transform the given item with the new name. Sets the `name` property by default.
- * @param nameHandler.formatName Function to transform the name when finding a unique name. Defaults to camel case.
- * @param nameHandler.reservedWords Reserved words that should be handled as duplicates.
- * @returns The given items with unique names.
+ * Takes a list of names and renames those that are duplicate.
+ * @param names List of names to deduplicate.
+ * @param options Object containing options to configure the transformation.
+ * @param options.format Function to format the name. Defaults to camel case.
+ * @param options.reservedWords Reserved words that should be handled as duplicates.
+ * @returns Unique names in the given order.
  */
-export function ensureUniqueNames<ItemT, UniqueItemT>(
-  items: ItemT[],
-  nameHandler: {
-    getName?: (item: ItemT) => string;
-    transformItem?: (item: ItemT, name: string) => UniqueItemT;
-    formatName?: (name: string) => string;
+export function ensureUniqueNames(
+  names: string[],
+  options: {
+    format?: (name: string) => string;
     reservedWords?: string[];
   } = {}
-): UniqueItemT[] {
-  const {
-    getName = getNameDefault,
-    transformItem = transformItemDefault,
-    formatName = camelCase,
-    reservedWords = []
-  } = nameHandler;
+): string[] {
+  const { format: format = camelCase, reservedWords = [] } = options;
 
-  const uniqueItems = getCorrectlyNamedItems(
-    items,
-    getName,
-    formatName,
-    reservedWords
-  );
+  const correctNames = getCorrectNames(names, format, reservedWords);
 
   const nameGenerator = new UniqueNameGenerator('', [
     ...reservedWords,
-    ...uniqueItems.map(item => getName(item))
+    ...correctNames
   ]);
 
-  const uniqueNames = uniqueItems.map(item => getName(item));
-  return items.map(item => {
-    const name = getName(item);
-    if (uniqueNames.length && uniqueNames[0] === name) {
-      uniqueNames.shift();
-      return transformItem(item, name);
+  return names.map(name => {
+    if (correctNames.length && correctNames[0] === name) {
+      correctNames.shift();
+      return name;
     }
-    return transformItem(
-      item,
-      nameGenerator.generateAndSaveUniqueName(formatName(name))
-    );
-  });
+    return nameGenerator.generateAndSaveUniqueName(format(name));
+  }, {});
 }
 
 /**
- * Get the items within a list of items that won't have to be renamed.
- * Those are the items that have a unique name and a name that does not have to be formatted.
- * @param items Named items.
- * @param getName Function to get the name of an item.
- * @param formatName Function to transform the name when finding a unique name.
+ * Get the names within a list of names that won't have to be renamed.
+ * Those are the names that are unique and have a name that does not need to be formatted.
+ * @param names Names to check.
+ * @param format Function to format the name.
  * @param reservedWords Reserved words that should be handled as duplicates.
- * @returns An object containing the unique operations, denoted by `unique` and operations with (potentially) duplicate names, denoted by `duplicate`.
+ * @returns A list of names that do not need to be renamed.
  */
-function getCorrectlyNamedItems<ItemT>(
-  items: ItemT[],
-  getName: (item: ItemT) => string,
-  formatName: (name: string) => string,
+function getCorrectNames(
+  names: string[],
+  format: (name: string) => string,
   reservedWords: string[]
-): ItemT[] {
-  return items.reduce((uniqueItems, item) => {
-    const name = getName(item);
-    const isReserved = reservedWords.includes(name);
-    const isDuplicate = uniqueItems.some(
-      uniqueItem => getName(uniqueItem) === name
-    );
-    const isFormatted = formatName(name) === name;
-    return isReserved || isDuplicate || !isFormatted
-      ? uniqueItems
-      : [...uniqueItems, item];
-  }, [] as ItemT[]);
+): string[] {
+  return names.reduce(
+    (correctNames, name) =>
+      isReserved(name, reservedWords) ||
+      isDuplicate(name, correctNames) ||
+      !isFormatted(name, format)
+        ? correctNames
+        : [...correctNames, name],
+    []
+  );
 }
 
-/**
- * Default function to access the name of an item.
- * @param item The item to get the name from.
- * @returns The name.
- */
-export function getNameDefault<ItemT>(item: ItemT): string {
-  return item['name'];
+function isReserved(name: string, reservedWords: string[]): boolean {
+  return reservedWords.includes(name);
 }
 
-/**
- * Default function to transform an item.
- * It sets the `name` property of the item to the given name.
- * @param item The item to trsansform.
- * @param name The name to set.
- * @returns The renamed item.
- */
-export function transformItemDefault<
-  ItemT,
-  UniqueItemT = ItemT & { name: string }
->(item: ItemT, name: string): UniqueItemT {
-  return ({
-    ...item,
-    name
-  } as unknown) as UniqueItemT;
+function isDuplicate(name: string, correctNames: string[]): boolean {
+  return correctNames.some(correctName => correctName === name);
+}
+
+function isFormatted(name: string, format: (name: string) => string): boolean {
+  return format(name) === name;
 }

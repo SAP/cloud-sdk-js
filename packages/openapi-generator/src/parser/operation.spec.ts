@@ -149,13 +149,24 @@ describe('parsePathParameters', () => {
         '/root/{path-param}/{pathParam}/path/{PathParam1}/sub-path/{path_param}',
         await createTestRefs()
       )
-    ).toEqual(
-      [pathParam3, pathParam1, pathParam2, pathParam4].map((param, i) => ({
-        ...param,
-        originalName: param.name,
-        name: 'pathParam' + (i ? i : '')
-      }))
-    );
+    ).toEqual([
+      expect.objectContaining({
+        name: 'pathParam1',
+        originalName: 'path-param'
+      }),
+      expect.objectContaining({
+        name: 'pathParam',
+        originalName: 'pathParam'
+      }),
+      expect.objectContaining({
+        name: 'pathParam2',
+        originalName: 'PathParam1'
+      }),
+      expect.objectContaining({
+        name: 'pathParam3',
+        originalName: 'path_param'
+      })
+    ]);
   });
 });
 

@@ -19,7 +19,7 @@ const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ dest
 <li>Install the generator <code>npm install -g @sap-cloud-sdk/generator</code></li>
 <li>Execute the generator <code>generate-odata-client --inputDir path/to/service-spec --outputDir path/to/</code></li>
 </ul>
-The steps above will generate a basic TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client\\">documentation.</a>",
+The steps above will generate a TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client\\">documentation.</a>",
       "text": "Follow the following generation steps to generate the client.",
     },
     "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/generator",

@@ -3,7 +3,7 @@ import {
   getGenerationAndUsage,
   getGenerationSteps,
   linkGenerationDocumentaion
-} from '@sap-cloud-sdk/generator/dist/sdk-metadata/generation-and-usage';
+} from '@sap-cloud-sdk/generator/internal';
 import { checkUrlExists } from '@sap-cloud-sdk/util';
 import { getLinks } from '@sap-cloud-sdk/generator/dist/sdk-metadata/links';
 

@@ -33,7 +33,7 @@ describe('parseOpenApiDocument', () => {
     expect(parsedDocument).not.toBe(input);
   });
 
-  it('parses unique api names', async () => {
+  it('parses unique schema names', async () => {
     const input: OpenAPIV3.Document = {
       ...emptyDocument,
       paths: {},

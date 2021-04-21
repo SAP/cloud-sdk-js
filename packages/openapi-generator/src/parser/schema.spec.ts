@@ -1,13 +1,16 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { emptyObjectSchema } from '../../test/test-util';
+import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { OpenApiObjectSchema } from '../openapi-types';
 import { parseSchema } from './schema';
 
 describe('parseSchema', () => {
-  it('parses reference schema', () => {
-    const schema = { $ref: 'test' };
+  it('parses reference schema', async () => {
+    const schema = { $ref: '#/components/schemas/test' };
     expect(
-      parseSchema(schema, { test: { schemaName: 'Test', fileName: 'test' } })
+      parseSchema(
+        schema,
+        await createTestRefs({ schemas: { test: { type: 'string' } } })
+      )
     ).toEqual({
       ...schema,
       schemaName: 'Test',
@@ -15,9 +18,9 @@ describe('parseSchema', () => {
     });
   });
 
-  it('parses simple schema', () => {
+  it('parses simple schema', async () => {
     const schema: OpenAPIV3.SchemaObject = { type: 'string' };
-    expect(parseSchema(schema, {})).toEqual(schema);
+    expect(parseSchema(schema, await createTestRefs())).toEqual(schema);
   });
 
   it('parses simple schema with description', async () => {
@@ -26,47 +29,47 @@ describe('parseSchema', () => {
       properties: { prop1: { description: 'My Description', type: 'string' } }
     };
     expect(
-      (parseSchema(schema, {} as any) as OpenApiObjectSchema).properties[0]
-        .description
+      (parseSchema(schema, await createTestRefs()) as OpenApiObjectSchema)
+        .properties[0].description
     ).toBe('My Description');
   });
 
-  it('parses array schema', () => {
+  it('parses array schema', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       type: 'array',
       items: { type: 'string' }
     };
 
-    expect(parseSchema(schema, {})).toEqual({
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
       items: { type: 'string' }
     });
   });
 
-  it('parses array schema with unique items', () => {
+  it('parses array schema with unique items', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       type: 'array',
       uniqueItems: true,
       items: { type: 'string' }
     };
-    expect(parseSchema(schema, {})).toEqual({
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
       uniqueItems: true,
       items: { type: 'string' }
     });
   });
 
-  it('parses array schema with nested object schema', () => {
+  it('parses array schema with nested object schema', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       type: 'array',
       uniqueItems: true,
       items: { type: 'object' }
     };
-    expect(parseSchema(schema, {})).toEqual({
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
       uniqueItems: true,
       items: emptyObjectSchema
     });
   });
 
-  it('parses object schema with nested object schema with additional properties', () => {
+  it('parses object schema with nested object schema with additional properties', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       required: ['simpleProperty'],
       properties: {
@@ -78,7 +81,7 @@ describe('parseSchema', () => {
         }
       }
     };
-    expect(parseSchema(schema, {})).toEqual({
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
       properties: [
         { name: 'simpleProperty', required: true, schema: { type: 'string' } },
         {
@@ -114,12 +117,12 @@ describe('parseSchema', () => {
       }
     };
     expect(
-      (parseSchema(schema, {
-        '#/components/schemas/PropertySchema': {
-          fileName: 'property-schema',
-          schemaName: 'PropertySchema'
-        }
-      }) as OpenApiObjectSchema).properties[0].description
+      (parseSchema(
+        schema,
+        await createTestRefs({
+          schemas: { PropertySchema: { type: 'string' } }
+        })
+      ) as OpenApiObjectSchema).properties[0].description
     ).toBeUndefined();
   });
 
@@ -136,16 +139,17 @@ describe('parseSchema', () => {
     };
 
     expect(
-      (parseSchema(schema, {
-        '#/components/schemas/PropertySchema': {
-          fileName: 'property-schema',
-          schemaName: 'PropertySchema'
-        }
-      }) as OpenApiObjectSchema).properties[0].description
+      (parseSchema(
+        schema,
+        await createTestRefs({
+          schemas: { PropertySchema: { type: 'string' } }
+        })
+      ) as OpenApiObjectSchema).properties[0].description
     ).toEqual('Property Description');
   });
 
-  it('throws an error if there are neither propertes nor additional properties', () => {
+  it('throws an error if there are neither propertes nor additional properties', async () => {
+    const refs = await createTestRefs();
     expect(() =>
       parseSchema(
         {
@@ -153,43 +157,43 @@ describe('parseSchema', () => {
           additionalProperties: false,
           properties: {}
         },
-        {}
+        refs
       )
     ).toThrowErrorMatchingInlineSnapshot(
       '"Could not parse object schema without neither properties nor additional properties."'
     );
   });
 
-  it('parses enum schema', () => {
+  it('parses enum schema', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       enum: ['1', '2', '3'],
       type: 'number'
     };
-    expect(parseSchema(schema, {})).toEqual(schema);
+    expect(parseSchema(schema, await createTestRefs())).toEqual(schema);
   });
 
-  it('parses string enum schema', () => {
+  it('parses string enum schema', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       enum: ['one', 'two', 'three'],
       type: 'string'
     };
-    expect(parseSchema(schema, {})).toEqual({
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
       type: 'string',
       enum: ["'one'", "'two'", "'three'"]
     });
   });
 
-  it("parses enum schema with 'string' as default", () => {
+  it("parses enum schema with 'string' as default", async () => {
     const schema: OpenAPIV3.SchemaObject = {
       enum: ['one', 'two', 'three']
     };
-    expect(parseSchema(schema, {})).toEqual({
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
       type: 'string',
       enum: ["'one'", "'two'", "'three'"]
     });
   });
 
-  it('parses oneOf, anyOf, allOf schemas', () => {
+  it('parses oneOf, anyOf, allOf schemas', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       oneOf: [
         { type: 'object' },
@@ -201,7 +205,7 @@ describe('parseSchema', () => {
         }
       ]
     };
-    expect(parseSchema(schema, {})).toEqual({
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
       oneOf: [
         emptyObjectSchema,
         {
@@ -214,11 +218,11 @@ describe('parseSchema', () => {
     });
   });
 
-  it('parses not schema', () => {
+  it('parses not schema', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       not: { type: 'object' }
     };
-    expect(parseSchema(schema, {})).toEqual({
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
       not: emptyObjectSchema
     });
   });

@@ -1,4 +1,4 @@
-import { createRefs } from '../../test/test-util';
+import { createTestRefs } from '../../test/test-util';
 import { parseResponses } from './responses';
 
 describe('parseResponses', () => {
@@ -6,8 +6,7 @@ describe('parseResponses', () => {
     expect(
       parseResponses(
         { 200: { description: 'A response' } },
-        await createRefs(),
-        {}
+        await createTestRefs()
       )
     ).toEqual({
       type: 'any'
@@ -25,8 +24,7 @@ describe('parseResponses', () => {
             }
           }
         },
-        await createRefs(),
-        {}
+        await createTestRefs()
       )
     ).toEqual({
       type: 'string'
@@ -51,20 +49,21 @@ describe('parseResponses', () => {
             description: 'Another response',
             content: {
               'application/json': {
-                schema: { $ref: '#/components/schema/RefType' }
+                schema: { $ref: '#/components/schemas/RefType' }
               }
             }
           }
         },
-        await createRefs(),
-        {
-          '#/components/schema/RefType': schemaNaming
-        }
+        await createTestRefs({
+          schemas: {
+            RefType: { type: 'string' }
+          }
+        })
       )
     ).toEqual({
       anyOf: [
         { type: 'string' },
-        { $ref: '#/components/schema/RefType', ...schemaNaming }
+        { $ref: '#/components/schemas/RefType', ...schemaNaming }
       ]
     });
   });

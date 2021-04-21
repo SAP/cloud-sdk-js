@@ -36,13 +36,13 @@ export interface OperationInfo {
 /**
  * Represents an object holding all relevant information for schema parsing.
  */
-export interface SchemaInfo {
+export interface SchemaInfo extends SchemaNaming {
   /**
    * Path, by which this schema is referenced.
    */
   refPath: string;
   /**
-   * Unique name for this schema.
+   * Original name for this schema.
    */
   name: string;
   /**

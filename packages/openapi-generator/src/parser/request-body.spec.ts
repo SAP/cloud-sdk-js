@@ -1,12 +1,12 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { createRefs } from '../../test/test-util';
+import { createTestRefs } from '../../test/test-util';
 import { parseRequestBody } from './request-body';
 
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
     const logger = createLogger('openapi-generator');
     spyOn(logger, 'debug');
-    expect(parseRequestBody(undefined, await createRefs(), {})).toBeUndefined();
+    expect(parseRequestBody(undefined, await createTestRefs())).toBeUndefined();
     expect(logger.debug).not.toHaveBeenCalled();
   });
 
@@ -18,7 +18,7 @@ describe('getRequestBody', () => {
     expect(
       parseRequestBody(
         requestBody,
-        await createRefs({
+        await createTestRefs({
           requestBodies: {
             RequestBody: {
               content: {
@@ -30,8 +30,7 @@ describe('getRequestBody', () => {
               }
             }
           }
-        }),
-        {}
+        })
       )
     ).toEqual({
       schema: { type: 'string' },
@@ -56,9 +55,10 @@ describe('getRequestBody', () => {
     };
 
     expect(
-      parseRequestBody(requestBody, await createRefs(), {
-        '#/components/schemas/TestEntity': schemaNaming
-      })
+      parseRequestBody(
+        requestBody,
+        await createTestRefs({ schemas: { TestEntity: { type: 'string' } } })
+      )
     ).toEqual({
       schema: { ...schema, ...schemaNaming },
       required: true

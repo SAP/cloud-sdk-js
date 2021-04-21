@@ -1,10 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
-import {
-  camelCase,
-  filterDuplicatesRight,
-  partition,
-  UniqueNameGenerator
-} from '@sap-cloud-sdk/util';
+import { filterDuplicatesRight, partition } from '@sap-cloud-sdk/util';
 import { OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { parseRequestBody } from './request-body';
 import { OpenApiDocumentRefs } from './refs';
@@ -12,6 +7,7 @@ import { parseSchema } from './schema';
 import { parseResponses } from './responses';
 import { OperationInfo } from './parsing-info';
 import { reservedJsKeywords } from './reserved-words';
+import { ensureUniqueNames } from './unique-naming';
 
 /**
  * Parse an operation info into a serialization-ready object.
@@ -118,16 +114,18 @@ export function parsePathParameters(
   refs: OpenApiDocumentRefs
 ): OpenApiParameter[] {
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
-  const nameGenerator = new UniqueNameGenerator('', [
-    'body',
-    'queryParameters',
-    ...reservedJsKeywords
-  ]);
+  const parsedParameters = parseParameters(sortedPathParameters, refs);
+  const uniqueNames = ensureUniqueNames(
+    parsedParameters.map(({ originalName }) => originalName),
+    {
+      reservedWords: ['body', 'queryParameters', ...reservedJsKeywords]
+    }
+  );
 
-  return parseParameters(sortedPathParameters, refs).map(param => ({
-    ...param,
-    name: nameGenerator.generateAndSaveUniqueName(camelCase(param.originalName))
-  }));
+  return parsedParameters.map((param, i) => {
+    param.name = uniqueNames[i];
+    return param;
+  });
 }
 
 export function parseParameters(

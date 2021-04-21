@@ -45,33 +45,21 @@ export class OpenApiDocumentRefs {
     document: OpenAPIV3.Document
   ): SchemaRefMapping {
     const originalNames = Object.keys(document.components?.schemas || {});
-
     const schemaNames = ensureUniqueNames(originalNames, {
-      formatName: pascalCase,
-      getName: item => item,
-      transformItem: (originalName, schemaName) => ({
-        originalName,
-        schemaName
-      })
+      format: pascalCase
     });
-
-    const schemaNamesWithFileNames = ensureUniqueNames(schemaNames, {
-      transformItem: (item, name) => ({
-        originalName: item.originalName,
-        schemaNaming: {
-          schemaName: item.schemaName,
-          fileName: name
-        }
-      }),
-      getName: ({ schemaName }) => schemaName,
-      formatName: kebabCase,
+    const fileNames = ensureUniqueNames(schemaNames, {
+      format: kebabCase,
       reservedWords: ['index']
     });
 
-    return schemaNamesWithFileNames.reduce(
-      (mapping, { originalName, schemaNaming }) => ({
+    return originalNames.reduce(
+      (mapping, originalName, i) => ({
         ...mapping,
-        [`#/components/schemas/${originalName}`]: schemaNaming
+        [`#/components/schemas/${originalName}`]: {
+          schemaName: schemaNames[i],
+          fileName: fileNames[i]
+        }
       }),
       {}
     );

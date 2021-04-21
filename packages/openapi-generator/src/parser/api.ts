@@ -21,20 +21,26 @@ export function parseApis(
   const operationsByApis = getOperationsByApis(document);
 
   return Object.entries(operationsByApis).map(
-    ([name, operations]: [string, OperationInfo[]]) => ({
-      name,
-      operations: ensureUniqueNames(
-        nameOperations(operations),
-        // All operations got an operationId in the line before
-        {
-          getName: ({ operation }) => operation.operationId!,
-          transformItem: (operationInfo, operationId) => {
-            operationInfo.operation.operationId = operationId;
-            return operationInfo;
-          }
+    ([name, operations]: [string, OperationInfo[]]) => {
+      const namedOperations = nameOperations(operations);
+      const operationNames = namedOperations.map(
+        // All operations have been named in the previous step
+        ({ operation }) => operation.operationId!
+      );
+      const uniqueNames = ensureUniqueNames(operationNames);
+      const uniquelyNamedOperations = namedOperations.map(
+        (operationInfo, i) => {
+          operationInfo.operation.operationId = uniqueNames[i];
+          return operationInfo;
         }
-      ).map(operationInfo => parseOperation(operationInfo, refs))
-    })
+      );
+      return {
+        name,
+        operations: uniquelyNamedOperations.map(operationInfo =>
+          parseOperation(operationInfo, refs)
+        )
+      };
+    }
   );
 }
 

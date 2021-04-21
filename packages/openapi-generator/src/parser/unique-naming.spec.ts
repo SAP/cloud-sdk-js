@@ -1,5 +1,5 @@
 import { pascalCase } from '@sap-cloud-sdk/util';
-import { ensureUniqueNames } from './unique-naming';
+import { ensureUniqueNames, validateUniqueNames } from './unique-naming';
 
 describe('ensureUniqueNames', () => {
   it('replaces duplicate names using defaults', () => {
@@ -29,5 +29,66 @@ describe('ensureUniqueNames', () => {
     });
 
     expect(uniqueItems).toEqual(['reserved2', 'reserved1']);
+  });
+});
+
+describe('validateUniqueNames', () => {
+  it('does not throw for empty list of names', () => {
+    expect(() => validateUniqueNames([])).not.toThrow();
+  });
+
+  it('does not throw for unique names', () => {
+    expect(() =>
+      validateUniqueNames(['uniqueName1', 'UniqueName2'])
+    ).not.toThrow();
+  });
+
+  it('throws an error if there are duplicate names', () => {
+    expect(() => validateUniqueNames(['duplicate', 'duplicate']))
+      .toThrowErrorMatchingInlineSnapshot(`
+      "Some names are not unique after formatting.
+      	Formatted name: 'duplicate', original names: 'duplicate', 'duplicate'."
+    `);
+  });
+
+  it('throws an error if there are duplicate names after formatting (default)', () => {
+    expect(() => validateUniqueNames(['Duplicate', 'duplicate']))
+      .toThrowErrorMatchingInlineSnapshot(`
+      "Some names are not unique after formatting.
+      	Formatted name: 'duplicate', original names: 'Duplicate', 'duplicate'."
+    `);
+  });
+
+  it('throws an error if there are duplicate names after formatting (pascal case)', () => {
+    expect(() =>
+      validateUniqueNames(['Duplicate', 'duplicate'], { format: pascalCase })
+    ).toThrowErrorMatchingInlineSnapshot(`
+      "Some names are not unique after formatting.
+      	Formatted name: 'Duplicate', original names: 'Duplicate', 'duplicate'."
+    `);
+  });
+
+  it('throws an error if reserved words are used', () => {
+    expect(() =>
+      validateUniqueNames(['reserved'], { reservedWords: ['reserved'] })
+    ).toThrowErrorMatchingInlineSnapshot(`
+      "Some names are reserved words after formatting.
+      	Formatted name: 'reserved', original names: 'reserved'."
+    `);
+  });
+
+  it('lists all duplicates when throwing error', () => {
+    expect(() =>
+      validateUniqueNames([
+        'duplicate1',
+        'Duplicate1',
+        'duplicate2',
+        'Duplicate2'
+      ])
+    ).toThrowErrorMatchingInlineSnapshot(`
+      "Some names are not unique after formatting.
+      	Formatted name: 'duplicate1', original names: 'duplicate1', 'Duplicate1'.
+      	Formatted name: 'duplicate2', original names: 'duplicate2', 'Duplicate2'."
+    `);
   });
 });

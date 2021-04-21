@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`url [E2E] fails for non existing link 1`] = `"Request to https://sap.github.io/cloud-sdk/docs/js/features/non-existing-features failed."`;

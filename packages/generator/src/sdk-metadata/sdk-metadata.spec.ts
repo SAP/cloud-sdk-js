@@ -30,6 +30,9 @@ describe('sdk-metadata', () => {
     );
     expect(metaData).toMatchSnapshot();
     expect(metaData.serviceStatus.status).toBe('certified');
+    expect(metaData.serviceStatus.statusText).toBe(
+      'The SDK team has generated a API client and published it under npm.'
+    );
   });
 
   it('[E2E] generates the JS metadata content for services without pregenerated lib', async () => {
@@ -39,6 +42,9 @@ describe('sdk-metadata', () => {
     );
     expect(metaData).toMatchSnapshot();
     expect(metaData.serviceStatus.status).toBe('verified');
+    expect(metaData.serviceStatus.statusText).toBe(
+      'The SDK team has tested the generation process for this API.'
+    );
   });
 
   it('generates the File names', () => {

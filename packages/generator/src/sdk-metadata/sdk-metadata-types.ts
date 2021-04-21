@@ -1,5 +1,3 @@
-import { textNoLib, textWithLib } from './sdk-metadata';
-
 /**
  * Represents the language independent header data of the sdk metadata
  */
@@ -34,10 +32,6 @@ export interface Client {
    */
   emergencyObject?: EmergencyObject;
 
-  /**
-   * The getting started text depends on the fact if we have a pregenerated client or not.
-   */
-  gettingStartedText: typeof textWithLib | typeof textNoLib;
   /**
    * The information on the pregenerated library. Undefined if there is no lib generated
    * @type {PregeneratedLibrary}
@@ -100,7 +94,7 @@ export type DateTimeString = string;
  */
 export type MultiLineText = string;
 
-interface ServiceStatus {
+export interface ServiceStatus {
   /**
    * certified -> Published lib, verified -> Generation worked
    */
@@ -109,12 +103,12 @@ interface ServiceStatus {
    * Detailed text what the serviceStatus means.
    * @memberof Client
    */
-  statusText: ServiceStatusText;
+  statusText: string;
+  /**
+   * Getting started text, depends on the service status
+   */
+  gettingStartedText: string;
 }
-type ServiceStatusText =
-  | 'The SDK team has generated a API client and published it under npm.'
-  | 'The SDK team has tested the generation process for this API.'
-  | 'The SDK has not investigated this service';
 
 interface LinkWithName {
   url: UrlString;

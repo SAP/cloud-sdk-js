@@ -72,7 +72,7 @@ describe('service-generator', () => {
         expect(services[0].directoryName).toBe('test-service');
         expect(services[0].npmPackageName).toBe('test-service');
         expect(services[0].servicePath).toBe('/sap/opu/odata/sap/API_TEST_SRV');
-        expect(services[0].entities.length).toBe(12);
+        expect(services[0].entities.length).toBe(14);
       });
 
       it('generates vdm from edmx using swagger', () => {
@@ -83,7 +83,7 @@ describe('service-generator', () => {
           })
         );
 
-        expect(services[0].entities.length).toBe(12);
+        expect(services[0].entities.length).toBe(14);
         expect(
           services[0].apiBusinessHubMetadata!.businessDocumentationUrl
         ).toBeDefined();
@@ -187,6 +187,18 @@ describe('service-generator', () => {
             className: 'TestEntityLvl2SingleLink',
             numKeys: 1,
             numProperties: 5
+          },
+          {
+            className: 'TestEntitySharesEntityType1',
+            entitySetName: 'A_TestEntitySharesEntityType1',
+            numKeys: 1,
+            numProperties: 1
+          },
+          {
+            className: 'TestEntitySharesEntityType2',
+            entitySetName: 'A_TestEntitySharesEntityType2',
+            numKeys: 1,
+            numProperties: 1
           },
           {
             entitySetName: 'A_TestEntityCircularLinkParent',

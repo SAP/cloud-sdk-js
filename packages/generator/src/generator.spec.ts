@@ -81,7 +81,7 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(32);
+      expect(files.length).toBe(36);
     });
 
     it('generates TestEntity.ts file', () => {
@@ -105,7 +105,7 @@ describe('generator', () => {
 
     it('generates function-imports.ts file', () => {
       const functionImports = getFunctionImportDeclarations(files);
-      expect(functionImports.length).toBe(13);
+      expect(functionImports.length).toBe(15);
     });
   });
 

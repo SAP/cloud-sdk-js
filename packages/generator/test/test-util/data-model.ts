@@ -248,7 +248,7 @@ export const entityNotDeserializable: VdmFunctionImport = {
   parametersTypeName: 'Params',
   returnType: {
     builderFunction: '',
-    returnType: 'any',
+    returnType: 'void',
     isCollection: false,
     returnTypeCategory: VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
   }

@@ -4,12 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntitySharesEntityType1RequestBuilder } from './TestEntitySharesEntityType1RequestBuilder';
-import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '@sap-cloud-sdk/core';
+import {
+  AllFields,
+  CustomFieldV2,
+  EntityBuilderType,
+  EntityV2,
+  Field,
+  StringField
+} from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntitySharesEntityType1" of service "API_TEST_SRV".
  */
-export class TestEntitySharesEntityType1 extends EntityV2 implements TestEntitySharesEntityType1Type {
+export class TestEntitySharesEntityType1
+  extends EntityV2
+  implements TestEntitySharesEntityType1Type {
   /**
    * Technical entity name for TestEntitySharesEntityType1.
    */
@@ -28,7 +37,10 @@ export class TestEntitySharesEntityType1 extends EntityV2 implements TestEntityS
    * Returns an entity builder to construct instances of `TestEntitySharesEntityType1`.
    * @returns A builder that constructs instances of entity type `TestEntitySharesEntityType1`.
    */
-  static builder(): EntityBuilderType<TestEntitySharesEntityType1, TestEntitySharesEntityType1Type> {
+  static builder(): EntityBuilderType<
+    TestEntitySharesEntityType1,
+    TestEntitySharesEntityType1Type
+  > {
     return EntityV2.entityBuilder(TestEntitySharesEntityType1);
   }
 
@@ -45,7 +57,9 @@ export class TestEntitySharesEntityType1 extends EntityV2 implements TestEntityS
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntitySharesEntityType1`.
    */
-  static customField(fieldName: string): CustomFieldV2<TestEntitySharesEntityType1> {
+  static customField(
+    fieldName: string
+  ): CustomFieldV2<TestEntitySharesEntityType1> {
     return EntityV2.customFieldSelector(fieldName, TestEntitySharesEntityType1);
   }
 
@@ -67,7 +81,11 @@ export namespace TestEntitySharesEntityType1 {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntitySharesEntityType1> = new StringField('KeyProperty', TestEntitySharesEntityType1, 'Edm.String');
+  export const KEY_PROPERTY: StringField<TestEntitySharesEntityType1> = new StringField(
+    'KeyProperty',
+    TestEntitySharesEntityType1,
+    'Edm.String'
+  );
   /**
    * All fields of the TestEntitySharesEntityType1 entity.
    */
@@ -77,16 +95,29 @@ export namespace TestEntitySharesEntityType1 {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntitySharesEntityType1> = new AllFields('*', TestEntitySharesEntityType1);
+  export const ALL_FIELDS: AllFields<TestEntitySharesEntityType1> = new AllFields(
+    '*',
+    TestEntitySharesEntityType1
+  );
   /**
    * All key fields of the TestEntitySharesEntityType1 entity.
    */
-  export const _keyFields: Array<Field<TestEntitySharesEntityType1>> = [TestEntitySharesEntityType1.KEY_PROPERTY];
+  export const _keyFields: Array<Field<TestEntitySharesEntityType1>> = [
+    TestEntitySharesEntityType1.KEY_PROPERTY
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntitySharesEntityType1.
    */
-  export const _keys: { [keys: string]: Field<TestEntitySharesEntityType1> } = TestEntitySharesEntityType1._keyFields.reduce((acc: { [keys: string]: Field<TestEntitySharesEntityType1> }, field: Field<TestEntitySharesEntityType1>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntitySharesEntityType1>;
+  } = TestEntitySharesEntityType1._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntitySharesEntityType1> },
+      field: Field<TestEntitySharesEntityType1>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

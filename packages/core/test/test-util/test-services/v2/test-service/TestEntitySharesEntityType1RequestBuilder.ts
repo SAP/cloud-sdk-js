@@ -3,7 +3,14 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder, GetAllRequestBuilderV2, GetByKeyRequestBuilderV2, CreateRequestBuilderV2, UpdateRequestBuilderV2, DeleteRequestBuilderV2 } from '../../../../../src';
+import {
+  RequestBuilder,
+  GetAllRequestBuilderV2,
+  GetByKeyRequestBuilderV2,
+  CreateRequestBuilderV2,
+  UpdateRequestBuilderV2,
+  DeleteRequestBuilderV2
+} from '../../../../../src';
 import { TestEntitySharesEntityType1 } from './TestEntitySharesEntityType1';
 
 /**
@@ -15,8 +22,12 @@ export class TestEntitySharesEntityType1RequestBuilder extends RequestBuilder<Te
    * @param keyProperty Key property. See [[TestEntitySharesEntityType1.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntitySharesEntityType1` entity based on its keys.
    */
-  getByKey(keyProperty: string): GetByKeyRequestBuilderV2<TestEntitySharesEntityType1> {
-    return new GetByKeyRequestBuilderV2(TestEntitySharesEntityType1, { KeyProperty: keyProperty });
+  getByKey(
+    keyProperty: string
+  ): GetByKeyRequestBuilderV2<TestEntitySharesEntityType1> {
+    return new GetByKeyRequestBuilderV2(TestEntitySharesEntityType1, {
+      KeyProperty: keyProperty
+    });
   }
 
   /**
@@ -32,7 +43,9 @@ export class TestEntitySharesEntityType1RequestBuilder extends RequestBuilder<Te
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntitySharesEntityType1`.
    */
-  create(entity: TestEntitySharesEntityType1): CreateRequestBuilderV2<TestEntitySharesEntityType1> {
+  create(
+    entity: TestEntitySharesEntityType1
+  ): CreateRequestBuilderV2<TestEntitySharesEntityType1> {
     return new CreateRequestBuilderV2(TestEntitySharesEntityType1, entity);
   }
 
@@ -41,7 +54,9 @@ export class TestEntitySharesEntityType1RequestBuilder extends RequestBuilder<Te
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntitySharesEntityType1`.
    */
-  update(entity: TestEntitySharesEntityType1): UpdateRequestBuilderV2<TestEntitySharesEntityType1> {
+  update(
+    entity: TestEntitySharesEntityType1
+  ): UpdateRequestBuilderV2<TestEntitySharesEntityType1> {
     return new UpdateRequestBuilderV2(TestEntitySharesEntityType1, entity);
   }
 
@@ -50,14 +65,25 @@ export class TestEntitySharesEntityType1RequestBuilder extends RequestBuilder<Te
    * @param keyProperty Key property. See [[TestEntitySharesEntityType1.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntitySharesEntityType1`.
    */
-  delete(keyProperty: string): DeleteRequestBuilderV2<TestEntitySharesEntityType1>;
+  delete(
+    keyProperty: string
+  ): DeleteRequestBuilderV2<TestEntitySharesEntityType1>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntitySharesEntityType1`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntitySharesEntityType1` by taking the entity as a parameter.
    */
-  delete(entity: TestEntitySharesEntityType1): DeleteRequestBuilderV2<TestEntitySharesEntityType1>;
-  delete(keyPropertyOrEntity: any): DeleteRequestBuilderV2<TestEntitySharesEntityType1> {
-    return new DeleteRequestBuilderV2(TestEntitySharesEntityType1, keyPropertyOrEntity instanceof TestEntitySharesEntityType1 ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
+  delete(
+    entity: TestEntitySharesEntityType1
+  ): DeleteRequestBuilderV2<TestEntitySharesEntityType1>;
+  delete(
+    keyPropertyOrEntity: any
+  ): DeleteRequestBuilderV2<TestEntitySharesEntityType1> {
+    return new DeleteRequestBuilderV2(
+      TestEntitySharesEntityType1,
+      keyPropertyOrEntity instanceof TestEntitySharesEntityType1
+        ? keyPropertyOrEntity
+        : { KeyProperty: keyPropertyOrEntity! }
+    );
   }
 }

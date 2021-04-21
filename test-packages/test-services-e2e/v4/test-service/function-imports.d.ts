@@ -17,7 +17,7 @@ export interface ConcatStringsParameters {
  * Concat Strings.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function concatStrings(
   parameters: ConcatStringsParameters
@@ -30,7 +30,7 @@ export interface GetAllParameters {}
  * Get All.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function getAll(
   parameters: GetAllParameters
@@ -48,7 +48,7 @@ export interface GetByKeyParameters {
  * Get By Key.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function getByKey(
   parameters: GetByKeyParameters
@@ -66,7 +66,7 @@ export interface ReturnCollectionParameters {
  * Return Collection.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function returnCollection(
   parameters: ReturnCollectionParameters
@@ -84,7 +84,7 @@ export interface ReturnIntParameters {
  * Return Int.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function returnInt(
   parameters: ReturnIntParameters
@@ -97,7 +97,7 @@ export interface ReturnSapCloudSdkParameters {}
  * Return Sap Cloud Sdk.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export declare function returnSapCloudSdk(
   parameters: ReturnSapCloudSdkParameters

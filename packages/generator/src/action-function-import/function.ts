@@ -1,6 +1,10 @@
 import { caps, unixEOL } from '@sap-cloud-sdk/util';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
-import { VdmFunctionImport, VdmReturnTypeCategory, VdmServiceMetadata } from '../vdm-types';
+import {
+  VdmFunctionImport,
+  VdmReturnTypeCategory,
+  VdmServiceMetadata
+} from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 
 const parameterName = 'parameters';
@@ -9,17 +13,17 @@ export function functionImportFunction(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const returnType = functionImport.returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
-  ?
-    `Omit<FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
-      functionImport.parametersTypeName
-    }, ${functionImport.returnType.returnType}>, 'execute'>`
-  :
-    `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
-      functionImport.parametersTypeName
-    }, ${functionImport.returnType.returnType}${
-      functionImport.returnType.isCollection ? '[]' : ''
-    }>`;
+  const returnType =
+    functionImport.returnType.returnTypeCategory ===
+    VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+      ? `Omit<FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
+          functionImport.parametersTypeName
+        }, ${functionImport.returnType.returnType}>, 'execute'>`
+      : `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
+          functionImport.parametersTypeName
+        }, ${functionImport.returnType.returnType}${
+          functionImport.returnType.isCollection ? '[]' : ''
+        }>`;
   return {
     kind: StructureKind.Function,
     name: functionImport.name,
@@ -41,10 +45,16 @@ export function functionImportFunction(
     ]
   };
 }
-export const additionalDocForEntityNotDeserializable = "The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.";
+export const additionalDocForEntityNotDeserializable =
+  "The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.";
 
-function getDocDescription(functionImport: VdmFunctionImport){
-  return `${functionImport.description} ${functionImport.returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE? additionalDocForEntityNotDeserializable:''}${unixEOL}`;
+function getDocDescription(functionImport: VdmFunctionImport) {
+  return `${functionImport.description} ${
+    functionImport.returnType.returnTypeCategory ===
+    VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+      ? additionalDocForEntityNotDeserializable
+      : ''
+  }${unixEOL}`;
 }
 
 function getFunctionImportStatements(

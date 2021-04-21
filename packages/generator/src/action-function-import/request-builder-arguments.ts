@@ -19,16 +19,23 @@ export function getRequestBuilderArgumentsBase(
   ];
 }
 
-function getTransformer(actionFunctionImport: VdmFunctionImport | VdmActionImport, service: VdmServiceMetadata): string{
-  if (actionFunctionImport.returnType.returnTypeCategory ===
-    VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE){
+function getTransformer(
+  actionFunctionImport: VdmFunctionImport | VdmActionImport,
+  service: VdmServiceMetadata
+): string {
+  if (
+    actionFunctionImport.returnType.returnTypeCategory ===
+    VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+  ) {
     return `(data) => throwErrorWhenReturnTypeIsUnionType(data, '${actionFunctionImport.originalName}')`;
   }
-  if(actionFunctionImport.returnType.builderFunction) {
+  if (actionFunctionImport.returnType.builderFunction) {
     return `(data) => ${responseTransformerFunctionName(
       actionFunctionImport.returnType,
       service.oDataVersion
     )}(data, ${actionFunctionImport.returnType.builderFunction})`;
   }
-  throw Error(`Cannot build function/action import ${actionFunctionImport.originalName} because the builder function: ${actionFunctionImport.returnType.builderFunction} is missing.`);
+  throw Error(
+    `Cannot build function/action import ${actionFunctionImport.originalName} because the builder function: ${actionFunctionImport.returnType.builderFunction} is missing.`
+  );
 }

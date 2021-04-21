@@ -1,5 +1,5 @@
-import { checkUrlExists } from './url';
 import nock from 'nock';
+import { checkUrlExists } from './url';
 
 describe('url', () => {
   it('throws for non existing link', async () => {

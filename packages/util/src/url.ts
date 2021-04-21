@@ -1,19 +1,9 @@
-import { executeHttpRequest } from '@sap-cloud-sdk/core';
-import { ErrorWithCause } from './error-with-cause';
+import axios from 'axios';
 
 /**
  * Checks whether a URL is existing via a head request. Throws an exception if not.
  * @param url - URL to be checked
  */
 export async function checkUrlExists(url: string): Promise<void> {
-  try {
-    const response = await executeHttpRequest({ url }, { method: 'head' });
-    if (response.status !== 200) {
-      throw new Error(
-        `Reques to ${url} failed with status: ${response.status}`
-      );
-    }
-  } catch (err) {
-    throw new ErrorWithCause(`Request to ${url} failed.`, err);
-  }
+  return axios.request({ url, method: 'HEAD' });
 }

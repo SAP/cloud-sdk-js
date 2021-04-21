@@ -3,6 +3,7 @@ import { UniqueNameGenerator, camelCase } from '@sap-cloud-sdk/util';
 /**
  * Ensure uniqueness of names.
  * Takes a list of names and renames those that are duplicate.
+ * The renamed list has the same order as the original list.
  * @param names List of names to deduplicate.
  * @param options Object containing options to configure the transformation.
  * @param options.format Function to format the name. Defaults to camel case.
@@ -18,16 +19,20 @@ export function ensureUniqueNames(
 ): string[] {
   const { format: format = camelCase, reservedWords = [] } = options;
 
-  const correctNames = getCorrectNames(names, format, reservedWords);
+  const nonConflictingNames = getNonConflictingNames(
+    names,
+    format,
+    reservedWords
+  );
 
   const nameGenerator = new UniqueNameGenerator('', [
     ...reservedWords,
-    ...correctNames
+    ...nonConflictingNames
   ]);
 
   return names.map(name => {
-    if (correctNames.length && correctNames[0] === name) {
-      correctNames.shift();
+    if (nonConflictingNames.length && nonConflictingNames[0] === name) {
+      nonConflictingNames.shift();
       return name;
     }
     return nameGenerator.generateAndSaveUniqueName(format(name));
@@ -36,13 +41,13 @@ export function ensureUniqueNames(
 
 /**
  * Get the names within a list of names that won't have to be renamed.
- * Those are the names that are unique and have a name that does not need to be formatted.
+ * Those are the names that are unique and don't need to be formatted.
  * @param names Names to check.
  * @param format Function to format the name.
  * @param reservedWords Reserved words that should be handled as duplicates.
  * @returns A list of names that do not need to be renamed.
  */
-function getCorrectNames(
+function getNonConflictingNames(
   names: string[],
   format: (name: string) => string,
   reservedWords: string[]

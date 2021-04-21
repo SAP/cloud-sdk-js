@@ -1,31 +1,34 @@
 import { pascalCase } from '@sap-cloud-sdk/util';
 import { ensureUniqueNames } from './unique-naming';
 
-it('ensureUniqueNames replaces duplicate names using defaults', () => {
-  expect(
-    ensureUniqueNames([
-      'someDuplicateName1',
-      'someDuplicateName',
-      'someDuplicateName'
-    ])
-  ).toEqual(['someDuplicateName1', 'someDuplicateName', 'someDuplicateName2']);
-});
-
-it('ensureUniqueNames replaces duplicate names using pascal case', () => {
-  expect(
-    ensureUniqueNames(
-      ['someDuplicateName1', 'SomeDuplicateName', 'someDuplicateName'],
-      {
+describe('ensureUniqueNames', () => {
+  it('replaces duplicate names using defaults', () => {
+    expect(
+      ensureUniqueNames(['duplicate', 'duplicate'], {
         format: pascalCase
-      }
-    )
-  ).toEqual(['SomeDuplicateName1', 'SomeDuplicateName', 'SomeDuplicateName2']);
-});
-
-it('ensureUniqueNames replaces duplicate names if they occur in the reserved words', () => {
-  const uniqueItems = ensureUniqueNames(['reserved', 'reserved1'], {
-    reservedWords: ['reserved']
+      })
+    ).toEqual(['duplicate', 'duplicate1']);
   });
 
-  expect(uniqueItems).toEqual(['reserved2', 'reserved1']);
+  it('replaces duplicate names using pascal case', () => {
+    expect(
+      ensureUniqueNames(['Duplicate', 'duplicate'], {
+        format: pascalCase
+      })
+    ).toEqual(['Duplicate', 'Duplicate1']);
+  });
+
+  it('replaces duplicate names, while keeping camel case names as is', () => {
+    expect(
+      ensureUniqueNames(['duplicate1', 'duplicate', 'duplicate'])
+    ).toEqual(['duplicate1', 'duplicate', 'duplicate2']);
+  });
+
+  it('replaces duplicate names if they occur in the reserved words', () => {
+    const uniqueItems = ensureUniqueNames(['reserved', 'reserved1'], {
+      reservedWords: ['reserved']
+    });
+
+    expect(uniqueItems).toEqual(['reserved2', 'reserved1']);
+  });
 });

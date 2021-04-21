@@ -115,7 +115,7 @@ export function parsePathParameters(
 ): OpenApiParameter[] {
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
   const parsedParameters = parseParameters(sortedPathParameters, refs);
-  const names = ensureUniqueNames(
+  const uniqueNames = ensureUniqueNames(
     parsedParameters.map(({ originalName }) => originalName),
     {
       reservedWords: ['body', 'queryParameters', ...reservedJsKeywords]
@@ -123,7 +123,7 @@ export function parsePathParameters(
   );
 
   return parsedParameters.map((param, i) => {
-    param.name = names[i];
+    param.name = uniqueNames[i];
     return param;
   });
 }

@@ -1,13 +1,14 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { emptyDocument } from '../../test/test-util';
+import { createTestRefs, emptyDocument } from '../../test/test-util';
 import { apiNameExtension } from '../extensions';
 import { parseApis } from './api';
 import { createRefs } from './refs';
 
+const options = { strictNaming: true };
 describe('parseApis', () => {
   it('parses APIs without paths', async () => {
     expect(
-      parseApis(emptyDocument, await createRefs(emptyDocument))
+      parseApis(emptyDocument, await createTestRefs(), options)
     ).toStrictEqual([]);
   });
 
@@ -43,7 +44,9 @@ describe('parseApis', () => {
       }
     };
 
-    expect(parseApis(document, await createRefs(document))).toStrictEqual([
+    expect(
+      parseApis(document, await createRefs(document, options), options)
+    ).toStrictEqual([
       {
         name: 'Api1Api',
         operations: [
@@ -106,7 +109,9 @@ describe('parseApis', () => {
       }
     };
 
-    expect(parseApis(document, await createRefs(document))).toStrictEqual([
+    expect(
+      parseApis(document, await createRefs(document, options), options)
+    ).toStrictEqual([
       {
         name: 'OperationWithTagApi',
         operations: [
@@ -156,7 +161,9 @@ describe('parseApis', () => {
       }
     };
 
-    expect(parseApis(document, await createRefs(document))).toStrictEqual([
+    expect(
+      parseApis(document, await createRefs(document, options), options)
+    ).toStrictEqual([
       {
         name: 'RootApi',
         operations: [

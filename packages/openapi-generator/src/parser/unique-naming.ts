@@ -1,114 +1,75 @@
 import { UniqueNameGenerator, camelCase, unique } from '@sap-cloud-sdk/util';
+import { ParserOptions } from './options';
 
 /**
- * Validate uniqueness of names.
- * Takes a list of names and throws an error if there are duplicates after formatting.
- * @param names List of names to check for duplicates.
- * @param options Object containing options to configure the transformation.
- * @param options.format Function to format the name. Defaults to camel case.
- * @param options.reservedWords Reserved words that should be handled as duplicates.
- */
-export function validateUniqueNames(
-  names: string[],
-  options: {
-    format?: (name: string) => string;
-    reservedWords?: string[];
-  } = {}
-): void {
-  const { format = camelCase, reservedWords = [] } = options;
-
-  const formattedNames = names.map(originalName => format(originalName));
-  const uniqueNames = unique(formattedNames);
-  const usedReservedWords = reservedWords.filter(reservedWord =>
-    formattedNames.includes(reservedWord)
-  );
-
-  const hasDuplicates = uniqueNames.length !== names.length;
-  const hasReservedWords = !!usedReservedWords.length;
-
-  let errorMessage = '';
-
-  if (hasDuplicates) {
-    errorMessage += `Some names are not unique after formatting.\n${getDuplicateErrorOuput(
-      names,
-      uniqueNames,
-      format,
-      1
-    )}`;
-  }
-
-  if (hasReservedWords) {
-    errorMessage += `Some names are reserved words after formatting.\n${getDuplicateErrorOuput(
-      names,
-      usedReservedWords,
-      format,
-      0
-    )}`;
-  }
-
-  if (errorMessage) {
-    throw new Error(errorMessage);
-  }
-}
-
-/**
- * Get the formatted error output.
- * @param originalNames The original names, that contain duplicates after formatting.
- * @param uniqueNames The unique formatted names.
- * @param format Function to format the name.
- * @param threshold Number of occurrences allowed.
- * @returns Formatted output for an error with duplicates.
- */
-function getDuplicateErrorOuput(
-  originalNames: string[],
-  uniqueNames: string[],
-  format: (name: string) => string,
-  threshold: number
-): string {
-  const duplicatesByName: Record<string, string[]> = uniqueNames.reduce(
-    (duplicates, formattedName) => {
-      const duplicateNames = originalNames.filter(
-        originalName => format(originalName) === formattedName
-      );
-      return duplicateNames.length > threshold
-        ? {
-            ...duplicates,
-            [formattedName]: duplicateNames
-          }
-        : duplicates;
-    },
-    {}
-  );
-
-  return Object.entries(duplicatesByName)
-    .map(
-      ([formattedName, duplicateNames]) =>
-        `\tFormatted name: '${formattedName}', original names: ${duplicateNames
-          .map(duplicate => `'${duplicate}'`)
-          .join(', ')}.`
-    )
-    .join('\n');
-}
-
-/**
- * Ensure uniqueness of names.
- * Takes a list of names and renames those that are duplicate.
- * The renamed list has the same order as the original list.
- * @param names List of names to deduplicate.
- * @param options Object containing options to configure the transformation.
+ * Format names and ensure uniqueness of names.
+ * With `strictNaming` enabled, duplicate names lead to an error.
+ * With `strictNaming` disabled, duplicate names are renamed.
+ * The formatted (and renamed) list of names has the same order and length as the original list.
+ * @param names List of names to ensure uniqueness for.
+ * @param options Parser options.
+ * @param namingOptions Object containing options to configure the transformation.
  * @param options.format Function to format the name. Defaults to camel case.
  * @param options.reservedWords Reserved words that should be handled as duplicates.
  * @returns Unique names in the given order.
  */
 export function ensureUniqueNames(
   names: string[],
-  options: {
+  options: ParserOptions,
+  namingOptions: {
     format?: (name: string) => string;
     reservedWords?: string[];
   } = {}
 ): string[] {
-  const { format: format = camelCase, reservedWords = [] } = options;
+  const { format = camelCase, reservedWords = [] } = namingOptions;
 
+  if (options.strictNaming) {
+    const formattedNames = names.map(originalName => format(originalName));
+    if (validateUniqueness(formattedNames, reservedWords)) {
+      return formattedNames;
+    }
+    throw new Error(
+      getDuplicateErrorMessage(names, formattedNames, reservedWords)
+    );
+  }
+  return deduplicateNames(names, { format, reservedWords });
+}
+
+/**
+ * Validate uniqueness of names.
+ * Takes a list of names and throws an error if there are duplicates after formatting.
+ * @param formattedNames Original transformed names.
+ * @param reservedWords Reserved words that should be handled as duplicates.
+ * @returns True if the names are not conflicting after transformation, otherwise false.
+ */
+export function validateUniqueness(
+  formattedNames: string[],
+  reservedWords: string[] = []
+): boolean {
+  return (
+    !hasDuplicates(formattedNames) &&
+    !hasReservedWords(formattedNames, reservedWords)
+  );
+}
+
+/**
+ * Deduplicate names.
+ * Takes a list of names and renames those that are duplicate.
+ * The renamed list has the same order as the original list.
+ * @param names List of names to deduplicate.
+ * @param namingOptions Object containing options to configure the transformation.
+ * @param namingOptions.format Function to format the name.
+ * @param namingOptions.reservedWords Reserved words that should be handled as duplicates.
+ * @returns Unique names in the given order.
+ */
+export function deduplicateNames(
+  names: string[],
+  namingOptions: {
+    format?: (name: string) => string;
+    reservedWords?: string[];
+  } = {}
+): string[] {
+  const { format = camelCase, reservedWords = [] } = namingOptions;
   const nonConflictingNames = getNonConflictingNames(
     names,
     format,
@@ -163,4 +124,82 @@ function isDuplicate(name: string, correctNames: string[]): boolean {
 
 function isFormatted(name: string, format: (name: string) => string): boolean {
   return format(name) === name;
+}
+
+function hasDuplicates(names: string[]): boolean {
+  const uniqueNames = unique(names);
+  return uniqueNames.length !== names.length;
+}
+
+function hasReservedWords(names: string[], reservedWords: string[]): boolean {
+  return !!reservedWords.find(reservedWord => names.includes(reservedWord));
+}
+
+function getDuplicateErrorMessage(
+  names: string[],
+  formattedNames: string[],
+  reservedWords: string[]
+): string {
+  const uniqueNames = unique(formattedNames);
+
+  let errorMessage = '';
+
+  if (hasDuplicates(formattedNames)) {
+    errorMessage += `Some names are not unique after formatting.\n${getDuplicateErrorLines(
+      names,
+      formattedNames,
+      uniqueNames,
+      1
+    )}`;
+  }
+
+  if (hasReservedWords(formattedNames, reservedWords)) {
+    errorMessage += `Some names are reserved words after formatting.\n${getDuplicateErrorLines(
+      names,
+      formattedNames,
+      reservedWords,
+      0
+    )}`;
+  }
+
+  return errorMessage;
+}
+
+/**
+ * Get the formatted error output.
+ * @param originalNames The original names, that contain duplicates after formatting.
+ * @param formattedNames Original transformed names.
+ * @param uniqueNames The unique formatted names.
+ * @param threshold Number of occurrences allowed.
+ * @returns Formatted output for an error with duplicates.
+ */
+function getDuplicateErrorLines(
+  originalNames: string[],
+  formattedNames: string[],
+  uniqueNames: string[],
+  threshold: number
+): string {
+  const duplicatesByName: Record<string, string[]> = uniqueNames.reduce(
+    (duplicates, formattedName) => {
+      const duplicateNames = originalNames.filter(
+        (_, i) => formattedNames[i] === formattedName
+      );
+      return duplicateNames.length > threshold
+        ? {
+            ...duplicates,
+            [formattedName]: duplicateNames
+          }
+        : duplicates;
+    },
+    {}
+  );
+
+  return Object.entries(duplicatesByName)
+    .map(
+      ([formattedName, duplicateNames]) =>
+        `\tFormatted name: '${formattedName}', original names: ${duplicateNames
+          .map(duplicate => `'${duplicate}'`)
+          .join(', ')}.`
+    )
+    .join('\n');
 }

@@ -6,7 +6,7 @@ describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
     const logger = createLogger('openapi-generator');
     spyOn(logger, 'debug');
-    expect(parseRequestBody(undefined, await createTestRefs(), {})).toBeUndefined();
+    expect(parseRequestBody(undefined, await createTestRefs())).toBeUndefined();
     expect(logger.debug).not.toHaveBeenCalled();
   });
 
@@ -30,8 +30,7 @@ describe('getRequestBody', () => {
               }
             }
           }
-        }),
-        {}
+        })
       )
     ).toEqual({
       schema: { type: 'string' },
@@ -56,9 +55,10 @@ describe('getRequestBody', () => {
     };
 
     expect(
-      parseRequestBody(requestBody, await createTestRefs(), {
-        '#/components/schemas/TestEntity': schemaNaming
-      })
+      parseRequestBody(
+        requestBody,
+        await createTestRefs({ schemas: { TestEntity: { type: 'string' } } })
+      )
     ).toEqual({
       schema: { ...schema, ...schemaNaming },
       required: true

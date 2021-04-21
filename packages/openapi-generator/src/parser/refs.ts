@@ -1,34 +1,88 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { $Refs, resolve } from '@apidevtools/swagger-parser';
-import { kebabCase, pascalCase } from '@sap-cloud-sdk/util';
+import { pascalCase, kebabCase } from '@sap-cloud-sdk/util';
 import { isReferenceObject } from '../schema-util';
 import { SchemaNaming } from '../openapi-types';
 import { SchemaRefMapping } from './parsing-info';
 import { ensureUniqueNames } from './unique-naming';
 
 /**
- * Check whether the given object is a reference object and resolve if necessary.
- * This operates only on the current level and does not resolve the object recursively.
- * @param obj Object to resolve if necessary.
- * @param refs References to resolve by.
- * @returns A resolved object.
+ * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.
+ * @param document The original OpenAPI document.
+ * @returns A promise to the reference representation.
  */
-export function resolveObject<T>(
-  obj: T | OpenAPIV3.ReferenceObject,
-  refs: $Refs
-): T {
-  return isReferenceObject(obj) ? refs.get(obj.$ref) : obj;
-}
-
 export async function createRefs(
   document: OpenAPIV3.Document
 ): Promise<OpenApiDocumentRefs> {
-  const $refs = await resolve(document);
-  return new OpenApiDocumentRefs($refs, parseSchemaRefMapping(document));
+  return OpenApiDocumentRefs.createRefs(document);
 }
 
+/**
+ * Representation of cross references within a document.
+ * Useful when resolving references or getting schema names for referenced schemas.
+ */
 export class OpenApiDocumentRefs {
-  constructor(
+  /**
+   * Create a representation of references within a document.
+   * @param document The original OpenAPI document.
+   * @returns A promise to the reference representation.
+   */
+  static async createRefs(
+    document: OpenAPIV3.Document
+  ): Promise<OpenApiDocumentRefs> {
+    return new OpenApiDocumentRefs(
+      await resolve(document),
+      OpenApiDocumentRefs.parseSchemaRefMapping(document)
+    );
+  }
+
+  /**
+   * Parse mapping between schema references and their unique names.
+   * @param document The original OpenAPI document.
+   * @returns A mapping from schema references to schema naming objects.
+   */
+  private static parseSchemaRefMapping(
+    document: OpenAPIV3.Document
+  ): SchemaRefMapping {
+    const originalNames = Object.keys(document.components?.schemas || {});
+
+    const schemaNames = ensureUniqueNames(originalNames, {
+      formatName: pascalCase,
+      getName: item => item,
+      transformItem: (originalName, schemaName) => ({
+        originalName,
+        schemaName
+      })
+    });
+
+    const schemaNamesWithFileNames = ensureUniqueNames(schemaNames, {
+      transformItem: (item, name) => ({
+        originalName: item.originalName,
+        schemaNaming: {
+          schemaName: item.schemaName,
+          fileName: name
+        }
+      }),
+      getName: ({ schemaName }) => schemaName,
+      formatName: kebabCase,
+      reservedWords: ['index']
+    });
+
+    return schemaNamesWithFileNames.reduce(
+      (mapping, { originalName, schemaNaming }) => ({
+        ...mapping,
+        [`#/components/schemas/${originalName}`]: schemaNaming
+      }),
+      {}
+    );
+  }
+
+  /**
+   * Creates a new instance of `OpenApiDocumentRefs`.
+   * @param refs Object representing the OpenAPI cross references.
+   * @param schemaRefMapping Mapping between schema references and schema naming.
+   */
+  private constructor(
     private refs: $Refs,
     private schemaRefMapping: SchemaRefMapping
   ) {}
@@ -65,35 +119,4 @@ export class OpenApiDocumentRefs {
     }
     return schemaNaming;
   }
-}
-
-function parseSchemaRefMapping(document: OpenAPIV3.Document): SchemaRefMapping {
-  const originalNames = Object.keys(document.components?.schemas || {});
-
-  const schemaNames = ensureUniqueNames(originalNames, {
-    formatName: pascalCase,
-    getName: item => item,
-    transformItem: (originalName, schemaName) => ({ originalName, schemaName })
-  });
-
-  const schemaNamesWithFileNames = ensureUniqueNames(schemaNames, {
-    transformItem: (item, name) => ({
-      originalName: item.originalName,
-      schemaNaming: {
-        schemaName: item.schemaName,
-        fileName: name
-      }
-    }),
-    getName: ({ originalName }) => originalName,
-    formatName: kebabCase,
-    reservedWords: ['index']
-  });
-
-  return schemaNamesWithFileNames.reduce(
-    (mapping, { originalName, schemaNaming }) => ({
-      ...mapping,
-      [`#/components/schemas/${originalName}`]: schemaNaming
-    }),
-    {}
-  );
 }

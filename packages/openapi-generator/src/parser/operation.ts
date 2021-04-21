@@ -1,37 +1,26 @@
-import { $Refs } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import {
-  camelCase,
-  filterDuplicatesRight,
-  partition,
-  UniqueNameGenerator
-} from '@sap-cloud-sdk/util';
+import { filterDuplicatesRight, partition } from '@sap-cloud-sdk/util';
 import { OpenApiOperation, OpenApiParameter } from '../openapi-types';
 import { parseRequestBody } from './request-body';
-import { resolveObject } from './refs';
+import { OpenApiDocumentRefs } from './refs';
 import { parseSchema } from './schema';
 import { parseResponses } from './responses';
 import { OperationInfo } from './parsing-info';
 import { reservedJsKeywords } from './reserved-words';
+import { ensureUniqueNames } from './unique-naming';
 
 /**
  * Parse an operation info into a serialization-ready object.
  * @param operationInfo Parsing relevant information on an operation.
- * @param refs List of cross references that can occur in the document.
- * @param schemaRefMapping Mapping between references and parsed names of the schemas.
+ * @param refs Object representing cross references throughout the document.
  * @returns A flat list of parsed operations.
  */
 export function parseOperation(
   { operation, pathPattern, method, pathItemParameters }: OperationInfo,
-  refs: $Refs,
-  schemaRefMapping: Record<string, string>
+  refs: OpenApiDocumentRefs
 ): OpenApiOperation {
-  const requestBody = parseRequestBody(
-    operation.requestBody,
-    refs,
-    schemaRefMapping
-  );
-  const response = parseResponses(operation.responses, refs, schemaRefMapping);
+  const requestBody = parseRequestBody(operation.requestBody, refs);
+  const response = parseResponses(operation.responses, refs);
   const relevantParameters = getRelevantParameters(
     [...(pathItemParameters || []), ...(operation.parameters || [])],
     refs
@@ -42,18 +31,14 @@ export function parseOperation(
     parameter => parameter.in === 'path'
   );
 
-  const pathParameters = parsePathParameters(
-    pathParams,
-    pathPattern,
-    schemaRefMapping
-  );
+  const pathParameters = parsePathParameters(pathParams, pathPattern, refs);
 
   return {
     ...operation,
     method,
     requestBody,
     response,
-    queryParameters: parseParameters(queryParams, schemaRefMapping),
+    queryParameters: parseParameters(queryParams, refs),
     pathParameters,
     pathPattern: parsePathPattern(pathPattern, pathParameters),
     operationId: operation.operationId!,
@@ -63,10 +48,10 @@ export function parseOperation(
 
 export function getRelevantParameters(
   parameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[],
-  refs: $Refs
+  refs: OpenApiDocumentRefs
 ): OpenAPIV3.ParameterObject[] {
   const resolvedParameters = parameters
-    .map(param => resolveObject(param, refs))
+    .map(param => refs.resolveObject(param))
     // Filter cookie and header parameters
     .filter(param => param.in === 'path' || param.in === 'query');
   return filterDuplicatesRight(
@@ -126,28 +111,30 @@ export function parsePathPattern(
 export function parsePathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
   pathPattern: string,
-  schemaRefMapping: Record<string, string>
+  refs: OpenApiDocumentRefs
 ): OpenApiParameter[] {
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
-  const nameGenerator = new UniqueNameGenerator('', [
-    'body',
-    'queryParameters',
-    ...reservedJsKeywords
-  ]);
+  const parsedParameters = parseParameters(sortedPathParameters, refs);
+  const uniqueNames = ensureUniqueNames(
+    parsedParameters.map(({ originalName }) => originalName),
+    {
+      reservedWords: ['body', 'queryParameters', ...reservedJsKeywords]
+    }
+  );
 
-  return parseParameters(sortedPathParameters, schemaRefMapping).map(param => ({
-    ...param,
-    name: nameGenerator.generateAndSaveUniqueName(camelCase(param.originalName))
-  }));
+  return parsedParameters.map((param, i) => {
+    param.name = uniqueNames[i];
+    return param;
+  });
 }
 
 export function parseParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
-  schemaRefMapping: Record<string, string>
+  refs: OpenApiDocumentRefs
 ): OpenApiParameter[] {
   return pathParameters.map(param => ({
     ...param,
     originalName: param.name,
-    schema: parseSchema(param.schema, schemaRefMapping)
+    schema: parseSchema(param.schema, refs)
   }));
 }

@@ -1,4 +1,8 @@
-import { OpenApiOperation } from '../openapi-types';
+import {
+  OpenApiOperation,
+  OpenApiParameter,
+  OpenApiReferenceSchema
+} from '../openapi-types';
 import { operationDocumentation, serializeOperation } from './operation';
 
 describe('serializeOperation', () => {
@@ -177,7 +181,10 @@ describe('serializeOperation', () => {
       queryParameters: [],
       requestBody: {
         required: false,
-        schema: { $ref: '#/components/schemas/RefType', schemaName: 'RefType' }
+        schema: {
+          $ref: '#/components/schemas/RefType',
+          schemaName: 'RefType'
+        } as OpenApiReferenceSchema
       },
       response: { type: 'string' },
       pathPattern: 'test'
@@ -204,8 +211,8 @@ describe('serializeOperation', () => {
       response: { type: 'string' },
       method: 'GET',
       pathPattern: 'my/Api',
-      pathParameters: [] as any,
-      queryParameters: [] as any
+      pathParameters: [] as OpenApiParameter[],
+      queryParameters: [] as OpenApiParameter[]
     } as OpenApiOperation;
   }
 
@@ -232,7 +239,7 @@ describe('serializeOperation', () => {
     operation.pathParameters = [
       { name: 'pathParameter1' },
       { name: 'path-parameter-2' }
-    ] as any;
+    ] as OpenApiParameter[];
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
@@ -250,7 +257,7 @@ describe('serializeOperation', () => {
         name: 'pathParameter1',
         description: 'This is my parameter description'
       }
-    ] as any;
+    ] as OpenApiParameter[];
     expect(operationDocumentation(operation)).toMatch(
       /This is my parameter description/
     );
@@ -261,7 +268,7 @@ describe('serializeOperation', () => {
     operation.queryParameters = [
       { name: 'queryParameter1' },
       { name: 'queryParameter2' }
-    ] as any;
+    ] as OpenApiParameter[];
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
@@ -295,12 +302,14 @@ describe('serializeOperation', () => {
 
   it('creates the signature in order path parameter, body, queryParameter and returns last', () => {
     const operation = getOperation();
-    operation.pathParameters = [{ name: 'pathParameter1' }] as any;
+    operation.pathParameters = [
+      { name: 'pathParameter1' }
+    ] as OpenApiParameter[];
     operation.requestBody = { schema: { type: 'string' }, required: false };
     operation.queryParameters = [
       { name: 'queryParameter1' },
       { name: 'queryParameter2' }
-    ] as any;
+    ] as OpenApiParameter[];
     operation.requestBody = { schema: { type: 'string' }, required: true };
     expect(operationDocumentation(operation)).toMatch(
       /@param pathParameter1.*\s.*@param body.*\s.*@param queryParameters.*\s.*@returns/

@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { createRefs, emptyObjectSchema } from '../../test/test-util';
+import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { OpenApiParameter } from '../openapi-types';
 import {
   parseParameters,
@@ -24,7 +24,7 @@ describe('getRelevantParameters', () => {
             schema: { type: 'string' }
           }
         ],
-        await createRefs()
+        await createTestRefs()
       )
     ).toEqual([]);
   });
@@ -38,7 +38,7 @@ describe('getRelevantParameters', () => {
     expect(
       getRelevantParameters(
         [{ $ref: '#/components/parameters/RefSchema' }],
-        await createRefs({
+        await createTestRefs({
           parameters: {
             RefSchema: refSchema
           }
@@ -72,7 +72,7 @@ describe('getRelevantParameters', () => {
     expect(
       getRelevantParameters(
         [queryParam1, queryParam2, pathParam, queryParam1Replacement],
-        await createRefs()
+        await createTestRefs()
       )
     ).toEqual([queryParam2, pathParam, queryParam1Replacement]);
   });
@@ -80,7 +80,7 @@ describe('getRelevantParameters', () => {
 
 describe('parseParameters', () => {
   it('returns empty arrays if there are no parameters', async () => {
-    expect(parseParameters([], {})).toEqual([]);
+    expect(parseParameters([], await createTestRefs())).toEqual([]);
   });
 
   it('parses the parameter schema', async () => {
@@ -93,7 +93,7 @@ describe('parseParameters', () => {
             schema: { type: 'object' }
           }
         ],
-        {}
+        await createTestRefs()
       )
     ).toEqual([
       {
@@ -108,12 +108,15 @@ describe('parseParameters', () => {
 
 describe('parsePathParameters', () => {
   it('returns empty arrays if there are no parameters', async () => {
-    expect(parsePathParameters([], '/test', {})).toEqual([]);
+    expect(parsePathParameters([], '/test', await createTestRefs())).toEqual(
+      []
+    );
   });
 
   it('throws an error if the parameters do not match the path pattern', async () => {
+    const refs = await createTestRefs();
     expect(() =>
-      parsePathParameters([], '/test/{id}', {})
+      parsePathParameters([], '/test/{id}', refs)
     ).toThrowErrorMatchingInlineSnapshot(
       '"Path parameter \'id\' provided in path is missing in path parameters."'
     );
@@ -144,15 +147,26 @@ describe('parsePathParameters', () => {
       parsePathParameters(
         [pathParam1, pathParam2, pathParam3, pathParam4],
         '/root/{path-param}/{pathParam}/path/{PathParam1}/sub-path/{path_param}',
-        {}
+        await createTestRefs()
       )
-    ).toEqual(
-      [pathParam3, pathParam1, pathParam2, pathParam4].map((param, i) => ({
-        ...param,
-        originalName: param.name,
-        name: 'pathParam' + (i ? i : '')
-      }))
-    );
+    ).toEqual([
+      expect.objectContaining({
+        name: 'pathParam1',
+        originalName: 'path-param'
+      }),
+      expect.objectContaining({
+        name: 'pathParam',
+        originalName: 'pathParam'
+      }),
+      expect.objectContaining({
+        name: 'pathParam2',
+        originalName: 'PathParam1'
+      }),
+      expect.objectContaining({
+        name: 'pathParam3',
+        originalName: 'path_param'
+      })
+    ]);
   });
 });
 

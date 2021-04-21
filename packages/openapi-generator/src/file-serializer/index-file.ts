@@ -12,7 +12,7 @@ export function apiIndexFile(openApiDocument: OpenApiDocument): string {
     ...(openApiDocument.schemas.length ? ['schema'] : [])
   ];
   return codeBlock`
-    ${exportAllFiles(files)}
+    ${exportAllFiles(files.map(fileName => kebabCase(fileName)))}
   `;
 }
 
@@ -22,14 +22,12 @@ export function apiIndexFile(openApiDocument: OpenApiDocument): string {
  * @returns The serialized index file contents.
  */
 export function schemaIndexFile(openApiDocument: OpenApiDocument): string {
-  return codeBlock`
-    ${exportAllFiles(openApiDocument.schemas.map(schema => schema.name))}
-  `;
+  return exportAllFiles(openApiDocument.schemas.map(schema => schema.fileName));
 }
 
 function exportAllFiles(fileNames: string[]): string {
   return codeBlock`${fileNames
-    .map(fileName => exportAll(`${kebabCase(fileName)}`))
+    .map(fileName => exportAll(fileName))
     .join('\n')}`;
 }
 

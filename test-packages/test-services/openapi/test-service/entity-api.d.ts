@@ -53,6 +53,11 @@ export declare const EntityApi: {
    */
   deleteEntity: (body: string[] | undefined) => OpenApiRequestBuilder<any>;
   /**
+   * Head request of entities
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  headEntities: () => OpenApiRequestBuilder<any>;
+  /**
    * Get entity by id
    * @param entityId Key property of the entity
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.

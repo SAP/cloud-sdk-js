@@ -1,6 +1,6 @@
 import { codeBlock, documentationBlock } from '@sap-cloud-sdk/util';
-import { OpenApiNamedSchema } from '../openapi-types';
-import { collectRefs, parseFileNameFromRef } from '../schema-util';
+import { OpenApiPersistedSchema } from '../openapi-types';
+import { collectRefs } from '../schema-util';
 import { serializeSchema } from './schema';
 import { Import, serializeImports } from './imports';
 
@@ -9,28 +9,30 @@ import { Import, serializeImports } from './imports';
  * @param namedSchema A named schema.
  * @returns The serialized schema file contents.
  */
-export function schemaFile(namedSchema: OpenApiNamedSchema): string {
+export function schemaFile(namedSchema: OpenApiPersistedSchema): string {
   const imports = serializeImports(getImports(namedSchema));
 
   return codeBlock`    
     ${imports}
     ${schemaDocumentation(namedSchema)}
-    export type ${namedSchema.name} = ${serializeSchema(namedSchema.schema)};
+    export type ${namedSchema.schemaName} = ${serializeSchema(
+    namedSchema.schema
+  )};
   `;
 }
 
-function getImports(namedSchema: OpenApiNamedSchema): Import[] {
+function getImports(namedSchema: OpenApiPersistedSchema): Import[] {
   return collectRefs(namedSchema.schema)
-    .filter(ref => ref.schemaName !== namedSchema.name)
+    .filter(ref => ref.schemaName !== namedSchema.schemaName)
     .map(ref => ({
       names: [ref.schemaName],
       typeOnly: true,
-      moduleIdentifier: `./${parseFileNameFromRef(ref)}`
+      moduleIdentifier: `./${ref.fileName}`
     }));
 }
 
-export function schemaDocumentation(schema: OpenApiNamedSchema): string {
+export function schemaDocumentation(schema: OpenApiPersistedSchema): string {
   return documentationBlock`${
-    schema.description || `Representation of the '${schema.name}' schema.`
+    schema.description || `Representation of the '${schema.schemaName}' schema.`
   }`;
 }

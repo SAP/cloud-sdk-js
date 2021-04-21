@@ -48,7 +48,7 @@ function makeCsrfRequest<T extends HttpRequestConfig>(
     'x-csrf-token'
   ) && { 'x-csrf-token': 'Fetch' };
   const axiosConfig: HttpRequestConfig = {
-    method: 'get',
+    method: 'head',
     ...requestConfig,
     headers: {
       ...fetchHeader,

@@ -1,10 +1,14 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
 import { FieldType, OneToManyLink } from '../selectable';
-import { Filter } from './filter';
-import { FilterLink } from './filter-link';
-import { FilterList } from './filter-list';
-import { FilterLambdaExpression } from './filter-lambda-expression';
+import {
+  FilterLambdaExpression,
+  BooleanFilterFunction,
+  Filter,
+  FilterLink,
+  FilterList,
+  UnaryFilter
+} from '../filter';
 
 /**
  * A union of all types that can be used for filtering.
@@ -15,7 +19,9 @@ export type Filterable<EntityT extends Entity> =
   | Filter<EntityT, FieldType | FieldType[]>
   | FilterLink<EntityT>
   | FilterList<EntityT>
-  | FilterLambdaExpression<EntityT>;
+  | FilterLambdaExpression<EntityT>
+  | UnaryFilter<EntityT>
+  | BooleanFilterFunction<EntityT>;
 
 /**
  * Create a [[FilterList]] by combining [[Filterable]]s with logical `and`.
@@ -90,7 +96,8 @@ export function toFilterableList<
   return filters.map(f => (f instanceof OneToManyLink ? f._filters : f));
 }
 
-// TODO:
-// Export function not<EntityT extends Entity>(expression: Filterable<EntityT>): Filterable<EntityT> {
-//   Return new FilterList([], expressions);
-// }
+export function not<EntityT extends Entity>(
+  filter: Filterable<EntityT>
+): UnaryFilter<EntityT> {
+  return new UnaryFilter(filter, 'not');
+}

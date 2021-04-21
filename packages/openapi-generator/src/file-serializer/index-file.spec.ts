@@ -27,10 +27,13 @@ it('apiIndexFile serializes the api index file without referenced schemas', () =
 it('schemaIndexFile serializes the schema index file for schemas in a document', () => {
   const document = ({
     apis: [],
-    schemas: [{ name: 'MySchema1' }, { name: 'MySchema2' }]
+    schemas: [
+      { schemaName: 'MySchema1', fileName: 'my-schema-1' },
+      { schemaName: 'MySchema2', fileName: 'some-other-name' }
+    ]
   } as unknown) as OpenApiDocument;
   expect(schemaIndexFile(document)).toMatchInlineSnapshot(`
-    "    export * from './my-schema-1';
-        export * from './my-schema-2';"
+    "export * from './my-schema-1';
+    export * from './some-other-name';"
   `);
 });

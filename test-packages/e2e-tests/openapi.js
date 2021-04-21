@@ -38,15 +38,18 @@ async function createApi() {
   entities[0].keyProperty = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
 
   api.register({
-    getAllEntities: (c, req, res) => {
+    headEntities: (c, req, res) => {
       const hasCsrfFetchHeader = Object.entries(c.request.headers).some(
         ([key, value]) =>
           key.toLowerCase() === 'x-csrf-token' &&
           value.toLowerCase() === 'fetch'
       );
       if (hasCsrfFetchHeader) {
-        return res.status(200).set('x-csrf-token', 'e2e-test-token').end();
+        return res.status(204).set('x-csrf-token', 'e2e-test-token').end();
       }
+      return res.status(204).end();
+    },
+    getAllEntities: (c, req, res) => {
       return res.status(200).json(entities);
     },
     countEntities: (c, req, res) => res.status(200).json(entities.length),

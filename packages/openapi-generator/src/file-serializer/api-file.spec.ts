@@ -1,4 +1,4 @@
-import { OpenApiApi } from '../openapi-types';
+import { OpenApiApi, OpenApiReferenceSchema } from '../openapi-types';
 import { apiDocumentation, apiFile } from './api-file';
 
 describe('apiFile', () => {
@@ -64,7 +64,7 @@ describe('apiFile', () => {
               schema: {
                 $ref: '#/components/schemas/PathParameterType',
                 schemaName: 'PathParameterType'
-              },
+              } as OpenApiReferenceSchema,
               required: true
             }
           ],
@@ -76,7 +76,7 @@ describe('apiFile', () => {
               schema: {
                 $ref: '#/components/schemas/QueryParameterType',
                 schemaName: 'QueryParameterType'
-              },
+              } as OpenApiReferenceSchema,
               required: true
             }
           ],
@@ -94,13 +94,13 @@ describe('apiFile', () => {
             schema: {
               $ref: '#/components/schemas/RefType',
               schemaName: 'RefType'
-            }
+            } as OpenApiReferenceSchema
           },
           pathPattern: 'test',
           response: {
             $ref: '#/components/schemas/ResponseType',
             schemaName: 'ResponseType'
-          }
+          } as OpenApiReferenceSchema
         }
       ]
     };

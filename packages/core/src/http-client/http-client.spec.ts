@@ -320,7 +320,7 @@ describe('generic http client', () => {
           'sap-client': '001'
         }
       })
-        .get('/api/entity')
+        .head('/api/entity')
         .reply(200, {}, { 'x-csrf-token': csrfToken });
 
       nock('https://example.com', {
@@ -367,7 +367,7 @@ describe('generic http client', () => {
           'sap-client': '001'
         }
       })
-        .get('/api/entity')
+        .head('/api/entity')
         .reply(405, {}, { 'x-csrf-token': csrfToken });
 
       nock('https://example.com', {

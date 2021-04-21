@@ -26,7 +26,7 @@ function mockCsrfTokenRequest(path?: string) {
       'x-csrf-token': 'Fetch'
     }
   })
-    .get(path ? `${servicePath}/${path}` : servicePath)
+    .head(path ? `${servicePath}/${path}` : servicePath)
     .reply(200, '', mockedBuildHeaderResponse);
 }
 

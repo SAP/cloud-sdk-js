@@ -44,7 +44,7 @@ function mockCsrfTokenRequest(host: string, sapClient: string) {
       'sap-client': sapClient
     }
   })
-    .get(`${servicePath}/$batch`)
+    .head(`${servicePath}/$batch`)
     .reply(200, '', {
       'x-csrf-token': csrfToken,
       'Set-Cookie': ['key1=val1', 'key2=val2', 'key3=val3']

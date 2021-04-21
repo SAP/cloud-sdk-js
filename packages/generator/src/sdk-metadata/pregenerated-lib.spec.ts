@@ -19,7 +19,7 @@ describe('pregenerated-lib', () => {
   const service: VdmServiceMetadata = getTestService();
 
   it('returns installation snipped', () => {
-    expect(getInstallationSnippet(service)).toBe(
+    expect(getInstallationSnippet(service).instructions).toBe(
       'npm i @sap/cloud-sdk-vdm-test-service:latest'
     );
   });

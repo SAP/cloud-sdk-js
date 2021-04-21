@@ -1,15 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generation-and-usage creates api specific usage for entity 1`] = `
-"import { DummyClass } from '@sap/dummy-package';
+Object {
+  "instructions": "import { DummyClass } from '@sap/dummy-package';
 
 const resultPromise = DummyClass.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
-"
+",
+  "text": "Find below a usage example for this API.",
+}
 `;
 
 exports[`generation-and-usage creates generic usage example 1`] = `
-"import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
+Object {
+  "instructions": "import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
-"
+",
+  "text": "Find below a generic example on execute request with the SDK.",
+}
 `;

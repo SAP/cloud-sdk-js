@@ -7,10 +7,19 @@ import {
   genericDescription,
   s4hanaCloudDescription
 } from '../package-description';
-import { PregeneratedLibrary } from './sdk-metadata-types';
+import type {
+  InstructionWithText,
+  PregeneratedLibrary
+} from './sdk-metadata-types';
 
-export function getInstallationSnippet(service: VdmServiceMetadata): string {
-  return `npm i ${service.npmPackageName}:latest`;
+export function getInstallationSnippet(
+  service: VdmServiceMetadata
+): InstructionWithText {
+  return {
+    instructions: `npm i ${service.npmPackageName}:latest`,
+    text:
+      'Execute the following npm command to install the pregenerated client.'
+  };
 }
 
 export function getRepositoryLink(service: VdmServiceMetadata): string {
@@ -62,7 +71,7 @@ export async function getPregeneratedLibrary(
     return {
       repository: 'npm',
       dependencyName: service.npmPackageName,
-      installLibrarySnippet: getInstallationSnippet(service),
+      installLibrarySteps: getInstallationSnippet(service),
       repositoryLink: getRepositoryLink(service),
       compatibilityNotes: '',
       description: getServiceDescription(service, options),

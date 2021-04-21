@@ -8,4 +8,8 @@ describe('url', () => {
       )
     ).rejects.toThrowErrorMatchingSnapshot();
   });
+
+  it('[E2E] does not fail for existing link', async () => {
+    await expect(checkUrlExists('https://sap.github.io/cloud-sdk/')).resolves;
+  });
 });

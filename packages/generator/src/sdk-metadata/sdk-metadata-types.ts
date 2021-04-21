@@ -10,6 +10,10 @@ export interface SdkMetadataHeader {
   name: string;
   type: 'odata' | 'rest' | 'soap';
   version: string;
+  /**
+   * The first introduction text about the SDK on the API hub.
+   */
+  introText: string;
 }
 
 /**
@@ -19,12 +23,15 @@ export interface Client {
   language: 'java' | 'javascript';
   /**
    * Status of the service.
-   * `certified` means we have a pregeneratedLibrary.
-   * `verified` means we have generated and transpiled the client
-   * `unknown` means we have no information.
    * @memberof Client
    */
-  serviceStatus: 'certified' | 'verified' | 'unknown';
+  serviceStatus: ServiceStatus;
+
+  /**
+   * This object will be set on our metadata server in case we need to show some emergency information.
+   */
+  emergencyObject?: EmergencyObject;
+
   /**
    * The information on the pregenerated library. Undefined if there is no lib generated
    * @type {PregeneratedLibrary}
@@ -48,7 +55,7 @@ export interface PregeneratedLibrary {
    * @type {string}
    * @memberof PregeneratedLibrary
    */
-  installLibrarySnippet: MultiLineText;
+  installLibrarySteps: InstructionWithText;
   /**
    * Compatability version note. Is not filled yet since there is no flow to detect API changes since the versions are not maintend and the hash workaround is not yet in place.
    * @type {string}
@@ -61,17 +68,18 @@ export interface PregeneratedLibrary {
 }
 
 export interface Links {
-  sdkDocumentation: UrlString;
-  featureDocumentation: UrlString;
-  support: UrlString;
-  apiHubTutorial: UrlString;
-  generationManual: UrlString;
+  sdkDocumentation: LinkWithName;
+  featureDocumentation: LinkWithName;
+  support: LinkWithName;
+  apiHubTutorial: LinkWithName;
+  generationManual: LinkWithName;
 }
-
 export interface GenerationAndUsage {
-  generationSteps: string;
-  apiSpecificUsage: MultiLineText;
-  genericUsage: MultiLineText;
+  generatorVersion: string;
+  generatorRepositoryLink: UrlString;
+  generationSteps: InstructionWithText;
+  apiSpecificUsage: InstructionWithText;
+  genericUsage: InstructionWithText;
   links: Links;
 }
 
@@ -85,3 +93,34 @@ export type DateTimeString = string;
  * String fields containing a text formatted with multiple lines.
  */
 export type MultiLineText = string;
+
+export interface ServiceStatus {
+  /**
+   * certified -> Published lib, verified -> Generation worked
+   */
+  status: 'certified' | 'verified' | 'unknown';
+  /**
+   * Detailed text what the serviceStatus means.
+   * @memberof Client
+   */
+  statusText: string;
+  /**
+   * Getting started text, depends on the service status
+   */
+  gettingStartedText: string;
+}
+
+interface LinkWithName {
+  url: UrlString;
+  name: string;
+}
+
+export interface EmergencyObject {
+  status: string;
+  description: string;
+}
+
+export interface InstructionWithText {
+  instructions: MultiLineText;
+  text: string;
+}

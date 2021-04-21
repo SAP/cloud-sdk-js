@@ -1,10 +1,18 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntity2RequestBuilder } from './TestEntity2RequestBuilder';
-import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
+import {
+  AllFields,
+  CustomFieldV4,
+  EntityBuilderType,
+  EntityV4,
+  Field,
+  NumberField,
+  StringField
+} from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntity2" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -72,32 +80,52 @@ export namespace TestEntity2 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity2> = new StringField('KeyPropertyString', TestEntity2, 'Edm.String');
+  export const KEY_PROPERTY_STRING: StringField<TestEntity2> = new StringField(
+    'KeyPropertyString',
+    TestEntity2,
+    'Edm.String'
+  );
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SINGLE_PROPERTY: NumberField<TestEntity2> = new NumberField('SingleProperty', TestEntity2, 'Edm.Single');
+  export const SINGLE_PROPERTY: NumberField<TestEntity2> = new NumberField(
+    'SingleProperty',
+    TestEntity2,
+    'Edm.Single'
+  );
   /**
    * All fields of the TestEntity2 entity.
    */
-  export const _allFields: Array<StringField<TestEntity2> | NumberField<TestEntity2>> = [
-    TestEntity2.KEY_PROPERTY_STRING,
-    TestEntity2.SINGLE_PROPERTY
-  ];
+  export const _allFields: Array<
+    StringField<TestEntity2> | NumberField<TestEntity2>
+  > = [TestEntity2.KEY_PROPERTY_STRING, TestEntity2.SINGLE_PROPERTY];
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity2> = new AllFields('*', TestEntity2);
+  export const ALL_FIELDS: AllFields<TestEntity2> = new AllFields(
+    '*',
+    TestEntity2
+  );
   /**
    * All key fields of the TestEntity2 entity.
    */
-  export const _keyFields: Array<Field<TestEntity2>> = [TestEntity2.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<TestEntity2>> = [
+    TestEntity2.KEY_PROPERTY_STRING
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntity2.
    */
-  export const _keys: { [keys: string]: Field<TestEntity2> } = TestEntity2._keyFields.reduce((acc: { [keys: string]: Field<TestEntity2> }, field: Field<TestEntity2>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntity2>;
+  } = TestEntity2._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntity2> },
+      field: Field<TestEntity2>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

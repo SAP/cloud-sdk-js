@@ -5,7 +5,7 @@ import { ODataUri } from '../uri-conversion';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
-import { HttpRequestAndResponse } from '../../http-client';
+import { HttpResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -196,12 +196,13 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
   protected async executeRequest(
     request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
   ): Promise<EntityT> {
-    return this.executeRequestRaw(request)
+    return (
+      this.executeRequestRaw(request)
         // Update returns 204 hence the data from the request is used to build entity for return
-        .then(requestResponse => {
+        .then(response => {
           const eTag =
-            extractEtagFromHeader(requestResponse.response.headers) ||
-            this.extractODataEtag(requestResponse.response.data) ||
+            extractEtagFromHeader(response.headers) ||
+            this.extractODataEtag(response.data) ||
             this.requestConfig.eTag;
           return this._entity
             .setOrInitializeRemoteState()
@@ -209,13 +210,14 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
         })
         .catch(error => {
           throw new ErrorWithCause('OData update request failed!', error);
-        });
+        })
+    );
   }
 
   protected async executeRequestRaw(
     request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
-  ): Promise<HttpRequestAndResponse> {
-    return request.executeRaw();
+  ): Promise<HttpResponse> {
+    return request.execute();
   }
 
   protected getPayload(): Record<string, any> {

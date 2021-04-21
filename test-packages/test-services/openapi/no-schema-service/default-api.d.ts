@@ -1,0 +1,13 @@
+import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+/**
+ * Representation of the 'DefaultApi'.
+ * This API is part of the 'NoSchemaService' service.
+ */
+export declare const DefaultApi: {
+  /**
+   * Create a request builder for execution of get requests to the '/' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  get: () => OpenApiRequestBuilder<any>;
+};
+//# sourceMappingURL=default-api.d.ts.map

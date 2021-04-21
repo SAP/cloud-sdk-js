@@ -4,14 +4,13 @@ import { Selectable } from '../selectable/selectable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataGetByKeyRequestConfig } from '../request';
-import { Destination, DestinationNameAndJwt, DestinationOptions } from '../../connectivity/scp-cf/destination';
-import { HttpRequestAndResponse } from '../../http-client';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationOptions
+} from '../../connectivity/scp-cf/destination';
+import { HttpResponse } from '../../http-client';
 
-/**
- * Base class for the get all and get by key request builders.
- *
- * @typeparam EntityT - Type of the entity to be requested.
- */
 export abstract class GetRequestBuilder<
     EntityT extends Entity,
     RequestConfigT extends
@@ -51,18 +50,17 @@ export abstract class GetRequestBuilder<
   }
 
   /**
-   * Execute request and return the request and the raw response.
+   * Execute request and return an [[HttpResponse]].
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpRequestAndResponse]].
+   * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse>{
-    return this.build(destination, options)
-      .then(request => request.executeRaw());
+  ): Promise<HttpResponse> {
+    return this.build(destination, options).then(request => request.execute());
   }
 }
 

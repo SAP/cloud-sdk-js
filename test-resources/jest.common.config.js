@@ -8,6 +8,6 @@ module.exports = {
   globalSetup: '<rootDir>/../../test-resources/bootstrap-global.js',
   setupFiles: ['<rootDir>/../../test-resources/bootstrap-test.js'],
   coverageReporters: ['text', 'cobertura', 'html'],
-  coveragePathIgnorePatterns: ['dist/', 'node_modules/', 'test/','.*.spec.ts'],
+  coveragePathIgnorePatterns: ['dist/', 'node_modules/', 'test/', '.*.spec.ts'],
   reporters: ['default', 'jest-junit']
 };

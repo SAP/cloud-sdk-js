@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import { readEdmxFile } from '../../../src/edmx-parser/edmx-file-reader';
 import { parseComplexTypesBase } from '../../../src/edmx-parser/common/edmx-parser';
 import {
@@ -7,11 +8,12 @@ import {
   parseEntityTypes as parseEntityTypesV2,
   parseFunctionImports as parseFunctionImportsV2
 } from '../../../src/edmx-parser/v2';
+import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 
 describe('edmx-edmx-parser', () => {
   it('v2: parses edmx file to JSON and coerces properties to arrays', () => {
     const metadataEdmx = readEdmxFile(
-      '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
+      resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV', 'API_TEST_SRV.edmx')
     );
 
     expect(parseEntitySetsV2(metadataEdmx.root).length).toBe(12);

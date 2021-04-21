@@ -4,16 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { ExtensionApi } from './openapi/api';
-
-
-export const TestServiceExtensionApi = {
-  niceGetFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'niceGetFunction'>(
-    ExtensionApi,
-    'niceGetFunction'
-  ),
-  nicePostFunction: () => new OpenApiRequestBuilder<ExtensionApi, 'nicePostFunction'>(
-    ExtensionApi,
-    'nicePostFunction'
-  )
+/**
+ * Representation of the 'ExtensionApi'.
+ * This API is part of the 'TestService' service.
+ */
+export const ExtensionApi = {
+  /**
+   * Create a request builder for execution of get requests to the '/test-cases/extension' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  niceGetFunction: () =>
+    new OpenApiRequestBuilder<any>('get', '/test-cases/extension'),
+  /**
+   * Create a request builder for execution of post requests to the '/test-cases/extension' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  nicePostFunction: () =>
+    new OpenApiRequestBuilder<any>('post', '/test-cases/extension')
 };

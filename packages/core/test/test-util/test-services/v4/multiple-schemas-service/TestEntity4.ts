@@ -1,10 +1,18 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
-import { AllFields, BooleanField, CustomFieldV4, EntityBuilderType, EntityV4, Field, StringField } from '../../../../../src';
+import {
+  AllFields,
+  BooleanField,
+  CustomFieldV4,
+  EntityBuilderType,
+  EntityV4,
+  Field,
+  StringField
+} from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -72,32 +80,52 @@ export namespace TestEntity4 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity4> = new StringField('KeyPropertyString', TestEntity4, 'Edm.String');
+  export const KEY_PROPERTY_STRING: StringField<TestEntity4> = new StringField(
+    'KeyPropertyString',
+    TestEntity4,
+    'Edm.String'
+  );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntity4> = new BooleanField('BooleanProperty', TestEntity4, 'Edm.Boolean');
+  export const BOOLEAN_PROPERTY: BooleanField<TestEntity4> = new BooleanField(
+    'BooleanProperty',
+    TestEntity4,
+    'Edm.Boolean'
+  );
   /**
    * All fields of the TestEntity4 entity.
    */
-  export const _allFields: Array<StringField<TestEntity4> | BooleanField<TestEntity4>> = [
-    TestEntity4.KEY_PROPERTY_STRING,
-    TestEntity4.BOOLEAN_PROPERTY
-  ];
+  export const _allFields: Array<
+    StringField<TestEntity4> | BooleanField<TestEntity4>
+  > = [TestEntity4.KEY_PROPERTY_STRING, TestEntity4.BOOLEAN_PROPERTY];
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity4> = new AllFields('*', TestEntity4);
+  export const ALL_FIELDS: AllFields<TestEntity4> = new AllFields(
+    '*',
+    TestEntity4
+  );
   /**
    * All key fields of the TestEntity4 entity.
    */
-  export const _keyFields: Array<Field<TestEntity4>> = [TestEntity4.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<TestEntity4>> = [
+    TestEntity4.KEY_PROPERTY_STRING
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntity4.
    */
-  export const _keys: { [keys: string]: Field<TestEntity4> } = TestEntity4._keyFields.reduce((acc: { [keys: string]: Field<TestEntity4> }, field: Field<TestEntity4>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntity4>;
+  } = TestEntity4._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntity4> },
+      field: Field<TestEntity4>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

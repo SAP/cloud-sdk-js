@@ -1,5 +1,5 @@
 <!-- sap-cloud-sdk-logo -->
-<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
@@ -24,6 +24,7 @@ generate-odata-client --inputDir path/to/your/service-specification(s) --outputD
 Run `generate-odata-client --help` for further options.
 
 ## Usage (programatically)
+
 You can also use the generator programmatically. You will have to provide the options anyways.
 
 ```ts
@@ -33,13 +34,13 @@ import { generate } from '@sap-cloud-sdk/generator';
 const options: GeneratorOptions = initializeOptions();
 
 // generate the client using the provided options
-generate(options)
+generate(options);
 ```
 
 For more detailed overview visit our [generator documentation](https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client).
 
 <!-- sap-cloud-sdk-common-readme -->
-<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 ## Support
 
 The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).
@@ -72,4 +73,3 @@ If you would like to contribute to the SAP Cloud SDK, please make yourself famil
 
 The SAP Cloud SDK is released under the [Apache License Version 2.0.](http://www.apache.org/licenses/)
 <!-- sap-cloud-sdk-common-readme-stop -->
-

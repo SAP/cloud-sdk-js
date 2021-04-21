@@ -17,7 +17,7 @@ import {
 } from '../../connectivity/scp-cf';
 import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
-import { HttpRequestAndResponse } from '../../http-client';
+import { HttpResponse } from '../../http-client';
 
 const logger = createLogger({
   package: 'core',
@@ -73,18 +73,20 @@ export class UpdateRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Execute request and return the request and the raw response. The request is only executed if some properties of the entity are modified.
+   * Execute request and return an [[HttpResponse]]. The request is only executed if some properties of the entity are modified.
    *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpRequestAndResponse]] when the request is executed or undefined otherwise.
+   * @returns A promise resolving to an [[HttpResponse]] when the request is executed or undefined otherwise.
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
-  ): Promise<HttpRequestAndResponse| undefined> {
+  ): Promise<HttpResponse | undefined> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
-      logger.info('The request is not executed because no properties of the entity are modified.');
+      logger.info(
+        'The request is not executed because no properties of the entity are modified.'
+      );
       return;
     }
 

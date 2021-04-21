@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/core",
-  "version": "1.39.0",
+  "version": "1.41.0",
   "description": "SAP Cloud SDK for JavaScript core",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -26,19 +26,19 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "compile": "yarn root:tsc -b",
+    "compile": "yarn tsc -b",
     "prepare": "yarn compile",
     "postinstall": "node usage-analytics.js",
-    "test": "yarn root:jest --coverage",
-    "test:local": "yarn root:jest",
+    "test": "yarn jest --coverage",
+    "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
     "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
     "test:debug-name-regex": "node -r ts-node/register --inspect-brk ./node_modules/.bin/jest --runInBand --testNamePattern=\"$PATTERN\"",
-    "check:dependencies": "yarn root:depcheck ."
+    "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.39.0",
-    "@sap-cloud-sdk/util": "^1.39.0",
+    "@sap-cloud-sdk/analytics": "^1.41.0",
+    "@sap-cloud-sdk/util": "^1.41.0",
     "@sap/xsenv": "^3.0.0",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.0",
@@ -46,12 +46,12 @@
     "https-proxy-agent": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.0",
-    "opossum": "^5.0.0",
+    "opossum": "^6.0.0",
     "uuid": "^8.2.0",
     "voca": "^1.4.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-util": "^1.39.0",
+    "@sap-cloud-sdk/test-util": "^1.41.0",
     "nock": "^13.0.3"
   }
 }

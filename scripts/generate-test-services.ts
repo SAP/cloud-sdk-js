@@ -33,6 +33,7 @@ const generatorConfigOData = {
   generateTypedocJson: false,
   generatePackageJson: false,
   generateCSN: false,
+  generateSdkMetadata: false,
   // Unnecessary options
   sdkAfterVersionScript: false,
   s4hanaCloud: false
@@ -42,7 +43,7 @@ const generatorConfigOpenApi: GeneratorOptions = {
   input: path.resolve('test-resources', 'openapi-service-specs'),
   outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
   clearOutputDir: true,
-  generateJs: true,
+  generateJs: false,
   generatePackageJson: true,
   versionInPackageJson: '1.2.3',
   additionalFiles: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',
@@ -170,7 +171,10 @@ async function generateAll(): Promise<void> {
   }
 
   if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
-    await generateOpenApi(generatorConfigOpenApi);
+    await generateOpenApi({
+      ...generatorConfigOpenApi,
+      generateJs: true
+    });
     await generateTestServicesWithLocalCoreModules(
       coreUnitTestOutputDir,
       'openapi'

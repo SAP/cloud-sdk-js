@@ -26,9 +26,7 @@
   "paths": {
     "/entities": {
       "get": {
-        "tags": [
-          "entity"
-        ],
+        "tags": ["entity"],
         "summary": "Get entities",
         "description": "Get all entities",
         "operationId": "getAllEntities",
@@ -89,10 +87,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": [
-                "value1",
-                "value2"
-              ]
+              "enum": ["value1", "value2"]
             }
           },
           {
@@ -103,10 +98,7 @@
             "schema": {
               "type": "integer",
               "format": "int32",
-              "enum": [
-                1,
-                2
-              ]
+              "enum": [1, 2]
             }
           },
           {
@@ -117,10 +109,7 @@
             "schema": {
               "type": "number",
               "format": "double",
-              "enum": [
-                1,
-                2
-              ]
+              "enum": [1, 2]
             }
           },
           {
@@ -130,10 +119,7 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "enum": [
-                "true",
-                "false"
-              ]
+              "enum": ["true", "false"]
             }
           }
         ],
@@ -157,9 +143,7 @@
         }
       },
       "post": {
-        "tags": [
-          "entity"
-        ],
+        "tags": ["entity"],
         "summary": "Create entity",
         "description": "Create entity",
         "operationId": "createEntity",
@@ -186,9 +170,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "entity"
-        ],
+        "tags": ["entity"],
         "operationId": "updateEntity",
         "requestBody": {
           "content": {
@@ -206,9 +188,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "entity"
-        ],
+        "tags": ["entity"],
         "operationId": "deleteEntity",
         "requestBody": {
           "content": {
@@ -229,9 +209,7 @@
         }
       },
       "put": {
-        "tags": [
-          "entity"
-        ],
+        "tags": ["entity"],
         "operationId": "updateEntityWithPut",
         "requestBody": {
           "content": {
@@ -254,9 +232,7 @@
     },
     "/entities/{entityId}": {
       "get": {
-        "tags": [
-          "entity"
-        ],
+        "tags": ["entity"],
         "summary": "Get entity by id",
         "description": "Get entity by id",
         "operationId": "getEntityByKey",
@@ -295,9 +271,7 @@
     },
     "/entities/count": {
       "get": {
-        "tags": [
-          "entity"
-        ],
+        "tags": ["entity"],
         "summary": "Count entities",
         "description": "Count entities",
         "operationId": "countEntities",
@@ -347,9 +321,7 @@
         }
       ],
       "get": {
-        "tags": [
-          "test case"
-        ],
+        "tags": ["test case"],
         "operationId": "testCaseGetRequiredParameters",
         "parameters": [
           {
@@ -394,9 +366,7 @@
         }
       },
       "post": {
-        "tags": [
-          "test case"
-        ],
+        "tags": ["test case"],
         "operationId": "testCasePostRequiredParameters",
         "requestBody": {
           "required": true,
@@ -435,9 +405,7 @@
     },
     "/test-cases/parameters/{duplicateParam}": {
       "get": {
-        "tags": [
-          "test case"
-        ],
+        "tags": ["test case"],
         "operationId": "testCaseGetDuplicateParameters",
         "parameters": [
           {
@@ -466,9 +434,7 @@
     },
     "/test-cases/no-operation-id": {
       "get": {
-        "tags": [
-          "test case"
-        ],
+        "tags": ["test case"],
         "responses": {
           "201": {
             "description": "no content"
@@ -478,9 +444,7 @@
     },
     "/test-cases/duplicate-operation-ids": {
       "get": {
-        "tags": [
-          "test case"
-        ],
+        "tags": ["test case"],
         "operationId": "duplicateOperationId",
         "responses": {
           "201": {
@@ -489,9 +453,7 @@
         }
       },
       "post": {
-        "tags": [
-          "test case"
-        ],
+        "tags": ["test case"],
         "operationId": "duplicateOperationId",
         "responses": {
           "201": {
@@ -500,9 +462,7 @@
         }
       },
       "put": {
-        "tags": [
-          "test case"
-        ],
+        "tags": ["test case"],
         "operationId": "duplicateOperationId_1",
         "responses": {
           "201": {
@@ -511,10 +471,37 @@
         }
       },
       "patch": {
-        "tags": [
-          "test case"
-        ],
+        "tags": ["test case"],
         "operationId": "duplicateOperationId1",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/test-cases/reserved-keywords/{const}": {
+      "get": {
+        "tags": ["test case"],
+        "operationId": "export",
+        "parameters": [
+          {
+            "name": "const",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "const",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "no content"
@@ -525,9 +512,7 @@
     "/test-cases/special-tag": {
       "get": {
         "operationId": "tag with dot",
-        "tags": [
-          "tag.dot"
-        ],
+        "tags": ["tag.dot"],
         "responses": {
           "201": {
             "description": "no content"
@@ -536,9 +521,7 @@
       },
       "post": {
         "operationId": "tag with space",
-        "tags": [
-          "tag space"
-        ],
+        "tags": ["tag space"],
         "responses": {
           "201": {
             "description": "no content"
@@ -556,9 +539,7 @@
         }
       },
       "post": {
-        "tags": [
-          "default"
-        ],
+        "tags": ["default"],
         "operationId": "defaultTag",
         "responses": {
           "201": {
@@ -579,10 +560,46 @@
       },
       "post": {
         "x-sap-cloud-sdk-operation-name": "nicePostFunction",
-        "tags": [
-          "default"
-        ],
+        "tags": ["default"],
         "operationId": "testCasesExtensionPost",
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
+    },
+    "/test-cases/complex-schemas": {
+      "get": {
+        "tags": ["test case"],
+        "operationId": "complexSchemas",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComplexTestEntity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      },
+      "post": {
+        "tags": ["test case"],
+        "operationId": "useNameWithSymbols",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/simple-test-entity«WITH_Symbols»"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "no content"
@@ -595,9 +612,7 @@
     "schemas": {
       "TestEntity": {
         "type": "object",
-        "required": [
-          "keyProperty"
-        ],
+        "required": ["keyProperty"],
         "properties": {
           "keyProperty": {
             "type": "string",
@@ -652,9 +667,7 @@
       },
       "SimpleTestEntity": {
         "type": "object",
-        "required": [
-          "stringProperty"
-        ],
+        "required": ["stringProperty"],
         "properties": {
           "stringProperty": {
             "type": "string",
@@ -662,6 +675,118 @@
           }
         },
         "description": "SimpleTestEntity schema"
+      },
+      "OtherSimpleTestEntity": {
+        "$ref": "#/components/schemas/SimpleTestEntity"
+      },
+      "simple-test-entity«WITH_Symbols»": {
+        "$ref": "#/components/schemas/SimpleTestEntity"
+      },
+      "simple-test-entity<WITH_Symbols>": {
+        "$ref": "#/components/schemas/SimpleTestEntity"
+      },
+      "ComplexTestEntity": {
+        "properties": {
+          "referenceProperty": {
+            "$ref": "#/components/schemas/SimpleTestEntity"
+          },
+          "arrayProperty": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item": { "type": "string" }
+              }
+            }
+          },
+          "uniqueItemsProperty": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "requiredPropertiesProperty": {
+            "type": "object",
+            "properties": {
+              "optionalProperty": { "type": "string" },
+              "requiredProperty": { "type": "string" }
+            },
+            "required": ["requiredProperty"]
+          },
+          "enumProperty": {
+            "type": "string",
+            "enum": ["one", "two"]
+          },
+          "oneOfProperty": {
+            "oneOf": [
+              { "$ref": "#/components/schemas/SimpleTestEntity" },
+              { "$ref": "#/components/schemas/TestEntity" }
+            ]
+          },
+          "allOfProperty": {
+            "allOf": [
+              { "$ref": "#/components/schemas/SimpleTestEntity" },
+              {
+                "type": "object",
+                "properties": {
+                  "additionalProperty": { "type": "string" }
+                }
+              }
+            ]
+          },
+          "anyOfProperty": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/SimpleTestEntity" },
+              {
+                "type": "object",
+                "properties": {
+                  "additionalProperty": { "type": "string" }
+                }
+              }
+            ]
+          },
+          "notProperty": {
+            "not": {
+              "type": "integer"
+            }
+          },
+          "objectPropertyWithNoAdditionalProperties": {
+            "properties": {
+              "specifiedProperty": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "objectPropertyWithAdditionalProperties": {
+            "properties": {
+              "specifiedProperty": { "type": "string" }
+            },
+            "additionalProperties": true
+          },
+          "objectPropertyWithNumberAdditionalProperties": {
+            "properties": {
+              "specifiedProperty": { "type": "string" }
+            },
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "CyclicParent": {
+        "type": "object",
+        "properties": {
+          "children": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CyclicChild" }
+          }
+        }
+      },
+      "CyclicChild": {
+        "type": "object",
+        "properties": {
+          "parent": { "$ref": "#/components/schemas/CyclicParent" }
+        }
       }
     }
   }

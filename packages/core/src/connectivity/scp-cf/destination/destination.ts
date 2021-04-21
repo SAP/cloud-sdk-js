@@ -216,7 +216,6 @@ export interface DestinationConfiguration {
   SystemUser?: string;
   Type?: 'HTTP' | 'LDAP' | 'MAIL' | 'RFC';
 }
-
 /* eslint-disable-next-line valid-jsdoc */
 /**
  * @hidden

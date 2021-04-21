@@ -1,63 +1,84 @@
 import { basename } from 'path';
-import { parse, resolve, $Refs } from '@apidevtools/swagger-parser';
+import SwaggerParser, { parse, resolve } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import { flatten, pascalCase, unique } from '@sap-cloud-sdk/util';
-import { OpenApiOperation, OpenApiDocument, methods } from '../openapi-types';
-import { VdmMapping } from '../service-mapping';
-import { parseOperation } from './operation';
+import { pascalCase, removeFileExtension } from '@sap-cloud-sdk/util';
+import { OpenApiDocument, OpenApiNamedSchema } from '../openapi-types';
+import { ServiceMapping } from '../service-mapping';
+import { parseSchema } from './schema';
+import { parseApis } from './api';
+import { ensureUniqueNames } from './unique-naming';
+import { SchemaInfo } from './parsing-info';
+import { resolveObject } from './refs';
 
+/**
+ * Parse the original OpenAPI document and return an SDK compliant document.
+ * @param fileContent The OpenAPI document representation.
+ * @param serviceName The name of the service.
+ * @param filePath The path of the OpenAPI document.
+ * @param serviceMapping A file representing a custom mapping of directory and npm package names.
+ * @returns The parsed document
+ */
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
   serviceName: string,
   filePath: string,
-  vdmMapping: VdmMapping
+  serviceMapping: ServiceMapping
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await resolve(document);
-  const operations = parseAllOperations(document, refs);
-  const originalFileName = basename(filePath).split('.')[0];
+  const originalFileName = removeFileExtension(basename(filePath));
+  const schemaInfo = parseSchemaInfo(document);
+  const schemaRefMapping = parseSchemaRefMapping(schemaInfo);
+
   return {
-    operations,
+    apis: parseApis(document, refs, schemaRefMapping),
     serviceName: pascalCase(serviceName),
-    npmPackageName: vdmMapping[originalFileName]
-      ? vdmMapping[originalFileName].npmPackageName
+    npmPackageName: serviceMapping[originalFileName]
+      ? serviceMapping[originalFileName].npmPackageName
       : originalFileName,
-    directoryName: vdmMapping[originalFileName]
-      ? vdmMapping[originalFileName].directoryName
+    directoryName: serviceMapping[originalFileName]
+      ? serviceMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
-    tags: collectTags(operations)
+    schemas: parseSchemas(schemaInfo, schemaRefMapping, refs)
   };
 }
 
-/**
- * Collect and parse all operations of an `OpenAPIV3.Document`.
- * @param document The OpenApi document to parse.
- * @param refs List of crossreferences that can occur in the document.
- * @returns A flat list of parsed operations.
- */
-export function parseAllOperations(
-  document: OpenAPIV3.Document,
-  refs: $Refs
-): OpenApiOperation[] {
-  return Object.entries(document.paths).reduce(
-    (allOperations, [path, pathDefinition]) => [
-      ...allOperations,
-      ...methods
-        .filter(method => pathDefinition?.[method])
-        // Undefined path definitions have been filtered out in the line before
-        .map(method => parseOperation(path, pathDefinition!, method, refs))
-    ],
-    []
+function parseSchemaInfo(document: OpenAPIV3.Document): SchemaInfo[] {
+  const schemaInfo = Object.entries(document.components?.schemas || {}).map(
+    ([name, schema]) => ({
+      name,
+      refPath: `#/components/schemas/${name}`,
+      schema
+    })
   );
+
+  return ensureUniqueNames(schemaInfo, {
+    formatName: pascalCase
+  });
 }
 
-/**
- * Collect all the tags used by given operations.
- * @param operations The given operations.
- * @returns An array that holds the unique tags.
- */
-export function collectTags(operations: OpenApiOperation[]): string[] {
-  return unique(flatten(operations.map(operation => operation.tags)));
+export function parseSchemas(
+  schemaInfo: SchemaInfo[],
+  schemaRefMapping: Record<string, string>,
+  refs: SwaggerParser.$Refs
+): OpenApiNamedSchema[] {
+  return schemaInfo.map(({ name, schema }) => ({
+    name,
+    schema: parseSchema(schema, schemaRefMapping),
+    description: resolveObject(schema, refs).description
+  }));
+}
+
+function parseSchemaRefMapping(
+  schemaInfo: SchemaInfo[]
+): Record<string, string> {
+  return schemaInfo.reduce(
+    (mapping, { refPath, name }) => ({
+      ...mapping,
+      [refPath]: name
+    }),
+    {}
+  );
 }

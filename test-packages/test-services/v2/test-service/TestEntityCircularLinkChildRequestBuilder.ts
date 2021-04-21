@@ -1,9 +1,16 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder, GetAllRequestBuilderV2, GetByKeyRequestBuilderV2, CreateRequestBuilderV2, UpdateRequestBuilderV2, DeleteRequestBuilderV2 } from '@sap-cloud-sdk/core';
+import {
+  RequestBuilder,
+  GetAllRequestBuilderV2,
+  GetByKeyRequestBuilderV2,
+  CreateRequestBuilderV2,
+  UpdateRequestBuilderV2,
+  DeleteRequestBuilderV2
+} from '@sap-cloud-sdk/core';
 import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 
 /**
@@ -15,8 +22,12 @@ export class TestEntityCircularLinkChildRequestBuilder extends RequestBuilder<Te
    * @param keyProperty Key property. See [[TestEntityCircularLinkChild.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkChild` entity based on its keys.
    */
-  getByKey(keyProperty: string): GetByKeyRequestBuilderV2<TestEntityCircularLinkChild> {
-    return new GetByKeyRequestBuilderV2(TestEntityCircularLinkChild, { KeyProperty: keyProperty });
+  getByKey(
+    keyProperty: string
+  ): GetByKeyRequestBuilderV2<TestEntityCircularLinkChild> {
+    return new GetByKeyRequestBuilderV2(TestEntityCircularLinkChild, {
+      KeyProperty: keyProperty
+    });
   }
 
   /**
@@ -32,7 +43,9 @@ export class TestEntityCircularLinkChildRequestBuilder extends RequestBuilder<Te
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityCircularLinkChild`.
    */
-  create(entity: TestEntityCircularLinkChild): CreateRequestBuilderV2<TestEntityCircularLinkChild> {
+  create(
+    entity: TestEntityCircularLinkChild
+  ): CreateRequestBuilderV2<TestEntityCircularLinkChild> {
     return new CreateRequestBuilderV2(TestEntityCircularLinkChild, entity);
   }
 
@@ -41,7 +54,9 @@ export class TestEntityCircularLinkChildRequestBuilder extends RequestBuilder<Te
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityCircularLinkChild`.
    */
-  update(entity: TestEntityCircularLinkChild): UpdateRequestBuilderV2<TestEntityCircularLinkChild> {
+  update(
+    entity: TestEntityCircularLinkChild
+  ): UpdateRequestBuilderV2<TestEntityCircularLinkChild> {
     return new UpdateRequestBuilderV2(TestEntityCircularLinkChild, entity);
   }
 
@@ -50,14 +65,25 @@ export class TestEntityCircularLinkChildRequestBuilder extends RequestBuilder<Te
    * @param keyProperty Key property. See [[TestEntityCircularLinkChild.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityCircularLinkChild`.
    */
-  delete(keyProperty: string): DeleteRequestBuilderV2<TestEntityCircularLinkChild>;
+  delete(
+    keyProperty: string
+  ): DeleteRequestBuilderV2<TestEntityCircularLinkChild>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityCircularLinkChild`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityCircularLinkChild` by taking the entity as a parameter.
    */
-  delete(entity: TestEntityCircularLinkChild): DeleteRequestBuilderV2<TestEntityCircularLinkChild>;
-  delete(keyPropertyOrEntity: any): DeleteRequestBuilderV2<TestEntityCircularLinkChild> {
-    return new DeleteRequestBuilderV2(TestEntityCircularLinkChild, keyPropertyOrEntity instanceof TestEntityCircularLinkChild ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
+  delete(
+    entity: TestEntityCircularLinkChild
+  ): DeleteRequestBuilderV2<TestEntityCircularLinkChild>;
+  delete(
+    keyPropertyOrEntity: any
+  ): DeleteRequestBuilderV2<TestEntityCircularLinkChild> {
+    return new DeleteRequestBuilderV2(
+      TestEntityCircularLinkChild,
+      keyPropertyOrEntity instanceof TestEntityCircularLinkChild
+        ? keyPropertyOrEntity
+        : { KeyProperty: keyPropertyOrEntity! }
+    );
   }
 }

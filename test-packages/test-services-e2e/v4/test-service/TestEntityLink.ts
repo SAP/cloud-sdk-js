@@ -1,10 +1,18 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityLinkRequestBuilder } from './TestEntityLinkRequestBuilder';
-import { AllFields, CustomFieldV4, EntityBuilderType, EntityV4, Field, NumberField, StringField } from '@sap-cloud-sdk/core';
+import {
+  AllFields,
+  CustomFieldV4,
+  EntityBuilderType,
+  EntityV4,
+  Field,
+  NumberField,
+  StringField
+} from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
@@ -78,21 +86,35 @@ export namespace TestEntityLink {
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TEST_ENTITY_LINK: NumberField<TestEntityLink> = new NumberField('KeyTestEntityLink', TestEntityLink, 'Edm.Int32');
+  export const KEY_TEST_ENTITY_LINK: NumberField<TestEntityLink> = new NumberField(
+    'KeyTestEntityLink',
+    TestEntityLink,
+    'Edm.Int32'
+  );
   /**
    * Static representation of the [[keyToTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TO_TEST_ENTITY: NumberField<TestEntityLink> = new NumberField('KeyToTestEntity', TestEntityLink, 'Edm.Int32');
+  export const KEY_TO_TEST_ENTITY: NumberField<TestEntityLink> = new NumberField(
+    'KeyToTestEntity',
+    TestEntityLink,
+    'Edm.Int32'
+  );
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityLink> = new StringField('StringProperty', TestEntityLink, 'Edm.String');
+  export const STRING_PROPERTY: StringField<TestEntityLink> = new StringField(
+    'StringProperty',
+    TestEntityLink,
+    'Edm.String'
+  );
   /**
    * All fields of the TestEntityLink entity.
    */
-  export const _allFields: Array<NumberField<TestEntityLink> | StringField<TestEntityLink>> = [
+  export const _allFields: Array<
+    NumberField<TestEntityLink> | StringField<TestEntityLink>
+  > = [
     TestEntityLink.KEY_TEST_ENTITY_LINK,
     TestEntityLink.KEY_TO_TEST_ENTITY,
     TestEntityLink.STRING_PROPERTY
@@ -100,16 +122,30 @@ export namespace TestEntityLink {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityLink> = new AllFields('*', TestEntityLink);
+  export const ALL_FIELDS: AllFields<TestEntityLink> = new AllFields(
+    '*',
+    TestEntityLink
+  );
   /**
    * All key fields of the TestEntityLink entity.
    */
-  export const _keyFields: Array<Field<TestEntityLink>> = [TestEntityLink.KEY_TEST_ENTITY_LINK, TestEntityLink.KEY_TO_TEST_ENTITY];
+  export const _keyFields: Array<Field<TestEntityLink>> = [
+    TestEntityLink.KEY_TEST_ENTITY_LINK,
+    TestEntityLink.KEY_TO_TEST_ENTITY
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntityLink.
    */
-  export const _keys: { [keys: string]: Field<TestEntityLink> } = TestEntityLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntityLink> }, field: Field<TestEntityLink>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntityLink>;
+  } = TestEntityLink._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntityLink> },
+      field: Field<TestEntityLink>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

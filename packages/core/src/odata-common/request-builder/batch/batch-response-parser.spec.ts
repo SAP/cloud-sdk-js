@@ -1,8 +1,11 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
+import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
+import { HttpResponse } from '../../../http-client';
 import {
   detectNewLineSymbol,
   getResponseBody,
+  parseBatchResponse,
   parseHttpCode,
   parseResponseData,
   splitBatchResponse,
@@ -16,7 +19,7 @@ describe('batch response parser', () => {
     });
 
     it('detects posix style new line', () => {
-      expect(detectNewLineSymbol('multiple\nlines')).toBe('\n');
+      expect(detectNewLineSymbol('multiple$\nlines')).toBe('\n');
     });
 
     it('throws error for unknown new line symbol', () => {
@@ -31,12 +34,12 @@ describe('batch response parser', () => {
   describe('getResponseBody', () => {
     it('retrieves the response body when there are >= 3 lines', () => {
       const responseLines = ['--partId', '', 'responseBody'];
-      const response = responseLines.join('\n');
+      const response = responseLines.join(unixEOL);
       expect(getResponseBody(response)).toBe(responseLines[2]);
     });
 
     it('retrieves the response body when there are < 3 lines', () => {
-      const response = ['--partId', 'responseBody'].join('\n');
+      const response = ['--partId', 'responseBody'].join(unixEOL);
       expect(() =>
         getResponseBody(response)
       ).toThrowErrorMatchingInlineSnapshot(
@@ -53,13 +56,13 @@ describe('batch response parser', () => {
       `--${changesetId}`,
       'changeSetResponse',
       `--${changesetId}--`
-    ].join('\n');
+    ].join(unixEOL);
     const createBatchResponse = (
       data,
       headers: Record<string, any> = {
         'content-type': `multipart/mixed; boundary=${batchId}`
       }
-    ) => ({ data, headers, status: 200 });
+    ) => ({ data, headers, status: 200, request: undefined });
 
     it('correctly splits batch response', () => {
       const body = [
@@ -68,7 +71,7 @@ describe('batch response parser', () => {
         `--${batchId}`,
         changeSetResponse,
         `--${batchId}--`
-      ].join('\n');
+      ].join(unixEOL);
 
       expect(splitBatchResponse(createBatchResponse(body))).toEqual([
         retrieveResponse,
@@ -83,7 +86,7 @@ describe('batch response parser', () => {
         `--${batchId}`,
         changeSetResponse,
         `--${batchId}--`
-      ].join('\n');
+      ].join(unixEOL);
 
       expect(
         splitBatchResponse(
@@ -108,7 +111,7 @@ describe('batch response parser', () => {
         '',
         `--${batchId}--`,
         ''
-      ].join('\n');
+      ].join(unixEOL);
 
       expect(splitBatchResponse(createBatchResponse(body))).toEqual([
         retrieveResponse,
@@ -117,13 +120,13 @@ describe('batch response parser', () => {
     });
 
     it('returns empty array for empty response', () => {
-      const body = ['', '', ''].join('\n');
+      const body = ['', '', ''].join(unixEOL);
       expect(splitBatchResponse(createBatchResponse(body))).toEqual([]);
     });
 
     it('throws an error when headers do not contain boundary', () => {
       const body = [`--${batchId}`, retrieveResponse, `--${batchId}--`].join(
-        '\n'
+        unixEOL
       );
       const response = createBatchResponse(body, {
         'Content-Type': 'multipart/mixed'
@@ -154,7 +157,7 @@ describe('batch response parser', () => {
         `--${changeSetId}`,
         response2,
         `--${changeSetId}--`
-      ].join('\n');
+      ].join(unixEOL);
 
       expect(splitChangeSetResponse(changeSet)).toEqual([response1, response2]);
     });
@@ -167,13 +170,13 @@ describe('batch response parser', () => {
         `--${changeSetId}`,
         response1,
         `--${changeSetId}--`
-      ].join('\n');
+      ].join(unixEOL);
 
       expect(splitChangeSetResponse(changeSet)).toEqual([response1]);
     });
 
     it('throws error if there is no boundary in the headers', () => {
-      const changeSet = ['', ''].join('\n');
+      const changeSet = ['', ''].join(unixEOL);
       expect(() =>
         splitChangeSetResponse(changeSet)
       ).toThrowErrorMatchingInlineSnapshot(
@@ -206,13 +209,13 @@ describe('batch response parser', () => {
       'Content-Length: X',
       'content-transfer-encoding: binary',
       ''
-    ].join('\n');
+    ].join(unixEOL);
 
     const secondHeader = [
       'Content-Length: X',
       'dataserviceversion: 2.0',
       ''
-    ].join('\n');
+    ].join(unixEOL);
 
     const body = { valid: 'json' };
 
@@ -222,7 +225,7 @@ describe('batch response parser', () => {
         'HTTP/1.1 200 Success',
         secondHeader,
         JSON.stringify(body)
-      ].join('\n');
+      ].join(unixEOL);
 
       expect(parseResponseData(response)).toEqual({
         httpCode: 200,
@@ -236,7 +239,7 @@ describe('batch response parser', () => {
         'HTTP/1.1 204 No Content',
         secondHeader,
         ''
-      ].join('\n');
+      ].join(unixEOL);
 
       expect(parseResponseData(response)).toEqual({
         httpCode: 204,
@@ -250,12 +253,69 @@ describe('batch response parser', () => {
         'HTTP/1.1 201 Created',
         secondHeader,
         JSON.stringify(body)
-      ].join('\n');
+      ].join(unixEOL);
 
       expect(parseResponseData(response)).toEqual({
         httpCode: 201,
         body
       });
+    });
+  });
+
+  describe('parseBatchResponse', () => {
+    it('parses a batch response with both empty and non-empty bodies', () => {
+      const data = [
+        '--3B17E95920A7FAF8BCB7495D043515000',
+        'Content-Type: multipart/mixed; boundary=3B17E95920A7FAF8BCB7495D043515001',
+        'Content-Length:      2427',
+        '',
+        '--3B17E95920A7FAF8BCB7495D043515001',
+        'Content-Type: application/http',
+        'Content-Length: 71,',
+        'content-transfer-encoding: binary',
+        '',
+        'HTTP/1.1 200 Success',
+        'Content-Length: 0',
+        'dataserviceversion: 2.0',
+        '',
+        '{"valid": "json"}',
+        '--3B17E95920A7FAF8BCB7495D043515001',
+        'Content-Type: application/http',
+        'Content-Length: 71',
+        'content-transfer-encoding: binary',
+        '',
+        'HTTP/1.1 204 No Content',
+        'Content-Length: 0',
+        'dataserviceversion: 2.0',
+        '',
+        '',
+        '--3B17E95920A7FAF8BCB7495D043515001',
+        'content-type: application/http',
+        'content-transfer-encoding: binary',
+        'content-id: ~00',
+        '',
+        'HTTP/1.1 204 No Content',
+        'odata-version: 4.0',
+        '',
+        '',
+        '--3B17E95920A7FAF8BCB7495D043515001--',
+        '',
+        '--3B17E95920A7FAF8BCB7495D043515000--'
+      ].join(unixEOL);
+      const batchResponse = {
+        data,
+        status: 200,
+        headers: {
+          'content-type':
+            'multipart/mixed; boundary=3B17E95920A7FAF8BCB7495D043515000'
+        }
+      } as HttpResponse;
+      const logger = createLogger({
+        messageContext: 'batch-response-parser'
+      });
+      const errorSpy = jest.spyOn(logger, 'error');
+      parseBatchResponse(batchResponse);
+      expect(errorSpy).toHaveBeenCalledTimes(0);
     });
   });
 });

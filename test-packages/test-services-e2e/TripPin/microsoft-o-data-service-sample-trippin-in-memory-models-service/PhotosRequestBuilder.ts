@@ -1,10 +1,17 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { BigNumber } from 'bignumber.js';
-import { RequestBuilder, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, CreateRequestBuilderV4, UpdateRequestBuilderV4, DeleteRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import {
+  RequestBuilder,
+  GetAllRequestBuilderV4,
+  GetByKeyRequestBuilderV4,
+  CreateRequestBuilderV4,
+  UpdateRequestBuilderV4,
+  DeleteRequestBuilderV4
+} from '@sap-cloud-sdk/core';
 import { Photos } from './Photos';
 
 /**
@@ -59,6 +66,9 @@ export class PhotosRequestBuilder extends RequestBuilder<Photos> {
    */
   delete(entity: Photos): DeleteRequestBuilderV4<Photos>;
   delete(idOrEntity: any): DeleteRequestBuilderV4<Photos> {
-    return new DeleteRequestBuilderV4(Photos, idOrEntity instanceof Photos ? idOrEntity : { Id: idOrEntity! });
+    return new DeleteRequestBuilderV4(
+      Photos,
+      idOrEntity instanceof Photos ? idOrEntity : { Id: idOrEntity! }
+    );
   }
 }

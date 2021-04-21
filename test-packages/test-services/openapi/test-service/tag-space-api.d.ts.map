@@ -1,1 +1,1 @@
-{"version":3,"file":"tag-space-api.d.ts","sourceRoot":"","sources":["tag-space-api.ts"],"names":[],"mappings":"AAKA,OAAO,EAAE,qBAAqB,EAAE,MAAM,qBAAqB,CAAC;AAC5D,OAAO,EAAE,WAAW,EAAE,MAAM,eAAe,CAAC;AAG5C,eAAO,MAAM,sBAAsB;;CAKlC,CAAC"}
+{"version":3,"file":"tag-space-api.d.ts","sourceRoot":"","sources":["tag-space-api.ts"],"names":[],"mappings":"AAKA,OAAO,EAAE,qBAAqB,EAAE,MAAM,qBAAqB,CAAC;AAC5D;;;GAGG;AACH,eAAO,MAAM,WAAW;IACtB;;;OAGG;;CAKJ,CAAC"}

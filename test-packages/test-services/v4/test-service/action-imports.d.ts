@@ -4,35 +4,39 @@ import { TestEntity } from './TestEntity';
 /**
  * Type of the parameters to be passed to [[testActionImportNoParameterNoReturnType]].
  */
-export interface TestActionImportNoParameterNoReturnTypeParameters {
-}
+export interface TestActionImportNoParameterNoReturnTypeParameters {}
 /**
  * Test Action Import No Parameter No Return Type.
  *
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function testActionImportNoParameterNoReturnType(parameters: TestActionImportNoParameterNoReturnTypeParameters): ActionImportRequestBuilder<TestActionImportNoParameterNoReturnTypeParameters, undefined>;
+export declare function testActionImportNoParameterNoReturnType(
+  parameters: TestActionImportNoParameterNoReturnTypeParameters
+): ActionImportRequestBuilder<
+  TestActionImportNoParameterNoReturnTypeParameters,
+  undefined
+>;
 /**
  * Type of the parameters to be passed to [[testActionImportMultipleParameterComplexReturnType]].
  */
 export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
-    /**
-     * String Param.
-     */
-    stringParam: string;
-    /**
-     * Non Nullable String Param.
-     */
-    nonNullableStringParam: string;
-    /**
-     * Nullable Boolean Param.
-     */
-    nullableBooleanParam?: boolean;
-    /**
-     * Nullable Geography Point Param.
-     */
-    nullableGeographyPointParam?: any;
+  /**
+   * String Param.
+   */
+  stringParam: string;
+  /**
+   * Non Nullable String Param.
+   */
+  nonNullableStringParam: string;
+  /**
+   * Nullable Boolean Param.
+   */
+  nullableBooleanParam?: boolean;
+  /**
+   * Nullable Geography Point Param.
+   */
+  nullableGeographyPointParam?: any;
 }
 /**
  * Test Action Import Multiple Parameter Complex Return Type.
@@ -40,15 +44,20 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function testActionImportMultipleParameterComplexReturnType(parameters: TestActionImportMultipleParameterComplexReturnTypeParameters): ActionImportRequestBuilder<TestActionImportMultipleParameterComplexReturnTypeParameters, TestComplexType>;
+export declare function testActionImportMultipleParameterComplexReturnType(
+  parameters: TestActionImportMultipleParameterComplexReturnTypeParameters
+): ActionImportRequestBuilder<
+  TestActionImportMultipleParameterComplexReturnTypeParameters,
+  TestComplexType
+>;
 /**
  * Type of the parameters to be passed to [[testActionImportUnsupportedEdmTypes]].
  */
 export interface TestActionImportUnsupportedEdmTypesParameters {
-    /**
-     * Simple Param.
-     */
-    simpleParam: any;
+  /**
+   * Simple Param.
+   */
+  simpleParam: any;
 }
 /**
  * Test Action Import Unsupported Edm Types.
@@ -56,18 +65,23 @@ export interface TestActionImportUnsupportedEdmTypesParameters {
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export declare function testActionImportUnsupportedEdmTypes(parameters: TestActionImportUnsupportedEdmTypesParameters): ActionImportRequestBuilder<TestActionImportUnsupportedEdmTypesParameters, any>;
+export declare function testActionImportUnsupportedEdmTypes(
+  parameters: TestActionImportUnsupportedEdmTypesParameters
+): ActionImportRequestBuilder<
+  TestActionImportUnsupportedEdmTypesParameters,
+  any
+>;
 /**
  * Type of the parameters to be passed to [[testActionImportNoParameterEntityReturnType]].
  */
-export interface TestActionImportNoParameterEntityReturnTypeParameters {
-}
+export interface TestActionImportNoParameterEntityReturnTypeParameters {}
 /**
  * Test Action Import No Parameter Entity Return Type.
  *
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
+<<<<<<< HEAD
 export declare function testActionImportNoParameterEntityReturnType(parameters: TestActionImportNoParameterEntityReturnTypeParameters): ActionImportRequestBuilder<TestActionImportNoParameterEntityReturnTypeParameters, TestEntity>;
 /**
  * Type of the parameters to be passed to [[testActionImportSharedEntityReturnType]].
@@ -100,5 +114,18 @@ export declare const actionImports: {
     testActionImportNoParameterEntityReturnType: typeof testActionImportNoParameterEntityReturnType;
     testActionImportSharedEntityReturnType: typeof testActionImportSharedEntityReturnType;
     testActionImportSharedEntityReturnTypeCollection: typeof testActionImportSharedEntityReturnTypeCollection;
+=======
+export declare function testActionImportNoParameterEntityReturnType(
+  parameters: TestActionImportNoParameterEntityReturnTypeParameters
+): ActionImportRequestBuilder<
+  TestActionImportNoParameterEntityReturnTypeParameters,
+  TestEntity
+>;
+export declare const actionImports: {
+  testActionImportNoParameterNoReturnType: typeof testActionImportNoParameterNoReturnType;
+  testActionImportMultipleParameterComplexReturnType: typeof testActionImportMultipleParameterComplexReturnType;
+  testActionImportUnsupportedEdmTypes: typeof testActionImportUnsupportedEdmTypes;
+  testActionImportNoParameterEntityReturnType: typeof testActionImportNoParameterEntityReturnType;
+>>>>>>> main
 };
 //# sourceMappingURL=action-imports.d.ts.map

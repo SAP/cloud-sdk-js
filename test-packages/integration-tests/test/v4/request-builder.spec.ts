@@ -1,7 +1,6 @@
 import nock from 'nock';
 import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
 import { basicHeader } from '@sap-cloud-sdk/core';
-import { mockCsrfTokenRequest } from '@sap-cloud-sdk/core/test/test-util/request-mocker';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response-v4';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response-v4';
 
@@ -14,6 +13,22 @@ const url = 'https://example.com';
 const getAllResponse = testEntityCollectionResponse();
 
 let destination;
+
+const mockedBuildHeaderResponse = {
+  'x-csrf-token': 'mocked-x-csrf-token',
+  'set-cookie': ['mocked-cookie-0', 'mocked-cookie-1']
+};
+
+function mockCsrfTokenRequest(path?: string) {
+  nock(destination.url, {
+    reqheaders: {
+      authorization: basicHeader(destination.username, destination.password),
+      'x-csrf-token': 'Fetch'
+    }
+  })
+    .get(path ? `${servicePath}/${path}` : servicePath)
+    .reply(200, '', mockedBuildHeaderResponse);
+}
 
 describe('Request Builder', () => {
   beforeEach(() => {
@@ -52,14 +67,15 @@ describe('Request Builder', () => {
 
   it('should resolve for getByKey request', async () => {
     const response = singleTestEntityResponse();
+    mockCsrfTokenRequest(entityName);
 
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
     nock(destination.url, {
       reqheaders: {
         authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
-        cookie: 'key1=val1;key2=val2;key3=val3'
+        'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token'],
+        cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
       .post(`${servicePath}/${entityName}`, {
@@ -83,14 +99,17 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for update request', async () => {
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
+    mockCsrfTokenRequest(
+      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
+    );
 
     nock(destination.url, {
       reqheaders: {
         authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
-        cookie: 'key1=val1;key2=val2;key3=val3'
+        'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token'],
+        cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
       .patch(
@@ -115,7 +134,9 @@ describe('Request Builder', () => {
   });
 
   it('should resolve for delete request using key fields', async () => {
-    mockCsrfTokenRequest(destination.url, destination.sapClient!);
+    mockCsrfTokenRequest(
+      `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
+    );
 
     const entity = TestEntity.builder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
@@ -130,7 +151,8 @@ describe('Request Builder', () => {
         authorization: basicHeader(destination.username, destination.password),
         accept: 'application/json',
         'content-type': 'application/json',
-        cookie: 'key1=val1;key2=val2;key3=val3'
+        'x-csrf-token': mockedBuildHeaderResponse['x-csrf-token'],
+        cookie: 'mocked-cookie-0;mocked-cookie-1'
       }
     })
       .delete(

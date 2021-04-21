@@ -1,3 +1,4 @@
+import { unixEOL } from './string-formatter';
 /**
  * Encode a string to a base64 encoded string.
  * @param str String to encode.
@@ -13,11 +14,11 @@ export function encodeBase64(str: string): string {
  * @returns String without whitespace on the left side.
  */
 export function trimLeft(string: string): string {
-  let subStrings = string.split('\n');
+  let subStrings = string.split(unixEOL);
   if (!subStrings[0].trim()) {
     subStrings = subStrings.slice(1);
   }
-  return subStrings.join('\n');
+  return subStrings.join(unixEOL);
 }
 
 /**
@@ -26,11 +27,11 @@ export function trimLeft(string: string): string {
  * @returns String without whitespace on the right side.
  */
 export function trimRight(string: string): string {
-  let subStrings = string.split('\n');
+  let subStrings = string.split(unixEOL);
   if (!subStrings[subStrings.length - 1].trim()) {
     subStrings = subStrings.slice(0, -1);
   }
-  return subStrings.join('\n');
+  return subStrings.join(unixEOL);
 }
 
 /**
@@ -40,4 +41,15 @@ export function trimRight(string: string): string {
  */
 export function trim(string: string): string {
   return trimRight(trimLeft(string));
+}
+
+/**
+ * Remove file extension from a string e.g. test.jpg -> test
+ * @param string String to remove file extension.
+ * @returns String without extension.
+ */
+export function removeFileExtension(string: string): string {
+  return string.includes('.')
+    ? string.split('.').slice(0, -1).join('.')
+    : string;
 }

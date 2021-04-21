@@ -21,6 +21,7 @@ export interface GeneratorOptions {
   generatePackageJson: boolean;
   versionInPackageJson?: string;
   generateJs: boolean;
+  generateSdkMetadata?: boolean;
   processesJsGeneration?: number;
   sdkAfterVersionScript: boolean;
   s4hanaCloud: boolean;
@@ -147,6 +148,12 @@ export const generatorOptionsCli: KeysToOptions = {
   sdkAfterVersionScript: {
     describe:
       'When set to true, the package.json of generated services will have the after-version script to internally keep the versions in sync.',
+    type: 'boolean',
+    default: false,
+    hidden: true
+  },
+  generateSdkMetadata: {
+    describe: 'When set to true, SDK metadata for the API hub is generated.',
     type: 'boolean',
     default: false,
     hidden: true

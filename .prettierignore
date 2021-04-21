@@ -1,3 +1,7 @@
-node_modules
-dist
+node_modules/
+dist/
+docs/
+.yarn/
+coverage/
 CHANGELOG.md
+README.md

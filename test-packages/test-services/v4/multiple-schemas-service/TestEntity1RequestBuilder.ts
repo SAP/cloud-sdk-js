@@ -1,9 +1,16 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, CreateRequestBuilderV4, UpdateRequestBuilderV4, DeleteRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import {
+  RequestBuilder,
+  GetAllRequestBuilderV4,
+  GetByKeyRequestBuilderV4,
+  CreateRequestBuilderV4,
+  UpdateRequestBuilderV4,
+  DeleteRequestBuilderV4
+} from '@sap-cloud-sdk/core';
 import { TestEntity1 } from './TestEntity1';
 
 /**
@@ -16,7 +23,9 @@ export class TestEntity1RequestBuilder extends RequestBuilder<TestEntity1> {
    * @returns A request builder for creating requests to retrieve one `TestEntity1` entity based on its keys.
    */
   getByKey(keyPropertyString: string): GetByKeyRequestBuilderV4<TestEntity1> {
-    return new GetByKeyRequestBuilderV4(TestEntity1, { KeyPropertyString: keyPropertyString });
+    return new GetByKeyRequestBuilderV4(TestEntity1, {
+      KeyPropertyString: keyPropertyString
+    });
   }
 
   /**
@@ -58,6 +67,11 @@ export class TestEntity1RequestBuilder extends RequestBuilder<TestEntity1> {
    */
   delete(entity: TestEntity1): DeleteRequestBuilderV4<TestEntity1>;
   delete(keyPropertyStringOrEntity: any): DeleteRequestBuilderV4<TestEntity1> {
-    return new DeleteRequestBuilderV4(TestEntity1, keyPropertyStringOrEntity instanceof TestEntity1 ? keyPropertyStringOrEntity : { KeyPropertyString: keyPropertyStringOrEntity! });
+    return new DeleteRequestBuilderV4(
+      TestEntity1,
+      keyPropertyStringOrEntity instanceof TestEntity1
+        ? keyPropertyStringOrEntity
+        : { KeyPropertyString: keyPropertyStringOrEntity! }
+    );
   }
 }

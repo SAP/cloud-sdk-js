@@ -1,9 +1,9 @@
+import { unixEOL, caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   ClassDeclarationStructure,
   PropertyDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   getComplexTypeFieldDescription,
   getComplexTypePropertyDescription
@@ -40,7 +40,7 @@ export function fieldTypeClass(
           }
         ],
         docs: [
-          `\nCreates an instance of ${complexType.fieldType}.\n\n@param fieldName - Actual name of the field as used in the OData request.\n@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
+          `${unixEOL}Creates an instance of ${complexType.fieldType}.${unixEOL}${unixEOL}@param fieldName - Actual name of the field as used in the OData request.${unixEOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
         ],
         statements: [`super(fieldName, fieldOf, ${complexType.typeName});`]
       }

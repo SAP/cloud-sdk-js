@@ -1,3 +1,5 @@
+import { resolve } from 'path';
+import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
 import { readEdmxFile } from './edmx-file-reader';
 import {
   parseActionImport,
@@ -14,14 +16,24 @@ describe('edmx-file-reader', () => {
   it('does not fail for multiple schema entries in the edmx file', () => {
     expect(() =>
       readEdmxFile(
-        '../../test-resources/odata-service-specs/v2/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx'
+        resolve(
+          oDataServiceSpecs,
+          'v2',
+          'API_MULTIPLE_SCHEMAS_SRV',
+          'API_MULTIPLE_SCHEMAS_SRV.edmx'
+        )
       )
     ).not.toThrow();
   });
 
   it('v4: parses edmx file that contains multiple schemas to JSON and coerces properties to arrays', () => {
     const metadataEdmx = readEdmxFile(
-      '../../test-resources/odata-service-specs/v4/API_MULTIPLE_SCHEMAS_SRV/API_MULTIPLE_SCHEMAS_SRV.edmx'
+      resolve(
+        oDataServiceSpecs,
+        'v4',
+        'API_MULTIPLE_SCHEMAS_SRV',
+        'API_MULTIPLE_SCHEMAS_SRV.edmx'
+      )
     );
 
     expect(parseEntitySets(metadataEdmx.root).length).toBe(4);

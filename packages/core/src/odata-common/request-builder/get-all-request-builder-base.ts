@@ -109,18 +109,17 @@ export abstract class GetAllRequestBuilder<
     destination: Destination | DestinationNameAndJwt,
     options?: DestinationOptions
   ): Promise<EntityT[]> {
-    return this.executeRaw(destination, options)
-      .then(({ response }) =>
-        this.dataAccessor
-          .getCollectionResult(response.data)
-          .map(json =>
-            this.entityDeserializer.deserializeEntity(
-              json,
-              this._entityConstructor,
-              response.headers
-            )
+    return this.executeRaw(destination, options).then(response =>
+      this.dataAccessor
+        .getCollectionResult(response.data)
+        .map(json =>
+          this.entityDeserializer.deserializeEntity(
+            json,
+            this._entityConstructor,
+            response.headers
           )
-      );
+        )
+    );
   }
 }
 

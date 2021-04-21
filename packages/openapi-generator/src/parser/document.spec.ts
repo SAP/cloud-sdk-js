@@ -1,15 +1,12 @@
-import { createRefs, emptyApiDefinition } from '../../test/test-util';
-import { OpenApiDocument, OpenApiOperation } from '../openapi-types';
-import {
-  collectTags,
-  parseAllOperations,
-  parseOpenApiDocument
-} from './document';
+import { OpenAPIV3 } from 'openapi-types';
+import { emptyDocument } from '../../test/test-util';
+import { OpenApiObjectSchema } from '../openapi-types';
+import { parseOpenApiDocument } from './document';
 
 describe('parseOpenApiDocument', () => {
   it('does not modify input service specification', () => {
     const input = {
-      ...emptyApiDefinition,
+      ...emptyDocument,
       paths: {
         '/entity': {
           parameters: [{ name: 'param1', in: 'query' }],
@@ -27,7 +24,7 @@ describe('parseOpenApiDocument', () => {
       'openapi/test-service.json',
       {
         'test-service': {
-          npmPackageName: '@sap/cloud-sdk-openapi-vdm-test-service',
+          npmPackageName: '@sap/cloud-sdk-openapi-test-service',
           directoryName: 'test-service'
         }
       }
@@ -37,86 +34,174 @@ describe('parseOpenApiDocument', () => {
     expect(parsedDocument).not.toBe(input);
   });
 
-  it('parse service mapping information from a given object', async () => {
-    const input = {
-      ...emptyApiDefinition,
-      paths: {
-        '/entity': {
-          parameters: [{ name: 'param1', in: 'query' }],
-          get: {
-            parameters: [{ name: 'param2', in: 'query' }]
+  it('parses unique api names', async () => {
+    const input: OpenAPIV3.Document = {
+      ...emptyDocument,
+      paths: {},
+      components: {
+        schemas: {
+          'my-schema': { type: 'string' },
+          MySchema: { type: 'number' }
+        }
+      }
+    };
+
+    const parsedDocument = await parseOpenApiDocument(
+      input,
+      'TestService',
+      'openapi/test-service.json',
+      {
+        'test-service': {
+          npmPackageName: '@sap/cloud-sdk-openapi-test-service',
+          directoryName: 'test-service'
+        }
+      }
+    );
+
+    expect(parsedDocument.schemas.map(schema => schema.name)).toEqual([
+      'MySchema1',
+      'MySchema'
+    ]);
+  });
+
+  it('parses simple schema with description', async () => {
+    const components: OpenAPIV3.ComponentsObject = {
+      schemas: {
+        SimpleSchema: {
+          description: 'Schema Description',
+          type: 'string'
+        }
+      }
+    };
+
+    const document: OpenAPIV3.Document = getDocument(
+      getResponse('SimpleSchema'),
+      components
+    );
+
+    const parsed = await parseOpenApiDocument(
+      document,
+      'myService',
+      'myFile.json',
+      {}
+    );
+    expect(parsed.schemas).toStrictEqual([
+      {
+        description: 'Schema Description',
+        name: 'SimpleSchema',
+        schema: { type: 'string' }
+      }
+    ]);
+  });
+
+  it('parses object schemas with description referenced', async () => {
+    const components: OpenAPIV3.ComponentsObject = {
+      schemas: {
+        PropertySchema: {
+          description: 'Property Description',
+          type: 'string'
+        },
+        ObjectSchema: {
+          description: 'Object Description',
+          type: 'object',
+          properties: {
+            prop1: {
+              $ref: '#/components/schemas/PropertySchema'
+            }
           }
         }
       }
     };
-    const serviceName = 'TestService';
-    const npmPackageName = '@sap/cloud-sdk-openapi-vdm-test-service';
-    const directoryName = 'test-service-dir';
-    const originalFileName = 'test-service';
 
-    const parsedDocument = await parseOpenApiDocument(
-      input,
-      serviceName,
-      `../../../../test-resources/openapi-service-specs/${originalFileName}.json`,
-      {
-        'test-service': {
-          npmPackageName,
-          directoryName
+    const document: OpenAPIV3.Document = getDocument(
+      getResponse('ObjectSchema'),
+      components
+    );
+
+    const parsed = await parseOpenApiDocument(
+      document,
+      'myService',
+      'myFile.json',
+      {}
+    );
+    const objectSchema = parsed.schemas.find(
+      schema => schema.name === 'ObjectSchema'
+    );
+    const propertySchema = parsed.schemas.find(
+      schema => schema.name === 'PropertySchema'
+    );
+    expect(objectSchema!.description).toBe('Object Description');
+    expect(
+      (objectSchema!.schema as OpenApiObjectSchema).properties[0].description
+    ).toBeUndefined();
+    expect(propertySchema!.description).toBe('Property Description');
+  });
+
+  it('parses object schemas with description inline', async () => {
+    const components: OpenAPIV3.ComponentsObject = {
+      schemas: {
+        ObjectSchema: {
+          description: 'Object Description',
+          type: 'object',
+          properties: {
+            prop1: {
+              description: 'Property Description',
+              type: 'string'
+            }
+          }
         }
       }
-    );
-    const serviceMappingInfo: Partial<OpenApiDocument> = {
-      npmPackageName,
-      directoryName,
-      originalFileName
     };
-    expect(parsedDocument).toMatchObject(
-      expect.objectContaining(serviceMappingInfo)
-    );
-  });
-});
 
-describe('parseAllOperations', () => {
-  it('returns empty array when there are no paths', async () => {
-    expect(parseAllOperations(emptyApiDefinition, await createRefs())).toEqual(
-      []
+    const document: OpenAPIV3.Document = getDocument(
+      getResponse('ObjectSchema'),
+      components
     );
+
+    const parsed = await parseOpenApiDocument(
+      document,
+      'myService',
+      'myFile.json',
+      {}
+    );
+    const objectSchema = parsed.schemas.find(
+      schema => schema.name === 'ObjectSchema'
+    );
+    expect(objectSchema!.description).toBe('Object Description');
+    expect(
+      (objectSchema!.schema as OpenApiObjectSchema).properties[0].description
+    ).toBe('Property Description');
   });
 
-  it('returns and operation for every existing path', async () => {
-    const apiDefinition = {
-      ...emptyApiDefinition,
+  function getDocument(
+    responseObject: OpenAPIV3.ResponseObject,
+    components: OpenAPIV3.ComponentsObject
+  ): OpenAPIV3.Document {
+    return {
+      ...emptyDocument,
       paths: {
         '/entity': {
-          get: {},
-          post: {}
-        },
-        '/entity/{placeholder}': {
-          get: {},
-          post: {},
-          delete: {}
+          parameters: [{ name: 'param1', in: 'query' }],
+          get: {
+            parameters: [{ name: 'param2', in: 'query' }],
+            responses: { '200': responseObject }
+          }
+        }
+      },
+      components
+    };
+  }
+
+  function getResponse(schemaName: string): OpenAPIV3.ResponseObject {
+    return {
+      description: 'Response description',
+      content: {
+        'application/json': {
+          schema: {
+            $ref: `#/components/schemas/${schemaName}`
+          }
         }
       }
     };
-    expect(
-      parseAllOperations(apiDefinition, await createRefs()).length
-    ).toEqual(5);
-  });
-});
-
-describe('collectTags', () => {
-  it('should collect tags from all operations', async () => {
-    const operations: OpenApiOperation[] = [
-      {
-        tags: ['tag']
-      },
-      {
-        tags: ['default']
-      },
-      {
-        tags: ['default']
-      }
-    ] as OpenApiOperation[];
-    expect(collectTags(operations)).toEqual(['tag', 'default']);
-  });
+  }
 });

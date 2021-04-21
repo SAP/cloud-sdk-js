@@ -2,19 +2,19 @@ import nock from 'nock';
 import { IsolationStrategy } from '../cache';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
+  providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
   subscriberServiceToken,
-  subscriberUserJwt,
-  userApprovedProviderServiceToken
+  subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
 import {
   mockedConnectivityServiceProxyConfig,
   mockServiceBindings
 } from '../../../../test/test-util/environment-mocks';
 import {
-  mockServiceToken,
-  mockUserApprovedServiceToken
+  mockJwtBearerToken,
+  mockServiceToken
 } from '../../../../test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
@@ -273,7 +273,7 @@ describe('caching destination integraion tests', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
@@ -318,7 +318,7 @@ describe('caching destination integraion tests', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(
@@ -333,7 +333,7 @@ describe('caching destination integraion tests', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(userApprovedProviderServiceToken).headers
+          wrapJwtInHeader(providerJwtBearerToken).headers
         )
       ];
 
@@ -366,7 +366,7 @@ describe('caching destination integraion tests', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      mockUserApprovedServiceToken();
+      mockJwtBearerToken();
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),

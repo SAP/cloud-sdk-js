@@ -1,9 +1,16 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, CreateRequestBuilderV4, UpdateRequestBuilderV4, DeleteRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import {
+  RequestBuilder,
+  GetAllRequestBuilderV4,
+  GetByKeyRequestBuilderV4,
+  CreateRequestBuilderV4,
+  UpdateRequestBuilderV4,
+  DeleteRequestBuilderV4
+} from '@sap-cloud-sdk/core';
 import { People } from './People';
 
 /**
@@ -58,6 +65,11 @@ export class PeopleRequestBuilder extends RequestBuilder<People> {
    */
   delete(entity: People): DeleteRequestBuilderV4<People>;
   delete(userNameOrEntity: any): DeleteRequestBuilderV4<People> {
-    return new DeleteRequestBuilderV4(People, userNameOrEntity instanceof People ? userNameOrEntity : { UserName: userNameOrEntity! });
+    return new DeleteRequestBuilderV4(
+      People,
+      userNameOrEntity instanceof People
+        ? userNameOrEntity
+        : { UserName: userNameOrEntity! }
+    );
   }
 }

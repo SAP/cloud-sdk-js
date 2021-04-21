@@ -11,6 +11,7 @@ import { resolve } from 'path';
 import cli from 'cli-ux';
 import execa from 'execa';
 import rm from 'rimraf';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { recordWarning } from '../utils';
 
 export async function shouldBuildScaffold(
@@ -154,7 +155,7 @@ export function addCatalogueModule(pathToAppModuleTs: string): void {
   const moduleName = 'CatalogueModule';
   const importToAdd = `import { ${moduleName} } from './catalogue/catalogue.module';`;
   const modifiedAppModuleTs = appModuleTs
-    .replace('@Module', [importToAdd, '@Module'].join('\n\n'))
+    .replace('@Module', [importToAdd, '@Module'].join(`${unixEOL}${unixEOL}`))
     .replace('imports: []', `imports: [${moduleName}]`);
 
   if (!modifiedAppModuleTs.includes(`imports: [${moduleName}]`)) {

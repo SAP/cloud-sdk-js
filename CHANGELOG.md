@@ -10,26 +10,77 @@
 
 ## Known Issues
 
-- 
+-
 
 ## Compatibility Notes
 
--
+- [core] Remove experimental `Exclude` type, which was accidentally exposed as non-experimental.
 
 ## New Functionality
 
-- [core] Support `executeRaw` in all `RequestBuilder`, which returns request and raw response without deserialization.
+- [core] Support custom axios options for all request builders.
+- [core] Support disabling csrf token request as an option for all request builders.
 
 ## Improvements
 
-- [generator] When calling a function/action import that has entity return type referenced by multiple entity sets, an exception is thrown instead of deserializing the response with the first entity set.
-- [http-agent] Fix client certificate authentication in conjunction with proxies - depends on [this PR](https://github.com/TooTallNate/node-https-proxy-agent/pull/111).
-- [generator] When an entity type is shared by multiple entity sets and is used as the return type of function/action imports, an exception will be thrown with the recommendation to use `executeRaw` instead of `execute`.
+- [odata-generator] When calling a function/action import that has entity return type referenced by multiple entity sets, an exception is thrown instead of deserializing the response with the first entity set.
+- [odata-generator] When an entity type is shared by multiple entity sets and is used as the return type of function/action imports, an exception will be thrown with the recommendation to use `executeRaw` instead of `execute`.
 
 ## Fixed Issues
 
 -
 
+
+# 1.41.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.41.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [core] Deprecated `userApprovedServiceToken`, `refreshTokenGrant` and `userTokenGrant`.
+- [openapi-generator] Replace the underlying Java-based OpenAPI generator with a custom implementation. 
+- [odata-generator] The type of one-to-one navigation properties is now optional.
+
+## New Functionality
+
+- [core] Added support for `jwtBearerToken` and `jwtBearerTokenGrant` authorization.
+- [http-client] Add a `fetchCsrfToken` option to `executeHttpRequest` to allow automatic fetching of CSRF tokens for write operations.
+- [openapi-generator] Fetch CSRF tokens for write operations automatically.
+
+## Fixed Issues
+
+- [odata-generator] Fix a type error of one-to-one navigation properties, so they can set `null` as valid values.
+- [core] Fix a runtime error of `fromJson` function, when passing an object containing one-to-one navigation properties with `null` value.
+- [odata-batch] Fix wrong double encoding of filter values in batch requests.
+- [openapi-generator] Use string as default type for enums.
+
+# 1.40.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.40.0<br>
+Blog: TBD<br>
+
+## Known Issues
+
+- 
+
+## Compatibility Notes
+
+- A mandatory property `request` is added to the `HttpResponse`.
+
+## New Functionality
+
+- [core] Support `executeRaw` in all `RequestBuilder`, which returns `HttpResponse` that contains the raw response and original request.
+
+## Improvements
+
+- [http-agent] Fix client certificate authentication in conjunction with proxies - depends on [this PR](https://github.com/TooTallNate/node-https-proxy-agent/pull/111).
+
+## Fixed Issues
+
+- [core] Fix parsing of empty bodies in batch responses.
 
 # 1.39.0
 

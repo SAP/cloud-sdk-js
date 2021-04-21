@@ -1,10 +1,11 @@
 import * as path from 'path';
 import execa = require('execa');
 import * as fs from 'fs-extra';
+import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 
 describe('generator-cli', () => {
   const pathToGenerator = path.resolve(__dirname, 'generator-cli.ts');
-  const inputDir = '../../test-resources/odata-service-specs/v2/API_TEST_SRV/';
+  const inputDir = path.resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
   const outputDir = path.resolve(__dirname, '../test/generator-test-output');
 
   beforeEach(() => {
@@ -20,7 +21,7 @@ describe('generator-cli', () => {
   // TODO move these tests to the nightly tests
   it('should fail if mandatory parameters are not there', async () => {
     try {
-      await execa('yarn', ['root:ts-node', pathToGenerator]);
+      await execa('npx', ['ts-node', pathToGenerator]);
     } catch (err) {
       expect(err.stderr).toContain(
         'Missing required arguments: inputDir, outputDir'
@@ -29,8 +30,8 @@ describe('generator-cli', () => {
   }, 60000);
 
   it('should generate VDM if all arguments are there', async () => {
-    await execa('yarn', [
-      'root:ts-node',
+    await execa('npx', [
+      'ts-node',
       pathToGenerator,
       '-i',
       inputDir,
@@ -45,8 +46,8 @@ describe('generator-cli', () => {
   }, 60000);
 
   it('should generate VDM if there is a valid config file', async () => {
-    await execa('yarn', [
-      'root:ts-node',
+    await execa('npx', [
+      'ts-node',
       pathToGenerator,
       '-c',
       path.resolve(__dirname, '../test/generator.config.json')

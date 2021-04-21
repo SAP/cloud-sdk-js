@@ -1,9 +1,11 @@
+import { resolve } from 'path';
+import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
 import { readSwaggerFile } from './swagger-parser';
 
 describe('swagger-parser', () => {
   it('parseSwaggerFromPath should parse service info', () => {
     const json = readSwaggerFile(
-      '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.json'
+      resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV', 'API_TEST_SRV.json')
     );
     expect(json).toBeDefined();
     expect(json.info).toEqual({

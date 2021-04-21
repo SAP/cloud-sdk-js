@@ -1,14 +1,33 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { DefaultApi } from './openapi/api';
-import { TestEntity } from './openapi/model';
-export declare const SwaggerYamlServiceDefaultApi: {
-    postEntity: (args: {
-        pathParam: string;
-        queryParam?: string;
-    }) => OpenApiRequestBuilder<DefaultApi, "postEntity">;
-    patchEntity: (args: {
-        pathParam: string;
-        body?: TestEntity;
-    }) => OpenApiRequestBuilder<DefaultApi, "patchEntity">;
+import type { TestEntity } from './schema';
+/**
+ * Representation of the 'DefaultApi'.
+ * This API is part of the 'SwaggerYamlService' service.
+ */
+export declare const DefaultApi: {
+  /**
+   * Test POST
+   * @param pathParam Path parameter.
+   * @param queryParameters Object containing the following keys: queryParam.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  postEntity: (
+    pathParam: string,
+    queryParameters?:
+      | {
+          queryParam?: string | undefined;
+        }
+      | undefined
+  ) => OpenApiRequestBuilder<TestEntity[]>;
+  /**
+   * Create a request builder for execution of patch requests to the '/entities/{pathParam}' endpoint.
+   * @param pathParam Path parameter.
+   * @param body Request body.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  patchEntity: (
+    pathParam: string,
+    body: TestEntity | undefined
+  ) => OpenApiRequestBuilder<string>;
 };
 //# sourceMappingURL=default-api.d.ts.map

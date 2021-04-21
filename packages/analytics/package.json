@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/analytics",
-  "version": "1.39.0",
+  "version": "1.41.0",
   "description": "SAP Cloud SDK Analytics Usage",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -23,15 +23,15 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "compile": "yarn root:tsc -b",
+    "compile": "yarn tsc -b",
     "prepare": "yarn compile",
-    "test": "yarn root:jest --coverage --runInBand",
-    "test:local": "yarn root:jest",
+    "test": "yarn jest --coverage --runInBand",
+    "test:local": "yarn jest",
     "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
-    "check:dependencies": "yarn root:depcheck ."
+    "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/util": "^1.39.0",
+    "@sap-cloud-sdk/util": "^1.41.0",
     "axios": "^0.21.1"
   },
   "devDependencies": {

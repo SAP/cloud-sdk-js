@@ -4,12 +4,22 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLinkRequestBuilder';
-import { AllFields, CustomField, Entity, EntityBuilderType, Field, Selectable, StringField } from '@sap-cloud-sdk/core';
+import {
+  AllFields,
+  CustomField,
+  Entity,
+  EntityBuilderType,
+  Field,
+  Selectable,
+  StringField
+} from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityOtherMultiLink extends Entity implements TestEntityOtherMultiLinkType {
+export class TestEntityOtherMultiLink
+  extends Entity
+  implements TestEntityOtherMultiLinkType {
   /**
    * Technical entity name for TestEntityOtherMultiLink.
    */
@@ -32,7 +42,10 @@ export class TestEntityOtherMultiLink extends Entity implements TestEntityOtherM
    * Returns an entity builder to construct instances `TestEntityOtherMultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
-  static builder(): EntityBuilderType<TestEntityOtherMultiLink, TestEntityOtherMultiLinkTypeForceMandatory> {
+  static builder(): EntityBuilderType<
+    TestEntityOtherMultiLink,
+    TestEntityOtherMultiLinkTypeForceMandatory
+  > {
     return Entity.entityBuilder(TestEntityOtherMultiLink);
   }
 
@@ -75,7 +88,11 @@ export namespace TestEntityOtherMultiLink {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntityOtherMultiLink> = new StringField('KeyPropertyString', TestEntityOtherMultiLink, 'Edm.String');
+  export const KEY_PROPERTY_STRING: StringField<TestEntityOtherMultiLink> = new StringField(
+    'KeyPropertyString',
+    TestEntityOtherMultiLink,
+    'Edm.String'
+  );
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */
@@ -85,16 +102,29 @@ export namespace TestEntityOtherMultiLink {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityOtherMultiLink> = new AllFields('*', TestEntityOtherMultiLink);
+  export const ALL_FIELDS: AllFields<TestEntityOtherMultiLink> = new AllFields(
+    '*',
+    TestEntityOtherMultiLink
+  );
   /**
    * All key fields of the TestEntityOtherMultiLink entity.
    */
-  export const _keyFields: Array<Selectable<TestEntityOtherMultiLink>> = [TestEntityOtherMultiLink.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Selectable<TestEntityOtherMultiLink>> = [
+    TestEntityOtherMultiLink.KEY_PROPERTY_STRING
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
    */
-  export const _keys: { [keys: string]: Selectable<TestEntityOtherMultiLink> } = TestEntityOtherMultiLink._keyFields.reduce((acc: { [keys: string]: Selectable<TestEntityOtherMultiLink> }, field: Selectable<TestEntityOtherMultiLink>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Selectable<TestEntityOtherMultiLink>;
+  } = TestEntityOtherMultiLink._keyFields.reduce(
+    (
+      acc: { [keys: string]: Selectable<TestEntityOtherMultiLink> },
+      field: Selectable<TestEntityOtherMultiLink>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

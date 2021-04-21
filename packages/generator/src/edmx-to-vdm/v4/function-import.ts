@@ -1,4 +1,4 @@
-import { createLogger } from '@sap-cloud-sdk/util';
+import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { transformFunctionImportBase } from '../common';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
@@ -13,7 +13,6 @@ import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
 import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 import { findActionFunctionByImportName } from './action-function-util';
-
 const logger = createLogger({
   package: 'generator',
   messageContext: 'function-import'
@@ -64,7 +63,7 @@ function joinFunctionImportData(
     logger.warn(
       `Could not find functions referenced by the following function imports. Skipping code generation: ${functionImportsWithoutFunctions
         .map(f => `${f.Name} => ${f.Function}`)
-        .join(', \n')}`
+        .join(`, ${unixEOL}`)}`
     );
   }
   return joinedFunctionImportData;

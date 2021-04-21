@@ -5,14 +5,14 @@ import {
 } from '../../../../test/test-util/environment-mocks';
 import {
   providerServiceToken,
+  subscriberJwtBearerToken,
   subscriberServiceToken,
   subscriberServiceTokenWithVerificationURL,
-  subscriberUserJwt,
-  userApprovedSubscriberServiceToken
+  subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
 import {
-  mockServiceToken,
-  mockUserApprovedServiceToken
+  mockJwtBearerToken,
+  mockServiceToken
 } from '../../../../test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
@@ -99,7 +99,7 @@ describe('Failure cases', () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();
-    mockUserApprovedServiceToken();
+    mockJwtBearerToken();
 
     const httpMocks = [
       mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
@@ -116,7 +116,7 @@ describe('Failure cases', () => {
         },
         401,
         destinationName,
-        wrapJwtInHeader(userApprovedSubscriberServiceToken).headers
+        wrapJwtInHeader(subscriberJwtBearerToken).headers
       )
     ];
 

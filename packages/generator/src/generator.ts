@@ -1,5 +1,5 @@
-import { PathLike, readFileSync } from 'fs';
-import { resolve, basename } from 'path';
+import { PathLike } from 'fs';
+import { resolve, basename, dirname } from 'path';
 import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
@@ -29,10 +29,6 @@ import {
   npmCompliantName,
   transpileDirectory
 } from './generator-utils';
-import {
-  genericDescription,
-  s4hanaCloudDescription
-} from './package-description';
 import { parseAllServices } from './edmx-to-vdm';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
@@ -49,6 +45,16 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
+import {
+  getSdkMetadataFileNames,
+  sdkMetaDataHeader,
+  sdkMetaDataJS
+} from './sdk-metadata/sdk-metadata';
+import {
+  getGeneratorVersion,
+  getServiceDescription,
+  getVersionForClient
+} from './sdk-metadata/pregenerated-lib';
 
 const logger = createLogger({
   package: 'generator',
@@ -188,9 +194,8 @@ export async function generateSourcesForService(
       'package.json',
       packageJson(
         service.npmPackageName,
-        options.versionInPackageJson,
-        getGeneratorVersion(),
-        serviceDescription(service, options),
+        getVersionForClient(options),
+        getServiceDescription(service, options),
         options.sdkAfterVersionScript
       ),
       options.forceOverwrite
@@ -320,6 +325,29 @@ export async function generateSourcesForService(
       );
     }
   }
+
+  if (options.generateSdkMetadata) {
+    const { clientFileName, headerFileName } = getSdkMetadataFileNames(service);
+    logger.info(`Generating sdk header metatdata ${headerFileName}...`);
+    const metadataDir = project.createDirectory(
+      resolve(dirname(service.edmxPath.toString()), 'sdk-metadata')
+    );
+
+    otherFile(
+      metadataDir,
+      headerFileName,
+      JSON.stringify(await sdkMetaDataHeader(service, options), null, 2),
+      options.forceOverwrite
+    );
+
+    logger.info(`Generating sdk client metatdata ${clientFileName}...`);
+    otherFile(
+      metadataDir,
+      clientFileName,
+      JSON.stringify(await sdkMetaDataJS(service, options), null, 2),
+      options.forceOverwrite
+    );
+  }
 }
 
 function projectOptions(): ProjectOptions {
@@ -363,11 +391,6 @@ function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
   return options;
 }
 
-function getGeneratorVersion(): string {
-  return JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf8'))
-    .version;
-}
-
 // TODO 1728 move to a new package for reduce code duplication.
 function copyAdditionalFiles(
   toDirectory: Directory,
@@ -383,15 +406,6 @@ function copyAdditionalFiles(
       );
     });
   }
-}
-
-function serviceDescription(
-  service: VdmServiceMetadata,
-  options: GeneratorOptions
-): string {
-  return options.s4hanaCloud
-    ? s4hanaCloudDescription(service.directoryName)
-    : genericDescription(service.directoryName);
 }
 
 function resolvePath(path: PathLike, options: GeneratorOptions): string {

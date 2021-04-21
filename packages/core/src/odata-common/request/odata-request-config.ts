@@ -24,6 +24,8 @@ export abstract class ODataRequestConfig {
 
   private _customHeaders: Record<string, string> = {};
   private _customQueryParameters: Record<string, string> = {};
+  private _customRequestConfiguration: Record<string, string> = {};
+  private _fetchCsrfToken = true;
 
   /**
    * @deprecated Since v1.30.0. Use [[defaultHeaders]] instead.
@@ -88,6 +90,23 @@ export abstract class ODataRequestConfig {
     return this._customQueryParameters;
   }
 
+  set customRequestConfiguration(requestConfiguration: Record<string, string>) {
+    this._customRequestConfiguration = {};
+    this.addCustomRequestConfiguration(requestConfiguration);
+  }
+
+  get customRequestConfiguration(): Record<string, string> {
+    return this._customRequestConfiguration;
+  }
+
+  set fetchCsrfToken(fetchCsrfToken: boolean) {
+    this._fetchCsrfToken = fetchCsrfToken;
+  }
+
+  get fetchCsrfToken(): boolean {
+    return this._fetchCsrfToken;
+  }
+
   /**
    * Add custom headers to the request. This is useful in case you want to provide your own authorization headers for example.
    *
@@ -108,6 +127,19 @@ export abstract class ODataRequestConfig {
   addCustomQueryParameters(queryParameters: Record<string, string>): void {
     Object.entries(queryParameters).forEach(([key, value]) => {
       this.customQueryParameters[key] = value;
+    });
+  }
+
+  /**
+   * Add custom request configuration to the request.
+   *
+   * @param requestConfiguration - Key-value pairs where the key is the name of a request configuration and the value is the respective value
+   */
+  addCustomRequestConfiguration(
+    requestConfiguration: Record<string, string>
+  ): void {
+    Object.entries(requestConfiguration).forEach(([key, value]) => {
+      this.customRequestConfiguration[key] = value;
     });
   }
 

@@ -1,6 +1,6 @@
 import {
   TestEntity,
-  TestServiceEntityApi
+  EntityApi
 } from '@sap-cloud-sdk/test-services/openapi/test-service';
 import { destination } from './test-util';
 
@@ -9,10 +9,17 @@ import { destination } from './test-util';
 const restDestination = { url: destination.url + 'openapi' };
 describe('openapi request builder', () => {
   it('executes getAll request', async () => {
-    const request = TestServiceEntityApi.getAllEntities();
+    const request = EntityApi.getAllEntities();
     expect(
       (await request.execute(restDestination)).length
     ).toBeGreaterThanOrEqual(4);
+  });
+
+  it('executes getAll request', async () => {
+    const request = EntityApi.getEntityByKey(
+      'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+    );
+    expect(await request.execute(restDestination)).toBeDefined();
   });
 
   it('executes create request', async () => {
@@ -21,14 +28,12 @@ describe('openapi request builder', () => {
       keyProperty: 'a13e7a92-cb9c-8f4a-b1e1-6b5c8458a9fb',
       stringProperty: 'string'
     };
-    await TestServiceEntityApi.createEntity({ body: testEntity }).execute(
-      restDestination
-    );
+    await EntityApi.createEntity(testEntity).execute(restDestination);
     const postCreateCount = await countEntities();
     expect(postCreateCount).toEqual(preCreateCount + 1);
   });
 });
 
 function countEntities(): Promise<number> {
-  return TestServiceEntityApi.countEntities().execute(restDestination);
+  return EntityApi.countEntities().execute(restDestination);
 }

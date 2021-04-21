@@ -2,6 +2,7 @@ import nock = require('nock');
 import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
+  defaultHost,
   mockCreateRequest
 } from '../../../test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../test/test-util/test-data';
@@ -14,7 +15,7 @@ import { testPostRequestOutcome } from '../../../test/test-util/testPostRequestO
 import { CreateRequestBuilder } from './create-request-builder';
 
 describe('CreateRequestBuilder', () => {
-  afterAll(() => {
+  afterEach(() => {
     nock.cleanAll();
   });
 
@@ -24,7 +25,8 @@ describe('CreateRequestBuilder', () => {
     const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
     mockCreateRequest({
-      body: postBody
+      body: postBody,
+      path: 'A_TestEntity'
     });
 
     const entity = TestEntity.builder()
@@ -49,6 +51,7 @@ describe('CreateRequestBuilder', () => {
 
     mockCreateRequest({
       body: postBody,
+      path: 'A_TestEntity',
       responseBody: {
         ...postBody,
         __metadata: { etag: eTag }
@@ -69,7 +72,8 @@ describe('CreateRequestBuilder', () => {
     const postBody = { to_SingleLink: { StringProperty: stringProp } };
 
     mockCreateRequest({
-      body: postBody
+      body: postBody,
+      path: 'A_TestEntity'
     });
 
     const entity = TestEntity.builder()
@@ -95,6 +99,7 @@ describe('CreateRequestBuilder', () => {
 
     mockCreateRequest({
       body: { to_MultiLink: linkedEntityBody },
+      path: 'A_TestEntity',
       responseBody: { to_MultiLink: { results: linkedEntityBody } }
     });
 
@@ -131,7 +136,8 @@ describe('CreateRequestBuilder', () => {
     };
 
     mockCreateRequest({
-      body: postBody
+      body: postBody,
+      path: 'A_TestEntity'
     });
 
     const entity = TestEntity.builder()
@@ -201,6 +207,30 @@ describe('CreateRequestBuilder', () => {
     await expect(createRequest).rejects.toThrowErrorMatchingSnapshot();
   });
 
+  it('create an entity with csrf token request when the option is set to false', async () => {
+    const keyProp = uuid();
+    const stringProp = 'testStr';
+    const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
+
+    nock(defaultHost)
+      .post(
+        '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
+        postBody
+      )
+      .reply(200, { d: postBody }, {});
+
+    const entity = TestEntity.builder()
+      .keyPropertyGuid(keyProp)
+      .stringProperty(stringProp)
+      .build();
+
+    const actual = await new CreateRequestBuilder(TestEntity, entity)
+      .skipCsrfTokenFetching()
+      .execute(defaultDestination);
+
+    testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
+  });
+
   describe('executeRaw', () => {
     it('returns request and raw response', async () => {
       const keyProp = uuid();
@@ -208,7 +238,8 @@ describe('CreateRequestBuilder', () => {
       const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
       mockCreateRequest({
-        body: postBody
+        body: postBody,
+        path: 'A_TestEntity'
       });
 
       const entity = TestEntity.builder()
@@ -216,13 +247,13 @@ describe('CreateRequestBuilder', () => {
         .stringProperty(stringProp)
         .build();
 
-      const actual = await new CreateRequestBuilder(TestEntity, entity).executeRaw(
-        defaultDestination
-      );
+      const actual = await new CreateRequestBuilder(
+        TestEntity,
+        entity
+      ).executeRaw(defaultDestination);
 
-      expect(actual.response.data.d).toEqual(postBody);
-      expect(actual.request.method).toBe('post');
-      expect(actual.request.baseURL).toBe(defaultDestination.url);
+      expect(actual.data.d).toEqual(postBody);
+      expect(actual.request.method).toBe('POST');
     });
   });
 });

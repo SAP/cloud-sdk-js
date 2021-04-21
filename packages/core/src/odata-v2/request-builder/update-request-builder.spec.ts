@@ -321,9 +321,10 @@ describe('UpdateRequestBuilder', () => {
       const entity = createTestEntity().setOrInitializeRemoteState();
       entity.keyPropertyGuid = uuid();
       entity.keyPropertyString = 'UPDATED!';
-      const actual = await new UpdateRequestBuilder(TestEntity, entity).executeRaw(
-        defaultDestination
-      );
+      const actual = await new UpdateRequestBuilder(
+        TestEntity,
+        entity
+      ).executeRaw(defaultDestination);
       await expect(actual).toEqual(undefined);
     });
 
@@ -345,12 +346,12 @@ describe('UpdateRequestBuilder', () => {
         responseBody: response
       });
 
-      const actual = await new UpdateRequestBuilder(TestEntity, entity).executeRaw(
-        defaultDestination
-      );
-      expect(actual!.response.data).toEqual(response);
-      expect(actual!.request.method).toEqual('patch');
-      expect(actual!.request.baseURL).toEqual(defaultDestination.url);
+      const actual = await new UpdateRequestBuilder(
+        TestEntity,
+        entity
+      ).executeRaw(defaultDestination);
+      expect(actual!.data).toEqual(response);
+      expect(actual!.request.method).toEqual('PATCH');
     });
   });
 });

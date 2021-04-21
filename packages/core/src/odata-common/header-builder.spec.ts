@@ -1,4 +1,3 @@
-import nock from 'nock';
 import { mockedConnectivityServiceProxyConfig } from '../../test/test-util/environment-mocks';
 import {
   defaultDestination,
@@ -6,11 +5,9 @@ import {
 } from '../../test/test-util/request-mocker';
 import {
   createGetAllRequest,
-  createUpdateRequest,
-  createCreateRequest
+  createUpdateRequest
 } from '../../test/test-util/create-requests';
 import { Destination } from '../connectivity';
-import * as csrfHeaders from '../connectivity/scp-cf/csrf-token-header';
 import { buildHeaders } from './header-builder';
 
 describe('Header-Builder', () => {
@@ -110,63 +107,6 @@ describe('Header-Builder', () => {
     const request = createGetAllRequest(destination);
     const headers = await request.headers();
     expect(headers['SAP-Connectivity-SCC-Location_ID']).toBe('Potsdam');
-  });
-
-  it('Adds location id headers to the fetch csrf token request if there is a cloudConnectorLocationId in the destination', async () => {
-    const destination: Destination = {
-      url: 'https://destination.example.com',
-      cloudConnectorLocationId: 'Potsdam'
-    };
-
-    const mockedHeaders = {
-      'x-csrf-token': 'mocked-x-csrf-token',
-      'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
-    };
-
-    nock('https://destination.example.com', {
-      reqheaders: {
-        'sap-connectivity-scc-location_id': 'Potsdam',
-        'x-csrf-token': 'Fetch'
-      }
-    })
-      .get('/sap/opu/odata/sap/API_TEST_SRV')
-      .reply(200, undefined, mockedHeaders);
-
-    const request = createCreateRequest(destination);
-    const headers = await request.headers();
-
-    expect(headers['SAP-Connectivity-SCC-Location_ID']).toBe('Potsdam');
-    expect(headers['x-csrf-token']).toBe('mocked-x-csrf-token');
-  });
-
-  it('Fetching CSRF tokens works even if the endpoint responds with a non-200 HTTP code', async () => {
-    const request = createCreateRequest(defaultDestination);
-
-    mockHeaderRequest({ request });
-
-    const headers = await request.headers();
-    expect(headers['x-csrf-token']).toBe('mocked-x-csrf-token');
-  });
-
-  it('Skips csrf token retrieval for existing csrf header', async () => {
-    spyOn(csrfHeaders, 'buildCsrfHeaders');
-    const request = createCreateRequest(defaultDestination);
-    request.config.customHeaders = { 'x-csrf-token': 'defined' };
-
-    mockHeaderRequest({ request });
-
-    await request.headers();
-    expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
-  });
-
-  it('Skips csrf token retrieval for GET request', async () => {
-    spyOn(csrfHeaders, 'buildCsrfHeaders');
-    const request = createGetAllRequest(defaultDestination);
-
-    mockHeaderRequest({ request });
-
-    await request.headers();
-    expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
   });
 
   it('Prioritizes custom Authorization headers (upper case A)', async () => {

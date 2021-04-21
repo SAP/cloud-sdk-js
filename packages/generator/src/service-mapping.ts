@@ -1,9 +1,8 @@
-import { createLogger, readJSON } from '@sap-cloud-sdk/util';
+import { unixEOL, createLogger, readJSON } from '@sap-cloud-sdk/util';
 import { GeneratorOptions } from './generator-options';
 import { VdmServiceMetadata } from './vdm-types';
 import { servicePathFromSwagger } from './swagger-parser/swagger-util';
 import { ServiceMetadata } from './edmx-parser/edmx-file-reader';
-
 const logger = createLogger({
   package: 'generator',
   messageContext: 'service-mapping'
@@ -42,7 +41,7 @@ export function serviceMapping(services: VdmServiceMetadata[]): VdmMapping {
 }
 
 export function serviceMappingFile(services: VdmServiceMetadata[]): string {
-  return JSON.stringify(serviceMapping(services), null, 2) + '\n';
+  return JSON.stringify(serviceMapping(services), null, 2) + unixEOL;
 }
 
 export function getServicePath(

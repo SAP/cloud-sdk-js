@@ -1,6 +1,8 @@
+import { resolve } from 'path';
 import { ClassDeclaration, FunctionDeclaration, SourceFile } from 'ts-morph';
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { generateProject } from '../../src';
+import { oDataServiceSpecs } from '../../../../test-resources/odata-service-specs';
 import { createOptions } from './create-generator-options';
 
 export function checkStaticProperties(entityClass: ClassDeclaration): void {
@@ -23,7 +25,7 @@ export async function getGeneratedFiles(
 ): Promise<SourceFile[]> {
   const project = await generateProject(
     createOptions({
-      inputDir: `../../test-resources/odata-service-specs/${oDataVersion}/API_TEST_SRV`,
+      inputDir: resolve(oDataServiceSpecs, oDataVersion, 'API_TEST_SRV'),
       useSwagger: false
     })
   );

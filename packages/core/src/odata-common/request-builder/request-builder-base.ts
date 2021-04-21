@@ -119,6 +119,28 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
+  /**
+   * Add a custom request configuration to the request. Typically, this is used when specifying a response type for downloading files.
+   * If the custom request configuration contains [[defaultDisallowedKeys | disallowed keys]], those will be ignored.
+   * @param requestConfiguration - Key-value pairs denoting additional custom request configuration options to be set in the request.
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  addCustomRequestConfiguration(
+    requestConfiguration: Record<string, string>
+  ): this {
+    this.requestConfig.addCustomRequestConfiguration(requestConfiguration);
+    return this;
+  }
+
+  /**
+   * Skip fetching csrf token for this request, which is typically useful when the csrf token is not required.
+   * @returns The request builder itself, to facilitate method chaining.
+   */
+  skipCsrfTokenFetching(): this {
+    this.requestConfig.fetchCsrfToken = false;
+    return this;
+  }
+
   build(): ODataRequest<RequestConfigT>;
   build(
     destination: Destination | DestinationNameAndJwt,

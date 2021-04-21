@@ -1,5 +1,5 @@
 <!-- sap-cloud-sdk-logo -->
-<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
@@ -16,6 +16,7 @@ $ npm install @sap-cloud-sdk/cli
 
 ## Usage
 
+<!-- prettier-ignore-start -->
 <!-- commands -->
 * [`sap-cloud-sdk add-approuter [PROJECTDIR]`](#sap-cloud-sdk-add-approuter-projectdir)
 * [`sap-cloud-sdk add-cds [PROJECTDIR]`](#sap-cloud-sdk-add-cds-projectdir)
@@ -49,7 +50,7 @@ EXAMPLE
   $ sap-cloud-sdk add-approuter
 ```
 
-_See code: [src/commands/add-approuter.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/add-approuter.ts)_
+_See code: [src/commands/add-approuter.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/src/commands/add-approuter.ts)_
 
 ## `sap-cloud-sdk add-cds [PROJECTDIR]`
 
@@ -71,7 +72,7 @@ EXAMPLE
   $ sap-cloud-sdk add-cds
 ```
 
-_See code: [src/commands/add-cds.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/add-cds.ts)_
+_See code: [src/commands/add-cds.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/src/commands/add-cds.ts)_
 
 ## `sap-cloud-sdk add-cx-server [PROJECTDIR]`
 
@@ -92,7 +93,7 @@ EXAMPLE
   $ sap-cloud-sdk add-cx-server
 ```
 
-_See code: [src/commands/add-cx-server.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/add-cx-server.ts)_
+_See code: [src/commands/add-cx-server.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/src/commands/add-cx-server.ts)_
 
 ## `sap-cloud-sdk autocomplete [SHELL]`
 
@@ -202,7 +203,7 @@ EXAMPLES
   $ sap-cloud-sdk generate-odata-client --help
 ```
 
-_See code: [src/commands/generate-odata-client.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/generate-odata-client.ts)_
+_See code: [src/commands/generate-odata-client.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/src/commands/generate-odata-client.ts)_
 
 ## `sap-cloud-sdk help [COMMAND]`
 
@@ -230,7 +231,7 @@ USAGE
   $ sap-cloud-sdk help-page
 ```
 
-_See code: [src/commands/help-page.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/help-page.ts)_
+_See code: [src/commands/help-page.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/src/commands/help-page.ts)_
 
 ## `sap-cloud-sdk init [PROJECTDIR]`
 
@@ -261,7 +262,7 @@ EXAMPLES
   $ sap-cloud-sdk init --help
 ```
 
-_See code: [src/commands/init.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/src/commands/init.ts)_
 
 ## `sap-cloud-sdk package [PROJECTDIR]`
 
@@ -293,11 +294,12 @@ EXAMPLES
   $ sap-cloud-sdk package --include="package.json,package-lock.json,index.js,dist/**/*" --exclude="**/*.java"
 ```
 
-_See code: [src/commands/package.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.39.0/src/commands/package.ts)_
+_See code: [src/commands/package.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/src/commands/package.ts)_
 <!-- commandsstop -->
+<!-- prettier-ignore-end -->
 
 <!-- sap-cloud-sdk-common-readme -->
-<!-- This block is inserted by scripts/replace-common-readme.ts and not oclif like the commands block. Do not adjust it manually. -->
+<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
 ## Support
 
 The recommended way to get in touch with us is to create an issue in our [github repository](https://github.com/SAP/cloud-sdk-js/issues).

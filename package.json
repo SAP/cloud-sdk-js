@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "1.39.0",
+  "version": "1.41.0",
   "private": true,
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",
@@ -30,29 +30,29 @@
   ],
   "scripts": {
     "postinstall": "yarn compile && yarn run readme",
-    "test": "yarn workspaces foreach -v run test",
+    "test": "yarn workspaces run test",
     "test:unit": "yarn lerna run test --ignore \"@sap-cloud-sdk/integration-tests\" --ignore \"@sap-cloud-sdk/type-tests\" --ignore \"@sap-cloud-sdk/e2e-tests\" --ignore \"@sap-cloud-sdk/nightly-tests\"",
     "test:integration": "yarn integration-tests test",
     "test:type": "yarn type-tests test",
     "test:e2e": "yarn e2e-tests test",
     "test:nightly": "yarn nightly-tests test",
-    "generate:test-services:v2": "yarn generate v2 && yarn lint:fix && yarn --immutable",
-    "generate:test-services:v4": "yarn generate v4 && yarn lint:fix && yarn --immutable",
-    "generate:test-services:openapi": "yarn generate openapi && yarn lint:fix && yarn --immutable",
-    "generate:test-services:e2e": "yarn generate e2e && yarn lint:fix && yarn --immutable",
-    "generate:test-services": "yarn generate all && yarn lint:fix && yarn --immutable",
+    "generate:test-services:v2": "yarn generate v2 && yarn lint:fix && yarn --frozen-lockfile",
+    "generate:test-services:v4": "yarn generate v4 && yarn lint:fix && yarn --frozen-lockfile",
+    "generate:test-services:openapi": "yarn generate openapi && yarn lint:fix && yarn --frozen-lockfile",
+    "generate:test-services:e2e": "yarn generate e2e && yarn lint:fix && yarn --frozen-lockfile",
+    "generate:test-services": "yarn generate all && yarn lint:fix && yarn --frozen-lockfile",
     "generate": "yarn workspace @sap-cloud-sdk/generator run compile && yarn ts-node scripts/generate-test-services.ts",
     "compile": "yarn lerna run compile",
     "doc": "ts-node scripts/generate-docs.ts",
     "version": "ts-node scripts/after-bump.ts && yarn generate:test-services && yarn doc && git add .",
     "readme": "ts-node scripts/replace-common-readme.ts && yarn lerna run readme",
-    "lint": "yarn eslint --ext .ts .",
-    "lint:fix": "yarn lint --fix",
-    "lint:fix-cached": "yarn lint:fix --cache",
+    "lint": "yarn eslint --ext .ts . && yarn prettier . -c",
+    "lint:fix": "yarn eslint --ext .ts . --fix && yarn prettier . -w",
+    "lint:fix-cached": "yarn eslint --ext .ts . --fix --cache && yarn prettier . -w",
     "check:circular": "yarn madge --extensions ts --circular ./packages --exclude 'test-services|environment-accessor|\\.d\\.ts'",
-    "check:dependencies": "yarn workspaces foreach -v run check:dependencies",
+    "check:dependencies": "yarn workspaces run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",
-    "check:vulnerability": "yarn npm audit --all --severity high",
+    "check:vulnerability": "yarn audit-ci -h",
     "check:test-service": "yarn generate:test-services && yarn ts-node scripts/check-test-service-for-changes.ts",
     "analytics": "yarn workspace @sap-cloud-sdk/analytics",
     "core": "yarn workspace @sap-cloud-sdk/core",
@@ -63,11 +63,7 @@
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
     "nightly-tests": "yarn workspace @sap-cloud-sdk/nightly-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
-    "type-tests": "yarn workspace @sap-cloud-sdk/type-tests",
-    "root:tsc": "cd $INIT_CWD && tsc",
-    "root:jest": "cd $INIT_CWD && jest",
-    "root:depcheck": "cd $INIT_CWD && depcheck",
-    "root:ts-node": "cd $INIT_CWD && ts-node"
+    "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
     "@types/jest": "^26.0.7",
@@ -78,6 +74,7 @@
     "@types/voca": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.1-alpha.1",
+    "audit-ci": "^3.1.1",
     "compare-versions": "^3.6.0",
     "depcheck": "^1.0.0",
     "eslint": "^7.5.0",
@@ -99,10 +96,11 @@
     "typedoc": "^0.20.13",
     "typescript": "~4.1.2"
   },
+  "dependencies": {},
   "resolutions": {
     "agent-base": "^6.0.2",
     "@types/node": "^12.0.0",
     "dot-prop": "^5.1.1",
-    "axios": "^0.21.1"
+    "netmask": "^2.0.1 "
   }
 }

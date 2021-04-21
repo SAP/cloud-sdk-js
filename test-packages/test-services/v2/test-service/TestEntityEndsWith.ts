@@ -1,15 +1,24 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBuilder';
-import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '@sap-cloud-sdk/core';
+import {
+  AllFields,
+  CustomFieldV2,
+  EntityBuilderType,
+  EntityV2,
+  Field,
+  StringField
+} from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */
-export class TestEntityEndsWith extends EntityV2 implements TestEntityEndsWithType {
+export class TestEntityEndsWith
+  extends EntityV2
+  implements TestEntityEndsWithType {
   /**
    * Technical entity name for TestEntityEndsWith.
    */
@@ -27,7 +36,10 @@ export class TestEntityEndsWith extends EntityV2 implements TestEntityEndsWithTy
    * Returns an entity builder to construct instances of `TestEntityEndsWith`.
    * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
    */
-  static builder(): EntityBuilderType<TestEntityEndsWith, TestEntityEndsWithType> {
+  static builder(): EntityBuilderType<
+    TestEntityEndsWith,
+    TestEntityEndsWithType
+  > {
     return EntityV2.entityBuilder(TestEntityEndsWith);
   }
 
@@ -66,7 +78,11 @@ export namespace TestEntityEndsWith {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityEndsWith> = new StringField('KeyProperty', TestEntityEndsWith, 'Edm.String');
+  export const KEY_PROPERTY: StringField<TestEntityEndsWith> = new StringField(
+    'KeyProperty',
+    TestEntityEndsWith,
+    'Edm.String'
+  );
   /**
    * All fields of the TestEntityEndsWith entity.
    */
@@ -76,16 +92,29 @@ export namespace TestEntityEndsWith {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityEndsWith> = new AllFields('*', TestEntityEndsWith);
+  export const ALL_FIELDS: AllFields<TestEntityEndsWith> = new AllFields(
+    '*',
+    TestEntityEndsWith
+  );
   /**
    * All key fields of the TestEntityEndsWith entity.
    */
-  export const _keyFields: Array<Field<TestEntityEndsWith>> = [TestEntityEndsWith.KEY_PROPERTY];
+  export const _keyFields: Array<Field<TestEntityEndsWith>> = [
+    TestEntityEndsWith.KEY_PROPERTY
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntityEndsWith.
    */
-  export const _keys: { [keys: string]: Field<TestEntityEndsWith> } = TestEntityEndsWith._keyFields.reduce((acc: { [keys: string]: Field<TestEntityEndsWith> }, field: Field<TestEntityEndsWith>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntityEndsWith>;
+  } = TestEntityEndsWith._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntityEndsWith> },
+      field: Field<TestEntityEndsWith>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

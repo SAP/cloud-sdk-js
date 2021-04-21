@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/cli",
-  "version": "1.39.0",
+  "version": "1.41.0",
   "description": "SAP Cloud SDK for JavaScript cli",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -16,6 +16,9 @@
   "bin": {
     "sap-cloud-sdk": "./bin/run"
   },
+  "publishConfig": {
+    "access": "private"
+  },
   "files": [
     "dist/**/*.js",
     "dist/**/*.js.map",
@@ -28,7 +31,7 @@
     "readme": "oclif-dev readme",
     "prepare": "yarn compile",
     "test": "yarn jest --coverage",
-    "check:dependencies": "yarn root:depcheck . --ignores='@oclif/plugin-*'"
+    "check:dependencies": "depcheck . --ignores=@oclif/plugin-*"
   },
   "dependencies": {
     "@oclif/command": "^1.5.19",
@@ -45,7 +48,8 @@
     "js-yaml": "^4.0.0",
     "listr": "^0.14.3",
     "rimraf": "^3.0.2",
-    "yargs": "16.2.0"
+    "yargs": "16.2.0",
+    "@sap-cloud-sdk/util": "^1.41.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",

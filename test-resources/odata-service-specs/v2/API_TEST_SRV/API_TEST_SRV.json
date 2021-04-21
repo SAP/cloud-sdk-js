@@ -24,17 +24,11 @@
           "description": "String Property Description"
         },
         "BooleanProperty": {
-          "type": [
-            "boolean",
-            "null"
-          ],
+          "type": ["boolean", "null"],
           "title": "Boolean Property Title"
         },
         "GuidProperty": {
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": ["string", "null"],
           "format": "uuid",
           "description": "Guid Property Description"
         }

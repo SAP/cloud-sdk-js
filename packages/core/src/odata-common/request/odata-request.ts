@@ -1,4 +1,5 @@
 import {
+  unixEOL,
   ErrorWithCause,
   mergeIgnoreCase,
   pickIgnoreCase,
@@ -9,8 +10,7 @@ import {
 import {
   Destination,
   sanitizeDestination,
-  buildHeadersForDestination,
-  buildCsrfHeaders
+  buildHeadersForDestination
 } from '../../connectivity';
 import {
   removeLeadingSlashes,
@@ -20,12 +20,10 @@ import {
 import {
   HttpResponse,
   executeHttpRequest,
-  HttpRequestAndResponse,
-  executeHttpRequestReturnRequestAndResponse
+  filterCustomRequestConfig
 } from '../../http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
-
 /**
  * OData request configuration for an entity type.
  *
@@ -168,14 +166,8 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         this.config.customHeaders
       );
 
-      const csrfHeaders =
-        this.config.method === 'get'
-          ? {}
-          : await this.getCsrfHeaders(destinationRelatedHeaders);
-
       return {
         ...destinationRelatedHeaders,
-        ...csrfHeaders,
         ...this.defaultHeaders(),
         ...this.eTagHeaders(),
         ...this.customHeaders()
@@ -239,50 +231,19 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequest(destination, {
-      headers: await this.headers(),
-      url: this.relativeUrl(),
-      method: this.config.method,
-      data: this.config.payload
-    }).catch(error => {
+    return executeHttpRequest(
+      destination,
+      {
+        ...filterCustomRequestConfig(this.config.customRequestConfiguration),
+        headers: await this.headers(),
+        url: this.relativeUrl(),
+        method: this.config.method,
+        data: this.config.payload
+      },
+      { fetchCsrfToken: this.config.fetchCsrfToken }
+    ).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());
     });
-  }
-
-  /**
-   * Execute the given request and return the request and the raw response.
-   *
-   * @returns Promise resolving to an [[HttpRequestAndResponse]].
-   */
-  async executeRaw(): Promise<HttpRequestAndResponse> {
-    const destination = this.destination;
-    if (!destination) {
-      throw Error('The destination cannot be undefined.');
-    }
-
-    return executeHttpRequestReturnRequestAndResponse(destination, {
-      headers: await this.headers(),
-      url: this.relativeUrl(),
-      method: this.config.method,
-      data: this.config.payload
-    }).catch(error => {
-      throw constructError(error, this.config.method, this.serviceUrl());
-    });
-  }
-
-  private async getCsrfHeaders(
-    destinationRelatedHeaders: Record<string, string>
-  ): Promise<Record<string, any>> {
-    const customCsrfHeaders = pickIgnoreCase(
-      this.config.customHeaders,
-      'x-csrf-token'
-    );
-    return Object.keys(customCsrfHeaders).length
-      ? customCsrfHeaders
-      : buildCsrfHeaders(this.destination!, {
-          headers: destinationRelatedHeaders,
-          url: this.relativeServiceUrl()
-        });
   }
 }
 
@@ -304,5 +265,5 @@ function messageFromS4ErrorResponse(error): string {
     propertyExists(error.response.data.error, 'message', 'value')
       ? error.response.data.error.message.value
       : ''
-  }\n${JSON.stringify(error.response.data.error)}`;
+  }${unixEOL}${JSON.stringify(error.response.data.error)}`;
 }

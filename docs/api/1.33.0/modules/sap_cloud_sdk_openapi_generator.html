@@ -1,947 +1,2019 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@sap-cloud-sdk/openapi-generator | SAP Cloud SDK for JavaScript / TypeScript - v1.33.0</title>
-	<meta name="description" content="Documentation for SAP Cloud SDK for JavaScript / TypeScript - v1.33.0">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../assets/css/main.css">
-<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="../index.html" class="title">SAP Cloud SDK for JavaScript / TypeScript - v1.33.0</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="../globals.html">Globals</a>
-				</li>
-				<li>
-					<a href="sap_cloud_sdk_openapi_generator">@sap-cloud-sdk/openapi-generator</a>
-				</li>
-			</ul>
-			<h1>Module @sap-cloud-sdk/openapi-generator</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<a href="#openapi-client-generator" id="openapi-client-generator" style="color: inherit; text-decoration: none;">
-						<h2>OpenApi Client Generator</h2>
-					</a>
-					<p>This is currently not release ready. excluded in <code>mail.ts</code>.</p>
-					<p>The generator wraps only the openapi-generator.
-						This is a flexible tool using many commandline flags and templates for easy adjustment.
-						<br><a href="https://github.com/OpenAPITools/openapi-generator#3---usage">Command line arguments</a>
-					<br><a href="https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-axios">Repo For mustache files</a></p>
-					<p>In the wrapping <code>generator-cli</code> we currently only expose <code>inputDir</code> and <code>outputDir</code> to generate tyescript-axios sources from the openapi.json files.</p>
-					<a href="#things-we-have-adjusted-to-the-openapi-generator" id="things-we-have-adjusted-to-the-openapi-generator" style="color: inherit; text-decoration: none;">
-						<h3>Things we have adjusted to the OpenApi Generator</h3>
-					</a>
-					<ul>
-						<li>Since the SAP graph definitions were lacking any tags we added a tag with the service name in camel case to each path of the service.</li>
-						<li>The method singature of the constructor was changed to take the accesstoken or basic for auth  and URL.
-						This was done by changing the <code>templates/baseApi.mustache</code> to achieve that.</li>
-					</ul>
-					<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-						<h3>Usage</h3>
-					</a>
-					<p>To run the generator use:</p>
-					<pre><code class="language-shell">ts-node `src/generator-cli.ts` -i &lt;FolderContainingOpenApiDefinitions&gt; -o &lt;OutputDirectory&gt;</code></pre>
-					<p>Once you have the generated classes, you can make calls via:</p>
-					<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { AxiosResponse } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;axios&#x27;</span>;
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+      @sap-cloud-sdk/openapi-generator | SAP Cloud SDK for JavaScript /
+      TypeScript - v1.33.0
+    </title>
+    <meta
+      name="description"
+      content="Documentation for SAP Cloud SDK for JavaScript / TypeScript - v1.33.0"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="tsd-page-toolbar">
+        <div class="container">
+          <div class="table-wrap">
+            <div
+              class="table-cell"
+              id="tsd-search"
+              data-index="../assets/js/search.json"
+              data-base=".."
+            >
+              <div class="field">
+                <label
+                  for="tsd-search-field"
+                  class="tsd-widget search no-caption"
+                  >Search</label
+                >
+                <input id="tsd-search-field" type="text" />
+              </div>
+              <ul class="results">
+                <li class="state loading">Preparing search index...</li>
+                <li class="state failure">The search index is not available</li>
+              </ul>
+              <a href="../index.html" class="title"
+                >SAP Cloud SDK for JavaScript / TypeScript - v1.33.0</a
+              >
+            </div>
+            <div class="table-cell" id="tsd-widgets">
+              <div id="tsd-filter">
+                <a
+                  href="#"
+                  class="tsd-widget options no-caption"
+                  data-toggle="options"
+                  >Options</a
+                >
+                <div class="tsd-filter-group">
+                  <div class="tsd-select" id="tsd-filter-visibility">
+                    <span class="tsd-select-label">All</span>
+                    <ul class="tsd-select-list">
+                      <li data-value="public">Public</li>
+                      <li data-value="protected">Public/Protected</li>
+                      <li data-value="private" class="selected">All</li>
+                    </ul>
+                  </div>
+                  <input type="checkbox" id="tsd-filter-inherited" checked />
+                  <label class="tsd-widget" for="tsd-filter-inherited"
+                    >Inherited</label
+                  >
+                  <input type="checkbox" id="tsd-filter-externals" checked />
+                  <label class="tsd-widget" for="tsd-filter-externals"
+                    >Externals</label
+                  >
+                </div>
+              </div>
+              <a href="#" class="tsd-widget menu no-caption" data-toggle="menu"
+                >Menu</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tsd-page-title">
+        <div class="container">
+          <ul class="tsd-breadcrumb">
+            <li>
+              <a href="../globals.html">Globals</a>
+            </li>
+            <li>
+              <a href="sap_cloud_sdk_openapi_generator"
+                >@sap-cloud-sdk/openapi-generator</a
+              >
+            </li>
+          </ul>
+          <h1>Module @sap-cloud-sdk/openapi-generator</h1>
+        </div>
+      </div>
+    </header>
+    <div class="container container-main">
+      <div class="row">
+        <div class="col-8 col-content">
+          <section class="tsd-panel tsd-comment">
+            <div class="tsd-comment tsd-typography">
+              <a
+                href="#openapi-client-generator"
+                id="openapi-client-generator"
+                style="color: inherit; text-decoration: none"
+              >
+                <h2>OpenApi Client Generator</h2>
+              </a>
+              <p>
+                This is currently not release ready. excluded in
+                <code>mail.ts</code>.
+              </p>
+              <p>
+                The generator wraps only the openapi-generator. This is a
+                flexible tool using many commandline flags and templates for
+                easy adjustment. <br /><a
+                  href="https://github.com/OpenAPITools/openapi-generator#3---usage"
+                  >Command line arguments</a
+                >
+                <br /><a
+                  href="https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-axios"
+                  >Repo For mustache files</a
+                >
+              </p>
+              <p>
+                In the wrapping <code>generator-cli</code> we currently only
+                expose <code>inputDir</code> and <code>outputDir</code> to
+                generate tyescript-axios sources from the openapi.json files.
+              </p>
+              <a
+                href="#things-we-have-adjusted-to-the-openapi-generator"
+                id="things-we-have-adjusted-to-the-openapi-generator"
+                style="color: inherit; text-decoration: none"
+              >
+                <h3>Things we have adjusted to the OpenApi Generator</h3>
+              </a>
+              <ul>
+                <li>
+                  Since the SAP graph definitions were lacking any tags we added
+                  a tag with the service name in camel case to each path of the
+                  service.
+                </li>
+                <li>
+                  The method singature of the constructor was changed to take
+                  the accesstoken or basic for auth and URL. This was done by
+                  changing the <code>templates/baseApi.mustache</code> to
+                  achieve that.
+                </li>
+              </ul>
+              <a
+                href="#usage"
+                id="usage"
+                style="color: inherit; text-decoration: none"
+              >
+                <h3>Usage</h3>
+              </a>
+              <p>To run the generator use:</p>
+              <pre><code class="language-shell">ts-node `src/generator-cli.ts` -i &lt;FolderContainingOpenApiDefinitions&gt; -o &lt;OutputDirectory&gt;</code></pre>
+              <p>
+                Once you have the generated classes, you can make calls via:
+              </p>
+              <pre><code class="language-typescript"><span class="hljs-keyword">import</span> { AxiosResponse } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;axios&#x27;</span>;
 <span class="hljs-keyword">import</span> { SalesOrdersApi, InlineResponse200 <span class="hljs-keyword">as</span> ResponseSalesOrder } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;generated/sales-orders&#x27;</span>;
 
 <span class="hljs-keyword">const</span> response: AxiosResponse&lt;ResponseSalesOrder&gt; = <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> SalesOrdersApi({ accessToken, basePath }).getSalesOrders()</code></pre>
-					<p>Besides bearer token also basic is supported for authentication.</p>
-					<a href="#problem-generator" id="problem-generator" style="color: inherit; text-decoration: none;">
-						<h3>Problem Generator</h3>
-					</a>
-					<ul>
-						<li>If you add the option <code>&#39;--additional-properties=withSeparateModelsAndApi=true&#39;</code>
-						and you have the templates enables, the model files are empty. Most likely there is no template found for the type.</li>
-					</ul>
-				</div>
-			</section>
-			<section class="tsd-panel-group tsd-index-group">
-				<h2>Index</h2>
-				<section class="tsd-panel tsd-index-panel">
-					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
-							<h3>Interfaces</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/sap_cloud_sdk_openapi_generator.generatoroptions" class="tsd-kind-icon">Generator<wbr>Options</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument" class="tsd-kind-icon">Open<wbr>Api<wbr>Document</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation" class="tsd-kind-icon">Open<wbr>Api<wbr>Operation</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapiparameter" class="tsd-kind-icon">Open<wbr>Api<wbr>Parameter</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapirequestbody" class="tsd-kind-icon">Open<wbr>Api<wbr>Request<wbr>Body</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Type aliases</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#method" class="tsd-kind-icon">Method</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Functions</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#apifile" class="tsd-kind-icon">api<wbr>File</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#createfile" class="tsd-kind-icon">create<wbr>File</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#createspecwithglobaltag" class="tsd-kind-icon">create<wbr>Spec<wbr>With<wbr>Global<wbr>Tag</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#filterduplicateparams" class="tsd-kind-icon">filter<wbr>Duplicate<wbr>Params</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#generate" class="tsd-kind-icon">generate</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#getoperation" class="tsd-kind-icon">get<wbr>Operation</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#gettype" class="tsd-kind-icon">get<wbr>Type</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#indexfile" class="tsd-kind-icon">index<wbr>File</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#isreferenceobject" class="tsd-kind-icon">is<wbr>Reference<wbr>Object</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#methods" class="tsd-kind-icon">methods</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#parsealloperations" class="tsd-kind-icon">parse<wbr>All<wbr>Operations</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#parseopenapidocument" class="tsd-kind-icon">parse<wbr>Open<wbr>Api<wbr>Document</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#parseoperation" class="tsd-kind-icon">parse<wbr>Operation</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#parseoperationname" class="tsd-kind-icon">parse<wbr>Operation<wbr>Name</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#parseparameters" class="tsd-kind-icon">parse<wbr>Parameters</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#parserequestbody" class="tsd-kind-icon">parse<wbr>Request<wbr>Body</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#parsetypename" class="tsd-kind-icon">parse<wbr>Type<wbr>Name</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#renameequallynamedparams" class="tsd-kind-icon">rename<wbr>Equally<wbr>Named<wbr>Params</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_openapi_generator#resolveobject" class="tsd-kind-icon">resolve<wbr>Object</a></li>
-							</ul>
-						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="method" class="tsd-anchor"></a>
-					<h3>Method</h3>
-					<div class="tsd-signature tsd-kind-icon">Method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">supportedMethods</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">supportedMethods</span><span class="tsd-signature-symbol">]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/openapi-types.ts#L39">packages/openapi-generator/src/openapi-types.ts:39</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<dl class="tsd-comment-tags">
-							<dt>experimental</dt>
-							<dd><p>This API is experimental and might change in newer versions. Use with caution.
-								Methods supported by OpenApi and SAP Cloud SDK.</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="apifile" class="tsd-anchor"></a>
-					<h3>api<wbr>File</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">api<wbr>File<span class="tsd-signature-symbol">(</span>openApiDocument<span class="tsd-signature-symbol">: </span><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument" class="tsd-signature-type">OpenApiDocument</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/wrapper-files/api-file.ts#L10">packages/openapi-generator/src/wrapper-files/api-file.ts:10</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>experimental</dt>
-									<dd><p>This API is experimental and might change in newer versions. Use with caution.
-										Get the content of the SAP Cloud SDK API wrapper.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>openApiDocument: <a href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument" class="tsd-signature-type">OpenApiDocument</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Parsed service.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>The generated code for the SDK API wrapper.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="createfile" class="tsd-anchor"></a>
-					<h3>create<wbr>File</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>File<span class="tsd-signature-symbol">(</span>directoryPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fileName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, content<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, overwrite<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/wrapper-files/create-file.ts#L14">packages/openapi-generator/src/wrapper-files/create-file.ts:14</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>experimental</dt>
-									<dd><p>This API is experimental and might change in newer versions. Use with caution.
-										Write a file generated by the SAP Cloud SDK for JavaScript containing a copyright statement.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>directoryPath: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Path of the directory to write to.</p>
-									</div>
-								</li>
-								<li>
-									<h5>fileName: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Name of the file to write</p>
-									</div>
-								</li>
-								<li>
-									<h5>content: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Content to be written to the file. A copyright statement will be added to this.</p>
-									</div>
-								</li>
-								<li>
-									<h5>overwrite: <span class="tsd-signature-type">boolean</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Whether or not existing files should be overwritten.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="createspecwithglobaltag" class="tsd-anchor"></a>
-					<h3>create<wbr>Spec<wbr>With<wbr>Global<wbr>Tag</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Spec<wbr>With<wbr>Global<wbr>Tag<span class="tsd-signature-symbol">(</span>openApiDocument<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Document</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Document</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/generator.ts#L144">packages/openapi-generator/src/generator.ts:144</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Workaround for OpenApi generation to build one and only one API for all tags.
-									Modify spec to contain only one &#39;default&#39; tag.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>openApiDocument: <span class="tsd-signature-type">Document</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>OpenApi JSON document.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Document</span></h4>
-							<p>The modified document.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="filterduplicateparams" class="tsd-anchor"></a>
-					<h3>filter<wbr>Duplicate<wbr>Params</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">filter<wbr>Duplicate<wbr>Params<span class="tsd-signature-symbol">(</span>parameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParameterObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParameterObject</span><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/parameters.ts#L32">packages/openapi-generator/src/parser/parameters.ts:32</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>parameters: <span class="tsd-signature-type">ParameterObject</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ParameterObject</span><span class="tsd-signature-symbol">[]</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="generate" class="tsd-anchor"></a>
-					<h3>generate</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/sap_cloud_sdk_openapi_generator.generatoroptions" class="tsd-signature-type">GeneratorOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/generator.ts#L22">packages/openapi-generator/src/generator.ts:22</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>experimental</dt>
-									<dd><p>This API is experimental and might change in newer versions. Use with caution.
-											Main entry point for OpenApi client generation.
-										Generates files using the OpenApi Generator CLI and wraps the resulting API in an SDK compatible API.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>options: <a href="../interfaces/sap_cloud_sdk_openapi_generator.generatoroptions" class="tsd-signature-type">GeneratorOptions</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Options to configure generation.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="getoperation" class="tsd-anchor"></a>
-					<h3>get<wbr>Operation</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Operation<span class="tsd-signature-symbol">(</span>pathItem<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PathItemObject</span>, method<span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_openapi_generator#method" class="tsd-signature-type">Method</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OperationObject</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/operation.ts#L36">packages/openapi-generator/src/parser/operation.ts:36</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get the operation for the given method and merge path parameters with operation parameters.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>pathItem: <span class="tsd-signature-type">PathItemObject</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Path Item to get the operation from.</p>
-									</div>
-								</li>
-								<li>
-									<h5>method: <a href="sap_cloud_sdk_openapi_generator#method" class="tsd-signature-type">Method</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>HTTP method to get the operation for.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">OperationObject</span></h4>
-							<p>The sanitized original operation.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="gettype" class="tsd-anchor"></a>
-					<h3>get<wbr>Type</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Type<span class="tsd-signature-symbol">(</span>originalType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/type-mapping.ts#L44">packages/openapi-generator/src/parser/type-mapping.ts:44</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get the mapped TypeScript type for the given original OpenApi type.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>originalType: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Original OpenApi type, to get a mapping for.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>The mapped TypeScript type.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="indexfile" class="tsd-anchor"></a>
-					<h3>index<wbr>File</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">index<wbr>File<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/wrapper-files/index-file.ts#L8">packages/openapi-generator/src/wrapper-files/index-file.ts:8</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>experimental</dt>
-									<dd><p>This API is experimental and might change in newer versions. Use with caution.
-										Generate the index file to expose the SAP Cloud SDK API and models.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>The index file contents.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="isreferenceobject" class="tsd-anchor"></a>
-					<h3>is<wbr>Reference<wbr>Object</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Reference<wbr>Object<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">obj</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">ReferenceObject</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/refs.ts#L10">packages/openapi-generator/src/parser/refs.ts:10</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Typeguard to check wheter an object is of type <code>OpenAPIV3.ReferenceObject</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>obj: <span class="tsd-signature-type">any</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Object to check.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">obj</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">ReferenceObject</span></h4>
-							<p>True if the object is a reference object, false otherwise.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="methods" class="tsd-anchor"></a>
-					<h3>methods</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">methods<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_openapi_generator#method" class="tsd-signature-type">Method</a><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/openapi-types.ts#L46">packages/openapi-generator/src/openapi-types.ts:46</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<dl class="tsd-comment-tags">
-									<dt>experimental</dt>
-									<dd><p>This API is experimental and might change in newer versions. Use with caution.
-										Get supported methods.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="sap_cloud_sdk_openapi_generator#method" class="tsd-signature-type">Method</a><span class="tsd-signature-symbol">[]</span></h4>
-							<p>Methods supported by OpenApi and SAP Cloud SDK.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="parsealloperations" class="tsd-anchor"></a>
-					<h3>parse<wbr>All<wbr>Operations</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>All<wbr>Operations<span class="tsd-signature-symbol">(</span>document<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Document</span>, refs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">$Refs</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation" class="tsd-signature-type">OpenApiOperation</a><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/document.ts#L28">packages/openapi-generator/src/parser/document.ts:28</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Collect and parse all operations of an <code>OpenAPIV3.Document</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>document: <span class="tsd-signature-type">Document</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The OpenApi document to parse.</p>
-									</div>
-								</li>
-								<li>
-									<h5>refs: <span class="tsd-signature-type">$Refs</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>List of crossreferences that can occur in the document.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation" class="tsd-signature-type">OpenApiOperation</a><span class="tsd-signature-symbol">[]</span></h4>
-							<p>A flat list of parsed operations.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="parseopenapidocument" class="tsd-anchor"></a>
-					<h3>parse<wbr>Open<wbr>Api<wbr>Document</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Open<wbr>Api<wbr>Document<span class="tsd-signature-symbol">(</span>filePath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument" class="tsd-signature-type">OpenApiDocument</a><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/document.ts#L8">packages/openapi-generator/src/parser/document.ts:8</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>filePath: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument" class="tsd-signature-type">OpenApiDocument</a><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="parseoperation" class="tsd-anchor"></a>
-					<h3>parse<wbr>Operation</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Operation<span class="tsd-signature-symbol">(</span>pattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, pathItem<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PathItemObject</span>, method<span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_openapi_generator#method" class="tsd-signature-type">Method</a>, refs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">$Refs</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation" class="tsd-signature-type">OpenApiOperation</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/operation.ts#L8">packages/openapi-generator/src/parser/operation.ts:8</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>pattern: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>pathItem: <span class="tsd-signature-type">PathItemObject</span></h5>
-								</li>
-								<li>
-									<h5>method: <a href="sap_cloud_sdk_openapi_generator#method" class="tsd-signature-type">Method</a></h5>
-								</li>
-								<li>
-									<h5>refs: <span class="tsd-signature-type">$Refs</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation" class="tsd-signature-type">OpenApiOperation</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="parseoperationname" class="tsd-anchor"></a>
-					<h3>parse<wbr>Operation<wbr>Name</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Operation<wbr>Name<span class="tsd-signature-symbol">(</span>operation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OperationObject</span>, pattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, method<span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_openapi_generator#method" class="tsd-signature-type">Method</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/operation.ts#L53">packages/openapi-generator/src/parser/operation.ts:53</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>operation: <span class="tsd-signature-type">OperationObject</span></h5>
-								</li>
-								<li>
-									<h5>pattern: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>method: <a href="sap_cloud_sdk_openapi_generator#method" class="tsd-signature-type">Method</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="parseparameters" class="tsd-anchor"></a>
-					<h3>parse<wbr>Parameters</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Parameters<span class="tsd-signature-symbol">(</span>operation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OperationObject</span>, refs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">$Refs</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapiparameter" class="tsd-signature-type">OpenApiParameter</a><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/parameters.ts#L14">packages/openapi-generator/src/parser/parameters.ts:14</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Parse parameters of an operation.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>operation: <span class="tsd-signature-type">OperationObject</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The original operation definition.</p>
-									</div>
-								</li>
-								<li>
-									<h5>refs: <span class="tsd-signature-type">$Refs</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>List of crossreferences that can occur in the document.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/sap_cloud_sdk_openapi_generator.openapiparameter" class="tsd-signature-type">OpenApiParameter</a><span class="tsd-signature-symbol">[]</span></h4>
-							<p>A list of parsed parameters.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="parserequestbody" class="tsd-anchor"></a>
-					<h3>parse<wbr>Request<wbr>Body</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Request<wbr>Body<span class="tsd-signature-symbol">(</span>requestBody<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReferenceObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RequestBodyObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, refs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">$Refs</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/sap_cloud_sdk_openapi_generator.openapirequestbody" class="tsd-signature-type">OpenApiRequestBody</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/request-body.ts#L15">packages/openapi-generator/src/parser/request-body.ts:15</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Parse the request body.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>requestBody: <span class="tsd-signature-type">ReferenceObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RequestBodyObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Original request body to parse.</p>
-									</div>
-								</li>
-								<li>
-									<h5>refs: <span class="tsd-signature-type">$Refs</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>List of crossreferences that can occur in the document.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/sap_cloud_sdk_openapi_generator.openapirequestbody" class="tsd-signature-type">OpenApiRequestBody</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
-							<p>The parsed request body.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="parsetypename" class="tsd-anchor"></a>
-					<h3>parse<wbr>Type<wbr>Name</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Type<wbr>Name<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReferenceObject</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/refs.ts#L19">packages/openapi-generator/src/parser/refs.ts:19</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Parse the type name of a reference object.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>obj: <span class="tsd-signature-type">ReferenceObject</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Reference object to get the type name from.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>Parsed type name.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="renameequallynamedparams" class="tsd-anchor"></a>
-					<h3>rename<wbr>Equally<wbr>Named<wbr>Params</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">rename<wbr>Equally<wbr>Named<wbr>Params<span class="tsd-signature-symbol">(</span>parameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParameterObject</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParameterObject</span><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/parameters.ts#L48">packages/openapi-generator/src/parser/parameters.ts:48</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>parameters: <span class="tsd-signature-type">ParameterObject</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ParameterObject</span><span class="tsd-signature-symbol">[]</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-					<a name="resolveobject" class="tsd-anchor"></a>
-					<h3>resolve<wbr>Object</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">resolve<wbr>Object&lt;T&gt;<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReferenceObject</span>, refs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">$Refs</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/refs.ts#L31">packages/openapi-generator/src/parser/refs.ts:31</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Check whether the given object is a reference object and resolve if necessary.
-									This operates only on the current level and does not resolve the object recursively.</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>obj: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReferenceObject</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Object to resolve if necessary.</p>
-									</div>
-								</li>
-								<li>
-									<h5>refs: <span class="tsd-signature-type">$Refs</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>References to resolve by.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-							<p>A resolved object.</p>
-						</li>
-					</ul>
-				</section>
-			</section>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="sap_cloud_sdk_analytics">@sap-<wbr>cloud-<wbr>sdk/analytics</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="sap_cloud_sdk_core">@sap-<wbr>cloud-<wbr>sdk/core</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="sap_cloud_sdk_generator">@sap-<wbr>cloud-<wbr>sdk/generator</a>
-					</li>
-					<li class="current tsd-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator">@sap-<wbr>cloud-<wbr>sdk/openapi-<wbr>generator</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="sap_cloud_sdk_test_util">@sap-<wbr>cloud-<wbr>sdk/test-<wbr>util</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="sap_cloud_sdk_util">@sap-<wbr>cloud-<wbr>sdk/util</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/sap_cloud_sdk_openapi_generator.generatoroptions" class="tsd-kind-icon">Generator<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument" class="tsd-kind-icon">Open<wbr>Api<wbr>Document</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation" class="tsd-kind-icon">Open<wbr>Api<wbr>Operation</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/sap_cloud_sdk_openapi_generator.openapiparameter" class="tsd-kind-icon">Open<wbr>Api<wbr>Parameter</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="../interfaces/sap_cloud_sdk_openapi_generator.openapirequestbody" class="tsd-kind-icon">Open<wbr>Api<wbr>Request<wbr>Body</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#method" class="tsd-kind-icon">Method</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#apifile" class="tsd-kind-icon">api<wbr>File</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#createfile" class="tsd-kind-icon">create<wbr>File</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#createspecwithglobaltag" class="tsd-kind-icon">create<wbr>Spec<wbr>With<wbr>Global<wbr>Tag</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#filterduplicateparams" class="tsd-kind-icon">filter<wbr>Duplicate<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#generate" class="tsd-kind-icon">generate</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#getoperation" class="tsd-kind-icon">get<wbr>Operation</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#gettype" class="tsd-kind-icon">get<wbr>Type</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#indexfile" class="tsd-kind-icon">index<wbr>File</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#isreferenceobject" class="tsd-kind-icon">is<wbr>Reference<wbr>Object</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#methods" class="tsd-kind-icon">methods</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#parsealloperations" class="tsd-kind-icon">parse<wbr>All<wbr>Operations</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#parseopenapidocument" class="tsd-kind-icon">parse<wbr>Open<wbr>Api<wbr>Document</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#parseoperation" class="tsd-kind-icon">parse<wbr>Operation</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#parseoperationname" class="tsd-kind-icon">parse<wbr>Operation<wbr>Name</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#parseparameters" class="tsd-kind-icon">parse<wbr>Parameters</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#parserequestbody" class="tsd-kind-icon">parse<wbr>Request<wbr>Body</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#parsetypename" class="tsd-kind-icon">parse<wbr>Type<wbr>Name</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="sap_cloud_sdk_openapi_generator#renameequallynamedparams" class="tsd-kind-icon">rename<wbr>Equally<wbr>Named<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="sap_cloud_sdk_openapi_generator#resolveobject" class="tsd-kind-icon">resolve<wbr>Object</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer>
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-			</ul>
-		</div>
-	</div>
-<div class="container"><p>Copyright Ⓒ 2020 SAP SE or an SAP affiliate company. All rights reserved.</p></div>
-</footer>
-<div class="overlay"></div>
-<script src="../assets/js/main.js"></script>
-</body>
+              <p>
+                Besides bearer token also basic is supported for authentication.
+              </p>
+              <a
+                href="#problem-generator"
+                id="problem-generator"
+                style="color: inherit; text-decoration: none"
+              >
+                <h3>Problem Generator</h3>
+              </a>
+              <ul>
+                <li>
+                  If you add the option
+                  <code
+                    >&#39;--additional-properties=withSeparateModelsAndApi=true&#39;</code
+                  >
+                  and you have the templates enables, the model files are empty.
+                  Most likely there is no template found for the type.
+                </li>
+              </ul>
+            </div>
+          </section>
+          <section class="tsd-panel-group tsd-index-group">
+            <h2>Index</h2>
+            <section class="tsd-panel tsd-index-panel">
+              <div class="tsd-index-content">
+                <section class="tsd-index-section">
+                  <h3>Interfaces</h3>
+                  <ul class="tsd-index-list">
+                    <li class="tsd-kind-interface tsd-parent-kind-module">
+                      <a
+                        href="../interfaces/sap_cloud_sdk_openapi_generator.generatoroptions"
+                        class="tsd-kind-icon"
+                        >Generator<wbr />Options</a
+                      >
+                    </li>
+                    <li class="tsd-kind-interface tsd-parent-kind-module">
+                      <a
+                        href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument"
+                        class="tsd-kind-icon"
+                        >Open<wbr />Api<wbr />Document</a
+                      >
+                    </li>
+                    <li class="tsd-kind-interface tsd-parent-kind-module">
+                      <a
+                        href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation"
+                        class="tsd-kind-icon"
+                        >Open<wbr />Api<wbr />Operation</a
+                      >
+                    </li>
+                    <li class="tsd-kind-interface tsd-parent-kind-module">
+                      <a
+                        href="../interfaces/sap_cloud_sdk_openapi_generator.openapiparameter"
+                        class="tsd-kind-icon"
+                        >Open<wbr />Api<wbr />Parameter</a
+                      >
+                    </li>
+                    <li class="tsd-kind-interface tsd-parent-kind-module">
+                      <a
+                        href="../interfaces/sap_cloud_sdk_openapi_generator.openapirequestbody"
+                        class="tsd-kind-icon"
+                        >Open<wbr />Api<wbr />Request<wbr />Body</a
+                      >
+                    </li>
+                  </ul>
+                </section>
+                <section class="tsd-index-section">
+                  <h3>Type aliases</h3>
+                  <ul class="tsd-index-list">
+                    <li class="tsd-kind-type-alias tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#method"
+                        class="tsd-kind-icon"
+                        >Method</a
+                      >
+                    </li>
+                  </ul>
+                </section>
+                <section class="tsd-index-section">
+                  <h3>Functions</h3>
+                  <ul class="tsd-index-list">
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#apifile"
+                        class="tsd-kind-icon"
+                        >api<wbr />File</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#createfile"
+                        class="tsd-kind-icon"
+                        >create<wbr />File</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#createspecwithglobaltag"
+                        class="tsd-kind-icon"
+                        >create<wbr />Spec<wbr />With<wbr />Global<wbr />Tag</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#filterduplicateparams"
+                        class="tsd-kind-icon"
+                        >filter<wbr />Duplicate<wbr />Params</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#generate"
+                        class="tsd-kind-icon"
+                        >generate</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#getoperation"
+                        class="tsd-kind-icon"
+                        >get<wbr />Operation</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#gettype"
+                        class="tsd-kind-icon"
+                        >get<wbr />Type</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#indexfile"
+                        class="tsd-kind-icon"
+                        >index<wbr />File</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#isreferenceobject"
+                        class="tsd-kind-icon"
+                        >is<wbr />Reference<wbr />Object</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#methods"
+                        class="tsd-kind-icon"
+                        >methods</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#parsealloperations"
+                        class="tsd-kind-icon"
+                        >parse<wbr />All<wbr />Operations</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#parseopenapidocument"
+                        class="tsd-kind-icon"
+                        >parse<wbr />Open<wbr />Api<wbr />Document</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#parseoperation"
+                        class="tsd-kind-icon"
+                        >parse<wbr />Operation</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#parseoperationname"
+                        class="tsd-kind-icon"
+                        >parse<wbr />Operation<wbr />Name</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#parseparameters"
+                        class="tsd-kind-icon"
+                        >parse<wbr />Parameters</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#parserequestbody"
+                        class="tsd-kind-icon"
+                        >parse<wbr />Request<wbr />Body</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#parsetypename"
+                        class="tsd-kind-icon"
+                        >parse<wbr />Type<wbr />Name</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#renameequallynamedparams"
+                        class="tsd-kind-icon"
+                        >rename<wbr />Equally<wbr />Named<wbr />Params</a
+                      >
+                    </li>
+                    <li
+                      class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"
+                    >
+                      <a
+                        href="sap_cloud_sdk_openapi_generator#resolveobject"
+                        class="tsd-kind-icon"
+                        >resolve<wbr />Object</a
+                      >
+                    </li>
+                  </ul>
+                </section>
+              </div>
+            </section>
+          </section>
+          <section class="tsd-panel-group tsd-member-group">
+            <h2>Type aliases</h2>
+            <section
+              class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module"
+            >
+              <a name="method" class="tsd-anchor"></a>
+              <h3>Method</h3>
+              <div class="tsd-signature tsd-kind-icon">
+                Method<span class="tsd-signature-symbol">:</span>
+                <span class="tsd-signature-symbol">typeof </span
+                ><span class="tsd-signature-type">supportedMethods</span
+                ><span class="tsd-signature-symbol">[</span
+                ><span class="tsd-signature-symbol">keyof </span
+                ><span class="tsd-signature-symbol">typeof </span
+                ><span class="tsd-signature-type">supportedMethods</span
+                ><span class="tsd-signature-symbol">]</span>
+              </div>
+              <aside class="tsd-sources">
+                <ul>
+                  <li>
+                    Defined in
+                    <a
+                      href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/openapi-types.ts#L39"
+                      >packages/openapi-generator/src/openapi-types.ts:39</a
+                    >
+                  </li>
+                </ul>
+              </aside>
+              <div class="tsd-comment tsd-typography">
+                <dl class="tsd-comment-tags">
+                  <dt>experimental</dt>
+                  <dd>
+                    <p>
+                      This API is experimental and might change in newer
+                      versions. Use with caution. Methods supported by OpenApi
+                      and SAP Cloud SDK.
+                    </p>
+                  </dd>
+                </dl>
+              </div>
+            </section>
+          </section>
+          <section class="tsd-panel-group tsd-member-group">
+            <h2>Functions</h2>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="apifile" class="tsd-anchor"></a>
+              <h3>api<wbr />File</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  api<wbr />File<span class="tsd-signature-symbol">(</span
+                  >openApiDocument<span class="tsd-signature-symbol">: </span
+                  ><a
+                    href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument"
+                    class="tsd-signature-type"
+                    >OpenApiDocument</a
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/wrapper-files/api-file.ts#L10"
+                          >packages/openapi-generator/src/wrapper-files/api-file.ts:10</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <dl class="tsd-comment-tags">
+                      <dt>experimental</dt>
+                      <dd>
+                        <p>
+                          This API is experimental and might change in newer
+                          versions. Use with caution. Get the content of the SAP
+                          Cloud SDK API wrapper.
+                        </p>
+                      </dd>
+                    </dl>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        openApiDocument:
+                        <a
+                          href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument"
+                          class="tsd-signature-type"
+                          >OpenApiDocument</a
+                        >
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Parsed service.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">string</span>
+                  </h4>
+                  <p>The generated code for the SDK API wrapper.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="createfile" class="tsd-anchor"></a>
+              <h3>create<wbr />File</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  create<wbr />File<span class="tsd-signature-symbol">(</span
+                  >directoryPath<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>, fileName<span
+                    class="tsd-signature-symbol"
+                    >: </span
+                  ><span class="tsd-signature-type">string</span>, content<span
+                    class="tsd-signature-symbol"
+                    >: </span
+                  ><span class="tsd-signature-type">string</span>,
+                  overwrite<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">boolean</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Promise</span
+                  ><span class="tsd-signature-symbol">&lt;</span
+                  ><span class="tsd-signature-type">void</span
+                  ><span class="tsd-signature-symbol">&gt;</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/wrapper-files/create-file.ts#L14"
+                          >packages/openapi-generator/src/wrapper-files/create-file.ts:14</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <dl class="tsd-comment-tags">
+                      <dt>experimental</dt>
+                      <dd>
+                        <p>
+                          This API is experimental and might change in newer
+                          versions. Use with caution. Write a file generated by
+                          the SAP Cloud SDK for JavaScript containing a
+                          copyright statement.
+                        </p>
+                      </dd>
+                    </dl>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        directoryPath:
+                        <span class="tsd-signature-type">string</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Path of the directory to write to.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        fileName: <span class="tsd-signature-type">string</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Name of the file to write</p>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        content: <span class="tsd-signature-type">string</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>
+                          Content to be written to the file. A copyright
+                          statement will be added to this.
+                        </p>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        overwrite:
+                        <span class="tsd-signature-type">boolean</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>
+                          Whether or not existing files should be overwritten.
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">Promise</span
+                    ><span class="tsd-signature-symbol">&lt;</span
+                    ><span class="tsd-signature-type">void</span
+                    ><span class="tsd-signature-symbol">&gt;</span>
+                  </h4>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="createspecwithglobaltag" class="tsd-anchor"></a>
+              <h3>create<wbr />Spec<wbr />With<wbr />Global<wbr />Tag</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  create<wbr />Spec<wbr />With<wbr />Global<wbr />Tag<span
+                    class="tsd-signature-symbol"
+                    >(</span
+                  >openApiDocument<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Document</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Document</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/generator.ts#L144"
+                          >packages/openapi-generator/src/generator.ts:144</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>
+                        Workaround for OpenApi generation to build one and only
+                        one API for all tags. Modify spec to contain only one
+                        &#39;default&#39; tag.
+                      </p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        openApiDocument:
+                        <span class="tsd-signature-type">Document</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>OpenApi JSON document.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">Document</span>
+                  </h4>
+                  <p>The modified document.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="filterduplicateparams" class="tsd-anchor"></a>
+              <h3>filter<wbr />Duplicate<wbr />Params</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  filter<wbr />Duplicate<wbr />Params<span
+                    class="tsd-signature-symbol"
+                    >(</span
+                  >parameters<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">ParameterObject</span
+                  ><span class="tsd-signature-symbol">[]</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">ParameterObject</span
+                  ><span class="tsd-signature-symbol">[]</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/parameters.ts#L32"
+                          >packages/openapi-generator/src/parser/parameters.ts:32</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        parameters:
+                        <span class="tsd-signature-type">ParameterObject</span
+                        ><span class="tsd-signature-symbol">[]</span>
+                      </h5>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns
+                    <span class="tsd-signature-type">ParameterObject</span
+                    ><span class="tsd-signature-symbol">[]</span>
+                  </h4>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="generate" class="tsd-anchor"></a>
+              <h3>generate</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  generate<span class="tsd-signature-symbol">(</span
+                  >options<span class="tsd-signature-symbol">: </span
+                  ><a
+                    href="../interfaces/sap_cloud_sdk_openapi_generator.generatoroptions"
+                    class="tsd-signature-type"
+                    >GeneratorOptions</a
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Promise</span
+                  ><span class="tsd-signature-symbol">&lt;</span
+                  ><span class="tsd-signature-type">void</span
+                  ><span class="tsd-signature-symbol">&gt;</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/generator.ts#L22"
+                          >packages/openapi-generator/src/generator.ts:22</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <dl class="tsd-comment-tags">
+                      <dt>experimental</dt>
+                      <dd>
+                        <p>
+                          This API is experimental and might change in newer
+                          versions. Use with caution. Main entry point for
+                          OpenApi client generation. Generates files using the
+                          OpenApi Generator CLI and wraps the resulting API in
+                          an SDK compatible API.
+                        </p>
+                      </dd>
+                    </dl>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        options:
+                        <a
+                          href="../interfaces/sap_cloud_sdk_openapi_generator.generatoroptions"
+                          class="tsd-signature-type"
+                          >GeneratorOptions</a
+                        >
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Options to configure generation.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">Promise</span
+                    ><span class="tsd-signature-symbol">&lt;</span
+                    ><span class="tsd-signature-type">void</span
+                    ><span class="tsd-signature-symbol">&gt;</span>
+                  </h4>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="getoperation" class="tsd-anchor"></a>
+              <h3>get<wbr />Operation</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  get<wbr />Operation<span class="tsd-signature-symbol">(</span
+                  >pathItem<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">PathItemObject</span>,
+                  method<span class="tsd-signature-symbol">: </span
+                  ><a
+                    href="sap_cloud_sdk_openapi_generator#method"
+                    class="tsd-signature-type"
+                    >Method</a
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">OperationObject</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/operation.ts#L36"
+                          >packages/openapi-generator/src/parser/operation.ts:36</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>
+                        Get the operation for the given method and merge path
+                        parameters with operation parameters.
+                      </p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        pathItem:
+                        <span class="tsd-signature-type">PathItemObject</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Path Item to get the operation from.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        method:
+                        <a
+                          href="sap_cloud_sdk_openapi_generator#method"
+                          class="tsd-signature-type"
+                          >Method</a
+                        >
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>HTTP method to get the operation for.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns
+                    <span class="tsd-signature-type">OperationObject</span>
+                  </h4>
+                  <p>The sanitized original operation.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="gettype" class="tsd-anchor"></a>
+              <h3>get<wbr />Type</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  get<wbr />Type<span class="tsd-signature-symbol">(</span
+                  >originalType<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span
+                  ><span class="tsd-signature-symbol"> | </span
+                  ><span class="tsd-signature-type">undefined</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/type-mapping.ts#L44"
+                          >packages/openapi-generator/src/parser/type-mapping.ts:44</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>
+                        Get the mapped TypeScript type for the given original
+                        OpenApi type.
+                      </p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        originalType:
+                        <span class="tsd-signature-type">string</span
+                        ><span class="tsd-signature-symbol"> | </span
+                        ><span class="tsd-signature-type">undefined</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Original OpenApi type, to get a mapping for.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">string</span>
+                  </h4>
+                  <p>The mapped TypeScript type.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="indexfile" class="tsd-anchor"></a>
+              <h3>index<wbr />File</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  index<wbr />File<span class="tsd-signature-symbol">(</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/wrapper-files/index-file.ts#L8"
+                          >packages/openapi-generator/src/wrapper-files/index-file.ts:8</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <dl class="tsd-comment-tags">
+                      <dt>experimental</dt>
+                      <dd>
+                        <p>
+                          This API is experimental and might change in newer
+                          versions. Use with caution. Generate the index file to
+                          expose the SAP Cloud SDK API and models.
+                        </p>
+                      </dd>
+                    </dl>
+                  </div>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">string</span>
+                  </h4>
+                  <p>The index file contents.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="isreferenceobject" class="tsd-anchor"></a>
+              <h3>is<wbr />Reference<wbr />Object</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  is<wbr />Reference<wbr />Object<span
+                    class="tsd-signature-symbol"
+                    >(</span
+                  >obj<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">any</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">obj</span
+                  ><span class="tsd-signature-symbol"> is </span
+                  ><span class="tsd-signature-type">ReferenceObject</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/refs.ts#L10"
+                          >packages/openapi-generator/src/parser/refs.ts:10</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>
+                        Typeguard to check wheter an object is of type
+                        <code>OpenAPIV3.ReferenceObject</code>.
+                      </p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>obj: <span class="tsd-signature-type">any</span></h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Object to check.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">obj</span
+                    ><span class="tsd-signature-symbol"> is </span
+                    ><span class="tsd-signature-type">ReferenceObject</span>
+                  </h4>
+                  <p>
+                    True if the object is a reference object, false otherwise.
+                  </p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="methods" class="tsd-anchor"></a>
+              <h3>methods</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  methods<span class="tsd-signature-symbol">(</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><a
+                    href="sap_cloud_sdk_openapi_generator#method"
+                    class="tsd-signature-type"
+                    >Method</a
+                  ><span class="tsd-signature-symbol">[]</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/openapi-types.ts#L46"
+                          >packages/openapi-generator/src/openapi-types.ts:46</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <dl class="tsd-comment-tags">
+                      <dt>experimental</dt>
+                      <dd>
+                        <p>
+                          This API is experimental and might change in newer
+                          versions. Use with caution. Get supported methods.
+                        </p>
+                      </dd>
+                    </dl>
+                  </div>
+                  <h4 class="tsd-returns-title">
+                    Returns
+                    <a
+                      href="sap_cloud_sdk_openapi_generator#method"
+                      class="tsd-signature-type"
+                      >Method</a
+                    ><span class="tsd-signature-symbol">[]</span>
+                  </h4>
+                  <p>Methods supported by OpenApi and SAP Cloud SDK.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="parsealloperations" class="tsd-anchor"></a>
+              <h3>parse<wbr />All<wbr />Operations</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  parse<wbr />All<wbr />Operations<span
+                    class="tsd-signature-symbol"
+                    >(</span
+                  >document<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Document</span>, refs<span
+                    class="tsd-signature-symbol"
+                    >: </span
+                  ><span class="tsd-signature-type">$Refs</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><a
+                    href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation"
+                    class="tsd-signature-type"
+                    >OpenApiOperation</a
+                  ><span class="tsd-signature-symbol">[]</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/document.ts#L28"
+                          >packages/openapi-generator/src/parser/document.ts:28</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>
+                        Collect and parse all operations of an
+                        <code>OpenAPIV3.Document</code>.
+                      </p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        document:
+                        <span class="tsd-signature-type">Document</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>The OpenApi document to parse.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        refs: <span class="tsd-signature-type">$Refs</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>
+                          List of cross references that can occur in the
+                          document.
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns
+                    <a
+                      href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation"
+                      class="tsd-signature-type"
+                      >OpenApiOperation</a
+                    ><span class="tsd-signature-symbol">[]</span>
+                  </h4>
+                  <p>A flat list of parsed operations.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="parseopenapidocument" class="tsd-anchor"></a>
+              <h3>parse<wbr />Open<wbr />Api<wbr />Document</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  parse<wbr />Open<wbr />Api<wbr />Document<span
+                    class="tsd-signature-symbol"
+                    >(</span
+                  >filePath<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Promise</span
+                  ><span class="tsd-signature-symbol">&lt;</span
+                  ><a
+                    href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument"
+                    class="tsd-signature-type"
+                    >OpenApiDocument</a
+                  ><span class="tsd-signature-symbol">&gt;</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/document.ts#L8"
+                          >packages/openapi-generator/src/parser/document.ts:8</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        filePath: <span class="tsd-signature-type">string</span>
+                      </h5>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">Promise</span
+                    ><span class="tsd-signature-symbol">&lt;</span
+                    ><a
+                      href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument"
+                      class="tsd-signature-type"
+                      >OpenApiDocument</a
+                    ><span class="tsd-signature-symbol">&gt;</span>
+                  </h4>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="parseoperation" class="tsd-anchor"></a>
+              <h3>parse<wbr />Operation</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  parse<wbr />Operation<span class="tsd-signature-symbol"
+                    >(</span
+                  >pattern<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>, pathItem<span
+                    class="tsd-signature-symbol"
+                    >: </span
+                  ><span class="tsd-signature-type">PathItemObject</span>,
+                  method<span class="tsd-signature-symbol">: </span
+                  ><a
+                    href="sap_cloud_sdk_openapi_generator#method"
+                    class="tsd-signature-type"
+                    >Method</a
+                  >, refs<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">$Refs</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><a
+                    href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation"
+                    class="tsd-signature-type"
+                    >OpenApiOperation</a
+                  >
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/operation.ts#L8"
+                          >packages/openapi-generator/src/parser/operation.ts:8</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        pattern: <span class="tsd-signature-type">string</span>
+                      </h5>
+                    </li>
+                    <li>
+                      <h5>
+                        pathItem:
+                        <span class="tsd-signature-type">PathItemObject</span>
+                      </h5>
+                    </li>
+                    <li>
+                      <h5>
+                        method:
+                        <a
+                          href="sap_cloud_sdk_openapi_generator#method"
+                          class="tsd-signature-type"
+                          >Method</a
+                        >
+                      </h5>
+                    </li>
+                    <li>
+                      <h5>
+                        refs: <span class="tsd-signature-type">$Refs</span>
+                      </h5>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns
+                    <a
+                      href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation"
+                      class="tsd-signature-type"
+                      >OpenApiOperation</a
+                    >
+                  </h4>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="parseoperationname" class="tsd-anchor"></a>
+              <h3>parse<wbr />Operation<wbr />Name</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  parse<wbr />Operation<wbr />Name<span
+                    class="tsd-signature-symbol"
+                    >(</span
+                  >operation<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">OperationObject</span>,
+                  pattern<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>, method<span
+                    class="tsd-signature-symbol"
+                    >: </span
+                  ><a
+                    href="sap_cloud_sdk_openapi_generator#method"
+                    class="tsd-signature-type"
+                    >Method</a
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/operation.ts#L53"
+                          >packages/openapi-generator/src/parser/operation.ts:53</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        operation:
+                        <span class="tsd-signature-type">OperationObject</span>
+                      </h5>
+                    </li>
+                    <li>
+                      <h5>
+                        pattern: <span class="tsd-signature-type">string</span>
+                      </h5>
+                    </li>
+                    <li>
+                      <h5>
+                        method:
+                        <a
+                          href="sap_cloud_sdk_openapi_generator#method"
+                          class="tsd-signature-type"
+                          >Method</a
+                        >
+                      </h5>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">string</span>
+                  </h4>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="parseparameters" class="tsd-anchor"></a>
+              <h3>parse<wbr />Parameters</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  parse<wbr />Parameters<span class="tsd-signature-symbol"
+                    >(</span
+                  >operation<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">OperationObject</span>,
+                  refs<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">$Refs</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><a
+                    href="../interfaces/sap_cloud_sdk_openapi_generator.openapiparameter"
+                    class="tsd-signature-type"
+                    >OpenApiParameter</a
+                  ><span class="tsd-signature-symbol">[]</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/parameters.ts#L14"
+                          >packages/openapi-generator/src/parser/parameters.ts:14</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>Parse parameters of an operation.</p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        operation:
+                        <span class="tsd-signature-type">OperationObject</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>The original operation definition.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        refs: <span class="tsd-signature-type">$Refs</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>
+                          List of cross references that can occur in the
+                          document.
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns
+                    <a
+                      href="../interfaces/sap_cloud_sdk_openapi_generator.openapiparameter"
+                      class="tsd-signature-type"
+                      >OpenApiParameter</a
+                    ><span class="tsd-signature-symbol">[]</span>
+                  </h4>
+                  <p>A list of parsed parameters.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="parserequestbody" class="tsd-anchor"></a>
+              <h3>parse<wbr />Request<wbr />Body</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  parse<wbr />Request<wbr />Body<span
+                    class="tsd-signature-symbol"
+                    >(</span
+                  >requestBody<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">ReferenceObject</span
+                  ><span class="tsd-signature-symbol"> | </span
+                  ><span class="tsd-signature-type">RequestBodyObject</span
+                  ><span class="tsd-signature-symbol"> | </span
+                  ><span class="tsd-signature-type">undefined</span>, refs<span
+                    class="tsd-signature-symbol"
+                    >: </span
+                  ><span class="tsd-signature-type">$Refs</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><a
+                    href="../interfaces/sap_cloud_sdk_openapi_generator.openapirequestbody"
+                    class="tsd-signature-type"
+                    >OpenApiRequestBody</a
+                  ><span class="tsd-signature-symbol"> | </span
+                  ><span class="tsd-signature-type">undefined</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/request-body.ts#L15"
+                          >packages/openapi-generator/src/parser/request-body.ts:15</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>Parse the request body.</p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        requestBody:
+                        <span class="tsd-signature-type">ReferenceObject</span
+                        ><span class="tsd-signature-symbol"> | </span
+                        ><span class="tsd-signature-type"
+                          >RequestBodyObject</span
+                        ><span class="tsd-signature-symbol"> | </span
+                        ><span class="tsd-signature-type">undefined</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Original request body to parse.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        refs: <span class="tsd-signature-type">$Refs</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>
+                          List of cross references that can occur in the
+                          document.
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns
+                    <a
+                      href="../interfaces/sap_cloud_sdk_openapi_generator.openapirequestbody"
+                      class="tsd-signature-type"
+                      >OpenApiRequestBody</a
+                    ><span class="tsd-signature-symbol"> | </span
+                    ><span class="tsd-signature-type">undefined</span>
+                  </h4>
+                  <p>The parsed request body.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="parsetypename" class="tsd-anchor"></a>
+              <h3>parse<wbr />Type<wbr />Name</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  parse<wbr />Type<wbr />Name<span class="tsd-signature-symbol"
+                    >(</span
+                  >obj<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">ReferenceObject</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/refs.ts#L19"
+                          >packages/openapi-generator/src/parser/refs.ts:19</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>Parse the type name of a reference object.</p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        obj:
+                        <span class="tsd-signature-type">ReferenceObject</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Reference object to get the type name from.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">string</span>
+                  </h4>
+                  <p>Parsed type name.</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="renameequallynamedparams" class="tsd-anchor"></a>
+              <h3>rename<wbr />Equally<wbr />Named<wbr />Params</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  rename<wbr />Equally<wbr />Named<wbr />Params<span
+                    class="tsd-signature-symbol"
+                    >(</span
+                  >parameters<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">ParameterObject</span
+                  ><span class="tsd-signature-symbol">[]</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">ParameterObject</span
+                  ><span class="tsd-signature-symbol">[]</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/parameters.ts#L48"
+                          >packages/openapi-generator/src/parser/parameters.ts:48</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        parameters:
+                        <span class="tsd-signature-type">ParameterObject</span
+                        ><span class="tsd-signature-symbol">[]</span>
+                      </h5>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns
+                    <span class="tsd-signature-type">ParameterObject</span
+                    ><span class="tsd-signature-symbol">[]</span>
+                  </h4>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"
+            >
+              <a name="resolveobject" class="tsd-anchor"></a>
+              <h3>resolve<wbr />Object</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  resolve<wbr />Object&lt;T&gt;<span
+                    class="tsd-signature-symbol"
+                    >(</span
+                  >obj<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">T</span
+                  ><span class="tsd-signature-symbol"> | </span
+                  ><span class="tsd-signature-type">ReferenceObject</span>,
+                  refs<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">$Refs</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">T</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/SAP/cloud-sdk-js/blob/1e1cb0d/packages/openapi-generator/src/parser/refs.ts#L31"
+                          >packages/openapi-generator/src/parser/refs.ts:31</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>
+                        Check whether the given object is a reference object and
+                        resolve if necessary. This operates only on the current
+                        level and does not resolve the object recursively.
+                      </p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-type-parameters-title">Type parameters</h4>
+                  <ul class="tsd-type-parameters">
+                    <li>
+                      <h4>T</h4>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        obj: <span class="tsd-signature-type">T</span
+                        ><span class="tsd-signature-symbol"> | </span
+                        ><span class="tsd-signature-type">ReferenceObject</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>Object to resolve if necessary.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        refs: <span class="tsd-signature-type">$Refs</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <p>References to resolve by.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">T</span>
+                  </h4>
+                  <p>A resolved object.</p>
+                </li>
+              </ul>
+            </section>
+          </section>
+        </div>
+        <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+          <nav class="tsd-navigation primary">
+            <ul>
+              <li class="globals">
+                <a href="../globals.html"><em>Globals</em></a>
+              </li>
+              <li class="tsd-kind-module">
+                <a href="sap_cloud_sdk_analytics"
+                  >@sap-<wbr />cloud-<wbr />sdk/analytics</a
+                >
+              </li>
+              <li class="tsd-kind-module">
+                <a href="sap_cloud_sdk_core"
+                  >@sap-<wbr />cloud-<wbr />sdk/core</a
+                >
+              </li>
+              <li class="tsd-kind-module">
+                <a href="sap_cloud_sdk_generator"
+                  >@sap-<wbr />cloud-<wbr />sdk/generator</a
+                >
+              </li>
+              <li class="current tsd-kind-module">
+                <a href="sap_cloud_sdk_openapi_generator"
+                  >@sap-<wbr />cloud-<wbr />sdk/openapi-<wbr />generator</a
+                >
+              </li>
+              <li class="tsd-kind-module">
+                <a href="sap_cloud_sdk_test_util"
+                  >@sap-<wbr />cloud-<wbr />sdk/test-<wbr />util</a
+                >
+              </li>
+              <li class="tsd-kind-module">
+                <a href="sap_cloud_sdk_util"
+                  >@sap-<wbr />cloud-<wbr />sdk/util</a
+                >
+              </li>
+            </ul>
+          </nav>
+          <nav class="tsd-navigation secondary menu-sticky">
+            <ul class="before-current">
+              <li class="tsd-kind-interface tsd-parent-kind-module">
+                <a
+                  href="../interfaces/sap_cloud_sdk_openapi_generator.generatoroptions"
+                  class="tsd-kind-icon"
+                  >Generator<wbr />Options</a
+                >
+              </li>
+              <li class="tsd-kind-interface tsd-parent-kind-module">
+                <a
+                  href="../interfaces/sap_cloud_sdk_openapi_generator.openapidocument"
+                  class="tsd-kind-icon"
+                  >Open<wbr />Api<wbr />Document</a
+                >
+              </li>
+              <li class="tsd-kind-interface tsd-parent-kind-module">
+                <a
+                  href="../interfaces/sap_cloud_sdk_openapi_generator.openapioperation"
+                  class="tsd-kind-icon"
+                  >Open<wbr />Api<wbr />Operation</a
+                >
+              </li>
+              <li class="tsd-kind-interface tsd-parent-kind-module">
+                <a
+                  href="../interfaces/sap_cloud_sdk_openapi_generator.openapiparameter"
+                  class="tsd-kind-icon"
+                  >Open<wbr />Api<wbr />Parameter</a
+                >
+              </li>
+              <li class="tsd-kind-interface tsd-parent-kind-module">
+                <a
+                  href="../interfaces/sap_cloud_sdk_openapi_generator.openapirequestbody"
+                  class="tsd-kind-icon"
+                  >Open<wbr />Api<wbr />Request<wbr />Body</a
+                >
+              </li>
+              <li class="tsd-kind-type-alias tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#method"
+                  class="tsd-kind-icon"
+                  >Method</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#apifile"
+                  class="tsd-kind-icon"
+                  >api<wbr />File</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#createfile"
+                  class="tsd-kind-icon"
+                  >create<wbr />File</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#createspecwithglobaltag"
+                  class="tsd-kind-icon"
+                  >create<wbr />Spec<wbr />With<wbr />Global<wbr />Tag</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#filterduplicateparams"
+                  class="tsd-kind-icon"
+                  >filter<wbr />Duplicate<wbr />Params</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#generate"
+                  class="tsd-kind-icon"
+                  >generate</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#getoperation"
+                  class="tsd-kind-icon"
+                  >get<wbr />Operation</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#gettype"
+                  class="tsd-kind-icon"
+                  >get<wbr />Type</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#indexfile"
+                  class="tsd-kind-icon"
+                  >index<wbr />File</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#isreferenceobject"
+                  class="tsd-kind-icon"
+                  >is<wbr />Reference<wbr />Object</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#methods"
+                  class="tsd-kind-icon"
+                  >methods</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#parsealloperations"
+                  class="tsd-kind-icon"
+                  >parse<wbr />All<wbr />Operations</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#parseopenapidocument"
+                  class="tsd-kind-icon"
+                  >parse<wbr />Open<wbr />Api<wbr />Document</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#parseoperation"
+                  class="tsd-kind-icon"
+                  >parse<wbr />Operation</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#parseoperationname"
+                  class="tsd-kind-icon"
+                  >parse<wbr />Operation<wbr />Name</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#parseparameters"
+                  class="tsd-kind-icon"
+                  >parse<wbr />Parameters</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#parserequestbody"
+                  class="tsd-kind-icon"
+                  >parse<wbr />Request<wbr />Body</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#parsetypename"
+                  class="tsd-kind-icon"
+                  >parse<wbr />Type<wbr />Name</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a
+                  href="sap_cloud_sdk_openapi_generator#renameequallynamedparams"
+                  class="tsd-kind-icon"
+                  >rename<wbr />Equally<wbr />Named<wbr />Params</a
+                >
+              </li>
+              <li
+                class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"
+              >
+                <a
+                  href="sap_cloud_sdk_openapi_generator#resolveobject"
+                  class="tsd-kind-icon"
+                  >resolve<wbr />Object</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="container">
+        <h2>Legend</h2>
+        <div class="tsd-legend-group">
+          <ul class="tsd-legend">
+            <li class="tsd-kind-object-literal">
+              <span class="tsd-kind-icon">Object literal</span>
+            </li>
+            <li class="tsd-kind-variable">
+              <span class="tsd-kind-icon">Variable</span>
+            </li>
+            <li class="tsd-kind-function">
+              <span class="tsd-kind-icon">Function</span>
+            </li>
+            <li class="tsd-kind-function tsd-has-type-parameter">
+              <span class="tsd-kind-icon">Function with type parameter</span>
+            </li>
+            <li class="tsd-kind-type-alias">
+              <span class="tsd-kind-icon">Type alias</span>
+            </li>
+            <li class="tsd-kind-type-alias tsd-has-type-parameter">
+              <span class="tsd-kind-icon">Type alias with type parameter</span>
+            </li>
+          </ul>
+          <ul class="tsd-legend">
+            <li class="tsd-kind-interface">
+              <span class="tsd-kind-icon">Interface</span>
+            </li>
+            <li class="tsd-kind-interface tsd-has-type-parameter">
+              <span class="tsd-kind-icon">Interface with type parameter</span>
+            </li>
+          </ul>
+          <ul class="tsd-legend">
+            <li class="tsd-kind-class">
+              <span class="tsd-kind-icon">Class</span>
+            </li>
+            <li class="tsd-kind-class tsd-has-type-parameter">
+              <span class="tsd-kind-icon">Class with type parameter</span>
+            </li>
+          </ul>
+          <ul class="tsd-legend">
+            <li class="tsd-kind-enum">
+              <span class="tsd-kind-icon">Enumeration</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="container">
+        <p>
+          Copyright Ⓒ 2020 SAP SE or an SAP affiliate company. All rights
+          reserved.
+        </p>
+      </div>
+    </footer>
+    <div class="overlay"></div>
+    <script src="../assets/js/main.js"></script>
+  </body>
 </html>

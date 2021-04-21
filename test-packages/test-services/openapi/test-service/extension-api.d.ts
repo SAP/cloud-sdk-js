@@ -1,7 +1,18 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
-import { ExtensionApi } from './openapi/api';
-export declare const TestServiceExtensionApi: {
-    niceGetFunction: () => OpenApiRequestBuilder<ExtensionApi, "niceGetFunction">;
-    nicePostFunction: () => OpenApiRequestBuilder<ExtensionApi, "nicePostFunction">;
+/**
+ * Representation of the 'ExtensionApi'.
+ * This API is part of the 'TestService' service.
+ */
+export declare const ExtensionApi: {
+  /**
+   * Create a request builder for execution of get requests to the '/test-cases/extension' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  niceGetFunction: () => OpenApiRequestBuilder<any>;
+  /**
+   * Create a request builder for execution of post requests to the '/test-cases/extension' endpoint.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  nicePostFunction: () => OpenApiRequestBuilder<any>;
 };
 //# sourceMappingURL=extension-api.d.ts.map

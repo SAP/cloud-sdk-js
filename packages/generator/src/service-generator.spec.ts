@@ -1,4 +1,6 @@
+import { resolve } from 'path';
 import { createOptions } from '../test/test-util/create-generator-options';
+import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { GlobalNameFormatter } from './global-name-formatter';
 import { ServiceMapping } from './service-mapping';
 import { VdmReturnTypeCategory, VdmProperty } from './vdm-types';
@@ -10,8 +12,12 @@ describe('service-generator', () => {
       it('namespace by default', () => {
         const serviceMetadata = parseService(
           {
-            edmxPath:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
+            edmxPath: resolve(
+              oDataServiceSpecs,
+              'v2',
+              'API_TEST_SRV',
+              'API_TEST_SRV.edmx'
+            )
           },
           createOptions(),
           {},
@@ -29,8 +35,12 @@ describe('service-generator', () => {
 
         const serviceMetadata = parseService(
           {
-            edmxPath:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV/API_TEST_SRV.edmx'
+            edmxPath: resolve(
+              oDataServiceSpecs,
+              'v2',
+              'API_TEST_SRV',
+              'API_TEST_SRV.edmx'
+            )
           },
           createOptions(),
           {
@@ -53,8 +63,7 @@ describe('service-generator', () => {
       it('generates vdm from edmx', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -69,8 +78,7 @@ describe('service-generator', () => {
       it('generates vdm from edmx using swagger', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: true
           })
         );
@@ -84,7 +92,7 @@ describe('service-generator', () => {
       it('entity properties are read correctly', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir: '../../test-resources/odata-service-specs/v2/API_TEST_SRV'
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')
           })
         );
         const properties = services[0].entities.find(
@@ -132,7 +140,7 @@ describe('service-generator', () => {
       it('entities are read correctly', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir: '../../test-resources/odata-service-specs/v2/API_TEST_SRV'
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')
           })
         );
 
@@ -222,7 +230,7 @@ describe('service-generator', () => {
       it('complex types are parsed correctly', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir: '../../test-resources/odata-service-specs/v2/API_TEST_SRV'
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV')
           })
         );
 
@@ -252,8 +260,7 @@ describe('service-generator', () => {
       it('complex type properties are read correctly', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -283,8 +290,7 @@ describe('service-generator', () => {
       it('does not clash with complex type builder function', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -318,8 +324,7 @@ describe('service-generator', () => {
       it('does not clash with reserved JavaScript keywords', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -334,8 +339,7 @@ describe('service-generator', () => {
       it('function imports edm return types are read correctly', () => {
         const [service] = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -366,8 +370,7 @@ describe('service-generator', () => {
       it('should parse C4C service definitions with proper class names.', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -390,8 +393,7 @@ describe('service-generator', () => {
       it('should skip entity types when not defined in any entity sets', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v2/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -406,8 +408,11 @@ describe('service-generator', () => {
       it('parses multiple schemas', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v2/API_MULTIPLE_SCHEMAS_SRV',
+            inputDir: resolve(
+              oDataServiceSpecs,
+              'v2',
+              'API_MULTIPLE_SCHEMAS_SRV'
+            ),
             useSwagger: false
           })
         );
@@ -422,7 +427,7 @@ describe('service-generator', () => {
       it('enum property is read correctly', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir: '../../test-resources/odata-service-specs/v4/API_TEST_SRV'
+            inputDir: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV')
           })
         );
         const properties = services[0].entities.find(
@@ -451,8 +456,7 @@ describe('service-generator', () => {
       it('v4 function imports edm return types are read correctly', () => {
         const [service] = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v4/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV'),
             useSwagger: false
           })
         );
@@ -470,8 +474,7 @@ describe('service-generator', () => {
       it('should parse actions imports correctly', () => {
         const services = parseAllServices(
           createOptions({
-            inputDir:
-              '../../test-resources/odata-service-specs/v4/API_TEST_SRV',
+            inputDir: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV'),
             useSwagger: false
           })
         );

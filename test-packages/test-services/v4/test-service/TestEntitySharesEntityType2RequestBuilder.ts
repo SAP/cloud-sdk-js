@@ -1,9 +1,16 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder, GetAllRequestBuilderV4, GetByKeyRequestBuilderV4, CreateRequestBuilderV4, UpdateRequestBuilderV4, DeleteRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import {
+  RequestBuilder,
+  GetAllRequestBuilderV4,
+  GetByKeyRequestBuilderV4,
+  CreateRequestBuilderV4,
+  UpdateRequestBuilderV4,
+  DeleteRequestBuilderV4
+} from '@sap-cloud-sdk/core';
 import { TestEntitySharesEntityType2 } from './TestEntitySharesEntityType2';
 
 /**
@@ -15,8 +22,12 @@ export class TestEntitySharesEntityType2RequestBuilder extends RequestBuilder<Te
    * @param keyProperty Key property. See [[TestEntitySharesEntityType2.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntitySharesEntityType2` entity based on its keys.
    */
-  getByKey(keyProperty: string): GetByKeyRequestBuilderV4<TestEntitySharesEntityType2> {
-    return new GetByKeyRequestBuilderV4(TestEntitySharesEntityType2, { KeyProperty: keyProperty });
+  getByKey(
+    keyProperty: string
+  ): GetByKeyRequestBuilderV4<TestEntitySharesEntityType2> {
+    return new GetByKeyRequestBuilderV4(TestEntitySharesEntityType2, {
+      KeyProperty: keyProperty
+    });
   }
 
   /**
@@ -32,7 +43,9 @@ export class TestEntitySharesEntityType2RequestBuilder extends RequestBuilder<Te
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntitySharesEntityType2`.
    */
-  create(entity: TestEntitySharesEntityType2): CreateRequestBuilderV4<TestEntitySharesEntityType2> {
+  create(
+    entity: TestEntitySharesEntityType2
+  ): CreateRequestBuilderV4<TestEntitySharesEntityType2> {
     return new CreateRequestBuilderV4(TestEntitySharesEntityType2, entity);
   }
 
@@ -41,7 +54,9 @@ export class TestEntitySharesEntityType2RequestBuilder extends RequestBuilder<Te
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntitySharesEntityType2`.
    */
-  update(entity: TestEntitySharesEntityType2): UpdateRequestBuilderV4<TestEntitySharesEntityType2> {
+  update(
+    entity: TestEntitySharesEntityType2
+  ): UpdateRequestBuilderV4<TestEntitySharesEntityType2> {
     return new UpdateRequestBuilderV4(TestEntitySharesEntityType2, entity);
   }
 
@@ -50,14 +65,25 @@ export class TestEntitySharesEntityType2RequestBuilder extends RequestBuilder<Te
    * @param keyProperty Key property. See [[TestEntitySharesEntityType2.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntitySharesEntityType2`.
    */
-  delete(keyProperty: string): DeleteRequestBuilderV4<TestEntitySharesEntityType2>;
+  delete(
+    keyProperty: string
+  ): DeleteRequestBuilderV4<TestEntitySharesEntityType2>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntitySharesEntityType2`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntitySharesEntityType2` by taking the entity as a parameter.
    */
-  delete(entity: TestEntitySharesEntityType2): DeleteRequestBuilderV4<TestEntitySharesEntityType2>;
-  delete(keyPropertyOrEntity: any): DeleteRequestBuilderV4<TestEntitySharesEntityType2> {
-    return new DeleteRequestBuilderV4(TestEntitySharesEntityType2, keyPropertyOrEntity instanceof TestEntitySharesEntityType2 ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
+  delete(
+    entity: TestEntitySharesEntityType2
+  ): DeleteRequestBuilderV4<TestEntitySharesEntityType2>;
+  delete(
+    keyPropertyOrEntity: any
+  ): DeleteRequestBuilderV4<TestEntitySharesEntityType2> {
+    return new DeleteRequestBuilderV4(
+      TestEntitySharesEntityType2,
+      keyPropertyOrEntity instanceof TestEntitySharesEntityType2
+        ? keyPropertyOrEntity
+        : { KeyProperty: keyPropertyOrEntity! }
+    );
   }
 }

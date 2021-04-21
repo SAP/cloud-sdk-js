@@ -22,20 +22,18 @@ function actionFunctionImportDeclarations(
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(parameters),
-    coreImportDeclaration(
-      [
-        ...corePropertyTypeImportNames(parameters),
-        ...returnTypes.map(returnType =>
-          returnType.returnTypeCategory ===
-          VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
-            ? 'throwErrorWhenReturnTypeIsUnionType'
-            : responseTransformerFunctionName(returnType, oDataVersion)
-        ),
-        ...edmRelatedImports(returnTypes, oDataVersion),
-        ...complexTypeRelatedImports(returnTypes, oDataVersion),
-        ...additionalImports
-      ]
-    ),
+    coreImportDeclaration([
+      ...corePropertyTypeImportNames(parameters),
+      ...returnTypes.map(returnType =>
+        returnType.returnTypeCategory ===
+        VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+          ? 'throwErrorWhenReturnTypeIsUnionType'
+          : responseTransformerFunctionName(returnType, oDataVersion)
+      ),
+      ...edmRelatedImports(returnTypes, oDataVersion),
+      ...complexTypeRelatedImports(returnTypes, oDataVersion),
+      ...additionalImports
+    ]),
     ...returnTypeImports(returnTypes)
   ];
 }

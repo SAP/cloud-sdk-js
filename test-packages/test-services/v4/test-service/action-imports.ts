@@ -3,20 +3,17 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-<<<<<<< HEAD
-import { transformReturnValueForUndefinedV4, transformReturnValueForComplexTypeV4, transformReturnValueForEdmTypeV4, transformReturnValueForEntityV4, throwErrorWhenReturnTypeIsUnionType, edmToTsV4, deserializeComplexTypeV4, ActionImportRequestBuilder, ActionImportParameter } from '@sap-cloud-sdk/core';
-=======
 import {
   transformReturnValueForUndefinedV4,
   transformReturnValueForComplexTypeV4,
   transformReturnValueForEdmTypeV4,
   transformReturnValueForEntityV4,
+  throwErrorWhenReturnTypeIsUnionType,
   edmToTsV4,
   deserializeComplexTypeV4,
   ActionImportRequestBuilder,
   ActionImportParameter
 } from '@sap-cloud-sdk/core';
->>>>>>> main
 import { TestComplexType } from './TestComplexType';
 import { TestEntity } from './TestEntity';
 
@@ -186,8 +183,7 @@ export function testActionImportNoParameterEntityReturnType(
 /**
  * Type of the parameters to be passed to [[testActionImportSharedEntityReturnType]].
  */
-export interface TestActionImportSharedEntityReturnTypeParameters {
-}
+export interface TestActionImportSharedEntityReturnTypeParameters {}
 
 /**
  * Test Action Import Shared Entity Return Type.
@@ -195,19 +191,30 @@ export interface TestActionImportSharedEntityReturnTypeParameters {
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testActionImportSharedEntityReturnType(parameters: TestActionImportSharedEntityReturnTypeParameters): ActionImportRequestBuilder<TestActionImportSharedEntityReturnTypeParameters, any> {
-  const params = {
+export function testActionImportSharedEntityReturnType(
+  parameters: TestActionImportSharedEntityReturnTypeParameters
+): ActionImportRequestBuilder<
+  TestActionImportSharedEntityReturnTypeParameters,
+  any
+> {
+  const params = {};
 
-  }
-
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnType', (data) => throwErrorWhenReturnTypeIsUnionType(data, 'TestActionImportSharedEntityReturnType'), params);
+  return new ActionImportRequestBuilder(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestActionImportSharedEntityReturnType',
+    data =>
+      throwErrorWhenReturnTypeIsUnionType(
+        data,
+        'TestActionImportSharedEntityReturnType'
+      ),
+    params
+  );
 }
 
 /**
  * Type of the parameters to be passed to [[testActionImportSharedEntityReturnTypeCollection]].
  */
-export interface TestActionImportSharedEntityReturnTypeCollectionParameters {
-}
+export interface TestActionImportSharedEntityReturnTypeCollectionParameters {}
 
 /**
  * Test Action Import Shared Entity Return Type Collection.
@@ -215,12 +222,24 @@ export interface TestActionImportSharedEntityReturnTypeCollectionParameters {
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testActionImportSharedEntityReturnTypeCollection(parameters: TestActionImportSharedEntityReturnTypeCollectionParameters): ActionImportRequestBuilder<TestActionImportSharedEntityReturnTypeCollectionParameters, any> {
-  const params = {
+export function testActionImportSharedEntityReturnTypeCollection(
+  parameters: TestActionImportSharedEntityReturnTypeCollectionParameters
+): ActionImportRequestBuilder<
+  TestActionImportSharedEntityReturnTypeCollectionParameters,
+  any
+> {
+  const params = {};
 
-  }
-
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnTypeCollection', (data) => throwErrorWhenReturnTypeIsUnionType(data, 'TestActionImportSharedEntityReturnTypeCollection'), params);
+  return new ActionImportRequestBuilder(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestActionImportSharedEntityReturnTypeCollection',
+    data =>
+      throwErrorWhenReturnTypeIsUnionType(
+        data,
+        'TestActionImportSharedEntityReturnTypeCollection'
+      ),
+    params
+  );
 }
 
 export const actionImports = {

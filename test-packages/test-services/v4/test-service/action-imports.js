@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.actionImports = exports.testActionImportSharedEntityReturnTypeCollection = exports.testActionImportSharedEntityReturnType = exports.testActionImportNoParameterEntityReturnType = exports.testActionImportUnsupportedEdmTypes = exports.testActionImportMultipleParameterComplexReturnType = exports.testActionImportNoParameterNoReturnType = void 0;
-=======
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.actionImports = exports.testActionImportNoParameterEntityReturnType = exports.testActionImportUnsupportedEdmTypes = exports.testActionImportMultipleParameterComplexReturnType = exports.testActionImportNoParameterNoReturnType = void 0;
->>>>>>> main
+exports.actionImports = exports.testActionImportSharedEntityReturnTypeCollection = exports.testActionImportSharedEntityReturnType = exports.testActionImportNoParameterEntityReturnType = exports.testActionImportUnsupportedEdmTypes = exports.testActionImportMultipleParameterComplexReturnType = exports.testActionImportNoParameterNoReturnType = void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -133,8 +127,18 @@ exports.testActionImportNoParameterEntityReturnType = testActionImportNoParamete
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportSharedEntityReturnType(parameters) {
-    var params = {};
-    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnType', function (data) { return core_1.throwErrorWhenReturnTypeIsUnionType(data, 'TestActionImportSharedEntityReturnType'); }, params);
+  var params = {};
+  return new core_1.ActionImportRequestBuilder(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestActionImportSharedEntityReturnType',
+    function (data) {
+      return core_1.throwErrorWhenReturnTypeIsUnionType(
+        data,
+        'TestActionImportSharedEntityReturnType'
+      );
+    },
+    params
+  );
 }
 exports.testActionImportSharedEntityReturnType = testActionImportSharedEntityReturnType;
 /**
@@ -144,23 +148,26 @@ exports.testActionImportSharedEntityReturnType = testActionImportSharedEntityRet
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testActionImportSharedEntityReturnTypeCollection(parameters) {
-    var params = {};
-    return new core_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportSharedEntityReturnTypeCollection', function (data) { return core_1.throwErrorWhenReturnTypeIsUnionType(data, 'TestActionImportSharedEntityReturnTypeCollection'); }, params);
+  var params = {};
+  return new core_1.ActionImportRequestBuilder(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestActionImportSharedEntityReturnTypeCollection',
+    function (data) {
+      return core_1.throwErrorWhenReturnTypeIsUnionType(
+        data,
+        'TestActionImportSharedEntityReturnTypeCollection'
+      );
+    },
+    params
+  );
 }
 exports.testActionImportSharedEntityReturnTypeCollection = testActionImportSharedEntityReturnTypeCollection;
 exports.actionImports = {
-<<<<<<< HEAD
-    testActionImportNoParameterNoReturnType: testActionImportNoParameterNoReturnType,
-    testActionImportMultipleParameterComplexReturnType: testActionImportMultipleParameterComplexReturnType,
-    testActionImportUnsupportedEdmTypes: testActionImportUnsupportedEdmTypes,
-    testActionImportNoParameterEntityReturnType: testActionImportNoParameterEntityReturnType,
-    testActionImportSharedEntityReturnType: testActionImportSharedEntityReturnType,
-    testActionImportSharedEntityReturnTypeCollection: testActionImportSharedEntityReturnTypeCollection
-=======
   testActionImportNoParameterNoReturnType: testActionImportNoParameterNoReturnType,
   testActionImportMultipleParameterComplexReturnType: testActionImportMultipleParameterComplexReturnType,
   testActionImportUnsupportedEdmTypes: testActionImportUnsupportedEdmTypes,
-  testActionImportNoParameterEntityReturnType: testActionImportNoParameterEntityReturnType
->>>>>>> main
+  testActionImportNoParameterEntityReturnType: testActionImportNoParameterEntityReturnType,
+  testActionImportSharedEntityReturnType: testActionImportSharedEntityReturnType,
+  testActionImportSharedEntityReturnTypeCollection: testActionImportSharedEntityReturnTypeCollection
 };
 //# sourceMappingURL=action-imports.js.map

@@ -68,27 +68,35 @@ export declare function testFunctionImportEntityReturnTypeCollection(
 /**
  * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnType]].
  */
-export interface TestFunctionImportSharedEntityReturnTypeParameters {
-}
+export interface TestFunctionImportSharedEntityReturnTypeParameters {}
 /**
  * Test Function Import Shared Entity Return Type.
  *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportSharedEntityReturnType(parameters: TestFunctionImportSharedEntityReturnTypeParameters): FunctionImportRequestBuilderV4<TestFunctionImportSharedEntityReturnTypeParameters, any>;
+export declare function testFunctionImportSharedEntityReturnType(
+  parameters: TestFunctionImportSharedEntityReturnTypeParameters
+): FunctionImportRequestBuilderV4<
+  TestFunctionImportSharedEntityReturnTypeParameters,
+  any
+>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnTypeCollection]].
  */
-export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {
-}
+export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {}
 /**
  * Test Function Import Shared Entity Return Type Collection.
  *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
  */
-export declare function testFunctionImportSharedEntityReturnTypeCollection(parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters): FunctionImportRequestBuilderV4<TestFunctionImportSharedEntityReturnTypeCollectionParameters, any>;
+export declare function testFunctionImportSharedEntityReturnTypeCollection(
+  parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters
+): FunctionImportRequestBuilderV4<
+  TestFunctionImportSharedEntityReturnTypeCollectionParameters,
+  any
+>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnType]].
  */
@@ -171,26 +179,15 @@ export declare function testFunctionImportWithDifferentName(
   undefined
 >;
 export declare const functionImports: {
-<<<<<<< HEAD
-    testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;
-    testFunctionImportEdmReturnTypeCollection: typeof testFunctionImportEdmReturnTypeCollection;
-    testFunctionImportEntityReturnType: typeof testFunctionImportEntityReturnType;
-    testFunctionImportEntityReturnTypeCollection: typeof testFunctionImportEntityReturnTypeCollection;
-    testFunctionImportSharedEntityReturnType: typeof testFunctionImportSharedEntityReturnType;
-    testFunctionImportSharedEntityReturnTypeCollection: typeof testFunctionImportSharedEntityReturnTypeCollection;
-    testFunctionImportComplexReturnType: typeof testFunctionImportComplexReturnType;
-    testFunctionImportComplexReturnTypeCollection: typeof testFunctionImportComplexReturnTypeCollection;
-    testFunctionImportMultipleParams: typeof testFunctionImportMultipleParams;
-    testFunctionImportWithDifferentName: typeof testFunctionImportWithDifferentName;
-=======
   testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;
   testFunctionImportEdmReturnTypeCollection: typeof testFunctionImportEdmReturnTypeCollection;
   testFunctionImportEntityReturnType: typeof testFunctionImportEntityReturnType;
   testFunctionImportEntityReturnTypeCollection: typeof testFunctionImportEntityReturnTypeCollection;
+  testFunctionImportSharedEntityReturnType: typeof testFunctionImportSharedEntityReturnType;
+  testFunctionImportSharedEntityReturnTypeCollection: typeof testFunctionImportSharedEntityReturnTypeCollection;
   testFunctionImportComplexReturnType: typeof testFunctionImportComplexReturnType;
   testFunctionImportComplexReturnTypeCollection: typeof testFunctionImportComplexReturnTypeCollection;
   testFunctionImportMultipleParams: typeof testFunctionImportMultipleParams;
   testFunctionImportWithDifferentName: typeof testFunctionImportWithDifferentName;
->>>>>>> main
 };
 //# sourceMappingURL=function-imports.d.ts.map

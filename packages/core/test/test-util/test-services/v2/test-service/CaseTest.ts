@@ -1,10 +1,17 @@
 /*
- * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { CaseTestRequestBuilder } from './CaseTestRequestBuilder';
-import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '../../../../../src';
+import {
+  AllFields,
+  CustomFieldV2,
+  EntityBuilderType,
+  EntityV2,
+  Field,
+  StringField
+} from '../../../../../src';
 
 /**
  * This class represents the entity "A_CaseTest" of service "API_TEST_SRV".
@@ -66,7 +73,11 @@ export namespace CaseTest {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<CaseTest> = new StringField('KeyPropertyString', CaseTest, 'Edm.String');
+  export const KEY_PROPERTY_STRING: StringField<CaseTest> = new StringField(
+    'KeyPropertyString',
+    CaseTest,
+    'Edm.String'
+  );
   /**
    * All fields of the CaseTest entity.
    */
@@ -80,12 +91,19 @@ export namespace CaseTest {
   /**
    * All key fields of the CaseTest entity.
    */
-  export const _keyFields: Array<Field<CaseTest>> = [CaseTest.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<CaseTest>> = [
+    CaseTest.KEY_PROPERTY_STRING
+  ];
   /**
    * Mapping of all key field names to the respective static field property CaseTest.
    */
-  export const _keys: { [keys: string]: Field<CaseTest> } = CaseTest._keyFields.reduce((acc: { [keys: string]: Field<CaseTest> }, field: Field<CaseTest>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<CaseTest>;
+  } = CaseTest._keyFields.reduce(
+    (acc: { [keys: string]: Field<CaseTest> }, field: Field<CaseTest>) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

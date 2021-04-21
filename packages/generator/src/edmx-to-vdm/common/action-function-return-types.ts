@@ -66,9 +66,9 @@ function parseReturnTypes(
     );
   }
 
-  const entity = findEntityType(returnType, entities);
-  if (entity.length) {
-    return getEntityReturnType(isCollection, entity);
+  const filteredEntities = findEntityType(returnType, entities);
+  if (filteredEntities.length) {
+    return getEntityReturnType(isCollection, filteredEntities);
   }
 
   const complexType = findComplexType(returnType, complexTypes);
@@ -166,10 +166,9 @@ function getEntityReturnType(
       }
     : {
         returnTypeCategory: VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE,
-        returnType: 'any',
-        builderFunction: '',
-        isMulti: false,
-        isCollection: false
+        returnType: 'void',
+        isMulti: isCollection,
+        isCollection
       };
 }
 

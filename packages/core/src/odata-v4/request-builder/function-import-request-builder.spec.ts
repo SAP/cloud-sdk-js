@@ -5,8 +5,9 @@ import {
 } from '../../../test/test-util/request-mocker';
 import {
   testFunctionImportMultipleParams,
-  testFunctionImportSharedEntityReturnType
+  testFunctionImportSharedEntityReturnType, TestFunctionImportSharedEntityReturnTypeParameters
 } from '../../../test/test-util/test-services/v4/test-service';
+import { FunctionImportRequestBuilderV4 } from './function-import-request-builder';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
 
@@ -32,7 +33,7 @@ describe('FunctionImportRequestBuilder', () => {
       .get(`${serviceUrl}/TestFunctionImportSharedEntityReturnType()`)
       .query({ $format: 'json' })
       .reply(200, {});
-    const requestBuilder = testFunctionImportSharedEntityReturnType({});
+    const requestBuilder = testFunctionImportSharedEntityReturnType({}) as any;
 
     await expect(
       requestBuilder.execute(defaultDestination)

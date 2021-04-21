@@ -1,6 +1,6 @@
 import { unixEOL, caps } from '@sap-cloud-sdk/util';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
-import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
+import { VdmFunctionImport, VdmReturnTypeCategory, VdmServiceMetadata } from '../vdm-types';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 const parameterName = 'parameters';
 
@@ -8,6 +8,17 @@ export function functionImportFunction(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
+  const returnType = functionImport.returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+  ?
+    `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
+      functionImport.parametersTypeName
+    }, ${functionImport.returnType.returnType}>`
+  :
+    `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
+      functionImport.parametersTypeName
+    }, ${functionImport.returnType.returnType}${
+      functionImport.returnType.isCollection ? '[]' : ''
+    }>`;
   return {
     kind: StructureKind.Function,
     name: functionImport.name,
@@ -18,12 +29,7 @@ export function functionImportFunction(
         type: functionImport.parametersTypeName
       }
     ],
-    returnType: `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
-      functionImport.parametersTypeName
-    }, ${functionImport.returnType.returnType}${
-      functionImport.returnType.isCollection ? '[]' : ''
-    }>`,
-
+    returnType,
     statements: getFunctionImportStatements(functionImport, service),
     docs: [
       [

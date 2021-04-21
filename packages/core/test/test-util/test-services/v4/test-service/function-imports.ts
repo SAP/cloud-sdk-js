@@ -147,10 +147,10 @@ export interface TestFunctionImportSharedEntityReturnTypeParameters {}
  */
 export function testFunctionImportSharedEntityReturnType(
   parameters: TestFunctionImportSharedEntityReturnTypeParameters
-): FunctionImportRequestBuilderV4<
+): Omit<FunctionImportRequestBuilderV4<
   TestFunctionImportSharedEntityReturnTypeParameters,
-  any
-> {
+  void
+>, 'execute'> {
   const params = {};
 
   return new FunctionImportRequestBuilderV4(
@@ -178,10 +178,10 @@ export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {}
  */
 export function testFunctionImportSharedEntityReturnTypeCollection(
   parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV4<
+): Omit<FunctionImportRequestBuilderV4<
   TestFunctionImportSharedEntityReturnTypeCollectionParameters,
-  any
-> {
+  void
+>, 'execute'> {
   const params = {};
 
   return new FunctionImportRequestBuilderV4(

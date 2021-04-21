@@ -117,7 +117,7 @@ export type VdmActionFunctionImportReturnType =
   | VdmFunctionImportReturnType;
 
 export interface VdmFunctionImportReturnType {
-  builderFunction: string;
+  builderFunction?: string;
   returnType: string;
   /**
    * @deprecated Since v1.22.0. Use `isCollection` instead.

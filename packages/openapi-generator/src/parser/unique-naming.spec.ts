@@ -3,11 +3,10 @@ import { ensureUniqueNames } from './unique-naming';
 
 describe('ensureUniqueNames', () => {
   it('replaces duplicate names using defaults', () => {
-    expect(
-      ensureUniqueNames(['duplicate', 'duplicate'], {
-        format: pascalCase
-      })
-    ).toEqual(['duplicate', 'duplicate1']);
+    expect(ensureUniqueNames(['duplicate', 'duplicate'])).toEqual([
+      'duplicate',
+      'duplicate1'
+    ]);
   });
 
   it('replaces duplicate names using pascal case', () => {

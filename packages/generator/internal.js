@@ -9,7 +9,7 @@ function __export(m) {
 Object.defineProperty(exports, '__esModule', { value: true });
 /**
  * @packageDocumentation
- * @experimental The v4 module is related to OData v4 and is still experimental. Use with caution.
+ * @experimental The internal module is related to sdk-metadata types which are used only internally.
  */
 __export(require('./dist/sdk-metadata'));
-// # sourceMappingURL=v4.js.map
+// # sourceMappingURL=internal.js.map

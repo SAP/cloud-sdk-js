@@ -7,9 +7,6 @@ import type {
 import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
 import { getGeneratorVersion } from './pregenerated-lib';
 
-export const genericUsageText =
-  'Find below a generic example on execute request with the SDK.';
-
 export async function getGenerationAndUsage(
   service: VdmServiceMetadata
 ): Promise<GenerationAndUsage> {
@@ -24,22 +21,20 @@ export async function getGenerationAndUsage(
   };
 }
 
-export async function getGenericUsage(): Promise<
-  InstructionWithText<typeof genericUsageText>
-> {
+export async function getGenericUsage(): Promise<InstructionWithText> {
   return {
     instructions: genericGetAllCodeSample(
       'BusinessPartner',
       '@sap/cloud-sdk-vdm-business-partner-service'
     ),
-    text: genericUsageText
+    text: 'Find below a generic example on execute request with the SDK.'
   };
 }
 
 export const apiSpecificUsageText = 'Find below a usage example for this API.';
 export async function getApiSpecificUsage(
   service: VdmServiceMetadata
-): Promise<InstructionWithText<typeof apiSpecificUsageText>> {
+): Promise<InstructionWithText> {
   if (service.entities.length > 0) {
     const codeSample = await genericGetAllCodeSample(
       service.entities[0].className,
@@ -60,11 +55,7 @@ export async function getApiSpecificUsage(
 export const linkGenerationDocumentaion =
   'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
 
-export const generationStepsText =
-  'Follow the following generation steps to generate the client.';
-export function getGenerationSteps(): InstructionWithText<
-  typeof generationStepsText
-> {
+export function getGenerationSteps(): InstructionWithText {
   return {
     instructions: `<ul>
 <li>Download the API specification to your local computer.</li>
@@ -72,6 +63,6 @@ export function getGenerationSteps(): InstructionWithText<
 <li>Execute the generator <code>generate-odata-client --inputDir path/to/service-spec --outputDir path/to/</code></li>
 </ul>
 The steps above will generate a basic TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href="${linkGenerationDocumentaion}">documentation.</a>`,
-    text: generationStepsText
+    text: 'Follow the following generation steps to generate the client.'
   };
 }

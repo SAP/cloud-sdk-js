@@ -12,6 +12,7 @@ export const textWithLib =
   'For this API you have two options to get a typed client. Either you download the pregenerated client from the repository or you generate the client on your own.';
 export const textNoLib =
   'For this API no pregenerated published client exists. Follow the generation steps to create a client on your own.';
+
 export async function sdkMetaDataJS(
   service: VdmServiceMetadata,
   options: GeneratorOptions
@@ -45,8 +46,6 @@ export function getSdkMetadataFileNames(
   };
 }
 
-export const introText =
-  'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.';
 export function sdkMetaDataHeader(
   service: VdmServiceMetadata,
   options: GeneratorOptions
@@ -56,6 +55,7 @@ export function sdkMetaDataHeader(
     // For the file name with use the artifact.name from API which should be the unique identifier
     name: removeFileExtension(service.originalFileName),
     version: getVersionForClient(options),
-    introText
+    introText:
+      'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.'
   };
 }

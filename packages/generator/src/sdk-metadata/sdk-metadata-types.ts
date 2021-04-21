@@ -1,10 +1,4 @@
-import {
-  apiSpecificUsageText,
-  generationStepsText,
-  genericUsageText
-} from './generation-and-usage';
-import { textNoLib, textWithLib, introText } from './sdk-metadata';
-import { installLibrarySnippetText } from './pregenerated-lib';
+import { textNoLib, textWithLib } from './sdk-metadata';
 
 /**
  * Represents the language independent header data of the sdk metadata
@@ -21,7 +15,7 @@ export interface SdkMetadataHeader {
   /**
    * The first introduction text about the SDK on the API hub.
    */
-  introText: typeof introText;
+  introText: string;
 }
 
 /**
@@ -67,7 +61,7 @@ export interface PregeneratedLibrary {
    * @type {string}
    * @memberof PregeneratedLibrary
    */
-  installLibrarySteps: InstructionWithText<typeof installLibrarySnippetText>;
+  installLibrarySteps: InstructionWithText;
   /**
    * Compatability version note. Is not filled yet since there is no flow to detect API changes since the versions are not maintend and the hash workaround is not yet in place.
    * @type {string}
@@ -89,9 +83,9 @@ export interface Links {
 export interface GenerationAndUsage {
   generatorVersion: string;
   generatorRepositoryLink: UrlString;
-  generationSteps: InstructionWithText<typeof generationStepsText>;
-  apiSpecificUsage: InstructionWithText<typeof apiSpecificUsageText>;
-  genericUsage: InstructionWithText<typeof genericUsageText>;
+  generationSteps: InstructionWithText;
+  apiSpecificUsage: InstructionWithText;
+  genericUsage: InstructionWithText;
   links: Links;
 }
 
@@ -132,7 +126,7 @@ export interface EmergencyObject {
   description: string;
 }
 
-export interface InstructionWithText<T> {
+export interface InstructionWithText {
   instructions: MultiLineText;
-  text: T;
+  text: string;
 }

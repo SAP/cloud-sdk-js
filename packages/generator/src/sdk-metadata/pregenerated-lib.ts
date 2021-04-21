@@ -12,14 +12,13 @@ import type {
   PregeneratedLibrary
 } from './sdk-metadata-types';
 
-export const installLibrarySnippetText =
-  'Execute the following npm command to install the pregenerated client.';
 export function getInstallationSnippet(
   service: VdmServiceMetadata
-): InstructionWithText<typeof installLibrarySnippetText> {
+): InstructionWithText {
   return {
     instructions: `npm i ${service.npmPackageName}:latest`,
-    text: installLibrarySnippetText
+    text:
+      'Execute the following npm command to install the pregenerated client.'
   };
 }
 

@@ -37,5 +37,8 @@
     "voca": "^1.4.0",
     "winston": "^3.3.3",
     "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "nock": "^13.0.11"
   }
 }

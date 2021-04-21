@@ -52,6 +52,6 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-util": "^1.41.0",
-    "nock": "^13.0.3"
+    "nock": "^13.0.11"
   }
 }

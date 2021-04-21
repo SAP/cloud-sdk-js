@@ -1,4 +1,4 @@
-import { checkUrlExists } from '@sap-cloud-sdk/util/dist/url';
+import { checkUrlExists } from './url';
 import nock from 'nock';
 
 describe('url', () => {

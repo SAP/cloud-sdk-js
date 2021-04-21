@@ -110,16 +110,25 @@ export interface ServiceStatus {
   gettingStartedText: string;
 }
 
+/**
+ * Representation of a link with a descriptive name.
+ */
 interface LinkWithName {
   url: UrlString;
   name: string;
 }
 
+/**
+ * This object will be filled at runtime on the sdk metadata server in case we have some code emergency which we want to inform the user base.
+ */
 export interface EmergencyObject {
   status: string;
   description: string;
 }
 
+/**
+ *  Represents a instruction block e.g. generation steps with some text above the code block
+ */
 export interface InstructionWithText {
   instructions: MultiLineText;
   text: string;

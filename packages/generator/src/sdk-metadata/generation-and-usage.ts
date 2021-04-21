@@ -27,11 +27,12 @@ export async function getGenericUsage(): Promise<InstructionWithText> {
       'BusinessPartner',
       '@sap/cloud-sdk-vdm-business-partner-service'
     ),
-    text: 'Find below a generic example on execute request with the SDK.'
+    text:
+      'Find a generic example on how to execute requests with the SAP Cloud SDK below.'
   };
 }
 
-export const apiSpecificUsageText = 'Find below a usage example for this API.';
+export const apiSpecificUsageText = 'Find a usage example for this API below.';
 export async function getApiSpecificUsage(
   service: VdmServiceMetadata
 ): Promise<InstructionWithText> {

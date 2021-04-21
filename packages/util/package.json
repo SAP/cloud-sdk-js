@@ -35,6 +35,10 @@
     "chalk": "^4.1.0",
     "logform": "^2.2.0",
     "voca": "^1.4.0",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "nock": "^13.0.11"
   }
 }

@@ -38,7 +38,7 @@ export interface Client {
   /**
    * This object will be set on our metadata server in case we need to show some emergency information.
    */
-  emergencyObject: EmergencyObject | undefined;
+  emergencyObject?: EmergencyObject;
 
   /**
    * The getting started text depends on the fact if we have a pregenerated client or not.

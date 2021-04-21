@@ -8,7 +8,7 @@ const logger = createLogger('openapi-generator');
 /**
  * Parse the type of a resolved request body or response object.
  * @param bodyOrResponseObject The request body or response object to parse the type from.
- * @param schemaRefMapping Mapping between references and parsed names of the schemas.
+ * @param refs Object representing cross references throughout the document.
  * @returns The type name of the request body if there is one.
  */
 export function parseApplicationJsonMediaType(

@@ -11,7 +11,7 @@ import { OpenApiDocumentRefs } from './refs';
 /**
  * Collect and parse all APIs of an `OpenAPIV3.Document`.
  * @param document The OpenApi document to parse.
- * @param refs List of cross references that can occur in the document.
+ * @param refs Object representing cross references throughout the document.
  * @returns A flat list of parsed APIs.
  */
 export function parseApis(

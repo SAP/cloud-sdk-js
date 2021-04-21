@@ -17,7 +17,7 @@ const logger = createLogger('openapi-generator');
 /**
  * Parse the original schema or reference object to a serializable schema.
  * @param schema Originally provided schema or reference object.
- * @param refs Object holding information on references throughout the document.
+ * @param refs Object representing cross references throughout the document.
  * @returns The parsed schema.
  */
 export function parseSchema(
@@ -85,7 +85,7 @@ function parseReferenceSchema(
 /**
  * Parse a schema to an array schema.
  * @param schema Original schema representing an array.
- * @param refs Object holding information on references throughout the document.
+ * @param refs Object representing cross references throughout the document.
  * @returns The recursively parsed array schema.
  */
 function parseArraySchema(
@@ -101,7 +101,7 @@ function parseArraySchema(
 /**
  * Parse a schema to an object schema.
  * @param schema Original schema representing an object.
- * @param refs Object holding information on references throughout the document.
+ * @param refs Object representing cross references throughout the document.
  * @returns The recursively parsed object schema.
  */
 function parseObjectSchema(
@@ -135,7 +135,7 @@ function parseObjectSchema(
 /**
  * Parse properties of an object as property schemas.
  * @param schema Original schema representing an object.
- * @param refs Object holding information on references throughout the document.
+ * @param refs Object representing cross references throughout the document.
  * @returns The list of parsed property schemas.
  */
 function parseObjectSchemaProperties(
@@ -178,7 +178,7 @@ function parseEnumSchema(
 /**
  * Parse a 'oneOf', 'allOf' or 'anyOf' schema.
  * @param schema Original schema to parse.
- * @param refs Object holding information on references throughout the document.
+ * @param refs Object representing cross references throughout the document.
  * @param xOf Key to identify which schema to parse.
  * @returns The parsed schema based on the given key.
  */

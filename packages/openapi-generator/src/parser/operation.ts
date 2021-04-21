@@ -16,8 +16,7 @@ import { reservedJsKeywords } from './reserved-words';
 /**
  * Parse an operation info into a serialization-ready object.
  * @param operationInfo Parsing relevant information on an operation.
- * @param refs List of cross references that can occur in the document.
- * @param schemaRefMapping Mapping between references and parsed names of the schemas.
+ * @param refs Object representing cross references throughout the document.
  * @returns A flat list of parsed operations.
  */
 export function parseOperation(

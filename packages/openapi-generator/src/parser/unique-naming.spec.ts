@@ -66,7 +66,7 @@ describe('ensureUniqueNames', () => {
     });
   });
 
-  describe('with strictNaming enabled', () => {
+  describe('with strictNaming disabled', () => {
     const options = { strictNaming: false };
 
     it('replaces duplicate names using defaults', () => {

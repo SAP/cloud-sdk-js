@@ -29,6 +29,10 @@ export class ErrorWithCause extends Error {
   get rootCause(): Error {
     return isErrorWithCause(this.cause) ? this.cause.rootCause : this.cause;
   }
+
+  toString(): string {
+    return this.stack ?? this.message;
+  }
 }
 /**
  * Type guard to check whether an error is of type ErrorWithCause.

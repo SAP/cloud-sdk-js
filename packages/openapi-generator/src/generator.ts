@@ -2,10 +2,12 @@
 
 import { promises as promisesFs } from 'fs';
 import { resolve, parse, basename, join } from 'path';
+import cli from 'cli-ux';
 import {
   createLogger,
   UniqueNameGenerator,
-  kebabCase
+  kebabCase,
+  ErrorWithCause
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import { GeneratorOptions } from './options';
@@ -60,7 +62,36 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       uniqueServiceName
     );
   });
-  await Promise.all(promises);
+
+  try {
+    await settleAndAccumulate(promises);
+  } catch (err) {
+    if (promises.length > 1) {
+      cli.error(
+        new ErrorWithCause('Some clients could not be generated.', err)
+      );
+    } else {
+      new ErrorWithCause('Could not generate client.', err);
+    }
+  }
+}
+
+/**
+ * Await all promises and resolve if non of them failed.
+ * Reject if at least one of them was rejected.
+ * @param promises Promises to settle.
+ */
+export async function settleAndAccumulate(
+  promises: Promise<any>[]
+): Promise<void> {
+  const settledPromises = await Promise.allSettled(promises);
+  const rejectedPromises = settledPromises.filter(
+    promise => promise.status === 'rejected'
+  ) as PromiseRejectedResult[];
+  if (rejectedPromises.length) {
+    const reasons = rejectedPromises.map(promise => promise.reason).join(', ');
+    throw new Error(reasons);
+  }
 }
 
 /**
@@ -183,10 +214,10 @@ async function generateService(
   try {
     openApiDocument = await convertOpenApiSpec(inputFilePath);
   } catch (err) {
-    logger.error(
-      `Could not convert document at ${inputFilePath} to the format needed for parsing and generation. Skipping service generation.`
+    throw new ErrorWithCause(
+      `Could not convert document at '${inputFilePath}' to the format needed for parsing and generation.`,
+      err
     );
-    return;
   }
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
@@ -196,13 +227,13 @@ async function generateService(
   );
 
   if (!parsedOpenApiDocument.apis.length) {
-    logger.warn(
-      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${inputFilePath}`
+    throw new Error(
+      `The given document at '${inputFilePath}' does not contain any operations.`
     );
-    return;
   }
 
   await generateSources(serviceDir, parsedOpenApiDocument, options);
+  cli.log(`Successfully generated client for '${inputFilePath}'`);
 }
 
 /**

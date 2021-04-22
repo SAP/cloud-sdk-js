@@ -24,7 +24,7 @@ describe('generation-and-usage', () => {
     const jsFile = tsFile.replace('.ts', '.js');
     await writeFile(resolve(__dirname, tsFile), codeSnippet);
     await execa('tsc', [tsFile, '--esModuleInterop'], { cwd: __dirname });
-    await expect(readFile(resolve(__dirname, jsFile))).resolves;
+    await expect(readFile(resolve(__dirname, jsFile))).resolves.toBeDefined();
     [tsFile, jsFile].map(file => removeSync(resolve(__dirname, file)));
   }, 60000);
 });

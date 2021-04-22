@@ -2,7 +2,7 @@ import { pascalCase } from '@sap-cloud-sdk/util';
 import { ensureUniqueNames } from './unique-naming';
 
 describe('ensureUniqueNames', () => {
-  describe('with strictNaming disabled', () => {
+  describe('with strictNaming enabled', () => {
     const options = { strictNaming: true };
     it('does not throw for empty list of names', () => {
       expect(() => ensureUniqueNames([], options)).not.toThrow();

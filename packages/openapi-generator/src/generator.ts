@@ -193,7 +193,7 @@ async function generateService(
     serviceName,
     inputFilePath,
     serviceMapping,
-    { strictNaming: options.strictNaming || true }
+    { strictNaming: options.strictNaming ?? true }
   );
 
   if (!parsedOpenApiDocument.apis.length) {

@@ -16,12 +16,12 @@ import { ParserOptions } from './options';
 export function ensureUniqueNames(
   names: string[],
   options: ParserOptions,
-  namingOptions: {
+  namingOptions?: {
     format?: (name: string) => string;
     reservedWords?: string[];
-  } = {}
+  }
 ): string[] {
-  const { format = camelCase, reservedWords = [] } = namingOptions;
+  const { format = camelCase, reservedWords = [] } = namingOptions || {};
 
   if (options.strictNaming) {
     const formattedNames = names.map(originalName => format(originalName));
@@ -64,12 +64,12 @@ export function validateUniqueness(
  */
 export function deduplicateNames(
   names: string[],
-  namingOptions: {
+  namingOptions?: {
     format?: (name: string) => string;
     reservedWords?: string[];
-  } = {}
+  }
 ): string[] {
-  const { format = camelCase, reservedWords = [] } = namingOptions;
+  const { format = camelCase, reservedWords = [] } = namingOptions || {};
   const nonConflictingNames = getNonConflictingNames(
     names,
     format,

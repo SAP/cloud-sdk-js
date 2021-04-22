@@ -7,17 +7,26 @@ import type {
 import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
 import { getGeneratorVersion } from './pregenerated-lib';
 
+export const generatorRepositoryLink =  'https://www.npmjs.com/package/@sap-cloud-sdk/generator'
+
 export async function getGenerationAndUsage(
   service: VdmServiceMetadata
+)
+export async function getGenerationAndUsage(
+  generatorVersion: string
+): Promise<GenerationAndUsage>
+export async function getGenerationAndUsage(
+  serviceOrVersion: string|VdmServiceMetadata
 ): Promise<GenerationAndUsage> {
+  const apiSpecificUsage = typeof serviceOrVersion === 'string' ?  {text:'No API specific usage example available.',instructions:''} : await getApiSpecificUsage(serviceOrVersion);
+  const generatorVersion = typeof serviceOrVersion === 'string' ? serviceOrVersion :getGeneratorVersion()
   return {
     genericUsage: await getGenericUsage(),
-    apiSpecificUsage: await getApiSpecificUsage(service),
+    apiSpecificUsage,
     links: getLinks(),
     generationSteps: getGenerationSteps(),
-    generatorVersion: getGeneratorVersion(),
-    generatorRepositoryLink:
-      'https://www.npmjs.com/package/@sap-cloud-sdk/generator'
+    generatorVersion,
+    generatorRepositoryLink
   };
 }
 

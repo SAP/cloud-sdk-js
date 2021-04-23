@@ -14,7 +14,9 @@ export async function finishAll(promises: Promise<any>[]): Promise<void> {
     promise => promise.status === 'rejected'
   ) as PromiseRejectedResult[];
   if (rejectedPromises.length) {
-    const reasons = rejectedPromises.map(promise => promise.reason).join(', ');
-    throw new Error(reasons);
+    const reasons = rejectedPromises
+      .map(promise => `\t${promise.reason}`)
+      .join('\n');
+    throw new Error(`Errors:\n${reasons}`);
   }
 }

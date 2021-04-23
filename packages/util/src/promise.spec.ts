@@ -8,9 +8,12 @@ describe('finishAll', () => {
       Promise.reject('ERROR1'),
       Promise.reject('ERROR2')
     ];
-    await expect(() =>
-      finishAll(promises)
-    ).rejects.toThrowErrorMatchingInlineSnapshot('"ERROR1, ERROR2"');
+    await expect(() => finishAll(promises)).rejects
+      .toThrowErrorMatchingInlineSnapshot(`
+            "Errors:
+            	ERROR1
+            	ERROR2"
+          `);
   });
 
   it('does not throw if all promises are resolved', async () => {

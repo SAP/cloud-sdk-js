@@ -1,10 +1,7 @@
 import { caps, unixEOL } from '@sap-cloud-sdk/util';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
-import {
-  VdmFunctionImport,
-  VdmReturnTypeCategory,
-  VdmServiceMetadata
-} from '../vdm-types';
+import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
+import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 
 const parameterName = 'parameters';
@@ -13,17 +10,15 @@ export function functionImportFunction(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const returnType =
-    functionImport.returnType.returnTypeCategory ===
-    VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
-      ? `Omit<FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
-          functionImport.parametersTypeName
-        }, ${functionImport.returnType.returnType}>, 'execute'>`
-      : `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
-          functionImport.parametersTypeName
-        }, ${functionImport.returnType.returnType}${
-          functionImport.returnType.isCollection ? '[]' : ''
-        }>`;
+  const returnType = isEntityNotDeserializable(functionImport.returnType)
+    ? `Omit<FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
+        functionImport.parametersTypeName
+      }, ${functionImport.returnType.returnType}>, 'execute'>`
+    : `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
+        functionImport.parametersTypeName
+      }, ${functionImport.returnType.returnType}${
+        functionImport.returnType.isCollection ? '[]' : ''
+      }>`;
   return {
     kind: StructureKind.Function,
     name: functionImport.name,
@@ -50,8 +45,7 @@ export const additionalDocForEntityNotDeserializable =
 
 function getDocDescription(functionImport: VdmFunctionImport) {
   return `${functionImport.description} ${
-    functionImport.returnType.returnTypeCategory ===
-    VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+    isEntityNotDeserializable(functionImport.returnType)
       ? additionalDocForEntityNotDeserializable
       : ''
   }${unixEOL}`;

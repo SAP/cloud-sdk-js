@@ -222,9 +222,9 @@
         <EntitySet Name="A_TestEntityLvl2MultiLink" EntityType="API_TEST_SRV.A_TestEntityLvl2MultiLinkType" sap:content-version="1"/>
         <EntitySet Name="A_TestEntitySingleLink" EntityType="API_TEST_SRV.A_TestEntitySingleLinkType" sap:content-version="1"/>
         <EntitySet Name="A_TestEntityLvl2SingleLink" EntityType="API_TEST_SRV.A_TestEntityLvl2SingleLinkType" sap:content-version="1"/>
-        <EntitySet Name="A_TestEntitySharesEntityType1" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
+        <EntitySet Name="A_TestEntityWithSharedEntityType1" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
         </EntitySet>
-        <EntitySet Name="A_TestEntitySharesEntityType2" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
+        <EntitySet Name="A_TestEntityWithSharedEntityType2" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
         </EntitySet>
 
         <!-- circular_links

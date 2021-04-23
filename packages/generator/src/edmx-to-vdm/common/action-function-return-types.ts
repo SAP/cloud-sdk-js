@@ -4,7 +4,8 @@ import {
   VdmComplexType,
   VdmEntity,
   VdmFunctionImportReturnType,
-  VdmReturnTypeCategory
+  VdmReturnTypeCategory,
+  VdmUnsupportedFunction
 } from '../../vdm-types';
 import {
   getTypeMappingActionFunction,
@@ -66,7 +67,7 @@ function parseReturnTypes(
     );
   }
 
-  const filteredEntities = findEntityType(returnType, entities);
+  const filteredEntities = findEntityTypes(returnType, entities);
   if (filteredEntities.length) {
     return getEntityReturnType(isCollection, filteredEntities);
   }
@@ -86,7 +87,7 @@ function findEdmType(returnType: string): string | undefined {
   }
 }
 
-function findEntityType(
+function findEntityTypes(
   returnType: string,
   entities: VdmEntity[]
 ): VdmEntity[] {
@@ -153,7 +154,9 @@ function getEntityReturnType(
   entities: VdmEntity[]
 ): VdmFunctionImportReturnType {
   if (!entities.length) {
-    throw Error('Cannot get entity return type from an empty collection.');
+    throw Error(
+      'Could not get entity return type for function import. No matching entity types found.'
+    );
   }
 
   return entities.length === 1
@@ -165,10 +168,11 @@ function getEntityReturnType(
         isCollection
       }
     : {
-        returnTypeCategory: VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE,
-        returnType: 'void',
+        returnTypeCategory: VdmReturnTypeCategory.NEVER,
+        returnType: 'never',
         isMulti: isCollection,
-        isCollection
+        isCollection,
+        unsupportedFunction: VdmUnsupportedFunction.ENTITY_NOT_DESERIALIZABLE
       };
 }
 
@@ -186,6 +190,16 @@ function getComplexReturnType(
     isMulti: isCollection,
     isCollection
   };
+}
+
+export function isEntityNotDeserializable(
+  returnType: VdmFunctionImportReturnType
+): boolean {
+  return (
+    returnType.returnTypeCategory === VdmReturnTypeCategory.NEVER &&
+    returnType.unsupportedFunction ===
+      VdmUnsupportedFunction.ENTITY_NOT_DESERIALIZABLE
+  );
 }
 
 export type ExtractResponse = (string) => string;

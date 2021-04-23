@@ -1,9 +1,9 @@
 import {
   VdmActionImport,
   VdmFunctionImport,
-  VdmReturnTypeCategory,
   VdmServiceMetadata
 } from '../vdm-types';
+import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 export function getRequestBuilderArgumentsBase(
@@ -23,10 +23,7 @@ function getTransformer(
   actionFunctionImport: VdmFunctionImport | VdmActionImport,
   service: VdmServiceMetadata
 ): string {
-  if (
-    actionFunctionImport.returnType.returnTypeCategory ===
-    VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
-  ) {
+  if (isEntityNotDeserializable(actionFunctionImport.returnType)) {
     return `(data) => throwErrorWhenReturnTypeIsUnionType(data, '${actionFunctionImport.originalName}')`;
   }
   if (actionFunctionImport.returnType.builderFunction) {

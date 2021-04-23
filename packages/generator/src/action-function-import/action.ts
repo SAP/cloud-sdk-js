@@ -1,25 +1,21 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
-import {
-  VdmActionImport,
-  VdmReturnTypeCategory,
-  VdmServiceMetadata
-} from '../vdm-types';
+import { VdmActionImport, VdmServiceMetadata } from '../vdm-types';
+import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 import { additionalDocForEntityNotDeserializable } from './function';
+
 const parameterName = 'parameters';
 
 export function actionImportFunction(
   actionImport: VdmActionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const returnType =
-    actionImport.returnType.returnTypeCategory ===
-    VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
-      ? `Omit<ActionImportRequestBuilder<${actionImport.parametersTypeName}, ${actionImport.returnType.returnType}>, 'execute'>`
-      : `ActionImportRequestBuilder<${actionImport.parametersTypeName}, ${
-          actionImport.returnType.returnType
-        }${actionImport.returnType.isCollection ? '[]' : ''}>`;
+  const returnType = isEntityNotDeserializable(actionImport.returnType)
+    ? `Omit<ActionImportRequestBuilder<${actionImport.parametersTypeName}, ${actionImport.returnType.returnType}>, 'execute'>`
+    : `ActionImportRequestBuilder<${actionImport.parametersTypeName}, ${
+        actionImport.returnType.returnType
+      }${actionImport.returnType.isCollection ? '[]' : ''}>`;
   return {
     kind: StructureKind.Function,
     name: actionImport.name,
@@ -44,8 +40,7 @@ export function actionImportFunction(
 
 function getDocDescription(actionImport: VdmActionImport) {
   return `${actionImport.description} ${
-    actionImport.returnType.returnTypeCategory ===
-    VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+    isEntityNotDeserializable(actionImport.returnType)
       ? additionalDocForEntityNotDeserializable
       : ''
   }${unixEOL}`;

@@ -1,12 +1,13 @@
 import {
   VdmComplexType,
   VdmEntity,
+  VdmEnumType,
   VdmFunctionImport,
-  VdmReturnTypeCategory,
   VdmNavigationProperty,
   VdmProperty,
+  VdmReturnTypeCategory,
   VdmServiceMetadata,
-  VdmEnumType
+  VdmUnsupportedFunction
 } from '../../src/vdm-types';
 
 export const entityName: VdmProperty = {
@@ -248,8 +249,9 @@ export const entityNotDeserializable: VdmFunctionImport = {
   parametersTypeName: 'Params',
   returnType: {
     builderFunction: '',
-    returnType: 'void',
+    returnType: 'any',
     isCollection: false,
-    returnTypeCategory: VdmReturnTypeCategory.ENTITY_NOT_DESERIALIZABLE
+    returnTypeCategory: VdmReturnTypeCategory.NEVER,
+    unsupportedFunction: VdmUnsupportedFunction.ENTITY_NOT_DESERIALIZABLE
   }
 };

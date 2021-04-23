@@ -27,8 +27,7 @@
 ## Improvements
 
 - [odata] Allow using filter functions with boolean return types directly in the `filter()` of OData request builders without `equals(true)`.
-- [odata-generator] When calling a function/action import that has entity return type referenced by multiple entity sets, an exception is thrown instead of deserializing the response with the first entity set.
-- [odata-generator] When an entity type is shared by multiple entity sets and is used as the return type of function/action imports, an exception will be thrown with the recommendation to use `executeRaw` instead of `execute`.
+- [odata-generator] Disable the `execute` function, when an entity type is shared by multiple entity sets and is used as the return type of function/action imports.
 
 ## Fixed Issues
 

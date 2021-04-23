@@ -125,6 +125,7 @@ export interface VdmFunctionImportReturnType {
   isMulti?: boolean;
   isCollection: boolean;
   returnTypeCategory: VdmReturnTypeCategory;
+  unsupportedFunction?: VdmUnsupportedFunction;
 }
 
 export enum VdmReturnTypeCategory {
@@ -132,6 +133,10 @@ export enum VdmReturnTypeCategory {
   COMPLEX_TYPE,
   EDM_TYPE,
   VOID,
+  NEVER
+}
+
+export enum VdmUnsupportedFunction {
   ENTITY_NOT_DESERIALIZABLE
 }
 

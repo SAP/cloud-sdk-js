@@ -7,7 +7,7 @@ import {
   VdmProperty,
   VdmReturnTypeCategory,
   VdmServiceMetadata,
-  VdmUnsupportedFunction
+  VdmUnsupportedReason
 } from '../../src/vdm-types';
 
 export const entityName: VdmProperty = {
@@ -252,6 +252,6 @@ export const entityNotDeserializable: VdmFunctionImport = {
     returnType: 'never',
     isCollection: false,
     returnTypeCategory: VdmReturnTypeCategory.NEVER,
-    unsupportedFunction: VdmUnsupportedFunction.ENTITY_NOT_DESERIALIZABLE
+    unsupportedReason: VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
   }
 };

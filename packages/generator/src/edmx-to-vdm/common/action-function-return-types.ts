@@ -5,7 +5,7 @@ import {
   VdmEntity,
   VdmFunctionImportReturnType,
   VdmReturnTypeCategory,
-  VdmUnsupportedFunction
+  VdmUnsupportedReason
 } from '../../vdm-types';
 import {
   getTypeMappingActionFunction,
@@ -172,7 +172,7 @@ function getEntityReturnType(
         returnType: 'never',
         isMulti: isCollection,
         isCollection,
-        unsupportedFunction: VdmUnsupportedFunction.ENTITY_NOT_DESERIALIZABLE
+        unsupportedReason: VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
       };
 }
 
@@ -197,8 +197,8 @@ export function isEntityNotDeserializable(
 ): boolean {
   return (
     returnType.returnTypeCategory === VdmReturnTypeCategory.NEVER &&
-    returnType.unsupportedFunction ===
-      VdmUnsupportedFunction.ENTITY_NOT_DESERIALIZABLE
+    returnType.unsupportedReason ===
+      VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
   );
 }
 

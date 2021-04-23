@@ -203,15 +203,6 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
 }
 `;
 
-exports[`sdk-metadata generates the header content 1`] = `
-Object {
-  "introText": "The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.",
-  "name": "API_TEST_SRV",
-  "type": "odata",
-  "version": "1.0.0",
-}
-`;
-
 exports[`sdk-metadata generates the header content from objects 1`] = `
 Object {
   "introText": "The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.",

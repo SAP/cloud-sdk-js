@@ -45,7 +45,7 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
     transpile: flags.boolean({
       char: 't',
       description:
-        'Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated. It emits `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. To configure transpilation set `--tsconfig`.',
+        'Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated and used. It emits `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. To configure transpilation set `--tsconfig`.',
       default: false
     }),
     include: flags.string({
@@ -67,7 +67,7 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
     }),
     packageJson: flags.boolean({
       description:
-        'When set to false, no `package.json` is generated. By default, a `package.json` that specifies dependencies and scripts for transpilation and documentation generation.',
+        'When set to false, no `package.json` is generated. By default, a `package.json` that specifies dependencies and scripts for transpilation and documentation generation is generated.',
       default: true,
       allowNo: true
     }),

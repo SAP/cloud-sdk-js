@@ -43,7 +43,7 @@ OPTIONS
                                                           `--serviceMapping`.
 
   -t, --transpile                                         Transpile the generated TypeScript code. When enabled a
-                                                          default `tsconfig.json` will be generated. It emits `.js`,
+                                                          default `tsconfig.json` will be generated and used. It emits `.js`,
                                                           `.js.map`, `.d.ts` and `.d.ts.map` files. To configure
                                                           transpilation set `--tsconfig`.
 

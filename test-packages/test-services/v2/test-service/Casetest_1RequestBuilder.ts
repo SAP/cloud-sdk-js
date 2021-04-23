@@ -3,14 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  RequestBuilder,
-  GetAllRequestBuilderV2,
-  GetByKeyRequestBuilderV2,
-  CreateRequestBuilderV2,
-  UpdateRequestBuilderV2,
-  DeleteRequestBuilderV2
-} from '@sap-cloud-sdk/core';
+import { RequestBuilder, GetAllRequestBuilderV2, GetByKeyRequestBuilderV2, CreateRequestBuilderV2, UpdateRequestBuilderV2, DeleteRequestBuilderV2 } from '@sap-cloud-sdk/core';
 import { Casetest_1 } from './Casetest_1';
 
 /**
@@ -23,9 +16,7 @@ export class Casetest_1RequestBuilder extends RequestBuilder<Casetest_1> {
    * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
    */
   getByKey(keyPropertyString: string): GetByKeyRequestBuilderV2<Casetest_1> {
-    return new GetByKeyRequestBuilderV2(Casetest_1, {
-      KeyPropertyString: keyPropertyString
-    });
+    return new GetByKeyRequestBuilderV2(Casetest_1, { KeyPropertyString: keyPropertyString });
   }
 
   /**
@@ -67,11 +58,6 @@ export class Casetest_1RequestBuilder extends RequestBuilder<Casetest_1> {
    */
   delete(entity: Casetest_1): DeleteRequestBuilderV2<Casetest_1>;
   delete(keyPropertyStringOrEntity: any): DeleteRequestBuilderV2<Casetest_1> {
-    return new DeleteRequestBuilderV2(
-      Casetest_1,
-      keyPropertyStringOrEntity instanceof Casetest_1
-        ? keyPropertyStringOrEntity
-        : { KeyPropertyString: keyPropertyStringOrEntity! }
-    );
+    return new DeleteRequestBuilderV2(Casetest_1, keyPropertyStringOrEntity instanceof Casetest_1 ? keyPropertyStringOrEntity : { KeyPropertyString: keyPropertyStringOrEntity! });
   }
 }

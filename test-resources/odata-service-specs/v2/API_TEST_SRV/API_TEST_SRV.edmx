@@ -33,6 +33,13 @@
         <NavigationProperty Name="to_SingleLink" Relationship="API_TEST_SRV.assoc_TestEntityToSingleLink" FromRole="FromRole_assoc_TestEntityToSingleLink" ToRole="ToRole_assoc_TestEntityToSingleLink"/>
       </EntityType>
 
+      <EntityType Name="A_TestEntityTypeToBeShared">
+        <Key>
+          <PropertyRef Name="KeyProperty"/>
+        </Key>
+        <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+      </EntityType>
+
       <EntityType Name="A_TestEntityMultiLinkType" sap:content-version="1">
         <Key>
           <PropertyRef Name="KeyProperty"/>
@@ -128,6 +135,16 @@
         <Property Name="KeyProperty" Type="Edm.String" Nullable="false"/>
       </EntityType>
 
+      <!-- duplicate_entity_name
+        In some C4C APIs there are entity sets, that have the same with different casing.
+      -->
+      <EntityType Name="A_CaseTestType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyPropertyString"/>
+        </Key>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+      </EntityType>
+
       <ComplexType Name="A_TestComplexType">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" Nullable="false"/>
         <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
@@ -205,6 +222,10 @@
         <EntitySet Name="A_TestEntityLvl2MultiLink" EntityType="API_TEST_SRV.A_TestEntityLvl2MultiLinkType" sap:content-version="1"/>
         <EntitySet Name="A_TestEntitySingleLink" EntityType="API_TEST_SRV.A_TestEntitySingleLinkType" sap:content-version="1"/>
         <EntitySet Name="A_TestEntityLvl2SingleLink" EntityType="API_TEST_SRV.A_TestEntityLvl2SingleLinkType" sap:content-version="1"/>
+        <EntitySet Name="A_TestEntityWithSharedEntityType1" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
+        </EntitySet>
+        <EntitySet Name="A_TestEntityWithSharedEntityType2" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
+        </EntitySet>
 
         <!-- circular_links
           Due to circular linking, we had a bug, where one of the links was undefined. Note, that there is only one association.
@@ -221,7 +242,8 @@
         <!-- duplicate_entity_name
           In some C4C APIs there are entity sets, that have the same with different casing.
         -->
-        <EntitySet Name="A_Testentity" EntityType="API_TEST_SRV.A_TestEntityType" sap:content-version="1"/>
+        <EntitySet Name="A_CaseTest" EntityType="API_TEST_SRV.A_CaseTestType" sap:content-version="1"/>
+        <EntitySet Name="A_CASETEST" EntityType="API_TEST_SRV.A_CaseTestType" sap:content-version="1"/>
 
         <AssociationSet Name="assoc_TestEntityToMultiLink" Association="API_TEST_SRV.assoc_TestEntityToMultiLink" sap:content-version="1">
           <End EntitySet="A_TestEntity" Role="FromRole_assoc_TestEntityToMultiLink"/>
@@ -277,6 +299,12 @@
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportEntityReturnTypeCollection" ReturnType="Collection(API_TEST_SRV.A_TestEntityType)" m:HttpMethod="GET" sap:action-for="API_TEST_SRV.A_TestEntityReturnType">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportSharedEntityReturnType" ReturnType="API_TEST_SRV.A_TestEntityTypeToBeShared" m:HttpMethod="GET" sap:action-for="API_TEST_SRV.A_TestEntityTypeToBeShared">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportSharedEntityReturnTypeCollection" ReturnType="Collection(API_TEST_SRV.A_TestEntityTypeToBeShared)" m:HttpMethod="GET" sap:action-for="API_TEST_SRV.A_TestEntityTypeToBeShared">
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportComplexReturnType" ReturnType="API_TEST_SRV.A_TestComplexType" m:HttpMethod="GET">

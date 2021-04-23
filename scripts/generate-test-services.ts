@@ -47,7 +47,8 @@ const generatorConfigOpenApi: GeneratorOptions = {
   generatePackageJson: true,
   versionInPackageJson: '1.2.3',
   additionalFiles: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',
-  writeReadme: true
+  writeReadme: true,
+  strictNaming: false
 };
 
 const logger = createLogger('generate-test-service');

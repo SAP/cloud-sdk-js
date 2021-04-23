@@ -15,7 +15,8 @@ import {
   testFunctionImportMultipleParams,
   testFunctionImportNoReturnType,
   testFunctionImportPost,
-  testFunctionImportUnsupportedEdmTypes
+  testFunctionImportUnsupportedEdmTypes,
+  testFunctionImportSharedEntityReturnType
 } from '../../../test/test-util/test-services/v2/test-service';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
@@ -188,6 +189,18 @@ describe('FunctionImportRequestBuilder', () => {
     await expect(
       testFunctionImportNoReturnType({}).execute(defaultDestination)
     ).rejects.toThrow();
+  });
+
+  it('throws an error when shared entity type is used as return type', async () => {
+    nock(defaultHost)
+      .get(`${serviceUrl}/TestFunctionImportSharedEntityReturnType()`)
+      .query({ $format: 'json' })
+      .reply(200, {});
+    const requestBuilder = testFunctionImportSharedEntityReturnType({}) as any;
+
+    await expect(
+      requestBuilder.execute(defaultDestination)
+    ).rejects.toThrowErrorMatchingSnapshot();
   });
 });
 

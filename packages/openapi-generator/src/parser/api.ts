@@ -7,16 +7,19 @@ import { OperationInfo } from './parsing-info';
 import { nameOperations } from './operation-naming';
 import { ensureUniqueNames } from './unique-naming';
 import { OpenApiDocumentRefs } from './refs';
+import { ParserOptions } from './options';
 
 /**
  * Collect and parse all APIs of an `OpenAPIV3.Document`.
  * @param document The OpenApi document to parse.
  * @param refs Object representing cross references throughout the document.
+ * @param options Parser options.
  * @returns A flat list of parsed APIs.
  */
 export function parseApis(
   document: OpenAPIV3.Document,
-  refs: OpenApiDocumentRefs
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
 ): OpenApiApi[] {
   const operationsByApis = getOperationsByApis(document);
 
@@ -27,7 +30,7 @@ export function parseApis(
         // All operations have been named in the previous step
         ({ operation }) => operation.operationId!
       );
-      const uniqueNames = ensureUniqueNames(operationNames);
+      const uniqueNames = ensureUniqueNames(operationNames, options);
       const uniquelyNamedOperations = namedOperations.map(
         (operationInfo, i) => {
           operationInfo.operation.operationId = uniqueNames[i];
@@ -37,7 +40,7 @@ export function parseApis(
       return {
         name,
         operations: uniquelyNamedOperations.map(operationInfo =>
-          parseOperation(operationInfo, refs)
+          parseOperation(operationInfo, refs, options)
         )
       };
     }

@@ -28,7 +28,7 @@ export interface GetNearestAirportParameters {
  * Get Nearest Airport.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function getNearestAirport(
   parameters: GetNearestAirportParameters

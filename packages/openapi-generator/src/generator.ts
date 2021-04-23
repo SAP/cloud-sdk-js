@@ -206,7 +206,8 @@ async function generateService(
     openApiDocument,
     serviceName,
     inputFilePath,
-    serviceMapping
+    serviceMapping,
+    { strictNaming: options.strictNaming ?? true }
   );
 
   if (!parsedOpenApiDocument.apis.length) {

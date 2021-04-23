@@ -12,6 +12,7 @@ import {
   externalImportDeclarations,
   mergeImportDeclarations
 } from '../imports';
+import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
 function actionFunctionImportDeclarations(
@@ -25,7 +26,9 @@ function actionFunctionImportDeclarations(
     coreImportDeclaration([
       ...corePropertyTypeImportNames(parameters),
       ...returnTypes.map(returnType =>
-        responseTransformerFunctionName(returnType, oDataVersion)
+        isEntityNotDeserializable(returnType)
+          ? 'throwErrorWhenReturnTypeIsUnionType'
+          : responseTransformerFunctionName(returnType, oDataVersion)
       ),
       ...edmRelatedImports(returnTypes, oDataVersion),
       ...complexTypeRelatedImports(returnTypes, oDataVersion),
@@ -67,7 +70,8 @@ function returnTypeImports(
       .filter(
         returnType =>
           returnType.returnTypeCategory !== VdmReturnTypeCategory.EDM_TYPE &&
-          returnType.returnTypeCategory !== VdmReturnTypeCategory.VOID
+          returnType.returnTypeCategory !== VdmReturnTypeCategory.VOID &&
+          returnType.returnTypeCategory !== VdmReturnTypeCategory.NEVER
       )
       .map(returnType => returnTypeImport(returnType))
   );

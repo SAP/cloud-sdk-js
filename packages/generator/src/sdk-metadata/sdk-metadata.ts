@@ -1,4 +1,3 @@
-import { removeFileExtension } from '@sap-cloud-sdk/util';
 import { VdmServiceMetadata } from '../vdm-types';
 import { GeneratorOptions } from '../generator-options';
 import type {
@@ -6,9 +5,7 @@ import type {
   SdkMetadataHeader,
   ServiceStatus
 } from './sdk-metadata-types';
-import {
-  getPregeneratedLibrary
-} from './pregenerated-lib';
+import { getPregeneratedLibrary } from './pregenerated-lib';
 import { getGenerationAndUsage } from './generation-and-usage';
 
 export async function sdkMetaDataJS(
@@ -50,7 +47,8 @@ export function sdkMetaDataHeader(
     type: 'odata',
     name: serviceName,
     version: clientVersion,
-    introText:'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.'
+    introText:
+      'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.'
   };
 }
 

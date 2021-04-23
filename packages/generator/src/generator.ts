@@ -1,6 +1,10 @@
 import { PathLike } from 'fs';
 import { resolve, basename, dirname } from 'path';
-import { createLogger, removeFileExtension, splitInChunks } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  removeFileExtension,
+  splitInChunks
+} from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
   Directory,
@@ -333,21 +337,24 @@ export async function generateSourcesForService(
       resolve(dirname(service.edmxPath.toString()), 'sdk-metadata')
     );
     // For the file name we use the artifact.name from API which should be the unique identifier
-    const fileName = removeFileExtension(service.originalFileName)
+    const fileName = removeFileExtension(service.originalFileName);
     otherFile(
       metadataDir,
       headerFileName,
-      JSON.stringify(await sdkMetaDataHeader(fileName, getVersionForClient(options)), null, 2),
+      JSON.stringify(
+        await sdkMetaDataHeader(fileName, getVersionForClient(options)),
+        null,
+        2
+      ),
       options.forceOverwrite
     );
 
     logger.info(`Generating sdk client metatdata ${clientFileName}...`);
 
-
     otherFile(
       metadataDir,
       clientFileName,
-      JSON.stringify(await sdkMetaDataJS(service,options), null, 2),
+      JSON.stringify(await sdkMetaDataJS(service, options), null, 2),
       options.forceOverwrite
     );
   }

@@ -1,8 +1,8 @@
 import { VdmServiceMetadata } from '../vdm-types';
 import { getLinks } from './links';
 import type {
-  GenerationAndUsage,
-  InstructionWithText
+  InstructionWithText,
+  GenerationAndUsage
 } from './sdk-metadata-types';
 import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
 import { getGeneratorVersion } from './pregenerated-lib';
@@ -10,7 +10,9 @@ import { getGeneratorVersion } from './pregenerated-lib';
 export const generatorRepositoryLink =
   'https://www.npmjs.com/package/@sap-cloud-sdk/generator';
 
-export async function getGenerationAndUsage(service: VdmServiceMetadata){
+export async function getGenerationAndUsage(
+  service: VdmServiceMetadata
+): Promise<GenerationAndUsage> {
   return {
     genericUsage: await getGenericUsage(),
     apiSpecificUsage: await getApiSpecificUsage(service),

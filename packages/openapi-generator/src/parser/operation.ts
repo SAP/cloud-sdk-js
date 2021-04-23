@@ -8,16 +8,19 @@ import { parseResponses } from './responses';
 import { OperationInfo } from './parsing-info';
 import { reservedJsKeywords } from './reserved-words';
 import { ensureUniqueNames } from './unique-naming';
+import { ParserOptions } from './options';
 
 /**
  * Parse an operation info into a serialization-ready object.
  * @param operationInfo Parsing relevant information on an operation.
  * @param refs Object representing cross references throughout the document.
+ * @param options Parser options.
  * @returns A flat list of parsed operations.
  */
 export function parseOperation(
   { operation, pathPattern, method, pathItemParameters }: OperationInfo,
-  refs: OpenApiDocumentRefs
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
 ): OpenApiOperation {
   const requestBody = parseRequestBody(operation.requestBody, refs);
   const response = parseResponses(operation.responses, refs);
@@ -31,7 +34,12 @@ export function parseOperation(
     parameter => parameter.in === 'path'
   );
 
-  const pathParameters = parsePathParameters(pathParams, pathPattern, refs);
+  const pathParameters = parsePathParameters(
+    pathParams,
+    pathPattern,
+    refs,
+    options
+  );
 
   return {
     ...operation,
@@ -111,12 +119,14 @@ export function parsePathPattern(
 export function parsePathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
   pathPattern: string,
-  refs: OpenApiDocumentRefs
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
 ): OpenApiParameter[] {
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
   const parsedParameters = parseParameters(sortedPathParameters, refs);
   const uniqueNames = ensureUniqueNames(
     parsedParameters.map(({ originalName }) => originalName),
+    options,
     {
       reservedWords: ['body', 'queryParameters', ...reservedJsKeywords]
     }

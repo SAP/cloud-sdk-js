@@ -5,10 +5,13 @@ describe('OpenApiDocumentRefs', () => {
   let refs: OpenApiDocumentRefs;
   const typeName: OpenAPIV3.SchemaObject = { type: 'string' };
   beforeAll(async () => {
-    refs = await createRefs({
-      ...emptyDocument,
-      components: { schemas: { typeName } }
-    });
+    refs = await createRefs(
+      {
+        ...emptyDocument,
+        components: { schemas: { typeName } }
+      },
+      { strictNaming: true }
+    );
   });
   describe('resolveObject', () => {
     it('resolves reference', async () => {

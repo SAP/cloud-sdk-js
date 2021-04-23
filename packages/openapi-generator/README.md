@@ -54,6 +54,8 @@ OPTIONS
 
   --tsConfig=tsConfig                          tsconfig.json file to overwrite the default "tsconfig.json".
 
+  --version                                    show CLI version
+
   --versionInPackageJson=versionInPackageJson  By default, when generating package.json file, the generator will set a
                                                version by using the generator version. It can also be set to a specific
                                                version.

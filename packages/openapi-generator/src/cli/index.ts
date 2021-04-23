@@ -97,7 +97,8 @@ class GenerateOpenApiClient extends Command {
       default: false,
       required: false,
       hidden: true
-    })
+    }),
+    version: flags.version()
   };
 
   async run(): Promise<void> {

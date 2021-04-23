@@ -5,7 +5,8 @@ import { getTestService } from './pregenerated-lib.spec';
 import {
   getSdkMetadataFileNames,
   sdkMetaDataHeader,
-  sdkMetaDataJS, sdkMetaDataJSFallback
+  sdkMetaDataJS,
+  sdkMetaDataJSFallback
 } from './sdk-metadata';
 
 describe('sdk-metadata', () => {
@@ -20,14 +21,8 @@ describe('sdk-metadata', () => {
     ).toMatchSnapshot();
   });
 
-
   it('generates the header content from strings', async () => {
-    expect(
-      sdkMetaDataHeader(
-        'serviceName',
-        'clientVersion'
-      )
-    ).toMatchSnapshot();
+    expect(sdkMetaDataHeader('serviceName', 'clientVersion')).toMatchSnapshot();
   });
 
   it('generates the File names', () => {
@@ -69,11 +64,8 @@ describe('sdk-metadata', () => {
     );
   });
 
-
-  it('generates the JS metadta fallback content',async ()=>{
-    const metaData = await sdkMetaDataJSFallback(
-     '1234'
-    );
+  it('generates the JS metadta fallback content', async () => {
+    const metaData = await sdkMetaDataJSFallback('1234');
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);
 
     expect(metaData).toMatchSnapshot();
@@ -82,5 +74,5 @@ describe('sdk-metadata', () => {
     expect(metaData.serviceStatus.statusText).toBe(
       'No information for this service present.'
     );
-  })
+  });
 });

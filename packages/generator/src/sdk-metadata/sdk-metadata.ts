@@ -10,9 +10,7 @@ import {
   getVersionForClient,
   getPregeneratedLibrary
 } from './pregenerated-lib';
-import { getGenerationAndUsage, getGenericUsage } from './generation-and-usage';
-import { installDependencies } from '@sap-cloud-sdk/cli/dist/utils';
-import { getLinks } from './links';
+import { getGenerationAndUsage } from './generation-and-usage';
 
 export async function sdkMetaDataJS(
   service: VdmServiceMetadata,
@@ -35,11 +33,13 @@ export async function sdkMetaDataJS(
   };
 }
 
-export async function sdkMetaDataJSFallback(generatorVersion: string): Promise<Client> {
+export async function sdkMetaDataJSFallback(
+  generatorVersion: string
+): Promise<Client> {
   return {
     pregeneratedLibrary: undefined,
     language: 'javascript',
-    serviceStatus:ServiceStatusValues.unknown,
+    serviceStatus: ServiceStatusValues.unknown,
     generationAndUsage: await getGenerationAndUsage(generatorVersion)
   };
 }
@@ -57,30 +57,35 @@ export function getSdkMetadataFileNames(
 export function sdkMetaDataHeader(
   service: VdmServiceMetadata,
   options: GeneratorOptions
-)
+);
+export function sdkMetaDataHeader(serviceName: string, version: string);
 export function sdkMetaDataHeader(
-  serviceName: string,
-  version: string
-)
-export function sdkMetaDataHeader(
-  serviceOrName: VdmServiceMetadata|string,
-  optionsOrVersion: GeneratorOptions|string
-)
-  : SdkMetadataHeader {
+  serviceOrName: VdmServiceMetadata | string,
+  optionsOrVersion: GeneratorOptions | string
+): SdkMetadataHeader {
   // For the file name we use the artifact.name from API which should be the unique identifier
-  const name = typeof serviceOrName === 'string' ? serviceOrName : removeFileExtension((serviceOrName.originalFileName))
-  const version = typeof optionsOrVersion === 'string' ? optionsOrVersion : getVersionForClient(optionsOrVersion as GeneratorOptions)
+  const name =
+    typeof serviceOrName === 'string'
+      ? serviceOrName
+      : removeFileExtension(serviceOrName.originalFileName);
+  const version =
+    typeof optionsOrVersion === 'string'
+      ? optionsOrVersion
+      : getVersionForClient(optionsOrVersion as GeneratorOptions);
 
   return {
     type: 'odata',
-  name,
+    name,
     version,
     introText:
       'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.'
   };
 }
 
-export const ServiceStatusValues: Record<ServiceStatus['status'], ServiceStatus> = {
+export const ServiceStatusValues: Record<
+  ServiceStatus['status'],
+  ServiceStatus
+> = {
   certified: {
     status: 'certified',
     statusText: 'A pre-generated API client exists.',

@@ -16,8 +16,6 @@
     "access": "public"
   },
   "files": [
-    "v4.d.ts",
-    "v4.js",
     "dist/**/*.js",
     "dist/**/*.js.map",
     "dist/**/*.d.ts",

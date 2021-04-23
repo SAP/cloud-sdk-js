@@ -39,10 +39,13 @@ var map = {
   A_TestEntityLvl2MultiLink: index_1.TestEntityLvl2MultiLink,
   A_TestEntitySingleLink: index_1.TestEntitySingleLink,
   A_TestEntityLvl2SingleLink: index_1.TestEntityLvl2SingleLink,
+  A_TestEntityWithSharedEntityType1: index_1.TestEntityWithSharedEntityType1,
+  A_TestEntityWithSharedEntityType2: index_1.TestEntityWithSharedEntityType2,
   A_TestEntityCircularLinkParent: index_1.TestEntityCircularLinkParent,
   A_TestEntityCircularLinkChild: index_1.TestEntityCircularLinkChild,
   A_TestEntityEndsWithCollection: index_1.TestEntityEndsWith,
   A_TestEntityEndsWithSomethingElse: index_1.TestEntityEndsWithSomethingElse,
-  A_Testentity: index_1.Testentity_1
+  A_CaseTest: index_1.CaseTest,
+  A_CASETEST: index_1.Casetest_1
 };
 //# sourceMappingURL=BatchRequest.js.map

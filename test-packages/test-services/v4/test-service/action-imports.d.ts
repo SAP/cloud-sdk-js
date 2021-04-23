@@ -87,10 +87,50 @@ export declare function testActionImportNoParameterEntityReturnType(
   TestActionImportNoParameterEntityReturnTypeParameters,
   TestEntity
 >;
+/**
+ * Type of the parameters to be passed to [[testActionImportSharedEntityReturnType]].
+ */
+export interface TestActionImportSharedEntityReturnTypeParameters {}
+/**
+ * Test Action Import Shared Entity Return Type. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportSharedEntityReturnType(
+  parameters: TestActionImportSharedEntityReturnTypeParameters
+): Omit<
+  ActionImportRequestBuilder<
+    TestActionImportSharedEntityReturnTypeParameters,
+    never
+  >,
+  'execute'
+>;
+/**
+ * Type of the parameters to be passed to [[testActionImportSharedEntityReturnTypeCollection]].
+ */
+export interface TestActionImportSharedEntityReturnTypeCollectionParameters {}
+/**
+ * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportSharedEntityReturnTypeCollection(
+  parameters: TestActionImportSharedEntityReturnTypeCollectionParameters
+): Omit<
+  ActionImportRequestBuilder<
+    TestActionImportSharedEntityReturnTypeCollectionParameters,
+    never
+  >,
+  'execute'
+>;
 export declare const actionImports: {
   testActionImportNoParameterNoReturnType: typeof testActionImportNoParameterNoReturnType;
   testActionImportMultipleParameterComplexReturnType: typeof testActionImportMultipleParameterComplexReturnType;
   testActionImportUnsupportedEdmTypes: typeof testActionImportUnsupportedEdmTypes;
   testActionImportNoParameterEntityReturnType: typeof testActionImportNoParameterEntityReturnType;
+  testActionImportSharedEntityReturnType: typeof testActionImportSharedEntityReturnType;
+  testActionImportSharedEntityReturnTypeCollection: typeof testActionImportSharedEntityReturnTypeCollection;
 };
 //# sourceMappingURL=action-imports.d.ts.map

@@ -4,12 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
-import { AllFields, CustomFieldV2, EntityBuilderType, EntityV2, Field, StringField } from '@sap-cloud-sdk/core';
+import {
+  AllFields,
+  CustomFieldV2,
+  EntityBuilderType,
+  EntityV2,
+  Field,
+  StringField
+} from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEntityType {
+export class MultiSchemaTestEntity
+  extends EntityV2
+  implements MultiSchemaTestEntityType {
   /**
    * Technical entity name for MultiSchemaTestEntity.
    */
@@ -27,7 +36,10 @@ export class MultiSchemaTestEntity extends EntityV2 implements MultiSchemaTestEn
    * Returns an entity builder to construct instances of `MultiSchemaTestEntity`.
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
-  static builder(): EntityBuilderType<MultiSchemaTestEntity, MultiSchemaTestEntityType> {
+  static builder(): EntityBuilderType<
+    MultiSchemaTestEntity,
+    MultiSchemaTestEntityType
+  > {
     return EntityV2.entityBuilder(MultiSchemaTestEntity);
   }
 
@@ -66,7 +78,11 @@ export namespace MultiSchemaTestEntity {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<MultiSchemaTestEntity> = new StringField('KeyProperty', MultiSchemaTestEntity, 'Edm.String');
+  export const KEY_PROPERTY: StringField<MultiSchemaTestEntity> = new StringField(
+    'KeyProperty',
+    MultiSchemaTestEntity,
+    'Edm.String'
+  );
   /**
    * All fields of the MultiSchemaTestEntity entity.
    */
@@ -76,16 +92,29 @@ export namespace MultiSchemaTestEntity {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<MultiSchemaTestEntity> = new AllFields('*', MultiSchemaTestEntity);
+  export const ALL_FIELDS: AllFields<MultiSchemaTestEntity> = new AllFields(
+    '*',
+    MultiSchemaTestEntity
+  );
   /**
    * All key fields of the MultiSchemaTestEntity entity.
    */
-  export const _keyFields: Array<Field<MultiSchemaTestEntity>> = [MultiSchemaTestEntity.KEY_PROPERTY];
+  export const _keyFields: Array<Field<MultiSchemaTestEntity>> = [
+    MultiSchemaTestEntity.KEY_PROPERTY
+  ];
   /**
    * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
    */
-  export const _keys: { [keys: string]: Field<MultiSchemaTestEntity> } = MultiSchemaTestEntity._keyFields.reduce((acc: { [keys: string]: Field<MultiSchemaTestEntity> }, field: Field<MultiSchemaTestEntity>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<MultiSchemaTestEntity>;
+  } = MultiSchemaTestEntity._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<MultiSchemaTestEntity> },
+      field: Field<MultiSchemaTestEntity>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

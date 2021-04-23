@@ -150,7 +150,7 @@ export function testFunctionImportSharedEntityReturnType(
 ): Omit<
   FunctionImportRequestBuilderV4<
     TestFunctionImportSharedEntityReturnTypeParameters,
-    void
+    never
   >,
   'execute'
 > {
@@ -184,7 +184,7 @@ export function testFunctionImportSharedEntityReturnTypeCollection(
 ): Omit<
   FunctionImportRequestBuilderV4<
     TestFunctionImportSharedEntityReturnTypeCollectionParameters,
-    void
+    never
   >,
   'execute'
 > {

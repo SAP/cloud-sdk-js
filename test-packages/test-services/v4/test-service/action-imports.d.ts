@@ -102,7 +102,7 @@ export declare function testActionImportSharedEntityReturnType(
 ): Omit<
   ActionImportRequestBuilder<
     TestActionImportSharedEntityReturnTypeParameters,
-    void
+    never
   >,
   'execute'
 >;
@@ -121,7 +121,7 @@ export declare function testActionImportSharedEntityReturnTypeCollection(
 ): Omit<
   ActionImportRequestBuilder<
     TestActionImportSharedEntityReturnTypeCollectionParameters,
-    void
+    never
   >,
   'execute'
 >;

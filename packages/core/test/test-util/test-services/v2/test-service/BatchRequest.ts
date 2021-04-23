@@ -20,8 +20,8 @@ import {
   TestEntityLvl2MultiLink,
   TestEntitySingleLink,
   TestEntityLvl2SingleLink,
-  TestEntitySharesEntityType1,
-  TestEntitySharesEntityType2,
+  TestEntityWithSharedEntityType1,
+  TestEntityWithSharedEntityType2,
   TestEntityCircularLinkParent,
   TestEntityCircularLinkChild,
   TestEntityEndsWith,
@@ -97,8 +97,8 @@ const map = {
   A_TestEntityLvl2MultiLink: TestEntityLvl2MultiLink,
   A_TestEntitySingleLink: TestEntitySingleLink,
   A_TestEntityLvl2SingleLink: TestEntityLvl2SingleLink,
-  A_TestEntitySharesEntityType1: TestEntitySharesEntityType1,
-  A_TestEntitySharesEntityType2: TestEntitySharesEntityType2,
+  A_TestEntityWithSharedEntityType1: TestEntityWithSharedEntityType1,
+  A_TestEntityWithSharedEntityType2: TestEntityWithSharedEntityType2,
   A_TestEntityCircularLinkParent: TestEntityCircularLinkParent,
   A_TestEntityCircularLinkChild: TestEntityCircularLinkChild,
   A_TestEntityEndsWithCollection: TestEntityEndsWith,
@@ -113,8 +113,8 @@ export type ReadTestServiceRequestBuilder =
   | GetAllRequestBuilderV2<TestEntityLvl2MultiLink>
   | GetAllRequestBuilderV2<TestEntitySingleLink>
   | GetAllRequestBuilderV2<TestEntityLvl2SingleLink>
-  | GetAllRequestBuilderV2<TestEntitySharesEntityType1>
-  | GetAllRequestBuilderV2<TestEntitySharesEntityType2>
+  | GetAllRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | GetAllRequestBuilderV2<TestEntityWithSharedEntityType2>
   | GetAllRequestBuilderV2<TestEntityCircularLinkParent>
   | GetAllRequestBuilderV2<TestEntityCircularLinkChild>
   | GetAllRequestBuilderV2<TestEntityEndsWith>
@@ -127,8 +127,8 @@ export type ReadTestServiceRequestBuilder =
   | GetByKeyRequestBuilderV2<TestEntityLvl2MultiLink>
   | GetByKeyRequestBuilderV2<TestEntitySingleLink>
   | GetByKeyRequestBuilderV2<TestEntityLvl2SingleLink>
-  | GetByKeyRequestBuilderV2<TestEntitySharesEntityType1>
-  | GetByKeyRequestBuilderV2<TestEntitySharesEntityType2>
+  | GetByKeyRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | GetByKeyRequestBuilderV2<TestEntityWithSharedEntityType2>
   | GetByKeyRequestBuilderV2<TestEntityCircularLinkParent>
   | GetByKeyRequestBuilderV2<TestEntityCircularLinkChild>
   | GetByKeyRequestBuilderV2<TestEntityEndsWith>
@@ -154,12 +154,12 @@ export type WriteTestServiceRequestBuilder =
   | CreateRequestBuilderV2<TestEntityLvl2SingleLink>
   | UpdateRequestBuilderV2<TestEntityLvl2SingleLink>
   | DeleteRequestBuilderV2<TestEntityLvl2SingleLink>
-  | CreateRequestBuilderV2<TestEntitySharesEntityType1>
-  | UpdateRequestBuilderV2<TestEntitySharesEntityType1>
-  | DeleteRequestBuilderV2<TestEntitySharesEntityType1>
-  | CreateRequestBuilderV2<TestEntitySharesEntityType2>
-  | UpdateRequestBuilderV2<TestEntitySharesEntityType2>
-  | DeleteRequestBuilderV2<TestEntitySharesEntityType2>
+  | CreateRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | UpdateRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | DeleteRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | CreateRequestBuilderV2<TestEntityWithSharedEntityType2>
+  | UpdateRequestBuilderV2<TestEntityWithSharedEntityType2>
+  | DeleteRequestBuilderV2<TestEntityWithSharedEntityType2>
   | CreateRequestBuilderV2<TestEntityCircularLinkParent>
   | UpdateRequestBuilderV2<TestEntityCircularLinkParent>
   | DeleteRequestBuilderV2<TestEntityCircularLinkParent>

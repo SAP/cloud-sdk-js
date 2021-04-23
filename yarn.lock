@@ -8541,9 +8541,9 @@ ono@^4.0.11:
     format-util "^1.0.3"
 
 openapi-backend@^3.6.3:
-  version "3.9.1"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-3.9.1.tgz#c424e6ce6d3a3243342678b16e984f28d7306db3"
-  integrity sha512-PXd7C1ln913Hpw1/JCpoZm3kv/0K138gvI9Abidib34yzW3vHBGYj+uxVEYSFEcy+5GVCvMJoMCMwO61Tb2t2Q==
+  version "3.9.2"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-3.9.2.tgz#69ed180cbed5ae6a2658106818178116675317ba"
+  integrity sha512-+IqhtObMGeRf4aDB6L5Lc3nZYPHB9JRkTiOaNHKx26SDWcaMAof6RnABbgLDNVRRiz+fbJPmizWcFSkCPX8qeQ==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.7"
     ajv "^6.10.0"

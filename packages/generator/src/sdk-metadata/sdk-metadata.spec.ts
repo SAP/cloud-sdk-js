@@ -5,21 +5,11 @@ import { getTestService } from './pregenerated-lib.spec';
 import {
   getSdkMetadataFileNames,
   sdkMetaDataHeader,
-  sdkMetaDataJS,
-  sdkMetaDataJSFallback
+  sdkMetaDataJS
 } from './sdk-metadata';
 
 describe('sdk-metadata', () => {
   const service = getTestService();
-
-  it('generates the header content from objects', async () => {
-    expect(
-      sdkMetaDataHeader(
-        service,
-        createOptions({ versionInPackageJson: '1.0.0' })
-      )
-    ).toMatchSnapshot();
-  });
 
   it('generates the header content from strings', async () => {
     expect(sdkMetaDataHeader('serviceName', 'clientVersion')).toMatchSnapshot();
@@ -61,18 +51,6 @@ describe('sdk-metadata', () => {
     expect(metaData.pregeneratedLibrary).toBeUndefined();
     expect(metaData.serviceStatus.statusText).toBe(
       'The generation process for this API works.'
-    );
-  });
-
-  it('generates the JS metadta fallback content', async () => {
-    const metaData = await sdkMetaDataJSFallback('1234');
-    nock('http://registry.npmjs.org/').head(/.*/).reply(200);
-
-    expect(metaData).toMatchSnapshot();
-    expect(metaData.serviceStatus.status).toBe('unknown');
-    expect(metaData.pregeneratedLibrary).toBeUndefined();
-    expect(metaData.serviceStatus.statusText).toBe(
-      'No information for this service present.'
     );
   });
 });

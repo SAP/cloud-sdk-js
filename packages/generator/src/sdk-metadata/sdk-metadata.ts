@@ -7,7 +7,6 @@ import type {
   ServiceStatus
 } from './sdk-metadata-types';
 import {
-  getVersionForClient,
   getPregeneratedLibrary
 } from './pregenerated-lib';
 import { getGenerationAndUsage } from './generation-and-usage';
@@ -33,17 +32,6 @@ export async function sdkMetaDataJS(
   };
 }
 
-export async function sdkMetaDataJSFallback(
-  generatorVersion: string
-): Promise<Client> {
-  return {
-    pregeneratedLibrary: undefined,
-    language: 'javascript',
-    serviceStatus: ServiceStatusValues.unknown,
-    generationAndUsage: await getGenerationAndUsage(generatorVersion)
-  };
-}
-
 export function getSdkMetadataFileNames(
   service: VdmServiceMetadata
 ): { clientFileName: string; headerFileName: string } {
@@ -55,30 +43,14 @@ export function getSdkMetadataFileNames(
 }
 
 export function sdkMetaDataHeader(
-  service: VdmServiceMetadata,
-  options: GeneratorOptions
-);
-export function sdkMetaDataHeader(serviceName: string, version: string);
-export function sdkMetaDataHeader(
-  serviceOrName: VdmServiceMetadata | string,
-  optionsOrVersion: GeneratorOptions | string
+  serviceName: string,
+  clientVersion: string
 ): SdkMetadataHeader {
-  // For the file name we use the artifact.name from API which should be the unique identifier
-  const name =
-    typeof serviceOrName === 'string'
-      ? serviceOrName
-      : removeFileExtension(serviceOrName.originalFileName);
-  const version =
-    typeof optionsOrVersion === 'string'
-      ? optionsOrVersion
-      : getVersionForClient(optionsOrVersion as GeneratorOptions);
-
   return {
     type: 'odata',
-    name,
-    version,
-    introText:
-      'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.'
+    name: serviceName,
+    version: clientVersion,
+    introText:'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.'
   };
 }
 

@@ -90,7 +90,7 @@ async function generateSources(
   await createApis(serviceDir, openApiDocument);
   await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
 
-  if (options.generatePackageJson) {
+  if (options.packageJson) {
     logger.debug(`Generating package.json in ${serviceDir}.`);
 
     await createFile(
@@ -100,14 +100,14 @@ async function generateSources(
         openApiDocument.npmPackageName,
         genericDescription(openApiDocument.directoryName),
         await getSdkVersion(),
-        options.versionInPackageJson
+        options.packageVersion
       ),
       true,
       false
     );
   }
 
-  if (options.generateJs) {
+  if (options.transpile) {
     await createFile(
       serviceDir,
       'tsconfig.json',
@@ -118,11 +118,11 @@ async function generateSources(
     await transpileDirectory(serviceDir);
   }
 
-  if (options.additionalFiles) {
-    await copyAdditionalFiles(options.additionalFiles, serviceDir);
+  if (options.include) {
+    await copyAdditionalFiles(options.include, serviceDir);
   }
 
-  if (options.writeReadme) {
+  if (options.readme) {
     await generateReadme(serviceDir, openApiDocument);
   }
 }

@@ -39,7 +39,7 @@ exports[`packageJson returns the package.json content 1`] = `
 "
 `;
 
-exports[`packageJson returns the package.json content when versionInPackageJson is undefined 1`] = `
+exports[`packageJson returns the package.json content when packageVersion is undefined 1`] = `
 "{
   \\"name\\": \\"workflow-service\\",
   \\"version\\": \\"1.35.0\\",

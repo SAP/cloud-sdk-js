@@ -7,7 +7,8 @@ import {
   createLogger,
   UniqueNameGenerator,
   kebabCase,
-  ErrorWithCause
+  ErrorWithCause,
+  finishAll
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import { GeneratorOptions } from './options';
@@ -64,7 +65,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   });
 
   try {
-    await settleAndAccumulate(promises);
+    await finishAll(promises);
   } catch (err) {
     if (promises.length > 1) {
       cli.error(
@@ -73,24 +74,6 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     } else {
       new ErrorWithCause('Could not generate client.', err);
     }
-  }
-}
-
-/**
- * Await all promises and resolve if non of them failed.
- * Reject if at least one of them was rejected.
- * @param promises Promises to settle.
- */
-export async function settleAndAccumulate(
-  promises: Promise<any>[]
-): Promise<void> {
-  const settledPromises = await Promise.allSettled(promises);
-  const rejectedPromises = settledPromises.filter(
-    promise => promise.status === 'rejected'
-  ) as PromiseRejectedResult[];
-  if (rejectedPromises.length) {
-    const reasons = rejectedPromises.map(promise => promise.reason).join(', ');
-    throw new Error(reasons);
   }
 }
 

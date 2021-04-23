@@ -2,11 +2,7 @@ import { resolve } from 'path';
 import { existsSync } from 'fs';
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
-import {
-  getSdkVersion,
-  getInputFilePaths,
-  settleAndAccumulate
-} from './generator';
+import { getSdkVersion, getInputFilePaths } from './generator';
 
 // FIXME: These tests are dangerous, because they operate on local data, that has to be generated and does not reside in the package directory, which should not be the case for unit tests.
 // As soon as we have mocking in place this should be exchanged.
@@ -82,24 +78,5 @@ describe('generator', () => {
   it('should create a readme', () => {
     const readme = resolve(testServicePath, 'README.md');
     expect(existsSync(readme)).toBe(true);
-  });
-});
-
-describe('settleAndAccumulate', () => {
-  it('throws an error if some promises are rejected', async () => {
-    const promises = [
-      Promise.resolve(),
-      Promise.resolve(),
-      Promise.reject('ERROR1'),
-      Promise.reject('ERROR2')
-    ];
-    await expect(() =>
-      settleAndAccumulate(promises)
-    ).rejects.toThrowErrorMatchingInlineSnapshot('"ERROR1, ERROR2"');
-  });
-
-  it('does not throw if all promises are resolved', async () => {
-    const promises = [Promise.resolve(), Promise.resolve()];
-    await expect(settleAndAccumulate(promises)).resolves.toBeUndefined();
   });
 });

@@ -14,4 +14,3 @@ export async function finishAll(promises: Promise<any>[]): Promise<void> {
     throw new Error(reasons);
   }
 }
-

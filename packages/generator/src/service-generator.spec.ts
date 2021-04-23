@@ -189,14 +189,14 @@ describe('service-generator', () => {
             numProperties: 5
           },
           {
-            className: 'TestEntitySharesEntityType1',
-            entitySetName: 'A_TestEntitySharesEntityType1',
+            className: 'TestEntityWithSharedEntityType1',
+            entitySetName: 'A_TestEntityWithSharedEntityType1',
             numKeys: 1,
             numProperties: 1
           },
           {
-            className: 'TestEntitySharesEntityType2',
-            entitySetName: 'A_TestEntitySharesEntityType2',
+            className: 'TestEntityWithSharedEntityType2',
+            entitySetName: 'A_TestEntityWithSharedEntityType2',
             numKeys: 1,
             numProperties: 1
           },

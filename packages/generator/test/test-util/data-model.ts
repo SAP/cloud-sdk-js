@@ -249,7 +249,7 @@ export const entityNotDeserializable: VdmFunctionImport = {
   parametersTypeName: 'Params',
   returnType: {
     builderFunction: '',
-    returnType: 'any',
+    returnType: 'never',
     isCollection: false,
     returnTypeCategory: VdmReturnTypeCategory.NEVER,
     unsupportedFunction: VdmUnsupportedFunction.ENTITY_NOT_DESERIALIZABLE

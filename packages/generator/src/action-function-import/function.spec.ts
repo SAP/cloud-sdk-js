@@ -30,7 +30,7 @@ describe('function', () => {
       name: 'entityNotDeserializable',
       parameters: [{ name: 'parameters', type: 'Params' }],
       returnType:
-        "Omit<FunctionImportRequestBuilderV2<Params, void>, 'execute'>",
+        "Omit<FunctionImportRequestBuilderV2<Params, never>, 'execute'>",
       docs: [
         "entityNotDeserializable The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.\n\n@param parameters - Object containing all parameters for the function import.\n@returns A request builder that allows to overwrite some of the values and execute the resulting request."
       ],

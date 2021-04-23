@@ -10,9 +10,20 @@ describe('finishAll', () => {
     ];
     await expect(() => finishAll(promises)).rejects
       .toThrowErrorMatchingInlineSnapshot(`
-            "Errors:
+            "Errors: [
             	ERROR1
-            	ERROR2"
+            	ERROR2
+            ]"
+          `);
+  });
+
+  it('throws an with a custom message', async () => {
+    const promises = [Promise.reject('ERROR')];
+    await expect(() => finishAll(promises, 'Message')).rejects
+      .toThrowErrorMatchingInlineSnapshot(`
+            "Message Errors: [
+            	ERROR
+            ]"
           `);
   });
 

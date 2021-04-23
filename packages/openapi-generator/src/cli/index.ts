@@ -3,7 +3,6 @@
 import { resolve } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Command, flags } from '@oclif/command';
-import cli from 'cli-ux';
 import { generate } from '../generator';
 
 const logger = createLogger('openapi-generator');
@@ -65,7 +64,7 @@ class GenerateOpenApiClient extends Command {
       name: 'generateJs',
       description:
         'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files.',
-      default: true,
+      default: false,
       required: false
     }),
     serviceMapping: flags.string({
@@ -101,13 +100,8 @@ class GenerateOpenApiClient extends Command {
   };
 
   async run(): Promise<void> {
-    try {
-      const parsed = this.parse(GenerateOpenApiClient);
-      await generate(parsed.flags);
-    } catch (e) {
-      logger.error(e.message);
-      return cli.exit(1);
-    }
+    const parsed = this.parse(GenerateOpenApiClient);
+    await generate(parsed.flags);
   }
 }
 

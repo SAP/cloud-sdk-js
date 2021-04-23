@@ -7,8 +7,12 @@ require('promise.allsettled/auto');
  * Reject if at least one of them was rejected, but only once all of them are finished.
  * Throws an error consisting of a list of reasons.
  * @param promises Promises to settle.
+ * @param errorMessage Message to use as introductory text of the error if an error occurs.
  */
-export async function finishAll(promises: Promise<any>[]): Promise<void> {
+export async function finishAll(
+  promises: Promise<any>[],
+  errorMessage?: string
+): Promise<void> {
   const settledPromises = await Promise.allSettled(promises);
   const rejectedPromises = settledPromises.filter(
     promise => promise.status === 'rejected'
@@ -17,6 +21,7 @@ export async function finishAll(promises: Promise<any>[]): Promise<void> {
     const reasons = rejectedPromises
       .map(promise => `\t${promise.reason}`)
       .join('\n');
-    throw new Error(`Errors:\n${reasons}`);
+    const message = errorMessage ? `${errorMessage} ` : '';
+    throw new Error(`${message}Errors: [\n${reasons}\n]`);
   }
 }

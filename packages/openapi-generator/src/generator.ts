@@ -2,7 +2,6 @@
 
 import { promises as promisesFs } from 'fs';
 import { resolve, parse, basename, join } from 'path';
-import cli from 'cli-ux';
 import {
   createLogger,
   UniqueNameGenerator,
@@ -64,17 +63,11 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     );
   });
 
-  try {
-    await finishAll(promises);
-  } catch (err) {
-    if (promises.length > 1) {
-      cli.error(
-        new ErrorWithCause('Some clients could not be generated.', err)
-      );
-    } else {
-      new ErrorWithCause('Could not generate client.', err);
-    }
-  }
+  const errorMessage =
+    promises.length > 1
+      ? 'Some clients could not be generated.'
+      : 'Could not generate client.';
+  await finishAll(promises, errorMessage);
 }
 
 /**
@@ -217,7 +210,7 @@ async function generateService(
   }
 
   await generateSources(serviceDir, parsedOpenApiDocument, options);
-  cli.log(`Successfully generated client for '${inputFilePath}'`);
+  logger.info(`Successfully generated client for '${inputFilePath}'`);
 }
 
 /**

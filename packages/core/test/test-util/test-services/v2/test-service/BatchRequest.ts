@@ -20,11 +20,14 @@ import {
   TestEntityLvl2MultiLink,
   TestEntitySingleLink,
   TestEntityLvl2SingleLink,
+  TestEntityWithSharedEntityType1,
+  TestEntityWithSharedEntityType2,
   TestEntityCircularLinkParent,
   TestEntityCircularLinkChild,
   TestEntityEndsWith,
   TestEntityEndsWithSomethingElse,
-  Testentity_1
+  CaseTest,
+  Casetest_1
 } from './index';
 
 /**
@@ -94,11 +97,14 @@ const map = {
   A_TestEntityLvl2MultiLink: TestEntityLvl2MultiLink,
   A_TestEntitySingleLink: TestEntitySingleLink,
   A_TestEntityLvl2SingleLink: TestEntityLvl2SingleLink,
+  A_TestEntityWithSharedEntityType1: TestEntityWithSharedEntityType1,
+  A_TestEntityWithSharedEntityType2: TestEntityWithSharedEntityType2,
   A_TestEntityCircularLinkParent: TestEntityCircularLinkParent,
   A_TestEntityCircularLinkChild: TestEntityCircularLinkChild,
   A_TestEntityEndsWithCollection: TestEntityEndsWith,
   A_TestEntityEndsWithSomethingElse: TestEntityEndsWithSomethingElse,
-  A_Testentity: Testentity_1
+  A_CaseTest: CaseTest,
+  A_CASETEST: Casetest_1
 };
 export type ReadTestServiceRequestBuilder =
   | GetAllRequestBuilderV2<TestEntity>
@@ -107,22 +113,28 @@ export type ReadTestServiceRequestBuilder =
   | GetAllRequestBuilderV2<TestEntityLvl2MultiLink>
   | GetAllRequestBuilderV2<TestEntitySingleLink>
   | GetAllRequestBuilderV2<TestEntityLvl2SingleLink>
+  | GetAllRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | GetAllRequestBuilderV2<TestEntityWithSharedEntityType2>
   | GetAllRequestBuilderV2<TestEntityCircularLinkParent>
   | GetAllRequestBuilderV2<TestEntityCircularLinkChild>
   | GetAllRequestBuilderV2<TestEntityEndsWith>
   | GetAllRequestBuilderV2<TestEntityEndsWithSomethingElse>
-  | GetAllRequestBuilderV2<Testentity_1>
+  | GetAllRequestBuilderV2<CaseTest>
+  | GetAllRequestBuilderV2<Casetest_1>
   | GetByKeyRequestBuilderV2<TestEntity>
   | GetByKeyRequestBuilderV2<TestEntityMultiLink>
   | GetByKeyRequestBuilderV2<TestEntityOtherMultiLink>
   | GetByKeyRequestBuilderV2<TestEntityLvl2MultiLink>
   | GetByKeyRequestBuilderV2<TestEntitySingleLink>
   | GetByKeyRequestBuilderV2<TestEntityLvl2SingleLink>
+  | GetByKeyRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | GetByKeyRequestBuilderV2<TestEntityWithSharedEntityType2>
   | GetByKeyRequestBuilderV2<TestEntityCircularLinkParent>
   | GetByKeyRequestBuilderV2<TestEntityCircularLinkChild>
   | GetByKeyRequestBuilderV2<TestEntityEndsWith>
   | GetByKeyRequestBuilderV2<TestEntityEndsWithSomethingElse>
-  | GetByKeyRequestBuilderV2<Testentity_1>;
+  | GetByKeyRequestBuilderV2<CaseTest>
+  | GetByKeyRequestBuilderV2<Casetest_1>;
 export type WriteTestServiceRequestBuilder =
   | CreateRequestBuilderV2<TestEntity>
   | UpdateRequestBuilderV2<TestEntity>
@@ -142,6 +154,12 @@ export type WriteTestServiceRequestBuilder =
   | CreateRequestBuilderV2<TestEntityLvl2SingleLink>
   | UpdateRequestBuilderV2<TestEntityLvl2SingleLink>
   | DeleteRequestBuilderV2<TestEntityLvl2SingleLink>
+  | CreateRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | UpdateRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | DeleteRequestBuilderV2<TestEntityWithSharedEntityType1>
+  | CreateRequestBuilderV2<TestEntityWithSharedEntityType2>
+  | UpdateRequestBuilderV2<TestEntityWithSharedEntityType2>
+  | DeleteRequestBuilderV2<TestEntityWithSharedEntityType2>
   | CreateRequestBuilderV2<TestEntityCircularLinkParent>
   | UpdateRequestBuilderV2<TestEntityCircularLinkParent>
   | DeleteRequestBuilderV2<TestEntityCircularLinkParent>
@@ -154,6 +172,9 @@ export type WriteTestServiceRequestBuilder =
   | CreateRequestBuilderV2<TestEntityEndsWithSomethingElse>
   | UpdateRequestBuilderV2<TestEntityEndsWithSomethingElse>
   | DeleteRequestBuilderV2<TestEntityEndsWithSomethingElse>
-  | CreateRequestBuilderV2<Testentity_1>
-  | UpdateRequestBuilderV2<Testentity_1>
-  | DeleteRequestBuilderV2<Testentity_1>;
+  | CreateRequestBuilderV2<CaseTest>
+  | UpdateRequestBuilderV2<CaseTest>
+  | DeleteRequestBuilderV2<CaseTest>
+  | CreateRequestBuilderV2<Casetest_1>
+  | UpdateRequestBuilderV2<Casetest_1>
+  | DeleteRequestBuilderV2<Casetest_1>;

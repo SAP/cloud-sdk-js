@@ -117,7 +117,7 @@ export type VdmActionFunctionImportReturnType =
   | VdmFunctionImportReturnType;
 
 export interface VdmFunctionImportReturnType {
-  builderFunction: string;
+  builderFunction?: string;
   returnType: string;
   /**
    * @deprecated Since v1.22.0. Use `isCollection` instead.
@@ -125,13 +125,19 @@ export interface VdmFunctionImportReturnType {
   isMulti?: boolean;
   isCollection: boolean;
   returnTypeCategory: VdmReturnTypeCategory;
+  unsupportedReason?: VdmUnsupportedReason;
 }
 
 export enum VdmReturnTypeCategory {
   ENTITY,
   COMPLEX_TYPE,
   EDM_TYPE,
-  VOID
+  VOID,
+  NEVER
+}
+
+export enum VdmUnsupportedReason {
+  ENTITY_NOT_DESERIALIZABLE
 }
 
 export interface VdmParameter extends VdmMappedEdmType {

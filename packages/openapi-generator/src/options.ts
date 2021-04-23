@@ -9,4 +9,5 @@ export interface GeneratorOptions {
   tsConfig?: string;
   include?: string;
   readme?: boolean;
+  strictNaming?: boolean;
 }

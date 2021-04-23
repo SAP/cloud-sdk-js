@@ -10,7 +10,7 @@ export const emptyDocument = {
 export function createTestRefs(
   components: OpenAPIV3.ComponentsObject = {}
 ): Promise<OpenApiDocumentRefs> {
-  return createRefs({ ...emptyDocument, components });
+  return createRefs({ ...emptyDocument, components }, { strictNaming: true });
 }
 
 export const emptyObjectSchema = {

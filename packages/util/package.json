@@ -32,11 +32,12 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "logform": "^2.2.0",
+    "promise.allsettled": "^1.0.4",
     "voca": "^1.4.0",
-    "winston": "^3.3.3",
-    "axios": "^0.21.1"
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "nock": "^13.0.11"

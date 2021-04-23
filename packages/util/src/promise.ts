@@ -1,3 +1,7 @@
+// Enable `Promise.allSettled` for node v10
+// eslint-disable-next-line import/no-internal-modules
+require('promise.allsettled/auto');
+
 /**
  * Await all promises and resolve if non of them failed.
  * Reject if at least one of them was rejected, but only once all of them are finished.

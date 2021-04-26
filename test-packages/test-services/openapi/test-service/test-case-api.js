@@ -161,6 +161,20 @@ exports.TestCaseApi = {
     );
   },
   /**
+   * Create a request builder for execution of get requests to the '/test-cases/schema-name-integer' endpoint.
+   * @param body Request body.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  schemaNameInteger: function (body) {
+    return new core_1.OpenApiRequestBuilder(
+      'get',
+      '/test-cases/schema-name-integer',
+      {
+        body: body
+      }
+    );
+  },
+  /**
    * Create a request builder for execution of get requests to the '/test-cases/no-operation-id' endpoint.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */

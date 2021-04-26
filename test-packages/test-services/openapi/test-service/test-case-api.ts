@@ -7,7 +7,8 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import type {
   SimpleTestEntity,
   ComplexTestEntity,
-  SimpleTestEntityWITHSymbols
+  SimpleTestEntityWITHSymbols,
+  Schema123456
 } from './schema';
 /**
  * Representation of the 'TestCaseApi'.
@@ -151,6 +152,15 @@ export const TestCaseApi = {
    */
   useNameWithSymbols: (body: SimpleTestEntityWITHSymbols | undefined) =>
     new OpenApiRequestBuilder<any>('post', '/test-cases/complex-schemas', {
+      body
+    }),
+  /**
+   * Create a request builder for execution of get requests to the '/test-cases/schema-name-integer' endpoint.
+   * @param body Request body.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  schemaNameInteger: (body: Schema123456 | undefined) =>
+    new OpenApiRequestBuilder<any>('get', '/test-cases/schema-name-integer', {
       body
     }),
   /**

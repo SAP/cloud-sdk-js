@@ -59,6 +59,91 @@ describe('OpenApiDocumentRefs', () => {
       );
     });
 
+    it('renames a schema if needed due to illegal name', async () => {
+      refs = await createRefs(
+        {
+          ...emptyDocument,
+          components: { schemas: { '123456': {}, schema123456: {} } }
+        },
+        { strictNaming: false }
+      );
+      expect(refs.getSchemaNaming('#/components/schemas/123456')).toEqual({
+        fileName: 'schema-123456',
+        schemaName: 'Schema123456'
+      });
+
+      expect(refs.getSchemaNaming('#/components/schemas/schema123456')).toEqual(
+        {
+          fileName: 'schema-123456-1',
+          schemaName: 'Schema123456_1'
+        }
+      );
+    });
+
+    it('throws if renaming is necessary due to starting with integer and strictNaming flag is on', async () => {
+      await expect(
+        createRefs(
+          {
+            ...emptyDocument,
+            components: { schemas: { '123456': {}, schema123456: {} } }
+          },
+          { strictNaming: true }
+        )
+      ).rejects.toThrowError(
+        'Your OpenApi definition contains a schema starting with an integer which is not possible in TypeScript.'
+      );
+    });
+
+    it('throws if renaming is necessary due to duplicateand strictNaming flag is on', async () => {
+      await expect(
+        createRefs(
+          {
+            ...emptyDocument,
+            components: { schemas: { name: {}, Name: {} } }
+          },
+          { strictNaming: true }
+        )
+      ).rejects.toThrowError('Some names are not unique after formatting.');
+    });
+
+    it('renames a schema if needed due to duplicate names', async () => {
+      refs = await createRefs(
+        {
+          ...emptyDocument,
+          components: { schemas: { name: {}, Name: {} } }
+        },
+        { strictNaming: false }
+      );
+      expect(refs.getSchemaNaming('#/components/schemas/name')).toEqual({
+        fileName: 'name-1',
+        schemaName: 'Name1'
+      });
+
+      expect(refs.getSchemaNaming('#/components/schemas/Name')).toEqual({
+        fileName: 'name',
+        schemaName: 'Name'
+      });
+    });
+
+    it('renames a schema if needed due to duplicate names with separator', async () => {
+      refs = await createRefs(
+        {
+          ...emptyDocument,
+          components: { schemas: { name400: {}, Name400: {} } }
+        },
+        { strictNaming: false }
+      );
+      expect(refs.getSchemaNaming('#/components/schemas/name400')).toEqual({
+        fileName: 'name-400-1',
+        schemaName: 'Name400_1'
+      });
+
+      expect(refs.getSchemaNaming('#/components/schemas/Name400')).toEqual({
+        fileName: 'name-400',
+        schemaName: 'Name400'
+      });
+    });
+
     it('throws an error for non schema reference', async () => {
       expect(() =>
         refs.getSchemaNaming('#/components/responses/typeName')

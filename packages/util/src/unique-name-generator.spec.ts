@@ -13,6 +13,13 @@ describe('UniqueNameGenerator', () => {
     );
   });
 
+  it('XXX', () => {
+    const generator = new UniqueNameGenerator('', ['SomeEntity123']);
+    expect(generator.generateUniqueName('SomeEntity123', false)).toBe(
+      'SomeEntity1231'
+    );
+  });
+
   it('should add _2 if _1 is already used', () => {
     const generator = new UniqueNameGenerator('_', ['MyClass_1']);
     expect(generator.generateUniqueName('MyClass_1')).toBe('MyClass_2');

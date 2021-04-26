@@ -43,7 +43,6 @@
     "@oclif/config": "^1.14.0",
     "@sap-cloud-sdk/util": "^1.41.0",
     "@types/js-yaml": "^4.0.0",
-    "cli-ux": "^5.4.5",
     "execa": "^5.0.0",
     "glob": "^7.1.6",
     "js-yaml": "^4.0.0",

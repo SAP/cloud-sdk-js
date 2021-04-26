@@ -1,11 +1,8 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { resolve } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
 import { Command, flags } from '@oclif/command';
 import { generate } from '../generator';
-
-const logger = createLogger('openapi-generator');
 
 class GenerateOpenApiClient extends Command {
   static description =

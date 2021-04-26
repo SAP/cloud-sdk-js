@@ -60,7 +60,7 @@ We should discuss the details of those defaults and make a concious decision on 
 
 \* Service Mapping - In OData we currently generate a `service-mapping.json` by default.
 Some services require a configuration to exist, in order to specify a service path, that could not be parsed from the specification by default.
-In those cases we plan to fail the generation when no service mapping was provided, similar to the behavior of `strictNaming`.
+In those cases we plan to fail the generation or log a warning when no service mapping was provided, similar to the behavior of `strictNaming`.
 As we pre-generate the OData services for SAP S/4HANA, the SDK takes care of a large number of services already using a `perServiceConfig` internally.
 
 Therefore, by default we will not generate a per service configuration, only when a path for `perServiceConfig` is provided.

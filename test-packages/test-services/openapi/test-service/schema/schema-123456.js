@@ -1,10 +1,8 @@
+'use strict';
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import type { SimpleTestEntity } from './simple-test-entity';
-/**
- * SimpleTestEntity schema
- */
-export type SimpleTestEntityWITHSymbols_1 = SimpleTestEntity;
+Object.defineProperty(exports, '__esModule', { value: true });
+//# sourceMappingURL=schema-123456.js.map

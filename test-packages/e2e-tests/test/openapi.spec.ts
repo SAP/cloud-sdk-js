@@ -32,6 +32,13 @@ describe('openapi request builder', () => {
     const postCreateCount = await countEntities();
     expect(postCreateCount).toEqual(preCreateCount + 1);
   });
+
+  it('executes request with quote in property', async () => {
+    const response = await EntityApi.getAllEntities({
+      enumStringParameter: 'value1'
+    }).execute(restDestination);
+    expect(response.length).toBeGreaterThanOrEqual(4);
+  });
 });
 
 function countEntities(): Promise<number> {

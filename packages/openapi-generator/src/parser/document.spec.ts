@@ -2,6 +2,7 @@ import { OpenAPIV3 } from 'openapi-types';
 import { emptyDocument } from '../../test/test-util';
 import { parseOpenApiDocument } from './document';
 
+const options = { strictNaming: true };
 describe('parseOpenApiDocument', () => {
   it('does not modify input service specification', () => {
     const input = {
@@ -26,7 +27,8 @@ describe('parseOpenApiDocument', () => {
           npmPackageName: '@sap/cloud-sdk-openapi-test-service',
           directoryName: 'test-service'
         }
-      }
+      },
+      options
     );
 
     expect(input).toStrictEqual(clonedInput);
@@ -54,7 +56,8 @@ describe('parseOpenApiDocument', () => {
           npmPackageName: '@sap/cloud-sdk-openapi-test-service',
           directoryName: 'test-service'
         }
-      }
+      },
+      { strictNaming: false }
     );
 
     expect(parsedDocument.schemas).toEqual([
@@ -88,7 +91,8 @@ describe('parseOpenApiDocument', () => {
       document,
       'myService',
       'myFile.json',
-      {}
+      {},
+      options
     );
     expect(parsed.schemas).toStrictEqual([
       {
@@ -120,7 +124,8 @@ describe('parseOpenApiDocument', () => {
           npmPackageName: '@sap/cloud-sdk-openapi-test-service',
           directoryName: 'test-service'
         }
-      }
+      },
+      { strictNaming: false }
     );
 
     expect(parsedDocument.schemas).toEqual([

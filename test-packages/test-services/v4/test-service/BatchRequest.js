@@ -34,6 +34,8 @@ exports.changeset = changeset;
 exports.defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 var map = {
   A_TestEntity: index_1.TestEntity,
+  A_TestEntityWithSharedEntityType1: index_1.TestEntityWithSharedEntityType1,
+  A_TestEntityWithSharedEntityType2: index_1.TestEntityWithSharedEntityType2,
   A_TestEntityMultiLink: index_1.TestEntityMultiLink,
   A_TestEntityOtherMultiLink: index_1.TestEntityOtherMultiLink,
   A_TestEntityLvl2MultiLink: index_1.TestEntityLvl2MultiLink,

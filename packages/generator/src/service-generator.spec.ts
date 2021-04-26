@@ -72,7 +72,7 @@ describe('service-generator', () => {
         expect(services[0].directoryName).toBe('test-service');
         expect(services[0].npmPackageName).toBe('test-service');
         expect(services[0].servicePath).toBe('/sap/opu/odata/sap/API_TEST_SRV');
-        expect(services[0].entities.length).toBe(11);
+        expect(services[0].entities.length).toBe(14);
       });
 
       it('generates vdm from edmx using swagger', () => {
@@ -83,7 +83,7 @@ describe('service-generator', () => {
           })
         );
 
-        expect(services[0].entities.length).toBe(11);
+        expect(services[0].entities.length).toBe(14);
         expect(
           services[0].apiBusinessHubMetadata!.businessDocumentationUrl
         ).toBeDefined();
@@ -189,6 +189,18 @@ describe('service-generator', () => {
             numProperties: 5
           },
           {
+            className: 'TestEntityWithSharedEntityType1',
+            entitySetName: 'A_TestEntityWithSharedEntityType1',
+            numKeys: 1,
+            numProperties: 1
+          },
+          {
+            className: 'TestEntityWithSharedEntityType2',
+            entitySetName: 'A_TestEntityWithSharedEntityType2',
+            numKeys: 1,
+            numProperties: 1
+          },
+          {
             entitySetName: 'A_TestEntityCircularLinkParent',
             className: 'TestEntityCircularLinkParent',
             numKeys: 1,
@@ -213,10 +225,16 @@ describe('service-generator', () => {
             numProperties: 1
           },
           {
-            entitySetName: 'A_Testentity',
-            className: 'Testentity_1',
-            numKeys: 2,
-            numProperties: 19
+            className: 'CaseTest',
+            entitySetName: 'A_CaseTest',
+            numKeys: 1,
+            numProperties: 1
+          },
+          {
+            className: 'Casetest_1',
+            entitySetName: 'A_CASETEST',
+            numKeys: 1,
+            numProperties: 1
           }
         ]);
       });
@@ -475,7 +493,7 @@ describe('service-generator', () => {
 
         const actions = services[0].actionsImports;
 
-        expect(actions?.length).toBe(4);
+        expect(actions?.length).toBe(6);
         const actionWithUnsupportedEdmType = actions?.find(
           action =>
             action.originalName === 'TestActionImportUnsupportedEdmTypes'

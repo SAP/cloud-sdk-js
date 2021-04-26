@@ -34,17 +34,28 @@ __exportStar(require('./TestEntityOtherMultiLink'), exports);
 __exportStar(require('./TestEntityLvl2MultiLink'), exports);
 __exportStar(require('./TestEntitySingleLink'), exports);
 __exportStar(require('./TestEntityLvl2SingleLink'), exports);
+__exportStar(require('./TestEntityWithSharedEntityType1'), exports);
+__exportStar(require('./TestEntityWithSharedEntityType2'), exports);
 __exportStar(require('./TestEntityCircularLinkParent'), exports);
 __exportStar(require('./TestEntityCircularLinkChild'), exports);
 __exportStar(require('./TestEntityEndsWith'), exports);
 __exportStar(require('./TestEntityEndsWithSomethingElse'), exports);
-__exportStar(require('./Testentity_1'), exports);
+__exportStar(require('./CaseTest'), exports);
+__exportStar(require('./Casetest_1'), exports);
 __exportStar(require('./TestEntityRequestBuilder'), exports);
 __exportStar(require('./TestEntityMultiLinkRequestBuilder'), exports);
 __exportStar(require('./TestEntityOtherMultiLinkRequestBuilder'), exports);
 __exportStar(require('./TestEntityLvl2MultiLinkRequestBuilder'), exports);
 __exportStar(require('./TestEntitySingleLinkRequestBuilder'), exports);
 __exportStar(require('./TestEntityLvl2SingleLinkRequestBuilder'), exports);
+__exportStar(
+  require('./TestEntityWithSharedEntityType1RequestBuilder'),
+  exports
+);
+__exportStar(
+  require('./TestEntityWithSharedEntityType2RequestBuilder'),
+  exports
+);
 __exportStar(require('./TestEntityCircularLinkParentRequestBuilder'), exports);
 __exportStar(require('./TestEntityCircularLinkChildRequestBuilder'), exports);
 __exportStar(require('./TestEntityEndsWithRequestBuilder'), exports);
@@ -52,7 +63,8 @@ __exportStar(
   require('./TestEntityEndsWithSomethingElseRequestBuilder'),
   exports
 );
-__exportStar(require('./Testentity_1RequestBuilder'), exports);
+__exportStar(require('./CaseTestRequestBuilder'), exports);
+__exportStar(require('./Casetest_1RequestBuilder'), exports);
 __exportStar(require('./TestComplexType'), exports);
 __exportStar(require('./TestNestedComplexType'), exports);
 __exportStar(require('./TestLvl2NestedComplexType'), exports);

@@ -12,7 +12,7 @@ var TestEntity_1 = require('./TestEntity');
  * Concat Strings.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function concatStrings(parameters) {
   var params = {
@@ -43,7 +43,7 @@ exports.concatStrings = concatStrings;
  * Get All.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getAll(parameters) {
   var params = {};
@@ -64,7 +64,7 @@ exports.getAll = getAll;
  * Get By Key.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function getByKey(parameters) {
   var params = {
@@ -91,7 +91,7 @@ exports.getByKey = getByKey;
  * Return Collection.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnCollection(parameters) {
   var params = {
@@ -117,7 +117,7 @@ exports.returnCollection = returnCollection;
  * Return Int.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnInt(parameters) {
   var params = {
@@ -143,7 +143,7 @@ exports.returnInt = returnInt;
  * Return Sap Cloud Sdk.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function returnSapCloudSdk(parameters) {
   var params = {};

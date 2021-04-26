@@ -1,6 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.functionImports = exports.fContinue = exports.createTestComplexType = exports.testFunctionImportMultipleParams = exports.testFunctionImportPost = exports.testFunctionImportGet = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportUnsupportedEdmTypes = exports.testFunctionImportComplexReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = exports.testFunctionImportNoReturnType = void 0;
+exports.functionImports = exports.fContinue = exports.createTestComplexType = exports.testFunctionImportMultipleParams = exports.testFunctionImportPost = exports.testFunctionImportGet = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportUnsupportedEdmTypes = exports.testFunctionImportComplexReturnType = exports.testFunctionImportSharedEntityReturnTypeCollection = exports.testFunctionImportSharedEntityReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = exports.testFunctionImportNoReturnType = void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -13,7 +13,7 @@ var TestComplexType_1 = require('./TestComplexType');
  * Test Function Import No Return Type.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportNoReturnType(parameters) {
   var params = {};
@@ -34,7 +34,7 @@ exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
  * Test Function Import Edm Return Type.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEdmReturnType(parameters) {
   var params = {};
@@ -58,7 +58,7 @@ exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
  * Test Function Import Edm Return Type Collection.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEdmReturnTypeCollection(parameters) {
   var params = {};
@@ -79,7 +79,7 @@ exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnT
  * Test Function Import Entity Return Type.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEntityReturnType(parameters) {
   var params = {};
@@ -101,7 +101,7 @@ exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
  * Test Function Import Entity Return Type Collection.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEntityReturnTypeCollection(parameters) {
   var params = {};
@@ -120,10 +120,54 @@ function testFunctionImportEntityReturnTypeCollection(parameters) {
 }
 exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
 /**
+ * Test Function Import Shared Entity Return Type. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+function testFunctionImportSharedEntityReturnType(parameters) {
+  var params = {};
+  return new core_1.FunctionImportRequestBuilderV2(
+    'get',
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestFunctionImportSharedEntityReturnType',
+    function (data) {
+      return core_1.throwErrorWhenReturnTypeIsUnionType(
+        data,
+        'TestFunctionImportSharedEntityReturnType'
+      );
+    },
+    params
+  );
+}
+exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntityReturnType;
+/**
+ * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+function testFunctionImportSharedEntityReturnTypeCollection(parameters) {
+  var params = {};
+  return new core_1.FunctionImportRequestBuilderV2(
+    'get',
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestFunctionImportSharedEntityReturnTypeCollection',
+    function (data) {
+      return core_1.throwErrorWhenReturnTypeIsUnionType(
+        data,
+        'TestFunctionImportSharedEntityReturnTypeCollection'
+      );
+    },
+    params
+  );
+}
+exports.testFunctionImportSharedEntityReturnTypeCollection = testFunctionImportSharedEntityReturnTypeCollection;
+/**
  * Test Function Import Complex Return Type.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportComplexReturnType(parameters) {
   var params = {};
@@ -147,7 +191,7 @@ exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnTyp
  * Test Function Import Unsupported Edm Types.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportUnsupportedEdmTypes(parameters) {
   var params = {
@@ -177,7 +221,7 @@ exports.testFunctionImportUnsupportedEdmTypes = testFunctionImportUnsupportedEdm
  * Test Function Import Complex Return Type Collection.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportComplexReturnTypeCollection(parameters) {
   var params = {};
@@ -204,7 +248,7 @@ exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComple
  * Test Function Import Get.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportGet(parameters) {
   var params = {
@@ -231,7 +275,7 @@ exports.testFunctionImportGet = testFunctionImportGet;
  * Test Function Import Post.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportPost(parameters) {
   var params = {
@@ -258,7 +302,7 @@ exports.testFunctionImportPost = testFunctionImportPost;
  * Test Function Import Multiple Params.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportMultipleParams(parameters) {
   var params = {
@@ -293,7 +337,7 @@ exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
  * Create Test Complex Type.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function createTestComplexType(parameters) {
   var params = {};
@@ -317,7 +361,7 @@ exports.createTestComplexType = createTestComplexType;
  * Continue.
  *
  * @param parameters - Object containing all parameters for the function import.
- * @returns A request builder that allows to overwrite some of the values and execute the resultng request.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function fContinue(parameters) {
   var params = {};
@@ -340,6 +384,8 @@ exports.functionImports = {
   testFunctionImportEdmReturnTypeCollection: testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,
   testFunctionImportEntityReturnTypeCollection: testFunctionImportEntityReturnTypeCollection,
+  testFunctionImportSharedEntityReturnType: testFunctionImportSharedEntityReturnType,
+  testFunctionImportSharedEntityReturnTypeCollection: testFunctionImportSharedEntityReturnTypeCollection,
   testFunctionImportComplexReturnType: testFunctionImportComplexReturnType,
   testFunctionImportUnsupportedEdmTypes: testFunctionImportUnsupportedEdmTypes,
   testFunctionImportComplexReturnTypeCollection: testFunctionImportComplexReturnTypeCollection,

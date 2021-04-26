@@ -43,11 +43,12 @@ const generatorConfigOpenApi: GeneratorOptions = {
   input: path.resolve('test-resources', 'openapi-service-specs'),
   outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
   clearOutputDir: true,
-  generateJs: false,
-  generatePackageJson: true,
-  versionInPackageJson: '1.2.3',
-  additionalFiles: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',
-  writeReadme: true
+  transpile: false,
+  packageJson: true,
+  packageVersion: '1.2.3',
+  include: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',
+  readme: true,
+  strictNaming: false
 };
 
 const logger = createLogger('generate-test-service');
@@ -173,7 +174,7 @@ async function generateAll(): Promise<void> {
   if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
     await generateOpenApi({
       ...generatorConfigOpenApi,
-      generateJs: true
+      transpile: true
     });
     await generateTestServicesWithLocalCoreModules(
       coreUnitTestOutputDir,

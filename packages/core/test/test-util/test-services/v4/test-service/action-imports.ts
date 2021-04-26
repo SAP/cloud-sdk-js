@@ -8,6 +8,7 @@ import {
   transformReturnValueForComplexTypeV4,
   transformReturnValueForEdmTypeV4,
   transformReturnValueForEntityV4,
+  throwErrorWhenReturnTypeIsUnionType,
   edmToTsV4,
   deserializeComplexTypeV4,
   ActionImportRequestBuilder,
@@ -179,9 +180,79 @@ export function testActionImportNoParameterEntityReturnType(
   );
 }
 
+/**
+ * Type of the parameters to be passed to [[testActionImportSharedEntityReturnType]].
+ */
+export interface TestActionImportSharedEntityReturnTypeParameters {}
+
+/**
+ * Test Action Import Shared Entity Return Type. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export function testActionImportSharedEntityReturnType(
+  parameters: TestActionImportSharedEntityReturnTypeParameters
+): Omit<
+  ActionImportRequestBuilder<
+    TestActionImportSharedEntityReturnTypeParameters,
+    never
+  >,
+  'execute'
+> {
+  const params = {};
+
+  return new ActionImportRequestBuilder(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestActionImportSharedEntityReturnType',
+    data =>
+      throwErrorWhenReturnTypeIsUnionType(
+        data,
+        'TestActionImportSharedEntityReturnType'
+      ),
+    params
+  );
+}
+
+/**
+ * Type of the parameters to be passed to [[testActionImportSharedEntityReturnTypeCollection]].
+ */
+export interface TestActionImportSharedEntityReturnTypeCollectionParameters {}
+
+/**
+ * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export function testActionImportSharedEntityReturnTypeCollection(
+  parameters: TestActionImportSharedEntityReturnTypeCollectionParameters
+): Omit<
+  ActionImportRequestBuilder<
+    TestActionImportSharedEntityReturnTypeCollectionParameters,
+    never
+  >,
+  'execute'
+> {
+  const params = {};
+
+  return new ActionImportRequestBuilder(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestActionImportSharedEntityReturnTypeCollection',
+    data =>
+      throwErrorWhenReturnTypeIsUnionType(
+        data,
+        'TestActionImportSharedEntityReturnTypeCollection'
+      ),
+    params
+  );
+}
+
 export const actionImports = {
   testActionImportNoParameterNoReturnType,
   testActionImportMultipleParameterComplexReturnType,
   testActionImportUnsupportedEdmTypes,
-  testActionImportNoParameterEntityReturnType
+  testActionImportNoParameterEntityReturnType,
+  testActionImportSharedEntityReturnType,
+  testActionImportSharedEntityReturnTypeCollection
 };

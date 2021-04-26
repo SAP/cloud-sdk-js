@@ -98,7 +98,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["value1", "value2"]
+              "enum": ["value1", "value2", "valueWith'Quote"]
             }
           },
           {

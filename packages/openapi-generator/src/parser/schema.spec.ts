@@ -183,6 +183,17 @@ describe('parseSchema', () => {
     });
   });
 
+  it('parses string enum schema with escaping', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      enum: ["valueWith'Quot'es"],
+      type: 'string'
+    };
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
+      type: 'string',
+      enum: ["'valueWith\\'Quot\\'es'"]
+    });
+  });
+
   it("parses enum schema with 'string' as default", async () => {
     const schema: OpenAPIV3.SchemaObject = {
       enum: ['one', 'two', 'three']

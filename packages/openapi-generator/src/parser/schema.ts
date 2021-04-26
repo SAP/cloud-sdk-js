@@ -170,9 +170,13 @@ function parseEnumSchema(
   return {
     type,
     enum: (schema.enum || []).map(entry =>
-      type === 'string' ? `'${entry}'` : entry
+      type === 'string' ? toEnumString(entry) : entry
     )
   };
+}
+
+function toEnumString(input: string): string {
+  return `'${input.replace(/'/g, "\\'")}'`;
 }
 
 /**

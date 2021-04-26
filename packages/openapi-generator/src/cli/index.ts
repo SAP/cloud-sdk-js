@@ -1,9 +1,9 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { resolve } from 'path';
-import { createLogger } from '@sap-cloud-sdk/util';
 import { Command, flags } from '@oclif/command';
-import cli from 'cli-ux';
+import { cli } from 'cli-ux';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { generate } from '../generator';
 
 const logger = createLogger('openapi-generator');
@@ -101,9 +101,9 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
     try {
       const parsed = this.parse(GenerateOpenApiClient);
       await generate(parsed.flags);
-    } catch (e) {
-      logger.error(e.message);
-      return cli.exit(1);
+    } catch (err) {
+      logger.error(err);
+      cli.exit(1);
     }
   }
 }

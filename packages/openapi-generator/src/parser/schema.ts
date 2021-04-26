@@ -170,12 +170,12 @@ function parseEnumSchema(
   return {
     type,
     enum: (schema.enum || []).map(entry =>
-      type === 'string' ? toEnumString(entry) : entry
+      type === 'string' ? getEnumStringValue(entry) : entry
     )
   };
 }
 
-function toEnumString(input: string): string {
+function getEnumStringValue(input: string): string {
   return `'${input.replace(/'/g, "\\'")}'`;
 }
 

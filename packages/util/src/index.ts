@@ -16,6 +16,7 @@ export * from './logger';
 export * from './nullish';
 export * from './object';
 export * from './pipe';
+export * from './promise';
 export * from './string';
 export * from './string-formatter';
 export * from './types';

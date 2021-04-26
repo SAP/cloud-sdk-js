@@ -5,7 +5,9 @@ import { resolve, parse, basename, join } from 'path';
 import {
   createLogger,
   UniqueNameGenerator,
-  kebabCase
+  kebabCase,
+  ErrorWithCause,
+  finishAll
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import { GeneratorOptions } from './options';
@@ -60,7 +62,12 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       uniqueServiceName
     );
   });
-  await Promise.all(promises);
+
+  const errorMessage =
+    promises.length > 1
+      ? 'Some clients could not be generated.'
+      : 'Could not generate client.';
+  await finishAll(promises, errorMessage);
 }
 
 /**
@@ -183,10 +190,10 @@ async function generateService(
   try {
     openApiDocument = await convertOpenApiSpec(inputFilePath);
   } catch (err) {
-    logger.error(
-      `Could not convert document at ${inputFilePath} to the format needed for parsing and generation. Skipping service generation.`
+    throw new ErrorWithCause(
+      `Could not convert document at '${inputFilePath}' to the format needed for parsing and generation.`,
+      err
     );
-    return;
   }
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
@@ -197,13 +204,13 @@ async function generateService(
   );
 
   if (!parsedOpenApiDocument.apis.length) {
-    logger.warn(
-      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${inputFilePath}`
+    throw new Error(
+      `The given document at '${inputFilePath}' does not contain any operations.`
     );
-    return;
   }
 
   await generateSources(serviceDir, parsedOpenApiDocument, options);
+  logger.info(`Successfully generated client for '${inputFilePath}'`);
 }
 
 /**

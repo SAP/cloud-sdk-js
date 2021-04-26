@@ -2,7 +2,11 @@
 
 import { resolve } from 'path';
 import { Command, flags } from '@oclif/command';
+import { cli } from 'cli-ux';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { generate } from '../generator';
+
+const logger = createLogger('openapi-generator');
 
 class GenerateOpenApiClient extends Command {
   static description =
@@ -94,8 +98,13 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
   };
 
   async run(): Promise<void> {
-    const parsed = this.parse(GenerateOpenApiClient);
-    await generate(parsed.flags);
+    try {
+      const parsed = this.parse(GenerateOpenApiClient);
+      await generate(parsed.flags);
+    } catch (err) {
+      logger.error(err);
+      cli.exit(1);
+    }
   }
 }
 

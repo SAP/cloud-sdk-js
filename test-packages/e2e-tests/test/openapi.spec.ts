@@ -35,7 +35,7 @@ describe('openapi request builder', () => {
 
   it('executes request with quote in property', async () => {
     const response = await EntityApi.getAllEntities({
-      enumStringParameter: 'value1'
+      enumStringParameter: "valueWith'Quote"
     }).execute(restDestination);
     expect(response.length).toBeGreaterThanOrEqual(4);
   });

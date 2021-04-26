@@ -9,35 +9,54 @@ const logger = createLogger('openapi-generator');
 
 class GenerateOpenApiClient extends Command {
   static description =
-    'Generate OpenAPI clients, that use the connectivity features of the SAP Cloud SDK for JavaScript.';
+    'Generate OpenAPI client(s), that use the connectivity features of the SAP Cloud SDK for JavaScript/TypeScript.';
 
-  static usage = '--inputDir <inputDirectory> --outputDir <outputDirectory>';
+  static usage = '--input <input> --outputDir <outputDirectory>';
+  static examples = [
+    `
+// generate TypeScript clients from OpenAPI definitions in a directory
+$ generate-openapi-client --input ./my-specs --outputDir ./clients`,
+    `
+// generate a JavaScript client from a OpenAPI definition file
+$ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpile`
+  ];
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   static version = require('../../package.json').version;
 
   static flags = {
     input: flags.string({
-      name: 'input',
       char: 'i',
       description:
-        'Input directory or file for the OpenAPI service definitions.',
+        'Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.',
       parse: input => resolve(input),
-      required: true
+      required: true,
+      helpValue: '<path/to/input>'
     }),
     outputDir: flags.string({
-      name: 'outputDir',
       char: 'o',
-      description: 'Output directory for the generated OpenAPI client.',
+      description:
+        'Specify the path to the directory to generate the client(s) in. Each client is generated into a subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory naming through `--serviceMapping`.',
       parse: input => resolve(input),
-      required: true
+      required: true,
+      helpValue: '<path/to/output>'
+    }),
+    transpile: flags.boolean({
+      char: 't',
+      description:
+        'Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated and used. It emits `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. To configure transpilation set `--tsconfig`.',
+      default: false
+    }),
+    include: flags.string({
+      description:
+        'Include files matching the given glob into the root of each generated client directory.',
+      parse: input => resolve(input),
+      helpValue: '<glob/to/include>'
     }),
     clearOutputDir: flags.boolean({
-      name: 'clearOutputDir',
       description:
-        'Remove all files in the output directory before generation.',
-      default: false,
-      required: false
+        'Remove all files in the output directory before generation. Be cautious when using this option, as it really removes EVERYTHING in the output directory.',
+      default: false
     }),
     strictNaming: flags.boolean({
       name: 'strictNaming',
@@ -47,54 +66,32 @@ class GenerateOpenApiClient extends Command {
       required: false,
       allowNo: true
     }),
-    versionInPackageJson: flags.string({
-      name: 'versionInPackageJson',
+    tsConfig: flags.string({
       description:
-        'By default, when generating package.json file, the generator will set a version by using the generator version. It can also be set to a specific version.',
-      required: false
+        'Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only generated, when transpilation is enabled (`--transpile`).',
+      parse: input => resolve(input),
+      helpValue: '<path/to/tsconfig.json>'
     }),
-    generatePackageJson: flags.boolean({
-      name: 'generatePackageJson',
+    packageJson: flags.boolean({
       description:
-        'By default, the generator will generate a package.json file, specifying dependencies and scripts for compiling and generating documentation. When set to false, the generator will skip the generation of the package.json.',
+        'When set to false, no `package.json` is generated. By default, a `package.json` that specifies dependencies and scripts for transpilation and documentation generation is generated.',
       default: true,
-      required: false
-    }),
-    generateJs: flags.boolean({
-      name: 'generateJs',
-      description:
-        'By default, the generator will also generate transpiled .js, .js.map, .d.ts and .d.ts.map files. When set to false, the generator will only generate .ts files.',
-      default: false,
-      required: false
+      allowNo: true
     }),
     serviceMapping: flags.string({
-      name: 'serviceMapping',
       description:
-        'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. By default it will be read from the input directory as "service-mapping.json".',
-      parse: input => resolve(input),
-      required: false
+        'Set the path to the service mapping file. By default, a `service-mapping.json` is generated in the input directory. The service mapping ensures consistent names between multiple generation runs with updated service definitions.',
+      helpValue: '<path/to/custom-service-mapping.json>'
     }),
-    tsConfig: flags.string({
-      name: 'tsConfig',
-      description:
-        'tsconfig.json file to overwrite the default "tsconfig.json".',
-      parse: input => resolve(input),
-      required: false
-    }),
-    additionalFiles: flags.string({
-      name: 'additionalFiles',
-      description:
-        'Glob describing additional files to be added to the each generated service directory.',
-      parse: input => resolve(input),
-      required: false,
+    packageVersion: flags.string({
+      description: 'Set the version in the generated package.json.',
+      default: '1.0.0',
       hidden: true
     }),
-    writeReadme: flags.boolean({
-      name: 'writeReadme',
+    readme: flags.boolean({
       description:
-        'When set to true, the generator will write a README.md file into the root folder of every package.',
+        'Generate default `README.md` files in the client directories.',
       default: false,
-      required: false,
       hidden: true
     })
   };

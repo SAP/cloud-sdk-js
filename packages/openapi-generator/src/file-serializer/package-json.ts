@@ -6,20 +6,20 @@ import { unixEOL } from '@sap-cloud-sdk/util';
  * @param npmPackageName The name of the npm package.
  * @param description The description of the  npm package.
  * @param sdkVersion The version of the SAP Cloud SDK used.
- * @param versionInPackageJson The version of the npm package.
+ * @param packageVersion The version of the npm package.
  * @returns The package.json contents.
  */
 export function packageJson(
   npmPackageName: string,
   description: string,
   sdkVersion: string,
-  versionInPackageJson?: string
+  packageVersion?: string
 ): string {
   return (
     JSON.stringify(
       {
         name: npmPackageName,
-        version: versionInPackageJson || sdkVersion,
+        version: packageVersion || '1.0.0',
         description,
         homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
         main: './index.js',

@@ -21,8 +21,6 @@ export async function createRefs(
   return OpenApiDocumentRefs.createRefs(document, options);
 }
 
-type MyType = {}
-
 /**
  * Representation of cross references within a document.
  * Useful when resolving references or getting schema names for referenced schemas.
@@ -55,10 +53,7 @@ export class OpenApiDocumentRefs {
     options: ParserOptions
   ): SchemaRefMapping {
     const originalNames = Object.keys(document.components?.schemas || {});
-    const validSchemaNames = ensureUValidSchemaNames(
-      originalNames,
-      options
-    );
+    const validSchemaNames = ensureUValidSchemaNames(originalNames, options);
 
     const schemaNames = ensureUniqueNames(validSchemaNames, options, {
       format: pascalCase,

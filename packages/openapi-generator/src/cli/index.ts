@@ -7,7 +7,6 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { generate } from '../generator';
 
 const logger = createLogger('openapi-generator');
-
 class GenerateOpenApiClient extends Command {
   static description =
     'Generate OpenAPI client(s), that use the connectivity features of the SAP Cloud SDK for JavaScript/TypeScript.';
@@ -78,6 +77,10 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
         'When set to false, no `package.json` is generated. By default, a `package.json` that specifies dependencies and scripts for transpilation and documentation generation is generated.',
       default: true,
       allowNo: true
+    }),
+    verbose: flags.boolean({
+      description: 'Turn on verbose logging.',
+      default: false
     }),
     serviceMapping: flags.string({
       description:

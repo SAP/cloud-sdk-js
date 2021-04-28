@@ -8,9 +8,9 @@ describe('getType', () => {
 
   it('logs warning for unknown values and returns any', () => {
     const logger = createLogger('openapi-generator');
-    spyOn(logger, 'debug');
+    spyOn(logger, 'verbose');
     expect(getType('unknown')).toEqual('any');
-    expect(logger.debug).toHaveBeenCalledWith(
+    expect(logger.verbose).toHaveBeenCalledWith(
       "Could not map type 'unknown' to a native type. Using any."
     );
   });

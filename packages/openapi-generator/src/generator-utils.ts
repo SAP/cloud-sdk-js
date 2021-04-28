@@ -10,10 +10,10 @@ const logger = createLogger('openapi-generator');
  * @param path - Directory to be compiled.
  */
 export async function transpileDirectory(path: string): Promise<void> {
-  logger.debug(`Transpiling files in the directory: ${path} started.`);
+  logger.verbose(`Transpiling files in the directory: ${path} started.`);
   await execa('tsc', { cwd: path }).catch(err => {
     logger.error(`Error: Failed to generate js files: ${err}`);
     process.exit(1);
   });
-  logger.debug(`Transpiling files in directory: ${path} finished.`);
+  logger.verbose(`Transpiling files in directory: ${path} finished.`);
 }

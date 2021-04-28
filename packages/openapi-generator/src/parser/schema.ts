@@ -25,7 +25,7 @@ export function parseSchema(
   refs: OpenApiDocumentRefs
 ): OpenApiSchema {
   if (!schema) {
-    logger.debug("No schema provided, continuing with 'any'.");
+    logger.verbose("No schema provided, continuing with 'any'.");
     return { type: 'any' };
   }
 

@@ -20,7 +20,7 @@ export const EntityApi = {
     integerParameter?: number;
     $dollarParameter?: string;
     'dot.parameter'?: string;
-    enumStringParameter?: 'value1' | 'value2';
+    enumStringParameter?: 'value1' | 'value2' | "valueWith'Quote";
     enumInt32Parameter?: 1 | 2;
     enumDoubleParameter?: 1 | 2;
     enumBooleanParameter?: true | false;

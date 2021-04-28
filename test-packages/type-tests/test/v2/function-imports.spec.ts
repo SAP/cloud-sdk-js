@@ -4,7 +4,8 @@ import {
   testFunctionImportEdmReturnType,
   testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType,
-  testFunctionImportEntityReturnTypeCollection
+  testFunctionImportEntityReturnTypeCollection,
+  testFunctionImportSharedEntityReturnType
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 // $ExpectType FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeParameters, boolean>
@@ -58,5 +59,15 @@ const entityCollectionReturnTypeRequestBuilder = testFunctionImportEntityReturnT
 
 // $ExpectType Promise<TestEntity[]>
 entityCollectionReturnTypeRequestBuilder.execute({
+  url: 'somePath'
+});
+
+// $ExpectType Promise<HttpResponse>
+testFunctionImportSharedEntityReturnType({}).executeRaw({
+  url: 'somePath'
+});
+
+// $ExpectError
+testFunctionImportSharedEntityReturnType({}).execute({
   url: 'somePath'
 });

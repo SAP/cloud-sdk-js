@@ -1,10 +1,11 @@
-import { caps, last, ODataVersion } from '@sap-cloud-sdk/util';
+import { caps, first, last, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmActionImportReturnType,
   VdmComplexType,
   VdmEntity,
   VdmFunctionImportReturnType,
-  VdmReturnTypeCategory
+  VdmReturnTypeCategory,
+  VdmUnsupportedReason
 } from '../../vdm-types';
 import {
   getTypeMappingActionFunction,
@@ -66,9 +67,9 @@ function parseReturnTypes(
     );
   }
 
-  const entity = findEntityType(returnType, entities);
-  if (entity) {
-    return getEntityReturnType(isCollection, entity);
+  const filteredEntities = findEntityTypes(returnType, entities);
+  if (filteredEntities.length) {
+    return getEntityReturnType(isCollection, filteredEntities);
   }
 
   const complexType = findComplexType(returnType, complexTypes);
@@ -86,18 +87,18 @@ function findEdmType(returnType: string): string | undefined {
   }
 }
 
-function findEntityType(
+function findEntityTypes(
   returnType: string,
   entities: VdmEntity[]
-): VdmEntity | undefined {
+): VdmEntity[] {
   returnType = parseTypeName(returnType);
-  const entity = entities.find(
+  const entity = entities.filter(
     e => `${e.entityTypeNamespace}.${e.entityTypeName}` === returnType
   );
   // TODO 1584 remove this block after testing all the s/4 edmx files
-  if (!entity) {
+  if (!entity.length) {
     const parsedReturnType = last(returnType.split('.'));
-    return entities.find(e => e.entityTypeName === parsedReturnType);
+    return entities.filter(e => e.entityTypeName === parsedReturnType);
   }
   return entity;
 }
@@ -150,15 +151,29 @@ function getEdmReturnType(
 
 function getEntityReturnType(
   isCollection: boolean,
-  entity: VdmEntity
+  entities: VdmEntity[]
 ): VdmFunctionImportReturnType {
-  return {
-    returnTypeCategory: VdmReturnTypeCategory.ENTITY,
-    returnType: entity.className,
-    builderFunction: entity.className,
-    isMulti: isCollection,
-    isCollection
-  };
+  if (!entities.length) {
+    throw Error(
+      'Could not get entity return type for function import. No matching entity types found.'
+    );
+  }
+
+  return entities.length === 1
+    ? {
+        returnTypeCategory: VdmReturnTypeCategory.ENTITY,
+        returnType: first(entities)!.className,
+        builderFunction: first(entities)!.className,
+        isMulti: isCollection,
+        isCollection
+      }
+    : {
+        returnTypeCategory: VdmReturnTypeCategory.NEVER,
+        returnType: 'never',
+        isMulti: isCollection,
+        isCollection,
+        unsupportedReason: VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
+      };
 }
 
 function getComplexReturnType(
@@ -175,6 +190,16 @@ function getComplexReturnType(
     isMulti: isCollection,
     isCollection
   };
+}
+
+export function isEntityNotDeserializable(
+  returnType: VdmFunctionImportReturnType
+): boolean {
+  return (
+    returnType.returnTypeCategory === VdmReturnTypeCategory.NEVER &&
+    returnType.unsupportedReason ===
+      VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
+  );
 }
 
 export type ExtractResponse = (string) => string;

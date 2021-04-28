@@ -5,7 +5,9 @@ import { resolve, parse, basename, join, dirname } from 'path';
 import {
   createLogger,
   UniqueNameGenerator,
-  kebabCase
+  kebabCase,
+  ErrorWithCause,
+  finishAll
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import {
@@ -66,7 +68,12 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       uniqueServiceName
     );
   });
-  await Promise.all(promises);
+
+  const errorMessage =
+    promises.length > 1
+      ? 'Some clients could not be generated.'
+      : 'Could not generate client.';
+  await finishAll(promises, errorMessage);
 }
 
 /**
@@ -130,7 +137,7 @@ async function generateSources(
     );
   }
 
-  if (options.generatePackageJson) {
+  if (options.packageJson) {
     logger.debug(`Generating package.json in ${serviceDir}.`);
 
     await createFile(
@@ -140,14 +147,14 @@ async function generateSources(
         openApiDocument.npmPackageName,
         genericDescription(openApiDocument.directoryName),
         await getSdkVersion(),
-        options.versionInPackageJson
+        options.packageVersion
       ),
       true,
       false
     );
   }
 
-  if (options.generateJs) {
+  if (options.transpile) {
     await createFile(
       serviceDir,
       'tsconfig.json',
@@ -158,11 +165,11 @@ async function generateSources(
     await transpileDirectory(serviceDir);
   }
 
-  if (options.additionalFiles) {
-    await copyAdditionalFiles(options.additionalFiles, serviceDir);
+  if (options.include) {
+    await copyAdditionalFiles(options.include, serviceDir);
   }
 
-  if (options.writeReadme) {
+  if (options.readme) {
     await generateReadme(serviceDir, openApiDocument);
   }
 }
@@ -223,26 +230,27 @@ async function generateService(
   try {
     openApiDocument = await convertOpenApiSpec(inputFilePath);
   } catch (err) {
-    logger.error(
-      `Could not convert document at ${inputFilePath} to the format needed for parsing and generation. Skipping service generation.`
+    throw new ErrorWithCause(
+      `Could not convert document at '${inputFilePath}' to the format needed for parsing and generation.`,
+      err
     );
-    return;
   }
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceName,
     inputFilePath,
-    serviceMapping
+    serviceMapping,
+    { strictNaming: options.strictNaming ?? true }
   );
 
   if (!parsedOpenApiDocument.apis.length) {
-    logger.warn(
-      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${inputFilePath}`
+    throw new Error(
+      `The given document at '${inputFilePath}' does not contain any operations.`
     );
-    return;
   }
 
   await generateSources(serviceDir, parsedOpenApiDocument, options);
+  logger.info(`Successfully generated client for '${inputFilePath}'`);
 }
 
 /**

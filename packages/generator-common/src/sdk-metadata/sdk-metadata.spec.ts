@@ -1,7 +1,4 @@
-import {
-  getSdkMetadataFileNames,
-  sdkMetaDataHeader
-} from '@sap-cloud-sdk/generator-common';
+import { getSdkMetadataFileNames, sdkMetaDataHeader } from './sdk-metadata';
 
 describe('sdk-metadata', () => {
   it('generates the header content', async () => {

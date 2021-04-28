@@ -1,12 +1,12 @@
 import nock = require('nock');
 import {
   getInstallationSnippet,
-  getRepositoryLink,
   getPregeneratedLibrary,
+  getRepositoryLink,
   getTimeStamp,
-  isPublishedNpmPackage,
-  getVersionForClient
-} from '@sap-cloud-sdk/generator-common';
+  isPublishedNpmPackage
+} from './pregenerated-lib';
+import { getVersionForClient } from './sdk-metadata';
 
 describe('pregenerated-lib', () => {
   const npmPackageName = '@sap/cloud-sdk-vdm-test-service';

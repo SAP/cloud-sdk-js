@@ -54,9 +54,6 @@ jobs:
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
-        if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn lerna run compile
-        if: steps.cache.outputs.cache-hit == 'true'
       - run: yarn lint
         name: Static Code Check
       - run: yarn check:test-service

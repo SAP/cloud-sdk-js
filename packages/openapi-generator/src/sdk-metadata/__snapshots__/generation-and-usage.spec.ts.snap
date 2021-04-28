@@ -11,8 +11,8 @@ const responseData = await DummyApi.DummyFunction().execute({ destinationName:'m
   "generationSteps": Object {
     "instructions": "<ul>
 <li>Download the API specification to your local computer.</li>
-<li>Install the generator <code></code></li>
-<li>Execute the generator <code></code></li>
+<li>Install the generator <code>npm install -g @sap-cloud-sdk/openapi-generator</code></li>
+<li>Execute the generator <code>generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory></code></li>
 </ul>
 The steps above will generate a basic TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client\\">documentation.</a>",
     "text": "Follow the following generation steps to generate the client.",
@@ -28,7 +28,7 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
   "links": Object {
     "apiHubTutorial": Object {
       "name": "API Hub Tutorial",
-      "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request",
+      "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request",
     },
     "featureDocumentation": Object {
       "name": "Feature Documentation",
@@ -36,7 +36,7 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
     },
     "generationManual": Object {
       "name": "Generation Manual",
-      "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client",
+      "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client",
     },
     "sdkDocumentation": Object {
       "name": "SDK Documentation",

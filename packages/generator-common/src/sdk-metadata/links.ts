@@ -1,6 +1,9 @@
 import type { Links } from './sdk-metadata-types';
 
-export function getLinks(): Links {
+export function getLinks(
+  apiHubTutorialUrl: string,
+  generationManualUrl: string
+): Links {
   return {
     sdkDocumentation: {
       url: 'https://sap.github.io/cloud-sdk/',
@@ -17,13 +20,11 @@ export function getLinks(): Links {
     },
     apiHubTutorial: {
       name: 'API Hub Tutorial',
-      url:
-        'https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request'
+      url: apiHubTutorialUrl
     },
     generationManual: {
       name: 'Generation Manual',
-      url:
-        'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client'
+      url: generationManualUrl
     }
   };
 }

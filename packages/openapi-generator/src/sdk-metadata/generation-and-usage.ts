@@ -6,7 +6,8 @@ import {
   getSdkVersion,
   apiSpecificUsageText,
   genericUsageText,
-  getGenerationSteps
+  getGenerationSteps,
+  Links
 } from '@sap-cloud-sdk/generator-common';
 import { OpenApiDocument } from '../openapi-types';
 import { apiSpecificCodeSample, genericCodeSample } from './code-sample';
@@ -17,10 +18,10 @@ export async function getGenerationAndUsage(
   return {
     genericUsage: getGenericUsage(),
     apiSpecificUsage: getApiSpecificUsage(openApiDocument),
-    links: getLinks(),
+    links: getOpenApiLinks(),
     generationSteps: getGenerationSteps(
-      installCommand,
-      generateCommand,
+      'npm install -g @sap-cloud-sdk/openapi-generator',
+      'generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>',
       linkGenerationDocumentation
     ),
     generatorVersion: await getSdkVersion(),
@@ -55,7 +56,12 @@ function getApiSpecificUsage(
   return { instructions: '', text: apiSpecificUsageText };
 }
 
-const installCommand = '';
-const generateCommand = '';
-const linkGenerationDocumentation =
+export const linkGenerationDocumentation =
   'https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client';
+
+export function getOpenApiLinks(): Links {
+  return getLinks(
+    'https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request',
+    'https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client'
+  );
+}

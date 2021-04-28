@@ -7,7 +7,8 @@ import {
   getLinks,
   apiSpecificUsageText,
   genericUsageText,
-  getGenerationSteps
+  getGenerationSteps,
+  Links
 } from '@sap-cloud-sdk/generator-common';
 import { VdmServiceMetadata } from '../vdm-types';
 import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
@@ -18,10 +19,10 @@ export async function getGenerationAndUsage(
   return {
     genericUsage: getGenericUsage(),
     apiSpecificUsage: getApiSpecificUsage(service),
-    links: getLinks(),
+    links: getODataLinks(),
     generationSteps: getGenerationSteps(
-      installCommand,
-      generateCommand,
+      'npm install -g @sap-cloud-sdk/generator',
+      'generate-odata-client --inputDir path/to/service-spec --outputDir path/to/',
       linkGenerationDocumentation
     ),
     generatorVersion: await getSdkVersion(),
@@ -63,6 +64,9 @@ export function getApiSpecificUsage(
 export const linkGenerationDocumentation =
   'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
 
-const installCommand = 'npm install -g @sap-cloud-sdk/generator';
-const generateCommand =
-  'generate-odata-client --inputDir path/to/service-spec --outputDir path/to/';
+export function getODataLinks(): Links {
+  return getLinks(
+    'https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request',
+    'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client'
+  );
+}

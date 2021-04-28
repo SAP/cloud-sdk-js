@@ -63,7 +63,7 @@ describe('parseOpenApiDocument', () => {
     expect(parsedDocument.schemas).toEqual([
       expect.objectContaining({
         fileName: 'my-schema-1',
-        schemaName: 'MySchema1'
+        schemaName: 'MySchema_1'
       }),
       expect.objectContaining({
         fileName: 'my-schema',

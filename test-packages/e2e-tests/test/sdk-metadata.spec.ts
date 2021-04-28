@@ -1,11 +1,16 @@
 import { VdmServiceMetadata } from '@sap-cloud-sdk/generator/dist/vdm-types';
+import { checkUrlExists } from '@sap-cloud-sdk/util';
+import { getGenerationSteps } from '@sap-cloud-sdk/generator-common';
 import {
   getGenerationAndUsage,
-  getGenerationSteps,
-  linkGenerationDocumentaion
+  linkGenerationDocumentation,
+  getODataLinks
 } from '@sap-cloud-sdk/generator/internal';
-import { checkUrlExists } from '@sap-cloud-sdk/util';
-import { getLinks } from '@sap-cloud-sdk/generator/dist/sdk-metadata/links';
+import {
+  getOpenApiLinks,
+  getGenerationAndUsage as getGenerationAndUsageOpenApi
+} from '@sap-cloud-sdk/openapi-generator/internal';
+import { OpenApiDocument } from '@sap-cloud-sdk/openapi-generator/dist/openapi-types';
 
 const service = {
   npmPackageName: '@sap/dummy-package',
@@ -13,22 +18,44 @@ const service = {
 } as VdmServiceMetadata;
 
 describe('sdk-metadata', () => {
-  it('gives a working generator repository link', async () => {
-    const generationAndUsage = await getGenerationAndUsage(service);
-    checkUrlExists(generationAndUsage.generatorRepositoryLink);
-  });
-
   it('gives instruction with working link', async () => {
-    expect(getGenerationSteps().instructions).toContain(
-      linkGenerationDocumentaion
-    );
-    checkUrlExists(linkGenerationDocumentaion);
+    expect(
+      getGenerationSteps(
+        'install command',
+        'generate command',
+        linkGenerationDocumentation
+      ).instructions
+    ).toContain(linkGenerationDocumentation);
+    await checkUrlExists(linkGenerationDocumentation);
   });
 
-  it('contains only existing links', async () => {
-    const links = getLinks();
-    for (const link of Object.values(links)) {
-      await checkUrlExists(link.url);
-    }
-  }, 10000);
+  describe('OData', () => {
+    it('gives a working generator repository link', async () => {
+      const generationAndUsage = await getGenerationAndUsage(service);
+      await checkUrlExists(generationAndUsage.generatorRepositoryLink);
+    });
+
+    it('contains only existing links', async () => {
+      const links = getODataLinks();
+      for (const link of Object.values(links)) {
+        await checkUrlExists(link.url);
+      }
+    }, 10000);
+  });
+
+  describe('OpenApi', () => {
+    it('gives a working generator repository link', async () => {
+      const generationAndUsage = await getGenerationAndUsageOpenApi({
+        apis: [] as any[]
+      } as OpenApiDocument);
+      await checkUrlExists(generationAndUsage.generatorRepositoryLink);
+    });
+
+    it('contains only existing links', async () => {
+      const links = getOpenApiLinks();
+      for (const link of Object.values(links)) {
+        await checkUrlExists(link.url);
+      }
+    }, 10000);
+  });
 });

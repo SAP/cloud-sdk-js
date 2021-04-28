@@ -23,6 +23,8 @@
     "@sap-cloud-sdk/test-services-e2e": "^1.41.0",
     "@sap-cloud-sdk/generator": "^1.41.0",
     "@sap-cloud-sdk/util": "^1.41.0",
+    "@sap-cloud-sdk/generator-common": "^1.41.0",
+    "@sap-cloud-sdk/openapi-generator": "^1.41.0",
     "@sap/cds": "^4.4.7",
     "@sap/cds-dk": "^3.3.3",
     "express": "^4.17.1",

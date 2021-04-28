@@ -24,6 +24,19 @@ export interface OpenApiDocument {
   directoryName: string;
 
   /**
+<<<<<<< HEAD
+=======
+   * Name of the original specification file.
+   */
+  originalFileName: string;
+
+  /**
+   * Path of the original specification file.
+   */
+  filePath: string;
+
+  /**
+>>>>>>> ec98e31828e9897f356ffe6f277bfe4539993016
    * Parsed schemas of the document.
    */
   schemas: OpenApiPersistedSchema[];

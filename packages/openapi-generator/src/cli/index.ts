@@ -95,6 +95,14 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
         'Generate default `README.md` files in the client directories.',
       default: false,
       hidden: true
+    }),
+    generateSdkMetadata: flags.boolean({
+      name: 'generateSdkMetadata',
+      description:
+        'When set to true, SDK metadata for the API hub is generated.',
+      default: false,
+      required: false,
+      hidden: true
     })
   };
 

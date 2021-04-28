@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, join } from 'path';
+import { resolve, parse, basename, join, dirname } from 'path';
 import {
   createLogger,
   UniqueNameGenerator,
@@ -9,6 +9,11 @@ import {
   finishAll
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
+import {
+  getSdkMetadataFileNames,
+  sdkMetaDataHeader,
+  getSdkVersion
+} from '@sap-cloud-sdk/generator-common';
 import {
   apiFile,
   packageJson,
@@ -32,6 +37,7 @@ import {
   ServiceConfig
 } from './options';
 import { GeneratorOptions } from '.';
+import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
 
 const { readdir, rmdir, mkdir, lstat, readFile, writeFile } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -131,6 +137,40 @@ async function generateSources(
 
   await createApis(serviceDir, openApiDocument);
   await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
+
+  if (options.generateSdkMetadata) {
+    const { clientFileName, headerFileName } = getSdkMetadataFileNames(
+      openApiDocument.originalFileName
+    );
+
+    logger.debug(`Generating sdk header metadata ${headerFileName}.`);
+    const specFileDirname = dirname(openApiDocument.filePath);
+    await mkdir(resolve(specFileDirname, 'sdk-metadata'), { recursive: true });
+    await createFile(
+      resolve(specFileDirname, 'sdk-metadata'),
+      headerFileName,
+      JSON.stringify(
+        await sdkMetaDataHeader(
+          'rest',
+          openApiDocument.originalFileName,
+          options.packageVersion
+        ),
+        null,
+        2
+      ),
+      true,
+      false
+    );
+
+    logger.debug(`Generating sdk client metadata ${clientFileName}...`);
+    await createFile(
+      resolve(specFileDirname, 'sdk-metadata'),
+      clientFileName,
+      JSON.stringify(await sdkMetaDataJS(openApiDocument, options), null, 2),
+      true,
+      false
+    );
+  }
 
   if (options.packageJson) {
     logger.debug(`Generating package.json in ${serviceDir}.`);
@@ -246,16 +286,6 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
     ],
     Promise.resolve([])
   );
-}
-
-/**
- * Get the current SDK version from the package json.
- * @returns The SDK version.
- */
-export async function getSdkVersion(): Promise<string> {
-  return JSON.parse(
-    await readFile(resolve(__dirname, '../package.json'), 'utf8')
-  ).version;
 }
 
 // TODO 1728 move to a new package to reduce code duplication.

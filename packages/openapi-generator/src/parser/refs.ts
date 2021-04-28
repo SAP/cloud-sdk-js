@@ -6,6 +6,7 @@ import { SchemaNaming } from '../openapi-types';
 import { SchemaRefMapping } from './parsing-info';
 import { ensureUniqueNames } from './unique-naming';
 import { ParserOptions } from './options';
+import { ensureUValidSchemaNames } from './schema-naming';
 
 /**
  * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.
@@ -19,6 +20,8 @@ export async function createRefs(
 ): Promise<OpenApiDocumentRefs> {
   return OpenApiDocumentRefs.createRefs(document, options);
 }
+
+type MyType = {}
 
 /**
  * Representation of cross references within a document.
@@ -42,32 +45,6 @@ export class OpenApiDocumentRefs {
   }
 
   /**
-   *  This method takes a list of names and adjusts them so that they are allowed as schema names.
-   *  For example in TypeScript a type definition must not start with integer.
-   *
-   * @param names List of names to be adjusted.
-   * @param options Parser options.
-   * @returns A list of strings which are possible for schema names.
-   */
-  private static getValidSchemaNames(
-    names: string[],
-    options: ParserOptions
-  ): string[] {
-    return names.map(name => {
-      if (!name.match(/^\d+/)) {
-        return name;
-      }
-
-      if (options.strictNaming) {
-        throw new Error(
-          "Your OpenApi definition contains a schema starting with an integer which is not possible in TypeScript. The SDK generator can adjust such names once you disable the 'strictNaming' or you adjust the schema."
-        );
-      }
-      return `schema${name}`;
-    });
-  }
-
-  /**
    * Parse mapping between schema references and their unique names.
    * @param document The original OpenAPI document.
    * @param options Parser options.
@@ -78,14 +55,14 @@ export class OpenApiDocumentRefs {
     options: ParserOptions
   ): SchemaRefMapping {
     const originalNames = Object.keys(document.components?.schemas || {});
-    const validSchemaNames = OpenApiDocumentRefs.getValidSchemaNames(
+    const validSchemaNames = ensureUValidSchemaNames(
       originalNames,
       options
     );
 
     const schemaNames = ensureUniqueNames(validSchemaNames, options, {
       format: pascalCase,
-      separator: OpenApiDocumentRefs.getSeperator(validSchemaNames)
+      separator: '_'
     });
     const fileNames = ensureUniqueNames(schemaNames, options, {
       format: kebabCase,
@@ -102,15 +79,6 @@ export class OpenApiDocumentRefs {
       }),
       {}
     );
-  }
-
-  /**
-   * If names end with integers it is better to use a separator to easy the mapping between the original and new object.
-   * @param names List of names investigated to find the best separator.
-   * @returns Either '' or '_' depending on the names.
-   */
-  private static getSeperator(names: string[]) {
-    return names.find(name => name.match(/\d+$/)) ? '_' : '';
   }
 
   /**

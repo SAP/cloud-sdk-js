@@ -27,9 +27,9 @@ import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
 import {
   getSdkMetadataFileNames,
-  sdkMetaDataHeader
-} from './common/sdk-metadata';
-import { getSdkVersion } from './common/util';
+  sdkMetaDataHeader,
+  getSdkVersion
+} from '@sap-cloud-sdk/generator-common';
 import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
 
 const { readdir, rmdir, mkdir, lstat, readFile } = promisesFs;

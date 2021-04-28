@@ -50,9 +50,9 @@ import { getServiceDescription } from './sdk-metadata/pregenerated-lib';
 import {
   getSdkMetadataFileNames,
   getVersionForClient,
-  sdkMetaDataHeader
-} from './common/sdk-metadata';
-import { getSdkVersion } from './common/util';
+  sdkMetaDataHeader,
+  getSdkVersion
+} from '@sap-cloud-sdk/generator-common';
 
 const logger = createLogger({
   package: 'generator',

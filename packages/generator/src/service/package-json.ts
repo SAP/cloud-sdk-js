@@ -1,5 +1,5 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { getSdkVersion } from '../common/util';
+import { getSdkVersion } from '@sap-cloud-sdk/generator-common';
 
 export async function packageJson(
   npmPackageName: string,

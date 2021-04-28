@@ -3,44 +3,10 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
-# @sap-cloud-sdk/openapi-generator (Beta)
+# @sap-cloud-sdk/generator-common
 
-This packages contains the generator to create your own service module using a OpenAPI specification.
-This generator is based on the [OpenAPI Tools generator](https://openapi-generator.tech/) for OpenAPI and adds some additional code for convenience to better integrate with the SAP Cloud SDK.
-
-## Installation
-
-The official OpenAPI generator is Java based, therefore you need to have a Java runtime installed to use the SAP Cloud SDK OpenAPI generator.
-
-```bash
-$ npm install @sap-cloud-sdk/openapi-generator
-```
-
-## Usage (CLI)
-
-<!-- prettier-ignore-start -->
-<!-- commands -->
-
-<!-- commandsstop -->
-<!-- prettier-ignore-end -->
-
-## Usage (programatically)
-
-```ts
-import { generate } from '@sap-cloud-sdk/openapi-generator';
-
-// initialize generator options based on what you want to do
-// note that inputDir and outputDir are mandatory
-const options: GeneratorOptions = {
-  inputDir: 'path/to/inputDir',
-  outputDir: 'path/to/outputDir'
-};
-
-// generates the files and writes them to the outputDir
-await generate(options);
-```
-
-For more detailed overview visit our [generator documentation](https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client).
+This package contains common functions of OData client generator and OpenAPI clint generator.
+The APIs of this package are internal and might change in newer versions. Use with caution.
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->

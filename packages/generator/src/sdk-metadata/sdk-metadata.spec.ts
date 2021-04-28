@@ -1,24 +1,10 @@
 import nock = require('nock');
 import { createOptions } from '../../test/test-util/create-generator-options';
-import {
-  getSdkMetadataFileNames,
-  sdkMetaDataHeader
-} from '../common/sdk-metadata';
 import { getTestService } from './pregenerated-lib.spec';
 import { sdkMetaDataJS } from './sdk-metadata';
 
 describe('sdk-metadata', () => {
   const service = getTestService();
-  //todo move
-  it('generates the header content', async () => {
-    expect(
-      await sdkMetaDataHeader('odata', service.originalFileName, '1.0.0')
-    ).toMatchSnapshot();
-  });
-  //todo move
-  it('generates the File names', () => {
-    expect(getSdkMetadataFileNames('MyService')).toMatchSnapshot();
-  });
 
   it('generates the JS metadata content for services with pregenerated lib', async () => {
     jest.spyOn(global.Date, 'now').mockImplementationOnce(() => 0);

@@ -1,15 +1,13 @@
 import { VdmServiceMetadata } from '../vdm-types';
 import type {
   GenerationAndUsage,
-  InstructionWithText
-} from '../common/sdk-metadata-types';
-import { getSdkVersion } from '../common/util';
-import { getLinks } from '../common/links';
-import {
+  InstructionWithText,
+} from '@sap-cloud-sdk/generator-common';
+import {getSdkVersion,
+  getLinks,
   apiSpecificUsageText,
   genericUsageText,
-  getGenerationSteps
-} from '../common/generation-and-usage';
+  getGenerationSteps} from '@sap-cloud-sdk/generator-common';
 import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
 
 export async function getGenerationAndUsage(

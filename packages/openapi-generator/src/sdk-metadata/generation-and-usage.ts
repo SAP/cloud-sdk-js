@@ -1,15 +1,13 @@
 import { first } from '@sap-cloud-sdk/util';
 import {
   GenerationAndUsage,
-  InstructionWithText
-} from '../common/sdk-metadata-types';
-import { getLinks } from '../common/links';
-import { getSdkVersion } from '../common/util';
-import {
+  InstructionWithText,
+  getLinks,
+  getSdkVersion,
   apiSpecificUsageText,
   genericUsageText,
   getGenerationSteps
-} from '../common/generation-and-usage';
+} from '@sap-cloud-sdk/generator-common';
 import { OpenApiDocument } from '../openapi-types';
 import { apiSpecificCodeSample, genericCodeSample } from './code-sample';
 

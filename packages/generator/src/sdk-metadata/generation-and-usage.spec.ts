@@ -10,20 +10,22 @@ describe('generation-and-usage', () => {
     entities: [{ className: 'DummyClass' }]
   } as VdmServiceMetadata;
 
-  it('creates generic usage example', async () => {
-    await expect(getGenericUsage()).resolves.toMatchSnapshot();
+  it('creates generic usage example', () => {
+    expect(getGenericUsage()).toMatchSnapshot();
   });
 
-  it('creates api specific usage for entity', async () => {
-    await expect(getApiSpecificUsage(service)).resolves.toMatchSnapshot();
+  it('creates api specific usage for entity', () => {
+    expect(getApiSpecificUsage(service)).toMatchSnapshot();
   });
 
   it('creates compiling generic usage', async () => {
-    const codeSnippet = (await getGenericUsage()).instructions;
+    const codeSnippet = getGenericUsage().instructions;
     const tsFile = 'generic-get-all-code-sample.ts';
     const jsFile = tsFile.replace('.ts', '.js');
     await writeFile(resolve(__dirname, tsFile), codeSnippet);
-    await execa('tsc', [tsFile, '--esModuleInterop'], { cwd: __dirname });
+    await execa('npx', ['tsc', tsFile, '--esModuleInterop'], {
+      cwd: __dirname
+    });
     await expect(readFile(resolve(__dirname, jsFile))).resolves.toBeDefined();
     [tsFile, jsFile].map(file => removeSync(resolve(__dirname, file)));
   }, 60000);

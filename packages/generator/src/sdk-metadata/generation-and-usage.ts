@@ -1,43 +1,51 @@
-import { VdmServiceMetadata } from '../vdm-types';
-import { getLinks } from './links';
 import type {
   GenerationAndUsage,
   InstructionWithText
-} from './sdk-metadata-types';
+} from '@sap-cloud-sdk/generator-common';
+import {
+  getSdkVersion,
+  getLinks,
+  apiSpecificUsageText,
+  genericUsageText,
+  getGenerationSteps,
+  Links
+} from '@sap-cloud-sdk/generator-common';
+import { VdmServiceMetadata } from '../vdm-types';
 import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
-import { getGeneratorVersion } from './pregenerated-lib';
 
 export async function getGenerationAndUsage(
   service: VdmServiceMetadata
 ): Promise<GenerationAndUsage> {
   return {
-    genericUsage: await getGenericUsage(),
-    apiSpecificUsage: await getApiSpecificUsage(service),
-    links: getLinks(),
-    generationSteps: getGenerationSteps(),
-    generatorVersion: getGeneratorVersion(),
+    genericUsage: getGenericUsage(),
+    apiSpecificUsage: getApiSpecificUsage(service),
+    links: getODataLinks(),
+    generationSteps: getGenerationSteps(
+      'npm install -g @sap-cloud-sdk/generator',
+      'generate-odata-client --inputDir path/to/service-spec --outputDir path/to/',
+      linkGenerationDocumentation
+    ),
+    generatorVersion: await getSdkVersion(),
     generatorRepositoryLink:
       'https://www.npmjs.com/package/@sap-cloud-sdk/generator'
   };
 }
 
-export async function getGenericUsage(): Promise<InstructionWithText> {
+export function getGenericUsage(): InstructionWithText {
   return {
     instructions: genericGetAllCodeSample(
       'BusinessPartner',
       '@sap/cloud-sdk-vdm-business-partner-service'
     ),
-    text:
-      'Find a generic example on how to execute requests with the SAP Cloud SDK below.'
+    text: genericUsageText
   };
 }
 
-export const apiSpecificUsageText = 'Find a usage example for this API below.';
-export async function getApiSpecificUsage(
+export function getApiSpecificUsage(
   service: VdmServiceMetadata
-): Promise<InstructionWithText> {
+): InstructionWithText {
   if (service.entities.length > 0) {
-    const codeSample = await genericGetAllCodeSample(
+    const codeSample = genericGetAllCodeSample(
       service.entities[0].className,
       service.npmPackageName
     );
@@ -53,17 +61,12 @@ export async function getApiSpecificUsage(
   return { instructions: '', text: apiSpecificUsageText };
 }
 
-export const linkGenerationDocumentaion =
+export const linkGenerationDocumentation =
   'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
 
-export function getGenerationSteps(): InstructionWithText {
-  return {
-    instructions: `<ul>
-<li>Download the API specification to your local computer.</li>
-<li>Install the generator <code>npm install -g @sap-cloud-sdk/generator</code></li>
-<li>Execute the generator <code>generate-odata-client --inputDir path/to/service-spec --outputDir path/to/</code></li>
-</ul>
-The steps above will generate a basic TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href="${linkGenerationDocumentaion}">documentation.</a>`,
-    text: 'Follow the following generation steps to generate the client.'
-  };
+export function getODataLinks(): Links {
+  return getLinks(
+    'https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request',
+    'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client'
+  );
 }

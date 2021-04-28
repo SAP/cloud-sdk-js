@@ -40,6 +40,7 @@ export async function parseOpenApiDocument(
       ? serviceMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
+    filePath,
     schemas: parseSchemas(document, refs)
   };
 }

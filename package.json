@@ -21,6 +21,7 @@
     "packages/test-util",
     "packages/util",
     "packages/openapi-generator",
+    "packages/generator-common",
     "test-packages/integration-tests",
     "test-packages/nightly-tests",
     "test-packages/e2e-tests",

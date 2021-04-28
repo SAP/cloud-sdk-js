@@ -10,4 +10,5 @@ export interface GeneratorOptions {
   include?: string;
   readme?: boolean;
   strictNaming?: boolean;
+  generateSdkMetadata?: boolean;
 }

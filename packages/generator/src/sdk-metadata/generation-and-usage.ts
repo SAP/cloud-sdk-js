@@ -60,7 +60,7 @@ export function getApiSpecificUsage(
   return { instructions: '', text: apiSpecificUsageText };
 }
 
-const linkGenerationDocumentation =
+export const linkGenerationDocumentation =
   'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
 
 const installCommand = 'npm install -g @sap-cloud-sdk/generator';

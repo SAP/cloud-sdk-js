@@ -6,7 +6,7 @@ import { sdkMetaDataJS } from './sdk-metadata';
 describe('sdk-metadata', () => {
   it('generates metadata content for services without pregenerated lib', async () => {
     const metadata = await sdkMetaDataJS(dummyOpenApiDocument, {
-      versionInPackageJson: '1.0.0'
+      packageVersion: '1.0.0'
     } as GeneratorOptions);
     expect(metadata).toMatchSnapshot();
     expect(metadata.serviceStatus.status).toBe('verified');
@@ -21,7 +21,7 @@ describe('sdk-metadata', () => {
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);
 
     const metadata = await sdkMetaDataJS(dummyOpenApiDocument, {
-      versionInPackageJson: '1.0.0'
+      packageVersion: '1.0.0'
     } as GeneratorOptions);
     expect(metadata).toMatchSnapshot();
     expect(metadata.pregeneratedLibrary).toBeDefined();

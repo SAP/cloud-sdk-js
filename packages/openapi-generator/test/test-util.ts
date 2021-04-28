@@ -19,12 +19,16 @@ export const emptyObjectSchema = {
   properties: []
 };
 
-export const dummyOpenApiDocument : OpenApiDocument = {
+export const dummyOpenApiDocument: OpenApiDocument = {
   npmPackageName: '@sap/dummy-package',
-  apis: [{
-    name: 'DummyApi',
-    operations: [{
-      operationId: 'DummyFunction'
-    }]
-  }]
+  apis: [
+    {
+      name: 'DummyApi',
+      operations: [
+        {
+          operationId: 'DummyFunction'
+        }
+      ]
+    }
+  ]
 } as OpenApiDocument;

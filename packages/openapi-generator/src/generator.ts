@@ -8,6 +8,11 @@ import {
   kebabCase
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
+import {
+  getSdkMetadataFileNames,
+  sdkMetaDataHeader,
+  getSdkVersion
+} from '@sap-cloud-sdk/generator-common';
 import { GeneratorOptions } from './options';
 import {
   apiFile,
@@ -25,11 +30,6 @@ import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, ServiceMapping } from './service-mapping';
 import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
-import {
-  getSdkMetadataFileNames,
-  sdkMetaDataHeader,
-  getSdkVersion
-} from '@sap-cloud-sdk/generator-common';
 import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
 
 const { readdir, rmdir, mkdir, lstat, readFile } = promisesFs;

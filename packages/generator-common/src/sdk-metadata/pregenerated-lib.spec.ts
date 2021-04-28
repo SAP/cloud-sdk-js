@@ -27,7 +27,6 @@ describe('pregenerated-lib', () => {
     expect(await getVersionForClient()).toMatch(/\d+\.\d+\.\d+/);
   });
 
-
   it('returns a timestamp in unix format', () => {
     expect(getTimeStamp()).toMatch(/\/Date\(\d{13,13}\)\//);
   });
@@ -42,20 +41,14 @@ describe('pregenerated-lib', () => {
 
   it('returns pregenerated lib information for existing service', async () => {
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);
-    const result = await getPregeneratedLibrary(
-      'description',
-      npmPackageName,
-    );
+    const result = await getPregeneratedLibrary('description', npmPackageName);
     // for an existing service like the business partner it should not be undefined the parts are tested independently
     expect(result).toBeDefined();
   });
 
   it('returns undefined for noon existing service', async () => {
     nock('http://registry.npmjs.org/').head(/.*/).reply(404);
-    const result = await getPregeneratedLibrary(
-      'description',
-      npmPackageName,
-    );
+    const result = await getPregeneratedLibrary('description', npmPackageName);
     // for an existing service like the business partner it should not be undefined the parts are tested independently
     expect(result).toBeUndefined();
   });

@@ -13,6 +13,12 @@ import {
 } from 'ts-morph';
 import { ModuleKind } from 'typescript';
 import { GlobSync } from 'glob';
+import {
+  getSdkMetadataFileNames,
+  getVersionForClient,
+  sdkMetaDataHeader,
+  getSdkVersion
+} from '@sap-cloud-sdk/generator-common';
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
 import { readme as aggregatorReadme } from './aggregator-package/readme';
 import { batchSourceFile } from './batch/file';
@@ -47,12 +53,6 @@ import {
 import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
 import { getServiceDescription } from './sdk-metadata/pregenerated-lib';
-import {
-  getSdkMetadataFileNames,
-  getVersionForClient,
-  sdkMetaDataHeader,
-  getSdkVersion
-} from '@sap-cloud-sdk/generator-common';
 
 const logger = createLogger({
   package: 'generator',

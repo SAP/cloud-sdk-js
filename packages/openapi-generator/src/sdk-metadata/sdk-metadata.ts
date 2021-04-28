@@ -1,7 +1,10 @@
-import { OpenApiDocument } from '../openapi-types';
-import { getPregeneratedLibrary, getSdkMetadataClient } from '@sap-cloud-sdk/generator-common';
-import { GeneratorOptions } from '../options';
+import {
+  getPregeneratedLibrary,
+  getSdkMetadataClient
+} from '@sap-cloud-sdk/generator-common';
 import type { Client } from '@sap-cloud-sdk/generator-common';
+import { OpenApiDocument } from '../openapi-types';
+import { GeneratorOptions } from '../options';
 import { packageDescription } from './package-description';
 import { getGenerationAndUsage } from './generation-and-usage';
 

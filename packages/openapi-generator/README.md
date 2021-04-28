@@ -5,7 +5,7 @@
 
 # @sap-cloud-sdk/openapi-generator (Beta)
 
-This packages contains the generator to create your own service module using a OpenAPI specification.
+This package contains the generator to create your own service module using a OpenAPI specification.
 This generator is based on the [OpenAPI Tools generator](https://openapi-generator.tech/) for OpenAPI and adds some additional code for convenience to better integrate with the SAP Cloud SDK.
 
 ## Installation

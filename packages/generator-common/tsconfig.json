@@ -8,7 +8,5 @@
   },
   "include": ["src/**/*.ts"],
   "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],
-  "references": [
-    { "path": "../../packages/util" }
-  ]
+  "references": [{ "path": "../../packages/util" }]
 }

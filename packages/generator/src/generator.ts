@@ -323,7 +323,7 @@ export async function generateSourcesForService(
       );
     }
   }
-  // todo
+
   if (options.generateSdkMetadata) {
     const { clientFileName, headerFileName } = getSdkMetadataFileNames(
       service.originalFileName

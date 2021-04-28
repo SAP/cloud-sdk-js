@@ -95,9 +95,7 @@ async function generateSources(
 
   await createApis(serviceDir, openApiDocument);
   await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
-
-  // todo
-  // if(true){
+  
   if (options.generateSdkMetadata) {
     const { clientFileName, headerFileName } = getSdkMetadataFileNames(
       openApiDocument.originalFileName

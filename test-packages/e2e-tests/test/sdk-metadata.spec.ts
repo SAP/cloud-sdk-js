@@ -1,11 +1,11 @@
 import { VdmServiceMetadata } from '@sap-cloud-sdk/generator/dist/vdm-types';
+import { checkUrlExists } from '@sap-cloud-sdk/util';
 import {
   getGenerationAndUsage,
   getGenerationSteps,
-  linkGenerationDocumentaion
-} from '@sap-cloud-sdk/generator/internal';
-import { checkUrlExists } from '@sap-cloud-sdk/util';
-import { getLinks } from '@sap-cloud-sdk/generator/dist/sdk-metadata/links';
+  linkGenerationDocumentaion,
+  getLinks
+} from '@sap-cloud-sdk/generator-common';
 
 const service = {
   npmPackageName: '@sap/dummy-package',

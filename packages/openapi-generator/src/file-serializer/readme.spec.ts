@@ -5,7 +5,7 @@ describe('readme', () => {
   it('returns the readme content', () => {
     expect(
       readme(({
-        npmPackageName: '@sap-cloud-sdk/workflow-service',
+        packageName: '@sap-cloud-sdk/workflow-service',
         serviceName: 'WorkflowAPI',
         directoryName: '',
         originalFileName: '',

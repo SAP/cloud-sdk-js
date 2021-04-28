@@ -6,11 +6,9 @@ import {
   createLogger,
   UniqueNameGenerator,
   kebabCase,
-  ErrorWithCause,
   finishAll
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
-import { GeneratorOptions } from './options';
 import {
   apiFile,
   packageJson,
@@ -18,17 +16,24 @@ import {
   readme,
   apiIndexFile,
   schemaIndexFile,
-  tsconfigJson,
   schemaFile
 } from './file-serializer';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
-import { readServiceMapping, ServiceMapping } from './service-mapping';
 import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
+import {
+  parseGeneratorOptions,
+  ParsedGeneratorOptions,
+  tsconfigJson,
+  getOrCreateServiceConfig,
+  getPerServiceConfig,
+  ServiceConfig
+} from './options';
+import { GeneratorOptions } from '.';
 
-const { readdir, rmdir, mkdir, lstat, readFile } = promisesFs;
+const { readdir, rmdir, mkdir, lstat, readFile, writeFile } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -38,17 +43,26 @@ const logger = createLogger('openapi-generator');
  * @param options Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  options.serviceMapping =
-    options.serviceMapping ||
-    resolve(options.input.toString(), 'service-mapping.json');
+  return generateWithParsedOptions(parseGeneratorOptions(options));
+}
 
+/**
+ * @experimental This API is experimental and might change in newer versions. Use with caution.
+ * Main entry point for the OpenAPI client generation.
+ * Generates models and API files.
+ * @param options Options to configure generation.
+ */
+export async function generateWithParsedOptions(
+  options: ParsedGeneratorOptions
+): Promise<void> {
   if (options.clearOutputDir) {
     await rmdir(options.outputDir, { recursive: true });
   }
 
-  const vdmMapping = readServiceMapping(options);
   const uniqueNameGenerator = new UniqueNameGenerator('-');
   const inputFilePaths = await getInputFilePaths(options.input);
+  const perServiceConfig = await getPerServiceConfig(options.perServiceConfig);
+  const tsConfig = await tsconfigJson(options);
 
   const promises = inputFilePaths.map(inputFilePath => {
     const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
@@ -58,7 +72,12 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     return generateService(
       inputFilePath,
       options,
-      vdmMapping,
+      getOrCreateServiceConfig(
+        perServiceConfig,
+        inputFilePath,
+        uniqueServiceName
+      ),
+      tsConfig,
       uniqueServiceName
     );
   });
@@ -68,18 +87,34 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       ? 'Some clients could not be generated.'
       : 'Could not generate client.';
   await finishAll(promises, errorMessage);
+
+  if (options.perServiceConfig) {
+    writeFile(
+      options.perServiceConfig,
+      JSON.stringify(perServiceConfig, null, 2),
+      'utf8'
+    );
+  }
+
+  if (!options.packageJson) {
+    logger.info(
+      "Finished generation. Don't forget to add @sap-cloud-sdk/core to your dependencies."
+    );
+  }
 }
 
 /**
  * Generate sources.
  * @param serviceDir Directory to generate the service to.
  * @param openApiDocument Parsed service.
+ * @param tsConfig File content for the `tsconfig.json`.
  * @param options Generation options.
  */
 async function generateSources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: GeneratorOptions
+  tsConfig: string | undefined,
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   await mkdir(serviceDir, { recursive: true });
 
@@ -104,7 +139,7 @@ async function generateSources(
       serviceDir,
       'package.json',
       packageJson(
-        openApiDocument.npmPackageName,
+        openApiDocument.packageName,
         genericDescription(openApiDocument.directoryName),
         await getSdkVersion(),
         options.packageVersion
@@ -114,14 +149,8 @@ async function generateSources(
     );
   }
 
-  if (options.transpile) {
-    await createFile(
-      serviceDir,
-      'tsconfig.json',
-      tsconfigJson(options),
-      true,
-      false
-    );
+  if (tsConfig) {
+    await createFile(serviceDir, 'tsconfig.json', tsConfig, true, false);
     await transpileDirectory(serviceDir);
   }
 
@@ -175,41 +204,27 @@ function parseServiceName(filePath: string): string {
  * Generates an OpenAPI service from a file.
  * @param inputFilePath The file path where the service to generate is located.
  * @param options Options to configure generation.
- * @param serviceMapping The serviceMapping for the OpenAPI generation.
+ * @param serviceConfig Service configuration as defined in the per service configuration.
+ * @param tsConfig File content for the `tsconfig.json`.
  * @param serviceName The unique service name to be used.
  */
 async function generateService(
   inputFilePath: string,
-  options: GeneratorOptions,
-  serviceMapping: ServiceMapping,
+  options: ParsedGeneratorOptions,
+  serviceConfig: ServiceConfig,
+  tsConfig: string | undefined,
   serviceName: string
 ): Promise<void> {
-  const serviceDir = resolve(options.outputDir, serviceName);
-
-  let openApiDocument;
-  try {
-    openApiDocument = await convertOpenApiSpec(inputFilePath);
-  } catch (err) {
-    throw new ErrorWithCause(
-      `Could not convert document at '${inputFilePath}' to the format needed for parsing and generation.`,
-      err
-    );
-  }
+  const serviceDir = resolve(options.outputDir, serviceConfig.directoryName);
+  const openApiDocument = await convertOpenApiSpec(inputFilePath);
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceName,
-    inputFilePath,
-    serviceMapping,
-    { strictNaming: options.strictNaming ?? true }
+    serviceConfig,
+    { strictNaming: options.strictNaming }
   );
 
-  if (!parsedOpenApiDocument.apis.length) {
-    throw new Error(
-      `The given document at '${inputFilePath}' does not contain any operations.`
-    );
-  }
-
-  await generateSources(serviceDir, parsedOpenApiDocument, options);
+  await generateSources(serviceDir, parsedOpenApiDocument, tsConfig, options);
   logger.info(`Successfully generated client for '${inputFilePath}'`);
 }
 

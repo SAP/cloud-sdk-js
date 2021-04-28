@@ -16,17 +16,12 @@ export interface OpenApiDocument {
   /**
    * Name of the npm package, if there is a package.json.
    */
-  npmPackageName: string;
+  packageName: string;
 
   /**
    * Name of the directory where the service will be generated to.
    */
   directoryName: string;
-
-  /**
-   * Name of the original specification file.
-   */
-  originalFileName: string;
 
   /**
    * Parsed schemas of the document.

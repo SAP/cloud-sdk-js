@@ -77,6 +77,12 @@ function getApiNameForOperation(
 function getOperationsByApis(document: OpenAPIV3.Document) {
   const allOperations = getAllOperations(document);
 
+  if (!allOperations.length) {
+    throw new Error(
+      'Could not parse APIs. The document does not contain any operations.'
+    );
+  }
+
   return allOperations.reduce((apiMap, operationInfo) => {
     const apiName = getApiNameForOperation(operationInfo, document);
     if (!apiMap[apiName]) {

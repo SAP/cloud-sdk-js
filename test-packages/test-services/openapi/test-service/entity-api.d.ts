@@ -22,8 +22,8 @@ export declare const EntityApi: {
             | 'value2'
             | "valueWith'Quote"
             | undefined;
-          enumInt32Parameter?: 1 | 2 | undefined;
-          enumDoubleParameter?: 1 | 2 | undefined;
+          enumInt32Parameter?: 2 | 1 | undefined;
+          enumDoubleParameter?: 2 | 1 | undefined;
           enumBooleanParameter?: boolean | undefined;
         }
       | undefined

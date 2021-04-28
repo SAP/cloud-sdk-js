@@ -31,7 +31,7 @@ export interface OpenApiDocument {
   /**
    * Path of the original specification file.
    */
-  specPath: string;
+  filePath: string;
 
   /**
    * Parsed schemas of the document.

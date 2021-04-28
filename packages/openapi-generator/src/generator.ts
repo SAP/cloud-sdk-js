@@ -102,14 +102,14 @@ async function generateSources(
 
   await createApis(serviceDir, openApiDocument);
   await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
-  
+
   if (options.generateSdkMetadata) {
     const { clientFileName, headerFileName } = getSdkMetadataFileNames(
       openApiDocument.originalFileName
     );
 
     logger.debug(`Generating sdk header metadata ${headerFileName}.`);
-    const specFileDirname = dirname(openApiDocument.specPath);
+    const specFileDirname = dirname(openApiDocument.filePath);
     await mkdir(resolve(specFileDirname, 'sdk-metadata'), { recursive: true });
     await createFile(
       resolve(specFileDirname, 'sdk-metadata'),
@@ -118,7 +118,7 @@ async function generateSources(
         await sdkMetaDataHeader(
           'rest',
           openApiDocument.originalFileName,
-          options.versionInPackageJson
+          options.packageVersion
         ),
         null,
         2

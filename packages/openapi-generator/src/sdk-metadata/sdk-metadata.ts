@@ -16,7 +16,7 @@ export async function sdkMetaDataJS(
     getPregeneratedLibrary(
       packageDescription(openApiDocument.npmPackageName),
       openApiDocument.npmPackageName,
-      options.versionInPackageJson
+      options.packageVersion
     ),
     getGenerationAndUsage(openApiDocument)
   ]);

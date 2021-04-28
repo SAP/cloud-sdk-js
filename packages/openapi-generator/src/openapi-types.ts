@@ -29,6 +29,11 @@ export interface OpenApiDocument {
   originalFileName: string;
 
   /**
+   * Path of the original specification file.
+   */
+  specPath: string;
+
+  /**
    * Parsed schemas of the document.
    */
   schemas: OpenApiPersistedSchema[];

@@ -1,31 +1,23 @@
 import nock = require('nock');
 import { createOptions } from '../../test/test-util/create-generator-options';
-import { VdmServiceMetadata } from '../vdm-types';
-import { getTestService } from './pregenerated-lib.spec';
 import {
   getSdkMetadataFileNames,
-  sdkMetaDataHeader,
-  sdkMetaDataJS
-} from './sdk-metadata';
+  sdkMetaDataHeader
+} from '../common/sdk-metadata';
+import { getTestService } from './pregenerated-lib.spec';
+import { sdkMetaDataJS } from './sdk-metadata';
 
 describe('sdk-metadata', () => {
   const service = getTestService();
-
+  //todo move
   it('generates the header content', async () => {
     expect(
-      sdkMetaDataHeader(
-        service,
-        createOptions({ versionInPackageJson: '1.0.0' })
-      )
+      await sdkMetaDataHeader('odata', service.originalFileName, '1.0.0')
     ).toMatchSnapshot();
   });
-
+  //todo move
   it('generates the File names', () => {
-    expect(
-      getSdkMetadataFileNames({
-        originalFileName: 'MyService'
-      } as VdmServiceMetadata)
-    ).toMatchSnapshot();
+    expect(getSdkMetadataFileNames('MyService')).toMatchSnapshot();
   });
 
   it('generates the JS metadata content for services with pregenerated lib', async () => {
@@ -49,7 +41,6 @@ describe('sdk-metadata', () => {
       service,
       createOptions({ versionInPackageJson: '1.0.0' })
     );
-    nock('http://registry.npmjs.org/').head(/.*/).reply(200);
 
     expect(metaData).toMatchSnapshot();
     expect(metaData.serviceStatus.status).toBe('verified');

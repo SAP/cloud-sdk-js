@@ -45,16 +45,14 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
+import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
+import { getServiceDescription } from './sdk-metadata/pregenerated-lib';
 import {
   getSdkMetadataFileNames,
-  sdkMetaDataHeader,
-  sdkMetaDataJS
-} from './sdk-metadata/sdk-metadata';
-import {
-  getGeneratorVersion,
-  getServiceDescription,
-  getVersionForClient
-} from './sdk-metadata/pregenerated-lib';
+  getVersionForClient,
+  sdkMetaDataHeader
+} from './common/sdk-metadata';
+import { getSdkVersion } from './common/util';
 
 const logger = createLogger({
   package: 'generator',
@@ -128,11 +126,11 @@ export async function generateProject(
   return project;
 }
 
-function generateAggregatorPackage(
+async function generateAggregatorPackage(
   services: VdmServiceMetadata[],
   options: GeneratorOptions,
   project: Project
-): void {
+): Promise<void> {
   if (
     typeof options.aggregatorNpmPackageName !== 'undefined' &&
     typeof options.aggregatorDirectoryName !== 'undefined'
@@ -150,7 +148,7 @@ function generateAggregatorPackage(
         cloudSdkVdmHack(npmCompliantName(options.aggregatorNpmPackageName)),
         services.map(service => service.npmPackageName),
         options.versionInPackageJson,
-        getGeneratorVersion()
+        await getSdkVersion()
       ),
       options.forceOverwrite
     );
@@ -192,9 +190,9 @@ export async function generateSourcesForService(
     otherFile(
       serviceDir,
       'package.json',
-      packageJson(
+      await packageJson(
         service.npmPackageName,
-        getVersionForClient(options),
+        await getVersionForClient(options.versionInPackageJson),
         getServiceDescription(service, options),
         options.sdkAfterVersionScript
       ),
@@ -325,10 +323,12 @@ export async function generateSourcesForService(
       );
     }
   }
-
+  // todo
   if (options.generateSdkMetadata) {
-    const { clientFileName, headerFileName } = getSdkMetadataFileNames(service);
-    logger.info(`Generating sdk header metatdata ${headerFileName}...`);
+    const { clientFileName, headerFileName } = getSdkMetadataFileNames(
+      service.originalFileName
+    );
+    logger.info(`Generating sdk header metadata ${headerFileName}...`);
     const metadataDir = project.createDirectory(
       resolve(dirname(service.edmxPath.toString()), 'sdk-metadata')
     );
@@ -336,11 +336,19 @@ export async function generateSourcesForService(
     otherFile(
       metadataDir,
       headerFileName,
-      JSON.stringify(await sdkMetaDataHeader(service, options), null, 2),
+      JSON.stringify(
+        await sdkMetaDataHeader(
+          'odata',
+          service.originalFileName,
+          options.versionInPackageJson
+        ),
+        null,
+        2
+      ),
       options.forceOverwrite
     );
 
-    logger.info(`Generating sdk client metatdata ${clientFileName}...`);
+    logger.info(`Generating sdk client metadata ${clientFileName}...`);
     otherFile(
       metadataDir,
       clientFileName,

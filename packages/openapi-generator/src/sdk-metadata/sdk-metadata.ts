@@ -1,22 +1,22 @@
-import { VdmServiceMetadata } from '../vdm-types';
-import { GeneratorOptions } from '../generator-options';
-import type { Client } from '../common/sdk-metadata-types';
+import { OpenApiDocument } from '../openapi-types';
 import { getSdkMetadataClient } from '../common/sdk-metadata';
 import { getPregeneratedLibrary } from '../common/pregenerated-lib';
+import { GeneratorOptions } from '../options';
+import { Client } from '../common/sdk-metadata-types';
+import { packageDescription } from './package-description';
 import { getGenerationAndUsage } from './generation-and-usage';
-import { getServiceDescription } from './pregenerated-lib';
 
 export async function sdkMetaDataJS(
-  service: VdmServiceMetadata,
+  openApiDocument: OpenApiDocument,
   options: GeneratorOptions
 ): Promise<Client> {
   const [pregeneratedLibrary, generationAndUsage] = await Promise.all([
     getPregeneratedLibrary(
-      getServiceDescription(service, options),
-      service.npmPackageName,
+      packageDescription(openApiDocument.npmPackageName),
+      openApiDocument.npmPackageName,
       options.versionInPackageJson
     ),
-    getGenerationAndUsage(service)
+    getGenerationAndUsage(openApiDocument)
   ]);
 
   return getSdkMetadataClient(generationAndUsage, pregeneratedLibrary);

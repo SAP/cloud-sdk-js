@@ -89,6 +89,14 @@ class GenerateOpenApiClient extends Command {
       default: false,
       required: false,
       hidden: true
+    }),
+    generateSdkMetadata: flags.boolean({
+      name: 'generateSdkMetadata',
+      description:
+        'When set to true, SDK metadata for the API hub is generated.',
+      default: false,
+      required: false,
+      hidden: true
     })
   };
 

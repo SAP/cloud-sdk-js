@@ -11,13 +11,13 @@ import { createRefs, OpenApiDocumentRefs } from './refs';
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
   serviceName: string,
-  filePath: string,
+  specPath: string,
   serviceMapping: ServiceMapping
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
   const document = (await parse(clonedContent)) as OpenAPIV3.Document;
   const refs = await createRefs(document);
-  const originalFileName = removeFileExtension(basename(filePath));
+  const originalFileName = removeFileExtension(basename(specPath));
 
   return {
     apis: parseApis(document, refs),
@@ -29,6 +29,7 @@ export async function parseOpenApiDocument(
       ? serviceMapping[originalFileName].directoryName
       : originalFileName,
     originalFileName,
+    specPath,
     schemas: parseSchemas(document, refs)
   };
 }

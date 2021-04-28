@@ -9,4 +9,5 @@ export interface GeneratorOptions {
   tsConfig?: string;
   additionalFiles?: string;
   writeReadme?: boolean;
+  generateSdkMetadata?: boolean;
 }

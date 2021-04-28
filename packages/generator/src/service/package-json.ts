@@ -1,12 +1,12 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { getGeneratorVersion } from '../sdk-metadata/pregenerated-lib';
+import { getSdkVersion } from '../common/util';
 
-export function packageJson(
+export async function packageJson(
   npmPackageName: string,
   version: string,
   description: string,
   sdkAfterVersionScript: boolean
-): string {
+): Promise<string> {
   return (
     JSON.stringify(
       {
@@ -38,10 +38,10 @@ export function packageJson(
             : {})
         },
         dependencies: {
-          '@sap-cloud-sdk/core': `^${getGeneratorVersion()}`
+          '@sap-cloud-sdk/core': `^${await getSdkVersion()}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${getGeneratorVersion()}`
+          '@sap-cloud-sdk/core': `^${await getSdkVersion()}`
         },
         devDependencies: {
           typedoc: '^0.17.0',

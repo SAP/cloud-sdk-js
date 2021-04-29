@@ -14,9 +14,9 @@ import {
 import { ModuleKind } from 'typescript';
 import { GlobSync } from 'glob';
 import {
-  getSdkMetadataFileNames,
+  getMetadataFileNames,
   getVersionForClient,
-  sdkMetaDataHeader,
+  metadataHeader,
   getSdkVersion
 } from '@sap-cloud-sdk/generator-common';
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
@@ -51,7 +51,7 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
-import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
+import { metadata } from './sdk-metadata/sdk-metadata';
 import { getServiceDescription } from './sdk-metadata/pregenerated-lib';
 
 const logger = createLogger({
@@ -325,7 +325,7 @@ export async function generateSourcesForService(
   }
 
   if (options.generateSdkMetadata) {
-    const { clientFileName, headerFileName } = getSdkMetadataFileNames(
+    const { clientFileName, headerFileName } = getMetadataFileNames(
       service.originalFileName
     );
     logger.info(`Generating sdk header metadata ${headerFileName}...`);
@@ -337,7 +337,7 @@ export async function generateSourcesForService(
       metadataDir,
       headerFileName,
       JSON.stringify(
-        await sdkMetaDataHeader(
+        await metadataHeader(
           'odata',
           service.originalFileName,
           options.versionInPackageJson
@@ -352,7 +352,7 @@ export async function generateSourcesForService(
     otherFile(
       metadataDir,
       clientFileName,
-      JSON.stringify(await sdkMetaDataJS(service, options), null, 2),
+      JSON.stringify(await metadata(service, options), null, 2),
       options.forceOverwrite
     );
   }

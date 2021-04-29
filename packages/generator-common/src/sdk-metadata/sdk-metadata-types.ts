@@ -1,11 +1,9 @@
 /**
  * Represents the language independent header data of the sdk metadata
  */
-export interface SdkMetadataHeader {
+export interface MetadataHeader {
   /**
-   * The unique identifier of the serivice which is the file name
-   * @type {string}
-   * @memberof SdkMetadataHeader
+   * The unique identifier of the service which is the file name.
    */
   name: string;
   type: 'odata' | 'rest' | 'soap';

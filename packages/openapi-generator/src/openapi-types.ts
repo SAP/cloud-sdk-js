@@ -1,4 +1,5 @@
 import type { OpenAPIV3 } from 'openapi-types';
+import { ServiceConfig } from './options';
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Representation of an operation.
@@ -14,29 +15,11 @@ export interface OpenApiDocument {
   serviceName: string;
 
   /**
-   * Name of the npm package, if there is a package.json.
+   * Configuration as defined in the per service configuration.
    */
-  packageName: string;
+  serviceConfig: ServiceConfig;
 
   /**
-   * Name of the directory where the service will be generated to.
-   */
-  directoryName: string;
-
-  /**
-<<<<<<< HEAD
-=======
-   * Name of the original specification file.
-   */
-  originalFileName: string;
-
-  /**
-   * Path of the original specification file.
-   */
-  filePath: string;
-
-  /**
->>>>>>> ec98e31828e9897f356ffe6f277bfe4539993016
    * Parsed schemas of the document.
    */
   schemas: OpenApiPersistedSchema[];

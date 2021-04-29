@@ -1,7 +1,7 @@
 import nock = require('nock');
 import { createOptions } from '../../test/test-util/create-generator-options';
 import { getTestService } from './pregenerated-lib.spec';
-import { sdkMetaDataJS } from './sdk-metadata';
+import { metadata } from './sdk-metadata';
 
 describe('sdk-metadata', () => {
   const service = getTestService();
@@ -10,7 +10,7 @@ describe('sdk-metadata', () => {
     jest.spyOn(global.Date, 'now').mockImplementationOnce(() => 0);
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);
 
-    const metaData = await sdkMetaDataJS(
+    const metaData = await metadata(
       service,
       createOptions({ versionInPackageJson: '1.0.0' })
     );
@@ -23,7 +23,7 @@ describe('sdk-metadata', () => {
   });
 
   it('generates the JS metadata content for services without pregenerated lib', async () => {
-    const metaData = await sdkMetaDataJS(
+    const metaData = await metadata(
       service,
       createOptions({ versionInPackageJson: '1.0.0' })
     );

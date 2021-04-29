@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, join, dirname } from 'path';
+import { resolve, parse, basename, join } from 'path';
 import {
   createLogger,
   UniqueNameGenerator,
@@ -10,9 +10,9 @@ import {
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import {
-  getSdkMetadataFileNames,
-  sdkMetaDataHeader,
-  getSdkVersion
+  getMetadataFileNames,
+  getSdkVersion,
+  metadataHeader
 } from '@sap-cloud-sdk/generator-common';
 import {
   apiFile,
@@ -36,10 +36,10 @@ import {
   getPerServiceConfig,
   ServiceConfig
 } from './options';
+import { metadata } from './sdk-metadata';
 import { GeneratorOptions } from '.';
-import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
 
-const { readdir, rmdir, mkdir, lstat, readFile, writeFile } = promisesFs;
+const { readdir, rmdir, mkdir, lstat, writeFile } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -113,79 +113,30 @@ export async function generateWithParsedOptions(
  * Generate sources.
  * @param serviceDir Directory to generate the service to.
  * @param openApiDocument Parsed service.
+ * @param inputFilePath Path to the input file.
  * @param tsConfig File content for the `tsconfig.json`.
  * @param options Generation options.
  */
 async function generateSources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
+  inputFilePath: string,
   tsConfig: string | undefined,
   options: ParsedGeneratorOptions
 ): Promise<void> {
   await mkdir(serviceDir, { recursive: true });
 
-  if (openApiDocument.schemas.length) {
-    const schemaDir = resolve(serviceDir, 'schema');
-    await createSchemaFiles(schemaDir, openApiDocument);
-    await createFile(
-      schemaDir,
-      'index.ts',
-      schemaIndexFile(openApiDocument),
-      true
-    );
-  }
+  await generateMandatorySources(serviceDir, openApiDocument);
 
-  await createApis(serviceDir, openApiDocument);
-  await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
-
-  if (options.generateSdkMetadata) {
-    const { clientFileName, headerFileName } = getSdkMetadataFileNames(
-      openApiDocument.originalFileName
-    );
-
-    logger.debug(`Generating sdk header metadata ${headerFileName}.`);
-    const specFileDirname = dirname(openApiDocument.filePath);
-    await mkdir(resolve(specFileDirname, 'sdk-metadata'), { recursive: true });
-    await createFile(
-      resolve(specFileDirname, 'sdk-metadata'),
-      headerFileName,
-      JSON.stringify(
-        await sdkMetaDataHeader(
-          'rest',
-          openApiDocument.originalFileName,
-          options.packageVersion
-        ),
-        null,
-        2
-      ),
-      true,
-      false
-    );
-
-    logger.debug(`Generating sdk client metadata ${clientFileName}...`);
-    await createFile(
-      resolve(specFileDirname, 'sdk-metadata'),
-      clientFileName,
-      JSON.stringify(await sdkMetaDataJS(openApiDocument, options), null, 2),
-      true,
-      false
-    );
+  if (options.metadata) {
+    generateMetadata(openApiDocument, inputFilePath, options);
   }
 
   if (options.packageJson) {
-    logger.debug(`Generating package.json in ${serviceDir}.`);
-
-    await createFile(
+    await generatePackageJson(
       serviceDir,
-      'package.json',
-      packageJson(
-        openApiDocument.packageName,
-        genericDescription(openApiDocument.directoryName),
-        await getSdkVersion(),
-        options.packageVersion
-      ),
-      true,
-      false
+      openApiDocument.serviceConfig,
+      options
     );
   }
 
@@ -201,6 +152,25 @@ async function generateSources(
   if (options.readme) {
     await generateReadme(serviceDir, openApiDocument);
   }
+}
+
+async function generateMandatorySources(
+  serviceDir: string,
+  openApiDocument: OpenApiDocument
+) {
+  if (openApiDocument.schemas.length) {
+    const schemaDir = resolve(serviceDir, 'schema');
+    await createSchemaFiles(schemaDir, openApiDocument);
+    await createFile(
+      schemaDir,
+      'index.ts',
+      schemaIndexFile(openApiDocument),
+      true
+    );
+  }
+
+  await createApis(serviceDir, openApiDocument);
+  await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
 }
 
 async function createApis(
@@ -255,7 +225,6 @@ async function generateService(
   tsConfig: string | undefined,
   serviceName: string
 ): Promise<void> {
-  const serviceDir = resolve(options.outputDir, serviceConfig.directoryName);
   const openApiDocument = await convertOpenApiSpec(inputFilePath);
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
@@ -264,7 +233,14 @@ async function generateService(
     { strictNaming: options.strictNaming }
   );
 
-  await generateSources(serviceDir, parsedOpenApiDocument, tsConfig, options);
+  const serviceDir = resolve(options.outputDir, serviceConfig.directoryName);
+  await generateSources(
+    serviceDir,
+    parsedOpenApiDocument,
+    inputFilePath,
+    tsConfig,
+    options
+  );
   logger.info(`Successfully generated client for '${inputFilePath}'`);
 }
 
@@ -317,4 +293,66 @@ function generateReadme(
     true,
     false
   );
+}
+
+async function generateMetadata(
+  openApiDocument: OpenApiDocument,
+  inputFilePath: string,
+  options: ParsedGeneratorOptions
+) {
+  const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
+  const { clientFileName, headerFileName } = getMetadataFileNames(
+    inputFileName
+  );
+
+  logger.verbose(`Generating header metadata ${headerFileName}.`);
+  const inputDir = resolve(inputDirPath, 'sdk-metadata');
+  await mkdir(inputDir, { recursive: true });
+  await createFile(
+    inputDir,
+    headerFileName,
+    JSON.stringify(
+      await metadataHeader('rest', inputFileName, options.packageVersion),
+      null,
+      2
+    ),
+    true,
+    false
+  );
+
+  logger.verbose(`Generating client metadata ${clientFileName}...`);
+  await createFile(
+    inputDir,
+    clientFileName,
+    JSON.stringify(await metadata(openApiDocument, options), null, 2),
+    true,
+    false
+  );
+}
+
+async function generatePackageJson(
+  serviceDir: string,
+  { packageName, directoryName }: ServiceConfig,
+  options: ParsedGeneratorOptions
+) {
+  logger.debug(`Generating package.json in ${serviceDir}.`);
+
+  await createFile(
+    serviceDir,
+    'package.json',
+    packageJson(
+      packageName,
+      genericDescription(directoryName),
+      await getSdkVersion(),
+      options.packageVersion
+    ),
+    true,
+    false
+  );
+}
+
+interface AdditionalGenerationInfo {
+  inputFilePath: string;
+  serviceConfig: ServiceConfig;
+  tsConfig?: string;
 }

@@ -59,17 +59,17 @@ OPTIONS
   --perServiceConfig=<path/to/per-service-config.json>
       Set the path to a file containing the configuration per service. The configuration allows to set a `directoryName` 
       and `packageName` for every service. It also makes sure that names do not change between generator runs. If a 
-      directory is passed, a `per-service-config.json` file will read/created in this directory.
+      directory is passed, a `per-service-config.json` file is read/created in this directory.
 
   --[no-]strictNaming
       By default, the generation fails, when there are duplicate names for operations and/or path parameters after 
-      transforming them to camel case. Set this to true to enable unique name generation. The names will then be generated 
+      transforming them to camel case. Set this to true to enable unique name generation. The names are then be generated 
       by appending numbers.
 
   --tsConfig=<path/to/tsconfig.json>
       Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only 
-      generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file will be 
-      read from this directory.
+      generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read 
+      from this directory.
 
 EXAMPLES
 

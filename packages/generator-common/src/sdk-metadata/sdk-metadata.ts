@@ -4,30 +4,30 @@ import {
   Client,
   GenerationAndUsage,
   PregeneratedLibrary,
-  SdkMetadataHeader,
+  MetadataHeader,
   ServiceStatus
 } from './sdk-metadata-types';
 
-export function getSdkMetadataFileNames(
+export function getMetadataFileNames(
   originalFileName: string
 ): { clientFileName: string; headerFileName: string } {
   return {
-    clientFileName: getClientFileName(originalFileName),
-    headerFileName: getHeaderFileName(originalFileName)
+    clientFileName: `${originalFileName}_CLIENT_JS.json`,
+    headerFileName: `${originalFileName}_HEADER.json`
   };
 }
 
-export async function sdkMetaDataHeader(
+export async function metadataHeader(
   type: 'odata' | 'rest' | 'soap',
   originalFileName: string,
   versionInPackageJson?: string
-): Promise<SdkMetadataHeader> {
+): Promise<MetadataHeader> {
   return {
     type,
     // For the file name with use the artifact.name from API which should be the unique identifier
     name: removeFileExtension(originalFileName),
     version: await getVersionForClient(versionInPackageJson),
-    introText: sdkMetadataHeaderIntroText
+    introText: metadataHeaderIntroText
   };
 }
 
@@ -37,7 +37,7 @@ export async function getVersionForClient(
   return versionInPackageJson || getSdkVersion();
 }
 
-export function getSdkMetadataClient(
+export function getMetadataClient(
   generationAndUsage: GenerationAndUsage,
   pregeneratedLibrary?: PregeneratedLibrary
 ): Client {
@@ -52,15 +52,7 @@ export function getSdkMetadataClient(
   };
 }
 
-function getClientFileName(serviceFileName: string): string {
-  return `${serviceFileName}_CLIENT_JS.json`;
-}
-
-function getHeaderFileName(serviceFileName: string): string {
-  return `${serviceFileName}_HEADER.json`;
-}
-
-const sdkMetadataHeaderIntroText =
+const metadataHeaderIntroText =
   'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.';
 
 const ServiceStatusValues: Record<ServiceStatus['status'], ServiceStatus> = {

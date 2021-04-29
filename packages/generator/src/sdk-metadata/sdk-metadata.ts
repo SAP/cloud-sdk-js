@@ -1,6 +1,6 @@
 import type { Client } from '@sap-cloud-sdk/generator-common';
 import {
-  getSdkMetadataClient,
+  getMetadataClient,
   getPregeneratedLibrary
 } from '@sap-cloud-sdk/generator-common';
 import { VdmServiceMetadata } from '../vdm-types';
@@ -8,7 +8,7 @@ import { GeneratorOptions } from '../generator-options';
 import { getGenerationAndUsage } from './generation-and-usage';
 import { getServiceDescription } from './pregenerated-lib';
 
-export async function sdkMetaDataJS(
+export async function metadata(
   service: VdmServiceMetadata,
   options: GeneratorOptions
 ): Promise<Client> {
@@ -21,5 +21,5 @@ export async function sdkMetaDataJS(
     getGenerationAndUsage(service)
   ]);
 
-  return getSdkMetadataClient(generationAndUsage, pregeneratedLibrary);
+  return getMetadataClient(generationAndUsage, pregeneratedLibrary);
 }

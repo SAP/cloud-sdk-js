@@ -13,7 +13,7 @@ export interface GeneratorOptions {
   perServiceConfig?: string;
   packageVersion?: string;
   readme?: boolean;
-  generateSdkMetadata?: boolean;
+  metadata?: boolean;
 }
 
 export type ParsedGeneratorOptions = typeof GenerateOpenApiClient extends Parser.Input<

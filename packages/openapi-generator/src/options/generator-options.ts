@@ -20,6 +20,9 @@ export interface GeneratorOptions {
   metadata?: boolean;
 }
 
+/**
+ * Parsed options with default values.
+ */
 export type ParsedGeneratorOptions = typeof GenerateOpenApiClient extends Parser.Input<
   infer F
 >

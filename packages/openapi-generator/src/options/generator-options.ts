@@ -18,6 +18,7 @@ export interface GeneratorOptions {
   packageVersion?: string;
   readme?: boolean;
   metadata?: boolean;
+  verbose?: boolean;
 }
 
 /**

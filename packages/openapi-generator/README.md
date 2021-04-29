@@ -71,6 +71,8 @@ OPTIONS
       generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read 
       from this directory.
 
+  --verbose                                               Turn on verbose logging.
+
 EXAMPLES
 
   // generate TypeScript clients from OpenAPI definitions in a directory

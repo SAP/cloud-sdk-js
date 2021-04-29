@@ -6,7 +6,8 @@ import {
   createLogger,
   UniqueNameGenerator,
   kebabCase,
-  finishAll
+  finishAll,
+  setLogLevel
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import {
@@ -61,6 +62,10 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
 ): Promise<void> {
+  if (options.verbose) {
+    setLogLevel('verbose', logger);
+  }
+
   if (options.clearOutputDir) {
     await rmdir(options.outputDir, { recursive: true });
   }
@@ -269,7 +274,7 @@ async function copyAdditionalFiles(
   additionalFiles: string,
   serviceDir: string
 ): Promise<void[]> {
-  logger.info(
+  logger.verbose(
     `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
   );
 
@@ -284,7 +289,7 @@ function generateReadme(
   serviceDir: string,
   openApiDocument: OpenApiDocument
 ): Promise<void> {
-  logger.info(`Generating readme in ${serviceDir}.`);
+  logger.verbose(`Generating readme in ${serviceDir}.`);
 
   return createFile(
     serviceDir,
@@ -335,7 +340,7 @@ async function generatePackageJson(
   { packageName, directoryName }: ServiceConfig,
   options: ParsedGeneratorOptions
 ) {
-  logger.debug(`Generating package.json in ${serviceDir}.`);
+  logger.verbose(`Generating package.json in ${serviceDir}.`);
 
   await createFile(
     serviceDir,
@@ -349,10 +354,4 @@ async function generatePackageJson(
     true,
     false
   );
-}
-
-interface AdditionalGenerationInfo {
-  inputFilePath: string;
-  serviceConfig: ServiceConfig;
-  tsConfig?: string;
 }

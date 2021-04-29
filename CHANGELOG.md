@@ -17,7 +17,8 @@
 - [core] Use `HEAD` instead of `GET` when fetching CSRF tokens. Change the URL for CSRF token fetching in OData requests from the service URL to the request URL. 
 - [test-util] Use `HEAD` for `mockHeaderRequest()` to align with the core behaviour.
 - [core] Remove experimental `Exclude` type, which was accidentally exposed as non-experimental.
-
+- [openapi-generator] Rename the CLI generator command from `generate-openapi-client` to `openapi-generator`.
+- [openapi-generator] Rename some generator options and default behavior of those options ([details](./knowledge-base/adr/0020-generator-options.md)).
 ## New Functionality
 
 - [core] Support custom axios options for all request builders.
@@ -28,6 +29,9 @@
 
 - [odata] Allow using filter functions with boolean return types directly in the `filter()` of OData request builders without `equals(true)`.
 - [odata-generator] Disable the `execute` function, when an entity type is shared by multiple entity sets and is used as the return type of function/action imports.
+- [openapi-generator] Introduce `verbose` option to enable verbose logging. 
+- [openapi-generator] Introduce `overwrite` option to allow overwriting of existing files. 
+- [openapi-generator] Introduce `include` option to allow copying files to the generated clients.
 
 ## Fixed Issues
 

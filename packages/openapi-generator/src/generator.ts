@@ -225,14 +225,14 @@ function parseServiceName(filePath: string): string {
  * Generates an OpenAPI service from a file.
  * @param inputFilePath The file path where the service to generate is located.
  * @param options Options to configure generation.
- * @param serviceConfig Service configuration as defined in the per service configuration.
+ * @param serviceOptions Service options as defined in the options per service.
  * @param tsConfig File content for the `tsconfig.json`.
  * @param serviceName The unique service name to be used.
  */
 async function generateService(
   inputFilePath: string,
   options: ParsedGeneratorOptions,
-  serviceConfig: ServiceOptions,
+  serviceOptions: ServiceOptions,
   tsConfig: string | undefined,
   serviceName: string
 ): Promise<void> {
@@ -240,11 +240,11 @@ async function generateService(
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceName,
-    serviceConfig,
+    serviceOptions,
     { strictNaming: options.strictNaming }
   );
 
-  const serviceDir = resolve(options.outputDir, serviceConfig.directoryName);
+  const serviceDir = resolve(options.outputDir, serviceOptions.directoryName);
   await generateSources(
     serviceDir,
     parsedOpenApiDocument,

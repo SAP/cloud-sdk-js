@@ -39,7 +39,7 @@ OPTIONS
   -o, --outputDir=<path/to/output>
       (required) Specify the path to the directory to generate the client(s) in. Each client is generated into a 
       subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory 
-      naming through `--perServiceConfig`.
+      naming through `--optionsPerService`.
 
   -t, --transpile
       Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated and used. It emits 

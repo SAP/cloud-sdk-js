@@ -11,9 +11,9 @@ import {
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import {
-  getMetadataFileNames,
+  getSdkMetadataFileNames,
   getSdkVersion,
-  metadataHeader
+  sdkMetadataHeader
 } from '@sap-cloud-sdk/generator-common';
 import {
   apiFile,
@@ -37,7 +37,7 @@ import {
   getPerServiceConfig,
   ServiceConfig
 } from './options';
-import { createMetadata } from './metadata';
+import { sdkMetadata } from './sdk-metadata';
 import { GeneratorOptions } from '.';
 
 const { readdir, rmdir, mkdir, lstat, writeFile } = promisesFs;
@@ -306,7 +306,7 @@ async function generateMetadata(
   options: ParsedGeneratorOptions
 ) {
   const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
-  const { clientFileName, headerFileName } = getMetadataFileNames(
+  const { clientFileName, headerFileName } = getSdkMetadataFileNames(
     inputFileName
   );
 
@@ -317,7 +317,7 @@ async function generateMetadata(
     metadataDir,
     headerFileName,
     JSON.stringify(
-      await metadataHeader('rest', inputFileName, options.packageVersion),
+      await sdkMetadataHeader('rest', inputFileName, options.packageVersion),
       null,
       2
     ),
@@ -329,7 +329,7 @@ async function generateMetadata(
   await createFile(
     metadataDir,
     clientFileName,
-    JSON.stringify(await createMetadata(openApiDocument, options), null, 2),
+    JSON.stringify(await sdkMetadata(openApiDocument, options), null, 2),
     true,
     false
   );

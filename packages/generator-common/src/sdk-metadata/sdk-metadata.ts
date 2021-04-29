@@ -4,11 +4,11 @@ import {
   Client,
   GenerationAndUsage,
   PregeneratedLibrary,
-  MetadataHeader,
+  SdkMetadataHeader,
   ServiceStatus
-} from './metadata-types';
+} from './sdk-metadata-types';
 
-export function getMetadataFileNames(
+export function getSdkMetadataFileNames(
   originalFileName: string
 ): { clientFileName: string; headerFileName: string } {
   return {
@@ -17,17 +17,17 @@ export function getMetadataFileNames(
   };
 }
 
-export async function metadataHeader(
+export async function sdkMetadataHeader(
   type: 'odata' | 'rest' | 'soap',
   originalFileName: string,
   versionInPackageJson?: string
-): Promise<MetadataHeader> {
+): Promise<SdkMetadataHeader> {
   return {
     type,
     // For the file name with use the artifact.name from API which should be the unique identifier
     name: removeFileExtension(originalFileName),
     version: await getVersionForClient(versionInPackageJson),
-    introText: metadataHeaderIntroText
+    introText: sdkMetadataHeaderIntroText
   };
 }
 
@@ -37,7 +37,7 @@ export async function getVersionForClient(
   return versionInPackageJson || getSdkVersion();
 }
 
-export function getMetadataClient(
+export function getSdkMetadataClient(
   generationAndUsage: GenerationAndUsage,
   pregeneratedLibrary?: PregeneratedLibrary
 ): Client {
@@ -52,7 +52,7 @@ export function getMetadataClient(
   };
 }
 
-const metadataHeaderIntroText =
+const sdkMetadataHeaderIntroText =
   'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.';
 
 const ServiceStatusValues: Record<ServiceStatus['status'], ServiceStatus> = {

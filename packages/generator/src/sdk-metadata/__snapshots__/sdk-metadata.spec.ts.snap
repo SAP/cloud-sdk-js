@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`metadata generates the JS metadata content for services with pregenerated lib 1`] = `
+exports[`sdk-metadata generates the sdk metadata content for services with pregenerated lib 1`] = `
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
@@ -73,7 +73,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
 }
 `;
 
-exports[`metadata generates the JS metadata content for services without pregenerated lib 1`] = `
+exports[`sdk-metadata generates the sdk metadata content for services without pregenerated lib 1`] = `
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {

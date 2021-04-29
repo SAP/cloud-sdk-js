@@ -6,12 +6,7 @@ const { readFile } = promises;
 /**
  * Represents the service configuration for all services.
  */
-export interface PerServiceConfig {
-  /**
-   * Configuration for a service, specified by its filename.
-   */
-  [fileName: string]: ServiceConfig;
-}
+export type PerServiceConfig = Record<string, ServiceConfig>;
 
 /**
  * Represents the service configuration for one service.

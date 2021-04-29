@@ -1,7 +1,7 @@
 /**
  * Represents the language independent header data of the sdk metadata
  */
-export interface MetadataHeader {
+export interface SdkMetadataHeader {
   /**
    * The unique identifier of the service which is the file name.
    */

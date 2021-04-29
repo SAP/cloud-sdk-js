@@ -32,7 +32,8 @@ describe('parseGeneratorOptions', () => {
       perServiceConfig: undefined,
       packageVersion: '1.0.0',
       readme: false,
-      metadata: false
+      metadata: false,
+      verbose: false
     });
   });
 

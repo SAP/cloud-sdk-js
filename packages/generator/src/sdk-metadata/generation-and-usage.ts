@@ -13,9 +13,6 @@ import {
 import { VdmServiceMetadata } from '../vdm-types';
 import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
 
-export const generatorRepositoryLink =
-  'https://www.npmjs.com/package/@sap-cloud-sdk/generator';
-
 export async function getGenerationAndUsage(
   service: VdmServiceMetadata
 ): Promise<GenerationAndUsage> {
@@ -29,7 +26,7 @@ export async function getGenerationAndUsage(
       linkGenerationDocumentation
     ),
     generatorVersion: await getSdkVersion(),
-    generatorRepositoryLink
+    generatorRepositoryLink: 'https://www.npmjs.com/package/@sap-cloud-sdk/generator'
   };
 }
 

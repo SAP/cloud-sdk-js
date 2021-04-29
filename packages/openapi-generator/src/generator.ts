@@ -36,7 +36,7 @@ import {
   getPerServiceConfig,
   ServiceConfig
 } from './options';
-import { createMetadata } from './sdk-metadata';
+import { createMetadata } from './metadata';
 import { GeneratorOptions } from '.';
 
 const { readdir, rmdir, mkdir, lstat, writeFile } = promisesFs;
@@ -306,10 +306,10 @@ async function generateMetadata(
   );
 
   logger.verbose(`Generating header metadata ${headerFileName}.`);
-  const inputDir = resolve(inputDirPath, 'sdk-metadata');
-  await mkdir(inputDir, { recursive: true });
+  const metadataDir = resolve(inputDirPath, 'sdk-metadata');
+  await mkdir(metadataDir, { recursive: true });
   await createFile(
-    inputDir,
+    metadataDir,
     headerFileName,
     JSON.stringify(
       await metadataHeader('rest', inputFileName, options.packageVersion),
@@ -322,7 +322,7 @@ async function generateMetadata(
 
   logger.verbose(`Generating client metadata ${clientFileName}...`);
   await createFile(
-    inputDir,
+    metadataDir,
     clientFileName,
     JSON.stringify(await createMetadata(openApiDocument, options), null, 2),
     true,

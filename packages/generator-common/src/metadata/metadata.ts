@@ -6,7 +6,7 @@ import {
   PregeneratedLibrary,
   MetadataHeader,
   ServiceStatus
-} from './sdk-metadata-types';
+} from './metadata-types';
 
 export function getMetadataFileNames(
   originalFileName: string

@@ -1,1 +1,1 @@
-export * from './sdk-metadata';
+export * from './metadata';

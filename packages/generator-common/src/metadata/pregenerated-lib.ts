@@ -1,6 +1,6 @@
 import { checkUrlExists } from '@sap-cloud-sdk/util';
-import { InstructionWithText, PregeneratedLibrary } from './sdk-metadata-types';
-import { getVersionForClient } from './sdk-metadata';
+import { InstructionWithText, PregeneratedLibrary } from './metadata-types';
+import { getVersionForClient } from './metadata';
 
 export async function isPublishedNpmPackage(
   npmPackageName: string

@@ -1,6 +1,6 @@
-import { getMetadataFileNames, metadataHeader } from './sdk-metadata';
+import { getMetadataFileNames, metadataHeader } from './metadata';
 
-describe('sdk-metadata', () => {
+describe('metadata', () => {
   it('generates the header content', async () => {
     expect(
       await metadataHeader('odata', 'API_TEST_SRV', '1.0.0')

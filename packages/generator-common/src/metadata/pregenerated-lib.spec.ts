@@ -6,7 +6,7 @@ import {
   getTimeStamp,
   isPublishedNpmPackage
 } from './pregenerated-lib';
-import { getVersionForClient } from './sdk-metadata';
+import { getVersionForClient } from './metadata';
 
 describe('pregenerated-lib', () => {
   const npmPackageName = '@sap/cloud-sdk-vdm-test-service';

@@ -1,9 +1,9 @@
 import nock = require('nock');
 import { createOptions } from '../../test/test-util/create-generator-options';
 import { getTestService } from './pregenerated-lib.spec';
-import { metadata } from './sdk-metadata';
+import { metadata } from './metadata';
 
-describe('sdk-metadata', () => {
+describe('metadata', () => {
   const service = getTestService();
 
   it('generates the JS metadata content for services with pregenerated lib', async () => {

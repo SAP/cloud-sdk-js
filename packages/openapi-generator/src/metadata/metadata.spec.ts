@@ -1,9 +1,9 @@
 import nock = require('nock');
 import { GeneratorOptions } from '../options';
 import { dummyOpenApiDocument } from '../../test/test-util';
-import { createMetadata } from './sdk-metadata';
+import { createMetadata } from './metadata';
 
-describe('sdk-metadata', () => {
+describe('metadata', () => {
   it('generates metadata content for services without pregenerated lib', async () => {
     const metadata = await createMetadata(dummyOpenApiDocument, {
       packageVersion: '1.0.0'

@@ -51,7 +51,7 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
-import { metadata, getServiceDescription } from './sdk-metadata';
+import { metadata, getServiceDescription } from './metadata';
 
 const logger = createLogger({
   package: 'generator',

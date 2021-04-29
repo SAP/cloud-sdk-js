@@ -1,4 +1,4 @@
-import type { Links } from './sdk-metadata-types';
+import type { Links } from './metadata-types';
 
 export function getLinks(
   apiHubTutorialUrl: string,

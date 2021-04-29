@@ -1,4 +1,4 @@
-import { InstructionWithText } from './sdk-metadata-types';
+import { InstructionWithText } from './metadata-types';
 
 export function getGenerationSteps(
   installCommand: string,

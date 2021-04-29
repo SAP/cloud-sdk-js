@@ -7,7 +7,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { generate } from '../generator';
 
 const logger = createLogger('openapi-generator');
-class GenerateOpenApiClient extends Command {
+class OpenApiGenerator extends Command {
   static description =
     'Generate OpenAPI client(s), that use the connectivity features of the SAP Cloud SDK for JavaScript/TypeScript.';
 
@@ -15,10 +15,10 @@ class GenerateOpenApiClient extends Command {
   static examples = [
     `
 // generate TypeScript clients from OpenAPI definitions in a directory
-$ generate-openapi-client --input ./my-specs --outputDir ./clients`,
+$ openapi-generator --input ./my-specs --outputDir ./clients`,
     `
 // generate a JavaScript client from a OpenAPI definition file
-$ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpile`
+$ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
   ];
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -110,7 +110,7 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
 
   async run(): Promise<void> {
     try {
-      const parsed = this.parse(GenerateOpenApiClient);
+      const parsed = this.parse(OpenApiGenerator);
       await generate(parsed.flags);
     } catch (err) {
       logger.error(err);
@@ -119,4 +119,4 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
   }
 }
 
-export = GenerateOpenApiClient;
+export = OpenApiGenerator;

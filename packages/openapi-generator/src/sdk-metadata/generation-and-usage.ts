@@ -21,7 +21,7 @@ export async function getGenerationAndUsage(
     links: getOpenApiLinks(),
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/openapi-generator',
-      'generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>',
+      'openapi-generator --inputDir <inputDirectory> --outputDir <outputDirectory>',
       linkGenerationDocumentation
     ),
     generatorVersion: await getSdkVersion(),

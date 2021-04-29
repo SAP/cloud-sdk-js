@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, join, relative } from 'path';
+import { resolve, parse, basename, dirname, join, relative } from 'path';
 import {
   createLogger,
   UniqueNameGenerator,
@@ -35,12 +35,13 @@ import {
   tsconfigJson,
   getServiceOptions,
   getOriginalOptionsPerService,
-  ServiceOptions
+  ServiceOptions,
+  OptionsPerService
 } from './options';
 import { sdkMetadata } from './sdk-metadata';
 import { GeneratorOptions } from '.';
 
-const { readdir, rmdir, mkdir, lstat, writeFile } = promisesFs;
+const { readdir, rmdir, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -100,24 +101,22 @@ export async function generateWithParsedOptions(
     );
   });
 
-  const errorMessage =
-    promises.length > 1
-      ? 'Some clients could not be generated.'
-      : 'Could not generate client.';
-  await finishAll(promises, errorMessage);
+  try {
+    const errorMessage =
+      promises.length > 1
+        ? 'Some clients could not be generated.'
+        : 'Could not generate client.';
+    await finishAll(promises, errorMessage);
+  } finally {
+    if (options.optionsPerService) {
+      generateOptionsPerService(options.optionsPerService, optionsPerService);
+    }
 
-  if (options.optionsPerService) {
-    writeFile(
-      options.optionsPerService,
-      JSON.stringify(optionsPerService, null, 2),
-      'utf8'
-    );
-  }
-
-  if (!options.packageJson) {
-    logger.info(
-      "Finished generation. Don't forget to add @sap-cloud-sdk/core to your dependencies."
-    );
+    if (!options.packageJson) {
+      logger.info(
+        "Finished generation. Don't forget to add @sap-cloud-sdk/core to your dependencies."
+      );
+    }
   }
 }
 
@@ -147,7 +146,7 @@ async function generateSources(
   if (options.packageJson) {
     await generatePackageJson(
       serviceDir,
-      openApiDocument.serviceConfig,
+      openApiDocument.serviceOptions,
       options
     );
   }
@@ -358,6 +357,23 @@ async function generatePackageJson(
       await getSdkVersion(),
       options.packageVersion
     ),
+    true,
+    false
+  );
+}
+
+async function generateOptionsPerService(
+  filePath: string,
+  optionsPerService: OptionsPerService
+) {
+  logger.verbose('Generating options per service.');
+
+  const dir = dirname(filePath);
+  await mkdir(dir, { recursive: true });
+  await createFile(
+    dir,
+    basename(filePath),
+    JSON.stringify(optionsPerService, null, 2),
     true,
     false
   );

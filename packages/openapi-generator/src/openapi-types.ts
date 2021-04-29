@@ -15,9 +15,9 @@ export interface OpenApiDocument {
   serviceName: string;
 
   /**
-   * Configuration as defined in the per service configuration.
+   * Configuration as defined in the options per service.
    */
-  serviceConfig: ServiceOptions;
+  serviceOptions: ServiceOptions;
 
   /**
    * Parsed schemas of the document.

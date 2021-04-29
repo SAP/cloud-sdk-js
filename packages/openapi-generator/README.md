@@ -52,14 +52,15 @@ OPTIONS
   --include=<glob/to/include>
       Include files matching the given glob into the root of each generated client directory.
 
+  --optionsPerService=<path/to/options-per-service.json>
+      Set the path to a file containing the options per service. The configuration allows to set a `directoryName` and 
+      `packageName` for every service, identified by the path to the original file. It also makes sure that names do not 
+      change between generator runs. If a directory is passed, a `options-per-service.json` file is read/created in this 
+      directory.
+
   --packageJson
       When enabled, a `package.json`, that specifies dependencies and scripts for transpilation and documentation 
       generation is generated.
-
-  --perServiceConfig=<path/to/per-service-config.json>
-      Set the path to a file containing the configuration per service. The configuration allows to set a `directoryName` 
-      and `packageName` for every service. It also makes sure that names do not change between generator runs. If a 
-      directory is passed, a `per-service-config.json` file is read/created in this directory.
 
   --[no-]strictNaming
       By default, the generation fails, when there are duplicate names for operations and/or path parameters after 

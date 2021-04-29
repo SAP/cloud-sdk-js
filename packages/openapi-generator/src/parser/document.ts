@@ -29,7 +29,7 @@ export async function parseOpenApiDocument(
   return {
     apis: parseApis(document, refs, options),
     serviceName: pascalCase(serviceName),
-    serviceConfig,
+    serviceOptions: serviceConfig,
     schemas: parseSchemas(document, refs)
   };
 }

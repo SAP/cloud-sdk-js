@@ -11,5 +11,5 @@ Object.defineProperty(exports, '__esModule', { value: true });
  * @packageDocumentation
  * @experimental The internal module is related to sdk-metadata types which are used only internally.
  */
-__export(require('./dist/sdk-metadata'));
+__export(require('./dist/metadata'));
 // # sourceMappingURL=internal.js.map

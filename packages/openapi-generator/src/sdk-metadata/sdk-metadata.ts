@@ -8,7 +8,7 @@ import { GeneratorOptions } from '../options';
 import { packageDescription } from './package-description';
 import { getGenerationAndUsage } from './generation-and-usage';
 
-export async function metadata(
+export async function createMetadata(
   openApiDocument: OpenApiDocument,
   options: GeneratorOptions
 ): Promise<Client> {

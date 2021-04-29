@@ -20,7 +20,10 @@ export const emptyObjectSchema = {
 };
 
 export const dummyOpenApiDocument: OpenApiDocument = {
-  npmPackageName: '@sap/dummy-package',
+  serviceConfig: {
+    packageName: '@sap/dummy-package',
+    directoryName: 'dummy-package'
+  },
   apis: [
     {
       name: 'DummyApi',

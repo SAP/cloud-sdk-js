@@ -36,7 +36,7 @@ import {
   getPerServiceConfig,
   ServiceConfig
 } from './options';
-import { metadata } from './sdk-metadata';
+import { createMetadata } from './sdk-metadata';
 import { GeneratorOptions } from '.';
 
 const { readdir, rmdir, mkdir, lstat, writeFile } = promisesFs;
@@ -324,7 +324,7 @@ async function generateMetadata(
   await createFile(
     inputDir,
     clientFileName,
-    JSON.stringify(await metadata(openApiDocument, options), null, 2),
+    JSON.stringify(await createMetadata(openApiDocument, options), null, 2),
     true,
     false
   );

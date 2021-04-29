@@ -5,9 +5,11 @@ describe('readme', () => {
   it('returns the readme content', () => {
     expect(
       readme(({
-        packageName: '@sap-cloud-sdk/workflow-service',
+        serviceConfig: {
+          packageName: '@sap-cloud-sdk/workflow-service',
+          directoryName: ''
+        },
         serviceName: 'WorkflowAPI',
-        directoryName: '',
         originalFileName: '',
         operations: []
       } as unknown) as OpenApiDocument)

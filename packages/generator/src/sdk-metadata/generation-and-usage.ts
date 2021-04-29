@@ -26,7 +26,8 @@ export async function getGenerationAndUsage(
       linkGenerationDocumentation
     ),
     generatorVersion: await getSdkVersion(),
-    generatorRepositoryLink: 'https://www.npmjs.com/package/@sap-cloud-sdk/generator'
+    generatorRepositoryLink:
+      'https://www.npmjs.com/package/@sap-cloud-sdk/generator'
   };
 }
 

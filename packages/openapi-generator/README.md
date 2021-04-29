@@ -76,10 +76,10 @@ OPTIONS
 EXAMPLES
 
   // generate TypeScript clients from OpenAPI definitions in a directory
-  $ generate-openapi-client --input ./my-specs --outputDir ./clients
+  $ openapi-generator --input ./my-specs --outputDir ./clients
 
   // generate a JavaScript client from a OpenAPI definition file
-  $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpile
+  $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile
 ```
 
 _See code: [dist/cli/index.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/dist/cli/index.ts)_

@@ -1,6 +1,19 @@
+import mock from 'mock-fs';
 import { parseGeneratorOptions } from './generator-options';
 
 describe('parseGeneratorOptions', () => {
+  beforeAll(() => {
+    mock({
+      'existent-directory': {
+        'existent-file': 'file content'
+      }
+    });
+  });
+
+  afterAll(() => {
+    mock.restore();
+  });
+
   it('gets default options', () => {
     expect(
       parseGeneratorOptions({
@@ -18,35 +31,60 @@ describe('parseGeneratorOptions', () => {
       packageJson: false,
       perServiceConfig: undefined,
       packageVersion: '1.0.0',
-      readme: false
+      readme: false,
+      metadata: false
     });
   });
 
-  it('parses per service config file for file path', () => {
+  it('parses per service config file for a non-existent file path', () => {
     expect(
       parseGeneratorOptions({
         input: 'inputDir',
         outputDir: 'outputDir',
-        perServiceConfig: 'someDir/config.json'
+        perServiceConfig: 'non-existent-directory/config.json'
       })
     ).toMatchObject({
-      perServiceConfig: `${process.cwd()}/someDir/config.json`
+      perServiceConfig: `${process.cwd()}/non-existent-directory/config.json`
     });
   });
 
-  it('parses per service config file for directory path', () => {
+  it('parses per service config file for existent file path', () => {
     expect(
       parseGeneratorOptions({
         input: 'inputDir',
         outputDir: 'outputDir',
-        perServiceConfig: 'someDir'
+        perServiceConfig: 'existent-directory/existent-file'
       })
     ).toMatchObject({
-      perServiceConfig: `${process.cwd()}/someDir/per-service-config.json`
+      perServiceConfig: `${process.cwd()}/existent-directory/existent-file`
     });
   });
 
-  it.only('parses tsconfig.json path', () => {
+  it('parses per service config file for a non-existent directory path', () => {
+    expect(
+      parseGeneratorOptions({
+        input: 'inputDir',
+        outputDir: 'outputDir',
+        perServiceConfig: 'non-existent-directory'
+      })
+    ).toMatchObject({
+      perServiceConfig: `${process.cwd()}/non-existent-directory/per-service-config.json`
+    });
+  });
+
+  it('parses per service config file for existent directory path', () => {
+    expect(
+      parseGeneratorOptions({
+        input: 'inputDir',
+        outputDir: 'outputDir',
+        perServiceConfig: 'existent-directory'
+      })
+    ).toMatchObject({
+      perServiceConfig: `${process.cwd()}/existent-directory/per-service-config.json`
+    });
+  });
+
+  it('parses tsconfig.json path', () => {
     expect(
       parseGeneratorOptions({
         input: 'inputDir',

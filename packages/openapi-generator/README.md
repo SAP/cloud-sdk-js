@@ -73,6 +73,8 @@ OPTIONS
                                                           custom config. By default, a `tsconfig.json` is only
                                                           generated, when transpilation is enabled (`--transpile`).
 
+  --verbose                                               Turn on verbose logging.
+
 EXAMPLES
 
   // generate TypeScript clients from OpenAPI definitions in a directory

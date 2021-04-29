@@ -7,7 +7,8 @@ import {
   UniqueNameGenerator,
   kebabCase,
   ErrorWithCause,
-  finishAll
+  finishAll,
+  setLogLevel
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import {
@@ -34,7 +35,7 @@ import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
 import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
 
-const { readdir, rmdir, mkdir, lstat, readFile } = promisesFs;
+const { readdir, rmdir, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -44,6 +45,9 @@ const logger = createLogger('openapi-generator');
  * @param options Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
+  if (options.verbose) {
+    setLogLevel('verbose', logger);
+  }
   options.serviceMapping =
     options.serviceMapping ||
     resolve(options.input.toString(), 'service-mapping.json');
@@ -108,7 +112,7 @@ async function generateSources(
       openApiDocument.originalFileName
     );
 
-    logger.debug(`Generating sdk header metadata ${headerFileName}.`);
+    logger.verbose(`Generating SDK header metadata ${headerFileName}.`);
     const specFileDirname = dirname(openApiDocument.filePath);
     await mkdir(resolve(specFileDirname, 'sdk-metadata'), { recursive: true });
     await createFile(
@@ -127,7 +131,7 @@ async function generateSources(
       false
     );
 
-    logger.debug(`Generating sdk client metadata ${clientFileName}...`);
+    logger.verbose(`Generating SDK client metadata ${clientFileName}...`);
     await createFile(
       resolve(specFileDirname, 'sdk-metadata'),
       clientFileName,
@@ -138,7 +142,7 @@ async function generateSources(
   }
 
   if (options.packageJson) {
-    logger.debug(`Generating package.json in ${serviceDir}.`);
+    logger.verbose(`Generating package.json in ${serviceDir}.`);
 
     await createFile(
       serviceDir,
@@ -278,7 +282,7 @@ async function copyAdditionalFiles(
   additionalFiles: string,
   serviceDir: string
 ): Promise<void[]> {
-  logger.info(
+  logger.verbose(
     `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
   );
 
@@ -293,7 +297,7 @@ function generateReadme(
   serviceDir: string,
   openApiDocument: OpenApiDocument
 ): Promise<void> {
-  logger.info(`Generating readme in ${serviceDir}.`);
+  logger.verbose(`Generating readme in ${serviceDir}.`);
 
   return createFile(
     serviceDir,

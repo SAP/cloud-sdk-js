@@ -1,7 +1,7 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, join } from 'path';
+import { resolve, parse, basename, join, relative } from 'path';
 import {
   createLogger,
   UniqueNameGenerator,
@@ -33,9 +33,9 @@ import {
   parseGeneratorOptions,
   ParsedGeneratorOptions,
   tsconfigJson,
-  getOrCreateServiceConfig,
-  getPerServiceConfig,
-  ServiceConfig
+  getServiceOptions,
+  getOriginalOptionsPerService,
+  ServiceOptions
 } from './options';
 import { sdkMetadata } from './sdk-metadata';
 import { GeneratorOptions } from '.';
@@ -72,7 +72,10 @@ export async function generateWithParsedOptions(
 
   const uniqueNameGenerator = new UniqueNameGenerator('-');
   const inputFilePaths = await getInputFilePaths(options.input);
-  const perServiceConfig = await getPerServiceConfig(options.perServiceConfig);
+  const originalOptionsPerService = await getOriginalOptionsPerService(
+    options.optionsPerService
+  );
+  const optionsPerService = {};
   const tsConfig = await tsconfigJson(options);
 
   const promises = inputFilePaths.map(inputFilePath => {
@@ -80,14 +83,18 @@ export async function generateWithParsedOptions(
       parseServiceName(inputFilePath)
     );
 
+    const relativeFilePath = relative(process.cwd(), inputFilePath);
+
+    optionsPerService[relativeFilePath] = getServiceOptions(
+      originalOptionsPerService,
+      relativeFilePath,
+      uniqueServiceName
+    );
+
     return generateService(
       inputFilePath,
       options,
-      getOrCreateServiceConfig(
-        perServiceConfig,
-        inputFilePath,
-        uniqueServiceName
-      ),
+      optionsPerService[relativeFilePath],
       tsConfig,
       uniqueServiceName
     );
@@ -99,10 +106,10 @@ export async function generateWithParsedOptions(
       : 'Could not generate client.';
   await finishAll(promises, errorMessage);
 
-  if (options.perServiceConfig) {
+  if (options.optionsPerService) {
     writeFile(
-      options.perServiceConfig,
-      JSON.stringify(perServiceConfig, null, 2),
+      options.optionsPerService,
+      JSON.stringify(optionsPerService, null, 2),
       'utf8'
     );
   }
@@ -226,7 +233,7 @@ function parseServiceName(filePath: string): string {
 async function generateService(
   inputFilePath: string,
   options: ParsedGeneratorOptions,
-  serviceConfig: ServiceConfig,
+  serviceConfig: ServiceOptions,
   tsConfig: string | undefined,
   serviceName: string
 ): Promise<void> {
@@ -337,7 +344,7 @@ async function generateMetadata(
 
 async function generatePackageJson(
   serviceDir: string,
-  { packageName, directoryName }: ServiceConfig,
+  { packageName, directoryName }: ServiceOptions,
   options: ParsedGeneratorOptions
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);

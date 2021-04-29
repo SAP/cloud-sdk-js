@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { emptyDocument } from '../../test/test-util';
-import { ServiceConfig } from '../options/per-service-config';
+import { ServiceOptions } from '../options/options-per-service';
 import { parseOpenApiDocument } from './document';
 import * as api from './api';
 
@@ -88,7 +88,7 @@ describe('parseOpenApiDocument', () => {
     const parsed = await parseOpenApiDocument(
       document,
       'myService',
-      {} as ServiceConfig,
+      {} as ServiceOptions,
       options
     );
     expect(parsed.schemas).toStrictEqual([

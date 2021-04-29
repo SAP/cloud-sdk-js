@@ -14,7 +14,7 @@ export interface GeneratorOptions {
   strictNaming?: boolean;
   tsConfig?: string;
   packageJson?: boolean;
-  perServiceConfig?: string;
+  optionsPerService?: string;
   packageVersion?: string;
   readme?: boolean;
   metadata?: boolean;

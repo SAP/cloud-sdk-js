@@ -80,16 +80,16 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
       description: 'Turn on verbose logging.',
       default: false
     }),
-    perServiceConfig: flags.string({
+    optionsPerService: flags.string({
       description:
-        'Set the path to a file containing the configuration per service. The configuration allows to set a `directoryName` and `packageName` for every service. It also makes sure that names do not change between generator runs. If a directory is passed, a `per-service-config.json` file is read/created in this directory.',
-      helpValue: '<path/to/per-service-config.json>',
+        'Set the path to a file containing the options per service. The configuration allows to set a `directoryName` and `packageName` for every service, identified by the path to the original file. It also makes sure that names do not change between generator runs. If a directory is passed, a `options-per-service.json` file is read/created in this directory.',
+      helpValue: '<path/to/options-per-service.json>',
       parse: input => {
         const isFilePath =
           (existsSync(input) && lstatSync(input).isFile()) || !!extname(input);
         return isFilePath
           ? resolve(input)
-          : resolve(input, 'per-service-config.json');
+          : resolve(input, 'options-per-service.json');
       }
     }),
     packageVersion: flags.string({

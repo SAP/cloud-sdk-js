@@ -29,7 +29,7 @@ describe('parseGeneratorOptions', () => {
       strictNaming: true,
       tsConfig: undefined,
       packageJson: false,
-      perServiceConfig: undefined,
+      optionsPerService: undefined,
       packageVersion: '1.0.0',
       readme: false,
       metadata: false,
@@ -42,10 +42,10 @@ describe('parseGeneratorOptions', () => {
       parseGeneratorOptions({
         input: 'inputDir',
         outputDir: 'outputDir',
-        perServiceConfig: 'non-existent-directory/config.json'
+        optionsPerService: 'non-existent-directory/config.json'
       })
     ).toMatchObject({
-      perServiceConfig: `${process.cwd()}/non-existent-directory/config.json`
+      optionsPerService: `${process.cwd()}/non-existent-directory/config.json`
     });
   });
 
@@ -54,10 +54,10 @@ describe('parseGeneratorOptions', () => {
       parseGeneratorOptions({
         input: 'inputDir',
         outputDir: 'outputDir',
-        perServiceConfig: 'existent-directory/existent-file'
+        optionsPerService: 'existent-directory/existent-file'
       })
     ).toMatchObject({
-      perServiceConfig: `${process.cwd()}/existent-directory/existent-file`
+      optionsPerService: `${process.cwd()}/existent-directory/existent-file`
     });
   });
 
@@ -66,10 +66,10 @@ describe('parseGeneratorOptions', () => {
       parseGeneratorOptions({
         input: 'inputDir',
         outputDir: 'outputDir',
-        perServiceConfig: 'non-existent-directory'
+        optionsPerService: 'non-existent-directory'
       })
     ).toMatchObject({
-      perServiceConfig: `${process.cwd()}/non-existent-directory/per-service-config.json`
+      optionsPerService: `${process.cwd()}/non-existent-directory/options-per-service.json`
     });
   });
 
@@ -78,10 +78,10 @@ describe('parseGeneratorOptions', () => {
       parseGeneratorOptions({
         input: 'inputDir',
         outputDir: 'outputDir',
-        perServiceConfig: 'existent-directory'
+        optionsPerService: 'existent-directory'
       })
     ).toMatchObject({
-      perServiceConfig: `${process.cwd()}/existent-directory/per-service-config.json`
+      optionsPerService: `${process.cwd()}/existent-directory/options-per-service.json`
     });
   });
 

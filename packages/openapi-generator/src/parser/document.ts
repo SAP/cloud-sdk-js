@@ -2,7 +2,7 @@ import { parse } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { pascalCase } from '@sap-cloud-sdk/util';
 import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
-import { ServiceConfig } from '../options';
+import { ServiceOptions } from '../options';
 import { parseSchema } from './schema';
 import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';
@@ -19,7 +19,7 @@ import { ParserOptions } from './options';
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
   serviceName: string,
-  serviceConfig: ServiceConfig,
+  serviceConfig: ServiceOptions,
   options: ParserOptions
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));

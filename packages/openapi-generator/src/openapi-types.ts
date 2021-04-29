@@ -1,5 +1,5 @@
 import type { OpenAPIV3 } from 'openapi-types';
-import { ServiceConfig } from './options';
+import { ServiceOptions } from './options';
 /**
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Representation of an operation.
@@ -17,7 +17,7 @@ export interface OpenApiDocument {
   /**
    * Configuration as defined in the per service configuration.
    */
-  serviceConfig: ServiceConfig;
+  serviceConfig: ServiceOptions;
 
   /**
    * Parsed schemas of the document.

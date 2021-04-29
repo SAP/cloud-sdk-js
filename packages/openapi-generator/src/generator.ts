@@ -45,7 +45,6 @@ const { readdir, rmdir, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Main entry point for the OpenAPI client generation.
  * Generates models and API files.
  * @param options Options to configure generation.
@@ -55,7 +54,6 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 }
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Main entry point for the OpenAPI client generation.
  * Generates models and API files.
  * @param options Options to configure generation.

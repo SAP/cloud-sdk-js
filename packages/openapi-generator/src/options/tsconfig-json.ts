@@ -1,6 +1,3 @@
-/**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
- */
 import { promises } from 'fs';
 import { resolve } from 'path';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';

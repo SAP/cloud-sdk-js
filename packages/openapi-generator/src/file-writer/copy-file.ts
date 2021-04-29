@@ -2,7 +2,6 @@ import { existsSync, promises } from 'fs';
 const { copyFile: fsCopyFile } = promises;
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Copy a file from a given path.
  * @param src Path to the source file.
  * @param dest Path to the destination file

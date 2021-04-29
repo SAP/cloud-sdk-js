@@ -58,6 +58,9 @@ OPTIONS
       change between generator runs. If a directory is passed, a `options-per-service.json` file is read/created in this 
       directory.
 
+  --overwrite
+      Allow to overwrite files, that already exist. This is useful, when running the generation regularly.
+
   --packageJson
       When enabled, a `package.json`, that specifies dependencies and scripts for transpilation and documentation 
       generation is generated.

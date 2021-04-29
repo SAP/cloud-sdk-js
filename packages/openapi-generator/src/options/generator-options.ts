@@ -19,6 +19,7 @@ export interface GeneratorOptions {
   readme?: boolean;
   metadata?: boolean;
   verbose?: boolean;
+  overwrite?: boolean;
 }
 
 /**

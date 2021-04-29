@@ -140,7 +140,7 @@ async function generateSources(
 ): Promise<void> {
   await mkdir(serviceDir, { recursive: true });
 
-  await generateMandatorySources(serviceDir, openApiDocument);
+  await generateMandatorySources(serviceDir, openApiDocument, options);
 
   if (options.metadata) {
     generateMetadata(openApiDocument, inputFilePath, options);
@@ -155,41 +155,54 @@ async function generateSources(
   }
 
   if (tsConfig) {
-    await createFile(serviceDir, 'tsconfig.json', tsConfig, true, false);
+    await createFile(
+      serviceDir,
+      'tsconfig.json',
+      tsConfig,
+      options.overwrite,
+      false
+    );
     await transpileDirectory(serviceDir);
   }
 
   if (options.include) {
-    await copyAdditionalFiles(options.include, serviceDir);
+    await copyAdditionalFiles(serviceDir, options.include, options.overwrite);
   }
 
   if (options.readme) {
-    await generateReadme(serviceDir, openApiDocument);
+    await generateReadme(serviceDir, openApiDocument, options);
   }
 }
 
 async function generateMandatorySources(
   serviceDir: string,
-  openApiDocument: OpenApiDocument
+  openApiDocument: OpenApiDocument,
+  options: ParsedGeneratorOptions
 ) {
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
-    await createSchemaFiles(schemaDir, openApiDocument);
+    await createSchemaFiles(schemaDir, openApiDocument, options);
     await createFile(
       schemaDir,
       'index.ts',
       schemaIndexFile(openApiDocument),
-      true
+      options.overwrite
     );
   }
 
-  await createApis(serviceDir, openApiDocument);
-  await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
+  await createApis(serviceDir, openApiDocument, options);
+  await createFile(
+    serviceDir,
+    'index.ts',
+    apiIndexFile(openApiDocument),
+    options.overwrite
+  );
 }
 
 async function createApis(
   serviceDir: string,
-  openApiDocument: OpenApiDocument
+  openApiDocument: OpenApiDocument,
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   await Promise.all(
     openApiDocument.apis.map(api =>
@@ -197,7 +210,7 @@ async function createApis(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
         apiFile(api, openApiDocument.serviceName),
-        true
+        options.overwrite
       )
     )
   );
@@ -205,12 +218,18 @@ async function createApis(
 
 async function createSchemaFiles(
   dir: string,
-  openApiDocument: OpenApiDocument
+  openApiDocument: OpenApiDocument,
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   await mkdir(dir, { recursive: true });
   await Promise.all(
     openApiDocument.schemas.map(schema =>
-      createFile(dir, `${schema.fileName}.ts`, schemaFile(schema), true)
+      createFile(
+        dir,
+        `${schema.fileName}.ts`,
+        schemaFile(schema),
+        options.overwrite
+      )
     )
   );
 }
@@ -280,8 +299,9 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
 
 // TODO 1728 move to a new package to reduce code duplication.
 async function copyAdditionalFiles(
+  serviceDir: string,
   additionalFiles: string,
-  serviceDir: string
+  overwrite: boolean
 ): Promise<void[]> {
   logger.verbose(
     `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
@@ -289,14 +309,19 @@ async function copyAdditionalFiles(
 
   return Promise.all(
     new GlobSync(additionalFiles!).found.map(filePath =>
-      copyFile(resolve(filePath), join(serviceDir, basename(filePath)), true)
+      copyFile(
+        resolve(filePath),
+        join(serviceDir, basename(filePath)),
+        overwrite
+      )
     )
   );
 }
 
 function generateReadme(
   serviceDir: string,
-  openApiDocument: OpenApiDocument
+  openApiDocument: OpenApiDocument,
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   logger.verbose(`Generating readme in ${serviceDir}.`);
 
@@ -304,7 +329,7 @@ function generateReadme(
     serviceDir,
     'README.md',
     readme(openApiDocument),
-    true,
+    options.overwrite,
     false
   );
 }
@@ -330,7 +355,7 @@ async function generateMetadata(
       null,
       2
     ),
-    true,
+    options.overwrite,
     false
   );
 
@@ -339,7 +364,7 @@ async function generateMetadata(
     metadataDir,
     clientFileName,
     JSON.stringify(await sdkMetadata(openApiDocument, options), null, 2),
-    true,
+    options.overwrite,
     false
   );
 }
@@ -360,7 +385,7 @@ async function generatePackageJson(
       await getSdkVersion(),
       options.packageVersion
     ),
-    true,
+    options.overwrite,
     false
   );
 }

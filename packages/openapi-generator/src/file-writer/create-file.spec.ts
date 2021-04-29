@@ -1,40 +1,44 @@
 import { promises } from 'fs';
+import mock from 'mock-fs';
 import { createFile } from './create-file';
-const { writeFile } = promises;
-
-jest.mock('fs', () => ({
-  promises: {
-    writeFile: jest.fn().mockReturnValue(undefined),
-    copyFile: jest.fn().mockRejectedValue(undefined)
-  },
-  existsSync: jest.fn()
-}));
+const { readFile } = promises;
 
 describe('createFile', () => {
-  it('creates content ending with new line', async () => {
-    await createFile('directory', 'filename', 'content', true);
-    expect(writeFile).toHaveBeenCalledWith(
-      'directory/filename',
-      expect.stringMatching(/.*\n$/),
-      expect.anything()
-    );
+  beforeEach(() => {
+    mock({
+      directory: {
+        existingFile: 'already exists'
+      }
+    });
   });
 
-  it('creates content with copyright', async () => {
-    await createFile('directory', 'filename', 'content', true, true);
-    expect(writeFile).toHaveBeenCalledWith(
-      'directory/filename',
-      expect.stringContaining('Copyright'),
-      expect.anything()
-    );
+  afterEach(() => {
+    mock.restore();
+  });
+
+  it('creates content ending with new line', async () => {
+    await createFile('directory', 'filename', 'content', true);
+    expect(await readFile('directory/filename', 'utf8')).toMatchInlineSnapshot(`
+      "/*
+       * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+       *
+       * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+       */
+      content
+      "
+    `);
   });
 
   it('creates content without copyright', async () => {
     await createFile('directory', 'filename', 'content', true, false);
-    expect(writeFile).toHaveBeenCalledWith(
-      'directory/filename',
-      expect.not.stringContaining('Copyright'),
-      expect.anything()
+    expect(await readFile('directory/filename', 'utf8')).toEqual('content');
+  });
+
+  it('throws an error if overwriting is disabled', async () => {
+    await expect(() =>
+      createFile('directory', 'existingFile', 'content', false)
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Could not write file. File already exists. If you want to allow overwriting files, enable the `overwrite` flag."'
     );
   });
 });

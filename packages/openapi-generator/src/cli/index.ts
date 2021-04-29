@@ -53,6 +53,11 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
         'Include files matching the given glob into the root of each generated client directory.',
       helpValue: '<glob/to/include>'
     }),
+    overwrite: flags.boolean({
+      description:
+        'Allow to overwrite files, that already exist. This is useful, when running the generation regularly.',
+      default: false
+    }),
     clearOutputDir: flags.boolean({
       description:
         'Remove all files in the output directory before generation. Be cautious when using this option, as it really removes EVERYTHING in the output directory.',

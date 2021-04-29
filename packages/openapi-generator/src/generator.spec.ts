@@ -84,7 +84,7 @@ describe('generator', () => {
     expect(existsSync(readme)).toBe(true);
   });
 
-  describe.only('optionsPerService', () => {
+  describe('optionsPerService', () => {
     beforeEach(() => {
       mock({
         inputDir: {
@@ -141,6 +141,54 @@ describe('generator', () => {
                 }
               }"
             `);
+    });
+  });
+
+  describe('overwrite', () => {
+    beforeAll(() => {
+      mock({
+        specs: {
+          'spec.json': JSON.stringify({
+            ...emptyDocument,
+            paths: {
+              '/path': { get: { response: { type: 'string' } } }
+            },
+            components: {
+              schemas: { test: { type: 'string' } }
+            }
+          })
+        },
+        out: {
+          spec: { schema: { 'test.ts': 'some content' } }
+        }
+      });
+    });
+
+    afterAll(() => {
+      mock.restore();
+    });
+
+    it('fails to overwrite by default', async () => {
+      await expect(() =>
+        generate({
+          input: 'specs',
+          outputDir: 'out'
+        })
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`
+              "Could not generate client. Errors: [
+              	ErrorWithCause: Could not write file. File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
+              ]"
+            `);
+    });
+
+    it.only('does not fail when overwrite is enabled', async () => {
+      await expect(
+        generate({
+          input: 'specs',
+          outputDir: 'out',
+          overwrite: true
+        })
+      ).resolves.toBeUndefined();
     });
   });
 });

@@ -109,7 +109,10 @@ export async function generateWithParsedOptions(
     await finishAll(promises, errorMessage);
   } finally {
     if (options.optionsPerService) {
-      generateOptionsPerService(options.optionsPerService, optionsPerService);
+      await generateOptionsPerService(
+        options.optionsPerService,
+        optionsPerService
+      );
     }
 
     if (!options.packageJson) {

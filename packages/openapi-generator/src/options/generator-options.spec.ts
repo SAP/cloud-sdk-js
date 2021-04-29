@@ -33,7 +33,8 @@ describe('parseGeneratorOptions', () => {
       packageVersion: '1.0.0',
       readme: false,
       metadata: false,
-      verbose: false
+      verbose: false,
+      overwrite: false
     });
   });
 

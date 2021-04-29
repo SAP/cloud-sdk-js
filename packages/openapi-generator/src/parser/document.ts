@@ -2,7 +2,7 @@ import { parse } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { pascalCase } from '@sap-cloud-sdk/util';
 import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
-import { ServiceConfig } from '../options/per-service-config';
+import { ServiceConfig } from '../options';
 import { parseSchema } from './schema';
 import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';

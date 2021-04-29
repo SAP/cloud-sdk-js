@@ -3,12 +3,19 @@ import { relative } from 'path';
 
 const { readFile } = promises;
 
+/**
+ * Represents the service configuration for all services.
+ */
 export interface PerServiceConfig {
+  /**
+   * Configuration for a service, specified by its filename.
+   */
   [fileName: string]: ServiceConfig;
 }
 
 /**
- * Represents the service mapping configuration for one service.
+ * Represents the service configuration for one service.
+ * This is usually specified as part of the per service configuration.
  */
 export interface ServiceConfig {
   /**

@@ -17,7 +17,11 @@ export declare const EntityApi: {
           integerParameter?: number | undefined;
           $dollarParameter?: string | undefined;
           'dot.parameter'?: string | undefined;
-          enumStringParameter?: 'value1' | 'value2' | undefined;
+          enumStringParameter?:
+            | 'value1'
+            | 'value2'
+            | "valueWith'Quote"
+            | undefined;
           enumInt32Parameter?: 1 | 2 | undefined;
           enumDoubleParameter?: 1 | 2 | undefined;
           enumBooleanParameter?: boolean | undefined;

@@ -7,7 +7,7 @@ describe('packageJson', () => {
     ).toMatchSnapshot();
   });
 
-  it('returns the package.json content when versionInPackageJson is undefined', () => {
+  it('returns the package.json content when packageVersion is undefined', () => {
     expect(
       packageJson('workflow-service', 'description', '1.35.0')
     ).toMatchSnapshot();

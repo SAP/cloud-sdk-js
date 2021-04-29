@@ -5,16 +5,19 @@ import { isReferenceObject } from '../schema-util';
 import { SchemaNaming } from '../openapi-types';
 import { SchemaRefMapping } from './parsing-info';
 import { ensureUniqueNames } from './unique-naming';
+import { ParserOptions } from './options';
 
 /**
  * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.
  * @param document The original OpenAPI document.
+ * @param options Parser options.
  * @returns A promise to the reference representation.
  */
 export async function createRefs(
-  document: OpenAPIV3.Document
+  document: OpenAPIV3.Document,
+  options: ParserOptions
 ): Promise<OpenApiDocumentRefs> {
-  return OpenApiDocumentRefs.createRefs(document);
+  return OpenApiDocumentRefs.createRefs(document, options);
 }
 
 /**
@@ -25,30 +28,34 @@ export class OpenApiDocumentRefs {
   /**
    * Create a representation of references within a document.
    * @param document The original OpenAPI document.
+   * @param options Parser options.
    * @returns A promise to the reference representation.
    */
   static async createRefs(
-    document: OpenAPIV3.Document
+    document: OpenAPIV3.Document,
+    options: ParserOptions
   ): Promise<OpenApiDocumentRefs> {
     return new OpenApiDocumentRefs(
       await resolve(document),
-      OpenApiDocumentRefs.parseSchemaRefMapping(document)
+      OpenApiDocumentRefs.parseSchemaRefMapping(document, options)
     );
   }
 
   /**
    * Parse mapping between schema references and their unique names.
    * @param document The original OpenAPI document.
+   * @param options Parser options.
    * @returns A mapping from schema references to schema naming objects.
    */
   private static parseSchemaRefMapping(
-    document: OpenAPIV3.Document
+    document: OpenAPIV3.Document,
+    options: ParserOptions
   ): SchemaRefMapping {
     const originalNames = Object.keys(document.components?.schemas || {});
-    const schemaNames = ensureUniqueNames(originalNames, {
+    const schemaNames = ensureUniqueNames(originalNames, options, {
       format: pascalCase
     });
-    const fileNames = ensureUniqueNames(schemaNames, {
+    const fileNames = ensureUniqueNames(schemaNames, options, {
       format: kebabCase,
       reservedWords: ['index']
     });

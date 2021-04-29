@@ -2,16 +2,8 @@
 
 exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service"`;
 
-exports[`sdk-metadata generates the File names 1`] = `
-Object {
-  "clientFileName": "MyService_CLIENT_JS.json",
-  "headerFileName": "MyService_HEADER.json",
-}
-`;
-
 exports[`sdk-metadata generates the JS metadata content for services with pregenerated lib 1`] = `
 Object {
-  "emergencyObject": undefined,
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
       "instructions": "import { TestEntity } from '@sap/cloud-sdk-vdm-test-service';
@@ -85,7 +77,6 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
 
 exports[`sdk-metadata generates the JS metadata content for services without pregenerated lib 1`] = `
 Object {
-  "emergencyObject": undefined,
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
       "instructions": "import { TestEntity } from '@sap/cloud-sdk-vdm-test-service';
@@ -142,14 +133,5 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
     "status": "verified",
     "statusText": "The generation process for this API works.",
   },
-}
-`;
-
-exports[`sdk-metadata generates the header content from strings 1`] = `
-Object {
-  "introText": "The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.",
-  "name": "serviceName",
-  "type": "odata",
-  "version": "clientVersion",
 }
 `;

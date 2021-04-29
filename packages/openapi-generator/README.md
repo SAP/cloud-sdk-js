@@ -5,7 +5,7 @@
 
 # @sap-cloud-sdk/openapi-generator (Beta)
 
-This packages contains the generator to create your own service module using a OpenAPI specification.
+This package contains the generator to create your own service module using a OpenAPI specification.
 This generator is based on the [OpenAPI Tools generator](https://openapi-generator.tech/) for OpenAPI and adds some additional code for convenience to better integrate with the SAP Cloud SDK.
 
 ## Installation
@@ -20,38 +20,66 @@ $ npm install @sap-cloud-sdk/openapi-generator
 
 <!-- prettier-ignore-start -->
 <!-- commands -->
-* [`generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>`](#generate-openapi-client---inputdir-inputdirectory---outputdir-outputdirectory)
+* [`generate-openapi-client --input <input> --outputDir <outputDirectory>`](#generate-openapi-client---input-input---outputdir-outputdirectory)
 
-## `generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>`
+## `generate-openapi-client --input <input> --outputDir <outputDirectory>`
 
-Generate OpenAPI clients, that use the connectivity features of the SAP Cloud SDK for JavaScript.
+Generate OpenAPI client(s), that use the connectivity features of the SAP Cloud SDK for JavaScript/TypeScript.
 
 ```
 USAGE
-  $ generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>
+  $ generate-openapi-client --input <input> --outputDir <outputDirectory>
 
 OPTIONS
-  -i, --input=input                            (required) Input directory or file for the OpenAPI service definitions.
-  -o, --outputDir=outputDir                    (required) Output directory for the generated OpenAPI client.
-  --clearOutputDir                             Remove all files in the output directory before generation.
+  -i, --input=<path/to/input>                             (required) Specify the path to the directory or file
+                                                          containing the OpenAPI service definition(s) to generate
+                                                          clients for. Accepts Swagger and OpenAPI definitions as YAML
+                                                          and JSON files. Throws an error if the path does not exist.
 
-  --generateJs                                 By default, the generator will also generate transpiled .js, .js.map,
-                                               .d.ts and .d.ts.map files. When set to false, the generator will only
-                                               generate .ts files.
+  -o, --outputDir=<path/to/output>                        (required) Specify the path to the directory to generate the
+                                                          client(s) in. Each client is generated into a subdirectory
+                                                          within the given output directory. Creates the directory if it
+                                                          does not exist. Customize subdirectory naming through
+                                                          `--serviceMapping`.
 
-  --generatePackageJson                        By default, the generator will generate a package.json file, specifying
-                                               dependencies and scripts for compiling and generating documentation. When
-                                               set to false, the generator will skip the generation of the package.json.
+  -t, --transpile                                         Transpile the generated TypeScript code. When enabled a
+                                                          default `tsconfig.json` will be generated and used. It emits
+                                                          `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. To configure
+                                                          transpilation set `--tsconfig`.
 
-  --serviceMapping=serviceMapping              Configuration file to ensure consistent names between multiple generation
-                                               runs with updated / changed metadata files. By default it will be read
-                                               from the input directory as "service-mapping.json".
+  --clearOutputDir                                        Remove all files in the output directory before generation. Be
+                                                          cautious when using this option, as it really removes
+                                                          EVERYTHING in the output directory.
 
-  --tsConfig=tsConfig                          tsconfig.json file to overwrite the default "tsconfig.json".
+  --include=<glob/to/include>                             Include files matching the given glob into the root of each
+                                                          generated client directory.
 
-  --versionInPackageJson=versionInPackageJson  By default, when generating package.json file, the generator will set a
-                                               version by using the generator version. It can also be set to a specific
-                                               version.
+  --[no-]packageJson                                      When set to false, no `package.json` is generated. By default,
+                                                          a `package.json` that specifies dependencies and scripts for
+                                                          transpilation and documentation generation is generated.
+
+  --serviceMapping=<path/to/custom-service-mapping.json>  Set the path to the service mapping file. By default, a
+                                                          `service-mapping.json` is generated in the input directory.
+                                                          The service mapping ensures consistent names between multiple
+                                                          generation runs with updated service definitions.
+
+  --[no-]strictNaming                                     By default, the generation fails, when there are duplicate
+                                                          names for operations and/or path parameters after transforming
+                                                          them to camel case. Set this to true to enable unique name
+                                                          generation. The names will then be generated by appending
+                                                          numbers.
+
+  --tsConfig=<path/to/tsconfig.json>                      Replace the default `tsconfig.json` by passing a path to a
+                                                          custom config. By default, a `tsconfig.json` is only
+                                                          generated, when transpilation is enabled (`--transpile`).
+
+EXAMPLES
+
+  // generate TypeScript clients from OpenAPI definitions in a directory
+  $ generate-openapi-client --input ./my-specs --outputDir ./clients
+
+  // generate a JavaScript client from a OpenAPI definition file
+  $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpile
 ```
 
 _See code: [dist/cli/index.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.41.0/dist/cli/index.ts)_

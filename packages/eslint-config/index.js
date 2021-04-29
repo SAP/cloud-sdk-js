@@ -140,7 +140,6 @@ module.exports = {
     'no-bitwise': 'error',
     'no-caller': 'error',
     'no-console': 'error',
-    'no-duplicate-imports': 'error',
     'no-else-return': ['error', { allowElseIf: false }],
     'no-eval': 'error',
     'no-extra-bind': 'error',

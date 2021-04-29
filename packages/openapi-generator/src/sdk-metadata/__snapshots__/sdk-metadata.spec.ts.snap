@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sdk-metadata generates metadata content for services with pregenerated lib 1`] = `
+Object {
+  "generationAndUsage": Object {
+    "apiSpecificUsage": Object {
+      "instructions": "import { DummyApi } from '@sap/dummy-package';
+
+const responseData = await DummyApi.DummyFunction().execute({ destinationName:'myDestinationName' });",
+      "text": "Find a usage example for this API below.",
+    },
+    "generationSteps": Object {
+      "instructions": "<ul>
+<li>Download the API specification to your local computer.</li>
+<li>Install the generator <code>npm install -g @sap-cloud-sdk/openapi-generator</code></li>
+<li>Execute the generator <code>generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory></code></li>
+</ul>
+The steps above will generate a basic TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client\\">documentation.</a>",
+      "text": "Follow the following generation steps to generate the client.",
+    },
+    "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/openapi-generator",
+    "generatorVersion": "1.41.0",
+    "genericUsage": Object {
+      "instructions": "import { MyApi } from 'my-npm-package';
+
+const responseData = await MyApi.myFunction().execute({ destinationName:'myDestinationName' });",
+      "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
+    },
+    "links": Object {
+      "apiHubTutorial": Object {
+        "name": "API Hub Tutorial",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request",
+      },
+      "featureDocumentation": Object {
+        "name": "Feature Documentation",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript",
+      },
+      "generationManual": Object {
+        "name": "Generation Manual",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client",
+      },
+      "sdkDocumentation": Object {
+        "name": "SDK Documentation",
+        "url": "https://sap.github.io/cloud-sdk/",
+      },
+      "support": Object {
+        "name": "Support",
+        "url": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
+      },
+    },
+  },
+  "language": "javascript",
+  "pregeneratedLibrary": Object {
+    "compatibilityNotes": "",
+    "dependencyName": "@sap/dummy-package",
+    "description": "SAP Cloud SDK for JavaScript: Generated client for OpenAPI service @sap/dummy-package",
+    "generatedAt": "/Date(0)/",
+    "installLibrarySteps": Object {
+      "instructions": "npm i @sap/dummy-package:latest",
+      "text": "Execute the following npm command to install the pregenerated client.",
+    },
+    "repository": "npm",
+    "repositoryLink": "https://www.npmjs.com/package/@sap/dummy-package",
+    "version": "1.0.0",
+  },
+  "serviceStatus": Object {
+    "gettingStartedText": "For this API you have two options to get a typed client. Either you download the pregenerated client from the repository or you generate the client on your own.",
+    "status": "certified",
+    "statusText": "A pre-generated API client exists.",
+  },
+}
+`;
+
+exports[`sdk-metadata generates metadata content for services without pregenerated lib 1`] = `
+Object {
+  "generationAndUsage": Object {
+    "apiSpecificUsage": Object {
+      "instructions": "import { DummyApi } from '@sap/dummy-package';
+
+const responseData = await DummyApi.DummyFunction().execute({ destinationName:'myDestinationName' });",
+      "text": "Find a usage example for this API below.",
+    },
+    "generationSteps": Object {
+      "instructions": "<ul>
+<li>Download the API specification to your local computer.</li>
+<li>Install the generator <code>npm install -g @sap-cloud-sdk/openapi-generator</code></li>
+<li>Execute the generator <code>generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory></code></li>
+</ul>
+The steps above will generate a basic TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client\\">documentation.</a>",
+      "text": "Follow the following generation steps to generate the client.",
+    },
+    "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/openapi-generator",
+    "generatorVersion": "1.41.0",
+    "genericUsage": Object {
+      "instructions": "import { MyApi } from 'my-npm-package';
+
+const responseData = await MyApi.myFunction().execute({ destinationName:'myDestinationName' });",
+      "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
+    },
+    "links": Object {
+      "apiHubTutorial": Object {
+        "name": "API Hub Tutorial",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request",
+      },
+      "featureDocumentation": Object {
+        "name": "Feature Documentation",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript",
+      },
+      "generationManual": Object {
+        "name": "Generation Manual",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client",
+      },
+      "sdkDocumentation": Object {
+        "name": "SDK Documentation",
+        "url": "https://sap.github.io/cloud-sdk/",
+      },
+      "support": Object {
+        "name": "Support",
+        "url": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
+      },
+    },
+  },
+  "language": "javascript",
+  "pregeneratedLibrary": undefined,
+  "serviceStatus": Object {
+    "gettingStartedText": "For this API no pregenerated published client exists. Follow the generation steps to create a client on your own.",
+    "status": "verified",
+    "statusText": "The generation process for this API works.",
+  },
+}
+`;

@@ -108,15 +108,17 @@ describe('parseParameters', () => {
 
 describe('parsePathParameters', () => {
   it('returns empty arrays if there are no parameters', async () => {
-    expect(parsePathParameters([], '/test', await createTestRefs())).toEqual(
-      []
-    );
+    expect(
+      parsePathParameters([], '/test', await createTestRefs(), {
+        strictNaming: false
+      })
+    ).toEqual([]);
   });
 
   it('throws an error if the parameters do not match the path pattern', async () => {
     const refs = await createTestRefs();
     expect(() =>
-      parsePathParameters([], '/test/{id}', refs)
+      parsePathParameters([], '/test/{id}', refs, { strictNaming: false })
     ).toThrowErrorMatchingInlineSnapshot(
       '"Path parameter \'id\' provided in path is missing in path parameters."'
     );
@@ -147,7 +149,8 @@ describe('parsePathParameters', () => {
       parsePathParameters(
         [pathParam1, pathParam2, pathParam3, pathParam4],
         '/root/{path-param}/{pathParam}/path/{PathParam1}/sub-path/{path_param}',
-        await createTestRefs()
+        await createTestRefs(),
+        { strictNaming: false }
       )
     ).toEqual([
       expect.objectContaining({

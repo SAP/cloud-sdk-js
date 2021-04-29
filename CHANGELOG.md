@@ -27,6 +27,7 @@
 ## Improvements
 
 - [odata] Allow using filter functions with boolean return types directly in the `filter()` of OData request builders without `equals(true)`.
+- [odata-generator] Disable the `execute` function, when an entity type is shared by multiple entity sets and is used as the return type of function/action imports.
 
 ## Fixed Issues
 

@@ -1,13 +1,20 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, join } from 'path';
+import { resolve, parse, basename, join, dirname } from 'path';
 import {
   createLogger,
   UniqueNameGenerator,
-  kebabCase
+  kebabCase,
+  ErrorWithCause,
+  finishAll
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
+import {
+  getSdkMetadataFileNames,
+  sdkMetaDataHeader,
+  getSdkVersion
+} from '@sap-cloud-sdk/generator-common';
 import { GeneratorOptions } from './options';
 import {
   apiFile,
@@ -25,6 +32,7 @@ import { convertOpenApiSpec } from './document-converter';
 import { readServiceMapping, ServiceMapping } from './service-mapping';
 import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
+import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
 
 const { readdir, rmdir, mkdir, lstat, readFile } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -60,7 +68,12 @@ export async function generate(options: GeneratorOptions): Promise<void> {
       uniqueServiceName
     );
   });
-  await Promise.all(promises);
+
+  const errorMessage =
+    promises.length > 1
+      ? 'Some clients could not be generated.'
+      : 'Could not generate client.';
+  await finishAll(promises, errorMessage);
 }
 
 /**
@@ -90,7 +103,41 @@ async function generateSources(
   await createApis(serviceDir, openApiDocument);
   await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
 
-  if (options.generatePackageJson) {
+  if (options.generateSdkMetadata) {
+    const { clientFileName, headerFileName } = getSdkMetadataFileNames(
+      openApiDocument.originalFileName
+    );
+
+    logger.debug(`Generating sdk header metadata ${headerFileName}.`);
+    const specFileDirname = dirname(openApiDocument.filePath);
+    await mkdir(resolve(specFileDirname, 'sdk-metadata'), { recursive: true });
+    await createFile(
+      resolve(specFileDirname, 'sdk-metadata'),
+      headerFileName,
+      JSON.stringify(
+        await sdkMetaDataHeader(
+          'rest',
+          openApiDocument.originalFileName,
+          options.packageVersion
+        ),
+        null,
+        2
+      ),
+      true,
+      false
+    );
+
+    logger.debug(`Generating sdk client metadata ${clientFileName}...`);
+    await createFile(
+      resolve(specFileDirname, 'sdk-metadata'),
+      clientFileName,
+      JSON.stringify(await sdkMetaDataJS(openApiDocument, options), null, 2),
+      true,
+      false
+    );
+  }
+
+  if (options.packageJson) {
     logger.debug(`Generating package.json in ${serviceDir}.`);
 
     await createFile(
@@ -100,14 +147,14 @@ async function generateSources(
         openApiDocument.npmPackageName,
         genericDescription(openApiDocument.directoryName),
         await getSdkVersion(),
-        options.versionInPackageJson
+        options.packageVersion
       ),
       true,
       false
     );
   }
 
-  if (options.generateJs) {
+  if (options.transpile) {
     await createFile(
       serviceDir,
       'tsconfig.json',
@@ -118,11 +165,11 @@ async function generateSources(
     await transpileDirectory(serviceDir);
   }
 
-  if (options.additionalFiles) {
-    await copyAdditionalFiles(options.additionalFiles, serviceDir);
+  if (options.include) {
+    await copyAdditionalFiles(options.include, serviceDir);
   }
 
-  if (options.writeReadme) {
+  if (options.readme) {
     await generateReadme(serviceDir, openApiDocument);
   }
 }
@@ -183,26 +230,27 @@ async function generateService(
   try {
     openApiDocument = await convertOpenApiSpec(inputFilePath);
   } catch (err) {
-    logger.error(
-      `Could not convert document at ${inputFilePath} to the format needed for parsing and generation. Skipping service generation.`
+    throw new ErrorWithCause(
+      `Could not convert document at '${inputFilePath}' to the format needed for parsing and generation.`,
+      err
     );
-    return;
   }
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
     serviceName,
     inputFilePath,
-    serviceMapping
+    serviceMapping,
+    { strictNaming: options.strictNaming ?? true }
   );
 
   if (!parsedOpenApiDocument.apis.length) {
-    logger.warn(
-      `The given OpenApi specification does not contain any operations. Skipping generation for input file: ${inputFilePath}`
+    throw new Error(
+      `The given document at '${inputFilePath}' does not contain any operations.`
     );
-    return;
   }
 
   await generateSources(serviceDir, parsedOpenApiDocument, options);
+  logger.info(`Successfully generated client for '${inputFilePath}'`);
 }
 
 /**
@@ -223,16 +271,6 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
     ],
     Promise.resolve([])
   );
-}
-
-/**
- * Get the current SDK version from the package json.
- * @returns The SDK version.
- */
-export async function getSdkVersion(): Promise<string> {
-  return JSON.parse(
-    await readFile(resolve(__dirname, '../package.json'), 'utf8')
-  ).version;
 }
 
 // TODO 1728 move to a new package to reduce code duplication.

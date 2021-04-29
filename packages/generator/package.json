@@ -39,6 +39,7 @@
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.41.0",
     "@sap-cloud-sdk/util": "^1.41.0",
+    "@sap-cloud-sdk/generator-common": "^1.41.0",
     "@sap/edm-converters": "^1.0.21",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^7.1.2",

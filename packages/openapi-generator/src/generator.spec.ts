@@ -2,7 +2,8 @@ import { resolve } from 'path';
 import { existsSync } from 'fs';
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
-import { getSdkVersion, getInputFilePaths } from './generator';
+import { getSdkVersion } from '@sap-cloud-sdk/generator-common';
+import { getInputFilePaths } from './generator';
 
 // FIXME: These tests are dangerous, because they operate on local data, that has to be generated and does not reside in the package directory, which should not be the case for unit tests.
 // As soon as we have mocking in place this should be exchanged.

@@ -43,7 +43,7 @@ const generatorConfigOpenApi: GeneratorOptions = {
   input: path.resolve('test-resources', 'openapi-service-specs'),
   outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
   clearOutputDir: true,
-  transpile: false,
+  transpile: true,
   packageJson: true,
   packageVersion: '1.2.3',
   include: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',
@@ -80,7 +80,11 @@ async function generateTestServicesWithLocalCoreModules(
     await generateOpenApi({
       ...generatorConfigOpenApi,
       input: openApiServiceSpecsDir,
-      outputDir
+      outputDir,
+      packageJson: false,
+      transpile: false,
+      include: undefined,
+      readme: false
     });
   }
 

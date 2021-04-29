@@ -31,49 +31,49 @@ USAGE
   $ generate-openapi-client --input <input> --outputDir <outputDirectory>
 
 OPTIONS
-  -i, --input=<path/to/input>                             (required) Specify the path to the directory or file
-                                                          containing the OpenAPI service definition(s) to generate
-                                                          clients for. Accepts Swagger and OpenAPI definitions as YAML
-                                                          and JSON files. Throws an error if the path does not exist.
+  -i, --input=<path/to/input>
+      (required) Specify the path to the directory or file containing the OpenAPI service definition(s) to generate 
+      clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not 
+      exist.
 
-  -o, --outputDir=<path/to/output>                        (required) Specify the path to the directory to generate the
-                                                          client(s) in. Each client is generated into a subdirectory
-                                                          within the given output directory. Creates the directory if it
-                                                          does not exist. Customize subdirectory naming through
-                                                          `--serviceMapping`.
+  -o, --outputDir=<path/to/output>
+      (required) Specify the path to the directory to generate the client(s) in. Each client is generated into a 
+      subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory 
+      naming through `--optionsPerService`.
 
-  -t, --transpile                                         Transpile the generated TypeScript code. When enabled a
-                                                          default `tsconfig.json` will be generated and used. It emits
-                                                          `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. To configure
-                                                          transpilation set `--tsconfig`.
+  -t, --transpile
+      Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated and used. It emits 
+      `.js`, `.js.map`, `.d.ts` and `.d.ts.map` files. To configure transpilation set `--tsconfig`.
 
-  --clearOutputDir                                        Remove all files in the output directory before generation. Be
-                                                          cautious when using this option, as it really removes
-                                                          EVERYTHING in the output directory.
+  --clearOutputDir
+      Remove all files in the output directory before generation. Be cautious when using this option, as it really removes 
+      EVERYTHING in the output directory.
 
-  --include=<glob/to/include>                             Include files matching the given glob into the root of each
-                                                          generated client directory.
+  --include=<glob/to/include>
+      Include files matching the given glob into the root of each generated client directory.
 
-  --[no-]packageJson                                      When set to false, no `package.json` is generated. By default,
-                                                          a `package.json` that specifies dependencies and scripts for
-                                                          transpilation and documentation generation is generated.
+  --optionsPerService=<path/to/options-per-service.json>
+      Set the path to a file containing the options per service. The configuration allows to set a `directoryName` and 
+      `packageName` for every service, identified by the path to the original file. It also makes sure that names do not 
+      change between generator runs. If a directory is passed, a `options-per-service.json` file is read/created in this 
+      directory.
 
-  --serviceMapping=<path/to/custom-service-mapping.json>  Set the path to the service mapping file. By default, a
-                                                          `service-mapping.json` is generated in the input directory.
-                                                          The service mapping ensures consistent names between multiple
-                                                          generation runs with updated service definitions.
+  --packageJson
+      When enabled, a `package.json`, that specifies dependencies and scripts for transpilation and documentation 
+      generation is generated.
 
-  --[no-]strictNaming                                     By default, the generation fails, when there are duplicate
-                                                          names for operations and/or path parameters after transforming
-                                                          them to camel case. Set this to true to enable unique name
-                                                          generation. The names will then be generated by appending
-                                                          numbers.
+  --[no-]strictNaming
+      By default, the generation fails, when there are duplicate names for operations and/or path parameters after 
+      transforming them to camel case. Disable strict naming to ensure unique name generation. The names are then 
+      generated by appending numbers.
 
-  --tsConfig=<path/to/tsconfig.json>                      Replace the default `tsconfig.json` by passing a path to a
-                                                          custom config. By default, a `tsconfig.json` is only
-                                                          generated, when transpilation is enabled (`--transpile`).
+  --tsConfig=<path/to/tsconfig.json>
+      Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only 
+      generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read 
+      from this directory.
 
-  --verbose                                               Turn on verbose logging.
+  --verbose
+      Turn on verbose logging.
 
 EXAMPLES
 

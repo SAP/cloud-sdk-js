@@ -1,9 +1,12 @@
 import { resolve } from 'path';
-import { existsSync } from 'fs';
+import { existsSync, promises } from 'fs';
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
 import { getSdkVersion } from '@sap-cloud-sdk/generator-common';
-import { getInputFilePaths } from './generator';
+import { emptyDocument } from '../test/test-util';
+import { generate, getInputFilePaths } from './generator';
+
+const { readFile } = promises;
 
 // FIXME: These tests are dangerous, because they operate on local data, that has to be generated and does not reside in the package directory, which should not be the case for unit tests.
 // As soon as we have mocking in place this should be exchanged.
@@ -79,5 +82,65 @@ describe('generator', () => {
   it('should create a readme', () => {
     const readme = resolve(testServicePath, 'README.md');
     expect(existsSync(readme)).toBe(true);
+  });
+
+  describe.only('optionsPerService', () => {
+    beforeEach(() => {
+      mock({
+        inputDir: {
+          'spec.json': JSON.stringify({
+            ...emptyDocument,
+            paths: {
+              '/path': { get: { response: { type: 'string' } } }
+            },
+            components: {
+              schemas: { test: { type: 'string' } }
+            }
+          })
+        },
+        existingConfig:
+          '{ "inputDir/spec.json": {"directoryName": "customName" } }'
+      });
+    });
+
+    afterEach(() => {
+      mock.restore();
+    });
+
+    it('writes options per service', async () => {
+      await generate({
+        input: 'inputDir',
+        outputDir: 'out',
+        optionsPerService: 'options.json'
+      });
+
+      await expect(readFile('options.json', 'utf8')).resolves
+        .toMatchInlineSnapshot(`
+              "{
+                \\"inputDir/spec.json\\": {
+                  \\"packageName\\": \\"spec\\",
+                  \\"directoryName\\": \\"spec\\"
+                }
+              }"
+            `);
+    });
+
+    it('overwrites writes options per service', async () => {
+      await generate({
+        input: 'inputDir',
+        outputDir: 'out',
+        optionsPerService: 'existingConfig'
+      });
+
+      await expect(readFile('existingConfig', 'utf8')).resolves
+        .toMatchInlineSnapshot(`
+              "{
+                \\"inputDir/spec.json\\": {
+                  \\"packageName\\": \\"spec\\",
+                  \\"directoryName\\": \\"customName\\"
+                }
+              }"
+            `);
+    });
   });
 });

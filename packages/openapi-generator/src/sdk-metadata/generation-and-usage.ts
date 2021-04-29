@@ -49,7 +49,7 @@ function getApiSpecificUsage(
     const instructions = apiSpecificCodeSample(
       apiWithOperations.name,
       operation.operationId,
-      openApiDocument.npmPackageName
+      openApiDocument.serviceOptions.packageName
     );
     return { instructions, text: apiSpecificUsageText };
   }

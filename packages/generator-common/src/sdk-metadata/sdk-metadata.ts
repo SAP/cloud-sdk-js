@@ -12,12 +12,12 @@ export function getSdkMetadataFileNames(
   originalFileName: string
 ): { clientFileName: string; headerFileName: string } {
   return {
-    clientFileName: getClientFileName(originalFileName),
-    headerFileName: getHeaderFileName(originalFileName)
+    clientFileName: `${originalFileName}_CLIENT_JS.json`,
+    headerFileName: `${originalFileName}_HEADER.json`
   };
 }
 
-export async function sdkMetaDataHeader(
+export async function sdkMetadataHeader(
   type: 'odata' | 'rest' | 'soap',
   originalFileName: string,
   versionInPackageJson?: string
@@ -50,14 +50,6 @@ export function getSdkMetadataClient(
     pregeneratedLibrary,
     generationAndUsage
   };
-}
-
-function getClientFileName(serviceFileName: string): string {
-  return `${serviceFileName}_CLIENT_JS.json`;
-}
-
-function getHeaderFileName(serviceFileName: string): string {
-  return `${serviceFileName}_HEADER.json`;
 }
 
 const sdkMetadataHeaderIntroText =

@@ -1,6 +1,8 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { emptyDocument } from '../../test/test-util';
+import { ServiceOptions } from '../options/options-per-service';
 import { parseOpenApiDocument } from './document';
+import * as api from './api';
 
 const options = { strictNaming: true };
 describe('parseOpenApiDocument', () => {
@@ -21,12 +23,9 @@ describe('parseOpenApiDocument', () => {
     const parsedDocument = parseOpenApiDocument(
       input,
       'TestService',
-      'openapi/test-service.json',
       {
-        'test-service': {
-          npmPackageName: '@sap/cloud-sdk-openapi-test-service',
-          directoryName: 'test-service'
-        }
+        packageName: '@sap/cloud-sdk-openapi-test-service',
+        directoryName: 'test-service'
       },
       options
     );
@@ -47,15 +46,14 @@ describe('parseOpenApiDocument', () => {
       }
     };
 
+    spyOn(api, 'parseApis');
+
     const parsedDocument = await parseOpenApiDocument(
       input,
       'TestService',
-      'openapi/test-service.json',
       {
-        'test-service': {
-          npmPackageName: '@sap/cloud-sdk-openapi-test-service',
-          directoryName: 'test-service'
-        }
+        packageName: '@sap/cloud-sdk-openapi-test-service',
+        directoryName: 'test-service'
       },
       { strictNaming: false }
     );
@@ -90,8 +88,7 @@ describe('parseOpenApiDocument', () => {
     const parsed = await parseOpenApiDocument(
       document,
       'myService',
-      'myFile.json',
-      {},
+      {} as ServiceOptions,
       options
     );
     expect(parsed.schemas).toStrictEqual([
@@ -115,15 +112,14 @@ describe('parseOpenApiDocument', () => {
       }
     };
 
+    spyOn(api, 'parseApis');
+
     const parsedDocument = await parseOpenApiDocument(
       input,
       'TestService',
-      'openapi/test-service.json',
       {
-        'test-service': {
-          npmPackageName: '@sap/cloud-sdk-openapi-test-service',
-          directoryName: 'test-service'
-        }
+        packageName: '@sap/cloud-sdk-openapi-test-service',
+        directoryName: 'test-service'
       },
       { strictNaming: false }
     );

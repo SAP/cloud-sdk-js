@@ -16,7 +16,7 @@ import { GlobSync } from 'glob';
 import {
   getSdkMetadataFileNames,
   getVersionForClient,
-  sdkMetaDataHeader,
+  sdkMetadataHeader,
   getSdkVersion
 } from '@sap-cloud-sdk/generator-common';
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
@@ -51,8 +51,7 @@ import {
   functionImportSourceFile
 } from './action-function-import';
 import { enumTypeSourceFile } from './enum-type/file';
-import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
-import { getServiceDescription } from './sdk-metadata/pregenerated-lib';
+import { sdkMetadata, getServiceDescription } from './sdk-metadata';
 
 const logger = createLogger({
   package: 'generator',
@@ -337,7 +336,7 @@ export async function generateSourcesForService(
       metadataDir,
       headerFileName,
       JSON.stringify(
-        await sdkMetaDataHeader(
+        await sdkMetadataHeader(
           'odata',
           service.originalFileName,
           options.versionInPackageJson
@@ -352,7 +351,7 @@ export async function generateSourcesForService(
     otherFile(
       metadataDir,
       clientFileName,
-      JSON.stringify(await sdkMetaDataJS(service, options), null, 2),
+      JSON.stringify(await sdkMetadata(service, options), null, 2),
       options.forceOverwrite
     );
   }

@@ -6,10 +6,13 @@ import { createRefs } from './refs';
 
 const options = { strictNaming: true };
 describe('parseApis', () => {
-  it('parses APIs without paths', async () => {
-    expect(
-      parseApis(emptyDocument, await createTestRefs(), options)
-    ).toStrictEqual([]);
+  it('throws an error if there are APIs without paths', async () => {
+    const refs = await createTestRefs();
+    expect(() =>
+      parseApis(emptyDocument, refs, options)
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Could not parse APIs. The document does not contain any operations."'
+    );
   });
 
   it('parses APIs based on tags', async () => {

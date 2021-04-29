@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sdk-metadata generates metadata content for services with pregenerated lib 1`] = `
+exports[`metadata generates metadata content for services with pregenerated lib 1`] = `
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
@@ -71,7 +71,7 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
 }
 `;
 
-exports[`sdk-metadata generates metadata content for services without pregenerated lib 1`] = `
+exports[`metadata generates metadata content for services without pregenerated lib 1`] = `
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {

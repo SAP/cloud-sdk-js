@@ -1,8 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service"`;
-
-exports[`sdk-metadata generates the JS metadata content for services with pregenerated lib 1`] = `
+exports[`metadata generates the JS metadata content for services with pregenerated lib 1`] = `
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
@@ -75,7 +73,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
 }
 `;
 
-exports[`sdk-metadata generates the JS metadata content for services without pregenerated lib 1`] = `
+exports[`metadata generates the JS metadata content for services without pregenerated lib 1`] = `
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
@@ -135,3 +133,5 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
   },
 }
 `;
+
+exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service"`;

@@ -73,7 +73,7 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
     }),
     packageJson: flags.boolean({
       description:
-        'When enabled, a `package.json`, that specifies dependencies and scripts for transpilation and documentation generation is generated.',
+        'When enabled, a `package.json`, that specifies dependencies and scripts for transpilation and documentation generation is generated.'
     }),
     verbose: flags.boolean({
       description: 'Turn on verbose logging.',

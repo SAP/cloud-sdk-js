@@ -1,5 +1,5 @@
 import Parser from '@oclif/parser';
-import GenerateOpenApiClient from '../cli';
+import OpenApiGenerator from '../cli';
 
 /**
  * Options that can be used to configure the generation when using the generator programmatically.
@@ -23,7 +23,7 @@ export interface GeneratorOptions {
 /**
  * Parsed options with default values.
  */
-export type ParsedGeneratorOptions = typeof GenerateOpenApiClient extends Parser.Input<
+export type ParsedGeneratorOptions = typeof OpenApiGenerator extends Parser.Input<
   infer F
 >
   ? F
@@ -37,7 +37,7 @@ export type ParsedGeneratorOptions = typeof GenerateOpenApiClient extends Parser
 export function parseGeneratorOptions(
   options: GeneratorOptions
 ): ParsedGeneratorOptions {
-  return Object.entries(GenerateOpenApiClient.flags).reduce(
+  return Object.entries(OpenApiGenerator.flags).reduce(
     (parsedOptions, [name, flag]) => {
       const value = options[name];
       if (typeof value !== 'undefined') {

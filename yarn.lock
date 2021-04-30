@@ -1716,15 +1716,6 @@
   dependencies:
     antlr4 "4.8.0"
 
-"@sap/cds-compiler@~1.50.0":
-  version "1.50.0"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-1.50.0.tgz#4c2fdc6ecacb9d659a08ef6adf0c920b5d6cb214"
-  integrity sha512-GjfOYeM4x7fMHxorHVA1FZZxoCbY1XF5gsyyLjIh7W68R5mSh80oOu0CuWRrSJ3ywONmwRfTxoB94xQRZwiilQ==
-  dependencies:
-    antlr4 "4.8.0"
-    resolve "1.8.1"
-    sax "^1.2.4"
-
 "@sap/cds-dk@^4.0.7":
   version "4.0.7"
   resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.0.7.tgz#3c0ceb0aaccfd306ee57f41cc9611ca1030af6a9"
@@ -1762,15 +1753,6 @@
     xmlbuilder "15.1.1"
     yaml "1.10.0"
 
-"@sap/cds-runtime@~2.9.0":
-  version "2.9.2"
-  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-2.9.2.tgz#a675d0b3fe9deb6efb1242b2daf3030e84abb0b6"
-  integrity sha512-ZMw9BlEBFZ+wMGeQa1KnFvwwVRiUOaNyh3cvQdIOoHW0HRmPSIN3z2cxZ2IP5TsRkGyhlArrrYKPaL+KJa4J4w==
-  dependencies:
-    "@sap-cloud-sdk/core" "^1.18.1"
-    "@sap-cloud-sdk/util" "^1.18.1"
-    "@sap/cds-foss" "^2.2.0"
-
 "@sap/cds-runtime@~3.0.6":
   version "3.0.9"
   resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-3.0.9.tgz#81aab8a05cf8cb91a01495c3246f6ba1d6516447"
@@ -1787,15 +1769,6 @@
   dependencies:
     fs-extra "9.0.1"
     got "10.7.0"
-
-"@sap/cds@^4.4.7":
-  version "4.6.5"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-4.6.5.tgz#4c70c137795aef6a62d21502ff9fe5a47ecfbfaa"
-  integrity sha512-JTSv1z71Arz9JZdc0OWnnNibIvfJldjzFQOcm/EoKmVfeJ6dfTjNseT6YJrQf3lEzYFjojCMaj2fi45F6/dSWw==
-  dependencies:
-    "@sap/cds-compiler" "~1.50.0"
-    "@sap/cds-foss" "^2"
-    "@sap/cds-runtime" "~2.9.0"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.0.6":
   version "5.0.6"
@@ -9096,7 +9069,7 @@ path-key@^3.0.0, path-key@^3.1.0:
   resolved "https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz#581f6ade658cbba65a0d3380de7753295054f375"
   integrity sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
 
-path-parse@^1.0.5, path-parse@^1.0.6:
+path-parse@^1.0.6:
   version "1.0.6"
   resolved "https://registry.npmjs.org/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
   integrity sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
@@ -10112,13 +10085,6 @@ resolve-url@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/resolve-url/-/resolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
   integrity sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
-
-resolve@1.8.1:
-  version "1.8.1"
-  resolved "https://registry.npmjs.org/resolve/-/resolve-1.8.1.tgz#82f1ec19a423ac1fbd080b0bab06ba36e84a7a26"
-  integrity sha512-AicPrAC7Qu1JxPCZ9ZgCZlY35QgFnNqc+0LtbRNxnVw4TXvjQ72wnuL9JQcEBgXkI9JM8MsT9kaQoHcpCRJOYA==
-  dependencies:
-    path-parse "^1.0.5"
 
 resolve@^1.1.6, resolve@^1.10.0, resolve@^1.12.0, resolve@^1.13.1, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.19.0, resolve@^1.3.2:
   version "1.20.0"

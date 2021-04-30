@@ -52,6 +52,8 @@ function nextSuffix(name: string, previouslyGeneratedNames: string[]): number {
   );
   const lastElem = last(sortedList);
   const match = lastElem ? lastElem.match(/(\d+)$/) : null;
+  const test1 = lastElem ? lastElem.match(/(\d+)$/) : null;
+  const test2 = lastElem ? lastElem.match(/(\d+)$/) : null;
 
   return match ? parseInt(match[1], 10) + 1 : 1;
 }

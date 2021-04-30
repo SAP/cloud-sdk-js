@@ -166,4 +166,53 @@ describe('getOptionsPerService', () => {
             }
           `);
   });
+
+  it('throws for conflicting service names if strict naming is on', async () => {
+    await expect(
+      getOptionsPerService(
+        [
+          {
+            absolutePath: '/user/path1/service',
+            relativePath: 'path1/service'
+          },
+          { absolutePath: '/user/path2/service', relativePath: 'path2/service' }
+        ],
+        {
+          strictNaming: true
+        } as ParsedGeneratorOptions
+      )
+    ).rejects.toMatchInlineSnapshot(
+      '[Error: The following service specs lead to non unique file names: path2/service. You can either introduce/adjust a operions-per-service.json or disable the strictNaming flag.]'
+    );
+  });
+
+  it('renames for conflicting service names if strict naming is off', async () => {
+    await expect(
+      getOptionsPerService(
+        [
+          {
+            absolutePath: '/user/path1/service',
+            relativePath: 'path1/service'
+          },
+          { absolutePath: '/user/path2/service', relativePath: 'path2/service' }
+        ],
+        {
+          strictNaming: false
+        } as ParsedGeneratorOptions
+      )
+    ).resolves.toMatchInlineSnapshot(`
+            Object {
+              "path1/service": Object {
+                "directoryName": "service",
+                "packageName": "service",
+                "serviceName": "service",
+              },
+              "path2/service": Object {
+                "directoryName": "service-1",
+                "packageName": "service-1",
+                "serviceName": "service-1",
+              },
+            }
+          `);
+  });
 });

@@ -20,7 +20,15 @@ $ npm install @sap-cloud-sdk/openapi-generator
 
 <!-- prettier-ignore-start -->
 <!-- commands -->
-* [`generate-openapi-client --input <input> --outputDir <outputDirectory>`](#generate-openapi-client---input-input---outputdir-outputdirectory)
+- [@sap-cloud-sdk/openapi-generator (Beta)](#sap-cloud-sdkopenapi-generator-beta)
+  - [Installation](#installation)
+  - [Usage (CLI)](#usage-cli)
+  - [`generate-openapi-client --input <input> --outputDir <outputDirectory>`](#generate-openapi-client---input-input---outputdir-outputdirectory)
+  - [Usage (programatically)](#usage-programatically)
+  - [Support](#support)
+  - [Contribute](#contribute)
+  - [Links](#links)
+  - [License](#license)
 
 ## `generate-openapi-client --input <input> --outputDir <outputDirectory>`
 

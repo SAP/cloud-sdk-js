@@ -30,7 +30,9 @@ export function parseApis(
         // All operations have been named in the previous step
         ({ operation }) => operation.operationId!
       );
-      const uniqueNames = ensureUniqueNames(operationNames, options);
+      const uniqueNames = ensureUniqueNames(operationNames, options, {
+        separator: '_'
+      });
       const uniquelyNamedOperations = namedOperations.map(
         (operationInfo, i) => {
           operationInfo.operation.operationId = uniqueNames[i];

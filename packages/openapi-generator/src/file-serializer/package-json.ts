@@ -1,7 +1,6 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Generate the package.json for an openapi client so it can be released as an npm module.
  * @param packageName The name of the npm package.
  * @param description The description of the  npm package.

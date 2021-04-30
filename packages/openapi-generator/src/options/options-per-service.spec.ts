@@ -104,7 +104,7 @@ describe('getOptionsPerService', () => {
           `);
   });
 
-  it('builds PerService config with options per service.', async () => {
+  it('builds options per service with existing config file', async () => {
     const config: OptionsPerService = {
       'path/service': {
         directoryName: 'dirName',

@@ -1,11 +1,20 @@
 import { existsSync, promises } from 'fs';
+import { parse } from 'path';
+import { UniqueNameGenerator } from '@sap-cloud-sdk/util';
+import { AbsoluteAndRelativePath } from '../generator';
+import { ParsedGeneratorOptions } from './generator-options';
 
 const { readFile } = promises;
 
 /**
  * Represents the service options for all services, mapped from the input file path to the service configuration.
  */
-export type OptionsPerService = Record<string, Partial<ServiceOptions>>;
+export type OptionsPerService = Record<string, ServiceOptions>;
+
+/**
+ * Partial OptionsPerService
+ */
+export type PartialOptionsPerService = Record<string, Partial<ServiceOptions>>;
 
 /**
  * Represents the options for one service.
@@ -20,6 +29,10 @@ export interface ServiceOptions {
    * Name of the package to reference in the package.json.
    */
   packageName: string;
+  /**
+   * Name of the service
+   */
+  serviceName: string;
 }
 
 /**
@@ -29,10 +42,71 @@ export interface ServiceOptions {
  */
 export async function getOriginalOptionsPerService(
   configPath: string | undefined
-): Promise<OptionsPerService> {
+): Promise<PartialOptionsPerService> {
   return configPath && existsSync(configPath)
     ? JSON.parse(await readFile(configPath, 'utf8'))
     : {};
+}
+
+/**
+ * Get the options per service for the list of services.
+ * If optionsPerServicePath is not given default values are used for the services.
+ * If optionsPerServicePath is given exisiting values for the services are.
+ * @param inputPaths Paths for the service spec files
+ * @param options Options of the generator
+ * @returns The parsed configuration for all services in relativeServicePaths.
+ */
+export async function getOptionsPerService(
+  inputPaths: AbsoluteAndRelativePath[],
+  options: ParsedGeneratorOptions
+): Promise<OptionsPerService> {
+  const originalOptionsPerService = await getOriginalOptionsPerService(
+    options.optionsPerService
+  );
+
+  const uniqueNameGenerator = new UniqueNameGenerator('-');
+  const nonUniqueFiles: string[] = [];
+
+  const optionsPerSerivice: OptionsPerService = inputPaths.reduce(
+    (optionsPerService, path) => {
+      const originalServiceName =
+        originalOptionsPerService[path.relativePath]?.serviceName ||
+        parseServiceName(path.relativePath);
+      const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
+        originalServiceName
+      );
+      if (originalServiceName !== uniqueServiceName) {
+        nonUniqueFiles.push(path.relativePath);
+      }
+
+      optionsPerService[path.relativePath] = getServiceOptions(
+        originalOptionsPerService,
+        path.relativePath,
+        uniqueServiceName
+      );
+      return optionsPerService;
+    },
+    {}
+  );
+
+  if (nonUniqueFiles.length > 0 && options.strictNaming) {
+    throw new Error(
+      `The following service specs lead to non unique file names: ${nonUniqueFiles.join(
+        ','
+      )}. You can either introduce/adjust a operions-per-service.json or disable the strictNaming flag.`
+    );
+  }
+
+  return optionsPerSerivice;
+}
+
+/**
+ * Parse the name of the service based on the file path.
+ * @param filePath Path of the service specification.
+ * @returns The parsed name.
+ */
+function parseServiceName(filePath: string): string {
+  return parse(filePath).name.replace(/-openapi$/, '');
 }
 
 /**
@@ -45,22 +119,19 @@ export async function getOriginalOptionsPerService(
  * @returns Service options.
  */
 export function getServiceOptions(
-  optionsPerService: OptionsPerService,
+  optionsPerService: PartialOptionsPerService,
   relativeInputFilePath: string,
   serviceName: string
 ): ServiceOptions {
   const defaultConfig = {
     packageName: serviceName,
-    directoryName: serviceName
+    directoryName: serviceName,
+    serviceName
   };
 
   const configFromOptionsPerService = optionsPerService[relativeInputFilePath];
-  if (configFromOptionsPerService) {
-    return {
-      ...defaultConfig,
-      ...configFromOptionsPerService
-    };
-  }
-
-  return defaultConfig;
+  return {
+    ...defaultConfig,
+    ...configFromOptionsPerService
+  };
 }

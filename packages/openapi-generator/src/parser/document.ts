@@ -11,14 +11,12 @@ import { ParserOptions } from './options';
 /**
  * Parse an OpenAPI document.
  * @param fileContent Original OpenAPI document object.
- * @param serviceName Original service name.
  * @param serviceOptions Service options as defined in the options per service.
  * @param options Parser options.
  * @returns The parsed OpenAPI document representation
  */
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
-  serviceName: string,
   serviceOptions: ServiceOptions,
   options: ParserOptions
 ): Promise<OpenApiDocument> {
@@ -28,7 +26,7 @@ export async function parseOpenApiDocument(
 
   return {
     apis: parseApis(document, refs, options),
-    serviceName: pascalCase(serviceName),
+    serviceName: pascalCase(serviceOptions.serviceName),
     serviceOptions,
     schemas: parseSchemas(document, refs)
   };

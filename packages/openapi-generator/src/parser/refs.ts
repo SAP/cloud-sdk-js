@@ -61,6 +61,7 @@ export class OpenApiDocumentRefs {
     });
     const fileNames = ensureUniqueNames(schemaNames, options, {
       format: kebabCase,
+      separator: '-',
       reservedWords: ['index']
     });
 

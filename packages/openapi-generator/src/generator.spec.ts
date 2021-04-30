@@ -31,10 +31,8 @@ describe('generator', () => {
         }
       }
     });
-    const absolutePaths = (await getInputFilePaths('/path/to/test/dir')).map(
-      path => path.absolutePath
-    );
-    expect(absolutePaths).toEqual([
+
+    expect(await getInputFilePaths('/path/to/test/dir')).toEqual([
       '/path/to/test/dir/sub-dir/sub-directory-service.txt',
       '/path/to/test/dir/sub-dir/test-service.txt',
       '/path/to/test/dir/test-service.txt'

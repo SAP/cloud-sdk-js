@@ -1,3 +1,14 @@
+jest.mock('path', () => {
+  const path = jest.requireActual('path');
+  return {
+    ...path,
+    relative: (from, to: string) =>
+      to.startsWith('/user/')
+        ? to.replace('/user/', '')
+        : path.relative(from, to)
+  };
+});
+
 import mock from 'mock-fs';
 import {
   getOptionsPerService,
@@ -87,21 +98,20 @@ describe('getServiceOptions', () => {
 });
 
 describe('getOptionsPerService', () => {
+  afterAll(() => {
+    mock.restore();
+  });
+
   it('builds PerService config without options per service.', async () => {
     await expect(
-      getOptionsPerService(
-        [{ absolutePath: '/user/path/service', relativePath: 'path/service' }],
-        {} as ParsedGeneratorOptions
-      )
-    ).resolves.toMatchInlineSnapshot(`
-            Object {
-              "path/service": Object {
-                "directoryName": "service",
-                "packageName": "service",
-                "serviceName": "service",
-              },
-            }
-          `);
+      getOptionsPerService(['/user/path/service'], {} as ParsedGeneratorOptions)
+    ).resolves.toEqual({
+      'path/service': {
+        directoryName: 'service',
+        packageName: 'service',
+        serviceName: 'service'
+      }
+    });
   });
 
   it('builds options per service with existing config file', async () => {
@@ -120,19 +130,16 @@ describe('getOptionsPerService', () => {
     });
 
     await expect(
-      getOptionsPerService(
-        [{ absolutePath: '/user/path/service', relativePath: 'path/service' }],
-        { optionsPerService: 'path/myConfig.json' } as ParsedGeneratorOptions
-      )
-    ).resolves.toMatchInlineSnapshot(`
-            Object {
-              "path/service": Object {
-                "directoryName": "dirName",
-                "packageName": "@scope/package-name",
-                "serviceName": "serviceName",
-              },
-            }
-          `);
+      getOptionsPerService(['/user/path/service'], {
+        optionsPerService: 'path/myConfig.json'
+      } as ParsedGeneratorOptions)
+    ).resolves.toEqual({
+      'path/service': {
+        directoryName: 'dirName',
+        packageName: '@scope/package-name',
+        serviceName: 'serviceName'
+      }
+    });
   });
 
   it('builds PerService config with partial options  per service.', async () => {
@@ -150,69 +157,46 @@ describe('getOptionsPerService', () => {
     });
 
     await expect(
-      getOptionsPerService(
-        [{ absolutePath: '/user/path/service', relativePath: 'path/service' }],
-        {
-          optionsPerService: 'path/myPartialConfig.json'
-        } as ParsedGeneratorOptions
-      )
-    ).resolves.toMatchInlineSnapshot(`
-            Object {
-              "path/service": Object {
-                "directoryName": "dirName",
-                "packageName": "@scope/package-name",
-                "serviceName": "service",
-              },
-            }
-          `);
+      getOptionsPerService(['/user/path/service'], {
+        optionsPerService: 'path/myPartialConfig.json'
+      } as ParsedGeneratorOptions)
+    ).resolves.toEqual({
+      'path/service': {
+        directoryName: 'dirName',
+        packageName: '@scope/package-name',
+        serviceName: 'service'
+      }
+    });
   });
 
   it('throws for conflicting service names if strict naming is on', async () => {
     await expect(
-      getOptionsPerService(
-        [
-          {
-            absolutePath: '/user/path1/service',
-            relativePath: 'path1/service'
-          },
-          { absolutePath: '/user/path2/service', relativePath: 'path2/service' }
-        ],
-        {
-          strictNaming: true
-        } as ParsedGeneratorOptions
-      )
-    ).rejects.toMatchInlineSnapshot(
-      '[Error: The following service specs lead to non unique file names: path2/service. You can either introduce/adjust a operions-per-service.json or disable the strictNaming flag.]'
-    );
+      getOptionsPerService(['/user/path1/service', '/user/path2/service'], {
+        strictNaming: true
+      } as ParsedGeneratorOptions)
+    ).rejects.toMatchInlineSnapshot(`
+            [Error: The following service specs lead to non unique service names:
+            path2/service.
+            You can either introduce a optionsPerSerivice file or enable the skipValidation flag.]
+          `);
   });
 
   it('renames for conflicting service names if strict naming is off', async () => {
     await expect(
-      getOptionsPerService(
-        [
-          {
-            absolutePath: '/user/path1/service',
-            relativePath: 'path1/service'
-          },
-          { absolutePath: '/user/path2/service', relativePath: 'path2/service' }
-        ],
-        {
-          strictNaming: false
-        } as ParsedGeneratorOptions
-      )
-    ).resolves.toMatchInlineSnapshot(`
-            Object {
-              "path1/service": Object {
-                "directoryName": "service",
-                "packageName": "service",
-                "serviceName": "service",
-              },
-              "path2/service": Object {
-                "directoryName": "service-1",
-                "packageName": "service-1",
-                "serviceName": "service-1",
-              },
-            }
-          `);
+      getOptionsPerService(['/user/path1/service', '/user/path2/service'], {
+        strictNaming: false
+      } as ParsedGeneratorOptions)
+    ).resolves.toEqual({
+      'path1/service': {
+        directoryName: 'service',
+        packageName: 'service',
+        serviceName: 'service'
+      },
+      'path2/service': {
+        directoryName: 'service-1',
+        packageName: 'service-1',
+        serviceName: 'service-1'
+      }
+    });
   });
 });

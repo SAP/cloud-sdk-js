@@ -73,9 +73,9 @@ export async function generateWithParsedOptions(
 
   const promises = inputFilePaths.map(inputFilePath =>
     generateService(
-      inputFilePath.absolutePath,
+      inputFilePath,
       options,
-      optionsPerService[inputFilePath.relativePath],
+      optionsPerService[getRelativePath(inputFilePath)],
       tsConfig
     )
   );
@@ -245,10 +245,14 @@ async function generateService(
   logger.info(`Successfully generated client for '${inputFilePath}'`);
 }
 
-function getAbsoluteAndRelativePath(
-  absolutePath: string
-): AbsoluteAndRelativePath {
-  return { absolutePath, relativePath: relative(process.cwd(), absolutePath) };
+/**
+ * Gives the relative path with respect tp pocess.cwd()/
+ * @param absolutePath The absolute path
+ * @returns The relative path
+ * @hidden
+ */
+export function getRelativePath(absolutePath: string): string {
+  return relative(process.cwd(), absolutePath);
 }
 
 /**
@@ -256,31 +260,20 @@ function getAbsoluteAndRelativePath(
  * @param input the path to the input directory.
  * @returns all file paths as a string array.
  */
-export async function getInputFilePaths(
-  input: string
-): Promise<AbsoluteAndRelativePath[]> {
+export async function getInputFilePaths(input: string): Promise<string[]> {
   if ((await lstat(input)).isFile()) {
-    return [getAbsoluteAndRelativePath(input)];
+    return [input];
   }
 
-  const absoluteInputPaths = await readdir(input);
-  const directoryContents: AbsoluteAndRelativePath[] = absoluteInputPaths.map(
-    path => getAbsoluteAndRelativePath(path)
-  );
-  return directoryContents.reduce(
-    async (paths: Promise<AbsoluteAndRelativePath[]>, directoryContent) => [
-      ...(await paths),
-      ...(await getInputFilePaths(
-        resolve(input, directoryContent.absolutePath)
-      ))
-    ],
-    Promise.resolve([] as AbsoluteAndRelativePath[])
-  );
-}
+  const directoryContents = await readdir(input);
 
-export interface AbsoluteAndRelativePath {
-  relativePath: string;
-  absolutePath: string;
+  return directoryContents.reduce(
+    async (paths: Promise<string[]>, directoryContent) => [
+      ...(await paths),
+      ...(await getInputFilePaths(resolve(input, directoryContent)))
+    ],
+    Promise.resolve([] as string[])
+  );
 }
 
 // TODO 1728 move to a new package to reduce code duplication.

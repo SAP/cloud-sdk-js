@@ -1,6 +1,5 @@
 import { parse } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
-import { pascalCase } from '@sap-cloud-sdk/util';
 import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
 import { ServiceOptions } from '../options';
 import { parseSchema } from './schema';
@@ -26,7 +25,7 @@ export async function parseOpenApiDocument(
 
   return {
     apis: parseApis(document, refs, options),
-    serviceName: pascalCase(serviceOptions.serviceName),
+    serviceName: serviceOptions.serviceName,
     serviceOptions,
     schemas: parseSchemas(document, refs)
   };

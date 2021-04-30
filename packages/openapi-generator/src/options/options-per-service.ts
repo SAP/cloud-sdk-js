@@ -1,7 +1,8 @@
 import { existsSync, promises } from 'fs';
 import { parse } from 'path';
+import { EOL } from 'os';
 import { UniqueNameGenerator } from '@sap-cloud-sdk/util';
-import { AbsoluteAndRelativePath } from '../generator';
+import { getRelativePath } from '../generator';
 import { ParsedGeneratorOptions } from './generator-options';
 
 const { readFile } = promises;
@@ -14,7 +15,7 @@ export type OptionsPerService = Record<string, ServiceOptions>;
 /**
  * Partial OptionsPerService
  */
-export type PartialOptionsPerService = Record<string, Partial<ServiceOptions>>;
+type PartialOptionsPerService = Record<string, Partial<ServiceOptions>>;
 
 /**
  * Represents the options for one service.
@@ -51,13 +52,13 @@ export async function getOriginalOptionsPerService(
 /**
  * Get the options per service for the list of services.
  * If optionsPerServicePath is not given default values are used for the services.
- * If optionsPerServicePath is given exisiting values for the services are.
+ * If optionsPerServicePath is given existing values for the services are.
  * @param inputPaths Paths for the service spec files
  * @param options Options of the generator
  * @returns The parsed configuration for all services in relativeServicePaths.
  */
 export async function getOptionsPerService(
-  inputPaths: AbsoluteAndRelativePath[],
+  inputPaths: string[],
   options: ParsedGeneratorOptions
 ): Promise<OptionsPerService> {
   const originalOptionsPerService = await getOriginalOptionsPerService(
@@ -65,39 +66,43 @@ export async function getOptionsPerService(
   );
 
   const uniqueNameGenerator = new UniqueNameGenerator('-');
-  const nonUniqueFiles: string[] = [];
+  const duplicateServicePaths: string[] = [];
 
   const optionsPerService: OptionsPerService = inputPaths.reduce(
-    (optionsPerService, path) => {
+    (previousOptions, path) => {
+      const relativePath = getRelativePath(path);
+
       const originalServiceName =
-        originalOptionsPerService[path.relativePath]?.serviceName ||
-        parseServiceName(path.relativePath);
+        originalOptionsPerService[relativePath]?.serviceName ||
+        parseServiceName(relativePath);
       const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
         originalServiceName
       );
       if (originalServiceName !== uniqueServiceName) {
-        nonUniqueFiles.push(path.relativePath);
+        duplicateServicePaths.push(relativePath);
       }
 
-      optionsPerService[path.relativePath] = getServiceOptions(
+      previousOptions[relativePath] = getServiceOptions(
         originalOptionsPerService,
-        path.relativePath,
+        relativePath,
         uniqueServiceName
       );
-      return optionsPerService;
+      return previousOptions;
     },
     {}
   );
 
-  if (nonUniqueFiles.length > 0 && options.strictNaming) {
+  if (duplicateServicePaths.length > 0 && options.strictNaming) {
     throw new Error(
-      `The following service specs lead to non unique file names: ${nonUniqueFiles.join(
-        ','
-      )}. You can either introduce/adjust a operions-per-service.json or disable the strictNaming flag.`
+      `The following service specs lead to non unique service names:${EOL}${duplicateServicePaths.join(
+        EOL
+      )}.${EOL}You can either ${
+        options.optionsPerService ? 'adjust your' : 'introduce a'
+      } optionsPerSerivice file or enable the skipValidation flag.`
     );
   }
 
-  return optionsPerSerivice;
+  return optionsPerService;
 }
 
 /**

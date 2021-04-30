@@ -54,18 +54,9 @@ We should discuss the details of those defaults and make a concious decision on 
 | `--additionalFiles`                                      | `--include`                      | Copy additional files, identified by glob. Hidden.                                                          | _same_ Expose it.                                                                                                                                                                                              |
 | `--writeReadme`                                          | `--readme`                       | Writes a default README.md, default false.                                                                  | _same_                                                                                                                                                                                                         |
 | **New options**                                          |
-| -                                                        | `--[no]-strictNaming`            | Duplicate names are renamed by default.                                                                     | Duplicate names throw an error by default. Disable validation to rename duplicates.                                                                                                                            |
-| -                                                        | `--verbose`                      | Logs everything that happens during generation by deafult.                                                  | Log only success / error per service by default. Enable verbosity through this flag.                                                                                                                           |
+| -                                                        | `--skipValidation`               | Duplicate names are renamed by default.                                                                     | Duplicate names throw an error by default. Disable validation to rename duplicates.                                                                                                                            |
+| -                                                        | `--verbose`                      | Logs everything that happens during generation by default.                                                  | Log only success / error per service by default. Enable verbosity through this flag.                                                                                                                           |
 | -                                                        | `--version`, `-v`                | -                                                                                                           | Prints the version of the generator.                                                                                                                                                                           |
-
-\* Service Mapping - In OData we currently generate a `service-mapping.json` by default.
-Some services require a configuration to exist, in order to specify a service path, that could not be parsed from the specification by default.
-In those cases we plan to fail the generation or log a warning when no service mapping was provided, similar to the behavior of `strictNaming`.
-As we pre-generate the OData services for SAP S/4HANA, the SDK takes care of a large number of services already using a `perServiceConfig` internally.
-
-Therefore, by default we will not generate a per service configuration, only when a path for `perServiceConfig` is provided.
-For OpenAPI this is never required, for OData, if it is required we will handle this through speaking error handling.
-Other ideas to be discussed in the future: specific command for config generation, forcing generation even without service path.
 
 ## Consequences 2
 

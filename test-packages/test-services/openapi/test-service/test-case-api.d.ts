@@ -65,12 +65,12 @@ export declare const TestCaseApi: {
    * Create a request builder for execution of put requests to the '/test-cases/duplicate-operation-ids' endpoint.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
-  duplicateOperationId2: () => OpenApiRequestBuilder<any>;
+  duplicateOperationId1_1: () => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of post requests to the '/test-cases/duplicate-operation-ids' endpoint.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
-  duplicateOperationId3: () => OpenApiRequestBuilder<any>;
+  duplicateOperationId_1: () => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of patch requests to the '/test-cases/duplicate-operation-ids' endpoint.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.

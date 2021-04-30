@@ -129,7 +129,7 @@ describe('parseOpenApiDocument', () => {
     );
 
     expect(parsedDocument.schemas).toEqual([
-      expect.objectContaining({ fileName: 'index1', schemaName: 'Index' })
+      expect.objectContaining({ fileName: 'index-1', schemaName: 'Index' })
     ]);
   });
 

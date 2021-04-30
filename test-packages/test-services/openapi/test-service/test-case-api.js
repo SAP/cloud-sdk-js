@@ -90,7 +90,7 @@ exports.TestCaseApi = {
    * Create a request builder for execution of put requests to the '/test-cases/duplicate-operation-ids' endpoint.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
-  duplicateOperationId2: function () {
+  duplicateOperationId1_1: function () {
     return new core_1.OpenApiRequestBuilder(
       'put',
       '/test-cases/duplicate-operation-ids'
@@ -100,7 +100,7 @@ exports.TestCaseApi = {
    * Create a request builder for execution of post requests to the '/test-cases/duplicate-operation-ids' endpoint.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
-  duplicateOperationId3: function () {
+  duplicateOperationId_1: function () {
     return new core_1.OpenApiRequestBuilder(
       'post',
       '/test-cases/duplicate-operation-ids'

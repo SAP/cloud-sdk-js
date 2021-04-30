@@ -59,6 +59,110 @@ describe('OpenApiDocumentRefs', () => {
       );
     });
 
+    it('renames a schema if needed due to illegal names', async () => {
+      refs = await createRefs(
+        {
+          ...emptyDocument,
+          components: { schemas: { '123456': {}, 'something.Else%': {} } }
+        },
+        { strictNaming: false }
+      );
+      expect(refs.getSchemaNaming('#/components/schemas/123456')).toEqual({
+        fileName: 'schema-123456',
+        schemaName: 'Schema123456'
+      });
+
+      expect(
+        refs.getSchemaNaming('#/components/schemas/something.Else%')
+      ).toEqual({
+        fileName: 'something-else',
+        schemaName: 'SomethingElse'
+      });
+    });
+
+    it('ensures uniqueness also if schemas are renamed.', async () => {
+      refs = await createRefs(
+        {
+          ...emptyDocument,
+          components: {
+            schemas: { '123456': {}, schema123456: {}, schema12345_6: {} }
+          }
+        },
+        { strictNaming: false }
+      );
+      expect(refs.getSchemaNaming('#/components/schemas/123456')).toEqual({
+        fileName: 'schema-123456',
+        schemaName: 'Schema123456'
+      });
+
+      expect(refs.getSchemaNaming('#/components/schemas/schema123456')).toEqual(
+        {
+          fileName: 'schema-123456-1',
+          schemaName: 'Schema123456_1'
+        }
+      );
+
+      // The to camalCase removes the _ in the origirnal name.
+      expect(
+        refs.getSchemaNaming('#/components/schemas/schema12345_6')
+      ).toEqual({
+        fileName: 'schema-123456-2',
+        schemaName: 'Schema123456_2'
+      });
+    });
+
+    it('throws if renaming is necessary and strictNames is on', async () => {
+      await expect(
+        createRefs(
+          {
+            ...emptyDocument,
+            components: { schemas: { '123456': {} } }
+          },
+          { strictNaming: true }
+        )
+      ).rejects.toThrowError(
+        'Your OpenApi definition contains the invalid schema names.'
+      );
+    });
+
+    it('renames a schema if needed due to duplicate names', async () => {
+      refs = await createRefs(
+        {
+          ...emptyDocument,
+          components: { schemas: { name: {}, Name: {} } }
+        },
+        { strictNaming: false }
+      );
+      expect(refs.getSchemaNaming('#/components/schemas/name')).toEqual({
+        fileName: 'name-1',
+        schemaName: 'Name_1'
+      });
+
+      expect(refs.getSchemaNaming('#/components/schemas/Name')).toEqual({
+        fileName: 'name',
+        schemaName: 'Name'
+      });
+    });
+
+    it('renames a schema if needed due to duplicate names with separator', async () => {
+      refs = await createRefs(
+        {
+          ...emptyDocument,
+          components: { schemas: { name400: {}, Name400: {} } }
+        },
+        { strictNaming: false }
+      );
+      expect(refs.getSchemaNaming('#/components/schemas/name400')).toEqual({
+        fileName: 'name-400-1',
+        schemaName: 'Name400_1'
+      });
+
+      expect(refs.getSchemaNaming('#/components/schemas/Name400')).toEqual({
+        fileName: 'name-400',
+        schemaName: 'Name400'
+      });
+    });
+
     it('throws an error for non schema reference', async () => {
       expect(() =>
         refs.getSchemaNaming('#/components/responses/typeName')

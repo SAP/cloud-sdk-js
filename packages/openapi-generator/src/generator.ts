@@ -261,7 +261,7 @@ async function generateService(
     openApiDocument,
     serviceName,
     serviceOptions,
-    { strictNaming: !options.noStrictNaming }
+    { strictNaming: !options.skipValidation }
   );
 
   const serviceDir = resolve(options.outputDir, serviceOptions.directoryName);

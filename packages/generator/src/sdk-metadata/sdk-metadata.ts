@@ -8,7 +8,7 @@ import { GeneratorOptions } from '../generator-options';
 import { getGenerationAndUsage } from './generation-and-usage';
 import { getServiceDescription } from './pregenerated-lib';
 
-export async function sdkMetaDataJS(
+export async function sdkMetadata(
   service: VdmServiceMetadata,
   options: GeneratorOptions
 ): Promise<Client> {

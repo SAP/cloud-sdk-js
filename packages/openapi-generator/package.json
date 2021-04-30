@@ -14,7 +14,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "generate-openapi-client": "./bin/run"
+    "openapi-generator": "./bin/run"
   },
   "publishConfig": {
     "access": "public"
@@ -43,6 +43,7 @@
     "@apidevtools/swagger-parser": "^10.0.2",
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.14.0",
+    "@oclif/parser": "^3.8.5",
     "@sap-cloud-sdk/util": "^1.41.0",
     "@sap-cloud-sdk/generator-common": "^1.41.0",
     "@types/js-yaml": "^4.0.0",

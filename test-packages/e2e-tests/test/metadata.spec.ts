@@ -17,8 +17,8 @@ const service = {
   entities: [{ className: 'DummyClass' }]
 } as VdmServiceMetadata;
 
-describe('sdk-metadata', () => {
-  it('gives instruction with working link', async () => {
+describe('metadata', () => {
+  it('gives instructions with working link', async () => {
     expect(
       getGenerationSteps(
         'install command',

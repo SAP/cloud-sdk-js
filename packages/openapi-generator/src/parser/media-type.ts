@@ -45,7 +45,7 @@ export function parseMediaType(
     );
 
     if (!jsonMediaType) {
-      logger.debug(
+      logger.warn(
         "Could not parse media type, because it is not 'application/json'. Generation will continue with 'any'. This might lead to errors at runtime."
       );
       return { type: 'any' };

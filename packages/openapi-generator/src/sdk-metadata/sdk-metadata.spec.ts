@@ -1,11 +1,11 @@
 import nock = require('nock');
 import { GeneratorOptions } from '../options';
 import { dummyOpenApiDocument } from '../../test/test-util';
-import { sdkMetaDataJS } from './sdk-metadata';
+import { sdkMetadata } from './sdk-metadata';
 
 describe('sdk-metadata', () => {
   it('generates metadata content for services without pregenerated lib', async () => {
-    const metadata = await sdkMetaDataJS(dummyOpenApiDocument, {
+    const metadata = await sdkMetadata(dummyOpenApiDocument, {
       packageVersion: '1.0.0'
     } as GeneratorOptions);
     expect(metadata).toMatchSnapshot();
@@ -20,7 +20,7 @@ describe('sdk-metadata', () => {
     jest.spyOn(global.Date, 'now').mockImplementationOnce(() => 0);
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);
 
-    const metadata = await sdkMetaDataJS(dummyOpenApiDocument, {
+    const metadata = await sdkMetadata(dummyOpenApiDocument, {
       packageVersion: '1.0.0'
     } as GeneratorOptions);
     expect(metadata).toMatchSnapshot();

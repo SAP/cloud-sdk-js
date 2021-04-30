@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+/* eslint-disable no-console */
 import {
   lstatSync,
   readdirSync,
@@ -7,6 +7,7 @@ import {
   writeFileSync
 } from 'fs';
 import { resolve, basename, extname } from 'path';
+import execa = require('execa');
 import { unixEOL } from '@sap-cloud-sdk/util';
 import compareVersions from 'compare-versions';
 import { jsonStringify, transformFile } from './util';
@@ -138,11 +139,21 @@ function validateLogs(generationLogs) {
   }
 }
 
-function generateDocs() {
-  const generationLogs = execSync('typedoc --tsconfig tsconfig.typedoc.json', {
-    cwd: resolve(),
-    encoding: 'utf8'
-  });
+async function generateDocs() {
+  let generationLogs;
+  try {
+    generationLogs = await execa.command(
+      'typedoc --tsconfig tsconfig.typedoc.json',
+      {
+        cwd: resolve(),
+        encoding: 'utf8'
+      }
+    );
+  } catch (err) {
+    console.error(err);
+    process.exit(err.exitCode);
+  }
+
   validateLogs(generationLogs);
   adjustForGitHubPages();
   insertCopyrightAndTracking();

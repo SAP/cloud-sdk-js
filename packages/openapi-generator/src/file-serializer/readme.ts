@@ -1,13 +1,12 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { OpenApiDocument } from '../openapi-types';
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Generate the readme for an openapi client.
  * @param openApiDocument Parsed service.
  * @returns The readme contents.
  */
 export function readme(openApiDocument: OpenApiDocument): string {
-  return `# ${openApiDocument.npmPackageName}
+  return `# ${openApiDocument.serviceOptions.packageName}
 
 This package contains the OpenAPI client for the ${openApiDocument.serviceName}.
 

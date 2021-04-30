@@ -1,25 +1,24 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Generate the package.json for an openapi client so it can be released as an npm module.
- * @param npmPackageName The name of the npm package.
+ * @param packageName The name of the npm package.
  * @param description The description of the  npm package.
  * @param sdkVersion The version of the SAP Cloud SDK used.
  * @param packageVersion The version of the npm package.
  * @returns The package.json contents.
  */
 export function packageJson(
-  npmPackageName: string,
+  packageName: string,
   description: string,
   sdkVersion: string,
-  packageVersion?: string
+  packageVersion: string
 ): string {
   return (
     JSON.stringify(
       {
-        name: npmPackageName,
-        version: packageVersion || '1.0.0',
+        name: packageName,
+        version: packageVersion,
         description,
         homepage: 'https://sap.github.io/cloud-sdk/docs/js/getting-started',
         main: './index.js',

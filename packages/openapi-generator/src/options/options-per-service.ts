@@ -67,7 +67,7 @@ export async function getOptionsPerService(
   const uniqueNameGenerator = new UniqueNameGenerator('-');
   const nonUniqueFiles: string[] = [];
 
-  const optionsPerSerivice: OptionsPerService = inputPaths.reduce(
+  const optionsPerService: OptionsPerService = inputPaths.reduce(
     (optionsPerService, path) => {
       const originalServiceName =
         originalOptionsPerService[path.relativePath]?.serviceName ||

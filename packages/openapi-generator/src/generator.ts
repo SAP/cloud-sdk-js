@@ -261,7 +261,7 @@ async function generateService(
     openApiDocument,
     serviceName,
     serviceOptions,
-    { strictNaming: options.strictNaming }
+    { strictNaming: !options.noStrictNaming }
   );
 
   const serviceDir = resolve(options.outputDir, serviceOptions.directoryName);

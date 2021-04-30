@@ -11,7 +11,7 @@ export interface GeneratorOptions {
   transpile?: boolean;
   include?: string;
   clearOutputDir?: boolean;
-  strictNaming?: boolean;
+  noStrictNaming?: boolean;
   tsConfig?: string;
   packageJson?: boolean;
   optionsPerService?: string;

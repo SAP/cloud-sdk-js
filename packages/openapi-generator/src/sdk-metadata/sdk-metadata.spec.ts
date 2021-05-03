@@ -1,5 +1,4 @@
 import nock = require('nock');
-import { getSdkVersion } from '@sap-cloud-sdk/generator-common';
 import { GeneratorOptions } from '../options';
 import { dummyOpenApiDocument } from '../../test/test-util';
 import { sdkMetadata } from './sdk-metadata';
@@ -12,9 +11,6 @@ describe('sdk-metadata', () => {
     expect(metadata).toMatchSnapshot({
       generationAndUsage: { generatorVersion: expect.any(String) }
     });
-    expect(metadata.generationAndUsage.generatorVersion).toEqual(
-      await getSdkVersion()
-    );
   });
 
   it('generates metadata content for services with pregenerated lib', async () => {

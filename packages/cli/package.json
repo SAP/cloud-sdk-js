@@ -58,7 +58,7 @@
     "@types/listr": "^0.14.2",
     "@types/node": ">=13.9.8",
     "@types/rimraf": "^3.0.0",
-    "fs-extra": "^9.0.0",
+    "fs-extra": "^10.0.0",
     "jest": "^26.6.1",
     "jest-circus": "^26.6.1",
     "jest-extended": "^0.11.5",

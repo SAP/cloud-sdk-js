@@ -14,35 +14,11 @@
 
 ## Compatibility Notes
 
--
-
-## New Functionality
-
--
-
-## Improvements
-
--
-
-## Fixed Issues
-
--
-
-
-# 1.42.0
-
-Release Date: TBD<br>
-API Docs: https://sap.github.io/cloud-sdk/api/1.42.0<br>
-Blog: TBD<br>
-
-## Compatibility Notes
-
 - [core] Use `HEAD` instead of `GET` when fetching CSRF tokens. Change the URL for CSRF token fetching in OData requests from the service URL to the request URL. 
 - [test-util] Use `HEAD` for `mockHeaderRequest()` to align with the core behaviour.
 - [core] Remove experimental `Exclude` type, which was accidentally exposed as non-experimental.
 - [openapi-generator] Rename the CLI generator command from `generate-openapi-client` to `openapi-generator`.
 - [openapi-generator] Rename some generator options and default behavior of those options ([details](./knowledge-base/adr/0020-generator-options.md)).
-
 ## New Functionality
 
 - [core] Support custom axios options for all request builders.
@@ -57,6 +33,11 @@ Blog: TBD<br>
 - [openapi-generator] Introduce `verbose` option to enable verbose logging. 
 - [openapi-generator] Introduce `overwrite` option to allow overwriting of existing files. 
 - [openapi-generator] Introduce `include` option to allow copying files to the generated clients.
+
+## Fixed Issues
+
+-
+
 
 # 1.41.0
 

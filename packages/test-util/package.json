@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/test-util",
-  "version": "1.42.0",
+  "version": "1.41.0",
   "description": "SAP Cloud SDK for JavaScript test utilities",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -31,7 +31,7 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.42.0",
-    "@sap-cloud-sdk/util": "^1.42.0"
+    "@sap-cloud-sdk/core": "^1.41.0",
+    "@sap-cloud-sdk/util": "^1.41.0"
   }
 }

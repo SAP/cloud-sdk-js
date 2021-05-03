@@ -92,7 +92,7 @@ export async function getOptionsPerService(
     {}
   );
 
-  if (duplicateServicePaths.length > 0 && options.strictNaming) {
+  if (duplicateServicePaths.length > 0 && !options.skipValidation) {
     throw new Error(
       `The following service specs lead to non unique service names:${EOL}${duplicateServicePaths.join(
         EOL

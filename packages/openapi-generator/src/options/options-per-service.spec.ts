@@ -169,10 +169,10 @@ describe('getOptionsPerService', () => {
     });
   });
 
-  it('throws for conflicting service names if strict naming is on', async () => {
+  it('throws for conflicting service names if validation is on', async () => {
     await expect(
       getOptionsPerService(['/user/path1/service', '/user/path2/service'], {
-        strictNaming: true
+        skipValidation: false
       } as ParsedGeneratorOptions)
     ).rejects.toMatchInlineSnapshot(`
             [Error: The following service specs lead to non unique service names:
@@ -181,10 +181,10 @@ describe('getOptionsPerService', () => {
           `);
   });
 
-  it('renames for conflicting service names if strict naming is off', async () => {
+  it('renames for conflicting service names if validation is off', async () => {
     await expect(
       getOptionsPerService(['/user/path1/service', '/user/path2/service'], {
-        strictNaming: false
+        skipValidation: true
       } as ParsedGeneratorOptions)
     ).resolves.toEqual({
       'path1/service': {

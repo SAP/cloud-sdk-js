@@ -18,7 +18,7 @@ The steps above will generate a basic TypeScript client. For additional options 
     "text": "Follow the following generation steps to generate the client.",
   },
   "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/openapi-generator",
-  "generatorVersion": "1.41.0",
+  "generatorVersion": Any<String>,
   "genericUsage": Object {
     "instructions": "import { MyApi } from 'my-npm-package';
 

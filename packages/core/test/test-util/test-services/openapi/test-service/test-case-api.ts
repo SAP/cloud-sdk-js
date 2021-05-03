@@ -12,7 +12,7 @@ import type {
 } from './schema';
 /**
  * Representation of the 'TestCaseApi'.
- * This API is part of the 'TestService' service.
+ * This API is part of the 'test-service' service.
  */
 export const TestCaseApi = {
   /**

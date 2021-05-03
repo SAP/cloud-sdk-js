@@ -9,7 +9,7 @@ exports.DefaultApi = void 0;
 var core_1 = require('@sap-cloud-sdk/core');
 /**
  * Representation of the 'DefaultApi'.
- * This API is part of the 'SwaggerYamlService' service.
+ * This API is part of the 'swagger-yaml-service' service.
  */
 exports.DefaultApi = {
   /**

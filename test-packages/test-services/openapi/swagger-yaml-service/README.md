@@ -1,6 +1,6 @@
 # swagger-yaml-service
 
-This package contains the OpenAPI client for the SwaggerYamlService.
+This package contains the OpenAPI client for the swagger-yaml-service.
 
 ### Helpful Links
 

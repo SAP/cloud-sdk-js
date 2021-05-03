@@ -1,4 +1,5 @@
 import nock = require('nock');
+import { getSdkVersion } from '@sap-cloud-sdk/generator-common';
 import { GeneratorOptions } from '../options';
 import { dummyOpenApiDocument } from '../../test/test-util';
 import { sdkMetadata } from './sdk-metadata';
@@ -8,7 +9,9 @@ describe('sdk-metadata', () => {
     const metadata = await sdkMetadata(dummyOpenApiDocument, {
       packageVersion: '1.0.0'
     } as GeneratorOptions);
-    expect(metadata).toMatchSnapshot();
+    expect(metadata).toMatchSnapshot({
+      generationAndUsage: { generatorVersion: await getSdkVersion() }
+    });
     expect(metadata.serviceStatus.status).toBe('verified');
     expect(metadata.pregeneratedLibrary).toBeUndefined();
     expect(metadata.serviceStatus.statusText).toBe(

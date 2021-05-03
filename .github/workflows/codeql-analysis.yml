@@ -7,8 +7,6 @@ name: 'code-ql'
 
 on:
   pull_request: ~
-  schedule:
-    - cron: '0 20 * * *'
 
 jobs:
   analyze:

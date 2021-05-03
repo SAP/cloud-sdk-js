@@ -9,7 +9,7 @@ exports.TestCaseApi = void 0;
 var core_1 = require('@sap-cloud-sdk/core');
 /**
  * Representation of the 'TestCaseApi'.
- * This API is part of the 'TestService' service.
+ * This API is part of the 'test-service' service.
  */
 exports.TestCaseApi = {
   /**

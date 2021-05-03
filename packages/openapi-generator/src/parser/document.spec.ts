@@ -22,10 +22,10 @@ describe('parseOpenApiDocument', () => {
     const clonedInput = JSON.parse(JSON.stringify(input));
     const parsedDocument = parseOpenApiDocument(
       input,
-      'TestService',
       {
         packageName: '@sap/cloud-sdk-openapi-test-service',
-        directoryName: 'test-service'
+        directoryName: 'test-service',
+        serviceName: 'TestService'
       },
       options
     );
@@ -50,10 +50,10 @@ describe('parseOpenApiDocument', () => {
 
     const parsedDocument = await parseOpenApiDocument(
       input,
-      'TestService',
       {
         packageName: '@sap/cloud-sdk-openapi-test-service',
-        directoryName: 'test-service'
+        directoryName: 'test-service',
+        serviceName: 'TestService'
       },
       { strictNaming: false }
     );
@@ -87,8 +87,7 @@ describe('parseOpenApiDocument', () => {
 
     const parsed = await parseOpenApiDocument(
       document,
-      'myService',
-      {} as ServiceOptions,
+      { serviceName: 'myService' } as ServiceOptions,
       options
     );
     expect(parsed.schemas).toStrictEqual([
@@ -116,10 +115,10 @@ describe('parseOpenApiDocument', () => {
 
     const parsedDocument = await parseOpenApiDocument(
       input,
-      'TestService',
       {
         packageName: '@sap/cloud-sdk-openapi-test-service',
-        directoryName: 'test-service'
+        directoryName: 'test-service',
+        serviceName: 'TestService'
       },
       { strictNaming: false }
     );

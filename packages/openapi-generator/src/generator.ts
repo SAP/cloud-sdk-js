@@ -4,7 +4,6 @@ import { promises as promisesFs } from 'fs';
 import { resolve, parse, basename, dirname, join, relative } from 'path';
 import {
   createLogger,
-  UniqueNameGenerator,
   kebabCase,
   finishAll,
   setLogLevel
@@ -33,10 +32,9 @@ import {
   parseGeneratorOptions,
   ParsedGeneratorOptions,
   tsconfigJson,
-  getServiceOptions,
-  getOriginalOptionsPerService,
   ServiceOptions,
-  OptionsPerService
+  OptionsPerService,
+  getOptionsPerService
 } from './options';
 import { sdkMetadata } from './sdk-metadata';
 import { GeneratorOptions } from '.';
@@ -68,36 +66,19 @@ export async function generateWithParsedOptions(
   if (options.clearOutputDir) {
     await rmdir(options.outputDir, { recursive: true });
   }
-
-  const uniqueNameGenerator = new UniqueNameGenerator('-');
   const inputFilePaths = await getInputFilePaths(options.input);
-  const originalOptionsPerService = await getOriginalOptionsPerService(
-    options.optionsPerService
-  );
-  const optionsPerService = {};
+
+  const optionsPerService = await getOptionsPerService(inputFilePaths, options);
   const tsConfig = await tsconfigJson(options);
 
-  const promises = inputFilePaths.map(inputFilePath => {
-    const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
-      parseServiceName(inputFilePath)
-    );
-
-    const relativeFilePath = relative(process.cwd(), inputFilePath);
-
-    optionsPerService[relativeFilePath] = getServiceOptions(
-      originalOptionsPerService,
-      relativeFilePath,
-      uniqueServiceName
-    );
-
-    return generateService(
+  const promises = inputFilePaths.map(inputFilePath =>
+    generateService(
       inputFilePath,
       options,
-      optionsPerService[relativeFilePath],
-      tsConfig,
-      uniqueServiceName
-    );
-  });
+      optionsPerService[getRelativePath(inputFilePath)],
+      tsConfig
+    )
+  );
 
   try {
     const errorMessage =
@@ -233,15 +214,6 @@ async function createSchemaFiles(
 }
 
 /**
- * Parse the name of the service based on the file path.
- * @param filePath Path of the service specification.
- * @returns The parsed name.
- */
-function parseServiceName(filePath: string): string {
-  return parse(filePath).name.replace(/-openapi$/, '');
-}
-
-/**
  * Generates an OpenAPI service from a file.
  * @param inputFilePath The file path where the service to generate is located.
  * @param options Options to configure generation.
@@ -253,13 +225,11 @@ async function generateService(
   inputFilePath: string,
   options: ParsedGeneratorOptions,
   serviceOptions: ServiceOptions,
-  tsConfig: string | undefined,
-  serviceName: string
+  tsConfig: string | undefined
 ): Promise<void> {
   const openApiDocument = await convertOpenApiSpec(inputFilePath);
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
-    serviceName,
     serviceOptions,
     { strictNaming: !options.skipValidation }
   );
@@ -276,6 +246,16 @@ async function generateService(
 }
 
 /**
+ * Gives the relative path with respect tp pocess.cwd()/
+ * @param absolutePath The absolute path
+ * @returns The relative path
+ * @hidden
+ */
+export function getRelativePath(absolutePath: string): string {
+  return relative(process.cwd(), absolutePath);
+}
+
+/**
  * Recursively searches through a given input path and returns all file paths as a string array.
  * @param input the path to the input directory.
  * @returns all file paths as a string array.
@@ -286,12 +266,13 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
   }
 
   const directoryContents = await readdir(input);
+
   return directoryContents.reduce(
     async (paths: Promise<string[]>, directoryContent) => [
       ...(await paths),
       ...(await getInputFilePaths(resolve(input, directoryContent)))
     ],
-    Promise.resolve([])
+    Promise.resolve([] as string[])
   );
 }
 

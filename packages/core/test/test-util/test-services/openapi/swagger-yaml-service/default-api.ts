@@ -7,7 +7,7 @@ import { OpenApiRequestBuilder } from '../../../../../src';
 import type { TestEntity } from './schema';
 /**
  * Representation of the 'DefaultApi'.
- * This API is part of the 'SwaggerYamlService' service.
+ * This API is part of the 'swagger-yaml-service' service.
  */
 export const DefaultApi = {
   /**

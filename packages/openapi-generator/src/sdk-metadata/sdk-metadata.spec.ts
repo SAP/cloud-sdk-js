@@ -10,12 +10,10 @@ describe('sdk-metadata', () => {
       packageVersion: '1.0.0'
     } as GeneratorOptions);
     expect(metadata).toMatchSnapshot({
-      generationAndUsage: { generatorVersion: await getSdkVersion() }
+      generationAndUsage: { generatorVersion: expect.any(String) }
     });
-    expect(metadata.serviceStatus.status).toBe('verified');
-    expect(metadata.pregeneratedLibrary).toBeUndefined();
-    expect(metadata.serviceStatus.statusText).toBe(
-      'The generation process for this API works.'
+    expect(metadata.generationAndUsage.generatorVersion).toEqual(
+      await getSdkVersion()
     );
   });
 
@@ -26,11 +24,8 @@ describe('sdk-metadata', () => {
     const metadata = await sdkMetadata(dummyOpenApiDocument, {
       packageVersion: '1.0.0'
     } as GeneratorOptions);
-    expect(metadata).toMatchSnapshot();
-    expect(metadata.pregeneratedLibrary).toBeDefined();
-    expect(metadata.serviceStatus.status).toBe('certified');
-    expect(metadata.serviceStatus.statusText).toBe(
-      'A pre-generated API client exists.'
-    );
+    expect(metadata).toMatchSnapshot({
+      generationAndUsage: { generatorVersion: expect.any(String) }
+    });
   });
 });

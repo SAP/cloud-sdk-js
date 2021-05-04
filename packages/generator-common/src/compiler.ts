@@ -9,7 +9,7 @@ import {
   ModuleKind,
   ModuleResolutionKind,
   ScriptTarget
-} from 'TypeScript';
+} from 'typescript';
 import {GlobSync} from 'glob';
 import {EOL} from 'os';
 
@@ -119,11 +119,11 @@ function parseScriptTarget(input: string): ScriptTarget {
 
 function parseModuleKind(input: string): ModuleKind {
   const mapping: Record<string, ModuleKind> = {
-   'commonjs':ModuleKind.CommonJS,
-    'amd':ModuleKind.AMD,
-    'es2015':ModuleKind.ES2015,
-    'es2020':ModuleKind.ES2020,
-    'esnext':ModuleKind.ESNext
+   commonjs:ModuleKind.CommonJS,
+    amd:ModuleKind.AMD,
+    es2015:ModuleKind.ES2015,
+    es2020:ModuleKind.ES2020,
+    esnext:ModuleKind.ESNext
   };
 
   if(mapping[input.toLowerCase()]){

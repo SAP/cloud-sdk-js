@@ -5,7 +5,7 @@ import {
   ModuleKind,
   ModuleResolutionKind,
   ScriptTarget
-} from 'TypeScript';
+} from 'typescript';
 import { promises } from 'fs';
 import { resolve } from 'path';
 

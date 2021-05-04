@@ -87,7 +87,7 @@ export async function readCompilerOptions(
   }
 
   if (options.module) {
-    options.module = parseModuleKind(options.target as any);
+    options.module = parseModuleKind(options.module as any);
   }
 
   return options;
@@ -114,7 +114,7 @@ function parseScriptTarget(input: string): ScriptTarget {
   if (mapping[input.toLowerCase()]) {
     return mapping[input.toLowerCase()];
   }
-  logger.warn(`The selected ES target ${input} is not found fallback es5 used`);
+  logger.warn(`The selected ES target ${input} is not found - Fallback es5 used`);
   return ScriptTarget.ES5;
 }
 
@@ -131,7 +131,7 @@ function parseModuleKind(input: string): ModuleKind {
     return mapping[input.toLowerCase()];
   }
   logger.warn(
-    `The selected ES target ${input} is not found fallback commonJS used`
+    `The selected module kind ${input} is not found - Fallback commonJS used`
   );
   return ModuleKind.CommonJS;
 }

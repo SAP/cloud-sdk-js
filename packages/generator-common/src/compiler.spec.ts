@@ -20,6 +20,12 @@ describe('compiler options', () => {
       }),
       'config3/tsconfig.json': JSON.stringify({
         compilerOptions: { lib: ['es5'] }
+      }),
+      'config4/tsconfig.json': JSON.stringify({
+        compilerOptions: { target: 'es2016' }
+      }),
+      'config5/tsconfig.json': JSON.stringify({
+        compilerOptions: { module: 'AMD' }
       })
     });
   });
@@ -38,12 +44,24 @@ describe('compiler options', () => {
     await expect(readCompilerOptions('config1')).resolves.toBeDefined();
   });
 
-  it('parses the module resolution enum', async () => {
+  it('parses the module resolution kind', async () => {
     await expect(readCompilerOptions('config1')).resolves.toEqual({
       moduleResolution: ModuleResolutionKind.NodeJs
     });
     await expect(readCompilerOptions('config2')).resolves.toEqual({
       moduleResolution: ModuleResolutionKind.Classic
+    });
+  });
+
+  it('parses the module script target', async () => {
+    await expect(readCompilerOptions('config4')).resolves.toEqual({
+      target: ScriptTarget.ES2016
+    });
+  });
+
+  it('parses the module kind', async () => {
+    await expect(readCompilerOptions('config5')).resolves.toEqual({
+      module: ModuleKind.AMD
     });
   });
 
@@ -100,10 +118,10 @@ describe('compilation', () => {
   });
 
   it('throws on broken source file', async () => {
-    await expect(
-      transpileDirectory('broken-src', compilerConfig)
-    ).rejects.toThrowError(
-      "broken-src/file.ts:17:3 - error TS2588: Cannot assign to 'foo' because it is a constant."
-    );
+    await expect(transpileDirectory('broken-src', compilerConfig)).rejects
+      .toMatchInlineSnapshot(`
+            [Error: Compilation Errors:
+            /Users/d068544/WebstormProjects/cloud-sdk-second-checkout/packages/generator-common/broken-src/file.ts:17:3 - error TS2588: Cannot assign to 'foo' because it is a constant.]
+          `);
   });
 });

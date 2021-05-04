@@ -72,9 +72,8 @@ export async function readCompilerOptions(
       })
     )['compilerOptions'] || {};
 
-  // TODO map other values to enum later as well
   if (options.moduleResolution) {
-    options.moduleResolution = parseModuleResolutionEnum(
+    options.moduleResolution = parseModuleResolutionKind(
       options.moduleResolution as any
     );
   }
@@ -93,7 +92,7 @@ export async function readCompilerOptions(
   return options;
 }
 
-function parseModuleResolutionEnum(input: string): ModuleResolutionKind {
+function parseModuleResolutionKind(input: string): ModuleResolutionKind {
   return input.includes('node')
     ? ModuleResolutionKind.NodeJs
     : ModuleResolutionKind.Classic;

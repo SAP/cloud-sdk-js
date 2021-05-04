@@ -35,6 +35,8 @@
     "fs-extra": "^10.0.0"
   },
   "devDependencies": {
-    "nock": "^13.0.11"
+    "nock": "^13.0.11",
+    "mock-fs": "^4.13.0",
+    "jest-extended": "^0.11.5"
   }
 }

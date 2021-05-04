@@ -8,6 +8,7 @@ const logger = createLogger('openapi-generator');
  * Executes the TypeScript compilation for the given directory.
  * A valid tsconfig.json needs to be present in the directory.
  * @param path - Directory to be compiled.
+ * @deprecated Since version 1.43.0 Use the transpileDirectory in the generator-common package
  */
 export async function transpileDirectory(path: string): Promise<void> {
   logger.verbose(`Transpiling files in the directory: ${path} started.`);

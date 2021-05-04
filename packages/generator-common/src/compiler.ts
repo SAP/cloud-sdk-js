@@ -43,7 +43,10 @@ export async function transpileDirectory(
 }
 
 function getErrorList(diagnostis: Diagnostic[]): string[] {
-  return diagnostis.map(diagnostic => `${diagnostic.file?.fileName}:${diagnostic.start}:${diagnostic.length} - error TS${diagnostic.code}: ${diagnostic.messageText}`);
+  return diagnostis.map(
+    diagnostic =>
+      `${diagnostic.file?.fileName}:${diagnostic.start}:${diagnostic.length} - error TS${diagnostic.code}: ${diagnostic.messageText}`
+  );
 }
 
 /**
@@ -108,7 +111,7 @@ function parseScriptTarget(input: string): ScriptTarget {
     es2019: ScriptTarget.ES2019,
     es2020: ScriptTarget.ES2020
   };
-  if(mapping[input.toLowerCase()]){
+  if (mapping[input.toLowerCase()]) {
     return mapping[input.toLowerCase()];
   }
   logger.warn(`The selected ES target ${input} is not found fallback es5 used`);
@@ -117,16 +120,18 @@ function parseScriptTarget(input: string): ScriptTarget {
 
 function parseModuleKind(input: string): ModuleKind {
   const mapping: Record<string, ModuleKind> = {
-   commonjs:ModuleKind.CommonJS,
-    amd:ModuleKind.AMD,
-    es2015:ModuleKind.ES2015,
-    es2020:ModuleKind.ES2020,
-    esnext:ModuleKind.ESNext
+    commonjs: ModuleKind.CommonJS,
+    amd: ModuleKind.AMD,
+    es2015: ModuleKind.ES2015,
+    es2020: ModuleKind.ES2020,
+    esnext: ModuleKind.ESNext
   };
 
-  if(mapping[input.toLowerCase()]){
+  if (mapping[input.toLowerCase()]) {
     return mapping[input.toLowerCase()];
   }
-  logger.warn(`The selected ES target ${input} is not found fallback commonJS used`);
+  logger.warn(
+    `The selected ES target ${input} is not found fallback commonJS used`
+  );
   return ModuleKind.CommonJS;
 }

@@ -17,7 +17,9 @@ import {
   getSdkMetadataFileNames,
   getVersionForClient,
   sdkMetadataHeader,
-  getSdkVersion
+  getSdkVersion,
+  transpileDirectory,
+  readCompilerOptions
 } from '@sap-cloud-sdk/generator-common';
 import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
 import { readme as aggregatorReadme } from './aggregator-package/readme';
@@ -32,8 +34,7 @@ import {
 import {
   cloudSdkVdmHack,
   hasEntities,
-  npmCompliantName,
-  transpileDirectory
+  npmCompliantName
 } from './generator-utils';
 import { parseAllServices } from './edmx-to-vdm';
 import { requestBuilderSourceFile } from './request-builder/file';
@@ -80,11 +81,14 @@ export async function generate(options: GeneratorOptions): Promise<void> {
   }
 }
 
-export function transpileDirectories(
+export async function transpileDirectories(
   directories: Directory[]
 ): Promise<void[]> {
   return Promise.all(
-    directories.map(directory => transpileDirectory(directory.getPath()))
+    directories.map(async directory => {
+      const compilerOptions = await readCompilerOptions(directory.getPath());
+      return transpileDirectory(directory.getPath(), compilerOptions);
+    })
   );
 }
 

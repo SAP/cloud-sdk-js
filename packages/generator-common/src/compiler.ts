@@ -114,7 +114,9 @@ function parseScriptTarget(input: string): ScriptTarget {
   if (mapping[input.toLowerCase()]) {
     return mapping[input.toLowerCase()];
   }
-  logger.warn(`The selected ES target ${input} is not found - Fallback es5 used`);
+  logger.warn(
+    `The selected ES target ${input} is not found - Fallback es5 used`
+  );
   return ScriptTarget.ES5;
 }
 

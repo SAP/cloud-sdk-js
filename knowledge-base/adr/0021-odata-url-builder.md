@@ -118,6 +118,29 @@ TripPinService
   .key('scottketchum') // single item can continue linking
   .navigationProp(People.BestFriend)
   .navigationProp(People.BestFriend)
+  .buildGetRequest() //xxxRequestBuilder, which can be called by single item/multi items and others
+  .expand  
+  .customHeaders(headers)
+  .execute(destination)
+```
+### Proposal C variants
+```
+//frank
+People.requestBuilder()
+  .getByKey('key') // xxxRequestBuilder
+  .toFriend('abc') 
+  .toBestFriend()
+  .toFriends() 
+  .getBuilder()//create
+  
+//marika
+People.requestBuilder()
+  .key('scottketchum') 
+  .navigationProp(People.BestFriend)
+  .navigationProp(People.BestFriend)
+  .buildGetRequest() //xxxRequestBuilder, which can be called by single item/multi items and others
+  .customHeaders(headers)
+  .execute(destination)
 ```
 #### Pros and cons:
 Same as `Proposal B`, but with method instead of overloading functions with more parameters.
@@ -151,6 +174,9 @@ Friends.requestBuilder()
 - Cannot be extended for supporting problem 5-7, so we need to find solution for them.
 - The ugly API `asChildOf` is used with additional use cases.
   - Different order: `Entity -> NavigationProp` (url) V.S. `NavigationProp -> Entity` (API usage)
+
+### previous docs
+Find related discussion [here](../implementation-documentation/api-improvements.md)
 
 ## Follow-ups
 

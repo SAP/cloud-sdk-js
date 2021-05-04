@@ -1,5 +1,5 @@
 # Title
-Status: proposed
+Status: in progress
 
 Decision: ??
 
@@ -68,6 +68,9 @@ People.reqeustBuilder()
 ##### Cons:
 - This is a workaround.
 - Not typed
+
+#### Decision:
+At least, implement it as a separate task so we have a workaround for custom URL.
 
 ### Proposal B
 ```ts
@@ -143,7 +146,7 @@ People.requestBuilder()
   .execute(destination)
 ```
 #### Pros and cons:
-Same as `Proposal B`, but with method instead of overloading functions with more parameters.
+Same as `Proposal B`, but with more methods instead of overloading functions with more parameters.
 
 ### Proposal D
 Use the similar API like `asChildOf`
@@ -174,6 +177,9 @@ Friends.requestBuilder()
 - Cannot be extended for supporting problem 5-7, so we need to find solution for them.
 - The ugly API `asChildOf` is used with additional use cases.
   - Different order: `Entity -> NavigationProp` (url) V.S. `NavigationProp -> Entity` (API usage)
+
+#### Decision:
+Not chosen due to the lack of extension and confusing API.
 
 ### previous docs
 Find related discussion [here](../implementation-documentation/api-improvements.md)

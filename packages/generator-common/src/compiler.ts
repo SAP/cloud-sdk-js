@@ -1,6 +1,7 @@
-import {parse, resolve} from 'path';
-import {existsSync, promises} from 'fs';
-import {createLogger} from '@sap-cloud-sdk/util';
+import { parse, resolve } from 'path';
+import { existsSync, promises } from 'fs';
+import { EOL } from 'os';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   CompilerOptions,
   createProgram,
@@ -10,16 +11,15 @@ import {
   ModuleResolutionKind,
   ScriptTarget
 } from 'typescript';
-import {GlobSync} from 'glob';
-import {EOL} from 'os';
+import { GlobSync } from 'glob';
 
 const logger = createLogger('compiler');
 
 /**
  * Executes the TypeScript compilation for the given directory.
  * It recursively compiles all files ending with .ts
- * A valid tsconfig.json needs to be present in the directory.
- * @param path - Directory to be compiled.
+ * @param path Directory to be compiled.
+ * @param compilerOptions Compiler options to be used
  */
 export async function transpileDirectory(
   path: string,
@@ -43,15 +43,13 @@ export async function transpileDirectory(
 }
 
 function getErrorList(diagnostis: Diagnostic[]): string[] {
-  return diagnostis.map(diagnostic => {
-    return `${diagnostic.file?.fileName}:${diagnostic.start}:${diagnostic.length} - error TS${diagnostic.code}: ${diagnostic.messageText}`;
-  });
+  return diagnostis.map(diagnostic => `${diagnostic.file?.fileName}:${diagnostic.start}:${diagnostic.length} - error TS${diagnostic.code}: ${diagnostic.messageText}`);
 }
 
 /**
- * Reads the compiler options from the ts-config.json.
- * @param pathToTsConfig
- * @returns Compiler options read from the tsconfig
+ * Reads and parses the compiler options a tsconfig.json.
+ * @param pathToTsConfig Folder containing or path to a tsconfig.json files
+ * @returns Compiler options from the tsconfig.json
  */
 export async function readCompilerOptions(
   pathToTsConfig: string
@@ -71,7 +69,7 @@ export async function readCompilerOptions(
       })
     )['compilerOptions'] || {};
 
-  //TODO map other values to enum later as well
+  // TODO map other values to enum later as well
   if (options.moduleResolution) {
     options.moduleResolution = parseModuleResolutionEnum(
       options.moduleResolution as any
@@ -111,10 +109,10 @@ function parseScriptTarget(input: string): ScriptTarget {
     es2020: ScriptTarget.ES2020
   };
   if(mapping[input.toLowerCase()]){
-    return mapping[input.toLowerCase()]
+    return mapping[input.toLowerCase()];
   }
-  logger.warn(`The selected ES target ${input} is not found fallback es5 used`)
-  return ScriptTarget.ES5
+  logger.warn(`The selected ES target ${input} is not found fallback es5 used`);
+  return ScriptTarget.ES5;
 }
 
 function parseModuleKind(input: string): ModuleKind {
@@ -127,8 +125,8 @@ function parseModuleKind(input: string): ModuleKind {
   };
 
   if(mapping[input.toLowerCase()]){
-    return mapping[input.toLowerCase()]
+    return mapping[input.toLowerCase()];
   }
-  logger.warn(`The selected ES target ${input} is not found fallback commonJS used`)
-  return ModuleKind.CommonJS
+  logger.warn(`The selected ES target ${input} is not found fallback commonJS used`);
+  return ModuleKind.CommonJS;
 }

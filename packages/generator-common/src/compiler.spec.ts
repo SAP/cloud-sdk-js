@@ -1,13 +1,13 @@
+import { promises } from 'fs';
+import { resolve } from 'path';
 import mock from 'mock-fs';
-import { readCompilerOptions, transpileDirectory } from './compiler';
 import {
   CompilerOptions,
   ModuleKind,
   ModuleResolutionKind,
   ScriptTarget
 } from 'typescript';
-import { promises } from 'fs';
-import { resolve } from 'path';
+import { readCompilerOptions, transpileDirectory } from './compiler';
 
 describe('compiler options', () => {
   beforeAll(() => {

@@ -1,6 +1,6 @@
-import { parse, resolve } from 'path';
-import { existsSync, promises } from 'fs';
-import { createLogger } from '@sap-cloud-sdk/util';
+import {parse, resolve} from 'path';
+import {existsSync, promises} from 'fs';
+import {createLogger} from '@sap-cloud-sdk/util';
 import {
   CompilerOptions,
   createProgram,
@@ -10,8 +10,8 @@ import {
   ModuleResolutionKind,
   ScriptTarget
 } from 'TypeScript';
-import { GlobSync } from 'glob';
-import { EOL } from 'os';
+import {GlobSync} from 'glob';
+import {EOL} from 'os';
 
 const logger = createLogger('compiler');
 
@@ -101,12 +101,34 @@ function parseModuleResolutionEnum(input: string): ModuleResolutionKind {
 function parseScriptTarget(input: string): ScriptTarget {
   const mapping: Record<string, ScriptTarget> = {
     es3: ScriptTarget.ES3,
-    es5: ScriptTarget.ES5
+    es5: ScriptTarget.ES5,
+    esnext: ScriptTarget.ESNext,
+    es2015: ScriptTarget.ES2015,
+    es2016: ScriptTarget.ES2016,
+    es2017: ScriptTarget.ES2017,
+    es2018: ScriptTarget.ES2018,
+    es2019: ScriptTarget.ES2019,
+    es2020: ScriptTarget.ES2020
   };
-
-  return mapping[input] ? mapping[input] : ScriptTarget.ES5;
+  if(mapping[input.toLowerCase()]){
+    return mapping[input.toLowerCase()]
+  }
+  logger.warn(`The selected ES target ${input} is not found fallback es5 used`)
+  return ScriptTarget.ES5
 }
 
 function parseModuleKind(input: string): ModuleKind {
-  return ModuleKind.CommonJS;
+  const mapping: Record<string, ModuleKind> = {
+   'commonjs':ModuleKind.CommonJS,
+    'amd':ModuleKind.AMD,
+    'es2015':ModuleKind.ES2015,
+    'es2020':ModuleKind.ES2020,
+    'esnext':ModuleKind.ESNext
+  };
+
+  if(mapping[input.toLowerCase()]){
+    return mapping[input.toLowerCase()]
+  }
+  logger.warn(`The selected ES target ${input} is not found fallback commonJS used`)
+  return ModuleKind.CommonJS
 }

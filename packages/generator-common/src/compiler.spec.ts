@@ -77,10 +77,10 @@ describe('compilation', () => {
     const rootNodeModules = resolve(__dirname, '../../../node_modules');
     const packageNodeModules = resolve(__dirname, '../node_modules');
     mock({
-      'test-src/file.ts': "export type someOtherType = 'A' | 'B'",
-      'test-src/index.ts': "export * from './file'",
-      'test-src/subfolder/file.ts': "export type someType = 'A' | 'B'",
-      'test-src/subfolder/index.ts': "export * from './file'",
+      'test-src/file-1.ts': "export type someOtherType = 'A' | 'B'",
+      'test-src/index.ts': "export * from './file-1'",
+      'test-src/sub-folder/file-2.ts': "export type someType = 'A' | 'B'",
+      'test-src/sub-folder/index.ts': "export * from './file-2'",
       'broken-src/file.ts': 'const foo = 123; foo = 456;',
       [rootNodeModules]: mock.load(rootNodeModules),
       [packageNodeModules]: mock.load(packageNodeModules)
@@ -105,15 +105,15 @@ describe('compilation', () => {
     await transpileDirectory('test-src', compilerConfig);
     const files = await promises.readdir('test-dist');
     expect(files).toIncludeAnyMembers([
-      'file.js',
-      'file.d.ts',
-      'file.d.ts.map'
+      'file-1.js',
+      'file-1.d.ts',
+      'file-1.d.ts.map'
     ]);
-    const filesSubfolder = await promises.readdir('test-dist/subfolder');
+    const filesSubfolder = await promises.readdir('test-dist/sub-folder');
     expect(filesSubfolder).toIncludeAnyMembers([
-      'file.js',
-      'file.d.ts',
-      'file.d.ts.map'
+      'file-2.js',
+      'file-2.d.ts',
+      'file-2.d.ts.map'
     ]);
   });
 

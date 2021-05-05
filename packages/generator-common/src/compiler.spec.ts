@@ -1,5 +1,6 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
+import { EOL } from 'os';
 import mock from 'mock-fs';
 import {
   CompilerOptions,
@@ -81,7 +82,7 @@ describe('compilation', () => {
       'test-src/index.ts': "export * from './file-1'",
       'test-src/sub-folder/file-2.ts': "export type someType = 'A' | 'B'",
       'test-src/sub-folder/index.ts': "export * from './file-2'",
-      'broken-src/file.ts': 'const foo = 123; foo = 456;',
+      'broken-src/file.ts': `const foo = 1;${EOL}const bar = 1;${EOL}   foo = 2;`,
       [rootNodeModules]: mock.load(rootNodeModules),
       [packageNodeModules]: mock.load(packageNodeModules)
     });
@@ -121,7 +122,7 @@ describe('compilation', () => {
     await expect(
       transpileDirectory('broken-src', compilerConfig)
     ).rejects.toThrowError(
-      "broken-src/file.ts:17:3 - error TS2588: Cannot assign to 'foo' because it is a constant"
+      "broken-src/file.ts:3:4 - error TS2588: Cannot assign to 'foo' because it is a constant"
     );
   });
 

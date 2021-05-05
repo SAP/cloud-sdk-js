@@ -9,7 +9,9 @@ import {
   getPreEmitDiagnostics,
   ModuleKind,
   ModuleResolutionKind,
-  ScriptTarget
+  NodeArray,
+  ScriptTarget,
+  Statement
 } from 'typescript';
 import { GlobSync } from 'glob';
 
@@ -45,10 +47,37 @@ export async function transpileDirectory(
 function getErrorList(diagnostis: Diagnostic[]): string[] {
   return diagnostis.map(diagnostic => {
     if (diagnostic.file) {
-      return `${diagnostic.file.fileName}:${diagnostic.start}:${diagnostic.length} - error TS${diagnostic.code}: ${diagnostic.messageText}`;
+      const { lineNumber, linePosition } = findPositions(
+        diagnostic.file.statements,
+        diagnostic.start
+      );
+
+      return `${diagnostic.file.fileName}:${lineNumber}:${linePosition} - error TS${diagnostic.code}: ${diagnostic.messageText}`;
     }
     return `error TS${diagnostic.code}: ${diagnostic.messageText}`;
   });
+}
+
+function findPositions(
+  statements?: NodeArray<Statement>,
+  errorPosition?: number
+): { lineNumber: number; linePosition: Statement } {
+  if (!statements || statements.length === 0 || !errorPosition) {
+    return { lineNumber: 0, linePosition: 0 };
+  }
+  let response;
+  statements.forEach((statement, index) => {
+    if (statement.pos <= errorPosition && errorPosition < statement.end) {
+      response = {
+        lineNumber: index + 1,
+        linePosition: errorPosition - statement.pos
+      };
+    }
+  });
+  if (!response) {
+    throw new Error('Can not find error position in list of statements.');
+  }
+  return response;
 }
 
 /**

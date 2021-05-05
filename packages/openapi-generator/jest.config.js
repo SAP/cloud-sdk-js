@@ -2,5 +2,6 @@
 const commonConfig = require('../../test-resources/jest.common.config');
 module.exports = {
   ...commonConfig,
-  displayName: 'openapi-generator'
+  displayName: 'openapi-generator',
+  setupFilesAfterEnv: ['jest-extended']
 };

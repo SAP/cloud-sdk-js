@@ -8,12 +8,9 @@ describe('sdk-metadata', () => {
     const metadata = await sdkMetadata(dummyOpenApiDocument, {
       packageVersion: '1.0.0'
     } as GeneratorOptions);
-    expect(metadata).toMatchSnapshot();
-    expect(metadata.serviceStatus.status).toBe('verified');
-    expect(metadata.pregeneratedLibrary).toBeUndefined();
-    expect(metadata.serviceStatus.statusText).toBe(
-      'The generation process for this API works.'
-    );
+    expect(metadata).toMatchSnapshot({
+      generationAndUsage: { generatorVersion: expect.any(String) }
+    });
   });
 
   it('generates metadata content for services with pregenerated lib', async () => {
@@ -23,11 +20,8 @@ describe('sdk-metadata', () => {
     const metadata = await sdkMetadata(dummyOpenApiDocument, {
       packageVersion: '1.0.0'
     } as GeneratorOptions);
-    expect(metadata).toMatchSnapshot();
-    expect(metadata.pregeneratedLibrary).toBeDefined();
-    expect(metadata.serviceStatus.status).toBe('certified');
-    expect(metadata.serviceStatus.statusText).toBe(
-      'A pre-generated API client exists.'
-    );
+    expect(metadata).toMatchSnapshot({
+      generationAndUsage: { generatorVersion: expect.any(String) }
+    });
   });
 });

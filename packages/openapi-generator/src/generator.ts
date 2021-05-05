@@ -12,7 +12,9 @@ import { GlobSync } from 'glob';
 import {
   getSdkMetadataFileNames,
   getSdkVersion,
-  sdkMetadataHeader
+  readCompilerOptions,
+  sdkMetadataHeader,
+  transpileDirectory
 } from '@sap-cloud-sdk/generator-common';
 import {
   apiFile,
@@ -26,7 +28,6 @@ import {
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
-import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
 import {
   parseGeneratorOptions,
@@ -141,7 +142,7 @@ async function generateSources(
       options.overwrite,
       false
     );
-    await transpileDirectory(serviceDir);
+    await transpileDirectory(serviceDir, await readCompilerOptions(serviceDir));
   }
 
   if (options.include) {

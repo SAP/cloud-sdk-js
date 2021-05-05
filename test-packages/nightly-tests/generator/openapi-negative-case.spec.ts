@@ -7,8 +7,7 @@ import {
 } from '../../../test-resources/generator';
 
 describe('openapi negative tests', () => {
-  // TODO Put test back in once the spec validation is put back in.
-  xit('should fail on generation for faulty spec file', async () => {
+  it('should fail on generation for faulty spec file', async () => {
     const output = resolve(
       testOutputRootDir,
       'openapi-negative',
@@ -18,40 +17,73 @@ describe('openapi negative tests', () => {
       execa(
         'npx',
         [
-          'generate-openapi-client',
+          'openapi-generator',
           '-i',
-          resolve(testResourcesDir, 'test-resources', 'faulty-openapi'),
+          resolve(testResourcesDir, 'faulty-openapi'),
           '-o',
           output,
           '--clearOutputDir'
         ],
         { cwd: __dirname }
       )
-      // In the spec file the http method is broken
-    ).rejects.toThrowError('set failed method');
+      // In the spec file the http method is not set
+    ).rejects.toThrowError(
+      'Could not parse APIs. The document does not contain any operations.'
+    );
   }, 120000);
 
-  it('should fail on transpilation on faulty tsconfig', async () => {
+  it('should fail on transpilation on faulty tsconfig - this also checks that --tsConfig switches on transpile', async () => {
     const output = resolve(
       testOutputRootDir,
       'openapi-negative',
-      'transpilation-failed'
+      'transpilation-failed-1'
     );
     await expect(
       execa(
         'npx',
         [
-          'generate-openapi-client',
+          'openapi-generator',
           '-i',
-          resolve(testDir, '../openapi-service-specs'),
+          resolve(testDir, '../openapi-service-specs/test-service.json'),
           '-o',
           output,
+          '--skipValidation',
+          '--clearOutputDir',
           '--tsConfig',
           resolve(testResourcesDir, 'faulty-openapi-tsconfig', 'tsconfig.json')
         ],
         { cwd: __dirname }
       )
-      // In the faulty tsconfig.json file the dom lib has been removed which leads to this compile error
-    ).rejects.toThrowError("Cannot find name 'URL'");
+      // In the faulty tsconfig.json a non existing lib is included
+    ).rejects.toThrowError(
+      "typescript/lib/lib.non-exisiting-lib.d.ts' not found"
+    );
+  }, 120000);
+
+  it('should fail on transpilation on faulty ts source file- this also checks that --include is done before transpile', async () => {
+    const output = resolve(
+      testOutputRootDir,
+      'openapi-negative',
+      'transpilation-failed-2'
+    );
+    await expect(
+      execa(
+        'npx',
+        [
+          'openapi-generator',
+          '-i',
+          resolve(testDir, '../openapi-service-specs/test-service.json'),
+          '-o',
+          output,
+          '--skipValidation',
+          '--clearOutputDir',
+          '--transpile',
+          '--include',
+          resolve(testResourcesDir, 'faulty-typescript', 'faulty-typescript.ts')
+        ],
+        { cwd: __dirname }
+      )
+      // In the faulty tsconfig.json a non existing lib is included
+    ).rejects.toThrowError("Cannot assign to 'foo' because it is a constant.");
   }, 120000);
 });

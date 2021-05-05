@@ -61,7 +61,7 @@ function getErrorList(diagnostis: Diagnostic[]): string[] {
 function findPositions(
   statements?: NodeArray<Statement>,
   errorPosition?: number
-): { lineNumber: number; linePosition: Statement } {
+): { lineNumber: number; linePosition: number } {
   if (!statements || statements.length === 0 || !errorPosition) {
     return { lineNumber: 0, linePosition: 0 };
   }

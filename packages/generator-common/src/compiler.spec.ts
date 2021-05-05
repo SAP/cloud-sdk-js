@@ -117,11 +117,22 @@ describe('compilation', () => {
     ]);
   });
 
-  it('throws on broken source file', async () => {
-    await expect(transpileDirectory('broken-src', compilerConfig)).rejects
-      .toMatchInlineSnapshot(`
-            [Error: Compilation Errors:
-            /Users/d068544/WebstormProjects/cloud-sdk-second-checkout/packages/generator-common/broken-src/file.ts:17:3 - error TS2588: Cannot assign to 'foo' because it is a constant.]
-          `);
+  it('throws error with file information on broken source file', async () => {
+    await expect(
+      transpileDirectory('broken-src', compilerConfig)
+    ).rejects.toThrowError(
+      "broken-src/file.ts:17:3 - error TS2588: Cannot assign to 'foo' because it is a constant"
+    );
+  });
+
+  it('throws error general information on broken module', async () => {
+    await expect(
+      transpileDirectory('test-src', {
+        ...compilerConfig,
+        lib: ['non-exisiting-lib']
+      })
+    ).rejects.toThrowError(
+      /error TS6231: Could not resolve the path .* with the extensions: '\.ts', '\.tsx', '\.d\.ts'\./
+    );
   });
 });

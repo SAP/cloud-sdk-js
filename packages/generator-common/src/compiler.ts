@@ -43,10 +43,12 @@ export async function transpileDirectory(
 }
 
 function getErrorList(diagnostis: Diagnostic[]): string[] {
-  return diagnostis.map(
-    diagnostic =>
-      `${diagnostic.file?.fileName}:${diagnostic.start}:${diagnostic.length} - error TS${diagnostic.code}: ${diagnostic.messageText}`
-  );
+  return diagnostis.map(diagnostic => {
+    if (diagnostic.file) {
+      return `${diagnostic.file.fileName}:${diagnostic.start}:${diagnostic.length} - error TS${diagnostic.code}: ${diagnostic.messageText}`;
+    }
+    return `error TS${diagnostic.code}: ${diagnostic.messageText}`;
+  });
 }
 
 /**

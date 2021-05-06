@@ -2,7 +2,6 @@ import { fail } from 'assert';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import { providerXsuaaUrl } from '../../../test/test-util/environment-mocks';
-import * as httpClient from '../../http-client/http-client';
 import {
   clientCredentialsGrant,
   fetchVerificationKeys,
@@ -10,18 +9,7 @@ import {
   userTokenGrant
 } from './xsuaa-service';
 import { TokenKey } from './xsuaa-service-types';
-import { Destination } from './destination';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
-import { Protocol } from './protocol';
-
-const expectedResponse200 = {
-  access_token: 'sometoken',
-  token_type: 'bearer',
-  expires_in: 0,
-  scope: 'some scopes',
-  jti: 'uhm'
-};
-
 describe('xsuaa', () => {
   const creds = {
     username: 'horsti',
@@ -32,110 +20,93 @@ describe('xsuaa', () => {
     url: providerXsuaaUrl
   } as XsuaaServiceCredentials;
 
-  describe('web proxy handling', () => {
-    it('includes the proxy if present', async () => {
-      nock(providerXsuaaUrl, {
-        reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
-      })
-        .post('/oauth/token', 'grant_type=client_credentials')
-        .reply(200, expectedResponse200);
-      process.env.https_proxy = 'http://some.test.proxy.com:1234';
-      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      const response = await clientCredentialsGrant(
-        providerXsuaaClientCredentials,
-        creds
-      );
-      const expectedDestination: Destination = {
-        url: 'https://provider.example.com/oauth/token',
-        proxyType: 'Internet',
-        proxyConfiguration: {
-          host: 'some.test.proxy.com',
-          protocol: Protocol.HTTP,
-          port: 1234
-        }
-      };
-
-      expect(spy).toHaveBeenCalledWith(expectedDestination, expect.anything());
-    });
-
-    it('considers the no_proxy if present', async () => {
-      nock(providerXsuaaUrl, {
-        reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
-      })
-        .post('/oauth/token', 'grant_type=client_credentials')
-        .reply(200, expectedResponse200);
-      process.env.https_proxy = 'http://some.test.proxy.com:1234';
-      process.env.no_proxy = 'https://provider.example.com/oauth/token';
-      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      const response = await clientCredentialsGrant(
-        providerXsuaaClientCredentials,
-        creds
-      );
-      const expectedDestination: Destination = {
-        url: 'https://provider.example.com/oauth/token',
-        proxyType: 'Internet'
-      };
-
-      expect(spy).toHaveBeenCalledWith(expectedDestination, expect.anything());
-    });
-  });
-
   describe('clientCredentialsGrant', () => {
     it('returns a valid token for a given set of client credentials when the url comes from XsuaaServiceCredentials', async () => {
+      const expectedResponse = {
+        access_token: 'sometoken',
+        token_type: 'bearer',
+        expires_in: 0,
+        scope: 'some scopes',
+        jti: 'uhm'
+      };
+
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
       })
         .post('/oauth/token', 'grant_type=client_credentials')
-        .reply(200, expectedResponse200);
+        .reply(200, expectedResponse);
 
       const response = await clientCredentialsGrant(
         providerXsuaaClientCredentials,
         creds
       );
-      expect(response).toEqual(expectedResponse200);
+      expect(response).toEqual(expectedResponse);
     });
 
     it('does not change the given token service URL if a string is passed', async () => {
+      const expectedResponse = {
+        access_token: 'sometoken',
+        token_type: 'bearer',
+        expires_in: 0,
+        scope: 'some scopes',
+        jti: 'uhm'
+      };
+
       nock('https://some.token.service.url.com', {
         reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
       })
         .post('/token/path', 'grant_type=client_credentials')
-        .reply(200, expectedResponse200);
+        .reply(200, expectedResponse);
 
       const response = await clientCredentialsGrant(
         'https://some.token.service.url.com/token/path',
         creds
       );
-      expect(response).toEqual(expectedResponse200);
+      expect(response).toEqual(expectedResponse);
     });
 
     it('adds /oauth/token if the XsuaaServiceCredentials are passed', async () => {
+      const expectedResponse = {
+        access_token: 'sometoken',
+        token_type: 'bearer',
+        expires_in: 0,
+        scope: 'some scopes',
+        jti: 'uhm'
+      };
+
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
       })
         .post('/oauth/token', 'grant_type=client_credentials')
-        .reply(200, expectedResponse200);
+        .reply(200, expectedResponse);
 
       const response = await clientCredentialsGrant(
         providerXsuaaClientCredentials,
         creds
       );
-      expect(response).toEqual(expectedResponse200);
+      expect(response).toEqual(expectedResponse);
     });
 
     it('returns a valid token for a given set of client credentials when the url comes from destination', async () => {
       const tokenUrlEndpointAndPathParam =
         '/oauth/token?grant_type=client_credentials';
       const tokenUrl = `${providerXsuaaUrl}${tokenUrlEndpointAndPathParam}`;
+      const expectedResponse = {
+        access_token: 'sometoken',
+        token_type: 'bearer',
+        expires_in: 0,
+        scope: 'some scopes',
+        jti: 'uhm'
+      };
 
       nock(providerXsuaaUrl, {
         reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
       })
         .post(tokenUrlEndpointAndPathParam, 'grant_type=client_credentials')
-        .reply(200, expectedResponse200);
+        .reply(200, expectedResponse);
 
       const response = await clientCredentialsGrant(tokenUrl, creds);
-      expect(response).toEqual(expectedResponse200);
+      expect(response).toEqual(expectedResponse);
     });
 
     it('returns 401 on wrong credentials', async () => {
@@ -495,8 +466,7 @@ describe('xsuaa', () => {
 function reqHeaders(authHeader: string) {
   return {
     authorization: authHeader,
-    'content-type': 'application/x-www-form-urlencoded',
-    accept: 'application/json',
-    'user-agent': 'axios/0.21.1'
+    'Content-Type': 'application/x-www-form-urlencoded',
+    accept: 'application/json'
   };
 }

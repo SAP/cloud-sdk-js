@@ -3,24 +3,14 @@ import {
   ErrorWithCause,
   propertyExists
 } from '@sap-cloud-sdk/util';
-import { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import {
-  executeHttpRequest,
-  getAxiosConfigWithDefaults,
-  HttpRequestConfig,
-  HttpResponse
-} from '../../../http-client';
+import { getAxiosConfigWithDefaults } from '../../../http-client';
 import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
 } from '../resilience-options';
 import { CachingOptions } from '../cache';
-import {
-  addProxyConfigurationInternet,
-  ProxyStrategy,
-  proxyStrategy
-} from '../proxy-util';
 import { parseDestination } from './destination';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
@@ -221,31 +211,24 @@ function callDestinationService(
   uri: string,
   headers: Record<string, any>,
   options: ResilienceOptions = { enableCircuitBreaker: true }
-): Promise<HttpResponse> {
-  const config: HttpRequestConfig = {
+): AxiosPromise {
+  const config: AxiosRequestConfig = {
     ...getAxiosConfigWithDefaults(),
     url: uri,
-    method: 'GET',
     headers
   };
-
-  let destination: Destination = { url: uri, proxyType: 'Internet' };
-  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
-    destination = addProxyConfigurationInternet(destination);
-  }
 
   if (
     options.enableCircuitBreaker ||
     options.enableCircuitBreaker === undefined
   ) {
-    return getInstanceCircuitBreaker().fire(destination, config);
+    return getInstanceCircuitBreaker().fire(uri, config);
   }
-
-  return executeHttpRequest(destination, config);
+  return axios.request(config);
 }
 
 function getInstanceCircuitBreaker(breaker?: any): any {
   return typeof breaker === 'undefined'
-    ? new CircuitBreaker(executeHttpRequest, circuitBreakerDefaultOptions)
+    ? new CircuitBreaker(axios.get, circuitBreakerDefaultOptions)
     : breaker;
 }

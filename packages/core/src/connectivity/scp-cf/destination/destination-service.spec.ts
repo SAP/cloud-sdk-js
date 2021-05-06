@@ -19,7 +19,6 @@ const jwt = jwt123.sign(
   }
 );
 
-//test
 const basicDestination = {
   Name: 'HTTP-BASIC',
   Type: 'HTTP',

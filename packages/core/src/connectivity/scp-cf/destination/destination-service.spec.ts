@@ -10,7 +10,7 @@ import {
   fetchInstanceDestinations,
   fetchSubaccountDestinations
 } from './destination-service';
-//test
+
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
   privateKey(),
@@ -19,6 +19,7 @@ const jwt = jwt123.sign(
   }
 );
 
+//test
 const basicDestination = {
   Name: 'HTTP-BASIC',
   Type: 'HTTP',

@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [odata] Support appending path to the generated url for all request builders, which can be used for some unsupported OData functionalities like querying navigation properties.
 
 ## Improvements
 

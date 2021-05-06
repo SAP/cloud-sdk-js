@@ -132,6 +132,12 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
+  /**
+   * Append additional path to the generated path. Typically, this can be used for querying navigation properties of an entity.
+   * When this function is used, the "execute" function of the request builder is disabled and use "executeRaw" instead.
+   * @param path Path to be appended.
+   * @returns The request builder itself without "execute" function, to facilitate method chaining.
+   */
   appendPath(path: string): Omit<this, 'execute'> {
     this.requestConfig.appendPath(path);
     return this;

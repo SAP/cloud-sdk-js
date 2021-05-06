@@ -10,11 +10,10 @@ import {
   createTestEntity
 } from '../../../test/test-util/test-data';
 import {
-  TestEntity, TestEntityMultiLink,
+  TestEntity,
   TestEntitySingleLink
 } from '../../../test/test-util/test-services/v2/test-service';
 import { GetAllRequestBuilder } from './get-all-request-builder';
-import { deserializeEntity } from '../entity-deserializer';
 
 describe('GetAllRequestBuilder', () => {
   let requestBuilder: GetAllRequestBuilder<TestEntity>;
@@ -83,11 +82,7 @@ describe('GetAllRequestBuilder', () => {
         responseBody: { d: { results: [entityData1, entityData2] } }
       });
 
-      const results = (await requestBuilder.executeRaw(defaultDestination)).data.d.results;
-
-      const actual = results.map(result =>
-        deserializeEntity(result, TestEntity) as TestEntity
-      );
+      const actual = await requestBuilder.execute(defaultDestination);
       expect(actual).toEqual([
         createTestEntity(entityData1),
         createTestEntity(entityData2)

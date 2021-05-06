@@ -41,12 +41,14 @@ xdescribe('Request builder', () => {
   });
 
   it('should return a collection all friends of a person', async () => {
-    const people = (await People.requestBuilder()
-      .getByKey('russellwhyte')
-      .appendPath('/Friends')
-      .executeRaw(destination)).data.value as any[];
-    const actual = people.map(person =>
-      deserializeEntityV4(person, People) as People
+    const people = (
+      await People.requestBuilder()
+        .getByKey('russellwhyte')
+        .appendPath('/Friends')
+        .executeRaw(destination)
+    ).data.value as any[];
+    const actual = people.map(
+      person => deserializeEntityV4(person, People) as People
     );
     expect(actual.length).toEqual(4);
     expect(actual).toEqual(

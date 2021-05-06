@@ -14,8 +14,8 @@ import {
   TestEntity,
   TestEntityMultiLink
 } from '../../../test/test-util/test-services/v2/test-service';
-import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 import { deserializeEntity } from '../entity-deserializer';
+import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 describe('GetByKeyRequestBuilder', () => {
   describe('url', () => {
@@ -33,7 +33,7 @@ describe('GetByKeyRequestBuilder', () => {
       expect(actual).toMatch(expected);
     });
   });
-  //todo
+
   describe('execute', () => {
     it('returns entity by key', async () => {
       const entityData = createOriginalTestEntityData1();
@@ -47,14 +47,12 @@ describe('GetByKeyRequestBuilder', () => {
         responseBody: { d: entityData }
       });
 
-      const actual = (await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilder(TestEntity, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
-      }).executeRaw(defaultDestination)).data.d;
-      const d = deserializeEntity(actual, TestEntity) as TestEntity;
-      expect(d).toEqual(expected);
-      // expect(actual).toEqual(expected);
-      // expect(actual.versionIdentifier).toBeUndefined();
+      }).execute(defaultDestination);
+      expect(actual).toEqual(expected);
+      expect(actual.versionIdentifier).toBeUndefined();
     });
 
     it('etag should be pulled from __metadata', async () => {
@@ -164,8 +162,9 @@ describe('GetByKeyRequestBuilder', () => {
           .appendPath('/to_MultiLink')
           .executeRaw(defaultDestination)
       ).data.d.results as any[];
-      const actual = results.map(result =>
-        deserializeEntity(result, TestEntityMultiLink) as TestEntityMultiLink
+      const actual = results.map(
+        result =>
+          deserializeEntity(result, TestEntityMultiLink) as TestEntityMultiLink
       );
       expect(actual).toEqual(expected);
     });

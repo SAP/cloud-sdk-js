@@ -7,4 +7,4 @@ import type { SimpleTestEntity } from './simple-test-entity';
 /**
  * SimpleTestEntity schema
  */
-export type SimpleTestEntityWITHSymbols1 = SimpleTestEntity;
+export type SimpleTestEntityWITHSymbols_1 = SimpleTestEntity;

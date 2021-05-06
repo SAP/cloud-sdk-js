@@ -6,6 +6,7 @@ import { SchemaNaming } from '../openapi-types';
 import { SchemaRefMapping } from './parsing-info';
 import { ensureUniqueNames } from './unique-naming';
 import { ParserOptions } from './options';
+import { ensureUValidSchemaNames } from './schema-naming';
 
 /**
  * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.
@@ -52,11 +53,15 @@ export class OpenApiDocumentRefs {
     options: ParserOptions
   ): SchemaRefMapping {
     const originalNames = Object.keys(document.components?.schemas || {});
-    const schemaNames = ensureUniqueNames(originalNames, options, {
-      format: pascalCase
+    const validSchemaNames = ensureUValidSchemaNames(originalNames, options);
+
+    const schemaNames = ensureUniqueNames(validSchemaNames, options, {
+      format: pascalCase,
+      separator: '_'
     });
     const fileNames = ensureUniqueNames(schemaNames, options, {
       format: kebabCase,
+      separator: '-',
       reservedWords: ['index']
     });
 

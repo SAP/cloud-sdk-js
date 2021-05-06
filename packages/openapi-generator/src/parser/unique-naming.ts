@@ -11,6 +11,7 @@ import { ParserOptions } from './options';
  * @param namingOptions Object containing options to configure the transformation.
  * @param options.format Function to format the name. Defaults to camel case.
  * @param options.reservedWords Reserved words that should be handled as duplicates.
+ * @param options.separator Character between index and original name
  * @returns Unique names in the given order.
  */
 export function ensureUniqueNames(
@@ -19,9 +20,11 @@ export function ensureUniqueNames(
   namingOptions?: {
     format?: (name: string) => string;
     reservedWords?: string[];
+    separator?: string;
   }
 ): string[] {
-  const { format = camelCase, reservedWords = [] } = namingOptions || {};
+  const { format = camelCase, reservedWords = [], separator = '' } =
+    namingOptions || {};
 
   if (options.strictNaming) {
     const formattedNames = names.map(originalName => format(originalName));
@@ -32,7 +35,7 @@ export function ensureUniqueNames(
       getDuplicateErrorMessage(names, formattedNames, reservedWords)
     );
   }
-  return deduplicateNames(names, { format, reservedWords });
+  return deduplicateNames(names, { format, reservedWords, separator });
 }
 
 /**
@@ -67,16 +70,18 @@ export function deduplicateNames(
   namingOptions?: {
     format?: (name: string) => string;
     reservedWords?: string[];
+    separator?: string;
   }
 ): string[] {
-  const { format = camelCase, reservedWords = [] } = namingOptions || {};
+  const { format = camelCase, reservedWords = [], separator = '' } =
+    namingOptions || {};
   const nonConflictingNames = getNonConflictingNames(
     names,
     format,
     reservedWords
   );
 
-  const nameGenerator = new UniqueNameGenerator('', [
+  const nameGenerator = new UniqueNameGenerator(separator, [
     ...reservedWords,
     ...nonConflictingNames
   ]);

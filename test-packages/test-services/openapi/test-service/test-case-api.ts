@@ -7,11 +7,12 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import type {
   SimpleTestEntity,
   ComplexTestEntity,
-  SimpleTestEntityWITHSymbols
+  SimpleTestEntityWITHSymbols,
+  Schema123456
 } from './schema';
 /**
  * Representation of the 'TestCaseApi'.
- * This API is part of the 'TestService' service.
+ * This API is part of the 'test-service' service.
  */
 export const TestCaseApi = {
   /**
@@ -97,7 +98,7 @@ export const TestCaseApi = {
    * Create a request builder for execution of put requests to the '/test-cases/duplicate-operation-ids' endpoint.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
-  duplicateOperationId2: () =>
+  duplicateOperationId1_1: () =>
     new OpenApiRequestBuilder<any>(
       'put',
       '/test-cases/duplicate-operation-ids'
@@ -106,7 +107,7 @@ export const TestCaseApi = {
    * Create a request builder for execution of post requests to the '/test-cases/duplicate-operation-ids' endpoint.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
-  duplicateOperationId3: () =>
+  duplicateOperationId_1: () =>
     new OpenApiRequestBuilder<any>(
       'post',
       '/test-cases/duplicate-operation-ids'
@@ -151,6 +152,15 @@ export const TestCaseApi = {
    */
   useNameWithSymbols: (body: SimpleTestEntityWITHSymbols | undefined) =>
     new OpenApiRequestBuilder<any>('post', '/test-cases/complex-schemas', {
+      body
+    }),
+  /**
+   * Create a request builder for execution of get requests to the '/test-cases/schema-name-integer' endpoint.
+   * @param body Request body.
+   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   */
+  schemaNameInteger: (body: Schema123456 | undefined) =>
+    new OpenApiRequestBuilder<any>('get', '/test-cases/schema-name-integer', {
       body
     }),
   /**

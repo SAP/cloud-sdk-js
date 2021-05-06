@@ -6,7 +6,7 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 /**
  * Representation of the 'TagDotApi'.
- * This API is part of the 'TestService' service.
+ * This API is part of the 'test-service' service.
  */
 export const TagDotApi = {
   /**

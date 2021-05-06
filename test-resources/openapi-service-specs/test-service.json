@@ -617,10 +617,39 @@
           }
         }
       }
+    },
+    "/test-cases/schema-name-integer": {
+      "get": {
+        "tags": ["test case"],
+        "operationId": "schemaNameInteger",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/123456"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "no content"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "123456": {
+        "type": "object",
+        "properties": {
+          "someProperty": {
+            "type": "string",
+            "example": "Schema name only integers"
+          }
+        }
+      },
       "TestEntity": {
         "type": "object",
         "required": ["keyProperty"],

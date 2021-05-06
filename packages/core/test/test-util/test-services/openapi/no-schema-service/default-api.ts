@@ -6,7 +6,7 @@
 import { OpenApiRequestBuilder } from '../../../../../src';
 /**
  * Representation of the 'DefaultApi'.
- * This API is part of the 'NoSchemaService' service.
+ * This API is part of the 'no-schema-service' service.
  */
 export const DefaultApi = {
   /**

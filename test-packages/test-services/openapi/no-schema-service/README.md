@@ -1,6 +1,6 @@
 # no-schema-service
 
-This package contains the OpenAPI client for the NoSchemaService.
+This package contains the OpenAPI client for the no-schema-service.
 
 ### Helpful Links
 

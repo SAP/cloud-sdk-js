@@ -9,7 +9,7 @@ exports.DefaultApi = void 0;
 var core_1 = require('@sap-cloud-sdk/core');
 /**
  * Representation of the 'DefaultApi'.
- * This API is part of the 'NoSchemaService' service.
+ * This API is part of the 'no-schema-service' service.
  */
 exports.DefaultApi = {
   /**

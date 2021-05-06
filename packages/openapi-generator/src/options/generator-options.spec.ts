@@ -26,7 +26,7 @@ describe('parseGeneratorOptions', () => {
       transpile: false,
       include: undefined,
       clearOutputDir: false,
-      strictNaming: true,
+      skipValidation: false,
       tsConfig: undefined,
       packageJson: false,
       optionsPerService: undefined,

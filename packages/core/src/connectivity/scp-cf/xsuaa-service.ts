@@ -4,12 +4,7 @@ import {
   ErrorWithCause,
   renameKeys
 } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig } from 'axios';
-import {
-  executeHttpRequest,
-  HttpRequestConfig,
-  HttpResponse
-} from '../../http-client';
+import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
@@ -21,12 +16,6 @@ import {
   TokenKey,
   UserTokenResponse
 } from './xsuaa-service-types';
-import { Destination } from './destination';
-import {
-  addProxyConfigurationInternet,
-  ProxyStrategy,
-  proxyStrategy
-} from './proxy-util';
 
 // For some reason, the equivalent import statement does not work
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
@@ -260,17 +249,12 @@ function post(
   authHeader: string,
   body: string,
   options: ResilienceOptions = { enableCircuitBreaker: true }
-): Promise<HttpResponse> {
-  const config = wrapXsuaaPostRequestHeader(authHeader, body);
+): AxiosPromise {
+  const config = wrapXsuaaPostRequestHeader(authHeader);
   const targetUri =
     typeof tokenServiceUrlOrXsuaaServiceCredentials === 'string'
       ? tokenServiceUrlOrXsuaaServiceCredentials
       : getTokenServiceUrl(tokenServiceUrlOrXsuaaServiceCredentials);
-
-  let destination: Destination = { url: targetUri, proxyType: 'Internet' };
-  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
-    destination = addProxyConfigurationInternet(destination);
-  }
 
   if (
     options.enableCircuitBreaker ||
@@ -282,19 +266,13 @@ function post(
       throw new Error('The xsuaa circuit breaker is undefined.');
     }
 
-    return xsuaaCircuitBreaker!.fire(destination, config);
+    return xsuaaCircuitBreaker!.fire(targetUri, body, config);
   }
-
-  return executeHttpRequest(destination, config);
+  return axios.post(targetUri, body, config);
 }
 
-function wrapXsuaaPostRequestHeader(
-  authHeader: string,
-  body: string
-): HttpRequestConfig {
+function wrapXsuaaPostRequestHeader(authHeader: string): AxiosRequestConfig {
   return {
-    method: 'post',
-    data: body,
     headers: {
       Authorization: authHeader,
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -345,7 +323,7 @@ function accessTokenError(error: Error, grant: string): Error {
 
 function getInstanceCircuitBreaker(breaker?: any | undefined): any {
   return typeof breaker === 'undefined'
-    ? new CircuitBreaker(executeHttpRequest, circuitBreakerDefaultOptions)
+    ? new CircuitBreaker(axios.post, circuitBreakerDefaultOptions)
     : breaker;
 }
 

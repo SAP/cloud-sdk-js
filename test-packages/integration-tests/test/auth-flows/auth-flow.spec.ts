@@ -149,21 +149,9 @@ describe('OAuth flows', () => {
   }, 60000);
 
   xit('ClientCertificate: Fetches the certificate and uses it', async () => {
-    const destination = await getDestination('CC8-HTTP-CERT');
-    expect(destination!.certificates!.length).toBe(1);
-    const bps = await BusinessPartner.requestBuilder()
-      .getAll()
-      .top(5)
-      .execute(destination!);
-    expect(bps.length).toBeGreaterThan(0);
-  }, 10000);
-
-  // The axios does currently not support that the client cert socket is forwarded via a proxy:https://github.com/TooTallNate/node-https-proxy-agent/pull/111
-  // Hence as a workaround it is possible to disable the proxy if it is not mandatory to pass the request.
-  it('ClientCertificate: Fetches the certificate and uses it - ignoring broken proxy', async () => {
     process.env.HTTPS_PROXY = 'http://someHost:1234';
     process.env.NO_PROXY =
-      'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token,https://my300470-api.s4hana.ondemand.com';
+      'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token';
 
     const destination = await getDestination('CC8-HTTP-CERT');
     expect(destination!.certificates!.length).toBe(1);

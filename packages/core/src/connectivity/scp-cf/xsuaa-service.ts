@@ -4,7 +4,12 @@ import {
   ErrorWithCause,
   renameKeys
 } from '@sap-cloud-sdk/util';
-import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+import {
+  executeHttpRequest,
+  HttpRequestConfig,
+  HttpResponse
+} from '../../http-client';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
@@ -16,6 +21,12 @@ import {
   TokenKey,
   UserTokenResponse
 } from './xsuaa-service-types';
+import { Destination } from './destination';
+import {
+  addProxyConfigurationInternet,
+  ProxyStrategy,
+  proxyStrategy
+} from './proxy-util';
 
 // For some reason, the equivalent import statement does not work
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
@@ -200,8 +211,8 @@ export function fetchVerificationKeys(
     if (!clientIdOrJku) {
       logger.warn(
         'JKU field from the JWT not provided. Use xsuaaClient.url/token_keys as fallback. ' +
-          'This will not work for subscriber accounts created after 14th of April 2020.' +
-          'Please provide the right URL given by the field JKU present in the JWT header.'
+        'This will not work for subscriber accounts created after 14th of April 2020.' +
+        'Please provide the right URL given by the field JKU present in the JWT header.'
       );
     }
     return fetchVerificationKeys(
@@ -249,12 +260,17 @@ function post(
   authHeader: string,
   body: string,
   options: ResilienceOptions = { enableCircuitBreaker: true }
-): AxiosPromise {
-  const config = wrapXsuaaPostRequestHeader(authHeader);
+): Promise<HttpResponse> {
+  const config = wrapXsuaaPostRequestHeader(authHeader, body);
   const targetUri =
     typeof tokenServiceUrlOrXsuaaServiceCredentials === 'string'
       ? tokenServiceUrlOrXsuaaServiceCredentials
       : getTokenServiceUrl(tokenServiceUrlOrXsuaaServiceCredentials);
+
+  let destination: Destination = { url: targetUri, proxyType: 'Internet' };
+  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
+    destination = addProxyConfigurationInternet(destination);
+  }
 
   if (
     options.enableCircuitBreaker ||
@@ -266,13 +282,19 @@ function post(
       throw new Error('The xsuaa circuit breaker is undefined.');
     }
 
-    return xsuaaCircuitBreaker!.fire(targetUri, body, config);
+    return xsuaaCircuitBreaker!.fire(destination, config);
   }
-  return axios.post(targetUri, body, config);
+
+  return executeHttpRequest(destination, config);
 }
 
-function wrapXsuaaPostRequestHeader(authHeader: string): AxiosRequestConfig {
+function wrapXsuaaPostRequestHeader(
+  authHeader: string,
+  body: string
+): HttpRequestConfig {
   return {
+    method: 'post',
+    data: body,
     headers: {
       Authorization: authHeader,
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -323,7 +345,7 @@ function accessTokenError(error: Error, grant: string): Error {
 
 function getInstanceCircuitBreaker(breaker?: any | undefined): any {
   return typeof breaker === 'undefined'
-    ? new CircuitBreaker(axios.post, circuitBreakerDefaultOptions)
+    ? new CircuitBreaker(executeHttpRequest, circuitBreakerDefaultOptions)
     : breaker;
 }
 

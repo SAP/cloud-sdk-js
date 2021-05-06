@@ -41,10 +41,7 @@ describe('xsuaa', () => {
         .reply(200, expectedResponse200);
       process.env.https_proxy = 'http://some.test.proxy.com:1234';
       const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      const response = await clientCredentialsGrant(
-        providerXsuaaClientCredentials,
-        creds
-      );
+      await clientCredentialsGrant(providerXsuaaClientCredentials, creds);
       const expectedDestination: Destination = {
         url: 'https://provider.example.com/oauth/token',
         proxyType: 'Internet',
@@ -56,6 +53,7 @@ describe('xsuaa', () => {
       };
 
       expect(spy).toHaveBeenCalledWith(expectedDestination, expect.anything());
+      delete process.env.https_proxy;
     });
 
     it('considers the no_proxy if present', async () => {
@@ -67,16 +65,15 @@ describe('xsuaa', () => {
       process.env.https_proxy = 'http://some.test.proxy.com:1234';
       process.env.no_proxy = 'https://provider.example.com/oauth/token';
       const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      const response = await clientCredentialsGrant(
-        providerXsuaaClientCredentials,
-        creds
-      );
+      await clientCredentialsGrant(providerXsuaaClientCredentials, creds);
       const expectedDestination: Destination = {
         url: 'https://provider.example.com/oauth/token',
         proxyType: 'Internet'
       };
 
       expect(spy).toHaveBeenCalledWith(expectedDestination, expect.anything());
+      delete process.env.https_proxy;
+      delete process.env.no_proxy;
     });
   });
 

@@ -211,8 +211,8 @@ export function fetchVerificationKeys(
     if (!clientIdOrJku) {
       logger.warn(
         'JKU field from the JWT not provided. Use xsuaaClient.url/token_keys as fallback. ' +
-        'This will not work for subscriber accounts created after 14th of April 2020.' +
-        'Please provide the right URL given by the field JKU present in the JWT header.'
+          'This will not work for subscriber accounts created after 14th of April 2020.' +
+          'Please provide the right URL given by the field JKU present in the JWT header.'
       );
     }
     return fetchVerificationKeys(

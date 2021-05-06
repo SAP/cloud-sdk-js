@@ -314,11 +314,7 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      const actual = await fetchDestination(
-        destinationServiceUri,
-        jwt,
-        destinationName
-      );
+      await fetchDestination(destinationServiceUri, jwt, destinationName);
       const expectedArgument: Destination = {
         url:
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
@@ -330,6 +326,7 @@ describe('destination service', () => {
         }
       };
       expect(spy).toHaveBeenCalledWith(expectedArgument, expect.anything());
+      delete process.env.HTTPS_PROXY;
     });
 
     it('fetches a destination considering no_proxy', async () => {
@@ -364,17 +361,15 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      const actual = await fetchDestination(
-        destinationServiceUri,
-        jwt,
-        destinationName
-      );
+      await fetchDestination(destinationServiceUri, jwt, destinationName);
       const expectedArgument: Destination = {
         url:
           'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         proxyType: 'Internet'
       };
       expect(spy).toHaveBeenCalledWith(expectedArgument, expect.anything());
+      delete process.env.HTTPS_PROXY;
+      delete process.env.no_proxy;
     });
 
     it('fetches a destination and returns 200 but authTokens are failing', async () => {

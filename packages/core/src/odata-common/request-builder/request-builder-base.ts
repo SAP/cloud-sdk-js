@@ -132,6 +132,11 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
+  appendPath(path: string): Omit<this, 'execute'> {
+    this.requestConfig.appendPath(path);
+    return this;
+  }
+
   /**
    * Skip fetching csrf token for this request, which is typically useful when the csrf token is not required.
    * @returns The request builder itself, to facilitate method chaining.

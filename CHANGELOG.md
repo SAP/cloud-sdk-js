@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [odata] Support appending path to the generated url for all request builders, which can be used for some unsupported OData functionalities like querying navigation properties.
+- [odata] Support appending path to the request URL built by the request builders through the `appendPath` method. It can be used for unsupported OData functionality like querying navigation properties.
 
 ## Improvements
 

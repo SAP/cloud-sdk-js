@@ -18,7 +18,8 @@ The current request builder APIs are not able to handle some odata requests like
 
 ## Consequences
 - The navigation properties query can be handled by using A.
-- We have a plan for new APIs in `2.0`
+- We have a plan for new APIs in `2.0`.
+When the time has come to implement it we will decide on the concrete API syntax.
 
 ## Background
 ### How to build a OData request by using the SDK

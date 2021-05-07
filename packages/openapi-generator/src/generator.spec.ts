@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
-import { getSdkVersion } from '@sap-cloud-sdk/generator-common';
 import { emptyDocument } from '../test/test-util';
 import { generate, getInputFilePaths } from './generator';
 
@@ -21,10 +20,6 @@ describe('generator', () => {
 
   afterAll(() => {
     mock.restore();
-  });
-
-  it('getSdkVersion returns a valid stable version', async () => {
-    expect((await getSdkVersion()).split('.').length).toBe(3);
   });
 
   it('getInputFilePaths returns an array of all file paths, including subdirectories', async () => {
@@ -78,7 +73,8 @@ describe('generator', () => {
         transpile: true,
         include: 'root/additionalFiles/*',
         readme: true,
-        packageJson: true
+        packageJson: true,
+        packageVersion: '1.2.3'
       });
     });
 
@@ -109,6 +105,7 @@ describe('generator', () => {
 
     it('should create a package.json with the provided version', async () => {
       const packageJson = await readJSON(resolve(outputPath, 'package.json'));
+      expect(packageJson.version).toBe('1.2.3');
     });
 
     it('should create a tsconfig.json', () => {

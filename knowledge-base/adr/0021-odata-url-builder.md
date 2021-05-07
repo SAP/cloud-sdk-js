@@ -1,7 +1,24 @@
 # Title
-Status: in progress
 
-Decision: ??
+## Status
+
+Proposal A: accepted
+Proposal B/C/variant: discussing
+
+## Context
+
+The current request builder APIs are not able to handle some odata requests like:
+- query navigation properties `GET /People('scottketchum')/Friends`
+- getting "raw value" of a property `/People('scottketchum')/$value`
+
+## Decision
+
+- Implement A for now as a powerful workaround.
+- Proposal B/C/variant will be a `2.0` task.
+
+## Consequences
+- The navigation properties query can be handled by using A.
+- We have a plan for new APIs in `2.0`
 
 ## Background
 ### How to build a OData request by using the SDK
@@ -54,11 +71,12 @@ A new API
 ```
 People.reqeustBuilder()
   .getByKey(key)
-  .appendUrl('$value')
-  // .appendUrl('Friends')
-  // .appendUrl("Friends('russellwhyte')")
-  // .appendUrl('/BestFriend/BestFriend/BestFriend')
-  // .appendUrl('/Friends/$count')
+  .appendPath('/$value')
+  // .appendPath('/Friends')
+  // .appendPath("/Friends('russellwhyte')")
+  // .appendPath('/BestFriend/BestFriend/BestFriend')
+  // .appendPath('/Friends/$count')
+  // .appendPath('/BestFriend', 'BestFriend')
 ```
 #### Pros and cons:
 ##### Pros:

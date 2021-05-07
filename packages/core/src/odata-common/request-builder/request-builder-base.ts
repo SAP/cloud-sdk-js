@@ -132,9 +132,9 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
-  /**
-   * Append additional path to the generated path. Typically, this can be used for querying navigation properties of an entity.
-   * When this function is used, the "execute" function of the request builder is disabled and use "executeRaw" instead.
+   * Append the given path to the URL.
+   * This can be used for querying navigation properties of an entity.
+   * To execute a request with an appended path use `executeRaw` to avoid errors during deserialization. When using this, the `execute` method is omitted from the return type.
    * @param path Path to be appended.
    * @returns The request builder itself without "execute" function, to facilitate method chaining.
    */

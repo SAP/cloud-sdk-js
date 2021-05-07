@@ -1,9 +1,7 @@
 # Title
 
 ## Status
-
-Proposal A: accepted
-Proposal B/C/variant: discussing
+ACCEPTED
 
 ## Context
 
@@ -14,7 +12,7 @@ The current request builder APIs are not able to handle some odata requests like
 ## Decision
 
 - Implement A for now as a powerful workaround.
-- Proposal B/C/variant will be a `2.0` task.
+- Proposal B/C/variant will be a `2.0` task, where it seems C might be the winner and we might review the decision later as they close to each other.
 
 ## Consequences
 - The navigation properties query can be handled by using A.
@@ -206,7 +204,4 @@ Find related discussion [here](../implementation-documentation/api-improvements.
 ## Follow-ups
 
 ### asChildOf()
-It should be deprecated and migrate to the new API structure, when B or C wins.
-
-AC:
-- [ ] create a follow up as `2.0` item
+It should be deprecated and migrate to the new API structure, when B or C is implemented.

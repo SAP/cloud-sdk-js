@@ -56,7 +56,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    */
   url(): string {
     return `${removeTrailingSlashes(this.resourceUrl())}${removeTrailingSlashes(
-      this.config.appendPaths.join('/')
+      this.config.appendedPaths.join('')
     )}${this.query()}`;
   }
 
@@ -69,7 +69,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     return `${removeTrailingSlashes(
       this.relativeResourceUrl(includeServicePath)
     )}${removeTrailingSlashes(
-      this.config.appendPaths.join('/')
+      this.config.appendedPaths.join('')
     )}${this.query()}`;
   }
 

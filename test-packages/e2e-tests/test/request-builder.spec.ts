@@ -71,9 +71,8 @@ describe('Request builder', () => {
         .appendPath('/ToMultiLink')
         .executeRaw(destination)
     ).data.value as any[];
-    const actual = multiLinks.map(
-      multiLink =>
-        deserializeEntityV4(multiLink, TestEntityLink) as TestEntityLink
+    const actual = multiLinks.map(multiLink =>
+      deserializeEntityV4(multiLink, TestEntityLink)
     );
 
     expect(actual).toEqual(

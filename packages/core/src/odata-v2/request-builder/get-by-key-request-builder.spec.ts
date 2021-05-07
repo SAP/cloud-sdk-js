@@ -10,11 +10,7 @@ import {
   createTestEntity,
   testEntityResourcePath
 } from '../../../test/test-util/test-data';
-import {
-  TestEntity,
-  TestEntityMultiLink
-} from '../../../test/test-util/test-services/v2/test-service';
-import { deserializeEntity } from '../entity-deserializer';
+import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 describe('GetByKeyRequestBuilder', () => {
@@ -22,13 +18,13 @@ describe('GetByKeyRequestBuilder', () => {
     it('returns correct url with appendPath', async () => {
       const entityData = createOriginalTestEntityData1();
       const entity = createTestEntity(entityData);
-      const expected = /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_MultiLink\?\$format=json$/;
+      const expected = /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_SingleLink\/to_MultiLink\?\$format=json$/;
 
       const actual = await new GetByKeyRequestBuilder(TestEntity, {
         KeyPropertyGuid: entity.keyPropertyGuid,
         KeyPropertyString: entity.keyPropertyString
       })
-        .appendPath('/to_MultiLink')
+        .appendPath('/to_SingleLink', '/to_MultiLink')
         .url(defaultDestination);
       expect(actual).toMatch(expected);
     });
@@ -144,29 +140,22 @@ describe('GetByKeyRequestBuilder', () => {
     it('returns navigation properties', async () => {
       const entityData = createOriginalTestEntityDataWithLinks();
       const entity = createTestEntity(entityData);
-      const expected = entity.toMultiLink;
 
       mockGetRequest({
         path: `${testEntityResourcePath(
           entity.keyPropertyGuid,
           entity.keyPropertyString
-        )}/to_MultiLink`,
+        )}/to_SingleLink/to_MultiLink`,
         responseBody: { d: { results: entityData.to_MultiLink } }
       });
 
-      const results = (
-        await new GetByKeyRequestBuilder(TestEntity, {
-          KeyPropertyGuid: entity.keyPropertyGuid,
-          KeyPropertyString: entity.keyPropertyString
-        })
-          .appendPath('/to_MultiLink')
-          .executeRaw(defaultDestination)
-      ).data.d.results as any[];
-      const actual = results.map(
-        result =>
-          deserializeEntity(result, TestEntityMultiLink) as TestEntityMultiLink
-      );
-      expect(actual).toEqual(expected);
+      const response = await new GetByKeyRequestBuilder(TestEntity, {
+        KeyPropertyGuid: entity.keyPropertyGuid,
+        KeyPropertyString: entity.keyPropertyString
+      })
+        .appendPath('/to_SingleLink', '/to_MultiLink')
+        .executeRaw(defaultDestination);
+      expect(response.status).toEqual(200);
     });
   });
 

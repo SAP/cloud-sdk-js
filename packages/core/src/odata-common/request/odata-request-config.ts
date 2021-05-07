@@ -25,7 +25,7 @@ export abstract class ODataRequestConfig {
   private _customHeaders: Record<string, string> = {};
   private _customQueryParameters: Record<string, string> = {};
   private _customRequestConfiguration: Record<string, string> = {};
-  private _appendPaths: string[] = [];
+  private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
 
   /**
@@ -100,8 +100,8 @@ export abstract class ODataRequestConfig {
     return this._customRequestConfiguration;
   }
 
-  get appendPaths(): string[] {
-    return this._appendPaths;
+  get appendedPaths(): string[] {
+    return this._appendedPaths;
   }
 
   set fetchCsrfToken(fetchCsrfToken: boolean) {
@@ -148,8 +148,8 @@ export abstract class ODataRequestConfig {
     });
   }
 
-  appendPath(path: string): void {
-    this.appendPaths.push(path);
+  appendPath(...path: string[]): void {
+    this.appendedPaths.push(...path);
   }
 
   protected prependDollarToQueryParameters(

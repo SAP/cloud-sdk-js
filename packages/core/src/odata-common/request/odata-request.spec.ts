@@ -121,6 +121,26 @@ describe('OData Request', () => {
     });
   });
 
+  describe('relativeUrl', () => {
+    it('should contain appended path', () => {
+      const request = createRequest(ODataGetAllRequestConfig);
+      const requestConfig = request.config as ODataGetAllRequestConfig<TestEntity>;
+      requestConfig.appendPath('/$value');
+      expect(request.relativeUrl()).toBe(
+        'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/$value?$format=json'
+      );
+    });
+
+    it('should not remove the trailing slash', () => {
+      const request = createRequest(ODataGetAllRequestConfig);
+      const requestConfig = request.config as ODataGetAllRequestConfig<TestEntity>;
+      requestConfig.appendPath('/');
+      expect(request.relativeUrl()).toBe(
+        'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/?$format=json'
+      );
+    });
+  });
+
   describe('execute', () => {
     beforeEach(() => {
       requestSpy = jest.spyOn(axios, 'request').mockResolvedValue('test');

@@ -133,6 +133,18 @@ export abstract class MethodRequestBuilder<
   }
 
   /**
+   * Append the given path to the URL.
+   * This can be used for querying navigation properties of an entity.
+   * To execute a request with an appended path use `executeRaw` to avoid errors during deserialization. When using this, the `execute` method is omitted from the return type.
+   * @param path Path to be appended.
+   * @returns The request builder itself without "execute" function, to facilitate method chaining.
+   */
+  appendPath(...path: string[]): Omit<this, 'execute'> {
+    this.requestConfig.appendPath(...path);
+    return this;
+  }
+
+  /**
    * Skip fetching csrf token for this request, which is typically useful when the csrf token is not required.
    * @returns The request builder itself, to facilitate method chaining.
    */

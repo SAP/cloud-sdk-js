@@ -6,6 +6,7 @@ import {
 } from '../../../test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
+  createOriginalTestEntityDataWithLinks,
   createTestEntity,
   testEntityResourcePath
 } from '../../../test/test-util/test-data';
@@ -13,6 +14,22 @@ import { TestEntity } from '../../../test/test-util/test-services/v2/test-servic
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 describe('GetByKeyRequestBuilder', () => {
+  describe('url', () => {
+    it('returns correct url with appendPath', async () => {
+      const entityData = createOriginalTestEntityData1();
+      const entity = createTestEntity(entityData);
+      const expected = /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_SingleLink\/to_MultiLink\/\?\$format=json$/;
+
+      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+        KeyPropertyGuid: entity.keyPropertyGuid,
+        KeyPropertyString: entity.keyPropertyString
+      })
+        .appendPath('/to_SingleLink', '/to_MultiLink/')
+        .url(defaultDestination);
+      expect(actual).toMatch(expected);
+    });
+  });
+
   describe('execute', () => {
     it('returns entity by key', async () => {
       const entityData = createOriginalTestEntityData1();
@@ -118,6 +135,26 @@ describe('GetByKeyRequestBuilder', () => {
       }).executeRaw(defaultDestination);
       expect(actual.data.d).toEqual(entityData);
       expect(actual.request.method).toBe('GET');
+    });
+
+    it('builds a URL with appended paths', async () => {
+      const entityData = createOriginalTestEntityDataWithLinks();
+      const entity = createTestEntity(entityData);
+
+      mockGetRequest({
+        path: `${testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString
+        )}/to_SingleLink/to_MultiLink`
+      });
+
+      const response = await new GetByKeyRequestBuilder(TestEntity, {
+        KeyPropertyGuid: entity.keyPropertyGuid,
+        KeyPropertyString: entity.keyPropertyString
+      })
+        .appendPath('/to_SingleLink', '/to_MultiLink')
+        .executeRaw(defaultDestination);
+      expect(response.status).toEqual(200);
     });
   });
 

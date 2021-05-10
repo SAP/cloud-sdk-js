@@ -15,7 +15,6 @@
   "workspaces": [
     "packages/analytics",
     "packages/core",
-    "packages/cli",
     "packages/eslint-config",
     "packages/generator",
     "packages/test-util",

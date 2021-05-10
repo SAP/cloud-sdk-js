@@ -27,6 +27,7 @@
 ## Fixed Issues
 
 - [PROXY] Consider the web proxy also in the service call to BTP services like XSUAA and destination service.
+- [odata] Fix encoding of filter strings.
 
 
 # 1.42.0

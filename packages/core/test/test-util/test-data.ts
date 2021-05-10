@@ -1,10 +1,14 @@
 import { v4 as uuid } from 'uuid';
 import { uriConverter } from '../../src/odata-v2';
-import { TestEntity } from './test-services/v2/test-service';
+import {
+  TestEntity,
+  TestEntitySingleLink,
+  TestEntityMultiLink
+} from './test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
-  TestEntityMultiLink,
-  TestEntitySingleLink
+  TestEntityMultiLink as TestEntityMultiLinkV4,
+  TestEntitySingleLink as TestEntitySingleLinkV4
 } from './test-services/v4/test-service';
 
 const { convertToUriFormat } = uriConverter;
@@ -46,7 +50,7 @@ export function createOriginalTestEntityDataWithLinks() {
 }
 
 export function createTestEntity(originalData): TestEntity {
-  return TestEntity.builder()
+  const entity = TestEntity.builder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
     .keyPropertyString(originalData.KeyPropertyString)
     .stringProperty(originalData.StringProperty)
@@ -54,6 +58,17 @@ export function createTestEntity(originalData): TestEntity {
     .int16Property(originalData.Int16Property)
     .build()
     .setOrInitializeRemoteState();
+  if (originalData.to_SingleLink) {
+    entity.toSingleLink = TestEntitySingleLink.builder()
+      .keyProperty(originalData.to_SingleLink.KeyProperty)
+      .build();
+  }
+  if (originalData.to_MultiLink) {
+    entity.toMultiLink = originalData.to_MultiLink.map(ml =>
+      TestEntityMultiLink.builder().keyProperty(ml.KeyProperty).build()
+    );
+  }
+  return entity;
 }
 
 export function createTestEntityV4(originalData): TestEntityV4 {
@@ -67,13 +82,13 @@ export function createTestEntityV4(originalData): TestEntityV4 {
     .build()
     .setOrInitializeRemoteState();
   if (originalData.to_SingleLink) {
-    entity.toSingleLink = TestEntitySingleLink.builder()
+    entity.toSingleLink = TestEntitySingleLinkV4.builder()
       .keyProperty(originalData.to_SingleLink.KeyProperty)
       .build();
   }
   if (originalData.to_MultiLink) {
     entity.toMultiLink = originalData.to_MultiLink.map(ml =>
-      TestEntityMultiLink.builder().keyProperty(ml.KeyProperty).build()
+      TestEntityMultiLinkV4.builder().keyProperty(ml.KeyProperty).build()
     );
   }
   return entity;

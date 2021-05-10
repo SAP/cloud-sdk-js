@@ -32,7 +32,7 @@ exports[`packageJson returns the package.json content 1`] = `
     \\"@sap-cloud-sdk/core\\": \\"^1.35.0\\"
   },
   \\"devDependencies\\": {
-    \\"typedoc\\": \\"^0.17.0\\",
+    \\"typedoc\\": \\"^0.20.36\\",
     \\"typescript\\": \\"~3.8.3\\"
   }
 }

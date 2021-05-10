@@ -8,7 +8,6 @@ coverage
 lerna-debug.log
 *.tgz
 **credentials.json
-!packages/cli/src/templates/init/credentials.json
 .idea
 .nyc_output
 documentation

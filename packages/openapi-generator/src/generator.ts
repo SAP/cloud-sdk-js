@@ -34,7 +34,7 @@ import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
 import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
 
-const { readdir, rmdir, mkdir, lstat, readFile } = promisesFs;
+const { readdir, rmdir, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**

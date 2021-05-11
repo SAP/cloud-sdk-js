@@ -1,5 +1,7 @@
+import { readFileSync } from 'fs';
 import execa from 'execa';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { GeneratorOptions } from './options';
 
 const logger = createLogger('openapi-generator');
 
@@ -16,4 +18,8 @@ export async function transpileDirectory(path: string): Promise<void> {
     process.exit(1);
   });
   logger.debug(`Transpiling files in directory: ${path} finished.`);
+}
+
+export function parseOptionsFromConfig(path: string): GeneratorOptions {
+  return JSON.parse(readFileSync(path, 'utf8'));
 }

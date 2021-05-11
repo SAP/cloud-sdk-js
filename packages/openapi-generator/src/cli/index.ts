@@ -5,6 +5,7 @@ import { Command, flags } from '@oclif/command';
 import { cli } from 'cli-ux';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate } from '../generator';
+import { parseOptionsFromConfig } from '../generator-utils';
 
 const logger = createLogger('openapi-generator');
 
@@ -116,7 +117,11 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
   async run(): Promise<void> {
     try {
       const parsed = this.parse(GenerateOpenApiClient);
-      await generate(parsed.flags);
+      if(parsed.flags.configJson){
+        await generate(parseOptionsFromConfig(parsed.flags.configJson));
+      } else {
+        await generate(parsed.flags);
+      }
     } catch (err) {
       logger.error(err);
       cli.exit(1);

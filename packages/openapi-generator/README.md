@@ -31,15 +31,15 @@ USAGE
   $ generate-openapi-client --input <input> --outputDir <outputDirectory>
 
 OPTIONS
-  -i, --input=<path/to/input>                             (required) Specify the path to the directory or file
-                                                          containing the OpenAPI service definition(s) to generate
-                                                          clients for. Accepts Swagger and OpenAPI definitions as YAML
-                                                          and JSON files. Throws an error if the path does not exist.
+  -i, --input=<path/to/input>                             Specify the path to the directory or file containing the
+                                                          OpenAPI service definition(s) to generate clients for. Accepts
+                                                          Swagger and OpenAPI definitions as YAML and JSON files. Throws
+                                                          an error if the path does not exist.
 
-  -o, --outputDir=<path/to/output>                        (required) Specify the path to the directory to generate the
-                                                          client(s) in. Each client is generated into a subdirectory
-                                                          within the given output directory. Creates the directory if it
-                                                          does not exist. Customize subdirectory naming through
+  -o, --outputDir=<path/to/output>                        Specify the path to the directory to generate the client(s)
+                                                          in. Each client is generated into a subdirectory within the
+                                                          given output directory. Creates the directory if it does not
+                                                          exist. Customize subdirectory naming through
                                                           `--serviceMapping`.
 
   -t, --transpile                                         Transpile the generated TypeScript code. When enabled a

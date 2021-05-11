@@ -33,7 +33,8 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
       description:
         'Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.',
       parse: input => resolve(input),
-      required: true,
+      required: false,
+      default: '',
       helpValue: '<path/to/input>'
     }),
     outputDir: flags.string({
@@ -41,7 +42,8 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
       description:
         'Specify the path to the directory to generate the client(s) in. Each client is generated into a subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory naming through `--serviceMapping`.',
       parse: input => resolve(input),
-      required: true,
+      required: false,
+      default: '',
       helpValue: '<path/to/output>'
     }),
     transpile: flags.boolean({

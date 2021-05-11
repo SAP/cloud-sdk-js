@@ -11,5 +11,4 @@ export interface GeneratorOptions {
   readme?: boolean;
   strictNaming?: boolean;
   generateSdkMetadata?: boolean;
-  configJson?: string;
 }

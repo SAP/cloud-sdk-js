@@ -13,11 +13,6 @@ jest.mock('../../generator-common', () => {
 const { readFile } = promises;
 
 describe('generator', () => {
-  const testServicePath = resolve(
-    __dirname,
-    '../../../test-packages/test-services/openapi/test-service'
-  );
-
   afterAll(() => {
     mock.restore();
   });

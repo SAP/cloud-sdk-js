@@ -43,7 +43,7 @@ export function packageJson(
         },
         devDependencies: {
           typedoc: '^0.20.36',
-          typescript: '~3.8.3'
+          typescript: '~4.1.2'
         }
       },
       null,

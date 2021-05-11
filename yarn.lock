@@ -1714,9 +1714,9 @@
     got "10.7.0"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.1.1.tgz#2b8572a3540c29928c313ffd3158f57a3518a90f"
-  integrity sha512-+9r20IDnDAzUBiLXkbbP5sAT6QMGOhseNHKdq4/BVfoNhFBRv5m0+cAEgBXeOXiWtvtLfqeMjyz4rRwL4OwOIw==
+  version "5.1.3"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.1.3.tgz#902103a18f3cb6eeb13c40c5f39bc29f2d222b13"
+  integrity sha512-3jmFCT0pqSrvpZiZy4fYOFPfzZ6oPLl9FwVi3r2qqM9LcrYJwvS0GF6jU1tMdu5IB8Ifl+G7Ti9uHSEG2/gpPQ==
   dependencies:
     "@sap/cds-compiler" "^2.1.6"
     "@sap/cds-foss" "^2.3.1"

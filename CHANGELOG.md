@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [odata-generator][openapi-generator] Update `typescript` version to `~4.1.2` in the `package.json` of the clients.
 
 ## Fixed Issues
 

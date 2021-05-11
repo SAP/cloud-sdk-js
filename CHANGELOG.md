@@ -22,12 +22,22 @@
 
 ## Improvements
 
-- [odata-generator][openapi-generator] Update `typescript` version to `~4.1.2` in the `package.json` of the clients.
+-
 
 ## Fixed Issues
 
 -
 
+
+# 1.44.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.44.0<br>
+Blog: TBD<br>
+
+## Improvements
+
+- [odata-generator][openapi-generator] Update `typescript` version to `~4.1.2` in the `package.json` of the clients.
 
 # 1.43.0
 

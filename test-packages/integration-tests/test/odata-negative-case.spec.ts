@@ -7,12 +7,16 @@ import {
 } from '../../../test-resources/generator';
 
 describe('odata negative tests', () => {
+  const pathToGenerator = resolve(
+    '../../node_modules/@sap-cloud-sdk/generator/dist/generator-cli.js'
+  );
+
   it('should fail on faulty edmx', async () => {
     await expect(
       execa(
-        'npx',
+        'node',
         [
-          'generate-odata-client',
+          pathToGenerator,
           '-i',
           resolve(testResourcesDir, 'faulty-edmx'),
           '-o',
@@ -28,9 +32,9 @@ describe('odata negative tests', () => {
   it('should fail on faulty typescript files.', async () => {
     await expect(
       execa(
-        'npx',
+        'node',
         [
-          'generate-odata-client',
+          pathToGenerator,
           '-i',
           resolve(testDir, '../odata-service-specs/v2/API_TEST_SRV'),
           '-o',

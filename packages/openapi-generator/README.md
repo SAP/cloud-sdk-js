@@ -51,6 +51,8 @@ OPTIONS
                                                           cautious when using this option, as it really removes
                                                           EVERYTHING in the output directory.
 
+  --configJson=<path/to/openapi-config.json>              Set the path to the openapi-config.json file for generation.
+
   --include=<glob/to/include>                             Include files matching the given glob into the root of each
                                                           generated client directory.
 

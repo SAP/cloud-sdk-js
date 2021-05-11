@@ -25,7 +25,8 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   static version = require('../../package.json').version;
 
-  static flags = {
+  static flags
+   = {
     input: flags.string({
       char: 'i',
       description:
@@ -102,6 +103,13 @@ $ generate-openapi-client --input ./my-spec.yaml --outputDir ./client --transpil
       default: false,
       required: false,
       hidden: true
+    }),
+    configJson: flags.string({
+      name: 'configJson',
+      description:
+        'Set the path to the openapi-config.json file for generation.',
+      helpValue: '<path/to/openapi-config.json>',
+      required: false
     })
   };
 

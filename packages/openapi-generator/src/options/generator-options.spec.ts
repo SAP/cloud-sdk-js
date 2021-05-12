@@ -42,8 +42,8 @@ describe('parseGeneratorOptions', () => {
 
   it('gets default options with config file', () => {
     const config = {
-      'input': 'inputDir',
-      'outputDir': 'outputDir'
+      input: 'inputDir',
+      outputDir: 'outputDir'
     };
     mock({
       '/path/': {

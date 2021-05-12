@@ -1,4 +1,6 @@
 import mock from 'mock-fs';
+import { generate } from '../generator';
+import { parseOptionsFromConfig } from '../generator-utils';
 import { parseGeneratorOptions } from './generator-options';
 
 describe('parseGeneratorOptions', () => {
@@ -34,7 +36,39 @@ describe('parseGeneratorOptions', () => {
       readme: false,
       metadata: false,
       verbose: false,
-      overwrite: false
+      overwrite: false,
+      config: undefined
+    });
+  });
+
+  it('gets default options with config file', () => {
+    const config = {
+      'input': 'inputDir',
+      'outputDir': 'outputDir'
+    };
+    mock({
+      '/path/': {
+        'config.json': JSON.stringify(config)
+      }
+    });
+    expect(
+      parseGeneratorOptions(parseOptionsFromConfig('/path/config.json'))
+    ).toEqual({
+      input: `${process.cwd()}/inputDir`,
+      outputDir: `${process.cwd()}/outputDir`,
+      transpile: false,
+      include: undefined,
+      clearOutputDir: false,
+      skipValidation: false,
+      tsConfig: undefined,
+      packageJson: false,
+      optionsPerService: undefined,
+      packageVersion: '1.0.0',
+      readme: false,
+      metadata: false,
+      verbose: false,
+      overwrite: false,
+      config: undefined
     });
   });
 

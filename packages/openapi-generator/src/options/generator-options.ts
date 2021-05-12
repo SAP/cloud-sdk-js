@@ -20,6 +20,7 @@ export interface GeneratorOptions {
   metadata?: boolean;
   verbose?: boolean;
   overwrite?: boolean;
+  config?: string;
 }
 
 /**

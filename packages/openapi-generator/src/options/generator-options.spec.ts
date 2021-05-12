@@ -1,10 +1,9 @@
 import mock from 'mock-fs';
-import { generate } from '../generator';
 import { parseOptionsFromConfig } from '../generator-utils';
 import { parseGeneratorOptions } from './generator-options';
 
 describe('parseGeneratorOptions', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mock({
       'existent-directory': {
         'existent-file': 'file content'
@@ -12,7 +11,7 @@ describe('parseGeneratorOptions', () => {
     });
   });
 
-  afterAll(() => {
+  afterEach(() => {
     mock.restore();
   });
 

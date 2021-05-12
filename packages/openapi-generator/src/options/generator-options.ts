@@ -45,7 +45,7 @@ export function parseGeneratorOptions(
   return Object.entries(OpenApiGenerator.flags).reduce(
     (parsedOptions, [name, flag]) => {
       const value = options[name];
-      if (typeof value !== undefined) {
+      if (typeof value !== 'undefined') {
         parsedOptions[name] = flag.parse(value as never, undefined);
       } else if (typeof flag.default !== undefined) {
         parsedOptions[name] = flag.default;

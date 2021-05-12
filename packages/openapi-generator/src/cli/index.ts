@@ -6,7 +6,7 @@ import { Command, flags } from '@oclif/command';
 import { cli } from 'cli-ux';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { parseOptionsFromConfig } from '../generator-utils';
-import { generateWithParsedOptions } from '../generator';
+import { generate, generateWithParsedOptions } from '../generator';
 
 const logger = createLogger('openapi-generator');
 class OpenApiGenerator extends Command {
@@ -120,14 +120,21 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
       description:
         'Set the path to the openapi-config.json file for generation.',
       helpValue: '<path/to/openapi-config.json>',
-      required: false
+      required: false,
     })
   };
 
   async run(): Promise<void> {
     try {
       const parsed = this.parse(OpenApiGenerator);
-      await generateWithParsedOptions(parsed.flags);
+      if(parsed.flags.configJson){
+        await generate(parseOptionsFromConfig(parsed.flags.configJson));
+      } else {
+        if(parsed.flags.input === '' || parsed.flags.outputDir !== ''){
+          throw new Error('Either input or outputDir were not set.');
+        }
+        await generateWithParsedOptions(parsed.flags);
+      }
     } catch (err) {
       logger.error(err);
       cli.exit(1);
@@ -136,10 +143,3 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
 }
 
 export = OpenApiGenerator;
-
-
-/* if(parsed.flags.configJson){
-  await generate(parseOptionsFromConfig(parsed.flags.configJson));
-} else {
-  await generate(parsed.flags);
-} */

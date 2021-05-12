@@ -44,8 +44,8 @@ export async function packageJson(
           '@sap-cloud-sdk/core': `^${await getSdkVersion()}`
         },
         devDependencies: {
-          typedoc: '^0.17.0',
-          typescript: '~3.8.3'
+          typedoc: '^0.20.36',
+          typescript: '~4.1.2'
         }
       },
       null,

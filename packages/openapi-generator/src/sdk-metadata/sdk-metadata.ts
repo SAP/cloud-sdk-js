@@ -8,14 +8,14 @@ import { GeneratorOptions } from '../options';
 import { packageDescription } from './package-description';
 import { getGenerationAndUsage } from './generation-and-usage';
 
-export async function sdkMetaDataJS(
+export async function sdkMetadata(
   openApiDocument: OpenApiDocument,
   options: GeneratorOptions
 ): Promise<Client> {
   const [pregeneratedLibrary, generationAndUsage] = await Promise.all([
     getPregeneratedLibrary(
-      packageDescription(openApiDocument.npmPackageName),
-      openApiDocument.npmPackageName,
+      packageDescription(openApiDocument.serviceOptions.packageName),
+      openApiDocument.serviceOptions.packageName,
       options.packageVersion
     ),
     getGenerationAndUsage(openApiDocument)

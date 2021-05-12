@@ -1,9 +1,9 @@
-import { getSdkMetadataFileNames, sdkMetaDataHeader } from './sdk-metadata';
+import { getSdkMetadataFileNames, sdkMetadataHeader } from './sdk-metadata';
 
 describe('sdk-metadata', () => {
   it('generates the header content', async () => {
     expect(
-      await sdkMetaDataHeader('odata', 'API_TEST_SRV', '1.0.0')
+      await sdkMetadataHeader('odata', 'API_TEST_SRV', '1.0.0')
     ).toMatchSnapshot();
   });
 

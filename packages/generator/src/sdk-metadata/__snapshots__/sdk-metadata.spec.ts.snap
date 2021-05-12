@@ -2,7 +2,7 @@
 
 exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service"`;
 
-exports[`sdk-metadata generates the JS metadata content for services with pregenerated lib 1`] = `
+exports[`sdk-metadata generates the sdk metadata content for services with pregenerated lib 1`] = `
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
@@ -22,7 +22,7 @@ The steps above will generate a basic TypeScript client. For additional options 
       "text": "Follow the following generation steps to generate the client.",
     },
     "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/generator",
-    "generatorVersion": "1.41.0",
+    "generatorVersion": Any<String>,
     "genericUsage": Object {
       "instructions": "import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 
@@ -75,7 +75,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
 }
 `;
 
-exports[`sdk-metadata generates the JS metadata content for services without pregenerated lib 1`] = `
+exports[`sdk-metadata generates the sdk metadata content for services without pregenerated lib 1`] = `
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
@@ -95,7 +95,7 @@ The steps above will generate a basic TypeScript client. For additional options 
       "text": "Follow the following generation steps to generate the client.",
     },
     "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/generator",
-    "generatorVersion": "1.41.0",
+    "generatorVersion": Any<String>,
     "genericUsage": Object {
       "instructions": "import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 

@@ -12,13 +12,13 @@ const responseData = await DummyApi.DummyFunction().execute({ destinationName:'m
     "instructions": "<ul>
 <li>Download the API specification to your local computer.</li>
 <li>Install the generator <code>npm install -g @sap-cloud-sdk/openapi-generator</code></li>
-<li>Execute the generator <code>generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory></code></li>
+<li>Execute the generator <code>openapi-generator --inputDir <inputDirectory> --outputDir <outputDirectory></code></li>
 </ul>
 The steps above will generate a basic TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client\\">documentation.</a>",
     "text": "Follow the following generation steps to generate the client.",
   },
   "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/openapi-generator",
-  "generatorVersion": "1.41.0",
+  "generatorVersion": Any<String>,
   "genericUsage": Object {
     "instructions": "import { MyApi } from 'my-npm-package';
 

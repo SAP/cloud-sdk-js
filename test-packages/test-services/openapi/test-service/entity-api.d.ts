@@ -2,7 +2,7 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 import type { TestEntity } from './schema';
 /**
  * Representation of the 'EntityApi'.
- * This API is part of the 'TestService' service.
+ * This API is part of the 'test-service' service.
  */
 export declare const EntityApi: {
   /**
@@ -22,8 +22,8 @@ export declare const EntityApi: {
             | 'value2'
             | "valueWith'Quote"
             | undefined;
-          enumInt32Parameter?: 1 | 2 | undefined;
-          enumDoubleParameter?: 1 | 2 | undefined;
+          enumInt32Parameter?: 2 | 1 | undefined;
+          enumDoubleParameter?: 2 | 1 | undefined;
           enumBooleanParameter?: boolean | undefined;
         }
       | undefined

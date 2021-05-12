@@ -14,25 +14,73 @@
 
 ## Compatibility Notes
 
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.44.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.44.0<br>
+Blog: TBD<br>
+
+## Improvements
+
+- [odata-generator][openapi-generator] Update `typescript` version to `~4.1.2` in the `package.json` of the clients.
+
+# 1.43.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.43.0<br>
+Blog: TBD<br>
+
+## New Functionality
+
+- [odata] Support appending path to the request URL built by the request builders through the `appendPath` method. It can be used for unsupported OData functionality like querying navigation properties.
+
+## Fixed Issues
+
+- [PROXY] Consider the web proxy also in the service call to BTP services like XSUAA and destination service.
+
+# 1.42.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.42.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - [core] Use `HEAD` instead of `GET` when fetching CSRF tokens. Change the URL for CSRF token fetching in OData requests from the service URL to the request URL. 
 - [test-util] Use `HEAD` for `mockHeaderRequest()` to align with the core behaviour.
 - [core] Remove experimental `Exclude` type, which was accidentally exposed as non-experimental.
+- [openapi-generator] Rename the CLI generator command from `generate-openapi-client` to `openapi-generator`.
+- [openapi-generator] Rename some generator options and default behavior of those options ([details](./knowledge-base/adr/0020-generator-options.md)).
 
 ## New Functionality
 
 - [core] Support custom axios options for all request builders.
 - [core] Support disabling csrf token request as an option for all request builders.
 - [odata] Support unary operator `not` in the `filter()` of OData request builders.
+- [openapi-generator] Release the SAP Cloud SDK OpenAPI generator.
 
 ## Improvements
 
 - [odata] Allow using filter functions with boolean return types directly in the `filter()` of OData request builders without `equals(true)`.
 - [odata-generator] Disable the `execute` function, when an entity type is shared by multiple entity sets and is used as the return type of function/action imports.
-
-## Fixed Issues
-
--
-
+- [openapi-generator] Introduce `verbose` option to enable verbose logging. 
+- [openapi-generator] Introduce `overwrite` option to allow overwriting of existing files. 
+- [openapi-generator] Introduce `include` option to allow copying files to the generated clients.
 
 # 1.41.0
 

@@ -21,7 +21,7 @@ export async function getGenerationAndUsage(
     links: getOpenApiLinks(),
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/openapi-generator',
-      'generate-openapi-client --inputDir <inputDirectory> --outputDir <outputDirectory>',
+      'openapi-generator --inputDir <inputDirectory> --outputDir <outputDirectory>',
       linkGenerationDocumentation
     ),
     generatorVersion: await getSdkVersion(),
@@ -49,7 +49,7 @@ function getApiSpecificUsage(
     const instructions = apiSpecificCodeSample(
       apiWithOperations.name,
       operation.operationId,
-      openApiDocument.npmPackageName
+      openApiDocument.serviceOptions.packageName
     );
     return { instructions, text: apiSpecificUsageText };
   }

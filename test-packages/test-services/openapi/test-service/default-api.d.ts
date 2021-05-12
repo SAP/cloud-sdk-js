@@ -1,7 +1,7 @@
 import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 /**
  * Representation of the 'DefaultApi'.
- * This API is part of the 'TestService' service.
+ * This API is part of the 'test-service' service.
  */
 export declare const DefaultApi: {
   /**

@@ -32,47 +32,8 @@ exports[`packageJson returns the package.json content 1`] = `
     \\"@sap-cloud-sdk/core\\": \\"^1.35.0\\"
   },
   \\"devDependencies\\": {
-    \\"typedoc\\": \\"^0.17.0\\",
-    \\"typescript\\": \\"~3.8.3\\"
-  }
-}
-"
-`;
-
-exports[`packageJson returns the package.json content when packageVersion is undefined 1`] = `
-"{
-  \\"name\\": \\"workflow-service\\",
-  \\"version\\": \\"1.0.0\\",
-  \\"description\\": \\"description\\",
-  \\"homepage\\": \\"https://sap.github.io/cloud-sdk/docs/js/getting-started\\",
-  \\"main\\": \\"./index.js\\",
-  \\"types\\": \\"./index.d.ts\\",
-  \\"publishConfig\\": {
-    \\"access\\": \\"public\\"
-  },
-  \\"files\\": [
-    \\"**/*.js\\",
-    \\"**/*.js.map\\",
-    \\"**/*.d.ts\\",
-    \\"**/d.ts.map\\"
-  ],
-  \\"repository\\": {
-    \\"type\\": \\"git\\",
-    \\"url\\": \\"\\"
-  },
-  \\"scripts\\": {
-    \\"compile\\": \\"npx tsc\\",
-    \\"doc\\": \\"npx typedoc\\"
-  },
-  \\"dependencies\\": {
-    \\"@sap-cloud-sdk/core\\": \\"^1.35.0\\"
-  },
-  \\"peerDependencies\\": {
-    \\"@sap-cloud-sdk/core\\": \\"^1.35.0\\"
-  },
-  \\"devDependencies\\": {
-    \\"typedoc\\": \\"^0.17.0\\",
-    \\"typescript\\": \\"~3.8.3\\"
+    \\"typedoc\\": \\"^0.20.36\\",
+    \\"typescript\\": \\"~4.1.2\\"
   }
 }
 "

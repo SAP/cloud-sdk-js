@@ -14,8 +14,15 @@ const { readFile } = promises;
 export async function convertOpenApiSpec(
   filePath: string
 ): Promise<OpenAPIV3.Document> {
-  const file = await parseFileAsJson(filePath);
-  return convertDocToOpenApiV3(file);
+  try {
+    const file = await parseFileAsJson(filePath);
+    return convertDocToOpenApiV3(file);
+  } catch (err) {
+    throw new ErrorWithCause(
+      'Could not convert document to the format needed for parsing and generation.',
+      err
+    );
+  }
 }
 
 /**

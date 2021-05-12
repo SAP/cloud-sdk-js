@@ -1,4 +1,4 @@
-import { any } from '@sap-cloud-sdk/core';
+import { any, deserializeEntityV4 } from '@sap-cloud-sdk/core';
 import { resetDataSource } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/action-imports';
 import { PersonGender } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/PersonGender';
 import { People } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
@@ -35,6 +35,26 @@ xdescribe('Request builder', () => {
       expect.arrayContaining([
         expect.objectContaining({
           friends: expect.arrayContaining([expect.anything()])
+        })
+      ])
+    );
+  });
+
+  it('should return a collection all friends of a person', async () => {
+    const people = (
+      await People.requestBuilder()
+        .getByKey('russellwhyte')
+        .appendPath('/Friends')
+        .executeRaw(destination)
+    ).data.value as any[];
+    const actual = people.map(
+      person => deserializeEntityV4(person, People) as People
+    );
+    expect(actual.length).toEqual(4);
+    expect(actual).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          userName: expect.anything()
         })
       ])
     );

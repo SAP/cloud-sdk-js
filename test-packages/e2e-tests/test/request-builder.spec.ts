@@ -3,7 +3,7 @@ import {
   TestEntityLink
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import moment from 'moment';
-import { and } from '@sap-cloud-sdk/core';
+import { and, deserializeEntityV4 } from '@sap-cloud-sdk/core';
 import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';
 import { destination } from './test-util';
 
@@ -62,6 +62,24 @@ describe('Request builder', () => {
       .getByKey(101)
       .execute(destination);
     expect(testEntity).toEqual(expect.objectContaining({ keyTestEntity: 101 }));
+  });
+
+  it('should return one to many navigation property of an entity', async () => {
+    const multiLinks = (
+      await TestEntity.requestBuilder()
+        .getByKey(101)
+        .appendPath('/ToMultiLink')
+        .executeRaw(destination)
+    ).data.value as any[];
+    const actual = multiLinks.map(multiLink =>
+      deserializeEntityV4(multiLink, TestEntityLink)
+    );
+
+    expect(actual).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ keyToTestEntity: 101 })
+      ])
+    );
   });
 
   it('should create an entity and a link as child of the entity', async () => {

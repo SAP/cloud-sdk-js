@@ -1,8 +1,5 @@
 import type { OpenAPIV3 } from 'openapi-types';
-/**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
- * Representation of an operation.
- */
+import { ServiceOptions } from './options';
 
 /**
  * Representation of an OpenAPI specification/document.
@@ -14,24 +11,9 @@ export interface OpenApiDocument {
   serviceName: string;
 
   /**
-   * Name of the npm package, if there is a package.json.
+   * Configuration as defined in the options per service.
    */
-  npmPackageName: string;
-
-  /**
-   * Name of the directory where the service will be generated to.
-   */
-  directoryName: string;
-
-  /**
-   * Name of the original specification file.
-   */
-  originalFileName: string;
-
-  /**
-   * Path of the original specification file.
-   */
-  filePath: string;
+  serviceOptions: ServiceOptions;
 
   /**
    * Parsed schemas of the document.
@@ -117,20 +99,17 @@ const supportedMethods = {
 } as const;
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Methods supported by OpenApi and SAP Cloud SDK.
  */
 export type Method = typeof supportedMethods[keyof typeof supportedMethods];
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Get supported methods.
  * @returns Methods supported by OpenApi and SAP Cloud SDK.
  */
 export const methods: Method[] = Object.values(supportedMethods);
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Representation of a parameter for both queries and path parameters.
  */
 export interface OpenApiParameter
@@ -143,7 +122,6 @@ export interface OpenApiParameter
 }
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Representation of a request body.
  */
 export interface OpenApiRequestBody {

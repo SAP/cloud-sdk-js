@@ -28,6 +28,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+__exportStar(require('./schema-123456'), exports);
 __exportStar(require('./test-entity'), exports);
 __exportStar(require('./simple-test-entity'), exports);
 __exportStar(require('./other-simple-test-entity'), exports);

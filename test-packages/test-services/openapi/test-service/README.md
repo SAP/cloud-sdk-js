@@ -1,6 +1,6 @@
 # test-service
 
-This package contains the OpenAPI client for the TestService.
+This package contains the OpenAPI client for the test-service.
 
 ### Helpful Links
 

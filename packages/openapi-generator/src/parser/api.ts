@@ -30,7 +30,9 @@ export function parseApis(
         // All operations have been named in the previous step
         ({ operation }) => operation.operationId!
       );
-      const uniqueNames = ensureUniqueNames(operationNames, options);
+      const uniqueNames = ensureUniqueNames(operationNames, options, {
+        separator: '_'
+      });
       const uniquelyNamedOperations = namedOperations.map(
         (operationInfo, i) => {
           operationInfo.operation.operationId = uniqueNames[i];
@@ -76,6 +78,12 @@ function getApiNameForOperation(
 
 function getOperationsByApis(document: OpenAPIV3.Document) {
   const allOperations = getAllOperations(document);
+
+  if (!allOperations.length) {
+    throw new Error(
+      'Could not parse APIs. The document does not contain any operations.'
+    );
+  }
 
   return allOperations.reduce((apiMap, operationInfo) => {
     const apiName = getApiNameForOperation(operationInfo, document);

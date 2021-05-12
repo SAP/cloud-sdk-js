@@ -5,9 +5,9 @@ import { parseRequestBody } from './request-body';
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
     const logger = createLogger('openapi-generator');
-    spyOn(logger, 'debug');
+    spyOn(logger, 'warn');
     expect(parseRequestBody(undefined, await createTestRefs())).toBeUndefined();
-    expect(logger.debug).not.toHaveBeenCalled();
+    expect(logger.warn).not.toHaveBeenCalled();
   });
 
   it('resolves referenced request body schema', async () => {

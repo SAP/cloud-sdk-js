@@ -1,21 +1,21 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, join, dirname } from 'path';
+import { resolve, parse, basename, dirname, join, relative } from 'path';
 import {
   createLogger,
-  UniqueNameGenerator,
   kebabCase,
-  ErrorWithCause,
-  finishAll
+  finishAll,
+  setLogLevel
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import {
   getSdkMetadataFileNames,
-  sdkMetaDataHeader,
-  getSdkVersion
+  getSdkVersion,
+  readCompilerOptions,
+  sdkMetadataHeader,
+  transpileDirectory
 } from '@sap-cloud-sdk/generator-common';
-import { GeneratorOptions } from './options';
 import {
   apiFile,
   packageJson,
@@ -23,160 +23,166 @@ import {
   readme,
   apiIndexFile,
   schemaIndexFile,
-  tsconfigJson,
   schemaFile
 } from './file-serializer';
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
-import { readServiceMapping, ServiceMapping } from './service-mapping';
-import { transpileDirectory } from './generator-utils';
 import { createFile, copyFile } from './file-writer';
-import { sdkMetaDataJS } from './sdk-metadata/sdk-metadata';
+import {
+  parseGeneratorOptions,
+  ParsedGeneratorOptions,
+  tsconfigJson,
+  ServiceOptions,
+  OptionsPerService,
+  getOptionsPerService
+} from './options';
+import { sdkMetadata } from './sdk-metadata';
+import { GeneratorOptions } from '.';
 
 const { readdir, rmdir, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**
- * @experimental This API is experimental and might change in newer versions. Use with caution.
  * Main entry point for the OpenAPI client generation.
  * Generates models and API files.
  * @param options Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
-  options.serviceMapping =
-    options.serviceMapping ||
-    resolve(options.input.toString(), 'service-mapping.json');
+  return generateWithParsedOptions(parseGeneratorOptions(options));
+}
+
+/**
+ * Main entry point for the OpenAPI client generation.
+ * Generates models and API files.
+ * @param options Options to configure generation.
+ */
+export async function generateWithParsedOptions(
+  options: ParsedGeneratorOptions
+): Promise<void> {
+  if (options.verbose) {
+    setLogLevel('verbose', logger);
+  }
 
   if (options.clearOutputDir) {
     await rmdir(options.outputDir, { recursive: true });
   }
-
-  const vdmMapping = readServiceMapping(options);
-  const uniqueNameGenerator = new UniqueNameGenerator('-');
   const inputFilePaths = await getInputFilePaths(options.input);
 
-  const promises = inputFilePaths.map(inputFilePath => {
-    const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
-      parseServiceName(inputFilePath)
-    );
+  const optionsPerService = await getOptionsPerService(inputFilePaths, options);
+  const tsConfig = await tsconfigJson(options);
 
-    return generateService(
+  const promises = inputFilePaths.map(inputFilePath =>
+    generateService(
       inputFilePath,
       options,
-      vdmMapping,
-      uniqueServiceName
-    );
-  });
+      optionsPerService[getRelativePath(inputFilePath)],
+      tsConfig
+    )
+  );
 
-  const errorMessage =
-    promises.length > 1
-      ? 'Some clients could not be generated.'
-      : 'Could not generate client.';
-  await finishAll(promises, errorMessage);
+  try {
+    const errorMessage =
+      promises.length > 1
+        ? 'Some clients could not be generated.'
+        : 'Could not generate client.';
+    await finishAll(promises, errorMessage);
+  } finally {
+    if (options.optionsPerService) {
+      await generateOptionsPerService(
+        options.optionsPerService,
+        optionsPerService
+      );
+    }
+
+    if (!options.packageJson) {
+      logger.info(
+        "Finished generation. Don't forget to add @sap-cloud-sdk/core to your dependencies."
+      );
+    }
+  }
 }
 
 /**
  * Generate sources.
  * @param serviceDir Directory to generate the service to.
  * @param openApiDocument Parsed service.
+ * @param inputFilePath Path to the input file.
+ * @param tsConfig File content for the `tsconfig.json`.
  * @param options Generation options.
  */
 async function generateSources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: GeneratorOptions
+  inputFilePath: string,
+  tsConfig: string | undefined,
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   await mkdir(serviceDir, { recursive: true });
 
+  await generateMandatorySources(serviceDir, openApiDocument, options);
+
+  if (options.metadata) {
+    generateMetadata(openApiDocument, inputFilePath, options);
+  }
+
+  if (options.packageJson) {
+    await generatePackageJson(
+      serviceDir,
+      openApiDocument.serviceOptions,
+      options
+    );
+  }
+
+  if (options.include) {
+    await copyAdditionalFiles(serviceDir, options.include, options.overwrite);
+  }
+
+  if (tsConfig) {
+    await createFile(
+      serviceDir,
+      'tsconfig.json',
+      tsConfig,
+      options.overwrite,
+      false
+    );
+    await transpileDirectory(serviceDir, await readCompilerOptions(serviceDir));
+  }
+
+  if (options.readme) {
+    await generateReadme(serviceDir, openApiDocument, options);
+  }
+}
+
+async function generateMandatorySources(
+  serviceDir: string,
+  openApiDocument: OpenApiDocument,
+  options: ParsedGeneratorOptions
+) {
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
-    await createSchemaFiles(schemaDir, openApiDocument);
+    await createSchemaFiles(schemaDir, openApiDocument, options);
     await createFile(
       schemaDir,
       'index.ts',
       schemaIndexFile(openApiDocument),
-      true
+      options.overwrite
     );
   }
 
-  await createApis(serviceDir, openApiDocument);
-  await createFile(serviceDir, 'index.ts', apiIndexFile(openApiDocument), true);
-
-  if (options.generateSdkMetadata) {
-    const { clientFileName, headerFileName } = getSdkMetadataFileNames(
-      openApiDocument.originalFileName
-    );
-
-    logger.debug(`Generating sdk header metadata ${headerFileName}.`);
-    const specFileDirname = dirname(openApiDocument.filePath);
-    await mkdir(resolve(specFileDirname, 'sdk-metadata'), { recursive: true });
-    await createFile(
-      resolve(specFileDirname, 'sdk-metadata'),
-      headerFileName,
-      JSON.stringify(
-        await sdkMetaDataHeader(
-          'rest',
-          openApiDocument.originalFileName,
-          options.packageVersion
-        ),
-        null,
-        2
-      ),
-      true,
-      false
-    );
-
-    logger.debug(`Generating sdk client metadata ${clientFileName}...`);
-    await createFile(
-      resolve(specFileDirname, 'sdk-metadata'),
-      clientFileName,
-      JSON.stringify(await sdkMetaDataJS(openApiDocument, options), null, 2),
-      true,
-      false
-    );
-  }
-
-  if (options.packageJson) {
-    logger.debug(`Generating package.json in ${serviceDir}.`);
-
-    await createFile(
-      serviceDir,
-      'package.json',
-      packageJson(
-        openApiDocument.npmPackageName,
-        genericDescription(openApiDocument.directoryName),
-        await getSdkVersion(),
-        options.packageVersion
-      ),
-      true,
-      false
-    );
-  }
-
-  if (options.transpile) {
-    await createFile(
-      serviceDir,
-      'tsconfig.json',
-      tsconfigJson(options),
-      true,
-      false
-    );
-    await transpileDirectory(serviceDir);
-  }
-
-  if (options.include) {
-    await copyAdditionalFiles(options.include, serviceDir);
-  }
-
-  if (options.readme) {
-    await generateReadme(serviceDir, openApiDocument);
-  }
+  await createApis(serviceDir, openApiDocument, options);
+  await createFile(
+    serviceDir,
+    'index.ts',
+    apiIndexFile(openApiDocument),
+    options.overwrite
+  );
 }
 
 async function createApis(
   serviceDir: string,
-  openApiDocument: OpenApiDocument
+  openApiDocument: OpenApiDocument,
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   await Promise.all(
     openApiDocument.apis.map(api =>
@@ -184,7 +190,7 @@ async function createApis(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
         apiFile(api, openApiDocument.serviceName),
-        true
+        options.overwrite
       )
     )
   );
@@ -192,65 +198,62 @@ async function createApis(
 
 async function createSchemaFiles(
   dir: string,
-  openApiDocument: OpenApiDocument
+  openApiDocument: OpenApiDocument,
+  options: ParsedGeneratorOptions
 ): Promise<void> {
   await mkdir(dir, { recursive: true });
   await Promise.all(
     openApiDocument.schemas.map(schema =>
-      createFile(dir, `${schema.fileName}.ts`, schemaFile(schema), true)
+      createFile(
+        dir,
+        `${schema.fileName}.ts`,
+        schemaFile(schema),
+        options.overwrite
+      )
     )
   );
-}
-
-/**
- * Parse the name of the service based on the file path.
- * @param filePath Path of the service specification.
- * @returns The parsed name.
- */
-function parseServiceName(filePath: string): string {
-  return parse(filePath).name.replace(/-openapi$/, '');
 }
 
 /**
  * Generates an OpenAPI service from a file.
  * @param inputFilePath The file path where the service to generate is located.
  * @param options Options to configure generation.
- * @param serviceMapping The serviceMapping for the OpenAPI generation.
+ * @param serviceOptions Service options as defined in the options per service.
+ * @param tsConfig File content for the `tsconfig.json`.
  * @param serviceName The unique service name to be used.
  */
 async function generateService(
   inputFilePath: string,
-  options: GeneratorOptions,
-  serviceMapping: ServiceMapping,
-  serviceName: string
+  options: ParsedGeneratorOptions,
+  serviceOptions: ServiceOptions,
+  tsConfig: string | undefined
 ): Promise<void> {
-  const serviceDir = resolve(options.outputDir, serviceName);
-
-  let openApiDocument;
-  try {
-    openApiDocument = await convertOpenApiSpec(inputFilePath);
-  } catch (err) {
-    throw new ErrorWithCause(
-      `Could not convert document at '${inputFilePath}' to the format needed for parsing and generation.`,
-      err
-    );
-  }
+  const openApiDocument = await convertOpenApiSpec(inputFilePath);
   const parsedOpenApiDocument = await parseOpenApiDocument(
     openApiDocument,
-    serviceName,
-    inputFilePath,
-    serviceMapping,
-    { strictNaming: options.strictNaming ?? true }
+    serviceOptions,
+    { strictNaming: !options.skipValidation }
   );
 
-  if (!parsedOpenApiDocument.apis.length) {
-    throw new Error(
-      `The given document at '${inputFilePath}' does not contain any operations.`
-    );
-  }
-
-  await generateSources(serviceDir, parsedOpenApiDocument, options);
+  const serviceDir = resolve(options.outputDir, serviceOptions.directoryName);
+  await generateSources(
+    serviceDir,
+    parsedOpenApiDocument,
+    inputFilePath,
+    tsConfig,
+    options
+  );
   logger.info(`Successfully generated client for '${inputFilePath}'`);
+}
+
+/**
+ * Gives the relative path with respect tp pocess.cwd()/
+ * @param absolutePath The absolute path
+ * @returns The relative path
+ * @hidden
+ */
+export function getRelativePath(absolutePath: string): string {
+  return relative(process.cwd(), absolutePath);
 }
 
 /**
@@ -264,41 +267,121 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
   }
 
   const directoryContents = await readdir(input);
+
   return directoryContents.reduce(
     async (paths: Promise<string[]>, directoryContent) => [
       ...(await paths),
       ...(await getInputFilePaths(resolve(input, directoryContent)))
     ],
-    Promise.resolve([])
+    Promise.resolve([] as string[])
   );
 }
 
 // TODO 1728 move to a new package to reduce code duplication.
 async function copyAdditionalFiles(
+  serviceDir: string,
   additionalFiles: string,
-  serviceDir: string
+  overwrite: boolean
 ): Promise<void[]> {
-  logger.info(
+  logger.verbose(
     `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
   );
 
   return Promise.all(
     new GlobSync(additionalFiles!).found.map(filePath =>
-      copyFile(resolve(filePath), join(serviceDir, basename(filePath)), true)
+      copyFile(
+        resolve(filePath),
+        join(serviceDir, basename(filePath)),
+        overwrite
+      )
     )
   );
 }
 
 function generateReadme(
   serviceDir: string,
-  openApiDocument: OpenApiDocument
+  openApiDocument: OpenApiDocument,
+  options: ParsedGeneratorOptions
 ): Promise<void> {
-  logger.info(`Generating readme in ${serviceDir}.`);
+  logger.verbose(`Generating readme in ${serviceDir}.`);
 
   return createFile(
     serviceDir,
     'README.md',
     readme(openApiDocument),
+    options.overwrite,
+    false
+  );
+}
+
+async function generateMetadata(
+  openApiDocument: OpenApiDocument,
+  inputFilePath: string,
+  options: ParsedGeneratorOptions
+) {
+  const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
+  const { clientFileName, headerFileName } = getSdkMetadataFileNames(
+    inputFileName
+  );
+
+  logger.verbose(`Generating header metadata ${headerFileName}.`);
+  const metadataDir = resolve(inputDirPath, 'sdk-metadata');
+  await mkdir(metadataDir, { recursive: true });
+  await createFile(
+    metadataDir,
+    headerFileName,
+    JSON.stringify(
+      await sdkMetadataHeader('rest', inputFileName, options.packageVersion),
+      null,
+      2
+    ),
+    options.overwrite,
+    false
+  );
+
+  logger.verbose(`Generating client metadata ${clientFileName}...`);
+  await createFile(
+    metadataDir,
+    clientFileName,
+    JSON.stringify(await sdkMetadata(openApiDocument, options), null, 2),
+    options.overwrite,
+    false
+  );
+}
+
+async function generatePackageJson(
+  serviceDir: string,
+  { packageName, directoryName }: ServiceOptions,
+  options: ParsedGeneratorOptions
+) {
+  logger.verbose(`Generating package.json in ${serviceDir}.`);
+
+  await createFile(
+    serviceDir,
+    'package.json',
+    packageJson(
+      packageName,
+      genericDescription(directoryName),
+      await getSdkVersion(),
+      options.packageVersion
+    ),
+    options.overwrite,
+    false
+  );
+}
+
+async function generateOptionsPerService(
+  filePath: string,
+  optionsPerService: OptionsPerService
+) {
+  logger.verbose('Generating options per service.');
+
+  const dir = dirname(filePath);
+  await mkdir(dir, { recursive: true });
+  await createFile(
+    dir,
+    basename(filePath),
+    JSON.stringify(optionsPerService, null, 2),
     true,
     false
   );

@@ -31,6 +31,9 @@ USAGE
   $ generate-openapi-client --input <input> --outputDir <outputDirectory>
 
 OPTIONS
+  -c, --config=<path/to/config.json>
+      Set the path to the config.json file for generation.
+
   -i, --input=<path/to/input>
       Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. 
       Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.
@@ -47,9 +50,6 @@ OPTIONS
   --clearOutputDir
       Remove all files in the output directory before generation. Be cautious when using this option, as it really removes 
       EVERYTHING in the output directory.
-
-  --configJson=<path/to/openapi-config.json>
-      Set the path to the openapi-config.json file for generation.
 
   --include=<glob/to/include>
       Include files matching the given glob into the root of each generated client directory.

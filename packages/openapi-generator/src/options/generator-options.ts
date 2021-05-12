@@ -35,7 +35,7 @@ export type ParsedGeneratorOptions = typeof OpenApiGenerator extends Parser.Inpu
  * Parse the given generator options for programmatic use.
  * This function is only used when invoking the generator programmatically.
  * It parses the options that were passed to [[generate]] and sets default values where necessary.
- * The parsing is done though the `parse` function and `default` value on the `OpenApiGenerator` command's flags.
+ * The parsing is done through the `parse` function and `default` value on the `OpenApiGenerator` command's flags.
  * @param options Options that match the CLI options.
  * @returns Parsed options with default values.
  */

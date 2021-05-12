@@ -26,8 +26,7 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   static version = require('../../package.json').version;
 
-  static flags
-   = {
+  static flags = {
     input: flags.string({
       char: 'i',
       description:
@@ -116,7 +115,6 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
       hidden: true
     }),
     config: flags.string({
-      name: 'config',
       char: 'c',
       parse: input => resolve(input),
       description:

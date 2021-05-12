@@ -117,17 +117,16 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
     config: flags.string({
       char: 'c',
       parse: input => resolve(input),
-      description:
-        'Set the path to the config.json file for generation.',
+      description: 'Set the path to the config.json file for generation.',
       helpValue: '<path/to/config.json>',
-      required: false,
+      required: false
     })
   };
 
   async run(): Promise<void> {
     try {
       const parsed = this.parse(OpenApiGenerator);
-      if(parsed.flags.config){
+      if (parsed.flags.config) {
         await generate(parseOptionsFromConfig(parsed.flags.config));
       } else {
         await generateWithParsedOptions(parsed.flags);

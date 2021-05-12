@@ -118,6 +118,7 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
     config: flags.string({
       name: 'config',
       char: 'c',
+      parse: input => resolve(input),
       description:
         'Set the path to the config.json file for generation.',
       helpValue: '<path/to/config.json>',
@@ -131,9 +132,6 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
       if(parsed.flags.config){
         await generate(parseOptionsFromConfig(parsed.flags.config));
       } else {
-        if(parsed.flags.input === '' || parsed.flags.outputDir === ''){
-          throw new Error('Either input or outputDir were not set.');
-        }
         await generateWithParsedOptions(parsed.flags);
       }
     } catch (err) {

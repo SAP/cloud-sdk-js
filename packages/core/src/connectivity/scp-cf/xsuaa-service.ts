@@ -37,6 +37,8 @@ const logger = createLogger({
   messageContext: 'xsuaa-service'
 });
 
+let circuitBreaker;
+
 /**
  * Executes a client credentials grant request.
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
@@ -272,17 +274,8 @@ function post(
     destination = addProxyConfigurationInternet(destination);
   }
 
-  if (
-    options.enableCircuitBreaker ||
-    options.enableCircuitBreaker === undefined
-  ) {
-    const xsuaaCircuitBreaker = getInstanceCircuitBreaker();
-
-    if (!xsuaaCircuitBreaker) {
-      throw new Error('The xsuaa circuit breaker is undefined.');
-    }
-
-    return xsuaaCircuitBreaker!.fire(destination, config);
+  if (options.enableCircuitBreaker) {
+    return getCircuitBreaker().fire(destination, config);
   }
 
   return executeHttpRequest(destination, config);
@@ -343,10 +336,14 @@ function accessTokenError(error: Error, grant: string): Error {
   );
 }
 
-function getInstanceCircuitBreaker(breaker?: any | undefined): any {
-  return typeof breaker === 'undefined'
-    ? new CircuitBreaker(executeHttpRequest, circuitBreakerDefaultOptions)
-    : breaker;
+function getCircuitBreaker(): any {
+  if (typeof circuitBreaker === 'undefined') {
+    circuitBreaker = new CircuitBreaker(
+      executeHttpRequest,
+      circuitBreakerDefaultOptions
+    );
+  }
+  return circuitBreaker;
 }
 
 const grantTypeMapper = {

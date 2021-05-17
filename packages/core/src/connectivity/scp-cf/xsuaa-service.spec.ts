@@ -182,6 +182,27 @@ describe('xsuaa', () => {
         expect(error.stack).toContain('500');
       }
     });
+
+    it('circuit breaker opens after 10 failed request attempts', async () => {
+      const attempts = 10;
+      nock(providerXsuaaUrl).post('/oauth/token').reply(400);
+
+      const failingXsuaaRequest = () =>
+        clientCredentialsGrant(providerXsuaaClientCredentials, creds);
+
+      for (let i = 0; i < attempts; i++) {
+        await failingXsuaaRequest().catch(() => undefined);
+      }
+
+      try {
+        await failingXsuaaRequest();
+        fail('Expected breaker to be open.');
+      } catch (err) {
+        expect(err.rootCause.message).toMatchInlineSnapshot(
+          '"Breaker is open"'
+        );
+      }
+    });
   });
 
   describe('userTokenGrant', () => {
@@ -209,7 +230,8 @@ describe('xsuaa', () => {
       const userToken = await userTokenGrant(
         providerXsuaaClientCredentials,
         userJwt,
-        clientId
+        clientId,
+        { enableCircuitBreaker: false }
       );
       expect(userToken).toEqual(expectedResponse);
     });
@@ -334,7 +356,8 @@ describe('xsuaa', () => {
       const response = await refreshTokenGrant(
         providerXsuaaClientCredentials,
         creds,
-        refreshToken
+        refreshToken,
+        { enableCircuitBreaker: false }
       );
       expect(response).toEqual(expectedResponse);
     });

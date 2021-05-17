@@ -5,9 +5,11 @@ import {
   renameKeys
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
+import CircuitBreaker from 'opossum';
 import {
   executeHttpRequest,
   HttpRequestConfig,
+  HttpRequestOptions,
   HttpResponse
 } from '../../http-client';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
@@ -21,23 +23,28 @@ import {
   TokenKey,
   UserTokenResponse
 } from './xsuaa-service-types';
-import { Destination } from './destination';
+import { Destination, DestinationNameAndJwt } from './destination';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
 } from './proxy-util';
 
-// For some reason, the equivalent import statement does not work
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-const CircuitBreaker = require('opossum');
-
 const logger = createLogger({
   package: 'core',
   messageContext: 'xsuaa-service'
 });
 
-let circuitBreaker;
+type XsuaaCircuitBreaker = CircuitBreaker<
+  [
+    destination: Destination | DestinationNameAndJwt,
+    requestConfig: HttpRequestConfig,
+    options?: HttpRequestOptions | undefined
+  ],
+  HttpResponse
+>;
+
+let circuitBreaker: XsuaaCircuitBreaker;
 
 /**
  * Executes a client credentials grant request.
@@ -336,7 +343,7 @@ function accessTokenError(error: Error, grant: string): Error {
   );
 }
 
-function getCircuitBreaker(): any {
+function getCircuitBreaker(): XsuaaCircuitBreaker {
   if (typeof circuitBreaker === 'undefined') {
     circuitBreaker = new CircuitBreaker(
       executeHttpRequest,

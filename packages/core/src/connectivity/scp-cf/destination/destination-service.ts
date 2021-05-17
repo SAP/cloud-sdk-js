@@ -4,11 +4,13 @@ import {
   propertyExists
 } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
+import CircuitBreaker from 'opossum';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   executeHttpRequest,
   getAxiosConfigWithDefaults,
   HttpRequestConfig,
+  HttpRequestOptions,
   HttpResponse
 } from '../../../http-client';
 import {
@@ -22,19 +24,28 @@ import {
   proxyStrategy
 } from '../proxy-util';
 import { parseDestination } from './destination';
-import { Destination, DestinationType } from './destination-service-types';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationType
+} from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
-
-// For some reason, the equivalent import statement does not work
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-const CircuitBreaker = require('opossum');
 
 const logger = createLogger({
   package: 'core',
   messageContext: 'destination-service'
 });
 
-let circuitBreaker;
+type DestinationCircuitBreaker = CircuitBreaker<
+  [
+    destination: Destination | DestinationNameAndJwt,
+    requestConfig: HttpRequestConfig,
+    options?: HttpRequestOptions | undefined
+  ],
+  HttpResponse
+>;
+
+let circuitBreaker: DestinationCircuitBreaker;
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -244,7 +255,7 @@ function callDestinationService(
   return executeHttpRequest(destination, config);
 }
 
-function getCircuitBreaker(): any {
+function getCircuitBreaker(): DestinationCircuitBreaker {
   if (typeof circuitBreaker === 'undefined') {
     circuitBreaker = new CircuitBreaker(
       executeHttpRequest,

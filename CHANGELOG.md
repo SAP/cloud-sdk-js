@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [core] Re-enable the circuit breakers for the destination and xsuaa services.
 
 
 # 1.44.0

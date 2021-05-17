@@ -6,11 +6,11 @@ import { ODataRequest } from '../../request/odata-request';
 import { ODataRequestConfig } from '../../request/odata-request-config';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { BatchChangeSet } from './batch-change-set';
-import type { BatchRequestBuilder } from './batch-request-builder';
 import {
   BatchRequestSerializationOptions,
   BatchSubRequestPathType
 } from './batch-request-options';
+import type { BatchRequestBuilder } from './batch-request-builder';
 /**
  * Serialize change set to string.
  * @param changeSet - Change set containing a collection of write operations.

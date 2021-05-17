@@ -6,13 +6,13 @@ import {
   toSanitizedObject,
   encodeBase64
 } from '@sap-cloud-sdk/util';
-import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
 import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
   sanitizeDestination
 } from './destination';
+import type { ODataRequest, ODataRequestConfig } from '../../odata-common';
 
 const logger = createLogger({
   package: 'core',

@@ -6,10 +6,10 @@ import jwt from 'jsonwebtoken';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
-import type { RegisteredJWTClaimsTenant } from './tenant';
-import type { RegisteredJWTClaimsUser } from './user';
 import { Cache } from './cache';
 import { fetchVerificationKeys } from './xsuaa-service';
+import type { RegisteredJWTClaimsTenant } from './tenant';
+import type { RegisteredJWTClaimsUser } from './user';
 
 const logger = createLogger({
   package: 'core',

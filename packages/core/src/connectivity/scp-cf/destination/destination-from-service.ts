@@ -13,7 +13,6 @@ import {
   getDestinationServiceCredentialsList
 } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
-import type { DestinationOptions } from './destination-accessor';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -28,6 +27,7 @@ import {
   fetchSubaccountDestinations
 } from './destination-service';
 import { destinationCache } from './destination-cache';
+import type { DestinationOptions } from './destination-accessor';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 

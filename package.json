@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "1.42.0",
+  "version": "1.44.0",
   "private": true,
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",
@@ -15,7 +15,6 @@
   "workspaces": [
     "packages/analytics",
     "packages/core",
-    "packages/cli",
     "packages/eslint-config",
     "packages/generator",
     "packages/test-util",
@@ -23,7 +22,6 @@
     "packages/openapi-generator",
     "packages/generator-common",
     "test-packages/integration-tests",
-    "test-packages/nightly-tests",
     "test-packages/e2e-tests",
     "test-packages/test-services",
     "test-packages/test-services-e2e",
@@ -36,7 +34,6 @@
     "test:integration": "yarn integration-tests test",
     "test:type": "yarn type-tests test",
     "test:e2e": "yarn e2e-tests test",
-    "test:nightly": "yarn nightly-tests test",
     "generate:test-services:v2": "yarn generate v2 && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services:v4": "yarn generate v4 && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services:openapi": "yarn generate openapi && yarn lint:fix && yarn --frozen-lockfile",
@@ -63,7 +60,6 @@
     "test-util": "yarn workspace @sap-cloud-sdk/test-util",
     "util": "yarn workspace @sap-cloud-sdk/util",
     "e2e-tests": "yarn workspace @sap-cloud-sdk/e2e-tests",
-    "nightly-tests": "yarn workspace @sap-cloud-sdk/nightly-tests",
     "integration-tests": "yarn workspace @sap-cloud-sdk/integration-tests",
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },

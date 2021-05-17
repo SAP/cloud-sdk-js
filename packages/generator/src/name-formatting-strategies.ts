@@ -52,15 +52,15 @@ function nextSuffix(name: string, previouslyGeneratedNames: string[]): number {
     previouslyGeneratedNames.filter(n => n.startsWith(name))
   );
   const lastElem = last(sortedList);
-  const match = lastElem ? lastElem.match(/(\d+)$/) : null;
+  const match = lastElem ? lastElem.match(/(?<!\d)(\d+)$/) : null;
 
   return match ? parseInt(match[1], 10) + 1 : 1;
 }
 
 function sortByIntegerSuffix(array: string[]): string[] {
   return array.slice().sort((e1, e2) => {
-    const matched1 = e1.match(/(\d+)$/);
-    const matched2 = e2.match(/(\d+)$/);
+    const matched1 = e1.match(/(?<!\d)(\d+)$/);
+    const matched2 = e2.match(/(?<!\d)(\d+)$/);
     if (matched1 && !matched2) {
       return 1;
     }

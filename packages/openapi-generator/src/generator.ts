@@ -134,6 +134,10 @@ async function generateSources(
     );
   }
 
+  if (options.include) {
+    await copyAdditionalFiles(serviceDir, options.include, options.overwrite);
+  }
+
   if (tsConfig) {
     await createFile(
       serviceDir,
@@ -143,10 +147,6 @@ async function generateSources(
       false
     );
     await transpileDirectory(serviceDir, await readCompilerOptions(serviceDir));
-  }
-
-  if (options.include) {
-    await copyAdditionalFiles(serviceDir, options.include, options.overwrite);
   }
 
   if (options.readme) {

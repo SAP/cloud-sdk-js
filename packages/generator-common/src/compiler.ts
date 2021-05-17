@@ -54,7 +54,11 @@ function getErrorList(diagnostis: Diagnostic[]): string[] {
 
       return `${diagnostic.file.fileName}:${lineNumber}:${linePosition} - error TS${diagnostic.code}: ${diagnostic.messageText}`;
     }
-    return `error TS${diagnostic.code}: ${diagnostic.messageText}`;
+    const text =
+      typeof diagnostic.messageText === 'string'
+        ? diagnostic.messageText
+        : diagnostic.messageText.messageText;
+    return `error TS${diagnostic.code}: ${text}`;
   });
 }
 

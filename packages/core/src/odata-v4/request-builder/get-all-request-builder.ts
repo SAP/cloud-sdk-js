@@ -16,7 +16,8 @@ import { oDataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 export class GetAllRequestBuilder<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   readonly _entity: EntityT;
 
   /**

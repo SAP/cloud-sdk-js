@@ -20,12 +20,10 @@ export type ParametersType<ApiT, FnT extends keyof ApiT> = ApiT[FnT] extends (
  * @typeparam ApiT Interface of the api.
  * @typeparam FnT Name of the function, that is part of the api.
  */
-export type FunctionReturnType<
-  ApiT,
-  FnT extends keyof ApiT
-> = ApiT[FnT] extends (...args: any) => any
-  ? UnPromisify<ReturnType<ApiT[FnT]>>
-  : never;
+export type FunctionReturnType<ApiT, FnT extends keyof ApiT> =
+  ApiT[FnT] extends (...args: any) => any
+    ? UnPromisify<ReturnType<ApiT[FnT]>>
+    : never;
 
 /**
  * Unwrap the Axios response type.

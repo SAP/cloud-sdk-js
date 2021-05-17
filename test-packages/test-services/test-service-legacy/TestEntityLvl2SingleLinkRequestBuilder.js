@@ -99,5 +99,6 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
   };
   return TestEntityLvl2SingleLinkRequestBuilder;
 })(core_1.RequestBuilder);
-exports.TestEntityLvl2SingleLinkRequestBuilder = TestEntityLvl2SingleLinkRequestBuilder;
+exports.TestEntityLvl2SingleLinkRequestBuilder =
+  TestEntityLvl2SingleLinkRequestBuilder;
 //# sourceMappingURL=TestEntityLvl2SingleLinkRequestBuilder.js.map

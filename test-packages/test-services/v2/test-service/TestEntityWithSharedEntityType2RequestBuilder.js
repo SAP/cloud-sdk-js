@@ -106,5 +106,6 @@ var TestEntityWithSharedEntityType2RequestBuilder = /** @class */ (function (
   };
   return TestEntityWithSharedEntityType2RequestBuilder;
 })(core_1.RequestBuilder);
-exports.TestEntityWithSharedEntityType2RequestBuilder = TestEntityWithSharedEntityType2RequestBuilder;
+exports.TestEntityWithSharedEntityType2RequestBuilder =
+  TestEntityWithSharedEntityType2RequestBuilder;
 //# sourceMappingURL=TestEntityWithSharedEntityType2RequestBuilder.js.map

@@ -145,13 +145,11 @@ var TestEntityCircularLinkParent_1 = require('./TestEntityCircularLinkParent');
   /**
    * Mapping of all key field names to the respective static field property TestEntityCircularLinkChild.
    */
-  TestEntityCircularLinkChild._keys = TestEntityCircularLinkChild._keyFields.reduce(
-    function (acc, field) {
+  TestEntityCircularLinkChild._keys =
+    TestEntityCircularLinkChild._keyFields.reduce(function (acc, field) {
       acc[field._fieldName] = field;
       return acc;
-    },
-    {}
-  );
+    }, {});
 })(
   (TestEntityCircularLinkChild =
     exports.TestEntityCircularLinkChild ||

@@ -27,7 +27,8 @@ export class BooleanFieldBase<EntityT extends Entity> extends EdmTypeField<
  */
 export class BooleanField<EntityT extends Entity>
   extends BooleanFieldBase<EntityT>
-  implements SelectableEdmTypeField {
+  implements SelectableEdmTypeField
+{
   readonly selectable: true;
 }
 

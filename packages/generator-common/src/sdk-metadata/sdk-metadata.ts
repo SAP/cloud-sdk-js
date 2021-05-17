@@ -8,9 +8,10 @@ import {
   ServiceStatus
 } from './sdk-metadata-types';
 
-export function getSdkMetadataFileNames(
-  originalFileName: string
-): { clientFileName: string; headerFileName: string } {
+export function getSdkMetadataFileNames(originalFileName: string): {
+  clientFileName: string;
+  headerFileName: string;
+} {
   return {
     clientFileName: `${originalFileName}_CLIENT_JS.json`,
     headerFileName: `${originalFileName}_HEADER.json`

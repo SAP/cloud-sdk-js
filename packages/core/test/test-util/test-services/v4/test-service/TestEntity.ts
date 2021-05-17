@@ -337,11 +337,8 @@ export namespace TestEntity {
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DECIMAL_PROPERTY: BigNumberField<TestEntity> = new BigNumberField(
-    'DecimalProperty',
-    TestEntity,
-    'Edm.Decimal'
-  );
+  export const DECIMAL_PROPERTY: BigNumberField<TestEntity> =
+    new BigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -391,11 +388,8 @@ export namespace TestEntity {
    * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_TIME_OFF_SET_PROPERTY: DateField<TestEntity> = new DateField(
-    'DateTimeOffSetProperty',
-    TestEntity,
-    'Edm.DateTimeOffset'
-  );
+  export const DATE_TIME_OFF_SET_PROPERTY: DateField<TestEntity> =
+    new DateField('DateTimeOffSetProperty', TestEntity, 'Edm.DateTimeOffset');
   /**
    * Static representation of the [[durationProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -436,27 +430,20 @@ export namespace TestEntity {
    * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: AnyField<TestEntity> = new AnyField(
-    'SomethingTheSDKDoesNotSupport',
-    TestEntity,
-    'Edm.Any'
-  );
+  export const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: AnyField<TestEntity> =
+    new AnyField('SomethingTheSDKDoesNotSupport', TestEntity, 'Edm.Any');
   /**
    * Static representation of the [[collectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COLLECTION_PROPERTY: CollectionField<
-    TestEntity,
-    'Edm.String'
-  > = new CollectionField('CollectionProperty', TestEntity, 'Edm.String');
+  export const COLLECTION_PROPERTY: CollectionField<TestEntity, 'Edm.String'> =
+    new CollectionField('CollectionProperty', TestEntity, 'Edm.String');
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity> = new TestComplexTypeField(
-    'ComplexTypeProperty',
-    TestEntity
-  );
+  export const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity> =
+    new TestComplexTypeField('ComplexTypeProperty', TestEntity);
   /**
    * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -481,10 +468,8 @@ export namespace TestEntity {
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY_WITH_ONE_MEMBER: EnumField<TestEntity> = new EnumField(
-    'EnumPropertyWithOneMember',
-    TestEntity
-  );
+  export const ENUM_PROPERTY_WITH_ONE_MEMBER: EnumField<TestEntity> =
+    new EnumField('EnumPropertyWithOneMember', TestEntity);
   /**
    * Static representation of the [[enumCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -497,10 +482,8 @@ export namespace TestEntity {
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK: OneToManyLink<
-    TestEntity,
-    TestEntityMultiLink
-  > = new OneToManyLink('to_MultiLink', TestEntity, TestEntityMultiLink);
+  export const TO_MULTI_LINK: OneToManyLink<TestEntity, TestEntityMultiLink> =
+    new OneToManyLink('to_MultiLink', TestEntity, TestEntityMultiLink);
   /**
    * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -513,10 +496,8 @@ export namespace TestEntity {
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_SINGLE_LINK: OneToOneLink<
-    TestEntity,
-    TestEntitySingleLink
-  > = new OneToOneLink('to_SingleLink', TestEntity, TestEntitySingleLink);
+  export const TO_SINGLE_LINK: OneToOneLink<TestEntity, TestEntitySingleLink> =
+    new OneToOneLink('to_SingleLink', TestEntity, TestEntitySingleLink);
   /**
    * All fields of the TestEntity entity.
    */

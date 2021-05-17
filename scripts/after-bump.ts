@@ -59,10 +59,8 @@ const nextChangelogTemplate = [
 
 function transformChangeLog(changelog) {
   const [comments, versionSections] = changelog.split(`${unixEOL}# Next`);
-  const [
-    latestVersionSection,
-    ...previousVersionSections
-  ] = versionSections.split(`${unixEOL}# `);
+  const [latestVersionSection, ...previousVersionSections] =
+    versionSections.split(`${unixEOL}# `);
   const [, ...changelogCategories] = latestVersionSection.split(
     `${unixEOL}## `
   );

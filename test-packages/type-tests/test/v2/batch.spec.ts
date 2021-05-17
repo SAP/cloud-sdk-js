@@ -11,9 +11,10 @@ import {
 const createTestEntity = TestEntity.requestBuilder().create(
   TestEntity.builder().build()
 );
-const createTestEntityFromOtherService = MultiSchemaTestEntity.requestBuilder().create(
-  MultiSchemaTestEntity.builder().build()
-);
+const createTestEntityFromOtherService =
+  MultiSchemaTestEntity.requestBuilder().create(
+    MultiSchemaTestEntity.builder().build()
+  );
 
 // $ExpectType ODataBatchChangeSet<WriteTestServiceRequestBuilder>
 const changeSetTestEntity = testEntityChangeset(createTestEntity);

@@ -135,13 +135,11 @@ exports.TestEntityEndsWithSomethingElse = TestEntityEndsWithSomethingElse;
   /**
    * Mapping of all key field names to the respective static field property TestEntityEndsWithSomethingElse.
    */
-  TestEntityEndsWithSomethingElse._keys = TestEntityEndsWithSomethingElse._keyFields.reduce(
-    function (acc, field) {
+  TestEntityEndsWithSomethingElse._keys =
+    TestEntityEndsWithSomethingElse._keyFields.reduce(function (acc, field) {
       acc[field._fieldName] = field;
       return acc;
-    },
-    {}
-  );
+    }, {});
 })(
   (TestEntityEndsWithSomethingElse =
     exports.TestEntityEndsWithSomethingElse ||

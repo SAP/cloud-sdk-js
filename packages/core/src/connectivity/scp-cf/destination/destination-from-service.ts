@@ -75,12 +75,12 @@ class DestinationFromServiceRetriever {
     name: string,
     options: DestinationOptions
   ): Promise<Destination | null> {
-    const decodedUserJwt = await DestinationFromServiceRetriever.getDecodedUserJwt(
-      options
-    );
-    const providerToken = await DestinationFromServiceRetriever.getProviderClientCredentialsToken(
-      options
-    );
+    const decodedUserJwt =
+      await DestinationFromServiceRetriever.getDecodedUserJwt(options);
+    const providerToken =
+      await DestinationFromServiceRetriever.getProviderClientCredentialsToken(
+        options
+      );
     const da = new DestinationFromServiceRetriever(
       name,
       options,
@@ -88,7 +88,8 @@ class DestinationFromServiceRetriever {
       providerToken
     );
 
-    const destinationResult = await da.searchDestinationWithSelectionStrategyAndCache();
+    const destinationResult =
+      await da.searchDestinationWithSelectionStrategyAndCache();
     if (!destinationResult) {
       return null;
     }
@@ -176,11 +177,13 @@ class DestinationFromServiceRetriever {
   > {
     let destinationSearchResult;
     if (this.isSubscriberNeeded()) {
-      destinationSearchResult = await this.searchSubscriberAccountForDestination();
+      destinationSearchResult =
+        await this.searchSubscriberAccountForDestination();
     }
 
     if (this.isProviderNeeded(destinationSearchResult)) {
-      destinationSearchResult = await this.searchProviderAccountForDestination();
+      destinationSearchResult =
+        await this.searchProviderAccountForDestination();
     }
     if (destinationSearchResult && !destinationSearchResult.fromCache) {
       logger.info(
@@ -283,9 +286,10 @@ class DestinationFromServiceRetriever {
         `OAuth2UserTokenExchange flow started for destination ${this.name} of the subscriber account.`
       );
       return {
-        authHeaderJwt: await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
-          this.options
-        ),
+        authHeaderJwt:
+          await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
+            this.options
+          ),
         exchangeHeaderJwt: this.options.userJwt
       };
     }

@@ -87,11 +87,12 @@ async function fetchDestinations(
   )}/destination-configuration/v1/${type}Destinations`;
 
   if (options?.useCache) {
-    const destinationsFromCache = destinationServiceCache.retrieveDestinationsFromCache(
-      targetUri,
-      decodeJwt(jwt),
-      options.isolationStrategy
-    );
+    const destinationsFromCache =
+      destinationServiceCache.retrieveDestinationsFromCache(
+        targetUri,
+        decodeJwt(jwt),
+        options.isolationStrategy
+      );
     if (destinationsFromCache) {
       return destinationsFromCache;
     }
@@ -167,11 +168,12 @@ async function fetchDestinationByTokens(
   )}/destination-configuration/v1/destinations/${destinationName}`;
 
   if (options?.useCache) {
-    const destinationsFromCache = destinationServiceCache.retrieveDestinationsFromCache(
-      targetUri,
-      decodeJwt(tokens.authHeaderJwt),
-      options.isolationStrategy
-    );
+    const destinationsFromCache =
+      destinationServiceCache.retrieveDestinationsFromCache(
+        targetUri,
+        decodeJwt(tokens.authHeaderJwt),
+        options.isolationStrategy
+      );
     if (destinationsFromCache) {
       if (destinationsFromCache.length > 1) {
         logger.warn(

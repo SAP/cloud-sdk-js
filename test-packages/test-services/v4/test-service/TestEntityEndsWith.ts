@@ -18,7 +18,8 @@ import {
  */
 export class TestEntityEndsWith
   extends EntityV4
-  implements TestEntityEndsWithType {
+  implements TestEntityEndsWithType
+{
   /**
    * Technical entity name for TestEntityEndsWith.
    */

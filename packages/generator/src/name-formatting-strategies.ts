@@ -3,25 +3,26 @@ import voca from 'voca';
 import { defaultReservedWords, reservedJsKeywords } from './reserved-words';
 
 // FIXME: this function has a side effect and it is not obvious that the cache is updated
-const applySuffixOnConflict = (separator: string) => (
-  name: string,
-  previouslyGeneratedNames: string[]
-): string => {
-  let newName = name;
-  if ([...previouslyGeneratedNames, ...defaultReservedWords].includes(name)) {
-    newName = `${name}${separator}${nextSuffix(
-      name,
-      previouslyGeneratedNames
-    )}`;
-  }
-  previouslyGeneratedNames.push(newName);
-  return newName;
-};
+const applySuffixOnConflict =
+  (separator: string) =>
+  (name: string, previouslyGeneratedNames: string[]): string => {
+    let newName = name;
+    if ([...previouslyGeneratedNames, ...defaultReservedWords].includes(name)) {
+      newName = `${name}${separator}${nextSuffix(
+        name,
+        previouslyGeneratedNames
+      )}`;
+    }
+    previouslyGeneratedNames.push(newName);
+    return newName;
+  };
 
-const applyPrefixOnJSReservedWords = (prefix: string) => (
-  param: string
-): string =>
-  reservedJsKeywords.includes(param) ? prefix + voca.capitalize(param) : param;
+const applyPrefixOnJSReservedWords =
+  (prefix: string) =>
+  (param: string): string =>
+    reservedJsKeywords.includes(param)
+      ? prefix + voca.capitalize(param)
+      : param;
 
 /**
  * @deprecated Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameGenerator]] instead.
@@ -38,13 +39,13 @@ export const applyPrefixOnJsConflictParam = applyPrefixOnJSReservedWords('p');
  * @deprecated  Since v1.25.0. Use [[applyPrefixOnJsConflictParam]] instead.
  */
 export const applyPrefixOnJsConfictParam = applyPrefixOnJsConflictParam;
-export const applyPrefixOnJsConflictFunctionImports = applyPrefixOnJSReservedWords(
-  'f'
-);
+export const applyPrefixOnJsConflictFunctionImports =
+  applyPrefixOnJSReservedWords('f');
 /**
  * @deprecated  Since v1.25.0. Use [[applyPrefixOnJsConflictFunctionImports]] instead.
  */
-export const applyPrefixOnJsConfictFunctionImports = applyPrefixOnJsConflictFunctionImports;
+export const applyPrefixOnJsConfictFunctionImports =
+  applyPrefixOnJsConflictFunctionImports;
 
 function nextSuffix(name: string, previouslyGeneratedNames: string[]): number {
   const sortedList = sortByIntegerSuffix(

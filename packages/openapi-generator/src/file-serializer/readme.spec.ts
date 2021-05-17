@@ -4,7 +4,7 @@ import { readme } from './readme';
 describe('readme', () => {
   it('returns the readme content', () => {
     expect(
-      readme(({
+      readme({
         serviceOptions: {
           packageName: '@sap-cloud-sdk/workflow-service',
           directoryName: ''
@@ -12,7 +12,7 @@ describe('readme', () => {
         serviceName: 'WorkflowAPI',
         originalFileName: '',
         operations: []
-      } as unknown) as OpenApiDocument)
+      } as unknown as OpenApiDocument)
     ).toMatchSnapshot();
   });
 });

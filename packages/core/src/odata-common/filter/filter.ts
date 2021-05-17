@@ -17,13 +17,12 @@ export type FilterOperator =
   | FilterOperatorBoolean
   | FilterOperatorNumber;
 
-export type FilterOperatorByType<
-  FieldT extends FieldType
-> = FieldT extends string
-  ? FilterOperatorString
-  : FieldT extends number
-  ? FilterOperatorNumber
-  : FilterOperatorBoolean;
+export type FilterOperatorByType<FieldT extends FieldType> =
+  FieldT extends string
+    ? FilterOperatorString
+    : FieldT extends number
+    ? FilterOperatorNumber
+    : FilterOperatorBoolean;
 
 /**
  * Represents a filter expression to narrow the data on a [[GetAllRequestBuilder]] request for multiple entities that match the specified criteria.
@@ -39,7 +38,8 @@ export type FilterOperatorByType<
 export class Filter<
   EntityT extends Entity,
   FieldT extends FieldType | FieldType[]
-> implements EntityIdentifiable<EntityT> {
+> implements EntityIdentifiable<EntityT>
+{
   /**
    * Constructor type of the entity to be filtered.
    */

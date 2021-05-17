@@ -31,7 +31,10 @@ const readDir = inputDir =>
 
 const isHtmlFile = fileName => extname(fileName) === '.html';
 const isSearchJs = fileName => basename(fileName) === 'search.js';
-const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
+const pipe =
+  (...fns) =>
+  start =>
+    fns.reduce((state, fn) => fn(state), start);
 
 /**
  * GitHub pages has requirements for links, so additional adjustment is necessary. See example below:

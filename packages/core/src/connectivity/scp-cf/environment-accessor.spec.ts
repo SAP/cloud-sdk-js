@@ -47,9 +47,8 @@ describe('Environment Accessor', () => {
     it('should return the defined environment variable with the respective name', () => {
       const env = services;
       const expected = JSON.stringify(env);
-      const actual = EnvironmentAccessor.getEnvironmentVariable(
-        'VCAP_SERVICES'
-      );
+      const actual =
+        EnvironmentAccessor.getEnvironmentVariable('VCAP_SERVICES');
       expect(actual).toBe(expected);
     });
 

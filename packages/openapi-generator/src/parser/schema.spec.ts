@@ -117,12 +117,14 @@ describe('parseSchema', () => {
       }
     };
     expect(
-      (parseSchema(
-        schema,
-        await createTestRefs({
-          schemas: { PropertySchema: { type: 'string' } }
-        })
-      ) as OpenApiObjectSchema).properties[0].description
+      (
+        parseSchema(
+          schema,
+          await createTestRefs({
+            schemas: { PropertySchema: { type: 'string' } }
+          })
+        ) as OpenApiObjectSchema
+      ).properties[0].description
     ).toBeUndefined();
   });
 
@@ -139,12 +141,14 @@ describe('parseSchema', () => {
     };
 
     expect(
-      (parseSchema(
-        schema,
-        await createTestRefs({
-          schemas: { PropertySchema: { type: 'string' } }
-        })
-      ) as OpenApiObjectSchema).properties[0].description
+      (
+        parseSchema(
+          schema,
+          await createTestRefs({
+            schemas: { PropertySchema: { type: 'string' } }
+          })
+        ) as OpenApiObjectSchema
+      ).properties[0].description
     ).toEqual('Property Description');
   });
 

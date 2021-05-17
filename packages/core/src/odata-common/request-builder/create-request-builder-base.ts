@@ -21,7 +21,8 @@ import { MethodRequestBuilder } from './request-builder-base';
  */
 export abstract class CreateRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilder<ODataCreateRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   /**
    * Creates an instance of CreateRequestBuilder.
    *

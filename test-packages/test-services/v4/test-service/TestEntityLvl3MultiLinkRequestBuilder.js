@@ -100,5 +100,6 @@ var TestEntityLvl3MultiLinkRequestBuilder = /** @class */ (function (_super) {
   };
   return TestEntityLvl3MultiLinkRequestBuilder;
 })(core_1.RequestBuilder);
-exports.TestEntityLvl3MultiLinkRequestBuilder = TestEntityLvl3MultiLinkRequestBuilder;
+exports.TestEntityLvl3MultiLinkRequestBuilder =
+  TestEntityLvl3MultiLinkRequestBuilder;
 //# sourceMappingURL=TestEntityLvl3MultiLinkRequestBuilder.js.map

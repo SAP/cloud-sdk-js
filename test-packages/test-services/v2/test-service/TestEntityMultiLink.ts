@@ -22,7 +22,8 @@ import {
  */
 export class TestEntityMultiLink
   extends EntityV2
-  implements TestEntityMultiLinkType {
+  implements TestEntityMultiLinkType
+{
   /**
    * Technical entity name for TestEntityMultiLink.
    */
@@ -136,38 +137,26 @@ export namespace TestEntityMultiLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityMultiLink> = new StringField(
-    'StringProperty',
-    TestEntityMultiLink,
-    'Edm.String'
-  );
+  export const STRING_PROPERTY: StringField<TestEntityMultiLink> =
+    new StringField('StringProperty', TestEntityMultiLink, 'Edm.String');
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntityMultiLink> = new BooleanField(
-    'BooleanProperty',
-    TestEntityMultiLink,
-    'Edm.Boolean'
-  );
+  export const BOOLEAN_PROPERTY: BooleanField<TestEntityMultiLink> =
+    new BooleanField('BooleanProperty', TestEntityMultiLink, 'Edm.Boolean');
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntityMultiLink> = new StringField(
-    'GuidProperty',
-    TestEntityMultiLink,
-    'Edm.Guid'
-  );
+  export const GUID_PROPERTY: StringField<TestEntityMultiLink> =
+    new StringField('GuidProperty', TestEntityMultiLink, 'Edm.Guid');
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY: NumberField<TestEntityMultiLink> = new NumberField(
-    'Int16Property',
-    TestEntityMultiLink,
-    'Edm.Int16'
-  );
+  export const INT_16_PROPERTY: NumberField<TestEntityMultiLink> =
+    new NumberField('Int16Property', TestEntityMultiLink, 'Edm.Int16');
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

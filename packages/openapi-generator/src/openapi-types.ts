@@ -1,5 +1,5 @@
-import type { OpenAPIV3 } from 'openapi-types';
 import { ServiceOptions } from './options';
+import type { OpenAPIV3 } from 'openapi-types';
 
 /**
  * Representation of an OpenAPI specification/document.

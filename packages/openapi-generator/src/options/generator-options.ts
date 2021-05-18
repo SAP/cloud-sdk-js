@@ -1,5 +1,6 @@
 import Parser from '@oclif/parser';
 import OpenApiGenerator from '../cli';
+import { openapi_flags } from '../cli/flags';
 
 /**
  * Options that can be used to configure the generation when using the generator programmatically.
@@ -43,7 +44,7 @@ export type ParsedGeneratorOptions = typeof OpenApiGenerator extends Parser.Inpu
 export function parseGeneratorOptions(
   options: GeneratorOptions
 ): ParsedGeneratorOptions {
-  return Object.entries(OpenApiGenerator.flags).reduce(
+  return Object.entries(openapi_flags).reduce(
     (parsedOptions, [name, flag]) => {
       const value = options[name];
       if (typeof value !== 'undefined') {

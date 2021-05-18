@@ -1,4 +1,5 @@
 import mock from 'mock-fs';
+import { generateWithParsedOptions, generate } from '../generator';
 import { parseOptionsFromConfig } from '../generator-utils';
 import { parseGeneratorOptions } from './generator-options';
 
@@ -129,5 +130,47 @@ describe('parseGeneratorOptions', () => {
     ).toMatchObject({
       tsConfig: `${process.cwd()}/someDir`
     });
+  });
+
+  it('receives an error without input and/or outputDir parameter set', () => {
+    const options = {
+      input: '',
+      outputDir: '',
+      transpile: false,
+      include: undefined,
+      clearOutputDir: false,
+      skipValidation: false,
+      tsConfig: undefined,
+      packageJson: false,
+      optionsPerService: undefined,
+      packageVersion: '1.0.0',
+      readme: false,
+      metadata: false,
+      verbose: false,
+      overwrite: false,
+      config: undefined
+    };
+    return expect(generateWithParsedOptions(options)).rejects.toThrowError(
+      'Either input or outputDir were not set.'
+    );
+  });
+
+  it('receives an error without input and/or outputDir set in config', () => {
+    const config = {
+      input: 'some-repository'
+    };
+    const parameters = {
+      config: '/path/config.json'
+    };
+    mock({
+      '/path/': {
+        'config.json': JSON.stringify(config)
+      }
+    });
+    return expect(
+      generate(parseOptionsFromConfig(parameters.config))
+    ).rejects.toThrowError(
+      new Error('Either input or outputDir were not set.')
+    );
   });
 });

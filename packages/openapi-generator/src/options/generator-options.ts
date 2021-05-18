@@ -44,16 +44,13 @@ export type ParsedGeneratorOptions = typeof OpenApiGenerator extends Parser.Inpu
 export function parseGeneratorOptions(
   options: GeneratorOptions
 ): ParsedGeneratorOptions {
-  return Object.entries(openapi_flags).reduce(
-    (parsedOptions, [name, flag]) => {
-      const value = options[name];
-      if (typeof value !== 'undefined') {
-        parsedOptions[name] = flag.parse(value as never, undefined);
-      } else if (typeof flag.default !== undefined) {
-        parsedOptions[name] = flag.default;
-      }
-      return parsedOptions;
-    },
-    {} as ParsedGeneratorOptions
-  );
+  return Object.entries(openapi_flags).reduce((parsedOptions, [name, flag]) => {
+    const value = options[name];
+    if (typeof value !== 'undefined') {
+      parsedOptions[name] = flag.parse(value as never, undefined);
+    } else if (typeof flag.default !== undefined) {
+      parsedOptions[name] = flag.default;
+    }
+    return parsedOptions;
+  }, {} as ParsedGeneratorOptions);
 }

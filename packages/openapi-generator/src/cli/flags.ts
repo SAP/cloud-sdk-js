@@ -3,7 +3,7 @@ import { existsSync, lstatSync } from 'fs';
 import { flags } from '@oclif/command';
 
 export const openapi_flags = {
-    input: flags.string({
+  input: flags.string({
     char: 'i',
     description:
       'Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.',

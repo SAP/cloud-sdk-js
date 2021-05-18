@@ -85,7 +85,8 @@ describe('destination service', () => {
 
       const instanceDestinations: Destination[] = await fetchInstanceDestinations(
         destinationServiceUri,
-        jwt
+        jwt,
+        { enableCircuitBreaker: false }
       );
       expected.forEach((e, index) => {
         expect(instanceDestinations[index]).toMatchObject(e);
@@ -165,7 +166,8 @@ describe('destination service', () => {
 
       const subaccountDestinations: Destination[] = await fetchSubaccountDestinations(
         destinationServiceUri,
-        jwt
+        jwt,
+        { enableCircuitBreaker: false }
       );
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
@@ -264,7 +266,8 @@ describe('destination service', () => {
       const actual = await fetchDestination(
         destinationServiceUri,
         jwt,
-        destinationName
+        destinationName,
+        { enableCircuitBreaker: false }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -432,7 +435,8 @@ describe('destination service', () => {
       const actual = await fetchDestination(
         destinationServiceUri,
         jwt,
-        destinationName
+        destinationName,
+        { enableCircuitBreaker: false }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -475,27 +479,6 @@ describe('destination service', () => {
           enableCircuitBreaker: false
         })
       ).rejects.toThrowError();
-    });
-
-    it('circuit breaker opens after 10 failed request attempts', async () => {
-      const attempts = 10;
-      nock(destinationServiceUri).get(/.*/).times(attempts).reply(400);
-
-      const failingDestinationRequest = () =>
-        fetchDestination(destinationServiceUri, jwt, 'FINAL-DESTINATION');
-
-      for (let i = 0; i < attempts; i++) {
-        await failingDestinationRequest().catch(() => undefined);
-      }
-
-      try {
-        await failingDestinationRequest();
-        fail('Expected breaker to be open.');
-      } catch (err) {
-        expect(err.rootCause.message).toMatchInlineSnapshot(
-          '"Breaker is open"'
-        );
-      }
     });
   });
 });

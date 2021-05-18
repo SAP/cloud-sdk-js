@@ -344,7 +344,7 @@ function accessTokenError(error: Error, grant: string): Error {
 }
 
 function getCircuitBreaker(): XsuaaCircuitBreaker {
-  if (typeof circuitBreaker === 'undefined') {
+  if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(
       executeHttpRequest,
       circuitBreakerDefaultOptions

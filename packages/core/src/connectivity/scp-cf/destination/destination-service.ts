@@ -256,7 +256,7 @@ function callDestinationService(
 }
 
 function getCircuitBreaker(): DestinationCircuitBreaker {
-  if (typeof circuitBreaker === 'undefined') {
+  if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(
       executeHttpRequest,
       circuitBreakerDefaultOptions

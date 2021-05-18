@@ -1,7 +1,10 @@
 import { fail } from 'assert';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { providerXsuaaUrl } from '../../../test/test-util/environment-mocks';
+import {
+  providerXsuaaClientCredentials,
+  providerXsuaaUrl
+} from '../../../test/test-util/environment-mocks';
 import * as httpClient from '../../http-client/http-client';
 import {
   clientCredentialsGrant,
@@ -11,7 +14,6 @@ import {
 } from './xsuaa-service';
 import { TokenKey } from './xsuaa-service-types';
 import { Destination } from './destination';
-import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { Protocol } from './protocol';
 
 const expectedResponse200 = {
@@ -28,9 +30,6 @@ describe('xsuaa', () => {
     password: 'borsti'
   };
   const basicHeader = 'Basic aG9yc3RpOmJvcnN0aQ==';
-  const providerXsuaaClientCredentials = {
-    url: providerXsuaaUrl
-  } as XsuaaServiceCredentials;
 
   describe('web proxy handling', () => {
     it('includes the proxy if present', async () => {
@@ -180,27 +179,6 @@ describe('xsuaa', () => {
         fail();
       } catch (error) {
         expect(error.stack).toContain('500');
-      }
-    });
-
-    it('circuit breaker opens after 10 failed request attempts', async () => {
-      const attempts = 10;
-      nock(providerXsuaaUrl).post('/oauth/token').reply(400);
-
-      const failingXsuaaRequest = () =>
-        clientCredentialsGrant(providerXsuaaClientCredentials, creds);
-
-      for (let i = 0; i < attempts; i++) {
-        await failingXsuaaRequest().catch(() => undefined);
-      }
-
-      try {
-        await failingXsuaaRequest();
-        fail('Expected breaker to be open.');
-      } catch (err) {
-        expect(err.rootCause.message).toMatchInlineSnapshot(
-          '"Breaker is open"'
-        );
       }
     });
   });

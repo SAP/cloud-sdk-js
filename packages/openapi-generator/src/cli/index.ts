@@ -5,7 +5,7 @@ import { cli } from 'cli-ux';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { parseOptionsFromConfig } from '../generator-utils';
 import { generate, generateWithParsedOptions } from '../generator';
-import { openapi_flags } from './flags';
+import { openapi_flags } from '../options/flags';
 
 const logger = createLogger('openapi-generator');
 class OpenApiGenerator extends Command {

@@ -1,6 +1,6 @@
 import Parser from '@oclif/parser';
 import OpenApiGenerator from '../cli';
-import { openapi_flags } from '../cli/flags';
+import { openapi_flags } from './flags';
 
 /**
  * Options that can be used to configure the generation when using the generator programmatically.

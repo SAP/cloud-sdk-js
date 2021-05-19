@@ -10,8 +10,6 @@ This generator is based on the [OpenAPI Tools generator](https://openapi-generat
 
 ## Installation
 
-The official OpenAPI generator is Java based, therefore you need to have a Java runtime installed to use the SAP Cloud SDK OpenAPI generator.
-
 ```bash
 $ npm install @sap-cloud-sdk/openapi-generator
 ```

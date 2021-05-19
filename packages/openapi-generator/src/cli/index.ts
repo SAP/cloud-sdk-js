@@ -8,7 +8,7 @@ import {
   removeDefaultValues
 } from '../generator-utils';
 import { generate, generateWithParsedOptions } from '../generator';
-import { generatorFlags } from '../options/flags';
+import { generatorFlags } from '../options';
 
 const logger = createLogger('openapi-generator');
 class OpenApiGenerator extends Command {

@@ -1,8 +1,11 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { GeneratorOptions, ParsedGeneratorOptions } from './options';
-import { generatorFlags } from './options/flags';
+import {
+  GeneratorOptions,
+  ParsedGeneratorOptions,
+  generatorFlags
+} from './options';
 const { readFile, lstat } = promises;
 
 /**

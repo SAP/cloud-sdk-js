@@ -94,7 +94,7 @@ export const generatorFlags = {
     char: 'c',
     parse: input => resolve(input),
     description:
-      'Set the path to the a file containing the options for generation. If other flags are used, they overwrite the options set in the config. If a directory is passed, a `config.json` file is read from this directory.',
+      'Set the path to the file containing the options for generation. If other flags are used, they overwrite the options set in the config. If a directory is passed, a `config.json` file is read from this directory.',
     helpValue: '<path/to/config.json>',
     required: false
   })

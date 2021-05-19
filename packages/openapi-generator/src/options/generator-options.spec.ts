@@ -132,7 +132,7 @@ describe('parseGeneratorOptions', () => {
     });
   });
 
-  it('receives an error without input and/or outputDir parameter set', () => {
+  it('throws an error if input and/or outputDir are not set', () => {
     const options = {
       input: '',
       outputDir: '',
@@ -150,12 +150,14 @@ describe('parseGeneratorOptions', () => {
       overwrite: false,
       config: undefined
     };
-    return expect(generateWithParsedOptions(options)).rejects.toThrowError(
-      'Either input or outputDir were not set.'
+    return expect(
+      generateWithParsedOptions(options)
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Either input or outputDir were not set."'
     );
   });
 
-  it('receives an error without input and/or outputDir set in config', () => {
+  it('throws an error if input and/or outputDir are not set in the config file', () => {
     const config = {
       input: 'some-repository'
     };
@@ -169,8 +171,8 @@ describe('parseGeneratorOptions', () => {
     });
     return expect(
       generate(parseOptionsFromConfig(parameters.config))
-    ).rejects.toThrowError(
-      new Error('Either input or outputDir were not set.')
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Either input or outputDir were not set."'
     );
   });
 });

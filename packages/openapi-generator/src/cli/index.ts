@@ -5,7 +5,7 @@ import { cli } from 'cli-ux';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { parseOptionsFromConfig } from '../generator-utils';
 import { generate, generateWithParsedOptions } from '../generator';
-import { openapi_flags } from '../options/flags';
+import { generatorFlags } from '../options/flags';
 
 const logger = createLogger('openapi-generator');
 class OpenApiGenerator extends Command {
@@ -25,13 +25,13 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   static version = require('../../package.json').version;
 
-  static flags = openapi_flags;
+  static flags = generatorFlags;
 
   async run(): Promise<void> {
     try {
       const parsed = this.parse(OpenApiGenerator);
       if (parsed.flags.config) {
-        await generate(parseOptionsFromConfig(parsed.flags.config));
+        await generate(await parseOptionsFromConfig(parsed.flags.config));
       } else {
         await generateWithParsedOptions(parsed.flags);
       }

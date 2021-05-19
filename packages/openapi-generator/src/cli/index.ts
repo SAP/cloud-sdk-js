@@ -3,7 +3,10 @@
 import { Command } from '@oclif/command';
 import { cli } from 'cli-ux';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { parseOptionsFromConfig } from '../generator-utils';
+import {
+  parseOptionsFromConfig,
+  removeDefaultValues
+} from '../generator-utils';
 import { generate, generateWithParsedOptions } from '../generator';
 import { generatorFlags } from '../options/flags';
 
@@ -31,7 +34,10 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
     try {
       const parsed = this.parse(OpenApiGenerator);
       if (parsed.flags.config) {
-        await generate(await parseOptionsFromConfig(parsed.flags.config));
+        await generate({
+          ...(await parseOptionsFromConfig(parsed.flags.config)),
+          ...removeDefaultValues(parsed.flags)
+        });
       } else {
         await generateWithParsedOptions(parsed.flags);
       }

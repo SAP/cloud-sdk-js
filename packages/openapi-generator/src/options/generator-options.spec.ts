@@ -41,7 +41,7 @@ describe('parseGeneratorOptions', () => {
     });
   });
 
-  it('gets default options with config file', () => {
+  it('gets default options with config file', async () => {
     const config = {
       input: 'inputDir',
       outputDir: 'outputDir'
@@ -51,8 +51,8 @@ describe('parseGeneratorOptions', () => {
         'config.json': JSON.stringify(config)
       }
     });
-    expect(
-      parseGeneratorOptions(parseOptionsFromConfig('/path/config.json'))
+    return expect(
+      parseGeneratorOptions(await parseOptionsFromConfig('/path/config.json'))
     ).toEqual({
       input: `${process.cwd()}/inputDir`,
       outputDir: `${process.cwd()}/outputDir`,
@@ -157,7 +157,7 @@ describe('parseGeneratorOptions', () => {
     );
   });
 
-  it('throws an error if input and/or outputDir are not set in the config file', () => {
+  it('throws an error if input and/or outputDir are not set in the config file', async () => {
     const config = {
       input: 'some-repository'
     };
@@ -170,7 +170,7 @@ describe('parseGeneratorOptions', () => {
       }
     });
     return expect(
-      generate(parseOptionsFromConfig(parameters.config))
+      generate(await parseOptionsFromConfig(parameters.config))
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Either input or outputDir were not set."'
     );

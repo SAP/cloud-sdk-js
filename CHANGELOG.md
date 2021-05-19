@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [openapi-generator] Added feature to use a config.json with `-c/--config` containing all generation options, instead passing them through command line options.
+- [openapi-generator] Added feature to use a config.json with `-c/--config` to use the openapi-generator. The config.json can be used for all generator options that would otherwise be used with command line options. If command line options are used, they overwrite the options set in the config file.
 
 ## Improvements
 

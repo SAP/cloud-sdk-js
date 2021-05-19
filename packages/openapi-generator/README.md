@@ -32,7 +32,8 @@ USAGE
 
 OPTIONS
   -c, --config=<path/to/config.json>
-      Set the path to the config.json file for generation.
+      Set the path to the a file containing the options for generation. If other flags are used, they overwrite the 
+      options set in the config. If a directory is passed, a `config.json` file is read from this directory.
 
   -i, --input=<path/to/input>
       Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. 

@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [odata] Fix encoding of filter strings.
 
 
 # 1.44.0

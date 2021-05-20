@@ -57,9 +57,7 @@ describe('convertToUriFormat', () => {
   });
 
   it('Edm.String with space, umlaut and plus', () => {
-    expect(convertToUriFormat('ä ö+', 'Edm.String')).toBe(
-      "'%C3%A4%20%C3%B6%2B'"
-    );
+    expect(convertToUriFormat("ä 'ö+", 'Edm.String')).toBe("'ä ''ö+'");
   });
 
   it('Edm.String with single quotes', () => {

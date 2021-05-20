@@ -8,9 +8,9 @@ import {
 } from 'fs';
 import { resolve, basename, extname } from 'path';
 import execa = require('execa');
-import { unixEOL } from '@sap-cloud-sdk/util';
+import { jsonStringify, unixEOL } from '@sap-cloud-sdk/util';
 import compareVersions from 'compare-versions';
-import { jsonStringify, transformFile } from './util';
+import { transformFile } from './util';
 const apiDocPath = resolve('docs', 'api');
 
 const isDirectory = entryPath => lstatSync(entryPath).isDirectory();

@@ -178,6 +178,10 @@ async function generateAll(): Promise<void> {
   if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
     await generateOpenApi({
       ...generatorConfigOpenApi,
+      optionsPerService: path.join(
+        generatorConfigOpenApi.input,
+        '../per-service-config.json'
+      ),
       transpile: true
     });
     await generateTestServicesWithLocalCoreModules(

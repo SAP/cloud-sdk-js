@@ -1,0 +1,17 @@
+{
+  "test-resources/openapi-service-specs/no-schema-service.yml": {
+    "packageName": "no-schema-service",
+    "directoryName": "no-schema-service",
+    "serviceName": "no-schema-service"
+  },
+  "test-resources/openapi-service-specs/swagger-yaml-service.yml": {
+    "packageName": "swagger-yaml-service",
+    "directoryName": "swagger-yaml-service",
+    "serviceName": "swagger-yaml-service"
+  },
+  "test-resources/openapi-service-specs/test-service.json": {
+    "packageName": "test-service",
+    "directoryName": "test-service",
+    "serviceName": "test-service"
+  }
+}

@@ -46,7 +46,7 @@ describe('batch request serializer', () => {
             .getAll()
             .filter(TestEntity.STRING_PROPERTY.equals('with EmptySpace'))
         )
-      ).toMatch(/filter=\(StringProperty%20eq%20'with%20EmptySpace'\)/);
+      ).toMatch(/filter=\(StringProperty eq 'with%20EmptySpace'\)/);
     });
 
     it('serializes getAll request with custom headers', () => {

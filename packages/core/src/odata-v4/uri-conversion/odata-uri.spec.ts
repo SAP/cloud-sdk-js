@@ -18,45 +18,41 @@ const { getFilter } = oDataUri;
 describe('getFilter', () => {
   it('for simple filters', () => {
     expect(getFilter(testFilterStringV4.filter, TestEntity).filter).toBe(
-      encodeURIComponent(`${testFilterString.odataStr}`)
+      `${testFilterString.odataStr}`
     );
   });
 
   it('for enum filters', () => {
     expect(getFilter(testFilterEnum.filter, TestEntity).filter).toBe(
-      encodeURIComponent(`${testFilterEnum.odataStr}`)
+      `${testFilterEnum.odataStr}`
     );
   });
 
   it('for lambda expression with simple filter on one-to-many navigation property', () => {
     expect(
       getFilter(testFilterLambdaExpressionOnLink.filter, TestEntity).filter
-    ).toBe(encodeURIComponent(testFilterLambdaExpressionOnLink.odataStr));
+    ).toBe(testFilterLambdaExpressionOnLink.odataStr);
   });
 
   it('for lambda expression with FilterList on one-to-many navigation property', () => {
     expect(
       getFilter(testFilterLambdaExpressionFilterListOnLink.filter, TestEntity)
         .filter
-    ).toBe(
-      encodeURIComponent(testFilterLambdaExpressionFilterListOnLink.odataStr)
-    );
+    ).toBe(testFilterLambdaExpressionFilterListOnLink.odataStr);
   });
 
   it('for lambda expression with FilterLink on one-to-many navigation property', () => {
     expect(
       getFilter(testFilterLambdaExpressionFilterLinkOnLink.filter, TestEntity)
         .filter
-    ).toBe(
-      encodeURIComponent(testFilterLambdaExpressionFilterLinkOnLink.odataStr)
-    );
+    ).toBe(testFilterLambdaExpressionFilterLinkOnLink.odataStr);
   });
 
   it('for nested lambda expression on one-to-many navigation property', () => {
     expect(
       getFilter(testNestedFilterLambdaExpressionOnLink.filter, TestEntity)
         .filter
-    ).toBe(encodeURIComponent(testNestedFilterLambdaExpressionOnLink.odataStr));
+    ).toBe(testNestedFilterLambdaExpressionOnLink.odataStr);
   });
 
   it('for lambda expression with filter function on one-to-many navigation property', () => {
@@ -65,11 +61,7 @@ describe('getFilter', () => {
         testFilterLambdaExpressionFilterFunctionOnLink.filter,
         TestEntity
       ).filter
-    ).toBe(
-      encodeURIComponent(
-        testFilterLambdaExpressionFilterFunctionOnLink.odataStr
-      )
-    );
+    ).toBe(testFilterLambdaExpressionFilterFunctionOnLink.odataStr);
   });
 
   it('for hasSubset filter function with collection', () => {
@@ -80,9 +72,7 @@ describe('getFilter', () => {
           .equals(true),
         TestEntity
       ).filter
-    ).toBe(
-      encodeURIComponent("hassubset(['1','2'], CollectionProperty) eq true")
-    );
+    ).toBe("hassubset(['1','2'], CollectionProperty) eq true");
   });
 
   it('for int collection filter function', () => {
@@ -91,6 +81,6 @@ describe('getFilter', () => {
         filterFunction('fn', 'int[]').equals([1, 2, 3]),
         TestEntity
       ).filter
-    ).toBe(encodeURIComponent('fn() eq [1,2,3]'));
+    ).toBe('fn() eq [1,2,3]');
   });
 });

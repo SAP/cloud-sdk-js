@@ -1,6 +1,6 @@
 import { resolve, relative } from 'path';
-import { jsonStringify, unixEOL } from '@sap-cloud-sdk/util';
-import { apiDocsDir, transformFile, version } from './util';
+import { unixEOL } from '@sap-cloud-sdk/util';
+import { apiDocsDir, jsonStringify, transformFile, version } from './util';
 
 function updateRootPackageJson() {
   transformFile(resolve('package.json'), packageJson =>

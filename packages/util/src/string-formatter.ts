@@ -61,12 +61,3 @@ export function pascalCase(str: string): string {
 export function kebabCase(str: string): string {
   return voca.kebabCase(str);
 }
-
-/**
- * Convert a JSON object to a string using formatting in line with the prettier.
- * @param json Object to be stringified
- * @returns The JSON object as string.
- */
-export function jsonStringify(json: any): string {
-  return JSON.stringify(json, null, 2) + unixEOL;
-}

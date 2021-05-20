@@ -159,19 +159,8 @@ describe('generator', () => {
                   \\"directoryName\\": \\"spec\\",
                   \\"serviceName\\": \\"spec\\"
                 }
-              }
-              "
+              }"
             `);
-    });
-
-    it('adds a new line at the options', async () => {
-      await generate({
-        input: 'inputDir',
-        outputDir: 'out',
-        optionsPerService: 'options.json'
-      });
-
-      await expect(readFile('options.json', 'utf8')).resolves.toMatch(/\n$/);
     });
 
     it('overwrites writes options per service', async () => {
@@ -189,8 +178,7 @@ describe('generator', () => {
                   \\"directoryName\\": \\"customName\\",
                   \\"serviceName\\": \\"spec\\"
                 }
-              }
-              "
+              }"
             `);
     });
   });

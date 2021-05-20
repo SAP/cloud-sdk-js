@@ -21,11 +21,6 @@ export const testFilterString = {
   odataStr: "StringProperty eq 'test'"
 };
 
-export const testFilterStringEncoding = {
-  filter: TestEntity.STRING_PROPERTY.equals("?'&$"),
-  odataStr: "StringProperty eq '?''&$'"
-};
-
 export const testFilterStringV4 = {
   filter: TestEntityV4.STRING_PROPERTY.equals('test'),
   odataStr: "StringProperty eq 'test'"

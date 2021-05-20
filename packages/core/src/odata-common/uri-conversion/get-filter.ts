@@ -47,7 +47,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
    * @typeparam EntityT - Type of the entity to filter on
    * @param filter - The filter to transform to a query parameter
    * @param entityConstructor - Constructor type of the entity to filter on
-   * @returns An object containing the query parameter with encoding or an empty object
+   * @returns An object containing the query parameter or an empty object
    */
   function getFilter<EntityT extends Entity>(
     filter: Filterable<EntityT>,
@@ -61,7 +61,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       );
       if (filterExpression) {
         return {
-          filter: encodeURIComponent(filterExpression)
+          filter: filterExpression
         };
       }
     }

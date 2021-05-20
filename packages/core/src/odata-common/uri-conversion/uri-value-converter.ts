@@ -34,7 +34,7 @@ function isInfOrNan(value: string | number): boolean {
  * @hidden
  */
 export function convertToUriForEdmString(value: any): string {
-  return `'${value.replace(/'/g, "''")}'`;
+  return `'${encodeURIComponent(value).replace(/'/g, "''")}'`;
 }
 
 /**

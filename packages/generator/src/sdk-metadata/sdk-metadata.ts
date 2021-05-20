@@ -1,4 +1,3 @@
-import type { Client } from '@sap-cloud-sdk/generator-common';
 import {
   getSdkMetadataClient,
   getPregeneratedLibrary
@@ -7,6 +6,7 @@ import { VdmServiceMetadata } from '../vdm-types';
 import { GeneratorOptions } from '../generator-options';
 import { getGenerationAndUsage } from './generation-and-usage';
 import { getServiceDescription } from './pregenerated-lib';
+import type { Client } from '@sap-cloud-sdk/generator-common';
 
 export async function sdkMetadata(
   service: VdmServiceMetadata,

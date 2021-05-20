@@ -6,10 +6,10 @@ import {
 } from '../../connectivity/scp-cf';
 import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataDeleteRequestConfig } from '../request';
-import type { ODataUri } from '../uri-conversion';
-import type { FieldType } from '../selectable';
 import { HttpResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
+import type { ODataUri } from '../uri-conversion';
+import type { FieldType } from '../selectable';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
  *

@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [odata] Support appending path to the request URL built by the request builders through the `appendPath` method. It can be used for unsupported OData functionality like querying navigation properties.
+-
 
 ## Improvements
 
@@ -26,9 +26,32 @@
 
 ## Fixed Issues
 
-- [PROXY] Consider the web proxy also in the service call to BTP services like XSUAA and destination service.
 - [odata] Fix encoding of filter strings.
 
+
+# 1.44.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.44.0<br>
+Blog: TBD<br>
+
+## Improvements
+
+- [odata-generator][openapi-generator] Update `typescript` version to `~4.1.2` in the `package.json` of the clients.
+
+# 1.43.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.43.0<br>
+Blog: TBD<br>
+
+## New Functionality
+
+- [odata] Support appending path to the request URL built by the request builders through the `appendPath` method. It can be used for unsupported OData functionality like querying navigation properties.
+
+## Fixed Issues
+
+- [PROXY] Consider the web proxy also in the service call to BTP services like XSUAA and destination service.
 
 # 1.42.0
 

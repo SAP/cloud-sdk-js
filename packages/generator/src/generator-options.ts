@@ -34,6 +34,10 @@ type KeysToOptions = {
   [optionName in keyof GeneratorOptions]: Options;
 };
 
+function coercePathArg(arg?: string): string | undefined {
+  return arg ? resolve(arg) : arg;
+}
+
 /**
  * @hidden
  */
@@ -43,7 +47,7 @@ export const generatorOptionsCli: KeysToOptions = {
     describe:
       'This directory will be recursively searched for .edmx/.xml files.',
     normalize: true,
-    coerce: resolve,
+    coerce: coercePathArg,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -52,7 +56,7 @@ export const generatorOptionsCli: KeysToOptions = {
     alias: 'o',
     describe: 'Directory to save the generated code in.',
     normalize: true,
-    coerce: resolve,
+    coerce: coercePathArg,
     type: 'string',
     demandOption: true,
     requiresArg: true
@@ -62,7 +66,7 @@ export const generatorOptionsCli: KeysToOptions = {
     describe:
       'Configuration file to ensure consistent names between multiple generation runs with updated / changed metadata files. Will be generated if not existent. By default it will be saved to/read from the input directory as "service-mapping.json".',
     type: 'string',
-    coerce: resolve,
+    coerce: coercePathArg,
     normalize: true
   },
   useSwagger: {
@@ -83,7 +87,7 @@ export const generatorOptionsCli: KeysToOptions = {
     describe:
       'Glob describing additional files to be added to the each generated service directory.',
     type: 'string',
-    coerce: resolve,
+    coerce: coercePathArg,
     normalize: true,
     hidden: true
   },

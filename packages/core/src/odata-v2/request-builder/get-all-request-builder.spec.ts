@@ -36,7 +36,7 @@ describe('GetAllRequestBuilder', () => {
 
     it('is built correctly with URI encoding', async () => {
       const expected =
-        "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$filter=(StringProperty eq '%C3%A4%20%C3%B6%2B%20''c')";
+        "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$filter=(StringProperty%20eq%20'%C3%A4%20%C3%B6%2B%20''c')";
       const actual = await requestBuilder
         .filter(TestEntity.STRING_PROPERTY.equals("ä ö+ 'c"))
         .url(defaultDestination);

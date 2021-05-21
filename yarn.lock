@@ -1723,11 +1723,11 @@
     "@sap/cds-runtime" "~3.1.0"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
-  version "1.24.0"
-  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.24.0.tgz#51f4e5c71de890421d8eb241c46ec9e5bfe3d990"
-  integrity sha512-fP/09Dudpktk945NsK9xogEn62xk8Hs8R0bvjP336ZJy1uDMn1AqrF8G0/pUHCAbmcty9+G7ZVlOWD7Va7bp2g==
+  version "1.25.0"
+  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.25.0.tgz#4e09aaeb30c873b3d72c8667c7569cae8277a1c2"
+  integrity sha512-XeZru18JlxTSi+PhT7xlxQopPgMrPZocKieRMu/TdLbw0GHYAXlZAPvs6rznc3N8AlGcvrAJekL15OIhEctBrw==
   dependencies:
-    "@sap-cloud-sdk/core" "^1.37.1"
+    "@sap-cloud-sdk/core" "^1.44.0"
 
 "@sap/edm-converters@^1.0.21", "@sap/edm-converters@^1.0.41":
   version "1.0.41"

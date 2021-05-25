@@ -50,7 +50,7 @@
     "cli-ux": "^5.4.5",
     "glob": "^7.1.6",
     "js-yaml": "^4.0.0",
-    "openapi-types": "^8.0.0",
+    "openapi-types": "^9.0.0",
     "swagger2openapi": "^7.0.4"
   },
   "devDependencies": {

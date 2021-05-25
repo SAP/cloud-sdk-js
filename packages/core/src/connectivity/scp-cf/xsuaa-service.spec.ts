@@ -1,7 +1,10 @@
 import { fail } from 'assert';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { providerXsuaaUrl } from '../../../test/test-util/environment-mocks';
+import {
+  providerXsuaaClientCredentials,
+  providerXsuaaUrl
+} from '../../../test/test-util/environment-mocks';
 import * as httpClient from '../../http-client/http-client';
 import {
   clientCredentialsGrant,
@@ -11,7 +14,6 @@ import {
 } from './xsuaa-service';
 import { TokenKey } from './xsuaa-service-types';
 import { Destination } from './destination';
-import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { Protocol } from './protocol';
 
 const expectedResponse200 = {
@@ -28,9 +30,6 @@ describe('xsuaa', () => {
     password: 'borsti'
   };
   const basicHeader = 'Basic aG9yc3RpOmJvcnN0aQ==';
-  const providerXsuaaClientCredentials = {
-    url: providerXsuaaUrl
-  } as XsuaaServiceCredentials;
 
   describe('web proxy handling', () => {
     it('includes the proxy if present', async () => {
@@ -209,7 +208,8 @@ describe('xsuaa', () => {
       const userToken = await userTokenGrant(
         providerXsuaaClientCredentials,
         userJwt,
-        clientId
+        clientId,
+        { enableCircuitBreaker: false }
       );
       expect(userToken).toEqual(expectedResponse);
     });
@@ -334,7 +334,8 @@ describe('xsuaa', () => {
       const response = await refreshTokenGrant(
         providerXsuaaClientCredentials,
         creds,
-        refreshToken
+        refreshToken,
+        { enableCircuitBreaker: false }
       );
       expect(response).toEqual(expectedResponse);
     });

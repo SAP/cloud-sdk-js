@@ -26,6 +26,7 @@
 
 ## Fixed Issues
 
+- [core] Re-enable the circuit breakers for the destination and xsuaa services.
 - [odata] Fix encoding of filter strings.
 
 

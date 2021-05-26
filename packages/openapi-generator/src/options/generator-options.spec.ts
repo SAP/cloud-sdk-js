@@ -1,7 +1,9 @@
 import mock from 'mock-fs';
 import { generateWithParsedOptions, generate } from '../generator';
-import { parseOptionsFromConfig } from '../generator-utils';
-import { parseGeneratorOptions } from './generator-options';
+import {
+  parseGeneratorOptions,
+  parseOptionsFromConfig
+} from './generator-options';
 
 describe('parseGeneratorOptions', () => {
   beforeEach(() => {

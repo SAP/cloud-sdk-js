@@ -5,10 +5,10 @@ import { cli } from 'cli-ux';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   parseOptionsFromConfig,
-  removeDefaultValues
-} from '../generator-utils';
+  removeDefaultValues,
+  generatorFlags
+} from '../options';
 import { generate, generateWithParsedOptions } from '../generator';
-import { generatorFlags } from '../options';
 
 const logger = createLogger('openapi-generator');
 class OpenApiGenerator extends Command {
@@ -36,7 +36,7 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
       if (parsed.flags.config) {
         await generate({
           ...(await parseOptionsFromConfig(parsed.flags.config)),
-          ...removeDefaultValues(parsed.flags)
+          ...removeDefaultValues(parsed.flags, parsed.raw)
         });
       } else {
         await generateWithParsedOptions(parsed.flags);

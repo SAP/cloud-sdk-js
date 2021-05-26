@@ -2,6 +2,7 @@ import { promises } from 'fs';
 import { resolve } from 'path';
 import Parser from '@oclif/parser';
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
+// eslint-disable-next-line import/no-internal-modules
 import { ParsingToken } from '@oclif/parser/lib/parse';
 import OpenApiGenerator from '../cli';
 import { generatorFlags } from './flags';

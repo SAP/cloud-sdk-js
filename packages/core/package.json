@@ -27,11 +27,8 @@
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
     "postinstall": "node usage-analytics.js",
-    "test": "yarn jest --coverage",
-    "test:local": "yarn jest",
-    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
-    "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
-    "test:debug-name-regex": "node -r ts-node/register --inspect-brk ./node_modules/.bin/jest --runInBand --testNamePattern=\"$PATTERN\"",
+    "test": "yarn jest",
+    "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck ."
   },
   "dependencies": {

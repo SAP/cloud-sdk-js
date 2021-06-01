@@ -13,7 +13,7 @@
     "stop": "pm2 stop server.js",
     "deploy": "cds deploy --to sqlite",
     "test": "yarn jest --runInBand",
-    "test:local": "yarn jest",
+    "test": "yarn jest",
     "check:dependencies": "depcheck . --ignores='express,sqlite3,@sap/cds'"
   },
   "devDependencies": {

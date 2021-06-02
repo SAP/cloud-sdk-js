@@ -169,9 +169,15 @@ function parseEnumSchema(
   const type = schema.type ? getType(schema.type) : 'string';
   return {
     type,
-    enum: (schema.enum || []).map(entry =>
-      type === 'string' ? getEnumStringValue(entry) : entry
-    )
+    enum: (schema.enum || []).map(entry => {
+      if(type === 'string' && entry !== null){
+        return getEnumStringValue(String(entry));
+      }
+      if(entry === null && !schema.nullable){
+        throw new Error("'Null' was used as a parameter, but nullable wasn't declared");
+      }
+      return entry;
+    })
   };
 }
 

@@ -183,6 +183,41 @@ describe('parseSchema', () => {
     });
   });
 
+  it('parses string enum schema with integers', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      enum: [1, 2, 3],
+      type: 'string'
+    };
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
+      type: 'string',
+      enum: ["'1'", "'2'", "'3'"]
+    });
+  });
+
+  it('parses string enum schema with a null value and nullable set to true', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      enum: [1, 2, 3, null],
+      type: 'string',
+      nullable: true
+    };
+    expect(parseSchema(schema, await createTestRefs())).toEqual({
+      type: 'string',
+      enum: ["'1'", "'2'", "'3'", null]
+    });
+  });
+
+  it('parses string enum schema with a null value and no nullable set', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      enum: [1, 2, 3, null],
+      type: 'string'
+    };
+    expect(async () => {
+      parseSchema(schema, await createTestRefs());
+    }).rejects.toThrowErrorMatchingInlineSnapshot(
+      "\"'Null' was used as a parameter, but nullable wasn't declared\""
+    );
+  });
+
   it('parses string enum schema with escaping', async () => {
     const schema: OpenAPIV3.SchemaObject = {
       enum: ["valueWith'Quot'es"],

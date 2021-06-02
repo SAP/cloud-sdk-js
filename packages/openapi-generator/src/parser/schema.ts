@@ -170,11 +170,13 @@ function parseEnumSchema(
   return {
     type,
     enum: (schema.enum || []).map(entry => {
-      if(type === 'string' && entry !== null){
+      if (type === 'string' && entry !== null) {
         return getEnumStringValue(String(entry));
       }
-      if(entry === null && !schema.nullable){
-        throw new Error("'Null' was used as a parameter, but nullable wasn't declared");
+      if (entry === null && !schema.nullable) {
+        throw new Error(
+          "'Null' was used as a parameter, but nullable wasn't declared"
+        );
       }
       return entry;
     })

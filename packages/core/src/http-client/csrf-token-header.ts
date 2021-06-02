@@ -1,6 +1,7 @@
 import {
   createLogger,
   ErrorWithCause,
+  first,
   pickIgnoreCase,
   pickNonNullish,
   pickValueIgnoreCase
@@ -39,21 +40,30 @@ export async function buildCsrfHeaders<T extends HttpRequestConfig>(
   });
 }
 
+export function buildCsrfFetchHeaders(headers: any): Record<string, any> {
+  const fetchHeader = !pickValueIgnoreCase(headers, 'x-csrf-token') && {
+    'x-csrf-token': 'Fetch'
+  };
+
+  const contentLengthHeaderKey =
+    first(Object.keys(pickIgnoreCase(headers, 'content-length'))) ||
+    'content-length';
+
+  return {
+    ...fetchHeader,
+    ...headers,
+    [contentLengthHeaderKey]: 0
+  };
+}
+
 function makeCsrfRequest<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: Partial<T>
 ): Promise<Record<string, any>> {
-  const fetchHeader = !pickValueIgnoreCase(
-    requestConfig.headers,
-    'x-csrf-token'
-  ) && { 'x-csrf-token': 'Fetch' };
   const axiosConfig: HttpRequestConfig = {
     method: 'head',
     ...requestConfig,
-    headers: {
-      ...fetchHeader,
-      ...requestConfig.headers
-    },
+    headers: buildCsrfFetchHeaders(requestConfig.headers),
     url: requestConfig.url
   };
 

@@ -154,9 +154,7 @@ async function generateDocs() {
   writeVersions();
 }
 
-try {
-  generateDocs();
-} catch (err) {
+generateDocs().catch(err => {
   console.error(err);
   process.exit(err.exitCode);
-}
+});

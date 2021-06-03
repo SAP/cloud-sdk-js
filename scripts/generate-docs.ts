@@ -140,19 +140,13 @@ function validateLogs(generationLogs) {
 }
 
 async function generateDocs() {
-  let generationLogs;
-  try {
-    generationLogs = await execa.command(
-      'typedoc --tsconfig tsconfig.typedoc.json',
-      {
-        cwd: resolve(),
-        encoding: 'utf8'
-      }
-    );
-  } catch (err) {
-    console.error(err);
-    process.exit(err.exitCode);
-  }
+  const generationLogs = await execa.command(
+    'typedoc --tsconfig tsconfig.typedoc.json',
+    {
+      cwd: resolve(),
+      encoding: 'utf8'
+    }
+  );
 
   validateLogs(generationLogs);
   adjustForGitHubPages();
@@ -160,4 +154,9 @@ async function generateDocs() {
   writeVersions();
 }
 
-generateDocs();
+try {
+  generateDocs();
+} catch (err) {
+  console.error(err);
+  process.exit(err.exitCode);
+}

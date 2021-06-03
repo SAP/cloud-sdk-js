@@ -130,7 +130,7 @@ function writeVersions() {
   );
 }
 
-function validateLogs(generationLogs) {
+function validateLogs(generationLogs: string) {
   const invalidLinksMessage =
     'Found invalid symbol reference(s) in JSDocs, they will not render as links in the generated documentation.';
   const [, invalidLinks] = generationLogs.split(invalidLinksMessage);
@@ -140,6 +140,11 @@ function validateLogs(generationLogs) {
 }
 
 async function generateDocs() {
+  process.on('unhandledRejection', reason => {
+    console.error(`Unhandled rejection at: ${reason}`);
+    process.exit(1);
+  });
+
   const generationLogs = await execa.command(
     'typedoc --tsconfig tsconfig.typedoc.json',
     {
@@ -148,13 +153,10 @@ async function generateDocs() {
     }
   );
 
-  validateLogs(generationLogs);
+  validateLogs(generationLogs.stdout);
   adjustForGitHubPages();
   insertCopyrightAndTracking();
   writeVersions();
 }
 
-generateDocs().catch(err => {
-  console.error(err);
-  process.exit(err.exitCode);
-});
+generateDocs();

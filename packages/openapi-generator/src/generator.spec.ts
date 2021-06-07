@@ -151,8 +151,9 @@ describe('generator', () => {
         optionsPerService: 'options.json'
       });
 
-      await expect(readFile('options.json', 'utf8')).resolves
-        .toMatchInlineSnapshot(`
+      const actual = readFile('options.json', 'utf8');
+      await expect(actual).resolves.toMatch(endsWithNewLine);
+      await expect(actual).resolves.toMatchInlineSnapshot(`
               "{
                 \\"inputDir/spec.json\\": {
                   \\"packageName\\": \\"spec\\",
@@ -164,16 +165,6 @@ describe('generator', () => {
             `);
     });
 
-    it('adds a new line at the options', async () => {
-      await generate({
-        input: 'inputDir',
-        outputDir: 'out',
-        optionsPerService: 'options.json'
-      });
-
-      await expect(readFile('options.json', 'utf8')).resolves.toMatch(/\n$/);
-    });
-
     it('overwrites writes options per service', async () => {
       await generate({
         input: 'inputDir',
@@ -181,8 +172,9 @@ describe('generator', () => {
         optionsPerService: 'existingConfig'
       });
 
-      await expect(readFile('existingConfig', 'utf8')).resolves
-        .toMatchInlineSnapshot(`
+      const actual = readFile('existingConfig', 'utf8');
+      await expect(actual).resolves.toMatch(endsWithNewLine);
+      await expect(actual).resolves.toMatchInlineSnapshot(`
               "{
                 \\"inputDir/spec.json\\": {
                   \\"packageName\\": \\"spec\\",
@@ -243,3 +235,5 @@ describe('generator', () => {
     });
   });
 });
+
+const endsWithNewLine = /\n$/;

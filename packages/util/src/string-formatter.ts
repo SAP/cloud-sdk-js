@@ -63,10 +63,10 @@ export function kebabCase(str: string): string {
 }
 
 /**
- * Convert a JSON object to a string using formatting in line with the prettier.
+ * Convert a JSON object to a string using formatting in line with the prettier with indentation and new line at the end.
  * @param json Object to be stringified
  * @returns The JSON object as string.
  */
-export function jsonStringify(json: any): string {
+export function jsonFileFormat(json: any): string {
   return JSON.stringify(json, null, 2) + unixEOL;
 }

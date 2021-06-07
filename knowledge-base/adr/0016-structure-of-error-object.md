@@ -125,24 +125,19 @@ Cons:
 In the API discussion [ADR](https://github.com/SAP/cloud-sdk-js/pull/709) we discussed a change to include more request and response data:
 
 ```typescript
-const [buPa, req, res]: [
-  BusinessPartner,
-  Request,
-  Response
-] = await BusinessPartner.requestBuilder().getAll().executeRaw(destination);
+const [buPa, req, res]: [BusinessPartner, Request, Response] =
+  await BusinessPartner.requestBuilder().getAll().executeRaw(destination);
 ```
 
 One could include a `httpNoThrow` flag to the `execute` methods.
 If switched on the request builder will not throw HTTP related error but include them in the return.
 
 ```typescript
-const [buPa, httpError]: [
-  BusinessPartner,
-  HttpError
-] = await BusinessPartner.requestBuilder()
-  .httpNoThrow()
-  .getAll()
-  .execute(destination);
+const [buPa, httpError]: [BusinessPartner, HttpError] =
+  await BusinessPartner.requestBuilder()
+    .httpNoThrow()
+    .getAll()
+    .execute(destination);
 ```
 
 The `httpError` object contains information on HTTP errors appearing during the request.

@@ -127,10 +127,11 @@ exports.TestEntity1 = TestEntity1;
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.COMPLEX_TYPE_PROPERTY = new TestComplexType1_1.TestComplexType1Field(
-    'ComplexTypeProperty',
-    TestEntity1
-  );
+  TestEntity1.COMPLEX_TYPE_PROPERTY =
+    new TestComplexType1_1.TestComplexType1Field(
+      'ComplexTypeProperty',
+      TestEntity1
+    );
   /**
    * All fields of the TestEntity1 entity.
    */

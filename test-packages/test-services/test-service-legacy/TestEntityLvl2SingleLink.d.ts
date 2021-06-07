@@ -14,7 +14,8 @@ import {
  */
 export declare class TestEntityLvl2SingleLink
   extends Entity
-  implements TestEntityLvl2SingleLinkType {
+  implements TestEntityLvl2SingleLinkType
+{
   /**
    * Technical entity name for TestEntityLvl2SingleLink.
    */

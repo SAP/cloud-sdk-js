@@ -11,8 +11,7 @@ export function getLinks(
     },
     featureDocumentation: {
       name: 'Feature Documentation',
-      url:
-        'https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript'
+      url: 'https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript'
     },
     support: {
       name: 'Support',

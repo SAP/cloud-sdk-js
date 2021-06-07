@@ -12,7 +12,8 @@ import {
  */
 export declare class MultiSchemaTestEntity
   extends EntityV2
-  implements MultiSchemaTestEntityType {
+  implements MultiSchemaTestEntityType
+{
   /**
    * Technical entity name for MultiSchemaTestEntity.
    */

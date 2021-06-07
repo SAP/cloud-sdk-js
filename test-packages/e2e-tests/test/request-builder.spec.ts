@@ -147,8 +147,7 @@ describe('Request builder', () => {
     const queried = await queryEntity(entityKey, destination);
     expect(queried.toMultiLink.length).toBe(2);
     expect(queried.toMultiLink.map(link => link.keyTestEntityLink)).toEqual([
-      20,
-      30
+      20, 30
     ]);
   });
 

@@ -154,18 +154,14 @@ export namespace People {
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const EMAILS: CollectionField<
-    People,
-    'Edm.String'
-  > = new CollectionField('Emails', People, 'Edm.String');
+  export const EMAILS: CollectionField<People, 'Edm.String'> =
+    new CollectionField('Emails', People, 'Edm.String');
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ADDRESS_INFO: CollectionField<
-    People,
-    Location
-  > = new CollectionField('AddressInfo', People, Location);
+  export const ADDRESS_INFO: CollectionField<People, Location> =
+    new CollectionField('AddressInfo', People, Location);
   /**
    * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

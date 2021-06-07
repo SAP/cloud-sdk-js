@@ -17,7 +17,8 @@ import type { FieldType } from '../selectable';
  */
 export abstract class DeleteRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilder<ODataDeleteRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
 

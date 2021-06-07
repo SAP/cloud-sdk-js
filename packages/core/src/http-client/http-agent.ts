@@ -54,27 +54,31 @@ function createProxyAgent(
   return proxyAgent(destination, options);
 }
 
-const trustAllOptions = (destination: Destination) => (
-  options: Record<string, any>
-): Record<string, any> =>
-  assoc('rejectUnauthorized', !destination.isTrustingAllCertificates, options);
+const trustAllOptions =
+  (destination: Destination) =>
+  (options: Record<string, any>): Record<string, any> =>
+    assoc(
+      'rejectUnauthorized',
+      !destination.isTrustingAllCertificates,
+      options
+    );
 
-const certificateOptions = (destination: Destination) => (
-  options: Record<string, any>
-): Record<string, any> => {
-  if (destination.keyStoreName && destination.keyStorePassword) {
-    const certificate = selectCertificate(destination);
+const certificateOptions =
+  (destination: Destination) =>
+  (options: Record<string, any>): Record<string, any> => {
+    if (destination.keyStoreName && destination.keyStorePassword) {
+      const certificate = selectCertificate(destination);
 
-    logger.debug(`Certifcate with name "${certificate.name}" selected.`);
+      logger.debug(`Certifcate with name "${certificate.name}" selected.`);
 
-    return {
-      ...options,
-      pfx: Buffer.from(certificate.content, 'base64'),
-      passphrase: destination.keyStorePassword
-    };
-  }
-  return options;
-};
+      return {
+        ...options,
+        pfx: Buffer.from(certificate.content, 'base64'),
+        passphrase: destination.keyStorePassword
+      };
+    }
+    return options;
+  };
 /**
  * The http agents (proxy and default) use node tls for the certificate handling. This method creates the options with the pfx and passphrase. *
  * https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options

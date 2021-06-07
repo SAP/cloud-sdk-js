@@ -113,20 +113,16 @@ describe('token accessor', () => {
         userJwt: subscriberUserJwt
       });
 
-      const providerTokenFromCache = clientCredentialsTokenCache.getGrantTokenFromCache(
-        providerXsuaaUrl,
-        {
+      const providerTokenFromCache =
+        clientCredentialsTokenCache.getGrantTokenFromCache(providerXsuaaUrl, {
           username: mockDestinationServiceBinding.credentials.clientid,
           password: mockDestinationServiceBinding.credentials.clientsecret
-        }
-      );
-      const subscriberTokenFromCache = clientCredentialsTokenCache.getGrantTokenFromCache(
-        subscriberXsuaaUrl,
-        {
+        });
+      const subscriberTokenFromCache =
+        clientCredentialsTokenCache.getGrantTokenFromCache(subscriberXsuaaUrl, {
           username: mockDestinationServiceBinding.credentials.clientid,
           password: mockDestinationServiceBinding.credentials.clientsecret
-        }
-      );
+        });
 
       expect(providerTokenFromCache!.access_token).toEqual(providerToken);
       expect(subscriberTokenFromCache!.access_token).toEqual(subscriberToken);

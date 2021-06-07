@@ -77,9 +77,8 @@ export function transformComplexTypesBase(
             c.Name,
             p.Name
           ),
-          propertyNameAsParam: applyPrefixOnJsConfictParam(
-            instancePropertyName
-          ),
+          propertyNameAsParam:
+            applyPrefixOnJsConfictParam(instancePropertyName),
           description: propertyDescription(p),
           technicalName: p.Name,
           nullable: isNullableProperty(p),

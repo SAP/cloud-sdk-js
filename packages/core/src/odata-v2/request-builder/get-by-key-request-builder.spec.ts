@@ -18,7 +18,8 @@ describe('GetByKeyRequestBuilder', () => {
     it('returns correct url with appendPath', async () => {
       const entityData = createOriginalTestEntityData1();
       const entity = createTestEntity(entityData);
-      const expected = /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_SingleLink\/to_MultiLink\/\?\$format=json$/;
+      const expected =
+        /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_SingleLink\/to_MultiLink\/\?\$format=json$/;
 
       const actual = await new GetByKeyRequestBuilder(TestEntity, {
         KeyPropertyGuid: entity.keyPropertyGuid,

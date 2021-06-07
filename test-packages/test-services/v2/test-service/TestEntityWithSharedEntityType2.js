@@ -135,13 +135,11 @@ exports.TestEntityWithSharedEntityType2 = TestEntityWithSharedEntityType2;
   /**
    * Mapping of all key field names to the respective static field property TestEntityWithSharedEntityType2.
    */
-  TestEntityWithSharedEntityType2._keys = TestEntityWithSharedEntityType2._keyFields.reduce(
-    function (acc, field) {
+  TestEntityWithSharedEntityType2._keys =
+    TestEntityWithSharedEntityType2._keyFields.reduce(function (acc, field) {
       acc[field._fieldName] = field;
       return acc;
-    },
-    {}
-  );
+    }, {});
 })(
   (TestEntityWithSharedEntityType2 =
     exports.TestEntityWithSharedEntityType2 ||

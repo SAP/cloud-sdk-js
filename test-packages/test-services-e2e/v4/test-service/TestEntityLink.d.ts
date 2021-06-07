@@ -13,7 +13,8 @@ import {
  */
 export declare class TestEntityLink
   extends EntityV4
-  implements TestEntityLinkType {
+  implements TestEntityLinkType
+{
   /**
    * Technical entity name for TestEntityLink.
    */

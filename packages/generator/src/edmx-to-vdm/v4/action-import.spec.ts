@@ -117,7 +117,8 @@ describe('action-import', () => {
     const warnSpy = jest.spyOn(logger, 'warn');
 
     const formatter = getFormatter();
-    const service = createServiceMetadataWithActionImportLinksToUndefinedAction();
+    const service =
+      createServiceMetadataWithActionImportLinksToUndefinedAction();
     generateActionImportsV4(service, [], [], formatter);
     expect(warnSpy).toBeCalledWith(
       expect.stringContaining(

@@ -3,4 +3,4 @@ export * from './http-client-types';
 export * from './http-agent';
 export * from './agent-config';
 export * from './http-request-config';
-export * from './csrf-token-header';
+export { buildCsrfHeaders } from './csrf-token-header';

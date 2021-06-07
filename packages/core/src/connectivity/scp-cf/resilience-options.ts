@@ -8,5 +8,6 @@ export interface ResilienceOptions {
 export const circuitBreakerDefaultOptions = {
   timeout: 10000,
   errorThresholdPercentage: 50,
+  volumeThreshold: 10,
   resetTimeout: 30000
 };

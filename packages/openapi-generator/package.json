@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/openapi-generator",
-  "version": "1.44.0",
+  "version": "1.45.0",
   "description": "SAP Cloud SDK for JavaScript OpenApi client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -33,10 +33,8 @@
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
     "readme": "oclif-dev readme",
-    "test": "yarn jest --coverage ",
-    "test:local": "yarn jest",
-    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
-    "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
+    "test": "yarn jest",
+    "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck . --ignore-bin-package=true --ignores=@oclif/plugin-*"
   },
   "dependencies": {
@@ -44,8 +42,8 @@
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.14.0",
     "@oclif/parser": "^3.8.5",
-    "@sap-cloud-sdk/generator-common": "^1.44.0",
-    "@sap-cloud-sdk/util": "^1.44.0",
+    "@sap-cloud-sdk/generator-common": "^1.45.0",
+    "@sap-cloud-sdk/util": "^1.45.0",
     "@types/js-yaml": "^4.0.0",
     "cli-ux": "^5.4.5",
     "glob": "^7.1.6",
@@ -55,7 +53,7 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
-    "mock-fs": "^4.13.0",
+    "mock-fs": "^5.0.0",
     "nock": "^13.0.11",
     "typescript": "~4.1.2"
   }

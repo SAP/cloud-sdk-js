@@ -5,9 +5,11 @@ import {
   renameKeys
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
+import CircuitBreaker from 'opossum';
 import {
   executeHttpRequest,
   HttpRequestConfig,
+  HttpRequestOptions,
   HttpResponse
 } from '../../http-client';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
@@ -21,21 +23,28 @@ import {
   TokenKey,
   UserTokenResponse
 } from './xsuaa-service-types';
-import { Destination } from './destination';
+import { Destination, DestinationNameAndJwt } from './destination';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
 } from './proxy-util';
 
-// For some reason, the equivalent import statement does not work
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-const CircuitBreaker = require('opossum');
-
 const logger = createLogger({
   package: 'core',
   messageContext: 'xsuaa-service'
 });
+
+type XsuaaCircuitBreaker = CircuitBreaker<
+  [
+    destination: Destination | DestinationNameAndJwt,
+    requestConfig: HttpRequestConfig,
+    options?: HttpRequestOptions | undefined
+  ],
+  HttpResponse
+>;
+
+let circuitBreaker: XsuaaCircuitBreaker;
 
 /**
  * Executes a client credentials grant request.
@@ -272,17 +281,8 @@ function post(
     destination = addProxyConfigurationInternet(destination);
   }
 
-  if (
-    options.enableCircuitBreaker ||
-    options.enableCircuitBreaker === undefined
-  ) {
-    const xsuaaCircuitBreaker = getInstanceCircuitBreaker();
-
-    if (!xsuaaCircuitBreaker) {
-      throw new Error('The xsuaa circuit breaker is undefined.');
-    }
-
-    return xsuaaCircuitBreaker!.fire(destination, config);
+  if (options.enableCircuitBreaker) {
+    return getCircuitBreaker().fire(destination, config);
   }
 
   return executeHttpRequest(destination, config);
@@ -343,10 +343,14 @@ function accessTokenError(error: Error, grant: string): Error {
   );
 }
 
-function getInstanceCircuitBreaker(breaker?: any | undefined): any {
-  return typeof breaker === 'undefined'
-    ? new CircuitBreaker(executeHttpRequest, circuitBreakerDefaultOptions)
-    : breaker;
+function getCircuitBreaker(): XsuaaCircuitBreaker {
+  if (!circuitBreaker) {
+    circuitBreaker = new CircuitBreaker(
+      executeHttpRequest,
+      circuitBreakerDefaultOptions
+    );
+  }
+  return circuitBreaker;
 }
 
 const grantTypeMapper = {

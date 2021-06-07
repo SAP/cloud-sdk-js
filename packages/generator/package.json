@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/generator",
-  "version": "1.44.0",
+  "version": "1.45.0",
   "description": "SAP Cloud SDK for JavaScript OData client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -30,16 +30,14 @@
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
-    "test": "yarn jest --coverage",
-    "test:local": "yarn jest",
-    "test:debug": "node --inspect-brk ../../node_modules/.bin/jest --runInBand",
-    "test:watch-debug": "node --inspect-brk ../../node_modules/.bin/jest --watch --runInBand",
+    "test": "yarn jest",
+    "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck . --ignores='@sap/cloud-sdk-vdm-business-partner-service'"
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.44.0",
-    "@sap-cloud-sdk/generator-common": "^1.44.0",
-    "@sap-cloud-sdk/util": "^1.44.0",
+    "@sap-cloud-sdk/core": "^1.45.0",
+    "@sap-cloud-sdk/generator-common": "^1.45.0",
+    "@sap-cloud-sdk/util": "^1.45.0",
     "@sap/edm-converters": "^1.0.21",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^7.1.2",
@@ -54,8 +52,8 @@
   },
   "devDependencies": {
     "@sap/cloud-sdk-vdm-business-partner-service": "^1.24.0",
-    "@types/yargs": "^16.0.0",
-    "mock-fs": "^4.13.0",
+    "@types/yargs": "^17.0.0",
+    "mock-fs": "^5.0.0",
     "nock": "^13.0.11"
   }
 }

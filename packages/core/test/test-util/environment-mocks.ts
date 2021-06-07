@@ -1,4 +1,9 @@
-import { Protocol, ProxyConfiguration, Service } from '../../src';
+import {
+  Protocol,
+  ProxyConfiguration,
+  Service,
+  XsuaaServiceCredentials
+} from '../../src';
 import { publicKey } from './keys';
 
 export enum TestTenants {
@@ -9,6 +14,10 @@ export enum TestTenants {
 export const providerXsuaaUrl = `https://${TestTenants.PROVIDER}.example.com`;
 export const subscriberXsuaaUrl = `https://${TestTenants.SUBSCRIBER}.example.com`;
 export const destinationServiceUri = 'https://destination.example.com';
+
+export const providerXsuaaClientCredentials = {
+  url: providerXsuaaUrl
+} as XsuaaServiceCredentials;
 
 export const mockXsuaaBinding: Service = {
   plan: 'application',

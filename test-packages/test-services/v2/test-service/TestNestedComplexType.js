@@ -27,7 +27,10 @@ var __extends =
     };
   })();
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.TestNestedComplexType = exports.TestNestedComplexTypeField = exports.createTestNestedComplexType = void 0;
+exports.TestNestedComplexType =
+  exports.TestNestedComplexTypeField =
+  exports.createTestNestedComplexType =
+    void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -70,10 +73,11 @@ var TestNestedComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.complexTypeProperty = new TestLvl2NestedComplexType_1.TestLvl2NestedComplexTypeField(
-      'ComplexTypeProperty',
-      _this
-    );
+    _this.complexTypeProperty =
+      new TestLvl2NestedComplexType_1.TestLvl2NestedComplexTypeField(
+        'ComplexTypeProperty',
+        _this
+      );
     return _this;
   }
   return TestNestedComplexTypeField;

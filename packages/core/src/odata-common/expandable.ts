@@ -7,11 +7,10 @@ import { OneToManyLink } from './selectable/one-to-many-link';
  *
  * @typeparam EntityT - Type of the entity to be selected on
  */
-export type Expandable<
-  EntityT extends Entity
-> = ODataVersionOf<EntityT> extends 'v2'
-  ? never
-  :
-      | OneToOneLink<EntityT, any>
-      | OneToManyLink<EntityT, any>
-      | AllFields<EntityT>;
+export type Expandable<EntityT extends Entity> =
+  ODataVersionOf<EntityT> extends 'v2'
+    ? never
+    :
+        | OneToOneLink<EntityT, any>
+        | OneToManyLink<EntityT, any>
+        | AllFields<EntityT>;

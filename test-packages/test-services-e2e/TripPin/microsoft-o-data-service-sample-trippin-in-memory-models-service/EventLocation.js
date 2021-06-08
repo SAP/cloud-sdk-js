@@ -27,7 +27,10 @@ var __extends =
     };
   })();
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.EventLocation = exports.EventLocationField = exports.createEventLocation = void 0;
+exports.EventLocation =
+  exports.EventLocationField =
+  exports.createEventLocation =
+    void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *

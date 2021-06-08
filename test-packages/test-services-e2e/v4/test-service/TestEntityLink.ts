@@ -86,20 +86,14 @@ export namespace TestEntityLink {
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TEST_ENTITY_LINK: NumberField<TestEntityLink> = new NumberField(
-    'KeyTestEntityLink',
-    TestEntityLink,
-    'Edm.Int32'
-  );
+  export const KEY_TEST_ENTITY_LINK: NumberField<TestEntityLink> =
+    new NumberField('KeyTestEntityLink', TestEntityLink, 'Edm.Int32');
   /**
    * Static representation of the [[keyToTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TO_TEST_ENTITY: NumberField<TestEntityLink> = new NumberField(
-    'KeyToTestEntity',
-    TestEntityLink,
-    'Edm.Int32'
-  );
+  export const KEY_TO_TEST_ENTITY: NumberField<TestEntityLink> =
+    new NumberField('KeyToTestEntity', TestEntityLink, 'Edm.Int32');
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -136,16 +130,15 @@ export namespace TestEntityLink {
   /**
    * Mapping of all key field names to the respective static field property TestEntityLink.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntityLink>;
-  } = TestEntityLink._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntityLink> },
-      field: Field<TestEntityLink>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntityLink> } =
+    TestEntityLink._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntityLink> },
+        field: Field<TestEntityLink>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

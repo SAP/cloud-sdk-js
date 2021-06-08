@@ -18,8 +18,7 @@ export function getInstallationSnippet(
 ): InstructionWithText {
   return {
     instructions: `npm i ${npmPackageName}:latest`,
-    text:
-      'Execute the following npm command to install the pregenerated client.'
+    text: 'Execute the following npm command to install the pregenerated client.'
   };
 }
 

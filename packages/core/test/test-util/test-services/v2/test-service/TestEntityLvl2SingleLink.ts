@@ -20,7 +20,8 @@ import {
  */
 export class TestEntityLvl2SingleLink
   extends EntityV2
-  implements TestEntityLvl2SingleLinkType {
+  implements TestEntityLvl2SingleLinkType
+{
   /**
    * Technical entity name for TestEntityLvl2SingleLink.
    */
@@ -108,47 +109,36 @@ export namespace TestEntityLvl2SingleLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityLvl2SingleLink> = new StringField(
-    'KeyProperty',
-    TestEntityLvl2SingleLink,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY: StringField<TestEntityLvl2SingleLink> =
+    new StringField('KeyProperty', TestEntityLvl2SingleLink, 'Edm.String');
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityLvl2SingleLink> = new StringField(
-    'StringProperty',
-    TestEntityLvl2SingleLink,
-    'Edm.String'
-  );
+  export const STRING_PROPERTY: StringField<TestEntityLvl2SingleLink> =
+    new StringField('StringProperty', TestEntityLvl2SingleLink, 'Edm.String');
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntityLvl2SingleLink> = new BooleanField(
-    'BooleanProperty',
-    TestEntityLvl2SingleLink,
-    'Edm.Boolean'
-  );
+  export const BOOLEAN_PROPERTY: BooleanField<TestEntityLvl2SingleLink> =
+    new BooleanField(
+      'BooleanProperty',
+      TestEntityLvl2SingleLink,
+      'Edm.Boolean'
+    );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntityLvl2SingleLink> = new StringField(
-    'GuidProperty',
-    TestEntityLvl2SingleLink,
-    'Edm.Guid'
-  );
+  export const GUID_PROPERTY: StringField<TestEntityLvl2SingleLink> =
+    new StringField('GuidProperty', TestEntityLvl2SingleLink, 'Edm.Guid');
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY: NumberField<TestEntityLvl2SingleLink> = new NumberField(
-    'Int16Property',
-    TestEntityLvl2SingleLink,
-    'Edm.Int16'
-  );
+  export const INT_16_PROPERTY: NumberField<TestEntityLvl2SingleLink> =
+    new NumberField('Int16Property', TestEntityLvl2SingleLink, 'Edm.Int16');
   /**
    * All fields of the TestEntityLvl2SingleLink entity.
    */
@@ -179,16 +169,15 @@ export namespace TestEntityLvl2SingleLink {
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntityLvl2SingleLink>;
-  } = TestEntityLvl2SingleLink._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntityLvl2SingleLink> },
-      field: Field<TestEntityLvl2SingleLink>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntityLvl2SingleLink> } =
+    TestEntityLvl2SingleLink._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntityLvl2SingleLink> },
+        field: Field<TestEntityLvl2SingleLink>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

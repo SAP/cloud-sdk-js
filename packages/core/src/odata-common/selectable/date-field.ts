@@ -69,7 +69,8 @@ export class DateFieldBase<EntityT extends Entity> extends EdmTypeField<
  */
 export class DateField<EntityT extends Entity>
   extends DateFieldBase<EntityT>
-  implements SelectableEdmTypeField {
+  implements SelectableEdmTypeField
+{
   readonly selectable: true;
 }
 

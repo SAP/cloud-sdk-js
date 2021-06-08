@@ -25,7 +25,7 @@ describe('batch response transformer', () => {
 
     it('throws error if uri is undefined in meta data', () => {
       expect(() =>
-        parseEntityNameFromMetadataUri((undefined as unknown) as string)
+        parseEntityNameFromMetadataUri(undefined as unknown as string)
       ).toThrowErrorMatchingInlineSnapshot(
         '"Could not retrieve entity name from metadata. URI was: \'undefined\'."'
       );

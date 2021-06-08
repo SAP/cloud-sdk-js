@@ -99,9 +99,8 @@ export namespace Photos {
   /**
    * All fields of the Photos entity.
    */
-  export const _allFields: Array<
-    BigNumberField<Photos> | StringField<Photos>
-  > = [Photos.ID, Photos.NAME];
+  export const _allFields: Array<BigNumberField<Photos> | StringField<Photos>> =
+    [Photos.ID, Photos.NAME];
   /**
    * All fields selector.
    */
@@ -113,13 +112,12 @@ export namespace Photos {
   /**
    * Mapping of all key field names to the respective static field property Photos.
    */
-  export const _keys: {
-    [keys: string]: Field<Photos>;
-  } = Photos._keyFields.reduce(
-    (acc: { [keys: string]: Field<Photos> }, field: Field<Photos>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<Photos> } =
+    Photos._keyFields.reduce(
+      (acc: { [keys: string]: Field<Photos> }, field: Field<Photos>) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

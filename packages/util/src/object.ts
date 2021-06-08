@@ -31,12 +31,14 @@ export function propertyExists(
  * @param obj - The object on which to create the association.
  * @returns A copy of the input object with the new key-value pair if the value is neither null nor undefined.
  */
-export const assocSome = <T>(key: string, value?: any) => (obj: T): T => {
-  if (typeof value !== 'undefined' && value !== null) {
-    return assoc(key, value, obj);
-  }
-  return { ...obj };
-};
+export const assocSome =
+  <T>(key: string, value?: any) =>
+  (obj: T): T => {
+    if (typeof value !== 'undefined' && value !== null) {
+      return assoc(key, value, obj);
+    }
+    return { ...obj };
+  };
 
 /**
  * Merges the two objects, if second object is neither null nor undefined.

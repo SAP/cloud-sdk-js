@@ -18,7 +18,8 @@ import {
  */
 export class TestEntityEndsWith
   extends EntityV4
-  implements TestEntityEndsWithType {
+  implements TestEntityEndsWithType
+{
   /**
    * Technical entity name for TestEntityEndsWith.
    */
@@ -106,16 +107,15 @@ export namespace TestEntityEndsWith {
   /**
    * Mapping of all key field names to the respective static field property TestEntityEndsWith.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntityEndsWith>;
-  } = TestEntityEndsWith._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntityEndsWith> },
-      field: Field<TestEntityEndsWith>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntityEndsWith> } =
+    TestEntityEndsWith._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntityEndsWith> },
+        field: Field<TestEntityEndsWith>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

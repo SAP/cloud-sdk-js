@@ -336,11 +336,8 @@ const {
 **3. Return a response array on execute**
 
 ```ts
-const [buPa, req, res]: [
-  BusinessPartner,
-  Request,
-  Response
-] = await BusinessPartner.requestBuilder().getAll().execute(destination);
+const [buPa, req, res]: [BusinessPartner, Request, Response] =
+  await BusinessPartner.requestBuilder().getAll().execute(destination);
 // Could also be
 const [buPa] = await BusinessPartner.requestBuilder()
   .getAll()

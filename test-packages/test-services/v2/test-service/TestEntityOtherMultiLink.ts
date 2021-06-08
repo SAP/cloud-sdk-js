@@ -18,7 +18,8 @@ import {
  */
 export class TestEntityOtherMultiLink
   extends EntityV2
-  implements TestEntityOtherMultiLinkType {
+  implements TestEntityOtherMultiLinkType
+{
   /**
    * Technical entity name for TestEntityOtherMultiLink.
    */
@@ -80,11 +81,8 @@ export namespace TestEntityOtherMultiLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityOtherMultiLink> = new StringField(
-    'KeyProperty',
-    TestEntityOtherMultiLink,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY: StringField<TestEntityOtherMultiLink> =
+    new StringField('KeyProperty', TestEntityOtherMultiLink, 'Edm.String');
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */

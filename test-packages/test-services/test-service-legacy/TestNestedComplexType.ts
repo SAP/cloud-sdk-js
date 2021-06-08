@@ -41,11 +41,8 @@ export class TestNestedComplexTypeField<
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'StringProperty',
-    this,
-    'Edm.String'
-  );
+  stringProperty: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('StringProperty', this, 'Edm.String');
 }
 
 export namespace TestNestedComplexType {

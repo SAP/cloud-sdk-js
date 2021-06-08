@@ -86,109 +86,108 @@ function getNoProxyEnvValue(): string[] {
   return split;
 }
 
-const addProtocol = (groups: any) => (
-  proxyConfiguration: Partial<ProxyConfiguration> | undefined
-) => {
-  if (!proxyConfiguration) {
-    return;
-  }
+const addProtocol =
+  (groups: any) =>
+  (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
+    if (!proxyConfiguration) {
+      return;
+    }
 
-  const copy = { ...proxyConfiguration };
-  if (!groups.protocol) {
-    copy.protocol = Protocol.HTTP;
-    logger.info(
-      'Protocol not specified in proxy environment value. Http used as fallback.'
-    );
-    return copy;
-  }
+    const copy = { ...proxyConfiguration };
+    if (!groups.protocol) {
+      copy.protocol = Protocol.HTTP;
+      logger.info(
+        'Protocol not specified in proxy environment value. Http used as fallback.'
+      );
+      return copy;
+    }
 
-  copy.protocol = Protocol.of(groups.protocol)!;
-  if (!copy.protocol) {
-    logger.warn(
-      `Unsupported protocol requested in environment variable: ${groups.protocol}. Supported values are http and https - no proxy used.`
-    );
-    return undefined;
-  }
-  if (copy.protocol === Protocol.HTTPS) {
-    logger.info(
-      `You are using https to connect to a proxy" ${proxyConfiguration} - this is unusual but possible.`
-    );
-  }
-
-  return copy;
-};
-
-const addPort = (groups: any) => (
-  proxyConfiguration: Partial<ProxyConfiguration> | undefined
-) => {
-  if (!proxyConfiguration) {
-    return;
-  }
-
-  const copy = { ...proxyConfiguration };
-  if (groups.port) {
-    if (groups.port.match(/[\D]/)) {
+    copy.protocol = Protocol.of(groups.protocol)!;
+    if (!copy.protocol) {
       logger.warn(
-        'Given port in proxy env variable is not an integer - no proxy used.'
+        `Unsupported protocol requested in environment variable: ${groups.protocol}. Supported values are http and https - no proxy used.`
       );
       return undefined;
     }
-    copy.port = parseInt(groups.port);
+    if (copy.protocol === Protocol.HTTPS) {
+      logger.info(
+        `You are using https to connect to a proxy" ${proxyConfiguration} - this is unusual but possible.`
+      );
+    }
+
     return copy;
-  }
-
-  const fallBackPort =
-    proxyConfiguration.protocol === Protocol.HTTPS ? 443 : 80;
-  copy.port = fallBackPort;
-  logger.info(
-    `Port not specified in proxy environment value. ${fallBackPort} used as fallback.`
-  );
-  return copy;
-};
-
-const addAuthHeaders = (groups: any) => (
-  proxyConfiguration: Partial<ProxyConfiguration> | undefined
-) => {
-  if (!proxyConfiguration) {
-    return;
-  }
-  const copy = { ...proxyConfiguration };
-  if (!groups.user || !groups.pwd) {
-    logger.debug(
-      'No user and password given in proxy environment value. Nothing added to header.'
-    );
-    return copy;
-  }
-
-  if (groups.user.match(/[^\w%]/) || groups.pwd.match(/[^\w%]/)) {
-    logger.warn(
-      'Username:Password in proxy environment variable contains special characters like [@/:]. Use percent-encoding to mask them - no Proxy used'
-    );
-    return undefined;
-  }
-
-  const userDecoded = decodeURIComponent(groups.user);
-  const pwdDecoded = decodeURIComponent(groups.pwd);
-  copy.headers = {
-    'Proxy-Authorization': basicHeader(userDecoded, pwdDecoded)
   };
-  logger.info(
-    'Username and password added to authorization of the proxy configuration.'
-  );
-  return copy;
-};
 
-const addHost = (groups: any) => (
-  proxyConfiguration: Partial<ProxyConfiguration>
-) => {
-  if (groups.host) {
-    proxyConfiguration.host = groups.host;
-    return proxyConfiguration;
-  }
+const addPort =
+  (groups: any) =>
+  (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
+    if (!proxyConfiguration) {
+      return;
+    }
 
-  logger.warn('Could not extract host from proxy env. - no proxy used');
-  return;
-};
+    const copy = { ...proxyConfiguration };
+    if (groups.port) {
+      if (groups.port.match(/[\D]/)) {
+        logger.warn(
+          'Given port in proxy env variable is not an integer - no proxy used.'
+        );
+        return undefined;
+      }
+      copy.port = parseInt(groups.port);
+      return copy;
+    }
+
+    const fallBackPort =
+      proxyConfiguration.protocol === Protocol.HTTPS ? 443 : 80;
+    copy.port = fallBackPort;
+    logger.info(
+      `Port not specified in proxy environment value. ${fallBackPort} used as fallback.`
+    );
+    return copy;
+  };
+
+const addAuthHeaders =
+  (groups: any) =>
+  (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
+    if (!proxyConfiguration) {
+      return;
+    }
+    const copy = { ...proxyConfiguration };
+    if (!groups.user || !groups.pwd) {
+      logger.debug(
+        'No user and password given in proxy environment value. Nothing added to header.'
+      );
+      return copy;
+    }
+
+    if (groups.user.match(/[^\w%]/) || groups.pwd.match(/[^\w%]/)) {
+      logger.warn(
+        'Username:Password in proxy environment variable contains special characters like [@/:]. Use percent-encoding to mask them - no Proxy used'
+      );
+      return undefined;
+    }
+
+    const userDecoded = decodeURIComponent(groups.user);
+    const pwdDecoded = decodeURIComponent(groups.pwd);
+    copy.headers = {
+      'Proxy-Authorization': basicHeader(userDecoded, pwdDecoded)
+    };
+    logger.info(
+      'Username and password added to authorization of the proxy configuration.'
+    );
+    return copy;
+  };
+
+const addHost =
+  (groups: any) => (proxyConfiguration: Partial<ProxyConfiguration>) => {
+    if (groups.host) {
+      proxyConfiguration.host = groups.host;
+      return proxyConfiguration;
+    }
+
+    logger.warn('Could not extract host from proxy env. - no proxy used');
+    return;
+  };
 
 /**
  * Parses the environment variable for the web proxy and extracts the values considering defaults like http for the protocol and 80 or 443 for the port.
@@ -200,7 +199,8 @@ const addHost = (groups: any) => (
 export function parseProxyEnv(
   proxyEnvValue: string
 ): ProxyConfiguration | undefined {
-  const regex = /(?<protocolWithDelimiter>(?<protocol>^.+):\/\/)?(?<userPwdWithDelimeter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
+  const regex =
+    /(?<protocolWithDelimiter>(?<protocol>^.+):\/\/)?(?<userPwdWithDelimeter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
   const parsed = regex.exec(proxyEnvValue);
 
   if (parsed?.groups) {

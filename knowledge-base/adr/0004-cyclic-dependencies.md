@@ -58,7 +58,8 @@ import helper = require('./PhysInventoryDocHeader');
 
 export class PhysInventoryDocItem
   extends Entity
-  implements PhysInventoryDocItemType {
+  implements PhysInventoryDocItemType
+{
   static getPhysInventoryDocHeader(): any {
     if (!PhysInventoryDocHeader) {
       console.log('Header is undefined in Item.');
@@ -84,7 +85,8 @@ import helper = require('./PhysInventoryDocItem');
 
 export class PhysInventoryDocHeader
   extends Entity
-  implements PhysInventoryDocHeaderType {
+  implements PhysInventoryDocHeaderType
+{
   static getPhysInventoryDocItem(): any {
     if (!PhysInventoryDocItem) {
       console.log('Item is undefined in Header.');

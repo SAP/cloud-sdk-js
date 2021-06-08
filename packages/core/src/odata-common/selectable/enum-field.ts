@@ -26,7 +26,8 @@ class EnumFieldBase<EntityT extends Entity> extends EdmTypeField<
  */
 export class EnumField<EntityT extends Entity>
   extends EnumFieldBase<EntityT>
-  implements SelectableEdmTypeField {
+  implements SelectableEdmTypeField
+{
   readonly selectable: true;
 
   constructor(fieldName: string, fieldOf: Constructable<EntityT>) {

@@ -47,12 +47,11 @@ export class ODataFunctionImportRequestConfig<
             queryParams: Record<string, any>,
             parameter: FunctionImportParameter<ParametersT>
           ) => {
-            queryParams[
-              parameter.originalName
-            ] = this.oDataUri.convertToUriFormat(
-              parameter.value,
-              parameter.edmType
-            );
+            queryParams[parameter.originalName] =
+              this.oDataUri.convertToUriFormat(
+                parameter.value,
+                parameter.edmType
+              );
             return queryParams;
           },
           {}

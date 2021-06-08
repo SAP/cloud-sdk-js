@@ -1,6 +1,9 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.functionImports = exports.testFunctionImportEntityReturnType2 = exports.testFunctionImportEntityReturnType1 = void 0;
+exports.functionImports =
+  exports.testFunctionImportEntityReturnType2 =
+  exports.testFunctionImportEntityReturnType1 =
+    void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -29,7 +32,8 @@ function testFunctionImportEntityReturnType1(parameters) {
     params
   );
 }
-exports.testFunctionImportEntityReturnType1 = testFunctionImportEntityReturnType1;
+exports.testFunctionImportEntityReturnType1 =
+  testFunctionImportEntityReturnType1;
 /**
  * Test Function Import Entity Return Type 2.
  *
@@ -50,7 +54,8 @@ function testFunctionImportEntityReturnType2(parameters) {
     params
   );
 }
-exports.testFunctionImportEntityReturnType2 = testFunctionImportEntityReturnType2;
+exports.testFunctionImportEntityReturnType2 =
+  testFunctionImportEntityReturnType2;
 exports.functionImports = {
   testFunctionImportEntityReturnType1: testFunctionImportEntityReturnType1,
   testFunctionImportEntityReturnType2: testFunctionImportEntityReturnType2

@@ -27,7 +27,8 @@ export class BinaryFieldBase<EntityT extends Entity> extends EdmTypeField<
  */
 export class BinaryField<EntityT extends Entity>
   extends BinaryFieldBase<EntityT>
-  implements SelectableEdmTypeField {
+  implements SelectableEdmTypeField
+{
   readonly selectable: true;
 }
 

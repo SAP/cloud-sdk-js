@@ -18,7 +18,8 @@ import {
  */
 export class TestEntityLvl3MultiLink
   extends EntityV4
-  implements TestEntityLvl3MultiLinkType {
+  implements TestEntityLvl3MultiLinkType
+{
   /**
    * Technical entity name for TestEntityLvl3MultiLink.
    */
@@ -94,29 +95,20 @@ export namespace TestEntityLvl3MultiLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityLvl3MultiLink> = new StringField(
-    'StringProperty',
-    TestEntityLvl3MultiLink,
-    'Edm.String'
-  );
+  export const STRING_PROPERTY: StringField<TestEntityLvl3MultiLink> =
+    new StringField('StringProperty', TestEntityLvl3MultiLink, 'Edm.String');
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntityLvl3MultiLink> = new StringField(
-    'GuidProperty',
-    TestEntityLvl3MultiLink,
-    'Edm.Guid'
-  );
+  export const GUID_PROPERTY: StringField<TestEntityLvl3MultiLink> =
+    new StringField('GuidProperty', TestEntityLvl3MultiLink, 'Edm.Guid');
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityLvl3MultiLink> = new StringField(
-    'KeyProperty',
-    TestEntityLvl3MultiLink,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY: StringField<TestEntityLvl3MultiLink> =
+    new StringField('KeyProperty', TestEntityLvl3MultiLink, 'Edm.String');
   /**
    * All fields of the TestEntityLvl3MultiLink entity.
    */

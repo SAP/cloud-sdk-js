@@ -99,9 +99,8 @@ export namespace Photos {
   /**
    * All fields of the Photos entity.
    */
-  export const _allFields: Array<
-    BigNumberField<Photos> | StringField<Photos>
-  > = [Photos.ID, Photos.NAME];
+  export const _allFields: Array<BigNumberField<Photos> | StringField<Photos>> =
+    [Photos.ID, Photos.NAME];
   /**
    * All fields selector.
    */

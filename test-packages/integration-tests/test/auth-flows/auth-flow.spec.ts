@@ -191,8 +191,7 @@ describe('OAuth flows', () => {
 
     const response = await executeHttpRequest(
       {
-        url:
-          'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
+        url: 'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
       },
       {
         method: 'get',

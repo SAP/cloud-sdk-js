@@ -117,10 +117,8 @@ export namespace Airports {
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LOCATION: AirportLocationField<Airports> = new AirportLocationField(
-    'Location',
-    Airports
-  );
+  export const LOCATION: AirportLocationField<Airports> =
+    new AirportLocationField('Location', Airports);
   /**
    * All fields of the Airports entity.
    */

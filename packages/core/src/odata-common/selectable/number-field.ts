@@ -68,7 +68,8 @@ export class NumberFieldBase<EntityT extends Entity> extends EdmTypeField<
  */
 export class NumberField<EntityT extends Entity>
   extends NumberFieldBase<EntityT>
-  implements SelectableEdmTypeField {
+  implements SelectableEdmTypeField
+{
   readonly selectable: true;
 }
 

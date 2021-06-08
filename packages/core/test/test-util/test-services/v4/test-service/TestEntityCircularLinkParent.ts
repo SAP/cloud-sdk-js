@@ -20,7 +20,8 @@ import {
  */
 export class TestEntityCircularLinkParent
   extends EntityV4
-  implements TestEntityCircularLinkParentType {
+  implements TestEntityCircularLinkParentType
+{
   /**
    * Technical entity name for TestEntityCircularLinkParent.
    */
@@ -101,11 +102,8 @@ export namespace TestEntityCircularLinkParent {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityCircularLinkParent> = new StringField(
-    'KeyProperty',
-    TestEntityCircularLinkParent,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY: StringField<TestEntityCircularLinkParent> =
+    new StringField('KeyProperty', TestEntityCircularLinkParent, 'Edm.String');
   /**
    * Static representation of the one-to-one navigation property [[toFirstChild]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -145,10 +143,8 @@ export namespace TestEntityCircularLinkParent {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityCircularLinkParent> = new AllFields(
-    '*',
-    TestEntityCircularLinkParent
-  );
+  export const ALL_FIELDS: AllFields<TestEntityCircularLinkParent> =
+    new AllFields('*', TestEntityCircularLinkParent);
   /**
    * All key fields of the TestEntityCircularLinkParent entity.
    */

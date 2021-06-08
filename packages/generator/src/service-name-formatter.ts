@@ -64,20 +64,17 @@ export class ServiceNameFormatter {
     // Here we assume that entitysets and complextypes cannot have the same original name
     [...entitySetNames, ...complexTypeNames].forEach(
       entitySetOrComplexTypeName => {
-        this.staticPropertyNameGenerators[
-          entitySetOrComplexTypeName
-        ] = new UniqueNameGenerator('_', defaultReservedWords);
-        this.instancePropertyNameGenerators[
-          entitySetOrComplexTypeName
-        ] = new UniqueNameGenerator('_', defaultReservedWords);
+        this.staticPropertyNameGenerators[entitySetOrComplexTypeName] =
+          new UniqueNameGenerator('_', defaultReservedWords);
+        this.instancePropertyNameGenerators[entitySetOrComplexTypeName] =
+          new UniqueNameGenerator('_', defaultReservedWords);
       }
     );
 
     if (functionImportNames) {
       functionImportNames.forEach(functionImportName => {
-        this.parameterNameGenerators[
-          functionImportName
-        ] = new UniqueNameGenerator('_', defaultReservedWords);
+        this.parameterNameGenerators[functionImportName] =
+          new UniqueNameGenerator('_', defaultReservedWords);
       });
     }
   }
@@ -113,9 +110,8 @@ export class ServiceNameFormatter {
 
   originalToFunctionImportName(str: string): string {
     const transformedName = voca.camelCase(str);
-    const newName = this.serviceWideNameGenerator.generateAndSaveUniqueName(
-      transformedName
-    );
+    const newName =
+      this.serviceWideNameGenerator.generateAndSaveUniqueName(transformedName);
 
     return applyPrefixOnJsConflictFunctionImports(newName);
   }
@@ -195,11 +191,12 @@ export class ServiceNameFormatter {
 
     transformedName = stripAUnderscore(voca.titleCase(transformedName));
 
-    const newNames = this.serviceWideNameGenerator.generateAndSaveUniqueNamesWithSuffixes(
-      transformedName,
-      getInterfaceNamesSuffixes(),
-      false
-    );
+    const newNames =
+      this.serviceWideNameGenerator.generateAndSaveUniqueNamesWithSuffixes(
+        transformedName,
+        getInterfaceNamesSuffixes(),
+        false
+      );
 
     return newNames[0];
   }

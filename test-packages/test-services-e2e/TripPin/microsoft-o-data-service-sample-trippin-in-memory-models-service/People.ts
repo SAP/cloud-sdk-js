@@ -227,13 +227,12 @@ export namespace People {
   /**
    * Mapping of all key field names to the respective static field property People.
    */
-  export const _keys: {
-    [keys: string]: Field<People>;
-  } = People._keyFields.reduce(
-    (acc: { [keys: string]: Field<People> }, field: Field<People>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<People> } =
+    People._keyFields.reduce(
+      (acc: { [keys: string]: Field<People> }, field: Field<People>) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

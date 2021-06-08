@@ -141,13 +141,12 @@ export namespace Airports {
   /**
    * Mapping of all key field names to the respective static field property Airports.
    */
-  export const _keys: {
-    [keys: string]: Field<Airports>;
-  } = Airports._keyFields.reduce(
-    (acc: { [keys: string]: Field<Airports> }, field: Field<Airports>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<Airports> } =
+    Airports._keyFields.reduce(
+      (acc: { [keys: string]: Field<Airports> }, field: Field<Airports>) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

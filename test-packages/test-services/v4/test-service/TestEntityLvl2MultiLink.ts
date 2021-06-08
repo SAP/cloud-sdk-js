@@ -190,16 +190,15 @@ export namespace TestEntityLvl2MultiLink {
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl2MultiLink.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntityLvl2MultiLink>;
-  } = TestEntityLvl2MultiLink._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntityLvl2MultiLink> },
-      field: Field<TestEntityLvl2MultiLink>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntityLvl2MultiLink> } =
+    TestEntityLvl2MultiLink._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntityLvl2MultiLink> },
+        field: Field<TestEntityLvl2MultiLink>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

@@ -169,16 +169,15 @@ export namespace TestEntityLvl2SingleLink {
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntityLvl2SingleLink>;
-  } = TestEntityLvl2SingleLink._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntityLvl2SingleLink> },
-      field: Field<TestEntityLvl2SingleLink>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntityLvl2SingleLink> } =
+    TestEntityLvl2SingleLink._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntityLvl2SingleLink> },
+        field: Field<TestEntityLvl2SingleLink>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

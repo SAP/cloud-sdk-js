@@ -131,16 +131,15 @@ export namespace TestEntityCircularLinkChild {
   /**
    * Mapping of all key field names to the respective static field property TestEntityCircularLinkChild.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntityCircularLinkChild>;
-  } = TestEntityCircularLinkChild._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntityCircularLinkChild> },
-      field: Field<TestEntityCircularLinkChild>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntityCircularLinkChild> } =
+    TestEntityCircularLinkChild._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntityCircularLinkChild> },
+        field: Field<TestEntityCircularLinkChild>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

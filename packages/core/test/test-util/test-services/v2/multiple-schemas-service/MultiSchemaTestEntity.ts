@@ -103,16 +103,15 @@ export namespace MultiSchemaTestEntity {
   /**
    * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
    */
-  export const _keys: {
-    [keys: string]: Field<MultiSchemaTestEntity>;
-  } = MultiSchemaTestEntity._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<MultiSchemaTestEntity> },
-      field: Field<MultiSchemaTestEntity>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<MultiSchemaTestEntity> } =
+    MultiSchemaTestEntity._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<MultiSchemaTestEntity> },
+        field: Field<MultiSchemaTestEntity>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

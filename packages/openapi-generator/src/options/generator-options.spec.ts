@@ -121,7 +121,7 @@ describe('parseGeneratorOptions', () => {
     );
   });
 
-  it('throws an error if input is not set', () => {
+  it('throws an error if outputDir is not set', () => {
     const config = {
       input: 'some-dir',
       outputDir: '',
@@ -134,7 +134,7 @@ describe('parseGeneratorOptions', () => {
     );
   });
 
-  it('throws an error if outputDir are not set', () => {
+  it('throws an error if input is not set', () => {
     const config = {
       input: '',
       outputDir: 'some-dir',

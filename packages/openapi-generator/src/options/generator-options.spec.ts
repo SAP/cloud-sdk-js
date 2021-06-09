@@ -159,7 +159,9 @@ describe('parseGeneratorOptions', () => {
         'config.json': JSON.stringify(config)
       }
     });
-    await expect(parseOptionsFromConfig(parameters.config)).resolves.toEqual(config);
+    await expect(parseOptionsFromConfig(parameters.config)).resolves.toEqual(
+      config
+    );
   });
 
   it('logs a warning if wrong configuration keys were used', async () => {

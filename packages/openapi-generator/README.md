@@ -37,13 +37,14 @@ OPTIONS
       If a directory is passed, a `config.json` file is read from this directory.
 
   -i, --input=<path/to/input>
-      Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. 
-      Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.
+      (required) Specify the path to the directory or file containing the OpenAPI service definition(s) to generate 
+      clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not 
+      exist.
 
   -o, --outputDir=<path/to/output>
-      Specify the path to the directory to generate the client(s) in. Each client is generated into a subdirectory within 
-      the given output directory. Creates the directory if it does not exist. Customize subdirectory naming through 
-      `--optionsPerService`.
+      (required) Specify the path to the directory to generate the client(s) in. Each client is generated into a 
+      subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory 
+      naming through `--optionsPerService`.
 
   -t, --transpile
       Transpile the generated TypeScript code. When enabled a default `tsconfig.json` will be generated and used. It emits 

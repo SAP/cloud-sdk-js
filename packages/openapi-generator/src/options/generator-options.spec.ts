@@ -48,25 +48,6 @@ describe('parseGeneratorOptions', () => {
     });
   });
 
-  it('gets default options with config file', async () => {
-    const config = {
-      input: 'inputDir',
-      outputDir: 'outputDir'
-    };
-    mock({
-      '/path/': {
-        'config.json': JSON.stringify(config)
-      }
-    });
-    return expect(
-      parseGeneratorOptions(await parseOptionsFromConfig('/path/config.json'))
-    ).toEqual({
-      input: `${process.cwd()}/inputDir`,
-      outputDir: `${process.cwd()}/outputDir`,
-      ...options
-    });
-  });
-
   it('parses per service config file for a non-existent file path', () => {
     expect(
       parseGeneratorOptions({

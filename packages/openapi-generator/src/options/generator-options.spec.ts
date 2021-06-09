@@ -1,5 +1,6 @@
 import mock from 'mock-fs';
-import { generateWithParsedOptions, generate } from '../generator';
+import { createLogger } from '@sap-cloud-sdk/util';
+import { generateWithParsedOptions } from '../generator';
 import {
   parseGeneratorOptions,
   parseOptionsFromConfig
@@ -18,6 +19,22 @@ describe('parseGeneratorOptions', () => {
     mock.restore();
   });
 
+  const options = {
+    transpile: false,
+    include: undefined,
+    clearOutputDir: false,
+    skipValidation: false,
+    tsConfig: undefined,
+    packageJson: false,
+    optionsPerService: undefined,
+    packageVersion: '1.0.0',
+    readme: false,
+    metadata: false,
+    verbose: false,
+    overwrite: false,
+    config: undefined
+  };
+
   it('gets default options', () => {
     expect(
       parseGeneratorOptions({
@@ -27,19 +44,7 @@ describe('parseGeneratorOptions', () => {
     ).toEqual({
       input: `${process.cwd()}/inputDir`,
       outputDir: `${process.cwd()}/outputDir`,
-      transpile: false,
-      include: undefined,
-      clearOutputDir: false,
-      skipValidation: false,
-      tsConfig: undefined,
-      packageJson: false,
-      optionsPerService: undefined,
-      packageVersion: '1.0.0',
-      readme: false,
-      metadata: false,
-      verbose: false,
-      overwrite: false,
-      config: undefined
+      ...options
     });
   });
 
@@ -58,19 +63,7 @@ describe('parseGeneratorOptions', () => {
     ).toEqual({
       input: `${process.cwd()}/inputDir`,
       outputDir: `${process.cwd()}/outputDir`,
-      transpile: false,
-      include: undefined,
-      clearOutputDir: false,
-      skipValidation: false,
-      tsConfig: undefined,
-      packageJson: false,
-      optionsPerService: undefined,
-      packageVersion: '1.0.0',
-      readme: false,
-      metadata: false,
-      verbose: false,
-      overwrite: false,
-      config: undefined
+      ...options
     });
   });
 
@@ -134,32 +127,46 @@ describe('parseGeneratorOptions', () => {
     });
   });
 
-  it('throws an error if input and/or outputDir are not set', () => {
-    const options = {
+  it('throws an error if input and outputDir are not set', () => {
+    const config = {
       input: '',
       outputDir: '',
-      transpile: false,
-      include: undefined,
-      clearOutputDir: false,
-      skipValidation: false,
-      tsConfig: undefined,
-      packageJson: false,
-      optionsPerService: undefined,
-      packageVersion: '1.0.0',
-      readme: false,
-      metadata: false,
-      verbose: false,
-      overwrite: false,
-      config: undefined
+      ...options
     };
     return expect(
-      generateWithParsedOptions(options)
+      generateWithParsedOptions(config)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Either input or outputDir were not set."'
     );
   });
 
-  it('throws an error if input and/or outputDir are not set in the config file', async () => {
+  it('throws an error if input is not set', () => {
+    const config = {
+      input: 'some-dir',
+      outputDir: '',
+      ...options
+    };
+    return expect(
+      generateWithParsedOptions(config)
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Either input or outputDir were not set."'
+    );
+  });
+
+  it('throws an error if outputDir are not set', () => {
+    const config = {
+      input: '',
+      outputDir: 'some-dir',
+      ...options
+    };
+    return expect(
+      generateWithParsedOptions(config)
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Either input or outputDir were not set."'
+    );
+  });
+
+  it('parses a given path to a config file and returns its content as generator options', async () => {
     const config = {
       input: 'some-repository'
     };
@@ -171,10 +178,29 @@ describe('parseGeneratorOptions', () => {
         'config.json': JSON.stringify(config)
       }
     });
-    return expect(
-      generate(await parseOptionsFromConfig(parameters.config))
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Either input or outputDir were not set."'
+    await expect(parseOptionsFromConfig(parameters.config)).resolves.toEqual({
+      input: 'some-repository'
+    });
+  });
+
+  it('logs a warning if wrong configuration keys were used', async () => {
+    const logger = createLogger('openapi-generator');
+    spyOn(logger, 'warn');
+    const config = {
+      input: 'some-repository',
+      wrong_key: 'random-value'
+    };
+    const parameters = {
+      config: '/path/config.json'
+    };
+    mock({
+      '/path/': {
+        'config.json': JSON.stringify(config)
+      }
+    });
+    await parseOptionsFromConfig(parameters.config);
+    expect(logger.warn).toHaveBeenCalledWith(
+      '"wrong_key" is not part of the configuration and will be ignored.'
     );
   });
 });

@@ -6,7 +6,7 @@ export const generatorFlags = {
   input: flags.string({
     char: 'i',
     description:
-      'Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.',
+      '(required) Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.',
     parse: input => resolve(input),
     required: false,
     default: '',
@@ -15,7 +15,7 @@ export const generatorFlags = {
   outputDir: flags.string({
     char: 'o',
     description:
-      'Specify the path to the directory to generate the client(s) in. Each client is generated into a subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory naming through `--optionsPerService`.',
+      '(required) Specify the path to the directory to generate the client(s) in. Each client is generated into a subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory naming through `--optionsPerService`.',
     parse: input => resolve(input),
     required: false,
     default: '',

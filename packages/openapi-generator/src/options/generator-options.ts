@@ -1,12 +1,12 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
 import Parser from '@oclif/parser';
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
-// eslint-disable-next-line import/no-internal-modules
-import { ParsingToken } from '@oclif/parser/lib/parse';
+import { ErrorWithCause, createLogger } from '@sap-cloud-sdk/util';
 import OpenApiGenerator from '../cli';
 import { generatorFlags } from './flags';
 const { readFile, lstat } = promises;
+
+const logger = createLogger('openapi-generator');
 
 /**
  * Options that can be used to configure the generation when using the generator programmatically.
@@ -76,7 +76,15 @@ export async function parseOptionsFromConfig(
     if ((await lstat(configPath)).isDirectory()) {
       configPath = resolve(configPath, 'config.json');
     }
-    return JSON.parse(await readFile(configPath, 'utf8'));
+    const generatorOptions = JSON.parse(await readFile(configPath, 'utf8'));
+    Object.keys(generatorOptions).forEach(key => {
+      if (!Object.keys(generatorFlags).includes(key)) {
+        logger.warn(
+          `"${key}" is not part of the configuration and will be ignored.`
+        );
+      }
+    });
+    return generatorOptions;
   } catch (err) {
     throw new ErrorWithCause(
       `Could not read configuration file at ${configPath}.`,
@@ -86,38 +94,20 @@ export async function parseOptionsFromConfig(
 }
 
 /**
- * Removes values that are not in the raw input
+ * Returns only values that were specified
  * @param options parsed generator options
- * @param rawInput the raw input
+ * @param rawInputFlags the raw input keys
  * @returns generator options that were used in the raw input
  */
-export function removeDefaultValues(
+export function getSpecifiedFlags(
   options: ParsedGeneratorOptions,
-  rawInput: ParsingToken[]
+  rawInputFlags: string[]
 ): GeneratorOptions {
-  return Object.entries(parseRawInput(rawInput)).reduce(
-    (reducedOptions, [name]) => {
-      const value = options[name];
-      if (value !== undefined) {
-        reducedOptions[name] = value;
-      }
-      return reducedOptions;
-    },
-    {} as GeneratorOptions
-  );
-}
-
-/**
- * Creates generator options out of raw input values
- * @param input raw input values
- * @returns generator options
- */
-export function parseRawInput(input: ParsingToken[]): GeneratorOptions {
-  return input.reduce(
-    (rawInput, item) => ({
-      ...rawInput,
-      [item['flag']]: item['input']
-    }),
-    {} as GeneratorOptions
-  );
+  return Object.entries(rawInputFlags).reduce((reducedOptions, [name]) => {
+    const value = options[name];
+    if (value !== undefined) {
+      reducedOptions[name] = value;
+    }
+    return reducedOptions;
+  }, {} as GeneratorOptions);
 }

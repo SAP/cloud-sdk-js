@@ -3,9 +3,11 @@
 import { Command } from '@oclif/command';
 import { cli } from 'cli-ux';
 import { createLogger } from '@sap-cloud-sdk/util';
+// eslint-disable-next-line import/no-internal-modules
+import { FlagToken } from '@oclif/parser/lib/parse';
 import {
   parseOptionsFromConfig,
-  removeDefaultValues,
+  getSpecifiedFlags,
   generatorFlags
 } from '../options';
 import { generate, generateWithParsedOptions } from '../generator';
@@ -36,7 +38,10 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
       if (parsed.flags.config) {
         await generate({
           ...(await parseOptionsFromConfig(parsed.flags.config)),
-          ...removeDefaultValues(parsed.flags, parsed.raw)
+          ...getSpecifiedFlags(
+            parsed.flags,
+            (parsed.raw as FlagToken[]).map(({ flag }) => flag)
+          )
         });
       } else {
         await generateWithParsedOptions(parsed.flags);

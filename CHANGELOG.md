@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [core] Fix type error to allow filtering on one-to-many navigation properties.
 
 
 # 1.45.0

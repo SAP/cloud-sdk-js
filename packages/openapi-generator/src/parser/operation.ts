@@ -72,12 +72,26 @@ function isPlaceholder(pathPart: string): boolean {
   return /^\{.+\}$/.test(pathPart);
 }
 
+function validatePlaceholder(pathPart: string): boolean {
+  return /^\{[^{}]+\}$/.test(pathPart);
+}
+
+function validatePathPattern(pathPattern: string, placeholders: string[]): boolean{
+  return pathPattern.includes('?') || placeholders.some(placeholder => !validatePlaceholder(placeholder))
+}
+
 function sortPathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
   pathPattern: string
 ): OpenAPIV3.ParameterObject[] {
   const pathParts = pathPattern.split('/');
   const placeholders = pathParts.filter(part => isPlaceholder(part));
+
+  if(validatePathPattern(pathPattern, placeholders)){
+    throw new Error(
+      `Path pattern '${pathPattern}' is invalid or not supported.`
+    );
+  }
 
   return placeholders.map(placeholder => {
     const strippedPlaceholder = placeholder.slice(1, -1);
@@ -122,6 +136,7 @@ export function parsePathParameters(
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiParameter[] {
+  //todo validate
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
   const parsedParameters = parseParameters(sortedPathParameters, refs);
   const uniqueNames = ensureUniqueNames(

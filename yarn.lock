@@ -1724,9 +1724,9 @@
     "@sap/cds-runtime" "~3.1.0"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
-  version "1.25.0"
-  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.25.0.tgz#4e09aaeb30c873b3d72c8667c7569cae8277a1c2"
-  integrity sha512-XeZru18JlxTSi+PhT7xlxQopPgMrPZocKieRMu/TdLbw0GHYAXlZAPvs6rznc3N8AlGcvrAJekL15OIhEctBrw==
+  version "1.26.0"
+  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.26.0.tgz#9a5a0921a91e2ea383990f0949369d91a39ed220"
+  integrity sha512-N7S/3flaVk31ZMRglqrzDZ6slHWZaHpuFg/PDd+1j2TUGg3PEnvjIvC6IBELQJVKJMAu7PP8voRSMs0CeYk/qA==
   dependencies:
     "@sap-cloud-sdk/core" "^1.44.0"
 
@@ -11012,9 +11012,9 @@ treeify@^1.1.0:
   integrity sha512-1m4RA7xVAJrSGrrXGs0L3YTwyvBs2S8PbRHaLZAkFw7JR8oIFwYtysxlBZhYIa7xSyiYJKZ3iGrrk55cGA3i9A==
 
 trim-newlines@^1.0.0, trim-newlines@^3.0.0, trim-newlines@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/trim-newlines/-/trim-newlines-4.0.1.tgz#caa1a0c92e86282c9cc8485ccd3ee5a6a4fbd958"
-  integrity sha512-5n5GIW0uEbjCB2PO6OoaG11rscJmLOLw12ZG9e0vBKNMToDJ2n1+AkUhJpGO2bLj3jXKa/gYTGVmilX5CCxqmA==
+  version "4.0.2"
+  resolved "https://registry.npmjs.org/trim-newlines/-/trim-newlines-4.0.2.tgz#d6aaaf6a0df1b4b536d183879a6b939489808c7c"
+  integrity sha512-GJtWyq9InR/2HRiLZgpIKv+ufIKrVrvjQWEj7PxAXNc5dwbNJkqhAUoAGgzRmULAnoOM5EIpveYd3J2VeSAIew==
 
 trim-off-newlines@^1.0.0:
   version "1.0.1"

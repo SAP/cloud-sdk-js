@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [openapi-generator] Add the `-c/--config` command line option to specify options through a configuration file instead of on the command line.
 
 ## Improvements
 

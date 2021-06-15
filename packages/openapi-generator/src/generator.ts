@@ -60,6 +60,9 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
 ): Promise<void> {
+  if (options.input === '' || options.outputDir === '') {
+    throw new Error('Either input or outputDir were not set.');
+  }
   if (options.verbose) {
     setLogLevel('verbose', logger);
   }

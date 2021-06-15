@@ -175,7 +175,7 @@ function parseEnumSchema(
       }
       if (entry === null && !schema.nullable) {
         throw new Error(
-          "null was used as a parameter in an enum, although the schema was not declared as nullable"
+          'null was used as a parameter in an enum, although the schema was not declared as nullable'
         );
       }
       return entry;

@@ -214,7 +214,7 @@ describe('parseSchema', () => {
     expect(async () => {
       parseSchema(schema, await createTestRefs());
     }).rejects.toThrowErrorMatchingInlineSnapshot(
-      "\"'Null' was used as a parameter, but nullable wasn't declared\""
+      '"null was used as a parameter in an enum, although the schema was not declared as nullable"'
     );
   });
 

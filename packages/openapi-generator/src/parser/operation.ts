@@ -72,17 +72,24 @@ function isPlaceholder(pathPart: string): boolean {
   return /^\{.+\}$/.test(pathPart);
 }
 
-function validatePlaceholder(pathPart: string): boolean {
-  return /^\{[^{}]+\}$/.test(pathPart);
+function isValidPlaceholder(placeholder: string): boolean {
+  // This regex matches the cases:
+  // 1. it starts with `{`
+  // 2. it ends with `}`
+  // 3. it does not contain any other `{` or `}` in the middle
+  return /^\{[^{}]+\}$/.test(placeholder);
 }
 
-function validatePathPattern(
+// This function checks whether the given path pattern is valid. Typically, it detects the invalid pattern like below
+// 1. `/path/{p1}:{p2}`
+// 2. `/path?{param}`
+function isValidPathPattern(
   pathPattern: string,
   placeholders: string[]
 ): boolean {
   return (
     pathPattern.includes('?') ||
-    placeholders.some(placeholder => !validatePlaceholder(placeholder))
+    placeholders.some(placeholder => !isValidPlaceholder(placeholder))
   );
 }
 
@@ -93,7 +100,7 @@ function sortPathParameters(
   const pathParts = pathPattern.split('/');
   const placeholders = pathParts.filter(part => isPlaceholder(part));
 
-  if (validatePathPattern(pathPattern, placeholders)) {
+  if (isValidPathPattern(pathPattern, placeholders)) {
     throw new Error(
       `Path pattern '${pathPattern}' is invalid or not supported.`
     );

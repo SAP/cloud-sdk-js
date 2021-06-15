@@ -118,7 +118,9 @@ describe('parsePathParameters', () => {
   it('throws an error if multiple parameters defined in the same part of the path', async () => {
     const refs = await createTestRefs();
     expect(() =>
-      parsePathParameters([], '/test/{param1}:{param2}', refs, { strictNaming: false })
+      parsePathParameters([], '/test/{param1}:{param2}', refs, {
+        strictNaming: false
+      })
     ).toThrowErrorMatchingInlineSnapshot(
       '"Path pattern \'/test/{param1}:{param2}\' is invalid or not supported."'
     );
@@ -127,7 +129,9 @@ describe('parsePathParameters', () => {
   it('throws an error if path pattern contains invalid characters', async () => {
     const refs = await createTestRefs();
     expect(() =>
-      parsePathParameters([], '/test/value?param={param}', refs, { strictNaming: false })
+      parsePathParameters([], '/test/value?param={param}', refs, {
+        strictNaming: false
+      })
     ).toThrowErrorMatchingInlineSnapshot(
       '"Path pattern \'/test/value?param={param}\' is invalid or not supported."'
     );

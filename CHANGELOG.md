@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [openapi-generator] Improve the error message for invalid or unsupported path patterns.
 
 ## Fixed Issues
 

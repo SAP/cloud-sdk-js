@@ -15,6 +15,7 @@
 ## Compatibility Notes
 
 - [eslint-config] Remove `brace-style` rule for compatibility with Prettier 2.3.
+- [openapi-generator] Change the basis for directory, package, and service names, when generating clients. If not specified otherwise, the default is based on the directory name instead of the service name.
 
 ## New Functionality
 
@@ -27,6 +28,7 @@
 ## Fixed Issues
 
 - [core] Fix type error to allow filtering on one-to-many navigation properties in lambda expressions.
+- [openapi-generator] Base uniqueness check for directory names on directory names in `optionsPerService` instead of the human readable service name.
 
 
 # 1.45.0

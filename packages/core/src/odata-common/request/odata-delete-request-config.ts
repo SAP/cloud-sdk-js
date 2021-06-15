@@ -11,7 +11,8 @@ import { WithKeys, WithETag } from './odata-request-traits';
  */
 export class ODataDeleteRequestConfig<EntityT extends Entity>
   extends ODataRequestConfig
-  implements WithKeys, WithETag {
+  implements WithKeys, WithETag
+{
   keys: Record<string, FieldType>;
   eTag: string;
   versionIdentifierIgnored = false;

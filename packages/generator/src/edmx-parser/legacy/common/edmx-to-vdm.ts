@@ -379,9 +379,8 @@ export function transformComplexTypes(
             c.Name,
             p.Name
           ),
-          propertyNameAsParam: applyPrefixOnJsConflictParam(
-            instancePropertyName
-          ),
+          propertyNameAsParam:
+            applyPrefixOnJsConflictParam(instancePropertyName),
           description: propertyDescription(p),
           technicalName: p.Name,
           nullable: isNullableProperty(p),

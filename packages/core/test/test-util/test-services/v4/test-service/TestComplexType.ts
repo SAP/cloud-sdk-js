@@ -162,179 +162,138 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'StringProperty',
-    this,
-    'Edm.String'
-  );
+  stringProperty: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('StringProperty', this, 'Edm.String');
   /**
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: ComplexTypeBooleanPropertyField<EntityT> = new ComplexTypeBooleanPropertyField(
-    'BooleanProperty',
-    this,
-    'Edm.Boolean'
-  );
+  booleanProperty: ComplexTypeBooleanPropertyField<EntityT> =
+    new ComplexTypeBooleanPropertyField('BooleanProperty', this, 'Edm.Boolean');
   /**
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'GuidProperty',
-    this,
-    'Edm.Guid'
-  );
+  guidProperty: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('GuidProperty', this, 'Edm.Guid');
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int16Property: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'Int16Property',
-    this,
-    'Edm.Int16'
-  );
+  int16Property: ComplexTypeNumberPropertyField<EntityT> =
+    new ComplexTypeNumberPropertyField('Int16Property', this, 'Edm.Int16');
   /**
    * Representation of the [[TestComplexType.int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int32Property: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'Int32Property',
-    this,
-    'Edm.Int32'
-  );
+  int32Property: ComplexTypeNumberPropertyField<EntityT> =
+    new ComplexTypeNumberPropertyField('Int32Property', this, 'Edm.Int32');
   /**
    * Representation of the [[TestComplexType.int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int64Property: ComplexTypeBigNumberPropertyField<EntityT> = new ComplexTypeBigNumberPropertyField(
-    'Int64Property',
-    this,
-    'Edm.Int64'
-  );
+  int64Property: ComplexTypeBigNumberPropertyField<EntityT> =
+    new ComplexTypeBigNumberPropertyField('Int64Property', this, 'Edm.Int64');
   /**
    * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  decimalProperty: ComplexTypeBigNumberPropertyField<EntityT> = new ComplexTypeBigNumberPropertyField(
-    'DecimalProperty',
-    this,
-    'Edm.Decimal'
-  );
+  decimalProperty: ComplexTypeBigNumberPropertyField<EntityT> =
+    new ComplexTypeBigNumberPropertyField(
+      'DecimalProperty',
+      this,
+      'Edm.Decimal'
+    );
   /**
    * Representation of the [[TestComplexType.singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  singleProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'SingleProperty',
-    this,
-    'Edm.Single'
-  );
+  singleProperty: ComplexTypeNumberPropertyField<EntityT> =
+    new ComplexTypeNumberPropertyField('SingleProperty', this, 'Edm.Single');
   /**
    * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  doubleProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'DoubleProperty',
-    this,
-    'Edm.Double'
-  );
+  doubleProperty: ComplexTypeNumberPropertyField<EntityT> =
+    new ComplexTypeNumberPropertyField('DoubleProperty', this, 'Edm.Double');
   /**
    * Representation of the [[TestComplexType.floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  floatProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'FloatProperty',
-    this,
-    'Edm.Float'
-  );
+  floatProperty: ComplexTypeNumberPropertyField<EntityT> =
+    new ComplexTypeNumberPropertyField('FloatProperty', this, 'Edm.Float');
   /**
    * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeOfDayProperty: ComplexTypeTimePropertyField<EntityT> = new ComplexTypeTimePropertyField(
-    'TimeOfDayProperty',
-    this,
-    'Edm.TimeOfDay'
-  );
+  timeOfDayProperty: ComplexTypeTimePropertyField<EntityT> =
+    new ComplexTypeTimePropertyField(
+      'TimeOfDayProperty',
+      this,
+      'Edm.TimeOfDay'
+    );
   /**
    * Representation of the [[TestComplexType.dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField(
-    'DateProperty',
-    this,
-    'Edm.Date'
-  );
+  dateProperty: ComplexTypeDatePropertyField<EntityT> =
+    new ComplexTypeDatePropertyField('DateProperty', this, 'Edm.Date');
   /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeOffSetProperty: ComplexTypeDatePropertyField<EntityT> = new ComplexTypeDatePropertyField(
-    'DateTimeOffSetProperty',
-    this,
-    'Edm.DateTimeOffset'
-  );
+  dateTimeOffSetProperty: ComplexTypeDatePropertyField<EntityT> =
+    new ComplexTypeDatePropertyField(
+      'DateTimeOffSetProperty',
+      this,
+      'Edm.DateTimeOffset'
+    );
   /**
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  byteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'ByteProperty',
-    this,
-    'Edm.Byte'
-  );
+  byteProperty: ComplexTypeNumberPropertyField<EntityT> =
+    new ComplexTypeNumberPropertyField('ByteProperty', this, 'Edm.Byte');
   /**
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  sByteProperty: ComplexTypeNumberPropertyField<EntityT> = new ComplexTypeNumberPropertyField(
-    'SByteProperty',
-    this,
-    'Edm.SByte'
-  );
+  sByteProperty: ComplexTypeNumberPropertyField<EntityT> =
+    new ComplexTypeNumberPropertyField('SByteProperty', this, 'Edm.SByte');
   /**
    * Representation of the [[TestComplexType.geographyPointProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  geographyPointProperty: ComplexTypeAnyPropertyField<EntityT> = new ComplexTypeAnyPropertyField(
-    'GeographyPointProperty',
-    this,
-    'Edm.Any'
-  );
+  geographyPointProperty: ComplexTypeAnyPropertyField<EntityT> =
+    new ComplexTypeAnyPropertyField('GeographyPointProperty', this, 'Edm.Any');
   /**
    * Representation of the [[TestComplexType.enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  enumProperty: ComplexTypeEnumPropertyField<EntityT> = new ComplexTypeEnumPropertyField(
-    'EnumProperty',
-    this
-  );
+  enumProperty: ComplexTypeEnumPropertyField<EntityT> =
+    new ComplexTypeEnumPropertyField('EnumProperty', this);
   /**
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  somethingTheSdkDoesNotSupport: ComplexTypeAnyPropertyField<EntityT> = new ComplexTypeAnyPropertyField(
-    'SomethingTheSDKDoesNotSupport',
-    this,
-    'Edm.Any'
-  );
+  somethingTheSdkDoesNotSupport: ComplexTypeAnyPropertyField<EntityT> =
+    new ComplexTypeAnyPropertyField(
+      'SomethingTheSDKDoesNotSupport',
+      this,
+      'Edm.Any'
+    );
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty: TestNestedComplexTypeField<EntityT> = new TestNestedComplexTypeField(
-    'ComplexTypeProperty',
-    this
-  );
+  complexTypeProperty: TestNestedComplexTypeField<EntityT> =
+    new TestNestedComplexTypeField('ComplexTypeProperty', this);
   /**
    * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  collectionStringProperty: CollectionField<
-    EntityT,
-    'Edm.String'
-  > = new CollectionField('CollectionStringProperty', this, 'Edm.String');
+  collectionStringProperty: CollectionField<EntityT, 'Edm.String'> =
+    new CollectionField('CollectionStringProperty', this, 'Edm.String');
   /**
    * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -351,11 +310,12 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'BaseStringProperty',
-    this,
-    'Edm.String'
-  );
+  baseStringProperty: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField(
+      'BaseStringProperty',
+      this,
+      'Edm.String'
+    );
 
   /**
    * Creates an instance of TestComplexTypeField.

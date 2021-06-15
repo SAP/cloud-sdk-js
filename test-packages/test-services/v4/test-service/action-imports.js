@@ -1,6 +1,13 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.actionImports = exports.testActionImportSharedEntityReturnTypeCollection = exports.testActionImportSharedEntityReturnType = exports.testActionImportNoParameterEntityReturnType = exports.testActionImportUnsupportedEdmTypes = exports.testActionImportMultipleParameterComplexReturnType = exports.testActionImportNoParameterNoReturnType = void 0;
+exports.actionImports =
+  exports.testActionImportSharedEntityReturnTypeCollection =
+  exports.testActionImportSharedEntityReturnType =
+  exports.testActionImportNoParameterEntityReturnType =
+  exports.testActionImportUnsupportedEdmTypes =
+  exports.testActionImportMultipleParameterComplexReturnType =
+  exports.testActionImportNoParameterNoReturnType =
+    void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -28,7 +35,8 @@ function testActionImportNoParameterNoReturnType(parameters) {
     params
   );
 }
-exports.testActionImportNoParameterNoReturnType = testActionImportNoParameterNoReturnType;
+exports.testActionImportNoParameterNoReturnType =
+  testActionImportNoParameterNoReturnType;
 /**
  * Test Action Import Multiple Parameter Complex Return Type.
  *
@@ -72,7 +80,8 @@ function testActionImportMultipleParameterComplexReturnType(parameters) {
     params
   );
 }
-exports.testActionImportMultipleParameterComplexReturnType = testActionImportMultipleParameterComplexReturnType;
+exports.testActionImportMultipleParameterComplexReturnType =
+  testActionImportMultipleParameterComplexReturnType;
 /**
  * Test Action Import Unsupported Edm Types.
  *
@@ -98,7 +107,8 @@ function testActionImportUnsupportedEdmTypes(parameters) {
     params
   );
 }
-exports.testActionImportUnsupportedEdmTypes = testActionImportUnsupportedEdmTypes;
+exports.testActionImportUnsupportedEdmTypes =
+  testActionImportUnsupportedEdmTypes;
 /**
  * Test Action Import No Parameter Entity Return Type.
  *
@@ -119,7 +129,8 @@ function testActionImportNoParameterEntityReturnType(parameters) {
     params
   );
 }
-exports.testActionImportNoParameterEntityReturnType = testActionImportNoParameterEntityReturnType;
+exports.testActionImportNoParameterEntityReturnType =
+  testActionImportNoParameterEntityReturnType;
 /**
  * Test Action Import Shared Entity Return Type. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
  *
@@ -140,7 +151,8 @@ function testActionImportSharedEntityReturnType(parameters) {
     params
   );
 }
-exports.testActionImportSharedEntityReturnType = testActionImportSharedEntityReturnType;
+exports.testActionImportSharedEntityReturnType =
+  testActionImportSharedEntityReturnType;
 /**
  * Test Action Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
  *
@@ -161,13 +173,19 @@ function testActionImportSharedEntityReturnTypeCollection(parameters) {
     params
   );
 }
-exports.testActionImportSharedEntityReturnTypeCollection = testActionImportSharedEntityReturnTypeCollection;
+exports.testActionImportSharedEntityReturnTypeCollection =
+  testActionImportSharedEntityReturnTypeCollection;
 exports.actionImports = {
-  testActionImportNoParameterNoReturnType: testActionImportNoParameterNoReturnType,
-  testActionImportMultipleParameterComplexReturnType: testActionImportMultipleParameterComplexReturnType,
+  testActionImportNoParameterNoReturnType:
+    testActionImportNoParameterNoReturnType,
+  testActionImportMultipleParameterComplexReturnType:
+    testActionImportMultipleParameterComplexReturnType,
   testActionImportUnsupportedEdmTypes: testActionImportUnsupportedEdmTypes,
-  testActionImportNoParameterEntityReturnType: testActionImportNoParameterEntityReturnType,
-  testActionImportSharedEntityReturnType: testActionImportSharedEntityReturnType,
-  testActionImportSharedEntityReturnTypeCollection: testActionImportSharedEntityReturnTypeCollection
+  testActionImportNoParameterEntityReturnType:
+    testActionImportNoParameterEntityReturnType,
+  testActionImportSharedEntityReturnType:
+    testActionImportSharedEntityReturnType,
+  testActionImportSharedEntityReturnTypeCollection:
+    testActionImportSharedEntityReturnTypeCollection
 };
 //# sourceMappingURL=action-imports.js.map

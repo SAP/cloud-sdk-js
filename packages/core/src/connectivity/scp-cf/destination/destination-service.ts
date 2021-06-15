@@ -4,11 +4,13 @@ import {
   propertyExists
 } from '@sap-cloud-sdk/util';
 import { AxiosError } from 'axios';
+import CircuitBreaker from 'opossum';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   executeHttpRequest,
   getAxiosConfigWithDefaults,
   HttpRequestConfig,
+  HttpRequestOptions,
   HttpResponse
 } from '../../../http-client';
 import {
@@ -22,17 +24,29 @@ import {
   proxyStrategy
 } from '../proxy-util';
 import { parseDestination } from './destination';
-import { Destination, DestinationType } from './destination-service-types';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationType
+} from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
-
-// For some reason, the equivalent import statement does not work
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-const CircuitBreaker = require('opossum');
 
 const logger = createLogger({
   package: 'core',
   messageContext: 'destination-service'
 });
+
+type DestinationCircuitBreaker = CircuitBreaker<
+  [
+    destination: Destination | DestinationNameAndJwt,
+    requestConfig: HttpRequestConfig,
+    options?: HttpRequestOptions | undefined
+  ],
+  HttpResponse
+>;
+
+let circuitBreaker: DestinationCircuitBreaker;
+
 /**
  * Fetches all instance destinations from the given URI.
  *
@@ -87,11 +101,12 @@ async function fetchDestinations(
   )}/destination-configuration/v1/${type}Destinations`;
 
   if (options?.useCache) {
-    const destinationsFromCache = destinationServiceCache.retrieveDestinationsFromCache(
-      targetUri,
-      decodeJwt(jwt),
-      options.isolationStrategy
-    );
+    const destinationsFromCache =
+      destinationServiceCache.retrieveDestinationsFromCache(
+        targetUri,
+        decodeJwt(jwt),
+        options.isolationStrategy
+      );
     if (destinationsFromCache) {
       return destinationsFromCache;
     }
@@ -167,11 +182,12 @@ async function fetchDestinationByTokens(
   )}/destination-configuration/v1/destinations/${destinationName}`;
 
   if (options?.useCache) {
-    const destinationsFromCache = destinationServiceCache.retrieveDestinationsFromCache(
-      targetUri,
-      decodeJwt(tokens.authHeaderJwt),
-      options.isolationStrategy
-    );
+    const destinationsFromCache =
+      destinationServiceCache.retrieveDestinationsFromCache(
+        targetUri,
+        decodeJwt(tokens.authHeaderJwt),
+        options.isolationStrategy
+      );
     if (destinationsFromCache) {
       if (destinationsFromCache.length > 1) {
         logger.warn(
@@ -234,18 +250,19 @@ function callDestinationService(
     destination = addProxyConfigurationInternet(destination);
   }
 
-  if (
-    options.enableCircuitBreaker ||
-    options.enableCircuitBreaker === undefined
-  ) {
-    return getInstanceCircuitBreaker().fire(destination, config);
+  if (options.enableCircuitBreaker) {
+    return getCircuitBreaker().fire(destination, config);
   }
 
   return executeHttpRequest(destination, config);
 }
 
-function getInstanceCircuitBreaker(breaker?: any): any {
-  return typeof breaker === 'undefined'
-    ? new CircuitBreaker(executeHttpRequest, circuitBreakerDefaultOptions)
-    : breaker;
+function getCircuitBreaker(): DestinationCircuitBreaker {
+  if (!circuitBreaker) {
+    circuitBreaker = new CircuitBreaker(
+      executeHttpRequest,
+      circuitBreakerDefaultOptions
+    );
+  }
+  return circuitBreaker;
 }

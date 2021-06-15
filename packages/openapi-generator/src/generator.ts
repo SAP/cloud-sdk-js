@@ -323,9 +323,8 @@ async function generateMetadata(
   options: ParsedGeneratorOptions
 ) {
   const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
-  const { clientFileName, headerFileName } = getSdkMetadataFileNames(
-    inputFileName
-  );
+  const { clientFileName, headerFileName } =
+    getSdkMetadataFileNames(inputFileName);
 
   logger.verbose(`Generating header metadata ${headerFileName}.`);
   const metadataDir = resolve(inputDirPath, 'sdk-metadata');

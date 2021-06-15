@@ -61,8 +61,6 @@ jobs:
         name: Circular dependency Check
       - run: yarn doc
         name: API Doc Check
-      - run: yarn check:vulnerability
-        name: Dependency Vulnerability Check
       - run: yarn check:license
         name: License Check
       - name: REUSE Compliance Check

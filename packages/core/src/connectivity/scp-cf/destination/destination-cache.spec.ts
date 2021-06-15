@@ -383,10 +383,11 @@ describe('caching destination integraion tests', () => {
         'retrieveDestinationFromCache'
       );
 
-      const destinationFromFirstCall = await getDestinationFromDestinationService(
-        'OnPremise',
-        { useCache: true, userJwt: providerUserJwt }
-      );
+      const destinationFromFirstCall =
+        await getDestinationFromDestinationService('OnPremise', {
+          useCache: true,
+          userJwt: providerUserJwt
+        });
       const destinationFromCache = await getDestinationFromDestinationService(
         'OnPremise',
         { useCache: true, userJwt: providerUserJwt }

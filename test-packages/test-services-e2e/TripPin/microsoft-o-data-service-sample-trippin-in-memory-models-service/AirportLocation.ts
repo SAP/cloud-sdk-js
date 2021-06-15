@@ -60,11 +60,8 @@ export class AirportLocationField<
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'Address',
-    this,
-    'Edm.String'
-  );
+  address: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('Address', this, 'Edm.String');
   /**
    * Representation of the [[AirportLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

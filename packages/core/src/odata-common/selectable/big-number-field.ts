@@ -69,7 +69,8 @@ class BigNumberFieldBase<EntityT extends Entity> extends EdmTypeField<
  */
 export class BigNumberField<EntityT extends Entity>
   extends BigNumberFieldBase<EntityT>
-  implements SelectableEdmTypeField {
+  implements SelectableEdmTypeField
+{
   readonly selectable: true;
 }
 

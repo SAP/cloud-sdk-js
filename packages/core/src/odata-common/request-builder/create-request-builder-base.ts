@@ -6,13 +6,13 @@ import {
 } from '../../connectivity/scp-cf';
 import { ODataCreateRequestConfig } from '../request';
 import { HttpResponse } from '../../http-client';
-import { MethodRequestBuilder } from './request-builder-base';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion/odata-uri';
 import type { Constructable, Entity, EntityIdentifiable } from '../entity';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import type { Link } from '../selectable';
+import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.
@@ -21,7 +21,8 @@ import type { Link } from '../selectable';
  */
 export abstract class CreateRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilder<ODataCreateRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   /**
    * Creates an instance of CreateRequestBuilder.
    *

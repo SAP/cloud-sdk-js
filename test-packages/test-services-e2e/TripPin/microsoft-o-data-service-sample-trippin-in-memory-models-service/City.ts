@@ -50,29 +50,20 @@ export class CityField<EntityT extends EntityV4> extends ComplexTypeField<
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'CountryRegion',
-    this,
-    'Edm.String'
-  );
+  countryRegion: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('CountryRegion', this, 'Edm.String');
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'Name',
-    this,
-    'Edm.String'
-  );
+  name: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('Name', this, 'Edm.String');
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'Region',
-    this,
-    'Edm.String'
-  );
+  region: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('Region', this, 'Edm.String');
 
   /**
    * Creates an instance of CityField.

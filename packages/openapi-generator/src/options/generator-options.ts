@@ -33,11 +33,8 @@ export interface GeneratorOptions {
 /**
  * Parsed options with default values.
  */
-export type ParsedGeneratorOptions = typeof OpenApiGenerator extends Parser.Input<
-  infer F
->
-  ? F
-  : never;
+export type ParsedGeneratorOptions =
+  typeof OpenApiGenerator extends Parser.Input<infer F> ? F : never;
 
 /**
  * Parse the given generator options for programmatic use.

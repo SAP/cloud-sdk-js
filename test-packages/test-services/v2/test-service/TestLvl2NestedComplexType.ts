@@ -44,11 +44,8 @@ export class TestLvl2NestedComplexTypeField<
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'StringProperty',
-    this,
-    'Edm.String'
-  );
+  stringProperty: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('StringProperty', this, 'Edm.String');
 
   /**
    * Creates an instance of TestLvl2NestedComplexTypeField.
@@ -65,14 +62,15 @@ export namespace TestLvl2NestedComplexType {
   /**
    * Metadata information on all properties of the `TestLvl2NestedComplexType` complex type.
    */
-  export const _propertyMetadata: PropertyMetadata<TestLvl2NestedComplexType>[] = [
-    {
-      originalName: 'StringProperty',
-      name: 'stringProperty',
-      type: 'Edm.String',
-      isCollection: false
-    }
-  ];
+  export const _propertyMetadata: PropertyMetadata<TestLvl2NestedComplexType>[] =
+    [
+      {
+        originalName: 'StringProperty',
+        name: 'stringProperty',
+        type: 'Edm.String',
+        isCollection: false
+      }
+    ];
 
   /**
    * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.

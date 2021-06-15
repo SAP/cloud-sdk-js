@@ -47,11 +47,8 @@ export class LocationField<EntityT extends EntityV4> extends ComplexTypeField<
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'Address',
-    this,
-    'Edm.String'
-  );
+  address: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('Address', this, 'Edm.String');
   /**
    * Representation of the [[Location.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

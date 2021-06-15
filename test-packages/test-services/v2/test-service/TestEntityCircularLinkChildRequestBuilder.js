@@ -106,5 +106,6 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (
   };
   return TestEntityCircularLinkChildRequestBuilder;
 })(core_1.RequestBuilder);
-exports.TestEntityCircularLinkChildRequestBuilder = TestEntityCircularLinkChildRequestBuilder;
+exports.TestEntityCircularLinkChildRequestBuilder =
+  TestEntityCircularLinkChildRequestBuilder;
 //# sourceMappingURL=TestEntityCircularLinkChildRequestBuilder.js.map

@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [eslint-config] Remove `brace-style` rule for compatibility with Prettier 2.3.
 
 ## New Functionality
 
@@ -28,6 +28,18 @@
 
 -
 
+
+# 1.45.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.45.0<br>
+Blog: TBD<br>
+
+## Fixed Issues
+
+- [core] Re-enable the circuit breakers for the destination and XSUAA services.
+- [odata] Fix encoding of filter strings.
+- [core] Add or overwrite the content length header for CSRF fetch requests. As those are always `HEAD` requests, the content length is always set to 0.
 
 # 1.44.0
 

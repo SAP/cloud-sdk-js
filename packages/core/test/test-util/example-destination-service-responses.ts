@@ -66,39 +66,41 @@ export const oauthSingleResponse: DestinationJson = {
   ]
 };
 
-export const oauthUserTokenExchangeMultipleResponse: DestinationConfiguration[] = [
-  {
-    Name: 'FINAL-DESTINATION',
-    Type: 'HTTP',
-    URL: 'https://my.system.com/',
-    Authentication: 'OAuth2UserTokenExchange' as AuthenticationType,
-    ProxyType: 'Internet',
-    audience: 'https://my.system.com',
-    clientKey: 'password',
-    scope: 'SOME_SCOPE',
-    tokenServiceUser: 'TOKEN_USER',
-    tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
-    userIdSource: 'email',
-    tokenServicePassword: 'password'
-  }
-];
+export const oauthUserTokenExchangeMultipleResponse: DestinationConfiguration[] =
+  [
+    {
+      Name: 'FINAL-DESTINATION',
+      Type: 'HTTP',
+      URL: 'https://my.system.com/',
+      Authentication: 'OAuth2UserTokenExchange' as AuthenticationType,
+      ProxyType: 'Internet',
+      audience: 'https://my.system.com',
+      clientKey: 'password',
+      scope: 'SOME_SCOPE',
+      tokenServiceUser: 'TOKEN_USER',
+      tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
+      userIdSource: 'email',
+      tokenServicePassword: 'password'
+    }
+  ];
 
-export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] = [
-  {
-    Name: 'FINAL-DESTINATION',
-    Type: 'HTTP',
-    URL: 'https://my.system.com/',
-    Authentication: 'OAuth2ClientCredentials' as AuthenticationType,
-    ProxyType: 'Internet',
-    audience: 'https://my.system.com',
-    clientKey: 'password',
-    scope: 'SOME_SCOPE',
-    tokenServiceUser: 'TOKEN_USER',
-    tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
-    userIdSource: 'email',
-    tokenServicePassword: 'password'
-  }
-];
+export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] =
+  [
+    {
+      Name: 'FINAL-DESTINATION',
+      Type: 'HTTP',
+      URL: 'https://my.system.com/',
+      Authentication: 'OAuth2ClientCredentials' as AuthenticationType,
+      ProxyType: 'Internet',
+      audience: 'https://my.system.com',
+      clientKey: 'password',
+      scope: 'SOME_SCOPE',
+      tokenServiceUser: 'TOKEN_USER',
+      tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
+      userIdSource: 'email',
+      tokenServicePassword: 'password'
+    }
+  ];
 
 export const oauthUserTokenExchangeSingleResponse: DestinationJson = {
   owner: {

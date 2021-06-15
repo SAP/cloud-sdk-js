@@ -27,7 +27,10 @@ var __extends =
     };
   })();
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.TestComplexType = exports.TestComplexTypeField = exports.createTestComplexType_1 = void 0;
+exports.TestComplexType =
+  exports.TestComplexTypeField =
+  exports.createTestComplexType_1 =
+    void 0;
 var TestNestedComplexType_1 = require('./TestNestedComplexType');
 var core_1 = require('@sap-cloud-sdk/core');
 /**
@@ -190,19 +193,21 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.somethingTheSdkDoesNotSupport = new core_1.ComplexTypeAnyPropertyField(
-      'SomethingTheSDKDoesNotSupport',
-      _this,
-      'Edm.Any'
-    );
+    _this.somethingTheSdkDoesNotSupport =
+      new core_1.ComplexTypeAnyPropertyField(
+        'SomethingTheSDKDoesNotSupport',
+        _this,
+        'Edm.Any'
+      );
     /**
      * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.complexTypeProperty = new TestNestedComplexType_1.TestNestedComplexTypeField(
-      'ComplexTypeProperty',
-      _this
-    );
+    _this.complexTypeProperty =
+      new TestNestedComplexType_1.TestNestedComplexTypeField(
+        'ComplexTypeProperty',
+        _this
+      );
     return _this;
   }
   return TestComplexTypeField;

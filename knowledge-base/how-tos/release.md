@@ -4,8 +4,10 @@ All SAP Cloud SDK modules will be published with the same version regardless whe
 
 ## Preparations for a Release
 
-Ensure that the changelog is up to date and correct.
-Move up high priority changes, so that they are easier to spot.
+- Make sure the internal e2e tests are green based on the latest version of the SDK core.
+- Make sure there is no unchecked [depandabot findings](https://github.com/SAP/cloud-sdk-js/security/dependabot)
+- Ensure that the changelog is up to date and correct.
+  - Move up high priority changes, so that they are easier to spot.
 
 ## How to bump a version
 

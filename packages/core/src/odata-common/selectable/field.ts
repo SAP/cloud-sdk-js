@@ -36,7 +36,8 @@ export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
  */
 
 export abstract class Field<EntityT extends Entity>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   readonly _entity: EntityT;
   /**
    * Creates an instance of Field.

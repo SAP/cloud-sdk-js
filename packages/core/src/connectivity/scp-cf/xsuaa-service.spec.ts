@@ -1,7 +1,10 @@
 import { fail } from 'assert';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { providerXsuaaUrl } from '../../../test/test-util/environment-mocks';
+import {
+  providerXsuaaClientCredentials,
+  providerXsuaaUrl
+} from '../../../test/test-util/environment-mocks';
 import * as httpClient from '../../http-client/http-client';
 import {
   clientCredentialsGrant,
@@ -11,7 +14,6 @@ import {
 } from './xsuaa-service';
 import { TokenKey } from './xsuaa-service-types';
 import { Destination } from './destination';
-import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { Protocol } from './protocol';
 
 const expectedResponse200 = {
@@ -28,9 +30,6 @@ describe('xsuaa', () => {
     password: 'borsti'
   };
   const basicHeader = 'Basic aG9yc3RpOmJvcnN0aQ==';
-  const providerXsuaaClientCredentials = {
-    url: providerXsuaaUrl
-  } as XsuaaServiceCredentials;
 
   describe('web proxy handling', () => {
     it('includes the proxy if present', async () => {
@@ -209,7 +208,8 @@ describe('xsuaa', () => {
       const userToken = await userTokenGrant(
         providerXsuaaClientCredentials,
         userJwt,
-        clientId
+        clientId,
+        { enableCircuitBreaker: false }
       );
       expect(userToken).toEqual(expectedResponse);
     });
@@ -334,7 +334,8 @@ describe('xsuaa', () => {
       const response = await refreshTokenGrant(
         providerXsuaaClientCredentials,
         creds,
-        refreshToken
+        refreshToken,
+        { enableCircuitBreaker: false }
       );
       expect(response).toEqual(expectedResponse);
     });
@@ -414,8 +415,7 @@ describe('xsuaa', () => {
             kid: 'key-id-0',
             alg: 'RS256',
             value: `-----BEGIN PUBLIC KEY-----${unixEOL}MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx/jN5v1mp/TVn9nTQoYV${unixEOL}IUfCsUDHa3Upr5tDZC7mzlTrN2PnwruzyS7w1Jd+StqwW4/vn87ua2YlZzU8Ob0j${unixEOL}R4lbOPCKaHIi0kyNtJXQvQ7LZPG8epQLbx0IIP/WLVVVtB8bL5OWuHma3pUnibbm${unixEOL}ATtbOh5LksQ2zLMngEjUF52JQyzTpjoQkahp0BNe/drlAqO253keiY63FL6belKj${unixEOL}JGmSqdnotSXxB2ym+HQ0ShaNvTFLEvi2+ObkyjGWgFpQaoCcGq0KX0y0mPzOvdFs${unixEOL}NT+rBFdkHiK+Jl638Sbim1z9fItFbH9hiVwY37R9rLtH1YKi3PuATMjf/DJ7mUlu${unixEOL}DQIDAQAB${unixEOL}-----END PUBLIC KEY-----`,
-            n:
-              'AMf4zeb9Zqf01Z_Z00KGFSFHwrFAx2t1Ka-bQ2Qu5s5U6zdj58K7s8ku8NSXfkrasFuP75_O7mtmJWc1PDm9I0eJWzjwimhyItJMjbSV0L0Oy2TxvHqUC28dCCD_1i1VVbQfGy-Tlrh5mt6VJ4m25gE7WzoeS5LENsyzJ4BI1BediUMs06Y6EJGoadATXv3a5QKjtud5HomOtxS-m3pSoyRpkqnZ6LUl8Qdspvh0NEoWjb0xSxL4tvjm5MoxloBaUGqAnBqtCl9MtJj8zr3RbDU_qwRXZB4iviZet_Em4ptc_XyLRWx_YYlcGN-0fay7R9WCotz7gEzI3_wye5lJbg0'
+            n: 'AMf4zeb9Zqf01Z_Z00KGFSFHwrFAx2t1Ka-bQ2Qu5s5U6zdj58K7s8ku8NSXfkrasFuP75_O7mtmJWc1PDm9I0eJWzjwimhyItJMjbSV0L0Oy2TxvHqUC28dCCD_1i1VVbQfGy-Tlrh5mt6VJ4m25gE7WzoeS5LENsyzJ4BI1BediUMs06Y6EJGoadATXv3a5QKjtud5HomOtxS-m3pSoyRpkqnZ6LUl8Qdspvh0NEoWjb0xSxL4tvjm5MoxloBaUGqAnBqtCl9MtJj8zr3RbDU_qwRXZB4iviZet_Em4ptc_XyLRWx_YYlcGN-0fay7R9WCotz7gEzI3_wye5lJbg0'
           },
           {
             kty: 'RSA',
@@ -424,8 +424,7 @@ describe('xsuaa', () => {
             kid: 'key-id-1',
             alg: 'RS256',
             value: `-----BEGIN PUBLIC KEY-----${unixEOL}MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx/jN5v1mp/TVn9nTQoYV${unixEOL}IUfCsUDHa3Upr5tDZC7mzlTrN2PnwruzyS7w1Jd+StqwW4/vn87ua2YlZzU8Ob0j${unixEOL}R4lbOPCKaHIi0kyNtJXQvQ7LZPG8epQLbx0IIP/WLVVVtB8bL5OWuHma3pUnibbm${unixEOL}ATtbOh5LksQ2zLMngEjUF52JQyzTpjoQkahp0BNe/drlAqO253keiY63FL6belKj${unixEOL}JGmSqdnotSXxB2ym+HQ0ShaNvTFLEvi2+ObkyjGWgFpQaoCcGq0KX0y0mPzOvdFs${unixEOL}NT+rBFdkHiK+Jl638Sbim1z9fItFbH9hiVwY37R9rLtH1YKi3PuATMjf/DJ7mUlu${unixEOL}DQIDAQAB${unixEOL}-----END PUBLIC KEY-----`,
-            n:
-              'AMf4zeb9Zqf01Z_Z00KGFSFHwrFAx2t1Ka-bQ2Qu5s5U6zdj58K7s8ku8NSXfkrasFuP75_O7mtmJWc1PDm9I0eJWzjwimhyItJMjbSV0L0Oy2TxvHqUC28dCCD_1i1VVbQfGy-Tlrh5mt6VJ4m25gE7WzoeS5LENsyzJ4BI1BediUMs06Y6EJGoadATXv3a5QKjtud5HomOtxS-m3pSoyRpkqnZ6LUl8Qdspvh0NEoWjb0xSxL4tvjm5MoxloBaUGqAnBqtCl9MtJj8zr3RbDU_qwRXZB4iviZet_Em4ptc_XyLRWx_YYlcGN-0fay7R9WCotz7gEzI3_wye5lJbg0'
+            n: 'AMf4zeb9Zqf01Z_Z00KGFSFHwrFAx2t1Ka-bQ2Qu5s5U6zdj58K7s8ku8NSXfkrasFuP75_O7mtmJWc1PDm9I0eJWzjwimhyItJMjbSV0L0Oy2TxvHqUC28dCCD_1i1VVbQfGy-Tlrh5mt6VJ4m25gE7WzoeS5LENsyzJ4BI1BediUMs06Y6EJGoadATXv3a5QKjtud5HomOtxS-m3pSoyRpkqnZ6LUl8Qdspvh0NEoWjb0xSxL4tvjm5MoxloBaUGqAnBqtCl9MtJj8zr3RbDU_qwRXZB4iviZet_Em4ptc_XyLRWx_YYlcGN-0fay7R9WCotz7gEzI3_wye5lJbg0'
           }
         ]
       };

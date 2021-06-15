@@ -100,13 +100,15 @@ export namespace Casetest_1 {
   /**
    * Mapping of all key field names to the respective static field property Casetest_1.
    */
-  export const _keys: {
-    [keys: string]: Field<Casetest_1>;
-  } = Casetest_1._keyFields.reduce(
-    (acc: { [keys: string]: Field<Casetest_1> }, field: Field<Casetest_1>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<Casetest_1> } =
+    Casetest_1._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<Casetest_1> },
+        field: Field<Casetest_1>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

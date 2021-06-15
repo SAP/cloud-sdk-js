@@ -30,7 +30,8 @@ const logger = createLogger({
  */
 export class UpdateRequestBuilder<EntityT extends Entity>
   extends UpdateRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   /**
    * Creates an instance of UpdateRequestBuilder.
    *

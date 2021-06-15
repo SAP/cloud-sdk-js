@@ -131,7 +131,6 @@ module.exports = {
     'import/no-duplicates': 'error',
     'unused-imports/no-unused-imports-ts': 'error',
     'arrow-body-style': 'error',
-    'brace-style': 'error',
     curly: 'error',
     'eol-last': 'error',
     eqeqeq: ['error', 'smart'],

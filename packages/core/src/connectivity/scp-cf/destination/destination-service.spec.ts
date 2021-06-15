@@ -83,16 +83,16 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/instanceDestinations')
         .reply(200, response);
 
-      const instanceDestinations: Destination[] = await fetchInstanceDestinations(
-        destinationServiceUri,
-        jwt
-      );
+      const instanceDestinations: Destination[] =
+        await fetchInstanceDestinations(destinationServiceUri, jwt, {
+          enableCircuitBreaker: false
+        });
       expected.forEach((e, index) => {
         expect(instanceDestinations[index]).toMatchObject(e);
       });
     });
 
-    it('returns 400 for an invalid JWT', done => {
+    it('returns 400 for an invalid JWT', async () => {
       const response = {
         ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
       };
@@ -105,19 +105,14 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/instanceDestinations')
         .reply(400, response);
 
-      fetchInstanceDestinations(destinationServiceUri, jwt, {
-        enableCircuitBreaker: false
-      })
-        .then(() => {
-          done("Should've failed...");
+      await expect(
+        fetchInstanceDestinations(destinationServiceUri, jwt, {
+          enableCircuitBreaker: false
         })
-        .catch(error => {
-          expect(error.message).toBeDefined();
-          done();
-        });
+      ).rejects.toThrowError();
     });
 
-    it('does not fail horribly when an internal server error occurs', done => {
+    it('does not fail horribly when an internal server error occurs', async () => {
       nock(destinationServiceUri, {
         reqheaders: {
           authorization: `Bearer ${jwt}`
@@ -126,16 +121,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/instanceDestinations')
         .reply(500);
 
-      fetchInstanceDestinations(destinationServiceUri, jwt, {
-        enableCircuitBreaker: false
-      })
-        .then(() => {
-          done("Should've failed...");
+      await expect(
+        fetchInstanceDestinations(destinationServiceUri, jwt, {
+          enableCircuitBreaker: false
         })
-        .catch(error => {
-          expect(error.message).toBeDefined();
-          done();
-        });
+      ).rejects.toThrowError();
     });
   });
 
@@ -173,16 +163,16 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/subaccountDestinations')
         .reply(200, response);
 
-      const subaccountDestinations: Destination[] = await fetchSubaccountDestinations(
-        destinationServiceUri,
-        jwt
-      );
+      const subaccountDestinations: Destination[] =
+        await fetchSubaccountDestinations(destinationServiceUri, jwt, {
+          enableCircuitBreaker: false
+        });
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
     });
 
-    it('returns 400 for an invalid JWT', done => {
+    it('returns 400 for an invalid JWT', async () => {
       const response = {
         ErrorMessage: 'Unable to parse the JWT in Authorization Header.'
       };
@@ -195,16 +185,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/subaccountDestinations')
         .reply(400, response);
 
-      fetchSubaccountDestinations(destinationServiceUri, jwt, {
-        enableCircuitBreaker: false
-      })
-        .then(() => {
-          done("Should've failed...");
+      await expect(
+        fetchSubaccountDestinations(destinationServiceUri, jwt, {
+          enableCircuitBreaker: false
         })
-        .catch(error => {
-          expect(error.message).toBeDefined();
-          done();
-        });
+      ).rejects.toThrowError();
     });
   });
 
@@ -279,7 +264,8 @@ describe('destination service', () => {
       const actual = await fetchDestination(
         destinationServiceUri,
         jwt,
-        destinationName
+        destinationName,
+        { enableCircuitBreaker: false }
       );
       expect(actual).toMatchObject(expected);
     });
@@ -314,10 +300,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      await fetchDestination(destinationServiceUri, jwt, destinationName);
+      await fetchDestination(destinationServiceUri, jwt, destinationName, {
+        enableCircuitBreaker: false
+      });
       const expectedArgument: Destination = {
-        url:
-          'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
+        url: 'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         proxyType: 'Internet',
         proxyConfiguration: {
           host: 'some.foo.bar',
@@ -361,10 +348,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
       const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      await fetchDestination(destinationServiceUri, jwt, destinationName);
+      await fetchDestination(destinationServiceUri, jwt, destinationName, {
+        enableCircuitBreaker: false
+      });
       const expectedArgument: Destination = {
-        url:
-          'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
+        url: 'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         proxyType: 'Internet'
       };
       expect(spy).toHaveBeenCalledWith(expectedArgument, expect.anything());
@@ -443,12 +431,13 @@ describe('destination service', () => {
       const actual = await fetchDestination(
         destinationServiceUri,
         jwt,
-        destinationName
+        destinationName,
+        { enableCircuitBreaker: false }
       );
       expect(actual).toMatchObject(expected);
     });
 
-    it('does not fail horribly when an internal server error occurs', done => {
+    it('does not fail horribly when an internal server error occurs', async () => {
       const destinationName = 'FINAL-DESTINATION';
 
       nock(destinationServiceUri, {
@@ -459,19 +448,14 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/FINAL-DESTINATION')
         .reply(500);
 
-      fetchDestination(destinationServiceUri, jwt, destinationName, {
-        enableCircuitBreaker: false
-      })
-        .then(() => {
-          done("Should've failed...");
+      await expect(
+        fetchDestination(destinationServiceUri, jwt, destinationName, {
+          enableCircuitBreaker: false
         })
-        .catch(error => {
-          expect(error.message).toBeDefined();
-          done();
-        });
+      ).rejects.toThrowError();
     });
 
-    it('returns 400 for an invalid JWT', done => {
+    it('returns 400 for an invalid JWT', async () => {
       const destinationName = 'FINAL-DESTINATION';
 
       const response = {
@@ -486,16 +470,11 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/destinations/FINAL-DESTINATION')
         .reply(400, response);
 
-      fetchDestination(destinationServiceUri, jwt, destinationName, {
-        enableCircuitBreaker: false
-      })
-        .then(() => {
-          done("Should've failed...");
+      await expect(() =>
+        fetchDestination(destinationServiceUri, jwt, destinationName, {
+          enableCircuitBreaker: false
         })
-        .catch(error => {
-          expect(error.message).toBeDefined();
-          done();
-        });
+      ).rejects.toThrowError();
     });
   });
 });

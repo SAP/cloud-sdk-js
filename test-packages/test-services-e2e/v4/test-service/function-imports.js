@@ -1,6 +1,13 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.functionImports = exports.returnSapCloudSdk = exports.returnInt = exports.returnCollection = exports.getByKey = exports.getAll = exports.concatStrings = void 0;
+exports.functionImports =
+  exports.returnSapCloudSdk =
+  exports.returnInt =
+  exports.returnCollection =
+  exports.getByKey =
+  exports.getAll =
+  exports.concatStrings =
+    void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *

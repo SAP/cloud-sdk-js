@@ -31,7 +31,7 @@ describe('CountRequestBuilderV2', () => {
       Promise.all(
         requestBuilders.map(async requestBuilder => {
           const expected =
-            "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/$count?$filter=(SomeProp eq 'test')";
+            "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/$count?$filter=(SomeProp%20eq%20'test')";
           const actual = await requestBuilder
             .getAll()
             .filter(

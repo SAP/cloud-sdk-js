@@ -100,5 +100,6 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
   };
   return MultiSchemaTestEntityRequestBuilder;
 })(core_1.RequestBuilder);
-exports.MultiSchemaTestEntityRequestBuilder = MultiSchemaTestEntityRequestBuilder;
+exports.MultiSchemaTestEntityRequestBuilder =
+  MultiSchemaTestEntityRequestBuilder;
 //# sourceMappingURL=MultiSchemaTestEntityRequestBuilder.js.map

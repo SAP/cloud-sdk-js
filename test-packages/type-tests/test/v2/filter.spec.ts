@@ -42,9 +42,3 @@ TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test');
 
 // $ExpectError
 TestEntity.COMPLEX_TYPE_PROPERTY.equals('test');
-
-// $ExpectError
-TestEntity.KEY_PROPERTY_STRING.equals(null);
-
-// $ExpectType Filter<TestEntity, string>
-TestEntity.STRING_PROPERTY.equals(null);

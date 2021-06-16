@@ -174,9 +174,9 @@ describe('generator', () => {
         .toMatchInlineSnapshot(`
               "{
                 \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"spec\\",
+                  \\"packageName\\": \\"customName\\",
                   \\"directoryName\\": \\"customName\\",
-                  \\"serviceName\\": \\"spec\\"
+                  \\"serviceName\\": \\"customName\\"
                 }
               }"
             `);

@@ -1,27 +1,20 @@
 // Most likely this list is not complete
-import { EOL } from 'os';
 import { ParserOptions } from './options';
 
 const illegalCharacterRegex = /[.#@/"'*%]+/g;
-const startWithIntegerRegex = /^\d+/g;
+const startsWithNumberRegex = /^\d+/g;
 
 function isValidSchemaName(name: string): boolean {
-  if (name.match(startWithIntegerRegex)) {
-    return false;
-  }
-  if (name.match(illegalCharacterRegex)) {
-    return false;
-  }
-  return true;
+  return (
+    !name.match(startsWithNumberRegex) && !name.match(illegalCharacterRegex)
+  );
 }
 
 function makeSchemaNameValid(name: string): string {
-  if (name.match(illegalCharacterRegex)) {
-    while (name.match(illegalCharacterRegex)) {
-      name = name.replace(illegalCharacterRegex, '');
-    }
+  while (name.match(illegalCharacterRegex)) {
+    name = name.replace(illegalCharacterRegex, '');
   }
-  if (name.match(startWithIntegerRegex)) {
+  if (name.match(startsWithNumberRegex)) {
     name = `schema${name}`;
   }
   return name;
@@ -36,39 +29,52 @@ function makeSchemaNameValid(name: string): string {
  * @param options Parser options.
  * @returns A list of strings which are possible for schema names.
  */
-export function ensureUValidSchemaNames(
+export function ensureValidSchemaNames(
   names: string[],
   options: ParserOptions
 ): string[] {
-  const nonValidNames = names.filter(name => !isValidSchemaName(name));
-
-  if (nonValidNames.length > 0) {
-    if (options.strictNaming) {
-      throw new Error(getNonValidNameErrorMessages(nonValidNames));
-    }
-    return names.map(name => makeSchemaNameValid(name));
+  if (options.strictNaming) {
+    validateSchemaNames(names);
   }
-  return names;
+
+  return names.map(name => makeSchemaNameValid(name));
 }
 
-function getNonValidNameErrorMessages(nonValidSchemaNames: string[]) {
-  const header =
-    "Your OpenApi definition contains the invalid schema names. The SDK generator can adjust such names automatically if you disable 'strictNaming' or you adjust the schema. The errors are:";
-  const errors = nonValidSchemaNames.map(nonValidSchemaName =>
-    getErrorMessage(nonValidSchemaName)
+function validateSchemaNames(names: string[]): void {
+  const namesStartingWithNumber = names.filter(name =>
+    name.match(startsWithNumberRegex)
   );
-  return [header, ...errors].join(EOL);
+  const namesContainingIllegalChars = names.filter(name =>
+    name.match(illegalCharacterRegex)
+  );
+
+  const hasInvalidNames =
+    namesStartingWithNumber.length || namesContainingIllegalChars.length;
+
+  if (hasInvalidNames) {
+    throw new Error(
+      getErrorMessage(namesStartingWithNumber, namesContainingIllegalChars)
+    );
+  }
 }
 
-function getErrorMessage(nonValidSchemaName: string): string {
-  if (nonValidSchemaName.match(startWithIntegerRegex)) {
-    return `The schema ${nonValidSchemaName} starts with an integer.`;
+function getErrorMessage(
+  namesStartingWithNumber: string[],
+  namesContainingIllegalChars: string[]
+): string {
+  let message =
+    'The service specification contains invalid schema names. Adjust the definition file or enable automatic name adjustment with `skipValidation`.';
+
+  if (namesStartingWithNumber.length) {
+    message += `\n\tInvalid names starting with a number: ${namesStartingWithNumber.map(
+      name => `'${name}'`
+    )}`;
+  }
+  if (namesContainingIllegalChars.length) {
+    message += `\n\tInvalid names containing illegal characters: ${namesContainingIllegalChars.map(
+      name => `'${name}'`
+    )}`;
   }
 
-  if (nonValidSchemaName.match(illegalCharacterRegex)) {
-    return `The schema ${nonValidSchemaName} contains an illegal character.`;
-  }
-  throw new Error(
-    `The getErrorMessage function was called with ${nonValidSchemaName} but no violation was found.`
-  );
+  return message;
 }

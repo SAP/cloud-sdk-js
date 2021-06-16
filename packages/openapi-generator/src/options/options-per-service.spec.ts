@@ -79,12 +79,9 @@ describe('getServiceOptions', () => {
 
   it('adds defaults if a config exists partially', () => {
     expect(
-      getServiceOptions(
-        {
-          packageName: 'customPackageName'
-        },
-        'serviceName'
-      )
+      getServiceOptions('serviceName', {
+        packageName: 'customPackageName'
+      })
     ).toEqual({
       packageName: 'customPackageName',
       directoryName: 'serviceName',

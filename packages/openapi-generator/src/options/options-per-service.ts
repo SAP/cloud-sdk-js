@@ -83,8 +83,8 @@ export async function getOptionsPerService(
       );
 
       previousOptions[relativePath] = getServiceOptions(
-        originalOptionsPerService[relativePath],
-        uniqueDirName
+        uniqueDirName,
+        originalOptionsPerService[relativePath]
       );
       return previousOptions;
     },
@@ -162,13 +162,13 @@ function parseDirectoryName(filePath: string): string {
  * Get the options for one service based on the options per service and the input file path.
  * If the file path does not exist in the options a default config is created.
  * If the service options for a file path are given only partially, default values are added for the missing values.
- * @param serviceOptions The original options for this service as specified in the per service options.
  * @param directoryName The directory name of the according service.
+ * @param serviceOptions The original options for this service as specified in the per service options.
  * @returns Service options.
  */
 export function getServiceOptions(
-  serviceOptions: Partial<ServiceOptions> | undefined,
-  directoryName: string
+  directoryName: string,
+  serviceOptions?: Partial<ServiceOptions>
 ): ServiceOptions {
   const defaultConfig = {
     packageName: directoryName,

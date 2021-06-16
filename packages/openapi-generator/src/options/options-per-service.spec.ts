@@ -63,7 +63,7 @@ describe('getServiceOptions', () => {
       directoryName: 'serviceName',
       serviceName: 'serviceName'
     };
-    expect(getServiceOptions(expectedConfig, 'serviceName')).toEqual(
+    expect(getServiceOptions('serviceName', expectedConfig)).toEqual(
       expectedConfig
     );
   });
@@ -74,7 +74,7 @@ describe('getServiceOptions', () => {
       directoryName: 'serviceName',
       serviceName: 'serviceName'
     };
-    expect(getServiceOptions(undefined, 'serviceName')).toEqual(expectedConfig);
+    expect(getServiceOptions('serviceName')).toEqual(expectedConfig);
   });
 
   it('adds defaults if a config exists partially', () => {

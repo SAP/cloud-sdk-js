@@ -24,7 +24,6 @@
 ## Improvements
 
 - [openapi-generator] Improve the error message for invalid or unsupported path patterns.
-- [openapi-generator] Improve the error message when detecting invalid Swagger 2.0 specification files. 
 
 ## Fixed Issues
 

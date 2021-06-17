@@ -1,0 +1,56 @@
+info:
+  title: Swagger Test Service
+  description: Test Service for OpenApi version 2 aka. Swagger as YAML file.
+  version: 1.0.0
+swagger: '2.0'
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /entities/{pathParam}:
+    parameters:
+      - in: path
+        name: pathParam
+        required: true
+        type: string
+    post:
+      summary: Test POST
+      operationId: postEntity
+      description: Test POST
+      parameters:
+        - in: query
+          name: queryParam
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            minItems: 0
+            items:
+              $ref: '#/definitions/TestEntity'
+    patch:
+      summary: Test PATCH
+      operationId: patchEntity
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/TestEntity'
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: string
+definitions:
+  TestEntity:
+    type: object
+    properties:
+      stringProperty:
+        type: string
+        description: A string property
+      integerProperty:
+        type: integer
+        description: An integer property
+        required: false

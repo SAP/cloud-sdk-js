@@ -8,9 +8,9 @@ import {
 } from 'fs';
 import { resolve, basename, extname } from 'path';
 import execa = require('execa');
-import { unixEOL } from '@sap-cloud-sdk/util';
+import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
 import compareVersions from 'compare-versions';
-import { jsonStringify, transformFile } from './util';
+import { transformFile } from './util';
 const apiDocPath = resolve('docs', 'api');
 
 const isDirectory = entryPath => lstatSync(entryPath).isDirectory();
@@ -123,12 +123,12 @@ function writeVersions() {
   const apiVersions = getSortedApiVersions();
   writeFileSync(
     resolve('docs', 'api', 'versions.js'),
-    `export default ${jsonStringify(apiVersions)}`,
+    `export default ${formatJson(apiVersions)}`,
     'utf8'
   );
   writeFileSync(
     resolve('docs', 'api', 'versions.json'),
-    `${jsonStringify(apiVersions)}`,
+    `${formatJson(apiVersions)}`,
     'utf8'
   );
 }

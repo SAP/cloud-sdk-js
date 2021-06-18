@@ -67,6 +67,6 @@ export function kebabCase(str: string): string {
  * @param json Object to be stringified
  * @returns The JSON object as string.
  */
-export function jsonFileFormat(json: any): string {
+export function formatJson(json: any): string {
   return JSON.stringify(json, null, 2) + unixEOL;
 }

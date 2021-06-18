@@ -1,10 +1,10 @@
 import { resolve, relative } from 'path';
-import { jsonFileFormat, unixEOL } from '@sap-cloud-sdk/util';
+import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
 import { apiDocsDir, transformFile, version } from './util';
 
 function updateRootPackageJson() {
   transformFile(resolve('package.json'), packageJson =>
-      jsonFileFormat({
+    formatJson({
       ...JSON.parse(packageJson),
       version: `${version}`
     })
@@ -25,7 +25,7 @@ function updateDocumentationMd() {
 function updateTypeDocConfig() {
   transformFile('tsconfig.typedoc.json', config => {
     const parsedConfig = JSON.parse(config);
-    return jsonFileFormat({
+    return formatJson({
       ...parsedConfig,
       typedocOptions: {
         ...parsedConfig.typedocOptions,
@@ -40,7 +40,7 @@ function updateDocsVersions() {
     const versions = JSON.parse(versionsJson);
     return versions.includes(version)
       ? versionsJson
-      : jsonFileFormat([version, ...versions]);
+      : formatJson([version, ...versions]);
   });
 }
 

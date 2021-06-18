@@ -7,7 +7,7 @@ import {
   kebabCase,
   finishAll,
   setLogLevel,
-  jsonFileFormat
+  formatJson
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import {
@@ -381,7 +381,7 @@ async function generateOptionsPerService(
   await createFile(
     dir,
     basename(filePath),
-    jsonFileFormat(optionsPerService),
+    formatJson(optionsPerService),
     true,
     false
   );

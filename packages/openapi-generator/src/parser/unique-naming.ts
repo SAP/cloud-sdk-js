@@ -23,8 +23,11 @@ export function ensureUniqueNames(
     separator?: string;
   }
 ): string[] {
-  const { format = camelCase, reservedWords = [], separator = '' } =
-    namingOptions || {};
+  const {
+    format = camelCase,
+    reservedWords = [],
+    separator = ''
+  } = namingOptions || {};
 
   if (options.strictNaming) {
     const formattedNames = names.map(originalName => format(originalName));
@@ -73,8 +76,11 @@ export function deduplicateNames(
     separator?: string;
   }
 ): string[] {
-  const { format = camelCase, reservedWords = [], separator = '' } =
-    namingOptions || {};
+  const {
+    format = camelCase,
+    reservedWords = [],
+    separator = ''
+  } = namingOptions || {};
   const nonConflictingNames = getNonConflictingNames(
     names,
     format,

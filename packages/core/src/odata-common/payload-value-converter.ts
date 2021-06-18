@@ -10,9 +10,10 @@ const toNumber = (value: any): number => Number(value);
 const toBigNumber = (value: any): BigNumber => new BigNumber(value);
 
 export const toGuid = (value: string): string => {
-  const guids = /[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}/.exec(
-    value
-  );
+  const guids =
+    /[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}/.exec(
+      value
+    );
   if (!guids || guids.length <= 0) {
     throw new Error(`Failed to parse the value: ${value} to guid.`);
   }

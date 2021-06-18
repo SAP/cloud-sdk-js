@@ -1,14 +1,14 @@
 import { Entity, EntityIdentifiable, Constructable } from '../entity';
 
-type EntityBasedRequestBuilder<
-  EntityCT extends Constructable<Entity>
-> = ReturnType<EntityCT['requestBuilder']>;
+type EntityBasedRequestBuilder<EntityCT extends Constructable<Entity>> =
+  ReturnType<EntityCT['requestBuilder']>;
 
 /**
  * @hidden
  */
 export abstract class RequestBuilder<EntityT extends Entity>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   static forEntity<EntityCT extends Constructable<Entity>>(
     entity: EntityCT
   ): EntityBasedRequestBuilder<EntityCT> {

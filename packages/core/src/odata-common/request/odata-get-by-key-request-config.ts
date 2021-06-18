@@ -12,7 +12,8 @@ import { WithKeys, WithSelection } from './odata-request-traits';
  */
 export class ODataGetByKeyRequestConfig<EntityT extends Entity>
   extends ODataRequestConfig
-  implements WithKeys, WithSelection<EntityT> {
+  implements WithKeys, WithSelection<EntityT>
+{
   keys: Record<string, FieldType>;
   selects: Selectable<EntityT>[] = [];
   expands: Expandable<EntityT>[];

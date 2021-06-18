@@ -75,9 +75,8 @@ export async function getOptionsPerService(
       const originalServiceName =
         originalOptionsPerService[relativePath]?.serviceName ||
         parseServiceName(relativePath);
-      const uniqueServiceName = uniqueNameGenerator.generateAndSaveUniqueName(
-        originalServiceName
-      );
+      const uniqueServiceName =
+        uniqueNameGenerator.generateAndSaveUniqueName(originalServiceName);
       if (originalServiceName !== uniqueServiceName) {
         duplicateServicePaths.push(relativePath);
       }

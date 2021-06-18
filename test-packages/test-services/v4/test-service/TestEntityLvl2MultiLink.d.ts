@@ -15,7 +15,8 @@ import {
  */
 export declare class TestEntityLvl2MultiLink
   extends EntityV4
-  implements TestEntityLvl2MultiLinkType {
+  implements TestEntityLvl2MultiLinkType
+{
   /**
    * Technical entity name for TestEntityLvl2MultiLink.
    */

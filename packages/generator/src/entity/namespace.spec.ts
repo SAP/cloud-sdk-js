@@ -15,9 +15,9 @@ describe('entity namespace', () => {
     const namespace = entityNamespace(breakfastEntity, foodService);
 
     expect(namespace.name).toBe(breakfastEntity.className);
-    const variableStatements = (namespace.statements as VariableStatementStructure[]).map(
-      v => v.declarations[0]
-    );
+    const variableStatements = (
+      namespace.statements as VariableStatementStructure[]
+    ).map(v => v.declarations[0]);
     [
       [
         entityName.staticPropertyName,

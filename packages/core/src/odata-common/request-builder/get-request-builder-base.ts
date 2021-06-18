@@ -18,7 +18,8 @@ export abstract class GetRequestBuilder<
       | ODataGetByKeyRequestConfig<EntityT>
   >
   extends MethodRequestBuilder<RequestConfigT>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   readonly _entity: EntityT;
 
   /**

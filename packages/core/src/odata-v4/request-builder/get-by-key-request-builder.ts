@@ -20,7 +20,8 @@ import { responseDataAccessor } from './response-data-accessor';
  */
 export class GetByKeyRequestBuilder<EntityT extends Entity>
   extends GetByKeyRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   readonly _entity: EntityT;
 
   /**

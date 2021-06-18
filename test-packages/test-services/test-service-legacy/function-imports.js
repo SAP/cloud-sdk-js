@@ -1,6 +1,19 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.functionImports = exports.fContinue = exports.createTestComplexType = exports.testFunctionImportMultipleParams = exports.testFunctionImportPost = exports.testFunctionImportGet = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportComplexReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = exports.testFunctionImportNoReturnType = void 0;
+exports.functionImports =
+  exports.fContinue =
+  exports.createTestComplexType =
+  exports.testFunctionImportMultipleParams =
+  exports.testFunctionImportPost =
+  exports.testFunctionImportGet =
+  exports.testFunctionImportComplexReturnTypeCollection =
+  exports.testFunctionImportComplexReturnType =
+  exports.testFunctionImportEntityReturnTypeCollection =
+  exports.testFunctionImportEntityReturnType =
+  exports.testFunctionImportEdmReturnTypeCollection =
+  exports.testFunctionImportEdmReturnType =
+  exports.testFunctionImportNoReturnType =
+    void 0;
 /*
  * Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -71,7 +84,8 @@ function testFunctionImportEdmReturnTypeCollection(parameters) {
     params
   );
 }
-exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnTypeCollection;
+exports.testFunctionImportEdmReturnTypeCollection =
+  testFunctionImportEdmReturnTypeCollection;
 /**
  * Test Function Import Entity Return Type.
  *
@@ -115,7 +129,8 @@ function testFunctionImportEntityReturnTypeCollection(parameters) {
     params
   );
 }
-exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
+exports.testFunctionImportEntityReturnTypeCollection =
+  testFunctionImportEntityReturnTypeCollection;
 /**
  * Test Function Import Complex Return Type.
  *
@@ -137,7 +152,8 @@ function testFunctionImportComplexReturnType(parameters) {
     params
   );
 }
-exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnType;
+exports.testFunctionImportComplexReturnType =
+  testFunctionImportComplexReturnType;
 /**
  * Test Function Import Complex Return Type Collection.
  *
@@ -159,7 +175,8 @@ function testFunctionImportComplexReturnTypeCollection(parameters) {
     params
   );
 }
-exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComplexReturnTypeCollection;
+exports.testFunctionImportComplexReturnTypeCollection =
+  testFunctionImportComplexReturnTypeCollection;
 /**
  * Test Function Import Get.
  *
@@ -292,11 +309,14 @@ exports.fContinue = fContinue;
 exports.functionImports = {
   testFunctionImportNoReturnType: testFunctionImportNoReturnType,
   testFunctionImportEdmReturnType: testFunctionImportEdmReturnType,
-  testFunctionImportEdmReturnTypeCollection: testFunctionImportEdmReturnTypeCollection,
+  testFunctionImportEdmReturnTypeCollection:
+    testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,
-  testFunctionImportEntityReturnTypeCollection: testFunctionImportEntityReturnTypeCollection,
+  testFunctionImportEntityReturnTypeCollection:
+    testFunctionImportEntityReturnTypeCollection,
   testFunctionImportComplexReturnType: testFunctionImportComplexReturnType,
-  testFunctionImportComplexReturnTypeCollection: testFunctionImportComplexReturnTypeCollection,
+  testFunctionImportComplexReturnTypeCollection:
+    testFunctionImportComplexReturnTypeCollection,
   testFunctionImportGet: testFunctionImportGet,
   testFunctionImportPost: testFunctionImportPost,
   testFunctionImportMultipleParams: testFunctionImportMultipleParams,

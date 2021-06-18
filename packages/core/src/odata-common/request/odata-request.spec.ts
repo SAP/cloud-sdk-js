@@ -124,7 +124,8 @@ describe('OData Request', () => {
   describe('relativeUrl', () => {
     it('should contain appended path', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      const requestConfig = request.config as ODataGetAllRequestConfig<TestEntity>;
+      const requestConfig =
+        request.config as ODataGetAllRequestConfig<TestEntity>;
       requestConfig.appendPath('/$value');
       expect(request.relativeUrl()).toBe(
         'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/$value?$format=json'
@@ -133,7 +134,8 @@ describe('OData Request', () => {
 
     it('should not remove the trailing slash', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      const requestConfig = request.config as ODataGetAllRequestConfig<TestEntity>;
+      const requestConfig =
+        request.config as ODataGetAllRequestConfig<TestEntity>;
       requestConfig.appendPath('/');
       expect(request.relativeUrl()).toBe(
         'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/?$format=json'

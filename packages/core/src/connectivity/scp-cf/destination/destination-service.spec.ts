@@ -83,11 +83,10 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/instanceDestinations')
         .reply(200, response);
 
-      const instanceDestinations: Destination[] = await fetchInstanceDestinations(
-        destinationServiceUri,
-        jwt,
-        { enableCircuitBreaker: false }
-      );
+      const instanceDestinations: Destination[] =
+        await fetchInstanceDestinations(destinationServiceUri, jwt, {
+          enableCircuitBreaker: false
+        });
       expected.forEach((e, index) => {
         expect(instanceDestinations[index]).toMatchObject(e);
       });
@@ -164,11 +163,10 @@ describe('destination service', () => {
         .get('/destination-configuration/v1/subaccountDestinations')
         .reply(200, response);
 
-      const subaccountDestinations: Destination[] = await fetchSubaccountDestinations(
-        destinationServiceUri,
-        jwt,
-        { enableCircuitBreaker: false }
-      );
+      const subaccountDestinations: Destination[] =
+        await fetchSubaccountDestinations(destinationServiceUri, jwt, {
+          enableCircuitBreaker: false
+        });
       expected.forEach((e, index) => {
         expect(subaccountDestinations[index]).toMatchObject(e);
       });
@@ -306,8 +304,7 @@ describe('destination service', () => {
         enableCircuitBreaker: false
       });
       const expectedArgument: Destination = {
-        url:
-          'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
+        url: 'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         proxyType: 'Internet',
         proxyConfiguration: {
           host: 'some.foo.bar',
@@ -355,8 +352,7 @@ describe('destination service', () => {
         enableCircuitBreaker: false
       });
       const expectedArgument: Destination = {
-        url:
-          'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
+        url: 'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
         proxyType: 'Internet'
       };
       expect(spy).toHaveBeenCalledWith(expectedArgument, expect.anything());

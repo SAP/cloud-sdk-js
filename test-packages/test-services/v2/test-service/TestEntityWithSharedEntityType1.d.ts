@@ -12,7 +12,8 @@ import {
  */
 export declare class TestEntityWithSharedEntityType1
   extends EntityV2
-  implements TestEntityWithSharedEntityType1Type {
+  implements TestEntityWithSharedEntityType1Type
+{
   /**
    * Technical entity name for TestEntityWithSharedEntityType1.
    */

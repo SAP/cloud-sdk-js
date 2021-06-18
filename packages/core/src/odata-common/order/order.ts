@@ -8,7 +8,8 @@ type OrderType = 'asc' | 'desc';
  * @typeparam EntityT -
  */
 export class Order<EntityT extends Entity>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
 

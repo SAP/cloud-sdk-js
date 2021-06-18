@@ -18,7 +18,8 @@ import {
  */
 export class TestEntityOtherMultiLink
   extends EntityV4
-  implements TestEntityOtherMultiLinkType {
+  implements TestEntityOtherMultiLinkType
+{
   /**
    * Technical entity name for TestEntityOtherMultiLink.
    */
@@ -81,11 +82,8 @@ export namespace TestEntityOtherMultiLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityOtherMultiLink> = new StringField(
-    'KeyProperty',
-    TestEntityOtherMultiLink,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY: StringField<TestEntityOtherMultiLink> =
+    new StringField('KeyProperty', TestEntityOtherMultiLink, 'Edm.String');
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */
@@ -108,16 +106,15 @@ export namespace TestEntityOtherMultiLink {
   /**
    * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntityOtherMultiLink>;
-  } = TestEntityOtherMultiLink._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntityOtherMultiLink> },
-      field: Field<TestEntityOtherMultiLink>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntityOtherMultiLink> } =
+    TestEntityOtherMultiLink._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntityOtherMultiLink> },
+        field: Field<TestEntityOtherMultiLink>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

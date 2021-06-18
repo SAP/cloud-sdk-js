@@ -204,11 +204,8 @@ export namespace TestEntity {
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DECIMAL_PROPERTY: BigNumberField<TestEntity> = new BigNumberField(
-    'DecimalProperty',
-    TestEntity,
-    'Edm.Decimal'
-  );
+  export const DECIMAL_PROPERTY: BigNumberField<TestEntity> =
+    new BigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
   /**
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -231,28 +228,28 @@ export namespace TestEntity {
    * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATA_TIME_OFFSET_DATA_TIME_PROPERTY: DateField<TestEntity> = new DateField(
-    'DataTimeOffsetDataTimeProperty',
-    TestEntity,
-    'Edm.DateTimeOffset'
-  );
+  export const DATA_TIME_OFFSET_DATA_TIME_PROPERTY: DateField<TestEntity> =
+    new DateField(
+      'DataTimeOffsetDataTimeProperty',
+      TestEntity,
+      'Edm.DateTimeOffset'
+    );
   /**
    * Static representation of the [[dataTimeOffsetTimestampProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: DateField<TestEntity> = new DateField(
-    'DataTimeOffsetTimestampProperty',
-    TestEntity,
-    'Edm.DateTimeOffset'
-  );
+  export const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: DateField<TestEntity> =
+    new DateField(
+      'DataTimeOffsetTimestampProperty',
+      TestEntity,
+      'Edm.DateTimeOffset'
+    );
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK: OneToManyLink<
-    TestEntity,
-    TestEntityLink
-  > = new OneToManyLink('ToMultiLink', TestEntity, TestEntityLink);
+  export const TO_MULTI_LINK: OneToManyLink<TestEntity, TestEntityLink> =
+    new OneToManyLink('ToMultiLink', TestEntity, TestEntityLink);
   /**
    * All fields of the TestEntity entity.
    */
@@ -294,13 +291,15 @@ export namespace TestEntity {
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntity>;
-  } = TestEntity._keyFields.reduce(
-    (acc: { [keys: string]: Field<TestEntity> }, field: Field<TestEntity>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntity> } =
+    TestEntity._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntity> },
+        field: Field<TestEntity>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

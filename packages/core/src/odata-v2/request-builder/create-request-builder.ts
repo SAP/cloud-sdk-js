@@ -15,7 +15,8 @@ import { responseDataAccessor } from './response-data-accessor';
  */
 export class CreateRequestBuilder<EntityT extends Entity>
   extends CreateRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   /**
    * Creates an instance of CreateRequestBuilder.
    *

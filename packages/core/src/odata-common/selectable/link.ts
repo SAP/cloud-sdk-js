@@ -21,7 +21,8 @@ import type { Selectable } from './selectable';
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
 export class Link<EntityT extends Entity, LinkedEntityT extends Entity = any>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   /**
    * @deprecated Since v1.21.0. Use [[clone]] instead.
    * Create a new link based on a given link.

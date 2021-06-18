@@ -1,6 +1,22 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.functionImports = exports.fContinue = exports.createTestComplexType = exports.testFunctionImportMultipleParams = exports.testFunctionImportPost = exports.testFunctionImportGet = exports.testFunctionImportComplexReturnTypeCollection = exports.testFunctionImportUnsupportedEdmTypes = exports.testFunctionImportComplexReturnType = exports.testFunctionImportSharedEntityReturnTypeCollection = exports.testFunctionImportSharedEntityReturnType = exports.testFunctionImportEntityReturnTypeCollection = exports.testFunctionImportEntityReturnType = exports.testFunctionImportEdmReturnTypeCollection = exports.testFunctionImportEdmReturnType = exports.testFunctionImportNoReturnType = void 0;
+exports.functionImports =
+  exports.fContinue =
+  exports.createTestComplexType =
+  exports.testFunctionImportMultipleParams =
+  exports.testFunctionImportPost =
+  exports.testFunctionImportGet =
+  exports.testFunctionImportComplexReturnTypeCollection =
+  exports.testFunctionImportUnsupportedEdmTypes =
+  exports.testFunctionImportComplexReturnType =
+  exports.testFunctionImportSharedEntityReturnTypeCollection =
+  exports.testFunctionImportSharedEntityReturnType =
+  exports.testFunctionImportEntityReturnTypeCollection =
+  exports.testFunctionImportEntityReturnType =
+  exports.testFunctionImportEdmReturnTypeCollection =
+  exports.testFunctionImportEdmReturnType =
+  exports.testFunctionImportNoReturnType =
+    void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -74,7 +90,8 @@ function testFunctionImportEdmReturnTypeCollection(parameters) {
     params
   );
 }
-exports.testFunctionImportEdmReturnTypeCollection = testFunctionImportEdmReturnTypeCollection;
+exports.testFunctionImportEdmReturnTypeCollection =
+  testFunctionImportEdmReturnTypeCollection;
 /**
  * Test Function Import Entity Return Type.
  *
@@ -118,7 +135,8 @@ function testFunctionImportEntityReturnTypeCollection(parameters) {
     params
   );
 }
-exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
+exports.testFunctionImportEntityReturnTypeCollection =
+  testFunctionImportEntityReturnTypeCollection;
 /**
  * Test Function Import Shared Entity Return Type. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
  *
@@ -140,7 +158,8 @@ function testFunctionImportSharedEntityReturnType(parameters) {
     params
   );
 }
-exports.testFunctionImportSharedEntityReturnType = testFunctionImportSharedEntityReturnType;
+exports.testFunctionImportSharedEntityReturnType =
+  testFunctionImportSharedEntityReturnType;
 /**
  * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
  *
@@ -162,7 +181,8 @@ function testFunctionImportSharedEntityReturnTypeCollection(parameters) {
     params
   );
 }
-exports.testFunctionImportSharedEntityReturnTypeCollection = testFunctionImportSharedEntityReturnTypeCollection;
+exports.testFunctionImportSharedEntityReturnTypeCollection =
+  testFunctionImportSharedEntityReturnTypeCollection;
 /**
  * Test Function Import Complex Return Type.
  *
@@ -186,7 +206,8 @@ function testFunctionImportComplexReturnType(parameters) {
     params
   );
 }
-exports.testFunctionImportComplexReturnType = testFunctionImportComplexReturnType;
+exports.testFunctionImportComplexReturnType =
+  testFunctionImportComplexReturnType;
 /**
  * Test Function Import Unsupported Edm Types.
  *
@@ -216,7 +237,8 @@ function testFunctionImportUnsupportedEdmTypes(parameters) {
     params
   );
 }
-exports.testFunctionImportUnsupportedEdmTypes = testFunctionImportUnsupportedEdmTypes;
+exports.testFunctionImportUnsupportedEdmTypes =
+  testFunctionImportUnsupportedEdmTypes;
 /**
  * Test Function Import Complex Return Type Collection.
  *
@@ -243,7 +265,8 @@ function testFunctionImportComplexReturnTypeCollection(parameters) {
     params
   );
 }
-exports.testFunctionImportComplexReturnTypeCollection = testFunctionImportComplexReturnTypeCollection;
+exports.testFunctionImportComplexReturnTypeCollection =
+  testFunctionImportComplexReturnTypeCollection;
 /**
  * Test Function Import Get.
  *
@@ -381,14 +404,19 @@ exports.fContinue = fContinue;
 exports.functionImports = {
   testFunctionImportNoReturnType: testFunctionImportNoReturnType,
   testFunctionImportEdmReturnType: testFunctionImportEdmReturnType,
-  testFunctionImportEdmReturnTypeCollection: testFunctionImportEdmReturnTypeCollection,
+  testFunctionImportEdmReturnTypeCollection:
+    testFunctionImportEdmReturnTypeCollection,
   testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,
-  testFunctionImportEntityReturnTypeCollection: testFunctionImportEntityReturnTypeCollection,
-  testFunctionImportSharedEntityReturnType: testFunctionImportSharedEntityReturnType,
-  testFunctionImportSharedEntityReturnTypeCollection: testFunctionImportSharedEntityReturnTypeCollection,
+  testFunctionImportEntityReturnTypeCollection:
+    testFunctionImportEntityReturnTypeCollection,
+  testFunctionImportSharedEntityReturnType:
+    testFunctionImportSharedEntityReturnType,
+  testFunctionImportSharedEntityReturnTypeCollection:
+    testFunctionImportSharedEntityReturnTypeCollection,
   testFunctionImportComplexReturnType: testFunctionImportComplexReturnType,
   testFunctionImportUnsupportedEdmTypes: testFunctionImportUnsupportedEdmTypes,
-  testFunctionImportComplexReturnTypeCollection: testFunctionImportComplexReturnTypeCollection,
+  testFunctionImportComplexReturnTypeCollection:
+    testFunctionImportComplexReturnTypeCollection,
   testFunctionImportGet: testFunctionImportGet,
   testFunctionImportPost: testFunctionImportPost,
   testFunctionImportMultipleParams: testFunctionImportMultipleParams,

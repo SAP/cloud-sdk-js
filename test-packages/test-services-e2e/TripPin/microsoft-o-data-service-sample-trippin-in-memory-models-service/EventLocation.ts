@@ -51,20 +51,14 @@ export class EventLocationField<
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'BuildingInfo',
-    this,
-    'Edm.String'
-  );
+  buildingInfo: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('BuildingInfo', this, 'Edm.String');
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: ComplexTypeStringPropertyField<EntityT> = new ComplexTypeStringPropertyField(
-    'Address',
-    this,
-    'Edm.String'
-  );
+  address: ComplexTypeStringPropertyField<EntityT> =
+    new ComplexTypeStringPropertyField('Address', this, 'Edm.String');
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

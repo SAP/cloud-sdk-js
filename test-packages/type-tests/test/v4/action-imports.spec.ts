@@ -13,12 +13,11 @@ noReturnTypeRequestBuilder.execute({
 });
 
 // $ExpectType ActionImportRequestBuilder<TestActionImportMultipleParameterComplexReturnTypeParameters, TestComplexType>
-const complexReturnTypeRequestBuilder = testActionImportMultipleParameterComplexReturnType(
-  {
+const complexReturnTypeRequestBuilder =
+  testActionImportMultipleParameterComplexReturnType({
     stringParam: 'stringParam',
     nonNullableStringParam: 'nonNullableStringParam'
-  }
-);
+  });
 
 // $ExpectType Promise<TestComplexType>
 complexReturnTypeRequestBuilder.execute({

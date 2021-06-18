@@ -18,7 +18,8 @@ export class CollectionField<
     FieldT extends EdmTypeShared<'any'> | Record<string, any> = any
   >
   extends Field<EntityT>
-  implements SelectableEdmTypeField {
+  implements SelectableEdmTypeField
+{
   readonly selectable: true;
 
   /**

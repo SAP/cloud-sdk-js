@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [eslint-config] Remove `brace-style` rule for compatibility with Prettier 2.3.
 
 ## New Functionality
 

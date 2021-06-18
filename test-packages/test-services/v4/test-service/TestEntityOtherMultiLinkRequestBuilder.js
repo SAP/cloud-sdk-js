@@ -100,5 +100,6 @@ var TestEntityOtherMultiLinkRequestBuilder = /** @class */ (function (_super) {
   };
   return TestEntityOtherMultiLinkRequestBuilder;
 })(core_1.RequestBuilder);
-exports.TestEntityOtherMultiLinkRequestBuilder = TestEntityOtherMultiLinkRequestBuilder;
+exports.TestEntityOtherMultiLinkRequestBuilder =
+  TestEntityOtherMultiLinkRequestBuilder;
 //# sourceMappingURL=TestEntityOtherMultiLinkRequestBuilder.js.map

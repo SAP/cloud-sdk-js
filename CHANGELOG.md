@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [core] Support setting custom `SAP-Connectivity-Authentication` headers for Principal Propagation.
 
 ## Fixed Issues
 

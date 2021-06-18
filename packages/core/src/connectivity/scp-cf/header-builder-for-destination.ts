@@ -1,6 +1,7 @@
 import { mergeLeftIgnoreCase, pickNonNullish } from '@sap-cloud-sdk/util';
 import { Destination } from '../scp-cf';
 import { getAuthHeaders } from './authorization-header';
+
 export async function buildHeadersForDestination(
   destination: Destination,
   customHeaders?: Record<string, any>

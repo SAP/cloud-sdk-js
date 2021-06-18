@@ -12,8 +12,30 @@ import { Destination } from './destination';
 import {
   addAuthorizationHeader,
   buildAndAddAuthorizationHeader,
-  buildAuthorizationHeaders
+  buildAuthorizationHeaders,
+  getAuthHeaders
 } from './authorization-header';
+
+const principalPropagationDestination = {
+  url: '',
+  authentication: 'PrincipalPropagation',
+  proxyType: 'OnPremise',
+  proxyConfiguration: {
+    headers: {
+      'SAP-Connectivity-Authentication': 'someValue',
+      'Proxy-Authorization': 'someProxyValue'
+    }
+  }
+} as Destination;
+
+function removeSapConnectivityAuthentication(destination) {
+  const destinationWithoutAuth = JSON.parse(JSON.stringify(destination));
+  delete destinationWithoutAuth!.proxyConfiguration!.headers![
+    'SAP-Connectivity-Authentication'
+  ];
+
+  return destinationWithoutAuth;
+}
 
 describe('buildAuthorizationHeaders', () => {
   describe('basic authentication', () => {
@@ -59,28 +81,21 @@ describe('buildAuthorizationHeaders', () => {
   });
 
   describe('principal propagation', () => {
-    it('does not throw on Principal Propagation', async () => {
-      const destination = {
-        url: '',
-        authentication: 'PrincipalPropagation',
-        proxyType: 'OnPremise',
-        proxyConfiguration: {
-          headers: {
-            'SAP-Connectivity-Authentication': 'someValue',
-            'Proxy-Authorization': 'someProxyValue'
-          }
-        }
-      } as Destination;
-
-      const headers = await buildAuthorizationHeaders(destination);
+    it('builds headers', async () => {
+      const headers = await buildAuthorizationHeaders(
+        principalPropagationDestination
+      );
       checkHeaders(headers);
+    });
 
-      delete destination!.proxyConfiguration!.headers![
-        'SAP-Connectivity-Authentication'
-      ];
+    it('does not throw on Principal Propagation', async () => {
       await expect(
-        buildAuthorizationHeaders(destination)
-      ).rejects.toThrowErrorMatchingSnapshot();
+        buildAuthorizationHeaders(
+          removeSapConnectivityAuthentication(principalPropagationDestination)
+        )
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Principal propagation was selected in destination, but no SAP-Connectivity-Authentication bearer header was added by connectivity service."'
+      );
     });
   });
 
@@ -194,9 +209,13 @@ describe('buildAuthorizationHeaders', () => {
         ]
       };
 
-      await expect(
-        buildAuthorizationHeaders(destination)
-      ).rejects.toThrowErrorMatchingSnapshot();
+      await expect(buildAuthorizationHeaders(destination)).rejects
+        .toThrowErrorMatchingInlineSnapshot(`
+              "The destination tried to provide authorization tokens but failed in all cases. This is most likely due to misconfiguration.
+              Original error messages:
+              error
+              error"
+            `);
     });
 
     it('uses the first authToken where the error property is falsy', async () => {
@@ -239,7 +258,9 @@ describe('buildAuthorizationHeaders', () => {
 
       await expect(
         buildAuthorizationHeaders(destination)
-      ).rejects.toThrowErrorMatchingSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"AuthenticationType is \\"BasicAuthentication\\", but \\"username\\" and / or \\"password\\" are missing!"'
+      );
     });
 
     it('Throws an error if no authTokens are present, password is null and authenticationType is wrongly set', async () => {
@@ -251,8 +272,22 @@ describe('buildAuthorizationHeaders', () => {
 
       await expect(
         buildAuthorizationHeaders(destination)
-      ).rejects.toThrowErrorMatchingSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"AuthenticationType is \\"BasicAuthentication\\", but \\"username\\" and / or \\"password\\" are missing!"'
+      );
     });
+  });
+});
+
+describe('getAuthHeaders', () => {
+  it('does not throw for custom principal propagation header', async () => {
+    const authHeader = { 'SAP-Connectivity-Authentication': 'token' };
+    await expect(
+      getAuthHeaders(
+        removeSapConnectivityAuthentication(principalPropagationDestination),
+        authHeader
+      )
+    ).resolves.toEqual(authHeader);
   });
 });
 
@@ -329,7 +364,9 @@ describe('[deprecated]', () => {
     ];
     await expect(
       buildAndAddAuthorizationHeader(destination)({})
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Principal propagation was selected in destination, but no SAP-Connectivity-Authentication bearer header was added by connectivity service."'
+    );
   });
 });
 

@@ -61,11 +61,21 @@ function hasAuthHeaders(destination: Destination): boolean {
   return authTypesWithAuthorizationHeader.includes(destination.authentication);
 }
 
+function getCustomAuthHeaders(
+  destination: Destination,
+  customHeaders?: Record<string, any>
+) {
+  if (destination.authentication === 'PrincipalPropagation') {
+    return pickIgnoreCase(customHeaders, 'SAP-Connectivity-Authentication');
+  }
+  return pickIgnoreCase(customHeaders, 'authorization');
+}
+
 export async function getAuthHeaders(
   destination: Destination,
   customHeaders?: Record<string, any>
 ): Promise<Record<string, string>> {
-  const customAuthHeaders = pickIgnoreCase(customHeaders, 'authorization');
+  const customAuthHeaders = getCustomAuthHeaders(destination, customHeaders);
 
   if (Object.keys(customAuthHeaders).length && hasAuthHeaders(destination)) {
     logger.warn(

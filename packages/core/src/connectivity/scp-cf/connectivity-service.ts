@@ -21,7 +21,7 @@ const logger = createLogger({
  *
  * @param destination - The destination to which the proxy configuration should be added.
  * @param jwt - The JWT of the current user.
- * @returns A promise resolving to the destiation with the added proxy configuration.
+ * @returns A promise resolving to the destination with the added proxy configuration.
  */
 export function addProxyConfiguration(
   destination: Destination,

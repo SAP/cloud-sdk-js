@@ -13,6 +13,7 @@ describe('OpenApiDocumentRefs', () => {
       { strictNaming: true }
     );
   });
+
   describe('resolveObject', () => {
     it('resolves reference', async () => {
       expect(
@@ -121,7 +122,7 @@ describe('OpenApiDocumentRefs', () => {
           { strictNaming: true }
         )
       ).rejects.toThrowError(
-        'Your OpenApi definition contains the invalid schema names.'
+        'The service specification contains invalid schema names.'
       );
     });
 

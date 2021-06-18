@@ -4,10 +4,9 @@ import { Orderable } from '../order';
 import { Link } from './link';
 
 /**
- * Represents a one to many relation for OData v4 entites.
- * For OData v2 entites the [[Link]] is used to represent one to many relation.
- *
- * See also [[Link]] for more informations.
+ * Represents a one to many relation for OData v4 entities.
+ * For OData v2 entities the [[Link]] is used to represent one to many relation.
+ * See [[Link]] for more information.
  */
 export class OneToManyLink<
   EntityT extends Entity,
@@ -29,9 +28,8 @@ export class OneToManyLink<
 
   /**
    * Create filter statements to be applied to the OData request based on the linked entity values.
-   *
-   * @param filters - Filters based on the linked entity
-   * @returns Newly created Filterlink
+   * @param filters - Filters based on the linked entity.
+   * @returns Newly created `FilterLink`.
    */
   filter(
     ...expressions: (
@@ -47,9 +45,8 @@ export class OneToManyLink<
 
   /**
    * Add order-by statements to the request.
-   *
-   * @param orderBy - OrderBy statements to order the response by
-   * @returns The request builder itself, to facilitate method chaining
+   ** @param orderBy - OrderBy statements to order the response by.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   orderBy(...orderBy: Orderable<LinkedEntityT>[]): this {
     const link = this.clone();
@@ -58,10 +55,9 @@ export class OneToManyLink<
   }
 
   /**
-   * Limit number of returned entities.
-   *
-   * @param top - Maximum number of entities to return in the response. Can be less, if less entities match the request
-   * @returns The request builder itself, to facilitate method chaining
+   * Number of returned entities.
+   * @param top - Maximum number of entities to return in the response. Can be less, if less entities match the request.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   top(top: number): this {
     const link = this.clone();
@@ -71,9 +67,8 @@ export class OneToManyLink<
 
   /**
    * Skip number of entities.
-   *
-   * @param skip - Number of matching entities to skip. Useful for paging
-   * @returns The request builder itself, to facilitate method chaining
+   * @param skip - Number of matching entities to skip. Useful for paging.
+   * @returns The request builder itself, to facilitate method chaining.
    */
   skip(skip: number): this {
     const link = this.clone();

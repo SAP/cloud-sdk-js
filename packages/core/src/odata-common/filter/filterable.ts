@@ -15,16 +15,20 @@ import {
  *
  * @typeparam EntityT - Type of the entity to be filtered on
  */
-export type Filterable<EntityT extends Entity> =
+export type Filterable<
+  EntityT extends Entity,
+  LinkedEntityT extends Entity = any
+> =
   | Filter<EntityT, FieldType | FieldType[]>
   | FilterLink<EntityT>
   | FilterList<EntityT>
   | FilterLambdaExpression<EntityT>
   | UnaryFilter<EntityT>
-  | BooleanFilterFunction<EntityT>;
+  | BooleanFilterFunction<EntityT>
+  | OneToManyLink<EntityT, LinkedEntityT>;
 
 /**
- * Create a [[FilterList]] by combining [[Filterable]]s with logical `and`.
+ * Combine [[Filterable]]s with logical `and` to create a [[FilterList]].
  *
  * Example:
  * ```ts
@@ -40,9 +44,9 @@ export type Filterable<EntityT extends Entity> =
  *  .filter(filterExp1, filterExp2);
  * ```
  *
- * @typeparam EntityT - Type of the entity to be filtered on
- * @param expressions - Filterables to be combined with logical `and`
- * @returns The newly created FilterList
+ * @typeparam EntityT - Type of the entity filter on.
+ * @param expressions - Filterables to be combined with logical `and`.
+ * @returns The newly created FilterList.
  */
 export function and<EntityT extends Entity>(
   expressions: Filterable<EntityT>[]
@@ -58,7 +62,7 @@ export function and<EntityT extends Entity>(
 }
 
 /**
- * Create a [[FilterList]] by combining [[Filterable]]s with logical `or`.
+ * Combine [[Filterable]]s with logical `or` to create a [[FilterList]].
  *
  * Example:
  * ```ts
@@ -67,7 +71,7 @@ export function and<EntityT extends Entity>(
  *  .filter(or(filterExp1, filterExp2));
  * ```
  *
- * @typeparam EntityT - Type of the entity to be filtered on
+ * @typeparam EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `or`
  * @returns The newly created FilterList
  */
@@ -90,12 +94,15 @@ export function or<EntityT extends Entity>(
 export function toFilterableList<
   EntityT extends Entity,
   LinkedEntityT extends Entity
->(
-  filters: (Filterable<EntityT> | OneToManyLink<EntityT, LinkedEntityT>)[]
-): Filterable<EntityT>[] {
+>(filters: Filterable<EntityT, LinkedEntityT>[]): Filterable<EntityT>[] {
   return filters.map(f => (f instanceof OneToManyLink ? f._filters : f));
 }
 
+/**
+ * Negate a filter.
+ * @param filter The filter to negate.
+ * @returns The negated filter.
+ */
 export function not<EntityT extends Entity>(
   filter: Filterable<EntityT>
 ): UnaryFilter<EntityT> {

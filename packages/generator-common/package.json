@@ -19,7 +19,8 @@
     "dist/**/*.js",
     "dist/**/*.js.map",
     "dist/**/*.d.ts",
-    "dist/**/*.d.ts.map"
+    "dist/**/*.d.ts.map",
+    "internal.js"
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {

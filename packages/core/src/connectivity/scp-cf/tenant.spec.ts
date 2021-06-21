@@ -1,10 +1,10 @@
 import assert = require('assert');
-import { DecodedJWT } from './jwt';
+import { JwtPayload } from 'jsonwebtoken';
 import { mappingTenantFields, tenantFromJwt } from './tenant';
 
 describe('tenant builder from jwt', () => {
   it('should contain the fields from decodedJwt', () => {
-    const decodedJwt: DecodedJWT = {
+    const decodedJwt: JwtPayload = {
       zid: 'tenantUUID',
       ext_attr: {
         zdn: 'tenantName'
@@ -16,7 +16,7 @@ describe('tenant builder from jwt', () => {
   });
 
   it('should handle missing ext_attr with undefined value', () => {
-    const decodedJwtMissingName: DecodedJWT = {
+    const decodedJwtMissingName: JwtPayload = {
       zid: 'tenantUUID'
     };
     expect(tenantFromJwt(decodedJwtMissingName).id).toBe(

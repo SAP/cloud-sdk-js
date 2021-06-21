@@ -32,5 +32,8 @@
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.45.0",
     "@sap-cloud-sdk/util": "^1.45.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^8.3.8"
   }
 }

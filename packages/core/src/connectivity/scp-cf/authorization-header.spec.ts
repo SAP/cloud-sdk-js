@@ -12,7 +12,6 @@ import { Destination } from './destination';
 import {
   addAuthorizationHeader,
   buildAndAddAuthorizationHeader,
-  buildAuthorizationHeaders,
   getAuthHeaders
 } from './authorization-header';
 
@@ -37,10 +36,10 @@ function removeSapConnectivityAuthentication(destination) {
   return destinationWithoutAuth;
 }
 
-describe('buildAuthorizationHeaders', () => {
+describe('getAuthHeaders', () => {
   describe('basic authentication', () => {
     it('creates basic authentication headers from destination credentials.', async () => {
-      const headers = await buildAuthorizationHeaders(defaultDestination);
+      const headers = await getAuthHeaders(defaultDestination);
       expect(headers.authorization).toBe(defaultBasicCredentials);
     });
   });
@@ -48,7 +47,7 @@ describe('buildAuthorizationHeaders', () => {
   describe('no authentication', () => {
     it('does not throw on NoAuthentication', async () => {
       await expect(
-        buildAuthorizationHeaders({
+        getAuthHeaders({
           url: 'https://example.com',
           authentication: 'NoAuthentication'
         })
@@ -57,12 +56,12 @@ describe('buildAuthorizationHeaders', () => {
 
     it('defaults to NoAuthentication', async () => {
       await expect(
-        buildAuthorizationHeaders({ url: 'https://example.com' })
+        getAuthHeaders({ url: 'https://example.com' })
       ).resolves.not.toThrow();
     });
 
     it('creates no authentication headers when only url is defined in a destination.', async () => {
-      const headers = await buildAuthorizationHeaders({
+      const headers = await getAuthHeaders({
         url: defaultDestination.url
       });
       expect(headers.authorization).toBeUndefined();
@@ -72,7 +71,7 @@ describe('buildAuthorizationHeaders', () => {
   describe('client credentials', () => {
     it('does not throw on ClientCertificateAuthentication', async () => {
       await expect(
-        buildAuthorizationHeaders({
+        getAuthHeaders({
           url: 'https://example.com',
           authentication: 'ClientCertificateAuthentication'
         })
@@ -82,20 +81,28 @@ describe('buildAuthorizationHeaders', () => {
 
   describe('principal propagation', () => {
     it('builds headers', async () => {
-      const headers = await buildAuthorizationHeaders(
-        principalPropagationDestination
-      );
+      const headers = await getAuthHeaders(principalPropagationDestination);
       checkHeaders(headers);
     });
 
-    it('does not throw on Principal Propagation', async () => {
+    it('throws when no `SAP-Connectivity-Authentication` header is given', async () => {
       await expect(
-        buildAuthorizationHeaders(
+        getAuthHeaders(
           removeSapConnectivityAuthentication(principalPropagationDestination)
         )
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Principal propagation was selected in destination, but no SAP-Connectivity-Authentication bearer header was added by connectivity service."'
       );
+    });
+
+    it('does not throw for custom `SAP-Connectivity-Authentication` header', async () => {
+      const authHeader = { 'SAP-Connectivity-Authentication': 'token' };
+      await expect(
+        getAuthHeaders(
+          removeSapConnectivityAuthentication(principalPropagationDestination),
+          authHeader
+        )
+      ).resolves.toEqual(authHeader);
     });
   });
 
@@ -118,7 +125,7 @@ describe('buildAuthorizationHeaders', () => {
         ]
       };
 
-      const actual = await buildAuthorizationHeaders(destination);
+      const actual = await getAuthHeaders(destination);
 
       expect(actual).toEqual({
         authorization: destination.authTokens![0].http_header.value
@@ -145,7 +152,7 @@ describe('buildAuthorizationHeaders', () => {
         ]
       };
 
-      const actual = await buildAuthorizationHeaders(destination);
+      const actual = await getAuthHeaders(destination);
 
       expect(actual).toEqual({
         authorization: 'Bearer some.token'
@@ -172,7 +179,7 @@ describe('buildAuthorizationHeaders', () => {
         ]
       };
 
-      const actual = await buildAuthorizationHeaders(destination);
+      const actual = await getAuthHeaders(destination);
 
       expect(actual).toEqual({
         authorization: 'Bearer some.token'
@@ -209,7 +216,7 @@ describe('buildAuthorizationHeaders', () => {
         ]
       };
 
-      await expect(buildAuthorizationHeaders(destination)).rejects
+      await expect(getAuthHeaders(destination)).rejects
         .toThrowErrorMatchingInlineSnapshot(`
               "The destination tried to provide authorization tokens but failed in all cases. This is most likely due to misconfiguration.
               Original error messages:
@@ -245,7 +252,7 @@ describe('buildAuthorizationHeaders', () => {
           }
         ]
       };
-      const headers = await buildAuthorizationHeaders(destination);
+      const headers = await getAuthHeaders(destination);
       expect(headers.authorization).toBe('Bearer some.other.token');
     });
 
@@ -257,7 +264,7 @@ describe('buildAuthorizationHeaders', () => {
       };
 
       await expect(
-        buildAuthorizationHeaders(destination)
+        getAuthHeaders(destination)
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"AuthenticationType is \\"BasicAuthentication\\", but \\"username\\" and / or \\"password\\" are missing!"'
       );
@@ -271,23 +278,11 @@ describe('buildAuthorizationHeaders', () => {
       };
 
       await expect(
-        buildAuthorizationHeaders(destination)
+        getAuthHeaders(destination)
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"AuthenticationType is \\"BasicAuthentication\\", but \\"username\\" and / or \\"password\\" are missing!"'
       );
     });
-  });
-});
-
-describe('getAuthHeaders', () => {
-  it('does not throw for custom principal propagation header', async () => {
-    const authHeader = { 'SAP-Connectivity-Authentication': 'token' };
-    await expect(
-      getAuthHeaders(
-        removeSapConnectivityAuthentication(principalPropagationDestination),
-        authHeader
-      )
-    ).resolves.toEqual(authHeader);
   });
 });
 

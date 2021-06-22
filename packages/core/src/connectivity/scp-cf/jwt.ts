@@ -2,7 +2,7 @@ import { IncomingMessage } from 'http';
 import * as url from 'url';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosRequestConfig } from 'axios';
-import jwt from 'jsonwebtoken';
+import { decode, Jwt, JwtPayload, verify } from 'jsonwebtoken';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
@@ -21,27 +21,23 @@ const logger = createLogger({
  * @param token - JWT to be decoded
  * @returns Decoded payload.
  */
-export function decodeJwt(token: string): DecodedJWT {
+export function decodeJwt(token: string): JwtPayload {
   return decodeJwtComplete(token).payload;
 }
 
 /**
  * Decode JWT and return the complete decoded token.
- * @param token - JWT to be decoded
+ * @param token - JWT to be decoded.
  * @returns Decoded token containing payload, header and signature.
  */
-export function decodeJwtComplete(token: string): CompleteDecodedJWT {
-  const decodedToken = jwt.decode(token, { complete: true });
+export function decodeJwtComplete(token: string): Jwt {
+  const decodedToken = decode(token, { complete: true });
   if (decodedToken === null || typeof decodedToken === 'string') {
     throw new Error(
       'JwtError: The given jwt payload does not encode valid JSON.'
     );
   }
-  return {
-    header: decodedToken.header,
-    payload: decodedToken.payload,
-    signature: decodedToken.signature
-  };
+  return decodedToken;
 }
 
 /**
@@ -103,14 +99,13 @@ function checkDomainVerificationKeyURL(
   const jkuDomain = url.parse(verificationKeyURL).hostname;
   if (!uaaDomain || !jkuDomain || !jkuDomain.endsWith(uaaDomain)) {
     throw new Error(
-      `The domains of the XSUAA and verification URL do not match - XSUUA domain is ${uaaDomain} and the URL provided in JWT (field jku) to receive validation certificate is ${jkuDomain}.`
+      `The domains of the XSUAA and verification URL do not match. The XSUUA domain is '${uaaDomain}' and the jku field provided in the JWT is '${jkuDomain}'.`
     );
   }
 }
 
 /**
  * Verifies the given JWT and returns the decoded payload.
- *
  * @param token - JWT to be verified
  * @param options - Options to control certain aspects of JWT verification behavior.
  * @returns A Promise to the decoded and verified JWT.
@@ -118,7 +113,7 @@ function checkDomainVerificationKeyURL(
 export async function verifyJwt(
   token: string,
   options?: VerifyJwtOptions
-): Promise<DecodedJWT> {
+): Promise<JwtPayload> {
   options = { ...defaultVerifyJwtOptions, ...options };
 
   const creds = getXsuaaServiceCredentials(token);
@@ -160,7 +155,7 @@ function fetchAndCacheKeyAndVerify(
   return getVerificationKey(creds, verificationKeyURL)
     .catch(error => {
       throw new ErrorWithCause(
-        'Failed to verify JWT - unable to get verification key!',
+        'Failed to verify JWT. Could not retrieve verification key.',
         error
       );
     })
@@ -188,7 +183,7 @@ function getVerificationKey(
   return fetchVerificationKeys(xsuaaCredentials, jku).then(verificationKeys => {
     if (!verificationKeys.length) {
       throw Error(
-        'No verification keys have been returned by the XSUAA service!'
+        'No verification keys have been returned by the XSUAA service.'
       );
     }
     return verificationKeys[0];
@@ -212,20 +207,22 @@ function cacheVerificationKey(
 /**
  * Verifies the given JWT with the given key and returns the decoded payload.
  *
- * @param token - JWT to be verified
- * @param key - Key to use for verification
+ * @param token - JWT to be verified.
+ * @param key - Key to use for verification.
  * @returns A Promise to the decoded and verified JWT.
  */
 export function verifyJwtWithKey(
   token: string,
   key: string
-): Promise<DecodedJWT> {
+): Promise<JwtPayload> {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, sanitizeVerificationKey(key), (err, decodedToken) => {
+    verify(token, sanitizeVerificationKey(key), (err, decodedToken) => {
       if (err) {
-        reject(new ErrorWithCause('JWT invalid', err));
+        reject(new ErrorWithCause('Invalid JWT.', err));
+      } else if (!decodedToken) {
+        reject('Invalid JWT. Token verification yielded `undefined`.');
       } else {
-        resolve(decodedToken as DecodedJWT);
+        resolve(decodedToken);
       }
     });
   });
@@ -244,7 +241,7 @@ function sanitizeVerificationKey(key: string) {
  * @param decodedToken - Token to read the issuer url from.
  * @returns The issuer url if available.
  */
-export function issuerUrl(decodedToken: DecodedJWT): string | undefined {
+export function issuerUrl(decodedToken: JwtPayload): string | undefined {
   return readPropertyWithWarn(decodedToken, 'iss');
 }
 
@@ -259,14 +256,14 @@ export function issuerUrl(decodedToken: DecodedJWT): string | undefined {
 // Scopes with dots will lead to an incorrect audience which is worked around here.
 // If a JWT contains no audience, infer audiences based on the scope names in the JWT.
 // This is currently necessary as the UAA does not correctly fill the audience in the user token flow.
-export function audiences(decodedToken: DecodedJWT): Set<string> {
+export function audiences(decodedToken: JwtPayload): Set<string> {
   if (audiencesFromAud(decodedToken).length) {
     return new Set(audiencesFromAud(decodedToken));
   }
   return new Set(audiencesFromScope(decodedToken));
 }
 
-function audiencesFromAud(decodedToken: DecodedJWT): string[] {
+function audiencesFromAud(decodedToken: JwtPayload): string[] {
   if (!(decodedToken.aud instanceof Array && decodedToken.aud.length)) {
     return [];
   }
@@ -275,7 +272,7 @@ function audiencesFromAud(decodedToken: DecodedJWT): string[] {
   );
 }
 
-function audiencesFromScope(decodedToken: DecodedJWT): string[] {
+function audiencesFromScope(decodedToken: JwtPayload): string[] {
   if (!decodedToken.scope) {
     return [];
   }
@@ -302,22 +299,22 @@ export function wrapJwtInHeader(token: string): AxiosRequestConfig {
 }
 
 export function readPropertyWithWarn(
-  decodedJwt: DecodedJWT,
+  jwtPayload: JwtPayload,
   property: string
 ): any {
-  if (!decodedJwt[property]) {
+  if (!jwtPayload[property]) {
     logger.warn(
-      `WarningJWT: The provided JWT does not include "${property}" property.`
+      `WarningJWT: The provided JWT payload does not include a '${property}' property.`
     );
   }
 
-  return decodedJwt[property];
+  return jwtPayload[property];
 }
 
 /**
  * Fetches the URL from the JWT header which exposes the verification key for that JWT.
- * @param token - Undecoded JWT as a string
- * @returns The value of jku property of the JWT header
+ * @param token - Encoded JWT as a string.
+ * @returns The value of the `jku` property of the JWT header.
  */
 function getVerificationKeyURL(token: string): string {
   const decodedJwt = decodeJwtComplete(token);
@@ -330,6 +327,7 @@ function getVerificationKeyURL(token: string): string {
 }
 
 /**
+ * @deprecated Since v1.46.0. This interface will not be replaced. Use the higher level JWT types directly.
  * Interface to represent the registered claims of a JWT.
  */
 export type RegisteredJWTClaims = RegisteredJWTClaimsBasic &
@@ -337,6 +335,7 @@ export type RegisteredJWTClaims = RegisteredJWTClaimsBasic &
   RegisteredJWTClaimsTenant;
 
 /**
+ * @deprecated Since v1.46.0. This interface will not be replaced. Use the higher level JWT types directly.
  * Interface to represent the basic properties like issuer, audience etc.
  */
 export interface RegisteredJWTClaimsBasic {
@@ -350,7 +349,8 @@ export interface RegisteredJWTClaimsBasic {
 }
 
 /**
- * Interface to represent the basic properties of a jwt header
+ * @deprecated Since v1.46.0. Use `JwtHeader` instead.
+ * Interface to represent the basic properties of a JWT header.
  */
 export interface JWTHeader {
   alg: string;
@@ -359,7 +359,7 @@ export interface JWTHeader {
 }
 
 /**
- * @Deprecated Since v1.20.0. Use [[JWTPayload]] if you want to represent the decoded JWT payload or [[CompleteDecodedJWT]] for the full decoded object.
+ * @deprecated Since v1.20.0. Use [[JWTPayload]] if you want to represent the decoded JWT payload or [[CompleteDecodedJWT]] for the full decoded object.
  * Interface to represent the payload of a JWT.
  */
 export interface DecodedJWT extends RegisteredJWTClaims {
@@ -367,6 +367,7 @@ export interface DecodedJWT extends RegisteredJWTClaims {
 }
 
 /**
+ * @deprecated Since v1.46.0. Use `JwtPayload` instead.
  * Interface to represent the payload of a JWT.
  */
 export interface JWTPayload extends RegisteredJWTClaims {
@@ -374,6 +375,7 @@ export interface JWTPayload extends RegisteredJWTClaims {
 }
 
 /**
+ * @deprecated Since v1.46.0. Use `Jwt` instead.
  * Interface to represent header and  payload of a JWT.
  */
 export interface CompleteDecodedJWT extends RegisteredJWTClaims {
@@ -382,29 +384,29 @@ export interface CompleteDecodedJWT extends RegisteredJWTClaims {
   signature: string;
 }
 
-export type JwtKeyMapping<TypescriptKeys, JwtKeys> = {
-  [key in keyof TypescriptKeys]: {
-    keyInJwt: keyof JwtKeys;
-    extractorFunction: (decodedJWT: DecodedJWT) => any;
+export type JwtKeyMapping<InterfaceT, JwtKeysT> = {
+  [key in keyof InterfaceT]: {
+    // This second part of the conditional type is deprecated and should be removed in version 2.0.
+    keyInJwt: JwtKeysT extends string ? JwtKeysT : keyof JwtKeysT;
+    extractorFunction: (jwtPayload: JwtPayload) => any;
   };
 };
 
 /**
- * Checks if a given key is in the decoded JWT. If not an error is raised
+ * Checks if a given key is present in the decoded JWT. If not, an error is thrown.
  * @param key - The key of the representation in typescript
  * @param mapping - The mapping between the typescript keys and the JWT key
- * @param decodedJWT - Decoded token on which the check is done
- * @exception Error is thrown if the key is not present.
+ * @param jwtPayload - JWT payload to check fo the given key.
  */
-export function checkMandatoryValue<TypeScriptKeys, JwtKeys>(
-  key: keyof TypeScriptKeys,
-  mapping: JwtKeyMapping<TypeScriptKeys, JwtKeys>,
-  decodedJWT: DecodedJWT
+export function checkMandatoryValue<InterfaceT, JwtKeysT>(
+  key: keyof InterfaceT,
+  mapping: JwtKeyMapping<InterfaceT, JwtKeysT>,
+  jwtPayload: JwtPayload
 ): void {
-  const value = mapping[key].extractorFunction(decodedJWT);
+  const value = mapping[key].extractorFunction(jwtPayload);
   if (!value) {
     throw new Error(
-      `Field ${mapping[key].keyInJwt} not provided in decoded jwt: ${decodedJWT}`
+      `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
     );
   }
 }

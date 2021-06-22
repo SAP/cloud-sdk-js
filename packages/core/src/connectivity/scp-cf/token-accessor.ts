@@ -1,5 +1,6 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
-import { DecodedJWT, decodeJwt } from './jwt';
+import { JwtPayload } from 'jsonwebtoken';
+import { decodeJwt } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import {
@@ -37,7 +38,7 @@ export async function serviceToken(
   service: string | Service,
   options?: CachingOptions &
     ResilienceOptions & {
-      userJwt?: string | DecodedJWT;
+      userJwt?: string | JwtPayload;
     }
 ): Promise<string> {
   const resolvedService = resolveService(service);
@@ -156,7 +157,7 @@ export async function jwtBearerToken(
     });
 }
 
-function multiTenantXsuaaCredentials(userJwt?: string | DecodedJWT) {
+function multiTenantXsuaaCredentials(userJwt?: string | JwtPayload) {
   const xsuaa = getXsuaaServiceCredentials(userJwt);
 
   if (userJwt) {

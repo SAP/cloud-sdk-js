@@ -44,7 +44,9 @@ describe('Failure cases', () => {
         userJwt: subscriberServiceTokenWithVerificationURL,
         cacheVerificationKeys: false
       })
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Failed to verify JWT. Could not retrieve verification key."'
+    );
   }, 50000);
 
   it('throws an error when the provide userJwt is invalid', async () => {
@@ -56,7 +58,9 @@ describe('Failure cases', () => {
         userJwt: 'fails',
         cacheVerificationKeys: false
       })
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"JwtError: The given jwt payload does not encode valid JSON."'
+    );
   });
 
   it('throws an error if the subaccount/instance destinations call fails', async () => {
@@ -178,7 +182,9 @@ describe('Failure cases', () => {
 
     await expect(
       getDestination(destinationName, { cacheVerificationKeys: false })
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"No user token (JWT) has been provided. This is strictly necessary for principal propagation."'
+    );
     expect(instanceDestinationCallMock.isDone()).toBe(true);
     expect(subaccountDestinationCallMock.isDone()).toBe(true);
   });

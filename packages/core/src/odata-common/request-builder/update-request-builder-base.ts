@@ -15,7 +15,8 @@ import { MethodRequestBuilder } from './request-builder-base';
  */
 export abstract class UpdateRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilder<ODataUpdateRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   private ignored: Set<string>;
   private required: Set<string>;
 

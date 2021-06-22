@@ -7,9 +7,9 @@ import {
 import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataDeleteRequestConfig } from '../request';
 import { HttpResponse } from '../../http-client';
-import { MethodRequestBuilder } from './request-builder-base';
 import type { ODataUri } from '../uri-conversion';
 import type { FieldType } from '../selectable';
+import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
  *
@@ -17,7 +17,8 @@ import type { FieldType } from '../selectable';
  */
 export abstract class DeleteRequestBuilder<EntityT extends Entity>
   extends MethodRequestBuilder<ODataDeleteRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
 

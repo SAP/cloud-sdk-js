@@ -18,7 +18,8 @@ import {
  */
 export class TestEntityWithSharedEntityType2
   extends EntityV2
-  implements TestEntityWithSharedEntityType2Type {
+  implements TestEntityWithSharedEntityType2Type
+{
   /**
    * Technical entity name for TestEntityWithSharedEntityType2.
    */
@@ -84,24 +85,22 @@ export namespace TestEntityWithSharedEntityType2 {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityWithSharedEntityType2> = new StringField(
-    'KeyProperty',
-    TestEntityWithSharedEntityType2,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY: StringField<TestEntityWithSharedEntityType2> =
+    new StringField(
+      'KeyProperty',
+      TestEntityWithSharedEntityType2,
+      'Edm.String'
+    );
   /**
    * All fields of the TestEntityWithSharedEntityType2 entity.
    */
-  export const _allFields: Array<
-    StringField<TestEntityWithSharedEntityType2>
-  > = [TestEntityWithSharedEntityType2.KEY_PROPERTY];
+  export const _allFields: Array<StringField<TestEntityWithSharedEntityType2>> =
+    [TestEntityWithSharedEntityType2.KEY_PROPERTY];
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityWithSharedEntityType2> = new AllFields(
-    '*',
-    TestEntityWithSharedEntityType2
-  );
+  export const ALL_FIELDS: AllFields<TestEntityWithSharedEntityType2> =
+    new AllFields('*', TestEntityWithSharedEntityType2);
   /**
    * All key fields of the TestEntityWithSharedEntityType2 entity.
    */

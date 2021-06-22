@@ -76,9 +76,8 @@ class ServiceGenerator {
       npmCompliantName(directoryName),
       serviceMetadata.edmx.fileName
     );
-    const speakingModuleName = ServiceNameFormatter.directoryToSpeakingModuleName(
-      directoryName
-    );
+    const speakingModuleName =
+      ServiceNameFormatter.directoryToSpeakingModuleName(directoryName);
     const className = `${speakingModuleName.replace(/ /g, '')}`;
 
     return {

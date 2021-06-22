@@ -105,5 +105,6 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (
   };
   return TestEntityEndsWithSomethingElseRequestBuilder;
 })(core_1.RequestBuilder);
-exports.TestEntityEndsWithSomethingElseRequestBuilder = TestEntityEndsWithSomethingElseRequestBuilder;
+exports.TestEntityEndsWithSomethingElseRequestBuilder =
+  TestEntityEndsWithSomethingElseRequestBuilder;
 //# sourceMappingURL=TestEntityEndsWithSomethingElseRequestBuilder.js.map

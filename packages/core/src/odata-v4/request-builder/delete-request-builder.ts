@@ -13,7 +13,8 @@ import { oDataUri } from '../uri-conversion';
  */
 export class DeleteRequestBuilder<EntityT extends Entity>
   extends DeleteRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
 

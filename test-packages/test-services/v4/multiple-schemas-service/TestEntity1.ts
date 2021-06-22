@@ -121,10 +121,8 @@ export namespace TestEntity1 {
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY: TestComplexType1Field<TestEntity1> = new TestComplexType1Field(
-    'ComplexTypeProperty',
-    TestEntity1
-  );
+  export const COMPLEX_TYPE_PROPERTY: TestComplexType1Field<TestEntity1> =
+    new TestComplexType1Field('ComplexTypeProperty', TestEntity1);
   /**
    * All fields of the TestEntity1 entity.
    */
@@ -155,16 +153,15 @@ export namespace TestEntity1 {
   /**
    * Mapping of all key field names to the respective static field property TestEntity1.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntity1>;
-  } = TestEntity1._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntity1> },
-      field: Field<TestEntity1>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntity1> } =
+    TestEntity1._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntity1> },
+        field: Field<TestEntity1>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

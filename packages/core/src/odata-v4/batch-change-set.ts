@@ -17,7 +17,8 @@ export class ODataBatchChangeSet<
     | CreateRequestBuilder<Entity>
     | UpdateRequestBuilder<Entity>
     | DeleteRequestBuilder<Entity>
-> implements BatchChangeSet<RequestT> {
+> implements BatchChangeSet<RequestT>
+{
   /**
    * @deprecated Since v1.30.0. Use [[boundary]] instead.
    */

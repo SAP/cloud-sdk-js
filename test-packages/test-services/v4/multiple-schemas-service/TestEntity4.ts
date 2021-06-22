@@ -116,16 +116,15 @@ export namespace TestEntity4 {
   /**
    * Mapping of all key field names to the respective static field property TestEntity4.
    */
-  export const _keys: {
-    [keys: string]: Field<TestEntity4>;
-  } = TestEntity4._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntity4> },
-      field: Field<TestEntity4>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<TestEntity4> } =
+    TestEntity4._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntity4> },
+        field: Field<TestEntity4>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

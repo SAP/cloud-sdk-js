@@ -12,7 +12,8 @@ import {
  */
 export declare class TestEntityEndsWithSomethingElse
   extends EntityV2
-  implements TestEntityEndsWithSomethingElseType {
+  implements TestEntityEndsWithSomethingElseType
+{
   /**
    * Technical entity name for TestEntityEndsWithSomethingElse.
    */

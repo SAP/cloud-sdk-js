@@ -117,10 +117,8 @@ export namespace Airports {
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LOCATION: AirportLocationField<Airports> = new AirportLocationField(
-    'Location',
-    Airports
-  );
+  export const LOCATION: AirportLocationField<Airports> =
+    new AirportLocationField('Location', Airports);
   /**
    * All fields of the Airports entity.
    */
@@ -143,13 +141,12 @@ export namespace Airports {
   /**
    * Mapping of all key field names to the respective static field property Airports.
    */
-  export const _keys: {
-    [keys: string]: Field<Airports>;
-  } = Airports._keyFields.reduce(
-    (acc: { [keys: string]: Field<Airports> }, field: Field<Airports>) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<Airports> } =
+    Airports._keyFields.reduce(
+      (acc: { [keys: string]: Field<Airports> }, field: Field<Airports>) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

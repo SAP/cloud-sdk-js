@@ -18,7 +18,8 @@ import {
  */
 export class MultiSchemaTestEntity
   extends EntityV2
-  implements MultiSchemaTestEntityType {
+  implements MultiSchemaTestEntityType
+{
   /**
    * Technical entity name for MultiSchemaTestEntity.
    */
@@ -78,11 +79,8 @@ export namespace MultiSchemaTestEntity {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<MultiSchemaTestEntity> = new StringField(
-    'KeyProperty',
-    MultiSchemaTestEntity,
-    'Edm.String'
-  );
+  export const KEY_PROPERTY: StringField<MultiSchemaTestEntity> =
+    new StringField('KeyProperty', MultiSchemaTestEntity, 'Edm.String');
   /**
    * All fields of the MultiSchemaTestEntity entity.
    */
@@ -105,16 +103,15 @@ export namespace MultiSchemaTestEntity {
   /**
    * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
    */
-  export const _keys: {
-    [keys: string]: Field<MultiSchemaTestEntity>;
-  } = MultiSchemaTestEntity._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<MultiSchemaTestEntity> },
-      field: Field<MultiSchemaTestEntity>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<MultiSchemaTestEntity> } =
+    MultiSchemaTestEntity._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<MultiSchemaTestEntity> },
+        field: Field<MultiSchemaTestEntity>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

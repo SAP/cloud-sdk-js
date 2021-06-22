@@ -27,7 +27,8 @@ class StringFieldBase<EntityT extends Entity> extends EdmTypeField<
  */
 export class StringField<EntityT extends Entity>
   extends StringFieldBase<EntityT>
-  implements SelectableEdmTypeField {
+  implements SelectableEdmTypeField
+{
   readonly selectable: true;
 }
 

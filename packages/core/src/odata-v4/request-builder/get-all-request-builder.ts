@@ -9,14 +9,14 @@ import {
   ODataGetAllRequestConfig,
   Expandable,
   GetAllRequestBuilder as GetAllRequestBuilderBase,
-  toFilterableList,
-  OneToManyLink
+  toFilterableList
 } from '../../odata-common';
 import { oDataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 export class GetAllRequestBuilder<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT> {
+  implements EntityIdentifiable<EntityT>
+{
   readonly _entity: EntityT;
 
   /**
@@ -50,9 +50,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
    * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
-  filter(
-    ...expressions: (Filterable<EntityT> | OneToManyLink<EntityT, any>)[]
-  ): this {
+  filter(...expressions: Filterable<EntityT>[]): this {
     this.requestConfig.filter = and(toFilterableList(expressions));
     return this;
   }

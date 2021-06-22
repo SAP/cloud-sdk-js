@@ -24,7 +24,8 @@ class AnyFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, any> {}
  */
 export class AnyField<EntityT extends Entity>
   extends AnyFieldBase<EntityT>
-  implements SelectableEdmTypeField {
+  implements SelectableEdmTypeField
+{
   readonly selectable: true;
 }
 

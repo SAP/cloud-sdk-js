@@ -14,21 +14,34 @@
 
 ## Compatibility Notes
 
--
+- [eslint-config] Remove `brace-style` rule for compatibility with Prettier 2.3.
+- [openapi-generator] Change the basis for directory, package, and service names, when generating clients. If not specified otherwise, the default is based on the directory name instead of the service name.
 
 ## New Functionality
 
--
+- [openapi-generator] Add the `-c/--config` command line option to specify options through a configuration file instead of on the command line.
 
 ## Improvements
 
--
+- [openapi-generator] Improve the error message for invalid or unsupported path patterns.
 
 ## Fixed Issues
 
-- [core] Re-enable the circuit breakers for the destination and xsuaa services.
-- [odata] Fix encoding of filter strings.
+- [core] Fix type error to allow filtering on one-to-many navigation properties in lambda expressions.
+- [openapi-generator] Base uniqueness check for directory names on directory names in `optionsPerService` instead of the human readable service name.
 
+
+# 1.45.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.45.0<br>
+Blog: TBD<br>
+
+## Fixed Issues
+
+- [core] Re-enable the circuit breakers for the destination and XSUAA services.
+- [odata] Fix encoding of filter strings.
+- [core] Add or overwrite the content length header for CSRF fetch requests. As those are always `HEAD` requests, the content length is always set to 0.
 
 # 1.44.0
 

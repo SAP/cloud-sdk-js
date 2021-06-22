@@ -40,9 +40,7 @@ describe('complex-type-field', () => {
     });
 
     it('should throw error when first parameter is not string nor edm type and second parameter is edm type', () => {
-      expect(() =>
-        getEdmType((1 as unknown) as string, 'Edm.String')
-      ).toThrow();
+      expect(() => getEdmType(1 as unknown as string, 'Edm.String')).toThrow();
     });
   });
 });

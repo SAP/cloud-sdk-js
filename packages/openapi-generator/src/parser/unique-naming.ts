@@ -23,17 +23,16 @@ export function ensureUniqueNames(
     separator?: string;
   }
 ): string[] {
-  const { format = camelCase, reservedWords = [], separator = '' } =
-    namingOptions || {};
+  const {
+    format = camelCase,
+    reservedWords = [],
+    separator = ''
+  } = namingOptions || {};
 
   if (options.strictNaming) {
     const formattedNames = names.map(originalName => format(originalName));
-    if (validateUniqueness(formattedNames, reservedWords)) {
-      return formattedNames;
-    }
-    throw new Error(
-      getDuplicateErrorMessage(names, formattedNames, reservedWords)
-    );
+    validateUniqueness(names, formattedNames, reservedWords);
+    return formattedNames;
   }
   return deduplicateNames(names, { format, reservedWords, separator });
 }
@@ -41,18 +40,23 @@ export function ensureUniqueNames(
 /**
  * Validate uniqueness of names.
  * Takes a list of names and throws an error if there are duplicates after formatting.
+ * @param names List of names to ensure uniqueness for.
  * @param formattedNames Original transformed names.
  * @param reservedWords Reserved words that should be handled as duplicates.
- * @returns True if the names are not conflicting after transformation, otherwise false.
  */
 export function validateUniqueness(
+  names: string[],
   formattedNames: string[],
   reservedWords: string[] = []
-): boolean {
-  return (
-    !hasDuplicates(formattedNames) &&
-    !hasReservedWords(formattedNames, reservedWords)
-  );
+): void {
+  if (
+    hasDuplicates(formattedNames) ||
+    hasReservedWords(formattedNames, reservedWords)
+  ) {
+    throw new Error(
+      getDuplicateErrorMessage(names, formattedNames, reservedWords)
+    );
+  }
 }
 
 /**
@@ -73,8 +77,11 @@ export function deduplicateNames(
     separator?: string;
   }
 ): string[] {
-  const { format = camelCase, reservedWords = [], separator = '' } =
-    namingOptions || {};
+  const {
+    format = camelCase,
+    reservedWords = [],
+    separator = ''
+  } = namingOptions || {};
   const nonConflictingNames = getNonConflictingNames(
     names,
     format,

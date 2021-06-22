@@ -29,6 +29,11 @@ USAGE
   $ generate-openapi-client --input <input> --outputDir <outputDirectory>
 
 OPTIONS
+  -c, --config=<path/to/config.json>
+      Set the path to a file containing the options for generation instead of setting the options on the command line. 
+      When combining the `config` option with other options on the command line, the command line options take precedence. 
+      If a directory is passed, a `config.json` file is read from this directory.
+
   -i, --input=<path/to/input>
       (required) Specify the path to the directory or file containing the OpenAPI service definition(s) to generate 
       clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not 
@@ -85,7 +90,7 @@ EXAMPLES
   $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile
 ```
 
-_See code: [dist/cli/index.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.44.0/dist/cli/index.ts)_
+_See code: [dist/cli/index.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.45.0/dist/cli/index.ts)_
 <!-- commandsstop -->
 <!-- prettier-ignore-end -->
 

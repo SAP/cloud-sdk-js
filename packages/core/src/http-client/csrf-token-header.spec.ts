@@ -8,7 +8,7 @@ import {
   createCreateRequest
 } from '../../test/test-util';
 import { Destination } from '../connectivity/scp-cf';
-import { buildCsrfHeaders } from './csrf-token-header';
+import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 
 const standardHeaders = {
   accept: 'application/json',
@@ -134,5 +134,30 @@ describe('buildCsrfHeaders', () => {
       url: request.relativeServiceUrl()
     });
     expect(headers).toEqual(expected);
+  });
+});
+
+describe('buildCsrfFetchHeaders', () => {
+  it('builds default csrf header when no headers are passed', () => {
+    expect(buildCsrfFetchHeaders({})).toEqual({
+      'x-csrf-token': 'Fetch',
+      'content-length': 0
+    });
+  });
+
+  it('builds custom csrf header when x-csrf-token is passed', () => {
+    expect(
+      buildCsrfFetchHeaders({ 'X-CSRF-TOKEN': 'TOKEN', 'content-length': 0 })
+    ).toEqual({
+      'X-CSRF-TOKEN': 'TOKEN',
+      'content-length': 0
+    });
+  });
+
+  it('overwrites existing content length header', () => {
+    expect(buildCsrfFetchHeaders({ 'Content-Length': 22 })).toEqual({
+      'x-csrf-token': 'Fetch',
+      'Content-Length': 0
+    });
   });
 });

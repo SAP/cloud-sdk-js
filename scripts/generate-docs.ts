@@ -8,9 +8,9 @@ import {
 } from 'fs';
 import { resolve, basename, extname } from 'path';
 import execa = require('execa');
-import { unixEOL } from '@sap-cloud-sdk/util';
+import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
 import compareVersions from 'compare-versions';
-import { jsonStringify, transformFile } from './util';
+import { transformFile } from './util';
 const apiDocPath = resolve('docs', 'api');
 
 const isDirectory = entryPath => lstatSync(entryPath).isDirectory();
@@ -31,7 +31,10 @@ const readDir = inputDir =>
 
 const isHtmlFile = fileName => extname(fileName) === '.html';
 const isSearchJs = fileName => basename(fileName) === 'search.js';
-const pipe = (...fns) => start => fns.reduce((state, fn) => fn(state), start);
+const pipe =
+  (...fns) =>
+  start =>
+    fns.reduce((state, fn) => fn(state), start);
 
 /**
  * GitHub pages has requirements for links, so additional adjustment is necessary. See example below:
@@ -120,17 +123,17 @@ function writeVersions() {
   const apiVersions = getSortedApiVersions();
   writeFileSync(
     resolve('docs', 'api', 'versions.js'),
-    `export default ${jsonStringify(apiVersions)}`,
+    `export default ${formatJson(apiVersions)}`,
     'utf8'
   );
   writeFileSync(
     resolve('docs', 'api', 'versions.json'),
-    `${jsonStringify(apiVersions)}`,
+    `${formatJson(apiVersions)}`,
     'utf8'
   );
 }
 
-function validateLogs(generationLogs) {
+function validateLogs(generationLogs: string) {
   const invalidLinksMessage =
     'Found invalid symbol reference(s) in JSDocs, they will not render as links in the generated documentation.';
   const [, invalidLinks] = generationLogs.split(invalidLinksMessage);
@@ -140,21 +143,20 @@ function validateLogs(generationLogs) {
 }
 
 async function generateDocs() {
-  let generationLogs;
-  try {
-    generationLogs = await execa.command(
-      'typedoc --tsconfig tsconfig.typedoc.json',
-      {
-        cwd: resolve(),
-        encoding: 'utf8'
-      }
-    );
-  } catch (err) {
-    console.error(err);
-    process.exit(err.exitCode);
-  }
+  process.on('unhandledRejection', reason => {
+    console.error(`Unhandled rejection at: ${reason}`);
+    process.exit(1);
+  });
 
-  validateLogs(generationLogs);
+  const generationLogs = await execa.command(
+    'typedoc --tsconfig tsconfig.typedoc.json',
+    {
+      cwd: resolve(),
+      encoding: 'utf8'
+    }
+  );
+
+  validateLogs(generationLogs.stdout);
   adjustForGitHubPages();
   insertCopyrightAndTracking();
   writeVersions();

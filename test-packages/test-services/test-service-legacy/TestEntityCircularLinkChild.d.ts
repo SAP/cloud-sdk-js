@@ -13,7 +13,8 @@ import {
  */
 export declare class TestEntityCircularLinkChild
   extends Entity
-  implements TestEntityCircularLinkChildType {
+  implements TestEntityCircularLinkChildType
+{
   /**
    * Technical entity name for TestEntityCircularLinkChild.
    */

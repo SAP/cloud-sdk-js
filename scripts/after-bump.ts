@@ -1,10 +1,10 @@
 import { resolve, relative } from 'path';
-import { unixEOL } from '@sap-cloud-sdk/util';
-import { apiDocsDir, jsonStringify, transformFile, version } from './util';
+import { formatJson, unixEOL } from '@sap-cloud-sdk/util';
+import { apiDocsDir, transformFile, version } from './util';
 
 function updateRootPackageJson() {
   transformFile(resolve('package.json'), packageJson =>
-    jsonStringify({
+    formatJson({
       ...JSON.parse(packageJson),
       version: `${version}`
     })
@@ -25,7 +25,7 @@ function updateDocumentationMd() {
 function updateTypeDocConfig() {
   transformFile('tsconfig.typedoc.json', config => {
     const parsedConfig = JSON.parse(config);
-    return jsonStringify({
+    return formatJson({
       ...parsedConfig,
       typedocOptions: {
         ...parsedConfig.typedocOptions,
@@ -40,7 +40,7 @@ function updateDocsVersions() {
     const versions = JSON.parse(versionsJson);
     return versions.includes(version)
       ? versionsJson
-      : jsonStringify([version, ...versions]);
+      : formatJson([version, ...versions]);
   });
 }
 
@@ -59,10 +59,8 @@ const nextChangelogTemplate = [
 
 function transformChangeLog(changelog) {
   const [comments, versionSections] = changelog.split(`${unixEOL}# Next`);
-  const [
-    latestVersionSection,
-    ...previousVersionSections
-  ] = versionSections.split(`${unixEOL}# `);
+  const [latestVersionSection, ...previousVersionSections] =
+    versionSections.split(`${unixEOL}# `);
   const [, ...changelogCategories] = latestVersionSection.split(
     `${unixEOL}## `
   );

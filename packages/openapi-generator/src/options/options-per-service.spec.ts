@@ -63,32 +63,25 @@ describe('getServiceOptions', () => {
       directoryName: 'serviceName',
       serviceName: 'serviceName'
     };
-    const optionsPerService = { 'some/input.json': expectedConfig };
-    expect(
-      getServiceOptions(optionsPerService, 'some/input.json', 'serviceName')
-    ).toEqual(expectedConfig);
+    expect(getServiceOptions('serviceName', expectedConfig)).toEqual(
+      expectedConfig
+    );
   });
 
   it('gets the default config if it does not exist', () => {
-    const optionsPerService = {};
     const expectedConfig = {
       packageName: 'serviceName',
       directoryName: 'serviceName',
       serviceName: 'serviceName'
     };
-    expect(
-      getServiceOptions(optionsPerService, 'some/input.json', 'serviceName')
-    ).toEqual(expectedConfig);
+    expect(getServiceOptions('serviceName')).toEqual(expectedConfig);
   });
 
   it('adds defaults if a config exists partially', () => {
-    const optionsPerService = {
-      'some/input.json': {
-        packageName: 'customPackageName'
-      }
-    };
     expect(
-      getServiceOptions(optionsPerService, 'some/input.json', 'serviceName')
+      getServiceOptions('serviceName', {
+        packageName: 'customPackageName'
+      })
     ).toEqual({
       packageName: 'customPackageName',
       directoryName: 'serviceName',
@@ -142,10 +135,10 @@ describe('getOptionsPerService', () => {
     });
   });
 
-  it('builds PerService config with partial options  per service.', async () => {
+  it('builds options per service with partial options per service.', async () => {
     const partialConfig = {
       'path/service': {
-        directoryName: 'dirName',
+        serviceName: 'Readable Name',
         packageName: '@scope/package-name'
       }
     };
@@ -162,9 +155,9 @@ describe('getOptionsPerService', () => {
       } as ParsedGeneratorOptions)
     ).resolves.toEqual({
       'path/service': {
-        directoryName: 'dirName',
+        directoryName: 'service',
         packageName: '@scope/package-name',
-        serviceName: 'service'
+        serviceName: 'Readable Name'
       }
     });
   });
@@ -174,10 +167,13 @@ describe('getOptionsPerService', () => {
       getOptionsPerService(['/user/path1/service', '/user/path2/service'], {
         skipValidation: false
       } as ParsedGeneratorOptions)
-    ).rejects.toMatchInlineSnapshot(`
-            [Error: The following service specs lead to non unique service names:
-            path2/service.
-            You can either introduce a optionsPerSerivice file or enable the skipValidation flag.]
+    ).rejects.toThrowErrorMatchingInlineSnapshot(`
+            "Duplicate service directory names found. Customize directory names with \`optionsPerService\` or enable automatic name adjustment with \`skipValidation\`.
+            	Duplicates:
+            		Directory name: 'service', specifications: [
+            			/user/path1/service,
+            			/user/path2/service
+            		]"
           `);
   });
 

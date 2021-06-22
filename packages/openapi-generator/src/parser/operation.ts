@@ -22,8 +22,8 @@ export function parseOperation(
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiOperation {
-  const requestBody = parseRequestBody(operation.requestBody, refs);
-  const response = parseResponses(operation.responses, refs);
+  const requestBody = parseRequestBody(operation.requestBody, refs, options);
+  const response = parseResponses(operation.responses, refs, options);
   const relevantParameters = getRelevantParameters(
     [...(pathItemParameters || []), ...(operation.parameters || [])],
     refs
@@ -46,7 +46,7 @@ export function parseOperation(
     method,
     requestBody,
     response,
-    queryParameters: parseParameters(queryParams, refs),
+    queryParameters: parseParameters(queryParams, refs, options),
     pathParameters,
     pathPattern: parsePathPattern(pathPattern, pathParameters),
     operationId: operation.operationId!,
@@ -151,7 +151,7 @@ export function parsePathParameters(
 ): OpenApiParameter[] {
   // todo validate
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
-  const parsedParameters = parseParameters(sortedPathParameters, refs);
+  const parsedParameters = parseParameters(sortedPathParameters, refs, options);
   const uniqueNames = ensureUniqueNames(
     parsedParameters.map(({ originalName }) => originalName),
     options,
@@ -168,11 +168,12 @@ export function parsePathParameters(
 
 export function parseParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
-  refs: OpenApiDocumentRefs
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
 ): OpenApiParameter[] {
   return pathParameters.map(param => ({
     ...param,
     originalName: param.name,
-    schema: parseSchema(param.schema, refs)
+    schema: parseSchema(param.schema, refs, options)
   }));
 }

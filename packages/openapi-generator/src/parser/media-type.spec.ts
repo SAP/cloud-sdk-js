@@ -1,6 +1,7 @@
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { parseApplicationJsonMediaType, parseMediaType } from './media-type';
 
+const defaultOptions = { strictNaming: true };
 describe('parseApplicationJsonMediaType', () => {
   it('returns undefined if there is no application/json media type', async () => {
     expect(
@@ -8,7 +9,8 @@ describe('parseApplicationJsonMediaType', () => {
         {
           content: { 'application/xml': { schema: { type: 'string' } } }
         },
-        await createTestRefs()
+        await createTestRefs(),
+        defaultOptions
       )
     ).toBeUndefined();
   });
@@ -19,7 +21,8 @@ describe('parseApplicationJsonMediaType', () => {
         {
           content: { 'application/json': { schema: { type: 'object' } } }
         },
-        await createTestRefs()
+        await createTestRefs(),
+        defaultOptions
       )
     ).toEqual(emptyObjectSchema);
   });
@@ -27,7 +30,9 @@ describe('parseApplicationJsonMediaType', () => {
 
 describe('parseMediaType', () => {
   it('returns undefined if there is no media type at all', async () => {
-    expect(parseMediaType(undefined, await createTestRefs())).toBeUndefined();
+    expect(
+      parseMediaType(undefined, await createTestRefs(), defaultOptions)
+    ).toBeUndefined();
   });
 
   it('returns any schema if there are other schemas', async () => {
@@ -36,7 +41,8 @@ describe('parseMediaType', () => {
         {
           content: { 'application/xml': { schema: { type: 'string' } } }
         },
-        await createTestRefs()
+        await createTestRefs(),
+        defaultOptions
       )
     ).toEqual({ type: 'any' });
   });
@@ -47,7 +53,8 @@ describe('parseMediaType', () => {
         {
           content: { 'application/json': { schema: { type: 'object' } } }
         },
-        await createTestRefs()
+        await createTestRefs(),
+        defaultOptions
       )
     ).toEqual(emptyObjectSchema);
   });
@@ -61,7 +68,8 @@ describe('parseMediaType', () => {
             'application/xml': { schema: { type: 'string' } }
           }
         },
-        await createTestRefs()
+        await createTestRefs(),
+        defaultOptions
       )
     ).toEqual({ anyOf: [emptyObjectSchema, { type: 'any' }] });
   });

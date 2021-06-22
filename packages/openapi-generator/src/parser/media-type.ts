@@ -3,12 +3,14 @@ import { OpenAPIV3 } from 'openapi-types';
 import { OpenApiSchema } from '../openapi-types';
 import { OpenApiDocumentRefs } from './refs';
 import { parseSchema } from './schema';
+import { ParserOptions } from './options';
 
 const logger = createLogger('openapi-generator');
 /**
  * Parse the type of a resolved request body or response object.
  * @param bodyOrResponseObject The request body or response object to parse the type from.
  * @param refs Object representing cross references throughout the document.
+ * @param options Options that were set for service generation.
  * @returns The type name of the request body if there is one.
  */
 export function parseApplicationJsonMediaType(
@@ -16,7 +18,8 @@ export function parseApplicationJsonMediaType(
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
     | undefined,
-  refs: OpenApiDocumentRefs
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
 ): OpenApiSchema | undefined {
   if (bodyOrResponseObject) {
     const mediaType = getMediaTypeObject(
@@ -25,7 +28,7 @@ export function parseApplicationJsonMediaType(
     );
     const schema = mediaType?.schema;
     if (schema) {
-      return parseSchema(schema, refs);
+      return parseSchema(schema, refs, options);
     }
   }
 }
@@ -35,13 +38,15 @@ export function parseMediaType(
     | OpenAPIV3.RequestBodyObject
     | OpenAPIV3.ResponseObject
     | undefined,
-  refs: OpenApiDocumentRefs
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
 ): OpenApiSchema | undefined {
   const allMediaTypes = getMediaTypes(bodyOrResponseObject);
   if (allMediaTypes.length) {
     const jsonMediaType = parseApplicationJsonMediaType(
       bodyOrResponseObject,
-      refs
+      refs,
+      options
     );
 
     if (!jsonMediaType) {

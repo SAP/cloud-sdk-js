@@ -8,7 +8,7 @@ import {
   EntityV4,
   EnumField,
   Field,
-  NumberField,
+  NullableNumberField,
   StringField
 } from '@sap-cloud-sdk/core';
 /**
@@ -82,7 +82,7 @@ export declare namespace TestEntity1 {
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_16_PROPERTY: NumberField<TestEntity1>;
+  const INT_16_PROPERTY: NullableNumberField<TestEntity1>;
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -98,7 +98,7 @@ export declare namespace TestEntity1 {
    */
   const _allFields: Array<
     | StringField<TestEntity1>
-    | NumberField<TestEntity1>
+    | NullableNumberField<TestEntity1>
     | EnumField<TestEntity1>
     | TestComplexType1Field<TestEntity1>
   >;

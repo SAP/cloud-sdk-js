@@ -6,12 +6,13 @@
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
+  NullableBooleanField,
+  NullableNumberField,
+  NullableStringField,
   StringField
 } from '@sap-cloud-sdk/core';
 
@@ -109,14 +110,18 @@ export namespace TestEntityLvl2SingleLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityLvl2SingleLink> =
-    new StringField('StringProperty', TestEntityLvl2SingleLink, 'Edm.String');
+  export const STRING_PROPERTY: NullableStringField<TestEntityLvl2SingleLink> =
+    new NullableStringField(
+      'StringProperty',
+      TestEntityLvl2SingleLink,
+      'Edm.String'
+    );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntityLvl2SingleLink> =
-    new BooleanField(
+  export const BOOLEAN_PROPERTY: NullableBooleanField<TestEntityLvl2SingleLink> =
+    new NullableBooleanField(
       'BooleanProperty',
       TestEntityLvl2SingleLink,
       'Edm.Boolean'
@@ -125,14 +130,22 @@ export namespace TestEntityLvl2SingleLink {
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntityLvl2SingleLink> =
-    new StringField('GuidProperty', TestEntityLvl2SingleLink, 'Edm.Guid');
+  export const GUID_PROPERTY: NullableStringField<TestEntityLvl2SingleLink> =
+    new NullableStringField(
+      'GuidProperty',
+      TestEntityLvl2SingleLink,
+      'Edm.Guid'
+    );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY: NumberField<TestEntityLvl2SingleLink> =
-    new NumberField('Int16Property', TestEntityLvl2SingleLink, 'Edm.Int16');
+  export const INT_16_PROPERTY: NullableNumberField<TestEntityLvl2SingleLink> =
+    new NullableNumberField(
+      'Int16Property',
+      TestEntityLvl2SingleLink,
+      'Edm.Int16'
+    );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -143,9 +156,10 @@ export namespace TestEntityLvl2SingleLink {
    * All fields of the TestEntityLvl2SingleLink entity.
    */
   export const _allFields: Array<
+    | NullableStringField<TestEntityLvl2SingleLink>
+    | NullableBooleanField<TestEntityLvl2SingleLink>
+    | NullableNumberField<TestEntityLvl2SingleLink>
     | StringField<TestEntityLvl2SingleLink>
-    | BooleanField<TestEntityLvl2SingleLink>
-    | NumberField<TestEntityLvl2SingleLink>
   > = [
     TestEntityLvl2SingleLink.STRING_PROPERTY,
     TestEntityLvl2SingleLink.BOOLEAN_PROPERTY,

@@ -10,8 +10,8 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
-  StringField
+  NullableStringField,
+  NumberField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -98,16 +98,13 @@ export namespace TestEntityLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityLink> = new StringField(
-    'StringProperty',
-    TestEntityLink,
-    'Edm.String'
-  );
+  export const STRING_PROPERTY: NullableStringField<TestEntityLink> =
+    new NullableStringField('StringProperty', TestEntityLink, 'Edm.String');
   /**
    * All fields of the TestEntityLink entity.
    */
   export const _allFields: Array<
-    NumberField<TestEntityLink> | StringField<TestEntityLink>
+    NumberField<TestEntityLink> | NullableStringField<TestEntityLink>
   > = [
     TestEntityLink.KEY_TEST_ENTITY_LINK,
     TestEntityLink.KEY_TO_TEST_ENTITY,

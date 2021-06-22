@@ -1,13 +1,14 @@
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV2,
   EntityBuilderType,
   EntityV2,
   Field,
   Link,
-  NumberField,
+  NullableBooleanField,
+  NullableNumberField,
+  NullableStringField,
   OneToOneLink,
   StringField
 } from '@sap-cloud-sdk/core';
@@ -114,22 +115,22 @@ export declare namespace TestEntitySingleLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: StringField<TestEntitySingleLink>;
+  const STRING_PROPERTY: NullableStringField<TestEntitySingleLink>;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: BooleanField<TestEntitySingleLink>;
+  const BOOLEAN_PROPERTY: NullableBooleanField<TestEntitySingleLink>;
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GUID_PROPERTY: StringField<TestEntitySingleLink>;
+  const GUID_PROPERTY: NullableStringField<TestEntitySingleLink>;
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_16_PROPERTY: NumberField<TestEntitySingleLink>;
+  const INT_16_PROPERTY: NullableNumberField<TestEntitySingleLink>;
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -148,8 +149,9 @@ export declare namespace TestEntitySingleLink {
    */
   const _allFields: Array<
     | StringField<TestEntitySingleLink>
-    | BooleanField<TestEntitySingleLink>
-    | NumberField<TestEntitySingleLink>
+    | NullableStringField<TestEntitySingleLink>
+    | NullableBooleanField<TestEntitySingleLink>
+    | NullableNumberField<TestEntitySingleLink>
     | Link<TestEntitySingleLink, TestEntityLvl2MultiLink>
     | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>
   >;

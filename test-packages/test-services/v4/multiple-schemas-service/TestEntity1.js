@@ -113,7 +113,7 @@ exports.TestEntity1 = TestEntity1;
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.INT_16_PROPERTY = new core_1.NumberField(
+  TestEntity1.INT_16_PROPERTY = new core_1.NullableNumberField(
     'Int16Property',
     TestEntity1,
     'Edm.Int16'

@@ -5,7 +5,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
+  NullableNumberField,
   StringField
 } from '@sap-cloud-sdk/core';
 /**
@@ -67,11 +67,13 @@ export declare namespace TestEntity2 {
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const SINGLE_PROPERTY: NumberField<TestEntity2>;
+  const SINGLE_PROPERTY: NullableNumberField<TestEntity2>;
   /**
    * All fields of the TestEntity2 entity.
    */
-  const _allFields: Array<StringField<TestEntity2> | NumberField<TestEntity2>>;
+  const _allFields: Array<
+    StringField<TestEntity2> | NullableNumberField<TestEntity2>
+  >;
   /**
    * All fields selector.
    */

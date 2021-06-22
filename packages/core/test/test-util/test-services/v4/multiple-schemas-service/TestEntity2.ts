@@ -10,7 +10,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
+  NullableNumberField,
   StringField
 } from '../../../../../src';
 
@@ -89,16 +89,13 @@ export namespace TestEntity2 {
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SINGLE_PROPERTY: NumberField<TestEntity2> = new NumberField(
-    'SingleProperty',
-    TestEntity2,
-    'Edm.Single'
-  );
+  export const SINGLE_PROPERTY: NullableNumberField<TestEntity2> =
+    new NullableNumberField('SingleProperty', TestEntity2, 'Edm.Single');
   /**
    * All fields of the TestEntity2 entity.
    */
   export const _allFields: Array<
-    StringField<TestEntity2> | NumberField<TestEntity2>
+    StringField<TestEntity2> | NullableNumberField<TestEntity2>
   > = [TestEntity2.KEY_PROPERTY_STRING, TestEntity2.SINGLE_PROPERTY];
   /**
    * All fields selector.

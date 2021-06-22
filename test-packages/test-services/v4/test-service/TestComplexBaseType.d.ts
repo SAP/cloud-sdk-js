@@ -1,6 +1,6 @@
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
+  ComplexTypeNullableStringPropertyField,
   ConstructorOrField,
   EntityV4,
   FieldType,
@@ -33,7 +33,7 @@ export declare class TestComplexBaseTypeField<
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: ComplexTypeStringPropertyField<EntityT>;
+  baseStringProperty: ComplexTypeNullableStringPropertyField<EntityT>;
   /**
    * Creates an instance of TestComplexBaseTypeField.
    *

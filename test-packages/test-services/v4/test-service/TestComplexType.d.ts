@@ -8,14 +8,15 @@ import { TestEnumType } from './TestEnumType';
 import {
   CollectionField,
   ComplexTypeAnyPropertyField,
-  ComplexTypeBigNumberPropertyField,
-  ComplexTypeBooleanPropertyField,
-  ComplexTypeDatePropertyField,
   ComplexTypeEnumPropertyField,
   ComplexTypeField,
-  ComplexTypeNumberPropertyField,
+  ComplexTypeNullableBigNumberPropertyField,
+  ComplexTypeNullableBooleanPropertyField,
+  ComplexTypeNullableDatePropertyField,
+  ComplexTypeNullableNumberPropertyField,
+  ComplexTypeNullableStringPropertyField,
+  ComplexTypeNullableTimePropertyField,
   ComplexTypeStringPropertyField,
-  ComplexTypeTimePropertyField,
   ConstructorOrField,
   EntityV4,
   FieldType,
@@ -156,72 +157,72 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: ComplexTypeBooleanPropertyField<EntityT>;
+  booleanProperty: ComplexTypeNullableBooleanPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: ComplexTypeStringPropertyField<EntityT>;
+  guidProperty: ComplexTypeNullableStringPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int16Property: ComplexTypeNumberPropertyField<EntityT>;
+  int16Property: ComplexTypeNullableNumberPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int32Property: ComplexTypeNumberPropertyField<EntityT>;
+  int32Property: ComplexTypeNullableNumberPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int64Property: ComplexTypeBigNumberPropertyField<EntityT>;
+  int64Property: ComplexTypeNullableBigNumberPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  decimalProperty: ComplexTypeBigNumberPropertyField<EntityT>;
+  decimalProperty: ComplexTypeNullableBigNumberPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  singleProperty: ComplexTypeNumberPropertyField<EntityT>;
+  singleProperty: ComplexTypeNullableNumberPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  doubleProperty: ComplexTypeNumberPropertyField<EntityT>;
+  doubleProperty: ComplexTypeNullableNumberPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  floatProperty: ComplexTypeNumberPropertyField<EntityT>;
+  floatProperty: ComplexTypeNullableNumberPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeOfDayProperty: ComplexTypeTimePropertyField<EntityT>;
+  timeOfDayProperty: ComplexTypeNullableTimePropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateProperty: ComplexTypeDatePropertyField<EntityT>;
+  dateProperty: ComplexTypeNullableDatePropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeOffSetProperty: ComplexTypeDatePropertyField<EntityT>;
+  dateTimeOffSetProperty: ComplexTypeNullableDatePropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  byteProperty: ComplexTypeNumberPropertyField<EntityT>;
+  byteProperty: ComplexTypeNullableNumberPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  sByteProperty: ComplexTypeNumberPropertyField<EntityT>;
+  sByteProperty: ComplexTypeNullableNumberPropertyField<EntityT>;
   /**
    * Representation of the [[TestComplexType.geographyPointProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -259,7 +260,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: ComplexTypeStringPropertyField<EntityT>;
+  baseStringProperty: ComplexTypeNullableStringPropertyField<EntityT>;
   /**
    * Creates an instance of TestComplexTypeField.
    *

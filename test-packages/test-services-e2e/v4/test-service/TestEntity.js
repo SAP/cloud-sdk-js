@@ -113,7 +113,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.STRING_PROPERTY = new core_1.StringField(
+  TestEntity.STRING_PROPERTY = new core_1.NullableStringField(
     'StringProperty',
     TestEntity,
     'Edm.String'
@@ -122,7 +122,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.GUID_PROPERTY = new core_1.StringField(
+  TestEntity.GUID_PROPERTY = new core_1.NullableStringField(
     'GuidProperty',
     TestEntity,
     'Edm.Guid'
@@ -131,7 +131,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.BOOLEAN_PROPERTY = new core_1.BooleanField(
+  TestEntity.BOOLEAN_PROPERTY = new core_1.NullableBooleanField(
     'BooleanProperty',
     TestEntity,
     'Edm.Boolean'
@@ -140,7 +140,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.INT_64_PROPERTY = new core_1.BigNumberField(
+  TestEntity.INT_64_PROPERTY = new core_1.NullableBigNumberField(
     'Int64Property',
     TestEntity,
     'Edm.Int64'
@@ -149,7 +149,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DOUBLE_PROPERTY = new core_1.NumberField(
+  TestEntity.DOUBLE_PROPERTY = new core_1.NullableNumberField(
     'DoubleProperty',
     TestEntity,
     'Edm.Double'
@@ -158,7 +158,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DECIMAL_PROPERTY = new core_1.BigNumberField(
+  TestEntity.DECIMAL_PROPERTY = new core_1.NullableBigNumberField(
     'DecimalProperty',
     TestEntity,
     'Edm.Decimal'
@@ -167,7 +167,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATE_PROPERTY = new core_1.DateField(
+  TestEntity.DATE_PROPERTY = new core_1.NullableDateField(
     'DateProperty',
     TestEntity,
     'Edm.Date'
@@ -176,7 +176,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.TIME_OF_DAY_PROPERTY = new core_1.TimeField(
+  TestEntity.TIME_OF_DAY_PROPERTY = new core_1.NullableTimeField(
     'TimeOfDayProperty',
     TestEntity,
     'Edm.TimeOfDay'
@@ -185,7 +185,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATA_TIME_OFFSET_DATA_TIME_PROPERTY = new core_1.DateField(
+  TestEntity.DATA_TIME_OFFSET_DATA_TIME_PROPERTY = new core_1.NullableDateField(
     'DataTimeOffsetDataTimeProperty',
     TestEntity,
     'Edm.DateTimeOffset'
@@ -194,7 +194,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[dataTimeOffsetTimestampProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATA_TIME_OFFSET_TIMESTAMP_PROPERTY = new core_1.DateField(
+  TestEntity.DATA_TIME_OFFSET_TIMESTAMP_PROPERTY = new core_1.NullableDateField(
     'DataTimeOffsetTimestampProperty',
     TestEntity,
     'Edm.DateTimeOffset'

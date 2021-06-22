@@ -1,6 +1,7 @@
 import { City, CityField } from './City';
 import {
   ComplexTypeField,
+  ComplexTypeNullableStringPropertyField,
   ComplexTypeStringPropertyField,
   ConstructorOrField,
   EntityV4,
@@ -40,7 +41,7 @@ export declare class EventLocationField<
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: ComplexTypeStringPropertyField<EntityT>;
+  buildingInfo: ComplexTypeNullableStringPropertyField<EntityT>;
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

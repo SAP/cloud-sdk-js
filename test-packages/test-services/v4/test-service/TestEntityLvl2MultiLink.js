@@ -108,7 +108,7 @@ var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.STRING_PROPERTY = new core_1.StringField(
+  TestEntityLvl2MultiLink.STRING_PROPERTY = new core_1.NullableStringField(
     'StringProperty',
     TestEntityLvl2MultiLink,
     'Edm.String'
@@ -117,7 +117,7 @@ var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.BOOLEAN_PROPERTY = new core_1.BooleanField(
+  TestEntityLvl2MultiLink.BOOLEAN_PROPERTY = new core_1.NullableBooleanField(
     'BooleanProperty',
     TestEntityLvl2MultiLink,
     'Edm.Boolean'
@@ -126,7 +126,7 @@ var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.GUID_PROPERTY = new core_1.StringField(
+  TestEntityLvl2MultiLink.GUID_PROPERTY = new core_1.NullableStringField(
     'GuidProperty',
     TestEntityLvl2MultiLink,
     'Edm.Guid'
@@ -135,7 +135,7 @@ var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.INT_16_PROPERTY = new core_1.NumberField(
+  TestEntityLvl2MultiLink.INT_16_PROPERTY = new core_1.NullableNumberField(
     'Int16Property',
     TestEntityLvl2MultiLink,
     'Edm.Int16'

@@ -124,7 +124,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.STRING_PROPERTY = new core_1.StringField(
+  TestEntity.STRING_PROPERTY = new core_1.NullableStringField(
     'StringProperty',
     TestEntity,
     'Edm.String'
@@ -133,7 +133,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.BOOLEAN_PROPERTY = new core_1.BooleanField(
+  TestEntity.BOOLEAN_PROPERTY = new core_1.NullableBooleanField(
     'BooleanProperty',
     TestEntity,
     'Edm.Boolean'
@@ -142,7 +142,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.GUID_PROPERTY = new core_1.StringField(
+  TestEntity.GUID_PROPERTY = new core_1.NullableStringField(
     'GuidProperty',
     TestEntity,
     'Edm.Guid'
@@ -151,7 +151,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.INT_16_PROPERTY = new core_1.NumberField(
+  TestEntity.INT_16_PROPERTY = new core_1.NullableNumberField(
     'Int16Property',
     TestEntity,
     'Edm.Int16'
@@ -160,7 +160,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.INT_32_PROPERTY = new core_1.NumberField(
+  TestEntity.INT_32_PROPERTY = new core_1.NullableNumberField(
     'Int32Property',
     TestEntity,
     'Edm.Int32'
@@ -169,7 +169,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.INT_64_PROPERTY = new core_1.BigNumberField(
+  TestEntity.INT_64_PROPERTY = new core_1.NullableBigNumberField(
     'Int64Property',
     TestEntity,
     'Edm.Int64'
@@ -178,7 +178,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DECIMAL_PROPERTY = new core_1.BigNumberField(
+  TestEntity.DECIMAL_PROPERTY = new core_1.NullableBigNumberField(
     'DecimalProperty',
     TestEntity,
     'Edm.Decimal'
@@ -187,7 +187,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.SINGLE_PROPERTY = new core_1.NumberField(
+  TestEntity.SINGLE_PROPERTY = new core_1.NullableNumberField(
     'SingleProperty',
     TestEntity,
     'Edm.Single'
@@ -196,7 +196,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DOUBLE_PROPERTY = new core_1.NumberField(
+  TestEntity.DOUBLE_PROPERTY = new core_1.NullableNumberField(
     'DoubleProperty',
     TestEntity,
     'Edm.Double'
@@ -205,7 +205,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.FLOAT_PROPERTY = new core_1.NumberField(
+  TestEntity.FLOAT_PROPERTY = new core_1.NullableNumberField(
     'FloatProperty',
     TestEntity,
     'Edm.Float'
@@ -214,7 +214,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.TIME_OF_DAY_PROPERTY = new core_1.TimeField(
+  TestEntity.TIME_OF_DAY_PROPERTY = new core_1.NullableTimeField(
     'TimeOfDayProperty',
     TestEntity,
     'Edm.TimeOfDay'
@@ -223,7 +223,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATE_PROPERTY = new core_1.DateField(
+  TestEntity.DATE_PROPERTY = new core_1.NullableDateField(
     'DateProperty',
     TestEntity,
     'Edm.Date'
@@ -232,7 +232,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATE_TIME_OFF_SET_PROPERTY = new core_1.DateField(
+  TestEntity.DATE_TIME_OFF_SET_PROPERTY = new core_1.NullableDateField(
     'DateTimeOffSetProperty',
     TestEntity,
     'Edm.DateTimeOffset'
@@ -241,7 +241,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[durationProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DURATION_PROPERTY = new core_1.DurationField(
+  TestEntity.DURATION_PROPERTY = new core_1.NullableDurationField(
     'DurationProperty',
     TestEntity,
     'Edm.Duration'
@@ -250,7 +250,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.BYTE_PROPERTY = new core_1.NumberField(
+  TestEntity.BYTE_PROPERTY = new core_1.NullableNumberField(
     'ByteProperty',
     TestEntity,
     'Edm.Byte'
@@ -259,7 +259,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.S_BYTE_PROPERTY = new core_1.NumberField(
+  TestEntity.S_BYTE_PROPERTY = new core_1.NullableNumberField(
     'SByteProperty',
     TestEntity,
     'Edm.SByte'

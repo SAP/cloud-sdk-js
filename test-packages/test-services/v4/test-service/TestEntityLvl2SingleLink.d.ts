@@ -1,12 +1,13 @@
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
+  NullableBooleanField,
+  NullableNumberField,
+  NullableStringField,
   StringField
 } from '@sap-cloud-sdk/core';
 /**
@@ -91,22 +92,22 @@ export declare namespace TestEntityLvl2SingleLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: StringField<TestEntityLvl2SingleLink>;
+  const STRING_PROPERTY: NullableStringField<TestEntityLvl2SingleLink>;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: BooleanField<TestEntityLvl2SingleLink>;
+  const BOOLEAN_PROPERTY: NullableBooleanField<TestEntityLvl2SingleLink>;
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GUID_PROPERTY: StringField<TestEntityLvl2SingleLink>;
+  const GUID_PROPERTY: NullableStringField<TestEntityLvl2SingleLink>;
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_16_PROPERTY: NumberField<TestEntityLvl2SingleLink>;
+  const INT_16_PROPERTY: NullableNumberField<TestEntityLvl2SingleLink>;
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -116,9 +117,10 @@ export declare namespace TestEntityLvl2SingleLink {
    * All fields of the TestEntityLvl2SingleLink entity.
    */
   const _allFields: Array<
+    | NullableStringField<TestEntityLvl2SingleLink>
+    | NullableBooleanField<TestEntityLvl2SingleLink>
+    | NullableNumberField<TestEntityLvl2SingleLink>
     | StringField<TestEntityLvl2SingleLink>
-    | BooleanField<TestEntityLvl2SingleLink>
-    | NumberField<TestEntityLvl2SingleLink>
   >;
   /**
    * All fields selector.

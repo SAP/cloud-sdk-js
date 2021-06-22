@@ -67,7 +67,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.booleanProperty = new core_1.ComplexTypeBooleanPropertyField(
+    _this.booleanProperty = new core_1.ComplexTypeNullableBooleanPropertyField(
       'BooleanProperty',
       _this,
       'Edm.Boolean'
@@ -76,7 +76,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.guidProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.guidProperty = new core_1.ComplexTypeStringPropertyField(
+    _this.guidProperty = new core_1.ComplexTypeNullableStringPropertyField(
       'GuidProperty',
       _this,
       'Edm.Guid'
@@ -85,7 +85,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.int16Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.int16Property = new core_1.ComplexTypeNumberPropertyField(
+    _this.int16Property = new core_1.ComplexTypeNullableNumberPropertyField(
       'Int16Property',
       _this,
       'Edm.Int16'
@@ -94,7 +94,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.int32Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.int32Property = new core_1.ComplexTypeNumberPropertyField(
+    _this.int32Property = new core_1.ComplexTypeNullableNumberPropertyField(
       'Int32Property',
       _this,
       'Edm.Int32'
@@ -103,7 +103,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.int64Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.int64Property = new core_1.ComplexTypeBigNumberPropertyField(
+    _this.int64Property = new core_1.ComplexTypeNullableBigNumberPropertyField(
       'Int64Property',
       _this,
       'Edm.Int64'
@@ -112,16 +112,17 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.decimalProperty = new core_1.ComplexTypeBigNumberPropertyField(
-      'DecimalProperty',
-      _this,
-      'Edm.Decimal'
-    );
+    _this.decimalProperty =
+      new core_1.ComplexTypeNullableBigNumberPropertyField(
+        'DecimalProperty',
+        _this,
+        'Edm.Decimal'
+      );
     /**
      * Representation of the [[TestComplexType.singleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.singleProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.singleProperty = new core_1.ComplexTypeNullableNumberPropertyField(
       'SingleProperty',
       _this,
       'Edm.Single'
@@ -130,7 +131,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.doubleProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.doubleProperty = new core_1.ComplexTypeNullableNumberPropertyField(
       'DoubleProperty',
       _this,
       'Edm.Double'
@@ -139,7 +140,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.floatProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.floatProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.floatProperty = new core_1.ComplexTypeNullableNumberPropertyField(
       'FloatProperty',
       _this,
       'Edm.Float'
@@ -148,7 +149,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.timeOfDayProperty = new core_1.ComplexTypeTimePropertyField(
+    _this.timeOfDayProperty = new core_1.ComplexTypeNullableTimePropertyField(
       'TimeOfDayProperty',
       _this,
       'Edm.TimeOfDay'
@@ -157,7 +158,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.dateProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.dateProperty = new core_1.ComplexTypeDatePropertyField(
+    _this.dateProperty = new core_1.ComplexTypeNullableDatePropertyField(
       'DateProperty',
       _this,
       'Edm.Date'
@@ -166,16 +167,17 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.dateTimeOffSetProperty = new core_1.ComplexTypeDatePropertyField(
-      'DateTimeOffSetProperty',
-      _this,
-      'Edm.DateTimeOffset'
-    );
+    _this.dateTimeOffSetProperty =
+      new core_1.ComplexTypeNullableDatePropertyField(
+        'DateTimeOffSetProperty',
+        _this,
+        'Edm.DateTimeOffset'
+      );
     /**
      * Representation of the [[TestComplexType.byteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.byteProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.byteProperty = new core_1.ComplexTypeNullableNumberPropertyField(
       'ByteProperty',
       _this,
       'Edm.Byte'
@@ -184,7 +186,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.sByteProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.sByteProperty = new core_1.ComplexTypeNullableNumberPropertyField(
       'SByteProperty',
       _this,
       'Edm.SByte'
@@ -247,11 +249,12 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.baseStringProperty = new core_1.ComplexTypeStringPropertyField(
-      'BaseStringProperty',
-      _this,
-      'Edm.String'
-    );
+    _this.baseStringProperty =
+      new core_1.ComplexTypeNullableStringPropertyField(
+        'BaseStringProperty',
+        _this,
+        'Edm.String'
+      );
     return _this;
   }
   return TestComplexTypeField;

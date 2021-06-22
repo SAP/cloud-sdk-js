@@ -63,7 +63,7 @@ var TestLvl2NestedComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.stringProperty = new core_1.ComplexTypeStringPropertyField(
+    _this.stringProperty = new core_1.ComplexTypeNullableStringPropertyField(
       'StringProperty',
       _this,
       'Edm.String'

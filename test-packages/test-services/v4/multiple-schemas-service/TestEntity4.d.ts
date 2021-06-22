@@ -1,11 +1,11 @@
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
   Field,
+  NullableBooleanField,
   StringField
 } from '@sap-cloud-sdk/core';
 /**
@@ -67,11 +67,13 @@ export declare namespace TestEntity4 {
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: BooleanField<TestEntity4>;
+  const BOOLEAN_PROPERTY: NullableBooleanField<TestEntity4>;
   /**
    * All fields of the TestEntity4 entity.
    */
-  const _allFields: Array<StringField<TestEntity4> | BooleanField<TestEntity4>>;
+  const _allFields: Array<
+    StringField<TestEntity4> | NullableBooleanField<TestEntity4>
+  >;
   /**
    * All fields selector.
    */

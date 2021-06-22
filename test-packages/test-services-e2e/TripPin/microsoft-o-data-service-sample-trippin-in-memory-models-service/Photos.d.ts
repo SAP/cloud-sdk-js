@@ -7,7 +7,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  NullableStringField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -68,11 +68,11 @@ export declare namespace Photos {
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const NAME: StringField<Photos>;
+  const NAME: NullableStringField<Photos>;
   /**
    * All fields of the Photos entity.
    */
-  const _allFields: Array<BigNumberField<Photos> | StringField<Photos>>;
+  const _allFields: Array<BigNumberField<Photos> | NullableStringField<Photos>>;
   /**
    * All fields selector.
    */

@@ -63,11 +63,12 @@ var TestComplexBaseTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.baseStringProperty = new core_1.ComplexTypeStringPropertyField(
-      'BaseStringProperty',
-      _this,
-      'Edm.String'
-    );
+    _this.baseStringProperty =
+      new core_1.ComplexTypeNullableStringPropertyField(
+        'BaseStringProperty',
+        _this,
+        'Edm.String'
+      );
     return _this;
   }
   return TestComplexBaseTypeField;

@@ -105,7 +105,7 @@ var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.STRING_PROPERTY = new core_1.StringField(
+  TestEntitySingleLink.STRING_PROPERTY = new core_1.NullableStringField(
     'StringProperty',
     TestEntitySingleLink,
     'Edm.String'
@@ -114,7 +114,7 @@ var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.BOOLEAN_PROPERTY = new core_1.BooleanField(
+  TestEntitySingleLink.BOOLEAN_PROPERTY = new core_1.NullableBooleanField(
     'BooleanProperty',
     TestEntitySingleLink,
     'Edm.Boolean'
@@ -123,7 +123,7 @@ var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.GUID_PROPERTY = new core_1.StringField(
+  TestEntitySingleLink.GUID_PROPERTY = new core_1.NullableStringField(
     'GuidProperty',
     TestEntitySingleLink,
     'Edm.Guid'
@@ -132,7 +132,7 @@ var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.INT_16_PROPERTY = new core_1.NumberField(
+  TestEntitySingleLink.INT_16_PROPERTY = new core_1.NullableNumberField(
     'Int16Property',
     TestEntitySingleLink,
     'Edm.Int16'

@@ -8,18 +8,19 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
-  BigNumberField,
-  BooleanField,
   CustomFieldV4,
-  DateField,
   EntityBuilderType,
   EntityV4,
   Field,
+  NullableBigNumberField,
+  NullableBooleanField,
+  NullableDateField,
+  NullableNumberField,
+  NullableStringField,
+  NullableTimeField,
   NumberField,
   OneToManyLink,
-  StringField,
-  Time,
-  TimeField
+  Time
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -159,77 +160,56 @@ export namespace TestEntity {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntity> = new StringField(
-    'StringProperty',
-    TestEntity,
-    'Edm.String'
-  );
+  export const STRING_PROPERTY: NullableStringField<TestEntity> =
+    new NullableStringField('StringProperty', TestEntity, 'Edm.String');
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntity> = new StringField(
-    'GuidProperty',
-    TestEntity,
-    'Edm.Guid'
-  );
+  export const GUID_PROPERTY: NullableStringField<TestEntity> =
+    new NullableStringField('GuidProperty', TestEntity, 'Edm.Guid');
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntity> = new BooleanField(
-    'BooleanProperty',
-    TestEntity,
-    'Edm.Boolean'
-  );
+  export const BOOLEAN_PROPERTY: NullableBooleanField<TestEntity> =
+    new NullableBooleanField('BooleanProperty', TestEntity, 'Edm.Boolean');
   /**
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_64_PROPERTY: BigNumberField<TestEntity> = new BigNumberField(
-    'Int64Property',
-    TestEntity,
-    'Edm.Int64'
-  );
+  export const INT_64_PROPERTY: NullableBigNumberField<TestEntity> =
+    new NullableBigNumberField('Int64Property', TestEntity, 'Edm.Int64');
   /**
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DOUBLE_PROPERTY: NumberField<TestEntity> = new NumberField(
-    'DoubleProperty',
-    TestEntity,
-    'Edm.Double'
-  );
+  export const DOUBLE_PROPERTY: NullableNumberField<TestEntity> =
+    new NullableNumberField('DoubleProperty', TestEntity, 'Edm.Double');
   /**
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DECIMAL_PROPERTY: BigNumberField<TestEntity> =
-    new BigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
+  export const DECIMAL_PROPERTY: NullableBigNumberField<TestEntity> =
+    new NullableBigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
   /**
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_PROPERTY: DateField<TestEntity> = new DateField(
-    'DateProperty',
-    TestEntity,
-    'Edm.Date'
-  );
+  export const DATE_PROPERTY: NullableDateField<TestEntity> =
+    new NullableDateField('DateProperty', TestEntity, 'Edm.Date');
   /**
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TIME_OF_DAY_PROPERTY: TimeField<TestEntity> = new TimeField(
-    'TimeOfDayProperty',
-    TestEntity,
-    'Edm.TimeOfDay'
-  );
+  export const TIME_OF_DAY_PROPERTY: NullableTimeField<TestEntity> =
+    new NullableTimeField('TimeOfDayProperty', TestEntity, 'Edm.TimeOfDay');
   /**
    * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATA_TIME_OFFSET_DATA_TIME_PROPERTY: DateField<TestEntity> =
-    new DateField(
+  export const DATA_TIME_OFFSET_DATA_TIME_PROPERTY: NullableDateField<TestEntity> =
+    new NullableDateField(
       'DataTimeOffsetDataTimeProperty',
       TestEntity,
       'Edm.DateTimeOffset'
@@ -238,8 +218,8 @@ export namespace TestEntity {
    * Static representation of the [[dataTimeOffsetTimestampProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: DateField<TestEntity> =
-    new DateField(
+  export const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: NullableDateField<TestEntity> =
+    new NullableDateField(
       'DataTimeOffsetTimestampProperty',
       TestEntity,
       'Edm.DateTimeOffset'
@@ -255,11 +235,12 @@ export namespace TestEntity {
    */
   export const _allFields: Array<
     | NumberField<TestEntity>
-    | StringField<TestEntity>
-    | BooleanField<TestEntity>
-    | BigNumberField<TestEntity>
-    | DateField<TestEntity>
-    | TimeField<TestEntity>
+    | NullableStringField<TestEntity>
+    | NullableBooleanField<TestEntity>
+    | NullableBigNumberField<TestEntity>
+    | NullableNumberField<TestEntity>
+    | NullableDateField<TestEntity>
+    | NullableTimeField<TestEntity>
     | OneToManyLink<TestEntity, TestEntityLink>
   > = [
     TestEntity.KEY_TEST_ENTITY,

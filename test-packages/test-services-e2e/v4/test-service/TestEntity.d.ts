@@ -3,18 +3,19 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
-  BigNumberField,
-  BooleanField,
   CustomFieldV4,
-  DateField,
   EntityBuilderType,
   EntityV4,
   Field,
+  NullableBigNumberField,
+  NullableBooleanField,
+  NullableDateField,
+  NullableNumberField,
+  NullableStringField,
+  NullableTimeField,
   NumberField,
   OneToManyLink,
-  StringField,
-  Time,
-  TimeField
+  Time
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "TestEntity" of service "TestService".
@@ -136,52 +137,52 @@ export declare namespace TestEntity {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: StringField<TestEntity>;
+  const STRING_PROPERTY: NullableStringField<TestEntity>;
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GUID_PROPERTY: StringField<TestEntity>;
+  const GUID_PROPERTY: NullableStringField<TestEntity>;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: BooleanField<TestEntity>;
+  const BOOLEAN_PROPERTY: NullableBooleanField<TestEntity>;
   /**
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_64_PROPERTY: BigNumberField<TestEntity>;
+  const INT_64_PROPERTY: NullableBigNumberField<TestEntity>;
   /**
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DOUBLE_PROPERTY: NumberField<TestEntity>;
+  const DOUBLE_PROPERTY: NullableNumberField<TestEntity>;
   /**
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DECIMAL_PROPERTY: BigNumberField<TestEntity>;
+  const DECIMAL_PROPERTY: NullableBigNumberField<TestEntity>;
   /**
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DATE_PROPERTY: DateField<TestEntity>;
+  const DATE_PROPERTY: NullableDateField<TestEntity>;
   /**
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const TIME_OF_DAY_PROPERTY: TimeField<TestEntity>;
+  const TIME_OF_DAY_PROPERTY: NullableTimeField<TestEntity>;
   /**
    * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DATA_TIME_OFFSET_DATA_TIME_PROPERTY: DateField<TestEntity>;
+  const DATA_TIME_OFFSET_DATA_TIME_PROPERTY: NullableDateField<TestEntity>;
   /**
    * Static representation of the [[dataTimeOffsetTimestampProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: DateField<TestEntity>;
+  const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: NullableDateField<TestEntity>;
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -192,11 +193,12 @@ export declare namespace TestEntity {
    */
   const _allFields: Array<
     | NumberField<TestEntity>
-    | StringField<TestEntity>
-    | BooleanField<TestEntity>
-    | BigNumberField<TestEntity>
-    | DateField<TestEntity>
-    | TimeField<TestEntity>
+    | NullableStringField<TestEntity>
+    | NullableBooleanField<TestEntity>
+    | NullableBigNumberField<TestEntity>
+    | NullableNumberField<TestEntity>
+    | NullableDateField<TestEntity>
+    | NullableTimeField<TestEntity>
     | OneToManyLink<TestEntity, TestEntityLink>
   >;
   /**

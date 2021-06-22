@@ -112,7 +112,7 @@ exports.TestEntity2 = TestEntity2;
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity2.SINGLE_PROPERTY = new core_1.NumberField(
+  TestEntity2.SINGLE_PROPERTY = new core_1.NullableNumberField(
     'SingleProperty',
     TestEntity2,
     'Edm.Single'

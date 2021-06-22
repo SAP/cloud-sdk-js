@@ -6,13 +6,14 @@
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV2,
   EntityBuilderType,
   EntityV2,
   Field,
   Link,
-  NumberField,
+  NullableBooleanField,
+  NullableNumberField,
+  NullableStringField,
   OneToOneLink,
   StringField
 } from '@sap-cloud-sdk/core';
@@ -134,26 +135,34 @@ export namespace TestEntitySingleLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntitySingleLink> =
-    new StringField('StringProperty', TestEntitySingleLink, 'Edm.String');
+  export const STRING_PROPERTY: NullableStringField<TestEntitySingleLink> =
+    new NullableStringField(
+      'StringProperty',
+      TestEntitySingleLink,
+      'Edm.String'
+    );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntitySingleLink> =
-    new BooleanField('BooleanProperty', TestEntitySingleLink, 'Edm.Boolean');
+  export const BOOLEAN_PROPERTY: NullableBooleanField<TestEntitySingleLink> =
+    new NullableBooleanField(
+      'BooleanProperty',
+      TestEntitySingleLink,
+      'Edm.Boolean'
+    );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntitySingleLink> =
-    new StringField('GuidProperty', TestEntitySingleLink, 'Edm.Guid');
+  export const GUID_PROPERTY: NullableStringField<TestEntitySingleLink> =
+    new NullableStringField('GuidProperty', TestEntitySingleLink, 'Edm.Guid');
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY: NumberField<TestEntitySingleLink> =
-    new NumberField('Int16Property', TestEntitySingleLink, 'Edm.Int16');
+  export const INT_16_PROPERTY: NullableNumberField<TestEntitySingleLink> =
+    new NullableNumberField('Int16Property', TestEntitySingleLink, 'Edm.Int16');
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -179,8 +188,9 @@ export namespace TestEntitySingleLink {
    */
   export const _allFields: Array<
     | StringField<TestEntitySingleLink>
-    | BooleanField<TestEntitySingleLink>
-    | NumberField<TestEntitySingleLink>
+    | NullableStringField<TestEntitySingleLink>
+    | NullableBooleanField<TestEntitySingleLink>
+    | NullableNumberField<TestEntitySingleLink>
     | Link<TestEntitySingleLink, TestEntityLvl2MultiLink>
     | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>
   > = [

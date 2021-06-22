@@ -1,12 +1,13 @@
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV2,
   EntityBuilderType,
   EntityV2,
   Field,
-  NumberField,
+  NullableBooleanField,
+  NullableNumberField,
+  NullableStringField,
   StringField
 } from '@sap-cloud-sdk/core';
 /**
@@ -94,29 +95,30 @@ export declare namespace TestEntityLvl2MultiLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: StringField<TestEntityLvl2MultiLink>;
+  const STRING_PROPERTY: NullableStringField<TestEntityLvl2MultiLink>;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: BooleanField<TestEntityLvl2MultiLink>;
+  const BOOLEAN_PROPERTY: NullableBooleanField<TestEntityLvl2MultiLink>;
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GUID_PROPERTY: StringField<TestEntityLvl2MultiLink>;
+  const GUID_PROPERTY: NullableStringField<TestEntityLvl2MultiLink>;
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_16_PROPERTY: NumberField<TestEntityLvl2MultiLink>;
+  const INT_16_PROPERTY: NullableNumberField<TestEntityLvl2MultiLink>;
   /**
    * All fields of the TestEntityLvl2MultiLink entity.
    */
   const _allFields: Array<
     | StringField<TestEntityLvl2MultiLink>
-    | BooleanField<TestEntityLvl2MultiLink>
-    | NumberField<TestEntityLvl2MultiLink>
+    | NullableStringField<TestEntityLvl2MultiLink>
+    | NullableBooleanField<TestEntityLvl2MultiLink>
+    | NullableNumberField<TestEntityLvl2MultiLink>
   >;
   /**
    * All fields selector.

@@ -109,7 +109,7 @@ exports.Photos = Photos;
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Photos.NAME = new core_1.StringField('Name', Photos, 'Edm.String');
+  Photos.NAME = new core_1.NullableStringField('Name', Photos, 'Edm.String');
   /**
    * All fields of the Photos entity.
    */

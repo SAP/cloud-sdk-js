@@ -1,6 +1,6 @@
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
+  ComplexTypeNullableStringPropertyField,
   ConstructorOrField,
   EntityV2,
   FieldType,
@@ -33,7 +33,7 @@ export declare class TestLvl2NestedComplexTypeField<
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: ComplexTypeStringPropertyField<EntityT>;
+  stringProperty: ComplexTypeNullableStringPropertyField<EntityT>;
   /**
    * Creates an instance of TestLvl2NestedComplexTypeField.
    *

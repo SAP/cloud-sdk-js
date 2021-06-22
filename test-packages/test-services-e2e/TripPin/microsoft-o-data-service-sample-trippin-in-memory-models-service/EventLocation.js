@@ -63,7 +63,7 @@ var EventLocationField = /** @class */ (function (_super) {
      * Representation of the [[EventLocation.buildingInfo]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.buildingInfo = new core_1.ComplexTypeStringPropertyField(
+    _this.buildingInfo = new core_1.ComplexTypeNullableStringPropertyField(
       'BuildingInfo',
       _this,
       'Edm.String'

@@ -6,12 +6,13 @@
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
+  NullableBooleanField,
+  NullableNumberField,
+  NullableStringField,
   OneToManyLink,
   StringField
 } from '../../../../../src';
@@ -120,26 +121,42 @@ export namespace TestEntityLvl2MultiLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityLvl2MultiLink> =
-    new StringField('StringProperty', TestEntityLvl2MultiLink, 'Edm.String');
+  export const STRING_PROPERTY: NullableStringField<TestEntityLvl2MultiLink> =
+    new NullableStringField(
+      'StringProperty',
+      TestEntityLvl2MultiLink,
+      'Edm.String'
+    );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntityLvl2MultiLink> =
-    new BooleanField('BooleanProperty', TestEntityLvl2MultiLink, 'Edm.Boolean');
+  export const BOOLEAN_PROPERTY: NullableBooleanField<TestEntityLvl2MultiLink> =
+    new NullableBooleanField(
+      'BooleanProperty',
+      TestEntityLvl2MultiLink,
+      'Edm.Boolean'
+    );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntityLvl2MultiLink> =
-    new StringField('GuidProperty', TestEntityLvl2MultiLink, 'Edm.Guid');
+  export const GUID_PROPERTY: NullableStringField<TestEntityLvl2MultiLink> =
+    new NullableStringField(
+      'GuidProperty',
+      TestEntityLvl2MultiLink,
+      'Edm.Guid'
+    );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY: NumberField<TestEntityLvl2MultiLink> =
-    new NumberField('Int16Property', TestEntityLvl2MultiLink, 'Edm.Int16');
+  export const INT_16_PROPERTY: NullableNumberField<TestEntityLvl2MultiLink> =
+    new NullableNumberField(
+      'Int16Property',
+      TestEntityLvl2MultiLink,
+      'Edm.Int16'
+    );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -162,9 +179,10 @@ export namespace TestEntityLvl2MultiLink {
    * All fields of the TestEntityLvl2MultiLink entity.
    */
   export const _allFields: Array<
+    | NullableStringField<TestEntityLvl2MultiLink>
+    | NullableBooleanField<TestEntityLvl2MultiLink>
+    | NullableNumberField<TestEntityLvl2MultiLink>
     | StringField<TestEntityLvl2MultiLink>
-    | BooleanField<TestEntityLvl2MultiLink>
-    | NumberField<TestEntityLvl2MultiLink>
     | OneToManyLink<TestEntityLvl2MultiLink, TestEntityLvl3MultiLink>
   > = [
     TestEntityLvl2MultiLink.STRING_PROPERTY,

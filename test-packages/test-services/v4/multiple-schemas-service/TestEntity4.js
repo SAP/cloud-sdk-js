@@ -112,7 +112,7 @@ exports.TestEntity4 = TestEntity4;
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity4.BOOLEAN_PROPERTY = new core_1.BooleanField(
+  TestEntity4.BOOLEAN_PROPERTY = new core_1.NullableBooleanField(
     'BooleanProperty',
     TestEntity4,
     'Edm.Boolean'

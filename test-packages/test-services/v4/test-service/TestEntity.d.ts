@@ -7,22 +7,23 @@ import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
 import {
   AllFields,
   AnyField,
-  BigNumberField,
-  BooleanField,
   CollectionField,
   CustomFieldV4,
-  DateField,
-  DurationField,
   EntityBuilderType,
   EntityV4,
   EnumField,
   Field,
-  NumberField,
+  NullableBigNumberField,
+  NullableBooleanField,
+  NullableDateField,
+  NullableDurationField,
+  NullableNumberField,
+  NullableStringField,
+  NullableTimeField,
   OneToManyLink,
   OneToOneLink,
   StringField,
-  Time,
-  TimeField
+  Time
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -256,82 +257,82 @@ export declare namespace TestEntity {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: StringField<TestEntity>;
+  const STRING_PROPERTY: NullableStringField<TestEntity>;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: BooleanField<TestEntity>;
+  const BOOLEAN_PROPERTY: NullableBooleanField<TestEntity>;
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GUID_PROPERTY: StringField<TestEntity>;
+  const GUID_PROPERTY: NullableStringField<TestEntity>;
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_16_PROPERTY: NumberField<TestEntity>;
+  const INT_16_PROPERTY: NullableNumberField<TestEntity>;
   /**
    * Static representation of the [[int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_32_PROPERTY: NumberField<TestEntity>;
+  const INT_32_PROPERTY: NullableNumberField<TestEntity>;
   /**
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_64_PROPERTY: BigNumberField<TestEntity>;
+  const INT_64_PROPERTY: NullableBigNumberField<TestEntity>;
   /**
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DECIMAL_PROPERTY: BigNumberField<TestEntity>;
+  const DECIMAL_PROPERTY: NullableBigNumberField<TestEntity>;
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const SINGLE_PROPERTY: NumberField<TestEntity>;
+  const SINGLE_PROPERTY: NullableNumberField<TestEntity>;
   /**
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DOUBLE_PROPERTY: NumberField<TestEntity>;
+  const DOUBLE_PROPERTY: NullableNumberField<TestEntity>;
   /**
    * Static representation of the [[floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const FLOAT_PROPERTY: NumberField<TestEntity>;
+  const FLOAT_PROPERTY: NullableNumberField<TestEntity>;
   /**
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const TIME_OF_DAY_PROPERTY: TimeField<TestEntity>;
+  const TIME_OF_DAY_PROPERTY: NullableTimeField<TestEntity>;
   /**
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DATE_PROPERTY: DateField<TestEntity>;
+  const DATE_PROPERTY: NullableDateField<TestEntity>;
   /**
    * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DATE_TIME_OFF_SET_PROPERTY: DateField<TestEntity>;
+  const DATE_TIME_OFF_SET_PROPERTY: NullableDateField<TestEntity>;
   /**
    * Static representation of the [[durationProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DURATION_PROPERTY: DurationField<TestEntity>;
+  const DURATION_PROPERTY: NullableDurationField<TestEntity>;
   /**
    * Static representation of the [[byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BYTE_PROPERTY: NumberField<TestEntity>;
+  const BYTE_PROPERTY: NullableNumberField<TestEntity>;
   /**
    * Static representation of the [[sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const S_BYTE_PROPERTY: NumberField<TestEntity>;
+  const S_BYTE_PROPERTY: NullableNumberField<TestEntity>;
   /**
    * Static representation of the [[geographyPointProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -395,12 +396,13 @@ export declare namespace TestEntity {
    */
   const _allFields: Array<
     | StringField<TestEntity>
-    | BooleanField<TestEntity>
-    | NumberField<TestEntity>
-    | BigNumberField<TestEntity>
-    | TimeField<TestEntity>
-    | DateField<TestEntity>
-    | DurationField<TestEntity>
+    | NullableStringField<TestEntity>
+    | NullableBooleanField<TestEntity>
+    | NullableNumberField<TestEntity>
+    | NullableBigNumberField<TestEntity>
+    | NullableTimeField<TestEntity>
+    | NullableDateField<TestEntity>
+    | NullableDurationField<TestEntity>
     | AnyField<TestEntity>
     | CollectionField<TestEntity, 'Edm.String'>
     | TestComplexTypeField<TestEntity>

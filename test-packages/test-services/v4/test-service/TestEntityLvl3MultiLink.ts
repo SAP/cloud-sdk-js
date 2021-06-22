@@ -10,6 +10,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
+  NullableStringField,
   StringField
 } from '@sap-cloud-sdk/core';
 
@@ -95,14 +96,22 @@ export namespace TestEntityLvl3MultiLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityLvl3MultiLink> =
-    new StringField('StringProperty', TestEntityLvl3MultiLink, 'Edm.String');
+  export const STRING_PROPERTY: NullableStringField<TestEntityLvl3MultiLink> =
+    new NullableStringField(
+      'StringProperty',
+      TestEntityLvl3MultiLink,
+      'Edm.String'
+    );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntityLvl3MultiLink> =
-    new StringField('GuidProperty', TestEntityLvl3MultiLink, 'Edm.Guid');
+  export const GUID_PROPERTY: NullableStringField<TestEntityLvl3MultiLink> =
+    new NullableStringField(
+      'GuidProperty',
+      TestEntityLvl3MultiLink,
+      'Edm.Guid'
+    );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -112,7 +121,10 @@ export namespace TestEntityLvl3MultiLink {
   /**
    * All fields of the TestEntityLvl3MultiLink entity.
    */
-  export const _allFields: Array<StringField<TestEntityLvl3MultiLink>> = [
+  export const _allFields: Array<
+    | NullableStringField<TestEntityLvl3MultiLink>
+    | StringField<TestEntityLvl3MultiLink>
+  > = [
     TestEntityLvl3MultiLink.STRING_PROPERTY,
     TestEntityLvl3MultiLink.GUID_PROPERTY,
     TestEntityLvl3MultiLink.KEY_PROPERTY

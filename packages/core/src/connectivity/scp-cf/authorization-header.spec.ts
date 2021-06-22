@@ -1,3 +1,4 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   ODataGetAllRequestConfig,
   ODataRequest
@@ -95,7 +96,10 @@ describe('getAuthHeaders', () => {
       );
     });
 
-    it('does not throw for custom `SAP-Connectivity-Authentication` header', async () => {
+    it('logs a warning instead of throwing an error for custom `SAP-Connectivity-Authentication` header', async () => {
+      const logger = createLogger('authorization-header');
+      const warnSpy = jest.spyOn(logger, 'warn');
+
       const authHeader = { 'SAP-Connectivity-Authentication': 'token' };
       await expect(
         getAuthHeaders(
@@ -103,6 +107,10 @@ describe('getAuthHeaders', () => {
           authHeader
         )
       ).resolves.toEqual(authHeader);
+
+      expect(warnSpy).toHaveBeenCalledWith(
+        'Found custom authorization headers. The given destination also provides authorization headers. This might be unintended. The custom headers from the request config will be used.'
+      );
     });
   });
 

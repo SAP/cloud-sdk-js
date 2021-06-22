@@ -66,14 +66,16 @@ describe('generator', () => {
         outputDir: 'root/outputDir',
         skipValidation: true,
         transpile: true,
+        metadata: true,
         include: 'root/additionalFiles/*',
         readme: true,
         packageJson: true,
         packageVersion: '1.2.3'
       });
-    });
+    }, 20000);
 
     const outputPath = resolve('root', 'outputDir', 'mySpec');
+    const inputPath = resolve('root', 'inputDir');
 
     afterAll(() => {
       jest.clearAllMocks();
@@ -115,9 +117,25 @@ describe('generator', () => {
       });
     });
 
-    it('should a README.md', () => {
+    it('should create a README.md', () => {
       const readme = resolve(outputPath, 'README.md');
       expect(existsSync(readme)).toBe(true);
+    });
+
+    it('should create metadata header', () => {
+      const metaDataHeader = resolve(
+        inputPath,
+        'sdk-metadata/mySpec_HEADER.json'
+      );
+      expect(existsSync(metaDataHeader)).toBe(true);
+    });
+
+    it('should create metadata client', () => {
+      const metaDataHeader = resolve(
+        inputPath,
+        'sdk-metadata/mySpec_CLIENT_JS.json'
+      );
+      expect(existsSync(metaDataHeader)).toBe(true);
     });
   });
 

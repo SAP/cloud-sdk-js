@@ -1,4 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { OpenApiObjectSchema } from '../openapi-types';
 import { parseSchema } from './schema';
@@ -211,14 +212,15 @@ describe('parseSchema', () => {
   });
 
   it('parses string enum schema with a null value and no nullable set', async () => {
+    const logger = createLogger('openapi-generator');
+    spyOn(logger, 'warn');
     const schema: OpenAPIV3.SchemaObject = {
       enum: [1, 2, 3, null],
       type: 'string'
     };
-    expect(async () => {
-      parseSchema(schema, await createTestRefs());
-    }).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"null was used as a parameter in an enum, although the schema was not declared as nullable"'
+    parseSchema(schema, await createTestRefs());
+    expect(logger.warn).toHaveBeenCalledWith(
+      'null was used as a parameter in an enum, although the schema was not declared as nullable'
     );
   });
 

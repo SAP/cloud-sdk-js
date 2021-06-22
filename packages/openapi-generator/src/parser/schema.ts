@@ -174,7 +174,7 @@ function parseEnumSchema(
         return getEnumStringValue(String(entry));
       }
       if (entry === null && !schema.nullable) {
-        throw new Error(
+        logger.warn(
           'null was used as a parameter in an enum, although the schema was not declared as nullable'
         );
       }

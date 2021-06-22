@@ -244,7 +244,7 @@ describe('parseSchema', () => {
     );
   });
 
-  it('parses string enum schema with a null value, no nullable set, and skipValidation set to true', async () => {
+  it('parses string enum schema with a null value, no nullable set, and skipValidation set to false', async () => {
     const logger = createLogger('openapi-generator');
     spyOn(logger, 'warn');
     const schema: OpenAPIV3.SchemaObject = {

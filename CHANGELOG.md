@@ -18,9 +18,9 @@
 - [openapi-generator] Change the basis for directory, package, and service names, when generating clients. If not specified otherwise, the default is based on the directory name instead of the service name.
 - [core] Deprecate JWT related interfaces in favor of the interfaces provided by the `jsonwebtoken` library.
 The following interfaces were deprecated:
-  - `JWTHeader`
-  - `JWTPayload`
-  - `CompleteDecodedJWT`
+  - `JWTHeader` (use `JwtHeader` instead, the property `typ` is now optional)
+  - `JWTPayload` (use `JwtPayload` instead)
+  - `CompleteDecodedJWT` (use `Jwt` instead)
   - `RegisteredJWTClaims`
   - `RegisteredJWTClaimsBasic`
   - `RegisteredJWTClaimsTenant`

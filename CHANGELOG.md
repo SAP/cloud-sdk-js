@@ -33,6 +33,7 @@ The following interfaces were deprecated:
 ## Improvements
 
 - [openapi-generator] Improve the error message for invalid or unsupported path patterns.
+- [openapi-generator] Improve the error message when detecting invalid Swagger 2.0 specification files. 
 - [core] Improve types in convenience functions for JWT access. See "Compatibility Notes" for details.
 
 ## Fixed Issues

@@ -61,7 +61,7 @@ export async function convertDocToOpenApiV3(
     return (await convert(openApiDocument, {})).openapi;
   } catch (err) {
     throw new ErrorWithCause(
-      'Could not convert OpenAPI specification to OpenAPI version 3.',
+      `Could not convert OpenAPI specification to OpenAPI version 3. ${err.message}`,
       err
     );
   }

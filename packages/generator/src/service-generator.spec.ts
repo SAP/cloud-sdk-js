@@ -109,7 +109,7 @@ describe('service-generator', () => {
           propertyNameAsParam: 'stringProperty',
           edmType: 'Edm.String',
           jsType: 'string',
-          fieldType: 'StringField',
+          fieldType: 'NullableStringField',
           description: '',
           nullable: true,
           maxLength: '10',

@@ -98,12 +98,14 @@ function properties(
     const parsed = isCollection ? parseCollectionTypeName(p.Type) : p.Type;
     const isComplex = isComplexType(parsed, complexTypes);
     const isEnum = isEnumType(parsed, enumTypes);
+    const nullable = isNullableProperty(p);
     const typeMapping = getTypeMappingEntityProperties(
       p.Type,
       complexTypes,
       enumTypes,
       isComplex,
-      isEnum
+      isEnum,
+      nullable
     );
 
     return {
@@ -118,7 +120,7 @@ function properties(
       jsType: typeMapping.jsType,
       fieldType: typeMapping.fieldType,
       description: propertyDescription(p, swaggerProp),
-      nullable: isNullableProperty(p),
+      nullable,
       maxLength: p.MaxLength,
       isComplex,
       isEnum,
@@ -215,14 +217,15 @@ function getTypeMappingEntityProperties(
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   enumTypes: VdmEnumType[],
   isComplex: boolean,
-  isEnum: boolean
+  isEnum: boolean,
+  isNullable: boolean
 ): VdmMappedEdmType {
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
     return {
       edmType: edmFallback,
       jsType: edmToTsType(edmFallback),
-      fieldType: edmToFieldType(edmFallback)
+      fieldType: edmToFieldType(edmFallback, isNullable)
     };
   }
   if (isCollectionType(typeName)) {

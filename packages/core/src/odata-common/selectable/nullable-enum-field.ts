@@ -6,26 +6,26 @@ import { ConstructorOrField } from './constructor-or-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 
 /**
- * Represents a property with an enum value.
+ * Represents a property with an enum value, that is nullable.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class EnumFieldBase<EntityT extends Entity> extends EdmTypeField<
+class NullableEnumFieldBase<EntityT extends Entity> extends EdmTypeField<
   EntityT,
   /* TODO FieldType is designed to be a union type of a list of static known type.
    For enum type, one can only use any. Use string here since it's better than any.
    However, when using filter you use `EnumType eq 'test'`.
    */
-  string
+  string | null
 > {}
 
 /**
- * Represents a selectable property with an enum value.
+ * Represents a selectable property with an enum value, that is nullable.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class EnumField<EntityT extends Entity>
-  extends EnumFieldBase<EntityT>
+export class NullableEnumField<EntityT extends Entity>
+  extends NullableEnumFieldBase<EntityT>
   implements SelectableEdmTypeField
 {
   readonly selectable: true;
@@ -36,14 +36,14 @@ export class EnumField<EntityT extends Entity>
 }
 
 /**
- * Represents a complex type property with an enum value.
+ * Represents a complex type property with an enum value, that is nullable.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class ComplexTypeEnumPropertyField<
+export class ComplexTypeNullableEnumPropertyField<
   EntityT extends Entity,
   ComplexT = any
-> extends EnumFieldBase<EntityT> {
+> extends NullableEnumFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */

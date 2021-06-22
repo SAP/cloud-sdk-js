@@ -2,68 +2,25 @@
 
 import { EdmTypeShared } from '../edm-types';
 import { Entity, ODataVersionOf, Constructable } from '../entity';
-import { Filter } from '../filter';
 import {
   ComplexTypeField,
   getEdmType,
   getEntityConstructor
 } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
-import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { SelectableEdmTypeField } from './edm-type-field';
+import { GreaterOrLessEdmTypeField } from './greater-or-less';
 
 /**
  * Represents a property with a number value.
- *
- * @typeparam EntityT - Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to.
  */
-export class NumberFieldBase<EntityT extends Entity> extends EdmTypeField<
-  EntityT,
-  number
-> {
-  /**
-   * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
-   *
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
-   */
-  greaterThan(value: number): Filter<EntityT, number> {
-    return new Filter(this.fieldPath(), 'gt', value, this.edmType);
-  }
-
-  /**
-   * Creates an instance of Filter for this field and the given value using the operator 'ge', i.e. `>=`.
-   *
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
-   */
-  greaterOrEqual(value: number): Filter<EntityT, number> {
-    return new Filter(this.fieldPath(), 'ge', value, this.edmType);
-  }
-
-  /**
-   * Creates an instance of Filter for this field and the given value using the operator 'lt', i.e. `<`.
-   *
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
-   */
-  lessThan(value: number): Filter<EntityT, number> {
-    return new Filter(this.fieldPath(), 'lt', value, this.edmType);
-  }
-
-  /**
-   * Creates an instance of Filter for this field and the given value using the operator 'le', i.e. `<=`.
-   *
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
-   */
-  lessOrEqual(value: number): Filter<EntityT, number> {
-    return new Filter(this.fieldPath(), 'le', value, this.edmType);
-  }
-}
+export class NumberFieldBase<
+  EntityT extends Entity
+> extends GreaterOrLessEdmTypeField<EntityT, number> {}
 
 /**
  * Represents a selectable property with a number value.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class NumberField<EntityT extends Entity>

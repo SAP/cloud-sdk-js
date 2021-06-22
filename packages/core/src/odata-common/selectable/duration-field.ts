@@ -3,64 +3,30 @@
 import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { Entity, ODataVersionOf, Constructable } from '../entity';
-import { Filter } from '../filter';
 import {
   ComplexTypeField,
   getEdmType,
   getEntityConstructor
 } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
-import { EdmTypeField } from './edm-type-field';
+import { GreaterOrLessEdmTypeField } from './greater-or-less';
 
 /**
  * Represents a property with a duration value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class DurtionFieldBase<EntityT extends Entity> extends EdmTypeField<
-  EntityT,
-  moment.Duration
-> {
-  /**
-   * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
-   *
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
-   */
-  greaterThan(value: moment.Duration): Filter<EntityT, moment.Duration> {
-    return new Filter(this.fieldPath(), 'gt', value, this.edmType);
-  }
+export class DurationFieldBase<
+  EntityT extends Entity
+> extends GreaterOrLessEdmTypeField<EntityT, moment.Duration> {}
 
-  /**
-   * Creates an instance of Filter for this field and the given value using the operator 'ge', i.e. `>=`.
-   *
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
-   */
-  greaterOrEqual(value: moment.Duration): Filter<EntityT, moment.Duration> {
-    return new Filter(this.fieldPath(), 'ge', value, this.edmType);
-  }
-
-  /**
-   * Creates an instance of Filter for this field and the given value using the operator 'lt', i.e. `<`.
-   *
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
-   */
-  lessThan(value: moment.Duration): Filter<EntityT, moment.Duration> {
-    return new Filter(this.fieldPath(), 'lt', value, this.edmType);
-  }
-
-  /**
-   * Creates an instance of Filter for this field and the given value using the operator 'le', i.e. `<=`.
-   *
-   * @param value - Value to be used in the filter
-   * @returns The resulting filter
-   */
-  lessOrEqual(value: moment.Duration): Filter<EntityT, moment.Duration> {
-    return new Filter(this.fieldPath(), 'le', value, this.edmType);
-  }
-}
+/**
+ * @deprecated Since v1.46.0. Use [[DurationFieldBase]] instead.
+ * Represents a property with a duration value.
+ * @typeparam EntityT - Type of the entity the field belongs to
+ */
+export type DurtionFieldBase<EntityT extends Entity> =
+  DurationFieldBase<EntityT>;
 
 /**
  * Represents a selectable property with a duration value.
@@ -69,7 +35,7 @@ export class DurtionFieldBase<EntityT extends Entity> extends EdmTypeField<
  */
 export class DurationField<
   EntityT extends Entity
-> extends DurtionFieldBase<EntityT> {
+> extends DurationFieldBase<EntityT> {
   readonly selectable: true;
 }
 
@@ -81,7 +47,7 @@ export class DurationField<
 export class ComplexTypeDurationPropertyField<
   EntityT extends Entity,
   ComplexT = any
-> extends DurtionFieldBase<EntityT> {
+> extends DurationFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */

@@ -183,7 +183,7 @@ function properties(
 }
 
 const propertyFieldType = (type: string): string | undefined =>
-  type.startsWith('Edm.') ? edmToFieldType(type) : undefined;
+  type.startsWith('Edm.') ? edmToFieldType(type, true) : undefined;
 
 const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
@@ -390,7 +390,7 @@ export function transformComplexTypes(
             ? 'CollectionField'
             : isComplex
             ? formattedTypes[parsedType] + 'Field'
-            : edmToComplexPropertyType(type),
+            : edmToComplexPropertyType(type, true),
           isComplex,
           isCollection
         };
@@ -480,7 +480,7 @@ export function transformFunctionImportBase(
       ),
       edmType: parseType(p.Type),
       jsType: edmToTsType(p.Type)!,
-      fieldType: edmToFieldType(p.Type),
+      fieldType: edmToFieldType(p.Type, true),
       nullable: isNullableParameter(p),
       description: parameterDescription(p, swaggerParameter)
     };

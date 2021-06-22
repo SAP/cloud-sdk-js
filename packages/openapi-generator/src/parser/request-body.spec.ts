@@ -7,7 +7,9 @@ describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
     const logger = createLogger('openapi-generator');
     spyOn(logger, 'warn');
-    expect(parseRequestBody(undefined, await createTestRefs(), defaultOptions)).toBeUndefined();
+    expect(
+      parseRequestBody(undefined, await createTestRefs(), defaultOptions)
+    ).toBeUndefined();
     expect(logger.warn).not.toHaveBeenCalled();
   });
 

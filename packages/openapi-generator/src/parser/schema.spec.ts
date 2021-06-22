@@ -35,11 +35,13 @@ describe('parseSchema', () => {
       properties: { prop1: { description: 'My Description', type: 'string' } }
     };
     expect(
-      (parseSchema(
-        schema,
-        await createTestRefs(),
-        defaultOptions
-      ) as OpenApiObjectSchema).properties[0].description
+      (
+        parseSchema(
+          schema,
+          await createTestRefs(),
+          defaultOptions
+        ) as OpenApiObjectSchema
+      ).properties[0].description
     ).toBe('My Description');
   });
 
@@ -138,13 +140,15 @@ describe('parseSchema', () => {
       }
     };
     expect(
-      (parseSchema(
-        schema,
-        await createTestRefs({
-          schemas: { PropertySchema: { type: 'string' } }
-        }),
-        defaultOptions
-      ) as OpenApiObjectSchema).properties[0].description
+      (
+        parseSchema(
+          schema,
+          await createTestRefs({
+            schemas: { PropertySchema: { type: 'string' } }
+          }),
+          defaultOptions
+        ) as OpenApiObjectSchema
+      ).properties[0].description
     ).toBeUndefined();
   });
 
@@ -161,13 +165,15 @@ describe('parseSchema', () => {
     };
 
     expect(
-      (parseSchema(
-        schema,
-        await createTestRefs({
-          schemas: { PropertySchema: { type: 'string' } }
-        }),
-        defaultOptions
-      ) as OpenApiObjectSchema).properties[0].description
+      (
+        parseSchema(
+          schema,
+          await createTestRefs({
+            schemas: { PropertySchema: { type: 'string' } }
+          }),
+          defaultOptions
+        ) as OpenApiObjectSchema
+      ).properties[0].description
     ).toEqual('Property Description');
   });
 

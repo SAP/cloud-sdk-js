@@ -30,7 +30,9 @@ describe('parseApplicationJsonMediaType', () => {
 
 describe('parseMediaType', () => {
   it('returns undefined if there is no media type at all', async () => {
-    expect(parseMediaType(undefined, await createTestRefs(), defaultOptions)).toBeUndefined();
+    expect(
+      parseMediaType(undefined, await createTestRefs(), defaultOptions)
+    ).toBeUndefined();
   });
 
   it('returns any schema if there are other schemas', async () => {

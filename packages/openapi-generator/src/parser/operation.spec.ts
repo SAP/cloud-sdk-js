@@ -81,7 +81,9 @@ describe('getRelevantParameters', () => {
 
 describe('parseParameters', () => {
   it('returns empty arrays if there are no parameters', async () => {
-    expect(parseParameters([], await createTestRefs(), defaultOptions)).toEqual([]);
+    expect(parseParameters([], await createTestRefs(), defaultOptions)).toEqual(
+      []
+    );
   });
 
   it('parses the parameter schema', async () => {

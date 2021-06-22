@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { Algorithm, sign } from 'jsonwebtoken';
+import { Algorithm, JwtHeader, sign } from 'jsonwebtoken';
 
 export function privateKey(filename = 'test'): string {
   return readFileSync(resolve(__dirname, `../test-res/${filename}`), {
@@ -31,7 +31,7 @@ export function signedJwtForVerification(
   algorithm: Algorithm = 'RS512'
 ) {
   return sign(payload, privateKey(filename), {
-    header: { jku },
+    header: { jku } as JwtHeader,
     algorithm
   });
 }

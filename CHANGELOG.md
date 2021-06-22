@@ -16,6 +16,15 @@
 
 - [eslint-config] Remove `brace-style` rule for compatibility with Prettier 2.3.
 - [openapi-generator] Change the basis for directory, package, and service names, when generating clients. If not specified otherwise, the default is based on the directory name instead of the service name.
+- [core] Deprecate JWT related interfaces in favor of the interfaces provided by the `jsonwebtoken` library.
+The following interfaces were deprecated:
+  - `JWTHeader` (use `JwtHeader` instead, the property `typ` is now optional)
+  - `JWTPayload` (use `JwtPayload` instead)
+  - `CompleteDecodedJWT` (use `Jwt` instead)
+  - `RegisteredJWTClaims`
+  - `RegisteredJWTClaimsBasic`
+  - `RegisteredJWTClaimsTenant`
+  - `RegisteredJWTClaimsUser`
 
 ## New Functionality
 
@@ -25,6 +34,7 @@
 
 - [openapi-generator] Improve the error message for invalid or unsupported path patterns.
 - [openapi-generator] Improve the error message when detecting invalid Swagger 2.0 specification files. 
+- [core] Improve types in convenience functions for JWT access. See "Compatibility Notes" for details.
 
 ## Fixed Issues
 

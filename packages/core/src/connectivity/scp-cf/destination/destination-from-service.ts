@@ -1,5 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { DecodedJWT, decodeJwt, verifyJwt } from '../jwt';
+import { JwtPayload } from 'jsonwebtoken';
+import { decodeJwt, verifyJwt } from '../jwt';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -124,7 +125,7 @@ class DestinationFromServiceRetriever {
 
   private static async getDecodedUserJwt(
     options: DestinationOptions
-  ): Promise<DecodedJWT | undefined> {
+  ): Promise<JwtPayload | undefined> {
     return options.userJwt
       ? verifyJwt(options.userJwt, options)
       : options.iss
@@ -151,13 +152,13 @@ class DestinationFromServiceRetriever {
     return serviceToken('destination', options);
   }
 
-  readonly decodedProviderClientCredentialsToken: DecodedJWT;
+  readonly decodedProviderClientCredentialsToken: JwtPayload;
   private options: DestinationOptions;
 
   private constructor(
     readonly name: string,
     options: DestinationOptions,
-    readonly decodedUserJwt: DecodedJWT | undefined,
+    readonly decodedUserJwt: JwtPayload | undefined,
     readonly providerClientCredentialsToken: string
   ) {
     this.options = { ...options };
@@ -252,7 +253,7 @@ class DestinationFromServiceRetriever {
   ): Promise<AuthAndExchangeTokens> {
     if (!this.options.userJwt) {
       throw Error(
-        'No user token (JWT) has been provided! This is strictly necessary for OAuth2UserTokenExchange.'
+        'No user token (JWT) has been provided. This is strictly necessary for `OAuth2UserTokenExchange`.'
       );
     }
 
@@ -350,7 +351,7 @@ class DestinationFromServiceRetriever {
      In the provider case the subdomain replacement in the xsuaa.url with the iss value does nothing but this does not hurt. */
     if (!this.options.userJwt) {
       throw Error(
-        'No user token (JWT) has been provided! This is strictly necessary for principal propagation.'
+        'No user token (JWT) has been provided. This is strictly necessary for principal propagation.'
       );
     }
     const accessToken = await jwtBearerToken(

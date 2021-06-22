@@ -117,94 +117,90 @@ describe('jwt', () => {
       delete process.env.VCAP_SERVICES;
     });
 
-    it('fails for no key', done => {
+    it('fails for no key', async () => {
       nock(jku, { reqheaders: { Authorization: basicHeader } })
         .get('/')
         .reply(200, { keys: [] });
 
-      verifyJwt(signedJwtForVerification(jwtPayload, jku))
-        .then(() => done('Should have failed.'))
-        .catch(error => {
-          expect(error.message).toContain(
-            'Failed to verify JWT - unable to get verification key!'
-          );
-          expect(error.stack).toContain(
-            'No verification keys have been returned by the XSUAA service!'
-          );
-          done();
-        });
+      await expect(() =>
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+      ).rejects.toMatchObject({
+        message: 'Failed to verify JWT. Could not retrieve verification key.',
+        cause: {
+          message:
+            'No verification keys have been returned by the XSUAA service.'
+        }
+      });
     });
 
-    it('fails for jku URL and xsuaa different domain', done => {
-      verifyJwt(
-        signedJwtForVerification(
-          jwtPayload,
-          'https://my-jku-url.some.wrong.domain.com'
+    it('fails for jku URL and xsuaa different domain', async () => {
+      await expect(() =>
+        verifyJwt(
+          signedJwtForVerification(
+            jwtPayload,
+            'https://my-jku-url.some.wrong.domain.com'
+          )
         )
-      )
-        .then(() => done('Should have failed.'))
-        .catch(error => {
-          expect(error.message).toContain(
-            'The domains of the XSUAA and verification URL do not match'
-          );
-          done();
-        });
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        "\"The domains of the XSUAA and verification URL do not match. The XSUUA domain is 'authentication.sap.hana.ondemand.com' and the jku field provided in the JWT is 'my-jku-url.some.wrong.domain.com'.\""
+      );
     });
 
-    it('succeeds and decodes for correct key', done => {
+    it('succeeds and decodes for correct key', async () => {
       nock(jku, { reqheaders: { Authorization: basicHeader } })
         .get('/')
         .reply(200, response);
 
-      verifyJwt(signedJwtForVerification(jwtPayload, jku))
-        .then(() => done())
-        .catch(done);
+      await expect(
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+      ).resolves.toEqual(jwtPayload);
     });
 
-    it('succeeds and decodes for correct inline key', done => {
+    it('succeeds and decodes for correct inline key', async () => {
       nock(jku, { reqheaders: { Authorization: basicHeader } })
         .get('/')
         .reply(200, responseWithoutNewlines);
 
-      verifyJwt(signedJwtForVerification(jwtPayload, jku))
-        .then(() => done())
-        .catch(done);
+      await expect(
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+      ).resolves.toEqual(jwtPayload);
     });
 
-    it('caches the key after fetching it', done => {
+    it('caches the key after fetching it', async () => {
       // We mock only a single HTTP call
       nock(jku, { reqheaders: { Authorization: basicHeader } })
         .get('/')
         .reply(200, response);
+
+      await verifyJwt(signedJwtForVerification(jwtPayload, jku));
 
       // But due to caching multiple calls should not lead to errors
-      verifyJwt(signedJwtForVerification(jwtPayload, jku))
-        .then(() => verifyJwt(signedJwtForVerification(jwtPayload, jku)))
-        .then(() => verifyJwt(signedJwtForVerification(jwtPayload, jku)))
-        .then(() => done())
-        .catch(done);
+      await expect(
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+      ).resolves.toEqual(jwtPayload);
     });
 
-    it('fails on the second call when caching is disabled', done => {
-      // We mock only a single HTTP call
+    it('fails on the second call when caching is disabled', async () => {
       nock(jku, { reqheaders: { Authorization: basicHeader } })
         .get('/')
         .reply(200, response);
 
-      // So the second call should fail
-      verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+      await verifyJwt(signedJwtForVerification(jwtPayload, jku), {
         cacheVerificationKeys: false
-      })
-        .then(() =>
-          verifyJwt(signedJwtForVerification(jwtPayload, jku), {
-            cacheVerificationKeys: false
-          })
-        )
-        .then(() => done('Should have failed!'))
-        .catch(() => done());
+      });
+
+      nock(jku, { reqheaders: { Authorization: basicHeader } })
+        .get('/')
+        .reply(500);
+
+      await expect(() =>
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Failed to verify JWT. Could not retrieve verification key."'
+      );
     });
 
-    it('fetches a new key when a key taken from the cache has been invalidated in the meantime', done => {
+    it('fetches a new key when a key taken from the cache has been invalidated in the meantime', async () => {
       nock(jku, { reqheaders: { Authorization: basicHeader } })
         .get('/')
         .reply(200, response);
@@ -218,33 +214,23 @@ describe('jwt', () => {
       const jwt1 = signedJwtForVerification(jwtPayload, jku);
       const jwt2 = signedJwtForVerification(jwtPayload2, jku);
 
-      verifyJwt(jwt1)
-        .then(() => {
-          verificationKeyCache.clear();
-          return verifyJwt(jwt2);
-        })
-        .then(() => {
-          expect(secondXsuaaMock.isDone()).toBe(true);
-          done();
-        })
-        .catch(done);
+      await verifyJwt(jwt1);
+      verificationKeyCache.clear();
+
+      await verifyJwt(jwt2);
+      expect(secondXsuaaMock.isDone()).toBe(true);
     });
 
-    it('fails if the verification key is not conform with the signed JWT', done => {
+    it('fails if the verification key is not conform with the signed JWT', async () => {
       nock(jku, { reqheaders: { Authorization: basicHeader } })
         .get('/')
         .reply(200, responseWithWrongKey);
 
-      verifyJwt(signedJwtForVerification(jwtPayload, jku), {
-        cacheVerificationKeys: false
-      })
-        .then(() => {
-          done('Should have failed.');
+      await expect(() =>
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+          cacheVerificationKeys: false
         })
-        .catch(error => {
-          expect(error.message).toBe('JWT invalid');
-          done();
-        });
+      ).rejects.toThrowErrorMatchingInlineSnapshot('"Invalid JWT."');
     });
   });
 

@@ -1,8 +1,7 @@
-import assert = require('assert');
-import { DecodedJWT } from './jwt';
+import { JwtPayload } from 'jsonwebtoken';
 import { mappingUserFields, userFromJwt } from './user';
 
-function getSampleJwt(scopes?: string[]): DecodedJWT {
+function getSampleJwt(scopes?: string[]): JwtPayload {
   return {
     user_id: 'someID',
     user_name: 'Smith_John',
@@ -15,50 +14,64 @@ function getSampleJwt(scopes?: string[]): DecodedJWT {
 
 describe('user builder from decoded jwt', () => {
   it('should contain the fields in the provided jwt', () => {
-    const decodedJwt: DecodedJWT = getSampleJwt();
+    const decodedJwt: JwtPayload = getSampleJwt();
 
-    expect(userFromJwt(decodedJwt).id).toBe(decodedJwt.user_id);
-    expect(userFromJwt(decodedJwt).givenName).toBe(decodedJwt.given_name);
-    expect(userFromJwt(decodedJwt).familyName).toBe(decodedJwt.family_name);
-    expect(userFromJwt(decodedJwt).userName).toBe(decodedJwt.user_name);
+    expect(userFromJwt(decodedJwt).id).toEqual(decodedJwt.user_id);
+    expect(userFromJwt(decodedJwt).givenName).toEqual(decodedJwt.given_name);
+    expect(userFromJwt(decodedJwt).familyName).toEqual(decodedJwt.family_name);
+    expect(userFromJwt(decodedJwt).userName).toEqual(decodedJwt.user_name);
     expect(userFromJwt(decodedJwt).scopes).toMatchObject([]);
   });
 
-  it('should throw exceptions if  mandatory fields are missing', () => {
-    try {
-      userFromJwt({ user_name: 'userNameThere' });
-      assert.fail('No exception while building from jwt without user id.');
-    } catch (e) {
-      expect(e.message).toContain(mappingUserFields.id.keyInJwt);
-    }
-
-    try {
-      userFromJwt({ user_id: 'userIdThere' });
-      assert.fail('No exception while building from jwt without user name.');
-    } catch (e) {
-      expect(e.message).toContain(mappingUserFields.userName.keyInJwt);
-    }
-
-    userFromJwt({ user_id: 'userIdThere', user_name: 'userNameThere' });
+  it('should throw if `user_id` is missing', () => {
+    expect(() =>
+      userFromJwt({ user_name: 'USERNAME' })
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Property \'user_id\' is missing in JWT payload."'
+    );
   });
 
-  it('checks the scopes', () => {
-    const userWithoutScopes = userFromJwt(getSampleJwt());
-    expect(userWithoutScopes.hasScope({ name: 'someScope' })).toBe(false);
+  it('should throw if `user_name` is missing', () => {
+    expect(() =>
+      userFromJwt({ user_id: 'USERID' })
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Property \'user_name\' is missing in JWT payload."'
+    );
+  });
 
-    const userWithScopes = userFromJwt(getSampleJwt(['scope1', 'scope2']));
+  it('should return a valid user when both `user_name` and `user_id` are given', () => {
+    const id = 'USERID';
+    const userName = 'USERNAME';
 
-    expect(userWithScopes.scopes.length).toBe(2);
-    expect(userWithScopes.hasScope({ name: 'scope1' })).toBe(true);
-    expect(userWithScopes.hasScope({ name: 'scope2' })).toBe(true);
-    expect(userWithScopes.hasScope({ name: 'nonExisting' })).toBe(false);
+    expect(userFromJwt({ user_id: id, user_name: userName })).toEqual(
+      expect.objectContaining({
+        id,
+        userName
+      })
+    );
+  });
+
+  describe('hasScope', () => {
+    it('returns false for user without scopes', () => {
+      const user = userFromJwt(getSampleJwt());
+
+      expect(user.scopes.length).toBe(0);
+      expect(user.hasScope({ name: 'someScope' })).toBe(false);
+    });
+
+    it('checks scopes for user with scopes', () => {
+      const user = userFromJwt(getSampleJwt(['scope1', 'scope2']));
+
+      expect(user.scopes.length).toBe(2);
+      expect(user.hasScope({ name: 'scope1' })).toBe(true);
+      expect(user.hasScope({ name: 'scope2' })).toBe(true);
+      expect(user.hasScope({ name: 'nonExisting' })).toBe(false);
+    });
   });
 
   it('should also parse custom attributes', () => {
-    const userWithoutCustomAtributes = userFromJwt(getSampleJwt());
-    expect(userWithoutCustomAtributes.customAttributes).toMatchObject(
-      new Map<string, string[]>()
-    );
+    const user = userFromJwt(getSampleJwt());
+    expect(user.customAttributes).toMatchObject(new Map<string, string[]>());
 
     const customAttributes = {
       customKey1: ['value1'],

@@ -6,7 +6,8 @@ import {
   createLogger,
   kebabCase,
   finishAll,
-  setLogLevel
+  setLogLevel,
+  formatJson
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import {
@@ -126,7 +127,7 @@ async function generateSources(
   await generateMandatorySources(serviceDir, openApiDocument, options);
 
   if (options.metadata) {
-    generateMetadata(openApiDocument, inputFilePath, options);
+    await generateMetadata(openApiDocument, inputFilePath, options);
   }
 
   if (options.packageJson) {
@@ -329,7 +330,7 @@ async function generateMetadata(
   logger.verbose(`Generating header metadata ${headerFileName}.`);
   const metadataDir = resolve(inputDirPath, 'sdk-metadata');
   await mkdir(metadataDir, { recursive: true });
-  await createFile(
+  const headerFile = createFile(
     metadataDir,
     headerFileName,
     JSON.stringify(
@@ -342,13 +343,14 @@ async function generateMetadata(
   );
 
   logger.verbose(`Generating client metadata ${clientFileName}...`);
-  await createFile(
+  const clientFile = createFile(
     metadataDir,
     clientFileName,
     JSON.stringify(await sdkMetadata(openApiDocument, options), null, 2),
     options.overwrite,
     false
   );
+  return Promise.all([headerFile, clientFile]);
 }
 
 async function generatePackageJson(
@@ -383,7 +385,7 @@ async function generateOptionsPerService(
   await createFile(
     dir,
     basename(filePath),
-    JSON.stringify(optionsPerService, null, 2),
+    formatJson(optionsPerService),
     true,
     false
   );

@@ -1,12 +1,14 @@
 import { createTestRefs } from '../../test/test-util';
 import { parseResponses } from './responses';
 
+const defaultOptions = { strictNaming: true };
 describe('parseResponses', () => {
   it('parses response schema without content', async () => {
     expect(
       parseResponses(
         { 200: { description: 'A response' } },
-        await createTestRefs()
+        await createTestRefs(),
+        defaultOptions
       )
     ).toEqual({
       type: 'any'
@@ -24,7 +26,8 @@ describe('parseResponses', () => {
             }
           }
         },
-        await createTestRefs()
+        await createTestRefs(),
+        defaultOptions
       )
     ).toEqual({
       type: 'string'
@@ -58,7 +61,8 @@ describe('parseResponses', () => {
           schemas: {
             RefType: { type: 'string' }
           }
-        })
+        }),
+        defaultOptions
       )
     ).toEqual({
       anyOf: [

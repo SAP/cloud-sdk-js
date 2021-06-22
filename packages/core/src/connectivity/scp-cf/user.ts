@@ -1,6 +1,6 @@
+import { JwtPayload } from 'jsonwebtoken';
 import {
   checkMandatoryValue,
-  DecodedJWT,
   JwtKeyMapping,
   readPropertyWithWarn
 } from './jwt';
@@ -23,16 +23,16 @@ export interface User extends UserData {
 }
 
 /**
- * Extracts the custom attributes in the JWT
- * @param decodedToken - Token to read the custom attributes
- * @returns custom attributes added by the xsuaa to the issued JWT.
+ * Extracts the custom attributes from the JWT.
+ * @param jwtPayload Token payload to read the custom attributes from.
+ * @returns Custom attributes added by the XSUAA service to the issued JWT.
  */
 export function customAttributes(
-  decodedToken: DecodedJWT
+  jwtPayload: JwtPayload
 ): Map<string, string[]> {
-  if (decodedToken[mappingUserFields.customAttributes.keyInJwt]) {
+  if (jwtPayload[mappingUserFields.customAttributes.keyInJwt]) {
     return readPropertyWithWarn(
-      decodedToken,
+      jwtPayload,
       mappingUserFields.customAttributes.keyInJwt
     ) as Map<string, string[]>;
   }
@@ -44,7 +44,13 @@ export function customAttributes(
  */
 export const mappingUserFields: JwtKeyMapping<
   UserData,
-  RegisteredJWTClaimsUser
+  | 'user_id'
+  | 'user_name'
+  | 'given_name'
+  | 'family_name'
+  | 'email'
+  | 'scope'
+  | 'xs.user.attributes'
 > = {
   id: { keyInJwt: 'user_id', extractorFunction: userId },
   userName: { keyInJwt: 'user_name', extractorFunction: userName },
@@ -59,81 +65,79 @@ export const mappingUserFields: JwtKeyMapping<
 };
 
 /**
- * Get the user's given name of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
+ * Get the user's given name from the JWT payload.
+ * @param jwtPayload Token payload to read the user's given name from.
+ * @returns The user's given name if available.
  */
-export function userGivenName(decodedToken: DecodedJWT): string | undefined {
+export function userGivenName(jwtPayload: JwtPayload): string | undefined {
   if (mappingUserFields.givenName) {
     return readPropertyWithWarn(
-      decodedToken,
+      jwtPayload,
       mappingUserFields.givenName.keyInJwt
     );
   }
 }
 
 /**
- * Get the user's family name of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
+ * Get the user's family name from the JWT payload.
+ * @param jwtPayload Token payload to read the user's family from.
+ * @returns The user's family name if available.
  */
-export function userFamilyName(decodedToken: DecodedJWT): string | undefined {
-  if (mappingUserFields && mappingUserFields.familyName) {
+export function userFamilyName(jwtPayload: JwtPayload): string | undefined {
+  if (mappingUserFields.familyName) {
     return readPropertyWithWarn(
-      decodedToken,
-      mappingUserFields!.familyName.keyInJwt
+      jwtPayload,
+      mappingUserFields.familyName.keyInJwt
     );
   }
 }
 
 /**
- * Get the user name of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
+ * Get the user name from the JWT payload.
+ * @param jwtPayload Token payload to read the user name from.
+ * @returns The user name if available.
  */
-export function userName(decodedToken: DecodedJWT): string | undefined {
-  return readPropertyWithWarn(
-    decodedToken,
-    mappingUserFields.userName.keyInJwt
-  );
+export function userName(jwtPayload: JwtPayload): string | undefined {
+  return readPropertyWithWarn(jwtPayload, mappingUserFields.userName.keyInJwt);
 }
 
 /**
- * Get the user's email of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
+ * Get the user's e-mail address from the JWT payload.
+ * @param jwtPayload Token payload to read the user e-mail address from.
+ * @returns The user's e-mail address if available.
  */
-export function userEmail(decodedToken: DecodedJWT): string | undefined {
-  if (mappingUserFields && mappingUserFields.email) {
-    return readPropertyWithWarn(decodedToken, mappingUserFields.email.keyInJwt);
+export function userEmail(jwtPayload: JwtPayload): string | undefined {
+  if (mappingUserFields.email) {
+    return readPropertyWithWarn(jwtPayload, mappingUserFields.email.keyInJwt);
   }
 }
 
 /**
- * Get the user's scopes of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
- * @returns The user id if available.
+ * Get the user's scopes from the JWT payload.
+ * @param jwtPayload Token payload to read the user's scopes from.
+ * @returns The user's scopes if available.
  */
-export function userScopes(decodedToken: DecodedJWT): Scope[] | [] {
-  if (!(decodedToken.scope instanceof Array && decodedToken.scope.length)) {
+export function userScopes(jwtPayload: JwtPayload): Scope[] {
+  if (!(jwtPayload.scope instanceof Array && jwtPayload.scope.length)) {
     return [];
   }
-  return decodedToken.scope
+  return jwtPayload.scope
     .map(s => (s.includes('.') ? s.substr(s.indexOf('.') + 1, s.length) : s))
     .map(s => ({ name: s }));
 }
 
 /**
- * Get the user id of a decoded JWT.
- * @param decodedToken - Token to read the user id from.
+ * Get the user id from the JWT payload.
+ * @param jwtPayload Token payload to read the user id from.
  * @returns The user id if available.
  */
-export function userId(decodedToken: DecodedJWT): string | undefined {
-  return readPropertyWithWarn(decodedToken, mappingUserFields.id.keyInJwt);
+export function userId(jwtPayload: JwtPayload): string | undefined {
+  return readPropertyWithWarn(jwtPayload, mappingUserFields.id.keyInJwt);
 }
 
 /**
- * Keys in the JWT related to the user
+ * @deprecated Since v1.46.0. This interface will not be replaced. Use the higher level JWT types directly.
+ * Keys in the JWT related to the user.
  */
 export interface RegisteredJWTClaimsUser {
   user_id?: string;
@@ -152,7 +156,6 @@ export interface Scope {
   name: string;
 }
 
-// Type ExtractStringType = (decodedJwt: DecodedJWT) => string;
 type hasScopeType = (s: Scope) => boolean;
 
 function hasScopeWrapper(scopes: Scope[]): hasScopeType {
@@ -163,22 +166,21 @@ function hasScopeWrapper(scopes: Scope[]): hasScopeType {
 
 /**
  * Creates a user object from the decoded JWT.
- *
- * @param decodedJWT - Decoded JWT toeken
- * @returns Representation of the user
- * @exception Error Raised if no id is found in the decoded JWT.
+ * Throws an error if no `id` or `userName` property is present on the JWT payload.
+ * @param jwtPayload Token payload to get the user from.
+ * @returns Representation of the user.
  */
-export function userFromJwt(decodedJWT: DecodedJWT): User {
-  checkMandatoryValue('id', mappingUserFields, decodedJWT);
-  checkMandatoryValue('userName', mappingUserFields, decodedJWT);
+export function userFromJwt(jwtPayload: JwtPayload): User {
+  checkMandatoryValue('id', mappingUserFields, jwtPayload);
+  checkMandatoryValue('userName', mappingUserFields, jwtPayload);
   return {
-    id: userId(decodedJWT)!,
-    givenName: userGivenName(decodedJWT),
-    familyName: userFamilyName(decodedJWT),
-    email: userEmail(decodedJWT),
-    userName: userName(decodedJWT)!,
-    scopes: userScopes(decodedJWT),
-    customAttributes: customAttributes(decodedJWT),
-    hasScope: hasScopeWrapper(userScopes(decodedJWT))
+    id: userId(jwtPayload)!,
+    givenName: userGivenName(jwtPayload),
+    familyName: userFamilyName(jwtPayload),
+    email: userEmail(jwtPayload),
+    userName: userName(jwtPayload)!,
+    scopes: userScopes(jwtPayload),
+    customAttributes: customAttributes(jwtPayload),
+    hasScope: hasScopeWrapper(userScopes(jwtPayload))
   };
 }

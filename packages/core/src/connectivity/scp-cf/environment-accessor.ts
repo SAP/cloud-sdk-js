@@ -1,6 +1,7 @@
 import { createLogger, ErrorWithCause, first } from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
-import { audiences, DecodedJWT, decodeJwt } from './jwt';
+import { JwtPayload } from 'jsonwebtoken';
+import { audiences, decodeJwt } from './jwt';
 import {
   DestinationServiceCredentials,
   Service,
@@ -203,7 +204,7 @@ export function getDestinationServiceUri(): string | null {
  * @returns The credentials for a match, otherwise null.
  */
 export function getXsuaaServiceCredentials(
-  token?: DecodedJWT | string
+  token?: JwtPayload | string
 ): XsuaaServiceCredentials {
   if (typeof token === 'string') {
     return getXsuaaServiceCredentials(decodeJwt(token)); // Decode without verifying
@@ -250,7 +251,7 @@ export function extractClientCredentials(
   };
 }
 
-function selectXsuaaInstance(token?: DecodedJWT): XsuaaServiceCredentials {
+function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {
   const xsuaaInstances = getServiceList('xsuaa');
 
   if (!xsuaaInstances.length) {
@@ -280,7 +281,7 @@ function selectXsuaaInstance(token?: DecodedJWT): XsuaaServiceCredentials {
 function applyStrategiesInOrder(
   selectionStrategies: SelectionStrategyFn[],
   xsuaaInstances: Record<string, any>[],
-  token?: DecodedJWT
+  token?: JwtPayload
 ): Record<string, any>[] {
   return selectionStrategies.reduce(
     (result, strategy) =>
@@ -291,12 +292,12 @@ function applyStrategiesInOrder(
 
 type SelectionStrategyFn = (
   xsuaaInstances: Record<string, any>[],
-  token?: DecodedJWT
+  token?: JwtPayload
 ) => Record<string, any>[];
 
 function matchingClientId(
   xsuaaInstances: Record<string, any>[],
-  token?: DecodedJWT
+  token?: JwtPayload
 ): Record<string, any>[] {
   if (!token) {
     return [];
@@ -308,7 +309,7 @@ function matchingClientId(
 
 function matchingAudience(
   xsuaaInstances: Record<string, any>[],
-  token?: DecodedJWT
+  token?: JwtPayload
 ): Record<string, any>[] {
   if (!token) {
     return [];

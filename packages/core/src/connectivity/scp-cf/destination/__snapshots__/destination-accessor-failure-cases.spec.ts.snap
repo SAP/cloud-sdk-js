@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Failure cases fails if no destination service is bound 1`] = `"Failed to verify JWT - unable to get verification key!"`;
-
-exports[`Failure cases should throw an error when neither userJwt nor SystemUser are defined 1`] = `"No user token (JWT) has been provided! This is strictly necessary for principal propagation."`;
-
-exports[`Failure cases throws an error when the provide userJwt is invalid 1`] = `"JwtError: The given jwt payload does not encode valid JSON."`;

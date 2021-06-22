@@ -1,4 +1,4 @@
-import { DecodedJWT } from '../jwt';
+import { JwtPayload } from 'jsonwebtoken';
 import { Cache, IsolationStrategy } from '../cache';
 import { Destination } from './destination-service-types';
 import { getDestinationCacheKey } from './destination-cache';
@@ -6,22 +6,22 @@ import { getDestinationCacheKey } from './destination-cache';
 const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
   retrieveDestinationsFromCache: (
     targetUrl: string,
-    decodedJwt: DecodedJWT,
-    isolationStrategty?: IsolationStrategy
+    decodedJwt: JwtPayload,
+    isolationStrategy?: IsolationStrategy
   ): Destination[] | undefined =>
     cache.get(
-      getDestinationCacheKeyService(targetUrl, decodedJwt, isolationStrategty)
+      getDestinationCacheKeyService(targetUrl, decodedJwt, isolationStrategy)
     ),
   cacheRetrievedDestinations: (
     destinationServiceUri: string,
-    decodedJwt: DecodedJWT,
+    decodedJwt: JwtPayload,
     destinations: Destination[],
-    isolationStrategty?: IsolationStrategy
+    isolationStrategy?: IsolationStrategy
   ): void => {
     const key = getDestinationCacheKeyService(
       destinationServiceUri,
       decodedJwt,
-      isolationStrategty
+      isolationStrategy
     );
     cache.set(key, destinations);
   },
@@ -31,17 +31,17 @@ const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
   getCacheInstance: () => cache
 });
 
-// The destination service Uri contains the destination name (single request) or the instance/subaccount information for get all request
-// The used isolation strategty is either Tenant or Tenat_User because we want to get results for subaccount and provider tenants which rules out no-isolation or user islation
+// The destination service URI contains the destination name (single request) or the instance/subaccount information for get all requests.
+// The used isolation strategy is either `Tenant` or `Tenant_User` because we want to get results for subaccount and provider tenants which rules out no-isolation or user isolation.
 function getDestinationCacheKeyService(
   destinationServiceUri: string,
-  decodedJwt: DecodedJWT,
-  isolationStrategty?: IsolationStrategy
+  decodedJwt: JwtPayload,
+  isolationStrategy?: IsolationStrategy
 ): string {
   const usedIsolationStrategy =
-    isolationStrategty === IsolationStrategy.Tenant ||
-    isolationStrategty === IsolationStrategy.Tenant_User
-      ? isolationStrategty
+    isolationStrategy === IsolationStrategy.Tenant ||
+    isolationStrategy === IsolationStrategy.Tenant_User
+      ? isolationStrategy
       : IsolationStrategy.Tenant;
 
   return getDestinationCacheKey(

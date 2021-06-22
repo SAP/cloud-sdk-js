@@ -6,7 +6,8 @@ import {
   createLogger,
   kebabCase,
   finishAll,
-  setLogLevel
+  setLogLevel,
+  formatJson
 } from '@sap-cloud-sdk/util';
 import { GlobSync } from 'glob';
 import {
@@ -60,6 +61,9 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
 ): Promise<void> {
+  if (options.input === '' || options.outputDir === '') {
+    throw new Error('Either input or outputDir were not set.');
+  }
   if (options.verbose) {
     setLogLevel('verbose', logger);
   }
@@ -381,7 +385,7 @@ async function generateOptionsPerService(
   await createFile(
     dir,
     basename(filePath),
-    JSON.stringify(optionsPerService, null, 2),
+    formatJson(optionsPerService),
     true,
     false
   );

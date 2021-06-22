@@ -1,7 +1,6 @@
 import { existsSync, promises } from 'fs';
 import { parse } from 'path';
-import { EOL } from 'os';
-import { UniqueNameGenerator } from '@sap-cloud-sdk/util';
+import { unique, UniqueNameGenerator } from '@sap-cloud-sdk/util';
 import { getRelativePath } from '../generator';
 import { ParsedGeneratorOptions } from './generator-options';
 
@@ -31,7 +30,7 @@ export interface ServiceOptions {
    */
   packageName: string;
   /**
-   * Name of the service
+   * Human readable name of the service. Used in API documentation and readme.
    */
   serviceName: string;
 }
@@ -50,12 +49,12 @@ export async function getOriginalOptionsPerService(
 }
 
 /**
- * Get the options per service for the list of services.
+ * Get the options per service for given service specifications.
  * If optionsPerServicePath is not given default values are used for the services.
  * If optionsPerServicePath is given existing values for the services are.
- * @param inputPaths Paths for the service spec files
- * @param options Options of the generator
- * @returns The parsed configuration for all services in relativeServicePaths.
+ * @param inputPaths Service spec file paths.
+ * @param options Generator options.
+ * @returns The parsed options per service.
  */
 export async function getOptionsPerService(
   inputPaths: string[],
@@ -66,50 +65,96 @@ export async function getOptionsPerService(
   );
 
   const uniqueNameGenerator = new UniqueNameGenerator('-');
-  const duplicateServicePaths: string[] = [];
+
+  const directoryNamesByPaths = getDirectoryNamesByPaths(
+    inputPaths,
+    originalOptionsPerService
+  );
+  if (!options.skipValidation) {
+    validateDirectoryNames(directoryNamesByPaths);
+  }
 
   const optionsPerService: OptionsPerService = inputPaths.reduce(
-    (previousOptions, path) => {
-      const relativePath = getRelativePath(path);
+    (previousOptions, inputPath) => {
+      const relativePath = getRelativePath(inputPath);
 
-      const originalServiceName =
-        originalOptionsPerService[relativePath]?.serviceName ||
-        parseServiceName(relativePath);
-      const uniqueServiceName =
-        uniqueNameGenerator.generateAndSaveUniqueName(originalServiceName);
-      if (originalServiceName !== uniqueServiceName) {
-        duplicateServicePaths.push(relativePath);
-      }
+      const uniqueDirName = uniqueNameGenerator.generateAndSaveUniqueName(
+        directoryNamesByPaths[inputPath]
+      );
 
       previousOptions[relativePath] = getServiceOptions(
-        originalOptionsPerService,
-        relativePath,
-        uniqueServiceName
+        uniqueDirName,
+        originalOptionsPerService[relativePath]
       );
       return previousOptions;
     },
     {}
   );
 
-  if (duplicateServicePaths.length > 0 && !options.skipValidation) {
-    throw new Error(
-      `The following service specs lead to non unique service names:${EOL}${duplicateServicePaths.join(
-        EOL
-      )}.${EOL}You can either ${
-        options.optionsPerService ? 'adjust your' : 'introduce a'
-      } optionsPerSerivice file or enable the skipValidation flag.`
-    );
-  }
-
   return optionsPerService;
 }
 
+function getDirectoryNamesByPaths(
+  inputPaths: string[],
+  originalOptionsPerService: PartialOptionsPerService
+): Record<string, string> {
+  return inputPaths.reduce((directoryNamesByPaths, inputPath) => {
+    const relativePath = getRelativePath(inputPath);
+    const directoryName =
+      originalOptionsPerService[relativePath]?.directoryName ||
+      parseDirectoryName(relativePath);
+
+    directoryNamesByPaths[inputPath] = directoryName;
+    return directoryNamesByPaths;
+  }, {});
+}
+
+function getPathsByDirName(
+  dirNamesByPaths: Record<string, string>
+): Record<string, string[]> {
+  return Object.entries(dirNamesByPaths).reduce(
+    (pathsByDirName, [inputPath, dirName]) => {
+      if (!pathsByDirName[dirName]) {
+        pathsByDirName[dirName] = [];
+      }
+      pathsByDirName[dirName].push(inputPath);
+      return pathsByDirName;
+    },
+    {}
+  );
+}
+
+function validateDirectoryNames(dirNamesByPaths: Record<string, string>): void {
+  const originalDirNames = Object.values(dirNamesByPaths);
+  const uniqueDirNames = unique(originalDirNames);
+  const hasDuplicates = originalDirNames.length !== uniqueDirNames.length;
+
+  if (hasDuplicates) {
+    const pathsByDirName = getPathsByDirName(dirNamesByPaths);
+    const duplicates = Object.entries(pathsByDirName).filter(
+      ([, paths]) => paths.length > 1
+    );
+
+    const duplicatesList = duplicates
+      .map(
+        ([dirName, paths]) =>
+          `\t\tDirectory name: '${dirName}', specifications: [\n${paths
+            .map(path => `\t\t\t${path}`)
+            .join(',\n')}\n\t\t]`
+      )
+      .join('\n');
+
+    const errorMessage = `Duplicate service directory names found. Customize directory names with \`optionsPerService\` or enable automatic name adjustment with \`skipValidation\`.\n\tDuplicates:\n${duplicatesList}`;
+    throw new Error(errorMessage);
+  }
+}
+
 /**
- * Parse the name of the service based on the file path.
+ * Parse the name of the service directory based on the file path.
  * @param filePath Path of the service specification.
  * @returns The parsed name.
  */
-function parseServiceName(filePath: string): string {
+function parseDirectoryName(filePath: string): string {
   return parse(filePath).name.replace(/-openapi$/, '');
 }
 
@@ -117,25 +162,23 @@ function parseServiceName(filePath: string): string {
  * Get the options for one service based on the options per service and the input file path.
  * If the file path does not exist in the options a default config is created.
  * If the service options for a file path are given only partially, default values are added for the missing values.
- * @param optionsPerService The original options per service to get the service options from.
- * @param relativeInputFilePath The input file path for which to find service options.
- * @param serviceName The default name of the according service.
+ * @param directoryName The directory name of the according service.
+ * @param serviceOptions The original options for this service as specified in the per service options.
  * @returns Service options.
  */
 export function getServiceOptions(
-  optionsPerService: PartialOptionsPerService,
-  relativeInputFilePath: string,
-  serviceName: string
+  directoryName: string,
+  serviceOptions?: Partial<ServiceOptions>
 ): ServiceOptions {
   const defaultConfig = {
-    packageName: serviceName,
-    directoryName: serviceName,
-    serviceName
+    packageName: directoryName,
+    directoryName,
+    serviceName: directoryName
   };
 
-  const configFromOptionsPerService = optionsPerService[relativeInputFilePath];
   return {
     ...defaultConfig,
-    ...configFromOptionsPerService
+    ...serviceOptions,
+    directoryName
   };
 }

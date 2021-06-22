@@ -1,44 +1,42 @@
+import { JwtPayload } from 'jsonwebtoken';
 import {
   checkMandatoryValue,
-  DecodedJWT,
   JwtKeyMapping,
   readPropertyWithWarn
 } from './jwt';
 
 /**
- * Mapping between key name in the Tenant and key name in decoded JWT and the
+ * Mapping between key name in the Tenant and key name in decoded JWT.
  */
-export const mappingTenantFields: JwtKeyMapping<
-  Tenant,
-  RegisteredJWTClaimsTenant
-> = {
+export const mappingTenantFields: JwtKeyMapping<Tenant, 'zid' | 'zdn'> = {
   id: { keyInJwt: 'zid', extractorFunction: tenantId },
   name: { keyInJwt: 'zdn', extractorFunction: tenantName }
 };
+
 /**
  * Get the tenant id of a decoded JWT.
- * @param decodedToken - Token to read the tenant id from.
- * @returns The tenant id if available.
+ * @param jwtPayload Token payload to read the tenant id from.
+ * @returns The tenant id, if available.
  */
-export function tenantId(decodedToken: DecodedJWT): string | undefined {
-  return readPropertyWithWarn(decodedToken, mappingTenantFields.id.keyInJwt);
+export function tenantId(jwtPayload: JwtPayload): string | undefined {
+  return readPropertyWithWarn(jwtPayload, mappingTenantFields.id.keyInJwt);
 }
 
 /**
  * Get the tenant name of a decoded JWT.
- * @param decodedToken - Token to read the tenant id from.
- * @returns The tenant id if available.
+ * @param jwtPayload Token payload to read the tenant name from.
+ * @returns The tenant name, if available.
  */
-export function tenantName(decodedToken: DecodedJWT): string | undefined {
-  const extAttr = readPropertyWithWarn(decodedToken, 'ext_attr');
+export function tenantName(jwtPayload: JwtPayload): string | undefined {
+  const extAttr = readPropertyWithWarn(jwtPayload, 'ext_attr');
   if (extAttr) {
     return readPropertyWithWarn(extAttr, 'zdn');
   }
-  return undefined;
 }
 
 /**
- * Keys in the JWT related to the user
+ * @deprecated Since v1.46.0. This interface will not be replaced. Use the higher level JWT types directly.
+ * Keys in the JWT related to the tenant.
  */
 export interface RegisteredJWTClaimsTenant {
   zid?: string;
@@ -46,7 +44,7 @@ export interface RegisteredJWTClaimsTenant {
 }
 
 /**
- * Representation of the tenant. A tenant represents the customer account on cloud foundry.
+ * Representation of the tenant. A tenant represents the customer account on Cloud Foundry.
  */
 export interface Tenant {
   id: string;
@@ -54,32 +52,31 @@ export interface Tenant {
 }
 
 /**
- * Creates a tenant object from the decoded JWT.
- *
- * @param decodedJWT - Decoded JWT token
+ * Creates a tenant object from the JWT payload.
+ * Throws an error if the property `id` is not present in the payload.
+ * @param jwtPayload Token payload to get the tenant information from.
  * @returns Representation of the tenant.
- * @exception Error Raised if no id is found in the decoded JWT.
  */
-export function tenantFromJwt(decodedJWT: DecodedJWT): Tenant {
-  checkMandatoryValue('id', mappingTenantFields, decodedJWT);
+export function tenantFromJwt(jwtPayload: JwtPayload): Tenant {
+  checkMandatoryValue('id', mappingTenantFields, jwtPayload);
   return {
-    id: tenantId(decodedJWT)!,
-    name: tenantName(decodedJWT)
+    id: tenantId(jwtPayload)!,
+    name: tenantName(jwtPayload)
   };
 }
 
 /**
- * Compare two decoded JWTs based on their tenantIds.
- * @param decodedUserToken - User JWT
- * @param decodedProviderToken - Provider JWT
+ * Compare two decoded JWTs based on their `tenantId`s.
+ * @param userTokenPayload - User JWT payload.
+ * @param providerTokenPayload - Provider JWT payload.
  * @returns Whether the tenant is identical.
  */
 export function isIdenticalTenant(
-  decodedUserToken: DecodedJWT,
-  decodedProviderToken: DecodedJWT
+  userTokenPayload: JwtPayload,
+  providerTokenPayload: JwtPayload
 ): boolean {
   return (
-    readPropertyWithWarn(decodedUserToken, mappingTenantFields.id.keyInJwt) ===
-    readPropertyWithWarn(decodedProviderToken, mappingTenantFields.id.keyInJwt)
+    readPropertyWithWarn(userTokenPayload, mappingTenantFields.id.keyInJwt) ===
+    readPropertyWithWarn(providerTokenPayload, mappingTenantFields.id.keyInJwt)
   );
 }

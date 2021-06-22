@@ -72,12 +72,39 @@ function isPlaceholder(pathPart: string): boolean {
   return /^\{.+\}$/.test(pathPart);
 }
 
+function isValidPlaceholder(placeholder: string): boolean {
+  // This regex matches the cases:
+  // 1. it starts with `{`
+  // 2. it ends with `}`
+  // 3. it does not contain any other `{` or `}` in the middle
+  return /^\{[^{}]+\}$/.test(placeholder);
+}
+
+// This function checks whether the given path pattern is valid. Typically, it detects the invalid pattern like below
+// 1. `/path/{p1}:{p2}`
+// 2. `/path?{param}`
+function isValidPathPattern(
+  pathPattern: string,
+  placeholders: string[]
+): boolean {
+  return (
+    pathPattern.includes('?') ||
+    placeholders.some(placeholder => !isValidPlaceholder(placeholder))
+  );
+}
+
 function sortPathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
   pathPattern: string
 ): OpenAPIV3.ParameterObject[] {
   const pathParts = pathPattern.split('/');
   const placeholders = pathParts.filter(part => isPlaceholder(part));
+
+  if (isValidPathPattern(pathPattern, placeholders)) {
+    throw new Error(
+      `Path pattern '${pathPattern}' is invalid or not supported.`
+    );
+  }
 
   return placeholders.map(placeholder => {
     const strippedPlaceholder = placeholder.slice(1, -1);
@@ -122,6 +149,7 @@ export function parsePathParameters(
   refs: OpenApiDocumentRefs,
   options: ParserOptions
 ): OpenApiParameter[] {
+  // todo validate
   const sortedPathParameters = sortPathParameters(pathParameters, pathPattern);
   const parsedParameters = parseParameters(sortedPathParameters, refs);
   const uniqueNames = ensureUniqueNames(

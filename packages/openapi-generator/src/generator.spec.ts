@@ -169,15 +169,17 @@ describe('generator', () => {
         optionsPerService: 'options.json'
       });
 
-      await expect(readFile('options.json', 'utf8')).resolves
-        .toMatchInlineSnapshot(`
+      const actual = readFile('options.json', 'utf8');
+      await expect(actual).resolves.toMatch(endsWithNewLine);
+      await expect(actual).resolves.toMatchInlineSnapshot(`
               "{
                 \\"inputDir/spec.json\\": {
                   \\"packageName\\": \\"spec\\",
                   \\"directoryName\\": \\"spec\\",
                   \\"serviceName\\": \\"spec\\"
                 }
-              }"
+              }
+              "
             `);
     });
 
@@ -188,15 +190,17 @@ describe('generator', () => {
         optionsPerService: 'existingConfig'
       });
 
-      await expect(readFile('existingConfig', 'utf8')).resolves
-        .toMatchInlineSnapshot(`
+      const actual = readFile('existingConfig', 'utf8');
+      await expect(actual).resolves.toMatch(endsWithNewLine);
+      await expect(actual).resolves.toMatchInlineSnapshot(`
               "{
                 \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"spec\\",
+                  \\"packageName\\": \\"customName\\",
                   \\"directoryName\\": \\"customName\\",
-                  \\"serviceName\\": \\"spec\\"
+                  \\"serviceName\\": \\"customName\\"
                 }
-              }"
+              }
+              "
             `);
     });
   });
@@ -249,3 +253,5 @@ describe('generator', () => {
     });
   });
 });
+
+const endsWithNewLine = /\n$/;

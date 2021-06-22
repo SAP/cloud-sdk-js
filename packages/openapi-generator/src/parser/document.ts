@@ -27,18 +27,19 @@ export async function parseOpenApiDocument(
     apis: parseApis(document, refs, options),
     serviceName: serviceOptions.serviceName,
     serviceOptions,
-    schemas: parseSchemas(document, refs)
+    schemas: parseSchemas(document, refs, options)
   };
 }
 
 export function parseSchemas(
   document: OpenAPIV3.Document,
-  refs: OpenApiDocumentRefs
+  refs: OpenApiDocumentRefs,
+  options: ParserOptions
 ): OpenApiPersistedSchema[] {
   return Object.entries(document.components?.schemas || {}).map(
     ([name, schema]) => ({
       ...refs.getSchemaNaming(`#/components/schemas/${name}`),
-      schema: parseSchema(schema, refs),
+      schema: parseSchema(schema, refs, options),
       description: refs.resolveObject(schema).description
     })
   );

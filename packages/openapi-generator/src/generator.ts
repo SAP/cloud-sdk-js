@@ -89,7 +89,11 @@ export async function generateWithParsedOptions(
       promises.length > 1
         ? 'Some clients could not be generated.'
         : 'Could not generate client.';
-    await finishAll(promises, errorMessage);
+    let getRootCause;
+    if(options.verbose) {
+      getRootCause = (rejected: PromiseRejectedResult) => rejected.reason.stack || rejected.reason;
+    }
+    await finishAll(promises, errorMessage, getRootCause);
   } finally {
     if (options.optionsPerService) {
       await generateOptionsPerService(

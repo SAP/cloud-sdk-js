@@ -8,10 +8,12 @@ require('promise.allsettled/auto');
  * Throws an error consisting of a list of reasons.
  * @param promises Promises to settle.
  * @param errorMessage Message to use as introductory text of the error if an error occurs.
+ * @param getRootCause A function to get the root cause of the potential errors.
  */
 export async function finishAll(
   promises: Promise<any>[],
-  errorMessage?: string
+  errorMessage?: string,
+  getRootCause  = (rejected : PromiseRejectedResult) => rejected.reason
 ): Promise<void> {
   const settledPromises = await Promise.allSettled(promises);
   const rejectedPromises = settledPromises.filter(
@@ -19,7 +21,7 @@ export async function finishAll(
   ) as PromiseRejectedResult[];
   if (rejectedPromises.length) {
     const reasons = rejectedPromises
-      .map(promise => `\t${promise.reason}`)
+      .map(rejectedPromise => `\t${getRootCause(rejectedPromise)}`)
       .join('\n');
     const message = errorMessage ? `${errorMessage} ` : '';
     throw new Error(`${message}Errors: [\n${reasons}\n]`);

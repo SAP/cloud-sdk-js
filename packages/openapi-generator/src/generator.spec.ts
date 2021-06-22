@@ -117,12 +117,12 @@ describe('generator', () => {
       });
     });
 
-    it('should a README.md', () => {
+    it('should create a README.md', () => {
       const readme = resolve(outputPath, 'README.md');
       expect(existsSync(readme)).toBe(true);
     });
 
-    it('should metadata header', () => {
+    it('should create metadata header', () => {
       const metaDataHeader = resolve(
         inputPath,
         'sdk-metadata/mySpec_HEADER.json'
@@ -130,7 +130,7 @@ describe('generator', () => {
       expect(existsSync(metaDataHeader)).toBe(true);
     });
 
-    it('should metadata client', () => {
+    it('should create metadata client', () => {
       const metaDataHeader = resolve(
         inputPath,
         'sdk-metadata/mySpec_CLIENT_JS.json'

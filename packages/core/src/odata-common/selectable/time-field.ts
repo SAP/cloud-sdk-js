@@ -93,7 +93,9 @@ export class ComplexTypeTimePropertyField<
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
     arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
-    arg4?: EdmTypeShared<ODataVersionOf<EntityT>> | NullableT
+    arg4:
+      | EdmTypeShared<ODataVersionOf<EntityT>>
+      | NullableT = false as NullableT
   ) {
     super(
       fieldName,

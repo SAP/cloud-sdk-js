@@ -12,11 +12,6 @@ import { ConstructorOrField } from './constructor-or-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
 import { ConditionallyNullable } from './nullable';
 
-/**
- * Represents a property with a string value.
- *
- * @typeparam EntityT - Type of the entity the field belongs to
- */
 class StringFieldBase<
   EntityT extends Entity,
   NullableT extends boolean
@@ -95,7 +90,9 @@ export class ComplexTypeStringPropertyField<
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
     arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
-    arg4?: EdmTypeShared<ODataVersionOf<EntityT>> | NullableT
+    arg4:
+      | EdmTypeShared<ODataVersionOf<EntityT>>
+      | NullableT = false as NullableT
   ) {
     super(
       fieldName,

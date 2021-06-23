@@ -120,7 +120,7 @@ export function getEntityConstructor<EntityT extends Entity, ComplexT>(
  */
 export function getEdmType<T extends ODataVersion>(
   complexTypeNameOrEdmType: string | EdmTypeShared<T>,
-  edmTypeOrUndefined?: EdmTypeShared<T>
+  edmTypeOrUndefined: EdmTypeShared<T> | undefined
 ): EdmTypeShared<T> {
   if (edmTypeOrUndefined) {
     if (

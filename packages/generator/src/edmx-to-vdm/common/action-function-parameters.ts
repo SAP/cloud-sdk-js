@@ -49,8 +49,7 @@ function getParameter<T extends EdmxNamed>(
     const swaggerParameter = swaggerDefinition
       ? swaggerDefinition.parameters.find(param => param.name === p.Name)
       : undefined;
-    const nullable = isNullableParameter(p);
-    const typeMapping = getTypeMappingActionFunction(p.Type, nullable);
+    const typeMapping = getTypeMappingActionFunction(p.Type);
     return {
       originalName: p.Name,
       parameterName: formatter.originalToParameterName(
@@ -60,7 +59,7 @@ function getParameter<T extends EdmxNamed>(
       edmType: typeMapping.edmType,
       jsType: typeMapping.jsType,
       fieldType: typeMapping.fieldType,
-      nullable,
+      nullable: isNullableParameter(p),
       description: parameterDescription(p, swaggerParameter)
     };
   });

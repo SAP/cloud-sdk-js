@@ -102,15 +102,14 @@ export function complexTypeFieldType(typeName: string): string {
 }
 
 export function getTypeMappingActionFunction(
-  typeName: string,
-  isNullable: boolean
+  typeName: string
 ): VdmMappedEdmType {
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
     return {
       edmType: edmFallback,
       jsType: edmToTsType(edmFallback),
-      fieldType: edmToFieldType(edmFallback, isNullable)
+      fieldType: edmToFieldType(edmFallback)
     };
   }
   throw new Error(

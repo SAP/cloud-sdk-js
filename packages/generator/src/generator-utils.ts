@@ -43,13 +43,8 @@ export function isNullableParameter(parameter: any): boolean {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
 }
 
-interface EdmTypeMappingFieldType {
-  nullable: string;
-  nonNullable: string;
-}
-
 export type EdmTypeMapping = {
-  [key in EdmTypeShared<'any'>]: EdmTypeMappingFieldType | undefined;
+  [key in EdmTypeShared<'any'>]: string | undefined;
 };
 
 type EdmTypeMappingWithoutEnum = {
@@ -84,63 +79,41 @@ const edmToTsTypeMapping: EdmTypeMappingWithoutEnum = {
 };
 
 const edmToFieldTypeMapping: EdmTypeMapping = {
-  'Edm.String': { nullable: 'NullableStringField', nonNullable: 'StringField' },
-  'Edm.Boolean': {
-    nullable: 'NullableBooleanField',
-    nonNullable: 'BooleanField'
-  },
-  'Edm.Guid': { nullable: 'NullableStringField', nonNullable: 'StringField' },
-  'Edm.Decimal': {
-    nullable: 'NullableBigNumberField',
-    nonNullable: 'BigNumberField'
-  },
-  'Edm.Int16': { nullable: 'NullableNumberField', nonNullable: 'NumberField' },
-  'Edm.Int32': { nullable: 'NullableNumberField', nonNullable: 'NumberField' },
-  'Edm.Int64': {
-    nullable: 'NullableBigNumberField',
-    nonNullable: 'BigNumberField'
-  },
-  'Edm.Single': { nullable: 'NullableNumberField', nonNullable: 'NumberField' },
-  'Edm.Double': { nullable: 'NullableNumberField', nonNullable: 'NumberField' },
-  'Edm.Float': { nullable: 'NullableNumberField', nonNullable: 'NumberField' }, // ABAP CDS compatibility
-  'Edm.Byte': { nullable: 'NullableNumberField', nonNullable: 'NumberField' },
-  'Edm.SByte': { nullable: 'NullableNumberField', nonNullable: 'NumberField' },
-  'Edm.DateTimeOffset': {
-    nullable: 'NullableDateField',
-    nonNullable: 'DateField'
-  },
-  'Edm.Binary': { nullable: 'NullableBinaryField', nonNullable: 'BinaryField' },
-  'Edm.Any': { nullable: 'AnyField', nonNullable: 'AnyField' },
+  'Edm.String': 'StringField',
+  'Edm.Boolean': 'BooleanField',
+  'Edm.Guid': 'StringField',
+  'Edm.Decimal': 'BigNumberField',
+  'Edm.Int16': 'NumberField',
+  'Edm.Int32': 'NumberField',
+  'Edm.Int64': 'BigNumberField',
+  'Edm.Single': 'NumberField',
+  'Edm.Double': 'NumberField',
+  'Edm.Float': 'NumberField', // ABAP CDS compatibility
+  'Edm.Byte': 'NumberField',
+  'Edm.SByte': 'NumberField',
+  'Edm.DateTimeOffset': 'DateField',
+  'Edm.Binary': 'BinaryField',
+  'Edm.Any': 'AnyField',
 
   // OData v2 specific
-  'Edm.DateTime': { nullable: 'NullableDateField', nonNullable: 'DateField' },
-  'Edm.Time': { nullable: 'NullableTimeField', nonNullable: 'TimeField' },
+  'Edm.DateTime': 'DateField',
+  'Edm.Time': 'TimeField',
 
   // OData v4 specific
-  'Edm.Date': { nullable: 'NullableDateField', nonNullable: 'DateField' },
-  'Edm.Duration': {
-    nullable: 'NullableDurationField',
-    nonNullable: 'DurationField'
-  },
-  'Edm.TimeOfDay': { nullable: 'NullableTimeField', nonNullable: 'TimeField' },
-  'Edm.Enum': { nullable: 'NullableEnumField', nonNullable: 'EnumField' }
+  'Edm.Date': 'DateField',
+  'Edm.Duration': 'DurationField',
+  'Edm.TimeOfDay': 'TimeField',
+  'Edm.Enum': 'EnumField'
 };
 
 const fieldTypeToComplexPropertyTypeMapping = {
   BigNumberField: 'ComplexTypeBigNumberPropertyField',
-  NullableBigNumberField: 'ComplexTypeNullableBigNumberPropertyField',
   BinaryField: 'ComplexTypeBinaryPropertyField',
-  NullableBinaryField: 'ComplexTypeNullableBinaryPropertyField',
   BooleanField: 'ComplexTypeBooleanPropertyField',
-  NullableBooleanField: 'ComplexTypeNullableBooleanPropertyField',
   DateField: 'ComplexTypeDatePropertyField',
-  NullableDateField: 'ComplexTypeNullableDatePropertyField',
   NumberField: 'ComplexTypeNumberPropertyField',
-  NullableNumberField: 'ComplexTypeNullableNumberPropertyField',
   StringField: 'ComplexTypeStringPropertyField',
-  NullableStringField: 'ComplexTypeNullableStringPropertyField',
   TimeField: 'ComplexTypeTimePropertyField',
-  NullableTimeField: 'ComplexTypeNullableTimePropertyField',
   AnyField: 'ComplexTypeAnyPropertyField'
 };
 
@@ -164,22 +137,18 @@ export function edmToTsType(edmType: string): string {
   return tsType;
 }
 
-export function edmToFieldType(edmType: string, nullable: boolean): string {
+export function edmToFieldType(edmType: string): string {
   const fieldType = edmToFieldTypeMapping[edmType];
   if (!fieldType) {
     throw new Error(`No field type found for edm type: ${edmType}`);
   }
 
-  const key = nullable ? 'nullable' : 'nonNullable';
-  return fieldType[key];
+  return fieldType;
 }
 
-export function edmToComplexPropertyType(
-  edmType: string,
-  nullable: boolean
-): string {
+export function edmToComplexPropertyType(edmType: string): string {
   const fieldType =
-    fieldTypeToComplexPropertyTypeMapping[edmToFieldType(edmType, nullable)];
+    fieldTypeToComplexPropertyTypeMapping[edmToFieldType(edmType)];
   if (!fieldType) {
     throw new Error(`No complex field type found for edm type: ${edmType}`);
   }
@@ -235,7 +204,8 @@ export function getGenericParameters(
       param = [`'${prop.edmType}'`];
     }
   }
-  return [entityClassName, ...param].join(', ');
+  const nullable = prop.nullable ? 'true' : 'false';
+  return [entityClassName, ...param, nullable].join(', ');
 }
 
 export function createPropertyFieldInitializer(

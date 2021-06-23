@@ -135,7 +135,7 @@ function getEdmReturnType(
   extractResponse: ExtractResponse,
   oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType {
-  const typeMapping = getTypeMappingActionFunction(edmType, true);
+  const typeMapping = getTypeMappingActionFunction(edmType);
   const valueAlias = 'val';
   const extracted = isCollection ? valueAlias : extractResponse(valueAlias);
   return {

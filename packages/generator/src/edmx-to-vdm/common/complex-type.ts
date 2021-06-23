@@ -62,15 +62,13 @@ export function transformComplexTypesBase(
         const isComplexOrEnum = isComplexTypeOrEnumType(parsed);
         const isEnum = isEnumType(parsed, enumTypes);
         const isComplex = isComplexOrEnum ? !isEnum : false;
-        const nullable = isNullableProperty(p);
         const typeMapping = getTypeMappingComplexProperties(
           p.Type,
           enumTypes,
           formattedTypes,
           isCollection,
           isEnum,
-          isComplex,
-          nullable
+          isComplex
         );
         return {
           originalName: p.Name,
@@ -83,7 +81,7 @@ export function transformComplexTypesBase(
             applyPrefixOnJsConfictParam(instancePropertyName),
           description: propertyDescription(p),
           technicalName: p.Name,
-          nullable,
+          nullable: isNullableProperty(p),
           edmType: typeMapping.edmType,
           jsType: typeMapping.jsType,
           fieldType: typeMapping.fieldType,
@@ -103,15 +101,14 @@ export function getTypeMappingComplexProperties(
   formattedTypes: Record<string, any>,
   isCollection: boolean,
   isEnum: boolean,
-  isComplex: boolean,
-  isNullable: boolean
+  isComplex: boolean
 ): VdmMappedEdmType {
   if (isEdmType(typeName)) {
     const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
     return {
       edmType: edmFallback,
       jsType: edmToTsType(edmFallback),
-      fieldType: edmToComplexPropertyType(edmFallback, isNullable)
+      fieldType: edmToComplexPropertyType(edmFallback)
     };
   }
 

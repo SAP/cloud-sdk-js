@@ -20,7 +20,7 @@ import { ConditionallyNullable } from './nullable';
  */
 export class TimeFieldBase<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends GreaterOrLessEdmTypeField<
   EntityT,
   ConditionallyNullable<Time, NullableT>,
@@ -34,7 +34,7 @@ export class TimeFieldBase<
  */
 export class TimeField<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends TimeFieldBase<EntityT, NullableT> {
   readonly selectable: true;
 }

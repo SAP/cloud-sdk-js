@@ -19,7 +19,7 @@ import { ConditionallyNullable } from './nullable';
  */
 export class BinaryFieldBase<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends EdmTypeField<
   EntityT,
   ConditionallyNullable<string, NullableT>,

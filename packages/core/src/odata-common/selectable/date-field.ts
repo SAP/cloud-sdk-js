@@ -21,7 +21,7 @@ import { ConditionallyNullable } from './nullable';
  */
 export class DateFieldBase<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends GreaterOrLessEdmTypeField<
   EntityT,
   ConditionallyNullable<moment.Moment, NullableT>,

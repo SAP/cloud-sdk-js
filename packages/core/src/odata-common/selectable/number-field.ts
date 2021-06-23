@@ -19,7 +19,7 @@ import { ConditionallyNullable } from './nullable';
  */
 export class NumberFieldBase<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends GreaterOrLessEdmTypeField<
   EntityT,
   ConditionallyNullable<number, NullableT>,

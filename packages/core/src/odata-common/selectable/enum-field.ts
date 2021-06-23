@@ -13,7 +13,7 @@ import { ConditionallyNullable } from './nullable';
  */
 class EnumFieldBase<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends EdmTypeField<
   EntityT,
   /* TODO FieldType is designed to be a union type of a list of static known type.

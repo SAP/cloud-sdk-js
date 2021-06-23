@@ -14,7 +14,7 @@ import { ConditionallyNullable } from './nullable';
 
 class StringFieldBase<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends EdmTypeField<
   EntityT,
   ConditionallyNullable<string, NullableT>,

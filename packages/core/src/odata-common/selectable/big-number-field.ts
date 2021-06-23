@@ -21,7 +21,7 @@ import { ConditionallyNullable } from './nullable';
  */
 class BigNumberFieldBase<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends GreaterOrLessEdmTypeField<
   EntityT,
   ConditionallyNullable<BigNumber, NullableT>,

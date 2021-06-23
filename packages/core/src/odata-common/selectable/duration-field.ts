@@ -20,7 +20,7 @@ import { ConditionallyNullable } from './nullable';
  */
 export class DurationFieldBase<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends GreaterOrLessEdmTypeField<
   EntityT,
   ConditionallyNullable<moment.Duration, NullableT>,
@@ -34,7 +34,7 @@ export class DurationFieldBase<
  */
 export type DurtionFieldBase<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > = DurationFieldBase<EntityT, NullableT>;
 
 /**
@@ -44,7 +44,7 @@ export type DurtionFieldBase<
  */
 export class DurationField<
   EntityT extends Entity,
-  NullableT extends boolean
+  NullableT extends boolean = false
 > extends DurationFieldBase<EntityT, NullableT> {
   readonly selectable: true;
 }

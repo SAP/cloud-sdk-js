@@ -34,7 +34,7 @@
     "@sap-cloud-sdk/util": "^1.45.0",
     "fs-extra": "^10.0.0",
     "glob": "^7.1.6",
-    "typescript": "~4.1.2"
+    "typescript": "~4.3.4"
   },
   "devDependencies": {
     "jest-extended": "^0.11.5",

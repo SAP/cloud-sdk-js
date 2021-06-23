@@ -47,7 +47,7 @@ export async function addAuthorizationHeader<
   };
 }
 
-function hasAuthHeaders(destination: Destination): boolean {
+function needsAuthHeaders(destination: Destination): boolean {
   if (!destination.authentication) {
     return false;
   }
@@ -77,7 +77,7 @@ export async function getAuthHeaders(
 ): Promise<Record<string, string>> {
   const customAuthHeaders = getCustomAuthHeaders(destination, customHeaders);
 
-  if (Object.keys(customAuthHeaders).length && hasAuthHeaders(destination)) {
+  if (Object.keys(customAuthHeaders).length && needsAuthHeaders(destination)) {
     logger.warn(
       'Found custom authorization headers. The given destination also provides authorization headers. This might be unintended. The custom headers from the request config will be used.'
     );

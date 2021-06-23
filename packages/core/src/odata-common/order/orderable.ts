@@ -18,8 +18,11 @@ export type Orderable<EntityT extends Entity> =
  *
  * @typeparam EntityT - Type of the entity to be ordered
  */
-export type OrderableInput<EntityT extends Entity> =
-  | SimpleTypeFields<EntityT>
+export type OrderableInput<
+  EntityT extends Entity,
+  NullableT extends boolean = false
+> =
+  | SimpleTypeFields<EntityT, NullableT>
   | Link<EntityT, Entity>
   | ComplexTypePropertyFields<EntityT, any>;
 
@@ -30,8 +33,8 @@ export type OrderableInput<EntityT extends Entity> =
  * @param orderBy - Field or link to be ordered by
  * @returns New order
  */
-export function asc<EntityT extends Entity>(
-  orderBy: OrderableInput<EntityT>
+export function asc<EntityT extends Entity, NullableT extends boolean = false>(
+  orderBy: OrderableInput<EntityT, NullableT>
 ): Order<EntityT> {
   if (orderBy instanceof Link) {
     return new Order(orderBy._fieldName);
@@ -46,8 +49,8 @@ export function asc<EntityT extends Entity>(
  * @param orderBy - Field or link to be ordered by
  * @returns New order
  */
-export function desc<EntityT extends Entity>(
-  orderBy: OrderableInput<EntityT>
+export function desc<EntityT extends Entity, NullableT extends boolean = false>(
+  orderBy: OrderableInput<EntityT, NullableT>
 ): Order<EntityT> {
   if (orderBy instanceof Link) {
     return new Order(orderBy._fieldName);

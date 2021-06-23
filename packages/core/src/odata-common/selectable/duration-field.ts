@@ -6,10 +6,12 @@ import { Entity, ODataVersionOf, Constructable } from '../entity';
 import {
   ComplexTypeField,
   getEdmType,
-  getEntityConstructor
+  getEntityConstructor,
+  getIsNullable
 } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { GreaterOrLessEdmTypeField } from './greater-or-less';
+import { ConditionallyNullable } from './nullable';
 
 /**
  * Represents a property with a duration value.
@@ -17,16 +19,23 @@ import { GreaterOrLessEdmTypeField } from './greater-or-less';
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class DurationFieldBase<
-  EntityT extends Entity
-> extends GreaterOrLessEdmTypeField<EntityT, moment.Duration> {}
+  EntityT extends Entity,
+  NullableT extends boolean
+> extends GreaterOrLessEdmTypeField<
+  EntityT,
+  ConditionallyNullable<moment.Duration, NullableT>,
+  NullableT
+> {}
 
 /**
  * @deprecated Since v1.46.0. Use [[DurationFieldBase]] instead.
  * Represents a property with a duration value.
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export type DurtionFieldBase<EntityT extends Entity> =
-  DurationFieldBase<EntityT>;
+export type DurtionFieldBase<
+  EntityT extends Entity,
+  NullableT extends boolean
+> = DurationFieldBase<EntityT, NullableT>;
 
 /**
  * Represents a selectable property with a duration value.
@@ -34,8 +43,9 @@ export type DurtionFieldBase<EntityT extends Entity> =
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class DurationField<
-  EntityT extends Entity
-> extends DurationFieldBase<EntityT> {
+  EntityT extends Entity,
+  NullableT extends boolean
+> extends DurationFieldBase<EntityT, NullableT> {
   readonly selectable: true;
 }
 
@@ -46,8 +56,9 @@ export class DurationField<
  */
 export class ComplexTypeDurationPropertyField<
   EntityT extends Entity,
-  ComplexT = any
-> extends DurationFieldBase<EntityT> {
+  ComplexT = any,
+  NullableT extends boolean = false
+> extends DurationFieldBase<EntityT, NullableT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
@@ -59,11 +70,13 @@ export class ComplexTypeDurationPropertyField<
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
+   * @param isNullable - Whether the field is nullable or not
    */
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
-    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
+    edmType: EdmTypeShared<ODataVersionOf<EntityT>>,
+    isNullable: NullableT
   );
 
   /**
@@ -90,9 +103,14 @@ export class ComplexTypeDurationPropertyField<
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
     arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
-    arg4?: EdmTypeShared<ODataVersionOf<EntityT>>
+    arg4?: EdmTypeShared<ODataVersionOf<EntityT>> | NullableT
   ) {
-    super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
+    super(
+      fieldName,
+      getEntityConstructor(fieldOf),
+      getEdmType(arg3, arg4),
+      getIsNullable(arg4)
+    );
     this.fieldOf = fieldOf;
   }
 

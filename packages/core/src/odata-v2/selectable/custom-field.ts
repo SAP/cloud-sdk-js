@@ -6,20 +6,23 @@ import {
 import type { Entity } from '../entity';
 
 export class CustomField<
-  EntityT extends Entity
-> extends CustomFieldBase<EntityT> {
-  edmDateTime(): DateField<EntityT> {
-    return new DateField<EntityT>(
+  EntityT extends Entity,
+  NullableT extends boolean = false
+> extends CustomFieldBase<EntityT, NullableT> {
+  edmDateTime(): DateField<EntityT, NullableT> {
+    return new DateField<EntityT, NullableT>(
       this._fieldName,
       this._entityConstructor,
-      'Edm.DateTime'
+      'Edm.DateTime',
+      this.isNullable
     );
   }
-  edmTime(): TimeField<EntityT> {
-    return new TimeField<EntityT>(
+  edmTime(): TimeField<EntityT, NullableT> {
+    return new TimeField<EntityT, NullableT>(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Time'
+      'Edm.Time',
+      this.isNullable
     );
   }
 }

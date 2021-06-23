@@ -6,11 +6,13 @@ import { Entity, ODataVersionOf, Constructable } from '../entity';
 import {
   ComplexTypeField,
   getEdmType,
-  getEntityConstructor
+  getEntityConstructor,
+  getIsNullable
 } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { SelectableEdmTypeField } from './edm-type-field';
 import { GreaterOrLessEdmTypeField } from './greater-or-less';
+import { ConditionallyNullable } from './nullable';
 
 /**
  * Represents a property with a date value.
@@ -18,16 +20,24 @@ import { GreaterOrLessEdmTypeField } from './greater-or-less';
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class DateFieldBase<
-  EntityT extends Entity
-> extends GreaterOrLessEdmTypeField<EntityT, moment.Moment> {}
+  EntityT extends Entity,
+  NullableT extends boolean
+> extends GreaterOrLessEdmTypeField<
+  EntityT,
+  ConditionallyNullable<moment.Moment, NullableT>,
+  NullableT
+> {}
 
 /**
  * Represents a selectable property with a date value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class DateField<EntityT extends Entity>
-  extends DateFieldBase<EntityT>
+export class DateField<
+    EntityT extends Entity,
+    NullableT extends boolean = false
+  >
+  extends DateFieldBase<EntityT, NullableT>
   implements SelectableEdmTypeField
 {
   readonly selectable: true;
@@ -40,8 +50,9 @@ export class DateField<EntityT extends Entity>
  */
 export class ComplexTypeDatePropertyField<
   EntityT extends Entity,
-  ComplexT = any
-> extends DateFieldBase<EntityT> {
+  ComplexT = any,
+  NullableT extends boolean = false
+> extends DateFieldBase<EntityT, NullableT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
@@ -53,11 +64,13 @@ export class ComplexTypeDatePropertyField<
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
+   * @param isNullable - Whether the field is nullable or not
    */
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
-    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
+    edmType: EdmTypeShared<ODataVersionOf<EntityT>>,
+    isNullable: NullableT
   );
 
   /**
@@ -84,9 +97,14 @@ export class ComplexTypeDatePropertyField<
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
     arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
-    arg4?: EdmTypeShared<ODataVersionOf<EntityT>>
+    arg4?: EdmTypeShared<ODataVersionOf<EntityT>> | NullableT
   ) {
-    super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
+    super(
+      fieldName,
+      getEntityConstructor(fieldOf),
+      getEdmType(arg3, arg4),
+      getIsNullable(arg4)
+    );
     this.fieldOf = fieldOf;
   }
 

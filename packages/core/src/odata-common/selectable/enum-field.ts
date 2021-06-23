@@ -4,19 +4,24 @@ import { Entity, Constructable } from '../entity';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { ConditionallyNullable } from './nullable';
 
 /**
  * Represents a property with an enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class EnumFieldBase<EntityT extends Entity> extends EdmTypeField<
+class EnumFieldBase<
+  EntityT extends Entity,
+  NullableT extends boolean
+> extends EdmTypeField<
   EntityT,
   /* TODO FieldType is designed to be a union type of a list of static known type.
    For enum type, one can only use any. Use string here since it's better than any.
    However, when using filter you use `EnumType eq 'test'`.
    */
-  string
+  ConditionallyNullable<string, NullableT>,
+  NullableT
 > {}
 
 /**
@@ -24,14 +29,21 @@ class EnumFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class EnumField<EntityT extends Entity>
-  extends EnumFieldBase<EntityT>
+export class EnumField<
+    EntityT extends Entity,
+    NullableT extends boolean = false
+  >
+  extends EnumFieldBase<EntityT, NullableT>
   implements SelectableEdmTypeField
 {
   readonly selectable: true;
 
-  constructor(fieldName: string, fieldOf: Constructable<EntityT>) {
-    super(fieldName, fieldOf, 'Edm.Enum');
+  constructor(
+    fieldName: string,
+    fieldOf: Constructable<EntityT>,
+    isNullable: NullableT
+  ) {
+    super(fieldName, fieldOf, 'Edm.Enum', isNullable);
   }
 }
 
@@ -42,8 +54,9 @@ export class EnumField<EntityT extends Entity>
  */
 export class ComplexTypeEnumPropertyField<
   EntityT extends Entity,
-  ComplexT = any
-> extends EnumFieldBase<EntityT> {
+  ComplexT = any,
+  NullableT extends boolean = false
+> extends EnumFieldBase<EntityT, NullableT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
@@ -54,13 +67,14 @@ export class ComplexTypeEnumPropertyField<
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
-   * @param edmType - Type of the field according to the metadata description
+   * @param isNullable - Whether the field is nullable or not
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT, ComplexT>
+    fieldOf: ConstructorOrField<EntityT, ComplexT>,
+    isNullable: NullableT
   ) {
-    super(fieldName, getEntityConstructor(fieldOf), 'Edm.Enum');
+    super(fieldName, getEntityConstructor(fieldOf), 'Edm.Enum', isNullable);
     this.fieldOf = fieldOf;
   }
 

@@ -5,26 +5,36 @@ import { Entity, ODataVersionOf, Constructable } from '../entity';
 import {
   ComplexTypeField,
   getEdmType,
-  getEntityConstructor
+  getEntityConstructor,
+  getIsNullable
 } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { SelectableEdmTypeField } from './edm-type-field';
 import { GreaterOrLessEdmTypeField } from './greater-or-less';
+import { ConditionallyNullable } from './nullable';
 
 /**
  * Represents a property with a number value.
  * @typeparam EntityT - Type of the entity the field belongs to.
  */
 export class NumberFieldBase<
-  EntityT extends Entity
-> extends GreaterOrLessEdmTypeField<EntityT, number> {}
+  EntityT extends Entity,
+  NullableT extends boolean
+> extends GreaterOrLessEdmTypeField<
+  EntityT,
+  ConditionallyNullable<number, NullableT>,
+  NullableT
+> {}
 
 /**
  * Represents a selectable property with a number value.
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class NumberField<EntityT extends Entity>
-  extends NumberFieldBase<EntityT>
+export class NumberField<
+    EntityT extends Entity,
+    NullableT extends boolean = false
+  >
+  extends NumberFieldBase<EntityT, NullableT>
   implements SelectableEdmTypeField
 {
   readonly selectable: true;
@@ -37,8 +47,9 @@ export class NumberField<EntityT extends Entity>
  */
 export class ComplexTypeNumberPropertyField<
   EntityT extends Entity,
-  ComplexT = any
-> extends NumberFieldBase<EntityT> {
+  ComplexT = any,
+  NullableT extends boolean = false
+> extends NumberFieldBase<EntityT, NullableT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
@@ -50,11 +61,13 @@ export class ComplexTypeNumberPropertyField<
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
+   * @param isNullable - Whether the field is nullable or not
    */
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
-    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
+    edmType: EdmTypeShared<ODataVersionOf<EntityT>>,
+    isNullable: NullableT
   );
 
   /**
@@ -81,9 +94,14 @@ export class ComplexTypeNumberPropertyField<
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
     arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
-    arg4?: EdmTypeShared<ODataVersionOf<EntityT>>
+    arg4?: EdmTypeShared<ODataVersionOf<EntityT>> | NullableT
   ) {
-    super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
+    super(
+      fieldName,
+      getEntityConstructor(fieldOf),
+      getEdmType(arg3, arg4),
+      getIsNullable(arg4)
+    );
     this.fieldOf = fieldOf;
   }
 

@@ -3,23 +3,10 @@ import { Entity, ODataVersionOf, Constructable } from '../entity';
 import { Filter } from '../filter';
 import { Field, FieldType } from './field';
 
-/**
- * Represents a property of an OData entity with an Edm type.
- *
- * `EdmTypeField`s are used as static properties of entities and are generated from the metadata, i.e. for each property of
- * an OData entity, that has an Edm type, there exists one static instance of `EdmTypeField` (or rather one of its subclasses) in the corresponding generated class file.
- * `EdmTypeField`s are used to represent the domain of more or less primitive values that can be used in select, filter and order by functions.
- * For example, when constructing a query on the BusinessPartner entity, an instance of `EdmTypeField<BusinessPartner, string>`
- * can be supplied as argument to the select function, e.g. `BusinessPartner.FIRST_NAME`.
- *
- * See also: [[Selectable]]
- *
- * @typeparam EntityT - Type of the entity the field belongs to
- * @typeparam FieldT - Type of the field
- */
 export abstract class EdmTypeField<
   EntityT extends Entity,
-  FieldT extends FieldType
+  FieldT extends FieldType,
+  NullableT extends boolean = false
 > extends Field<EntityT> {
   /**
    * Creates an instance of EdmTypeField.
@@ -31,7 +18,8 @@ export abstract class EdmTypeField<
   constructor(
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
-    readonly edmType: EdmTypeShared<ODataVersionOf<EntityT>>
+    readonly edmType: EdmTypeShared<ODataVersionOf<EntityT>>,
+    readonly isNullable: NullableT = false as NullableT
   ) {
     super(fieldName, entityConstructor);
   }

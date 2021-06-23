@@ -5,19 +5,25 @@ import { Entity, ODataVersionOf, Constructable } from '../entity';
 import {
   ComplexTypeField,
   getEdmType,
-  getEntityConstructor
+  getEntityConstructor,
+  getIsNullable
 } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { ConditionallyNullable } from './nullable';
 
 /**
  * Represents a property with a binary value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BinaryFieldBase<EntityT extends Entity> extends EdmTypeField<
+export class BinaryFieldBase<
+  EntityT extends Entity,
+  NullableT extends boolean
+> extends EdmTypeField<
   EntityT,
-  string
+  ConditionallyNullable<string, NullableT>,
+  NullableT
 > {}
 
 /**
@@ -25,8 +31,11 @@ export class BinaryFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BinaryField<EntityT extends Entity>
-  extends BinaryFieldBase<EntityT>
+export class BinaryField<
+    EntityT extends Entity,
+    NullableT extends boolean = false
+  >
+  extends BinaryFieldBase<EntityT, NullableT>
   implements SelectableEdmTypeField
 {
   readonly selectable: true;
@@ -39,8 +48,9 @@ export class BinaryField<EntityT extends Entity>
  */
 export class ComplexTypeBinaryPropertyField<
   EntityT extends Entity,
-  ComplexT = any
-> extends BinaryFieldBase<EntityT> {
+  ComplexT = any,
+  NullableT extends boolean = false
+> extends BinaryFieldBase<EntityT, NullableT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
@@ -52,11 +62,13 @@ export class ComplexTypeBinaryPropertyField<
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
+   * @param isNullable - Whether the field is nullable or not
    */
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
-    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
+    edmType: EdmTypeShared<ODataVersionOf<EntityT>>,
+    isNullable: NullableT
   );
 
   /**
@@ -83,9 +95,14 @@ export class ComplexTypeBinaryPropertyField<
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
     arg3: string | EdmTypeShared<ODataVersionOf<EntityT>>,
-    arg4?: EdmTypeShared<ODataVersionOf<EntityT>>
+    arg4?: EdmTypeShared<ODataVersionOf<EntityT>> | NullableT
   ) {
-    super(fieldName, getEntityConstructor(fieldOf), getEdmType(arg3, arg4));
+    super(
+      fieldName,
+      getEntityConstructor(fieldOf),
+      getEdmType(arg3, arg4),
+      getIsNullable(arg4)
+    );
     this.fieldOf = fieldOf;
   }
 

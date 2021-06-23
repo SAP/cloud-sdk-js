@@ -7,27 +7,31 @@ import {
 import type { Entity } from '../entity';
 
 export class CustomField<
-  EntityT extends Entity
-> extends CustomFieldBase<EntityT> {
-  edmDate(): DateField<EntityT> {
-    return new DateField<EntityT>(
+  EntityT extends Entity,
+  NullableT extends boolean = false
+> extends CustomFieldBase<EntityT, NullableT> {
+  edmDate(): DateField<EntityT, NullableT> {
+    return new DateField<EntityT, NullableT>(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Date'
+      'Edm.Date',
+      this.isNullable
     );
   }
-  edmDuration(): DurationField<EntityT> {
-    return new DurationField<EntityT>(
+  edmDuration(): DurationField<EntityT, NullableT> {
+    return new DurationField<EntityT, NullableT>(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Duration'
+      'Edm.Duration',
+      this.isNullable
     );
   }
-  edmTimeOfDay(): TimeField<EntityT> {
-    return new TimeField<EntityT>(
+  edmTimeOfDay(): TimeField<EntityT, NullableT> {
+    return new TimeField<EntityT, NullableT>(
       this._fieldName,
       this._entityConstructor,
-      'Edm.TimeOfDay'
+      'Edm.TimeOfDay',
+      this.isNullable
     );
   }
 }

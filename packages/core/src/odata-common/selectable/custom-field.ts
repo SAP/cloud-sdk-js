@@ -6,115 +6,132 @@ import { Field } from './field';
 import { NumberField } from './number-field';
 import { StringField } from './string-field';
 
-export class CustomField<EntityT extends Entity> extends Field<EntityT> {
+export class CustomField<
+  EntityT extends Entity,
+  NullableT extends boolean = false
+> extends Field<EntityT> {
   constructor(
     readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT>
+    readonly _entityConstructor: Constructable<EntityT>,
+    readonly isNullable: NullableT = false as NullableT
   ) {
     super(_fieldName, _entityConstructor);
   }
 
-  edmString(): StringField<EntityT> {
+  edmString(): StringField<EntityT, NullableT> {
     return new StringField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.String'
+      'Edm.String',
+      this.isNullable
     );
   }
 
-  edmBoolean(): BooleanField<EntityT> {
+  edmBoolean(): BooleanField<EntityT, NullableT> {
     return new BooleanField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Boolean'
+      'Edm.Boolean',
+      this.isNullable
     );
   }
 
-  edmGuid(): StringField<EntityT> {
+  edmGuid(): StringField<EntityT, NullableT> {
     return new StringField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Guid'
+      'Edm.Guid',
+      this.isNullable
     );
   }
 
-  edmDecimal(): BigNumberField<EntityT> {
+  edmDecimal(): BigNumberField<EntityT, NullableT> {
     return new BigNumberField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Decimal'
+      'Edm.Decimal',
+      this.isNullable
     );
   }
 
-  edmInt16(): NumberField<EntityT> {
+  edmInt16(): NumberField<EntityT, NullableT> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Int16'
+      'Edm.Int16',
+      this.isNullable
     );
   }
 
-  edmInt32(): NumberField<EntityT> {
+  edmInt32(): NumberField<EntityT, NullableT> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Int32'
+      'Edm.Int32',
+      this.isNullable
     );
   }
 
-  edmInt64(): BigNumberField<EntityT> {
+  edmInt64(): BigNumberField<EntityT, NullableT> {
     return new BigNumberField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Int64'
+      'Edm.Int64',
+      this.isNullable
     );
   }
 
-  edmSingle(): NumberField<EntityT> {
+  edmSingle(): NumberField<Entity, NullableT> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Single'
+      'Edm.Single',
+      this.isNullable
     );
   }
 
-  edmDouble(): NumberField<EntityT> {
+  edmDouble(): NumberField<EntityT, NullableT> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Double'
+      'Edm.Double',
+      this.isNullable
     );
   }
 
-  edmByte(): NumberField<EntityT> {
+  edmByte(): NumberField<EntityT, NullableT> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Byte'
+      'Edm.Byte',
+      this.isNullable
     );
   }
 
-  edmSByte(): NumberField<EntityT> {
+  edmSByte(): NumberField<EntityT, NullableT> {
     return new NumberField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.SByte'
+      'Edm.SByte',
+      this.isNullable
     );
   }
 
-  edmDateTimeOffset(): DateField<EntityT> {
+  edmDateTimeOffset(): DateField<EntityT, NullableT> {
     return new DateField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.DateTimeOffset'
+      'Edm.DateTimeOffset',
+      this.isNullable
     );
   }
 
-  edmBinary(): StringField<EntityT> {
+  edmBinary(): StringField<EntityT, NullableT> {
     return new StringField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Binary'
+      'Edm.Binary',
+      this.isNullable
     );
   }
 }

@@ -120,7 +120,7 @@ export function getEntityConstructor<EntityT extends Entity, ComplexT>(
  */
 export function getEdmType<T extends ODataVersion>(
   complexTypeNameOrEdmType: string | EdmTypeShared<T>,
-  edmTypeOrUndefined: EdmTypeShared<T> | undefined
+  edmTypeOrUndefined: EdmTypeShared<T> | undefined | boolean
 ): EdmTypeShared<T> {
   if (edmTypeOrUndefined) {
     if (
@@ -136,4 +136,18 @@ export function getEdmType<T extends ODataVersion>(
   throw new Error(
     `Failed to get edm type based on '${complexTypeNameOrEdmType}' and '${edmTypeOrUndefined}'.`
   );
+}
+
+/**
+ * Convenience function to get the `isNullable` parameter from the overloaded constructor.
+ * @param edmTypeOrIsNullableOrUndefined Argument given in the constructor. It can be an edm type, a boolean or undefined.
+ * @returns Whether the field is nullable or not.
+ */
+export function getIsNullable<NullableT extends boolean = false>(
+  edmTypeOrIsNullableOrUndefined: string | NullableT | undefined
+): NullableT {
+  return typeof edmTypeOrIsNullableOrUndefined === 'string' ||
+    typeof edmTypeOrIsNullableOrUndefined === 'undefined'
+    ? (false as NullableT)
+    : edmTypeOrIsNullableOrUndefined;
 }

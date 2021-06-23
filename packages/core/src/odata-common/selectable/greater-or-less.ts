@@ -10,8 +10,9 @@ import { FieldType } from './field';
  */
 export class GreaterOrLessEdmTypeField<
   EntityT extends Entity,
-  FieldT extends FieldType
-> extends EdmTypeField<EntityT, FieldT> {
+  FieldT extends FieldType,
+  NullableT extends boolean
+> extends EdmTypeField<EntityT, FieldT, NullableT> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    *

@@ -1,0 +1,2954 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@sap-cloud-sdk/util | SAP Cloud SDK for JavaScript / TypeScript - v1.46.0</title>
+	<meta name="description" content="Documentation for SAP Cloud SDK for JavaScript / TypeScript - v1.46.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">SAP Cloud SDK for JavaScript / TypeScript - v1.46.0</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">SAP Cloud SDK for JavaScript / TypeScript - v1.46.0</a>
+				</li>
+				<li>
+					<a href="sap_cloud_sdk_util">@sap-cloud-sdk/util</a>
+				</li>
+			</ul>
+			<h1>Module @sap-cloud-sdk/util</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<!-- sap-cloud-sdk-logo -->
+						<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
+						<p><a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a></p>
+						<!-- sap-cloud-sdk-logo-stop -->
+						<a href="#sap-cloud-sdkutil" id="sap-cloud-sdkutil" style="color: inherit; text-decoration: none;">
+							<h1>@sap-cloud-sdk/util</h1>
+						</a>
+						<p>This package contains general utility functions that we reuse multiple times in the SDK.
+						While primarily designed for internal usage, they might also be beneficial for consumers of the SDK.</p>
+						<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+							<h3>Installation</h3>
+						</a>
+						<pre><code><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> @</span><span style="color: #001080">sap</span><span style="color: #000000">-</span><span style="color: #001080">cloud</span><span style="color: #000000">-</span><span style="color: #001080">sdk</span><span style="color: #000000">/</span><span style="color: #001080">util</span>
+</code></pre>
+						<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+							<h3>Usage</h3>
+						</a>
+						<p>The util package collects useful tools that help build your SAP Cloud Platform application.
+						For example, the following code snippet changes the log level of the destination accessor of the SDK.</p>
+						<pre><code><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">setLogLevel</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@sap-cloud-sdk/util&#039;</span><span style="color: #000000">;</span>
+<span style="color: #795E26">setLogLevel</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;debug&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;destination-accessor&#039;</span><span style="color: #000000">);</span>
+</code></pre>
+						<!-- sap-cloud-sdk-common-readme -->
+						<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
+						<a href="#support" id="support" style="color: inherit; text-decoration: none;">
+							<h2>Support</h2>
+						</a>
+						<p>The recommended way to get in touch with us is to create an issue in our <a href="https://github.com/SAP/cloud-sdk-js/issues">github repository</a>.
+							Select the issue category <code>Bug</code>, <code>Feature</code> or <code>Question</code> depending on the nature of your request.
+						We try to provide fixes, features and answers as soon as possible.</p>
+						<p>We also monitor questions on <a href="https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest">StackOverflow</a> and <a href="https://answers.sap.com/tags/73555000100800000895">ansers.sap.com</a> but prefer issues on github.</p>
+						<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+							<h2>Contribute</h2>
+						</a>
+						<p>If you would like to contribute to the SAP Cloud SDK, please make yourself familiar with our <a href="https://github.com/SAP/cloud-sdk-js/blob/main/CONTRIBUTING.md">contributing guidelines</a> and follow the given instructions.</p>
+						<a href="#links" id="links" style="color: inherit; text-decoration: none;">
+							<h2>Links</h2>
+						</a>
+						<ul>
+							<li><a href="https://github.com/SAP/cloud-sdk-js">Github</a></li>
+							<li><a href="https://github.com/SAP/cloud-sdk-js/releases">Github - Releases</a></li>
+						</ul>
+						<br>
+						<ul>
+							<li><a href="https://sap.github.io/cloud-sdk/">SAP Cloud SDK Documentation portal</a></li>
+							<li><a href="https://sap.github.io/cloud-sdk/docs/js/getting-started">SAP Cloud SDK Documentation portal - Getting started guide</a></li>
+							<li><a href="https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts">SAP Cloud SDK Documentation portal - API documentation</a></li>
+						</ul>
+						<br>
+						<ul>
+							<li><a href="https://developers.sap.com/topics/cloud-sdk.html">developers.sap.com - Product Overview</a></li>
+							<li><a href="https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&amp;tag=topic:javascript">developers.sap.com - Tutorials</a></li>
+						</ul>
+						<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+							<h2>License</h2>
+						</a>
+						<p>The SAP Cloud SDK is released under the <a href="http://www.apache.org/licenses/">Apache License Version 2.0.</a></p>
+						<!-- sap-cloud-sdk-common-readme-stop -->
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/sap_cloud_sdk_util.errorwithcause" class="tsd-kind-icon">Error<wbr>With<wbr>Cause</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/sap_cloud_sdk_util.uniquenamegenerator" class="tsd-kind-icon">Unique<wbr>Name<wbr>Generator</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/sap_cloud_sdk_util.loggeroptions" class="tsd-kind-icon">Logger<wbr>Options</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/sap_cloud_sdk_util.messagecontextobj" class="tsd-kind-icon">Message<wbr>Context<wbr>Obj</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="sap_cloud_sdk_util#loglevel" class="tsd-kind-icon">Log<wbr>Level</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#maptype" class="tsd-kind-icon">Map<wbr>Type</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="sap_cloud_sdk_util#odataversion" class="tsd-kind-icon">OData<wbr>Version</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="sap_cloud_sdk_util#value_is_undefined" class="tsd-kind-icon">VALUE_<wbr>IS_<wbr>UNDEFINED</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="sap_cloud_sdk_util#cloudsdkexceptionlogger" class="tsd-kind-icon">cloud<wbr>Sdk<wbr>Exception<wbr>Logger</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="sap_cloud_sdk_util#kibana" class="tsd-kind-icon">kibana</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="sap_cloud_sdk_util#local" class="tsd-kind-icon">local</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="sap_cloud_sdk_util#unixeol" class="tsd-kind-icon">unixEOL</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="sap_cloud_sdk_util#webeol" class="tsd-kind-icon">webEOL</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#assoc" class="tsd-kind-icon">assoc</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#assocsome" class="tsd-kind-icon">assoc<wbr>Some</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#asyncpipe" class="tsd-kind-icon">async<wbr>Pipe</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#camelcase" class="tsd-kind-icon">camel<wbr>Case</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#caps" class="tsd-kind-icon">caps</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#checkurlexists" class="tsd-kind-icon">check<wbr>Url<wbr>Exists</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#codeblock" class="tsd-kind-icon">code<wbr>Block</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#createlogger" class="tsd-kind-icon">create<wbr>Logger</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#disableexceptionlogger" class="tsd-kind-icon">disable<wbr>Exception<wbr>Logger</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#documentationblock" class="tsd-kind-icon">documentation<wbr>Block</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#enableexceptionlogger" class="tsd-kind-icon">enable<wbr>Exception<wbr>Logger</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#encodebase64" class="tsd-kind-icon">encode<wbr>Base64</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#equal" class="tsd-kind-icon">equal</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#equalarrays" class="tsd-kind-icon">equal<wbr>Arrays</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#equalobjects" class="tsd-kind-icon">equal<wbr>Objects</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#errorwithcause-1" class="tsd-kind-icon">error<wbr>With<wbr>Cause</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#exclude" class="tsd-kind-icon">exclude</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#filterduplicates" class="tsd-kind-icon">filter<wbr>Duplicates</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#filterduplicatesright" class="tsd-kind-icon">filter<wbr>Duplicates<wbr>Right</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#findprojectroot" class="tsd-kind-icon">find<wbr>Project<wbr>Root</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#finishall" class="tsd-kind-icon">finish<wbr>All</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#first" class="tsd-kind-icon">first</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#flat" class="tsd-kind-icon">flat</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#flatten" class="tsd-kind-icon">flatten</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#formatjson" class="tsd-kind-icon">format<wbr>Json</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#getgloballoglevel" class="tsd-kind-icon">get<wbr>Global<wbr>Log<wbr>Level</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#getlogger" class="tsd-kind-icon">get<wbr>Logger</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#identity" class="tsd-kind-icon">identity</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#iserrorwithcause" class="tsd-kind-icon">is<wbr>Error<wbr>With<wbr>Cause</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#isnullish" class="tsd-kind-icon">is<wbr>Nullish</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#kebabcase" class="tsd-kind-icon">kebab<wbr>Case</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#last" class="tsd-kind-icon">last</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#mergeignorecase" class="tsd-kind-icon">merge<wbr>Ignore<wbr>Case</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#mergeleftignorecase" class="tsd-kind-icon">merge<wbr>Left<wbr>Ignore<wbr>Case</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#mergesome" class="tsd-kind-icon">merge<wbr>Some</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#muteloggers" class="tsd-kind-icon">mute<wbr>Loggers</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#partition" class="tsd-kind-icon">partition</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#pascalcase" class="tsd-kind-icon">pascal<wbr>Case</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#pick" class="tsd-kind-icon">pick</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#pickignorecase" class="tsd-kind-icon">pick<wbr>Ignore<wbr>Case</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#picknonnullish" class="tsd-kind-icon">pick<wbr>Non<wbr>Nullish</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#pickvalueignorecase" class="tsd-kind-icon">pick<wbr>Value<wbr>Ignore<wbr>Case</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#propertyexists" class="tsd-kind-icon">property<wbr>Exists</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#readjson" class="tsd-kind-icon">readJSON</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#removefileextension" class="tsd-kind-icon">remove<wbr>File<wbr>Extension</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#renamekeys" class="tsd-kind-icon">rename<wbr>Keys</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#setgloballoglevel" class="tsd-kind-icon">set<wbr>Global<wbr>Log<wbr>Level</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#setloglevel" class="tsd-kind-icon">set<wbr>Log<wbr>Level</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#splitinchunks" class="tsd-kind-icon">split<wbr>InChunks</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#titleformat" class="tsd-kind-icon">title<wbr>Format</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#tosanitizedobject" class="tsd-kind-icon">to<wbr>Sanitized<wbr>Object</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#trim" class="tsd-kind-icon">trim</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#trimleft" class="tsd-kind-icon">trim<wbr>Left</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#trimright" class="tsd-kind-icon">trim<wbr>Right</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#unique" class="tsd-kind-icon">unique</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#unmuteloggers" class="tsd-kind-icon">unmute<wbr>Loggers</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_util#uppercasesnakecase" class="tsd-kind-icon">upper<wbr>Case<wbr>Snake<wbr>Case</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#variadicargumenttoarray" class="tsd-kind-icon">variadic<wbr>Argument<wbr>ToArray</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="sap_cloud_sdk_util#zip" class="tsd-kind-icon">zip</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="loglevel" class="tsd-anchor"></a>
+					<h3>Log<wbr>Level</h3>
+					<div class="tsd-signature tsd-kind-icon">Log<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;error&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;warn&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;info&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;verbose&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;debug&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;silly&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:71</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Npm log levels used for the SAP Cloud SDK logger.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="maptype" class="tsd-anchor"></a>
+					<h3>Map<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">Map<wbr>Type&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/util/dist/types.d.ts:5</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>deprecated</dt>
+							<dd><p>Since v1.29.0. Use Record&lt;string, T&gt; instead.
+								Convenience type for JavaScript objects.</p>
+							</dd>
+						</dl>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="odataversion" class="tsd-anchor"></a>
+					<h3>OData<wbr>Version</h3>
+					<div class="tsd-signature tsd-kind-icon">OData<wbr>Version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;v2&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;v4&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/util/dist/types.d.ts:9</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Denotes the OData version.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="value_is_undefined" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> VALUE_<wbr>IS_<wbr>UNDEFINED</h3>
+					<div class="tsd-signature tsd-kind-icon">VALUE_<wbr>IS_<wbr>UNDEFINED<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;VALUE_IS_UNDEFINED&quot;</span><span class="tsd-signature-symbol"> = &#x27;VALUE_IS_UNDEFINED&#x27;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/constants.ts#L1">packages/util/src/constants.ts:1</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="cloudsdkexceptionlogger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> cloud<wbr>Sdk<wbr>Exception<wbr>Logger</h3>
+					<div class="tsd-signature tsd-kind-icon">cloud<wbr>Sdk<wbr>Exception<wbr>Logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Logger</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:13</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Default logger for the SAP Cloud SDK for unhandled exceptions.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="kibana" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> kibana</h3>
+					<div class="tsd-signature tsd-kind-icon">kibana<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Format</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/util/dist/logger/format/kibana.d.ts:4</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Format for logging in Kibana.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="local" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> local</h3>
+					<div class="tsd-signature tsd-kind-icon">local<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Format</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/util/dist/logger/format/local.d.ts:5</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Format for local logging.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="unixeol" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> unixEOL</h3>
+					<div class="tsd-signature tsd-kind-icon">unixEOL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;\n&quot;</span><span class="tsd-signature-symbol"> = &quot;\n&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/util/dist/string-formatter.d.ts:6</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Within all files generated by the SDK we use the unix style end of line delimiter.
+								We do not consider if the generator is executed on windows or unix systems.
+							It will always be \n to have consistent clients between operating systems.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="webeol" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> webEOL</h3>
+					<div class="tsd-signature tsd-kind-icon">webEOL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;\r\n&quot;</span><span class="tsd-signature-symbol"> = &quot;\r\n&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/util/dist/string-formatter.d.ts:10</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>For request payloads etc. it is convention to use the \r\n new line.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="assoc" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> assoc</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">assoc&lt;T&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:69</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds a key value pair to the given objects and returns a shallow copy.
+									If the key is already present it will be overwritten.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>key to be added</p>
+									</div>
+								</li>
+								<li>
+									<h5>value: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>value to be added</p>
+									</div>
+								</li>
+								<li>
+									<h5>obj: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>object the key value pair is added to.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span></h4>
+							<p>the object with the key value pair added</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="assocsome" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> assoc<wbr>Some</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">assoc<wbr>Some&lt;T&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:20</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds the value to the object if it is neither null nor undefined.
+									Note that this is different to JS idiomatic checks for truthy/falsy values, i.e. an empty string will result in key/value pairs beeing added.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd><p>This will be removed in version 2.0 of the SDK.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The key to associate with the given value.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> value: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The value to associate with the given key.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">T</span></h4>
+							<p>A copy of the input object with the new key-value pair if the value is neither null nor undefined.</p>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>obj: <span class="tsd-signature-type">T</span></h5>
+													<div class="tsd-comment tsd-typography">
+														<p>The object on which to create the association.</p>
+													</div>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="asyncpipe" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> async<wbr>Pipe</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">async<wbr>Pipe<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>fns<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CallableFunction</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>start<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/pipe.d.ts:10</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Same as pipe but for asynchronous functions:
+									asynvPipe(finc1,func2,...funcN)(start)  executes all functions in sequence awaiting the result and piping the response through in other words await funcN(... await func2(await func1(start))...)</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd><p>We will remove this in version 2.0 of the SDK.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>fns: <span class="tsd-signature-type">CallableFunction</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>a list of asynchronous functions to be executed in sequence</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>start<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>the reponse of the last function in the list.</p>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>start<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>start: <span class="tsd-signature-type">any</span></h5>
+													<div class="tsd-comment tsd-typography">
+														<p>start value for the first function in the list</p>
+													</div>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="camelcase" class="tsd-anchor"></a>
+					<h3>camel<wbr>Case</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">camel<wbr>Case<span class="tsd-signature-symbol">(</span>str<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string-formatter.d.ts:24</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert a string to camelCase. This format used e. g. for properties on entity class instances.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>str: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The string to be transformed.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>The transformed string.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="caps" class="tsd-anchor"></a>
+					<h3>caps</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">caps<span class="tsd-signature-symbol">(</span>oDataVersion<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;V2&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;V4&quot;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/types.d.ts:15</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the OData version in capital letters so V2 or V4.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>oDataVersion: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>OData version in lower case: &#39;v2&#39; or &#39;v4&#39;</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">&quot;V2&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;V4&quot;</span></h4>
+							<p>&#39;V2&#39; or &#39;V4&#39;</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="checkurlexists" class="tsd-anchor"></a>
+					<h3>check<wbr>Url<wbr>Exists</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">check<wbr>Url<wbr>Exists<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/url.d.ts:6</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks whether a URL is existing via a head request.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>url: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>URL to be checked</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>promise - resolves if the URL exists</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="codeblock" class="tsd-anchor"></a>
+					<h3>code<wbr>Block</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">code<wbr>Block<span class="tsd-signature-symbol">(</span>strings<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TemplateStringsArray</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/code-block.ts#L15">packages/util/src/code-block.ts:15</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>experimental</dt>
+									<dd><p>This API is experimental and might change in newer versions. Use with caution.
+											Transform strings and arguments to a string formatted as a code block, keeping the indentation of sub code blocks.
+										Use in tagged templates, e. g.:</p>
+										<pre><code><span style="color: #795E26">codeBlock</span><span style="color: #A31515">`Code with </span><span style="color: #0000FF">${</span><span style="color: #0000FF">arguments</span><span style="color: #0000FF">}</span><span style="color: #A31515"> and more code;`</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>strings: <span class="tsd-signature-type">TemplateStringsArray</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Strings in the tagged template. In the example above that would be [&#39;Code with &#39;, &#39; and more code;&#39;].</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Arguments in the tagged template. In the example above that would be the resolved value for <code>arguments</code>;</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>A string formatted as code block.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="createlogger" class="tsd-anchor"></a>
+					<h3>create<wbr>Logger</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Logger<span class="tsd-signature-symbol">(</span>messageContext<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><a href="../interfaces/sap_cloud_sdk_util.messagecontextobj" class="tsd-signature-type" data-tsd-kind="Interface">MessageContextObj</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/sap_cloud_sdk_util.loggeroptions" class="tsd-signature-type" data-tsd-kind="Interface">LoggerOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Logger</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:47</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a logger for the given message context, if available.</p>
+								</div>
+								<p>Usage:
+									To create a logger in your module, it is recommended to pass a module identifier that will be logged as <code>messageContext</code> for all messages from this logger:
+									<code>const logger = createLogger(&#39;my-module&#39;);</code>. Not setting any module identifier will retrieve the default logger.
+									Use this logger throughout your module. If the module is spread over multiple files, you can retrieve the logger instance by calling the <code>createLogger</code> function with the respective module identifier.
+									There will always be only one instance of a logger per module identifier.
+									You can pass any custom data that you want to be logged in addition by passing an object instead. You can change the default logging level (<code>INFO</code>) using the <code>level</code> key in the object.
+								In those cases, provide the <code>messageContext</code> as a key in the object:</p>
+								<pre><code><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">logger</span><span style="color: #000000"> = </span><span style="color: #795E26">createLogger</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">messageContext:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;my-module&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">myCustomKey:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;my-custom-data&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">level:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;debug&#039;</span>
+<span style="color: #000000">});</span>
+</code></pre>
+								<p>You will find these information under the <em>custom_fields</em> key in your Cloud Foundry logs.</p>
+								<p>To retrieve a logger after its creation use <a href="sap_cloud_sdk_util#getlogger">getLogger</a>.
+								If you want to change the log level of a logger use <a href="sap_cloud_sdk_util#setloglevel">setLogLevel</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> messageContext: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><a href="../interfaces/sap_cloud_sdk_util.messagecontextobj" class="tsd-signature-type" data-tsd-kind="Interface">MessageContextObj</a><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/sap_cloud_sdk_util.loggeroptions" class="tsd-signature-type" data-tsd-kind="Interface">LoggerOptions</a><span class="tsd-signature-symbol">)</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Either a key for the message context of all messages produced by the logger or an object with additional keys to set in the message.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Logger</span></h4>
+							<p>A newly created or an already existing logger for the given context.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="disableexceptionlogger" class="tsd-anchor"></a>
+					<h3>disable<wbr>Exception<wbr>Logger</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">disable<wbr>Exception<wbr>Logger<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:17</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Disable logging of exceptions. Enabled by default.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="documentationblock" class="tsd-anchor"></a>
+					<h3>documentation<wbr>Block</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">documentation<wbr>Block<span class="tsd-signature-symbol">(</span>strings<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TemplateStringsArray</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/documentation-block.ts#L19">packages/util/src/documentation-block.ts:19</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>experimental</dt>
+									<dd><p>This API is experimental and might change in newer versions. Use with caution.
+											Transform strings and arguments to a string formatted as a documentation block.
+											The formatting is block like so no leading or trailing spaces.
+											New lines in the beginning and end are also removed.
+										Use in tagged templates, e. g.:</p>
+										<pre><code><span style="color: #795E26">documentationBlock</span><span style="color: #A31515">`Docs with </span><span style="color: #0000FF">${</span><span style="color: #0000FF">arguments</span><span style="color: #0000FF">}</span><span style="color: #A31515"> and more content;`</span>
+</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>strings: <span class="tsd-signature-type">TemplateStringsArray</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Strings in the tagged template. In the example above that would be [&#39;Docs with &#39;, &#39; and more content;&#39;].</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Arguments in the tagged template. In the example above that would be the resolved value for <code>arguments</code>;</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>A string formatted as documentation block.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="enableexceptionlogger" class="tsd-anchor"></a>
+					<h3>enable<wbr>Exception<wbr>Logger</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">enable<wbr>Exception<wbr>Logger<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:21</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Enable logging of exceptions. Enabled by default.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="encodebase64" class="tsd-anchor"></a>
+					<h3>encode<wbr>Base64</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">encode<wbr>Base64<span class="tsd-signature-symbol">(</span>str<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string.d.ts:6</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Encode a string to a base64 encoded string.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>str: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>String to encode.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>Base64 encoded string.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="equal" class="tsd-anchor"></a>
+					<h3>equal</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">equal&lt;T&gt;<span class="tsd-signature-symbol">(</span>item1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, item2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/equal.ts#L20">packages/util/src/equal.ts:20</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>hidden</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>item1: <span class="tsd-signature-type">T</span></h5>
+								</li>
+								<li>
+									<h5>item2: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="equalarrays" class="tsd-anchor"></a>
+					<h3>equal<wbr>Arrays</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">equal<wbr>Arrays&lt;T&gt;<span class="tsd-signature-symbol">(</span>arr1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, arr2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/equal.ts#L38">packages/util/src/equal.ts:38</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>hidden</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr1: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5>arr2: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="equalobjects" class="tsd-anchor"></a>
+					<h3>equal<wbr>Objects</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">equal<wbr>Objects<span class="tsd-signature-symbol">(</span>obj1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, obj2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/equal.ts#L5">packages/util/src/equal.ts:5</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>hidden</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>obj1: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>obj2: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="errorwithcause-1" class="tsd-anchor"></a>
+					<h3>error<wbr>With<wbr>Cause</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">error<wbr>With<wbr>Cause<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, cause<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/error.ts#L10">packages/util/src/error.ts:10</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd><p>Since v1.34.0. Use <a href="../classes/sap_cloud_sdk_util.errorwithcause">ErrorWithCause</a> instead.
+										Creates a new Error and adds the stack trace of the original error to the stack trace of the new one.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>message: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Error message.</p>
+									</div>
+								</li>
+								<li>
+									<h5>cause: <span class="tsd-signature-type">Error</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Original error, causing the new error.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Error</span></h4>
+							<p>A new error with the given cause.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="exclude" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> exclude</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">exclude&lt;T&gt;<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:59</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a shallow copy of the given object, that does not contain the given keys.
+									Non existing keys in the source object are ignored.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>keys: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>properties to be selected</p>
+									</div>
+								</li>
+								<li>
+									<h5>obj: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>object from which the values are taken</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>an object with the selected keys and corresponding values.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="filterduplicates" class="tsd-anchor"></a>
+					<h3>filter<wbr>Duplicates</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">filter<wbr>Duplicates&lt;T&gt;<span class="tsd-signature-symbol">(</span>arr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, comparator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L145">packages/util/src/array.ts:145</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Filter an array by removing duplicates and keeping the left most occurence. By default this compares by identity.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array to remove duplicates from.</p>
+									</div>
+								</li>
+								<li>
+									<h5>comparator: <span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = ...</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>left: <span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>right: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>A filtered array containing no duplicates.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="filterduplicatesright" class="tsd-anchor"></a>
+					<h3>filter<wbr>Duplicates<wbr>Right</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">filter<wbr>Duplicates<wbr>Right&lt;T&gt;<span class="tsd-signature-symbol">(</span>arr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, comparator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L161">packages/util/src/array.ts:161</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Filter an array by removing duplicates and keeping the right most occurence. By default this compares by identity.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array to remove duplicates from.</p>
+									</div>
+								</li>
+								<li>
+									<h5>comparator: <span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = ...</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>left: <span class="tsd-signature-type">T</span></h5>
+														</li>
+														<li>
+															<h5>right: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>A filtered array containing no duplicates.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="findprojectroot" class="tsd-anchor"></a>
+					<h3>find<wbr>Project<wbr>Root</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">find<wbr>Project<wbr>Root<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, lastPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/fs.ts#L10">packages/util/src/fs.ts:10</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>lastPath: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ...</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="finishall" class="tsd-anchor"></a>
+					<h3>finish<wbr>All</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">finish<wbr>All<span class="tsd-signature-symbol">(</span>promises<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, errorMessage<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/promise.d.ts:8</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Await all promises and resolve if non of them failed.
+										Reject if at least one of them was rejected, but only once all of them are finished.
+									Throws an error consisting of a list of reasons.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>promises: <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Promises to settle.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> errorMessage: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Message to use as introductory text of the error if an error occurs.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="first" class="tsd-anchor"></a>
+					<h3>first</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">first&lt;T&gt;<span class="tsd-signature-symbol">(</span>arr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L33">packages/util/src/array.ts:33</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the first item from an array. Returns undefined if the array is empty.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array to get the first item of</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
+							<p>Fist item of the array or undefined if the array was empty</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="flat" class="tsd-anchor"></a>
+					<h3>flat</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">flat&lt;T&gt;<span class="tsd-signature-symbol">(</span>arr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L6">packages/util/src/array.ts:6</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Flatten a two dimensional array into a one dimensional array</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The array to be flattened.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>A one dimensional array.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="flatten" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> flatten</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">flatten<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L83">packages/util/src/array.ts:83</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Flattens a array: [1,[2,[3,4]],5] will become [1,2,3,4,5].
+									Non primitive values are copied by reference.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>input: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array to be flattened</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>The flattened array.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="formatjson" class="tsd-anchor"></a>
+					<h3>format<wbr>Json</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">format<wbr>Json<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string-formatter.d.ts:49</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert a JSON object to a string using formatting in line with the prettier with indentation and new line at the end.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>json: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object to be stringified</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>The JSON object as string.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="getgloballoglevel" class="tsd-anchor"></a>
+					<h3>get<wbr>Global<wbr>Log<wbr>Level</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Global<wbr>Log<wbr>Level<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:67</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="getlogger" class="tsd-anchor"></a>
+					<h3>get<wbr>Logger</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Logger<span class="tsd-signature-symbol">(</span>messageContext<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Logger</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:53</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get logger for a given message context, if avilable.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> messageContext: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A key for the message context of all messages produced by the logger</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Logger</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
+							<p>The logger for the given messageContext if it was created before</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="identity" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> identity</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">identity&lt;T&gt;<span class="tsd-signature-symbol">(</span>argument<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/pipe.d.ts:17</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Identity function</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>argument: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Any object</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+							<p>the given argument without doing something</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="iserrorwithcause" class="tsd-anchor"></a>
+					<h3>is<wbr>Error<wbr>With<wbr>Cause</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Error<wbr>With<wbr>Cause<span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">err</span><span class="tsd-signature-symbol"> is </span><a href="../classes/sap_cloud_sdk_util.errorwithcause" class="tsd-signature-type" data-tsd-kind="Class">ErrorWithCause</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/error-with-cause.ts#L39">packages/util/src/error-with-cause.ts:39</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Type guard to check whether an error is of type ErrorWithCause.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>err: <span class="tsd-signature-type">Error</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An error.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">err</span><span class="tsd-signature-symbol"> is </span><a href="../classes/sap_cloud_sdk_util.errorwithcause" class="tsd-signature-type" data-tsd-kind="Class">ErrorWithCause</a></h4>
+							<p>Whether the given error is of type ErrorWithCause.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="isnullish" class="tsd-anchor"></a>
+					<h3>is<wbr>Nullish</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Nullish<span class="tsd-signature-symbol">(</span>val<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">val</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/nullish.d.ts:6</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks whether a value is either <code>null</code> or <code>undefined</code>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>val: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">val</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+							<p>true for null or undefined, false otherwise.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="kebabcase" class="tsd-anchor"></a>
+					<h3>kebab<wbr>Case</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">kebab<wbr>Case<span class="tsd-signature-symbol">(</span>str<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string-formatter.d.ts:43</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert a string to kebab case. This format is used e. g. for file names.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>str: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The string to be transformed.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>The transformed string.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="last" class="tsd-anchor"></a>
+					<h3>last</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">last&lt;T&gt;<span class="tsd-signature-symbol">(</span>arr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L24">packages/util/src/array.ts:24</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the last item from an array. Returns undefined if the array is empty.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array to get the last item of</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
+							<p>Last item of the array or undefined if the array was empty</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="mergeignorecase" class="tsd-anchor"></a>
+					<h3>merge<wbr>Ignore<wbr>Case</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">merge<wbr>Ignore<wbr>Case&lt;LeftT, RightT&gt;<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">LeftT</span>, right<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RightT</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LeftT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RightT</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:118</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create an object by merging the <code>right</code> object into a shallow copy of the <code>left</code> object ignoring casing, but keeping the right casing. Keys present both objects will be present in the merged object.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>LeftT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+								<li>
+									<h4>RightT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> left: <span class="tsd-signature-type">LeftT</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object to merge.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> right: <span class="tsd-signature-type">RightT</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object to merge. The casing of the keys of this object takes precedence.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LeftT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RightT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li>An object containing all keys from both objects, where entries present in the <code>right</code> object are replaced. Note that the casing used by <code>right</code> will be used.</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="mergeleftignorecase" class="tsd-anchor"></a>
+					<h3>merge<wbr>Left<wbr>Ignore<wbr>Case</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">merge<wbr>Left<wbr>Ignore<wbr>Case&lt;LeftT, RightT&gt;<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">LeftT</span>, right<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RightT</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:111</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create an object by merging the <code>right</code> object into a shallow copy of the <code>left</code> object ignoring casing, but keeping the <code>right</code> casing. Only keys present in the <code>left</code> object will be present in the merged object.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>LeftT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+								<li>
+									<h4>RightT<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> left: <span class="tsd-signature-type">LeftT</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object to merge into. They keys of this object will be present in the returned object.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> right: <span class="tsd-signature-type">RightT</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object to merge. Only keys in <code>left</code> will be considered for merging.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li>An object containing all keys from the <code>left</code> object, where entries present in the <code>right</code> object are replaced. Note that the casing used by <code>right</code> will be used.</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="mergesome" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> merge<wbr>Some</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">merge<wbr>Some<span class="tsd-signature-symbol">(</span>a<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, b<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:31</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Merges the two objects, if second object is neither null nor undefined.
+									If a key exists on a and b the value from b is taken</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd><p>This will be removed in version 2.0 of the SDK.</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>a: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The object to merge into.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> b: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The object which to merge into a.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A copy of the merge(a, b) or a if b is undefined or null.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="muteloggers" class="tsd-anchor"></a>
+					<h3>mute<wbr>Loggers</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">mute<wbr>Loggers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:5</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Mute all logger output created by the SAP Cloud SDK Logger. This also applies to future loggers created. Useful for tests.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="partition" class="tsd-anchor"></a>
+					<h3>partition</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">partition&lt;T&gt;<span class="tsd-signature-symbol">(</span>arr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, condition<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L126">packages/util/src/array.ts:126</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Split an array into two based on a condition.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array to partition.</p>
+									</div>
+								</li>
+								<li>
+									<h5>condition: <span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Function to determine to where to put each item.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>item: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span></h4>
+							<p>A two dimensional array containting two arrays, where the first one includes all items where the given condition was met and the second one includes all items where it was not met.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="pascalcase" class="tsd-anchor"></a>
+					<h3>pascal<wbr>Case</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">pascal<wbr>Case<span class="tsd-signature-symbol">(</span>str<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string-formatter.d.ts:37</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert a string to pascal case. This format is used e. g. for types.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>str: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The string to be transformed.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>The transformed string.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="pick" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> pick</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">pick&lt;T&gt;<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:50</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a shallow copy of the given object, that contains the given keys.
+									Non existing keys in the source object are ignored.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>keys: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>properties to be selected</p>
+									</div>
+								</li>
+								<li>
+									<h5>obj: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>object from which the values are taken</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>an object with the selected keys and corresponding values.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="pickignorecase" class="tsd-anchor"></a>
+					<h3>pick<wbr>Ignore<wbr>Case</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">pick<wbr>Ignore<wbr>Case&lt;T&gt;<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">T</span>, <span class="tsd-signature-symbol">...</span>keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">typeof </span><a href="" class="tsd-signature-type" data-tsd-kind="Parameter">keys</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:88</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a shallow copy of the given object, that contains the given keys, independent of casing.
+									Non existing keys in the source object are ignored.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> obj: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object to pick the given key from.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>keys: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Keys of the pair to be picked.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">typeof </span><a href="" class="tsd-signature-type" data-tsd-kind="Parameter">keys</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li>An object containing the given key-value pairs in its original case or an empty object if none of them are found.</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="picknonnullish" class="tsd-anchor"></a>
+					<h3>pick<wbr>Non<wbr>Nullish</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">pick<wbr>Non<wbr>Nullish&lt;T&gt;<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:103</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a shallow copy of the given object, that contains all entries with non-nullish values.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> obj: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An object to pick from.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li>A filtered object containing only keys with non-nullish values.</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="pickvalueignorecase" class="tsd-anchor"></a>
+					<h3>pick<wbr>Value<wbr>Ignore<wbr>Case</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">pick<wbr>Value<wbr>Ignore<wbr>Case&lt;T&gt;<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:96</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the value of an object based on the given key, independent of casing.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>obj: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object to be searched for the given key.</p>
+									</div>
+								</li>
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key of the value to pick.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
+							<p>The value of for the given key or undefined if not available.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="propertyexists" class="tsd-anchor"></a>
+					<h3>property<wbr>Exists</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">property<wbr>Exists<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, <span class="tsd-signature-symbol">...</span>properties<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:8</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if a chain of properties exists on the given object.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>obj: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The object to be checked.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>properties: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Chained properties.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>True if the property chain leads to a truthy value, false otherwise.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="readjson" class="tsd-anchor"></a>
+					<h3>readJSON</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">readJSON<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PathLike</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/fs.ts#L31">packages/util/src/fs.ts:31</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Read a JSON file from the file system.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>path: <span class="tsd-signature-type">PathLike</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The path to the JSON file.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{}</span></h4>
+							<p>An object parsed from the JSON file.</p>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-index-signature">
+									<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="removefileextension" class="tsd-anchor"></a>
+					<h3>remove<wbr>File<wbr>Extension</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>File<wbr>Extension<span class="tsd-signature-symbol">(</span>string<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string.d.ts:30</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove file extension from a string e.g. test.jpg -&gt; test</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>string: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>String to remove file extension.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>String without extension.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="renamekeys" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> rename<wbr>Keys</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">rename<wbr>Keys<span class="tsd-signature-symbol">(</span>keyMapping<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span>, obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:41</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Takes an object and returns a new object whose keys are renamed according to the provided key mapping.
+										Any keys in the input object not present in the key mapping will be present in the output object as-is.
+									If a key in the key mapping is not present in the input object, the output object will contain the key with value &quot;undefined&quot;.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>keyMapping: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An object mapping keys of the input object to keys of the output object.</p>
+									</div>
+								</li>
+								<li>
+									<h5>obj: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The input object.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>An object with renamed keys.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setgloballoglevel" class="tsd-anchor"></a>
+					<h3>set<wbr>Global<wbr>Log<wbr>Level</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Global<wbr>Log<wbr>Level<span class="tsd-signature-symbol">(</span>level<span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_util#loglevel" class="tsd-signature-type" data-tsd-kind="Type alias">LogLevel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:66</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Change the global log level of the container which will set default level for all active loggers.
+									E. g., to set the global log level call <code>setGlobalLogLevel(&#39;debug&#39;)</code>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>level: <a href="sap_cloud_sdk_util#loglevel" class="tsd-signature-type" data-tsd-kind="Type alias">LogLevel</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setloglevel" class="tsd-anchor"></a>
+					<h3>set<wbr>Log<wbr>Level</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Log<wbr>Level<span class="tsd-signature-symbol">(</span>level<span class="tsd-signature-symbol">: </span><a href="sap_cloud_sdk_util#loglevel" class="tsd-signature-type" data-tsd-kind="Type alias">LogLevel</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;&quot;</span>, messageContextOrLogger<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Logger</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:60</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Change the log level of a logger based on its message context.
+									E. g., to set the log level for the destination accessor module of the SDK to <em>debug</em>, simply call <code>setLogLevel(&#39;debug&#39;, &#39;destination-acessor&#39;)</code>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>level: <a href="sap_cloud_sdk_util#loglevel" class="tsd-signature-type" data-tsd-kind="Type alias">LogLevel</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;&quot;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>level to set the logger to. Use an empty string &#39;&#39; as level to unset context level.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> messageContextOrLogger: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Logger</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Message context of the logger to change the log level for or the logger itself</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="splitinchunks" class="tsd-anchor"></a>
+					<h3>split<wbr>InChunks</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">split<wbr>InChunks&lt;T&gt;<span class="tsd-signature-symbol">(</span>arr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, chunkSize<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L43">packages/util/src/array.ts:43</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Split the given array in chunks</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array to be split into chunks.</p>
+									</div>
+								</li>
+								<li>
+									<h5>chunkSize: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Size of the chunks</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>Two dimensional array with arrays of length chunkSize. The last subarray could be shorter.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="titleformat" class="tsd-anchor"></a>
+					<h3>title<wbr>Format</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">title<wbr>Format<span class="tsd-signature-symbol">(</span>str<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string-formatter.d.ts:31</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert a string to a human readable format, e.g. it transforms <code>to_BusinessPartner</code> to <code>To Business Partner</code>.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>str: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The string to be transformed.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>The transformed string.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="tosanitizedobject" class="tsd-anchor"></a>
+					<h3>to<wbr>Sanitized<wbr>Object</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Sanitized<wbr>Object<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/object.d.ts:79</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create an object based on the given key and value if neither key nor value are nullish.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the header.</p>
+									</div>
+								</li>
+								<li>
+									<h5>value: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value of the header.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li>An object containing the given key and value of an empty object.</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="trim" class="tsd-anchor"></a>
+					<h3>trim</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">trim<span class="tsd-signature-symbol">(</span>string<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string.d.ts:24</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove whitespace from the left side of a string.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>string: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>String to trim.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>String without outer whitespace.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="trimleft" class="tsd-anchor"></a>
+					<h3>trim<wbr>Left</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">trim<wbr>Left<span class="tsd-signature-symbol">(</span>string<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string.d.ts:12</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove whitespace from the left side of a string.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>string: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>String to trim.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>String without whitespace on the left side.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="trimright" class="tsd-anchor"></a>
+					<h3>trim<wbr>Right</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">trim<wbr>Right<span class="tsd-signature-symbol">(</span>string<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string.d.ts:18</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove whitespace from the right side of a string.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>string: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>String to trim.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>String without whitespace on the right side.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="unique" class="tsd-anchor"></a>
+					<h3>unique</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">unique&lt;T&gt;<span class="tsd-signature-symbol">(</span>arr<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L15">packages/util/src/array.ts:15</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove all duplicates from array</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array that might contain duplicates</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>Array of unique items</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="unmuteloggers" class="tsd-anchor"></a>
+					<h3>unmute<wbr>Loggers</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">unmute<wbr>Loggers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/logger/cloud-sdk-logger.d.ts:9</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unmute all logger output created by the SAP Cloud SDK Logger. This also applies to future loggers created. Useful for tests.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="uppercasesnakecase" class="tsd-anchor"></a>
+					<h3>upper<wbr>Case<wbr>Snake<wbr>Case</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">upper<wbr>Case<wbr>Snake<wbr>Case<span class="tsd-signature-symbol">(</span>str<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/util/dist/string-formatter.d.ts:17</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert a string to the uppercase snake case. This format is used e. g. for static properties on entity classes.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>str: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The string to be transformed.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>The input string in the case used by static methods on entity-classes.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="variadicargumenttoarray" class="tsd-anchor"></a>
+					<h3>variadic<wbr>Argument<wbr>ToArray</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">variadic<wbr>Argument<wbr>ToArray&lt;T&gt;<span class="tsd-signature-symbol">(</span>firstOrArray<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, rest<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L66">packages/util/src/array.ts:66</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>We want to provide methods which accept a variable single number of elements and arrays.
+										The overloaded signature to achieve this is:
+										function doSomething(array: T[])
+										function doSomething(...varArgs: T[])
+										functiondoSomething(first: undefined | T | T[], ...rest: T[]) {
+										//implementation
+										}
+									This wrapper methods makes it easy build an array from the input.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>firstOrArray: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Either an array, the first element of the var args or undefined if no argument was given.</p>
+									</div>
+								</li>
+								<li>
+									<h5>rest: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Second to last element if var args were used, empty array if the frist argument is an array.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>Array from the input or empty array if no input was given.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="zip" class="tsd-anchor"></a>
+					<h3>zip</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">zip&lt;T&gt;<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/7eaf4bb9/packages/util/src/array.ts#L106">packages/util/src/array.ts:106</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Merge two arrays by alternately adding inserting values from both arrays, starting from the left.
+									For example: <code>zip([1, 2], [3, 4, 5, 6])</code> =&gt; <code>[1, 3, 2, 4, 5, 6]</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>left: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array to start alternately merging from.</p>
+									</div>
+								</li>
+								<li>
+									<h5>right: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Second array to merge.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>Zipped array.</p>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_analytics">@sap-<wbr>cloud-<wbr>sdk/analytics</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_core">@sap-<wbr>cloud-<wbr>sdk/core</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_generator">@sap-<wbr>cloud-<wbr>sdk/generator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_openapi_generator">@sap-<wbr>cloud-<wbr>sdk/openapi-<wbr>generator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_test_util">@sap-<wbr>cloud-<wbr>sdk/test-<wbr>util</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="sap_cloud_sdk_util">@sap-<wbr>cloud-<wbr>sdk/util</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/sap_cloud_sdk_util.errorwithcause" class="tsd-kind-icon">Error<wbr>With<wbr>Cause</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/sap_cloud_sdk_util.uniquenamegenerator" class="tsd-kind-icon">Unique<wbr>Name<wbr>Generator</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/sap_cloud_sdk_util.loggeroptions" class="tsd-kind-icon">Logger<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/sap_cloud_sdk_util.messagecontextobj" class="tsd-kind-icon">Message<wbr>Context<wbr>Obj</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#loglevel" class="tsd-kind-icon">Log<wbr>Level</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#maptype" class="tsd-kind-icon">Map<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#odataversion" class="tsd-kind-icon">OData<wbr>Version</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#value_is_undefined" class="tsd-kind-icon">VALUE_<wbr>IS_<wbr>UNDEFINED</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#cloudsdkexceptionlogger" class="tsd-kind-icon">cloud<wbr>Sdk<wbr>Exception<wbr>Logger</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#kibana" class="tsd-kind-icon">kibana</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#local" class="tsd-kind-icon">local</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#unixeol" class="tsd-kind-icon">unixEOL</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#webeol" class="tsd-kind-icon">webEOL</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#assoc" class="tsd-kind-icon">assoc</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#assocsome" class="tsd-kind-icon">assoc<wbr>Some</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#asyncpipe" class="tsd-kind-icon">async<wbr>Pipe</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#camelcase" class="tsd-kind-icon">camel<wbr>Case</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#caps" class="tsd-kind-icon">caps</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#checkurlexists" class="tsd-kind-icon">check<wbr>Url<wbr>Exists</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#codeblock" class="tsd-kind-icon">code<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#createlogger" class="tsd-kind-icon">create<wbr>Logger</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#disableexceptionlogger" class="tsd-kind-icon">disable<wbr>Exception<wbr>Logger</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#documentationblock" class="tsd-kind-icon">documentation<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#enableexceptionlogger" class="tsd-kind-icon">enable<wbr>Exception<wbr>Logger</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#encodebase64" class="tsd-kind-icon">encode<wbr>Base64</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#equal" class="tsd-kind-icon">equal</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#equalarrays" class="tsd-kind-icon">equal<wbr>Arrays</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#equalobjects" class="tsd-kind-icon">equal<wbr>Objects</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#errorwithcause-1" class="tsd-kind-icon">error<wbr>With<wbr>Cause</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#exclude" class="tsd-kind-icon">exclude</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#filterduplicates" class="tsd-kind-icon">filter<wbr>Duplicates</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#filterduplicatesright" class="tsd-kind-icon">filter<wbr>Duplicates<wbr>Right</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#findprojectroot" class="tsd-kind-icon">find<wbr>Project<wbr>Root</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#finishall" class="tsd-kind-icon">finish<wbr>All</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#first" class="tsd-kind-icon">first</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#flat" class="tsd-kind-icon">flat</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#flatten" class="tsd-kind-icon">flatten</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#formatjson" class="tsd-kind-icon">format<wbr>Json</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#getgloballoglevel" class="tsd-kind-icon">get<wbr>Global<wbr>Log<wbr>Level</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#getlogger" class="tsd-kind-icon">get<wbr>Logger</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#identity" class="tsd-kind-icon">identity</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#iserrorwithcause" class="tsd-kind-icon">is<wbr>Error<wbr>With<wbr>Cause</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#isnullish" class="tsd-kind-icon">is<wbr>Nullish</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#kebabcase" class="tsd-kind-icon">kebab<wbr>Case</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#last" class="tsd-kind-icon">last</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#mergeignorecase" class="tsd-kind-icon">merge<wbr>Ignore<wbr>Case</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#mergeleftignorecase" class="tsd-kind-icon">merge<wbr>Left<wbr>Ignore<wbr>Case</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#mergesome" class="tsd-kind-icon">merge<wbr>Some</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#muteloggers" class="tsd-kind-icon">mute<wbr>Loggers</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#partition" class="tsd-kind-icon">partition</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#pascalcase" class="tsd-kind-icon">pascal<wbr>Case</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#pick" class="tsd-kind-icon">pick</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#pickignorecase" class="tsd-kind-icon">pick<wbr>Ignore<wbr>Case</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#picknonnullish" class="tsd-kind-icon">pick<wbr>Non<wbr>Nullish</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#pickvalueignorecase" class="tsd-kind-icon">pick<wbr>Value<wbr>Ignore<wbr>Case</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#propertyexists" class="tsd-kind-icon">property<wbr>Exists</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#readjson" class="tsd-kind-icon">readJSON</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#removefileextension" class="tsd-kind-icon">remove<wbr>File<wbr>Extension</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#renamekeys" class="tsd-kind-icon">rename<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#setgloballoglevel" class="tsd-kind-icon">set<wbr>Global<wbr>Log<wbr>Level</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#setloglevel" class="tsd-kind-icon">set<wbr>Log<wbr>Level</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#splitinchunks" class="tsd-kind-icon">split<wbr>InChunks</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#titleformat" class="tsd-kind-icon">title<wbr>Format</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#tosanitizedobject" class="tsd-kind-icon">to<wbr>Sanitized<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#trim" class="tsd-kind-icon">trim</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#trimleft" class="tsd-kind-icon">trim<wbr>Left</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#trimright" class="tsd-kind-icon">trim<wbr>Right</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#unique" class="tsd-kind-icon">unique</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#unmuteloggers" class="tsd-kind-icon">unmute<wbr>Loggers</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_util#uppercasesnakecase" class="tsd-kind-icon">upper<wbr>Case<wbr>Snake<wbr>Case</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#variadicargumenttoarray" class="tsd-kind-icon">variadic<wbr>Argument<wbr>ToArray</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="sap_cloud_sdk_util#zip" class="tsd-kind-icon">zip</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+		</div>
+	</div>
+<div class="container"><p>Copyright Ⓒ 2021 SAP SE or an SAP affiliate company. All rights reserved.</p></div>
+</footer>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

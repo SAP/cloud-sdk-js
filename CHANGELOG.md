@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [proxy] Fix destination service calls using web proxies.
 
 
 # 1.46.0

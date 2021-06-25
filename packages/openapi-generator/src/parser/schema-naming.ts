@@ -4,12 +4,6 @@ import { ParserOptions } from './options';
 const illegalCharacterRegex = /[.#@/"'*%]+/g;
 const startsWithNumberRegex = /^\d+/g;
 
-function isValidSchemaName(name: string): boolean {
-  return (
-    !name.match(startsWithNumberRegex) && !name.match(illegalCharacterRegex)
-  );
-}
-
 function makeSchemaNameValid(name: string): string {
   while (name.match(illegalCharacterRegex)) {
     name = name.replace(illegalCharacterRegex, '');

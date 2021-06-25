@@ -163,7 +163,7 @@ describe('generic http client', () => {
       );
     });
 
-    it('overwrites the default axios config with detination config', async () => {
+    it('overwrites the default axios config with destination related request config', async () => {
       const destination: Destination = {
         url: 'https://destinationUrl',
         proxyConfiguration: {

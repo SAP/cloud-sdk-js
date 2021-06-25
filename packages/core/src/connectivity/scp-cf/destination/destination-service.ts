@@ -8,7 +8,6 @@ import CircuitBreaker from 'opossum';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   executeHttpRequest,
-  getAxiosConfigWithDefaults,
   HttpRequestConfig,
   HttpRequestOptions,
   HttpResponse
@@ -239,9 +238,7 @@ function callDestinationService(
   options: ResilienceOptions = { enableCircuitBreaker: true }
 ): Promise<HttpResponse> {
   const config: HttpRequestConfig = {
-    ...getAxiosConfigWithDefaults(),
-    url: uri,
-    method: 'GET',
+    method: 'get',
     headers
   };
 

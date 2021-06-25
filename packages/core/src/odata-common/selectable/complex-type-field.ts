@@ -113,15 +113,15 @@ export function getEntityConstructor<EntityT extends Entity, ComplexT>(
 
 /**
  * Convenience method to get the [[EdmTypeShared]] from the overloaded constructor.
- * The two scenarios are complexTypeNameOrEdmType = EdmTypeShared and edmTypeOrUndefined = undefined or complexTypeNameOrEdmType = string of complextype and edmTypeOrUndefined = EdmTypeShared.
+ * The two scenarios are complexTypeNameOrEdmType = EdmTypeShared and edmTypeOrUndefined = undefined or complexTypeNameOrEdmType = string of complex type and edmTypeOrUndefined = EdmTypeShared.
  * @param complexTypeNameOrEdmType - Either the name of the complex type or the EdmType
  * @param edmTypeOrUndefined - Either the EdmType or undefined.
  * @returns The EdmType resolved for the two arguments.
  */
-export function getEdmType<T extends ODataVersion>(
-  complexTypeNameOrEdmType: string | EdmTypeShared<T>,
-  edmTypeOrUndefined?: EdmTypeShared<T>
-): EdmTypeShared<T> {
+export function getEdmType<VersionT extends ODataVersion | 'any'>(
+  complexTypeNameOrEdmType: string | EdmTypeShared<VersionT>,
+  edmTypeOrUndefined?: EdmTypeShared<VersionT>
+): EdmTypeShared<VersionT> {
   if (edmTypeOrUndefined) {
     if (
       typeof complexTypeNameOrEdmType === 'string' &&

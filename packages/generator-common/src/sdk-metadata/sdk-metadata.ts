@@ -63,8 +63,7 @@ export const ServiceStatusValues: Record<
   certified: {
     status: 'certified',
     statusText: 'API Client available for download',
-    statusLongText:
-      'You can download our pregenerated API client for this API.'
+    statusLongText: 'You can download our pregenerated API client for this API.'
   },
   verified: {
     status: 'verified',

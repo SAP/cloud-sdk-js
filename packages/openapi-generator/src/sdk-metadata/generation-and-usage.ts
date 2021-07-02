@@ -16,7 +16,7 @@ export async function getGenerationAndUsage(
   openApiDocument: OpenApiDocument
 ): Promise<GenerationAndUsage> {
   return {
-    ...getGenericGenerationAndUsage(),
+    ...(await getGenericGenerationAndUsage()),
     apiSpecificUsage: getApiSpecificUsage(openApiDocument)
   };
 }

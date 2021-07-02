@@ -17,7 +17,7 @@ export async function getGenerationAndUsage(
   service: VdmServiceMetadata
 ): Promise<GenerationAndUsage> {
   return {
-    ...getGenericGenerationAndUsage(),
+    ...(await getGenericGenerationAndUsage()),
     apiSpecificUsage: getApiSpecificUsage(service)
   };
 }

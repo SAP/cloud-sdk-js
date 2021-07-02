@@ -65,7 +65,7 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
   },
   "serviceStatus": Object {
     "status": "certified",
-    "statusLongText": "You can download our pre-generated API client for this API.",
+    "statusLongText": "You can download our pregenerated API client for this API.",
     "statusText": "API Client available for download",
   },
 }

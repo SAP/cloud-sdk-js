@@ -107,10 +107,6 @@ export interface ServiceStatus {
    * @memberof Client
    */
   statusLongText: string;
-  /**
-   * Getting started text, depends on the service status
-   */
-  // gettingStartedText: string;
 }
 
 /**

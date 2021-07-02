@@ -124,7 +124,7 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
   "pregeneratedLibrary": undefined,
   "serviceStatus": Object {
     "status": "verified",
-    "statusLongText": "The SAP Cloud SDK team checked for this API that generating a API client works, but no pre-generated client is available. You can generate your own client for this API.",
+    "statusLongText": "The SAP Cloud SDK team checked for this API that generating a API client works, but no pregenerated client is available. You can generate your own client for this API.",
     "statusText": "API Client generation tested but no download available",
   },
 }

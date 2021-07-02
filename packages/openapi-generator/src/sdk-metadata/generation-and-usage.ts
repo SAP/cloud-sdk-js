@@ -16,8 +16,16 @@ export async function getGenerationAndUsage(
   openApiDocument: OpenApiDocument
 ): Promise<GenerationAndUsage> {
   return {
+    ...getGenericGenerationAndUsage(),
+    apiSpecificUsage: getApiSpecificUsage(openApiDocument)
+  };
+}
+
+// will be used to generate metadata for failed and unknown case.
+export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
+  return {
     genericUsage: getGenericUsage(),
-    apiSpecificUsage: getApiSpecificUsage(openApiDocument),
+    apiSpecificUsage: undefined,
     links: getOpenApiLinks(),
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/openapi-generator',

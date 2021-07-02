@@ -76,7 +76,7 @@ export interface GenerationAndUsage {
   generatorVersion: string;
   generatorRepositoryLink: UrlString;
   generationSteps: InstructionWithText;
-  apiSpecificUsage: InstructionWithText;
+  apiSpecificUsage: InstructionWithText | undefined;
   genericUsage: InstructionWithText;
   links: Links;
 }
@@ -96,16 +96,21 @@ export interface ServiceStatus {
   /**
    * certified -> Published lib, verified -> Generation worked
    */
-  status: 'certified' | 'verified' | 'unknown';
+  status: 'certified' | 'verified' | 'unknown' | 'failed';
   /**
    * Detailed text what the serviceStatus means.
    * @memberof Client
    */
   statusText: string;
   /**
+   * Like the short version but more information.
+   * @memberof Client
+   */
+  statusLongText: string;
+  /**
    * Getting started text, depends on the service status
    */
-  gettingStartedText: string;
+  // gettingStartedText: string;
 }
 
 /**

@@ -6,4 +6,4 @@ import type { ComplexTypeField } from './complex-type-field';
  */
 export type ConstructorOrField<EntityT extends Entity, ComplexT = any> =
   | Constructable<EntityT>
-  | ComplexTypeField<EntityT, ComplexT>;
+  | ComplexTypeField<EntityT, ComplexT, boolean>;

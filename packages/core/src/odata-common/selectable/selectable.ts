@@ -6,12 +6,6 @@ import type { CustomField } from './custom-field';
 import type { Link } from './link';
 import type { SimpleTypeFields } from './simple-type-fields';
 
-/**
- * Represents all selectables, i.e. everything that can be used in a `.select` statement.
- *
- * @typeparam EntityT - Type of the entity to be selected on
- */
-
 export type Selectable<EntityT extends Entity> =
   ODataVersionOf<EntityT> extends 'v2'
     ?
@@ -29,3 +23,19 @@ export type Selectable<EntityT extends Entity> =
         | CollectionField<EntityT>
         | AllFields<EntityT>
     : never;
+
+/**
+ * Interface to denote a selectable [[Field]].
+ */
+export interface SelectableField {
+  /**
+   * This property denotes that this is a selectable field.
+   */
+  selectable: true;
+}
+
+/**
+ * @deprecated Since v1.27.0. Use [[SelectableField]] instead.
+ * Interface denoting a selectable [[EdmTypeField]].
+ */
+export type SelectableEdmTypeField = SelectableField;

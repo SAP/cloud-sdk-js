@@ -1,10 +1,10 @@
 import { EdmTypeShared } from '../edm-types';
 
-export interface ComplexTypeNamespace<ComplexT extends Record<string, any>> {
+export interface ComplexTypeNamespace<ComplexT> {
   _propertyMetadata: PropertyMetadata<ComplexT>[];
 }
 
-export interface PropertyMetadata<ComplexT extends Record<string, any> = any> {
+export interface PropertyMetadata<ComplexT = any> {
   name: keyof ComplexT;
   originalName: string;
   type: EdmTypeShared<'any'> | ComplexTypeNamespace<any>;

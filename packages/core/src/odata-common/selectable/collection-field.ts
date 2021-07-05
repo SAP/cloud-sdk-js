@@ -1,6 +1,6 @@
 import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
-import { SelectableEdmTypeField } from './edm-field';
+import { SelectableField } from './selectable';
 import { Field } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { getEntityConstructor } from './complex-type-field';
@@ -11,7 +11,7 @@ export class CollectionField<
     NullableT extends boolean = false
   >
   extends Field<EntityT, NullableT>
-  implements SelectableEdmTypeField
+  implements SelectableField
 {
   readonly selectable: true;
 

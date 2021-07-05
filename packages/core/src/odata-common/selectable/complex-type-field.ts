@@ -24,7 +24,7 @@ import type { ConstructorOrField } from './constructor-or-field';
  */
 export abstract class ComplexTypeField<
   EntityT extends Entity,
-  ComplexT extends Record<string, any> = any,
+  ComplexT = any,
   NullableT extends boolean = false
 > extends Field<EntityT, NullableT> {
   /**

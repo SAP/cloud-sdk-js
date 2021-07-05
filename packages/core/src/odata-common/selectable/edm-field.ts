@@ -97,13 +97,10 @@ export type NonNullableFieldTypeByEdmType<
   : never;
 
 export type FieldTypeByEdmType<
-  EdmOrFieldT extends EdmTypeShared<'any'> | FieldType,
+  EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean
-> = NullableFieldType<NonNullableFieldTypeByEdmType<EdmOrFieldT>, NullableT>;
-type EdmType<EdmOrFieldT extends EdmTypeShared<'any'> | FieldType> =
-  EdmOrFieldT extends EdmTypeShared<'any'> ? EdmOrFieldT : EdmTypeShared<'any'>;
+> = NullableFieldType<NonNullableFieldTypeByEdmType<EdmT>, NullableT>;
 
-type fjdskl = EdmType<'Edm.Boolean'>;
 /**
  * Represents a property of an OData entity with an Edm type.
  *
@@ -163,14 +160,4 @@ export class EdmField<
   ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
     return new Filter(this.fieldPath(), 'ne', value, this.edmType);
   }
-}
-
-/**
- * Interface denoting a selectable [[EdmTypeField]].
- */
-export interface SelectableEdmTypeField {
-  /**
-   * This property denotes that this is a selectable edm type field.
-   */
-  selectable: true;
 }

@@ -1,10 +1,9 @@
-/* eslint-disable max-classes-per-file */
 import { Filter } from '../filter';
 import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
 import { EdmField, FieldTypeByEdmType } from './edm-field';
 
-export class GreaterOrLessEdmTypeField<
+export class OrderableEdmField<
   EntityT extends Entity,
   EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean = false

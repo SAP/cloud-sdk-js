@@ -2044,9 +2044,9 @@
   integrity sha512-Y2mHTRAbqfFkpjldbkHGY8JIzRN6XqYRliG8/24FcHm2D2PwW24fl5xMRTVGdrb7iMrwCaIEbLWerGIkXuFWVg==
 
 "@types/voca@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.npmjs.org/@types/voca/-/voca-1.4.0.tgz#59d93132e411f13fbaacb166a2047464c463535a"
-  integrity sha512-LdffYbNO8Mg06oPouDq13XwarZbYEvLHMCeV04B/LYl2o6miyg4qBa3YduIZcNhK8/r3Soq0a1tCDeprkBXTIQ==
+  version "1.4.1"
+  resolved "https://registry.npmjs.org/@types/voca/-/voca-1.4.1.tgz#953bbccabc1b6d199f591cf9b18b531d8b7000ce"
+  integrity sha512-Qi8c/YSUCH54J9HoIi2QfUTcCUr4l7qdUtQb8P85MOLdRXQgR87N7K3p1Dvw9aNrRFmiQnOHl0q7GFebBhmEXA==
 
 "@types/yargs-parser@*":
   version "20.2.0"

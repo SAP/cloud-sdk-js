@@ -35,19 +35,23 @@ export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 
-export abstract class Field<EntityT extends Entity>
-  implements EntityIdentifiable<EntityT>
+export abstract class Field<
+  EntityT extends Entity,
+  NullableT extends boolean = false
+> implements EntityIdentifiable<EntityT>
 {
   readonly _entity: EntityT;
   /**
    * Creates an instance of Field.
    *
    * @param _fieldName - Actual name of the field used in the OData request
+   * @param _isNullable - Whether the field can have the value `null`.
    * @param _entityConstructor - Constructor type of the entity the field belongs to
    */
   constructor(
     readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT>
+    readonly _entityConstructor: Constructable<EntityT>,
+    readonly _isNullable: NullableT = false as NullableT
   ) {}
 
   /**

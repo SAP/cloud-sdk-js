@@ -1,33 +1,35 @@
 import {
   CustomField as CustomFieldBase,
-  DateField,
-  DurationField,
-  TimeField
+  EdmTypeField
 } from '../../odata-common';
 import type { Entity } from '../entity';
 
 export class CustomField<
-  EntityT extends Entity
-> extends CustomFieldBase<EntityT> {
-  edmDate(): DateField<EntityT> {
-    return new DateField<EntityT>(
+  EntityT extends Entity,
+  NullableT extends boolean = false
+> extends CustomFieldBase<EntityT, NullableT> {
+  edmDate(): EdmTypeField<EntityT, 'Edm.Date', NullableT> {
+    return new EdmTypeField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Date'
+      'Edm.Date',
+      this._isNullable
     );
   }
-  edmDuration(): DurationField<EntityT> {
-    return new DurationField<EntityT>(
+  edmDuration(): EdmTypeField<EntityT, 'Edm.Duration', NullableT> {
+    return new EdmTypeField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.Duration'
+      'Edm.Duration',
+      this._isNullable
     );
   }
-  edmTimeOfDay(): TimeField<EntityT> {
-    return new TimeField<EntityT>(
+  edmTimeOfDay(): EdmTypeField<EntityT, 'Edm.TimeOfDay', NullableT> {
+    return new EdmTypeField(
       this._fieldName,
       this._entityConstructor,
-      'Edm.TimeOfDay'
+      'Edm.TimeOfDay',
+      this._isNullable
     );
   }
 }

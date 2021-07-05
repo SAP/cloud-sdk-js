@@ -21,7 +21,7 @@ export interface Constructable<EntityT extends Entity, EntityTypeT = unknown> {
   new (...args: any[]): EntityT;
   requestBuilder(): RequestBuilder<EntityT>;
   builder(): EntityBuilderType<EntityT, EntityTypeT>;
-  customField(fieldName: string): CustomField<EntityT>;
+  customField(fieldName: string, isNullable?: boolean): CustomField<EntityT>;
 }
 
 export type EntityBuilderType<EntityT extends Entity, EntityTypeT> = {
@@ -261,7 +261,7 @@ export abstract class Entity {
    * @param visitedEntities List of entities to check in case of circular dependencies.
    * @returns Entity with all defined entity fields
    */
-  protected getCurrentMapKeys(visitedEntities: Entity[] = []): this {
+  protected getCurrentMapKeys(visitedEntities: Entity[] = []): any {
     return this.asObject(visitedEntities) as this;
   }
 

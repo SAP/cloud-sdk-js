@@ -2,22 +2,15 @@ import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
 import { SelectableEdmTypeField } from './edm-type-field';
 import { Field } from './field';
-import { ComplexTypeNamespace } from './complex-type-namespace';
-import { getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
+import { getEntityConstructor } from './complex-type-field';
 
-/**
- *
- * Represents a static field of an entity or complex type.
- *
- * @typeparam EntityT - Type of the entity the field belongs to
- * @typeparam FieldT - Type of the entries of the collection in the field
- */
 export class CollectionField<
     EntityT extends Entity,
-    FieldT extends EdmTypeShared<'any'> | Record<string, any> = any
+    CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any> = any,
+    NullableT extends boolean = false
   >
-  extends Field<EntityT>
+  extends Field<EntityT, NullableT>
   implements SelectableEdmTypeField
 {
   readonly selectable: true;
@@ -28,13 +21,15 @@ export class CollectionField<
    *
    * @param fieldName - Actual name of the field used in the OData request.
    * @param fieldOf - The constructor of the entity or the complex type field this field belongs to.
-   * @param _fieldType - Type of the field according to the metadata description.
+   * @param _fieldType - Edm type of the field according to the metadata description.
+   * @param isNullable - Whether the field can have the value `null`.
    */
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    readonly _fieldType: FieldT | ComplexTypeNamespace<FieldT>
+    readonly _fieldType: CollectionFieldT,
+    isNullable: NullableT = false as NullableT
   ) {
-    super(fieldName, getEntityConstructor(fieldOf));
+    super(fieldName, getEntityConstructor(fieldOf), isNullable);
   }
 }

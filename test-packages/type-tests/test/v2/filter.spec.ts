@@ -5,13 +5,13 @@ import {
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 
-// $ExpectType Filter<TestEntity, string>
+// $ExpectType Filter<TestEntity, string | null>
 const stringProp = TestEntity.STRING_PROPERTY.equals('test');
 
-// $ExpectType Filter<TestEntity, boolean>
+// $ExpectType Filter<TestEntity, boolean | null>
 const booleanProp = TestEntity.BOOLEAN_PROPERTY.equals(true);
 
-// $ExpectType Filter<TestEntityMultiLink, number>
+// $ExpectType Filter<TestEntityMultiLink, number | null>
 const multiLinkInt16Prop = TestEntityMultiLink.INT_16_PROPERTY.equals(15);
 
 // $ExpectType FilterList<TestEntity>
@@ -42,3 +42,9 @@ TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test');
 
 // $ExpectError
 TestEntity.COMPLEX_TYPE_PROPERTY.equals('test');
+
+// $ExpectError
+TestEntity.KEY_PROPERTY_STRING.equals(null);
+
+// $ExpectType Filter<TestEntity, string | null>
+TestEntity.STRING_PROPERTY.equals(null);

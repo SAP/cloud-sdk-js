@@ -1,7 +1,99 @@
+import BigNumber from 'bignumber.js';
+import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
-import { Entity, ODataVersionOf, Constructable } from '../entity';
+import { Entity } from '../entity';
 import { Filter } from '../filter';
+import { Time } from '../time';
+import { getEntityConstructor } from './complex-type-field';
+import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldType } from './field';
+
+export type SortableEdmType =
+  | 'Edm.Boolean'
+  | 'Edm.Decimal'
+  | 'Edm.Double'
+  | 'Edm.Single'
+  | 'Edm.Float'
+  | 'Edm.Int16'
+  | 'Edm.Int32'
+  | 'Edm.Int64'
+  | 'Edm.SByte'
+  | 'Edm.Byte'
+  | 'Edm.DateTime'
+  | 'Edm.Time'
+  | 'Edm.Date'
+  | 'Edm.Duration'
+  | 'Edm.TimeOfDay';
+
+export function isSortableEdmType(edmType: EdmTypeShared<'any'>): boolean {
+  return [
+    'Edm.Boolean',
+    'Edm.Decimal',
+    'Edm.Double',
+    'Edm.Single',
+    'Edm.Float',
+    'Edm.Int16',
+    'Edm.Int32',
+    'Edm.Int64',
+    'Edm.SByte',
+    'Edm.Byte',
+    'Edm.DateTime',
+    'Edm.Time',
+    'Edm.Date',
+    'Edm.Duration',
+    'Edm.TimeOfDay'
+  ].includes(edmType);
+}
+
+type NullableFieldType<
+  FieldT extends FieldType,
+  NullableT extends boolean
+> = NullableT extends true ? FieldT | null : FieldT;
+
+export type FieldTypeByEdmType<
+  EdmT extends EdmTypeShared<'any'>,
+  NullableT extends boolean
+> = EdmT extends 'Edm.String'
+  ? NullableFieldType<string, NullableT>
+  : EdmT extends 'Edm.Boolean'
+  ? NullableFieldType<boolean, NullableT>
+  : EdmT extends 'Edm.Decimal'
+  ? NullableFieldType<BigNumber, NullableT>
+  : EdmT extends 'Edm.Double'
+  ? NullableFieldType<number, NullableT>
+  : EdmT extends 'Edm.Single'
+  ? NullableFieldType<number, NullableT>
+  : EdmT extends 'Edm.Float'
+  ? NullableFieldType<number, NullableT>
+  : EdmT extends 'Edm.Int16'
+  ? NullableFieldType<number, NullableT>
+  : EdmT extends 'Edm.Int32'
+  ? NullableFieldType<number, NullableT>
+  : EdmT extends 'Edm.Int64'
+  ? NullableFieldType<BigNumber, NullableT>
+  : EdmT extends 'Edm.SByte'
+  ? NullableFieldType<number, NullableT>
+  : EdmT extends 'Edm.Binary'
+  ? NullableFieldType<string, NullableT>
+  : EdmT extends 'Edm.Guid'
+  ? NullableFieldType<string, NullableT>
+  : EdmT extends 'Edm.Byte'
+  ? NullableFieldType<number, NullableT>
+  : EdmT extends 'Edm.DateTime'
+  ? NullableFieldType<moment.Moment, NullableT>
+  : EdmT extends 'Edm.Time'
+  ? NullableFieldType<Time, NullableT>
+  : EdmT extends 'Edm.Date'
+  ? NullableFieldType<moment.Moment, NullableT>
+  : EdmT extends 'Edm.Duration'
+  ? NullableFieldType<moment.Duration, NullableT>
+  : EdmT extends 'Edm.TimeOfDay'
+  ? NullableFieldType<Time, NullableT>
+  : EdmT extends 'Edm.Enum'
+  ? NullableFieldType<string, NullableT>
+  : EdmT extends 'Edm.Any'
+  ? NullableFieldType<any, NullableT>
+  : never;
 
 /**
  * Represents a property of an OData entity with an Edm type.
@@ -17,23 +109,26 @@ import { Field, FieldType } from './field';
  * @typeparam EntityT - Type of the entity the field belongs to
  * @typeparam FieldT - Type of the field
  */
-export abstract class EdmTypeField<
+export class EdmTypeField<
   EntityT extends Entity,
-  FieldT extends FieldType
-> extends Field<EntityT> {
+  EdmT extends EdmTypeShared<'any'>,
+  NullableT extends boolean = false
+> extends Field<EntityT, NullableT> {
   /**
    * Creates an instance of EdmTypeField.
    *
-   * @param fieldName - Actual name of the field used in the OData request
-   * @param entityConstructor - Constructor type of the entity the field belongs to
-   * @param edmType - Type of the field according to the metadata description
+   * @param fieldName - Actual name of the field used in the OData request.
+   * @param _fieldOf - Constructor type of the entity the field belongs to.
+   * @param edmType - Type of the field according to the metadata description.
+   * @param isNullable - Whether the field can have the value `null`.
    */
   constructor(
     fieldName: string,
-    entityConstructor: Constructable<EntityT>,
-    readonly edmType: EdmTypeShared<ODataVersionOf<EntityT>>
+    readonly _fieldOf: ConstructorOrField<EntityT>,
+    readonly edmType: EdmT,
+    isNullable: NullableT = false as NullableT
   ) {
-    super(fieldName, entityConstructor);
+    super(fieldName, getEntityConstructor(_fieldOf), isNullable);
   }
 
   /**
@@ -42,7 +137,9 @@ export abstract class EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  equals(value: FieldT): Filter<EntityT, FieldT> {
+  equals(
+    value: FieldTypeByEdmType<EdmT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
     return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 
@@ -52,7 +149,9 @@ export abstract class EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  notEquals(value: FieldT): Filter<EntityT, FieldT> {
+  notEquals(
+    value: FieldTypeByEdmType<EdmT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
     return new Filter(this.fieldPath(), 'ne', value, this.edmType);
   }
 }

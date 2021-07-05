@@ -2,13 +2,13 @@
 import { Filter } from '../filter';
 import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
-import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
+import { EdmField, FieldTypeByEdmType } from './edm-field';
 
 export class GreaterOrLessEdmTypeField<
   EntityT extends Entity,
   EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean = false
-> extends EdmTypeField<EntityT, EdmT, NullableT> {
+> extends EdmField<EntityT, EdmT, NullableT> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    *

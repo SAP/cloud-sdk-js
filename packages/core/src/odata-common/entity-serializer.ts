@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
   Constructable,
-  EdmTypeField,
+  EdmField,
   OneToOneLink,
   Link,
   ComplexTypeField,
@@ -77,7 +77,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     if (fieldValue === null || fieldValue === undefined) {
       return null;
     }
-    if (field instanceof EdmTypeField) {
+    if (field instanceof EdmField) {
       return tsToEdm(fieldValue, field.edmType);
     }
     if (field instanceof OneToOneLink) {
@@ -151,7 +151,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     return Object.entries(complexTypeField)
       .filter(
         ([propertyKey, propertyValue]) =>
-          (propertyValue instanceof EdmTypeField ||
+          (propertyValue instanceof EdmField ||
             propertyValue instanceof ComplexTypeField) &&
           typeof fieldValue[propertyKey] !== 'undefined'
       )
@@ -159,7 +159,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
         (complexTypeObject, [propertyKey, propertyValue]) => ({
           ...complexTypeObject,
           [propertyValue._fieldName]:
-            propertyValue instanceof EdmTypeField
+            propertyValue instanceof EdmField
               ? tsToEdm(fieldValue[propertyKey], propertyValue.edmType)
               : serializeComplexTypeFieldLegacy(
                   propertyValue,

@@ -1,5 +1,5 @@
 import { Entity, Constructable } from '../entity';
-import { EdmTypeField } from './edm-type-field';
+import { EdmField } from './edm-field';
 import { Field } from './field';
 
 export class CustomField<
@@ -14,8 +14,8 @@ export class CustomField<
     super(fieldName, entityConstructor, isNullable);
   }
 
-  edmString(): EdmTypeField<EntityT, 'Edm.String', NullableT> {
-    return new EdmTypeField(
+  edmString(): EdmField<EntityT, 'Edm.String', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.String',
@@ -23,8 +23,8 @@ export class CustomField<
     );
   }
 
-  edmBoolean(): EdmTypeField<EntityT, 'Edm.Boolean', NullableT> {
-    return new EdmTypeField(
+  edmBoolean(): EdmField<EntityT, 'Edm.Boolean', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Boolean',
@@ -32,8 +32,8 @@ export class CustomField<
     );
   }
 
-  edmGuid(): EdmTypeField<EntityT, 'Edm.Guid', NullableT> {
-    return new EdmTypeField(
+  edmGuid(): EdmField<EntityT, 'Edm.Guid', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Guid',
@@ -41,8 +41,8 @@ export class CustomField<
     );
   }
 
-  edmDecimal(): EdmTypeField<EntityT, 'Edm.Decimal', NullableT> {
-    return new EdmTypeField(
+  edmDecimal(): EdmField<EntityT, 'Edm.Decimal', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Decimal',
@@ -51,8 +51,8 @@ export class CustomField<
   }
 
   // TODO: GL
-  edmInt16(): EdmTypeField<EntityT, 'Edm.Int16', NullableT> {
-    return new EdmTypeField(
+  edmInt16(): EdmField<EntityT, 'Edm.Int16', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Int16',
@@ -60,8 +60,8 @@ export class CustomField<
     );
   }
 
-  edmInt32(): EdmTypeField<EntityT, 'Edm.Int32', NullableT> {
-    return new EdmTypeField(
+  edmInt32(): EdmField<EntityT, 'Edm.Int32', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Int32',
@@ -69,8 +69,8 @@ export class CustomField<
     );
   }
 
-  edmInt64(): EdmTypeField<EntityT, 'Edm.Int64', NullableT> {
-    return new EdmTypeField(
+  edmInt64(): EdmField<EntityT, 'Edm.Int64', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Int64',
@@ -78,8 +78,8 @@ export class CustomField<
     );
   }
 
-  edmSingle(): EdmTypeField<EntityT, 'Edm.Single', NullableT> {
-    return new EdmTypeField(
+  edmSingle(): EdmField<EntityT, 'Edm.Single', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Single',
@@ -87,8 +87,8 @@ export class CustomField<
     );
   }
 
-  edmDouble(): EdmTypeField<EntityT, 'Edm.Double', NullableT> {
-    return new EdmTypeField(
+  edmDouble(): EdmField<EntityT, 'Edm.Double', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Double',
@@ -96,8 +96,8 @@ export class CustomField<
     );
   }
 
-  edmByte(): EdmTypeField<EntityT, 'Edm.Byte', NullableT> {
-    return new EdmTypeField(
+  edmByte(): EdmField<EntityT, 'Edm.Byte', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Byte',
@@ -105,8 +105,8 @@ export class CustomField<
     );
   }
 
-  edmSByte(): EdmTypeField<EntityT, 'Edm.SByte', NullableT> {
-    return new EdmTypeField(
+  edmSByte(): EdmField<EntityT, 'Edm.SByte', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.SByte',
@@ -114,8 +114,8 @@ export class CustomField<
     );
   }
 
-  edmDateTimeOffset(): EdmTypeField<EntityT, 'Edm.DateTimeOffset', NullableT> {
-    return new EdmTypeField(
+  edmDateTimeOffset(): EdmField<EntityT, 'Edm.DateTimeOffset', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.DateTimeOffset',
@@ -123,8 +123,8 @@ export class CustomField<
     );
   }
 
-  edmBinary(): EdmTypeField<EntityT, 'Edm.Binary', NullableT> {
-    return new EdmTypeField(
+  edmBinary(): EdmField<EntityT, 'Edm.Binary', NullableT> {
+    return new EdmField(
       this._fieldName,
       this._entityConstructor,
       'Edm.Binary',

@@ -1,6 +1,6 @@
 import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
-import { SelectableEdmTypeField } from './edm-type-field';
+import { SelectableEdmTypeField } from './edm-field';
 import { Field } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { getEntityConstructor } from './complex-type-field';

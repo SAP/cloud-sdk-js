@@ -1,7 +1,7 @@
-import { EdmTypeShared } from '../edm-types';
-import { Entity, ODataVersionOf, Constructable } from '../entity';
-import { Filter } from '../filter';
-import { Field, FieldType } from './field';
+import { EdmTypeShared } from '../../edm-types';
+import { Entity, ODataVersionOf, Constructable } from '../../entity';
+import { Filter } from '../../filter';
+import { Field, FieldType } from '../field';
 
 /**
  * @deprecated Since v1.27.0. Use [[EdmField]] instead.
@@ -56,14 +56,4 @@ export abstract class EdmTypeField<
   notEquals(value: FieldT): Filter<EntityT, FieldT> {
     return new Filter(this.fieldPath(), 'ne', value, this.edmType);
   }
-}
-
-/**
- * Interface denoting a selectable [[EdmTypeField]].
- */
-export interface SelectableEdmTypeField {
-  /**
-   * This property denotes that this is a selectable edm type field.
-   */
-  selectable: true;
 }

@@ -1,53 +1,54 @@
 /* eslint-disable max-classes-per-file */
 
-import { EdmTypeShared } from '../edm-types';
-import { Entity, ODataVersionOf, Constructable } from '../entity';
+import { EdmTypeShared } from '../../edm-types';
+import { Entity, ODataVersionOf } from '../../entity';
 import {
   ComplexTypeField,
   getEdmType,
   getEntityConstructor
-} from './complex-type-field';
-import { ConstructorOrField } from './constructor-or-field';
-import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+} from '../complex-type-field';
+import { ConstructorOrField } from '../constructor-or-field';
+import { SelectableField } from '../selectable';
+import { EdmTypeField } from './edm-type-field';
 
 /**
- * Represents a property with a boolean value.
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * Represents a property with an unknown or currently unsupported edm type like Edm.Geography.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanFieldBase<EntityT extends Entity> extends EdmTypeField<
-  EntityT,
-  boolean
-> {}
+class AnyFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, any> {}
 
 /**
- * Represents a selectable property with a boolean value.
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * Represents a selectable property with with an unknown or currently unsupported edm type like Edm.Geography.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BooleanField<EntityT extends Entity>
-  extends BooleanFieldBase<EntityT>
-  implements SelectableEdmTypeField
+export class AnyField<EntityT extends Entity>
+  extends AnyFieldBase<EntityT>
+  implements SelectableField
 {
   readonly selectable: true;
 }
 
 /**
- * Represents a complex type property with a boolean value.
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * Represents a complex type property with with an unknown or currently unsupported edm type like Edm.Geography.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class ComplexTypeBooleanPropertyField<
+export class ComplexTypeAnyPropertyField<
   EntityT extends Entity,
   ComplexT = any
-> extends BooleanFieldBase<EntityT> {
+> extends AnyFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
   readonly fieldOf: ConstructorOrField<EntityT, ComplexT>;
 
   /**
-   * Creates an instance of ComplexTypeBooleanPropertyField.
+   * Creates an instance of ComplexTypeAnyPropertyField.
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
@@ -56,23 +57,6 @@ export class ComplexTypeBooleanPropertyField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
-    edmType: EdmTypeShared<ODataVersionOf<EntityT>>
-  );
-
-  /**
-   * @deprecated Since v1.19.0.
-   *
-   * Creates an instance of ComplexTypeBooleanPropertyField.
-   *
-   * @param fieldName - Actual name of the field used in the OData request
-   * @param entityConstructor - Constructor type of the entity the field belongs to
-   * @param parentTypeName - Name of the parent complex type
-   * @param edmType - Type of the field according to the metadata description
-   */
-  constructor(
-    fieldName: string,
-    entityConstructor: Constructable<EntityT>,
-    parentTypeName: string,
     edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   );
 

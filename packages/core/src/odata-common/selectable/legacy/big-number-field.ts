@@ -1,25 +1,27 @@
 /* eslint-disable max-classes-per-file */
 
-import moment from 'moment';
-import { EdmTypeShared } from '../edm-types';
-import { Entity, ODataVersionOf, Constructable } from '../entity';
-import { Filter } from '../filter';
+import { BigNumber } from 'bignumber.js';
+import { EdmTypeShared } from '../../edm-types';
+import { Entity, ODataVersionOf, Constructable } from '../../entity';
+import { Filter } from '../../filter';
 import {
   ComplexTypeField,
   getEdmType,
   getEntityConstructor
-} from './complex-type-field';
-import { ConstructorOrField } from './constructor-or-field';
+} from '../complex-type-field';
+import { ConstructorOrField } from '../constructor-or-field';
+import { SelectableField } from '../selectable';
 import { EdmTypeField } from './edm-type-field';
 
 /**
- * Represents a property with a duration value.
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * Represents a property with a big number value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class DurtionFieldBase<EntityT extends Entity> extends EdmTypeField<
+class BigNumberFieldBase<EntityT extends Entity> extends EdmTypeField<
   EntityT,
-  moment.Duration
+  BigNumber
 > {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
@@ -27,7 +29,7 @@ export class DurtionFieldBase<EntityT extends Entity> extends EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  greaterThan(value: moment.Duration): Filter<EntityT, moment.Duration> {
+  greaterThan(value: BigNumber): Filter<EntityT, BigNumber> {
     return new Filter(this.fieldPath(), 'gt', value, this.edmType);
   }
 
@@ -37,7 +39,7 @@ export class DurtionFieldBase<EntityT extends Entity> extends EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  greaterOrEqual(value: moment.Duration): Filter<EntityT, moment.Duration> {
+  greaterOrEqual(value: BigNumber): Filter<EntityT, BigNumber> {
     return new Filter(this.fieldPath(), 'ge', value, this.edmType);
   }
 
@@ -47,7 +49,7 @@ export class DurtionFieldBase<EntityT extends Entity> extends EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  lessThan(value: moment.Duration): Filter<EntityT, moment.Duration> {
+  lessThan(value: BigNumber): Filter<EntityT, BigNumber> {
     return new Filter(this.fieldPath(), 'lt', value, this.edmType);
   }
 
@@ -57,38 +59,41 @@ export class DurtionFieldBase<EntityT extends Entity> extends EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  lessOrEqual(value: moment.Duration): Filter<EntityT, moment.Duration> {
+  lessOrEqual(value: BigNumber): Filter<EntityT, BigNumber> {
     return new Filter(this.fieldPath(), 'le', value, this.edmType);
   }
 }
 
 /**
- * Represents a selectable property with a duration value.
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * Represents a selectable property with a big number value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class DurationField<
-  EntityT extends Entity
-> extends DurtionFieldBase<EntityT> {
+export class BigNumberField<EntityT extends Entity>
+  extends BigNumberFieldBase<EntityT>
+  implements SelectableField
+{
   readonly selectable: true;
 }
 
 /**
- * Represents a complex type property with a duration value.
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * Represents a complex type property with a big number value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class ComplexTypeDurationPropertyField<
+export class ComplexTypeBigNumberPropertyField<
   EntityT extends Entity,
   ComplexT = any
-> extends DurtionFieldBase<EntityT> {
+> extends BigNumberFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
   readonly fieldOf: ConstructorOrField<EntityT, ComplexT>;
 
   /**
-   * Creates an instance of ComplexTypeDurationPropertyField.
+   * Creates an instance of ComplexTypeBigNumberPropertyField.
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
@@ -103,7 +108,7 @@ export class ComplexTypeDurationPropertyField<
   /**
    * @deprecated Since v1.19.0.
    *
-   * Creates an instance of ComplexTypeDurationPropertyField.
+   * Creates an instance of ComplexTypeBigNumberPropertyField.
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param entityConstructor - Constructor type of the entity the field belongs to

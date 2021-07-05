@@ -1,11 +1,13 @@
 /* eslint-disable max-classes-per-file */
 
-import { Entity, Constructable } from '../entity';
-import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
-import { ConstructorOrField } from './constructor-or-field';
-import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { Entity, Constructable } from '../../entity';
+import { ComplexTypeField, getEntityConstructor } from '../complex-type-field';
+import { ConstructorOrField } from '../constructor-or-field';
+import { EdmTypeField } from './edm-type-field';
+import { SelectableField } from '../selectable';
 
 /**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a property with a enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -20,13 +22,14 @@ class EnumFieldBase<EntityT extends Entity> extends EdmTypeField<
 > {}
 
 /**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a selectable property with a enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class EnumField<EntityT extends Entity>
   extends EnumFieldBase<EntityT>
-  implements SelectableEdmTypeField
+  implements SelectableField
 {
   readonly selectable: true;
 
@@ -36,6 +39,7 @@ export class EnumField<EntityT extends Entity>
 }
 
 /**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a complex type property with a enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to

@@ -1,7 +1,4 @@
-import {
-  CustomField as CustomFieldBase,
-  EdmField
-} from '../../odata-common';
+import { CustomField as CustomFieldBase, EdmField } from '../../odata-common';
 import type { Entity } from '../entity';
 
 export class CustomField<

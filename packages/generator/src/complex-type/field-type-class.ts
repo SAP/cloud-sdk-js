@@ -9,10 +9,7 @@ import {
   getComplexTypePropertyDescription
 } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
-import {
-  getGenericParameters,
-  createPropertyFieldInitializer
-} from '../generator-utils';
+import { getGenericParameters } from '../generator-utils';
 
 export function fieldTypeClass(
   complexType: VdmComplexType,
@@ -22,7 +19,7 @@ export function fieldTypeClass(
     kind: StructureKind.Class,
     name: `${complexType.fieldType}<EntityT extends Entity${caps(
       oDataVersion
-    )}>`,
+    )}, NullableT extends boolean = false>`,
     extends: `ComplexTypeField<EntityT, ${complexType.typeName}>`,
     isExported: true,
     properties: properties(complexType),
@@ -37,6 +34,11 @@ export function fieldTypeClass(
           {
             name: 'fieldOf',
             type: 'ConstructorOrField<EntityT>'
+          },
+          {
+            name: 'isNullable',
+            type: 'NullableT',
+            initializer: 'false as NullableT'
           }
         ],
         docs: [
@@ -64,7 +66,23 @@ function property(
     kind: StructureKind.Property,
     name: prop.instancePropertyName,
     type: `${prop.fieldType}<${getGenericParameters('EntityT', prop)}>`,
-    initializer: createPropertyFieldInitializer(prop, 'this'),
+    initializer: createPropertyFieldInitializer(prop),
     docs: [getComplexTypePropertyDescription(prop, complexType.typeName)]
   };
+}
+
+export function createPropertyFieldInitializer(prop: VdmProperty): string {
+  if (prop.isCollection) {
+    if (prop.isComplex) {
+      return `new CollectionField('${prop.originalName}', this, ${prop.jsType}, ${prop.nullable})`;
+    }
+
+    return `new CollectionField('${prop.originalName}', this, '${prop.edmType}', ${prop.nullable})`;
+  }
+
+  if (prop.isComplex) {
+    return `new ${prop.fieldType}('${prop.originalName}',this, ${prop.nullable})`;
+  }
+
+  return `new ${prop.fieldType}('${prop.originalName}', this, '${prop.edmType}', ${prop.nullable})`;
 }

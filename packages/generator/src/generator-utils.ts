@@ -79,42 +79,36 @@ const edmToTsTypeMapping: EdmTypeMappingWithoutEnum = {
 };
 
 const edmToFieldTypeMapping: EdmTypeMapping = {
-  'Edm.String': 'StringField',
-  'Edm.Boolean': 'BooleanField',
-  'Edm.Guid': 'StringField',
-  'Edm.Decimal': 'BigNumberField',
-  'Edm.Int16': 'NumberField',
-  'Edm.Int32': 'NumberField',
-  'Edm.Int64': 'BigNumberField',
-  'Edm.Single': 'NumberField',
-  'Edm.Double': 'NumberField',
-  'Edm.Float': 'NumberField', // ABAP CDS compatibility
-  'Edm.Byte': 'NumberField',
-  'Edm.SByte': 'NumberField',
-  'Edm.DateTimeOffset': 'DateField',
-  'Edm.Binary': 'BinaryField',
-  'Edm.Any': 'AnyField',
+  'Edm.String': 'SelectableEdmField',
+  'Edm.Boolean': 'SelectableEdmField',
+  'Edm.Guid': 'SelectableEdmField',
+  'Edm.Decimal': 'SelectableOrderableEdmField',
+  'Edm.Int16': 'SelectableOrderableEdmField',
+  'Edm.Int32': 'SelectableOrderableEdmField',
+  'Edm.Int64': 'SelectableOrderableEdmField',
+  'Edm.Single': 'SelectableOrderableEdmField',
+  'Edm.Double': 'SelectableOrderableEdmField',
+  'Edm.Float': 'SelectableOrderableEdmField', // ABAP CDS compatibility
+  'Edm.Byte': 'SelectableOrderableEdmField',
+  'Edm.SByte': 'SelectableOrderableEdmField',
+  'Edm.DateTimeOffset': 'SelectableOrderableEdmField',
+  'Edm.Binary': 'SelectableEdmField',
+  'Edm.Any': 'SelectableEdmField',
 
   // OData v2 specific
-  'Edm.DateTime': 'DateField',
-  'Edm.Time': 'TimeField',
+  'Edm.DateTime': 'SelectableOrderableEdmField',
+  'Edm.Time': 'SelectableOrderableEdmField',
 
   // OData v4 specific
-  'Edm.Date': 'DateField',
-  'Edm.Duration': 'DurationField',
-  'Edm.TimeOfDay': 'TimeField',
-  'Edm.Enum': 'EnumField'
+  'Edm.Date': 'SelectableOrderableEdmField',
+  'Edm.Duration': 'SelectableOrderableEdmField',
+  'Edm.TimeOfDay': 'SelectableOrderableEdmField',
+  'Edm.Enum': 'SelectableEdmField'
 };
 
 const fieldTypeToComplexPropertyTypeMapping = {
-  BigNumberField: 'ComplexTypeBigNumberPropertyField',
-  BinaryField: 'ComplexTypeBinaryPropertyField',
-  BooleanField: 'ComplexTypeBooleanPropertyField',
-  DateField: 'ComplexTypeDatePropertyField',
-  NumberField: 'ComplexTypeNumberPropertyField',
-  StringField: 'ComplexTypeStringPropertyField',
-  TimeField: 'ComplexTypeTimePropertyField',
-  AnyField: 'ComplexTypeAnyPropertyField'
+  SelectableEdmField: 'EdmField',
+  SelectableOrderableEdmField: 'OrderableEdmField'
 };
 
 export function getFallbackEdmTypeIfNeeded(
@@ -124,7 +118,7 @@ export function getFallbackEdmTypeIfNeeded(
     return edmType as EdmTypeShared<any>;
   }
   logger.warn(
-    `The type ${edmType} is currently not supported by the sdk. Type "any" is used as fallback.`
+    `The EDM type '${edmType}' is unknown or not supported by the SAP Cloud SDK. Using "any" as fallback.`
   );
   return 'Edm.Any';
 }
@@ -132,7 +126,9 @@ export function getFallbackEdmTypeIfNeeded(
 export function edmToTsType(edmType: string): string {
   const tsType = edmToTsTypeMapping[edmType];
   if (!tsType) {
-    throw new Error(`No ts type found for edm type: ${edmType}`);
+    throw new Error(
+      `Could not determine TypeScript type for EDM type: '${edmType}'.`
+    );
   }
   return tsType;
 }
@@ -140,7 +136,9 @@ export function edmToTsType(edmType: string): string {
 export function edmToFieldType(edmType: string): string {
   const fieldType = edmToFieldTypeMapping[edmType];
   if (!fieldType) {
-    throw new Error(`No field type found for edm type: ${edmType}`);
+    throw new Error(
+      `Could not determine field type for EDM type: '${edmType}'.`
+    );
   }
   return fieldType;
 }
@@ -149,7 +147,9 @@ export function edmToComplexPropertyType(edmType: string): string {
   const fieldType =
     fieldTypeToComplexPropertyTypeMapping[edmToFieldType(edmType)];
   if (!fieldType) {
-    throw new Error(`No complex field type found for edm type: ${edmType}`);
+    throw new Error(
+      `Could not determine complex field type for EDM type: '${edmType}'.`
+    );
   }
   return fieldType;
 }
@@ -193,42 +193,17 @@ export function getGenericParameters(
   entityClassName: string,
   prop: VdmProperty
 ): string {
-  let param: string[] = [];
-  if (prop.isCollection) {
-    if (prop.isComplex) {
-      param = [`${prop.jsType}`];
-    } else if (prop.isEnum) {
-      param = ["'Edm.Enum'"];
-    } else {
-      param = [`'${prop.edmType}'`];
-    }
+  const params = [entityClassName];
+  if (prop.isEnum) {
+    params.push("'Edm.Enum'");
+  } else if (!prop.isComplex) {
+    params.push(`'${prop.edmType}'`);
+  } else if (prop.isCollection) {
+    params.push(prop.jsType);
   }
-  return [entityClassName, ...param].join(', ');
-}
 
-export function createPropertyFieldInitializer(
-  property: VdmProperty,
-  entityClassName: string
-): string {
-  const edmOrComplexTypeOrEnumType =
-    property.isComplex || property.isEnum
-      ? property.jsType
-      : `'${property.edmType}'`;
-  let collectionTypeOrEdmType: string | undefined = edmOrComplexTypeOrEnumType;
-  if (property.isComplex && !property.isCollection) {
-    collectionTypeOrEdmType = undefined;
-  } else if (property.isEnum && !property.isCollection) {
-    collectionTypeOrEdmType = undefined;
-  } else if (property.isEnum && property.isCollection) {
-    collectionTypeOrEdmType = "'Edm.Enum'";
-  }
-  return `new ${property.fieldType}(${[
-    `'${property.originalName}'`,
-    entityClassName,
-    ...(typeof collectionTypeOrEdmType === 'undefined'
-      ? []
-      : [collectionTypeOrEdmType])
-  ].join(', ')})`;
+  params.push(prop.nullable.toString());
+  return params.join(', ');
 }
 
 /**

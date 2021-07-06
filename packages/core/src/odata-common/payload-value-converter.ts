@@ -14,8 +14,8 @@ export const toGuid = (value: string): string => {
     /[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}/.exec(
       value
     );
-  if (!guids || guids.length <= 0) {
-    throw new Error(`Failed to parse the value: ${value} to guid.`);
+  if (!guids || !guids.length) {
+    throw new Error(`Failed to parse guid from '${value}'.`);
   }
 
   return guids[0];
@@ -45,7 +45,7 @@ export function fromEdmToNumber(value: string | number): number {
   const num = Number(value);
 
   if (Number.isNaN(num)) {
-    throw new Error(`Edm->TS: Cannot create number from input "${value}"`);
+    throw new Error(`EDM->TS: Cannot create number from input "${value}"`);
   }
 
   return num;
@@ -69,7 +69,7 @@ export function fromNumberToEdm(value: number): number | string {
     return value;
   }
 
-  throw new Error(`TS->edm: Cannot create number from input "${value}"`);
+  throw new Error(`TS->EDM: Cannot create number from input "${value}"`);
 }
 
 export const deserializersCommon: EdmTypeMapping = {
@@ -89,7 +89,7 @@ export const deserializersCommon: EdmTypeMapping = {
   'Edm.Any': identity
 };
 
-export const serializersCommom: EdmTypeMapping = {
+export const serializersCommon: EdmTypeMapping = {
   'Edm.Binary': identity,
   'Edm.Boolean': identity,
   'Edm.Byte': toNumber,
@@ -105,3 +105,6 @@ export const serializersCommom: EdmTypeMapping = {
   'Edm.String': identity,
   'Edm.Any': identity
 };
+
+/** @deprecated Since v1.27.0. Use [[serializersCommon]] instead. */
+export const serializersCommom = serializersCommon;

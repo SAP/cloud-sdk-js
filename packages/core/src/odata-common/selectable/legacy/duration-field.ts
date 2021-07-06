@@ -1,15 +1,15 @@
 /* eslint-disable max-classes-per-file */
 
 import moment from 'moment';
-import { EdmTypeShared } from '../edm-types';
-import { Entity, ODataVersionOf, Constructable } from '../entity';
-import { Filter } from '../filter';
+import { EdmTypeShared } from '../../edm-types';
+import { Entity, ODataVersionOf, Constructable } from '../../entity';
+import { Filter } from '../../filter';
 import {
   ComplexTypeField,
   getEdmType,
   getEntityConstructor
-} from './complex-type-field';
-import { ConstructorOrField } from './constructor-or-field';
+} from '../complex-type-field';
+import { ConstructorOrField } from '../constructor-or-field';
 import { EdmTypeField } from './edm-type-field';
 
 /**

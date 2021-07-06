@@ -182,8 +182,7 @@ export function entityDeserializer(
     return Object.entries(complexTypeField)
       .filter(
         ([, field]) =>
-          (field instanceof EdmField ||
-            field instanceof ComplexTypeField) &&
+          (field instanceof EdmField || field instanceof ComplexTypeField) &&
           typeof json[field._fieldName] !== 'undefined'
       )
       .reduce(

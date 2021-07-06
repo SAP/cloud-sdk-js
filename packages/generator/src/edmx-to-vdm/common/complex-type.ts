@@ -120,7 +120,7 @@ export function getTypeMappingComplexProperties(
     return {
       edmType: 'Edm.Enum',
       jsType: enumTypeForName(typeName, enumTypes),
-      fieldType: 'ComplexTypeEnumPropertyField'
+      fieldType: 'EdmField'
     };
   }
 

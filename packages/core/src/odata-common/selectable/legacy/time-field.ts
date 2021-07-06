@@ -1,15 +1,15 @@
 /* eslint-disable max-classes-per-file */
 
-import { EdmTypeShared } from '../edm-types';
-import { Entity, ODataVersionOf, Constructable } from '../entity';
-import { Filter } from '../filter';
-import { Time } from '../time';
+import { EdmTypeShared } from '../../edm-types';
+import { Entity, ODataVersionOf, Constructable } from '../../entity';
+import { Filter } from '../../filter';
+import { Time } from '../../time';
 import {
   ComplexTypeField,
   getEdmType,
   getEntityConstructor
-} from './complex-type-field';
-import { ConstructorOrField } from './constructor-or-field';
+} from '../complex-type-field';
+import { ConstructorOrField } from '../constructor-or-field';
 import { EdmTypeField } from './edm-type-field';
 
 /**

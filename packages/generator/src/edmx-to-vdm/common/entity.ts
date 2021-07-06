@@ -17,7 +17,10 @@ import {
   VdmEnumType
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
+import {
+  applyPrefixOnJsConfictParam,
+  applyPrefixOnJsConflictParam
+} from '../../name-formatting-strategies';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
   EdmxEntitySetBase,
@@ -193,7 +196,7 @@ export function navigationPropertyBase(
       entitySetName,
       navPropName
     ),
-    propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName)
+    propertyNameAsParam: applyPrefixOnJsConflictParam(instancePropertyName)
   };
 }
 
@@ -239,7 +242,7 @@ function getTypeMappingEntityProperties(
     return {
       edmType: typeName,
       jsType: enumTypeForName(typeName, enumTypes),
-      fieldType: 'EnumField'
+      fieldType: edmToFieldType('Edm.Enum')
     };
   }
   throw new Error(`No types found for ${typeName}`);

@@ -3,7 +3,7 @@ import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 import { entityClass } from './class';
 import { importDeclarations, otherEntityImports } from './imports';
 import { entityTypeInterface } from './interface';
-import { entityNamespace } from './namespace';
+import { entityNamespace, fieldBuilderInitializer } from './namespace';
 
 export function entitySourceFile(
   entity: VdmEntity,
@@ -16,6 +16,7 @@ export function entitySourceFile(
       entityClass(entity, service),
       ...otherEntityImports(entity, service),
       entityTypeInterface(entity, service),
+      fieldBuilderInitializer(entity),
       entityNamespace(entity, service)
     ]
   };

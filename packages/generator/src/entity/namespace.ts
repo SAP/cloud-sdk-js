@@ -7,11 +7,7 @@ import {
   OptionalKind,
   VariableDeclarationStructure
 } from 'ts-morph';
-import {
-  linkClass,
-  getGenericParameters,
-  createPropertyFieldInitializer
-} from '../generator-utils';
+import { getGenericParameters, linkClass } from '../generator-utils';
 import { prependPrefix } from '../internal-prefix';
 import {
   getStaticNavPropertyDescription,
@@ -24,6 +20,22 @@ import {
   VdmProperty,
   VdmServiceMetadata
 } from '../vdm-types';
+
+export function fieldBuilderInitializer(
+  entity: VdmEntity
+): VariableStatementStructure {
+  return {
+    kind: StructureKind.VariableStatement,
+    declarationKind: VariableDeclarationKind.Const,
+    declarations: [
+      {
+        name: 'fieldBuilder',
+        initializer: `new FieldBuilder(${entity.className})`
+      }
+    ],
+    isExported: false
+  };
+}
 
 export function entityNamespace(
   entity: VdmEntity,
@@ -45,29 +57,45 @@ export function entityNamespace(
 }
 
 function properties(entity: VdmEntity): VariableStatementStructure[] {
-  return entity.properties.map(prop => property(prop, entity));
+  return entity.properties.map(prop => property(prop));
 }
 
 function getFieldInitializer(
-  prop: VdmProperty,
-  entityClassName: string
+  prop: VdmProperty
 ): OptionalKind<VariableDeclarationStructure> {
-  const genericParameters = getGenericParameters(entityClassName, prop);
   return {
     name: prop.staticPropertyName,
-    type: `${prop.fieldType}<${genericParameters}>`,
-    initializer: createPropertyFieldInitializer(prop, entityClassName)
+    initializer: createPropertyFieldInitializer(prop)
   };
 }
 
-function property(
-  prop: VdmProperty,
-  entity: VdmEntity
-): VariableStatementStructure {
+function createPropertyFieldInitializer(prop: VdmProperty): string {
+  if (prop.isCollection) {
+    if (prop.isComplex) {
+      return `fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+    }
+    if (prop.isEnum) {
+      return `fieldBuilder.buildCollectionField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
+    }
+    return `fieldBuilder.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+  }
+
+  if (prop.isComplex) {
+    return `fieldBuilder.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
+  }
+
+  if (prop.isEnum) {
+    return `fieldBuilder.buildEdmTypeField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
+  }
+
+  return `fieldBuilder.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+}
+
+function property(prop: VdmProperty): VariableStatementStructure {
   return {
     kind: StructureKind.VariableStatement,
     declarationKind: VariableDeclarationKind.Const,
-    declarations: [getFieldInitializer(prop, entity.className)],
+    declarations: [getFieldInitializer(prop)],
     docs: [getStaticPropertyDescription(prop)],
     isExported: true
   };

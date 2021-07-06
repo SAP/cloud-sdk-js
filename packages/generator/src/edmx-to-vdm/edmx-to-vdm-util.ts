@@ -105,15 +105,15 @@ export function getTypeMappingActionFunction(
   typeName: string
 ): VdmMappedEdmType {
   if (isEdmType(typeName)) {
-    const edmFallback = getFallbackEdmTypeIfNeeded(typeName);
+    const edmType = getFallbackEdmTypeIfNeeded(typeName);
     return {
-      edmType: edmFallback,
-      jsType: edmToTsType(edmFallback),
-      fieldType: edmToFieldType(edmFallback)
+      edmType,
+      jsType: edmToTsType(edmType),
+      fieldType: edmToFieldType(edmType)
     };
   }
   throw new Error(
-    `Tries to get a action/function parameter with type ${typeName} which is not a Edm type.`
+    `Could not get a action/function parameter. '${typeName}' is not an EDM type.`
   );
 }
 
@@ -164,15 +164,16 @@ export function hasUnsupportedParameterTypes(
   const unsupportedParameters = functionOrAction.Parameter.filter(
     p => !isEdmType(p.Type)
   );
-  if (unsupportedParameters.length > 0) {
+  if (unsupportedParameters.length) {
     logger.warn(
-      `Unsupported function or action import parameter types "${unsupportedParameters
-        .map(p => p.Type)
-        .join(
-          ', '
-        )}" found, which is used by the function import or action import "${
-        functionOrAction.Name
-      }". The SAP Cloud SDK currently only supports Edm types in parameters. Skipping code generation for function/action import.`
+      [
+        `Found unsupported function or action import parameter types for action '${functionOrAction.Name}'.`,
+        'The SAP Cloud SDK only supports EDM types in parameters.',
+        'Skipping code generation for function/action import.',
+        `Unsupported parameter types: [${unsupportedParameters
+          .map(p => `'${p.Type}'`)
+          .join(', ')}].`
+      ].join('\n')
     );
     return true;
   }

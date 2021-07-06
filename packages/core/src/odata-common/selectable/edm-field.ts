@@ -9,7 +9,6 @@ import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldType } from './field';
 
 export type SortableEdmType =
-  | 'Edm.Boolean'
   | 'Edm.Decimal'
   | 'Edm.Double'
   | 'Edm.Single'
@@ -20,6 +19,7 @@ export type SortableEdmType =
   | 'Edm.SByte'
   | 'Edm.Byte'
   | 'Edm.DateTime'
+  | 'Edm.DateTimeOffset'
   | 'Edm.Time'
   | 'Edm.Date'
   | 'Edm.Duration'

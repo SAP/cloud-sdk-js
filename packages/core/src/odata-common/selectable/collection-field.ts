@@ -4,6 +4,7 @@ import { SelectableField } from './selectable';
 import { Field } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { getEntityConstructor } from './complex-type-field';
+import { ComplexTypeNamespace } from './complex-type-namespace';
 
 export class CollectionField<
     EntityT extends Entity,
@@ -27,9 +28,15 @@ export class CollectionField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    readonly _fieldType: CollectionFieldT,
+    readonly _fieldType: CollectionFieldType<CollectionFieldT>,
     isNullable: NullableT = false as NullableT
   ) {
     super(fieldName, getEntityConstructor(fieldOf), isNullable);
   }
 }
+
+export type CollectionFieldType<
+  CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any>
+> = CollectionFieldT extends EdmTypeShared<'any'>
+  ? CollectionFieldT
+  : ComplexTypeNamespace<CollectionFieldT>;

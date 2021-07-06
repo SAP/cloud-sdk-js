@@ -37,6 +37,7 @@ export function importDeclarations(
         `CustomField${versionInCap}`,
         `Entity${versionInCap}`,
         'EntityBuilderType',
+        'FieldBuilder',
         'Field'
       ].sort()
     )

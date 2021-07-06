@@ -5,7 +5,7 @@ import { Entity } from '../entity';
 import { ComplexTypeField } from './complex-type-field';
 import { EdmField, isSortableEdmType, SortableEdmType } from './edm-field';
 import { OrderableEdmField } from './orderable-edm-field';
-import { CollectionField } from './collection-field';
+import { CollectionField, CollectionFieldType } from './collection-field';
 import { AllFields } from './all-fields';
 import { ConstructorOrField } from './constructor-or-field';
 import {
@@ -60,7 +60,7 @@ export class FieldBuilder<EntityT extends Entity> {
     NullableT extends boolean
   >(
     fieldName: string,
-    collectionFieldType: CollectionFieldT,
+    collectionFieldType: CollectionFieldType<CollectionFieldT>,
     isNullable: NullableT
   ): CollectionField<EntityT, CollectionFieldT, NullableT> {
     return new CollectionField(

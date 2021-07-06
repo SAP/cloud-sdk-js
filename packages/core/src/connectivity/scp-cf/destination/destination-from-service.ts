@@ -114,6 +114,13 @@ class DestinationFromServiceRetriever {
     if (destination.authentication === 'OAuth2ClientCredentials') {
       destination = await da.addOAuth2ClientCredentials();
     }
+    if (destination.authentication === 'OAuth2JWTBearer'){
+      // todo add jwt info
+      destination = await da.addOAuthSamlAuth(
+        destination,
+        destinationResult.origin
+      );
+    }
     if (destination.authentication === 'ClientCertificateAuthentication') {
       destination = await da.addClientCertAuth();
     }

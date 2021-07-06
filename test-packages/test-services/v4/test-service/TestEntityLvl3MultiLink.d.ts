@@ -5,7 +5,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityLvl3MultiLink" of service "API_TEST_SRV".
@@ -75,21 +75,37 @@ export declare namespace TestEntityLvl3MultiLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: StringField<TestEntityLvl3MultiLink>;
+  const STRING_PROPERTY: SelectableEdmField<
+    TestEntityLvl3MultiLink,
+    'Edm.String',
+    true
+  >;
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GUID_PROPERTY: StringField<TestEntityLvl3MultiLink>;
+  const GUID_PROPERTY: SelectableEdmField<
+    TestEntityLvl3MultiLink,
+    'Edm.Guid',
+    true
+  >;
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<TestEntityLvl3MultiLink>;
+  const KEY_PROPERTY: SelectableEdmField<
+    TestEntityLvl3MultiLink,
+    'Edm.String',
+    false
+  >;
   /**
    * All fields of the TestEntityLvl3MultiLink entity.
    */
-  const _allFields: Array<StringField<TestEntityLvl3MultiLink>>;
+  const _allFields: Array<
+    | SelectableEdmField<TestEntityLvl3MultiLink, 'Edm.String', true>
+    | SelectableEdmField<TestEntityLvl3MultiLink, 'Edm.Guid', true>
+    | SelectableEdmField<TestEntityLvl3MultiLink, 'Edm.String', false>
+  >;
   /**
    * All fields selector.
    */

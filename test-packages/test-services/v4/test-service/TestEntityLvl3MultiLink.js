@@ -106,33 +106,34 @@ var TestEntityLvl3MultiLink = /** @class */ (function (_super) {
   return TestEntityLvl3MultiLink;
 })(core_1.EntityV4);
 exports.TestEntityLvl3MultiLink = TestEntityLvl3MultiLink;
+var fieldBuilder = new core_1.FieldBuilder(TestEntityLvl3MultiLink);
 (function (TestEntityLvl3MultiLink) {
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl3MultiLink.STRING_PROPERTY = new core_1.StringField(
+  TestEntityLvl3MultiLink.STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
     'StringProperty',
-    TestEntityLvl3MultiLink,
-    'Edm.String'
+    'Edm.String',
+    true
   );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl3MultiLink.GUID_PROPERTY = new core_1.StringField(
+  TestEntityLvl3MultiLink.GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
     'GuidProperty',
-    TestEntityLvl3MultiLink,
-    'Edm.Guid'
+    'Edm.Guid',
+    true
   );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl3MultiLink.KEY_PROPERTY = new core_1.StringField(
+  TestEntityLvl3MultiLink.KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
     'KeyProperty',
-    TestEntityLvl3MultiLink,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * All fields of the TestEntityLvl3MultiLink entity.

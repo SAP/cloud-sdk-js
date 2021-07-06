@@ -5,7 +5,7 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_CaseTest" of service "API_TEST_SRV".
@@ -55,11 +55,11 @@ export declare namespace CaseTest {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_STRING: StringField<CaseTest>;
+  const KEY_PROPERTY_STRING: SelectableEdmField<CaseTest, 'Edm.String', false>;
   /**
    * All fields of the CaseTest entity.
    */
-  const _allFields: Array<StringField<CaseTest>>;
+  const _allFields: Array<SelectableEdmField<CaseTest, 'Edm.String', false>>;
   /**
    * All fields selector.
    */

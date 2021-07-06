@@ -106,176 +106,179 @@ exports.TestEntity = TestEntity;
 var TestEntityMultiLink_1 = require('./TestEntityMultiLink');
 var TestEntityOtherMultiLink_1 = require('./TestEntityOtherMultiLink');
 var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
+var fieldBuilder = new core_1.FieldBuilder(TestEntity);
 (function (TestEntity) {
   /**
    * Static representation of the [[keyPropertyGuid]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.KEY_PROPERTY_GUID = new core_1.StringField(
+  TestEntity.KEY_PROPERTY_GUID = fieldBuilder.buildEdmTypeField(
     'KeyPropertyGuid',
-    TestEntity,
-    'Edm.Guid'
+    'Edm.Guid',
+    false
   );
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.KEY_PROPERTY_STRING = new core_1.StringField(
+  TestEntity.KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.STRING_PROPERTY = new core_1.StringField(
+  TestEntity.STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
     'StringProperty',
-    TestEntity,
-    'Edm.String'
+    'Edm.String',
+    true
   );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.BOOLEAN_PROPERTY = new core_1.BooleanField(
+  TestEntity.BOOLEAN_PROPERTY = fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
-    TestEntity,
-    'Edm.Boolean'
+    'Edm.Boolean',
+    true
   );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.GUID_PROPERTY = new core_1.StringField(
+  TestEntity.GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
     'GuidProperty',
-    TestEntity,
-    'Edm.Guid'
+    'Edm.Guid',
+    true
   );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.INT_16_PROPERTY = new core_1.NumberField(
+  TestEntity.INT_16_PROPERTY = fieldBuilder.buildEdmTypeField(
     'Int16Property',
-    TestEntity,
-    'Edm.Int16'
+    'Edm.Int16',
+    true
   );
   /**
    * Static representation of the [[int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.INT_32_PROPERTY = new core_1.NumberField(
+  TestEntity.INT_32_PROPERTY = fieldBuilder.buildEdmTypeField(
     'Int32Property',
-    TestEntity,
-    'Edm.Int32'
+    'Edm.Int32',
+    true
   );
   /**
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.INT_64_PROPERTY = new core_1.BigNumberField(
+  TestEntity.INT_64_PROPERTY = fieldBuilder.buildEdmTypeField(
     'Int64Property',
-    TestEntity,
-    'Edm.Int64'
+    'Edm.Int64',
+    true
   );
   /**
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DECIMAL_PROPERTY = new core_1.BigNumberField(
+  TestEntity.DECIMAL_PROPERTY = fieldBuilder.buildEdmTypeField(
     'DecimalProperty',
-    TestEntity,
-    'Edm.Decimal'
+    'Edm.Decimal',
+    true
   );
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.SINGLE_PROPERTY = new core_1.NumberField(
+  TestEntity.SINGLE_PROPERTY = fieldBuilder.buildEdmTypeField(
     'SingleProperty',
-    TestEntity,
-    'Edm.Single'
+    'Edm.Single',
+    true
   );
   /**
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DOUBLE_PROPERTY = new core_1.NumberField(
+  TestEntity.DOUBLE_PROPERTY = fieldBuilder.buildEdmTypeField(
     'DoubleProperty',
-    TestEntity,
-    'Edm.Double'
+    'Edm.Double',
+    true
   );
   /**
    * Static representation of the [[floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.FLOAT_PROPERTY = new core_1.NumberField(
+  TestEntity.FLOAT_PROPERTY = fieldBuilder.buildEdmTypeField(
     'FloatProperty',
-    TestEntity,
-    'Edm.Float'
+    'Edm.Float',
+    true
   );
   /**
    * Static representation of the [[timeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.TIME_PROPERTY = new core_1.TimeField(
+  TestEntity.TIME_PROPERTY = fieldBuilder.buildEdmTypeField(
     'TimeProperty',
-    TestEntity,
-    'Edm.Time'
+    'Edm.Time',
+    true
   );
   /**
    * Static representation of the [[dateTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATE_TIME_PROPERTY = new core_1.DateField(
+  TestEntity.DATE_TIME_PROPERTY = fieldBuilder.buildEdmTypeField(
     'DateTimeProperty',
-    TestEntity,
-    'Edm.DateTime'
+    'Edm.DateTime',
+    true
   );
   /**
    * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATE_TIME_OFF_SET_PROPERTY = new core_1.DateField(
+  TestEntity.DATE_TIME_OFF_SET_PROPERTY = fieldBuilder.buildEdmTypeField(
     'DateTimeOffSetProperty',
-    TestEntity,
-    'Edm.DateTimeOffset'
+    'Edm.DateTimeOffset',
+    true
   );
   /**
    * Static representation of the [[byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.BYTE_PROPERTY = new core_1.NumberField(
+  TestEntity.BYTE_PROPERTY = fieldBuilder.buildEdmTypeField(
     'ByteProperty',
-    TestEntity,
-    'Edm.Byte'
+    'Edm.Byte',
+    true
   );
   /**
    * Static representation of the [[sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.S_BYTE_PROPERTY = new core_1.NumberField(
+  TestEntity.S_BYTE_PROPERTY = fieldBuilder.buildEdmTypeField(
     'SByteProperty',
-    TestEntity,
-    'Edm.SByte'
+    'Edm.SByte',
+    true
   );
   /**
    * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT = new core_1.AnyField(
-    'SomethingTheSDKDoesNotSupport',
-    TestEntity,
-    'Edm.Any'
-  );
+  TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT =
+    fieldBuilder.buildEdmTypeField(
+      'SomethingTheSDKDoesNotSupport',
+      'Edm.Any',
+      true
+    );
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.COMPLEX_TYPE_PROPERTY = new TestComplexType_1.TestComplexTypeField(
+  TestEntity.COMPLEX_TYPE_PROPERTY = fieldBuilder.buildComplexTypeField(
     'ComplexTypeProperty',
-    TestEntity
+    TestComplexType_1.TestComplexTypeField,
+    true
   );
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.

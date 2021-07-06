@@ -6,9 +6,8 @@ import {
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
-  EnumField,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -70,24 +69,28 @@ export declare namespace TestEntity3 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_STRING: StringField<TestEntity3>;
+  const KEY_PROPERTY_STRING: SelectableEdmField<
+    TestEntity3,
+    'Edm.String',
+    false
+  >;
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ENUM_PROPERTY: EnumField<TestEntity3>;
+  const ENUM_PROPERTY: SelectableEdmField<TestEntity3, 'Edm.Enum', true>;
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const COMPLEX_TYPE_PROPERTY: TestComplexType2Field<TestEntity3>;
+  const COMPLEX_TYPE_PROPERTY: TestComplexType2Field<TestEntity3, true>;
   /**
    * All fields of the TestEntity3 entity.
    */
   const _allFields: Array<
-    | StringField<TestEntity3>
-    | EnumField<TestEntity3>
-    | TestComplexType2Field<TestEntity3>
+    | SelectableEdmField<TestEntity3, 'Edm.String', false>
+    | SelectableEdmField<TestEntity3, 'Edm.Enum', true>
+    | TestComplexType2Field<TestEntity3, true>
   >;
   /**
    * All fields selector.

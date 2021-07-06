@@ -1,12 +1,11 @@
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -62,16 +61,23 @@ export declare namespace TestEntity4 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_STRING: StringField<TestEntity4>;
+  const KEY_PROPERTY_STRING: SelectableEdmField<
+    TestEntity4,
+    'Edm.String',
+    false
+  >;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: BooleanField<TestEntity4>;
+  const BOOLEAN_PROPERTY: SelectableEdmField<TestEntity4, 'Edm.Boolean', true>;
   /**
    * All fields of the TestEntity4 entity.
    */
-  const _allFields: Array<StringField<TestEntity4> | BooleanField<TestEntity4>>;
+  const _allFields: Array<
+    | SelectableEdmField<TestEntity4, 'Edm.String', false>
+    | SelectableEdmField<TestEntity4, 'Edm.Boolean', true>
+  >;
   /**
    * All fields selector.
    */

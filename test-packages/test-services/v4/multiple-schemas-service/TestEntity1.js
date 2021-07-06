@@ -103,39 +103,44 @@ var TestEntity1 = /** @class */ (function (_super) {
   return TestEntity1;
 })(core_1.EntityV4);
 exports.TestEntity1 = TestEntity1;
+var fieldBuilder = new core_1.FieldBuilder(TestEntity1);
 (function (TestEntity1) {
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.KEY_PROPERTY_STRING = new core_1.StringField(
+  TestEntity1.KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity1,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.INT_16_PROPERTY = new core_1.NumberField(
+  TestEntity1.INT_16_PROPERTY = fieldBuilder.buildEdmTypeField(
     'Int16Property',
-    TestEntity1,
-    'Edm.Int16'
+    'Edm.Int16',
+    true
   );
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.ENUM_PROPERTY = new core_1.EnumField('EnumProperty', TestEntity1);
+  TestEntity1.ENUM_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'EnumProperty',
+    'Edm.Enum',
+    true
+  );
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.COMPLEX_TYPE_PROPERTY =
-    new TestComplexType1_1.TestComplexType1Field(
-      'ComplexTypeProperty',
-      TestEntity1
-    );
+  TestEntity1.COMPLEX_TYPE_PROPERTY = fieldBuilder.buildComplexTypeField(
+    'ComplexTypeProperty',
+    TestComplexType1_1.TestComplexType1Field,
+    true
+  );
   /**
    * All fields of the TestEntity1 entity.
    */

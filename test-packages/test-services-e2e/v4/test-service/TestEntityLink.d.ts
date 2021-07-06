@@ -5,8 +5,8 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
-  StringField
+  SelectableEdmField,
+  SelectableOrderableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
@@ -71,22 +71,31 @@ export declare namespace TestEntityLink {
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_TEST_ENTITY_LINK: NumberField<TestEntityLink>;
+  const KEY_TEST_ENTITY_LINK: SelectableOrderableEdmField<
+    TestEntityLink,
+    'Edm.Int32',
+    false
+  >;
   /**
    * Static representation of the [[keyToTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_TO_TEST_ENTITY: NumberField<TestEntityLink>;
+  const KEY_TO_TEST_ENTITY: SelectableOrderableEdmField<
+    TestEntityLink,
+    'Edm.Int32',
+    false
+  >;
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: StringField<TestEntityLink>;
+  const STRING_PROPERTY: SelectableEdmField<TestEntityLink, 'Edm.String', true>;
   /**
    * All fields of the TestEntityLink entity.
    */
   const _allFields: Array<
-    NumberField<TestEntityLink> | StringField<TestEntityLink>
+    | SelectableOrderableEdmField<TestEntityLink, 'Edm.Int32', false>
+    | SelectableEdmField<TestEntityLink, 'Edm.String', true>
   >;
   /**
    * All fields selector.

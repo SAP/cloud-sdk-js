@@ -10,7 +10,8 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -80,22 +81,24 @@ export interface TestEntityWithSharedEntityType1Type {
   keyProperty: string;
 }
 
+const fieldBuilder = new FieldBuilder(TestEntityWithSharedEntityType1);
+
 export namespace TestEntityWithSharedEntityType1 {
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityWithSharedEntityType1> =
-    new StringField(
-      'KeyProperty',
-      TestEntityWithSharedEntityType1,
-      'Edm.String'
-    );
+  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
   /**
    * All fields of the TestEntityWithSharedEntityType1 entity.
    */
-  export const _allFields: Array<StringField<TestEntityWithSharedEntityType1>> =
-    [TestEntityWithSharedEntityType1.KEY_PROPERTY];
+  export const _allFields: Array<
+    SelectableEdmField<TestEntityWithSharedEntityType1, 'Edm.String', false>
+  > = [TestEntityWithSharedEntityType1.KEY_PROPERTY];
   /**
    * All fields selector.
    */

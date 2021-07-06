@@ -6,7 +6,7 @@ import {
   EntityV2,
   Field,
   Link,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
@@ -73,7 +73,11 @@ export declare namespace TestEntityCircularLinkParent {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<TestEntityCircularLinkParent>;
+  const KEY_PROPERTY: SelectableEdmField<
+    TestEntityCircularLinkParent,
+    'Edm.String',
+    false
+  >;
   /**
    * Static representation of the one-to-many navigation property [[toChild]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -86,7 +90,7 @@ export declare namespace TestEntityCircularLinkParent {
    * All fields of the TestEntityCircularLinkParent entity.
    */
   const _allFields: Array<
-    | StringField<TestEntityCircularLinkParent>
+    | SelectableEdmField<TestEntityCircularLinkParent, 'Edm.String', false>
     | Link<TestEntityCircularLinkParent, TestEntityCircularLinkChild>
   >;
   /**

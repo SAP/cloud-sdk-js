@@ -10,7 +10,8 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -90,29 +91,44 @@ export interface TestEntityLvl3MultiLinkType {
   keyProperty: string;
 }
 
+const fieldBuilder = new FieldBuilder(TestEntityLvl3MultiLink);
+
 export namespace TestEntityLvl3MultiLink {
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntityLvl3MultiLink> =
-    new StringField('StringProperty', TestEntityLvl3MultiLink, 'Edm.String');
+  export const STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    true
+  );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntityLvl3MultiLink> =
-    new StringField('GuidProperty', TestEntityLvl3MultiLink, 'Edm.Guid');
+  export const GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'GuidProperty',
+    'Edm.Guid',
+    true
+  );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityLvl3MultiLink> =
-    new StringField('KeyProperty', TestEntityLvl3MultiLink, 'Edm.String');
+  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
   /**
    * All fields of the TestEntityLvl3MultiLink entity.
    */
-  export const _allFields: Array<StringField<TestEntityLvl3MultiLink>> = [
+  export const _allFields: Array<
+    | SelectableEdmField<TestEntityLvl3MultiLink, 'Edm.String', true>
+    | SelectableEdmField<TestEntityLvl3MultiLink, 'Edm.Guid', true>
+    | SelectableEdmField<TestEntityLvl3MultiLink, 'Edm.String', false>
+  > = [
     TestEntityLvl3MultiLink.STRING_PROPERTY,
     TestEntityLvl3MultiLink.GUID_PROPERTY,
     TestEntityLvl3MultiLink.KEY_PROPERTY

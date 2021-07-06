@@ -106,51 +106,52 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
   return TestEntityLvl2SingleLink;
 })(core_1.EntityV2);
 exports.TestEntityLvl2SingleLink = TestEntityLvl2SingleLink;
+var fieldBuilder = new core_1.FieldBuilder(TestEntityLvl2SingleLink);
 (function (TestEntityLvl2SingleLink) {
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2SingleLink.KEY_PROPERTY = new core_1.StringField(
+  TestEntityLvl2SingleLink.KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
     'KeyProperty',
-    TestEntityLvl2SingleLink,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2SingleLink.STRING_PROPERTY = new core_1.StringField(
+  TestEntityLvl2SingleLink.STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
     'StringProperty',
-    TestEntityLvl2SingleLink,
-    'Edm.String'
+    'Edm.String',
+    true
   );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2SingleLink.BOOLEAN_PROPERTY = new core_1.BooleanField(
+  TestEntityLvl2SingleLink.BOOLEAN_PROPERTY = fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
-    TestEntityLvl2SingleLink,
-    'Edm.Boolean'
+    'Edm.Boolean',
+    true
   );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2SingleLink.GUID_PROPERTY = new core_1.StringField(
+  TestEntityLvl2SingleLink.GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
     'GuidProperty',
-    TestEntityLvl2SingleLink,
-    'Edm.Guid'
+    'Edm.Guid',
+    true
   );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2SingleLink.INT_16_PROPERTY = new core_1.NumberField(
+  TestEntityLvl2SingleLink.INT_16_PROPERTY = fieldBuilder.buildEdmTypeField(
     'Int16Property',
-    TestEntityLvl2SingleLink,
-    'Edm.Int16'
+    'Edm.Int16',
+    true
   );
   /**
    * All fields of the TestEntityLvl2SingleLink entity.

@@ -10,8 +10,9 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
+  FieldBuilder,
   Link,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -82,13 +83,18 @@ export interface TestEntityCircularLinkChildType {
   toParent: TestEntityCircularLinkChildType[];
 }
 
+const fieldBuilder = new FieldBuilder(TestEntityCircularLinkChild);
+
 export namespace TestEntityCircularLinkChild {
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityCircularLinkChild> =
-    new StringField('KeyProperty', TestEntityCircularLinkChild, 'Edm.String');
+  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
   /**
    * Static representation of the one-to-many navigation property [[toParent]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -105,7 +111,7 @@ export namespace TestEntityCircularLinkChild {
    * All fields of the TestEntityCircularLinkChild entity.
    */
   export const _allFields: Array<
-    | StringField<TestEntityCircularLinkChild>
+    | SelectableEdmField<TestEntityCircularLinkChild, 'Edm.String', false>
     | Link<TestEntityCircularLinkChild, TestEntityCircularLinkChild>
   > = [
     TestEntityCircularLinkChild.KEY_PROPERTY,

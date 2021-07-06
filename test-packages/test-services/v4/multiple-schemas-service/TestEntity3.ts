@@ -11,9 +11,9 @@ import {
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
-  EnumField,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -83,37 +83,43 @@ export interface TestEntity3Type {
   complexTypeProperty?: TestComplexType2 | null;
 }
 
+const fieldBuilder = new FieldBuilder(TestEntity3);
+
 export namespace TestEntity3 {
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity3> = new StringField(
+  export const KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity3,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY: EnumField<TestEntity3> = new EnumField(
+  export const ENUM_PROPERTY = fieldBuilder.buildEdmTypeField(
     'EnumProperty',
-    TestEntity3
+    'Edm.Enum',
+    true
   );
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY: TestComplexType2Field<TestEntity3> =
-    new TestComplexType2Field('ComplexTypeProperty', TestEntity3);
+  export const COMPLEX_TYPE_PROPERTY = fieldBuilder.buildComplexTypeField(
+    'ComplexTypeProperty',
+    TestComplexType2Field,
+    true
+  );
   /**
    * All fields of the TestEntity3 entity.
    */
   export const _allFields: Array<
-    | StringField<TestEntity3>
-    | EnumField<TestEntity3>
-    | TestComplexType2Field<TestEntity3>
+    | SelectableEdmField<TestEntity3, 'Edm.String', false>
+    | SelectableEdmField<TestEntity3, 'Edm.Enum', true>
+    | TestComplexType2Field<TestEntity3, true>
   > = [
     TestEntity3.KEY_PROPERTY_STRING,
     TestEntity3.ENUM_PROPERTY,

@@ -11,10 +11,10 @@ import {
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
-  EnumField,
   Field,
-  NumberField,
-  StringField
+  FieldBuilder,
+  SelectableEdmField,
+  SelectableOrderableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -90,47 +90,53 @@ export interface TestEntity1Type {
   complexTypeProperty?: TestComplexType1 | null;
 }
 
+const fieldBuilder = new FieldBuilder(TestEntity1);
+
 export namespace TestEntity1 {
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity1> = new StringField(
+  export const KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity1,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY: NumberField<TestEntity1> = new NumberField(
+  export const INT_16_PROPERTY = fieldBuilder.buildEdmTypeField(
     'Int16Property',
-    TestEntity1,
-    'Edm.Int16'
+    'Edm.Int16',
+    true
   );
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY: EnumField<TestEntity1> = new EnumField(
+  export const ENUM_PROPERTY = fieldBuilder.buildEdmTypeField(
     'EnumProperty',
-    TestEntity1
+    'Edm.Enum',
+    true
   );
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY: TestComplexType1Field<TestEntity1> =
-    new TestComplexType1Field('ComplexTypeProperty', TestEntity1);
+  export const COMPLEX_TYPE_PROPERTY = fieldBuilder.buildComplexTypeField(
+    'ComplexTypeProperty',
+    TestComplexType1Field,
+    true
+  );
   /**
    * All fields of the TestEntity1 entity.
    */
   export const _allFields: Array<
-    | StringField<TestEntity1>
-    | NumberField<TestEntity1>
-    | EnumField<TestEntity1>
-    | TestComplexType1Field<TestEntity1>
+    | SelectableEdmField<TestEntity1, 'Edm.String', false>
+    | SelectableOrderableEdmField<TestEntity1, 'Edm.Int16', true>
+    | SelectableEdmField<TestEntity1, 'Edm.Enum', true>
+    | TestComplexType1Field<TestEntity1, true>
   > = [
     TestEntity1.KEY_PROPERTY_STRING,
     TestEntity1.INT_16_PROPERTY,

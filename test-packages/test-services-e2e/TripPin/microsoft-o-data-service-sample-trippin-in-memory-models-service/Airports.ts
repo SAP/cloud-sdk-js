@@ -11,7 +11,8 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -85,45 +86,51 @@ export interface AirportsType {
   location: AirportLocation;
 }
 
+const fieldBuilder = new FieldBuilder(Airports);
+
 export namespace Airports {
   /**
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ICAO_CODE: StringField<Airports> = new StringField(
+  export const ICAO_CODE = fieldBuilder.buildEdmTypeField(
     'IcaoCode',
-    Airports,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME: StringField<Airports> = new StringField(
+  export const NAME = fieldBuilder.buildEdmTypeField(
     'Name',
-    Airports,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[iataCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const IATA_CODE: StringField<Airports> = new StringField(
+  export const IATA_CODE = fieldBuilder.buildEdmTypeField(
     'IataCode',
-    Airports,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LOCATION: AirportLocationField<Airports> =
-    new AirportLocationField('Location', Airports);
+  export const LOCATION = fieldBuilder.buildComplexTypeField(
+    'Location',
+    AirportLocationField,
+    false
+  );
   /**
    * All fields of the Airports entity.
    */
   export const _allFields: Array<
-    StringField<Airports> | AirportLocationField<Airports>
+    | SelectableEdmField<Airports, 'Edm.String', false>
+    | AirportLocationField<Airports, false>
   > = [
     Airports.ICAO_CODE,
     Airports.NAME,

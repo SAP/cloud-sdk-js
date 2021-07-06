@@ -10,11 +10,11 @@ import {
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmField,
   EntityV2,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV2,
-  EdmField
+  deserializeComplexTypeV2
 } from '../../../../../src';
 
 /**
@@ -46,8 +46,8 @@ export function createTestNestedComplexType(json: any): TestNestedComplexType {
  */
 export class TestNestedComplexTypeField<
   EntityT extends EntityV2,
-  NullableT extends boolean
-> extends ComplexTypeField<EntityT, TestNestedComplexType, NullableT> {
+  NullableT extends boolean = false
+> extends ComplexTypeField<EntityT, TestNestedComplexType> {
   /**
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -74,9 +74,9 @@ export class TestNestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable: NullableT
+    isNullable: NullableT = false as NullableT
   ) {
-    super(fieldName, fieldOf, TestNestedComplexType, isNullable);
+    super(fieldName, fieldOf, TestNestedComplexType);
   }
 }
 

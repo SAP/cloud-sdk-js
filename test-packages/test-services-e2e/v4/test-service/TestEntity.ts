@@ -8,18 +8,15 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
-  BigNumberField,
-  BooleanField,
   CustomFieldV4,
-  DateField,
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
+  FieldBuilder,
   OneToManyLink,
-  StringField,
-  Time,
-  TimeField
+  SelectableEdmField,
+  SelectableOrderableEdmField,
+  Time
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -145,104 +142,109 @@ export interface TestEntityType {
   toMultiLink: TestEntityLinkType[];
 }
 
+const fieldBuilder = new FieldBuilder(TestEntity);
+
 export namespace TestEntity {
   /**
    * Static representation of the [[keyTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TEST_ENTITY: NumberField<TestEntity> = new NumberField(
+  export const KEY_TEST_ENTITY = fieldBuilder.buildEdmTypeField(
     'KeyTestEntity',
-    TestEntity,
-    'Edm.Int32'
+    'Edm.Int32',
+    false
   );
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntity> = new StringField(
+  export const STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
     'StringProperty',
-    TestEntity,
-    'Edm.String'
+    'Edm.String',
+    true
   );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntity> = new StringField(
+  export const GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
     'GuidProperty',
-    TestEntity,
-    'Edm.Guid'
+    'Edm.Guid',
+    true
   );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntity> = new BooleanField(
+  export const BOOLEAN_PROPERTY = fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
-    TestEntity,
-    'Edm.Boolean'
+    'Edm.Boolean',
+    true
   );
   /**
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_64_PROPERTY: BigNumberField<TestEntity> = new BigNumberField(
+  export const INT_64_PROPERTY = fieldBuilder.buildEdmTypeField(
     'Int64Property',
-    TestEntity,
-    'Edm.Int64'
+    'Edm.Int64',
+    true
   );
   /**
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DOUBLE_PROPERTY: NumberField<TestEntity> = new NumberField(
+  export const DOUBLE_PROPERTY = fieldBuilder.buildEdmTypeField(
     'DoubleProperty',
-    TestEntity,
-    'Edm.Double'
+    'Edm.Double',
+    true
   );
   /**
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DECIMAL_PROPERTY: BigNumberField<TestEntity> =
-    new BigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
+  export const DECIMAL_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'DecimalProperty',
+    'Edm.Decimal',
+    true
+  );
   /**
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_PROPERTY: DateField<TestEntity> = new DateField(
+  export const DATE_PROPERTY = fieldBuilder.buildEdmTypeField(
     'DateProperty',
-    TestEntity,
-    'Edm.Date'
+    'Edm.Date',
+    true
   );
   /**
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TIME_OF_DAY_PROPERTY: TimeField<TestEntity> = new TimeField(
+  export const TIME_OF_DAY_PROPERTY = fieldBuilder.buildEdmTypeField(
     'TimeOfDayProperty',
-    TestEntity,
-    'Edm.TimeOfDay'
+    'Edm.TimeOfDay',
+    true
   );
   /**
    * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATA_TIME_OFFSET_DATA_TIME_PROPERTY: DateField<TestEntity> =
-    new DateField(
+  export const DATA_TIME_OFFSET_DATA_TIME_PROPERTY =
+    fieldBuilder.buildEdmTypeField(
       'DataTimeOffsetDataTimeProperty',
-      TestEntity,
-      'Edm.DateTimeOffset'
+      'Edm.DateTimeOffset',
+      true
     );
   /**
    * Static representation of the [[dataTimeOffsetTimestampProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: DateField<TestEntity> =
-    new DateField(
+  export const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY =
+    fieldBuilder.buildEdmTypeField(
       'DataTimeOffsetTimestampProperty',
-      TestEntity,
-      'Edm.DateTimeOffset'
+      'Edm.DateTimeOffset',
+      true
     );
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
@@ -254,12 +256,16 @@ export namespace TestEntity {
    * All fields of the TestEntity entity.
    */
   export const _allFields: Array<
-    | NumberField<TestEntity>
-    | StringField<TestEntity>
-    | BooleanField<TestEntity>
-    | BigNumberField<TestEntity>
-    | DateField<TestEntity>
-    | TimeField<TestEntity>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Int32', false>
+    | SelectableEdmField<TestEntity, 'Edm.String', true>
+    | SelectableEdmField<TestEntity, 'Edm.Guid', true>
+    | SelectableEdmField<TestEntity, 'Edm.Boolean', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Int64', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Double', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Decimal', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Date', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.TimeOfDay', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.DateTimeOffset', true>
     | OneToManyLink<TestEntity, TestEntityLink>
   > = [
     TestEntity.KEY_TEST_ENTITY,

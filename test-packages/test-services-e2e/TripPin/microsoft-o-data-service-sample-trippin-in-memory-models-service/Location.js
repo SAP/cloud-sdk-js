@@ -58,22 +58,21 @@ var LocationField = /** @class */ (function (_super) {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  function LocationField(fieldName, fieldOf) {
+  function LocationField(fieldName, fieldOf, isNullable) {
+    if (isNullable === void 0) {
+      isNullable = false;
+    }
     var _this = _super.call(this, fieldName, fieldOf, Location) || this;
     /**
      * Representation of the [[Location.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.address = new core_1.ComplexTypeStringPropertyField(
-      'Address',
-      _this,
-      'Edm.String'
-    );
+    _this.address = new core_1.EdmField('Address', _this, 'Edm.String', false);
     /**
      * Representation of the [[Location.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.city = new City_1.CityField('City', _this);
+    _this.city = new City_1.CityField('City', _this, false);
     return _this;
   }
   return LocationField;

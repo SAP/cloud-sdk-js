@@ -61,27 +61,26 @@ var AirportLocationField = /** @class */ (function (_super) {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  function AirportLocationField(fieldName, fieldOf) {
+  function AirportLocationField(fieldName, fieldOf, isNullable) {
+    if (isNullable === void 0) {
+      isNullable = false;
+    }
     var _this = _super.call(this, fieldName, fieldOf, AirportLocation) || this;
     /**
      * Representation of the [[AirportLocation.loc]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.loc = new core_1.ComplexTypeAnyPropertyField('Loc', _this, 'Edm.Any');
+    _this.loc = new core_1.EdmField('Loc', _this, 'Edm.Any', false);
     /**
      * Representation of the [[AirportLocation.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.address = new core_1.ComplexTypeStringPropertyField(
-      'Address',
-      _this,
-      'Edm.String'
-    );
+    _this.address = new core_1.EdmField('Address', _this, 'Edm.String', false);
     /**
      * Representation of the [[AirportLocation.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.city = new City_1.CityField('City', _this);
+    _this.city = new City_1.CityField('City', _this, false);
     return _this;
   }
   return AirportLocationField;

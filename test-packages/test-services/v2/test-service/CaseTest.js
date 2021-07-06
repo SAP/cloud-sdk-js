@@ -102,15 +102,16 @@ var CaseTest = /** @class */ (function (_super) {
   return CaseTest;
 })(core_1.EntityV2);
 exports.CaseTest = CaseTest;
+var fieldBuilder = new core_1.FieldBuilder(CaseTest);
 (function (CaseTest) {
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  CaseTest.KEY_PROPERTY_STRING = new core_1.StringField(
+  CaseTest.KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    CaseTest,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * All fields of the CaseTest entity.

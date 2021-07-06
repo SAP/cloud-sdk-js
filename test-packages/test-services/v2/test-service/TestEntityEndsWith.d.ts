@@ -5,7 +5,7 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
@@ -61,11 +61,17 @@ export declare namespace TestEntityEndsWith {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<TestEntityEndsWith>;
+  const KEY_PROPERTY: SelectableEdmField<
+    TestEntityEndsWith,
+    'Edm.String',
+    false
+  >;
   /**
    * All fields of the TestEntityEndsWith entity.
    */
-  const _allFields: Array<StringField<TestEntityEndsWith>>;
+  const _allFields: Array<
+    SelectableEdmField<TestEntityEndsWith, 'Edm.String', false>
+  >;
   /**
    * All fields selector.
    */

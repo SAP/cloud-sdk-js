@@ -6,11 +6,11 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmField,
   EntityV2,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV2,
-  EdmField
+  deserializeComplexTypeV2
 } from '../../../../../src';
 
 /**
@@ -39,17 +39,17 @@ export function createTestLvl2NestedComplexType(
  */
 export class TestLvl2NestedComplexTypeField<
   EntityT extends EntityV2,
-  NullableT extends boolean
-> extends ComplexTypeField<EntityT, TestLvl2NestedComplexType, NullableT> {
+  NullableT extends boolean = false
+> extends ComplexTypeField<EntityT, TestLvl2NestedComplexType> {
   /**
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmField<EntityT, 'Edm.String', false> = new EdmField(
+  stringProperty: EdmField<EntityT, 'Edm.String', true> = new EdmField(
     'StringProperty',
     this,
     'Edm.String',
-    false
+    true
   );
 
   /**
@@ -61,9 +61,9 @@ export class TestLvl2NestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable: NullableT
+    isNullable: NullableT = false as NullableT
   ) {
-    super(fieldName, fieldOf, TestLvl2NestedComplexType, isNullable);
+    super(fieldName, fieldOf, TestLvl2NestedComplexType);
   }
 }
 

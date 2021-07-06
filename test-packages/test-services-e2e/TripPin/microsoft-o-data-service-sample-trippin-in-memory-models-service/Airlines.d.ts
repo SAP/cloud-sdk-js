@@ -5,7 +5,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -60,16 +60,16 @@ export declare namespace Airlines {
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const AIRLINE_CODE: StringField<Airlines>;
+  const AIRLINE_CODE: SelectableEdmField<Airlines, 'Edm.String', false>;
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const NAME: StringField<Airlines>;
+  const NAME: SelectableEdmField<Airlines, 'Edm.String', false>;
   /**
    * All fields of the Airlines entity.
    */
-  const _allFields: Array<StringField<Airlines>>;
+  const _allFields: Array<SelectableEdmField<Airlines, 'Edm.String', false>>;
   /**
    * All fields selector.
    */

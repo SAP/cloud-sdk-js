@@ -10,7 +10,8 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '../../../../../src';
 
 /**
@@ -74,19 +75,24 @@ export interface MultiSchemaTestEntityType {
   keyProperty: string;
 }
 
+const fieldBuilder = new FieldBuilder(MultiSchemaTestEntity);
+
 export namespace MultiSchemaTestEntity {
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<MultiSchemaTestEntity> =
-    new StringField('KeyProperty', MultiSchemaTestEntity, 'Edm.String');
+  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
   /**
    * All fields of the MultiSchemaTestEntity entity.
    */
-  export const _allFields: Array<StringField<MultiSchemaTestEntity>> = [
-    MultiSchemaTestEntity.KEY_PROPERTY
-  ];
+  export const _allFields: Array<
+    SelectableEdmField<MultiSchemaTestEntity, 'Edm.String', false>
+  > = [MultiSchemaTestEntity.KEY_PROPERTY];
   /**
    * All fields selector.
    */

@@ -4,8 +4,8 @@ import {
 } from './TestLvl2NestedComplexType';
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
   ConstructorOrField,
+  EdmField,
   EntityV4,
   FieldType,
   PropertyMetadata
@@ -36,25 +36,30 @@ export declare function createTestNestedComplexType(
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class TestNestedComplexTypeField<
-  EntityT extends EntityV4
+  EntityT extends EntityV4,
+  NullableT extends boolean = false
 > extends ComplexTypeField<EntityT, TestNestedComplexType> {
   /**
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: ComplexTypeStringPropertyField<EntityT>;
+  stringProperty: EdmField<EntityT, 'Edm.String', true>;
   /**
    * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty: TestLvl2NestedComplexTypeField<EntityT>;
+  complexTypeProperty: TestLvl2NestedComplexTypeField<EntityT, true>;
   /**
    * Creates an instance of TestNestedComplexTypeField.
    *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    isNullable?: NullableT
+  );
 }
 export declare namespace TestNestedComplexType {
   /**

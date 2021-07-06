@@ -10,8 +10,9 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
-  StringField
+  FieldBuilder,
+  SelectableEdmField,
+  SelectableOrderableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -75,30 +76,33 @@ export interface TestEntity2Type {
   singleProperty?: number | null;
 }
 
+const fieldBuilder = new FieldBuilder(TestEntity2);
+
 export namespace TestEntity2 {
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity2> = new StringField(
+  export const KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity2,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SINGLE_PROPERTY: NumberField<TestEntity2> = new NumberField(
+  export const SINGLE_PROPERTY = fieldBuilder.buildEdmTypeField(
     'SingleProperty',
-    TestEntity2,
-    'Edm.Single'
+    'Edm.Single',
+    true
   );
   /**
    * All fields of the TestEntity2 entity.
    */
   export const _allFields: Array<
-    StringField<TestEntity2> | NumberField<TestEntity2>
+    | SelectableEdmField<TestEntity2, 'Edm.String', false>
+    | SelectableOrderableEdmField<TestEntity2, 'Edm.Single', true>
   > = [TestEntity2.KEY_PROPERTY_STRING, TestEntity2.SINGLE_PROPERTY];
   /**
    * All fields selector.

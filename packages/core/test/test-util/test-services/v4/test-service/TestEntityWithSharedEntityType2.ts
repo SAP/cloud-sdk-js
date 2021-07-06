@@ -10,7 +10,8 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '../../../../../src';
 
 /**
@@ -80,22 +81,24 @@ export interface TestEntityWithSharedEntityType2Type {
   keyProperty: string;
 }
 
+const fieldBuilder = new FieldBuilder(TestEntityWithSharedEntityType2);
+
 export namespace TestEntityWithSharedEntityType2 {
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityWithSharedEntityType2> =
-    new StringField(
-      'KeyProperty',
-      TestEntityWithSharedEntityType2,
-      'Edm.String'
-    );
+  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
   /**
    * All fields of the TestEntityWithSharedEntityType2 entity.
    */
-  export const _allFields: Array<StringField<TestEntityWithSharedEntityType2>> =
-    [TestEntityWithSharedEntityType2.KEY_PROPERTY];
+  export const _allFields: Array<
+    SelectableEdmField<TestEntityWithSharedEntityType2, 'Edm.String', false>
+  > = [TestEntityWithSharedEntityType2.KEY_PROPERTY];
   /**
    * All fields selector.
    */

@@ -106,15 +106,16 @@ var TestEntityCircularLinkChild = /** @class */ (function (_super) {
   return TestEntityCircularLinkChild;
 })(core_1.EntityV2);
 exports.TestEntityCircularLinkChild = TestEntityCircularLinkChild;
+var fieldBuilder = new core_1.FieldBuilder(TestEntityCircularLinkChild);
 (function (TestEntityCircularLinkChild) {
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityCircularLinkChild.KEY_PROPERTY = new core_1.StringField(
+  TestEntityCircularLinkChild.KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
     'KeyProperty',
-    TestEntityCircularLinkChild,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the one-to-many navigation property [[toParent]] for query construction.

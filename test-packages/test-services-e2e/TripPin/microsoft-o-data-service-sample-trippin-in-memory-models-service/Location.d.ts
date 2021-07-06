@@ -1,8 +1,8 @@
 import { City, CityField } from './City';
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
   ConstructorOrField,
+  EdmField,
   EntityV4,
   FieldType,
   PropertyMetadata
@@ -29,25 +29,30 @@ export declare function createLocation(json: any): Location;
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class LocationField<
-  EntityT extends EntityV4
+  EntityT extends EntityV4,
+  NullableT extends boolean = false
 > extends ComplexTypeField<EntityT, Location> {
   /**
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: ComplexTypeStringPropertyField<EntityT>;
+  address: EdmField<EntityT, 'Edm.String', false>;
   /**
    * Representation of the [[Location.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT>;
+  city: CityField<EntityT, false>;
   /**
    * Creates an instance of LocationField.
    *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    isNullable?: NullableT
+  );
 }
 export declare namespace Location {
   /**

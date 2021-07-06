@@ -6,8 +6,8 @@
 import { City, CityField } from './City';
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
   ConstructorOrField,
+  EdmField,
   EntityV4,
   FieldType,
   PropertyMetadata,
@@ -45,25 +45,34 @@ export function createEventLocation(json: any): EventLocation {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class EventLocationField<
-  EntityT extends EntityV4
+  EntityT extends EntityV4,
+  NullableT extends boolean = false
 > extends ComplexTypeField<EntityT, EventLocation> {
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('BuildingInfo', this, 'Edm.String');
+  buildingInfo: EdmField<EntityT, 'Edm.String', true> = new EdmField(
+    'BuildingInfo',
+    this,
+    'Edm.String',
+    true
+  );
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('Address', this, 'Edm.String');
+  address: EdmField<EntityT, 'Edm.String', false> = new EdmField(
+    'Address',
+    this,
+    'Edm.String',
+    false
+  );
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT> = new CityField('City', this);
+  city: CityField<EntityT, false> = new CityField('City', this, false);
 
   /**
    * Creates an instance of EventLocationField.
@@ -71,7 +80,11 @@ export class EventLocationField<
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    isNullable: NullableT = false as NullableT
+  ) {
     super(fieldName, fieldOf, EventLocation);
   }
 }

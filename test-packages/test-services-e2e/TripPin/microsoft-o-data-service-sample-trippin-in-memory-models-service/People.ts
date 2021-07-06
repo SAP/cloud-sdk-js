@@ -9,16 +9,16 @@ import { Location } from './Location';
 import { PersonGender } from './PersonGender';
 import {
   AllFields,
-  BigNumberField,
   CollectionField,
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
-  EnumField,
   Field,
+  FieldBuilder,
   OneToManyLink,
   OneToOneLink,
-  StringField
+  SelectableEdmField,
+  SelectableOrderableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -122,59 +122,71 @@ export interface PeopleType {
   photo?: PhotosType | null;
 }
 
+const fieldBuilder = new FieldBuilder(People);
+
 export namespace People {
   /**
    * Static representation of the [[userName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const USER_NAME: StringField<People> = new StringField(
+  export const USER_NAME = fieldBuilder.buildEdmTypeField(
     'UserName',
-    People,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[firstName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const FIRST_NAME: StringField<People> = new StringField(
+  export const FIRST_NAME = fieldBuilder.buildEdmTypeField(
     'FirstName',
-    People,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[lastName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LAST_NAME: StringField<People> = new StringField(
+  export const LAST_NAME = fieldBuilder.buildEdmTypeField(
     'LastName',
-    People,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const EMAILS: CollectionField<People, 'Edm.String'> =
-    new CollectionField('Emails', People, 'Edm.String');
+  export const EMAILS = fieldBuilder.buildCollectionField(
+    'Emails',
+    'Edm.String',
+    true
+  );
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ADDRESS_INFO: CollectionField<People, Location> =
-    new CollectionField('AddressInfo', People, Location);
+  export const ADDRESS_INFO = fieldBuilder.buildCollectionField(
+    'AddressInfo',
+    Location,
+    true
+  );
   /**
    * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GENDER: EnumField<People> = new EnumField('Gender', People);
+  export const GENDER = fieldBuilder.buildEdmTypeField(
+    'Gender',
+    'Edm.Enum',
+    true
+  );
   /**
    * Static representation of the [[concurrency]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const CONCURRENCY: BigNumberField<People> = new BigNumberField(
+  export const CONCURRENCY = fieldBuilder.buildEdmTypeField(
     'Concurrency',
-    People,
-    'Edm.Int64'
+    'Edm.Int64',
+    false
   );
   /**
    * Static representation of the one-to-many navigation property [[friends]] for query construction.
@@ -198,11 +210,11 @@ export namespace People {
    * All fields of the People entity.
    */
   export const _allFields: Array<
-    | StringField<People>
-    | CollectionField<People, 'Edm.String'>
-    | CollectionField<People, Location>
-    | EnumField<People>
-    | BigNumberField<People>
+    | SelectableEdmField<People, 'Edm.String', false>
+    | CollectionField<People, 'Edm.String', true>
+    | CollectionField<People, Location, true>
+    | SelectableEdmField<People, 'Edm.Enum', true>
+    | SelectableOrderableEdmField<People, 'Edm.Int64', false>
     | OneToManyLink<People, People>
     | OneToOneLink<People, Photos>
   > = [

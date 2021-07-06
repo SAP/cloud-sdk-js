@@ -7,12 +7,13 @@ import { PhotosRequestBuilder } from './PhotosRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
-  BigNumberField,
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField,
+  SelectableOrderableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -77,30 +78,30 @@ export interface PhotosType {
   name?: string | null;
 }
 
+const fieldBuilder = new FieldBuilder(Photos);
+
 export namespace Photos {
   /**
    * Static representation of the [[id]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ID: BigNumberField<Photos> = new BigNumberField(
-    'Id',
-    Photos,
-    'Edm.Int64'
-  );
+  export const ID = fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false);
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME: StringField<Photos> = new StringField(
+  export const NAME = fieldBuilder.buildEdmTypeField(
     'Name',
-    Photos,
-    'Edm.String'
+    'Edm.String',
+    true
   );
   /**
    * All fields of the Photos entity.
    */
-  export const _allFields: Array<BigNumberField<Photos> | StringField<Photos>> =
-    [Photos.ID, Photos.NAME];
+  export const _allFields: Array<
+    | SelectableOrderableEdmField<Photos, 'Edm.Int64', false>
+    | SelectableEdmField<Photos, 'Edm.String', true>
+  > = [Photos.ID, Photos.NAME];
   /**
    * All fields selector.
    */

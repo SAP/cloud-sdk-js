@@ -5,7 +5,7 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType1" of service "API_TEST_SRV".
@@ -64,11 +64,17 @@ export declare namespace TestEntityWithSharedEntityType1 {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<TestEntityWithSharedEntityType1>;
+  const KEY_PROPERTY: SelectableEdmField<
+    TestEntityWithSharedEntityType1,
+    'Edm.String',
+    false
+  >;
   /**
    * All fields of the TestEntityWithSharedEntityType1 entity.
    */
-  const _allFields: Array<StringField<TestEntityWithSharedEntityType1>>;
+  const _allFields: Array<
+    SelectableEdmField<TestEntityWithSharedEntityType1, 'Edm.String', false>
+  >;
   /**
    * All fields selector.
    */

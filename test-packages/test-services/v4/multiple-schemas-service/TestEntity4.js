@@ -102,24 +102,25 @@ var TestEntity4 = /** @class */ (function (_super) {
   return TestEntity4;
 })(core_1.EntityV4);
 exports.TestEntity4 = TestEntity4;
+var fieldBuilder = new core_1.FieldBuilder(TestEntity4);
 (function (TestEntity4) {
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity4.KEY_PROPERTY_STRING = new core_1.StringField(
+  TestEntity4.KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity4,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity4.BOOLEAN_PROPERTY = new core_1.BooleanField(
+  TestEntity4.BOOLEAN_PROPERTY = fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
-    TestEntity4,
-    'Edm.Boolean'
+    'Edm.Boolean',
+    true
   );
   /**
    * All fields of the TestEntity4 entity.

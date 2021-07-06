@@ -6,12 +6,12 @@
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -75,30 +75,33 @@ export interface TestEntity4Type {
   booleanProperty?: boolean | null;
 }
 
+const fieldBuilder = new FieldBuilder(TestEntity4);
+
 export namespace TestEntity4 {
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity4> = new StringField(
+  export const KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity4,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntity4> = new BooleanField(
+  export const BOOLEAN_PROPERTY = fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
-    TestEntity4,
-    'Edm.Boolean'
+    'Edm.Boolean',
+    true
   );
   /**
    * All fields of the TestEntity4 entity.
    */
   export const _allFields: Array<
-    StringField<TestEntity4> | BooleanField<TestEntity4>
+    | SelectableEdmField<TestEntity4, 'Edm.String', false>
+    | SelectableEdmField<TestEntity4, 'Edm.Boolean', true>
   > = [TestEntity4.KEY_PROPERTY_STRING, TestEntity4.BOOLEAN_PROPERTY];
   /**
    * All fields selector.

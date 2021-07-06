@@ -4,16 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
+import { Moment } from 'moment';
+import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import {
   AllFields,
   CustomFieldV2,
-  EdmTypeShared,
   EntityBuilderType,
   EntityV2,
   Field,
+  FieldBuilder,
   Link,
-  OneToOneLink
+  OneToOneLink,
+  SelectableEdmField,
+  SelectableOrderableEdmField,
+  Time
 } from '../../../../../src';
 
 /**
@@ -37,10 +42,81 @@ export class TestEntity extends EntityV2 implements TestEntityType {
    */
   keyPropertyString!: string;
   /**
+   * String Property.
+   * Maximum length: 10.
+   * @nullable
+   */
+  stringProperty?: string;
+  /**
+   * Boolean Property.
+   * @nullable
+   */
+  booleanProperty?: boolean;
+  /**
+   * Guid Property.
+   * @nullable
+   */
+  guidProperty?: string;
+  /**
    * Int 16 Property.
    * @nullable
    */
   int16Property?: number;
+  /**
+   * Int 32 Property.
+   * @nullable
+   */
+  int32Property?: number;
+  /**
+   * Int 64 Property.
+   * @nullable
+   */
+  int64Property?: BigNumber;
+  /**
+   * Decimal Property.
+   * @nullable
+   */
+  decimalProperty?: BigNumber;
+  /**
+   * Single Property.
+   * @nullable
+   */
+  singleProperty?: number;
+  /**
+   * Double Property.
+   * @nullable
+   */
+  doubleProperty?: number;
+  /**
+   * Float Property.
+   * @nullable
+   */
+  floatProperty?: number;
+  /**
+   * Time Property.
+   * @nullable
+   */
+  timeProperty?: Time;
+  /**
+   * Date Time Property.
+   * @nullable
+   */
+  dateTimeProperty?: Moment;
+  /**
+   * Date Time Off Set Property.
+   * @nullable
+   */
+  dateTimeOffSetProperty?: Moment;
+  /**
+   * Byte Property.
+   * @nullable
+   */
+  byteProperty?: number;
+  /**
+   * S Byte Property.
+   * @nullable
+   */
+  sByteProperty?: number;
   /**
    * Something The Sdk Does Not Support.
    * @nullable
@@ -85,11 +161,8 @@ export class TestEntity extends EntityV2 implements TestEntityType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField<PropertyNullableT extends boolean>(
-    fieldName: string,
-    isNullable: PropertyNullableT
-  ): CustomFieldV2<TestEntity, PropertyNullableT> {
-    return EntityV2.customFieldSelector(fieldName, TestEntity, isNullable);
+  static customField(fieldName: string): CustomFieldV2<TestEntity> {
+    return EntityV2.customFieldSelector(fieldName, TestEntity);
   }
 
   /**
@@ -113,16 +186,25 @@ import {
   TestEntitySingleLink,
   TestEntitySingleLinkType
 } from './TestEntitySingleLink';
-import {
-  SelectableEdmField,
-  SelectableOrderableEdmField
-} from '../../../../../src/odata-common/selectable';
-import { FieldBuilder } from '../../../../../src/odata-common/selectable/field-builder';
 
 export interface TestEntityType {
   keyPropertyGuid: string;
   keyPropertyString: string;
+  stringProperty?: string | null;
+  booleanProperty?: boolean | null;
+  guidProperty?: string | null;
   int16Property?: number | null;
+  int32Property?: number | null;
+  int64Property?: BigNumber | null;
+  decimalProperty?: BigNumber | null;
+  singleProperty?: number | null;
+  doubleProperty?: number | null;
+  floatProperty?: number | null;
+  timeProperty?: Time | null;
+  dateTimeProperty?: Moment | null;
+  dateTimeOffSetProperty?: Moment | null;
+  byteProperty?: number | null;
+  sByteProperty?: number | null;
   somethingTheSdkDoesNotSupport?: any | null;
   complexTypeProperty?: TestComplexType | null;
   toMultiLink: TestEntityMultiLinkType[];
@@ -149,9 +231,35 @@ export namespace TestEntity {
   export const KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
+    false
+  );
+  /**
+   * Static representation of the [[stringProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
     true
   );
-
+  /**
+   * Static representation of the [[booleanProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const BOOLEAN_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'BooleanProperty',
+    'Edm.Boolean',
+    true
+  );
+  /**
+   * Static representation of the [[guidProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'GuidProperty',
+    'Edm.Guid',
+    true
+  );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -161,7 +269,105 @@ export namespace TestEntity {
     'Edm.Int16',
     true
   );
-
+  /**
+   * Static representation of the [[int32Property]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const INT_32_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'Int32Property',
+    'Edm.Int32',
+    true
+  );
+  /**
+   * Static representation of the [[int64Property]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const INT_64_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'Int64Property',
+    'Edm.Int64',
+    true
+  );
+  /**
+   * Static representation of the [[decimalProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const DECIMAL_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'DecimalProperty',
+    'Edm.Decimal',
+    true
+  );
+  /**
+   * Static representation of the [[singleProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const SINGLE_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'SingleProperty',
+    'Edm.Single',
+    true
+  );
+  /**
+   * Static representation of the [[doubleProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const DOUBLE_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'DoubleProperty',
+    'Edm.Double',
+    true
+  );
+  /**
+   * Static representation of the [[floatProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const FLOAT_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'FloatProperty',
+    'Edm.Float',
+    true
+  );
+  /**
+   * Static representation of the [[timeProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const TIME_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'TimeProperty',
+    'Edm.Time',
+    true
+  );
+  /**
+   * Static representation of the [[dateTimeProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const DATE_TIME_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'DateTimeProperty',
+    'Edm.DateTime',
+    true
+  );
+  /**
+   * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const DATE_TIME_OFF_SET_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'DateTimeOffSetProperty',
+    'Edm.DateTimeOffset',
+    true
+  );
+  /**
+   * Static representation of the [[byteProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const BYTE_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'ByteProperty',
+    'Edm.Byte',
+    true
+  );
+  /**
+   * Static representation of the [[sByteProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  export const S_BYTE_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'SByteProperty',
+    'Edm.SByte',
+    true
+  );
   /**
    * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -170,7 +376,7 @@ export namespace TestEntity {
     fieldBuilder.buildEdmTypeField(
       'SomethingTheSDKDoesNotSupport',
       'Edm.Any',
-      false
+      true
     );
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
@@ -206,17 +412,46 @@ export namespace TestEntity {
    * All fields of the TestEntity entity.
    */
   export const _allFields: Array<
-    | SelectableEdmField<TestEntity, EdmTypeShared<'any'>, boolean>
-    | TestComplexTypeField<TestEntity, boolean>
+    | SelectableEdmField<TestEntity, 'Edm.Guid', false>
+    | SelectableEdmField<TestEntity, 'Edm.String', false>
+    | SelectableEdmField<TestEntity, 'Edm.String', true>
+    | SelectableEdmField<TestEntity, 'Edm.Boolean', true>
+    | SelectableEdmField<TestEntity, 'Edm.Guid', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Int16', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Int32', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Int64', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Decimal', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Single', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Double', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Float', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Time', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.DateTime', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.DateTimeOffset', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.Byte', true>
+    | SelectableOrderableEdmField<TestEntity, 'Edm.SByte', true>
+    | SelectableEdmField<TestEntity, 'Edm.Any', true>
+    | TestComplexTypeField<TestEntity, true>
     | Link<TestEntity, TestEntityMultiLink>
     | Link<TestEntity, TestEntityOtherMultiLink>
     | OneToOneLink<TestEntity, TestEntitySingleLink>
   > = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
-
+    TestEntity.STRING_PROPERTY,
+    TestEntity.BOOLEAN_PROPERTY,
+    TestEntity.GUID_PROPERTY,
     TestEntity.INT_16_PROPERTY,
-
+    TestEntity.INT_32_PROPERTY,
+    TestEntity.INT_64_PROPERTY,
+    TestEntity.DECIMAL_PROPERTY,
+    TestEntity.SINGLE_PROPERTY,
+    TestEntity.DOUBLE_PROPERTY,
+    TestEntity.FLOAT_PROPERTY,
+    TestEntity.TIME_PROPERTY,
+    TestEntity.DATE_TIME_PROPERTY,
+    TestEntity.DATE_TIME_OFF_SET_PROPERTY,
+    TestEntity.BYTE_PROPERTY,
+    TestEntity.S_BYTE_PROPERTY,
     TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT,
     TestEntity.COMPLEX_TYPE_PROPERTY,
     TestEntity.TO_MULTI_LINK,
@@ -233,18 +468,18 @@ export namespace TestEntity {
   /**
    * All key fields of the TestEntity entity.
    */
-  export const _keyFields: Array<Field<TestEntity, boolean>> = [
+  export const _keyFields: Array<Field<TestEntity>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING
   ];
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */
-  export const _keys: { [keys: string]: Field<TestEntity, boolean> } =
+  export const _keys: { [keys: string]: Field<TestEntity> } =
     TestEntity._keyFields.reduce(
       (
-        acc: { [keys: string]: Field<TestEntity, boolean> },
-        field: Field<TestEntity, boolean>
+        acc: { [keys: string]: Field<TestEntity> },
+        field: Field<TestEntity>
       ) => {
         acc[field._fieldName] = field;
         return acc;

@@ -5,8 +5,8 @@
  */
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
   ConstructorOrField,
+  EdmField,
   EntityV4,
   FieldType,
   PropertyMetadata,
@@ -42,28 +42,40 @@ export function createCity(json: any): City {
  * CityField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class CityField<EntityT extends EntityV4> extends ComplexTypeField<
-  EntityT,
-  City
-> {
+export class CityField<
+  EntityT extends EntityV4,
+  NullableT extends boolean = false
+> extends ComplexTypeField<EntityT, City> {
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('CountryRegion', this, 'Edm.String');
+  countryRegion: EdmField<EntityT, 'Edm.String', false> = new EdmField(
+    'CountryRegion',
+    this,
+    'Edm.String',
+    false
+  );
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('Name', this, 'Edm.String');
+  name: EdmField<EntityT, 'Edm.String', false> = new EdmField(
+    'Name',
+    this,
+    'Edm.String',
+    false
+  );
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('Region', this, 'Edm.String');
+  region: EdmField<EntityT, 'Edm.String', false> = new EdmField(
+    'Region',
+    this,
+    'Edm.String',
+    false
+  );
 
   /**
    * Creates an instance of CityField.
@@ -71,7 +83,11 @@ export class CityField<EntityT extends EntityV4> extends ComplexTypeField<
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    isNullable: NullableT = false as NullableT
+  ) {
     super(fieldName, fieldOf, City);
   }
 }

@@ -6,7 +6,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -71,27 +71,28 @@ export declare namespace Airports {
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ICAO_CODE: StringField<Airports>;
+  const ICAO_CODE: SelectableEdmField<Airports, 'Edm.String', false>;
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const NAME: StringField<Airports>;
+  const NAME: SelectableEdmField<Airports, 'Edm.String', false>;
   /**
    * Static representation of the [[iataCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const IATA_CODE: StringField<Airports>;
+  const IATA_CODE: SelectableEdmField<Airports, 'Edm.String', false>;
   /**
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const LOCATION: AirportLocationField<Airports>;
+  const LOCATION: AirportLocationField<Airports, false>;
   /**
    * All fields of the Airports entity.
    */
   const _allFields: Array<
-    StringField<Airports> | AirportLocationField<Airports>
+    | SelectableEdmField<Airports, 'Edm.String', false>
+    | AirportLocationField<Airports, false>
   >;
   /**
    * All fields selector.

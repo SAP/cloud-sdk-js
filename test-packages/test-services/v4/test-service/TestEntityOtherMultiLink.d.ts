@@ -5,7 +5,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
@@ -64,11 +64,17 @@ export declare namespace TestEntityOtherMultiLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<TestEntityOtherMultiLink>;
+  const KEY_PROPERTY: SelectableEdmField<
+    TestEntityOtherMultiLink,
+    'Edm.String',
+    false
+  >;
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */
-  const _allFields: Array<StringField<TestEntityOtherMultiLink>>;
+  const _allFields: Array<
+    SelectableEdmField<TestEntityOtherMultiLink, 'Edm.String', false>
+  >;
   /**
    * All fields selector.
    */

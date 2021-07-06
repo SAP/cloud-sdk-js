@@ -5,7 +5,7 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -61,11 +61,17 @@ export declare namespace MultiSchemaTestEntity {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<MultiSchemaTestEntity>;
+  const KEY_PROPERTY: SelectableEdmField<
+    MultiSchemaTestEntity,
+    'Edm.String',
+    false
+  >;
   /**
    * All fields of the MultiSchemaTestEntity entity.
    */
-  const _allFields: Array<StringField<MultiSchemaTestEntity>>;
+  const _allFields: Array<
+    SelectableEdmField<MultiSchemaTestEntity, 'Edm.String', false>
+  >;
   /**
    * All fields selector.
    */

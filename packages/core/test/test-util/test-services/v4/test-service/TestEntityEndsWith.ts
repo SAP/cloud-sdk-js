@@ -10,7 +10,8 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '../../../../../src';
 
 /**
@@ -75,22 +76,24 @@ export interface TestEntityEndsWithType {
   keyProperty: string;
 }
 
+const fieldBuilder = new FieldBuilder(TestEntityEndsWith);
+
 export namespace TestEntityEndsWith {
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityEndsWith> = new StringField(
+  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
     'KeyProperty',
-    TestEntityEndsWith,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * All fields of the TestEntityEndsWith entity.
    */
-  export const _allFields: Array<StringField<TestEntityEndsWith>> = [
-    TestEntityEndsWith.KEY_PROPERTY
-  ];
+  export const _allFields: Array<
+    SelectableEdmField<TestEntityEndsWith, 'Edm.String', false>
+  > = [TestEntityEndsWith.KEY_PROPERTY];
   /**
    * All fields selector.
    */

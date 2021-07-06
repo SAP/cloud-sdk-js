@@ -2,12 +2,12 @@ import { PhotosRequestBuilder } from './PhotosRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
-  BigNumberField,
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  SelectableEdmField,
+  SelectableOrderableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -63,16 +63,19 @@ export declare namespace Photos {
    * Static representation of the [[id]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ID: BigNumberField<Photos>;
+  const ID: SelectableOrderableEdmField<Photos, 'Edm.Int64', false>;
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const NAME: StringField<Photos>;
+  const NAME: SelectableEdmField<Photos, 'Edm.String', true>;
   /**
    * All fields of the Photos entity.
    */
-  const _allFields: Array<BigNumberField<Photos> | StringField<Photos>>;
+  const _allFields: Array<
+    | SelectableOrderableEdmField<Photos, 'Edm.Int64', false>
+    | SelectableEdmField<Photos, 'Edm.String', true>
+  >;
   /**
    * All fields selector.
    */

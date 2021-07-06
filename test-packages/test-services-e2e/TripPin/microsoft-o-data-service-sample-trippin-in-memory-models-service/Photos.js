@@ -103,17 +103,18 @@ var Photos = /** @class */ (function (_super) {
   return Photos;
 })(core_1.EntityV4);
 exports.Photos = Photos;
+var fieldBuilder = new core_1.FieldBuilder(Photos);
 (function (Photos) {
   /**
    * Static representation of the [[id]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Photos.ID = new core_1.BigNumberField('Id', Photos, 'Edm.Int64');
+  Photos.ID = fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false);
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Photos.NAME = new core_1.StringField('Name', Photos, 'Edm.String');
+  Photos.NAME = fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true);
   /**
    * All fields of the Photos entity.
    */

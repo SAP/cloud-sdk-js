@@ -10,7 +10,8 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '../../../../../src';
 
 /**
@@ -76,19 +77,24 @@ export interface TestEntityOtherMultiLinkType {
   keyProperty: string;
 }
 
+const fieldBuilder = new FieldBuilder(TestEntityOtherMultiLink);
+
 export namespace TestEntityOtherMultiLink {
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityOtherMultiLink> =
-    new StringField('KeyProperty', TestEntityOtherMultiLink, 'Edm.String');
+  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */
-  export const _allFields: Array<StringField<TestEntityOtherMultiLink>> = [
-    TestEntityOtherMultiLink.KEY_PROPERTY
-  ];
+  export const _allFields: Array<
+    SelectableEdmField<TestEntityOtherMultiLink, 'Edm.String', false>
+  > = [TestEntityOtherMultiLink.KEY_PROPERTY];
   /**
    * All fields selector.
    */

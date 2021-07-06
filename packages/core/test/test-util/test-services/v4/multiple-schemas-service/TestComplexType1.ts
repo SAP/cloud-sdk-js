@@ -5,8 +5,8 @@
  */
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
   ConstructorOrField,
+  EdmField,
   EntityV4,
   FieldType,
   PropertyMetadata,
@@ -35,14 +35,19 @@ export function createTestComplexType1(json: any): TestComplexType1 {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class TestComplexType1Field<
-  EntityT extends EntityV4
+  EntityT extends EntityV4,
+  NullableT extends boolean = false
 > extends ComplexTypeField<EntityT, TestComplexType1> {
   /**
    * Representation of the [[TestComplexType1.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('StringProperty', this, 'Edm.String');
+  stringProperty: EdmField<EntityT, 'Edm.String', false> = new EdmField(
+    'StringProperty',
+    this,
+    'Edm.String',
+    false
+  );
 
   /**
    * Creates an instance of TestComplexType1Field.
@@ -50,7 +55,11 @@ export class TestComplexType1Field<
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    isNullable: NullableT = false as NullableT
+  ) {
     super(fieldName, fieldOf, TestComplexType1);
   }
 }

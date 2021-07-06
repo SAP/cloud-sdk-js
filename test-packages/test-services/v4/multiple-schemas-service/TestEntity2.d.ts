@@ -5,8 +5,8 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
-  StringField
+  SelectableEdmField,
+  SelectableOrderableEdmField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity2" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -62,16 +62,27 @@ export declare namespace TestEntity2 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_STRING: StringField<TestEntity2>;
+  const KEY_PROPERTY_STRING: SelectableEdmField<
+    TestEntity2,
+    'Edm.String',
+    false
+  >;
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const SINGLE_PROPERTY: NumberField<TestEntity2>;
+  const SINGLE_PROPERTY: SelectableOrderableEdmField<
+    TestEntity2,
+    'Edm.Single',
+    true
+  >;
   /**
    * All fields of the TestEntity2 entity.
    */
-  const _allFields: Array<StringField<TestEntity2> | NumberField<TestEntity2>>;
+  const _allFields: Array<
+    | SelectableEdmField<TestEntity2, 'Edm.String', false>
+    | SelectableOrderableEdmField<TestEntity2, 'Edm.Single', true>
+  >;
   /**
    * All fields selector.
    */

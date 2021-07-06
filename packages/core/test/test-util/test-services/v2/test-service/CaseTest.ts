@@ -10,7 +10,8 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '../../../../../src';
 
 /**
@@ -68,22 +69,24 @@ export interface CaseTestType {
   keyPropertyString: string;
 }
 
+const fieldBuilder = new FieldBuilder(CaseTest);
+
 export namespace CaseTest {
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<CaseTest> = new StringField(
+  export const KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    CaseTest,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * All fields of the CaseTest entity.
    */
-  export const _allFields: Array<StringField<CaseTest>> = [
-    CaseTest.KEY_PROPERTY_STRING
-  ];
+  export const _allFields: Array<
+    SelectableEdmField<CaseTest, 'Edm.String', false>
+  > = [CaseTest.KEY_PROPERTY_STRING];
   /**
    * All fields selector.
    */

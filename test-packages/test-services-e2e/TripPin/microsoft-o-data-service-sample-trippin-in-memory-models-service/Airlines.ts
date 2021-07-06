@@ -10,7 +10,8 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  FieldBuilder,
+  SelectableEdmField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -74,32 +75,33 @@ export interface AirlinesType {
   name: string;
 }
 
+const fieldBuilder = new FieldBuilder(Airlines);
+
 export namespace Airlines {
   /**
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const AIRLINE_CODE: StringField<Airlines> = new StringField(
+  export const AIRLINE_CODE = fieldBuilder.buildEdmTypeField(
     'AirlineCode',
-    Airlines,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME: StringField<Airlines> = new StringField(
+  export const NAME = fieldBuilder.buildEdmTypeField(
     'Name',
-    Airlines,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * All fields of the Airlines entity.
    */
-  export const _allFields: Array<StringField<Airlines>> = [
-    Airlines.AIRLINE_CODE,
-    Airlines.NAME
-  ];
+  export const _allFields: Array<
+    SelectableEdmField<Airlines, 'Edm.String', false>
+  > = [Airlines.AIRLINE_CODE, Airlines.NAME];
   /**
    * All fields selector.
    */

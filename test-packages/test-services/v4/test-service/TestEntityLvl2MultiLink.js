@@ -107,51 +107,52 @@ var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
 })(core_1.EntityV4);
 exports.TestEntityLvl2MultiLink = TestEntityLvl2MultiLink;
 var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
+var fieldBuilder = new core_1.FieldBuilder(TestEntityLvl2MultiLink);
 (function (TestEntityLvl2MultiLink) {
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.STRING_PROPERTY = new core_1.StringField(
+  TestEntityLvl2MultiLink.STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
     'StringProperty',
-    TestEntityLvl2MultiLink,
-    'Edm.String'
+    'Edm.String',
+    true
   );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.BOOLEAN_PROPERTY = new core_1.BooleanField(
+  TestEntityLvl2MultiLink.BOOLEAN_PROPERTY = fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
-    TestEntityLvl2MultiLink,
-    'Edm.Boolean'
+    'Edm.Boolean',
+    true
   );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.GUID_PROPERTY = new core_1.StringField(
+  TestEntityLvl2MultiLink.GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
     'GuidProperty',
-    TestEntityLvl2MultiLink,
-    'Edm.Guid'
+    'Edm.Guid',
+    true
   );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.INT_16_PROPERTY = new core_1.NumberField(
+  TestEntityLvl2MultiLink.INT_16_PROPERTY = fieldBuilder.buildEdmTypeField(
     'Int16Property',
-    TestEntityLvl2MultiLink,
-    'Edm.Int16'
+    'Edm.Int16',
+    true
   );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.KEY_PROPERTY = new core_1.StringField(
+  TestEntityLvl2MultiLink.KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
     'KeyProperty',
-    TestEntityLvl2MultiLink,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink2]] for query construction.

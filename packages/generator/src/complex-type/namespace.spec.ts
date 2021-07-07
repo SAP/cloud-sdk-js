@@ -9,7 +9,7 @@ describe('namespace', () => {
   it('complexTypeSourceFile', () => {
     const actual = complexTypeNamespace(complexMeal, 'v2');
     expect(actual).toEqual({
-      kind: StructureKind.Namespace,
+      kind: StructureKind.Module,
       name: 'ComplexMealType',
       isExported: true,
       statements: [
@@ -61,7 +61,7 @@ describe('namespace', () => {
   it('should generate a builder when a complex type includes a complex type property', () => {
     const actual = complexTypeNamespace(complexMealWithDesert, 'v4');
     expect(actual).toEqual({
-      kind: StructureKind.Namespace,
+      kind: StructureKind.Module,
       name: 'ComplexMealWithDesertType',
       isExported: true,
       statements: [

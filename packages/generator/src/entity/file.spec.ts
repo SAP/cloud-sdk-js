@@ -25,7 +25,7 @@ describe('file', () => {
     expect(interfaces.length).toBe(1);
 
     const namespaces = (actual.statements as any[]).filter(
-      element => element.kind === StructureKind.Namespace
+      element => element.kind === StructureKind.Module
     );
 
     expect(namespaces.length).toBe(1);

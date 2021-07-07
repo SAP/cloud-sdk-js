@@ -97,12 +97,27 @@ export type NonNullableFieldTypeByEdmType<
   : never;
 
 export type FieldTypeByEdmType<
-  EdmT extends EdmTypeShared<'any'>,
+  EdmOrFieldT extends EdmTypeShared<'any'> | FieldType,
   NullableT extends boolean
-> = NullableFieldType<NonNullableFieldTypeByEdmType<EdmT>, NullableT>;
+> = NullableFieldType<
+  EdmOrFieldT extends EdmTypeShared<'any'>
+    ? NonNullableFieldTypeByEdmType<EdmOrFieldT>
+    : EdmOrFieldT,
+  NullableT
+>;
 
 /**
- * Represents a property of an OData entity with an Edm type.
+ * Convenience type to support old `EdmTypeField` with field type as generic parameter.
+ * This will become obsolete in the next major version update.
+ */
+export type EdmTypeForEdmOrFieldType<
+  EdmOrFieldT extends EdmTypeShared<'any'> | FieldType
+> = EdmOrFieldT extends EdmTypeShared<'any'>
+  ? EdmOrFieldT
+  : EdmTypeShared<'any'>;
+
+/**
+ * Represents a property of an OData entity with an EDM type.
  *
  * `EdmTypeField`s are used as static properties of entities and are generated from the metadata, i.e. for each property of
  * an OData entity, that has an Edm type, there exists one static instance of `EdmTypeField` (or rather one of its subclasses) in the corresponding generated class file.
@@ -113,11 +128,11 @@ export type FieldTypeByEdmType<
  * See also: [[Selectable]]
  *
  * @typeparam EntityT - Type of the entity the field belongs to
- * @typeparam FieldT - Type of the field
+ * @typeparam EdmOrFieldT - [[EDM type | EdmTypeShared]] of the field. Deprecated: Field type of the field.
  */
-export class EdmField<
+export class EdmTypeField<
   EntityT extends Entity,
-  EdmT extends EdmTypeShared<'any'>,
+  EdmOrFieldT extends EdmTypeShared<'any'> | FieldType,
   NullableT extends boolean = false
 > extends Field<EntityT, NullableT> {
   /**
@@ -131,7 +146,7 @@ export class EdmField<
   constructor(
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
-    readonly edmType: EdmT,
+    readonly edmType: EdmTypeForEdmOrFieldType<EdmOrFieldT>,
     isNullable: NullableT = false as NullableT
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), isNullable);
@@ -144,8 +159,8 @@ export class EdmField<
    * @returns The resulting filter
    */
   equals(
-    value: FieldTypeByEdmType<EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
+    value: FieldTypeByEdmType<EdmOrFieldT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>> {
     return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 
@@ -156,8 +171,8 @@ export class EdmField<
    * @returns The resulting filter
    */
   notEquals(
-    value: FieldTypeByEdmType<EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
+    value: FieldTypeByEdmType<EdmOrFieldT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>> {
     return new Filter(this.fieldPath(), 'ne', value, this.edmType);
   }
 }

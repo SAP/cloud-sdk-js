@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { EdmTypeShared } from '../edm-types';
 import { Entity } from '../entity';
-import { EdmField } from './edm-field';
+import { EdmTypeField } from './edm-type-field';
 import { OrderableEdmField } from './orderable-edm-field';
 import { SelectableField } from './selectable';
 
@@ -10,7 +10,7 @@ export class SelectableEdmField<
     EdmT extends EdmTypeShared<'any'>,
     NullableT extends boolean = false
   >
-  extends EdmField<EntityT, EdmT, NullableT>
+  extends EdmTypeField<EntityT, EdmT, NullableT>
   implements SelectableField
 {
   readonly selectable: true;

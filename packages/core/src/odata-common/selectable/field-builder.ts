@@ -3,7 +3,12 @@
 import { EdmTypeShared } from '../edm-types';
 import { Entity } from '../entity';
 import { ComplexTypeField } from './complex-type-field';
-import { EdmField, isSortableEdmType, SortableEdmType } from './edm-field';
+import {
+  EdmTypeField,
+  EdmTypeForEdmOrFieldType,
+  isSortableEdmType,
+  SortableEdmType
+} from './edm-type-field';
 import { OrderableEdmField } from './orderable-edm-field';
 import { CollectionField, CollectionFieldType } from './collection-field';
 import { AllFields } from './all-fields';
@@ -31,7 +36,7 @@ export class FieldBuilder<EntityT extends Entity> {
     NullableT extends boolean
   >(
     fieldName: string,
-    edmType: EdmT,
+    edmType: EdmTypeForEdmOrFieldType<EdmT>,
     isNullable: NullableT
   ): EdmTypeClassByType<EntityT, EdmT, NullableT> {
     if (this.fieldOf instanceof ComplexTypeField) {
@@ -80,7 +85,7 @@ export class FieldBuilder<EntityT extends Entity> {
     NullableT extends boolean
   >(
     fieldName: string,
-    edmType: EdmT,
+    edmType: EdmTypeForEdmOrFieldType<EdmT>,
     isNullable: NullableT
   ): EdmTypeClassByType<EntityT, EdmT, NullableT> {
     if (isSortableEdmType(edmType)) {
@@ -104,7 +109,7 @@ export class FieldBuilder<EntityT extends Entity> {
     NullableT extends boolean
   >(
     fieldName: string,
-    edmType: EdmT,
+    edmType: EdmTypeForEdmOrFieldType<EdmT>,
     isNullable: NullableT
   ): EdmTypeClassByType<EntityT, EdmT, NullableT> {
     if (isSortableEdmType(edmType)) {
@@ -115,7 +120,7 @@ export class FieldBuilder<EntityT extends Entity> {
         isNullable
       ) as EdmTypeClassByType<EntityT, EdmT, NullableT>;
     }
-    return new EdmField(
+    return new EdmTypeField(
       fieldName,
       this.fieldOf,
       edmType,
@@ -134,4 +139,4 @@ export type EdmTypeClassByType<
     : SelectableEdmField<EntityT, EdmT, NullableT>
   : EdmT extends SortableEdmType
   ? OrderableEdmField<EntityT, EdmT, NullableT>
-  : EdmField<EntityT, EdmT, NullableT>;
+  : EdmTypeField<EntityT, EdmT, NullableT>;

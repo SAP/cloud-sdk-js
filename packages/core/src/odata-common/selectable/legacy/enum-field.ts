@@ -4,7 +4,7 @@ import { Entity, Constructable } from '../../entity';
 import { ComplexTypeField, getEntityConstructor } from '../complex-type-field';
 import { ConstructorOrField } from '../constructor-or-field';
 import { SelectableField } from '../selectable';
-import { EdmTypeField } from './edm-type-field';
+import { EdmTypeField } from '../edm-type-field';
 
 /**
  * @deprecated Since v1.27.0. Use [[XY]] instead.

@@ -3,7 +3,7 @@ import {
   isSelectedProperty,
   Field,
   Link,
-  EdmField,
+  EdmTypeField,
   ComplexTypeField,
   CollectionField,
   OneToOneLink,
@@ -104,7 +104,7 @@ export function entityDeserializer(
     json: Partial<JsonT>,
     field: Field<EntityT> | Link<EntityT>
   ) {
-    if (field instanceof EdmField) {
+    if (field instanceof EdmTypeField) {
       return edmToTs(json[field._fieldName], field.edmType);
     }
     if (field instanceof Link) {
@@ -182,14 +182,14 @@ export function entityDeserializer(
     return Object.entries(complexTypeField)
       .filter(
         ([, field]) =>
-          (field instanceof EdmField || field instanceof ComplexTypeField) &&
+          (field instanceof EdmTypeField || field instanceof ComplexTypeField) &&
           typeof json[field._fieldName] !== 'undefined'
       )
       .reduce(
         (complexTypeObject, [fieldName, field]) => ({
           ...complexTypeObject,
           [toPropertyFormat(fieldName)]:
-            field instanceof EdmField
+            field instanceof EdmTypeField
               ? edmToTs(json[field._fieldName], field.edmType)
               : deserializeComplexTypeLegacy(json[field._fieldName], field)
         }),

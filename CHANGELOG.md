@@ -27,6 +27,7 @@
 ## Fixed Issues
 
 - [proxy] Fix destination service calls using web proxies.
+- [core] Fix type error to allow `null` values in filters for nullable properties.
 
 
 # 1.46.0
@@ -63,7 +64,6 @@ The following interfaces were deprecated:
 ## Fixed Issues
 
 - [core] Fix type error to allow filtering on one-to-many navigation properties in lambda expressions.
-- [core] Fix type error to allow `null` values in filters for nullable properties.
 - [openapi-generator] Base uniqueness check for directory names on directory names in `optionsPerService` instead of the human readable service name.
 
 # 1.45.0

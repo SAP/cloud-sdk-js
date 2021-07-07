@@ -1,5 +1,5 @@
 import { Entity } from '../entity';
-import { EdmField } from './edm-field';
+import { EdmTypeField } from './edm-type-field';
 import {
   ComplexTypeBigNumberPropertyField,
   ComplexTypeBinaryPropertyField,
@@ -15,7 +15,7 @@ import { OrderableEdmField } from './orderable-edm-field';
  * @hidden
  */
 export type ComplexTypePropertyFields<EntityT extends Entity, ComplexT> =
-  | EdmField<EntityT, any, boolean>
+  | EdmTypeField<EntityT, any, boolean>
   | OrderableEdmField<EntityT, any, boolean>
   | ComplexTypeBigNumberPropertyField<EntityT, ComplexT>
   | ComplexTypeBinaryPropertyField<EntityT, ComplexT>

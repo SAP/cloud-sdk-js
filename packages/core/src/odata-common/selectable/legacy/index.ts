@@ -3,7 +3,6 @@ export * from './binary-field';
 export * from './boolean-field';
 export * from './date-field';
 export * from './duration-field';
-export * from './edm-type-field';
 export * from './number-field';
 export * from './string-field';
 export * from './time-field';

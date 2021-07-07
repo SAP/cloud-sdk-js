@@ -107,7 +107,7 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
 };
 
 const fieldTypeToComplexPropertyTypeMapping = {
-  SelectableEdmField: 'EdmField',
+  SelectableEdmField: 'EdmTypeField',
   SelectableOrderableEdmField: 'OrderableEdmField'
 };
 

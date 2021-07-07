@@ -67,7 +67,12 @@ var LocationField = /** @class */ (function (_super) {
      * Representation of the [[Location.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.address = new core_1.EdmField('Address', _this, 'Edm.String', false);
+    _this.address = new core_1.EdmTypeField(
+      'Address',
+      _this,
+      'Edm.String',
+      false
+    );
     /**
      * Representation of the [[Location.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

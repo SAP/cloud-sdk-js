@@ -14,7 +14,7 @@ import {
   CollectionField,
   ComplexTypeField,
   ConstructorOrField,
-  EdmField,
+  EdmTypeField,
   EntityV4,
   FieldType,
   OrderableEdmField,
@@ -157,7 +157,7 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmField<EntityT, 'Edm.String', false> = new EdmField(
+  stringProperty: EdmTypeField<EntityT, 'Edm.String', false> = new EdmTypeField(
     'StringProperty',
     this,
     'Edm.String',
@@ -167,17 +167,13 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: EdmField<EntityT, 'Edm.Boolean', true> = new EdmField(
-    'BooleanProperty',
-    this,
-    'Edm.Boolean',
-    true
-  );
+  booleanProperty: EdmTypeField<EntityT, 'Edm.Boolean', true> =
+    new EdmTypeField('BooleanProperty', this, 'Edm.Boolean', true);
   /**
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: EdmField<EntityT, 'Edm.Guid', true> = new EdmField(
+  guidProperty: EdmTypeField<EntityT, 'Edm.Guid', true> = new EdmTypeField(
     'GuidProperty',
     this,
     'Edm.Guid',
@@ -267,17 +263,13 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.geographyPointProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  geographyPointProperty: EdmField<EntityT, 'Edm.Any', true> = new EdmField(
-    'GeographyPointProperty',
-    this,
-    'Edm.Any',
-    true
-  );
+  geographyPointProperty: EdmTypeField<EntityT, 'Edm.Any', true> =
+    new EdmTypeField('GeographyPointProperty', this, 'Edm.Any', true);
   /**
    * Representation of the [[TestComplexType.enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  enumProperty: EdmField<EntityT, 'Edm.Enum', true> = new EdmField(
+  enumProperty: EdmTypeField<EntityT, 'Edm.Enum', true> = new EdmTypeField(
     'EnumProperty',
     this,
     'Edm.Enum',
@@ -287,8 +279,8 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  somethingTheSdkDoesNotSupport: EdmField<EntityT, 'Edm.Any', true> =
-    new EdmField('SomethingTheSDKDoesNotSupport', this, 'Edm.Any', true);
+  somethingTheSdkDoesNotSupport: EdmTypeField<EntityT, 'Edm.Any', true> =
+    new EdmTypeField('SomethingTheSDKDoesNotSupport', this, 'Edm.Any', true);
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -319,12 +311,8 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: EdmField<EntityT, 'Edm.String', true> = new EdmField(
-    'BaseStringProperty',
-    this,
-    'Edm.String',
-    true
-  );
+  baseStringProperty: EdmTypeField<EntityT, 'Edm.String', true> =
+    new EdmTypeField('BaseStringProperty', this, 'Edm.String', true);
 
   /**
    * Creates an instance of TestComplexTypeField.

@@ -6,7 +6,7 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmField,
+  EdmTypeField,
   EntityV4,
   FieldType,
   PropertyMetadata,
@@ -42,7 +42,7 @@ export class TestComplexType2Field<
    * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmField<EntityT, 'Edm.String', false> = new EdmField(
+  stringProperty: EdmTypeField<EntityT, 'Edm.String', false> = new EdmTypeField(
     'StringProperty',
     this,
     'Edm.String',

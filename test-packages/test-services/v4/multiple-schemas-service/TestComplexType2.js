@@ -69,7 +69,7 @@ var TestComplexType2Field = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.stringProperty = new core_1.EdmField(
+    _this.stringProperty = new core_1.EdmTypeField(
       'StringProperty',
       _this,
       'Edm.String',

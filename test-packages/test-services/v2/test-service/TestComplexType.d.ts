@@ -7,7 +7,7 @@ import {
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmField,
+  EdmTypeField,
   EntityV2,
   FieldType,
   OrderableEdmField,
@@ -119,17 +119,17 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmField<EntityT, 'Edm.String', false>;
+  stringProperty: EdmTypeField<EntityT, 'Edm.String', false>;
   /**
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: EdmField<EntityT, 'Edm.Boolean', true>;
+  booleanProperty: EdmTypeField<EntityT, 'Edm.Boolean', true>;
   /**
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: EdmField<EntityT, 'Edm.Guid', true>;
+  guidProperty: EdmTypeField<EntityT, 'Edm.Guid', true>;
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -198,7 +198,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  somethingTheSdkDoesNotSupport: EdmField<EntityT, 'Edm.Any', true>;
+  somethingTheSdkDoesNotSupport: EdmTypeField<EntityT, 'Edm.Any', true>;
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

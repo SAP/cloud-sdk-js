@@ -70,12 +70,17 @@ var AirportLocationField = /** @class */ (function (_super) {
      * Representation of the [[AirportLocation.loc]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.loc = new core_1.EdmField('Loc', _this, 'Edm.Any', false);
+    _this.loc = new core_1.EdmTypeField('Loc', _this, 'Edm.Any', false);
     /**
      * Representation of the [[AirportLocation.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.address = new core_1.EdmField('Address', _this, 'Edm.String', false);
+    _this.address = new core_1.EdmTypeField(
+      'Address',
+      _this,
+      'Edm.String',
+      false
+    );
     /**
      * Representation of the [[AirportLocation.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

@@ -2,7 +2,7 @@ import { City, CityField } from './City';
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmField,
+  EdmTypeField,
   EntityV4,
   FieldType,
   PropertyMetadata
@@ -36,7 +36,7 @@ export declare class LocationField<
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmField<EntityT, 'Edm.String', false>;
+  address: EdmTypeField<EntityT, 'Edm.String', false>;
   /**
    * Representation of the [[Location.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

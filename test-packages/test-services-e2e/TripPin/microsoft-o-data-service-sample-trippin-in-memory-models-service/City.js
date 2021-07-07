@@ -66,7 +66,7 @@ var CityField = /** @class */ (function (_super) {
      * Representation of the [[City.countryRegion]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.countryRegion = new core_1.EdmField(
+    _this.countryRegion = new core_1.EdmTypeField(
       'CountryRegion',
       _this,
       'Edm.String',
@@ -76,12 +76,17 @@ var CityField = /** @class */ (function (_super) {
      * Representation of the [[City.name]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.name = new core_1.EdmField('Name', _this, 'Edm.String', false);
+    _this.name = new core_1.EdmTypeField('Name', _this, 'Edm.String', false);
     /**
      * Representation of the [[City.region]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.region = new core_1.EdmField('Region', _this, 'Edm.String', false);
+    _this.region = new core_1.EdmTypeField(
+      'Region',
+      _this,
+      'Edm.String',
+      false
+    );
     return _this;
   }
   return CityField;

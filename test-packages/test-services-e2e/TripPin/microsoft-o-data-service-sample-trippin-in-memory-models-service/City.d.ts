@@ -1,7 +1,7 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmField,
+  EdmTypeField,
   EntityV4,
   FieldType,
   PropertyMetadata
@@ -39,17 +39,17 @@ export declare class CityField<
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: EdmField<EntityT, 'Edm.String', false>;
+  countryRegion: EdmTypeField<EntityT, 'Edm.String', false>;
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: EdmField<EntityT, 'Edm.String', false>;
+  name: EdmTypeField<EntityT, 'Edm.String', false>;
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: EdmField<EntityT, 'Edm.String', false>;
+  region: EdmTypeField<EntityT, 'Edm.String', false>;
   /**
    * Creates an instance of CityField.
    *

@@ -65,7 +65,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.stringProperty = new core_1.EdmField(
+    _this.stringProperty = new core_1.EdmTypeField(
       'StringProperty',
       _this,
       'Edm.String',
@@ -75,7 +75,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.booleanProperty = new core_1.EdmField(
+    _this.booleanProperty = new core_1.EdmTypeField(
       'BooleanProperty',
       _this,
       'Edm.Boolean',
@@ -85,7 +85,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.guidProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.guidProperty = new core_1.EdmField(
+    _this.guidProperty = new core_1.EdmTypeField(
       'GuidProperty',
       _this,
       'Edm.Guid',
@@ -215,7 +215,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.somethingTheSdkDoesNotSupport = new core_1.EdmField(
+    _this.somethingTheSdkDoesNotSupport = new core_1.EdmTypeField(
       'SomethingTheSDKDoesNotSupport',
       _this,
       'Edm.Any',

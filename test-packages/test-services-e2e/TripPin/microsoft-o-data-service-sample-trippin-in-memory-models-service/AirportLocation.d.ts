@@ -2,7 +2,7 @@ import { City, CityField } from './City';
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmField,
+  EdmTypeField,
   EntityV4,
   FieldType,
   PropertyMetadata
@@ -40,12 +40,12 @@ export declare class AirportLocationField<
    * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  loc: EdmField<EntityT, 'Edm.Any', false>;
+  loc: EdmTypeField<EntityT, 'Edm.Any', false>;
   /**
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmField<EntityT, 'Edm.String', false>;
+  address: EdmTypeField<EntityT, 'Edm.String', false>;
   /**
    * Representation of the [[AirportLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

@@ -70,7 +70,7 @@ var EventLocationField = /** @class */ (function (_super) {
      * Representation of the [[EventLocation.buildingInfo]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.buildingInfo = new core_1.EdmField(
+    _this.buildingInfo = new core_1.EdmTypeField(
       'BuildingInfo',
       _this,
       'Edm.String',
@@ -80,7 +80,12 @@ var EventLocationField = /** @class */ (function (_super) {
      * Representation of the [[EventLocation.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.address = new core_1.EdmField('Address', _this, 'Edm.String', false);
+    _this.address = new core_1.EdmTypeField(
+      'Address',
+      _this,
+      'Edm.String',
+      false
+    );
     /**
      * Representation of the [[EventLocation.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

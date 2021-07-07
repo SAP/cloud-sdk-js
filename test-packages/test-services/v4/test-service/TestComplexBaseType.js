@@ -70,7 +70,7 @@ var TestComplexBaseTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.baseStringProperty = new core_1.EdmField(
+    _this.baseStringProperty = new core_1.EdmTypeField(
       'BaseStringProperty',
       _this,
       'Edm.String',

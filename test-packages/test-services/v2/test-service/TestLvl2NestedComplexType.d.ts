@@ -1,7 +1,7 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmField,
+  EdmTypeField,
   EntityV2,
   FieldType,
   PropertyMetadata
@@ -34,7 +34,7 @@ export declare class TestLvl2NestedComplexTypeField<
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmField<EntityT, 'Edm.String', true>;
+  stringProperty: EdmTypeField<EntityT, 'Edm.String', true>;
   /**
    * Creates an instance of TestLvl2NestedComplexTypeField.
    *

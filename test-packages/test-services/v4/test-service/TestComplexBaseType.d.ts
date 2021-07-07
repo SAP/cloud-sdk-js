@@ -1,7 +1,7 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmField,
+  EdmTypeField,
   EntityV4,
   FieldType,
   PropertyMetadata
@@ -34,7 +34,7 @@ export declare class TestComplexBaseTypeField<
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: EdmField<EntityT, 'Edm.String', true>;
+  baseStringProperty: EdmTypeField<EntityT, 'Edm.String', true>;
   /**
    * Creates an instance of TestComplexBaseTypeField.
    *

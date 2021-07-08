@@ -8,18 +8,18 @@ export class CustomField<
   EntityT extends Entity,
   NullableT extends boolean = false
 > extends CustomFieldBase<EntityT, NullableT> {
-  edmDateTime(): EdmTypeClassByType<EntityT, 'Edm.DateTime', NullableT> {
+  edmDateTime(): EdmTypeClassByType<EntityT, 'Edm.DateTime', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.DateTime',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
-  edmTime(): EdmTypeClassByType<EntityT, 'Edm.Time', NullableT> {
+  edmTime(): EdmTypeClassByType<EntityT, 'Edm.Time', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Time',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 }

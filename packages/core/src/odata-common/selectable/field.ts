@@ -65,19 +65,21 @@ export class Field<
 > implements EntityIdentifiable<EntityT>
 {
   readonly _entity: EntityT;
+  // readonly selectable: SelectableT;
+  readonly _fieldOptions: FieldOptions<NullableT, SelectableT>;
   /**
    * Creates an instance of Field.
    *
    * @param _fieldName - Actual name of the field used in the OData request
-   * @param _isNullable - Whether the field can have the value `null`.
    * @param _entityConstructor - Constructor type of the entity the field belongs to
+   * @param fieldOptions - Optional settings for this field.
    */
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>,
-    readonly _fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    this._fieldOptions = getFieldOptions(_fieldOptions);
+    this._fieldOptions = getFieldOptions(fieldOptions);
   }
 
   /**

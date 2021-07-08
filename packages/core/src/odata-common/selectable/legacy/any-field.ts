@@ -8,7 +8,6 @@ import {
   getEntityConstructor
 } from '../complex-type-field';
 import { ConstructorOrField } from '../constructor-or-field';
-import { SelectableField } from '../selectable';
 import { EdmTypeField } from '../edm-type-field';
 
 /**
@@ -17,7 +16,7 @@ import { EdmTypeField } from '../edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class AnyFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, any> {}
+class AnyFieldBase<EntityT extends Entity, SelectableT extends boolean = false> extends EdmTypeField<EntityT, any, false, SelectableT> {}
 
 /**
  * @deprecated Since v1.27.0. Use [[XY]] instead.
@@ -25,12 +24,10 @@ class AnyFieldBase<EntityT extends Entity> extends EdmTypeField<EntityT, any> {}
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class AnyField<EntityT extends Entity>
-  extends AnyFieldBase<EntityT>
-  implements SelectableField
-{
-  readonly selectable: true;
-}
+export class AnyField<EntityT extends Entity> extends AnyFieldBase<
+  EntityT,
+  true
+> {}
 
 /**
  * @deprecated Since v1.27.0. Use [[XY]] instead.

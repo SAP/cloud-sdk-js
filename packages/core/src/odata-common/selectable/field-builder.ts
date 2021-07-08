@@ -9,14 +9,9 @@ import {
   isSortableEdmType,
   SortableEdmType
 } from './edm-type-field';
-import { OrderableEdmField } from './orderable-edm-field';
+import { OrderableEdmTypeField } from './orderable-edm-type-field';
 import { CollectionField, CollectionFieldType } from './collection-field';
-import { AllFields } from './all-fields';
 import { ConstructorOrField } from './constructor-or-field';
-import {
-  SelectableEdmField,
-  SelectableOrderableEdmField
-} from './selectable-edm-field';
 
 type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<EntityT, any, NullableT>,
@@ -28,8 +23,14 @@ type ComplexTypeFieldConstructor<
   isNullable: NullableT
 ) => ComplexTypeFieldT;
 
-export class FieldBuilder<EntityT extends Entity> {
-  constructor(private fieldOf: ConstructorOrField<EntityT>) {}
+type EdmFieldSelectable<FieldOfT extends ConstructorOrField<any>> =
+  FieldOfT extends ComplexTypeField<any> ? false : true;
+
+export class FieldBuilder<
+  EntityT extends Entity,
+  FieldOfT extends ConstructorOrField<EntityT>
+> {
+  constructor(public fieldOf: FieldOfT) {}
 
   buildEdmTypeField<
     EdmT extends EdmTypeShared<'any'>,
@@ -38,11 +39,22 @@ export class FieldBuilder<EntityT extends Entity> {
     fieldName: string,
     edmType: EdmTypeForEdmOrFieldType<EdmT>,
     isNullable: NullableT
-  ): EdmTypeClassByType<EntityT, EdmT, NullableT> {
-    if (this.fieldOf instanceof ComplexTypeField) {
-      return this.buildComplexTypeEdmTypeField(fieldName, edmType, isNullable);
-    }
-    return this.buildEntityEdmTypeField(fieldName, edmType, isNullable);
+  ): EdmTypeClassByType<
+    EntityT,
+    EdmT,
+    NullableT,
+    EdmFieldSelectable<FieldOfT>
+  > {
+    return (
+      this.fieldOf instanceof ComplexTypeField
+        ? this.buildComplexTypeEdmTypeField(fieldName, edmType, isNullable)
+        : this.buildEntityEdmTypeField(fieldName, edmType, isNullable)
+    ) as EdmTypeClassByType<
+      EntityT,
+      EdmT,
+      NullableT,
+      EdmFieldSelectable<FieldOfT>
+    >;
   }
 
   buildComplexTypeField<
@@ -76,10 +88,6 @@ export class FieldBuilder<EntityT extends Entity> {
     );
   }
 
-  buildAllFieldsField(): AllFields<EntityT> {
-    return new AllFields('*', this.fieldOf as any); // TODO
-  }
-
   private buildEntityEdmTypeField<
     EdmT extends EdmTypeShared<'any'>,
     NullableT extends boolean
@@ -87,21 +95,17 @@ export class FieldBuilder<EntityT extends Entity> {
     fieldName: string,
     edmType: EdmTypeForEdmOrFieldType<EdmT>,
     isNullable: NullableT
-  ): EdmTypeClassByType<EntityT, EdmT, NullableT> {
+  ): EdmTypeClassByType<EntityT, EdmT, NullableT, true> {
     if (isSortableEdmType(edmType)) {
-      return new SelectableOrderableEdmField(
-        fieldName,
-        this.fieldOf,
-        edmType,
-        isNullable
-      ) as EdmTypeClassByType<EntityT, EdmT, NullableT>;
+      return new OrderableEdmTypeField(fieldName, this.fieldOf, edmType, {
+        isNullable,
+        isSelectable: true
+      }) as EdmTypeClassByType<EntityT, EdmT, NullableT, true>;
     }
-    return new SelectableEdmField(
-      fieldName,
-      this.fieldOf,
-      edmType,
-      isNullable
-    ) as EdmTypeClassByType<EntityT, EdmT, NullableT>;
+    return new EdmTypeField(fieldName, this.fieldOf, edmType, {
+      isNullable,
+      isSelectable: true
+    }) as EdmTypeClassByType<EntityT, EdmT, NullableT, true>;
   }
 
   private buildComplexTypeEdmTypeField<
@@ -111,32 +115,29 @@ export class FieldBuilder<EntityT extends Entity> {
     fieldName: string,
     edmType: EdmTypeForEdmOrFieldType<EdmT>,
     isNullable: NullableT
-  ): EdmTypeClassByType<EntityT, EdmT, NullableT> {
+  ): EdmTypeClassByType<EntityT, EdmT, NullableT, false> {
     if (isSortableEdmType(edmType)) {
-      return new OrderableEdmField(
-        fieldName,
-        this.fieldOf,
-        edmType,
-        isNullable
-      ) as EdmTypeClassByType<EntityT, EdmT, NullableT>;
+      return new OrderableEdmTypeField(fieldName, this.fieldOf, edmType, {
+        isNullable,
+        isSelectable: false
+      }) as EdmTypeClassByType<EntityT, EdmT, NullableT, false>;
     }
-    return new EdmTypeField(
-      fieldName,
-      this.fieldOf,
-      edmType,
-      isNullable
-    ) as EdmTypeClassByType<EntityT, EdmT, NullableT>;
+    return new EdmTypeField(fieldName, this.fieldOf, edmType, {
+      isNullable,
+      isSelectable: false
+    }) as EdmTypeClassByType<EntityT, EdmT, NullableT, false>;
   }
 }
 
 export type EdmTypeClassByType<
   EntityT extends Entity,
   EdmT extends EdmTypeShared<'any'>,
-  NullableT extends boolean
+  NullableT extends boolean,
+  SelectableT extends boolean
 > = EntityT extends Entity
   ? EdmT extends SortableEdmType
-    ? SelectableOrderableEdmField<EntityT, EdmT, NullableT>
-    : SelectableEdmField<EntityT, EdmT, NullableT>
+    ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
+    : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>
   : EdmT extends SortableEdmType
-  ? OrderableEdmField<EntityT, EdmT, NullableT>
-  : EdmTypeField<EntityT, EdmT, NullableT>;
+  ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
+  : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>;

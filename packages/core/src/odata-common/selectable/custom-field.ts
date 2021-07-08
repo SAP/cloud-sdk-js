@@ -6,121 +6,122 @@ export class CustomField<
   EntityT extends Entity,
   NullableT extends boolean = false
 > extends Field<EntityT, NullableT> {
-  protected fieldBuilder: FieldBuilder<EntityT>;
+  protected fieldBuilder: FieldBuilder<EntityT, Constructable<EntityT>>;
   constructor(
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
     isNullable: NullableT = false as NullableT
   ) {
-    super(fieldName, entityConstructor, isNullable);
+    super(fieldName, entityConstructor, { isNullable });
     this.fieldBuilder = new FieldBuilder(entityConstructor);
   }
 
-  edmString(): EdmTypeClassByType<EntityT, 'Edm.String', NullableT> {
+  edmString(): EdmTypeClassByType<EntityT, 'Edm.String', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.String',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmBoolean(): EdmTypeClassByType<EntityT, 'Edm.Boolean', NullableT> {
+  edmBoolean(): EdmTypeClassByType<EntityT, 'Edm.Boolean', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Boolean',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmGuid(): EdmTypeClassByType<EntityT, 'Edm.Guid', NullableT> {
+  edmGuid(): EdmTypeClassByType<EntityT, 'Edm.Guid', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Guid',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmDecimal(): EdmTypeClassByType<EntityT, 'Edm.Decimal', NullableT> {
+  edmDecimal(): EdmTypeClassByType<EntityT, 'Edm.Decimal', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Decimal',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmInt16(): EdmTypeClassByType<EntityT, 'Edm.Int16', NullableT> {
+  edmInt16(): EdmTypeClassByType<EntityT, 'Edm.Int16', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Int16',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmInt32(): EdmTypeClassByType<EntityT, 'Edm.Int32', NullableT> {
+  edmInt32(): EdmTypeClassByType<EntityT, 'Edm.Int32', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Int32',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmInt64(): EdmTypeClassByType<EntityT, 'Edm.Int64', NullableT> {
+  edmInt64(): EdmTypeClassByType<EntityT, 'Edm.Int64', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Int64',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmSingle(): EdmTypeClassByType<EntityT, 'Edm.Single', NullableT> {
+  edmSingle(): EdmTypeClassByType<EntityT, 'Edm.Single', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Single',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmDouble(): EdmTypeClassByType<EntityT, 'Edm.Double', NullableT> {
+  edmDouble(): EdmTypeClassByType<EntityT, 'Edm.Double', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Double',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmByte(): EdmTypeClassByType<EntityT, 'Edm.Byte', NullableT> {
+  edmByte(): EdmTypeClassByType<EntityT, 'Edm.Byte', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Byte',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmSByte(): EdmTypeClassByType<EntityT, 'Edm.SByte', NullableT> {
+  edmSByte(): EdmTypeClassByType<EntityT, 'Edm.SByte', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.SByte',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
   edmDateTimeOffset(): EdmTypeClassByType<
     EntityT,
     'Edm.DateTimeOffset',
-    NullableT
+    NullableT,
+    true
   > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.DateTimeOffset',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 
-  edmBinary(): EdmTypeClassByType<EntityT, 'Edm.Binary', NullableT> {
+  edmBinary(): EdmTypeClassByType<EntityT, 'Edm.Binary', NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Binary',
-      this._isNullable
+      this._fieldOptions.isNullable
     );
   }
 }

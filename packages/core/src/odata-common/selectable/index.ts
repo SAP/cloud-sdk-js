@@ -13,7 +13,6 @@ export * from './legacy';
 export * from './link';
 export * from './one-to-one-link';
 export * from './one-to-many-link';
-export * from './orderable-edm-field';
+export * from './orderable-edm-type-field';
 export * from './selectable';
-export * from './selectable-edm-field';
 export * from './simple-type-fields';

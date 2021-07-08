@@ -25,17 +25,12 @@ export type Selectable<EntityT extends Entity> =
     : never;
 
 /**
- * Interface to denote a selectable [[Field]].
+ * @deprecated Since v1.27.0. This will not be replaced. Use the generic `SelectableT` parameter of Fields instead.
+ * Interface denoting a selectable [[EdmTypeField]].
  */
-export interface SelectableField {
+export interface SelectableEdmTypeField {
   /**
    * This property denotes that this is a selectable field.
    */
   selectable: true;
 }
-
-/**
- * @deprecated Since v1.27.0. Use [[SelectableField]] instead.
- * Interface denoting a selectable [[EdmTypeField]].
- */
-export type SelectableEdmTypeField = SelectableField;

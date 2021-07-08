@@ -1,4 +1,5 @@
 import { Entity } from '../entity';
+import { EdmTypeField } from './edm-type-field';
 import {
   AnyField,
   BigNumberField,
@@ -9,17 +10,14 @@ import {
   StringField,
   TimeField
 } from './legacy';
-import {
-  SelectableEdmField,
-  SelectableOrderableEdmField
-} from './selectable-edm-field';
+import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 /**
  * @hidden
  */
 export type SimpleTypeFields<EntityT extends Entity> =
-  | SelectableEdmField<EntityT, any, boolean>
-  | SelectableOrderableEdmField<EntityT, any, boolean>
+  | EdmTypeField<EntityT, any, boolean, true>
+  | OrderableEdmTypeField<EntityT, any, boolean, true>
   | BigNumberField<EntityT>
   | BinaryField<EntityT>
   | BooleanField<EntityT>

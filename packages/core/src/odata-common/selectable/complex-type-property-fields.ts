@@ -9,14 +9,14 @@ import {
   ComplexTypeStringPropertyField,
   ComplexTypeTimePropertyField
 } from './legacy';
-import { OrderableEdmField } from './orderable-edm-field';
+import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 /**
  * @hidden
  */
 export type ComplexTypePropertyFields<EntityT extends Entity, ComplexT> =
-  | EdmTypeField<EntityT, any, boolean>
-  | OrderableEdmField<EntityT, any, boolean>
+  | EdmTypeField<EntityT, any, boolean, false>
+  | OrderableEdmTypeField<EntityT, any, boolean, false>
   | ComplexTypeBigNumberPropertyField<EntityT, ComplexT>
   | ComplexTypeBinaryPropertyField<EntityT, ComplexT>
   | ComplexTypeBooleanPropertyField<EntityT, ComplexT>

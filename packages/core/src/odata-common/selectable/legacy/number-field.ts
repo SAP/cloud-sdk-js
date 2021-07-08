@@ -9,7 +9,6 @@ import {
   getEntityConstructor
 } from '../complex-type-field';
 import { ConstructorOrField } from '../constructor-or-field';
-import { SelectableField } from '../selectable';
 import { EdmTypeField } from '../edm-type-field';
 
 /**
@@ -18,10 +17,10 @@ import { EdmTypeField } from '../edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class NumberFieldBase<EntityT extends Entity> extends EdmTypeField<
-  EntityT,
-  number
-> {
+export class NumberFieldBase<
+  EntityT extends Entity,
+  SelectableT extends boolean = false
+> extends EdmTypeField<EntityT, number, false, SelectableT> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    *
@@ -69,12 +68,10 @@ export class NumberFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class NumberField<EntityT extends Entity>
-  extends NumberFieldBase<EntityT>
-  implements SelectableField
-{
-  readonly selectable: true;
-}
+export class NumberField<EntityT extends Entity> extends NumberFieldBase<
+  EntityT,
+  true
+> {}
 
 /**
  * @deprecated Since v1.27.0. Use [[XY]] instead.

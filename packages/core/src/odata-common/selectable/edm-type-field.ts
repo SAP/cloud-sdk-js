@@ -142,7 +142,7 @@ export class EdmTypeField<
    * @param fieldName - Actual name of the field used in the OData request.
    * @param _fieldOf - Constructor type of the entity the field belongs to.
    * @param edmType - Type of the field according to the metadata description.
-   * @param isNullable - Whether the field can have the value `null`.
+   * @param fieldOptions - Optional settings for this field.
    */
   constructor(
     fieldName: string,

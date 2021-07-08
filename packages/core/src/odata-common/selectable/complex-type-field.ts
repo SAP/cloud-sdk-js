@@ -41,6 +41,21 @@ export abstract class ComplexTypeField<
   readonly _complexType: ComplexTypeNamespace<ComplexT>;
 
   /**
+   * @deprecated Since v1.19.0.
+   *
+   * Creates an instance of ComplexTypeField.
+   *
+   * @param fieldName - Actual name of the field as used in the OData request.
+   * @param entityConstructor - Constructor type of the entity the field belongs to.
+   * @param complexTypeName - Name of the type of the field according to the metadata description.
+   */
+  constructor(
+    fieldName: string,
+    entityConstructor: Constructable<EntityT>,
+    complexTypeName: string
+  );
+
+  /**
    * @deprecated Since v1.27.0. Use other constructors instead.
    * Creates an instance of ComplexTypeField.
    *
@@ -57,28 +72,14 @@ export abstract class ComplexTypeField<
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    * @param complexType - The complex type of the complex type property represented by this.
-   * @param isNullable - Whether the field can have the value `null`.
+   * @param fieldOptions - Optional settings for this field.
    */
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
     complexType: ComplexTypeNamespace<ComplexT>,
+    // eslint-disable-next-line @typescript-eslint/unified-signatures
     fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
-  );
-
-  /**
-   * @deprecated Since v1.19.0.
-   *
-   * Creates an instance of ComplexTypeField.
-   *
-   * @param fieldName - Actual name of the field as used in the OData request.
-   * @param entityConstructor - Constructor type of the entity the field belongs to.
-   * @param complexTypeName - Name of the type of the field according to the metadata description.
-   */
-  constructor(
-    fieldName: string,
-    entityConstructor: Constructable<EntityT>,
-    complexTypeName: string
   );
 
   /**
@@ -87,7 +88,7 @@ export abstract class ComplexTypeField<
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    * @param complexTypeOrName - The complex type of the complex type property represented by this or the name of the type of the field according to the metadata description. Using the name here is deprecated.
-   * @param isNullable - Whether the field can have the value `null`.
+   * @param fieldOptions - Optional settings for this field.
    */
   constructor(
     fieldName: string,

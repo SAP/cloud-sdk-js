@@ -18,10 +18,10 @@ import { EdmTypeField } from '../edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class DurtionFieldBase<EntityT extends Entity> extends EdmTypeField<
-  EntityT,
-  moment.Duration
-> {
+export class DurtionFieldBase<
+  EntityT extends Entity,
+  SelectableT extends boolean = false
+> extends EdmTypeField<EntityT, moment.Duration, false, SelectableT> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    *
@@ -69,11 +69,10 @@ export class DurtionFieldBase<EntityT extends Entity> extends EdmTypeField<
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class DurationField<
-  EntityT extends Entity
-> extends DurtionFieldBase<EntityT> {
-  readonly selectable: true;
-}
+export class DurationField<EntityT extends Entity> extends DurtionFieldBase<
+  EntityT,
+  true
+> {}
 
 /**
  * @deprecated Since v1.27.0. Use [[XY]] instead.

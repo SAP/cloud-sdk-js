@@ -15,7 +15,7 @@ import {
   EdmTypeField,
   EntityV2,
   FieldType,
-  OrderableEdmField,
+  OrderableEdmTypeField,
   PropertyMetadata,
   Time,
   deserializeComplexTypeV2
@@ -156,65 +156,65 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int16Property: OrderableEdmField<EntityT, 'Edm.Int16', true> =
-    new OrderableEdmField('Int16Property', this, 'Edm.Int16', true);
+  int16Property: OrderableEdmTypeField<EntityT, 'Edm.Int16', true> =
+    new OrderableEdmTypeField('Int16Property', this, 'Edm.Int16', true);
   /**
    * Representation of the [[TestComplexType.int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int32Property: OrderableEdmField<EntityT, 'Edm.Int32', true> =
-    new OrderableEdmField('Int32Property', this, 'Edm.Int32', true);
+  int32Property: OrderableEdmTypeField<EntityT, 'Edm.Int32', true> =
+    new OrderableEdmTypeField('Int32Property', this, 'Edm.Int32', true);
   /**
    * Representation of the [[TestComplexType.int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int64Property: OrderableEdmField<EntityT, 'Edm.Int64', true> =
-    new OrderableEdmField('Int64Property', this, 'Edm.Int64', true);
+  int64Property: OrderableEdmTypeField<EntityT, 'Edm.Int64', true> =
+    new OrderableEdmTypeField('Int64Property', this, 'Edm.Int64', true);
   /**
    * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  decimalProperty: OrderableEdmField<EntityT, 'Edm.Decimal', true> =
-    new OrderableEdmField('DecimalProperty', this, 'Edm.Decimal', true);
+  decimalProperty: OrderableEdmTypeField<EntityT, 'Edm.Decimal', true> =
+    new OrderableEdmTypeField('DecimalProperty', this, 'Edm.Decimal', true);
   /**
    * Representation of the [[TestComplexType.singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  singleProperty: OrderableEdmField<EntityT, 'Edm.Single', true> =
-    new OrderableEdmField('SingleProperty', this, 'Edm.Single', true);
+  singleProperty: OrderableEdmTypeField<EntityT, 'Edm.Single', true> =
+    new OrderableEdmTypeField('SingleProperty', this, 'Edm.Single', true);
   /**
    * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  doubleProperty: OrderableEdmField<EntityT, 'Edm.Double', true> =
-    new OrderableEdmField('DoubleProperty', this, 'Edm.Double', true);
+  doubleProperty: OrderableEdmTypeField<EntityT, 'Edm.Double', true> =
+    new OrderableEdmTypeField('DoubleProperty', this, 'Edm.Double', true);
   /**
    * Representation of the [[TestComplexType.floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  floatProperty: OrderableEdmField<EntityT, 'Edm.Float', true> =
-    new OrderableEdmField('FloatProperty', this, 'Edm.Float', true);
+  floatProperty: OrderableEdmTypeField<EntityT, 'Edm.Float', true> =
+    new OrderableEdmTypeField('FloatProperty', this, 'Edm.Float', true);
   /**
    * Representation of the [[TestComplexType.timeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeProperty: OrderableEdmField<EntityT, 'Edm.Time', true> =
-    new OrderableEdmField('TimeProperty', this, 'Edm.Time', true);
+  timeProperty: OrderableEdmTypeField<EntityT, 'Edm.Time', true> =
+    new OrderableEdmTypeField('TimeProperty', this, 'Edm.Time', true);
   /**
    * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeProperty: OrderableEdmField<EntityT, 'Edm.DateTime', true> =
-    new OrderableEdmField('DateTimeProperty', this, 'Edm.DateTime', true);
+  dateTimeProperty: OrderableEdmTypeField<EntityT, 'Edm.DateTime', true> =
+    new OrderableEdmTypeField('DateTimeProperty', this, 'Edm.DateTime', true);
   /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeOffSetProperty: OrderableEdmField<
+  dateTimeOffSetProperty: OrderableEdmTypeField<
     EntityT,
     'Edm.DateTimeOffset',
     true
-  > = new OrderableEdmField(
+  > = new OrderableEdmTypeField(
     'DateTimeOffSetProperty',
     this,
     'Edm.DateTimeOffset',
@@ -224,14 +224,14 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  byteProperty: OrderableEdmField<EntityT, 'Edm.Byte', true> =
-    new OrderableEdmField('ByteProperty', this, 'Edm.Byte', true);
+  byteProperty: OrderableEdmTypeField<EntityT, 'Edm.Byte', true> =
+    new OrderableEdmTypeField('ByteProperty', this, 'Edm.Byte', true);
   /**
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  sByteProperty: OrderableEdmField<EntityT, 'Edm.SByte', true> =
-    new OrderableEdmField('SByteProperty', this, 'Edm.SByte', true);
+  sByteProperty: OrderableEdmTypeField<EntityT, 'Edm.SByte', true> =
+    new OrderableEdmTypeField('SByteProperty', this, 'Edm.SByte', true);
   /**
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.

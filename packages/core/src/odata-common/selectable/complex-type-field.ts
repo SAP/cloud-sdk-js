@@ -1,7 +1,7 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { EdmTypeShared, isEdmType } from '../edm-types';
 import { Constructable, Entity } from '../entity';
-import { Field } from './field';
+import { Field, FieldOptions } from './field';
 import {
   isComplexTypeNameSpace,
   ComplexTypeNamespace
@@ -25,8 +25,9 @@ import type { ConstructorOrField } from './constructor-or-field';
 export abstract class ComplexTypeField<
   EntityT extends Entity,
   ComplexT = any,
-  NullableT extends boolean = false
-> extends Field<EntityT, NullableT> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends Field<EntityT, NullableT, SelectableT> {
   /**
    * @hidden
    * Note that this property is crucial, although not really used.
@@ -62,7 +63,7 @@ export abstract class ComplexTypeField<
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
     complexType: ComplexTypeNamespace<ComplexT>,
-    isNullable?: NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   );
 
   /**
@@ -92,9 +93,9 @@ export abstract class ComplexTypeField<
     fieldName: string,
     readonly fieldOf: ConstructorOrField<EntityT, ComplexT>,
     complexTypeOrName?: ComplexTypeNamespace<ComplexT> | string,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, getEntityConstructor(fieldOf), isNullable);
+    super(fieldName, getEntityConstructor(fieldOf), fieldOptions);
     if (typeof complexTypeOrName === 'string') {
       this.complexTypeName = complexTypeOrName;
     } else if (isComplexTypeNameSpace(complexTypeOrName)) {

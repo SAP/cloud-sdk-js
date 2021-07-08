@@ -6,7 +6,7 @@ import { Filter } from '../filter';
 import { Time } from '../time';
 import { getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
-import { Field, FieldType } from './field';
+import { Field, FieldOptions, FieldType } from './field';
 
 export type SortableEdmType =
   | 'Edm.Decimal'
@@ -133,8 +133,9 @@ export type EdmTypeForEdmOrFieldType<
 export class EdmTypeField<
   EntityT extends Entity,
   EdmOrFieldT extends EdmTypeShared<'any'> | FieldType,
-  NullableT extends boolean = false
-> extends Field<EntityT, NullableT> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends Field<EntityT, NullableT, SelectableT> {
   /**
    * Creates an instance of EdmTypeField.
    *
@@ -147,9 +148,9 @@ export class EdmTypeField<
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
     readonly edmType: EdmTypeForEdmOrFieldType<EdmOrFieldT>,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, getEntityConstructor(_fieldOf), isNullable);
+    super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
   }
 
   /**

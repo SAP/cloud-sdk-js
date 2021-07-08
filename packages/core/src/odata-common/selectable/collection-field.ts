@@ -1,7 +1,7 @@
 import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
 import { SelectableField } from './selectable';
-import { Field } from './field';
+import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { getEntityConstructor } from './complex-type-field';
 import { ComplexTypeNamespace } from './complex-type-namespace';
@@ -9,9 +9,10 @@ import { ComplexTypeNamespace } from './complex-type-namespace';
 export class CollectionField<
     EntityT extends Entity,
     CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any> = any,
-    NullableT extends boolean = false
+    NullableT extends boolean = false,
+    SelectableT extends boolean = false
   >
-  extends Field<EntityT, NullableT>
+  extends Field<EntityT, NullableT, SelectableT>
   implements SelectableField
 {
   readonly selectable: true;
@@ -29,14 +30,15 @@ export class CollectionField<
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
     readonly _fieldType: CollectionFieldType<CollectionFieldT>,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, getEntityConstructor(fieldOf), isNullable);
+    super(fieldName, getEntityConstructor(fieldOf), fieldOptions);
   }
 }
 
 export type CollectionFieldType<
   CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any>
-> = CollectionFieldT extends EdmTypeShared<'any'>
-  ? CollectionFieldT
-  : ComplexTypeNamespace<CollectionFieldT>;
+> = CollectionFieldT | ComplexTypeNamespace<CollectionFieldT>;
+// CollectionFieldT extends EdmTypeShared<'any'>
+//   ? CollectionFieldT
+//   : ComplexTypeNamespace<CollectionFieldT>;

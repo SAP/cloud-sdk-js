@@ -23,6 +23,29 @@ export type FieldType =
  */
 export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
 
+export interface FieldOptions<
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> {
+  isNullable: NullableT;
+  isSelectable: SelectableT;
+}
+
+export function getFieldOptions<
+  T1 extends boolean = false,
+  T2 extends boolean = false
+>(fieldOptions?: Partial<FieldOptions<T1, T2>>): FieldOptions<T1, T2> {
+  return { ...defaultFieldOptions, ...fieldOptions } as FieldOptions<T1, T2>;
+}
+
+const defaultFieldOptions: FieldOptions = {
+  isNullable: false,
+  isSelectable: false
+};
+
+export type FO<T extends FieldOptions<boolean, boolean>> =
+  T extends FieldOptions<infer T1, infer T2> ? FieldOptions<T1, T2> : never;
+
 /**
  * Abstract representation a property of an OData entity.
  *
@@ -35,9 +58,10 @@ export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 
-export abstract class Field<
+export class Field<
   EntityT extends Entity,
-  NullableT extends boolean = false
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
 > implements EntityIdentifiable<EntityT>
 {
   readonly _entity: EntityT;
@@ -51,8 +75,10 @@ export abstract class Field<
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>,
-    readonly _isNullable: NullableT = false as NullableT
-  ) {}
+    readonly _fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+  ) {
+    this._fieldOptions = getFieldOptions(_fieldOptions);
+  }
 
   /**
    * Path to the field to be used in filter and order by queries. In most cases this will just be the [[_fieldName]] itself. However, for complex types for instance, the path is prefixed with the name of the complextype.

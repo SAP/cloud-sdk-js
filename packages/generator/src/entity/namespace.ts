@@ -49,9 +49,9 @@ function fieldBuilderInitializer(
     declarationKind: VariableDeclarationKind.Const,
     declarations: [
       {
-        name: 'fb',
+        name: '_fieldBuilder',
         type: `FieldBuilder<${entity.className}, Constructable<${entity.className}>>`,
-        initializer: `fieldBuilder(${entity.className})`
+        initializer: `new FieldBuilder(${entity.className})`
       }
     ],
     isExported: false
@@ -74,23 +74,23 @@ function getFieldInitializer(
 function createPropertyFieldInitializer(prop: VdmProperty): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
-      return `fb.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+      return `_fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
     if (prop.isEnum) {
-      return `fb.buildCollectionField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
+      return `_fieldBuilder.buildCollectionField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
     }
-    return `fb.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+    return `_fieldBuilder.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
   }
 
   if (prop.isComplex) {
-    return `fb.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
+    return `_fieldBuilder.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
   }
 
   if (prop.isEnum) {
-    return `fb.buildEdmTypeField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
+    return `_fieldBuilder.buildEdmTypeField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
   }
 
-  return `fb.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+  return `_fieldBuilder.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
 }
 
 function property(prop: VdmProperty): VariableStatementStructure {

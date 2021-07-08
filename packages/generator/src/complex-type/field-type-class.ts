@@ -26,9 +26,9 @@ export function fieldTypeClass(
       {
         kind: StructureKind.Property,
         scope: Scope.Private,
-        name: 'fb',
-        type: "FieldBuilder<EntityT, this['fieldOf']>",
-        initializer: 'fieldBuilder(this.fieldOf)',
+        name: '_fieldBuilder',
+        type: 'FieldBuilder<EntityT, this>',
+        initializer: 'new FieldBuilder(this)',
         docs: ['TODO']
       },
       ...properties(complexType)
@@ -85,15 +85,15 @@ function property(
 export function createPropertyFieldInitializer(prop: VdmProperty): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
-      return `this.fb.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+      return `this._fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
 
-    return `this.fb.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+    return `this._fieldBuilder.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
   }
 
   if (prop.isComplex) {
-    return `this.fb.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
+    return `this._fieldBuilder.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
   }
 
-  return `this.fb.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+  return `this._fieldBuilder.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
 }

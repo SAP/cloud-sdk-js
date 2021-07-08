@@ -25,7 +25,6 @@ export function importDeclarations(
         'ConstructorOrField',
         `deserializeComplexType${versionInCaps}`,
         `Entity${versionInCaps}`,
-        'fieldBuilder',
         'FieldBuilder',
         'FieldType',
         'FieldOptions',

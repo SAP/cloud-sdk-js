@@ -32,13 +32,6 @@ type ComplexTypeFieldConstructor<
 
 export type IsSelectableField<T> = T extends Constructable<any> ? true : false;
 
-export function fieldBuilder<
-  EntityT extends Entity,
-  FieldOfT extends ConstructorOrField<EntityT>
->(fieldOf: FieldOfT): FieldBuilder<EntityT, FieldOfT> {
-  return new FieldBuilder(fieldOf);
-}
-
 export class FieldBuilder<
   EntityT extends Entity,
   FieldOfT extends ConstructorOrField<EntityT>

@@ -16,8 +16,11 @@ import { Entity } from './entity';
  * @returns The newly created filter function
  */
 export function substringOf<EntityT extends Entity>(
-  substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
-  str: string | Field<EntityT> | StringFilterFunction<EntityT>
+  substr:
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
+  str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('substringof', 'boolean', substr, str);
 }
@@ -31,9 +34,18 @@ export function substringOf<EntityT extends Entity>(
  * @returns The newly created filter function
  */
 export function replace<EntityT extends Entity>(
-  str: string | Field<EntityT> | StringFilterFunction<EntityT>,
-  searchStr: string | Field<EntityT> | StringFilterFunction<EntityT>,
-  replaceStr: string | Field<EntityT> | StringFilterFunction<EntityT>
+  str:
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
+  searchStr:
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
+  replaceStr:
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('replace', 'string', str, searchStr, replaceStr);
 }

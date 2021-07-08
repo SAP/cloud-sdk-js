@@ -21,22 +21,6 @@ import {
   VdmServiceMetadata
 } from '../vdm-types';
 
-export function fieldBuilderInitializer(
-  entity: VdmEntity
-): VariableStatementStructure {
-  return {
-    kind: StructureKind.VariableStatement,
-    declarationKind: VariableDeclarationKind.Const,
-    declarations: [
-      {
-        name: 'fieldBuilder',
-        initializer: `new FieldBuilder(${entity.className})`
-      }
-    ],
-    isExported: false
-  };
-}
-
 export function entityNamespace(
   entity: VdmEntity,
   service: VdmServiceMetadata
@@ -46,6 +30,7 @@ export function entityNamespace(
     name: entity.className,
     isExported: true,
     statements: [
+      fieldBuilderInitializer(entity),
       ...properties(entity),
       ...navigationProperties(entity, service),
       allFields(entity, service),
@@ -53,6 +38,23 @@ export function entityNamespace(
       keyFields(entity),
       keys(entity)
     ]
+  };
+}
+
+function fieldBuilderInitializer(
+  entity: VdmEntity
+): VariableStatementStructure {
+  return {
+    kind: StructureKind.VariableStatement,
+    declarationKind: VariableDeclarationKind.Const,
+    declarations: [
+      {
+        name: 'fb',
+        type: `FieldBuilder<${entity.className}, Constructable<${entity.className}>>`,
+        initializer: `fieldBuilder(${entity.className})`
+      }
+    ],
+    isExported: false
   };
 }
 
@@ -72,23 +74,23 @@ function getFieldInitializer(
 function createPropertyFieldInitializer(prop: VdmProperty): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
-      return `fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+      return `fb.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
     if (prop.isEnum) {
-      return `fieldBuilder.buildCollectionField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
+      return `fb.buildCollectionField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
     }
-    return `fieldBuilder.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+    return `fb.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
   }
 
   if (prop.isComplex) {
-    return `fieldBuilder.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
+    return `fb.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
   }
 
   if (prop.isEnum) {
-    return `fieldBuilder.buildEdmTypeField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
+    return `fb.buildEdmTypeField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
   }
 
-  return `fieldBuilder.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+  return `fb.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
 }
 
 function property(prop: VdmProperty): VariableStatementStructure {
@@ -153,7 +155,7 @@ function allFields(
 ): VariableStatementStructure {
   const fieldTypes = unique([
     ...entity.properties.map(
-      p => `${p.fieldType}<${getGenericParameters(entity.className, p)}>`
+      p => `${p.fieldType}<${getGenericParameters(entity.className, p, true)}>`
     ),
     ...entity.navigationProperties.map(
       p =>
@@ -210,7 +212,7 @@ function keyFields(entity: VdmEntity): VariableStatementStructure {
     declarations: [
       {
         name: prependPrefix('keyFields'),
-        type: `Array<Field<${entity.className}>>`,
+        type: `Array<Field<${entity.className}, boolean, boolean>>`,
         initializer:
           '[' +
           entity.keys
@@ -233,12 +235,14 @@ function keys(entity: VdmEntity): VariableStatementStructure {
     declarations: [
       {
         name: prependPrefix('keys'),
-        type: `{[keys: string]: Field<${entity.className}>}`,
+        type: `{[keys: string]: Field<${entity.className}, boolean, boolean>}`,
         initializer: `${entity.className}.${prependPrefix(
           'keyFields'
         )}.reduce((acc: {[keys: string]: Field<${
           entity.className
-        }>}, field: Field<${entity.className}>) => {
+        }, boolean, boolean>}, field: Field<${
+          entity.className
+        }, boolean, boolean>) => {
           acc[field._fieldName] = field;
           return acc;
         }, {})`

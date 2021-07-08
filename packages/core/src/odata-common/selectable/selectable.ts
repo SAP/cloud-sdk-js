@@ -11,16 +11,16 @@ export type Selectable<EntityT extends Entity> =
     ?
         | SimpleTypeFields<EntityT>
         | Link<EntityT>
-        | ComplexTypeField<EntityT>
-        | CustomField<EntityT>
-        | CollectionField<EntityT>
+        | ComplexTypeField<EntityT, any, boolean, boolean>
+        | CustomField<EntityT, boolean>
+        | CollectionField<EntityT, any, boolean, boolean>
         | AllFields<EntityT>
     : ODataVersionOf<EntityT> extends 'v4'
     ?
         | SimpleTypeFields<EntityT>
-        | ComplexTypeField<EntityT>
-        | CustomField<EntityT>
-        | CollectionField<EntityT>
+        | ComplexTypeField<EntityT, any, boolean, boolean>
+        | CustomField<EntityT, boolean>
+        | CollectionField<EntityT, any, boolean, boolean>
         | AllFields<EntityT>
     : never;
 

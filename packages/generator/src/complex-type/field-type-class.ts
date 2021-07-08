@@ -2,6 +2,7 @@ import { unixEOL, caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   ClassDeclarationStructure,
   PropertyDeclarationStructure,
+  Scope,
   StructureKind
 } from 'ts-morph';
 import {
@@ -9,7 +10,6 @@ import {
   getComplexTypePropertyDescription
 } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
-import { getGenericParameters } from '../generator-utils';
 
 export function fieldTypeClass(
   complexType: VdmComplexType,
@@ -19,10 +19,20 @@ export function fieldTypeClass(
     kind: StructureKind.Class,
     name: `${complexType.fieldType}<EntityT extends Entity${caps(
       oDataVersion
-    )}, NullableT extends boolean = false>`,
-    extends: `ComplexTypeField<EntityT, ${complexType.typeName}>`,
+    )}, NullableT extends boolean = false, SelectableT extends boolean = false>`,
+    extends: `ComplexTypeField<EntityT, ${complexType.typeName}, NullableT, SelectableT>`,
     isExported: true,
-    properties: properties(complexType),
+    properties: [
+      {
+        kind: StructureKind.Property,
+        scope: Scope.Private,
+        name: 'fb',
+        type: "FieldBuilder<EntityT, this['fieldOf']>",
+        initializer: 'fieldBuilder(this.fieldOf)',
+        docs: ['TODO']
+      },
+      ...properties(complexType)
+    ],
     docs: [getComplexTypeFieldDescription(complexType)],
     ctors: [
       {
@@ -36,15 +46,17 @@ export function fieldTypeClass(
             type: 'ConstructorOrField<EntityT>'
           },
           {
-            name: 'isNullable',
-            type: 'NullableT',
-            initializer: 'false as NullableT'
+            name: 'fieldOptions',
+            type: 'Partial<FieldOptions<NullableT, SelectableT>>',
+            hasQuestionToken: true
           }
         ],
         docs: [
           `${unixEOL}Creates an instance of ${complexType.fieldType}.${unixEOL}${unixEOL}@param fieldName - Actual name of the field as used in the OData request.${unixEOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
         ],
-        statements: [`super(fieldName, fieldOf, ${complexType.typeName});`]
+        statements: [
+          `super(fieldName, fieldOf, ${complexType.typeName}, fieldOptions);`
+        ]
       }
     ]
   };
@@ -65,7 +77,6 @@ function property(
   return {
     kind: StructureKind.Property,
     name: prop.instancePropertyName,
-    type: `${prop.fieldType}<${getGenericParameters('EntityT', prop)}>`,
     initializer: createPropertyFieldInitializer(prop),
     docs: [getComplexTypePropertyDescription(prop, complexType.typeName)]
   };
@@ -74,15 +85,15 @@ function property(
 export function createPropertyFieldInitializer(prop: VdmProperty): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
-      return `new CollectionField('${prop.originalName}', this, ${prop.jsType}, ${prop.nullable})`;
+      return `this.fb.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
 
-    return `new CollectionField('${prop.originalName}', this, '${prop.edmType}', ${prop.nullable})`;
+    return `this.fb.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
   }
 
   if (prop.isComplex) {
-    return `new ${prop.fieldType}('${prop.originalName}',this, ${prop.nullable})`;
+    return `this.fb.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
   }
 
-  return `new ${prop.fieldType}('${prop.originalName}', this, '${prop.edmType}', ${prop.nullable})`;
+  return `this.fb.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
 }

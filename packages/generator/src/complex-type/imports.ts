@@ -3,7 +3,6 @@ import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   coreImportDeclaration,
-  corePropertyFieldTypeImportNames,
   corePropertyTypeImportNames,
   enumTypeImportDeclarations,
   externalImportDeclarations
@@ -22,12 +21,14 @@ export function importDeclarations(
     coreImportDeclaration(
       [
         ...corePropertyTypeImportNames(complexType.properties),
-        ...corePropertyFieldTypeImportNames(complexType.properties),
         'ComplexTypeField',
         'ConstructorOrField',
         `deserializeComplexType${versionInCaps}`,
         `Entity${versionInCaps}`,
+        'fieldBuilder',
+        'FieldBuilder',
         'FieldType',
+        'FieldOptions',
         'PropertyMetadata'
       ].sort()
     )

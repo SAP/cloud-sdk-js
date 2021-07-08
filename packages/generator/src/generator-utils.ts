@@ -79,36 +79,31 @@ const edmToTsTypeMapping: EdmTypeMappingWithoutEnum = {
 };
 
 const edmToFieldTypeMapping: EdmTypeMapping = {
-  'Edm.String': 'SelectableEdmField',
-  'Edm.Boolean': 'SelectableEdmField',
-  'Edm.Guid': 'SelectableEdmField',
-  'Edm.Decimal': 'SelectableOrderableEdmField',
-  'Edm.Int16': 'SelectableOrderableEdmField',
-  'Edm.Int32': 'SelectableOrderableEdmField',
-  'Edm.Int64': 'SelectableOrderableEdmField',
-  'Edm.Single': 'SelectableOrderableEdmField',
-  'Edm.Double': 'SelectableOrderableEdmField',
-  'Edm.Float': 'SelectableOrderableEdmField', // ABAP CDS compatibility
-  'Edm.Byte': 'SelectableOrderableEdmField',
-  'Edm.SByte': 'SelectableOrderableEdmField',
-  'Edm.DateTimeOffset': 'SelectableOrderableEdmField',
-  'Edm.Binary': 'SelectableEdmField',
-  'Edm.Any': 'SelectableEdmField',
+  'Edm.String': 'EdmTypeField',
+  'Edm.Boolean': 'EdmTypeField',
+  'Edm.Guid': 'EdmTypeField',
+  'Edm.Decimal': 'OrderableEdmTypeField',
+  'Edm.Int16': 'OrderableEdmTypeField',
+  'Edm.Int32': 'OrderableEdmTypeField',
+  'Edm.Int64': 'OrderableEdmTypeField',
+  'Edm.Single': 'OrderableEdmTypeField',
+  'Edm.Double': 'OrderableEdmTypeField',
+  'Edm.Float': 'OrderableEdmTypeField', // ABAP CDS compatibility
+  'Edm.Byte': 'OrderableEdmTypeField',
+  'Edm.SByte': 'OrderableEdmTypeField',
+  'Edm.DateTimeOffset': 'OrderableEdmTypeField',
+  'Edm.Binary': 'EdmTypeField',
+  'Edm.Any': 'EdmTypeField',
 
   // OData v2 specific
-  'Edm.DateTime': 'SelectableOrderableEdmField',
-  'Edm.Time': 'SelectableOrderableEdmField',
+  'Edm.DateTime': 'OrderableEdmTypeField',
+  'Edm.Time': 'OrderableEdmTypeField',
 
   // OData v4 specific
-  'Edm.Date': 'SelectableOrderableEdmField',
-  'Edm.Duration': 'SelectableOrderableEdmField',
-  'Edm.TimeOfDay': 'SelectableOrderableEdmField',
-  'Edm.Enum': 'SelectableEdmField'
-};
-
-const fieldTypeToComplexPropertyTypeMapping = {
-  SelectableEdmField: 'EdmTypeField',
-  SelectableOrderableEdmField: 'OrderableEdmField'
+  'Edm.Date': 'OrderableEdmTypeField',
+  'Edm.Duration': 'OrderableEdmTypeField',
+  'Edm.TimeOfDay': 'OrderableEdmTypeField',
+  'Edm.Enum': 'EdmTypeField'
 };
 
 export function getFallbackEdmTypeIfNeeded(
@@ -144,8 +139,7 @@ export function edmToFieldType(edmType: string): string {
 }
 
 export function edmToComplexPropertyType(edmType: string): string {
-  const fieldType =
-    fieldTypeToComplexPropertyTypeMapping[edmToFieldType(edmType)];
+  const fieldType = edmToFieldType(edmType);
   if (!fieldType) {
     throw new Error(
       `Could not determine complex field type for EDM type: '${edmType}'.`
@@ -191,7 +185,8 @@ export function linkClass(
 
 export function getGenericParameters(
   entityClassName: string,
-  prop: VdmProperty
+  prop: VdmProperty,
+  isSelectable: boolean
 ): string {
   const params = [entityClassName];
   if (prop.isEnum) {
@@ -203,6 +198,8 @@ export function getGenericParameters(
   }
 
   params.push(prop.nullable.toString());
+  params.push(isSelectable.toString());
+
   return params.join(', ');
 }
 

@@ -16,7 +16,10 @@ import { EdmTypeField } from '../edm-type-field';
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class AnyFieldBase<EntityT extends Entity, SelectableT extends boolean = false> extends EdmTypeField<EntityT, any, false, SelectableT> {}
+class AnyFieldBase<
+  EntityT extends Entity,
+  SelectableT extends boolean = false
+> extends EdmTypeField<EntityT, any, false, SelectableT> {}
 
 /**
  * @deprecated Since v1.27.0. Use [[XY]] instead.

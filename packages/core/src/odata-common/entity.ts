@@ -15,9 +15,15 @@ export interface Constructable<EntityT extends Entity, EntityTypeT = unknown> {
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
-  _allFields: (Selectable<EntityT> | Field<EntityT, boolean> | Link<EntityT>)[]; // Selectable only here for backwards TODO: Remove in v2.0
-  _keyFields: (Selectable<EntityT> | Field<EntityT, boolean>)[]; // Selectable only here for backwards TODO: Remove in v2.0
-  _keys: { [keys: string]: Selectable<EntityT> | Field<EntityT, boolean> }; // Selectable only here for backwards TODO: Remove in v2.0
+  _allFields: (
+    | Selectable<EntityT>
+    | Field<EntityT, boolean, boolean>
+    | Link<EntityT>
+  )[]; // Selectable only here for backwards TODO: Remove in v2.0
+  _keyFields: (Selectable<EntityT> | Field<EntityT, boolean, boolean>)[]; // Selectable only here for backwards TODO: Remove in v2.0
+  _keys: {
+    [keys: string]: Selectable<EntityT> | Field<EntityT, boolean, boolean>;
+  }; // Selectable only here for backwards TODO: Remove in v2.0
   new (...args: any[]): EntityT;
   requestBuilder(): RequestBuilder<EntityT>;
   builder(): EntityBuilderType<EntityT, EntityTypeT>;

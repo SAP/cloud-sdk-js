@@ -15,8 +15,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4,
-  fieldBuilder
+  deserializeComplexTypeV4
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -57,14 +56,12 @@ export class TestNestedComplexTypeField<
   SelectableT
 > {
   /** TODO */
-  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
-    this.fieldOf
-  );
+  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
   /**
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty = this.fb.buildEdmTypeField(
+  stringProperty = this._fieldBuilder.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -73,7 +70,7 @@ export class TestNestedComplexTypeField<
    * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty = this.fb.buildComplexTypeField(
+  complexTypeProperty = this._fieldBuilder.buildComplexTypeField(
     'ComplexTypeProperty',
     TestLvl2NestedComplexTypeField,
     true

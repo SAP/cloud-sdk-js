@@ -70,12 +70,12 @@ var TestComplexBaseTypeField = /** @class */ (function (_super) {
         fieldOptions
       ) || this;
     /** TODO */
-    _this.fb = core_1.fieldBuilder(_this.fieldOf);
+    _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.baseStringProperty = _this.fb.buildEdmTypeField(
+    _this.baseStringProperty = _this._fieldBuilder.buildEdmTypeField(
       'BaseStringProperty',
       'Edm.String',
       true

@@ -34,7 +34,7 @@ export declare class LocationField<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, Location, NullableT, SelectableT> {
   /** TODO */
-  private fb;
+  private _fieldBuilder;
   /**
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -43,7 +43,7 @@ export declare class LocationField<
     EntityT,
     'Edm.String',
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[Location.city]] property for query construction.
@@ -52,7 +52,7 @@ export declare class LocationField<
   city: CityField<
     EntityT,
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Creates an instance of LocationField.

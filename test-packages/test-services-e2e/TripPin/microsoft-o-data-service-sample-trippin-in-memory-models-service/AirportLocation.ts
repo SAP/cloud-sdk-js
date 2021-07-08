@@ -12,8 +12,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4,
-  fieldBuilder
+  deserializeComplexTypeV4
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -51,24 +50,26 @@ export class AirportLocationField<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, AirportLocation, NullableT, SelectableT> {
   /** TODO */
-  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
-    this.fieldOf
-  );
+  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
   /**
    * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  loc = this.fb.buildEdmTypeField('Loc', 'Edm.Any', false);
+  loc = this._fieldBuilder.buildEdmTypeField('Loc', 'Edm.Any', false);
   /**
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address = this.fb.buildEdmTypeField('Address', 'Edm.String', false);
+  address = this._fieldBuilder.buildEdmTypeField(
+    'Address',
+    'Edm.String',
+    false
+  );
   /**
    * Representation of the [[AirportLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city = this.fb.buildComplexTypeField('City', CityField, false);
+  city = this._fieldBuilder.buildComplexTypeField('City', CityField, false);
 
   /**
    * Creates an instance of AirportLocationField.

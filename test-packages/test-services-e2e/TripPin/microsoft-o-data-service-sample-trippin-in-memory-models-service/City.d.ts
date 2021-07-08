@@ -37,7 +37,7 @@ export declare class CityField<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, City, NullableT, SelectableT> {
   /** TODO */
-  private fb;
+  private _fieldBuilder;
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -46,7 +46,7 @@ export declare class CityField<
     EntityT,
     'Edm.String',
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[City.name]] property for query construction.
@@ -56,7 +56,7 @@ export declare class CityField<
     EntityT,
     'Edm.String',
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[City.region]] property for query construction.
@@ -66,7 +66,7 @@ export declare class CityField<
     EntityT,
     'Edm.String',
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Creates an instance of CityField.

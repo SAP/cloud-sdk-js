@@ -12,8 +12,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  FieldBuilder,
-  fieldBuilder
+  FieldBuilder
 } from '../../../../../src';
 
 /**
@@ -78,15 +77,15 @@ export interface TestEntity4Type {
 }
 
 export namespace TestEntity4 {
-  const fb: FieldBuilder<
+  const _fieldBuilder: FieldBuilder<
     TestEntity4,
     Constructable<TestEntity4>
-  > = fieldBuilder(TestEntity4);
+  > = new FieldBuilder(TestEntity4);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = fb.buildEdmTypeField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false
@@ -95,7 +94,7 @@ export namespace TestEntity4 {
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY = fb.buildEdmTypeField(
+  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
     'Edm.Boolean',
     true

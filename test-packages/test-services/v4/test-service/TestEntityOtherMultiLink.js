@@ -107,12 +107,12 @@ var TestEntityOtherMultiLink = /** @class */ (function (_super) {
 })(core_1.EntityV4);
 exports.TestEntityOtherMultiLink = TestEntityOtherMultiLink;
 (function (TestEntityOtherMultiLink) {
-  var fb = core_1.fieldBuilder(TestEntityOtherMultiLink);
+  var _fieldBuilder = new core_1.FieldBuilder(TestEntityOtherMultiLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityOtherMultiLink.KEY_PROPERTY = fb.buildEdmTypeField(
+  TestEntityOtherMultiLink.KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false

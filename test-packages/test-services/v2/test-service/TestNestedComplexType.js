@@ -71,12 +71,12 @@ var TestNestedComplexTypeField = /** @class */ (function (_super) {
         fieldOptions
       ) || this;
     /** TODO */
-    _this.fb = core_1.fieldBuilder(_this.fieldOf);
+    _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.stringProperty = _this.fb.buildEdmTypeField(
+    _this.stringProperty = _this._fieldBuilder.buildEdmTypeField(
       'StringProperty',
       'Edm.String',
       true
@@ -85,7 +85,7 @@ var TestNestedComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.complexTypeProperty = _this.fb.buildComplexTypeField(
+    _this.complexTypeProperty = _this._fieldBuilder.buildComplexTypeField(
       'ComplexTypeProperty',
       TestLvl2NestedComplexType_1.TestLvl2NestedComplexTypeField,
       true

@@ -66,22 +66,26 @@ var AirportLocationField = /** @class */ (function (_super) {
       _super.call(this, fieldName, fieldOf, AirportLocation, fieldOptions) ||
       this;
     /** TODO */
-    _this.fb = core_1.fieldBuilder(_this.fieldOf);
+    _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[AirportLocation.loc]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.loc = _this.fb.buildEdmTypeField('Loc', 'Edm.Any', false);
+    _this.loc = _this._fieldBuilder.buildEdmTypeField('Loc', 'Edm.Any', false);
     /**
      * Representation of the [[AirportLocation.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.address = _this.fb.buildEdmTypeField('Address', 'Edm.String', false);
+    _this.address = _this._fieldBuilder.buildEdmTypeField(
+      'Address',
+      'Edm.String',
+      false
+    );
     /**
      * Representation of the [[AirportLocation.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.city = _this.fb.buildComplexTypeField(
+    _this.city = _this._fieldBuilder.buildComplexTypeField(
       'City',
       City_1.CityField,
       false

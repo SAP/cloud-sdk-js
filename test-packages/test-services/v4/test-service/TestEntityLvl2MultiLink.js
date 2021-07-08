@@ -108,12 +108,12 @@ var TestEntityLvl2MultiLink = /** @class */ (function (_super) {
 exports.TestEntityLvl2MultiLink = TestEntityLvl2MultiLink;
 var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
 (function (TestEntityLvl2MultiLink) {
-  var fb = core_1.fieldBuilder(TestEntityLvl2MultiLink);
+  var _fieldBuilder = new core_1.FieldBuilder(TestEntityLvl2MultiLink);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.STRING_PROPERTY = fb.buildEdmTypeField(
+  TestEntityLvl2MultiLink.STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -122,7 +122,7 @@ var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.BOOLEAN_PROPERTY = fb.buildEdmTypeField(
+  TestEntityLvl2MultiLink.BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
     'Edm.Boolean',
     true
@@ -131,7 +131,7 @@ var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.GUID_PROPERTY = fb.buildEdmTypeField(
+  TestEntityLvl2MultiLink.GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'GuidProperty',
     'Edm.Guid',
     true
@@ -140,7 +140,7 @@ var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.INT_16_PROPERTY = fb.buildEdmTypeField(
+  TestEntityLvl2MultiLink.INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'Int16Property',
     'Edm.Int16',
     true
@@ -149,7 +149,7 @@ var TestEntityLvl3MultiLink_1 = require('./TestEntityLvl3MultiLink');
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLvl2MultiLink.KEY_PROPERTY = fb.buildEdmTypeField(
+  TestEntityLvl2MultiLink.KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false

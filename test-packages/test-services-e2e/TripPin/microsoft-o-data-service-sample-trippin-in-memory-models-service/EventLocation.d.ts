@@ -39,7 +39,7 @@ export declare class EventLocationField<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, EventLocation, NullableT, SelectableT> {
   /** TODO */
-  private fb;
+  private _fieldBuilder;
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -48,7 +48,7 @@ export declare class EventLocationField<
     EntityT,
     'Edm.String',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
@@ -58,7 +58,7 @@ export declare class EventLocationField<
     EntityT,
     'Edm.String',
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
@@ -67,7 +67,7 @@ export declare class EventLocationField<
   city: CityField<
     EntityT,
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Creates an instance of EventLocationField.

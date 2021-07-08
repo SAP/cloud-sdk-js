@@ -14,8 +14,7 @@ import {
   EntityV4,
   Field,
   FieldBuilder,
-  OrderableEdmTypeField,
-  fieldBuilder
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -81,17 +80,24 @@ export interface PhotosType {
 }
 
 export namespace Photos {
-  const fb: FieldBuilder<Photos, Constructable<Photos>> = fieldBuilder(Photos);
+  const _fieldBuilder: FieldBuilder<
+    Photos,
+    Constructable<Photos>
+  > = new FieldBuilder(Photos);
   /**
    * Static representation of the [[id]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ID = fb.buildEdmTypeField('Id', 'Edm.Int64', false);
+  export const ID = _fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false);
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME = fb.buildEdmTypeField('Name', 'Edm.String', true);
+  export const NAME = _fieldBuilder.buildEdmTypeField(
+    'Name',
+    'Edm.String',
+    true
+  );
   /**
    * All fields of the Photos entity.
    */

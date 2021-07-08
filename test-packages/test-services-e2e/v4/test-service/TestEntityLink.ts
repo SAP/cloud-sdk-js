@@ -13,8 +13,7 @@ import {
   EntityV4,
   Field,
   FieldBuilder,
-  OrderableEdmTypeField,
-  fieldBuilder
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -85,15 +84,15 @@ export interface TestEntityLinkType {
 }
 
 export namespace TestEntityLink {
-  const fb: FieldBuilder<
+  const _fieldBuilder: FieldBuilder<
     TestEntityLink,
     Constructable<TestEntityLink>
-  > = fieldBuilder(TestEntityLink);
+  > = new FieldBuilder(TestEntityLink);
   /**
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TEST_ENTITY_LINK = fb.buildEdmTypeField(
+  export const KEY_TEST_ENTITY_LINK = _fieldBuilder.buildEdmTypeField(
     'KeyTestEntityLink',
     'Edm.Int32',
     false
@@ -102,7 +101,7 @@ export namespace TestEntityLink {
    * Static representation of the [[keyToTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TO_TEST_ENTITY = fb.buildEdmTypeField(
+  export const KEY_TO_TEST_ENTITY = _fieldBuilder.buildEdmTypeField(
     'KeyToTestEntity',
     'Edm.Int32',
     false
@@ -111,7 +110,7 @@ export namespace TestEntityLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = fb.buildEdmTypeField(
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true

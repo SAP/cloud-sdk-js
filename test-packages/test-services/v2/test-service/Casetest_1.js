@@ -103,12 +103,12 @@ var Casetest_1 = /** @class */ (function (_super) {
 })(core_1.EntityV2);
 exports.Casetest_1 = Casetest_1;
 (function (Casetest_1) {
-  var fb = core_1.fieldBuilder(Casetest_1);
+  var _fieldBuilder = new core_1.FieldBuilder(Casetest_1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Casetest_1.KEY_PROPERTY_STRING = fb.buildEdmTypeField(
+  Casetest_1.KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false

@@ -13,8 +13,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  FieldBuilder,
-  fieldBuilder
+  FieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -89,14 +88,15 @@ export interface AirportsType {
 }
 
 export namespace Airports {
-  const fb: FieldBuilder<Airports, Constructable<Airports>> = fieldBuilder(
-    Airports
-  );
+  const _fieldBuilder: FieldBuilder<
+    Airports,
+    Constructable<Airports>
+  > = new FieldBuilder(Airports);
   /**
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ICAO_CODE = fb.buildEdmTypeField(
+  export const ICAO_CODE = _fieldBuilder.buildEdmTypeField(
     'IcaoCode',
     'Edm.String',
     false
@@ -105,12 +105,16 @@ export namespace Airports {
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME = fb.buildEdmTypeField('Name', 'Edm.String', false);
+  export const NAME = _fieldBuilder.buildEdmTypeField(
+    'Name',
+    'Edm.String',
+    false
+  );
   /**
    * Static representation of the [[iataCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const IATA_CODE = fb.buildEdmTypeField(
+  export const IATA_CODE = _fieldBuilder.buildEdmTypeField(
     'IataCode',
     'Edm.String',
     false
@@ -119,7 +123,7 @@ export namespace Airports {
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LOCATION = fb.buildComplexTypeField(
+  export const LOCATION = _fieldBuilder.buildComplexTypeField(
     'Location',
     AirportLocationField,
     false

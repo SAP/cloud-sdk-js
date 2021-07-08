@@ -13,8 +13,7 @@ import {
   EntityV4,
   Field,
   FieldBuilder,
-  OrderableEdmTypeField,
-  fieldBuilder
+  OrderableEdmTypeField
 } from '../../../../../src';
 
 /**
@@ -107,15 +106,15 @@ export interface TestEntityLvl2SingleLinkType {
 }
 
 export namespace TestEntityLvl2SingleLink {
-  const fb: FieldBuilder<
+  const _fieldBuilder: FieldBuilder<
     TestEntityLvl2SingleLink,
     Constructable<TestEntityLvl2SingleLink>
-  > = fieldBuilder(TestEntityLvl2SingleLink);
+  > = new FieldBuilder(TestEntityLvl2SingleLink);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = fb.buildEdmTypeField(
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -124,7 +123,7 @@ export namespace TestEntityLvl2SingleLink {
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY = fb.buildEdmTypeField(
+  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
     'Edm.Boolean',
     true
@@ -133,7 +132,7 @@ export namespace TestEntityLvl2SingleLink {
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY = fb.buildEdmTypeField(
+  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'GuidProperty',
     'Edm.Guid',
     true
@@ -142,7 +141,7 @@ export namespace TestEntityLvl2SingleLink {
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY = fb.buildEdmTypeField(
+  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'Int16Property',
     'Edm.Int16',
     true
@@ -151,7 +150,7 @@ export namespace TestEntityLvl2SingleLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = fb.buildEdmTypeField(
+  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false

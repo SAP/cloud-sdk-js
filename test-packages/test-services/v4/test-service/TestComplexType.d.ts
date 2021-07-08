@@ -142,7 +142,7 @@ export declare class TestComplexTypeField<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, TestComplexType, NullableT, SelectableT> {
   /** TODO */
-  private fb;
+  private _fieldBuilder;
   /**
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -151,7 +151,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.String',
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
@@ -161,7 +161,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Boolean',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
@@ -171,7 +171,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Guid',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
@@ -181,7 +181,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Int16',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.int32Property]] property for query construction.
@@ -191,7 +191,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Int32',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.int64Property]] property for query construction.
@@ -201,7 +201,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Int64',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
@@ -211,7 +211,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Decimal',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.singleProperty]] property for query construction.
@@ -221,7 +221,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Single',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
@@ -231,7 +231,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Double',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.floatProperty]] property for query construction.
@@ -241,7 +241,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Float',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
@@ -251,7 +251,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.TimeOfDay',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.dateProperty]] property for query construction.
@@ -261,7 +261,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Date',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
@@ -271,7 +271,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.DateTimeOffset',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
@@ -281,7 +281,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Byte',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
@@ -291,7 +291,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.SByte',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.geographyPointProperty]] property for query construction.
@@ -301,7 +301,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Any',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.enumProperty]] property for query construction.
@@ -311,7 +311,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Enum',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
@@ -321,7 +321,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.Any',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
@@ -330,7 +330,7 @@ export declare class TestComplexTypeField<
   complexTypeProperty: TestNestedComplexTypeField<
     EntityT,
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
@@ -340,7 +340,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.String',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
@@ -350,7 +350,7 @@ export declare class TestComplexTypeField<
     EntityT,
     TestNestedComplexType,
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
@@ -360,7 +360,7 @@ export declare class TestComplexTypeField<
     EntityT,
     'Edm.String',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Creates an instance of TestComplexTypeField.

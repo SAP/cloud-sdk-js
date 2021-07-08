@@ -12,8 +12,7 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  FieldBuilder,
-  fieldBuilder
+  FieldBuilder
 } from '../../../../../src';
 
 /**
@@ -72,14 +71,15 @@ export interface CaseTestType {
 }
 
 export namespace CaseTest {
-  const fb: FieldBuilder<CaseTest, Constructable<CaseTest>> = fieldBuilder(
-    CaseTest
-  );
+  const _fieldBuilder: FieldBuilder<
+    CaseTest,
+    Constructable<CaseTest>
+  > = new FieldBuilder(CaseTest);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = fb.buildEdmTypeField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false

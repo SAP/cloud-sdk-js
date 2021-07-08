@@ -14,8 +14,7 @@ import {
   Field,
   FieldBuilder,
   OneToManyLink,
-  OneToOneLink,
-  fieldBuilder
+  OneToOneLink
 } from '../../../../../src';
 
 /**
@@ -101,15 +100,15 @@ export interface TestEntityCircularLinkParentType {
 }
 
 export namespace TestEntityCircularLinkParent {
-  const fb: FieldBuilder<
+  const _fieldBuilder: FieldBuilder<
     TestEntityCircularLinkParent,
     Constructable<TestEntityCircularLinkParent>
-  > = fieldBuilder(TestEntityCircularLinkParent);
+  > = new FieldBuilder(TestEntityCircularLinkParent);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = fb.buildEdmTypeField(
+  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false

@@ -14,8 +14,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  FieldBuilder,
-  fieldBuilder
+  FieldBuilder
 } from '../../../../../src';
 
 /**
@@ -86,15 +85,15 @@ export interface TestEntity3Type {
 }
 
 export namespace TestEntity3 {
-  const fb: FieldBuilder<
+  const _fieldBuilder: FieldBuilder<
     TestEntity3,
     Constructable<TestEntity3>
-  > = fieldBuilder(TestEntity3);
+  > = new FieldBuilder(TestEntity3);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = fb.buildEdmTypeField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false
@@ -103,7 +102,7 @@ export namespace TestEntity3 {
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY = fb.buildEdmTypeField(
+  export const ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'EnumProperty',
     'Edm.Enum',
     true
@@ -112,7 +111,7 @@ export namespace TestEntity3 {
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY = fb.buildComplexTypeField(
+  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
     'ComplexTypeProperty',
     TestComplexType2Field,
     true

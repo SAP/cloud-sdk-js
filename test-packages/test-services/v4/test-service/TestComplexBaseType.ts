@@ -11,8 +11,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4,
-  fieldBuilder
+  deserializeComplexTypeV4
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -48,14 +47,12 @@ export class TestComplexBaseTypeField<
   SelectableT
 > {
   /** TODO */
-  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
-    this.fieldOf
-  );
+  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
   /**
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty = this.fb.buildEdmTypeField(
+  baseStringProperty = this._fieldBuilder.buildEdmTypeField(
     'BaseStringProperty',
     'Edm.String',
     true

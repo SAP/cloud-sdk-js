@@ -22,8 +22,7 @@ import {
   OneToManyLink,
   OneToOneLink,
   OrderableEdmTypeField,
-  Time,
-  fieldBuilder
+  Time
 } from '../../../../../src';
 
 /**
@@ -257,14 +256,15 @@ export interface TestEntityType {
 }
 
 export namespace TestEntity {
-  const fb: FieldBuilder<TestEntity, Constructable<TestEntity>> = fieldBuilder(
-    TestEntity
-  );
+  const _fieldBuilder: FieldBuilder<
+    TestEntity,
+    Constructable<TestEntity>
+  > = new FieldBuilder(TestEntity);
   /**
    * Static representation of the [[keyPropertyGuid]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_GUID = fb.buildEdmTypeField(
+  export const KEY_PROPERTY_GUID = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyGuid',
     'Edm.Guid',
     false
@@ -273,7 +273,7 @@ export namespace TestEntity {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = fb.buildEdmTypeField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false
@@ -282,7 +282,7 @@ export namespace TestEntity {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = fb.buildEdmTypeField(
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -291,7 +291,7 @@ export namespace TestEntity {
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY = fb.buildEdmTypeField(
+  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
     'Edm.Boolean',
     true
@@ -300,7 +300,7 @@ export namespace TestEntity {
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY = fb.buildEdmTypeField(
+  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'GuidProperty',
     'Edm.Guid',
     true
@@ -309,7 +309,7 @@ export namespace TestEntity {
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY = fb.buildEdmTypeField(
+  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'Int16Property',
     'Edm.Int16',
     true
@@ -318,7 +318,7 @@ export namespace TestEntity {
    * Static representation of the [[int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_32_PROPERTY = fb.buildEdmTypeField(
+  export const INT_32_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'Int32Property',
     'Edm.Int32',
     true
@@ -327,7 +327,7 @@ export namespace TestEntity {
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_64_PROPERTY = fb.buildEdmTypeField(
+  export const INT_64_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'Int64Property',
     'Edm.Int64',
     true
@@ -336,7 +336,7 @@ export namespace TestEntity {
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DECIMAL_PROPERTY = fb.buildEdmTypeField(
+  export const DECIMAL_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DecimalProperty',
     'Edm.Decimal',
     true
@@ -345,7 +345,7 @@ export namespace TestEntity {
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SINGLE_PROPERTY = fb.buildEdmTypeField(
+  export const SINGLE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'SingleProperty',
     'Edm.Single',
     true
@@ -354,7 +354,7 @@ export namespace TestEntity {
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DOUBLE_PROPERTY = fb.buildEdmTypeField(
+  export const DOUBLE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DoubleProperty',
     'Edm.Double',
     true
@@ -363,7 +363,7 @@ export namespace TestEntity {
    * Static representation of the [[floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const FLOAT_PROPERTY = fb.buildEdmTypeField(
+  export const FLOAT_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'FloatProperty',
     'Edm.Float',
     true
@@ -372,7 +372,7 @@ export namespace TestEntity {
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TIME_OF_DAY_PROPERTY = fb.buildEdmTypeField(
+  export const TIME_OF_DAY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'TimeOfDayProperty',
     'Edm.TimeOfDay',
     true
@@ -381,7 +381,7 @@ export namespace TestEntity {
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_PROPERTY = fb.buildEdmTypeField(
+  export const DATE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DateProperty',
     'Edm.Date',
     true
@@ -390,7 +390,7 @@ export namespace TestEntity {
    * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_TIME_OFF_SET_PROPERTY = fb.buildEdmTypeField(
+  export const DATE_TIME_OFF_SET_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DateTimeOffSetProperty',
     'Edm.DateTimeOffset',
     true
@@ -399,7 +399,7 @@ export namespace TestEntity {
    * Static representation of the [[durationProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DURATION_PROPERTY = fb.buildEdmTypeField(
+  export const DURATION_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DurationProperty',
     'Edm.Duration',
     true
@@ -408,7 +408,7 @@ export namespace TestEntity {
    * Static representation of the [[byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BYTE_PROPERTY = fb.buildEdmTypeField(
+  export const BYTE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'ByteProperty',
     'Edm.Byte',
     true
@@ -417,7 +417,7 @@ export namespace TestEntity {
    * Static representation of the [[sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const S_BYTE_PROPERTY = fb.buildEdmTypeField(
+  export const S_BYTE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'SByteProperty',
     'Edm.SByte',
     true
@@ -426,7 +426,7 @@ export namespace TestEntity {
    * Static representation of the [[geographyPointProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GEOGRAPHY_POINT_PROPERTY = fb.buildEdmTypeField(
+  export const GEOGRAPHY_POINT_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'GeographyPointProperty',
     'Edm.Any',
     true
@@ -435,16 +435,17 @@ export namespace TestEntity {
    * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SOMETHING_THE_SDK_DOES_NOT_SUPPORT = fb.buildEdmTypeField(
-    'SomethingTheSDKDoesNotSupport',
-    'Edm.Any',
-    true
-  );
+  export const SOMETHING_THE_SDK_DOES_NOT_SUPPORT =
+    _fieldBuilder.buildEdmTypeField(
+      'SomethingTheSDKDoesNotSupport',
+      'Edm.Any',
+      true
+    );
   /**
    * Static representation of the [[collectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COLLECTION_PROPERTY = fb.buildCollectionField(
+  export const COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField(
     'CollectionProperty',
     'Edm.String',
     true
@@ -453,7 +454,7 @@ export namespace TestEntity {
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY = fb.buildComplexTypeField(
+  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
     'ComplexTypeProperty',
     TestComplexTypeField,
     true
@@ -462,16 +463,17 @@ export namespace TestEntity {
    * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_COLLECTION_PROPERTY = fb.buildCollectionField(
-    'ComplexTypeCollectionProperty',
-    TestComplexType,
-    true
-  );
+  export const COMPLEX_TYPE_COLLECTION_PROPERTY =
+    _fieldBuilder.buildCollectionField(
+      'ComplexTypeCollectionProperty',
+      TestComplexType,
+      true
+    );
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY = fb.buildEdmTypeField(
+  export const ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'EnumProperty',
     'Edm.Enum',
     true
@@ -480,7 +482,7 @@ export namespace TestEntity {
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY_WITH_ONE_MEMBER = fb.buildEdmTypeField(
+  export const ENUM_PROPERTY_WITH_ONE_MEMBER = _fieldBuilder.buildEdmTypeField(
     'EnumPropertyWithOneMember',
     'Edm.Enum',
     true
@@ -489,7 +491,7 @@ export namespace TestEntity {
    * Static representation of the [[enumCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_COLLECTION_PROPERTY = fb.buildCollectionField(
+  export const ENUM_COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField(
     'EnumCollectionProperty',
     'Edm.Enum',
     true

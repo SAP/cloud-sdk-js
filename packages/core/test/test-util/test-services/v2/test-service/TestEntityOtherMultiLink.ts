@@ -12,8 +12,7 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  FieldBuilder,
-  fieldBuilder
+  FieldBuilder
 } from '../../../../../src';
 
 /**
@@ -80,15 +79,15 @@ export interface TestEntityOtherMultiLinkType {
 }
 
 export namespace TestEntityOtherMultiLink {
-  const fb: FieldBuilder<
+  const _fieldBuilder: FieldBuilder<
     TestEntityOtherMultiLink,
     Constructable<TestEntityOtherMultiLink>
-  > = fieldBuilder(TestEntityOtherMultiLink);
+  > = new FieldBuilder(TestEntityOtherMultiLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = fb.buildEdmTypeField(
+  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false

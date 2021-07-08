@@ -12,8 +12,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  FieldBuilder,
-  fieldBuilder
+  FieldBuilder
 } from '../../../../../src';
 
 /**
@@ -94,15 +93,15 @@ export interface TestEntityLvl3MultiLinkType {
 }
 
 export namespace TestEntityLvl3MultiLink {
-  const fb: FieldBuilder<
+  const _fieldBuilder: FieldBuilder<
     TestEntityLvl3MultiLink,
     Constructable<TestEntityLvl3MultiLink>
-  > = fieldBuilder(TestEntityLvl3MultiLink);
+  > = new FieldBuilder(TestEntityLvl3MultiLink);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = fb.buildEdmTypeField(
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -111,7 +110,7 @@ export namespace TestEntityLvl3MultiLink {
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY = fb.buildEdmTypeField(
+  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'GuidProperty',
     'Edm.Guid',
     true
@@ -120,7 +119,7 @@ export namespace TestEntityLvl3MultiLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = fb.buildEdmTypeField(
+  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false

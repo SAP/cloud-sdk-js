@@ -12,8 +12,7 @@ import {
   EntityBuilderType,
   EntityV4,
   Field,
-  FieldBuilder,
-  fieldBuilder
+  FieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -78,14 +77,15 @@ export interface AirlinesType {
 }
 
 export namespace Airlines {
-  const fb: FieldBuilder<Airlines, Constructable<Airlines>> = fieldBuilder(
-    Airlines
-  );
+  const _fieldBuilder: FieldBuilder<
+    Airlines,
+    Constructable<Airlines>
+  > = new FieldBuilder(Airlines);
   /**
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const AIRLINE_CODE = fb.buildEdmTypeField(
+  export const AIRLINE_CODE = _fieldBuilder.buildEdmTypeField(
     'AirlineCode',
     'Edm.String',
     false
@@ -94,7 +94,11 @@ export namespace Airlines {
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME = fb.buildEdmTypeField('Name', 'Edm.String', false);
+  export const NAME = _fieldBuilder.buildEdmTypeField(
+    'Name',
+    'Edm.String',
+    false
+  );
   /**
    * All fields of the Airlines entity.
    */

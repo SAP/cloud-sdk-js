@@ -38,7 +38,7 @@ export declare class AirportLocationField<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, AirportLocation, NullableT, SelectableT> {
   /** TODO */
-  private fb;
+  private _fieldBuilder;
   /**
    * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -47,7 +47,7 @@ export declare class AirportLocationField<
     EntityT,
     'Edm.Any',
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[AirportLocation.address]] property for query construction.
@@ -57,7 +57,7 @@ export declare class AirportLocationField<
     EntityT,
     'Edm.String',
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Representation of the [[AirportLocation.city]] property for query construction.
@@ -66,7 +66,7 @@ export declare class AirportLocationField<
   city: CityField<
     EntityT,
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Creates an instance of AirportLocationField.

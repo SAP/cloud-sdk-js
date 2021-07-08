@@ -61,12 +61,12 @@ var CityField = /** @class */ (function (_super) {
     var _this =
       _super.call(this, fieldName, fieldOf, City, fieldOptions) || this;
     /** TODO */
-    _this.fb = core_1.fieldBuilder(_this.fieldOf);
+    _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[City.countryRegion]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.countryRegion = _this.fb.buildEdmTypeField(
+    _this.countryRegion = _this._fieldBuilder.buildEdmTypeField(
       'CountryRegion',
       'Edm.String',
       false
@@ -75,12 +75,20 @@ var CityField = /** @class */ (function (_super) {
      * Representation of the [[City.name]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.name = _this.fb.buildEdmTypeField('Name', 'Edm.String', false);
+    _this.name = _this._fieldBuilder.buildEdmTypeField(
+      'Name',
+      'Edm.String',
+      false
+    );
     /**
      * Representation of the [[City.region]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.region = _this.fb.buildEdmTypeField('Region', 'Edm.String', false);
+    _this.region = _this._fieldBuilder.buildEdmTypeField(
+      'Region',
+      'Edm.String',
+      false
+    );
     return _this;
   }
   return CityField;

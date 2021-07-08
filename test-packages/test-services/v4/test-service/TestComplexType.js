@@ -61,12 +61,12 @@ var TestComplexTypeField = /** @class */ (function (_super) {
       _super.call(this, fieldName, fieldOf, TestComplexType, fieldOptions) ||
       this;
     /** TODO */
-    _this.fb = core_1.fieldBuilder(_this.fieldOf);
+    _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[TestComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.stringProperty = _this.fb.buildEdmTypeField(
+    _this.stringProperty = _this._fieldBuilder.buildEdmTypeField(
       'StringProperty',
       'Edm.String',
       false
@@ -75,7 +75,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.booleanProperty = _this.fb.buildEdmTypeField(
+    _this.booleanProperty = _this._fieldBuilder.buildEdmTypeField(
       'BooleanProperty',
       'Edm.Boolean',
       true
@@ -84,7 +84,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.guidProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.guidProperty = _this.fb.buildEdmTypeField(
+    _this.guidProperty = _this._fieldBuilder.buildEdmTypeField(
       'GuidProperty',
       'Edm.Guid',
       true
@@ -93,7 +93,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.int16Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.int16Property = _this.fb.buildEdmTypeField(
+    _this.int16Property = _this._fieldBuilder.buildEdmTypeField(
       'Int16Property',
       'Edm.Int16',
       true
@@ -102,7 +102,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.int32Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.int32Property = _this.fb.buildEdmTypeField(
+    _this.int32Property = _this._fieldBuilder.buildEdmTypeField(
       'Int32Property',
       'Edm.Int32',
       true
@@ -111,7 +111,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.int64Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.int64Property = _this.fb.buildEdmTypeField(
+    _this.int64Property = _this._fieldBuilder.buildEdmTypeField(
       'Int64Property',
       'Edm.Int64',
       true
@@ -120,7 +120,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.decimalProperty = _this.fb.buildEdmTypeField(
+    _this.decimalProperty = _this._fieldBuilder.buildEdmTypeField(
       'DecimalProperty',
       'Edm.Decimal',
       true
@@ -129,7 +129,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.singleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.singleProperty = _this.fb.buildEdmTypeField(
+    _this.singleProperty = _this._fieldBuilder.buildEdmTypeField(
       'SingleProperty',
       'Edm.Single',
       true
@@ -138,7 +138,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.doubleProperty = _this.fb.buildEdmTypeField(
+    _this.doubleProperty = _this._fieldBuilder.buildEdmTypeField(
       'DoubleProperty',
       'Edm.Double',
       true
@@ -147,7 +147,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.floatProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.floatProperty = _this.fb.buildEdmTypeField(
+    _this.floatProperty = _this._fieldBuilder.buildEdmTypeField(
       'FloatProperty',
       'Edm.Float',
       true
@@ -156,7 +156,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.timeOfDayProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.timeOfDayProperty = _this.fb.buildEdmTypeField(
+    _this.timeOfDayProperty = _this._fieldBuilder.buildEdmTypeField(
       'TimeOfDayProperty',
       'Edm.TimeOfDay',
       true
@@ -165,7 +165,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.dateProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.dateProperty = _this.fb.buildEdmTypeField(
+    _this.dateProperty = _this._fieldBuilder.buildEdmTypeField(
       'DateProperty',
       'Edm.Date',
       true
@@ -174,7 +174,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.dateTimeOffSetProperty = _this.fb.buildEdmTypeField(
+    _this.dateTimeOffSetProperty = _this._fieldBuilder.buildEdmTypeField(
       'DateTimeOffSetProperty',
       'Edm.DateTimeOffset',
       true
@@ -183,7 +183,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.byteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.byteProperty = _this.fb.buildEdmTypeField(
+    _this.byteProperty = _this._fieldBuilder.buildEdmTypeField(
       'ByteProperty',
       'Edm.Byte',
       true
@@ -192,7 +192,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.sByteProperty = _this.fb.buildEdmTypeField(
+    _this.sByteProperty = _this._fieldBuilder.buildEdmTypeField(
       'SByteProperty',
       'Edm.SByte',
       true
@@ -201,7 +201,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.geographyPointProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.geographyPointProperty = _this.fb.buildEdmTypeField(
+    _this.geographyPointProperty = _this._fieldBuilder.buildEdmTypeField(
       'GeographyPointProperty',
       'Edm.Any',
       true
@@ -210,7 +210,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.enumProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.enumProperty = _this.fb.buildEdmTypeField(
+    _this.enumProperty = _this._fieldBuilder.buildEdmTypeField(
       'EnumProperty',
       'Edm.Enum',
       true
@@ -219,7 +219,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.somethingTheSdkDoesNotSupport = _this.fb.buildEdmTypeField(
+    _this.somethingTheSdkDoesNotSupport = _this._fieldBuilder.buildEdmTypeField(
       'SomethingTheSDKDoesNotSupport',
       'Edm.Any',
       true
@@ -228,7 +228,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.complexTypeProperty = _this.fb.buildComplexTypeField(
+    _this.complexTypeProperty = _this._fieldBuilder.buildComplexTypeField(
       'ComplexTypeProperty',
       TestNestedComplexType_1.TestNestedComplexTypeField,
       true
@@ -237,7 +237,7 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.collectionStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.collectionStringProperty = _this.fb.buildCollectionField(
+    _this.collectionStringProperty = _this._fieldBuilder.buildCollectionField(
       'CollectionStringProperty',
       'Edm.String',
       true
@@ -246,16 +246,17 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.collectionComplexTypeProperty = _this.fb.buildCollectionField(
-      'CollectionComplexTypeProperty',
-      TestNestedComplexType_1.TestNestedComplexType,
-      true
-    );
+    _this.collectionComplexTypeProperty =
+      _this._fieldBuilder.buildCollectionField(
+        'CollectionComplexTypeProperty',
+        TestNestedComplexType_1.TestNestedComplexType,
+        true
+      );
     /**
      * Representation of the [[TestComplexType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.baseStringProperty = _this.fb.buildEdmTypeField(
+    _this.baseStringProperty = _this._fieldBuilder.buildEdmTypeField(
       'BaseStringProperty',
       'Edm.String',
       true

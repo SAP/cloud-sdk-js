@@ -11,8 +11,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4,
-  fieldBuilder
+  deserializeComplexTypeV4
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -50,14 +49,12 @@ export class CityField<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, City, NullableT, SelectableT> {
   /** TODO */
-  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
-    this.fieldOf
-  );
+  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion = this.fb.buildEdmTypeField(
+  countryRegion = this._fieldBuilder.buildEdmTypeField(
     'CountryRegion',
     'Edm.String',
     false
@@ -66,12 +63,12 @@ export class CityField<
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name = this.fb.buildEdmTypeField('Name', 'Edm.String', false);
+  name = this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region = this.fb.buildEdmTypeField('Region', 'Edm.String', false);
+  region = this._fieldBuilder.buildEdmTypeField('Region', 'Edm.String', false);
 
   /**
    * Creates an instance of CityField.

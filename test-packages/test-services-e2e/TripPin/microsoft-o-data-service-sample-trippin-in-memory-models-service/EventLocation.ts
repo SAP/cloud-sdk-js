@@ -12,8 +12,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4,
-  fieldBuilder
+  deserializeComplexTypeV4
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -52,24 +51,30 @@ export class EventLocationField<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, EventLocation, NullableT, SelectableT> {
   /** TODO */
-  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
-    this.fieldOf
-  );
+  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo = this.fb.buildEdmTypeField('BuildingInfo', 'Edm.String', true);
+  buildingInfo = this._fieldBuilder.buildEdmTypeField(
+    'BuildingInfo',
+    'Edm.String',
+    true
+  );
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address = this.fb.buildEdmTypeField('Address', 'Edm.String', false);
+  address = this._fieldBuilder.buildEdmTypeField(
+    'Address',
+    'Edm.String',
+    false
+  );
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city = this.fb.buildComplexTypeField('City', CityField, false);
+  city = this._fieldBuilder.buildComplexTypeField('City', CityField, false);
 
   /**
    * Creates an instance of EventLocationField.

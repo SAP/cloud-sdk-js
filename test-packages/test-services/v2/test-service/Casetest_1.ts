@@ -12,8 +12,7 @@ import {
   EntityBuilderType,
   EntityV2,
   Field,
-  FieldBuilder,
-  fieldBuilder
+  FieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -72,14 +71,15 @@ export interface Casetest_1Type {
 }
 
 export namespace Casetest_1 {
-  const fb: FieldBuilder<Casetest_1, Constructable<Casetest_1>> = fieldBuilder(
-    Casetest_1
-  );
+  const _fieldBuilder: FieldBuilder<
+    Casetest_1,
+    Constructable<Casetest_1>
+  > = new FieldBuilder(Casetest_1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = fb.buildEdmTypeField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false

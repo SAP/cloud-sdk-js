@@ -104,12 +104,12 @@ var TestEntity = /** @class */ (function (_super) {
 exports.TestEntity = TestEntity;
 var TestEntityLink_1 = require('./TestEntityLink');
 (function (TestEntity) {
-  var fb = core_1.fieldBuilder(TestEntity);
+  var _fieldBuilder = new core_1.FieldBuilder(TestEntity);
   /**
    * Static representation of the [[keyTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.KEY_TEST_ENTITY = fb.buildEdmTypeField(
+  TestEntity.KEY_TEST_ENTITY = _fieldBuilder.buildEdmTypeField(
     'KeyTestEntity',
     'Edm.Int32',
     false
@@ -118,7 +118,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.STRING_PROPERTY = fb.buildEdmTypeField(
+  TestEntity.STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -127,7 +127,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.GUID_PROPERTY = fb.buildEdmTypeField(
+  TestEntity.GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'GuidProperty',
     'Edm.Guid',
     true
@@ -136,7 +136,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.BOOLEAN_PROPERTY = fb.buildEdmTypeField(
+  TestEntity.BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
     'Edm.Boolean',
     true
@@ -145,7 +145,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.INT_64_PROPERTY = fb.buildEdmTypeField(
+  TestEntity.INT_64_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'Int64Property',
     'Edm.Int64',
     true
@@ -154,7 +154,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DOUBLE_PROPERTY = fb.buildEdmTypeField(
+  TestEntity.DOUBLE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DoubleProperty',
     'Edm.Double',
     true
@@ -163,7 +163,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DECIMAL_PROPERTY = fb.buildEdmTypeField(
+  TestEntity.DECIMAL_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DecimalProperty',
     'Edm.Decimal',
     true
@@ -172,7 +172,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATE_PROPERTY = fb.buildEdmTypeField(
+  TestEntity.DATE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DateProperty',
     'Edm.Date',
     true
@@ -181,7 +181,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.TIME_OF_DAY_PROPERTY = fb.buildEdmTypeField(
+  TestEntity.TIME_OF_DAY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'TimeOfDayProperty',
     'Edm.TimeOfDay',
     true
@@ -190,20 +190,22 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATA_TIME_OFFSET_DATA_TIME_PROPERTY = fb.buildEdmTypeField(
-    'DataTimeOffsetDataTimeProperty',
-    'Edm.DateTimeOffset',
-    true
-  );
+  TestEntity.DATA_TIME_OFFSET_DATA_TIME_PROPERTY =
+    _fieldBuilder.buildEdmTypeField(
+      'DataTimeOffsetDataTimeProperty',
+      'Edm.DateTimeOffset',
+      true
+    );
   /**
    * Static representation of the [[dataTimeOffsetTimestampProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.DATA_TIME_OFFSET_TIMESTAMP_PROPERTY = fb.buildEdmTypeField(
-    'DataTimeOffsetTimestampProperty',
-    'Edm.DateTimeOffset',
-    true
-  );
+  TestEntity.DATA_TIME_OFFSET_TIMESTAMP_PROPERTY =
+    _fieldBuilder.buildEdmTypeField(
+      'DataTimeOffsetTimestampProperty',
+      'Edm.DateTimeOffset',
+      true
+    );
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

@@ -11,8 +11,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4,
-  fieldBuilder
+  deserializeComplexTypeV4
 } from '../../../../../src';
 
 /**
@@ -42,14 +41,12 @@ export class TestComplexType2Field<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, TestComplexType2, NullableT, SelectableT> {
   /** TODO */
-  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
-    this.fieldOf
-  );
+  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
   /**
    * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty = this.fb.buildEdmTypeField(
+  stringProperty = this._fieldBuilder.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     false

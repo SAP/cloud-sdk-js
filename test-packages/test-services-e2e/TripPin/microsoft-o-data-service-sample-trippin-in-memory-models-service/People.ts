@@ -19,8 +19,7 @@ import {
   FieldBuilder,
   OneToManyLink,
   OneToOneLink,
-  OrderableEdmTypeField,
-  fieldBuilder
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -125,12 +124,15 @@ export interface PeopleType {
 }
 
 export namespace People {
-  const fb: FieldBuilder<People, Constructable<People>> = fieldBuilder(People);
+  const _fieldBuilder: FieldBuilder<
+    People,
+    Constructable<People>
+  > = new FieldBuilder(People);
   /**
    * Static representation of the [[userName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const USER_NAME = fb.buildEdmTypeField(
+  export const USER_NAME = _fieldBuilder.buildEdmTypeField(
     'UserName',
     'Edm.String',
     false
@@ -139,7 +141,7 @@ export namespace People {
    * Static representation of the [[firstName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const FIRST_NAME = fb.buildEdmTypeField(
+  export const FIRST_NAME = _fieldBuilder.buildEdmTypeField(
     'FirstName',
     'Edm.String',
     false
@@ -148,7 +150,7 @@ export namespace People {
    * Static representation of the [[lastName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LAST_NAME = fb.buildEdmTypeField(
+  export const LAST_NAME = _fieldBuilder.buildEdmTypeField(
     'LastName',
     'Edm.String',
     false
@@ -157,12 +159,16 @@ export namespace People {
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const EMAILS = fb.buildCollectionField('Emails', 'Edm.String', true);
+  export const EMAILS = _fieldBuilder.buildCollectionField(
+    'Emails',
+    'Edm.String',
+    true
+  );
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ADDRESS_INFO = fb.buildCollectionField(
+  export const ADDRESS_INFO = _fieldBuilder.buildCollectionField(
     'AddressInfo',
     Location,
     true
@@ -171,12 +177,16 @@ export namespace People {
    * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GENDER = fb.buildEdmTypeField('Gender', 'Edm.Enum', true);
+  export const GENDER = _fieldBuilder.buildEdmTypeField(
+    'Gender',
+    'Edm.Enum',
+    true
+  );
   /**
    * Static representation of the [[concurrency]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const CONCURRENCY = fb.buildEdmTypeField(
+  export const CONCURRENCY = _fieldBuilder.buildEdmTypeField(
     'Concurrency',
     'Edm.Int64',
     false

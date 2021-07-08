@@ -15,8 +15,7 @@ import {
   EntityV4,
   Field,
   FieldBuilder,
-  OrderableEdmTypeField,
-  fieldBuilder
+  OrderableEdmTypeField
 } from '../../../../../src';
 
 /**
@@ -93,15 +92,15 @@ export interface TestEntity1Type {
 }
 
 export namespace TestEntity1 {
-  const fb: FieldBuilder<
+  const _fieldBuilder: FieldBuilder<
     TestEntity1,
     Constructable<TestEntity1>
-  > = fieldBuilder(TestEntity1);
+  > = new FieldBuilder(TestEntity1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = fb.buildEdmTypeField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false
@@ -110,7 +109,7 @@ export namespace TestEntity1 {
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY = fb.buildEdmTypeField(
+  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'Int16Property',
     'Edm.Int16',
     true
@@ -119,7 +118,7 @@ export namespace TestEntity1 {
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY = fb.buildEdmTypeField(
+  export const ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'EnumProperty',
     'Edm.Enum',
     true
@@ -128,7 +127,7 @@ export namespace TestEntity1 {
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY = fb.buildComplexTypeField(
+  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
     'ComplexTypeProperty',
     TestComplexType1Field,
     true

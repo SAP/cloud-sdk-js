@@ -29,7 +29,7 @@ export declare class TestComplexType2Field<
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, TestComplexType2, NullableT, SelectableT> {
   /** TODO */
-  private fb;
+  private _fieldBuilder;
   /**
    * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -38,7 +38,7 @@ export declare class TestComplexType2Field<
     EntityT,
     'Edm.String',
     false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Creates an instance of TestComplexType2Field.

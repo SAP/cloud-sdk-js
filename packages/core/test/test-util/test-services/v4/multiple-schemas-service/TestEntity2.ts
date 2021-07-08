@@ -13,8 +13,7 @@ import {
   EntityV4,
   Field,
   FieldBuilder,
-  OrderableEdmTypeField,
-  fieldBuilder
+  OrderableEdmTypeField
 } from '../../../../../src';
 
 /**
@@ -79,15 +78,15 @@ export interface TestEntity2Type {
 }
 
 export namespace TestEntity2 {
-  const fb: FieldBuilder<
+  const _fieldBuilder: FieldBuilder<
     TestEntity2,
     Constructable<TestEntity2>
-  > = fieldBuilder(TestEntity2);
+  > = new FieldBuilder(TestEntity2);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = fb.buildEdmTypeField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false
@@ -96,7 +95,7 @@ export namespace TestEntity2 {
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SINGLE_PROPERTY = fb.buildEdmTypeField(
+  export const SINGLE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'SingleProperty',
     'Edm.Single',
     true

@@ -37,7 +37,7 @@ export declare class TestLvl2NestedComplexTypeField<
   SelectableT
 > {
   /** TODO */
-  private fb;
+  private _fieldBuilder;
   /**
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -46,7 +46,7 @@ export declare class TestLvl2NestedComplexTypeField<
     EntityT,
     'Edm.String',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+    import('@sap-cloud-sdk/core').IsSelectableField<this>
   >;
   /**
    * Creates an instance of TestLvl2NestedComplexTypeField.

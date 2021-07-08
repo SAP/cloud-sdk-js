@@ -4,7 +4,7 @@ import { EdmTypeShared } from '../edm-types';
 import { Entity } from '../entity';
 import { Filter } from '../filter';
 import { Time } from '../time';
-import { getEntityConstructor } from './complex-type-field';
+import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldOptions, FieldType } from './field';
 
@@ -175,5 +175,11 @@ export class EdmTypeField<
     value: FieldTypeByEdmType<EdmOrFieldT, NullableT>
   ): Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>> {
     return new Filter(this.fieldPath(), 'ne', value, this.edmType);
+  }
+
+  fieldPath(): string {
+    return this._fieldOf instanceof ComplexTypeField
+      ? `${this._fieldOf.fieldPath()}/${this._fieldName}`
+      : this._fieldName;
   }
 }

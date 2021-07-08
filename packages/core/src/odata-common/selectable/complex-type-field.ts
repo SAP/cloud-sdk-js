@@ -152,6 +152,6 @@ export function getEdmType<VersionT extends ODataVersion | 'any'>(
     return complexTypeNameOrEdmType;
   }
   throw new Error(
-    `Failed to get edm type based on '${complexTypeNameOrEdmType}' and '${edmTypeOrUndefined}'.`
+    `Failed to get EDM type based on '${complexTypeNameOrEdmType}' and '${edmTypeOrUndefined}'.`
   );
 }

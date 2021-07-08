@@ -6,11 +6,13 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV4,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4
+  deserializeComplexTypeV4,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -36,15 +38,19 @@ export function createTestComplexType2(json: any): TestComplexType2 {
  */
 export class TestComplexType2Field<
   EntityT extends EntityV4,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, TestComplexType2> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, TestComplexType2, NullableT, SelectableT> {
+  /** TODO */
+  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
+    this.fieldOf
+  );
   /**
    * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', false> = new EdmTypeField(
+  stringProperty = this.fb.buildEdmTypeField(
     'StringProperty',
-    this,
     'Edm.String',
     false
   );
@@ -58,9 +64,9 @@ export class TestComplexType2Field<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, fieldOf, TestComplexType2);
+    super(fieldName, fieldOf, TestComplexType2, fieldOptions);
   }
 }
 

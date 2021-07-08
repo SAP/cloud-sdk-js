@@ -7,12 +7,14 @@ import { AirportsRequestBuilder } from './AirportsRequestBuilder';
 import { AirportLocation, AirportLocationField } from './AirportLocation';
 import {
   AllFields,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
   FieldBuilder,
-  SelectableEdmField
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -86,14 +88,15 @@ export interface AirportsType {
   location: AirportLocation;
 }
 
-const fieldBuilder = new FieldBuilder(Airports);
-
 export namespace Airports {
+  const fb: FieldBuilder<Airports, Constructable<Airports>> = fieldBuilder(
+    Airports
+  );
   /**
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ICAO_CODE = fieldBuilder.buildEdmTypeField(
+  export const ICAO_CODE = fb.buildEdmTypeField(
     'IcaoCode',
     'Edm.String',
     false
@@ -102,16 +105,12 @@ export namespace Airports {
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME = fieldBuilder.buildEdmTypeField(
-    'Name',
-    'Edm.String',
-    false
-  );
+  export const NAME = fb.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Static representation of the [[iataCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const IATA_CODE = fieldBuilder.buildEdmTypeField(
+  export const IATA_CODE = fb.buildEdmTypeField(
     'IataCode',
     'Edm.String',
     false
@@ -120,7 +119,7 @@ export namespace Airports {
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LOCATION = fieldBuilder.buildComplexTypeField(
+  export const LOCATION = fb.buildComplexTypeField(
     'Location',
     AirportLocationField,
     false
@@ -129,8 +128,8 @@ export namespace Airports {
    * All fields of the Airports entity.
    */
   export const _allFields: Array<
-    | SelectableEdmField<Airports, 'Edm.String', false>
-    | AirportLocationField<Airports, false>
+    | EdmTypeField<Airports, 'Edm.String', false, true>
+    | AirportLocationField<Airports, false, true>
   > = [
     Airports.ICAO_CODE,
     Airports.NAME,
@@ -144,13 +143,18 @@ export namespace Airports {
   /**
    * All key fields of the Airports entity.
    */
-  export const _keyFields: Array<Field<Airports>> = [Airports.ICAO_CODE];
+  export const _keyFields: Array<Field<Airports, boolean, boolean>> = [
+    Airports.ICAO_CODE
+  ];
   /**
    * Mapping of all key field names to the respective static field property Airports.
    */
-  export const _keys: { [keys: string]: Field<Airports> } =
+  export const _keys: { [keys: string]: Field<Airports, boolean, boolean> } =
     Airports._keyFields.reduce(
-      (acc: { [keys: string]: Field<Airports> }, field: Field<Airports>) => {
+      (
+        acc: { [keys: string]: Field<Airports, boolean, boolean> },
+        field: Field<Airports, boolean, boolean>
+      ) => {
         acc[field._fieldName] = field;
         return acc;
       },

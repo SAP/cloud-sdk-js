@@ -103,13 +103,13 @@ var TestEntity3 = /** @class */ (function (_super) {
   return TestEntity3;
 })(core_1.EntityV4);
 exports.TestEntity3 = TestEntity3;
-var fieldBuilder = new core_1.FieldBuilder(TestEntity3);
 (function (TestEntity3) {
+  var fb = core_1.fieldBuilder(TestEntity3);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity3.KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
+  TestEntity3.KEY_PROPERTY_STRING = fb.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false
@@ -118,7 +118,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntity3);
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity3.ENUM_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntity3.ENUM_PROPERTY = fb.buildEdmTypeField(
     'EnumProperty',
     'Edm.Enum',
     true
@@ -127,7 +127,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntity3);
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity3.COMPLEX_TYPE_PROPERTY = fieldBuilder.buildComplexTypeField(
+  TestEntity3.COMPLEX_TYPE_PROPERTY = fb.buildComplexTypeField(
     'ComplexTypeProperty',
     TestComplexType2_1.TestComplexType2Field,
     true

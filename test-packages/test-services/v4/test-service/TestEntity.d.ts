@@ -8,13 +8,13 @@ import {
   AllFields,
   CollectionField,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
   OneToManyLink,
   OneToOneLink,
-  SelectableEdmField,
-  SelectableOrderableEdmField,
+  OrderableEdmTypeField,
   Time
 } from '@sap-cloud-sdk/core';
 /**
@@ -239,176 +239,197 @@ export declare namespace TestEntity {
    * Static representation of the [[keyPropertyGuid]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_GUID: SelectableEdmField<TestEntity, 'Edm.Guid', false>;
+  const KEY_PROPERTY_GUID: EdmTypeField<TestEntity, 'Edm.Guid', false, true>;
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_STRING: SelectableEdmField<
+  const KEY_PROPERTY_STRING: EdmTypeField<
     TestEntity,
     'Edm.String',
-    false
+    false,
+    true
   >;
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: SelectableEdmField<TestEntity, 'Edm.String', true>;
+  const STRING_PROPERTY: EdmTypeField<TestEntity, 'Edm.String', true, true>;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: SelectableEdmField<TestEntity, 'Edm.Boolean', true>;
+  const BOOLEAN_PROPERTY: EdmTypeField<TestEntity, 'Edm.Boolean', true, true>;
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GUID_PROPERTY: SelectableEdmField<TestEntity, 'Edm.Guid', true>;
+  const GUID_PROPERTY: EdmTypeField<TestEntity, 'Edm.Guid', true, true>;
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_16_PROPERTY: SelectableOrderableEdmField<
+  const INT_16_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Int16',
+    true,
     true
   >;
   /**
    * Static representation of the [[int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_32_PROPERTY: SelectableOrderableEdmField<
+  const INT_32_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Int32',
+    true,
     true
   >;
   /**
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_64_PROPERTY: SelectableOrderableEdmField<
+  const INT_64_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Int64',
+    true,
     true
   >;
   /**
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DECIMAL_PROPERTY: SelectableOrderableEdmField<
+  const DECIMAL_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Decimal',
+    true,
     true
   >;
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const SINGLE_PROPERTY: SelectableOrderableEdmField<
+  const SINGLE_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Single',
+    true,
     true
   >;
   /**
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DOUBLE_PROPERTY: SelectableOrderableEdmField<
+  const DOUBLE_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Double',
+    true,
     true
   >;
   /**
    * Static representation of the [[floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const FLOAT_PROPERTY: SelectableOrderableEdmField<
+  const FLOAT_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Float',
+    true,
     true
   >;
   /**
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const TIME_OF_DAY_PROPERTY: SelectableOrderableEdmField<
+  const TIME_OF_DAY_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.TimeOfDay',
+    true,
     true
   >;
   /**
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DATE_PROPERTY: SelectableOrderableEdmField<
+  const DATE_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Date',
+    true,
     true
   >;
   /**
    * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DATE_TIME_OFF_SET_PROPERTY: SelectableOrderableEdmField<
+  const DATE_TIME_OFF_SET_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.DateTimeOffset',
+    true,
     true
   >;
   /**
    * Static representation of the [[durationProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const DURATION_PROPERTY: SelectableOrderableEdmField<
+  const DURATION_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Duration',
+    true,
     true
   >;
   /**
    * Static representation of the [[byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BYTE_PROPERTY: SelectableOrderableEdmField<
+  const BYTE_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.Byte',
+    true,
     true
   >;
   /**
    * Static representation of the [[sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const S_BYTE_PROPERTY: SelectableOrderableEdmField<
+  const S_BYTE_PROPERTY: OrderableEdmTypeField<
     TestEntity,
     'Edm.SByte',
+    true,
     true
   >;
   /**
    * Static representation of the [[geographyPointProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GEOGRAPHY_POINT_PROPERTY: SelectableEdmField<
+  const GEOGRAPHY_POINT_PROPERTY: EdmTypeField<
     TestEntity,
     'Edm.Any',
+    true,
     true
   >;
   /**
    * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: SelectableEdmField<
+  const SOMETHING_THE_SDK_DOES_NOT_SUPPORT: EdmTypeField<
     TestEntity,
     'Edm.Any',
+    true,
     true
   >;
   /**
    * Static representation of the [[collectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const COLLECTION_PROPERTY: CollectionField<TestEntity, 'Edm.String', true>;
+  const COLLECTION_PROPERTY: CollectionField<
+    TestEntity,
+    'Edm.String',
+    true,
+    true
+  >;
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity, true>;
+  const COMPLEX_TYPE_PROPERTY: TestComplexTypeField<TestEntity, true, true>;
   /**
    * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -416,27 +437,34 @@ export declare namespace TestEntity {
   const COMPLEX_TYPE_COLLECTION_PROPERTY: CollectionField<
     TestEntity,
     TestComplexType,
+    true,
     true
   >;
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ENUM_PROPERTY: SelectableEdmField<TestEntity, 'Edm.Enum', true>;
+  const ENUM_PROPERTY: EdmTypeField<TestEntity, 'Edm.Enum', true, true>;
   /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ENUM_PROPERTY_WITH_ONE_MEMBER: SelectableEdmField<
+  const ENUM_PROPERTY_WITH_ONE_MEMBER: EdmTypeField<
     TestEntity,
     'Edm.Enum',
+    true,
     true
   >;
   /**
    * Static representation of the [[enumCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ENUM_COLLECTION_PROPERTY: CollectionField<TestEntity, 'Edm.Enum', true>;
+  const ENUM_COLLECTION_PROPERTY: CollectionField<
+    TestEntity,
+    'Edm.Enum',
+    true,
+    true
+  >;
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -456,30 +484,30 @@ export declare namespace TestEntity {
    * All fields of the TestEntity entity.
    */
   const _allFields: Array<
-    | SelectableEdmField<TestEntity, 'Edm.Guid', false>
-    | SelectableEdmField<TestEntity, 'Edm.String', false>
-    | SelectableEdmField<TestEntity, 'Edm.String', true>
-    | SelectableEdmField<TestEntity, 'Edm.Boolean', true>
-    | SelectableEdmField<TestEntity, 'Edm.Guid', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Int16', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Int32', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Int64', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Decimal', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Single', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Double', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Float', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.TimeOfDay', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Date', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.DateTimeOffset', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Duration', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.Byte', true>
-    | SelectableOrderableEdmField<TestEntity, 'Edm.SByte', true>
-    | SelectableEdmField<TestEntity, 'Edm.Any', true>
-    | CollectionField<TestEntity, 'Edm.String', true>
-    | TestComplexTypeField<TestEntity, true>
-    | CollectionField<TestEntity, TestComplexType, true>
-    | SelectableEdmField<TestEntity, 'Edm.Enum', true>
-    | CollectionField<TestEntity, 'Edm.Enum', true>
+    | EdmTypeField<TestEntity, 'Edm.Guid', false, true>
+    | EdmTypeField<TestEntity, 'Edm.String', false, true>
+    | EdmTypeField<TestEntity, 'Edm.String', true, true>
+    | EdmTypeField<TestEntity, 'Edm.Boolean', true, true>
+    | EdmTypeField<TestEntity, 'Edm.Guid', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Int16', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Int32', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Int64', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Decimal', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Single', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Double', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Float', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.TimeOfDay', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Date', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.DateTimeOffset', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Duration', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Byte', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.SByte', true, true>
+    | EdmTypeField<TestEntity, 'Edm.Any', true, true>
+    | CollectionField<TestEntity, 'Edm.String', true, true>
+    | TestComplexTypeField<TestEntity, true, true>
+    | CollectionField<TestEntity, TestComplexType, true, true>
+    | EdmTypeField<TestEntity, 'Edm.Enum', true, true>
+    | CollectionField<TestEntity, 'Edm.Enum', true, true>
     | OneToManyLink<TestEntity, TestEntityMultiLink>
     | OneToOneLink<TestEntity, TestEntitySingleLink>
   >;
@@ -490,12 +518,12 @@ export declare namespace TestEntity {
   /**
    * All key fields of the TestEntity entity.
    */
-  const _keyFields: Array<Field<TestEntity>>;
+  const _keyFields: Array<Field<TestEntity, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */
   const _keys: {
-    [keys: string]: Field<TestEntity>;
+    [keys: string]: Field<TestEntity, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntity.d.ts.map

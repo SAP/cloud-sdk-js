@@ -10,15 +10,17 @@ import { PersonGender } from './PersonGender';
 import {
   AllFields,
   CollectionField,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
   FieldBuilder,
   OneToManyLink,
   OneToOneLink,
-  SelectableEdmField,
-  SelectableOrderableEdmField
+  OrderableEdmTypeField,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -122,14 +124,13 @@ export interface PeopleType {
   photo?: PhotosType | null;
 }
 
-const fieldBuilder = new FieldBuilder(People);
-
 export namespace People {
+  const fb: FieldBuilder<People, Constructable<People>> = fieldBuilder(People);
   /**
    * Static representation of the [[userName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const USER_NAME = fieldBuilder.buildEdmTypeField(
+  export const USER_NAME = fb.buildEdmTypeField(
     'UserName',
     'Edm.String',
     false
@@ -138,7 +139,7 @@ export namespace People {
    * Static representation of the [[firstName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const FIRST_NAME = fieldBuilder.buildEdmTypeField(
+  export const FIRST_NAME = fb.buildEdmTypeField(
     'FirstName',
     'Edm.String',
     false
@@ -147,7 +148,7 @@ export namespace People {
    * Static representation of the [[lastName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const LAST_NAME = fieldBuilder.buildEdmTypeField(
+  export const LAST_NAME = fb.buildEdmTypeField(
     'LastName',
     'Edm.String',
     false
@@ -156,16 +157,12 @@ export namespace People {
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const EMAILS = fieldBuilder.buildCollectionField(
-    'Emails',
-    'Edm.String',
-    true
-  );
+  export const EMAILS = fb.buildCollectionField('Emails', 'Edm.String', true);
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ADDRESS_INFO = fieldBuilder.buildCollectionField(
+  export const ADDRESS_INFO = fb.buildCollectionField(
     'AddressInfo',
     Location,
     true
@@ -174,16 +171,12 @@ export namespace People {
    * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GENDER = fieldBuilder.buildEdmTypeField(
-    'Gender',
-    'Edm.Enum',
-    true
-  );
+  export const GENDER = fb.buildEdmTypeField('Gender', 'Edm.Enum', true);
   /**
    * Static representation of the [[concurrency]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const CONCURRENCY = fieldBuilder.buildEdmTypeField(
+  export const CONCURRENCY = fb.buildEdmTypeField(
     'Concurrency',
     'Edm.Int64',
     false
@@ -210,11 +203,11 @@ export namespace People {
    * All fields of the People entity.
    */
   export const _allFields: Array<
-    | SelectableEdmField<People, 'Edm.String', false>
-    | CollectionField<People, 'Edm.String', true>
-    | CollectionField<People, Location, true>
-    | SelectableEdmField<People, 'Edm.Enum', true>
-    | SelectableOrderableEdmField<People, 'Edm.Int64', false>
+    | EdmTypeField<People, 'Edm.String', false, true>
+    | CollectionField<People, 'Edm.String', true, true>
+    | CollectionField<People, Location, true, true>
+    | EdmTypeField<People, 'Edm.Enum', true, true>
+    | OrderableEdmTypeField<People, 'Edm.Int64', false, true>
     | OneToManyLink<People, People>
     | OneToOneLink<People, Photos>
   > = [
@@ -235,13 +228,18 @@ export namespace People {
   /**
    * All key fields of the People entity.
    */
-  export const _keyFields: Array<Field<People>> = [People.USER_NAME];
+  export const _keyFields: Array<Field<People, boolean, boolean>> = [
+    People.USER_NAME
+  ];
   /**
    * Mapping of all key field names to the respective static field property People.
    */
-  export const _keys: { [keys: string]: Field<People> } =
+  export const _keys: { [keys: string]: Field<People, boolean, boolean> } =
     People._keyFields.reduce(
-      (acc: { [keys: string]: Field<People> }, field: Field<People>) => {
+      (
+        acc: { [keys: string]: Field<People, boolean, boolean> },
+        field: Field<People, boolean, boolean>
+      ) => {
         acc[field._fieldName] = field;
         return acc;
       },

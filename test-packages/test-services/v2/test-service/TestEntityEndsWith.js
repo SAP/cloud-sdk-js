@@ -102,13 +102,13 @@ var TestEntityEndsWith = /** @class */ (function (_super) {
   return TestEntityEndsWith;
 })(core_1.EntityV2);
 exports.TestEntityEndsWith = TestEntityEndsWith;
-var fieldBuilder = new core_1.FieldBuilder(TestEntityEndsWith);
 (function (TestEntityEndsWith) {
+  var fb = core_1.fieldBuilder(TestEntityEndsWith);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityEndsWith.KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntityEndsWith.KEY_PROPERTY = fb.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false

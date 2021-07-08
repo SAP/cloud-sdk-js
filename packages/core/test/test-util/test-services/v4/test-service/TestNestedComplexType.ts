@@ -10,11 +10,13 @@ import {
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV4,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4
+  deserializeComplexTypeV4,
+  fieldBuilder
 } from '../../../../../src';
 
 /**
@@ -46,15 +48,24 @@ export function createTestNestedComplexType(json: any): TestNestedComplexType {
  */
 export class TestNestedComplexTypeField<
   EntityT extends EntityV4,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, TestNestedComplexType> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<
+  EntityT,
+  TestNestedComplexType,
+  NullableT,
+  SelectableT
+> {
+  /** TODO */
+  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
+    this.fieldOf
+  );
   /**
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', true> = new EdmTypeField(
+  stringProperty = this.fb.buildEdmTypeField(
     'StringProperty',
-    this,
     'Edm.String',
     true
   );
@@ -62,8 +73,11 @@ export class TestNestedComplexTypeField<
    * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty: TestLvl2NestedComplexTypeField<EntityT, true> =
-    new TestLvl2NestedComplexTypeField('ComplexTypeProperty', this, true);
+  complexTypeProperty = this.fb.buildComplexTypeField(
+    'ComplexTypeProperty',
+    TestLvl2NestedComplexTypeField,
+    true
+  );
 
   /**
    * Creates an instance of TestNestedComplexTypeField.
@@ -74,9 +88,9 @@ export class TestNestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, fieldOf, TestNestedComplexType);
+    super(fieldName, fieldOf, TestNestedComplexType, fieldOptions);
   }
 }
 

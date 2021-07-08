@@ -102,13 +102,13 @@ var TestEntityLink = /** @class */ (function (_super) {
   return TestEntityLink;
 })(core_1.EntityV4);
 exports.TestEntityLink = TestEntityLink;
-var fieldBuilder = new core_1.FieldBuilder(TestEntityLink);
 (function (TestEntityLink) {
+  var fb = core_1.fieldBuilder(TestEntityLink);
   /**
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLink.KEY_TEST_ENTITY_LINK = fieldBuilder.buildEdmTypeField(
+  TestEntityLink.KEY_TEST_ENTITY_LINK = fb.buildEdmTypeField(
     'KeyTestEntityLink',
     'Edm.Int32',
     false
@@ -117,7 +117,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntityLink);
    * Static representation of the [[keyToTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLink.KEY_TO_TEST_ENTITY = fieldBuilder.buildEdmTypeField(
+  TestEntityLink.KEY_TO_TEST_ENTITY = fb.buildEdmTypeField(
     'KeyToTestEntity',
     'Edm.Int32',
     false
@@ -126,7 +126,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntityLink);
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityLink.STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntityLink.STRING_PROPERTY = fb.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true

@@ -107,13 +107,13 @@ var TestEntityCircularLinkParent = /** @class */ (function (_super) {
 })(core_1.EntityV2);
 exports.TestEntityCircularLinkParent = TestEntityCircularLinkParent;
 var TestEntityCircularLinkChild_1 = require('./TestEntityCircularLinkChild');
-var fieldBuilder = new core_1.FieldBuilder(TestEntityCircularLinkParent);
 (function (TestEntityCircularLinkParent) {
+  var fb = core_1.fieldBuilder(TestEntityCircularLinkParent);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityCircularLinkParent.KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntityCircularLinkParent.KEY_PROPERTY = fb.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false

@@ -2,11 +2,11 @@ import { TestEntityLinkRequestBuilder } from './TestEntityLinkRequestBuilder';
 import {
   AllFields,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
-  SelectableEdmField,
-  SelectableOrderableEdmField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
@@ -71,31 +71,33 @@ export declare namespace TestEntityLink {
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_TEST_ENTITY_LINK: SelectableOrderableEdmField<
+  const KEY_TEST_ENTITY_LINK: OrderableEdmTypeField<
     TestEntityLink,
     'Edm.Int32',
-    false
+    false,
+    true
   >;
   /**
    * Static representation of the [[keyToTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_TO_TEST_ENTITY: SelectableOrderableEdmField<
+  const KEY_TO_TEST_ENTITY: OrderableEdmTypeField<
     TestEntityLink,
     'Edm.Int32',
-    false
+    false,
+    true
   >;
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: SelectableEdmField<TestEntityLink, 'Edm.String', true>;
+  const STRING_PROPERTY: EdmTypeField<TestEntityLink, 'Edm.String', true, true>;
   /**
    * All fields of the TestEntityLink entity.
    */
   const _allFields: Array<
-    | SelectableOrderableEdmField<TestEntityLink, 'Edm.Int32', false>
-    | SelectableEdmField<TestEntityLink, 'Edm.String', true>
+    | OrderableEdmTypeField<TestEntityLink, 'Edm.Int32', false, true>
+    | EdmTypeField<TestEntityLink, 'Edm.String', true, true>
   >;
   /**
    * All fields selector.
@@ -104,12 +106,12 @@ export declare namespace TestEntityLink {
   /**
    * All key fields of the TestEntityLink entity.
    */
-  const _keyFields: Array<Field<TestEntityLink>>;
+  const _keyFields: Array<Field<TestEntityLink, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntityLink.
    */
   const _keys: {
-    [keys: string]: Field<TestEntityLink>;
+    [keys: string]: Field<TestEntityLink, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntityLink.d.ts.map

@@ -6,15 +6,17 @@
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
   Field,
   FieldBuilder,
   Link,
   OneToOneLink,
-  SelectableEdmField,
-  SelectableOrderableEdmField
+  OrderableEdmTypeField,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -123,14 +125,16 @@ export interface TestEntitySingleLinkType {
   toSingleLink?: TestEntityLvl2SingleLinkType | null;
 }
 
-const fieldBuilder = new FieldBuilder(TestEntitySingleLink);
-
 export namespace TestEntitySingleLink {
+  const fb: FieldBuilder<
+    TestEntitySingleLink,
+    Constructable<TestEntitySingleLink>
+  > = fieldBuilder(TestEntitySingleLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const KEY_PROPERTY = fb.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false
@@ -139,7 +143,7 @@ export namespace TestEntitySingleLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const STRING_PROPERTY = fb.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -148,7 +152,7 @@ export namespace TestEntitySingleLink {
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const BOOLEAN_PROPERTY = fb.buildEdmTypeField(
     'BooleanProperty',
     'Edm.Boolean',
     true
@@ -157,7 +161,7 @@ export namespace TestEntitySingleLink {
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const GUID_PROPERTY = fb.buildEdmTypeField(
     'GuidProperty',
     'Edm.Guid',
     true
@@ -166,7 +170,7 @@ export namespace TestEntitySingleLink {
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const INT_16_PROPERTY = fb.buildEdmTypeField(
     'Int16Property',
     'Edm.Int16',
     true
@@ -195,11 +199,11 @@ export namespace TestEntitySingleLink {
    * All fields of the TestEntitySingleLink entity.
    */
   export const _allFields: Array<
-    | SelectableEdmField<TestEntitySingleLink, 'Edm.String', false>
-    | SelectableEdmField<TestEntitySingleLink, 'Edm.String', true>
-    | SelectableEdmField<TestEntitySingleLink, 'Edm.Boolean', true>
-    | SelectableEdmField<TestEntitySingleLink, 'Edm.Guid', true>
-    | SelectableOrderableEdmField<TestEntitySingleLink, 'Edm.Int16', true>
+    | EdmTypeField<TestEntitySingleLink, 'Edm.String', false, true>
+    | EdmTypeField<TestEntitySingleLink, 'Edm.String', true, true>
+    | EdmTypeField<TestEntitySingleLink, 'Edm.Boolean', true, true>
+    | EdmTypeField<TestEntitySingleLink, 'Edm.Guid', true, true>
+    | OrderableEdmTypeField<TestEntitySingleLink, 'Edm.Int16', true, true>
     | Link<TestEntitySingleLink, TestEntityLvl2MultiLink>
     | OneToOneLink<TestEntitySingleLink, TestEntityLvl2SingleLink>
   > = [
@@ -221,21 +225,22 @@ export namespace TestEntitySingleLink {
   /**
    * All key fields of the TestEntitySingleLink entity.
    */
-  export const _keyFields: Array<Field<TestEntitySingleLink>> = [
-    TestEntitySingleLink.KEY_PROPERTY
-  ];
+  export const _keyFields: Array<
+    Field<TestEntitySingleLink, boolean, boolean>
+  > = [TestEntitySingleLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntitySingleLink.
    */
-  export const _keys: { [keys: string]: Field<TestEntitySingleLink> } =
-    TestEntitySingleLink._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<TestEntitySingleLink> },
-        field: Field<TestEntitySingleLink>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: {
+    [keys: string]: Field<TestEntitySingleLink, boolean, boolean>;
+  } = TestEntitySingleLink._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntitySingleLink, boolean, boolean> },
+      field: Field<TestEntitySingleLink, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

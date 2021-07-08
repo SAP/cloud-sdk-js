@@ -60,18 +60,18 @@ var TestComplexType1Field = /** @class */ (function (_super) {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  function TestComplexType1Field(fieldName, fieldOf, isNullable) {
-    if (isNullable === void 0) {
-      isNullable = false;
-    }
-    var _this = _super.call(this, fieldName, fieldOf, TestComplexType1) || this;
+  function TestComplexType1Field(fieldName, fieldOf, fieldOptions) {
+    var _this =
+      _super.call(this, fieldName, fieldOf, TestComplexType1, fieldOptions) ||
+      this;
+    /** TODO */
+    _this.fb = core_1.fieldBuilder(_this.fieldOf);
     /**
      * Representation of the [[TestComplexType1.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.stringProperty = new core_1.EdmTypeField(
+    _this.stringProperty = _this.fb.buildEdmTypeField(
       'StringProperty',
-      _this,
       'Edm.String',
       false
     );

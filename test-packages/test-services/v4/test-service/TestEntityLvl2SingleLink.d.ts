@@ -2,11 +2,11 @@ import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLi
 import {
   AllFields,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
-  SelectableEdmField,
-  SelectableOrderableEdmField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
@@ -90,56 +90,61 @@ export declare namespace TestEntityLvl2SingleLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: SelectableEdmField<
+  const STRING_PROPERTY: EdmTypeField<
     TestEntityLvl2SingleLink,
     'Edm.String',
+    true,
     true
   >;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: SelectableEdmField<
+  const BOOLEAN_PROPERTY: EdmTypeField<
     TestEntityLvl2SingleLink,
     'Edm.Boolean',
+    true,
     true
   >;
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GUID_PROPERTY: SelectableEdmField<
+  const GUID_PROPERTY: EdmTypeField<
     TestEntityLvl2SingleLink,
     'Edm.Guid',
+    true,
     true
   >;
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_16_PROPERTY: SelectableOrderableEdmField<
+  const INT_16_PROPERTY: OrderableEdmTypeField<
     TestEntityLvl2SingleLink,
     'Edm.Int16',
+    true,
     true
   >;
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: SelectableEdmField<
+  const KEY_PROPERTY: EdmTypeField<
     TestEntityLvl2SingleLink,
     'Edm.String',
-    false
+    false,
+    true
   >;
   /**
    * All fields of the TestEntityLvl2SingleLink entity.
    */
   const _allFields: Array<
-    | SelectableEdmField<TestEntityLvl2SingleLink, 'Edm.String', true>
-    | SelectableEdmField<TestEntityLvl2SingleLink, 'Edm.Boolean', true>
-    | SelectableEdmField<TestEntityLvl2SingleLink, 'Edm.Guid', true>
-    | SelectableOrderableEdmField<TestEntityLvl2SingleLink, 'Edm.Int16', true>
-    | SelectableEdmField<TestEntityLvl2SingleLink, 'Edm.String', false>
+    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.String', true, true>
+    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.Boolean', true, true>
+    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.Guid', true, true>
+    | OrderableEdmTypeField<TestEntityLvl2SingleLink, 'Edm.Int16', true, true>
+    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.String', false, true>
   >;
   /**
    * All fields selector.
@@ -148,12 +153,12 @@ export declare namespace TestEntityLvl2SingleLink {
   /**
    * All key fields of the TestEntityLvl2SingleLink entity.
    */
-  const _keyFields: Array<Field<TestEntityLvl2SingleLink>>;
+  const _keyFields: Array<Field<TestEntityLvl2SingleLink, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink.
    */
   const _keys: {
-    [keys: string]: Field<TestEntityLvl2SingleLink>;
+    [keys: string]: Field<TestEntityLvl2SingleLink, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntityLvl2SingleLink.d.ts.map

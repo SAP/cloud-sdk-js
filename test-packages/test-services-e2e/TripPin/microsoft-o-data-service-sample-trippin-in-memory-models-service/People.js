@@ -105,49 +105,33 @@ var People = /** @class */ (function (_super) {
 })(core_1.EntityV4);
 exports.People = People;
 var Photos_1 = require('./Photos');
-var fieldBuilder = new core_1.FieldBuilder(People);
 (function (People) {
+  var fb = core_1.fieldBuilder(People);
   /**
    * Static representation of the [[userName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.USER_NAME = fieldBuilder.buildEdmTypeField(
-    'UserName',
-    'Edm.String',
-    false
-  );
+  People.USER_NAME = fb.buildEdmTypeField('UserName', 'Edm.String', false);
   /**
    * Static representation of the [[firstName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.FIRST_NAME = fieldBuilder.buildEdmTypeField(
-    'FirstName',
-    'Edm.String',
-    false
-  );
+  People.FIRST_NAME = fb.buildEdmTypeField('FirstName', 'Edm.String', false);
   /**
    * Static representation of the [[lastName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.LAST_NAME = fieldBuilder.buildEdmTypeField(
-    'LastName',
-    'Edm.String',
-    false
-  );
+  People.LAST_NAME = fb.buildEdmTypeField('LastName', 'Edm.String', false);
   /**
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.EMAILS = fieldBuilder.buildCollectionField(
-    'Emails',
-    'Edm.String',
-    true
-  );
+  People.EMAILS = fb.buildCollectionField('Emails', 'Edm.String', true);
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.ADDRESS_INFO = fieldBuilder.buildCollectionField(
+  People.ADDRESS_INFO = fb.buildCollectionField(
     'AddressInfo',
     Location_1.Location,
     true
@@ -156,16 +140,12 @@ var fieldBuilder = new core_1.FieldBuilder(People);
    * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.GENDER = fieldBuilder.buildEdmTypeField('Gender', 'Edm.Enum', true);
+  People.GENDER = fb.buildEdmTypeField('Gender', 'Edm.Enum', true);
   /**
    * Static representation of the [[concurrency]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.CONCURRENCY = fieldBuilder.buildEdmTypeField(
-    'Concurrency',
-    'Edm.Int64',
-    false
-  );
+  People.CONCURRENCY = fb.buildEdmTypeField('Concurrency', 'Edm.Int64', false);
   /**
    * Static representation of the one-to-many navigation property [[friends]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

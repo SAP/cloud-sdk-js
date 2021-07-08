@@ -2,10 +2,10 @@ import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLi
 import {
   AllFields,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  Field,
-  SelectableEdmField
+  Field
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
@@ -64,16 +64,17 @@ export declare namespace TestEntityOtherMultiLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: SelectableEdmField<
+  const KEY_PROPERTY: EdmTypeField<
     TestEntityOtherMultiLink,
     'Edm.String',
-    false
+    false,
+    true
   >;
   /**
    * All fields of the TestEntityOtherMultiLink entity.
    */
   const _allFields: Array<
-    SelectableEdmField<TestEntityOtherMultiLink, 'Edm.String', false>
+    EdmTypeField<TestEntityOtherMultiLink, 'Edm.String', false, true>
   >;
   /**
    * All fields selector.
@@ -82,12 +83,12 @@ export declare namespace TestEntityOtherMultiLink {
   /**
    * All key fields of the TestEntityOtherMultiLink entity.
    */
-  const _keyFields: Array<Field<TestEntityOtherMultiLink>>;
+  const _keyFields: Array<Field<TestEntityOtherMultiLink, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
    */
   const _keys: {
-    [keys: string]: Field<TestEntityOtherMultiLink>;
+    [keys: string]: Field<TestEntityOtherMultiLink, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntityOtherMultiLink.d.ts.map

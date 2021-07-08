@@ -2,8 +2,8 @@ import { City, CityField } from './City';
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV4,
+  FieldOptions,
   FieldType,
   PropertyMetadata
 } from '@sap-cloud-sdk/core';
@@ -34,23 +34,40 @@ export declare function createAirportLocation(json: any): AirportLocation;
  */
 export declare class AirportLocationField<
   EntityT extends EntityV4,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, AirportLocation> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, AirportLocation, NullableT, SelectableT> {
+  /** TODO */
+  private fb;
   /**
    * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  loc: EdmTypeField<EntityT, 'Edm.Any', false>;
+  loc: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+    EntityT,
+    'Edm.Any',
+    false,
+    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+  >;
   /**
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, 'Edm.String', false>;
+  address: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+    EntityT,
+    'Edm.String',
+    false,
+    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+  >;
   /**
    * Representation of the [[AirportLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT, false>;
+  city: CityField<
+    EntityT,
+    false,
+    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+  >;
   /**
    * Creates an instance of AirportLocationField.
    *
@@ -60,7 +77,7 @@ export declare class AirportLocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable?: NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   );
 }
 export declare namespace AirportLocation {

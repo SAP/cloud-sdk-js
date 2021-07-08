@@ -2,11 +2,11 @@ import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularL
 import {
   AllFields,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
-  OneToOneLink,
-  SelectableEdmField
+  OneToOneLink
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
@@ -74,10 +74,11 @@ export declare namespace TestEntityCircularLinkChild {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: SelectableEdmField<
+  const KEY_PROPERTY: EdmTypeField<
     TestEntityCircularLinkChild,
     'Edm.String',
-    false
+    false,
+    true
   >;
   /**
    * Static representation of the one-to-one navigation property [[toParent]] for query construction.
@@ -91,7 +92,7 @@ export declare namespace TestEntityCircularLinkChild {
    * All fields of the TestEntityCircularLinkChild entity.
    */
   const _allFields: Array<
-    | SelectableEdmField<TestEntityCircularLinkChild, 'Edm.String', false>
+    | EdmTypeField<TestEntityCircularLinkChild, 'Edm.String', false, true>
     | OneToOneLink<TestEntityCircularLinkChild, TestEntityCircularLinkParent>
   >;
   /**
@@ -101,12 +102,12 @@ export declare namespace TestEntityCircularLinkChild {
   /**
    * All key fields of the TestEntityCircularLinkChild entity.
    */
-  const _keyFields: Array<Field<TestEntityCircularLinkChild>>;
+  const _keyFields: Array<Field<TestEntityCircularLinkChild, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntityCircularLinkChild.
    */
   const _keys: {
-    [keys: string]: Field<TestEntityCircularLinkChild>;
+    [keys: string]: Field<TestEntityCircularLinkChild, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntityCircularLinkChild.d.ts.map

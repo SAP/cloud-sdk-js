@@ -61,31 +61,31 @@ var AirportLocationField = /** @class */ (function (_super) {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  function AirportLocationField(fieldName, fieldOf, isNullable) {
-    if (isNullable === void 0) {
-      isNullable = false;
-    }
-    var _this = _super.call(this, fieldName, fieldOf, AirportLocation) || this;
+  function AirportLocationField(fieldName, fieldOf, fieldOptions) {
+    var _this =
+      _super.call(this, fieldName, fieldOf, AirportLocation, fieldOptions) ||
+      this;
+    /** TODO */
+    _this.fb = core_1.fieldBuilder(_this.fieldOf);
     /**
      * Representation of the [[AirportLocation.loc]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.loc = new core_1.EdmTypeField('Loc', _this, 'Edm.Any', false);
+    _this.loc = _this.fb.buildEdmTypeField('Loc', 'Edm.Any', false);
     /**
      * Representation of the [[AirportLocation.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.address = new core_1.EdmTypeField(
-      'Address',
-      _this,
-      'Edm.String',
-      false
-    );
+    _this.address = _this.fb.buildEdmTypeField('Address', 'Edm.String', false);
     /**
      * Representation of the [[AirportLocation.city]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.city = new City_1.CityField('City', _this, false);
+    _this.city = _this.fb.buildComplexTypeField(
+      'City',
+      City_1.CityField,
+      false
+    );
     return _this;
   }
   return AirportLocationField;

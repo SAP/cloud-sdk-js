@@ -104,13 +104,13 @@ var TestEntitySingleLink = /** @class */ (function (_super) {
 exports.TestEntitySingleLink = TestEntitySingleLink;
 var TestEntityLvl2MultiLink_1 = require('./TestEntityLvl2MultiLink');
 var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
-var fieldBuilder = new core_1.FieldBuilder(TestEntitySingleLink);
 (function (TestEntitySingleLink) {
+  var fb = core_1.fieldBuilder(TestEntitySingleLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntitySingleLink.KEY_PROPERTY = fb.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false
@@ -119,7 +119,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntitySingleLink);
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntitySingleLink.STRING_PROPERTY = fb.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -128,7 +128,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntitySingleLink);
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.BOOLEAN_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntitySingleLink.BOOLEAN_PROPERTY = fb.buildEdmTypeField(
     'BooleanProperty',
     'Edm.Boolean',
     true
@@ -137,7 +137,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntitySingleLink);
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntitySingleLink.GUID_PROPERTY = fb.buildEdmTypeField(
     'GuidProperty',
     'Edm.Guid',
     true
@@ -146,7 +146,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntitySingleLink);
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.INT_16_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntitySingleLink.INT_16_PROPERTY = fb.buildEdmTypeField(
     'Int16Property',
     'Edm.Int16',
     true

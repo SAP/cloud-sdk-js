@@ -60,19 +60,23 @@ var TestComplexBaseTypeField = /** @class */ (function (_super) {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  function TestComplexBaseTypeField(fieldName, fieldOf, isNullable) {
-    if (isNullable === void 0) {
-      isNullable = false;
-    }
+  function TestComplexBaseTypeField(fieldName, fieldOf, fieldOptions) {
     var _this =
-      _super.call(this, fieldName, fieldOf, TestComplexBaseType) || this;
+      _super.call(
+        this,
+        fieldName,
+        fieldOf,
+        TestComplexBaseType,
+        fieldOptions
+      ) || this;
+    /** TODO */
+    _this.fb = core_1.fieldBuilder(_this.fieldOf);
     /**
      * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.baseStringProperty = new core_1.EdmTypeField(
+    _this.baseStringProperty = _this.fb.buildEdmTypeField(
       'BaseStringProperty',
-      _this,
       'Edm.String',
       true
     );

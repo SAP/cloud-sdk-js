@@ -6,12 +6,14 @@
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
   Field,
   FieldBuilder,
-  SelectableEdmField
+  fieldBuilder
 } from '../../../../../src';
 
 /**
@@ -75,14 +77,16 @@ export interface MultiSchemaTestEntityType {
   keyProperty: string;
 }
 
-const fieldBuilder = new FieldBuilder(MultiSchemaTestEntity);
-
 export namespace MultiSchemaTestEntity {
+  const fb: FieldBuilder<
+    MultiSchemaTestEntity,
+    Constructable<MultiSchemaTestEntity>
+  > = fieldBuilder(MultiSchemaTestEntity);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const KEY_PROPERTY = fb.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false
@@ -91,7 +95,7 @@ export namespace MultiSchemaTestEntity {
    * All fields of the MultiSchemaTestEntity entity.
    */
   export const _allFields: Array<
-    SelectableEdmField<MultiSchemaTestEntity, 'Edm.String', false>
+    EdmTypeField<MultiSchemaTestEntity, 'Edm.String', false, true>
   > = [MultiSchemaTestEntity.KEY_PROPERTY];
   /**
    * All fields selector.
@@ -103,21 +107,22 @@ export namespace MultiSchemaTestEntity {
   /**
    * All key fields of the MultiSchemaTestEntity entity.
    */
-  export const _keyFields: Array<Field<MultiSchemaTestEntity>> = [
-    MultiSchemaTestEntity.KEY_PROPERTY
-  ];
+  export const _keyFields: Array<
+    Field<MultiSchemaTestEntity, boolean, boolean>
+  > = [MultiSchemaTestEntity.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
    */
-  export const _keys: { [keys: string]: Field<MultiSchemaTestEntity> } =
-    MultiSchemaTestEntity._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<MultiSchemaTestEntity> },
-        field: Field<MultiSchemaTestEntity>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: {
+    [keys: string]: Field<MultiSchemaTestEntity, boolean, boolean>;
+  } = MultiSchemaTestEntity._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<MultiSchemaTestEntity, boolean, boolean> },
+      field: Field<MultiSchemaTestEntity, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

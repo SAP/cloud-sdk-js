@@ -6,12 +6,14 @@
 import { TestEntityLvl3MultiLinkRequestBuilder } from './TestEntityLvl3MultiLinkRequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
   FieldBuilder,
-  SelectableEdmField
+  fieldBuilder
 } from '../../../../../src';
 
 /**
@@ -91,14 +93,16 @@ export interface TestEntityLvl3MultiLinkType {
   keyProperty: string;
 }
 
-const fieldBuilder = new FieldBuilder(TestEntityLvl3MultiLink);
-
 export namespace TestEntityLvl3MultiLink {
+  const fb: FieldBuilder<
+    TestEntityLvl3MultiLink,
+    Constructable<TestEntityLvl3MultiLink>
+  > = fieldBuilder(TestEntityLvl3MultiLink);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const STRING_PROPERTY = fb.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -107,7 +111,7 @@ export namespace TestEntityLvl3MultiLink {
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const GUID_PROPERTY = fb.buildEdmTypeField(
     'GuidProperty',
     'Edm.Guid',
     true
@@ -116,7 +120,7 @@ export namespace TestEntityLvl3MultiLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const KEY_PROPERTY = fb.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false
@@ -125,9 +129,9 @@ export namespace TestEntityLvl3MultiLink {
    * All fields of the TestEntityLvl3MultiLink entity.
    */
   export const _allFields: Array<
-    | SelectableEdmField<TestEntityLvl3MultiLink, 'Edm.String', true>
-    | SelectableEdmField<TestEntityLvl3MultiLink, 'Edm.Guid', true>
-    | SelectableEdmField<TestEntityLvl3MultiLink, 'Edm.String', false>
+    | EdmTypeField<TestEntityLvl3MultiLink, 'Edm.String', true, true>
+    | EdmTypeField<TestEntityLvl3MultiLink, 'Edm.Guid', true, true>
+    | EdmTypeField<TestEntityLvl3MultiLink, 'Edm.String', false, true>
   > = [
     TestEntityLvl3MultiLink.STRING_PROPERTY,
     TestEntityLvl3MultiLink.GUID_PROPERTY,
@@ -143,21 +147,22 @@ export namespace TestEntityLvl3MultiLink {
   /**
    * All key fields of the TestEntityLvl3MultiLink entity.
    */
-  export const _keyFields: Array<Field<TestEntityLvl3MultiLink>> = [
-    TestEntityLvl3MultiLink.KEY_PROPERTY
-  ];
+  export const _keyFields: Array<
+    Field<TestEntityLvl3MultiLink, boolean, boolean>
+  > = [TestEntityLvl3MultiLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl3MultiLink.
    */
-  export const _keys: { [keys: string]: Field<TestEntityLvl3MultiLink> } =
-    TestEntityLvl3MultiLink._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<TestEntityLvl3MultiLink> },
-        field: Field<TestEntityLvl3MultiLink>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: {
+    [keys: string]: Field<TestEntityLvl3MultiLink, boolean, boolean>;
+  } = TestEntityLvl3MultiLink._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntityLvl3MultiLink, boolean, boolean> },
+      field: Field<TestEntityLvl3MultiLink, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

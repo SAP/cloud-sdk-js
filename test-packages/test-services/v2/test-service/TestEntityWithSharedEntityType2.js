@@ -107,13 +107,13 @@ var TestEntityWithSharedEntityType2 = /** @class */ (function (_super) {
   return TestEntityWithSharedEntityType2;
 })(core_1.EntityV2);
 exports.TestEntityWithSharedEntityType2 = TestEntityWithSharedEntityType2;
-var fieldBuilder = new core_1.FieldBuilder(TestEntityWithSharedEntityType2);
 (function (TestEntityWithSharedEntityType2) {
+  var fb = core_1.fieldBuilder(TestEntityWithSharedEntityType2);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityWithSharedEntityType2.KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntityWithSharedEntityType2.KEY_PROPERTY = fb.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false

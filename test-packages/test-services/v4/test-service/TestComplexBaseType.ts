@@ -6,11 +6,13 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV4,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4
+  deserializeComplexTypeV4,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -37,14 +39,27 @@ export function createTestComplexBaseType(json: any): TestComplexBaseType {
  */
 export class TestComplexBaseTypeField<
   EntityT extends EntityV4,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, TestComplexBaseType> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<
+  EntityT,
+  TestComplexBaseType,
+  NullableT,
+  SelectableT
+> {
+  /** TODO */
+  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
+    this.fieldOf
+  );
   /**
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: EdmTypeField<EntityT, 'Edm.String', true> =
-    new EdmTypeField('BaseStringProperty', this, 'Edm.String', true);
+  baseStringProperty = this.fb.buildEdmTypeField(
+    'BaseStringProperty',
+    'Edm.String',
+    true
+  );
 
   /**
    * Creates an instance of TestComplexBaseTypeField.
@@ -55,9 +70,9 @@ export class TestComplexBaseTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, fieldOf, TestComplexBaseType);
+    super(fieldName, fieldOf, TestComplexBaseType, fieldOptions);
   }
 }
 

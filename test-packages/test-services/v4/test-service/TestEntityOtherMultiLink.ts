@@ -6,12 +6,14 @@
 import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLinkRequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
   FieldBuilder,
-  SelectableEdmField
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -78,14 +80,16 @@ export interface TestEntityOtherMultiLinkType {
   keyProperty: string;
 }
 
-const fieldBuilder = new FieldBuilder(TestEntityOtherMultiLink);
-
 export namespace TestEntityOtherMultiLink {
+  const fb: FieldBuilder<
+    TestEntityOtherMultiLink,
+    Constructable<TestEntityOtherMultiLink>
+  > = fieldBuilder(TestEntityOtherMultiLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const KEY_PROPERTY = fb.buildEdmTypeField(
     'KeyProperty',
     'Edm.String',
     false
@@ -94,7 +98,7 @@ export namespace TestEntityOtherMultiLink {
    * All fields of the TestEntityOtherMultiLink entity.
    */
   export const _allFields: Array<
-    SelectableEdmField<TestEntityOtherMultiLink, 'Edm.String', false>
+    EdmTypeField<TestEntityOtherMultiLink, 'Edm.String', false, true>
   > = [TestEntityOtherMultiLink.KEY_PROPERTY];
   /**
    * All fields selector.
@@ -106,21 +110,24 @@ export namespace TestEntityOtherMultiLink {
   /**
    * All key fields of the TestEntityOtherMultiLink entity.
    */
-  export const _keyFields: Array<Field<TestEntityOtherMultiLink>> = [
-    TestEntityOtherMultiLink.KEY_PROPERTY
-  ];
+  export const _keyFields: Array<
+    Field<TestEntityOtherMultiLink, boolean, boolean>
+  > = [TestEntityOtherMultiLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityOtherMultiLink.
    */
-  export const _keys: { [keys: string]: Field<TestEntityOtherMultiLink> } =
-    TestEntityOtherMultiLink._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<TestEntityOtherMultiLink> },
-        field: Field<TestEntityOtherMultiLink>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
+  export const _keys: {
+    [keys: string]: Field<TestEntityOtherMultiLink, boolean, boolean>;
+  } = TestEntityOtherMultiLink._keyFields.reduce(
+    (
+      acc: {
+        [keys: string]: Field<TestEntityOtherMultiLink, boolean, boolean>;
       },
-      {}
-    );
+      field: Field<TestEntityOtherMultiLink, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

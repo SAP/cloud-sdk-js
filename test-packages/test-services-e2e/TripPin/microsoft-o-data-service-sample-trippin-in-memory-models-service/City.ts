@@ -6,11 +6,13 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV4,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4
+  deserializeComplexTypeV4,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -44,15 +46,19 @@ export function createCity(json: any): City {
  */
 export class CityField<
   EntityT extends EntityV4,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, City> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, City, NullableT, SelectableT> {
+  /** TODO */
+  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
+    this.fieldOf
+  );
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: EdmTypeField<EntityT, 'Edm.String', false> = new EdmTypeField(
+  countryRegion = this.fb.buildEdmTypeField(
     'CountryRegion',
-    this,
     'Edm.String',
     false
   );
@@ -60,22 +66,12 @@ export class CityField<
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: EdmTypeField<EntityT, 'Edm.String', false> = new EdmTypeField(
-    'Name',
-    this,
-    'Edm.String',
-    false
-  );
+  name = this.fb.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: EdmTypeField<EntityT, 'Edm.String', false> = new EdmTypeField(
-    'Region',
-    this,
-    'Edm.String',
-    false
-  );
+  region = this.fb.buildEdmTypeField('Region', 'Edm.String', false);
 
   /**
    * Creates an instance of CityField.
@@ -86,9 +82,9 @@ export class CityField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, fieldOf, City);
+    super(fieldName, fieldOf, City, fieldOptions);
   }
 }
 

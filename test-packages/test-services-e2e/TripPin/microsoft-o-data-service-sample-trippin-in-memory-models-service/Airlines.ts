@@ -6,12 +6,14 @@
 import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
   FieldBuilder,
-  SelectableEdmField
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -75,14 +77,15 @@ export interface AirlinesType {
   name: string;
 }
 
-const fieldBuilder = new FieldBuilder(Airlines);
-
 export namespace Airlines {
+  const fb: FieldBuilder<Airlines, Constructable<Airlines>> = fieldBuilder(
+    Airlines
+  );
   /**
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const AIRLINE_CODE = fieldBuilder.buildEdmTypeField(
+  export const AIRLINE_CODE = fb.buildEdmTypeField(
     'AirlineCode',
     'Edm.String',
     false
@@ -91,16 +94,12 @@ export namespace Airlines {
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME = fieldBuilder.buildEdmTypeField(
-    'Name',
-    'Edm.String',
-    false
-  );
+  export const NAME = fb.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * All fields of the Airlines entity.
    */
   export const _allFields: Array<
-    SelectableEdmField<Airlines, 'Edm.String', false>
+    EdmTypeField<Airlines, 'Edm.String', false, true>
   > = [Airlines.AIRLINE_CODE, Airlines.NAME];
   /**
    * All fields selector.
@@ -109,13 +108,18 @@ export namespace Airlines {
   /**
    * All key fields of the Airlines entity.
    */
-  export const _keyFields: Array<Field<Airlines>> = [Airlines.AIRLINE_CODE];
+  export const _keyFields: Array<Field<Airlines, boolean, boolean>> = [
+    Airlines.AIRLINE_CODE
+  ];
   /**
    * Mapping of all key field names to the respective static field property Airlines.
    */
-  export const _keys: { [keys: string]: Field<Airlines> } =
+  export const _keys: { [keys: string]: Field<Airlines, boolean, boolean> } =
     Airlines._keyFields.reduce(
-      (acc: { [keys: string]: Field<Airlines> }, field: Field<Airlines>) => {
+      (
+        acc: { [keys: string]: Field<Airlines, boolean, boolean> },
+        field: Field<Airlines, boolean, boolean>
+      ) => {
         acc[field._fieldName] = field;
         return acc;
       },

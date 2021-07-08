@@ -7,13 +7,15 @@ import { PhotosRequestBuilder } from './PhotosRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
   FieldBuilder,
-  SelectableEdmField,
-  SelectableOrderableEdmField
+  OrderableEdmTypeField,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -78,29 +80,24 @@ export interface PhotosType {
   name?: string | null;
 }
 
-const fieldBuilder = new FieldBuilder(Photos);
-
 export namespace Photos {
+  const fb: FieldBuilder<Photos, Constructable<Photos>> = fieldBuilder(Photos);
   /**
    * Static representation of the [[id]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ID = fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false);
+  export const ID = fb.buildEdmTypeField('Id', 'Edm.Int64', false);
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME = fieldBuilder.buildEdmTypeField(
-    'Name',
-    'Edm.String',
-    true
-  );
+  export const NAME = fb.buildEdmTypeField('Name', 'Edm.String', true);
   /**
    * All fields of the Photos entity.
    */
   export const _allFields: Array<
-    | SelectableOrderableEdmField<Photos, 'Edm.Int64', false>
-    | SelectableEdmField<Photos, 'Edm.String', true>
+    | OrderableEdmTypeField<Photos, 'Edm.Int64', false, true>
+    | EdmTypeField<Photos, 'Edm.String', true, true>
   > = [Photos.ID, Photos.NAME];
   /**
    * All fields selector.
@@ -109,13 +106,16 @@ export namespace Photos {
   /**
    * All key fields of the Photos entity.
    */
-  export const _keyFields: Array<Field<Photos>> = [Photos.ID];
+  export const _keyFields: Array<Field<Photos, boolean, boolean>> = [Photos.ID];
   /**
    * Mapping of all key field names to the respective static field property Photos.
    */
-  export const _keys: { [keys: string]: Field<Photos> } =
+  export const _keys: { [keys: string]: Field<Photos, boolean, boolean> } =
     Photos._keyFields.reduce(
-      (acc: { [keys: string]: Field<Photos> }, field: Field<Photos>) => {
+      (
+        acc: { [keys: string]: Field<Photos, boolean, boolean> },
+        field: Field<Photos, boolean, boolean>
+      ) => {
         acc[field._fieldName] = field;
         return acc;
       },

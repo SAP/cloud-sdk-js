@@ -104,36 +104,28 @@ var Airports = /** @class */ (function (_super) {
   return Airports;
 })(core_1.EntityV4);
 exports.Airports = Airports;
-var fieldBuilder = new core_1.FieldBuilder(Airports);
 (function (Airports) {
+  var fb = core_1.fieldBuilder(Airports);
   /**
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airports.ICAO_CODE = fieldBuilder.buildEdmTypeField(
-    'IcaoCode',
-    'Edm.String',
-    false
-  );
+  Airports.ICAO_CODE = fb.buildEdmTypeField('IcaoCode', 'Edm.String', false);
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airports.NAME = fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
+  Airports.NAME = fb.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Static representation of the [[iataCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airports.IATA_CODE = fieldBuilder.buildEdmTypeField(
-    'IataCode',
-    'Edm.String',
-    false
-  );
+  Airports.IATA_CODE = fb.buildEdmTypeField('IataCode', 'Edm.String', false);
   /**
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airports.LOCATION = fieldBuilder.buildComplexTypeField(
+  Airports.LOCATION = fb.buildComplexTypeField(
     'Location',
     AirportLocation_1.AirportLocationField,
     false

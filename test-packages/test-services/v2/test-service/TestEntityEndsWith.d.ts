@@ -2,10 +2,10 @@ import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBui
 import {
   AllFields,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
-  Field,
-  SelectableEdmField
+  Field
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
@@ -61,16 +61,17 @@ export declare namespace TestEntityEndsWith {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: SelectableEdmField<
+  const KEY_PROPERTY: EdmTypeField<
     TestEntityEndsWith,
     'Edm.String',
-    false
+    false,
+    true
   >;
   /**
    * All fields of the TestEntityEndsWith entity.
    */
   const _allFields: Array<
-    SelectableEdmField<TestEntityEndsWith, 'Edm.String', false>
+    EdmTypeField<TestEntityEndsWith, 'Edm.String', false, true>
   >;
   /**
    * All fields selector.
@@ -79,12 +80,12 @@ export declare namespace TestEntityEndsWith {
   /**
    * All key fields of the TestEntityEndsWith entity.
    */
-  const _keyFields: Array<Field<TestEntityEndsWith>>;
+  const _keyFields: Array<Field<TestEntityEndsWith, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntityEndsWith.
    */
   const _keys: {
-    [keys: string]: Field<TestEntityEndsWith>;
+    [keys: string]: Field<TestEntityEndsWith, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntityEndsWith.d.ts.map

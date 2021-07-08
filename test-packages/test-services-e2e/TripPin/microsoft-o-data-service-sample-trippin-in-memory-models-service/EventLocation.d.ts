@@ -2,8 +2,8 @@ import { City, CityField } from './City';
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV4,
+  FieldOptions,
   FieldType,
   PropertyMetadata
 } from '@sap-cloud-sdk/core';
@@ -35,23 +35,40 @@ export declare function createEventLocation(json: any): EventLocation;
  */
 export declare class EventLocationField<
   EntityT extends EntityV4,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, EventLocation> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, EventLocation, NullableT, SelectableT> {
+  /** TODO */
+  private fb;
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: EdmTypeField<EntityT, 'Edm.String', true>;
+  buildingInfo: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+    EntityT,
+    'Edm.String',
+    true,
+    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+  >;
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, 'Edm.String', false>;
+  address: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+    EntityT,
+    'Edm.String',
+    false,
+    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+  >;
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT, false>;
+  city: CityField<
+    EntityT,
+    false,
+    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+  >;
   /**
    * Creates an instance of EventLocationField.
    *
@@ -61,7 +78,7 @@ export declare class EventLocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable?: NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   );
 }
 export declare namespace EventLocation {

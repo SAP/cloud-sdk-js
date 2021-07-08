@@ -7,11 +7,13 @@ import { City, CityField } from './City';
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV4,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4
+  deserializeComplexTypeV4,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -46,33 +48,28 @@ export function createEventLocation(json: any): EventLocation {
  */
 export class EventLocationField<
   EntityT extends EntityV4,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, EventLocation> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, EventLocation, NullableT, SelectableT> {
+  /** TODO */
+  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
+    this.fieldOf
+  );
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: EdmTypeField<EntityT, 'Edm.String', true> = new EdmTypeField(
-    'BuildingInfo',
-    this,
-    'Edm.String',
-    true
-  );
+  buildingInfo = this.fb.buildEdmTypeField('BuildingInfo', 'Edm.String', true);
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, 'Edm.String', false> = new EdmTypeField(
-    'Address',
-    this,
-    'Edm.String',
-    false
-  );
+  address = this.fb.buildEdmTypeField('Address', 'Edm.String', false);
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT, false> = new CityField('City', this, false);
+  city = this.fb.buildComplexTypeField('City', CityField, false);
 
   /**
    * Creates an instance of EventLocationField.
@@ -83,9 +80,9 @@ export class EventLocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, fieldOf, EventLocation);
+    super(fieldName, fieldOf, EventLocation, fieldOptions);
   }
 }
 

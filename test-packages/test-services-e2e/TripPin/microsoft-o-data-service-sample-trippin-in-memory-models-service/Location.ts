@@ -7,11 +7,13 @@ import { City, CityField } from './City';
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV4,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
   PropertyMetadata,
-  deserializeComplexTypeV4
+  deserializeComplexTypeV4,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -41,23 +43,23 @@ export function createLocation(json: any): Location {
  */
 export class LocationField<
   EntityT extends EntityV4,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, Location> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, Location, NullableT, SelectableT> {
+  /** TODO */
+  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
+    this.fieldOf
+  );
   /**
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, 'Edm.String', false> = new EdmTypeField(
-    'Address',
-    this,
-    'Edm.String',
-    false
-  );
+  address = this.fb.buildEdmTypeField('Address', 'Edm.String', false);
   /**
    * Representation of the [[Location.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT, false> = new CityField('City', this, false);
+  city = this.fb.buildComplexTypeField('City', CityField, false);
 
   /**
    * Creates an instance of LocationField.
@@ -68,9 +70,9 @@ export class LocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, fieldOf, Location);
+    super(fieldName, fieldOf, Location, fieldOptions);
   }
 }
 

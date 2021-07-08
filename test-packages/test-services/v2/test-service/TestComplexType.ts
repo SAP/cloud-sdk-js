@@ -12,13 +12,14 @@ import {
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV2,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
-  OrderableEdmField,
   PropertyMetadata,
   Time,
-  deserializeComplexTypeV2
+  deserializeComplexTypeV2,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -124,15 +125,19 @@ export function createTestComplexType_1(json: any): TestComplexType {
  */
 export class TestComplexTypeField<
   EntityT extends EntityV2,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, TestComplexType> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, TestComplexType, NullableT, SelectableT> {
+  /** TODO */
+  private fb: FieldBuilder<EntityT, this['fieldOf']> = fieldBuilder(
+    this.fieldOf
+  );
   /**
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', false> = new EdmTypeField(
+  stringProperty = this.fb.buildEdmTypeField(
     'StringProperty',
-    this,
     'Edm.String',
     false
   );
@@ -140,83 +145,83 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: EdmTypeField<EntityT, 'Edm.Boolean', true> =
-    new EdmTypeField('BooleanProperty', this, 'Edm.Boolean', true);
+  booleanProperty = this.fb.buildEdmTypeField(
+    'BooleanProperty',
+    'Edm.Boolean',
+    true
+  );
   /**
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: EdmTypeField<EntityT, 'Edm.Guid', true> = new EdmTypeField(
-    'GuidProperty',
-    this,
-    'Edm.Guid',
-    true
-  );
+  guidProperty = this.fb.buildEdmTypeField('GuidProperty', 'Edm.Guid', true);
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int16Property: OrderableEdmField<EntityT, 'Edm.Int16', true> =
-    new OrderableEdmField('Int16Property', this, 'Edm.Int16', true);
+  int16Property = this.fb.buildEdmTypeField('Int16Property', 'Edm.Int16', true);
   /**
    * Representation of the [[TestComplexType.int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int32Property: OrderableEdmField<EntityT, 'Edm.Int32', true> =
-    new OrderableEdmField('Int32Property', this, 'Edm.Int32', true);
+  int32Property = this.fb.buildEdmTypeField('Int32Property', 'Edm.Int32', true);
   /**
    * Representation of the [[TestComplexType.int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int64Property: OrderableEdmField<EntityT, 'Edm.Int64', true> =
-    new OrderableEdmField('Int64Property', this, 'Edm.Int64', true);
+  int64Property = this.fb.buildEdmTypeField('Int64Property', 'Edm.Int64', true);
   /**
    * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  decimalProperty: OrderableEdmField<EntityT, 'Edm.Decimal', true> =
-    new OrderableEdmField('DecimalProperty', this, 'Edm.Decimal', true);
+  decimalProperty = this.fb.buildEdmTypeField(
+    'DecimalProperty',
+    'Edm.Decimal',
+    true
+  );
   /**
    * Representation of the [[TestComplexType.singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  singleProperty: OrderableEdmField<EntityT, 'Edm.Single', true> =
-    new OrderableEdmField('SingleProperty', this, 'Edm.Single', true);
+  singleProperty = this.fb.buildEdmTypeField(
+    'SingleProperty',
+    'Edm.Single',
+    true
+  );
   /**
    * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  doubleProperty: OrderableEdmField<EntityT, 'Edm.Double', true> =
-    new OrderableEdmField('DoubleProperty', this, 'Edm.Double', true);
+  doubleProperty = this.fb.buildEdmTypeField(
+    'DoubleProperty',
+    'Edm.Double',
+    true
+  );
   /**
    * Representation of the [[TestComplexType.floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  floatProperty: OrderableEdmField<EntityT, 'Edm.Float', true> =
-    new OrderableEdmField('FloatProperty', this, 'Edm.Float', true);
+  floatProperty = this.fb.buildEdmTypeField('FloatProperty', 'Edm.Float', true);
   /**
    * Representation of the [[TestComplexType.timeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeProperty: OrderableEdmField<EntityT, 'Edm.Time', true> =
-    new OrderableEdmField('TimeProperty', this, 'Edm.Time', true);
+  timeProperty = this.fb.buildEdmTypeField('TimeProperty', 'Edm.Time', true);
   /**
    * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeProperty: OrderableEdmField<EntityT, 'Edm.DateTime', true> =
-    new OrderableEdmField('DateTimeProperty', this, 'Edm.DateTime', true);
+  dateTimeProperty = this.fb.buildEdmTypeField(
+    'DateTimeProperty',
+    'Edm.DateTime',
+    true
+  );
   /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeOffSetProperty: OrderableEdmField<
-    EntityT,
-    'Edm.DateTimeOffset',
-    true
-  > = new OrderableEdmField(
+  dateTimeOffSetProperty = this.fb.buildEdmTypeField(
     'DateTimeOffSetProperty',
-    this,
     'Edm.DateTimeOffset',
     true
   );
@@ -224,26 +229,30 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  byteProperty: OrderableEdmField<EntityT, 'Edm.Byte', true> =
-    new OrderableEdmField('ByteProperty', this, 'Edm.Byte', true);
+  byteProperty = this.fb.buildEdmTypeField('ByteProperty', 'Edm.Byte', true);
   /**
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  sByteProperty: OrderableEdmField<EntityT, 'Edm.SByte', true> =
-    new OrderableEdmField('SByteProperty', this, 'Edm.SByte', true);
+  sByteProperty = this.fb.buildEdmTypeField('SByteProperty', 'Edm.SByte', true);
   /**
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  somethingTheSdkDoesNotSupport: EdmTypeField<EntityT, 'Edm.Any', true> =
-    new EdmTypeField('SomethingTheSDKDoesNotSupport', this, 'Edm.Any', true);
+  somethingTheSdkDoesNotSupport = this.fb.buildEdmTypeField(
+    'SomethingTheSDKDoesNotSupport',
+    'Edm.Any',
+    true
+  );
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty: TestNestedComplexTypeField<EntityT, true> =
-    new TestNestedComplexTypeField('ComplexTypeProperty', this, true);
+  complexTypeProperty = this.fb.buildComplexTypeField(
+    'ComplexTypeProperty',
+    TestNestedComplexTypeField,
+    true
+  );
 
   /**
    * Creates an instance of TestComplexTypeField.
@@ -254,9 +263,9 @@ export class TestComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable: NullableT = false as NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   ) {
-    super(fieldName, fieldOf, TestComplexType);
+    super(fieldName, fieldOf, TestComplexType, fieldOptions);
   }
 }
 

@@ -103,13 +103,13 @@ var Airlines = /** @class */ (function (_super) {
   return Airlines;
 })(core_1.EntityV4);
 exports.Airlines = Airlines;
-var fieldBuilder = new core_1.FieldBuilder(Airlines);
 (function (Airlines) {
+  var fb = core_1.fieldBuilder(Airlines);
   /**
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airlines.AIRLINE_CODE = fieldBuilder.buildEdmTypeField(
+  Airlines.AIRLINE_CODE = fb.buildEdmTypeField(
     'AirlineCode',
     'Edm.String',
     false
@@ -118,7 +118,7 @@ var fieldBuilder = new core_1.FieldBuilder(Airlines);
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airlines.NAME = fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
+  Airlines.NAME = fb.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * All fields of the Airlines entity.
    */

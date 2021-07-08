@@ -103,13 +103,13 @@ var TestEntity1 = /** @class */ (function (_super) {
   return TestEntity1;
 })(core_1.EntityV4);
 exports.TestEntity1 = TestEntity1;
-var fieldBuilder = new core_1.FieldBuilder(TestEntity1);
 (function (TestEntity1) {
+  var fb = core_1.fieldBuilder(TestEntity1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
+  TestEntity1.KEY_PROPERTY_STRING = fb.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false
@@ -118,7 +118,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntity1);
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.INT_16_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntity1.INT_16_PROPERTY = fb.buildEdmTypeField(
     'Int16Property',
     'Edm.Int16',
     true
@@ -127,7 +127,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntity1);
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.ENUM_PROPERTY = fieldBuilder.buildEdmTypeField(
+  TestEntity1.ENUM_PROPERTY = fb.buildEdmTypeField(
     'EnumProperty',
     'Edm.Enum',
     true
@@ -136,7 +136,7 @@ var fieldBuilder = new core_1.FieldBuilder(TestEntity1);
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.COMPLEX_TYPE_PROPERTY = fieldBuilder.buildComplexTypeField(
+  TestEntity1.COMPLEX_TYPE_PROPERTY = fb.buildComplexTypeField(
     'ComplexTypeProperty',
     TestComplexType1_1.TestComplexType1Field,
     true

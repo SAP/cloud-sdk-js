@@ -6,13 +6,15 @@
 import { TestEntityLinkRequestBuilder } from './TestEntityLinkRequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
   FieldBuilder,
-  SelectableEdmField,
-  SelectableOrderableEdmField
+  OrderableEdmTypeField,
+  fieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -82,14 +84,16 @@ export interface TestEntityLinkType {
   stringProperty?: string | null;
 }
 
-const fieldBuilder = new FieldBuilder(TestEntityLink);
-
 export namespace TestEntityLink {
+  const fb: FieldBuilder<
+    TestEntityLink,
+    Constructable<TestEntityLink>
+  > = fieldBuilder(TestEntityLink);
   /**
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TEST_ENTITY_LINK = fieldBuilder.buildEdmTypeField(
+  export const KEY_TEST_ENTITY_LINK = fb.buildEdmTypeField(
     'KeyTestEntityLink',
     'Edm.Int32',
     false
@@ -98,7 +102,7 @@ export namespace TestEntityLink {
    * Static representation of the [[keyToTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TO_TEST_ENTITY = fieldBuilder.buildEdmTypeField(
+  export const KEY_TO_TEST_ENTITY = fb.buildEdmTypeField(
     'KeyToTestEntity',
     'Edm.Int32',
     false
@@ -107,7 +111,7 @@ export namespace TestEntityLink {
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = fieldBuilder.buildEdmTypeField(
+  export const STRING_PROPERTY = fb.buildEdmTypeField(
     'StringProperty',
     'Edm.String',
     true
@@ -116,8 +120,8 @@ export namespace TestEntityLink {
    * All fields of the TestEntityLink entity.
    */
   export const _allFields: Array<
-    | SelectableOrderableEdmField<TestEntityLink, 'Edm.Int32', false>
-    | SelectableEdmField<TestEntityLink, 'Edm.String', true>
+    | OrderableEdmTypeField<TestEntityLink, 'Edm.Int32', false, true>
+    | EdmTypeField<TestEntityLink, 'Edm.String', true, true>
   > = [
     TestEntityLink.KEY_TEST_ENTITY_LINK,
     TestEntityLink.KEY_TO_TEST_ENTITY,
@@ -133,22 +137,23 @@ export namespace TestEntityLink {
   /**
    * All key fields of the TestEntityLink entity.
    */
-  export const _keyFields: Array<Field<TestEntityLink>> = [
+  export const _keyFields: Array<Field<TestEntityLink, boolean, boolean>> = [
     TestEntityLink.KEY_TEST_ENTITY_LINK,
     TestEntityLink.KEY_TO_TEST_ENTITY
   ];
   /**
    * Mapping of all key field names to the respective static field property TestEntityLink.
    */
-  export const _keys: { [keys: string]: Field<TestEntityLink> } =
-    TestEntityLink._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<TestEntityLink> },
-        field: Field<TestEntityLink>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: {
+    [keys: string]: Field<TestEntityLink, boolean, boolean>;
+  } = TestEntityLink._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntityLink, boolean, boolean> },
+      field: Field<TestEntityLink, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

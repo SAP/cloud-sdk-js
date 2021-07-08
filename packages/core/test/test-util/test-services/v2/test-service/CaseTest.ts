@@ -6,12 +6,14 @@
 import { CaseTestRequestBuilder } from './CaseTestRequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
   Field,
   FieldBuilder,
-  SelectableEdmField
+  fieldBuilder
 } from '../../../../../src';
 
 /**
@@ -69,14 +71,15 @@ export interface CaseTestType {
   keyPropertyString: string;
 }
 
-const fieldBuilder = new FieldBuilder(CaseTest);
-
 export namespace CaseTest {
+  const fb: FieldBuilder<CaseTest, Constructable<CaseTest>> = fieldBuilder(
+    CaseTest
+  );
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = fieldBuilder.buildEdmTypeField(
+  export const KEY_PROPERTY_STRING = fb.buildEdmTypeField(
     'KeyPropertyString',
     'Edm.String',
     false
@@ -85,7 +88,7 @@ export namespace CaseTest {
    * All fields of the CaseTest entity.
    */
   export const _allFields: Array<
-    SelectableEdmField<CaseTest, 'Edm.String', false>
+    EdmTypeField<CaseTest, 'Edm.String', false, true>
   > = [CaseTest.KEY_PROPERTY_STRING];
   /**
    * All fields selector.
@@ -94,15 +97,18 @@ export namespace CaseTest {
   /**
    * All key fields of the CaseTest entity.
    */
-  export const _keyFields: Array<Field<CaseTest>> = [
+  export const _keyFields: Array<Field<CaseTest, boolean, boolean>> = [
     CaseTest.KEY_PROPERTY_STRING
   ];
   /**
    * Mapping of all key field names to the respective static field property CaseTest.
    */
-  export const _keys: { [keys: string]: Field<CaseTest> } =
+  export const _keys: { [keys: string]: Field<CaseTest, boolean, boolean> } =
     CaseTest._keyFields.reduce(
-      (acc: { [keys: string]: Field<CaseTest> }, field: Field<CaseTest>) => {
+      (
+        acc: { [keys: string]: Field<CaseTest, boolean, boolean> },
+        field: Field<CaseTest, boolean, boolean>
+      ) => {
         acc[field._fieldName] = field;
         return acc;
       },

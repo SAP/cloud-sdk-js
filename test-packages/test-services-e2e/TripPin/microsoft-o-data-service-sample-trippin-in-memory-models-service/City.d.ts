@@ -1,8 +1,8 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   EntityV4,
+  FieldOptions,
   FieldType,
   PropertyMetadata
 } from '@sap-cloud-sdk/core';
@@ -33,23 +33,41 @@ export declare function createCity(json: any): City;
  */
 export declare class CityField<
   EntityT extends EntityV4,
-  NullableT extends boolean = false
-> extends ComplexTypeField<EntityT, City> {
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, City, NullableT, SelectableT> {
+  /** TODO */
+  private fb;
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: EdmTypeField<EntityT, 'Edm.String', false>;
+  countryRegion: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+    EntityT,
+    'Edm.String',
+    false,
+    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+  >;
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: EdmTypeField<EntityT, 'Edm.String', false>;
+  name: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+    EntityT,
+    'Edm.String',
+    false,
+    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+  >;
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: EdmTypeField<EntityT, 'Edm.String', false>;
+  region: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+    EntityT,
+    'Edm.String',
+    false,
+    import('@sap-cloud-sdk/core').IsSelectableField<this['fieldOf']>
+  >;
   /**
    * Creates an instance of CityField.
    *
@@ -59,7 +77,7 @@ export declare class CityField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    isNullable?: NullableT
+    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
   );
 }
 export declare namespace City {

@@ -30,6 +30,7 @@ type ComplexTypeFieldConstructor<
 ) => ComplexTypeFieldT;
 
 export type IsSelectableField<T> = T extends Constructable<any> ? true : false;
+export type IsOrderableField<T> = T extends OrderableEdmType ? true : false;
 
 export class FieldBuilder<
   EntityT extends Entity,
@@ -37,32 +38,56 @@ export class FieldBuilder<
 > {
   constructor(public fieldOf: FieldOfT) {}
 
+  buildEdmTypeField<EdmT extends OrderableEdmType, NullableT extends boolean>(
+    fieldName: string,
+    edmType: EdmT,
+    isNullable: NullableT
+  ): OrderableEdmTypeField<
+    EntityT,
+    EdmT,
+    NullableT,
+    IsSelectableField<FieldOfT>
+  >;
+  buildEdmTypeField<
+    EdmT extends Exclude<EdmTypeShared<'any'>, OrderableEdmType>,
+    NullableT extends boolean
+  >(
+    fieldName: string,
+    edmType: EdmT,
+    isNullable: NullableT
+  ): EdmTypeField<EntityT, EdmT, NullableT, IsSelectableField<FieldOfT>>;
   buildEdmTypeField<
     EdmT extends EdmTypeShared<'any'>,
     NullableT extends boolean
   >(
     fieldName: string,
-    edmType: EdmTypeForEdmOrFieldType<EdmT>,
+    edmType: EdmT,
     isNullable: NullableT
-  ): EdmTypeClassByType<EntityT, EdmT, NullableT, IsSelectableField<FieldOfT>> {
-    const isSelectable = this.fieldOf instanceof ComplexTypeField;
+  ):
+    | OrderableEdmTypeField<
+        EntityT,
+        EdmT,
+        NullableT,
+        IsSelectableField<FieldOfT>
+      >
+    | EdmTypeField<EntityT, EdmT, NullableT, IsSelectableField<FieldOfT>> {
+    const isSelectable = (this.fieldOf instanceof
+      ComplexTypeField) as IsSelectableField<FieldOfT>;
 
-    return (
-      isOrderableEdmType(edmType)
-        ? new OrderableEdmTypeField(fieldName, this.fieldOf, edmType, {
-            isNullable,
-            isSelectable
-          })
-        : new EdmTypeField(fieldName, this.fieldOf, edmType, {
-            isNullable,
-            isSelectable
-          })
-    ) as EdmTypeClassByType<
-      EntityT,
-      EdmT,
-      NullableT,
-      IsSelectableField<FieldOfT>
-    >;
+    // The type assertion is necessary because the signatures of the two constructors differ (TS design limitation)
+    const ctor = (
+      isOrderableEdmType(edmType) ? OrderableEdmTypeField : EdmTypeField
+    ) as typeof EdmTypeField;
+
+    return new ctor(
+      fieldName,
+      this.fieldOf,
+      edmType as EdmTypeForEdmOrFieldType<EdmT>,
+      {
+        isNullable,
+        isSelectable
+      }
+    );
   }
 
   buildComplexTypeField<
@@ -113,11 +138,24 @@ export class FieldBuilder<
   }
 }
 
+/**
+ * Return type for the EDM builder functions.
+ */
 export type EdmTypeClassByType<
   EntityT extends Entity,
   EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean,
   SelectableT extends boolean
 > = EdmT extends OrderableEdmType
+  ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
+  : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>;
+
+export type EdmTypeClassByType2<
+  EntityT extends Entity,
+  EdmT extends EdmTypeShared<'any'>,
+  OrderableT extends boolean,
+  NullableT extends boolean,
+  SelectableT extends boolean
+> = OrderableT extends true
   ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
   : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>;

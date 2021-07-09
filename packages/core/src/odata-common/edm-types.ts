@@ -75,6 +75,7 @@ export type OrderableEdmType =
  * @returns Whether the given `edmType` is of type [[OrderableEdmType]].
  */
 export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
+  // edmType is OrderableEdmType {
   return [
     'Edm.Boolean',
     'Edm.Decimal',

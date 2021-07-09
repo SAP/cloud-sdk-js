@@ -23,28 +23,44 @@ export type FieldType =
  */
 export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
 
+/**
+ * Optional settings for fields.
+ */
 export interface FieldOptions<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > {
-  isNullable: NullableT;
-  isSelectable: SelectableT;
+  /**
+   * Whether the value of the field can be null.
+   */
+  isNullable?: NullableT;
+  /**
+   * Whether the field can be reference in a `.select` statement.
+   */
+  isSelectable?: SelectableT;
 }
 
+/**
+ * Get field options merged with default values.
+ * The given options take precedence.
+ * @param fieldOptions Given options.
+ * @returns Given options merged with default values.
+ */
 export function getFieldOptions<
-  T1 extends boolean = false,
-  T2 extends boolean = false
->(fieldOptions?: Partial<FieldOptions<T1, T2>>): FieldOptions<T1, T2> {
-  return { ...defaultFieldOptions, ...fieldOptions } as FieldOptions<T1, T2>;
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+>(
+  fieldOptions?: FieldOptions<NullableT, SelectableT>
+): Required<FieldOptions<NullableT, SelectableT>> {
+  return { ...defaultFieldOptions, ...fieldOptions } as Required<
+    FieldOptions<NullableT, SelectableT>
+  >;
 }
 
-const defaultFieldOptions: FieldOptions = {
+const defaultFieldOptions: Required<FieldOptions> = {
   isNullable: false,
   isSelectable: false
 };
-
-export type FO<T extends FieldOptions<boolean, boolean>> =
-  T extends FieldOptions<infer T1, infer T2> ? FieldOptions<T1, T2> : never;
 
 /**
  * Abstract representation a property of an OData entity.
@@ -59,7 +75,6 @@ export type FO<T extends FieldOptions<boolean, boolean>> =
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
-
 export class Field<
   EntityT extends Entity,
   NullableT extends boolean = false,
@@ -67,8 +82,7 @@ export class Field<
 > implements EntityIdentifiable<EntityT>
 {
   readonly _entity: EntityT;
-  // readonly selectable: SelectableT;
-  readonly _fieldOptions: FieldOptions<NullableT, SelectableT>;
+  readonly _fieldOptions: Required<FieldOptions<NullableT, SelectableT>>;
   /**
    * Creates an instance of Field.
    *
@@ -79,7 +93,7 @@ export class Field<
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     this._fieldOptions = getFieldOptions(fieldOptions);
   }

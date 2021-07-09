@@ -47,7 +47,7 @@ export function fieldTypeClass(
           },
           {
             name: 'fieldOptions',
-            type: 'Partial<FieldOptions<NullableT, SelectableT>>',
+            type: 'FieldOptions<NullableT, SelectableT>',
             hasQuestionToken: true
           }
         ],

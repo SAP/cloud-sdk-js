@@ -31,7 +31,7 @@ export class CollectionField<
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
     readonly _fieldType: CollectionFieldType<CollectionFieldT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
   }

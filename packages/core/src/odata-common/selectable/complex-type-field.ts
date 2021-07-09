@@ -82,7 +82,7 @@ export abstract class ComplexTypeField<
     fieldOf: ConstructorOrField<EntityT, ComplexT>,
     complexType: ComplexTypeNamespace<ComplexT>,
     // eslint-disable-next-line @typescript-eslint/unified-signatures
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 
   /**
@@ -97,7 +97,7 @@ export abstract class ComplexTypeField<
     fieldName: string,
     readonly fieldOf: ConstructorOrField<EntityT, ComplexT>,
     complexTypeOrName?: ComplexTypeNamespace<ComplexT> | string,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, getEntityConstructor(fieldOf), fieldOptions);
     if (typeof complexTypeOrName === 'string') {

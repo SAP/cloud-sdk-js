@@ -127,7 +127,7 @@ export class EdmTypeField<
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
     readonly edmType: EdmTypeForEdmOrFieldType<EdmOrFieldT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
   }

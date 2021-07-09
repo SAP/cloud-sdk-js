@@ -62,7 +62,7 @@ describe('field-type-class', () => {
             {
               hasQuestionToken: true,
               name: 'fieldOptions',
-              type: 'Partial<FieldOptions<NullableT, SelectableT>>'
+              type: 'FieldOptions<NullableT, SelectableT>'
             }
           ],
           statements: [
@@ -127,7 +127,7 @@ describe('field-type-class', () => {
             {
               hasQuestionToken: true,
               name: 'fieldOptions',
-              type: 'Partial<FieldOptions<NullableT, SelectableT>>'
+              type: 'FieldOptions<NullableT, SelectableT>'
             }
           ],
           statements: [

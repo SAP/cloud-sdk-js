@@ -8468,9 +8468,9 @@ openapi-types@^9.0.3:
   integrity sha512-c4C1xAKZOvOxeSWvRY0d2XsoaZoF8M7rifxfZZCIH2mqPEQxOz8qfFx4oEpLFaE+DfDGe08HcIA/p1Bu93keLQ==
 
 opossum@^6.0.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/opossum/-/opossum-6.1.0.tgz#3515a9ab6b2e817ded19d8e6010b671314bda963"
-  integrity sha512-vzZxPqjfJQisLhavf68PMPCTuGMBp6Ar38LjKD/uVrAF+htVMJ8FXtp/wJMBG5NZ9B+VRMDpVymvDP31FjFFDg==
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/opossum/-/opossum-6.2.0.tgz#19154f934ad656f296e593794d4a8b7e91852aa2"
+  integrity sha512-pqemKjWRvgkhNNRsovfKQ/B3t16OIyOp+VPr+jQCf2U/PhqfyFyvur6LxMxw+1Vrj+Q392YSav6z9wS1wwc+2g==
 
 optionator@^0.8.1:
   version "0.8.3"

@@ -5,6 +5,7 @@ import {
   Scope,
   StructureKind
 } from 'ts-morph';
+import { getGenericParameters } from '../generator-utils';
 import {
   getComplexTypeFieldDescription,
   getComplexTypePropertyDescription
@@ -27,9 +28,8 @@ export function fieldTypeClass(
         kind: StructureKind.Property,
         scope: Scope.Private,
         name: '_fieldBuilder',
-        type: 'FieldBuilder<EntityT, this>',
-        initializer: 'new FieldBuilder(this)',
-        docs: ['TODO']
+        type: 'FieldBuilder<this>',
+        initializer: 'new FieldBuilder(this)'
       },
       ...properties(complexType)
     ],
@@ -77,6 +77,7 @@ function property(
   return {
     kind: StructureKind.Property,
     name: prop.instancePropertyName,
+    type: `${prop.fieldType}<${getGenericParameters('EntityT', prop, false)}>`,
     initializer: createPropertyFieldInitializer(prop),
     docs: [getComplexTypePropertyDescription(prop, complexType.typeName)]
   };

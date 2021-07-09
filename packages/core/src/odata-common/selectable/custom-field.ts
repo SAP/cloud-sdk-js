@@ -8,7 +8,7 @@ export class CustomField<
   EntityT extends Entity,
   NullableT extends boolean = false
 > extends Field<EntityT, NullableT> {
-  protected fieldBuilder: FieldBuilder<EntityT, Constructable<EntityT>>;
+  protected fieldBuilder: FieldBuilder<Constructable<EntityT>>;
   constructor(
     fieldName: string,
     entityConstructor: Constructable<EntityT>,

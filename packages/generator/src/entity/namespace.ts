@@ -50,7 +50,7 @@ function fieldBuilderInitializer(
     declarations: [
       {
         name: '_fieldBuilder',
-        type: `FieldBuilder<${entity.className}, Constructable<${entity.className}>>`,
+        type: `FieldBuilder<Constructable<${entity.className}>>`,
         initializer: `new FieldBuilder(${entity.className})`
       }
     ],

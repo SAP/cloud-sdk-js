@@ -21,9 +21,8 @@ describe('field-type-class', () => {
           kind: StructureKind.Property,
           scope: Scope.Private,
           name: '_fieldBuilder',
-          type: 'FieldBuilder<EntityT, this>',
-          initializer: 'new FieldBuilder(this)',
-          docs: ['TODO']
+          type: 'FieldBuilder<this>',
+          initializer: 'new FieldBuilder(this)'
         },
         {
           kind: StructureKind.Property,
@@ -87,10 +86,9 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           scope: Scope.Private,
-          type: 'FieldBuilder<EntityT, this>',
+          type: 'FieldBuilder<this>',
           name: '_fieldBuilder',
-          initializer: 'new FieldBuilder(this)',
-          docs: ['TODO']
+          initializer: 'new FieldBuilder(this)'
         },
         {
           kind: StructureKind.Property,

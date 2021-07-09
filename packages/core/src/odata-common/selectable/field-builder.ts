@@ -16,11 +16,12 @@ import { FieldOptions } from './field';
 type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<
     EntityT,
-    any,
+    ComplexT,
     NullableT,
     SelectableT
   >,
   EntityT extends Entity,
+  ComplexT,
   NullableT extends boolean,
   SelectableT extends boolean
 > = new (
@@ -32,10 +33,10 @@ type ComplexTypeFieldConstructor<
 export type IsSelectableField<T> = T extends Constructable<any> ? true : false;
 export type IsOrderableField<T> = T extends OrderableEdmType ? true : false;
 
-export class FieldBuilder<
-  EntityT extends Entity,
-  FieldOfT extends ConstructorOrField<EntityT>
-> {
+type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
+  FieldOfT extends ConstructorOrField<infer EntityT> ? EntityT : never;
+
+export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
   constructor(public fieldOf: FieldOfT) {}
 
   buildEdmTypeField<EdmT extends OrderableEdmType, NullableT extends boolean>(
@@ -43,7 +44,7 @@ export class FieldBuilder<
     edmType: EdmT,
     isNullable: NullableT
   ): OrderableEdmTypeField<
-    EntityT,
+    EntityTypeFromFieldOf<FieldOfT>,
     EdmT,
     NullableT,
     IsSelectableField<FieldOfT>
@@ -55,7 +56,12 @@ export class FieldBuilder<
     fieldName: string,
     edmType: EdmT,
     isNullable: NullableT
-  ): EdmTypeField<EntityT, EdmT, NullableT, IsSelectableField<FieldOfT>>;
+  ): EdmTypeField<
+    EntityTypeFromFieldOf<FieldOfT>,
+    EdmT,
+    NullableT,
+    IsSelectableField<FieldOfT>
+  >;
   buildEdmTypeField<
     EdmT extends EdmTypeShared<'any'>,
     NullableT extends boolean
@@ -65,12 +71,17 @@ export class FieldBuilder<
     isNullable: NullableT
   ):
     | OrderableEdmTypeField<
-        EntityT,
+        EntityTypeFromFieldOf<FieldOfT>,
         EdmT,
         NullableT,
         IsSelectableField<FieldOfT>
       >
-    | EdmTypeField<EntityT, EdmT, NullableT, IsSelectableField<FieldOfT>> {
+    | EdmTypeField<
+        EntityTypeFromFieldOf<FieldOfT>,
+        EdmT,
+        NullableT,
+        IsSelectableField<FieldOfT>
+      > {
     const isSelectable = (this.fieldOf instanceof
       ComplexTypeField) as IsSelectableField<FieldOfT>;
 
@@ -92,17 +103,19 @@ export class FieldBuilder<
 
   buildComplexTypeField<
     ComplexTypeFieldT extends ComplexTypeField<
+      EntityTypeFromFieldOf<FieldOfT>,
       any,
-      any,
-      any,
+      NullableT,
       IsSelectableField<FieldOfT>
     >,
+    ComplexT,
     NullableT extends boolean
   >(
     fieldName: string,
     complexTypeFieldCtor: ComplexTypeFieldConstructor<
       ComplexTypeFieldT,
-      EntityT,
+      EntityTypeFromFieldOf<FieldOfT>,
+      ComplexT,
       NullableT,
       IsSelectableField<FieldOfT>
     >,
@@ -124,7 +137,7 @@ export class FieldBuilder<
     collectionFieldType: CollectionFieldType<CollectionFieldT>,
     isNullable: NullableT
   ): CollectionField<
-    EntityT,
+    EntityTypeFromFieldOf<FieldOfT>,
     CollectionFieldT,
     NullableT,
     IsSelectableField<FieldOfT>

@@ -5,6 +5,13 @@ import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ComplexTypeNamespace } from './complex-type-namespace';
 
+/**
+ * Represents a field of an entity or a complex type, that can have a collection as value.
+ * @typeparam EntityT - Type of the entity the field belongs to.
+ * @typeparam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
+ * @typeparam NullableT - Boolean type that represents whether the field is nullable.
+ * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
+ */
 export class CollectionField<
   EntityT extends Entity,
   CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any> = any,
@@ -29,6 +36,10 @@ export class CollectionField<
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
   }
 
+  /**
+   * Gets the path to the complex type property represented by this.
+   * @returns The path to the complex type property.
+   */
   fieldPath(): string {
     return this._fieldOf instanceof ComplexTypeField
       ? `${this._fieldOf.fieldPath()}/${this._fieldName}`
@@ -36,6 +47,11 @@ export class CollectionField<
   }
 }
 
+/**
+ * Convenience type to reflect the type of the instances of a collection field.
+ * The actual type of the elements for complex type collections is [[ComplexTypeNamespace]].
+ * @typeparam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
+ */
 export type CollectionFieldType<
   CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any>
 > = CollectionFieldT | ComplexTypeNamespace<CollectionFieldT>;

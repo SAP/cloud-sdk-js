@@ -55,7 +55,9 @@ export type FO<T extends FieldOptions<boolean, boolean>> =
  *
  * See also: [[Selectable]], [[EdmTypeField]], [[ComplexTypeField]]
  *
- * @typeparam EntityT - Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to.
+ * @typeparam NullableT - Boolean type that represents whether the field is nullable.
+ * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
 
 export class Field<

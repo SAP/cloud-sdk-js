@@ -9,7 +9,7 @@ import {
 import type { ConstructorOrField } from './constructor-or-field';
 
 /**
- * Represents a complex type property of an entity.
+ * Represents a complex type property of an entity or a complex type.
  *
  * `ComplexTypeField`s are used as static properties of entities and are generated from the metadata, i.e. for each property of
  * an OData entity, that has a complex type, there exists one static instance of `ComplexTypeField` (or rather one of its subclasses) in the corresponding generated class file.
@@ -20,7 +20,10 @@ import type { ConstructorOrField } from './constructor-or-field';
  *
  * See also: [[Selectable]]
  *
- * @typeparam EntityT - Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to.
+ * @typeparam ComplexT - Type of complex type represented by this field.
+ * @typeparam NullableT - Boolean type that represents whether the field is nullable.
+ * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export abstract class ComplexTypeField<
   EntityT extends Entity,

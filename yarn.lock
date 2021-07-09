@@ -3150,9 +3150,9 @@ cli-tableau@^2.0.0:
     chalk "3.0.0"
 
 cli-ux@^5.2.1, cli-ux@^5.4.5:
-  version "5.6.2"
-  resolved "https://registry.npmjs.org/cli-ux/-/cli-ux-5.6.2.tgz#c78b953b14cdf95b4bb6aae8db0ab6745333405c"
-  integrity sha512-CuiamOCfPaOTjbuAQXdFsfZLQmO6XSmCDxulq4y8pIets1hZ3eaysHppPKGdrcdgLugUGUap5+bXd3IukJASBA==
+  version "5.6.3"
+  resolved "https://registry.npmjs.org/cli-ux/-/cli-ux-5.6.3.tgz#eecdb2e0261171f2b28f2be6b18c490291c3a287"
+  integrity sha512-/oDU4v8BiDjX2OKcSunGH0iGDiEtj2rZaGyqNuv9IT4CgcSMyVWAMfn0+rEHaOc4n9ka78B0wo1+N1QX89f7mw==
   dependencies:
     "@oclif/command" "^1.6.0"
     "@oclif/errors" "^1.2.1"

@@ -2,10 +2,10 @@ import { TestEntityWithSharedEntityType1RequestBuilder } from './TestEntityWithS
 import {
   AllFields,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
-  Field,
-  StringField
+  Field
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType1" of service "API_TEST_SRV".
@@ -64,11 +64,18 @@ export declare namespace TestEntityWithSharedEntityType1 {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<TestEntityWithSharedEntityType1>;
+  const KEY_PROPERTY: EdmTypeField<
+    TestEntityWithSharedEntityType1,
+    'Edm.String',
+    false,
+    true
+  >;
   /**
    * All fields of the TestEntityWithSharedEntityType1 entity.
    */
-  const _allFields: Array<StringField<TestEntityWithSharedEntityType1>>;
+  const _allFields: Array<
+    EdmTypeField<TestEntityWithSharedEntityType1, 'Edm.String', false, true>
+  >;
   /**
    * All fields selector.
    */
@@ -76,12 +83,14 @@ export declare namespace TestEntityWithSharedEntityType1 {
   /**
    * All key fields of the TestEntityWithSharedEntityType1 entity.
    */
-  const _keyFields: Array<Field<TestEntityWithSharedEntityType1>>;
+  const _keyFields: Array<
+    Field<TestEntityWithSharedEntityType1, boolean, boolean>
+  >;
   /**
    * Mapping of all key field names to the respective static field property TestEntityWithSharedEntityType1.
    */
   const _keys: {
-    [keys: string]: Field<TestEntityWithSharedEntityType1>;
+    [keys: string]: Field<TestEntityWithSharedEntityType1, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntityWithSharedEntityType1.d.ts.map

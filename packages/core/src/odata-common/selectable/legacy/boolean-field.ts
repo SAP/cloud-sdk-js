@@ -1,53 +1,54 @@
 /* eslint-disable max-classes-per-file */
 
-import { EdmTypeShared } from '../edm-types';
-import { Entity, ODataVersionOf, Constructable } from '../entity';
+import { EdmTypeShared } from '../../edm-types';
+import { Entity, ODataVersionOf, Constructable } from '../../entity';
 import {
   ComplexTypeField,
   getEdmType,
   getEntityConstructor
-} from './complex-type-field';
-import { ConstructorOrField } from './constructor-or-field';
-import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+} from '../complex-type-field';
+import { ConstructorOrField } from '../constructor-or-field';
+import { EdmTypeField } from '../edm-type-field';
 
 /**
- * Represents a property with a binary value.
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * Represents a property with a boolean value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BinaryFieldBase<EntityT extends Entity> extends EdmTypeField<
+export class BooleanFieldBase<
+  EntityT extends Entity,
+  SelectableT extends boolean = false
+> extends EdmTypeField<EntityT, boolean, false, SelectableT> {}
+
+/**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * Represents a selectable property with a boolean value.
+ *
+ * @typeparam EntityT - Type of the entity the field belongs to
+ */
+export class BooleanField<EntityT extends Entity> extends BooleanFieldBase<
   EntityT,
-  string
+  true
 > {}
 
 /**
- * Represents a selectable property with a binary value.
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * Represents a complex type property with a boolean value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class BinaryField<EntityT extends Entity>
-  extends BinaryFieldBase<EntityT>
-  implements SelectableEdmTypeField
-{
-  readonly selectable: true;
-}
-
-/**
- * Represents a complex type property with a binary value.
- *
- * @typeparam EntityT - Type of the entity the field belongs to
- */
-export class ComplexTypeBinaryPropertyField<
+export class ComplexTypeBooleanPropertyField<
   EntityT extends Entity,
   ComplexT = any
-> extends BinaryFieldBase<EntityT> {
+> extends BooleanFieldBase<EntityT> {
   /**
    * The constructor of the entity or the complex type this field belongs to
    */
   readonly fieldOf: ConstructorOrField<EntityT, ComplexT>;
 
   /**
-   * Creates an instance of ComplexTypeBinaryPropertyField.
+   * Creates an instance of ComplexTypeBooleanPropertyField.
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
@@ -62,7 +63,7 @@ export class ComplexTypeBinaryPropertyField<
   /**
    * @deprecated Since v1.19.0.
    *
-   * Creates an instance of ComplexTypeBinaryPropertyField.
+   * Creates an instance of ComplexTypeBooleanPropertyField.
    *
    * @param fieldName - Actual name of the field used in the OData request
    * @param entityConstructor - Constructor type of the entity the field belongs to

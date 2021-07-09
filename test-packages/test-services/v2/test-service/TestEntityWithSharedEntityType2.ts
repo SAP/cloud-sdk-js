@@ -6,11 +6,13 @@
 import { TestEntityWithSharedEntityType2RequestBuilder } from './TestEntityWithSharedEntityType2RequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  FieldBuilder
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -81,21 +83,24 @@ export interface TestEntityWithSharedEntityType2Type {
 }
 
 export namespace TestEntityWithSharedEntityType2 {
+  const _fieldBuilder: FieldBuilder<
+    Constructable<TestEntityWithSharedEntityType2>
+  > = new FieldBuilder(TestEntityWithSharedEntityType2);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityWithSharedEntityType2> =
-    new StringField(
-      'KeyProperty',
-      TestEntityWithSharedEntityType2,
-      'Edm.String'
-    );
+  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
   /**
    * All fields of the TestEntityWithSharedEntityType2 entity.
    */
-  export const _allFields: Array<StringField<TestEntityWithSharedEntityType2>> =
-    [TestEntityWithSharedEntityType2.KEY_PROPERTY];
+  export const _allFields: Array<
+    EdmTypeField<TestEntityWithSharedEntityType2, 'Edm.String', false, true>
+  > = [TestEntityWithSharedEntityType2.KEY_PROPERTY];
   /**
    * All fields selector.
    */
@@ -104,18 +109,24 @@ export namespace TestEntityWithSharedEntityType2 {
   /**
    * All key fields of the TestEntityWithSharedEntityType2 entity.
    */
-  export const _keyFields: Array<Field<TestEntityWithSharedEntityType2>> = [
-    TestEntityWithSharedEntityType2.KEY_PROPERTY
-  ];
+  export const _keyFields: Array<
+    Field<TestEntityWithSharedEntityType2, boolean, boolean>
+  > = [TestEntityWithSharedEntityType2.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityWithSharedEntityType2.
    */
   export const _keys: {
-    [keys: string]: Field<TestEntityWithSharedEntityType2>;
+    [keys: string]: Field<TestEntityWithSharedEntityType2, boolean, boolean>;
   } = TestEntityWithSharedEntityType2._keyFields.reduce(
     (
-      acc: { [keys: string]: Field<TestEntityWithSharedEntityType2> },
-      field: Field<TestEntityWithSharedEntityType2>
+      acc: {
+        [keys: string]: Field<
+          TestEntityWithSharedEntityType2,
+          boolean,
+          boolean
+        >;
+      },
+      field: Field<TestEntityWithSharedEntityType2, boolean, boolean>
     ) => {
       acc[field._fieldName] = field;
       return acc;

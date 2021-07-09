@@ -15,11 +15,13 @@ describe('complex type imports', () => {
         moduleSpecifier: '@sap-cloud-sdk/core',
         namedImports: [
           'ComplexTypeField',
-          'ComplexTypeNumberPropertyField',
-          'ComplexTypeStringPropertyField',
           'ConstructorOrField',
+          'EdmTypeField',
           'EntityV2',
+          'FieldBuilder',
+          'FieldOptions',
           'FieldType',
+          'OrderableEdmTypeField',
           'PropertyMetadata',
           'deserializeComplexTypeV2'
         ]
@@ -40,10 +42,12 @@ describe('complex type imports', () => {
         moduleSpecifier: '@sap-cloud-sdk/core',
         namedImports: [
           'ComplexTypeField',
-          'ComplexTypeNumberPropertyField',
           'ConstructorOrField',
           'EntityV2',
+          'FieldBuilder',
+          'FieldOptions',
           'FieldType',
+          'OrderableEdmTypeField',
           'PropertyMetadata',
           'deserializeComplexTypeV2'
         ]
@@ -75,6 +79,8 @@ describe('complex type imports', () => {
           'ComplexTypeField',
           'ConstructorOrField',
           'EntityV2',
+          'FieldBuilder',
+          'FieldOptions',
           'FieldType',
           'PropertyMetadata',
           'deserializeComplexTypeV2'

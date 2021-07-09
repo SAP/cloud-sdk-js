@@ -4,11 +4,10 @@ import { TestEnumType2 } from './TestEnumType2';
 import {
   AllFields,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  EnumField,
-  Field,
-  StringField
+  Field
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -70,24 +69,29 @@ export declare namespace TestEntity3 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_STRING: StringField<TestEntity3>;
+  const KEY_PROPERTY_STRING: EdmTypeField<
+    TestEntity3,
+    'Edm.String',
+    false,
+    true
+  >;
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ENUM_PROPERTY: EnumField<TestEntity3>;
+  const ENUM_PROPERTY: EdmTypeField<TestEntity3, 'Edm.Enum', true, true>;
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const COMPLEX_TYPE_PROPERTY: TestComplexType2Field<TestEntity3>;
+  const COMPLEX_TYPE_PROPERTY: TestComplexType2Field<TestEntity3, true, true>;
   /**
    * All fields of the TestEntity3 entity.
    */
   const _allFields: Array<
-    | StringField<TestEntity3>
-    | EnumField<TestEntity3>
-    | TestComplexType2Field<TestEntity3>
+    | EdmTypeField<TestEntity3, 'Edm.String', false, true>
+    | EdmTypeField<TestEntity3, 'Edm.Enum', true, true>
+    | TestComplexType2Field<TestEntity3, true, true>
   >;
   /**
    * All fields selector.
@@ -96,12 +100,12 @@ export declare namespace TestEntity3 {
   /**
    * All key fields of the TestEntity3 entity.
    */
-  const _keyFields: Array<Field<TestEntity3>>;
+  const _keyFields: Array<Field<TestEntity3, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntity3.
    */
   const _keys: {
-    [keys: string]: Field<TestEntity3>;
+    [keys: string]: Field<TestEntity3, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntity3.d.ts.map

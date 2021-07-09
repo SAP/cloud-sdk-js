@@ -105,36 +105,38 @@ var Airports = /** @class */ (function (_super) {
 })(core_1.EntityV4);
 exports.Airports = Airports;
 (function (Airports) {
+  var _fieldBuilder = new core_1.FieldBuilder(Airports);
   /**
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airports.ICAO_CODE = new core_1.StringField(
+  Airports.ICAO_CODE = _fieldBuilder.buildEdmTypeField(
     'IcaoCode',
-    Airports,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airports.NAME = new core_1.StringField('Name', Airports, 'Edm.String');
+  Airports.NAME = _fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Static representation of the [[iataCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airports.IATA_CODE = new core_1.StringField(
+  Airports.IATA_CODE = _fieldBuilder.buildEdmTypeField(
     'IataCode',
-    Airports,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  Airports.LOCATION = new AirportLocation_1.AirportLocationField(
+  Airports.LOCATION = _fieldBuilder.buildComplexTypeField(
     'Location',
-    Airports
+    AirportLocation_1.AirportLocationField,
+    false
   );
   /**
    * All fields of the Airports entity.

@@ -34,9 +34,11 @@ export function importDeclarations(
           oDataVersion
         ),
         'AllFields',
+        'Constructable',
         `CustomField${versionInCap}`,
         `Entity${versionInCap}`,
         'EntityBuilderType',
+        'FieldBuilder',
         'Field'
       ].sort()
     )

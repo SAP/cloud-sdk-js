@@ -1,16 +1,22 @@
 import { Entity } from '../entity';
-import { ComplexTypeBigNumberPropertyField } from './big-number-field';
-import { ComplexTypeBinaryPropertyField } from './binary-field';
-import { ComplexTypeBooleanPropertyField } from './boolean-field';
-import { ComplexTypeDatePropertyField } from './date-field';
-import { ComplexTypeNumberPropertyField } from './number-field';
-import { ComplexTypeStringPropertyField } from './string-field';
-import { ComplexTypeTimePropertyField } from './time-field';
+import { EdmTypeField } from './edm-type-field';
+import {
+  ComplexTypeBigNumberPropertyField,
+  ComplexTypeBinaryPropertyField,
+  ComplexTypeBooleanPropertyField,
+  ComplexTypeDatePropertyField,
+  ComplexTypeNumberPropertyField,
+  ComplexTypeStringPropertyField,
+  ComplexTypeTimePropertyField
+} from './legacy';
+import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 /**
  * @hidden
  */
 export type ComplexTypePropertyFields<EntityT extends Entity, ComplexT> =
+  | EdmTypeField<EntityT, any, boolean, false>
+  | OrderableEdmTypeField<EntityT, any, boolean, false>
   | ComplexTypeBigNumberPropertyField<EntityT, ComplexT>
   | ComplexTypeBinaryPropertyField<EntityT, ComplexT>
   | ComplexTypeBooleanPropertyField<EntityT, ComplexT>

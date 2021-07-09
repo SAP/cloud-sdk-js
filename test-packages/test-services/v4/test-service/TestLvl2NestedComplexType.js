@@ -60,17 +60,24 @@ var TestLvl2NestedComplexTypeField = /** @class */ (function (_super) {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  function TestLvl2NestedComplexTypeField(fieldName, fieldOf) {
+  function TestLvl2NestedComplexTypeField(fieldName, fieldOf, fieldOptions) {
     var _this =
-      _super.call(this, fieldName, fieldOf, TestLvl2NestedComplexType) || this;
+      _super.call(
+        this,
+        fieldName,
+        fieldOf,
+        TestLvl2NestedComplexType,
+        fieldOptions
+      ) || this;
+    _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.stringProperty = new core_1.ComplexTypeStringPropertyField(
+    _this.stringProperty = _this._fieldBuilder.buildEdmTypeField(
       'StringProperty',
-      _this,
-      'Edm.String'
+      'Edm.String',
+      true
     );
     return _this;
   }

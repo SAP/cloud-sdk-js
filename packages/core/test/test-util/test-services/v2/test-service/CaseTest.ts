@@ -6,11 +6,13 @@
 import { CaseTestRequestBuilder } from './CaseTestRequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  FieldBuilder
 } from '../../../../../src';
 
 /**
@@ -69,21 +71,24 @@ export interface CaseTestType {
 }
 
 export namespace CaseTest {
+  const _fieldBuilder: FieldBuilder<Constructable<CaseTest>> = new FieldBuilder(
+    CaseTest
+  );
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<CaseTest> = new StringField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    CaseTest,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * All fields of the CaseTest entity.
    */
-  export const _allFields: Array<StringField<CaseTest>> = [
-    CaseTest.KEY_PROPERTY_STRING
-  ];
+  export const _allFields: Array<
+    EdmTypeField<CaseTest, 'Edm.String', false, true>
+  > = [CaseTest.KEY_PROPERTY_STRING];
   /**
    * All fields selector.
    */
@@ -91,15 +96,18 @@ export namespace CaseTest {
   /**
    * All key fields of the CaseTest entity.
    */
-  export const _keyFields: Array<Field<CaseTest>> = [
+  export const _keyFields: Array<Field<CaseTest, boolean, boolean>> = [
     CaseTest.KEY_PROPERTY_STRING
   ];
   /**
    * Mapping of all key field names to the respective static field property CaseTest.
    */
-  export const _keys: { [keys: string]: Field<CaseTest> } =
+  export const _keys: { [keys: string]: Field<CaseTest, boolean, boolean> } =
     CaseTest._keyFields.reduce(
-      (acc: { [keys: string]: Field<CaseTest> }, field: Field<CaseTest>) => {
+      (
+        acc: { [keys: string]: Field<CaseTest, boolean, boolean> },
+        field: Field<CaseTest, boolean, boolean>
+      ) => {
         acc[field._fieldName] = field;
         return acc;
       },

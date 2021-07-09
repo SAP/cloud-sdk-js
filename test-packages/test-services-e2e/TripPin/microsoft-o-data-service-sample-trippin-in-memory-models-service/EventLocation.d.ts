@@ -1,9 +1,10 @@
 import { City, CityField } from './City';
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
+  FieldOptions,
   FieldType,
   PropertyMetadata
 } from '@sap-cloud-sdk/core';
@@ -34,30 +35,37 @@ export declare function createEventLocation(json: any): EventLocation;
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class EventLocationField<
-  EntityT extends EntityV4
-> extends ComplexTypeField<EntityT, EventLocation> {
+  EntityT extends EntityV4,
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, EventLocation, NullableT, SelectableT> {
+  private _fieldBuilder;
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: ComplexTypeStringPropertyField<EntityT>;
+  buildingInfo: EdmTypeField<EntityT, 'Edm.String', true, false>;
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: ComplexTypeStringPropertyField<EntityT>;
+  address: EdmTypeField<EntityT, 'Edm.String', false, false>;
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT>;
+  city: CityField<EntityT, false, false>;
   /**
    * Creates an instance of EventLocationField.
    *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>);
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
+  );
 }
 export declare namespace EventLocation {
   /**

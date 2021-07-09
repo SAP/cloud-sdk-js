@@ -5,11 +5,12 @@
  */
 import { City, CityField } from './City';
 import {
-  ComplexTypeAnyPropertyField,
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
   PropertyMetadata,
   deserializeComplexTypeV4
@@ -45,28 +46,29 @@ export function createAirportLocation(json: any): AirportLocation {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class AirportLocationField<
-  EntityT extends EntityV4
-> extends ComplexTypeField<EntityT, AirportLocation> {
+  EntityT extends EntityV4,
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, AirportLocation, NullableT, SelectableT> {
+  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
   /**
    * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  loc: ComplexTypeAnyPropertyField<EntityT> = new ComplexTypeAnyPropertyField(
-    'Loc',
-    this,
-    'Edm.Any'
-  );
+  loc: EdmTypeField<EntityT, 'Edm.Any', false, false> =
+    this._fieldBuilder.buildEdmTypeField('Loc', 'Edm.Any', false);
   /**
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('Address', this, 'Edm.String');
+  address: EdmTypeField<EntityT, 'Edm.String', false, false> =
+    this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
   /**
    * Representation of the [[AirportLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT> = new CityField('City', this);
+  city: CityField<EntityT, false, false> =
+    this._fieldBuilder.buildComplexTypeField('City', CityField, false);
 
   /**
    * Creates an instance of AirportLocationField.
@@ -74,8 +76,12 @@ export class AirportLocationField<
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
-    super(fieldName, fieldOf, AirportLocation);
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
+  ) {
+    super(fieldName, fieldOf, AirportLocation, fieldOptions);
   }
 }
 

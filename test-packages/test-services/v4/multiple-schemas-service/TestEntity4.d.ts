@@ -1,12 +1,11 @@
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  Field,
-  StringField
+  Field
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -62,16 +61,24 @@ export declare namespace TestEntity4 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_STRING: StringField<TestEntity4>;
+  const KEY_PROPERTY_STRING: EdmTypeField<
+    TestEntity4,
+    'Edm.String',
+    false,
+    true
+  >;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: BooleanField<TestEntity4>;
+  const BOOLEAN_PROPERTY: EdmTypeField<TestEntity4, 'Edm.Boolean', true, true>;
   /**
    * All fields of the TestEntity4 entity.
    */
-  const _allFields: Array<StringField<TestEntity4> | BooleanField<TestEntity4>>;
+  const _allFields: Array<
+    | EdmTypeField<TestEntity4, 'Edm.String', false, true>
+    | EdmTypeField<TestEntity4, 'Edm.Boolean', true, true>
+  >;
   /**
    * All fields selector.
    */
@@ -79,12 +86,12 @@ export declare namespace TestEntity4 {
   /**
    * All key fields of the TestEntity4 entity.
    */
-  const _keyFields: Array<Field<TestEntity4>>;
+  const _keyFields: Array<Field<TestEntity4, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntity4.
    */
   const _keys: {
-    [keys: string]: Field<TestEntity4>;
+    [keys: string]: Field<TestEntity4, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntity4.d.ts.map

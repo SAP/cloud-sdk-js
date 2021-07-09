@@ -56,162 +56,164 @@ var TestComplexTypeField = /** @class */ (function (_super) {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  function TestComplexTypeField(fieldName, fieldOf) {
-    var _this = _super.call(this, fieldName, fieldOf, TestComplexType) || this;
+  function TestComplexTypeField(fieldName, fieldOf, fieldOptions) {
+    var _this =
+      _super.call(this, fieldName, fieldOf, TestComplexType, fieldOptions) ||
+      this;
+    _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[TestComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.stringProperty = new core_1.ComplexTypeStringPropertyField(
+    _this.stringProperty = _this._fieldBuilder.buildEdmTypeField(
       'StringProperty',
-      _this,
-      'Edm.String'
+      'Edm.String',
+      false
     );
     /**
      * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.booleanProperty = new core_1.ComplexTypeBooleanPropertyField(
+    _this.booleanProperty = _this._fieldBuilder.buildEdmTypeField(
       'BooleanProperty',
-      _this,
-      'Edm.Boolean'
+      'Edm.Boolean',
+      true
     );
     /**
      * Representation of the [[TestComplexType.guidProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.guidProperty = new core_1.ComplexTypeStringPropertyField(
+    _this.guidProperty = _this._fieldBuilder.buildEdmTypeField(
       'GuidProperty',
-      _this,
-      'Edm.Guid'
+      'Edm.Guid',
+      true
     );
     /**
      * Representation of the [[TestComplexType.int16Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.int16Property = new core_1.ComplexTypeNumberPropertyField(
+    _this.int16Property = _this._fieldBuilder.buildEdmTypeField(
       'Int16Property',
-      _this,
-      'Edm.Int16'
+      'Edm.Int16',
+      true
     );
     /**
      * Representation of the [[TestComplexType.int32Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.int32Property = new core_1.ComplexTypeNumberPropertyField(
+    _this.int32Property = _this._fieldBuilder.buildEdmTypeField(
       'Int32Property',
-      _this,
-      'Edm.Int32'
+      'Edm.Int32',
+      true
     );
     /**
      * Representation of the [[TestComplexType.int64Property]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.int64Property = new core_1.ComplexTypeBigNumberPropertyField(
+    _this.int64Property = _this._fieldBuilder.buildEdmTypeField(
       'Int64Property',
-      _this,
-      'Edm.Int64'
+      'Edm.Int64',
+      true
     );
     /**
      * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.decimalProperty = new core_1.ComplexTypeBigNumberPropertyField(
+    _this.decimalProperty = _this._fieldBuilder.buildEdmTypeField(
       'DecimalProperty',
-      _this,
-      'Edm.Decimal'
+      'Edm.Decimal',
+      true
     );
     /**
      * Representation of the [[TestComplexType.singleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.singleProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.singleProperty = _this._fieldBuilder.buildEdmTypeField(
       'SingleProperty',
-      _this,
-      'Edm.Single'
+      'Edm.Single',
+      true
     );
     /**
      * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.doubleProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.doubleProperty = _this._fieldBuilder.buildEdmTypeField(
       'DoubleProperty',
-      _this,
-      'Edm.Double'
+      'Edm.Double',
+      true
     );
     /**
      * Representation of the [[TestComplexType.floatProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.floatProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.floatProperty = _this._fieldBuilder.buildEdmTypeField(
       'FloatProperty',
-      _this,
-      'Edm.Float'
+      'Edm.Float',
+      true
     );
     /**
      * Representation of the [[TestComplexType.timeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.timeProperty = new core_1.ComplexTypeTimePropertyField(
+    _this.timeProperty = _this._fieldBuilder.buildEdmTypeField(
       'TimeProperty',
-      _this,
-      'Edm.Time'
+      'Edm.Time',
+      true
     );
     /**
      * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.dateTimeProperty = new core_1.ComplexTypeDatePropertyField(
+    _this.dateTimeProperty = _this._fieldBuilder.buildEdmTypeField(
       'DateTimeProperty',
-      _this,
-      'Edm.DateTime'
+      'Edm.DateTime',
+      true
     );
     /**
      * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.dateTimeOffSetProperty = new core_1.ComplexTypeDatePropertyField(
+    _this.dateTimeOffSetProperty = _this._fieldBuilder.buildEdmTypeField(
       'DateTimeOffSetProperty',
-      _this,
-      'Edm.DateTimeOffset'
+      'Edm.DateTimeOffset',
+      true
     );
     /**
      * Representation of the [[TestComplexType.byteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.byteProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.byteProperty = _this._fieldBuilder.buildEdmTypeField(
       'ByteProperty',
-      _this,
-      'Edm.Byte'
+      'Edm.Byte',
+      true
     );
     /**
      * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.sByteProperty = new core_1.ComplexTypeNumberPropertyField(
+    _this.sByteProperty = _this._fieldBuilder.buildEdmTypeField(
       'SByteProperty',
-      _this,
-      'Edm.SByte'
+      'Edm.SByte',
+      true
     );
     /**
      * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.somethingTheSdkDoesNotSupport =
-      new core_1.ComplexTypeAnyPropertyField(
-        'SomethingTheSDKDoesNotSupport',
-        _this,
-        'Edm.Any'
-      );
+    _this.somethingTheSdkDoesNotSupport = _this._fieldBuilder.buildEdmTypeField(
+      'SomethingTheSDKDoesNotSupport',
+      'Edm.Any',
+      true
+    );
     /**
      * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.complexTypeProperty =
-      new TestNestedComplexType_1.TestNestedComplexTypeField(
-        'ComplexTypeProperty',
-        _this
-      );
+    _this.complexTypeProperty = _this._fieldBuilder.buildComplexTypeField(
+      'ComplexTypeProperty',
+      TestNestedComplexType_1.TestNestedComplexTypeField,
+      true
+    );
     return _this;
   }
   return TestComplexTypeField;

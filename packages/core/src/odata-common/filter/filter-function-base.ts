@@ -106,6 +106,6 @@ export type FilterFunctionPrimitiveParameterType =
  */
 export type FilterFunctionParameterType<EntityT extends Entity> =
   | FilterFunctionPrimitiveParameterType
-  | Field<EntityT>
+  | Field<EntityT, boolean, boolean>
   | FilterFunction<EntityT, FieldType | FieldType[]>
   | FilterFunctionPrimitiveParameterType[];

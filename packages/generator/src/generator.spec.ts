@@ -100,7 +100,7 @@ describe('generator', () => {
       checkStaticProperties(entityClass!);
 
       const entityNamespace = testEntityFile!.getModule('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(26);
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(27);
     });
 
     it('generates function-imports.ts file', () => {
@@ -149,7 +149,7 @@ describe('generator', () => {
       checkStaticProperties(entityClass!);
 
       const entityNamespace = testEntityFile!.getModule('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(33);
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(34);
     });
 
     it('generates function-imports.ts file', () => {

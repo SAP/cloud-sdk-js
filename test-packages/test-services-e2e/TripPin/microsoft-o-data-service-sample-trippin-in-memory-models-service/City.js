@@ -57,34 +57,36 @@ var CityField = /** @class */ (function (_super) {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  function CityField(fieldName, fieldOf) {
-    var _this = _super.call(this, fieldName, fieldOf, City) || this;
+  function CityField(fieldName, fieldOf, fieldOptions) {
+    var _this =
+      _super.call(this, fieldName, fieldOf, City, fieldOptions) || this;
+    _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[City.countryRegion]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.countryRegion = new core_1.ComplexTypeStringPropertyField(
+    _this.countryRegion = _this._fieldBuilder.buildEdmTypeField(
       'CountryRegion',
-      _this,
-      'Edm.String'
+      'Edm.String',
+      false
     );
     /**
      * Representation of the [[City.name]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.name = new core_1.ComplexTypeStringPropertyField(
+    _this.name = _this._fieldBuilder.buildEdmTypeField(
       'Name',
-      _this,
-      'Edm.String'
+      'Edm.String',
+      false
     );
     /**
      * Representation of the [[City.region]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.region = new core_1.ComplexTypeStringPropertyField(
+    _this.region = _this._fieldBuilder.buildEdmTypeField(
       'Region',
-      _this,
-      'Edm.String'
+      'Edm.String',
+      false
     );
     return _this;
   }

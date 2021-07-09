@@ -4,10 +4,10 @@ import {
   TestEntity
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 
-// $ExpectType TestComplexTypeField<TestEntity>
+// $ExpectType TestComplexTypeField<TestEntity, true, true>
 TestEntity.COMPLEX_TYPE_PROPERTY;
 
-// $ExpectType ComplexTypeStringPropertyField<TestEntity, any>
+// $ExpectType EdmTypeField<TestEntity, "Edm.String", false, false>
 TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty;
 
 // $ExpectType TestComplexType

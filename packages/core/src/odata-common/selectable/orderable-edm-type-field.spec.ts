@@ -4,8 +4,8 @@ import {
 } from '../../../test/test-util/test-services/v2/test-service';
 import { Entity } from '../entity';
 import { Filter } from '../filter';
-import { ComplexTypeNumberPropertyField, NumberField } from './number-field';
 import { FieldType } from './field';
+import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 export function checkFilter<EntityT extends Entity, FieldT extends FieldType>(
   filter: Filter<EntityT, FieldT>,
@@ -22,8 +22,8 @@ describe('Number Field', () => {
   const fieldName = 'SomeField';
   const filterValue = 100;
 
-  describe('edm type field', () => {
-    const field = new NumberField(fieldName, TestEntity, 'Edm.Decimal');
+  describe('orderable edm type field', () => {
+    const field = new OrderableEdmTypeField(fieldName, TestEntity, 'Edm.Int16');
 
     it('should create filter for "equals"', () => {
       const filter = field.equals(filterValue);
@@ -62,7 +62,7 @@ describe('Number Field', () => {
       parentFieldName,
       TestEntity
     );
-    const field = new ComplexTypeNumberPropertyField(
+    const field = new OrderableEdmTypeField(
       fieldName,
       parentComplexField,
       'Edm.Single'

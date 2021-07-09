@@ -106,14 +106,15 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
 })(core_1.EntityV2);
 exports.MultiSchemaTestEntity = MultiSchemaTestEntity;
 (function (MultiSchemaTestEntity) {
+  var _fieldBuilder = new core_1.FieldBuilder(MultiSchemaTestEntity);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  MultiSchemaTestEntity.KEY_PROPERTY = new core_1.StringField(
+  MultiSchemaTestEntity.KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'KeyProperty',
-    MultiSchemaTestEntity,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * All fields of the MultiSchemaTestEntity entity.

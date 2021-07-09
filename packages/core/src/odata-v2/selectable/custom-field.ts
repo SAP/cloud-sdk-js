@@ -1,25 +1,30 @@
 import {
   CustomField as CustomFieldBase,
-  DateField,
-  TimeField
+  OrderableEdmTypeField
 } from '../../odata-common';
 import type { Entity } from '../entity';
 
 export class CustomField<
-  EntityT extends Entity
-> extends CustomFieldBase<EntityT> {
-  edmDateTime(): DateField<EntityT> {
-    return new DateField<EntityT>(
+  EntityT extends Entity,
+  NullableT extends boolean = false
+> extends CustomFieldBase<EntityT, NullableT> {
+  edmDateTime(): OrderableEdmTypeField<
+    EntityT,
+    'Edm.DateTime',
+    NullableT,
+    true
+  > {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.DateTime'
+      'Edm.DateTime',
+      this._fieldOptions.isNullable
     );
   }
-  edmTime(): TimeField<EntityT> {
-    return new TimeField<EntityT>(
+  edmTime(): OrderableEdmTypeField<EntityT, 'Edm.Time', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Time'
+      'Edm.Time',
+      this._fieldOptions.isNullable
     );
   }
 }

@@ -1,120 +1,129 @@
 import { Entity, Constructable } from '../entity';
-import { BigNumberField } from './big-number-field';
-import { BooleanField } from './boolean-field';
-import { DateField } from './date-field';
+import { EdmTypeField } from './edm-type-field';
 import { Field } from './field';
-import { NumberField } from './number-field';
-import { StringField } from './string-field';
+import { FieldBuilder } from './field-builder';
+import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
-export class CustomField<EntityT extends Entity> extends Field<EntityT> {
+export class CustomField<
+  EntityT extends Entity,
+  NullableT extends boolean = false
+> extends Field<EntityT, NullableT> {
+  protected fieldBuilder: FieldBuilder<Constructable<EntityT>>;
   constructor(
-    readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT>
+    fieldName: string,
+    entityConstructor: Constructable<EntityT>,
+    isNullable: NullableT = false as NullableT
   ) {
-    super(_fieldName, _entityConstructor);
+    super(fieldName, entityConstructor, { isNullable });
+    this.fieldBuilder = new FieldBuilder(entityConstructor);
   }
 
-  edmString(): StringField<EntityT> {
-    return new StringField(
+  edmString(): EdmTypeField<EntityT, 'Edm.String', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.String'
+      'Edm.String',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmBoolean(): BooleanField<EntityT> {
-    return new BooleanField(
+  edmBoolean(): EdmTypeField<EntityT, 'Edm.Boolean', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Boolean'
+      'Edm.Boolean',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmGuid(): StringField<EntityT> {
-    return new StringField(
+  edmGuid(): EdmTypeField<EntityT, 'Edm.Guid', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Guid'
+      'Edm.Guid',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmDecimal(): BigNumberField<EntityT> {
-    return new BigNumberField(
+  edmDecimal(): EdmTypeField<EntityT, 'Edm.Decimal', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Decimal'
+      'Edm.Decimal',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmInt16(): NumberField<EntityT> {
-    return new NumberField(
+  edmInt16(): OrderableEdmTypeField<EntityT, 'Edm.Int16', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Int16'
+      'Edm.Int16',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmInt32(): NumberField<EntityT> {
-    return new NumberField(
+  edmInt32(): OrderableEdmTypeField<EntityT, 'Edm.Int32', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Int32'
+      'Edm.Int32',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmInt64(): BigNumberField<EntityT> {
-    return new BigNumberField(
+  edmInt64(): OrderableEdmTypeField<EntityT, 'Edm.Int64', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Int64'
+      'Edm.Int64',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmSingle(): NumberField<EntityT> {
-    return new NumberField(
+  edmSingle(): OrderableEdmTypeField<EntityT, 'Edm.Single', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Single'
+      'Edm.Single',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmDouble(): NumberField<EntityT> {
-    return new NumberField(
+  edmDouble(): OrderableEdmTypeField<EntityT, 'Edm.Double', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Double'
+      'Edm.Double',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmByte(): NumberField<EntityT> {
-    return new NumberField(
+  edmByte(): OrderableEdmTypeField<EntityT, 'Edm.Byte', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Byte'
+      'Edm.Byte',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmSByte(): NumberField<EntityT> {
-    return new NumberField(
+  edmSByte(): OrderableEdmTypeField<EntityT, 'Edm.SByte', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.SByte'
+      'Edm.SByte',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmDateTimeOffset(): DateField<EntityT> {
-    return new DateField(
+  edmDateTimeOffset(): OrderableEdmTypeField<
+    EntityT,
+    'Edm.DateTimeOffset',
+    NullableT,
+    true
+  > {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.DateTimeOffset'
+      'Edm.DateTimeOffset',
+      this._fieldOptions.isNullable
     );
   }
 
-  edmBinary(): StringField<EntityT> {
-    return new StringField(
+  edmBinary(): EdmTypeField<EntityT, 'Edm.Binary', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Binary'
+      'Edm.Binary',
+      this._fieldOptions.isNullable
     );
   }
 }

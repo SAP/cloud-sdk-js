@@ -6,11 +6,13 @@
 import { Casetest_1RequestBuilder } from './Casetest_1RequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
   Field,
-  StringField
+  FieldBuilder
 } from '../../../../../src';
 
 /**
@@ -69,21 +71,23 @@ export interface Casetest_1Type {
 }
 
 export namespace Casetest_1 {
+  const _fieldBuilder: FieldBuilder<Constructable<Casetest_1>> =
+    new FieldBuilder(Casetest_1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<Casetest_1> = new StringField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    Casetest_1,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * All fields of the Casetest_1 entity.
    */
-  export const _allFields: Array<StringField<Casetest_1>> = [
-    Casetest_1.KEY_PROPERTY_STRING
-  ];
+  export const _allFields: Array<
+    EdmTypeField<Casetest_1, 'Edm.String', false, true>
+  > = [Casetest_1.KEY_PROPERTY_STRING];
   /**
    * All fields selector.
    */
@@ -94,17 +98,17 @@ export namespace Casetest_1 {
   /**
    * All key fields of the Casetest_1 entity.
    */
-  export const _keyFields: Array<Field<Casetest_1>> = [
+  export const _keyFields: Array<Field<Casetest_1, boolean, boolean>> = [
     Casetest_1.KEY_PROPERTY_STRING
   ];
   /**
    * Mapping of all key field names to the respective static field property Casetest_1.
    */
-  export const _keys: { [keys: string]: Field<Casetest_1> } =
+  export const _keys: { [keys: string]: Field<Casetest_1, boolean, boolean> } =
     Casetest_1._keyFields.reduce(
       (
-        acc: { [keys: string]: Field<Casetest_1> },
-        field: Field<Casetest_1>
+        acc: { [keys: string]: Field<Casetest_1, boolean, boolean> },
+        field: Field<Casetest_1, boolean, boolean>
       ) => {
         acc[field._fieldName] = field;
         return acc;

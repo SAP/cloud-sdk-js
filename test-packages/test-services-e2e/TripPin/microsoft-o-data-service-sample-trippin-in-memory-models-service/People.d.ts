@@ -4,16 +4,15 @@ import { Location } from './Location';
 import { PersonGender } from './PersonGender';
 import {
   AllFields,
-  BigNumberField,
   CollectionField,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  EnumField,
   Field,
   OneToManyLink,
   OneToOneLink,
-  StringField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -107,37 +106,37 @@ export declare namespace People {
    * Static representation of the [[userName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const USER_NAME: StringField<People>;
+  const USER_NAME: EdmTypeField<People, 'Edm.String', false, true>;
   /**
    * Static representation of the [[firstName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const FIRST_NAME: StringField<People>;
+  const FIRST_NAME: EdmTypeField<People, 'Edm.String', false, true>;
   /**
    * Static representation of the [[lastName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const LAST_NAME: StringField<People>;
+  const LAST_NAME: EdmTypeField<People, 'Edm.String', false, true>;
   /**
    * Static representation of the [[emails]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const EMAILS: CollectionField<People, 'Edm.String'>;
+  const EMAILS: CollectionField<People, 'Edm.String', true, true>;
   /**
    * Static representation of the [[addressInfo]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ADDRESS_INFO: CollectionField<People, Location>;
+  const ADDRESS_INFO: CollectionField<People, Location, true, true>;
   /**
    * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GENDER: EnumField<People>;
+  const GENDER: EdmTypeField<People, 'Edm.Enum', true, true>;
   /**
    * Static representation of the [[concurrency]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const CONCURRENCY: BigNumberField<People>;
+  const CONCURRENCY: OrderableEdmTypeField<People, 'Edm.Int64', false, true>;
   /**
    * Static representation of the one-to-many navigation property [[friends]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -152,11 +151,11 @@ export declare namespace People {
    * All fields of the People entity.
    */
   const _allFields: Array<
-    | StringField<People>
-    | CollectionField<People, 'Edm.String'>
-    | CollectionField<People, Location>
-    | EnumField<People>
-    | BigNumberField<People>
+    | EdmTypeField<People, 'Edm.String', false, true>
+    | CollectionField<People, 'Edm.String', true, true>
+    | CollectionField<People, Location, true, true>
+    | EdmTypeField<People, 'Edm.Enum', true, true>
+    | OrderableEdmTypeField<People, 'Edm.Int64', false, true>
     | OneToManyLink<People, People>
     | OneToOneLink<People, Photos>
   >;
@@ -167,12 +166,12 @@ export declare namespace People {
   /**
    * All key fields of the People entity.
    */
-  const _keyFields: Array<Field<People>>;
+  const _keyFields: Array<Field<People, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property People.
    */
   const _keys: {
-    [keys: string]: Field<People>;
+    [keys: string]: Field<People, boolean, boolean>;
   };
 }
 //# sourceMappingURL=People.d.ts.map

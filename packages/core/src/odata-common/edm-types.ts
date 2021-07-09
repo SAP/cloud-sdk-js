@@ -48,3 +48,48 @@ export type EdmTypeSameConvertersUri = Exclude<
 export function isEdmType(val: any): val is EdmTypeShared<'any'> {
   return typeof val === 'string' && val.startsWith('Edm.');
 }
+
+/**
+ * EDM types that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.
+ */
+export type OrderableEdmType =
+  | 'Edm.Decimal'
+  | 'Edm.Double'
+  | 'Edm.Single'
+  | 'Edm.Float'
+  | 'Edm.Int16'
+  | 'Edm.Int32'
+  | 'Edm.Int64'
+  | 'Edm.SByte'
+  | 'Edm.Byte'
+  | 'Edm.DateTime'
+  | 'Edm.DateTimeOffset'
+  | 'Edm.Time'
+  | 'Edm.Date'
+  | 'Edm.Duration'
+  | 'Edm.TimeOfDay';
+
+/**
+ * Convenience function to check whether a given EDM type is of type [[OrderableEdmType]].
+ * @param edmType Literal EDM type string to check.
+ * @returns Whether the given `edmType` is of type [[OrderableEdmType]].
+ */
+export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
+  return [
+    'Edm.Decimal',
+    'Edm.Double',
+    'Edm.Single',
+    'Edm.Float',
+    'Edm.Int16',
+    'Edm.Int32',
+    'Edm.Int64',
+    'Edm.SByte',
+    'Edm.Byte',
+    'Edm.DateTime',
+    'Edm.DateTimeOffset',
+    'Edm.Time',
+    'Edm.Date',
+    'Edm.Duration',
+    'Edm.TimeOfDay'
+  ].includes(edmType);
+}

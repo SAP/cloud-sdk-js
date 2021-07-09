@@ -2,12 +2,12 @@ import { PhotosRequestBuilder } from './PhotosRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
-  BigNumberField,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -63,16 +63,19 @@ export declare namespace Photos {
    * Static representation of the [[id]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ID: BigNumberField<Photos>;
+  const ID: OrderableEdmTypeField<Photos, 'Edm.Int64', false, true>;
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const NAME: StringField<Photos>;
+  const NAME: EdmTypeField<Photos, 'Edm.String', true, true>;
   /**
    * All fields of the Photos entity.
    */
-  const _allFields: Array<BigNumberField<Photos> | StringField<Photos>>;
+  const _allFields: Array<
+    | OrderableEdmTypeField<Photos, 'Edm.Int64', false, true>
+    | EdmTypeField<Photos, 'Edm.String', true, true>
+  >;
   /**
    * All fields selector.
    */
@@ -80,12 +83,12 @@ export declare namespace Photos {
   /**
    * All key fields of the Photos entity.
    */
-  const _keyFields: Array<Field<Photos>>;
+  const _keyFields: Array<Field<Photos, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property Photos.
    */
   const _keys: {
-    [keys: string]: Field<Photos>;
+    [keys: string]: Field<Photos, boolean, boolean>;
   };
 }
 //# sourceMappingURL=Photos.d.ts.map

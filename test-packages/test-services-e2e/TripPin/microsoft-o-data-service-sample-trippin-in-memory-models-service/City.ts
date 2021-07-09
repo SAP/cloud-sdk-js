@@ -5,9 +5,11 @@
  */
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
   PropertyMetadata,
   deserializeComplexTypeV4
@@ -42,28 +44,30 @@ export function createCity(json: any): City {
  * CityField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-export class CityField<EntityT extends EntityV4> extends ComplexTypeField<
-  EntityT,
-  City
-> {
+export class CityField<
+  EntityT extends EntityV4,
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, City, NullableT, SelectableT> {
+  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('CountryRegion', this, 'Edm.String');
+  countryRegion: EdmTypeField<EntityT, 'Edm.String', false, false> =
+    this._fieldBuilder.buildEdmTypeField('CountryRegion', 'Edm.String', false);
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('Name', this, 'Edm.String');
+  name: EdmTypeField<EntityT, 'Edm.String', false, false> =
+    this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('Region', this, 'Edm.String');
+  region: EdmTypeField<EntityT, 'Edm.String', false, false> =
+    this._fieldBuilder.buildEdmTypeField('Region', 'Edm.String', false);
 
   /**
    * Creates an instance of CityField.
@@ -71,8 +75,12 @@ export class CityField<EntityT extends EntityV4> extends ComplexTypeField<
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
-    super(fieldName, fieldOf, City);
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
+  ) {
+    super(fieldName, fieldOf, City, fieldOptions);
   }
 }
 

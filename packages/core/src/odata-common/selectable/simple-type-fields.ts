@@ -1,17 +1,23 @@
 import { Entity } from '../entity';
-import { BigNumberField } from './big-number-field';
-import { BinaryField } from './binary-field';
-import { BooleanField } from './boolean-field';
-import { DateField } from './date-field';
-import { NumberField } from './number-field';
-import { StringField } from './string-field';
-import { TimeField } from './time-field';
-import { AnyField } from './any-field';
+import { EdmTypeField } from './edm-type-field';
+import {
+  AnyField,
+  BigNumberField,
+  BinaryField,
+  BooleanField,
+  DateField,
+  NumberField,
+  StringField,
+  TimeField
+} from './legacy';
+import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 /**
  * @hidden
  */
 export type SimpleTypeFields<EntityT extends Entity> =
+  | EdmTypeField<EntityT, any, boolean, true>
+  | OrderableEdmTypeField<EntityT, any, boolean, true>
   | BigNumberField<EntityT>
   | BinaryField<EntityT>
   | BooleanField<EntityT>

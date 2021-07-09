@@ -6,12 +6,14 @@
 import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularLinkChildRequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
-  OneToOneLink,
-  StringField
+  FieldBuilder,
+  OneToOneLink
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -89,12 +91,18 @@ export interface TestEntityCircularLinkChildType {
 }
 
 export namespace TestEntityCircularLinkChild {
+  const _fieldBuilder: FieldBuilder<
+    Constructable<TestEntityCircularLinkChild>
+  > = new FieldBuilder(TestEntityCircularLinkChild);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY: StringField<TestEntityCircularLinkChild> =
-    new StringField('KeyProperty', TestEntityCircularLinkChild, 'Edm.String');
+  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
   /**
    * Static representation of the one-to-one navigation property [[toParent]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -111,7 +119,7 @@ export namespace TestEntityCircularLinkChild {
    * All fields of the TestEntityCircularLinkChild entity.
    */
   export const _allFields: Array<
-    | StringField<TestEntityCircularLinkChild>
+    | EdmTypeField<TestEntityCircularLinkChild, 'Edm.String', false, true>
     | OneToOneLink<TestEntityCircularLinkChild, TestEntityCircularLinkParent>
   > = [
     TestEntityCircularLinkChild.KEY_PROPERTY,
@@ -125,21 +133,24 @@ export namespace TestEntityCircularLinkChild {
   /**
    * All key fields of the TestEntityCircularLinkChild entity.
    */
-  export const _keyFields: Array<Field<TestEntityCircularLinkChild>> = [
-    TestEntityCircularLinkChild.KEY_PROPERTY
-  ];
+  export const _keyFields: Array<
+    Field<TestEntityCircularLinkChild, boolean, boolean>
+  > = [TestEntityCircularLinkChild.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityCircularLinkChild.
    */
-  export const _keys: { [keys: string]: Field<TestEntityCircularLinkChild> } =
-    TestEntityCircularLinkChild._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<TestEntityCircularLinkChild> },
-        field: Field<TestEntityCircularLinkChild>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
+  export const _keys: {
+    [keys: string]: Field<TestEntityCircularLinkChild, boolean, boolean>;
+  } = TestEntityCircularLinkChild._keyFields.reduce(
+    (
+      acc: {
+        [keys: string]: Field<TestEntityCircularLinkChild, boolean, boolean>;
       },
-      {}
-    );
+      field: Field<TestEntityCircularLinkChild, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

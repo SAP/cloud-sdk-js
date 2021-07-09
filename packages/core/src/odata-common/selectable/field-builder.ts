@@ -137,25 +137,3 @@ export class FieldBuilder<
     });
   }
 }
-
-/**
- * Return type for the EDM builder functions.
- */
-export type EdmTypeClassByType<
-  EntityT extends Entity,
-  EdmT extends EdmTypeShared<'any'>,
-  NullableT extends boolean,
-  SelectableT extends boolean
-> = EdmT extends OrderableEdmType
-  ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
-  : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>;
-
-export type EdmTypeClassByType2<
-  EntityT extends Entity,
-  EdmT extends EdmTypeShared<'any'>,
-  OrderableT extends boolean,
-  NullableT extends boolean,
-  SelectableT extends boolean
-> = OrderableT extends true
-  ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
-  : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>;

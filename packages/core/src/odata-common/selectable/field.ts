@@ -83,8 +83,7 @@ export class Field<
   }
 
   /**
-   * Path to the field to be used in filter and order by queries. In most cases this will just be the [[_fieldName]] itself. However, for complex types for instance, the path is prefixed with the name of the complextype.
-   *
+   * Path to the field to be used in filter and order by queries.
    * @returns Path to the field to be used in filter and order by queries.
    */
   fieldPath(): string {

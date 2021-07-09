@@ -27,6 +27,7 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           name: 'complexity',
+          type: "EdmTypeField<EntityT, 'Edm.String', false, false>",
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Complexity', 'Edm.String', false)",
           docs: [
@@ -36,6 +37,7 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           name: 'amount',
+          type: "OrderableEdmTypeField<EntityT, 'Edm.Int16', false, false>",
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Amount', 'Edm.Int16', false)",
           docs: [
@@ -93,6 +95,7 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           name: 'complexDesert',
+          type: 'ComplexDesertField<EntityT, false, false>',
           initializer:
             "this._fieldBuilder.buildComplexTypeField('ComplexDesert', ComplexDesertField, false)",
           docs: [
@@ -102,6 +105,7 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           name: 'amount',
+          type: "OrderableEdmTypeField<EntityT, 'Edm.Int16', false, false>",
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Amount', 'Edm.Int16', false)",
           docs: [

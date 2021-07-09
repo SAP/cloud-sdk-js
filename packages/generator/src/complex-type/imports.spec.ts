@@ -16,10 +16,12 @@ describe('complex type imports', () => {
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
+          'EdmTypeField',
           'EntityV2',
           'FieldBuilder',
           'FieldOptions',
           'FieldType',
+          'OrderableEdmTypeField',
           'PropertyMetadata',
           'deserializeComplexTypeV2'
         ]
@@ -45,6 +47,7 @@ describe('complex type imports', () => {
           'FieldBuilder',
           'FieldOptions',
           'FieldType',
+          'OrderableEdmTypeField',
           'PropertyMetadata',
           'deserializeComplexTypeV2'
         ]

@@ -84,10 +84,8 @@ export interface TestEntityLinkType {
 }
 
 export namespace TestEntityLink {
-  const _fieldBuilder: FieldBuilder<
-    TestEntityLink,
-    Constructable<TestEntityLink>
-  > = new FieldBuilder(TestEntityLink);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntityLink>> =
+    new FieldBuilder(TestEntityLink);
   /**
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

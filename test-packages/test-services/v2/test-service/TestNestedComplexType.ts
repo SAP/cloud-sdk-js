@@ -10,6 +10,7 @@ import {
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV2,
   FieldBuilder,
   FieldOptions,
@@ -55,26 +56,23 @@ export class TestNestedComplexTypeField<
   NullableT,
   SelectableT
 > {
-  /** TODO */
-  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
   /**
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty = this._fieldBuilder.buildEdmTypeField(
-    'StringProperty',
-    'Edm.String',
-    true
-  );
+  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
+    this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
   /**
    * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty = this._fieldBuilder.buildComplexTypeField(
-    'ComplexTypeProperty',
-    TestLvl2NestedComplexTypeField,
-    true
-  );
+  complexTypeProperty: TestLvl2NestedComplexTypeField<EntityT, true, false> =
+    this._fieldBuilder.buildComplexTypeField(
+      'ComplexTypeProperty',
+      TestLvl2NestedComplexTypeField,
+      true
+    );
 
   /**
    * Creates an instance of TestNestedComplexTypeField.

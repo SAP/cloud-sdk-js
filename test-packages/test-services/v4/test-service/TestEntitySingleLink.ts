@@ -125,10 +125,8 @@ export interface TestEntitySingleLinkType {
 }
 
 export namespace TestEntitySingleLink {
-  const _fieldBuilder: FieldBuilder<
-    TestEntitySingleLink,
-    Constructable<TestEntitySingleLink>
-  > = new FieldBuilder(TestEntitySingleLink);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntitySingleLink>> =
+    new FieldBuilder(TestEntitySingleLink);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

@@ -64,7 +64,6 @@ var TestComplexType2Field = /** @class */ (function (_super) {
     var _this =
       _super.call(this, fieldName, fieldOf, TestComplexType2, fieldOptions) ||
       this;
-    /** TODO */
     _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[TestComplexType2.stringProperty]] property for query construction.

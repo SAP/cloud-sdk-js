@@ -83,7 +83,6 @@ export interface TestEntityEndsWithSomethingElseType {
 
 export namespace TestEntityEndsWithSomethingElse {
   const _fieldBuilder: FieldBuilder<
-    TestEntityEndsWithSomethingElse,
     Constructable<TestEntityEndsWithSomethingElse>
   > = new FieldBuilder(TestEntityEndsWithSomethingElse);
   /**

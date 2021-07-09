@@ -77,10 +77,8 @@ export interface MultiSchemaTestEntityType {
 }
 
 export namespace MultiSchemaTestEntity {
-  const _fieldBuilder: FieldBuilder<
-    MultiSchemaTestEntity,
-    Constructable<MultiSchemaTestEntity>
-  > = new FieldBuilder(MultiSchemaTestEntity);
+  const _fieldBuilder: FieldBuilder<Constructable<MultiSchemaTestEntity>> =
+    new FieldBuilder(MultiSchemaTestEntity);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

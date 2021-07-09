@@ -7,6 +7,7 @@ import { City, CityField } from './City';
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
   FieldBuilder,
   FieldOptions,
@@ -45,22 +46,19 @@ export class LocationField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, Location, NullableT, SelectableT> {
-  /** TODO */
-  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
   /**
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address = this._fieldBuilder.buildEdmTypeField(
-    'Address',
-    'Edm.String',
-    false
-  );
+  address: EdmTypeField<EntityT, 'Edm.String', false, false> =
+    this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
   /**
    * Representation of the [[Location.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city = this._fieldBuilder.buildComplexTypeField('City', CityField, false);
+  city: CityField<EntityT, false, false> =
+    this._fieldBuilder.buildComplexTypeField('City', CityField, false);
 
   /**
    * Creates an instance of LocationField.

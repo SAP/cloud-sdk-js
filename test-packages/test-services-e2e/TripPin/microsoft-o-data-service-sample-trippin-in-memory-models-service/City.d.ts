@@ -1,6 +1,7 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
   FieldOptions,
   FieldType,
@@ -36,38 +37,22 @@ export declare class CityField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, City, NullableT, SelectableT> {
-  /** TODO */
   private _fieldBuilder;
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.String',
-    false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  countryRegion: EdmTypeField<EntityT, 'Edm.String', false, false>;
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.String',
-    false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  name: EdmTypeField<EntityT, 'Edm.String', false, false>;
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.String',
-    false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  region: EdmTypeField<EntityT, 'Edm.String', false, false>;
   /**
    * Creates an instance of CityField.
    *

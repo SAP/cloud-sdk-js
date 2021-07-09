@@ -6,6 +6,7 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
   FieldBuilder,
   FieldOptions,
@@ -46,17 +47,17 @@ export class TestComplexBaseTypeField<
   NullableT,
   SelectableT
 > {
-  /** TODO */
-  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
   /**
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty = this._fieldBuilder.buildEdmTypeField(
-    'BaseStringProperty',
-    'Edm.String',
-    true
-  );
+  baseStringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
+    this._fieldBuilder.buildEdmTypeField(
+      'BaseStringProperty',
+      'Edm.String',
+      true
+    );
 
   /**
    * Creates an instance of TestComplexBaseTypeField.

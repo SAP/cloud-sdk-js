@@ -6,6 +6,7 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
   FieldBuilder,
   FieldOptions,
@@ -48,27 +49,25 @@ export class CityField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, City, NullableT, SelectableT> {
-  /** TODO */
-  private _fieldBuilder: FieldBuilder<EntityT, this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion = this._fieldBuilder.buildEdmTypeField(
-    'CountryRegion',
-    'Edm.String',
-    false
-  );
+  countryRegion: EdmTypeField<EntityT, 'Edm.String', false, false> =
+    this._fieldBuilder.buildEdmTypeField('CountryRegion', 'Edm.String', false);
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name = this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
+  name: EdmTypeField<EntityT, 'Edm.String', false, false> =
+    this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region = this._fieldBuilder.buildEdmTypeField('Region', 'Edm.String', false);
+  region: EdmTypeField<EntityT, 'Edm.String', false, false> =
+    this._fieldBuilder.buildEdmTypeField('Region', 'Edm.String', false);
 
   /**
    * Creates an instance of CityField.

@@ -2,6 +2,7 @@ import { City, CityField } from './City';
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
   FieldOptions,
   FieldType,
@@ -38,37 +39,22 @@ export declare class EventLocationField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, EventLocation, NullableT, SelectableT> {
-  /** TODO */
   private _fieldBuilder;
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.String',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  buildingInfo: EdmTypeField<EntityT, 'Edm.String', true, false>;
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.String',
-    false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  address: EdmTypeField<EntityT, 'Edm.String', false, false>;
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<
-    EntityT,
-    false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  city: CityField<EntityT, false, false>;
   /**
    * Creates an instance of EventLocationField.
    *

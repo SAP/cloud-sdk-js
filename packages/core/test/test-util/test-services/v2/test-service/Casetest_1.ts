@@ -71,10 +71,8 @@ export interface Casetest_1Type {
 }
 
 export namespace Casetest_1 {
-  const _fieldBuilder: FieldBuilder<
-    Casetest_1,
-    Constructable<Casetest_1>
-  > = new FieldBuilder(Casetest_1);
+  const _fieldBuilder: FieldBuilder<Constructable<Casetest_1>> =
+    new FieldBuilder(Casetest_1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

@@ -69,7 +69,6 @@ var TestLvl2NestedComplexTypeField = /** @class */ (function (_super) {
         TestLvl2NestedComplexType,
         fieldOptions
       ) || this;
-    /** TODO */
     _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.

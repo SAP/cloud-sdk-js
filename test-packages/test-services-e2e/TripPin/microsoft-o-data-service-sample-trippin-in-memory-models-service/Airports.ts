@@ -88,10 +88,9 @@ export interface AirportsType {
 }
 
 export namespace Airports {
-  const _fieldBuilder: FieldBuilder<
-    Airports,
-    Constructable<Airports>
-  > = new FieldBuilder(Airports);
+  const _fieldBuilder: FieldBuilder<Constructable<Airports>> = new FieldBuilder(
+    Airports
+  );
   /**
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

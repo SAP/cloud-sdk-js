@@ -7,9 +7,11 @@ import {
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV2,
   FieldOptions,
   FieldType,
+  OrderableEdmTypeField,
   PropertyMetadata,
   Time
 } from '@sap-cloud-sdk/core';
@@ -115,177 +117,97 @@ export declare class TestComplexTypeField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, TestComplexType, NullableT, SelectableT> {
-  /** TODO */
   private _fieldBuilder;
   /**
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.String',
-    false,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  stringProperty: EdmTypeField<EntityT, 'Edm.String', false, false>;
   /**
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.Boolean',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  booleanProperty: EdmTypeField<EntityT, 'Edm.Boolean', true, false>;
   /**
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.Guid',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  guidProperty: EdmTypeField<EntityT, 'Edm.Guid', true, false>;
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int16Property: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.Int16',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  int16Property: OrderableEdmTypeField<EntityT, 'Edm.Int16', true, false>;
   /**
    * Representation of the [[TestComplexType.int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int32Property: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.Int32',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  int32Property: OrderableEdmTypeField<EntityT, 'Edm.Int32', true, false>;
   /**
    * Representation of the [[TestComplexType.int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int64Property: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.Int64',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  int64Property: OrderableEdmTypeField<EntityT, 'Edm.Int64', true, false>;
   /**
    * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  decimalProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.Decimal',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  decimalProperty: OrderableEdmTypeField<EntityT, 'Edm.Decimal', true, false>;
   /**
    * Representation of the [[TestComplexType.singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  singleProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.Single',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  singleProperty: OrderableEdmTypeField<EntityT, 'Edm.Single', true, false>;
   /**
    * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  doubleProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.Double',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  doubleProperty: OrderableEdmTypeField<EntityT, 'Edm.Double', true, false>;
   /**
    * Representation of the [[TestComplexType.floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  floatProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.Float',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  floatProperty: OrderableEdmTypeField<EntityT, 'Edm.Float', true, false>;
   /**
    * Representation of the [[TestComplexType.timeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.Time',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  timeProperty: OrderableEdmTypeField<EntityT, 'Edm.Time', true, false>;
   /**
    * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.DateTime',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  dateTimeProperty: OrderableEdmTypeField<EntityT, 'Edm.DateTime', true, false>;
   /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeOffSetProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
+  dateTimeOffSetProperty: OrderableEdmTypeField<
     EntityT,
     'Edm.DateTimeOffset',
     true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
+    false
   >;
   /**
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  byteProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.Byte',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  byteProperty: OrderableEdmTypeField<EntityT, 'Edm.Byte', true, false>;
   /**
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  sByteProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
-    EntityT,
-    'Edm.SByte',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  sByteProperty: OrderableEdmTypeField<EntityT, 'Edm.SByte', true, false>;
   /**
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  somethingTheSdkDoesNotSupport: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.Any',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  somethingTheSdkDoesNotSupport: EdmTypeField<EntityT, 'Edm.Any', true, false>;
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty: TestNestedComplexTypeField<
-    EntityT,
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  complexTypeProperty: TestNestedComplexTypeField<EntityT, true, false>;
   /**
    * Creates an instance of TestComplexTypeField.
    *

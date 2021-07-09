@@ -80,10 +80,9 @@ export interface PhotosType {
 }
 
 export namespace Photos {
-  const _fieldBuilder: FieldBuilder<
-    Photos,
-    Constructable<Photos>
-  > = new FieldBuilder(Photos);
+  const _fieldBuilder: FieldBuilder<Constructable<Photos>> = new FieldBuilder(
+    Photos
+  );
   /**
    * Static representation of the [[id]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

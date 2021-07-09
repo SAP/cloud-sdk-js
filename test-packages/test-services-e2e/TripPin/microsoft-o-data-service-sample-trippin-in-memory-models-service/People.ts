@@ -124,10 +124,9 @@ export interface PeopleType {
 }
 
 export namespace People {
-  const _fieldBuilder: FieldBuilder<
-    People,
-    Constructable<People>
-  > = new FieldBuilder(People);
+  const _fieldBuilder: FieldBuilder<Constructable<People>> = new FieldBuilder(
+    People
+  );
   /**
    * Static representation of the [[userName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

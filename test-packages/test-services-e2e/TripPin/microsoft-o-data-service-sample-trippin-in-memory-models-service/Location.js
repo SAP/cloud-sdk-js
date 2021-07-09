@@ -61,7 +61,6 @@ var LocationField = /** @class */ (function (_super) {
   function LocationField(fieldName, fieldOf, fieldOptions) {
     var _this =
       _super.call(this, fieldName, fieldOf, Location, fieldOptions) || this;
-    /** TODO */
     _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[Location.address]] property for query construction.

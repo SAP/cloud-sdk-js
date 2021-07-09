@@ -86,7 +86,6 @@ export interface TestEntityCircularLinkChildType {
 
 export namespace TestEntityCircularLinkChild {
   const _fieldBuilder: FieldBuilder<
-    TestEntityCircularLinkChild,
     Constructable<TestEntityCircularLinkChild>
   > = new FieldBuilder(TestEntityCircularLinkChild);
   /**

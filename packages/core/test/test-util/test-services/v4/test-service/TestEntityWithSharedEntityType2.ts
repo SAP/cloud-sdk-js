@@ -84,7 +84,6 @@ export interface TestEntityWithSharedEntityType2Type {
 
 export namespace TestEntityWithSharedEntityType2 {
   const _fieldBuilder: FieldBuilder<
-    TestEntityWithSharedEntityType2,
     Constructable<TestEntityWithSharedEntityType2>
   > = new FieldBuilder(TestEntityWithSharedEntityType2);
   /**

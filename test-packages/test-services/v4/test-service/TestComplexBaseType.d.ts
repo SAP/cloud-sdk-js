@@ -1,6 +1,7 @@
 import {
   ComplexTypeField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
   FieldOptions,
   FieldType,
@@ -36,18 +37,12 @@ export declare class TestComplexBaseTypeField<
   NullableT,
   SelectableT
 > {
-  /** TODO */
   private _fieldBuilder;
   /**
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: import('@sap-cloud-sdk/core').EdmTypeField<
-    EntityT,
-    'Edm.String',
-    true,
-    import('@sap-cloud-sdk/core').IsSelectableField<this>
-  >;
+  baseStringProperty: EdmTypeField<EntityT, 'Edm.String', true, false>;
   /**
    * Creates an instance of TestComplexBaseTypeField.
    *

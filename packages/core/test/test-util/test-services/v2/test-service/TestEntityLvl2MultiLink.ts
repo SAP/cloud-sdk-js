@@ -106,10 +106,8 @@ export interface TestEntityLvl2MultiLinkType {
 }
 
 export namespace TestEntityLvl2MultiLink {
-  const _fieldBuilder: FieldBuilder<
-    TestEntityLvl2MultiLink,
-    Constructable<TestEntityLvl2MultiLink>
-  > = new FieldBuilder(TestEntityLvl2MultiLink);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntityLvl2MultiLink>> =
+    new FieldBuilder(TestEntityLvl2MultiLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

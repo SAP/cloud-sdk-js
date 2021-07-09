@@ -78,10 +78,8 @@ export interface TestEntityEndsWithType {
 }
 
 export namespace TestEntityEndsWith {
-  const _fieldBuilder: FieldBuilder<
-    TestEntityEndsWith,
-    Constructable<TestEntityEndsWith>
-  > = new FieldBuilder(TestEntityEndsWith);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntityEndsWith>> =
+    new FieldBuilder(TestEntityEndsWith);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

@@ -69,7 +69,6 @@ var TestComplexBaseTypeField = /** @class */ (function (_super) {
         TestComplexBaseType,
         fieldOptions
       ) || this;
-    /** TODO */
     _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.

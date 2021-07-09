@@ -77,10 +77,9 @@ export interface AirlinesType {
 }
 
 export namespace Airlines {
-  const _fieldBuilder: FieldBuilder<
-    Airlines,
-    Constructable<Airlines>
-  > = new FieldBuilder(Airlines);
+  const _fieldBuilder: FieldBuilder<Constructable<Airlines>> = new FieldBuilder(
+    Airlines
+  );
   /**
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

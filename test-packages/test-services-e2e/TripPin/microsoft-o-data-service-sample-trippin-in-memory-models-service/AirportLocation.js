@@ -65,7 +65,6 @@ var AirportLocationField = /** @class */ (function (_super) {
     var _this =
       _super.call(this, fieldName, fieldOf, AirportLocation, fieldOptions) ||
       this;
-    /** TODO */
     _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[AirportLocation.loc]] property for query construction.

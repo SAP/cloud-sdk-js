@@ -60,7 +60,6 @@ var CityField = /** @class */ (function (_super) {
   function CityField(fieldName, fieldOf, fieldOptions) {
     var _this =
       _super.call(this, fieldName, fieldOf, City, fieldOptions) || this;
-    /** TODO */
     _this._fieldBuilder = new core_1.FieldBuilder(_this);
     /**
      * Representation of the [[City.countryRegion]] property for query construction.

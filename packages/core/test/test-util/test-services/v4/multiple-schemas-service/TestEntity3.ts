@@ -85,10 +85,8 @@ export interface TestEntity3Type {
 }
 
 export namespace TestEntity3 {
-  const _fieldBuilder: FieldBuilder<
-    TestEntity3,
-    Constructable<TestEntity3>
-  > = new FieldBuilder(TestEntity3);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntity3>> =
+    new FieldBuilder(TestEntity3);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

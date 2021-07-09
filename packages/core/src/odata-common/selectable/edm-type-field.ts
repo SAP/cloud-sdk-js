@@ -8,7 +8,7 @@ import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldOptions, FieldType } from './field';
 
-export type SortableEdmType =
+export type OrderableEdmType =
   | 'Edm.Decimal'
   | 'Edm.Double'
   | 'Edm.Single'
@@ -25,7 +25,7 @@ export type SortableEdmType =
   | 'Edm.Duration'
   | 'Edm.TimeOfDay';
 
-export function isSortableEdmType(edmType: EdmTypeShared<'any'>): boolean {
+export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
   return [
     'Edm.Boolean',
     'Edm.Decimal',

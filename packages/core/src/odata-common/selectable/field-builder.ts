@@ -6,8 +6,8 @@ import { ComplexTypeField } from './complex-type-field';
 import {
   EdmTypeField,
   EdmTypeForEdmOrFieldType,
-  isSortableEdmType,
-  SortableEdmType
+  isOrderableEdmType,
+  OrderableEdmType
 } from './edm-type-field';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
 import { CollectionField, CollectionFieldType } from './collection-field';
@@ -113,7 +113,7 @@ export class FieldBuilder<
     edmType: EdmTypeForEdmOrFieldType<EdmT>,
     isNullable: NullableT
   ): EdmTypeClassByType<EntityT, EdmT, NullableT, true> {
-    if (isSortableEdmType(edmType)) {
+    if (isOrderableEdmType(edmType)) {
       return new OrderableEdmTypeField(fieldName, this.fieldOf, edmType, {
         isNullable,
         isSelectable: true
@@ -133,7 +133,7 @@ export class FieldBuilder<
     edmType: EdmTypeForEdmOrFieldType<EdmT>,
     isNullable: NullableT
   ): EdmTypeClassByType<EntityT, EdmT, NullableT, false> {
-    if (isSortableEdmType(edmType)) {
+    if (isOrderableEdmType(edmType)) {
       return new OrderableEdmTypeField(fieldName, this.fieldOf, edmType, {
         isNullable,
         isSelectable: false
@@ -152,23 +152,9 @@ export type EdmTypeClassByType<
   NullableT extends boolean,
   SelectableT extends boolean
 > = EntityT extends Entity
-  ? EdmT extends SortableEdmType
+  ? EdmT extends OrderableEdmType
     ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
     : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>
-  : EdmT extends SortableEdmType
-  ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
-  : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>;
-
-export type ComplexTypeClassByType<
-  EntityT extends Entity,
-  FieldOfT extends ConstructorOrField<EntityT>,
-  EdmT extends EdmTypeShared<'any'>,
-  NullableT extends boolean,
-  SelectableT extends boolean
-> = FieldOfT extends Entity
-  ? EdmT extends SortableEdmType
-    ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
-    : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>
-  : EdmT extends SortableEdmType
+  : EdmT extends OrderableEdmType
   ? OrderableEdmTypeField<EntityT, EdmT, NullableT, SelectableT>
   : EdmTypeField<EntityT, EdmT, NullableT, SelectableT>;

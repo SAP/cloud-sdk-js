@@ -44,7 +44,7 @@ export declare class TestComplexType2Field<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }
 export declare namespace TestComplexType2 {

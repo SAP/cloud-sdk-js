@@ -64,7 +64,7 @@ export declare class EventLocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }
 export declare namespace EventLocation {

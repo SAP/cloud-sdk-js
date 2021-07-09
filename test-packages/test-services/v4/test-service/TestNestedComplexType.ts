@@ -83,7 +83,7 @@ export class TestNestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, fieldOf, TestNestedComplexType, fieldOptions);
   }

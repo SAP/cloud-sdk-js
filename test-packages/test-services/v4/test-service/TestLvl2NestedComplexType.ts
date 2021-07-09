@@ -66,7 +66,7 @@ export class TestLvl2NestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, fieldOf, TestLvl2NestedComplexType, fieldOptions);
   }

@@ -66,7 +66,7 @@ export declare class TestNestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }
 export declare namespace TestNestedComplexType {

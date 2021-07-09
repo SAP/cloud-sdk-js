@@ -355,7 +355,7 @@ export class TestComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, fieldOf, TestComplexType, fieldOptions);
   }

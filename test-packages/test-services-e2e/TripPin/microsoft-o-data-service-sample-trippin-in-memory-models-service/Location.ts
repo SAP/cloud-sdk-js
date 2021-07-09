@@ -69,7 +69,7 @@ export class LocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
-    fieldOptions?: Partial<FieldOptions<NullableT, SelectableT>>
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, fieldOf, Location, fieldOptions);
   }

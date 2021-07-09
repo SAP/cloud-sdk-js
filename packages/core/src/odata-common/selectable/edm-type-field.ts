@@ -8,43 +8,6 @@ import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldOptions, FieldType } from './field';
 
-export type OrderableEdmType =
-  | 'Edm.Decimal'
-  | 'Edm.Double'
-  | 'Edm.Single'
-  | 'Edm.Float'
-  | 'Edm.Int16'
-  | 'Edm.Int32'
-  | 'Edm.Int64'
-  | 'Edm.SByte'
-  | 'Edm.Byte'
-  | 'Edm.DateTime'
-  | 'Edm.DateTimeOffset'
-  | 'Edm.Time'
-  | 'Edm.Date'
-  | 'Edm.Duration'
-  | 'Edm.TimeOfDay';
-
-export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
-  return [
-    'Edm.Boolean',
-    'Edm.Decimal',
-    'Edm.Double',
-    'Edm.Single',
-    'Edm.Float',
-    'Edm.Int16',
-    'Edm.Int32',
-    'Edm.Int64',
-    'Edm.SByte',
-    'Edm.Byte',
-    'Edm.DateTime',
-    'Edm.Time',
-    'Edm.Date',
-    'Edm.Duration',
-    'Edm.TimeOfDay'
-  ].includes(edmType);
-}
-
 type NullableFieldType<
   FieldT extends FieldType,
   NullableT extends boolean

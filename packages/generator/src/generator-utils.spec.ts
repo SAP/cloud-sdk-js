@@ -107,14 +107,18 @@ describe('edmToTsType', () => {
     expect(edmToTsType('Edm.Single')).toBe('number');
     expect(edmToTsType('Edm.DateTime')).toBe('Moment');
     expect(edmToTsType('Edm.Time')).toBe('Time');
-    expect(() => edmToTsType('Edm.GeographyPoint')).toThrow(
-      'No ts type found for edm type: Edm.GeographyPoint'
+    expect(() =>
+      edmToTsType('Edm.GeographyPoint')
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Could not determine TypeScript type for EDM type: \'Edm.GeographyPoint\'."'
     );
     expect(edmToTsType(getFallbackEdmTypeIfNeeded('Edm.GeographyPoint'))).toBe(
       'any'
     );
-    expect(() => edmToTsType('Edm.Undefined')).toThrow(
-      'No ts type found for edm type: Edm.Undefined'
+    expect(() =>
+      edmToTsType('Edm.Undefined')
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Could not determine TypeScript type for EDM type: \'Edm.Undefined\'."'
     );
     expect(edmToTsType(getFallbackEdmTypeIfNeeded('Edm.Undefined'))).toBe(
       'any'

@@ -23,7 +23,7 @@ describe('service-generator', () => {
           {},
           new GlobalNameFormatter(undefined)
         );
-        expect(serviceMetadata.directoryName).toBe('test-service');
+        expect(serviceMetadata.directoryName).toEqual('test-service');
       });
 
       it('prioritizes mapping over original names', () => {
@@ -49,11 +49,11 @@ describe('service-generator', () => {
           new GlobalNameFormatter({ API_TEST_SRV: serviceMapping })
         );
 
-        expect(serviceMetadata.directoryName).toBe(
+        expect(serviceMetadata.directoryName).toEqual(
           serviceMapping.directoryName
         );
-        expect(serviceMetadata.servicePath).toBe(serviceMapping.servicePath);
-        expect(serviceMetadata.npmPackageName).toBe(
+        expect(serviceMetadata.servicePath).toEqual(serviceMapping.servicePath);
+        expect(serviceMetadata.npmPackageName).toEqual(
           serviceMapping.npmPackageName
         );
       });
@@ -68,11 +68,13 @@ describe('service-generator', () => {
           })
         );
 
-        expect(services[0].namespaces[0]).toBe('API_TEST_SRV');
-        expect(services[0].directoryName).toBe('test-service');
-        expect(services[0].npmPackageName).toBe('test-service');
-        expect(services[0].servicePath).toBe('/sap/opu/odata/sap/API_TEST_SRV');
-        expect(services[0].entities.length).toBe(14);
+        expect(services[0].namespaces[0]).toEqual('API_TEST_SRV');
+        expect(services[0].directoryName).toEqual('test-service');
+        expect(services[0].npmPackageName).toEqual('test-service');
+        expect(services[0].servicePath).toEqual(
+          '/sap/opu/odata/sap/API_TEST_SRV'
+        );
+        expect(services[0].entities.length).toEqual(14);
       });
 
       it('generates vdm from edmx using swagger', () => {
@@ -83,7 +85,7 @@ describe('service-generator', () => {
           })
         );
 
-        expect(services[0].entities.length).toBe(14);
+        expect(services[0].entities.length).toEqual(14);
         expect(
           services[0].apiBusinessHubMetadata!.businessDocumentationUrl
         ).toBeDefined();
@@ -98,7 +100,7 @@ describe('service-generator', () => {
         const properties = services[0].entities.find(
           entity => entity.className === 'TestEntity'
         )!.properties;
-        expect(properties.length).toBe(19);
+        expect(properties.length).toEqual(19);
         const stringProp = properties.find(
           prop => prop.originalName === 'StringProperty'
         );
@@ -109,7 +111,7 @@ describe('service-generator', () => {
           propertyNameAsParam: 'stringProperty',
           edmType: 'Edm.String',
           jsType: 'string',
-          fieldType: 'StringField',
+          fieldType: 'EdmTypeField',
           description: '',
           nullable: true,
           maxLength: '10',
@@ -128,12 +130,13 @@ describe('service-generator', () => {
           propertyNameAsParam: 'somethingTheSdkDoesNotSupport',
           edmType: 'Edm.Any',
           jsType: 'any',
-          fieldType: 'AnyField',
+          fieldType: 'EdmTypeField',
           description: '',
           nullable: true,
           isComplex: false,
           isCollection: false,
-          isEnum: false
+          isEnum: false,
+          maxLength: undefined
         });
       });
 
@@ -249,24 +252,25 @@ describe('service-generator', () => {
         const complexTypes = services[0].complexTypes;
         const complexType = complexTypes[0];
 
-        expect(complexTypes.length).toBe(3);
-        expect(complexType.typeName).toBe('TestComplexType');
-        expect(complexType.originalName).toBe('A_TestComplexType');
-        expect(complexType.factoryName).toBe('createTestComplexType_1');
-        expect(complexType.fieldType).toBe('TestComplexTypeField');
-        expect(complexType.properties.length).toBe(17);
+        expect(complexTypes.length).toEqual(3);
+        expect(complexType.typeName).toEqual('TestComplexType');
+        expect(complexType.originalName).toEqual('A_TestComplexType');
+        expect(complexType.factoryName).toEqual('createTestComplexType_1');
+        expect(complexType.fieldType).toEqual('TestComplexTypeField');
+        expect(complexType.properties.length).toEqual(17);
 
-        expect(
-          complexType.properties.find(
-            prop => prop.originalName === 'SomethingTheSDKDoesNotSupport'
-          )!.fieldType
-        ).toBe('ComplexTypeAnyPropertyField');
+        const anyProp = complexType.properties.find(
+          prop => prop.originalName === 'SomethingTheSDKDoesNotSupport'
+        );
+        expect(anyProp?.fieldType).toEqual('EdmTypeField');
+        expect(anyProp?.edmType).toEqual('Edm.Any');
 
-        expect(
-          complexType.properties.find(
-            prop => prop.originalName === 'ComplexTypeProperty'
-          )!.fieldType
-        ).toBe('TestNestedComplexTypeField');
+        const complexTypeProp = complexType.properties.find(
+          prop => prop.originalName === 'ComplexTypeProperty'
+        );
+        expect(complexTypeProp?.fieldType).toEqual(
+          'TestNestedComplexTypeField'
+        );
       });
 
       it('complex type properties are read correctly', () => {
@@ -326,11 +330,11 @@ describe('service-generator', () => {
           isMulti: false
         };
 
-        expect(functionImport.name).toBe(functionImportName);
+        expect(functionImport.name).toEqual(functionImportName);
         expect(functionImport.returnType).toEqual(expectedReturnType);
 
-        expect(complexType.typeName).toBe(complexTypeName);
-        expect(complexType.factoryName).toBe(factoryName);
+        expect(complexType.typeName).toEqual(complexTypeName);
+        expect(complexType.factoryName).toEqual(factoryName);
       });
 
       it('does not clash with reserved JavaScript keywords', () => {
@@ -345,7 +349,7 @@ describe('service-generator', () => {
           f => f.originalName === 'Continue'
         )!;
 
-        expect(functionImport.name).toBe('fContinue');
+        expect(functionImport.name).toEqual('fContinue');
       });
 
       it('function imports edm return types are read correctly', () => {
@@ -360,8 +364,8 @@ describe('service-generator', () => {
           f => f.originalName === 'TestFunctionImportEdmReturnType'
         )!;
 
-        expect(functionImport.name).toBe('testFunctionImportEdmReturnType');
-        expect(functionImport.returnType.builderFunction).toBe(
+        expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
+        expect(functionImport.returnType.builderFunction).toEqual(
           "(val) => edmToTsV2(val.TestFunctionImportEdmReturnType, 'Edm.Boolean')"
         );
 
@@ -371,10 +375,10 @@ describe('service-generator', () => {
 
         expect(
           functionImportUnsupportedEdmTypes.returnType.builderFunction
-        ).toBe(
+        ).toEqual(
           "(val) => edmToTsV2(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any')"
         );
-        expect(functionImportUnsupportedEdmTypes.parameters[0].edmType).toBe(
+        expect(functionImportUnsupportedEdmTypes.parameters[0].edmType).toEqual(
           'Edm.Any'
         );
       });
@@ -396,8 +400,10 @@ describe('service-generator', () => {
           e => e.entitySetName === 'A_TestEntityEndsWithSomethingElse'
         )!;
 
-        expect(entityEndsWithCollection.className).toBe('TestEntityEndsWith');
-        expect(entityEndsWithSthElse.className).toBe(
+        expect(entityEndsWithCollection.className).toEqual(
+          'TestEntityEndsWith'
+        );
+        expect(entityEndsWithSthElse.className).toEqual(
           'TestEntityEndsWithSomethingElse'
         );
       });
@@ -429,7 +435,7 @@ describe('service-generator', () => {
           })
         );
 
-        expect(services[0].entities.length).toBe(1);
+        expect(services[0].entities.length).toEqual(1);
       });
     });
   });
@@ -445,23 +451,24 @@ describe('service-generator', () => {
         const properties = services[0].entities.find(
           entity => entity.className === 'TestEntity'
         )!.properties;
-        const stringProp = properties.find(
+        const enumProp = properties.find(
           prop => prop.originalName === 'EnumPropertyWithOneMember'
         );
 
-        expect(stringProp).toEqual({
+        expect(enumProp).toEqual({
           originalName: 'EnumPropertyWithOneMember',
           instancePropertyName: 'enumPropertyWithOneMember',
           staticPropertyName: 'ENUM_PROPERTY_WITH_ONE_MEMBER',
           propertyNameAsParam: 'enumPropertyWithOneMember',
           edmType: 'API_TEST_SRV.A_TestEnumType_WithOneMember',
           jsType: 'TestEnumTypeWithOneMember',
-          fieldType: 'EnumField',
+          fieldType: 'EdmTypeField',
           description: '',
           nullable: true,
           isComplex: false,
           isCollection: false,
-          isEnum: true
+          isEnum: true,
+          maxLength: undefined
         });
       });
 
@@ -477,8 +484,8 @@ describe('service-generator', () => {
           f => f.originalName === 'TestFunctionImportEdmReturnType'
         )!;
 
-        expect(functionImport.name).toBe('testFunctionImportEdmReturnType');
-        expect(functionImport.returnType.builderFunction).toBe(
+        expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
+        expect(functionImport.returnType.builderFunction).toEqual(
           "(val) => edmToTsV4(val.value, 'Edm.Boolean')"
         );
       });
@@ -493,15 +500,15 @@ describe('service-generator', () => {
 
         const actions = services[0].actionsImports;
 
-        expect(actions?.length).toBe(6);
+        expect(actions?.length).toEqual(6);
         const actionWithUnsupportedEdmType = actions?.find(
           action =>
             action.originalName === 'TestActionImportUnsupportedEdmTypes'
         );
-        expect(actionWithUnsupportedEdmType?.returnType.builderFunction).toBe(
-          "(val) => edmToTsV4(val.value, 'Edm.Any')"
-        );
-        expect(actionWithUnsupportedEdmType?.parameters[0].edmType).toBe(
+        expect(
+          actionWithUnsupportedEdmType?.returnType.builderFunction
+        ).toEqual("(val) => edmToTsV4(val.value, 'Edm.Any')");
+        expect(actionWithUnsupportedEdmType?.parameters[0].edmType).toEqual(
           'Edm.Any'
         );
       });

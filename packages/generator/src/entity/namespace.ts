@@ -1,6 +1,6 @@
 import { unixEOL, unique } from '@sap-cloud-sdk/util';
 import {
-  NamespaceDeclarationStructure,
+  ModuleDeclarationStructure,
   StructureKind,
   VariableDeclarationKind,
   VariableStatementStructure,
@@ -24,9 +24,9 @@ import {
 export function entityNamespace(
   entity: VdmEntity,
   service: VdmServiceMetadata
-): NamespaceDeclarationStructure {
+): ModuleDeclarationStructure {
   return {
-    kind: StructureKind.Namespace,
+    kind: StructureKind.Module,
     name: entity.className,
     isExported: true,
     statements: [

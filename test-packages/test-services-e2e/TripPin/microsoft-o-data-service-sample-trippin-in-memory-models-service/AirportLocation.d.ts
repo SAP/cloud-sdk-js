@@ -43,7 +43,7 @@ export declare class AirportLocationField<
    * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  loc: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  loc: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.Any',
     false,
@@ -53,7 +53,7 @@ export declare class AirportLocationField<
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  address: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.String',
     false,

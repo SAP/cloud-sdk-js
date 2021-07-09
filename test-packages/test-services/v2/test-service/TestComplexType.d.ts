@@ -121,7 +121,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  stringProperty: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.String',
     false,
@@ -131,7 +131,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  booleanProperty: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.Boolean',
     true,
@@ -141,7 +141,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  guidProperty: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.Guid',
     true,
@@ -151,7 +151,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int16Property: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  int16Property: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.Int16',
     true,
@@ -161,7 +161,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int32Property: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  int32Property: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.Int32',
     true,
@@ -171,7 +171,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int64Property: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  int64Property: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.Int64',
     true,
@@ -181,7 +181,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  decimalProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  decimalProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.Decimal',
     true,
@@ -191,7 +191,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  singleProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  singleProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.Single',
     true,
@@ -201,7 +201,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  doubleProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  doubleProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.Double',
     true,
@@ -211,7 +211,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  floatProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  floatProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.Float',
     true,
@@ -221,7 +221,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.timeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  timeProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.Time',
     true,
@@ -231,7 +231,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  dateTimeProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.DateTime',
     true,
@@ -241,7 +241,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeOffSetProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  dateTimeOffSetProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.DateTimeOffset',
     true,
@@ -251,7 +251,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  byteProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  byteProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.Byte',
     true,
@@ -261,7 +261,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  sByteProperty: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  sByteProperty: import('@sap-cloud-sdk/core').OrderableEdmTypeField<
     EntityT,
     'Edm.SByte',
     true,
@@ -271,7 +271,7 @@ export declare class TestComplexTypeField<
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  somethingTheSdkDoesNotSupport: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  somethingTheSdkDoesNotSupport: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.Any',
     true,

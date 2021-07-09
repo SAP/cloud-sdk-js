@@ -42,7 +42,7 @@ export declare class CityField<
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  countryRegion: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.String',
     false,
@@ -52,7 +52,7 @@ export declare class CityField<
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  name: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.String',
     false,
@@ -62,7 +62,7 @@ export declare class CityField<
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  region: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.String',
     false,

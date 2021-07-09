@@ -39,7 +39,7 @@ export declare class LocationField<
    * Representation of the [[Location.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: import('@sap-cloud-sdk/core').EdmTypeClassByType<
+  address: import('@sap-cloud-sdk/core').EdmTypeField<
     EntityT,
     'Edm.String',
     false,

@@ -1755,11 +1755,11 @@
     semver "^7.3.4"
 
 "@sap/xsenv@^3.0.0":
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.1.0.tgz#86cf4a5229c7f3d3b4425aa1fab674cf8505051e"
-  integrity sha512-Z+fwO13tcad+eoe8iTrbR471OacU754puabhRn8OI1MU2pPebDQu8rcHN7sR9JQinh4dSs953WkbDneOmvCWuA==
+  version "3.1.1"
+  resolved "https://registry.npmjs.org/@sap/xsenv/-/xsenv-3.1.1.tgz#8c65144fb256dd95a65b2b3d6382a0b5ac5d4833"
+  integrity sha512-7UOnJNRdvb6d+LqgLf0qZLtcG18Fo7ZquxaQ5Pk33wGtpB0pTDCuV7z7JgAv2QTLx4aqtxTI435YFwa4kCnWzA==
   dependencies:
-    debug "3.1.0"
+    debug "4.2.0"
     verror "1.10.0"
 
 "@sindresorhus/is@^2.0.0":
@@ -3693,17 +3693,17 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
-  integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
-  dependencies:
-    ms "2.0.0"
-
 debug@4, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.2.0, debug@^4.3.1, debug@~4.3.1:
   version "4.3.1"
   resolved "https://registry.npmjs.org/debug/-/debug-4.3.1.tgz#f0d229c505e0c6d8c49ac553d1b13dc183f6b2ee"
   integrity sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==
+  dependencies:
+    ms "2.1.2"
+
+debug@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.npmjs.org/debug/-/debug-4.2.0.tgz#7f150f93920e94c58f5574c2fd01a3110effe7f1"
+  integrity sha512-IX2ncY78vDTjZMFUdmsvIRFY2Cf4FnD0wRs+nQwJU8Lu99/tPFdb0VybiiMTPe3I6rQmwsqQqRBvxU+bZ/I8sg==
   dependencies:
     ms "2.1.2"
 

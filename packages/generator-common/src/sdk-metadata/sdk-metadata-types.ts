@@ -18,7 +18,7 @@ export interface SdkMetadataHeader {
  * Represents the language specific data of the sdk metadata
  */
 export interface Client {
-  language: 'java' | 'javascript';
+  language: 'Java' | 'JavaScript';
   /**
    * Status of the service.
    * @memberof Client
@@ -60,7 +60,7 @@ export interface PregeneratedLibrary {
    * @memberof PregeneratedLibrary
    */
   compatibilityNotes: '';
-  repository: 'maven' | 'npm';
+  repository: 'Maven' | 'npm';
   repositoryLink: UrlString;
   dependencyName: string;
 }

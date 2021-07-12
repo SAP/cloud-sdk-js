@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { or } from '../../src';
+import { and, or } from '../../src';
 import {
   all,
   any,
@@ -64,6 +64,16 @@ export const testFilterLambdaExpressionOnLink = {
   )._filters,
   odataStr:
     "(to_MultiLink/any(a0:(a0/StringProperty eq 'test1')) and to_MultiLink/all(a0:(a0/StringProperty eq 'test2')))"
+};
+
+export const testFilterLambdaExpressionWithOr = {
+  filter: or(
+    TestEntityV4.STRING_PROPERTY.equals('str1'),
+    TestEntityV4.TO_MULTI_LINK.filter(
+      any(TestEntityMultiLinkV4.STRING_PROPERTY.equals('str2'))
+    )
+  ),
+  odataStr: "(StringProperty eq 'str1' or (to_MultiLink/any(a0:(a0/StringProperty eq 'str2'))))"
 };
 
 export const testFilterLambdaExpressionFilterListOnLink = {

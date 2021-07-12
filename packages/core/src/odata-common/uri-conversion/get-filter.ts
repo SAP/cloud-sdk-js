@@ -13,10 +13,10 @@ import {
   FilterLambdaExpression,
   FilterList,
   FilterLink,
-  Filter
+  Filter, toFilterableList
 } from '../filter';
 import { EdmTypeShared } from '../edm-types';
-import { ComplexTypeField, FieldType } from '../selectable';
+import { ComplexTypeField, FieldType, OneToManyLink } from '../selectable';
 import { UriConverter } from '../uri-conversion';
 import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 import { toStaticPropertyFormat } from '../name-converter';
@@ -121,8 +121,17 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       );
     }
 
+    if (filter instanceof OneToManyLink){
+      return getODataFilterExpressionForFilterLink(
+        filter._filters,
+        parentFieldNames,
+        targetEntityConstructor,
+        lambdaExpressionLevel
+      );
+    }
+
     throw new Error(
-      `Could not construct query parameters from filter. Filter is not valid: ${filter}`
+      `Could not construct query parameters from filter. Filter is not valid: ${JSON.stringify(filter)}`
     );
   }
 

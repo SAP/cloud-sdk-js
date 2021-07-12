@@ -28,6 +28,7 @@
 
 - [proxy] Fix destination service calls using web proxies.
 - [core] Fix type error to allow `null` values in filters for nullable properties.
+- [core] Fix OData filter runtime error, when using lambda expression with operands like `or`.
 
 
 # 1.46.0

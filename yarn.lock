@@ -1659,10 +1659,10 @@
   dependencies:
     debug "^4.1.1"
 
-"@sap/cds-compiler@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.1.6.tgz#238a9f918ed6e797728e630d3f77634649c1cbd3"
-  integrity sha512-T3Ne1dadAIpizooD6yhH/o5SOuqoNkCI1dWUmL5RCKpEyiYEIpZ/3jYynJ2ku8vOM9z1rgsh1OX4ORUyv2l1JA==
+"@sap/cds-compiler@^2.2.0":
+  version "2.4.4"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.4.4.tgz#558b9da056fa85edfe0082837a09995f68cb8b8f"
+  integrity sha512-KkVy9Mb1Gq0Mg2JQ2nLWMdvH1c7eKAHxnigFIBOW9VSyMPrWPRiwFstk0z+1s5AP86/F0bf35W+OyOi0EvtGqA==
   dependencies:
     antlr4 "4.8.0"
 
@@ -1691,7 +1691,7 @@
   optionalDependencies:
     sqlite3 "^5.0.2"
 
-"@sap/cds-foss@^2.2.0", "@sap/cds-foss@^2.3.1":
+"@sap/cds-foss@^2.3.1":
   version "2.3.1"
   resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-2.3.1.tgz#f73846c0fb2ac6e13872017f4c2788b35e2f305b"
   integrity sha512-Scfvem8T7YFBJE2Ruphrl/YVBUah8kYtaSyhiCh7N3+Vop4vx09WWysa1geOT1hholbZL3UCZ87w5R+0wKMEoA==
@@ -1703,15 +1703,6 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds-runtime@~3.1.0":
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-3.1.0.tgz#b6cbb19afb9f42e31de670604d039b428fb193af"
-  integrity sha512-z9atZ02FQZcf9CTk/E3Kf4FnbBwSK1FmYlkNHu5X/TMpiXXzMLECc0r8618BwH9YdvhB5v17AShK2g2998C6lw==
-  dependencies:
-    "@sap-cloud-sdk/core" "^1.41"
-    "@sap-cloud-sdk/util" "^1.41"
-    "@sap/cds-foss" "^2.2.0"
-
 "@sap/cds-sidecar-client@^1.1.16":
   version "1.1.16"
   resolved "https://registry.npmjs.org/@sap/cds-sidecar-client/-/cds-sidecar-client-1.1.16.tgz#9bdb6bd3be1e6bb3b64d821d3dc7183aebb8e153"
@@ -1721,13 +1712,14 @@
     got "10.7.0"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.1.4":
-  version "5.1.5"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.1.5.tgz#aec9965f4d25f914210f23d1d3c5d28d155b4c15"
-  integrity sha512-nm5LjXLqUAXivO73eyzTfsvdVanZAVVhqEM86p3hV4sveRsWF56WS+6Rlbz5eFGMtH0LaXzEAd0gzJ4G8/spow==
+  version "5.3.0"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.3.0.tgz#ba3bd9bbf3f6fc9b5da95a8934f31b0ddbe5f6e4"
+  integrity sha512-41IMft4ovC36etCLeVP2iQRdh8OLP2yA8fKPzqHznXfZ1FdHy3KVUGT71vAakIAwPXQIHfyUz8/tKZqNnyAQ/Q==
   dependencies:
-    "@sap/cds-compiler" "^2.1.6"
+    "@sap-cloud-sdk/core" "^1.41"
+    "@sap-cloud-sdk/util" "^1.41"
+    "@sap/cds-compiler" "^2.2.0"
     "@sap/cds-foss" "^2.3.1"
-    "@sap/cds-runtime" "~3.1.0"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
   version "1.26.0"

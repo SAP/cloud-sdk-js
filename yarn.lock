@@ -1659,23 +1659,22 @@
   dependencies:
     debug "^4.1.1"
 
-"@sap/cds-compiler@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.1.6.tgz#238a9f918ed6e797728e630d3f77634649c1cbd3"
-  integrity sha512-T3Ne1dadAIpizooD6yhH/o5SOuqoNkCI1dWUmL5RCKpEyiYEIpZ/3jYynJ2ku8vOM9z1rgsh1OX4ORUyv2l1JA==
+"@sap/cds-compiler@^2.2.0":
+  version "2.4.4"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.4.4.tgz#558b9da056fa85edfe0082837a09995f68cb8b8f"
+  integrity sha512-KkVy9Mb1Gq0Mg2JQ2nLWMdvH1c7eKAHxnigFIBOW9VSyMPrWPRiwFstk0z+1s5AP86/F0bf35W+OyOi0EvtGqA==
   dependencies:
     antlr4 "4.8.0"
 
 "@sap/cds-dk@^4.0.7":
-  version "4.1.5"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.1.5.tgz#a1dcba66352d8e043630a209e77d35b3d53e1c08"
-  integrity sha512-DMt85FCofzI7t81ck7LbzMWjaBHkhN/17yBEGLGZAUCxaFxMgETRsCe7h27sJVuKo6G7HZBjYLGx9GUDPmASSg==
+  version "4.3.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.3.1.tgz#ebf5766e199321edb97e1de9bf700445aed5d897"
+  integrity sha512-tViC0JCuhJLPODfXn8r3C8RbS/Rgxtay3FL9Ojp9uCcNJ4rrV6E71y6/pva06GjY5AzFscEoRPgkdY+NrYQXtw==
   dependencies:
-    "@sap/cds" "^5.1.4"
+    "@sap/cds" "^5.3.0"
     "@sap/cds-foss" "^2.3.1"
     "@sap/cds-sidecar-client" "^1.1.16"
-    "@sap/edm-converters" "^1.0.41"
-    "@sap/eslint-plugin-cds" "^1.1.3"
+    "@sap/eslint-plugin-cds" "^2.0.4"
     axios "^0.21.0"
     connect-livereload "^0.6.1"
     eslint "^7.0.0"
@@ -1687,11 +1686,11 @@
     passport "^0.4.1"
     pluralize "^8.0.0"
     ws "^7"
-    xml2js "^0.4.3"
+    xml-js "^1.6.11"
   optionalDependencies:
     sqlite3 "^5.0.2"
 
-"@sap/cds-foss@^2.2.0", "@sap/cds-foss@^2.3.1":
+"@sap/cds-foss@^2.3.1":
   version "2.3.1"
   resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-2.3.1.tgz#f73846c0fb2ac6e13872017f4c2788b35e2f305b"
   integrity sha512-Scfvem8T7YFBJE2Ruphrl/YVBUah8kYtaSyhiCh7N3+Vop4vx09WWysa1geOT1hholbZL3UCZ87w5R+0wKMEoA==
@@ -1703,15 +1702,6 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds-runtime@~3.1.0":
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-3.1.0.tgz#b6cbb19afb9f42e31de670604d039b428fb193af"
-  integrity sha512-z9atZ02FQZcf9CTk/E3Kf4FnbBwSK1FmYlkNHu5X/TMpiXXzMLECc0r8618BwH9YdvhB5v17AShK2g2998C6lw==
-  dependencies:
-    "@sap-cloud-sdk/core" "^1.41"
-    "@sap-cloud-sdk/util" "^1.41"
-    "@sap/cds-foss" "^2.2.0"
-
 "@sap/cds-sidecar-client@^1.1.16":
   version "1.1.16"
   resolved "https://registry.npmjs.org/@sap/cds-sidecar-client/-/cds-sidecar-client-1.1.16.tgz#9bdb6bd3be1e6bb3b64d821d3dc7183aebb8e153"
@@ -1720,14 +1710,15 @@
     fs-extra "9.0.1"
     got "10.7.0"
 
-"@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.1.4":
-  version "5.1.5"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.1.5.tgz#aec9965f4d25f914210f23d1d3c5d28d155b4c15"
-  integrity sha512-nm5LjXLqUAXivO73eyzTfsvdVanZAVVhqEM86p3hV4sveRsWF56WS+6Rlbz5eFGMtH0LaXzEAd0gzJ4G8/spow==
+"@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.3.0.tgz#ba3bd9bbf3f6fc9b5da95a8934f31b0ddbe5f6e4"
+  integrity sha512-41IMft4ovC36etCLeVP2iQRdh8OLP2yA8fKPzqHznXfZ1FdHy3KVUGT71vAakIAwPXQIHfyUz8/tKZqNnyAQ/Q==
   dependencies:
-    "@sap/cds-compiler" "^2.1.6"
+    "@sap-cloud-sdk/core" "^1.41"
+    "@sap-cloud-sdk/util" "^1.41"
+    "@sap/cds-compiler" "^2.2.0"
     "@sap/cds-foss" "^2.3.1"
-    "@sap/cds-runtime" "~3.1.0"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
   version "1.26.0"
@@ -1736,7 +1727,7 @@
   dependencies:
     "@sap-cloud-sdk/core" "^1.44.0"
 
-"@sap/edm-converters@^1.0.21", "@sap/edm-converters@^1.0.41":
+"@sap/edm-converters@^1.0.21":
   version "1.0.41"
   resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.41.tgz#e38cdd69b49ac407ef3c6637f78f1c6ea26ada4d"
   integrity sha512-Af7L7amlh06YXfOK2ufjKUZXhcuwXSt0uzPDrHbVBvN1lQS8Gj4BxzXTbnskiFweTR2CFuhoqsSaV2r/7l9mYw==
@@ -1746,10 +1737,10 @@
     request "=2.88.0"
     xml-js "=1.6.8"
 
-"@sap/eslint-plugin-cds@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-1.1.3.tgz#3bfb232457eb68d667bf74bed53459f5ef1adebc"
-  integrity sha512-izXtwCOzMsf+jpvLCqGcP0udM5NfaO1glrdjaizOiBd/fb+40ZNr5fLMNevSPV8pjSbsg2JHtNvF1Ai8AntzNg==
+"@sap/eslint-plugin-cds@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-2.0.4.tgz#f7adfad2e290e655a122b48d244d8d55cf3663d3"
+  integrity sha512-lKH5rXCogV4DDf9N+J5a6FUqB/YQRIzpRQcQCg7BvA+nTHXiOt2aBf4SYVunkic6d88j5uapHqIl0D6x0rHFsA==
   dependencies:
     "@sap/cds" "^5.0.0"
     semver "^7.3.4"
@@ -9987,7 +9978,7 @@ sass@^1.29.0:
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
-sax@>=0.6.0, sax@^1.2.4:
+sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
@@ -11716,18 +11707,17 @@ xml-js@=1.6.8:
   dependencies:
     sax "^1.2.4"
 
+xml-js@^1.6.11:
+  version "1.6.11"
+  resolved "https://registry.npmjs.org/xml-js/-/xml-js-1.6.11.tgz#927d2f6947f7f1c19a316dd8eea3614e8b18f8e9"
+  integrity sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==
+  dependencies:
+    sax "^1.2.4"
+
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
-
-xml2js@^0.4.3:
-  version "0.4.23"
-  resolved "https://registry.npmjs.org/xml2js/-/xml2js-0.4.23.tgz#a0c69516752421eb2ac758ee4d4ccf58843eac66"
-  integrity sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==
-  dependencies:
-    sax ">=0.6.0"
-    xmlbuilder "~11.0.0"
 
 xml@^1.0.1:
   version "1.0.1"
@@ -11738,11 +11728,6 @@ xmlbuilder@15.1.1:
   version "15.1.1"
   resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-15.1.1.tgz#9dcdce49eea66d8d10b42cae94a79c3c8d0c2ec5"
   integrity sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==
-
-xmlbuilder@~11.0.0:
-  version "11.0.1"
-  resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-11.0.1.tgz#be9bae1c8a046e76b31127726347d0ad7002beb3"
-  integrity sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==
 
 xmlchars@^2.2.0:
   version "2.2.0"

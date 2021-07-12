@@ -46,7 +46,7 @@ export function getSdkMetadataClient(
     ? ServiceStatusValues.certified
     : ServiceStatusValues.verified;
   return {
-    language: "JavaScript",
+    language: 'JavaScript',
     serviceStatus: status,
     pregeneratedLibrary,
     generationAndUsage

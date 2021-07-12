@@ -6,12 +6,14 @@
 import { TestEntity2RequestBuilder } from './TestEntity2RequestBuilder';
 import {
   AllFields,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
-  StringField
+  FieldBuilder,
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -76,29 +78,32 @@ export interface TestEntity2Type {
 }
 
 export namespace TestEntity2 {
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntity2>> =
+    new FieldBuilder(TestEntity2);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity2> = new StringField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity2,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SINGLE_PROPERTY: NumberField<TestEntity2> = new NumberField(
+  export const SINGLE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'SingleProperty',
-    TestEntity2,
-    'Edm.Single'
+    'Edm.Single',
+    true
   );
   /**
    * All fields of the TestEntity2 entity.
    */
   export const _allFields: Array<
-    StringField<TestEntity2> | NumberField<TestEntity2>
+    | EdmTypeField<TestEntity2, 'Edm.String', false, true>
+    | OrderableEdmTypeField<TestEntity2, 'Edm.Single', true, true>
   > = [TestEntity2.KEY_PROPERTY_STRING, TestEntity2.SINGLE_PROPERTY];
   /**
    * All fields selector.
@@ -110,17 +115,17 @@ export namespace TestEntity2 {
   /**
    * All key fields of the TestEntity2 entity.
    */
-  export const _keyFields: Array<Field<TestEntity2>> = [
+  export const _keyFields: Array<Field<TestEntity2, boolean, boolean>> = [
     TestEntity2.KEY_PROPERTY_STRING
   ];
   /**
    * Mapping of all key field names to the respective static field property TestEntity2.
    */
-  export const _keys: { [keys: string]: Field<TestEntity2> } =
+  export const _keys: { [keys: string]: Field<TestEntity2, boolean, boolean> } =
     TestEntity2._keyFields.reduce(
       (
-        acc: { [keys: string]: Field<TestEntity2> },
-        field: Field<TestEntity2>
+        acc: { [keys: string]: Field<TestEntity2, boolean, boolean> },
+        field: Field<TestEntity2, boolean, boolean>
       ) => {
         acc[field._fieldName] = field;
         return acc;

@@ -1,33 +1,42 @@
 import {
   CustomField as CustomFieldBase,
-  DateField,
-  DurationField,
-  TimeField
+  OrderableEdmTypeField
 } from '../../odata-common';
 import type { Entity } from '../entity';
 
 export class CustomField<
-  EntityT extends Entity
-> extends CustomFieldBase<EntityT> {
-  edmDate(): DateField<EntityT> {
-    return new DateField<EntityT>(
+  EntityT extends Entity,
+  NullableT extends boolean = false
+> extends CustomFieldBase<EntityT, NullableT> {
+  edmDate(): OrderableEdmTypeField<EntityT, 'Edm.Date', NullableT, true> {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Date'
+      'Edm.Date',
+      this._fieldOptions.isNullable
     );
   }
-  edmDuration(): DurationField<EntityT> {
-    return new DurationField<EntityT>(
+  edmDuration(): OrderableEdmTypeField<
+    EntityT,
+    'Edm.Duration',
+    NullableT,
+    true
+  > {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.Duration'
+      'Edm.Duration',
+      this._fieldOptions.isNullable
     );
   }
-  edmTimeOfDay(): TimeField<EntityT> {
-    return new TimeField<EntityT>(
+  edmTimeOfDay(): OrderableEdmTypeField<
+    EntityT,
+    'Edm.TimeOfDay',
+    NullableT,
+    true
+  > {
+    return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
-      this._entityConstructor,
-      'Edm.TimeOfDay'
+      'Edm.TimeOfDay',
+      this._fieldOptions.isNullable
     );
   }
 }

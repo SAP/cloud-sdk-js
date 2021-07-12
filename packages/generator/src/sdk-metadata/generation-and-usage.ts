@@ -17,8 +17,16 @@ export async function getGenerationAndUsage(
   service: VdmServiceMetadata
 ): Promise<GenerationAndUsage> {
   return {
+    ...(await getGenericGenerationAndUsage()),
+    apiSpecificUsage: getApiSpecificUsage(service)
+  };
+}
+
+// will be used to generate metadata for failed and unknown case.
+export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
+  return {
     genericUsage: getGenericUsage(),
-    apiSpecificUsage: getApiSpecificUsage(service),
+    apiSpecificUsage: undefined,
     links: getODataLinks(),
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/generator',

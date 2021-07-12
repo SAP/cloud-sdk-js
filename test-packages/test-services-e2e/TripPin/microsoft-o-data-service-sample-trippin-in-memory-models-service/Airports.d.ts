@@ -3,10 +3,10 @@ import { AirportLocation, AirportLocationField } from './AirportLocation';
 import {
   AllFields,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  Field,
-  StringField
+  Field
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -71,27 +71,28 @@ export declare namespace Airports {
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ICAO_CODE: StringField<Airports>;
+  const ICAO_CODE: EdmTypeField<Airports, 'Edm.String', false, true>;
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const NAME: StringField<Airports>;
+  const NAME: EdmTypeField<Airports, 'Edm.String', false, true>;
   /**
    * Static representation of the [[iataCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const IATA_CODE: StringField<Airports>;
+  const IATA_CODE: EdmTypeField<Airports, 'Edm.String', false, true>;
   /**
    * Static representation of the [[location]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const LOCATION: AirportLocationField<Airports>;
+  const LOCATION: AirportLocationField<Airports, false, true>;
   /**
    * All fields of the Airports entity.
    */
   const _allFields: Array<
-    StringField<Airports> | AirportLocationField<Airports>
+    | EdmTypeField<Airports, 'Edm.String', false, true>
+    | AirportLocationField<Airports, false, true>
   >;
   /**
    * All fields selector.
@@ -100,12 +101,12 @@ export declare namespace Airports {
   /**
    * All key fields of the Airports entity.
    */
-  const _keyFields: Array<Field<Airports>>;
+  const _keyFields: Array<Field<Airports, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property Airports.
    */
   const _keys: {
-    [keys: string]: Field<Airports>;
+    [keys: string]: Field<Airports, boolean, boolean>;
   };
 }
 //# sourceMappingURL=Airports.d.ts.map

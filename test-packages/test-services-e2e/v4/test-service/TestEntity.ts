@@ -8,18 +8,16 @@ import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import {
   AllFields,
-  BigNumberField,
-  BooleanField,
+  Constructable,
   CustomFieldV4,
-  DateField,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
-  NumberField,
+  FieldBuilder,
   OneToManyLink,
-  StringField,
-  Time,
-  TimeField
+  OrderableEdmTypeField,
+  Time
 } from '@sap-cloud-sdk/core';
 
 /**
@@ -146,103 +144,108 @@ export interface TestEntityType {
 }
 
 export namespace TestEntity {
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntity>> =
+    new FieldBuilder(TestEntity);
   /**
    * Static representation of the [[keyTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TEST_ENTITY: NumberField<TestEntity> = new NumberField(
+  export const KEY_TEST_ENTITY = _fieldBuilder.buildEdmTypeField(
     'KeyTestEntity',
-    TestEntity,
-    'Edm.Int32'
+    'Edm.Int32',
+    false
   );
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY: StringField<TestEntity> = new StringField(
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'StringProperty',
-    TestEntity,
-    'Edm.String'
+    'Edm.String',
+    true
   );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY: StringField<TestEntity> = new StringField(
+  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'GuidProperty',
-    TestEntity,
-    'Edm.Guid'
+    'Edm.Guid',
+    true
   );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntity> = new BooleanField(
+  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
-    TestEntity,
-    'Edm.Boolean'
+    'Edm.Boolean',
+    true
   );
   /**
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_64_PROPERTY: BigNumberField<TestEntity> = new BigNumberField(
+  export const INT_64_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'Int64Property',
-    TestEntity,
-    'Edm.Int64'
+    'Edm.Int64',
+    true
   );
   /**
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DOUBLE_PROPERTY: NumberField<TestEntity> = new NumberField(
+  export const DOUBLE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DoubleProperty',
-    TestEntity,
-    'Edm.Double'
+    'Edm.Double',
+    true
   );
   /**
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DECIMAL_PROPERTY: BigNumberField<TestEntity> =
-    new BigNumberField('DecimalProperty', TestEntity, 'Edm.Decimal');
+  export const DECIMAL_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'DecimalProperty',
+    'Edm.Decimal',
+    true
+  );
   /**
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_PROPERTY: DateField<TestEntity> = new DateField(
+  export const DATE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'DateProperty',
-    TestEntity,
-    'Edm.Date'
+    'Edm.Date',
+    true
   );
   /**
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TIME_OF_DAY_PROPERTY: TimeField<TestEntity> = new TimeField(
+  export const TIME_OF_DAY_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'TimeOfDayProperty',
-    TestEntity,
-    'Edm.TimeOfDay'
+    'Edm.TimeOfDay',
+    true
   );
   /**
    * Static representation of the [[dataTimeOffsetDataTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATA_TIME_OFFSET_DATA_TIME_PROPERTY: DateField<TestEntity> =
-    new DateField(
+  export const DATA_TIME_OFFSET_DATA_TIME_PROPERTY =
+    _fieldBuilder.buildEdmTypeField(
       'DataTimeOffsetDataTimeProperty',
-      TestEntity,
-      'Edm.DateTimeOffset'
+      'Edm.DateTimeOffset',
+      true
     );
   /**
    * Static representation of the [[dataTimeOffsetTimestampProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY: DateField<TestEntity> =
-    new DateField(
+  export const DATA_TIME_OFFSET_TIMESTAMP_PROPERTY =
+    _fieldBuilder.buildEdmTypeField(
       'DataTimeOffsetTimestampProperty',
-      TestEntity,
-      'Edm.DateTimeOffset'
+      'Edm.DateTimeOffset',
+      true
     );
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
@@ -254,12 +257,16 @@ export namespace TestEntity {
    * All fields of the TestEntity entity.
    */
   export const _allFields: Array<
-    | NumberField<TestEntity>
-    | StringField<TestEntity>
-    | BooleanField<TestEntity>
-    | BigNumberField<TestEntity>
-    | DateField<TestEntity>
-    | TimeField<TestEntity>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Int32', false, true>
+    | EdmTypeField<TestEntity, 'Edm.String', true, true>
+    | EdmTypeField<TestEntity, 'Edm.Guid', true, true>
+    | EdmTypeField<TestEntity, 'Edm.Boolean', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Int64', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Double', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Decimal', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.Date', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.TimeOfDay', true, true>
+    | OrderableEdmTypeField<TestEntity, 'Edm.DateTimeOffset', true, true>
     | OneToManyLink<TestEntity, TestEntityLink>
   > = [
     TestEntity.KEY_TEST_ENTITY,
@@ -285,17 +292,17 @@ export namespace TestEntity {
   /**
    * All key fields of the TestEntity entity.
    */
-  export const _keyFields: Array<Field<TestEntity>> = [
+  export const _keyFields: Array<Field<TestEntity, boolean, boolean>> = [
     TestEntity.KEY_TEST_ENTITY
   ];
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */
-  export const _keys: { [keys: string]: Field<TestEntity> } =
+  export const _keys: { [keys: string]: Field<TestEntity, boolean, boolean> } =
     TestEntity._keyFields.reduce(
       (
-        acc: { [keys: string]: Field<TestEntity> },
-        field: Field<TestEntity>
+        acc: { [keys: string]: Field<TestEntity, boolean, boolean> },
+        field: Field<TestEntity, boolean, boolean>
       ) => {
         acc[field._fieldName] = field;
         return acc;

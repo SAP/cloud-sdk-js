@@ -1,15 +1,14 @@
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
 import {
   AllFields,
-  BooleanField,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
   Field,
   Link,
-  NumberField,
   OneToOneLink,
-  StringField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
@@ -109,27 +108,52 @@ export declare namespace TestEntityMultiLink {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<TestEntityMultiLink>;
+  const KEY_PROPERTY: EdmTypeField<
+    TestEntityMultiLink,
+    'Edm.String',
+    false,
+    true
+  >;
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const STRING_PROPERTY: StringField<TestEntityMultiLink>;
+  const STRING_PROPERTY: EdmTypeField<
+    TestEntityMultiLink,
+    'Edm.String',
+    true,
+    true
+  >;
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const BOOLEAN_PROPERTY: BooleanField<TestEntityMultiLink>;
+  const BOOLEAN_PROPERTY: EdmTypeField<
+    TestEntityMultiLink,
+    'Edm.Boolean',
+    true,
+    true
+  >;
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const GUID_PROPERTY: StringField<TestEntityMultiLink>;
+  const GUID_PROPERTY: EdmTypeField<
+    TestEntityMultiLink,
+    'Edm.Guid',
+    true,
+    true
+  >;
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_16_PROPERTY: NumberField<TestEntityMultiLink>;
+  const INT_16_PROPERTY: OrderableEdmTypeField<
+    TestEntityMultiLink,
+    'Edm.Int16',
+    true,
+    true
+  >;
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -147,9 +171,11 @@ export declare namespace TestEntityMultiLink {
    * All fields of the TestEntityMultiLink entity.
    */
   const _allFields: Array<
-    | StringField<TestEntityMultiLink>
-    | BooleanField<TestEntityMultiLink>
-    | NumberField<TestEntityMultiLink>
+    | EdmTypeField<TestEntityMultiLink, 'Edm.String', false, true>
+    | EdmTypeField<TestEntityMultiLink, 'Edm.String', true, true>
+    | EdmTypeField<TestEntityMultiLink, 'Edm.Boolean', true, true>
+    | EdmTypeField<TestEntityMultiLink, 'Edm.Guid', true, true>
+    | OrderableEdmTypeField<TestEntityMultiLink, 'Edm.Int16', true, true>
     | Link<TestEntityMultiLink, TestEntityLvl2MultiLink>
     | OneToOneLink<TestEntityMultiLink, TestEntityLvl2SingleLink>
   >;
@@ -160,12 +186,12 @@ export declare namespace TestEntityMultiLink {
   /**
    * All key fields of the TestEntityMultiLink entity.
    */
-  const _keyFields: Array<Field<TestEntityMultiLink>>;
+  const _keyFields: Array<Field<TestEntityMultiLink, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntityMultiLink.
    */
   const _keys: {
-    [keys: string]: Field<TestEntityMultiLink>;
+    [keys: string]: Field<TestEntityMultiLink, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntityMultiLink.d.ts.map

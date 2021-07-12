@@ -1,41 +1,47 @@
 /* eslint-disable max-classes-per-file */
 
-import { Entity, Constructable } from '../entity';
-import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
-import { ConstructorOrField } from './constructor-or-field';
-import { EdmTypeField, SelectableEdmTypeField } from './edm-type-field';
+import { Entity, Constructable } from '../../entity';
+import { ComplexTypeField, getEntityConstructor } from '../complex-type-field';
+import { ConstructorOrField } from '../constructor-or-field';
+import { EdmTypeField } from '../edm-type-field';
 
 /**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a property with a enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-class EnumFieldBase<EntityT extends Entity> extends EdmTypeField<
+class EnumFieldBase<
+  EntityT extends Entity,
+  SelectableT extends boolean = false
+> extends EdmTypeField<
   EntityT,
   /* TODO FieldType is designed to be a union type of a list of static known type.
    For enum type, one can only use any. Use string here since it's better than any.
    However, when using filter you use `EnumType eq 'test'`.
    */
-  string
+  string,
+  false,
+  SelectableT
 > {}
 
 /**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a selectable property with a enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class EnumField<EntityT extends Entity>
-  extends EnumFieldBase<EntityT>
-  implements SelectableEdmTypeField
-{
-  readonly selectable: true;
-
+export class EnumField<EntityT extends Entity> extends EnumFieldBase<
+  EntityT,
+  true
+> {
   constructor(fieldName: string, fieldOf: Constructable<EntityT>) {
     super(fieldName, fieldOf, 'Edm.Enum');
   }
 }
 
 /**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a complex type property with a enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to

@@ -1,26 +1,27 @@
 /* eslint-disable max-classes-per-file */
 
-import { EdmTypeShared } from '../edm-types';
-import { Entity, ODataVersionOf, Constructable } from '../entity';
-import { Filter } from '../filter';
-import { Time } from '../time';
+import { EdmTypeShared } from '../../edm-types';
+import { Entity, ODataVersionOf, Constructable } from '../../entity';
+import { Filter } from '../../filter';
+import { Time } from '../../time';
 import {
   ComplexTypeField,
   getEdmType,
   getEntityConstructor
-} from './complex-type-field';
-import { ConstructorOrField } from './constructor-or-field';
-import { EdmTypeField } from './edm-type-field';
+} from '../complex-type-field';
+import { ConstructorOrField } from '../constructor-or-field';
+import { EdmTypeField } from '../edm-type-field';
 
 /**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a property with a time value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<
-  EntityT,
-  Time
-> {
+export class TimeFieldBase<
+  EntityT extends Entity,
+  SelectableT extends boolean = false
+> extends EdmTypeField<EntityT, Time, false, SelectableT> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    *
@@ -63,15 +64,18 @@ export class TimeFieldBase<EntityT extends Entity> extends EdmTypeField<
 }
 
 /**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a selectable property with a time value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
-export class TimeField<EntityT extends Entity> extends TimeFieldBase<EntityT> {
-  readonly selectable: true;
-}
+export class TimeField<EntityT extends Entity> extends TimeFieldBase<
+  EntityT,
+  true
+> {}
 
 /**
+ * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a complex type property with a time value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to

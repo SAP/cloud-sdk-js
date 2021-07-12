@@ -2,10 +2,10 @@ import { CaseTestRequestBuilder } from './CaseTestRequestBuilder';
 import {
   AllFields,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
-  Field,
-  StringField
+  Field
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_CaseTest" of service "API_TEST_SRV".
@@ -55,11 +55,11 @@ export declare namespace CaseTest {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_STRING: StringField<CaseTest>;
+  const KEY_PROPERTY_STRING: EdmTypeField<CaseTest, 'Edm.String', false, true>;
   /**
    * All fields of the CaseTest entity.
    */
-  const _allFields: Array<StringField<CaseTest>>;
+  const _allFields: Array<EdmTypeField<CaseTest, 'Edm.String', false, true>>;
   /**
    * All fields selector.
    */
@@ -67,12 +67,12 @@ export declare namespace CaseTest {
   /**
    * All key fields of the CaseTest entity.
    */
-  const _keyFields: Array<Field<CaseTest>>;
+  const _keyFields: Array<Field<CaseTest, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property CaseTest.
    */
   const _keys: {
-    [keys: string]: Field<CaseTest>;
+    [keys: string]: Field<CaseTest, boolean, boolean>;
   };
 }
 //# sourceMappingURL=CaseTest.d.ts.map

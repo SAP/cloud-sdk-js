@@ -56,22 +56,31 @@ export function getSdkMetadataClient(
 const sdkMetadataHeaderIntroText =
   'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.';
 
-const ServiceStatusValues: Record<ServiceStatus['status'], ServiceStatus> = {
+export const ServiceStatusValues: Record<
+  ServiceStatus['status'],
+  ServiceStatus
+> = {
   certified: {
     status: 'certified',
-    statusText: 'A pre-generated API client exists.',
-    gettingStartedText:
-      'For this API you have two options to get a typed client. Either you download the pregenerated client from the repository or you generate the client on your own.'
+    statusText: 'API Client available for download',
+    statusLongText: 'You can download our pregenerated API client for this API.'
   },
   verified: {
     status: 'verified',
-    statusText: 'The generation process for this API works.',
-    gettingStartedText:
-      'For this API no pregenerated published client exists. Follow the generation steps to create a client on your own.'
+    statusText: 'API Client generation tested but no download available',
+    statusLongText:
+      'The SAP Cloud SDK team checked for this API that generating a API client works, but no pregenerated client is available. You can generate your own client for this API.'
   },
   unknown: {
     status: 'unknown',
-    statusText: 'No information for this service present.',
-    gettingStartedText: ''
+    statusText: 'API Client generation not tested',
+    statusLongText:
+      'The SAP Cloud SDK team has not tested if generating an API client for this API works. You might try to generate a client for this API if you need one.'
+  },
+  failed: {
+    status: 'failed',
+    statusText: 'API Client generation has failed',
+    statusLongText:
+      'The SAP Cloud SDK team checked for this API if generating a API client works, which has failed. You might try it on your own.'
   }
 };

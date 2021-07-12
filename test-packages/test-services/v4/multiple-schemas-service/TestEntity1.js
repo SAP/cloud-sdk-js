@@ -104,38 +104,43 @@ var TestEntity1 = /** @class */ (function (_super) {
 })(core_1.EntityV4);
 exports.TestEntity1 = TestEntity1;
 (function (TestEntity1) {
+  var _fieldBuilder = new core_1.FieldBuilder(TestEntity1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.KEY_PROPERTY_STRING = new core_1.StringField(
+  TestEntity1.KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity1,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.INT_16_PROPERTY = new core_1.NumberField(
+  TestEntity1.INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'Int16Property',
-    TestEntity1,
-    'Edm.Int16'
+    'Edm.Int16',
+    true
   );
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.ENUM_PROPERTY = new core_1.EnumField('EnumProperty', TestEntity1);
+  TestEntity1.ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'EnumProperty',
+    'Edm.Enum',
+    true
+  );
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity1.COMPLEX_TYPE_PROPERTY =
-    new TestComplexType1_1.TestComplexType1Field(
-      'ComplexTypeProperty',
-      TestEntity1
-    );
+  TestEntity1.COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
+    'ComplexTypeProperty',
+    TestComplexType1_1.TestComplexType1Field,
+    true
+  );
   /**
    * All fields of the TestEntity1 entity.
    */

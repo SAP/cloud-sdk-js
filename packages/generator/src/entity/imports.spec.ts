@@ -37,15 +37,16 @@ const expectedEntityImports = [
     moduleSpecifier: '@sap-cloud-sdk/core',
     namedImports: [
       'AllFields',
-      'BigNumberField',
+      'Constructable',
       'CustomFieldV2',
+      'EdmTypeField',
       'EntityBuilderType',
       'EntityV2',
       'Field',
+      'FieldBuilder',
       'OneToOneLink',
-      'StringField',
-      'Time',
-      'TimeField'
+      'OrderableEdmTypeField',
+      'Time'
     ]
   }
 ];

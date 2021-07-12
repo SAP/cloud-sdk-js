@@ -2,10 +2,10 @@ import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
 import {
   AllFields,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  Field,
-  StringField
+  Field
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -60,16 +60,16 @@ export declare namespace Airlines {
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const AIRLINE_CODE: StringField<Airlines>;
+  const AIRLINE_CODE: EdmTypeField<Airlines, 'Edm.String', false, true>;
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const NAME: StringField<Airlines>;
+  const NAME: EdmTypeField<Airlines, 'Edm.String', false, true>;
   /**
    * All fields of the Airlines entity.
    */
-  const _allFields: Array<StringField<Airlines>>;
+  const _allFields: Array<EdmTypeField<Airlines, 'Edm.String', false, true>>;
   /**
    * All fields selector.
    */
@@ -77,12 +77,12 @@ export declare namespace Airlines {
   /**
    * All key fields of the Airlines entity.
    */
-  const _keyFields: Array<Field<Airlines>>;
+  const _keyFields: Array<Field<Airlines, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property Airlines.
    */
   const _keys: {
-    [keys: string]: Field<Airlines>;
+    [keys: string]: Field<Airlines, boolean, boolean>;
   };
 }
 //# sourceMappingURL=Airlines.d.ts.map

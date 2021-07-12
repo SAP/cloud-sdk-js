@@ -1,7 +1,7 @@
 import { unixEOL, caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
   FunctionDeclarationStructure,
-  NamespaceDeclarationStructure,
+  ModuleDeclarationStructure,
   StructureKind,
   VariableDeclarationKind,
   VariableStatementStructure
@@ -11,9 +11,9 @@ import { VdmComplexType } from '../vdm-types';
 export function complexTypeNamespace(
   complexType: VdmComplexType,
   oDataVersion: ODataVersion
-): NamespaceDeclarationStructure {
+): ModuleDeclarationStructure {
   return {
-    kind: StructureKind.Namespace,
+    kind: StructureKind.Module,
     name: complexType.typeName,
     isExported: true,
     statements: [
@@ -25,14 +25,14 @@ export function complexTypeNamespace(
 
 function factoryFunction(
   complexType: VdmComplexType,
-  oDataVerion: ODataVersion
+  oDataVersion: ODataVersion
 ): FunctionDeclarationStructure {
   return {
     kind: StructureKind.Function,
     name: 'build',
     returnType: complexType.typeName,
     parameters: [{ name: 'json', type: getJsonType(complexType) }],
-    statements: `return deserializeComplexType${caps(oDataVerion)}(json, ${
+    statements: `return deserializeComplexType${caps(oDataVersion)}(json, ${
       complexType.typeName
     });`,
     isExported: true,

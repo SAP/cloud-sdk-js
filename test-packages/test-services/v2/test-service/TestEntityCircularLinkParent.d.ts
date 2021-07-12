@@ -2,11 +2,11 @@ import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircular
 import {
   AllFields,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
   Field,
-  Link,
-  StringField
+  Link
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
@@ -73,7 +73,12 @@ export declare namespace TestEntityCircularLinkParent {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<TestEntityCircularLinkParent>;
+  const KEY_PROPERTY: EdmTypeField<
+    TestEntityCircularLinkParent,
+    'Edm.String',
+    false,
+    true
+  >;
   /**
    * Static representation of the one-to-many navigation property [[toChild]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -86,7 +91,7 @@ export declare namespace TestEntityCircularLinkParent {
    * All fields of the TestEntityCircularLinkParent entity.
    */
   const _allFields: Array<
-    | StringField<TestEntityCircularLinkParent>
+    | EdmTypeField<TestEntityCircularLinkParent, 'Edm.String', false, true>
     | Link<TestEntityCircularLinkParent, TestEntityCircularLinkChild>
   >;
   /**
@@ -96,12 +101,14 @@ export declare namespace TestEntityCircularLinkParent {
   /**
    * All key fields of the TestEntityCircularLinkParent entity.
    */
-  const _keyFields: Array<Field<TestEntityCircularLinkParent>>;
+  const _keyFields: Array<
+    Field<TestEntityCircularLinkParent, boolean, boolean>
+  >;
   /**
    * Mapping of all key field names to the respective static field property TestEntityCircularLinkParent.
    */
   const _keys: {
-    [keys: string]: Field<TestEntityCircularLinkParent>;
+    [keys: string]: Field<TestEntityCircularLinkParent, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntityCircularLinkParent.d.ts.map

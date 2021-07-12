@@ -6,12 +6,13 @@
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
 import {
   AllFields,
-  BooleanField,
+  Constructable,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
   Field,
-  StringField
+  FieldBuilder
 } from '../../../../../src';
 
 /**
@@ -76,29 +77,32 @@ export interface TestEntity4Type {
 }
 
 export namespace TestEntity4 {
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntity4>> =
+    new FieldBuilder(TestEntity4);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING: StringField<TestEntity4> = new StringField(
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity4,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY: BooleanField<TestEntity4> = new BooleanField(
+  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'BooleanProperty',
-    TestEntity4,
-    'Edm.Boolean'
+    'Edm.Boolean',
+    true
   );
   /**
    * All fields of the TestEntity4 entity.
    */
   export const _allFields: Array<
-    StringField<TestEntity4> | BooleanField<TestEntity4>
+    | EdmTypeField<TestEntity4, 'Edm.String', false, true>
+    | EdmTypeField<TestEntity4, 'Edm.Boolean', true, true>
   > = [TestEntity4.KEY_PROPERTY_STRING, TestEntity4.BOOLEAN_PROPERTY];
   /**
    * All fields selector.
@@ -110,17 +114,17 @@ export namespace TestEntity4 {
   /**
    * All key fields of the TestEntity4 entity.
    */
-  export const _keyFields: Array<Field<TestEntity4>> = [
+  export const _keyFields: Array<Field<TestEntity4, boolean, boolean>> = [
     TestEntity4.KEY_PROPERTY_STRING
   ];
   /**
    * Mapping of all key field names to the respective static field property TestEntity4.
    */
-  export const _keys: { [keys: string]: Field<TestEntity4> } =
+  export const _keys: { [keys: string]: Field<TestEntity4, boolean, boolean> } =
     TestEntity4._keyFields.reduce(
       (
-        acc: { [keys: string]: Field<TestEntity4> },
-        field: Field<TestEntity4>
+        acc: { [keys: string]: Field<TestEntity4, boolean, boolean> },
+        field: Field<TestEntity4, boolean, boolean>
       ) => {
         acc[field._fieldName] = field;
         return acc;

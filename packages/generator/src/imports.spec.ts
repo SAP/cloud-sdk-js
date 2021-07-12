@@ -16,31 +16,31 @@ import {
 const momentProperty = {
   jsType: 'Moment',
   edmType: 'Edm.DateTime',
-  fieldType: 'DateField'
+  fieldType: 'OrderableEdmTypeField'
 } as VdmProperty;
 
 const bigNumberProperty = {
   jsType: 'BigNumber',
   edmType: 'Edm.Decimal',
-  fieldType: 'BigNumberField'
+  fieldType: 'OrderableEdmTypeField'
 } as VdmProperty;
 
 const stringProperty = {
   jsType: 'string',
   edmType: 'Edm.String',
-  fieldType: 'StringField'
+  fieldType: 'EdmTypeField'
 } as VdmProperty;
 
 const numberProperty = {
   jsType: 'number',
   edmType: 'Edm.Number',
-  fieldType: 'NumberField'
+  fieldType: 'OrderableEdmTypeField'
 } as VdmProperty;
 
 const timeProperty = {
   jsType: 'Time',
   edmType: 'Edm.DateTimeOffset',
-  fieldType: 'TimeField'
+  fieldType: 'OrderableEdmTypeField'
 } as VdmProperty;
 
 const multiLink = {
@@ -113,7 +113,7 @@ describe('imports', () => {
           momentProperty,
           timeProperty
         ])
-      ).toEqual(['StringField', 'TimeField', 'DateField']);
+      ).toEqual(['EdmTypeField', 'OrderableEdmTypeField']);
     });
 
     it('contains unique multilink import', () => {

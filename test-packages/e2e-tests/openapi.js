@@ -3,7 +3,7 @@ const OpenAPIBackend = require('openapi-backend').default;
 const express = require('express');
 const SwaggerParser = require('@apidevtools/swagger-parser');
 
-const jsf = require('json-schema-faker');
+const jsf = require('json-schema-faker').default;
 
 async function getSchemas() {
   // SchemaObject
@@ -49,9 +49,7 @@ async function createApi() {
       }
       return res.status(204).end();
     },
-    getAllEntities: (c, req, res) => {
-      return res.status(200).json(entities);
-    },
+    getAllEntities: (c, req, res) => res.status(200).json(entities),
     countEntities: (c, req, res) => res.status(200).json(entities.length),
     getEntityByKey: (c, req, res) => {
       const entityId = c.request.params.entityId;
@@ -76,9 +74,7 @@ async function createApi() {
     validationFail: (c, req, res) => {
       res.status(400).json({ err: c.validation.errors });
     },
-    notFound: (c, req, res) => {
-      return res.status(404).json({ err: 'not found' });
-    }
+    notFound: (c, req, res) => res.status(404).json({ err: 'not found' })
   });
 
   api.init();

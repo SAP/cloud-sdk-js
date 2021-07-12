@@ -103,23 +103,24 @@ var TestEntity2 = /** @class */ (function (_super) {
 })(core_1.EntityV4);
 exports.TestEntity2 = TestEntity2;
 (function (TestEntity2) {
+  var _fieldBuilder = new core_1.FieldBuilder(TestEntity2);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity2.KEY_PROPERTY_STRING = new core_1.StringField(
+  TestEntity2.KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
     'KeyPropertyString',
-    TestEntity2,
-    'Edm.String'
+    'Edm.String',
+    false
   );
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity2.SINGLE_PROPERTY = new core_1.NumberField(
+  TestEntity2.SINGLE_PROPERTY = _fieldBuilder.buildEdmTypeField(
     'SingleProperty',
-    TestEntity2,
-    'Edm.Single'
+    'Edm.Single',
+    true
   );
   /**
    * All fields of the TestEntity2 entity.

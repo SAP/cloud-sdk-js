@@ -92,15 +92,15 @@ describe('generator', () => {
       expect(testEntityFile).toBeDefined();
       expect(testEntityFile!.getClasses().length).toBe(1);
       expect(testEntityFile!.getInterfaces().length).toBe(1);
-      expect(testEntityFile!.getNamespaces().length).toBe(1);
+      expect(testEntityFile!.getModules().length).toBe(1);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
       expect(entityClass!.getProperties().length).toBe(24);
 
       checkStaticProperties(entityClass!);
 
-      const entityNamespace = testEntityFile!.getNamespace('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(26);
+      const entityNamespace = testEntityFile!.getModule('TestEntity');
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(27);
     });
 
     it('generates function-imports.ts file', () => {
@@ -127,7 +127,7 @@ describe('generator', () => {
       expect(testEntityFile).toBeDefined();
       expect(testEntityFile!.getClasses().length).toBe(1);
       expect(testEntityFile!.getInterfaces().length).toBe(1);
-      expect(testEntityFile!.getNamespaces().length).toBe(1);
+      expect(testEntityFile!.getModules().length).toBe(1);
       const imports = testEntityFile!
         .getImportStringLiterals()
         .map(stringLiteral => stringLiteral.getLiteralValue());
@@ -148,8 +148,8 @@ describe('generator', () => {
 
       checkStaticProperties(entityClass!);
 
-      const entityNamespace = testEntityFile!.getNamespace('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(33);
+      const entityNamespace = testEntityFile!.getModule('TestEntity');
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(34);
     });
 
     it('generates function-imports.ts file', () => {

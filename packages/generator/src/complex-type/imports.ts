@@ -27,7 +27,9 @@ export function importDeclarations(
         'ConstructorOrField',
         `deserializeComplexType${versionInCaps}`,
         `Entity${versionInCaps}`,
+        'FieldBuilder',
         'FieldType',
+        'FieldOptions',
         'PropertyMetadata'
       ].sort()
     )

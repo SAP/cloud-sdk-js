@@ -5,9 +5,11 @@
  */
 import {
   ComplexTypeField,
-  ComplexTypeStringPropertyField,
   ConstructorOrField,
+  EdmTypeField,
   EntityV4,
+  FieldBuilder,
+  FieldOptions,
   FieldType,
   PropertyMetadata,
   deserializeComplexTypeV4
@@ -38,14 +40,22 @@ export function createTestLvl2NestedComplexType(
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class TestLvl2NestedComplexTypeField<
-  EntityT extends EntityV4
-> extends ComplexTypeField<EntityT, TestLvl2NestedComplexType> {
+  EntityT extends EntityV4,
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<
+  EntityT,
+  TestLvl2NestedComplexType,
+  NullableT,
+  SelectableT
+> {
+  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
   /**
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: ComplexTypeStringPropertyField<EntityT> =
-    new ComplexTypeStringPropertyField('StringProperty', this, 'Edm.String');
+  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
+    this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
 
   /**
    * Creates an instance of TestLvl2NestedComplexTypeField.
@@ -53,8 +63,12 @@ export class TestLvl2NestedComplexTypeField<
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName: string, fieldOf: ConstructorOrField<EntityT>) {
-    super(fieldName, fieldOf, TestLvl2NestedComplexType);
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
+  ) {
+    super(fieldName, fieldOf, TestLvl2NestedComplexType, fieldOptions);
   }
 }
 

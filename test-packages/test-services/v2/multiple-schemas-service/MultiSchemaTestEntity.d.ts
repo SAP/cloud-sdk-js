@@ -2,10 +2,10 @@ import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequ
 import {
   AllFields,
   CustomFieldV2,
+  EdmTypeField,
   EntityBuilderType,
   EntityV2,
-  Field,
-  StringField
+  Field
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -61,11 +61,18 @@ export declare namespace MultiSchemaTestEntity {
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY: StringField<MultiSchemaTestEntity>;
+  const KEY_PROPERTY: EdmTypeField<
+    MultiSchemaTestEntity,
+    'Edm.String',
+    false,
+    true
+  >;
   /**
    * All fields of the MultiSchemaTestEntity entity.
    */
-  const _allFields: Array<StringField<MultiSchemaTestEntity>>;
+  const _allFields: Array<
+    EdmTypeField<MultiSchemaTestEntity, 'Edm.String', false, true>
+  >;
   /**
    * All fields selector.
    */
@@ -73,12 +80,12 @@ export declare namespace MultiSchemaTestEntity {
   /**
    * All key fields of the MultiSchemaTestEntity entity.
    */
-  const _keyFields: Array<Field<MultiSchemaTestEntity>>;
+  const _keyFields: Array<Field<MultiSchemaTestEntity, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
    */
   const _keys: {
-    [keys: string]: Field<MultiSchemaTestEntity>;
+    [keys: string]: Field<MultiSchemaTestEntity, boolean, boolean>;
   };
 }
 //# sourceMappingURL=MultiSchemaTestEntity.d.ts.map

@@ -27,6 +27,7 @@
 ## Fixed Issues
 
 - [proxy] Fix destination service calls using web proxies.
+- [core] Fix type error to allow `null` values in filters for nullable properties.
 
 
 # 1.46.0

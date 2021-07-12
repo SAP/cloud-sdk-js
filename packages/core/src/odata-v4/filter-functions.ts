@@ -22,8 +22,11 @@ import { filterFunction } from './filter-function';
  * @returns The newly created filter function
  */
 export function contains<EntityT extends Entity>(
-  substr: string | Field<EntityT> | StringFilterFunction<EntityT>,
-  str: string | Field<EntityT> | StringFilterFunction<EntityT>
+  substr:
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
+  str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('contains', 'boolean', substr, str);
 }
@@ -35,7 +38,10 @@ export function contains<EntityT extends Entity>(
  * @returns The newly created filter function
  */
 export function matchesPattern<EntityT extends Entity>(
-  str: string | Field<EntityT> | StringFilterFunction<EntityT>,
+  str:
+    | string
+    | Field<EntityT, boolean, boolean>
+    | StringFilterFunction<EntityT>,
   regex: string
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('matchesPattern', 'boolean', str, regex);
@@ -48,7 +54,7 @@ export function matchesPattern<EntityT extends Entity>(
  * @returns The newly created filter function
  */
 export function fractionalSeconds<EntityT extends Entity>(
-  date: moment.Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT, boolean, boolean>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('fractionalseconds', 'decimal', date);
 }
@@ -59,7 +65,7 @@ export function fractionalSeconds<EntityT extends Entity>(
  * @returns The newly created filter function
  */
 export function totalOffsetMinutes<EntityT extends Entity>(
-  date: moment.Moment | Field<EntityT>
+  date: moment.Moment | Field<EntityT, boolean, boolean>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('totaloffsetminutes', 'decimal', date);
 }
@@ -94,7 +100,7 @@ export function now<EntityT extends Entity>(): NumberFilterFunction<EntityT> {
 
 /* Collection functions */
 /**
- * Build a filter function to test whether a set is a subset of the other, i. e. wheter the second parameter can be transformed into the first by reordering and / or removing items. Evaluates to boolean.
+ * Build a filter function to test whether a set is a subset of the other, i. e. whether the second parameter can be transformed into the first by reordering and / or removing items. Evaluates to boolean.
  * @param subset - The subset to test for. This can either be an array, a reference to a field or another filter function.
  * @param set - The set to test. This can either be an array, a reference to a field or another filter function.
  *
@@ -107,18 +113,18 @@ export function hasSubset<
 >(
   subset:
     | ParamT[]
-    | CollectionField<EntityT, any>
+    | CollectionField<EntityT, any, boolean, boolean>
     | CollectionFilterFunction<EntityT, ReturnT>,
   set:
     | ParamT[]
-    | CollectionField<EntityT, any>
+    | CollectionField<EntityT, any, boolean, boolean>
     | CollectionFilterFunction<EntityT, ReturnT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('hassubset', 'boolean', subset, set);
 }
 
 /**
- * Build a filter function to test whether a set is a subsequence of the other, i. e. wheter the second parameter can be transformed into the first by removing items. Evaluates to boolean.
+ * Build a filter function to test whether a set is a subsequence of the other, i. e. whether the second parameter can be transformed into the first by removing items. Evaluates to boolean.
  * @param subsequence - The subsequence to test for. This can either be an array, a reference to a field or another filter function.
  * @param sequence - The sequence to test. This can either be an array, a reference to a field or another filter function.
  *
@@ -131,11 +137,11 @@ export function hasSubsequence<
 >(
   subsequence:
     | ParamT[]
-    | Field<EntityT>
+    | Field<EntityT, boolean, boolean>
     | CollectionFilterFunction<EntityT, ReturnT>,
   sequence:
     | ParamT[]
-    | Field<EntityT>
+    | Field<EntityT, boolean, boolean>
     | CollectionFilterFunction<EntityT, ReturnT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('hassubsequence', 'boolean', subsequence, sequence);

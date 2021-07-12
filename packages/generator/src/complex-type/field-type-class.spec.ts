@@ -1,5 +1,5 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { StructureKind } from 'ts-morph';
+import { Scope, StructureKind } from 'ts-morph';
 import {
   complexMeal,
   complexMealWithDesert
@@ -12,16 +12,24 @@ describe('field-type-class', () => {
 
     expect(actual).toEqual({
       kind: StructureKind.Class,
-      name: 'ComplexMealField<EntityT extends EntityV2>',
-      extends: 'ComplexTypeField<EntityT, ComplexMealType>',
+      name: 'ComplexMealField<EntityT extends EntityV2, NullableT extends boolean = false, SelectableT extends boolean = false>',
+      extends:
+        'ComplexTypeField<EntityT, ComplexMealType, NullableT, SelectableT>',
       isExported: true,
       properties: [
         {
           kind: StructureKind.Property,
+          scope: Scope.Private,
+          name: '_fieldBuilder',
+          type: 'FieldBuilder<this>',
+          initializer: 'new FieldBuilder(this)'
+        },
+        {
+          kind: StructureKind.Property,
           name: 'complexity',
-          type: 'ComplexTypeStringPropertyField<EntityT>',
+          type: "EdmTypeField<EntityT, 'Edm.String', false, false>",
           initializer:
-            "new ComplexTypeStringPropertyField('Complexity', this, 'Edm.String')",
+            "this._fieldBuilder.buildEdmTypeField('Complexity', 'Edm.String', false)",
           docs: [
             `Representation of the [[ComplexMealType.complexity]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
@@ -29,9 +37,9 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           name: 'amount',
-          type: 'ComplexTypeNumberPropertyField<EntityT>',
+          type: "OrderableEdmTypeField<EntityT, 'Edm.Int16', false, false>",
           initializer:
-            "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
+            "this._fieldBuilder.buildEdmTypeField('Amount', 'Edm.Int16', false)",
           docs: [
             `Representation of the [[ComplexMealType.amount]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
@@ -50,9 +58,16 @@ describe('field-type-class', () => {
             {
               name: 'fieldOf',
               type: 'ConstructorOrField<EntityT>'
+            },
+            {
+              hasQuestionToken: true,
+              name: 'fieldOptions',
+              type: 'FieldOptions<NullableT, SelectableT>'
             }
           ],
-          statements: ['super(fieldName, fieldOf, ComplexMealType);'],
+          statements: [
+            'super(fieldName, fieldOf, ComplexMealType, fieldOptions);'
+          ],
           docs: [
             `${unixEOL}Creates an instance of ComplexMealField.${unixEOL}${unixEOL}@param fieldName - Actual name of the field as used in the OData request.${unixEOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
           ]
@@ -65,15 +80,24 @@ describe('field-type-class', () => {
     const actual = fieldTypeClass(complexMealWithDesert, 'v4');
     expect(actual).toEqual({
       kind: StructureKind.Class,
-      name: 'ComplexMealWithDesertField<EntityT extends EntityV4>',
-      extends: 'ComplexTypeField<EntityT, ComplexMealWithDesertType>',
+      name: 'ComplexMealWithDesertField<EntityT extends EntityV4, NullableT extends boolean = false, SelectableT extends boolean = false>',
+      extends:
+        'ComplexTypeField<EntityT, ComplexMealWithDesertType, NullableT, SelectableT>',
       isExported: true,
       properties: [
         {
           kind: StructureKind.Property,
+          scope: Scope.Private,
+          type: 'FieldBuilder<this>',
+          name: '_fieldBuilder',
+          initializer: 'new FieldBuilder(this)'
+        },
+        {
+          kind: StructureKind.Property,
           name: 'complexDesert',
-          type: 'ComplexDesertField<EntityT>',
-          initializer: "new ComplexDesertField('ComplexDesert', this)",
+          type: 'ComplexDesertField<EntityT, false, false>',
+          initializer:
+            "this._fieldBuilder.buildComplexTypeField('ComplexDesert', ComplexDesertField, false)",
           docs: [
             `Representation of the [[ComplexMealWithDesertType.complexDesert]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
@@ -81,9 +105,9 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           name: 'amount',
-          type: 'ComplexTypeNumberPropertyField<EntityT>',
+          type: "OrderableEdmTypeField<EntityT, 'Edm.Int16', false, false>",
           initializer:
-            "new ComplexTypeNumberPropertyField('Amount', this, 'Edm.Int16')",
+            "this._fieldBuilder.buildEdmTypeField('Amount', 'Edm.Int16', false)",
           docs: [
             `Representation of the [[ComplexMealWithDesertType.amount]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`
           ]
@@ -99,9 +123,16 @@ describe('field-type-class', () => {
             {
               name: 'fieldOf',
               type: 'ConstructorOrField<EntityT>'
+            },
+            {
+              hasQuestionToken: true,
+              name: 'fieldOptions',
+              type: 'FieldOptions<NullableT, SelectableT>'
             }
           ],
-          statements: ['super(fieldName, fieldOf, ComplexMealWithDesertType);'],
+          statements: [
+            'super(fieldName, fieldOf, ComplexMealWithDesertType, fieldOptions);'
+          ],
           docs: [
             `${unixEOL}Creates an instance of ComplexMealWithDesertField.${unixEOL}${unixEOL}@param fieldName - Actual name of the field as used in the OData request.${unixEOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
           ]

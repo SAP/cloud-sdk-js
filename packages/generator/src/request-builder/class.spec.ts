@@ -53,7 +53,7 @@ describe('request builder class', () => {
       staticPropertyName: 'BREAKFAST_TIME',
       propertyNameAsParam: 'pWith',
       jsType: 'string',
-      fieldType: 'StringField',
+      fieldType: 'EdmTypeField',
       originalName: 'With',
       edmType: 'Edm.String',
       description: 'Breakfast accompaniment.',

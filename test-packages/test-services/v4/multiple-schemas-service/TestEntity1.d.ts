@@ -4,12 +4,11 @@ import { TestEnumType1 } from './TestEnumType1';
 import {
   AllFields,
   CustomFieldV4,
+  EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  EnumField,
   Field,
-  NumberField,
-  StringField
+  OrderableEdmTypeField
 } from '@sap-cloud-sdk/core';
 /**
  * This class represents the entity "A_TestEntity1" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -77,30 +76,40 @@ export declare namespace TestEntity1 {
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_STRING: StringField<TestEntity1>;
+  const KEY_PROPERTY_STRING: EdmTypeField<
+    TestEntity1,
+    'Edm.String',
+    false,
+    true
+  >;
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const INT_16_PROPERTY: NumberField<TestEntity1>;
+  const INT_16_PROPERTY: OrderableEdmTypeField<
+    TestEntity1,
+    'Edm.Int16',
+    true,
+    true
+  >;
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ENUM_PROPERTY: EnumField<TestEntity1>;
+  const ENUM_PROPERTY: EdmTypeField<TestEntity1, 'Edm.Enum', true, true>;
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const COMPLEX_TYPE_PROPERTY: TestComplexType1Field<TestEntity1>;
+  const COMPLEX_TYPE_PROPERTY: TestComplexType1Field<TestEntity1, true, true>;
   /**
    * All fields of the TestEntity1 entity.
    */
   const _allFields: Array<
-    | StringField<TestEntity1>
-    | NumberField<TestEntity1>
-    | EnumField<TestEntity1>
-    | TestComplexType1Field<TestEntity1>
+    | EdmTypeField<TestEntity1, 'Edm.String', false, true>
+    | OrderableEdmTypeField<TestEntity1, 'Edm.Int16', true, true>
+    | EdmTypeField<TestEntity1, 'Edm.Enum', true, true>
+    | TestComplexType1Field<TestEntity1, true, true>
   >;
   /**
    * All fields selector.
@@ -109,12 +118,12 @@ export declare namespace TestEntity1 {
   /**
    * All key fields of the TestEntity1 entity.
    */
-  const _keyFields: Array<Field<TestEntity1>>;
+  const _keyFields: Array<Field<TestEntity1, boolean, boolean>>;
   /**
    * Mapping of all key field names to the respective static field property TestEntity1.
    */
   const _keys: {
-    [keys: string]: Field<TestEntity1>;
+    [keys: string]: Field<TestEntity1, boolean, boolean>;
   };
 }
 //# sourceMappingURL=TestEntity1.d.ts.map

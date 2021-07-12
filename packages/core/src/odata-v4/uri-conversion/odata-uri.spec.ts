@@ -4,6 +4,7 @@ import {
   testFilterLambdaExpressionFilterLinkOnLink,
   testFilterLambdaExpressionFilterListOnLink,
   testFilterLambdaExpressionOnLink,
+  testFilterLambdaExpressionWithOr,
   testFilterString,
   testFilterStringV4,
   testNestedFilterLambdaExpressionOnLink
@@ -32,6 +33,12 @@ describe('getFilter', () => {
     expect(
       getFilter(testFilterLambdaExpressionOnLink.filter, TestEntity).filter
     ).toBe(encodeURIComponent(testFilterLambdaExpressionOnLink.odataStr));
+  });
+
+  it('for lambda expression with or operand', () => {
+    expect(
+      getFilter(testFilterLambdaExpressionWithOr.filter, TestEntity).filter
+    ).toBe(encodeURIComponent(testFilterLambdaExpressionWithOr.odataStr));
   });
 
   it('for lambda expression with FilterList on one-to-many navigation property', () => {

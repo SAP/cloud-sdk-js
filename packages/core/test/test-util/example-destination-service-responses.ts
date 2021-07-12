@@ -83,7 +83,7 @@ export const oauthUserTokenExchangeMultipleResponse: DestinationConfiguration[] 
       tokenServicePassword: 'password'
     }
   ];
-// todo add more
+
 export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] =
   [
     {

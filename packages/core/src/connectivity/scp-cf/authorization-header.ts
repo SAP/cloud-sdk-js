@@ -56,6 +56,7 @@ function needsAuthHeaders(destination: Destination): boolean {
     'OAuth2ClientCredentials',
     'OAuth2SAMLBearerAssertion',
     'OAuth2UserTokenExchange',
+    'OAuth2JWTBearer',
     'PrincipalPropagation'
   ];
   return authTypesWithAuthorizationHeader.includes(destination.authentication);
@@ -233,6 +234,7 @@ async function getAuthenticationRelatedHeaders(
       return {};
     case 'OAuth2SAMLBearerAssertion':
     case 'OAuth2UserTokenExchange':
+    case 'OAuth2JWTBearer':
     case 'OAuth2ClientCredentials':
       return headerFromTokens(
         destination.authentication,

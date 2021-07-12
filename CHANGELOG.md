@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [core] Support `OAuth2JWTBearer` authentication type.
 
 ## Improvements
 

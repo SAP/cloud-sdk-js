@@ -148,6 +148,25 @@ describe('OAuth flows', () => {
     expect(response.status).toBe(200);
   }, 60000);
 
+  xit('OAuth2JWTBearer: Provider Destination & Provider Token', async () => {
+    const token = await serviceToken('destination', {
+      userJwt: accessToken.provider
+    });
+
+    const destination = await fetchDestination(
+      destinationService!.credentials.uri,
+      token,
+      systems.workflow.providerOauth2JWTBearer
+    );
+
+    expect(destination!.authTokens![0].error).toBeNull();
+
+    destination.url = destination.url + '/v1/workflow-definitions';
+    const response = await executeHttpRequest(destination, { method: 'get' });
+
+    expect(response.status).toBe(200);
+  }, 60000);
+
   xit('ClientCertificate: Fetches the certificate and uses it', async () => {
     const destination = await getDestination('CC8-HTTP-CERT');
     expect(destination!.certificates!.length).toBe(1);

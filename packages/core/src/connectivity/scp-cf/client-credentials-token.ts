@@ -5,8 +5,8 @@ import {
   ClientCredentialsResponse
 } from './xsuaa-service-types';
 
-// TODO: This should be moved down to the token accessor
 /**
+ * @deprecated Since v1.47.0.
  * Retrieves an access token required for "OAuth2ClientCredentials" destination authentication type.
  *
  * @param destination - A destination having `OAuth2ClientCredentials` authentication type

@@ -45,6 +45,7 @@ export interface Systems {
   workflow: {
     providerOAuth2ClientCredentials: string;
     providerOAuth2UserTokenExchange: string;
+    providerOauth2JWTBearer: string;
   };
   destination: {
     subscriberOAuth2UserTokenExchange: string;

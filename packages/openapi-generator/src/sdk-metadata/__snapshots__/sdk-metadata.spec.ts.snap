@@ -49,7 +49,7 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
       },
     },
   },
-  "language": "javascript",
+  "language": "JavaScript",
   "pregeneratedLibrary": Object {
     "compatibilityNotes": "",
     "dependencyName": "@sap/dummy-package",
@@ -120,7 +120,7 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
       },
     },
   },
-  "language": "javascript",
+  "language": "JavaScript",
   "pregeneratedLibrary": undefined,
   "serviceStatus": Object {
     "status": "verified",

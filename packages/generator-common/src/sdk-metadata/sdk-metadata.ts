@@ -46,14 +46,14 @@ export function getSdkMetadataClient(
     ? ServiceStatusValues.certified
     : ServiceStatusValues.verified;
   return {
-    language: 'javascript',
+    language: 'JavaScript',
     serviceStatus: status,
     pregeneratedLibrary,
     generationAndUsage
   };
 }
 
-const sdkMetadataHeaderIntroText =
+export const sdkMetadataHeaderIntroText =
   'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.';
 
 export const ServiceStatusValues: Record<

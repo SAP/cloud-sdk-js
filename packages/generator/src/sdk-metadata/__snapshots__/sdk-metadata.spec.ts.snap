@@ -53,7 +53,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
       },
     },
   },
-  "language": "javascript",
+  "language": "JavaScript",
   "pregeneratedLibrary": Object {
     "compatibilityNotes": "",
     "dependencyName": "@sap/cloud-sdk-vdm-test-service",
@@ -126,7 +126,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
       },
     },
   },
-  "language": "javascript",
+  "language": "JavaScript",
   "pregeneratedLibrary": undefined,
   "serviceStatus": Object {
     "status": "verified",

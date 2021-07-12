@@ -3,7 +3,8 @@ import {
   testFilterLambdaExpressionFilterFunctionOnLink,
   testFilterLambdaExpressionFilterLinkOnLink,
   testFilterLambdaExpressionFilterListOnLink,
-  testFilterLambdaExpressionOnLink, testFilterLambdaExpressionWithOr,
+  testFilterLambdaExpressionOnLink,
+  testFilterLambdaExpressionWithOr,
   testFilterString,
   testFilterStringV4,
   testNestedFilterLambdaExpressionOnLink

@@ -115,10 +115,7 @@ class DestinationFromServiceRetriever {
       destination = await da.addOAuth2ClientCredentials();
     }
     if (destination.authentication === 'OAuth2JWTBearer') {
-      destination = await da.addOAuthSamlAuth(
-        destination,
-        destinationResult.origin
-      );
+      destination = await da.fetchDestinationByUserJwt();
     }
     if (destination.authentication === 'ClientCertificateAuthentication') {
       destination = await da.addClientCertAuth();
@@ -331,8 +328,6 @@ class DestinationFromServiceRetriever {
     destination: Destination,
     destinationOrigin: DestinationOrigin
   ): Promise<Destination> {
-    const destinationService = getDestinationService();
-
     /* This covers the two technical user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
    If the destination comes from the provider account the client credentials token from the xsuaa.url is used (provider token).
    If the destination comes from the subscriber account the subscriber subdomain is used fetch the client credentials token (subscriber token).
@@ -352,6 +347,13 @@ class DestinationFromServiceRetriever {
         return this.fetchDestinationByToken(token);
       }
     }
+
+    return this.fetchDestinationByUserJwt();
+  }
+
+  private async fetchDestinationByUserJwt(): Promise<Destination> {
+    const destinationService = getDestinationService();
+
     /* This covers the two business user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
      The two cases are JWT issued from provider or JWT from subscriber - the two cases are handled automatically.
      In the provider case the subdomain replacement in the xsuaa.url with the iss value does nothing but this does not hurt. */

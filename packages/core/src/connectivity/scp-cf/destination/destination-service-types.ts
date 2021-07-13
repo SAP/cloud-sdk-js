@@ -72,17 +72,17 @@ export interface Destination {
   proxyConfiguration?: ProxyConfiguration;
 
   /**
-   * Client Id used to retrieve access token for "OAuth2ClientCredentials" authentication.
+   * Client Id used to retrieve access token for "OAuth2ClientCredentials", "OAuth2UserTokenExchange" and "OAuth2JWTBearer" authentication.
    */
   clientId?: string;
 
   /**
-   * Client Secret used to retrieve access token for "OAuth2ClientCredentials" authentication.
+   * Client Secret used to retrieve access token for "OAuth2ClientCredentials", "OAuth2UserTokenExchange" and "OAuth2JWTBearer" authentication.
    */
   clientSecret?: string;
 
   /**
-   * URL to retrieve access token for "OAuth2ClientCredentials" authentication.
+   * URL to retrieve access token for "OAuth2ClientCredentials", "OAuth2UserTokenExchange" and "OAuth2JWTBearer" authentication.
    */
   tokenServiceUrl?: string;
 
@@ -247,7 +247,8 @@ export type AuthenticationType =
   | 'OAuth2SAMLBearerAssertion'
   | 'OAuth2ClientCredentials'
   | 'OAuth2UserTokenExchange'
-  | 'ClientCertificateAuthentication';
+  | 'ClientCertificateAuthentication'
+  | 'OAuth2JWTBearer';
 
 /**
  * The destinations endpoint distinguished between destinations maintained on service level (instance) and account level (subaccount).

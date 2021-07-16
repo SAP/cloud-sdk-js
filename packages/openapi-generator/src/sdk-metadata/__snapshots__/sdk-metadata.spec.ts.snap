@@ -4,6 +4,7 @@ exports[`sdk-metadata generates metadata content for services with pregenerated 
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
+      "header": "Sample code for using the client library",
       "instructions": "import { DummyApi } from '@sap/dummy-package';
 
 const responseData = await DummyApi.DummyFunction().execute({ destinationName:'myDestinationName' });",
@@ -21,6 +22,7 @@ The steps above will generate a basic TypeScript client. For additional options 
     "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/openapi-generator",
     "generatorVersion": Any<String>,
     "genericUsage": Object {
+      "header": "Sample code for using the client library",
       "instructions": "import { MyApi } from 'my-npm-package';
 
 const responseData = await MyApi.myFunction().execute({ destinationName:'myDestinationName' });",
@@ -75,6 +77,7 @@ exports[`sdk-metadata generates metadata content for services without pregenerat
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
+      "header": "Sample code for using the client library",
       "instructions": "import { DummyApi } from '@sap/dummy-package';
 
 const responseData = await DummyApi.DummyFunction().execute({ destinationName:'myDestinationName' });",
@@ -92,6 +95,7 @@ The steps above will generate a basic TypeScript client. For additional options 
     "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/openapi-generator",
     "generatorVersion": Any<String>,
     "genericUsage": Object {
+      "header": "Sample code for using the client library",
       "instructions": "import { MyApi } from 'my-npm-package';
 
 const responseData = await MyApi.myFunction().execute({ destinationName:'myDestinationName' });",

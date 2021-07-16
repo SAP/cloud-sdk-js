@@ -1,13 +1,14 @@
 import { first } from '@sap-cloud-sdk/util';
 import {
   GenerationAndUsage,
-  InstructionWithText,
   getLinks,
   getSdkVersion,
   apiSpecificUsageText,
   genericUsageText,
   getGenerationSteps,
-  Links
+  Links,
+  InstructionWithTextAndHeader,
+  usageHeaderText
 } from '@sap-cloud-sdk/generator-common';
 import { OpenApiDocument } from '../openapi-types';
 import { apiSpecificCodeSample, genericCodeSample } from './code-sample';
@@ -38,16 +39,17 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
   };
 }
 
-function getGenericUsage(): InstructionWithText {
+function getGenericUsage(): InstructionWithTextAndHeader {
   return {
     instructions: genericCodeSample(),
-    text: genericUsageText
+    text: genericUsageText,
+    header: usageHeaderText
   };
 }
 
 function getApiSpecificUsage(
   openApiDocument: OpenApiDocument
-): InstructionWithText {
+): InstructionWithTextAndHeader {
   const apiWithOperations = first(
     openApiDocument.apis.filter(api => api.operations.length > 0)
   );
@@ -59,9 +61,17 @@ function getApiSpecificUsage(
       operation.operationId,
       openApiDocument.serviceOptions.packageName
     );
-    return { instructions, text: apiSpecificUsageText };
+    return {
+      instructions,
+      text: apiSpecificUsageText,
+      header: usageHeaderText
+    };
   }
-  return { instructions: '', text: apiSpecificUsageText };
+  return {
+    instructions: '',
+    text: apiSpecificUsageText,
+    header: usageHeaderText
+  };
 }
 
 export const linkGenerationDocumentation =

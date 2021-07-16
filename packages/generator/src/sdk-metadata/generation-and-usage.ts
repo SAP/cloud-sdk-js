@@ -4,12 +4,11 @@ import {
   apiSpecificUsageText,
   genericUsageText,
   getGenerationSteps,
-  Links
+  Links,
+  InstructionWithTextAndHeader,
+  usageHeaderText
 } from '@sap-cloud-sdk/generator-common';
-import type {
-  GenerationAndUsage,
-  InstructionWithText
-} from '@sap-cloud-sdk/generator-common';
+import type { GenerationAndUsage } from '@sap-cloud-sdk/generator-common';
 import { VdmServiceMetadata } from '../vdm-types';
 import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
 
@@ -39,19 +38,20 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
   };
 }
 
-export function getGenericUsage(): InstructionWithText {
+export function getGenericUsage(): InstructionWithTextAndHeader {
   return {
     instructions: genericGetAllCodeSample(
       'BusinessPartner',
       '@sap/cloud-sdk-vdm-business-partner-service'
     ),
-    text: genericUsageText
+    text: genericUsageText,
+    header: usageHeaderText
   };
 }
 
 export function getApiSpecificUsage(
   service: VdmServiceMetadata
-): InstructionWithText {
+): InstructionWithTextAndHeader {
   if (service.entities.length > 0) {
     const codeSample = genericGetAllCodeSample(
       service.entities[0].className,
@@ -59,14 +59,23 @@ export function getApiSpecificUsage(
     );
     return {
       instructions: codeSample,
-      text: apiSpecificUsageText
+      text: apiSpecificUsageText,
+      header: usageHeaderText
     };
   }
   // TODO handle cases if no entity is there in the follow up ticket.
   if (service.functionImports.length > 0) {
-    return { instructions: '', text: apiSpecificUsageText };
+    return {
+      instructions: '',
+      text: apiSpecificUsageText,
+      header: usageHeaderText
+    };
   }
-  return { instructions: '', text: apiSpecificUsageText };
+  return {
+    instructions: '',
+    text: apiSpecificUsageText,
+    header: usageHeaderText
+  };
 }
 
 export const linkGenerationDocumentation =

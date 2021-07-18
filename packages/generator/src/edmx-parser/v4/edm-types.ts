@@ -25,10 +25,11 @@ export interface EdmxEntitySet extends EdmxEntitySetBase {
 }
 
 export interface EdmxEnumMember extends EdmxNamed {
-  Value: string;
+  Value?: string;
 }
 
 export interface EdmxEnumType extends EdmxNamed, EdmxNamespaced {
+  UnderlyingType?: string;
   Member: EdmxEnumMember[];
 }
 

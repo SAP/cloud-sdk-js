@@ -37,6 +37,7 @@ export function parseComplexTypes(root: any): EdmxComplexType[] {
 export function parseEnumTypes(root: any): EdmxEnumType[] {
   return getMergedPropertyWithNamespace(root, 'EnumType').map(edmxEnumType => ({
     Name: edmxEnumType.Name,
+    UnderlyingType: edmxEnumType.UnderlyingType,
     Member: forceArray(edmxEnumType.Member),
     Namespace: edmxEnumType.Namespace
   }));

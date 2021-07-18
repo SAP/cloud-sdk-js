@@ -1,5 +1,6 @@
 import { PathLike } from 'fs';
 import { ODataVersion } from '@sap-cloud-sdk/util';
+import BigNumber from 'bignumber.js';
 
 export interface VdmServicePackageMetaData {
   oDataVersion: ODataVersion;
@@ -80,7 +81,8 @@ export interface VdmNavigationProperty extends VdmPropertyDescriptor {
 export interface VdmEnumType {
   originalName: string;
   typeName: string;
-  members: string[];
+  underlyingType: string;
+  members: Record<string, number | BigNumber>;
 }
 
 // Complex types and function imports

@@ -43,15 +43,19 @@ export async function buildHttpRequest(
 ): Promise<DestinationHttpRequestConfig> {
   if (customHeaders) {
     logger.warn(
-      `The custom headers are provided with the keys: ${Object.keys(
+      `The custom headers are provided with the keys: [ ${Object.keys(
         customHeaders
-      )}. These keys will overwrite the headers created by the SDK.`
+      ).join(
+        ', '
+      )} ]. These keys will overwrite the headers created by the SDK.`
     );
   }
   const resolvedDestination = await resolveDestination(destination);
   if (!resolvedDestination) {
     throw Error(
-      `Failed to resolve the destination: ${toDestinationNameUrl(destination)}.`
+      `Failed to resolve the destination '${toDestinationNameUrl(
+        destination
+      )}'.`
     );
   }
   const headers = await buildHeaders(resolvedDestination, customHeaders);
@@ -82,7 +86,7 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
  * Returns a function that takes a destination and a request-config (extends [[HttpRequestConfig]]), builds an [[HttpRequest]] from them, and calls
  * the provided execute function.
  *
- * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead!
+ * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead.
  *
  * @param executeFn - A function that can execute an [[HttpRequestConfig]].
  * @returns A function expecting destination and a request.
@@ -161,10 +165,7 @@ function buildHeaders(
   customHeaders?: Record<string, any>
 ): Promise<Record<string, string>> {
   return buildHeadersForDestination(destination, customHeaders).catch(error => {
-    throw new ErrorWithCause(
-      'Failed to build HTTP request for destination: failed to build headers!',
-      error
-    );
+    throw new ErrorWithCause('Failed to build headers.', error);
   });
 }
 
@@ -172,10 +173,7 @@ function resolveDestination(
   destination: Destination | DestinationNameAndJwt
 ): Promise<Destination | null> {
   return useOrFetchDestination(destination).catch(error => {
-    throw new ErrorWithCause(
-      'Failed to build HTTP request for destination: failed to load destination!',
-      error
-    );
+    throw new ErrorWithCause('Failed to load destination.', error);
   });
 }
 

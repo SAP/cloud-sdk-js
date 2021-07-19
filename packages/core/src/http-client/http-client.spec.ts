@@ -90,14 +90,16 @@ describe('generic http client', () => {
         'SAP-Connectivity-SCC-Location_ID': 'efg'
       });
       expect(warnSpy).toBeCalledWith(
-        'The custom headers are provided with the keys: authorization,sap-client,SAP-Connectivity-SCC-Location_ID. These keys will overwrite the headers created by the SDK.'
+        'The custom headers are provided with the keys: [ authorization, sap-client, SAP-Connectivity-SCC-Location_ID ]. These keys will overwrite the headers created by the SDK.'
       );
     });
 
     it('throws useful error messages when finding the destination fails', async () => {
       await expect(
         buildHttpRequest({ destinationName: 'does not exist' })
-      ).rejects.toThrowErrorMatchingSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Failed to load destination."'
+      );
     });
 
     it('throws useful error messages when building headers fails', async () => {
@@ -106,7 +108,9 @@ describe('generic http client', () => {
           url: 'https://example.com',
           authentication: 'BasicAuthentication'
         })
-      ).rejects.toThrowErrorMatchingSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Failed to build headers."'
+      );
     });
 
     it('defaults to NoAuthentication/does not throw if no credentials are provided', async () => {
@@ -359,7 +363,9 @@ describe('generic http client', () => {
             b: 'b'
           }
         })
-      ).rejects.toThrowErrorMatchingSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Request failed with status code 500"'
+      );
     });
 
     it('fetches csrf token headers when fetchCsrfToken is true', async () => {

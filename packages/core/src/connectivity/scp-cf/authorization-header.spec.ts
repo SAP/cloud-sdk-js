@@ -43,6 +43,34 @@ describe('getAuthHeaders', () => {
       const headers = await getAuthHeaders(defaultDestination);
       expect(headers.authorization).toBe(defaultBasicCredentials);
     });
+
+    it('prioritizes destination headers before SDK built headers', async () => {
+      const headers = await getAuthHeaders({
+        ...defaultDestination,
+        urlHeaders: { authorization: 'destinationHeader' }
+      });
+      expect(headers.authorization).toEqual('destinationHeader');
+    });
+
+    it('prioritizes custom headers before SDK built headers', async () => {
+      const headers = await getAuthHeaders(defaultDestination, {
+        authorization: 'custom'
+      });
+      expect(headers.authorization).toEqual('custom');
+    });
+
+    it('prioritizes custom headers before destination headers', async () => {
+      const headers = await getAuthHeaders(
+        {
+          ...defaultDestination,
+          urlHeaders: { authorization: 'destinationHeader' }
+        },
+        {
+          authorization: 'custom'
+        }
+      );
+      expect(headers.authorization).toEqual('custom');
+    });
   });
 
   describe('no authentication', () => {
@@ -96,7 +124,7 @@ describe('getAuthHeaders', () => {
       );
     });
 
-    it('logs a warning instead of throwing an error for custom `SAP-Connectivity-Authentication` header', async () => {
+    it('logs a warning for custom `SAP-Connectivity-Authentication` header', async () => {
       const logger = createLogger('authorization-header');
       const warnSpy = jest.spyOn(logger, 'warn');
 
@@ -111,6 +139,18 @@ describe('getAuthHeaders', () => {
       expect(warnSpy).toHaveBeenCalledWith(
         'Found custom authorization headers. The given destination also provides authorization headers. This might be unintended. The custom headers from the request config will be used.'
       );
+    });
+
+    it('gets `SAP-Connectivity-Authentication` header from destination headers', async () => {
+      const authHeader = { 'SAP-Connectivity-Authentication': 'token' };
+      await expect(
+        getAuthHeaders({
+          ...removeSapConnectivityAuthentication(
+            principalPropagationDestination
+          ),
+          urlHeaders: authHeader
+        })
+      ).resolves.toEqual(authHeader);
     });
   });
 

@@ -179,7 +179,7 @@ class DestinationFromServiceRetriever {
   private async searchDestinationWithSelectionStrategyAndCache(): Promise<
     DestinationSearchResult | undefined
   > {
-    let destinationSearchResult;
+    let destinationSearchResult: DestinationSearchResult | undefined;
     if (this.isSubscriberNeeded()) {
       destinationSearchResult =
         await this.searchSubscriberAccountForDestination();
@@ -497,7 +497,7 @@ class DestinationFromServiceRetriever {
   }
 
   private isProviderNeeded(
-    resultFromSubscriber: DestinationSearchResult
+    resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
     if (this.options.selectionStrategy === alwaysSubscriber) {
       return false;

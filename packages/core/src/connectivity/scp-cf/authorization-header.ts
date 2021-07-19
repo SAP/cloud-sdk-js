@@ -83,8 +83,16 @@ export async function getAuthHeaders(
       'Found custom authorization headers. The given destination also provides authorization headers. This might be unintended. The custom headers from the request config will be used.'
     );
   }
+
+  const additionalDestinationAuthHeaders = getCustomAuthHeaders(
+    destination,
+    destination.urlHeaders
+  );
+
   return Object.keys(customAuthHeaders).length
     ? customAuthHeaders
+    : Object.keys(additionalDestinationAuthHeaders).length
+    ? additionalDestinationAuthHeaders
     : buildAuthorizationHeaders(destination);
 }
 
@@ -106,6 +114,7 @@ export function buildAndAddAuthorizationHeader(destination: Destination) {
     };
   };
 }
+
 function toAuthorizationHeader(authorization: string): Record<string, string> {
   return toSanitizedObject('authorization', authorization);
 }

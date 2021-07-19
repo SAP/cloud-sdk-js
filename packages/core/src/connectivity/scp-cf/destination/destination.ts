@@ -55,7 +55,42 @@ export function parseDestination(
     }
   );
 
-  return sanitizeDestination(destination);
+  const additionalHeadersAndQueryParameters =
+    getAdditionalHeadersAndQueryParameters(destinationConfig);
+
+  return sanitizeDestination({
+    ...destination,
+    ...additionalHeadersAndQueryParameters
+  });
+}
+
+function getAdditionalHeadersAndQueryParameters(
+  destinationConfig: DestinationConfiguration
+): Record<string, any> {
+  const configDestinationPropertyMapping = {
+    'URL.headers.': 'urlHeaders',
+    'URL.queries.': 'urlQueries',
+    'tokenServiceURL.headers.': 'tokenServiceUrlHeaders',
+    'tokenServiceURL.queries.': 'tokenServiceUrlQueries'
+  };
+
+  return Object.entries(destinationConfig).reduce(
+    (additionalHeaders: Record<string, any>, [originalKey, value]) => {
+      const mapping = Object.entries(configDestinationPropertyMapping).find(
+        ([configProperty]) => originalKey.startsWith(configProperty)
+      );
+      if (mapping) {
+        const [configProperty, destinationProperty] = mapping;
+        if (!additionalHeaders[destinationProperty]) {
+          additionalHeaders[destinationProperty] = {};
+        }
+        const headerKey = originalKey.replace(configProperty, '');
+        additionalHeaders[destinationProperty][headerKey] = value;
+      }
+      return additionalHeaders;
+    },
+    {}
+  );
 }
 
 function getDestinationConfig(

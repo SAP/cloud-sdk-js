@@ -1,18 +1,32 @@
-import {
-  TestEntity,
-  TestComplexType
-} from '../../test/test-util/test-services/v4/test-service';
+import { TestComplexType, TestEntity } from '../../test/test-util/test-services/v4/test-service';
 import { TestEnumType } from '../../test/test-util/test-services/v4/test-service/TestEnumType';
-import {
-  deserializeComplexType,
-  deserializeEntity
-} from './entity-deserializer';
+import { deserializeComplexType, deserializeEntity } from './entity-deserializer';
 
 describe('entity-deserializer', () => {
   it('should deserialize an enum property', () => {
     const enumProperty = TestEnumType.Member1;
     expect(deserializeEntity({ EnumProperty: 'Member1' }, TestEntity)).toEqual(
       TestEntity.builder().enumProperty(enumProperty).build()
+    );
+  });
+
+  it('should deserialize a complex property with enum', () => {
+    const actual = deserializeEntity(
+      {
+        ComplexTypeProperty: {
+          StringProperty: 'str',
+          EnumProperty: 'Member1',
+        }
+      },
+      TestEntity
+    );
+
+    expect(actual).toEqual(
+      TestEntity.builder().complexTypeProperty(
+        {
+          stringProperty: 'str',
+          enumProperty: TestEnumType.Member1}
+      ).build()
     );
   });
 

@@ -6,7 +6,7 @@ import {
   convertToUriForEdmString,
   uriConvertersCommon,
   EdmTypeShared,
-  UriConverter
+  UriConverter, Enum
 } from '../../odata-common';
 import { EdmType } from '../edm-types';
 
@@ -28,9 +28,15 @@ export const uriConverters: UriConverterMapping = {
  * @hidden
  */
 export const uriConverter: UriConverter = {
-  convertToUriFormat(value: any, edmType: EdmTypeShared<'v4'>): string {
-    const converted = tsToEdm(value, edmType);
-    const uriConverterFunc = uriConverters[edmType];
+  convertToUriFormat(value: any, edmType?: EdmTypeShared<'v4'>, enumType?: Enum<any>): string {
+    if(!edmType && !enumType){
+      throw new Error("Failed to convert value to URI format. Either 'edmType' or 'enumType' has to be specified.");
+    }
+    if(enumType){
+      return `'${enumType[value].toString()}'`;
+    }
+    const converted = tsToEdm(value, edmType!);
+    const uriConverterFunc = uriConverters[edmType!];
     if (uriConverterFunc) {
       return uriConverterFunc(converted);
     }

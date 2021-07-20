@@ -10,6 +10,7 @@ import {
   TestEntityMultiLink as TestEntityMultiLinkV4,
   TestEntitySingleLink as TestEntitySingleLinkV4
 } from './test-services/v4/test-service';
+import { TestEnumType } from './test-services/v4/test-service/TestEnumType';
 
 const { convertToUriFormat } = uriConverter;
 
@@ -30,7 +31,7 @@ export function createOriginalTestEntityData2() {
     StringProperty: '6789',
     BooleanProperty: true,
     Int16Property: 42,
-    EnumProperty: 'Enum1'
+    EnumProperty: TestEnumType[TestEnumType.Member1]
   };
 }
 
@@ -78,7 +79,7 @@ export function createTestEntityV4(originalData): TestEntityV4 {
     .stringProperty(originalData.StringProperty)
     .booleanProperty(originalData.BooleanProperty)
     .int16Property(originalData.Int16Property)
-    .enumProperty(originalData.EnumProperty)
+    .enumProperty(TestEnumType[originalData.EnumProperty] as unknown as TestEnumType)
     .build()
     .setOrInitializeRemoteState();
   if (originalData.to_SingleLink) {

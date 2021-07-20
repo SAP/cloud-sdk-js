@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 
 import {
-  EdmTypeShared,
+  EdmTypeShared, EnumUnderlyingType,
   isOrderableEdmType,
   OrderableEdmType
 } from '../edm-types';
@@ -12,6 +12,7 @@ import { OrderableEdmTypeField } from './orderable-edm-type-field';
 import { CollectionField, CollectionFieldType } from './collection-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { FieldOptions } from './field';
+import { Enum, EnumField } from './enum-field';
 
 type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<
@@ -193,5 +194,24 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
       isNullable,
       isSelectable
     });
+  }
+
+  buildEnumField <
+    EnumT extends Enum<EnumT>,
+    EnumUnderlyingT extends EnumUnderlyingType,
+    NullableT extends boolean>(
+    fieldName: string,
+    enumType: EnumT,
+    underlyingType: EnumUnderlyingT,
+    isNullable: NullableT
+  ): EnumField<
+    EntityTypeFromFieldOf<FieldOfT>,
+    EnumT,
+    EnumUnderlyingT,
+    NullableT,
+    IsSelectableField<FieldOfT>> {
+    const isSelectable = (this.fieldOf instanceof
+      ComplexTypeField) as IsSelectableField<FieldOfT>;
+    return new EnumField(fieldName, this.fieldOf, enumType, underlyingType,{isNullable, isSelectable});
   }
 }

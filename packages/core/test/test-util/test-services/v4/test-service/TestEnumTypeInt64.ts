@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
-export enum TestEnumType {
-  Member1 = 0,
-  Member2 = 1
+export enum TestEnumTypeInt64 {
+  Member1 = '1L',
+  Member2 = '2L'
 }

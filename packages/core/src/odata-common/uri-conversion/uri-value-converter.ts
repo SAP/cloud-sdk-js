@@ -1,6 +1,6 @@
 /* eslint-disable valid-jsdoc */
 
-import { EdmTypeSameConvertersUri, EdmTypeShared } from '../../odata-common';
+import { EdmTypeSameConvertersUri, EdmTypeShared, Enum } from '../../odata-common';
 
 type UriConverterMapping = {
   [key in EdmTypeSameConvertersUri]: (value: any) => string;
@@ -44,6 +44,7 @@ export function convertToUriForEdmString(value: any): string {
 export interface UriConverter {
   convertToUriFormat(
     value: any,
-    edmType: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>
+    edmType?: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>,
+    enumType?: Enum<any>
   ): string;
 }

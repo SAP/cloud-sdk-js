@@ -93,3 +93,10 @@ export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
     'Edm.TimeOfDay'
   ].includes(edmType);
 }
+
+export type EnumUnderlyingType =
+  | 'Edm.Int16'
+  | 'Edm.Int32'
+  | 'Edm.Int64'
+  | 'Edm.SByte'
+  | 'Edm.Byte';

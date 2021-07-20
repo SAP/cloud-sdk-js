@@ -32,6 +32,9 @@ import type { DestinationOptions } from './destination-accessor';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
+type RequiredProperties<T, P extends keyof T> = Required<Pick<T, P>> &
+  Omit<T, P>;
+
 const logger = createLogger({
   package: 'core',
   messageContext: 'destination-accessor-service'
@@ -156,7 +159,10 @@ class DestinationFromServiceRetriever {
   }
 
   readonly decodedProviderClientCredentialsToken: JwtPayload;
-  private options: DestinationOptions;
+  private options: RequiredProperties<
+    DestinationOptions,
+    'isolationStrategy' | 'selectionStrategy' | 'useCache'
+  >;
 
   private constructor(
     readonly name: string,
@@ -164,16 +170,16 @@ class DestinationFromServiceRetriever {
     readonly decodedUserJwt: JwtPayload | undefined,
     readonly providerClientCredentialsToken: string
   ) {
-    this.options = { ...options };
     this.decodedProviderClientCredentialsToken = decodeJwt(
       providerClientCredentialsToken
     );
 
-    this.options.isolationStrategy =
-      options.isolationStrategy || IsolationStrategy.Tenant;
-    this.options.selectionStrategy =
-      options.selectionStrategy || subscriberFirst;
-    this.options.useCache = options.useCache || false;
+    this.options = {
+      isolationStrategy: IsolationStrategy.Tenant,
+      selectionStrategy: subscriberFirst,
+      useCache: false,
+      ...options
+    };
   }
 
   private async searchDestinationWithSelectionStrategyAndCache(): Promise<
@@ -190,12 +196,12 @@ class DestinationFromServiceRetriever {
         await this.searchProviderAccountForDestination();
     }
     if (destinationSearchResult && !destinationSearchResult.fromCache) {
-      logger.info(
+      logger.debug(
         'Successfully retrieved destination from destination service.'
       );
     }
     if (destinationSearchResult && destinationSearchResult.fromCache) {
-      logger.info(
+      logger.debug(
         `Successfully retrieved destination from destination service cache for ${destinationSearchResult.origin} destinations.`
       );
     }
@@ -251,6 +257,7 @@ class DestinationFromServiceRetriever {
       this.options
     );
   }
+
   private async getAuthTokenForOAuth2UserTokenExchange(
     destinationOrigin: DestinationOrigin
   ): Promise<AuthAndExchangeTokens> {
@@ -413,7 +420,7 @@ class DestinationFromServiceRetriever {
         ? this.decodedUserJwt!
         : this.decodedProviderClientCredentialsToken,
       destination,
-      this.options.isolationStrategy!
+      this.options.isolationStrategy
     );
   }
 
@@ -423,7 +430,7 @@ class DestinationFromServiceRetriever {
     const provider = await this.getInstanceAndSubaccountDestinations(
       this.providerClientCredentialsToken
     );
-    const destination = await this.options.selectionStrategy!(
+    const destination = this.options.selectionStrategy(
       {
         subscriber: emptyDestinationByType,
         provider
@@ -443,7 +450,7 @@ class DestinationFromServiceRetriever {
     const destination = destinationCache.retrieveDestinationFromCache(
       this.decodedProviderClientCredentialsToken,
       this.name,
-      this.options.isolationStrategy!
+      this.options.isolationStrategy
     );
 
     if (destination) {
@@ -461,7 +468,7 @@ class DestinationFromServiceRetriever {
     const subscriber = await this.getInstanceAndSubaccountDestinations(
       accessToken
     );
-    const destination = this.options.selectionStrategy!(
+    const destination = this.options.selectionStrategy(
       {
         subscriber,
         provider: emptyDestinationByType
@@ -478,7 +485,7 @@ class DestinationFromServiceRetriever {
     const destination = destinationCache.retrieveDestinationFromCache(
       this.decodedUserJwt!,
       this.name,
-      this.options.isolationStrategy!
+      this.options.isolationStrategy
     );
 
     if (destination) {
@@ -499,54 +506,36 @@ class DestinationFromServiceRetriever {
   private isProviderNeeded(
     resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
-    if (this.options.selectionStrategy === alwaysSubscriber) {
-      return false;
-    }
-    if (
-      this.options.selectionStrategy === subscriberFirst &&
-      resultFromSubscriber
-    ) {
-      return false;
-    }
-
-    return true;
+    return (
+      this.options.selectionStrategy !== alwaysSubscriber &&
+      (this.options.selectionStrategy !== subscriberFirst ||
+        !resultFromSubscriber)
+    );
   }
 
   private isSubscriberNeeded(): boolean {
-    if (!this.decodedUserJwt) {
-      return false;
-    }
-
-    if (this.options.selectionStrategy === alwaysProvider) {
-      return false;
-    }
-
-    if (this.isProviderAndSubscriberSameTenant()) {
-      return false;
-    }
-
-    return true;
+    return (
+      !!this.decodedUserJwt &&
+      this.options.selectionStrategy !== alwaysProvider &&
+      !this.isProviderAndSubscriberSameTenant()
+    );
   }
 
   private async searchProviderAccountForDestination(): Promise<
     DestinationSearchResult | undefined
   > {
-    let destination;
-    if (this.options.useCache) {
-      destination = this.getProviderDestinationCache();
-    }
-
-    return destination || this.getProviderDestinationService();
+    return (
+      (this.options.useCache && this.getProviderDestinationCache()) ||
+      this.getProviderDestinationService()
+    );
   }
 
   private async searchSubscriberAccountForDestination(): Promise<
     DestinationSearchResult | undefined
   > {
-    let destination;
-    if (this.options.useCache) {
-      destination = this.getSubscriberDestinationCache();
-    }
-
-    return destination || this.getSubscriberDestinationService();
+    return (
+      (this.options.useCache && this.getSubscriberDestinationCache()) ||
+      this.getSubscriberDestinationService()
+    );
   }
 }

@@ -49,13 +49,13 @@ let circuitBreaker: XsuaaCircuitBreaker;
 /**
  * Executes a client credentials grant request.
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
- * If the first parameter is an URI, the response will not be verified.
+ * If the first parameter is a URI, the response will not be verified.
  *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
- * @param clientCredentials - Client credentials for which to request a token
- * @param options - Options to use by retrieving access token
- * @param customBody - Object containing value required for the body request
- * @returns A promise resolving to the response
+ * @param clientCredentials - Client credentials for which to request a token.
+ * @param options - Options to use by retrieving access token.
+ * @param customBody - Object containing value required for the body request.
+ * @returns A promise resolving to the response.
  */
 export function clientCredentialsGrant(
   tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,

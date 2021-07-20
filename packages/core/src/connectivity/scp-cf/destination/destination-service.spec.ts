@@ -30,7 +30,7 @@ const basicDestination = {
   Password: 'password'
 };
 
-const oaut2SamlBaererDestination = {
+const oauth2SamlBearerDestination = {
   Name: 'HTTP-OAUTH',
   Type: 'HTTP',
   URL: 'https://my.system.com/',
@@ -50,7 +50,7 @@ const oaut2SamlBaererDestination = {
 describe('destination service', () => {
   describe('fetchInstanceDestinations', () => {
     it('fetches instance destinations and returns them as Destination array', async () => {
-      const response = [basicDestination, oaut2SamlBaererDestination];
+      const response = [basicDestination, oauth2SamlBearerDestination];
 
       const expected: Destination[] = [
         {
@@ -70,7 +70,7 @@ describe('destination service', () => {
           authentication: 'OAuth2SAMLBearerAssertion',
           proxyType: 'Internet',
           isTrustingAllCertificates: false,
-          originalProperties: oaut2SamlBaererDestination,
+          originalProperties: oauth2SamlBearerDestination,
           authTokens: []
         }
       ];
@@ -131,7 +131,7 @@ describe('destination service', () => {
 
   describe('fetchSubaccountDestinations', () => {
     it('fetches subaccount destinations and returns them as Destination array', async () => {
-      const response = [basicDestination, oaut2SamlBaererDestination];
+      const response = [basicDestination, oauth2SamlBearerDestination];
       const expected: Destination[] = [
         {
           name: 'HTTP-BASIC',
@@ -150,7 +150,7 @@ describe('destination service', () => {
           authentication: 'OAuth2SAMLBearerAssertion',
           proxyType: 'Internet',
           isTrustingAllCertificates: false,
-          originalProperties: oaut2SamlBaererDestination,
+          originalProperties: oauth2SamlBearerDestination,
           authTokens: []
         }
       ];
@@ -201,7 +201,7 @@ describe('destination service', () => {
           SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
           InstanceId: null
         },
-        destinationConfiguration: oaut2SamlBaererDestination,
+        destinationConfiguration: oauth2SamlBearerDestination,
         authTokens: [
           {
             type: 'Bearer',
@@ -226,7 +226,7 @@ describe('destination service', () => {
             SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
             InstanceId: null
           },
-          destinationConfiguration: oaut2SamlBaererDestination,
+          destinationConfiguration: oauth2SamlBearerDestination,
           authTokens: [
             {
               type: 'Bearer',
@@ -278,7 +278,7 @@ describe('destination service', () => {
           SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
           InstanceId: null
         },
-        destinationConfiguration: oaut2SamlBaererDestination,
+        destinationConfiguration: oauth2SamlBearerDestination,
         authTokens: [
           {
             type: 'Bearer',
@@ -326,7 +326,7 @@ describe('destination service', () => {
           SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
           InstanceId: null
         },
-        destinationConfiguration: oaut2SamlBaererDestination,
+        destinationConfiguration: oauth2SamlBearerDestination,
         authTokens: [
           {
             type: 'Bearer',

@@ -46,7 +46,7 @@ export async function serviceToken(
   const opts = {
     useCache: true,
     enableCircuitBreaker: true,
-    ...(options || {}) // Tsc complains otherwise
+    ...options
   };
 
   const xsuaa = multiTenantXsuaaCredentials(opts.userJwt);

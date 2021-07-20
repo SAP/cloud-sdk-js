@@ -75,6 +75,8 @@ describe('destination loading precedence', () => {
         { destinationName: 'non-existent' },
         { cacheVerificationKeys: false }
       )
-    ).rejects.toThrowErrorMatchingSnapshot();
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
+    );
   });
 });

@@ -145,8 +145,10 @@ describe('env-destination-accessor', () => {
     });
 
     it('should throw for ill formatted JSON', () => {
-      process.env.destinations = 'Not Proper JSON string';
-      expect(() => getDestinationsFromEnv()).toThrowErrorMatchingSnapshot();
+      process.env.destinations = 'Improper JSON string';
+      expect(() => getDestinationsFromEnv()).toThrowErrorMatchingInlineSnapshot(
+        '"Error in parsing the destinations from the environment variable."'
+      );
     });
   });
 });

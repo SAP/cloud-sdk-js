@@ -65,33 +65,33 @@ describe('parseDestination', () => {
     expect(actual.certificates!.length).toEqual(0);
   });
 
-  it.only('parses additional headers and query parameters', () => {
+  it('parses additional headers and query parameters', () => {
     const destination = parseDestination({
       URL: '',
-      'URL.headers.additionalHeader1': 'additionalUrlHeader1',
-      'URL.queries.additionalQueryParam': 'additionalUrlQueryParam',
-      'tokenServiceURL.queries.additionalQueryParam1':
-        'additionalTokenServiceUrlQueryParam1',
-      'tokenServiceURL.queries.additionalQueryParam2':
-        'additionalTokenServiceUrlQueryParam2',
-      'URL.headers.additionalHeader2': 'additionalUrlHeader2'
+      'URL.headers.additionalHeader1': 'additionalHeader1',
+      'URL.queries.additionalQueryParam': 'additionalQueryParam',
+      'URL.headers.additionalHeader2': 'additionalHeader2'
     });
     expect(destination).toEqual(
       expect.objectContaining({
-        urlHeaders: {
-          additionalHeader1: 'additionalUrlHeader1',
-          additionalHeader2: 'additionalUrlHeader2'
+        headers: {
+          additionalHeader1: 'additionalHeader1',
+          additionalHeader2: 'additionalHeader2'
         },
-        urlQueries: {
-          additionalQueryParam: 'additionalUrlQueryParam'
-        },
-        tokenServiceUrlQueries: {
-          additionalQueryParam1: 'additionalTokenServiceUrlQueryParam1',
-          additionalQueryParam2: 'additionalTokenServiceUrlQueryParam2'
+        queries: {
+          additionalQueryParam: 'additionalQueryParam'
         }
       })
     );
-    expect(destination).not.toHaveProperty('tokenServiceUrlHeaders');
+  });
+
+  it('parses additional headers and query parameters as undefined if not provided', () => {
+    const destination = parseDestination({
+      URL: ''
+    });
+
+    expect(destination).not.toHaveProperty('headers');
+    expect(destination).not.toHaveProperty('queryParameters');
   });
 
   it('throws an error if there is no `URL` given', () => {

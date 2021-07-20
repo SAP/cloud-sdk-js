@@ -66,7 +66,7 @@ describe('header builder for destination', () => {
     const destination = {
       url: 'url',
       sapClient: 'destinationProperty',
-      urlHeaders: {
+      headers: {
         'sap-client': 'destinationHeader'
       }
     } as Destination;
@@ -79,7 +79,7 @@ describe('header builder for destination', () => {
     const destination = {
       url: 'url',
       sapClient: 'destinationProperty',
-      urlHeaders: {
+      headers: {
         'sap-client': 'destinationHeader'
       }
     } as Destination;
@@ -94,7 +94,7 @@ describe('header builder for destination', () => {
     const destination = {
       url: 'url',
       sapClient: 'destinationProperty',
-      urlHeaders: {
+      headers: {
         'some-header': 'some header',
         'header-to-overwrite': 'destinationHeader',
         'SAP-client': 'destinationHeader'

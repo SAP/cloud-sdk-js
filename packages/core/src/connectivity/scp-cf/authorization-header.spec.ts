@@ -47,7 +47,7 @@ describe('getAuthHeaders', () => {
     it('prioritizes destination headers before SDK built headers', async () => {
       const headers = await getAuthHeaders({
         ...defaultDestination,
-        urlHeaders: { authorization: 'destinationHeader' }
+        headers: { authorization: 'destinationHeader' }
       });
       expect(headers.authorization).toEqual('destinationHeader');
     });
@@ -63,7 +63,7 @@ describe('getAuthHeaders', () => {
       const headers = await getAuthHeaders(
         {
           ...defaultDestination,
-          urlHeaders: { authorization: 'destinationHeader' }
+          headers: { authorization: 'destinationHeader' }
         },
         {
           authorization: 'custom'
@@ -148,7 +148,7 @@ describe('getAuthHeaders', () => {
           ...removeSapConnectivityAuthentication(
             principalPropagationDestination
           ),
-          urlHeaders: authHeader
+          headers: authHeader
         })
       ).resolves.toEqual(authHeader);
     });

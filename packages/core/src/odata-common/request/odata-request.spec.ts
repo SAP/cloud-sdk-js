@@ -105,7 +105,7 @@ describe('OData Request', () => {
     it('should prioritize destination query parameters over SDK built parameters', () => {
       const request = createRequest(ODataGetAllRequestConfig, {
         url: '',
-        urlQueries: { $format: 'destinationParam' }
+        queryParameters: { $format: 'destinationParam' }
       });
       expect(request.query()).toEqual('?$format=destinationParam');
     });
@@ -121,7 +121,7 @@ describe('OData Request', () => {
     it('should prioritize custom query parameters over destination parameters', () => {
       const request = createRequest(ODataGetAllRequestConfig, {
         url: '',
-        urlQueries: { $format: 'destinationParam' }
+        queryParameters: { $format: 'destinationParam' }
       });
       request.config.customQueryParameters = {
         $format: 'customParam'

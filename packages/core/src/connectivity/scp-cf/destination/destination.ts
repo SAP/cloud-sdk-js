@@ -68,10 +68,8 @@ function getAdditionalHeadersAndQueryParameters(
   destinationConfig: DestinationConfiguration
 ): Record<string, any> {
   const configDestinationPropertyMapping = {
-    'URL.headers.': 'urlHeaders',
-    'URL.queries.': 'urlQueries',
-    'tokenServiceURL.headers.': 'tokenServiceUrlHeaders',
-    'tokenServiceURL.queries.': 'tokenServiceUrlQueries'
+    'URL.headers.': 'headers',
+    'URL.queries.': 'queries'
   };
 
   return Object.entries(destinationConfig).reduce(

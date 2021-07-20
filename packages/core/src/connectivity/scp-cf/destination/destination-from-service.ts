@@ -238,7 +238,7 @@ class DestinationFromServiceRetriever {
     const credentials = getDestinationServiceCredentialsList();
     if (!credentials || credentials.length === 0) {
       throw Error(
-        'No binding to a Destination service instance found. Please bind a destination service instance to your application!'
+        'No binding to a destination service instance found. Please bind a destination service instance to your application.'
       );
     }
 
@@ -347,7 +347,7 @@ class DestinationFromServiceRetriever {
               this.options
             );
       logger.debug(
-        `System user found on destination. The ${destinationOrigin} token: ${token} is used for destination fetching`
+        `System user found on destination. The ${destinationOrigin} token: ${token} is used for destination fetching.`
       );
 
       if (destinationOrigin) {

@@ -86,7 +86,7 @@ export async function getAuthHeaders(
 
   const additionalDestinationAuthHeaders = getCustomAuthHeaders(
     destination,
-    destination.urlHeaders
+    destination.headers
   );
 
   return Object.keys(customAuthHeaders).length
@@ -125,7 +125,7 @@ function headerFromTokens(
 ): Record<string, string> {
   if (!authTokens || !authTokens.length) {
     throw Error(
-      `AuthenticationType is ${authenticationType}, but no AuthTokens could be fetched from the destination service!`
+      `\`AuthenticationType\` is "${authenticationType}", but no auth tokens could be fetched from the destination service.`
     );
   }
   const usableTokens = authTokens.filter(

@@ -15,7 +15,7 @@ export async function buildHeadersForDestination(
   const sapHeaders = getSapHeaders(destination, customHeaders);
 
   return mergeIgnoreCase(
-    mergeLeftIgnoreCase(destination.urlHeaders, customHeaders),
+    mergeLeftIgnoreCase(destination.headers, customHeaders),
     {
       ...authHeaders,
       ...sapHeaders
@@ -33,7 +33,7 @@ function getSapHeaders(
   });
   const destinationHeaders = mergeLeftIgnoreCase(
     defaultHeaders,
-    destination.urlHeaders
+    destination.headers
   );
   return mergeLeftIgnoreCase(destinationHeaders, customHeaders);
 }

@@ -142,7 +142,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   query(): string {
     const queryParameters = {
       ...this.config.queryParameters(),
-      ...this.destination?.urlQueries,
+      ...this.destination?.queryParameters,
       ...this.config.customQueryParameters
     };
 
@@ -251,7 +251,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   private getAdditionalHeadersForKeys(...keys: string[]): Record<string, any> {
     const destinationHeaders = pickIgnoreCase(
-      this.destination?.urlHeaders,
+      this.destination?.headers,
       ...keys
     );
     const customHeaders = pickIgnoreCase(this.customHeaders(), ...keys);

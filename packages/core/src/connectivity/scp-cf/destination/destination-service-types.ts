@@ -135,10 +135,17 @@ export interface Destination {
    */
   systemUser?: string;
 
-  urlHeaders?: Record<string, any>;
-  urlQueries?: Record<string, any>;
-  tokenServiceUrlHeaders?: Record<string, any>;
-  tokenServiceUrlQueries?: Record<string, any>;
+  /**
+   * Additional headers to be used for calls against the destination, originally defined by `URL.headers.<header-name>`.
+   * The keys of this object denote the names of the headers and the values their values.
+   */
+  headers?: Record<string, any>;
+
+  /**
+   * Additional query parameters to be used for calls against the destination, originally defined by `URL.queries.<query-parameter-name>`.
+   * The keys of this object denote the names of the query parameters and the values their values.
+   */
+  queryParameters?: Record<string, any>;
 }
 
 /**

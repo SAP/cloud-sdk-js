@@ -96,16 +96,19 @@ describe('header builder for destination', () => {
       sapClient: 'destinationProperty',
       urlHeaders: {
         'some-header': 'some header',
+        'header-to-overwrite': 'destinationHeader',
         'SAP-client': 'destinationHeader'
       }
     } as Destination;
 
     const headers = await buildHeadersForDestination(destination, {
-      'sap-CLIENT': 'customHeader'
+      'sap-CLIENT': 'customHeader',
+      'HEADER-to-overwrite': 'customHeader'
     });
     expect(headers).toEqual({
       'some-header': 'some header',
-      'sap-CLIENT': 'customHeader'
+      'sap-CLIENT': 'customHeader',
+      'HEADER-to-overwrite': 'customHeader'
     });
   });
 });

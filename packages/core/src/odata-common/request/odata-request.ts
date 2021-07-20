@@ -4,7 +4,6 @@ import {
   mergeIgnoreCase,
   pickIgnoreCase,
   pickNonNullish,
-  pickValueIgnoreCase,
   propertyExists
 } from '@sap-cloud-sdk/util';
 import {
@@ -143,6 +142,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   query(): string {
     const queryParameters = {
       ...this.config.queryParameters(),
+      ...this.destination?.urlQueries,
       ...this.config.customQueryParameters
     };
 
@@ -195,14 +195,13 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   defaultHeaders(): Record<string, any> {
-    const customDefaultHeaders = pickIgnoreCase(
-      this.customHeaders(),
+    const additionalHeaders = this.getAdditionalHeadersForKeys(
       ...Object.keys(this.config.defaultHeaders)
     );
 
     return mergeIgnoreCase(
       pickNonNullish(this.config.defaultHeaders),
-      customDefaultHeaders
+      additionalHeaders
     );
   }
 
@@ -211,8 +210,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   eTagHeaders(): Record<string, any> {
-    if (pickValueIgnoreCase(this.customHeaders(), 'if-match')) {
-      return pickIgnoreCase(this.customHeaders(), 'if-match');
+    const additionalIfMatchHeader =
+      this.getAdditionalHeadersForKeys('if-match');
+    if (Object.keys(additionalIfMatchHeader).length) {
+      return additionalIfMatchHeader;
     }
     const eTag = isWithETag(this.config)
       ? this.config.versionIdentifierIgnored
@@ -246,6 +247,15 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     ).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());
     });
+  }
+
+  private getAdditionalHeadersForKeys(...keys: string[]): Record<string, any> {
+    const destinationHeaders = pickIgnoreCase(
+      this.destination?.urlHeaders,
+      ...keys
+    );
+    const customHeaders = pickIgnoreCase(this.customHeaders(), ...keys);
+    return mergeIgnoreCase(destinationHeaders, customHeaders);
   }
 }
 

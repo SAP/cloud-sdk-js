@@ -14,10 +14,13 @@ export async function buildHeadersForDestination(
 
   const sapHeaders = getSapHeaders(destination, customHeaders);
 
-  return mergeIgnoreCase(destination.urlHeaders, {
-    ...authHeaders,
-    ...sapHeaders
-  });
+  return mergeIgnoreCase(
+    mergeLeftIgnoreCase(destination.urlHeaders, customHeaders),
+    {
+      ...authHeaders,
+      ...sapHeaders
+    }
+  );
 }
 
 function getSapHeaders(

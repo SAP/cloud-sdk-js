@@ -24,8 +24,7 @@ export type ExclusiveEdmTypeV2 = 'Edm.DateTime' | 'Edm.Time';
 export type ExclusiveEdmTypeV4 =
   | 'Edm.Date'
   | 'Edm.Duration'
-  | 'Edm.TimeOfDay'
-  | 'Edm.Enum'; // FIXME: Represents all enum types. This is not correct, because enum types can have different integer related types. Fix latest by v2.0.
+  | 'Edm.TimeOfDay';
 
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of typescript.
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */

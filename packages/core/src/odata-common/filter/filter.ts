@@ -65,14 +65,12 @@ export class Filter<
    * @param value - Value to be used by the operator
    * @param edmType - EdmType of the field to filter on, needed for custom fields
    */
-  // TODO: refactor the optional params
   constructor(
     public field: string | FilterFunction<EntityT, FieldT>,
     public operator: FilterOperator,
     public value: FieldT,
     public edmType?: EdmTypeShared<ODataVersionOf<EntityT>>,
-    public enumType?: Enum<any>,
-    public underlyingType?: EnumUnderlyingType
+    public enumType?: Enum<any>
   ) {
     this._fieldName = field;
   }

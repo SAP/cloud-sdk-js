@@ -212,6 +212,6 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
     IsSelectableField<FieldOfT>> {
     const isSelectable = (this.fieldOf instanceof
       ComplexTypeField) as IsSelectableField<FieldOfT>;
-    return new EnumField(fieldName, this.fieldOf, enumType, underlyingType,{isNullable, isSelectable});
+    return new EnumField(fieldName, this.fieldOf, enumType, underlyingType,{ isNullable, isSelectable });
   }
 }

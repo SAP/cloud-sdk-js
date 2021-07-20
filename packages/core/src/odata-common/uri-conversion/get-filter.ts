@@ -16,7 +16,7 @@ import {
   Filter
 } from '../filter';
 import { EdmTypeShared } from '../edm-types';
-import { ComplexTypeField, Enum, EnumField, FieldType, OneToManyLink } from '../selectable';
+import { ComplexTypeField, Enum, FieldType, OneToManyLink } from '../selectable';
 import { UriConverter } from '../uri-conversion';
 import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 import { toStaticPropertyFormat } from '../name-converter';
@@ -153,7 +153,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     }
 
     // In case of custom field we infer then the returned field from the filter edmType property
-    return field || { edmType: filterEdmType, enumType: filterEnumType};
+    return field || { edmType: filterEdmType, enumType: filterEnumType };
   }
 
   function filterFunctionToString<

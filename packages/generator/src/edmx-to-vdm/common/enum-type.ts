@@ -1,8 +1,8 @@
-import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmEnumType } from '../../vdm-types';
-import { EdmxEnumMember, EdmxEnumType } from '../../edmx-parser/v4';
 import { createLogger, unique } from '@sap-cloud-sdk/util';
 import BigNumber from 'bignumber.js';
+import { ServiceNameFormatter } from '../../service-name-formatter';
+import { VdmEnumType } from '../../vdm-types';
+import { EdmxEnumType } from '../../edmx-parser/v4';
 
 const logger = createLogger({
   package: 'generator',
@@ -38,16 +38,15 @@ function parseMember(edmxEnumType: EdmxEnumType): Record<string, number | BigNum
 
   if(!hasValidValues(edmxEnumType)){
     logger.warn(`The enum ${edmxEnumType.Name} has invalid member values, which should be either of the following: 1. All values are specified. 2. No values are specified. 0 based index is used as value.`);
-    return edmxEnumType.Member.reduce((ret, member, index) => ({...ret, [member.Name]: index}), {} as Record<string, number>);
+    return edmxEnumType.Member.reduce((ret, member, index) => ({ ...ret, [member.Name]: index }), {} as Record<string, number>);
   }
 
   if(edmxEnumType.Member.some(member => member.Value)){
-    return edmxEnumType.Member.reduce((ret, member) => ({...ret, [member.Name]: parseValue(edmxEnumType.UnderlyingType!, member.Value!)}), {} as Record<string, number | BigNumber>);
+    return edmxEnumType.Member.reduce((ret, member) => ({ ...ret, [member.Name]: parseValue(edmxEnumType.UnderlyingType!, member.Value!) }), {} as Record<string, number | BigNumber>);
   }
 
-  return edmxEnumType.Member.reduce((ret, member, index) => ({...ret, [member.Name]: index}), {} as Record<string, number>);
+  return edmxEnumType.Member.reduce((ret, member, index) => ({ ...ret, [member.Name]: index }), {} as Record<string, number>);
 }
-
 
 function validateUniqueness(edmxEnumType: EdmxEnumType){
   if(unique(edmxEnumType.Member).length !== edmxEnumType.Member.length){
@@ -75,7 +74,7 @@ function hasValidValues(edmxEnumType: EdmxEnumType): boolean {
 
 function parseValue(underlyingType: string, value: string): number | BigNumber {
   if(underlyingType === 'Edm.Int64'){
-    return toBigNumber(value)
+    return toBigNumber(value);
   }
   return toNumber(value);
 }

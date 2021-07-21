@@ -139,7 +139,9 @@ export class EdmTypeField<
    */
   equals(
     value: FieldTypeByEdmType<EdmOrFieldT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>> {
+  )
+  // TODO: Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>>
+  {
     return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 
@@ -150,7 +152,7 @@ export class EdmTypeField<
    */
   notEquals(
     value: FieldTypeByEdmType<EdmOrFieldT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>> {
+  ) {
     return new Filter(this.fieldPath(), 'ne', value, this.edmType);
   }
 

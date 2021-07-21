@@ -144,7 +144,8 @@ const deserializers: EdmTypeMapping = {
   'Edm.Date': edmDateToMoment,
   'Edm.DateTimeOffset': edmDateTimeOffsetToMoment,
   'Edm.Duration': edmDurationToMoment,
-  'Edm.TimeOfDay': edmTimeOfDayToTime
+  'Edm.TimeOfDay': edmTimeOfDayToTime,
+  'Edm.Enum': identity
 };
 
 const serializers: EdmTypeMapping = {
@@ -152,7 +153,8 @@ const serializers: EdmTypeMapping = {
   'Edm.Date': momentToEdmDate,
   'Edm.DateTimeOffset': momentToEdmDateTimeOffsetToMoment,
   'Edm.Duration': durationToEdmDuration,
-  'Edm.TimeOfDay': timeToEdmTimeOfDay
+  'Edm.TimeOfDay': timeToEdmTimeOfDay,
+  'Edm.Enum': identity
 };
 
 export {

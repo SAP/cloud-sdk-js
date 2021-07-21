@@ -5,14 +5,6 @@ import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 
-/**
- * Represents a field of an enum type.
- * @typeparam EntityT - Type of the entity the field belongs to.
- * @typeparam EnumT - Type of the enum filed.
- * @typeparam EnumUnderlyingT - The underlying type of the enum field according to the metadata description.
- * @typeparam NullableT - Boolean type that represents whether the field is nullable.
- * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
- */
 export class EnumField<
   EntityT extends Entity,
   EnumT extends Enum<EnumT>,
@@ -26,8 +18,7 @@ export class EnumField<
    *
    * @param fieldName - Actual name of the field used in the OData request.
    * @param _fieldOf - The constructor of the entity or the complex type field this field belongs to.
-   * @param enumType - The enum type of the enum type filed e.g., `TestEnumType`.
-   * @param underlyingType - The underlying type of the enum field according to the metadata description.
+   * @param _fieldType - Edm type of the field according to the metadata description.
    * @param fieldOptions - Optional settings for this field.
    */
   constructor(
@@ -57,7 +48,7 @@ export class EnumField<
   equals(
     value: EnumUnderlyingT extends 'Edm.Int64'? string: number
   ): Filter<EntityT, EnumUnderlyingT extends 'Edm.Int64'? string: number> {
-    return new Filter(this.fieldPath(), 'eq', value, undefined, this.enumType);
+    return new Filter(this.fieldPath(), 'eq', value, undefined, this.enumType, this.underlyingType);
   }
 
   /**
@@ -68,9 +59,18 @@ export class EnumField<
   notEquals(
     value: EnumUnderlyingT extends 'Edm.Int64'? string: number
   ): Filter<EntityT, EnumUnderlyingT extends 'Edm.Int64'? string: number> {
-    return new Filter(this.fieldPath(), 'ne', value, undefined, this.enumType);
+    return new Filter(this.fieldPath(), 'ne', value, undefined, this.enumType, this.underlyingType);
   }
 }
+
+/**
+ * Convenience type to reflect the type of the instances of an enum field.
+ * The actual type of the elements for complex type enum is [[ComplexTypeNamespace]].
+ * @typeparam EnumFieldT - Type of of elements of the enum. This can either be an enum type or complex type.
+ */
+// export type EnumFieldType<
+//   EnumFieldT extends EnumUnderlyingType
+//   > = EnumFieldT | ComplexTypeNamespace<EnumFieldT>;
 
 export type Enum<E> = Record<keyof E, number | string>;
 

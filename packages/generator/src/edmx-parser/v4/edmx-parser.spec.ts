@@ -19,7 +19,7 @@ describe('edmx-edmx-parser', () => {
       resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV', 'API_TEST_SRV.edmx')
     );
 
-    expect(parseEntitySets(metadataEdmx.root).length).toBe(13);
+    expect(parseEntitySets(metadataEdmx.root).length).toBe(14);
     expect(parseEntityType(metadataEdmx.root).length).toBe(13);
     expect(parseFunctionImports(metadataEdmx.root).length).toBe(10);
     expect(parseFunctions(metadataEdmx.root).length).toBe(10);

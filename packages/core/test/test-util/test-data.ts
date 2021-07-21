@@ -12,7 +12,6 @@ import {
   TestEntityWithEnumKey
 } from './test-services/v4/test-service';
 import { TestEnumType } from './test-services/v4/test-service/TestEnumType';
-import { TestEnumTypeInt64 } from './test-services/v4/test-service/TestEnumTypeInt64';
 
 const { convertToUriFormat } = uriConverter;
 
@@ -110,9 +109,7 @@ export function testEntityResourcePath(
 
 export function createOriginalTestEntityWithEnumKeyData() {
   return {
-    KeyPropertyEnum1: TestEnumType[TestEnumType.Member1],
-    KeyPropertyEnum2: TestEnumType[TestEnumType.Member2],
-    KeyPropertyEnum3: TestEnumTypeInt64[TestEnumTypeInt64.Member1]
+    KeyPropertyEnum1: TestEnumType.Member1
   };
 }
 
@@ -121,8 +118,6 @@ export function createTestEntityWithEnumKey(
 ): TestEntityWithEnumKey {
   return TestEntityWithEnumKey.builder()
     .keyPropertyEnum1(originalData.KeyPropertyEnum1)
-    .keyPropertyEnum2(originalData.KeyPropertyEnum2)
-    .keyPropertyEnum3(originalData.KeyPropertyEnum3)
     .build()
     .setOrInitializeRemoteState();
 }

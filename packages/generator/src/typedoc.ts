@@ -167,13 +167,8 @@ function tagToText(tag: string, descr = ''): string {
 }
 
 export function enumDocs(enumType: VdmEnumType): string {
-  const enumKeyValues = Object.entries(enumType.members).map(
-    ([key, value]) => `${key}: ${value.toString()}`
-  );
   return [
     `This enum represents the enum type [[${enumType.originalName}]]".`,
-    `The members represent values of EDM type ${enumType.underlyingType}.`,
-    'The value of the enum entries are:',
-    ...enumKeyValues
+    `The members represent values of EDM type ${enumType.underlyingType}.`
   ].join(`${unixEOL}`);
 }

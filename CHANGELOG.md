@@ -29,7 +29,7 @@
 - [proxy] Fix destination service calls using web proxies.
 - [core] Fix type error to allow `null` values in filters for nullable properties.
 - [core] Fix OData filter runtime error, when using lambda expression with operands like `or`.
-- [odata-generator] Fix generation errors, when `Enum` is used as a key of an entity.
+- [odata-generator] Fix generation errors, when Enum type field is used as a key of an entity.
 
 
 # 1.46.0

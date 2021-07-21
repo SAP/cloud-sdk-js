@@ -5,17 +5,16 @@
  */
 
 /**
- * Enum type: [[A_TestEnumType1]] that reflects all the members in the metadata.
- * The underlying type of this enum is Edm.Int32
- * The value of the enum entries are:
- * Member1: 1
- * Member2: 2
+ * This enum represents the enum type [[A_TestEnumType1]]".
+ * The members represent values of EDM type Edm.Int32.
  */
 export enum TestEnumType1 {
-  /** test */
-  /** test2 */
+  /**
+   * original value: 1
+   */
   Member1 = 'Member1',
-  /** test */
-  /** test2 */
+  /**
+   * original value: 2
+   */
   Member2 = 'Member2'
 }

@@ -1,1 +1,1 @@
-{"version":3,"file":"TestEnumType.d.ts","sourceRoot":"","sources":["TestEnumType.ts"],"names":[],"mappings":"AAMA;;;;;;GAMG;AACH,oBAAY,YAAY;IACtB,WAAW;IACX,YAAY;IACZ,OAAO,YAAY;IACnB,WAAW;IACX,YAAY;IACZ,OAAO,YAAY;CACpB"}
+{"version":3,"file":"TestEnumType.d.ts","sourceRoot":"","sources":["TestEnumType.ts"],"names":[],"mappings":"AAMA;;;GAGG;AACH,oBAAY,YAAY;IACtB;;OAEG;IACH,OAAO,YAAY;IACnB;;OAEG;IACH,OAAO,YAAY;CACpB"}

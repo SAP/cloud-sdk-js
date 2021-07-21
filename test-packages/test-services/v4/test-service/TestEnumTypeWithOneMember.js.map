@@ -1,1 +1,1 @@
-{"version":3,"file":"TestEnumTypeWithOneMember.js","sourceRoot":"","sources":["TestEnumTypeWithOneMember.ts"],"names":[],"mappings":";AAAA;;;;GAIG;;;AAEH;;;;;GAKG;AACH,IAAY,yBAIX;AAJD,WAAY,yBAAyB;IACnC,WAAW;IACX,YAAY;IACZ,gDAAmB,CAAA;AACrB,CAAC,EAJW,yBAAyB,GAAzB,iCAAyB,KAAzB,iCAAyB,QAIpC"}
+{"version":3,"file":"TestEnumTypeWithOneMember.js","sourceRoot":"","sources":["TestEnumTypeWithOneMember.ts"],"names":[],"mappings":";AAAA;;;;GAIG;;;AAEH;;;GAGG;AACH,IAAY,yBAKX;AALD,WAAY,yBAAyB;IACnC;;OAEG;IACH,gDAAmB,CAAA;AACrB,CAAC,EALW,yBAAyB,GAAzB,iCAAyB,KAAzB,iCAAyB,QAKpC"}

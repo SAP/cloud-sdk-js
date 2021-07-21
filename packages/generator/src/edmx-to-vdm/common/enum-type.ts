@@ -1,7 +1,6 @@
 import { createLogger, unique } from '@sap-cloud-sdk/util';
-import BigNumber from 'bignumber.js';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { VdmEnumType } from '../../vdm-types';
+import { VdmEnumMemberType, VdmEnumType } from '../../vdm-types';
 import { EdmxEnumType } from '../../edmx-parser/v4';
 
 const logger = createLogger({
@@ -10,60 +9,43 @@ const logger = createLogger({
 });
 
 export function transformEnumTypesBase(
-  edmTypes: EdmxEnumType[],
+  enumTypes: EdmxEnumType[],
   formatter: ServiceNameFormatter
 ): VdmEnumType[] {
-  const formattedTypes = edmTypes.reduce(
-    (formatted, c) => ({
+  const formattedTypes = enumTypes.reduce(
+    (formatted, enumType) => ({
       ...formatted,
-      [c.Name]: formatter.originalToEnumTypeName(c.Name)
+      [enumType.Name]: formatter.originalToEnumTypeName(enumType.Name)
     }),
     {}
   );
-  return edmTypes.map(e => {
+  return enumTypes.map(e => {
+    e.UnderlyingType = e.UnderlyingType || 'Edm.Int32';
     const typeName = formattedTypes[e.Name];
     return {
       originalName: e.Name,
       typeName,
-      underlyingType: e.UnderlyingType || 'Edm.Int32',
+      underlyingType: e.UnderlyingType,
       members: parseMember(e)
     };
   });
 }
 
-function parseMember(
-  edmxEnumType: EdmxEnumType
-): Record<string, number | BigNumber> {
+function parseMember(edmxEnumType: EdmxEnumType): VdmEnumMemberType[] {
   validateUniqueness(edmxEnumType);
   validateUnderlyingType(edmxEnumType);
-  edmxEnumType.UnderlyingType = edmxEnumType.UnderlyingType
-    ? edmxEnumType.UnderlyingType
-    : 'Edm.Int32';
 
-  if (!hasValidValues(edmxEnumType)) {
-    logger.warn(
-      `The enum ${edmxEnumType.Name} has invalid member values, which should be either of the following: 1. All values are specified. 2. No values are specified. 0 based index is used as value.`
-    );
-    return edmxEnumType.Member.reduce(
-      (ret, member, index) => ({ ...ret, [member.Name]: index }),
-      {} as Record<string, number>
-    );
+  if (areAllValuesSet(edmxEnumType)) {
+    return edmxEnumType.Member.map(member => ({
+      name: member.Name,
+      originalValue: member.Value!
+    }));
   }
 
-  if (edmxEnumType.Member.some(member => member.Value)) {
-    return edmxEnumType.Member.reduce(
-      (ret, member) => ({
-        ...ret,
-        [member.Name]: parseValue(edmxEnumType.UnderlyingType!, member.Value!)
-      }),
-      {} as Record<string, number | BigNumber>
-    );
-  }
-
-  return edmxEnumType.Member.reduce(
-    (ret, member, index) => ({ ...ret, [member.Name]: index }),
-    {} as Record<string, number>
-  );
+  return edmxEnumType.Member.map((member, index) => ({
+    name: member.Name,
+    originalValue: index.toString()
+  }));
 }
 
 function validateUniqueness(edmxEnumType: EdmxEnumType) {
@@ -92,18 +74,8 @@ function validateUnderlyingType(edmxEnumType: EdmxEnumType) {
   }
 }
 
-function hasValidValues(edmxEnumType: EdmxEnumType): boolean {
+function areAllValuesSet(edmxEnumType: EdmxEnumType): boolean {
   const values = edmxEnumType.Member.map(member => member.Value);
-  const filtered = values.filter(value => !!value);
-  return !(filtered.length !== 0 && filtered.length !== values.length);
+  const hasUnsetValues = values.some(value => !value);
+  return !hasUnsetValues;
 }
-
-function parseValue(underlyingType: string, value: string): number | BigNumber {
-  if (underlyingType === 'Edm.Int64') {
-    return toBigNumber(value);
-  }
-  return toNumber(value);
-}
-
-const toNumber = (value: any): number => Number(value);
-const toBigNumber = (value: any): BigNumber => new BigNumber(value);

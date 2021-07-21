@@ -7,6 +7,7 @@ Handle Enum Type of OData V4
 accepted
 
 ## Background
+
 Here are some examples when Enum type is used:
 
 - Filter: `/People?$filter=Gender eq 'Female'`
@@ -23,15 +24,18 @@ The [Enum type](http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete
 - `Edm.Int64`
 
 We need to save all the enum related information specified in the metadata in the client including:
+
 - enum name
 - enum underlying type (by default `Edm.Int32`)
 - enum keys
-- enum values (optional) 
+- enum values (optional)
 
 ## Alternatives
 
-### Option A (not chosen due to the TS Enum type limit)
+### Option A
+
 The generated Enum type contains information below:
+
 - enum name
 - enum underlying type
 - enum keys
@@ -40,12 +44,13 @@ The generated Enum type contains information below:
 #### Parsing
 
 When parsing the metadata to our VDM TS model, we have to find proper data types for the 5 underlying types listed above.
-For `Edm.Int64`, we use `bignumber.js` or `string` in the SDK, as the built-in `number` type does not fit the range of `Edm.Int64`.
-For other 4 potential types, we can use `number` without any issues.
+
+- For `Edm.Int64`, we use `bignumber.js` or `string` in the SDK, as the built-in `number` type does not fit the range of `Edm.Int64`.
+- For other 4 potential types, we can use `number`.
 
 #### Generating Enum Types
 
-The TS Enum type can only use `number` or `string` as the type of an entry.
+The TS Enum type can only use `number` or `string` as the type of the value of an entry.
 Therefore, as a workaround, `string` is the only one possible TS data type in the case of `Edm.Int64`.
 The generated Enum types should then look like the examples below:
 
@@ -73,18 +78,24 @@ TestEntity.ENUM_FIELD.equal(EnumNumber.MEMBER_ONE);
 - For the `EnumNumber`, we can use `EnumNumber[EnumNumber.MEMBER_ONE]` to get the key string `MEMBER`.
 - For the `EnumString`, we iterate all the key value pair for finding the key, as `EnumString[EnumString.MEMBER_ONE]` has compilation errors.
 
-#### Problem
 However, none of the above works, if the values are not unique, which is the case in terms of OData specification in general.
 
+### Decision
+
+As it cannot handle enums with duplicate values, it's not accepted.
+
 ### Option B (similar to C)
+
 The generated Enum type contains the information below:
+
 - enum name
 - enum keys
-The documentation covers the following:
+  The documentation covers the following:
 - enum underlying type
 - enum values
 
 #### Parsing
+
 The same as the Option A, so we have all the information in the VDM model.
 
 #### Generating Enum Types
@@ -108,13 +119,20 @@ export enum TestEnumType {
 ```
 
 #### Building Filters
+
 Below are the examples when building filters on the enum field.
+
 ```ts
 TestEntity.ENUM_FIELD.equal(TestEnumType.NOT_FOUND);
 TestEntity.ENUM_FIELD.equal(0);
 ```
 
+### Decision
+
+As it accept `number` typed value when building filters, it is not accepted.
+
 ### Option C (chosen)
+
 Similar to Option C, it has additional string based enum values.
 
 #### Generating Enum Types
@@ -133,25 +151,26 @@ export enum TestEnumType {
 ```
 
 #### Building Filters
+
 Below are the examples when building filters on the enum field.
+
 ```ts
 TestEntity.ENUM_FIELD.equal(TestEnumType.NOT_FOUND);
 TestEntity.ENUM_FIELD.equal('NOT_FOUND');
 ```
 
 #### Comparison between Option B and C
+
 The only one difference in terms of the API is that:
+
 - for B, `TestEntity.ENUM_FIELD.equal(0);` is possible in addition to providing an enum entry,
-- for C, `TestEntity.ENUM_FIELD.equal('Member1');` is valid.
+- for C, `TestEntity.ENUM_FIELD.equal('NOT_FOUND');` is valid.
 
 Using C, as `string` type is better than `number` type (index) in terms of readability, because for example, there is no relation between `0` and `TestEnumType.NOT_FOUND`.
 
 ## Decision
 
-As the value of the Enum type is not useful, and we even cannot find any use cases, the following information are parsed in the generator, but are only generated as part of the API documentation:
-
-- underlying type
-- value of enum entries
+Accepted, because `string` typed parameter is better than `number` typed, when building filters.
 
 ## Consequences
 

@@ -52,13 +52,9 @@
       <EntityType Name="A_TestEntityWithEnumKeyType" sap:content-version="1">
         <Key>
           <PropertyRef Name="KeyPropertyEnum1"/>
-          <PropertyRef Name="KeyPropertyEnum2"/>
-          <PropertyRef Name="KeyPropertyEnum3"/>
         </Key>
 
         <Property Name="KeyPropertyEnum1" Type="API_TEST_SRV.A_TestEnumType" Nullable="false"/>
-        <Property Name="KeyPropertyEnum2" Type="API_TEST_SRV.A_TestEnumType" Nullable="false"/>
-        <Property Name="KeyPropertyEnum3" Type="API_TEST_SRV.A_TestEnumType_Int64" Nullable="false"/>
 
       </EntityType>
 
@@ -175,8 +171,8 @@
         <Member Name="Member2"/>
       </EnumType>
       <EnumType Name="A_TestEnumType_Int64" UnderlyingType="Edm.Int64">
-        <Member Name="Member1" Value="1"/>
-        <Member Name="Member2" Value="2"/>
+        <Member Name="Member1" Value="99999999999999999999"/>
+        <Member Name="Member2" Value="88888888888888888888"/>
       </EnumType>
 
       <EnumType Name="A_TestEnumType_WithOneMember">

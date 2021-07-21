@@ -5,13 +5,12 @@
  */
 
 /**
- * Enum type: [[A_TestEnumType_WithOneMember]] that reflects all the members in the metadata.
- * The underlying type of this enum is Edm.Int32
- * The value of the enum entries are:
- * Member1: 0
+ * This enum represents the enum type [[A_TestEnumType_WithOneMember]]".
+ * The members represent values of EDM type Edm.Int32.
  */
 export enum TestEnumTypeWithOneMember {
-  /** test */
-  /** test2 */
+  /**
+   * original value: 0
+   */
   Member1 = 'Member1'
 }

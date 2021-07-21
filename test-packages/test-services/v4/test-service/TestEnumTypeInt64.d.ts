@@ -1,16 +1,15 @@
 /**
- * Enum type: [[A_TestEnumType_Int64]] that reflects all the members in the metadata.
- * The underlying type of this enum is Edm.Int64
- * The value of the enum entries are:
- * Member1: 1
- * Member2: 2
+ * This enum represents the enum type [[A_TestEnumType_Int64]]".
+ * The members represent values of EDM type Edm.Int64.
  */
 export declare enum TestEnumTypeInt64 {
-    /** test */
-    /** test2 */
-    Member1 = "Member1",
-    /** test */
-    /** test2 */
-    Member2 = "Member2"
+  /**
+   * original value: 99999999999999999999
+   */
+  Member1 = 'Member1',
+  /**
+   * original value: 88888888888888888888
+   */
+  Member2 = 'Member2'
 }
 //# sourceMappingURL=TestEnumTypeInt64.d.ts.map

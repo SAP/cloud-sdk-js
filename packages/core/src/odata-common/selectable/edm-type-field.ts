@@ -140,7 +140,7 @@ export class EdmTypeField<
   equals(
     value: FieldTypeByEdmType<EdmOrFieldT, NullableT>
   )
-  // TODO: Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>>
+  //TODO: Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>>
   {
     return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }

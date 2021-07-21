@@ -25,7 +25,7 @@ describe('entity-deserializer', () => {
       TestEntity.builder().complexTypeProperty(
         {
           stringProperty: 'str',
-          enumProperty: TestEnumType.Member1 }
+          enumProperty: TestEnumType.Member1}
       ).build()
     );
   });

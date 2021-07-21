@@ -1,9 +1,11 @@
+import { Field, FieldOptions } from './field';
 import { Entity } from '../entity';
 import { EnumUnderlyingType } from '../edm-types';
-import { Filter } from '../filter';
-import { Field, FieldOptions } from './field';
+import { ComplexTypeNamespace } from './complex-type-namespace';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
+import { Filter } from '../filter';
+import { FieldTypeByEdmType } from './edm-type-field';
 
 export class EnumField<
   EntityT extends Entity,
@@ -40,12 +42,14 @@ export class EnumField<
       : this._fieldName;
   }
 
+
+
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'eq', i.e. `==`.
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  equals(
+  equals<T extends EnumUnderlyingType>(
     value: EnumUnderlyingT extends 'Edm.Int64'? string: number
   ): Filter<EntityT, EnumUnderlyingT extends 'Edm.Int64'? string: number> {
     return new Filter(this.fieldPath(), 'eq', value, undefined, this.enumType, this.underlyingType);
@@ -63,6 +67,7 @@ export class EnumField<
   }
 }
 
+
 /**
  * Convenience type to reflect the type of the instances of an enum field.
  * The actual type of the elements for complex type enum is [[ComplexTypeNamespace]].
@@ -77,5 +82,5 @@ export type Enum<E> = Record<keyof E, number | string>;
 export function isEnum(
   val: any
 ): val is Enum<any> {
-  return typeof val === 'object' && Object.values(val).every(value => typeof value === 'number' || typeof value === 'string');
+  return typeof val === 'object' && Object.values(val).every(value => typeof value === 'number' || typeof value === 'string')
 }

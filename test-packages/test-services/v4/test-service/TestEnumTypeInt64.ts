@@ -5,7 +5,7 @@
  */
 
 /**
- * This enum represents the enum type [[A_TestEnumType_Int64]]".
+ * This enum represents the enum type "[[A_TestEnumType_Int64]]".
  * The members represent values of EDM type Edm.Int64.
  */
 export enum TestEnumTypeInt64 {

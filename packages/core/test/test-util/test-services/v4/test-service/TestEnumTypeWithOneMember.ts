@@ -5,7 +5,7 @@
  */
 
 /**
- * This enum represents the enum type [[A_TestEnumType_WithOneMember]]".
+ * This enum represents the enum type "[[A_TestEnumType_WithOneMember]]".
  * The members represent values of EDM type Edm.Int32.
  */
 export enum TestEnumTypeWithOneMember {

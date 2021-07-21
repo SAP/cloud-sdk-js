@@ -7,7 +7,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestEnumTypeInt64 = void 0;
 /**
- * This enum represents the enum type [[A_TestEnumType_Int64]]".
+ * This enum represents the enum type "[[A_TestEnumType_Int64]]".
  * The members represent values of EDM type Edm.Int64.
  */
 var TestEnumTypeInt64;

@@ -7,17 +7,22 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.PersonGender = void 0;
 /**
- * Enum type: [[PersonGender]] that reflects all the members in the metadata.
- * The underlying type of this enum is Edm.Int32
- * The value of the enum entries are:
- * Male: 0
- * Female: 1
- * Unknown: 2
+ * This enum represents the enum type "[[PersonGender]]".
+ * The members represent values of EDM type Edm.Int32.
  */
 var PersonGender;
 (function (PersonGender) {
+  /**
+   * original value: 0
+   */
   PersonGender['Male'] = 'Male';
+  /**
+   * original value: 1
+   */
   PersonGender['Female'] = 'Female';
+  /**
+   * original value: 2
+   */
   PersonGender['Unknown'] = 'Unknown';
 })((PersonGender = exports.PersonGender || (exports.PersonGender = {})));
 //# sourceMappingURL=PersonGender.js.map

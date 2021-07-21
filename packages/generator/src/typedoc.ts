@@ -168,7 +168,7 @@ function tagToText(tag: string, descr = ''): string {
 
 export function enumDocs(enumType: VdmEnumType): string {
   return [
-    `This enum represents the enum type [[${enumType.originalName}]]".`,
+    `This enum represents the enum type "[[${enumType.originalName}]]".`,
     `The members represent values of EDM type ${enumType.underlyingType}.`
   ].join(`${unixEOL}`);
 }

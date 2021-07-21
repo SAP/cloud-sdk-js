@@ -10,17 +10,19 @@ describe('enum', () => {
       kind: StructureKind.Enum,
       members: [
         {
+          docs: ['\noriginal value: 0'],
           name: 'member1',
           value: 'member1'
         },
         {
+          docs: ['\noriginal value: 1'],
           name: 'member2',
           value: 'member2'
         }
       ],
       name: 'EnumMealType',
       docs: [
-        'Enum type: [[EnumMealName]] that reflects all the members in the metadata.\nThe underlying type of this enum is Edm.Int32\nThe value of the enum entries are:\nmember1: 0\nmember2: 1'
+        'This enum represents the enum type "[[EnumMealName]]".\nThe members represent values of EDM type Edm.Int32.'
       ]
     });
   });

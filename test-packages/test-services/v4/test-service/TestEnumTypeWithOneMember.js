@@ -7,7 +7,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestEnumTypeWithOneMember = void 0;
 /**
- * This enum represents the enum type [[A_TestEnumType_WithOneMember]]".
+ * This enum represents the enum type "[[A_TestEnumType_WithOneMember]]".
  * The members represent values of EDM type Edm.Int32.
  */
 var TestEnumTypeWithOneMember;

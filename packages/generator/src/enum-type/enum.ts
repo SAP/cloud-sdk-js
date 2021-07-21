@@ -9,7 +9,8 @@ export function enumTypeClass(enumType: VdmEnumType): EnumDeclarationStructure {
     isExported: true,
     members: Object.keys(enumType.members).map(key => ({
       name: key,
-      value: key
+      value: key,
+      docs: ['test', 'test2']
     })),
     docs: [enumDocs(enumType)]
   };

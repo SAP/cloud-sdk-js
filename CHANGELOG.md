@@ -22,7 +22,7 @@
 
 ## Improvements
 
-- [odata-generator] Add underlying type and value information as part of the js doc.
+- [odata-generator] Add underlying type and value information as part of the API documentation.
 
 ## Fixed Issues
 

@@ -171,8 +171,8 @@ export function enumDocs(enumType: VdmEnumType): string {
     ([key, value]) => `${key}: ${value.toString()}`
   );
   return [
-    `Enum type: [[${enumType.originalName}]] that reflects all the members in the metadata.`,
-    `The underlying type of this enum is ${enumType.underlyingType}`,
+    `This enum represents the enum type [[${enumType.originalName}]]".`,
+    `The members represent values of EDM type ${enumType.underlyingType}.`,
     'The value of the enum entries are:',
     ...enumKeyValues
   ].join(`${unixEOL}`);

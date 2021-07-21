@@ -11,5 +11,7 @@
  * Member1: 0
  */
 export enum TestEnumTypeWithOneMember {
+  /** test */
+  /** test2 */
   Member1 = 'Member1'
 }

@@ -12,6 +12,10 @@
  * Member2: 2
  */
 export enum TestEnumTypeInt64 {
+  /** test */
+  /** test2 */
   Member1 = 'Member1',
+  /** test */
+  /** test2 */
   Member2 = 'Member2'
 }

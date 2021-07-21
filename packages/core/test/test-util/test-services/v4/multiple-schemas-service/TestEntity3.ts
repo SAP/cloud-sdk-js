@@ -6,16 +6,7 @@
 import { TestEntity3RequestBuilder } from './TestEntity3RequestBuilder';
 import { TestComplexType2, TestComplexType2Field } from './TestComplexType2';
 import { TestEnumType2 } from './TestEnumType2';
-import {
-  AllFields,
-  Constructable,
-  CustomFieldV4,
-  EdmTypeField,
-  EntityBuilderType,
-  EntityV4,
-  Field,
-  FieldBuilder
-} from '../../../../../src';
+import { AllFields, Constructable, CustomFieldV4, EdmTypeField, EntityBuilderType, EntityV4, Field, FieldBuilder } from '../../../../../src';
 
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -85,43 +76,26 @@ export interface TestEntity3Type {
 }
 
 export namespace TestEntity3 {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntity3>> =
-    new FieldBuilder(TestEntity3);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntity3>> = new FieldBuilder(TestEntity3);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
-    'KeyPropertyString',
-    'Edm.String',
-    false
-  );
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false);
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'EnumProperty',
-    'Edm.Enum',
-    true
-  );
+  export const ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField('EnumProperty', 'Edm.Enum', true);
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
-    'ComplexTypeProperty',
-    TestComplexType2Field,
-    true
-  );
+  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestComplexType2Field, true);
   /**
    * All fields of the TestEntity3 entity.
    */
-  export const _allFields: Array<
-    | EdmTypeField<TestEntity3, 'Edm.String', false, true>
-    | EdmTypeField<TestEntity3, 'Edm.Enum', true, true>
-    | TestComplexType2Field<TestEntity3, true, true>
-  > = [
+  export const _allFields: Array<EdmTypeField<TestEntity3, 'Edm.String', false, true> | EdmTypeField<TestEntity3, 'Edm.Enum', true, true> | TestComplexType2Field<TestEntity3, true, true>> = [
     TestEntity3.KEY_PROPERTY_STRING,
     TestEntity3.ENUM_PROPERTY,
     TestEntity3.COMPLEX_TYPE_PROPERTY
@@ -129,28 +103,16 @@ export namespace TestEntity3 {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity3> = new AllFields(
-    '*',
-    TestEntity3
-  );
+  export const ALL_FIELDS: AllFields<TestEntity3> = new AllFields('*', TestEntity3);
   /**
    * All key fields of the TestEntity3 entity.
    */
-  export const _keyFields: Array<Field<TestEntity3, boolean, boolean>> = [
-    TestEntity3.KEY_PROPERTY_STRING
-  ];
+  export const _keyFields: Array<Field<TestEntity3, boolean, boolean>> = [TestEntity3.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity3.
    */
-  export const _keys: { [keys: string]: Field<TestEntity3, boolean, boolean> } =
-    TestEntity3._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<TestEntity3, boolean, boolean> },
-        field: Field<TestEntity3, boolean, boolean>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: { [keys: string]: Field<TestEntity3, boolean, boolean> } = TestEntity3._keyFields.reduce((acc: { [keys: string]: Field<TestEntity3, boolean, boolean> }, field: Field<TestEntity3, boolean, boolean>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

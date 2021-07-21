@@ -21,7 +21,7 @@ var TestEntity2_1 = require('./TestEntity2');
 function testFunctionImportEntityReturnType1(parameters) {
   var params = {};
   return new core_1.FunctionImportRequestBuilderV4(
-    'VALUE_IS_UNDEFINED',
+    '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType1',
     function (data) {
       return core_1.transformReturnValueForEntityV4(
@@ -43,7 +43,7 @@ exports.testFunctionImportEntityReturnType1 =
 function testFunctionImportEntityReturnType2(parameters) {
   var params = {};
   return new core_1.FunctionImportRequestBuilderV4(
-    'VALUE_IS_UNDEFINED',
+    '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType2',
     function (data) {
       return core_1.transformReturnValueForEntityV4(

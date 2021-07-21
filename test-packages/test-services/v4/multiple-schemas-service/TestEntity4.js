@@ -98,7 +98,7 @@ var TestEntity4 = /** @class */ (function (_super) {
   /**
    * Default url path for the according service.
    */
-  TestEntity4._defaultServicePath = 'VALUE_IS_UNDEFINED';
+  TestEntity4._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   return TestEntity4;
 })(core_1.EntityV4);
 exports.TestEntity4 = TestEntity4;

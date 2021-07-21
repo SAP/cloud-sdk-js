@@ -21,7 +21,7 @@ var TestComplexType2_1 = require('./TestComplexType2');
 function testActionImportNoParameterComplexReturnType1(parameters) {
   var params = {};
   return new core_1.ActionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType1',
     function (data) {
       return core_1.transformReturnValueForComplexTypeV4(data, function (data) {
@@ -45,7 +45,7 @@ exports.testActionImportNoParameterComplexReturnType1 =
 function testActionImportNoParameterComplexReturnType2(parameters) {
   var params = {};
   return new core_1.ActionImportRequestBuilder(
-    'VALUE_IS_UNDEFINED',
+    '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType2',
     function (data) {
       return core_1.transformReturnValueForComplexTypeV4(data, function (data) {

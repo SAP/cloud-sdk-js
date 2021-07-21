@@ -74,7 +74,8 @@ export function changeset(
   return new ODataBatchChangeSetV4(variadicArgumentToArray(first, rest));
 }
 
-export const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
+export const defaultMultipleSchemasServicePath =
+  '/sap/opu/odata/sap/API_TEST_SRV';
 const map = {
   A_TestEntity1: TestEntity1,
   A_TestEntity2: TestEntity2,

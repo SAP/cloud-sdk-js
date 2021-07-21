@@ -20,8 +20,8 @@ describe('enum', () => {
       ],
       name: 'EnumMealType',
       docs: [
-        "Enum type: [[EnumMealName]] that reflects all the members in the metadata.\nThe underlying type of this enum is Edm.Int32\nThe value of the enum entries are:\nmember1: 0\nmember2: 1"
-      ],
+        'Enum type: [[EnumMealName]] that reflects all the members in the metadata.\nThe underlying type of this enum is Edm.Int32\nThe value of the enum entries are:\nmember1: 0\nmember2: 1'
+      ]
     });
   });
 });

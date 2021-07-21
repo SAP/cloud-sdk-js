@@ -26,7 +26,7 @@ export class TestEntity4 extends EntityV4 implements TestEntity4Type {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'VALUE_IS_UNDEFINED';
+  static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * Key Property String.
    */

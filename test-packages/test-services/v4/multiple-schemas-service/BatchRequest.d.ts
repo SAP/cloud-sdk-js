@@ -36,7 +36,8 @@ export declare function changeset(
 export declare function changeset(
   requests: Array<WriteMultipleSchemasServiceRequestBuilder>
 ): ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>;
-export declare const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
+export declare const defaultMultipleSchemasServicePath =
+  '/sap/opu/odata/sap/API_TEST_SRV';
 export declare type ReadMultipleSchemasServiceRequestBuilder =
   | GetAllRequestBuilderV4<TestEntity1>
   | GetAllRequestBuilderV4<TestEntity2>

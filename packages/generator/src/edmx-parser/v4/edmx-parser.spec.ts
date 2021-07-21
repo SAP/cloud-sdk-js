@@ -20,7 +20,7 @@ describe('edmx-edmx-parser', () => {
     );
 
     expect(parseEntitySets(metadataEdmx.root).length).toBe(14);
-    expect(parseEntityType(metadataEdmx.root).length).toBe(13);
+    expect(parseEntityType(metadataEdmx.root).length).toBe(14);
     expect(parseFunctionImports(metadataEdmx.root).length).toBe(10);
     expect(parseFunctions(metadataEdmx.root).length).toBe(10);
     expect(parseActionImport(metadataEdmx.root).length).toBe(8);

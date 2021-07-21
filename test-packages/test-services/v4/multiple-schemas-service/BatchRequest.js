@@ -34,7 +34,7 @@ function changeset(first) {
   );
 }
 exports.changeset = changeset;
-exports.defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
+exports.defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 var map = {
   A_TestEntity1: index_1.TestEntity1,
   A_TestEntity2: index_1.TestEntity2,

@@ -114,9 +114,9 @@ export function createOriginalTestEntityWithEnumKeyData() {
 
 export function createTestEntityWithEnumKey(originalData): TestEntityWithEnumKey {
   return TestEntityWithEnumKey.builder()
-    .keyPropertyEnum1(TestEnumType[originalData.KeyPropertyEnum1] as unknown as TestEnumType)
-    .keyPropertyEnum2(TestEnumType[originalData.KeyPropertyEnum2] as unknown as TestEnumType)
-    .keyPropertyEnum3(TestEnumTypeInt64[originalData.KeyPropertyEnum3] as unknown as TestEnumTypeInt64)
+    .keyPropertyEnum1(originalData.KeyPropertyEnum1)
+    .keyPropertyEnum2(originalData.KeyPropertyEnum2)
+    .keyPropertyEnum3(originalData.KeyPropertyEnum3)
     .build()
     .setOrInitializeRemoteState();
 }

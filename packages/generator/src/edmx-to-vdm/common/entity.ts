@@ -242,7 +242,7 @@ function getTypeMappingEntityProperties(
     return {
       edmType: typeName,
       jsType: enumTypeForName(typeName, enumTypes),
-      fieldType: 'EnumField'
+      fieldType: edmToFieldType('Edm.Enum')
     };
   }
   throw new Error(`No types found for ${typeName}`);

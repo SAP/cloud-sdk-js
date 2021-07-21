@@ -1,16 +1,18 @@
 import { EnumDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmEnumType } from '../vdm-types';
 import BigNumber from 'bignumber.js';
+import { enumDocs } from '../typedoc';
 
 export function enumTypeClass(enumType: VdmEnumType): EnumDeclarationStructure {
   return {
     kind: StructureKind.Enum,
     name: enumType.typeName,
     isExported: true,
-    members: Object.entries(enumType.members).map(([key,value]) => ({
+    members: Object.keys(enumType.members).map(key => ({
       name: key,
-      value: enumType.underlyingType === 'Edm.Int64' ? `${fromBigNumber(value as BigNumber)}L` : value as number
-    }))
+      value: key
+    })),
+    docs: [enumDocs(enumType)]
   };
 }
 

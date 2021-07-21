@@ -44,10 +44,10 @@ describe('GetByKeyRequestBuilder', () => {
 
       mockGetRequest(
         {
-          path: `A_TestEntityWithEnumKey(KeyPropertyEnum1='Member1', KeyPropertyEnum2='Member2', KeyPropertyEnum3='Member1')`,
+          path: `A_TestEntityWithEnumKey(KeyPropertyEnum1='Member1',KeyPropertyEnum2='Member2',KeyPropertyEnum3='Member1')`,
           responseBody: entityData
         },
-        TestEntity
+        TestEntityWithEnumKey
       );
 
       const actual = await new GetByKeyRequestBuilder(TestEntityWithEnumKey, {

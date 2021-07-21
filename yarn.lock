@@ -11053,9 +11053,9 @@ ts-jest@^26.4.1:
     yargs-parser "20.x"
 
 ts-morph@^11.0.0:
-  version "11.0.2"
-  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-11.0.2.tgz#75bf2321b93230b47b16d21014f7b0b709edc1a2"
-  integrity sha512-8SMHk8PcinHZAtFHNGZd2Ua+f6w9K4Szfwv+kE1BpUuOqq6996ooXEsBGHy5ElbHZ0D6YhjzcorQZYA+7Y9Zww==
+  version "11.0.3"
+  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-11.0.3.tgz#01a92b3c2b5a48ccdf318ec90864229b8061d056"
+  integrity sha512-ymuPkndv9rzqTLiHWMkVrFXWcN4nBiBGhRP/kTC9F5amAAl7BNLfyrsTzMD1o9A0zishKoF1KQT/0yyFhJnPgA==
   dependencies:
     "@ts-morph/common" "~0.10.1"
     code-block-writer "^10.1.1"

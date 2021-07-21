@@ -16,7 +16,7 @@ import {
   Filter
 } from '../filter';
 import { EdmTypeShared } from '../edm-types';
-import { ComplexTypeField, Enum, EnumField, FieldType, OneToManyLink } from '../selectable';
+import { ComplexTypeField, FieldType, OneToManyLink } from '../selectable';
 import { UriConverter } from '../uri-conversion';
 import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
 import { toStaticPropertyFormat } from '../name-converter';
@@ -140,8 +140,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function retrieveField(
     filterField: string,
     targetEntityConstructor: Constructable<any>,
-    filterEdmType?: EdmTypeShared<'v2'>,
-    filterEnumType?: Enum<any>
+    filterEdmType?: EdmTypeShared<'v2'>
   ) {
     // In case of complex types there will be a property name as part of the filter.field
     const [fieldName] = filterField.split('/');
@@ -153,7 +152,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     }
 
     // In case of custom field we infer then the returned field from the filter edmType property
-    return field || { edmType: filterEdmType, enumType: filterEnumType};
+    return field || { edmType: filterEdmType };
   }
 
   function filterFunctionToString<
@@ -195,14 +194,13 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
 
   function convertFilterValue(
     value: any | any[],
-    edmType?: EdmTypeShared<'any'>,
-    enumType?: Enum<any>
+    edmType: EdmTypeShared<'any'>
   ): string {
     return Array.isArray(value)
       ? `[${value
-          .map(v => uriConverter.convertToUriFormat(v, edmType, enumType))
+          .map(v => uriConverter.convertToUriFormat(v, edmType))
           .join(',')}]`
-      : uriConverter.convertToUriFormat(value, edmType, enumType);
+      : uriConverter.convertToUriFormat(value, edmType);
   }
 
   function getODataFilterExpressionForUnaryFilter<FilterEntityT extends Entity>(
@@ -311,19 +309,18 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       const field = retrieveField(
         filter.field,
         targetEntityConstructor,
-        filter.edmType,
-        filter.enumType
+        filter.edmType
       );
       return [
         [...parentFieldNames, filter.field].join('/'),
         filter.operator,
-        convertFilterValue(filter.value, field.edmType, field.enumType)
+        convertFilterValue(filter.value, field.edmType)
       ].join(' ');
     }
     return [
       filterFunctionToString(filter.field, parentFieldNames),
       filter.operator,
-      convertFilterValue(filter.value, filter.edmType, filter.enumType)
+      convertFilterValue(filter.value, filter.edmType!)
     ].join(' ');
   }
 

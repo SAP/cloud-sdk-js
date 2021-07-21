@@ -1,11 +1,11 @@
-import { EdmTypeShared, EnumUnderlyingType } from '../edm-types';
+import { EdmTypeShared } from '../edm-types';
 import {
   Constructable,
   Entity,
   EntityIdentifiable,
   ODataVersionOf
 } from '../entity';
-import { Enum, FieldType } from '../selectable';
+import { FieldType } from '../selectable';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 
@@ -65,14 +65,12 @@ export class Filter<
    * @param value - Value to be used by the operator
    * @param edmType - EdmType of the field to filter on, needed for custom fields
    */
-  // TODO: refactor the optional params
+
   constructor(
     public field: string | FilterFunction<EntityT, FieldT>,
     public operator: FilterOperator,
     public value: FieldT,
-    public edmType?: EdmTypeShared<ODataVersionOf<EntityT>>,
-    public enumType?: Enum<any>,
-    public underlyingType?: EnumUnderlyingType
+    public edmType?: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {
     this._fieldName = field;
   }

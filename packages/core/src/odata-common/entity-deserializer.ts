@@ -14,7 +14,7 @@ import {
   isComplexTypeNameSpace,
   EdmTypeShared,
   isEdmType,
-  PropertyMetadata, EnumField, isEnum
+  PropertyMetadata
 } from '../odata-common';
 import {
   EdmToPrimitive as EdmToPrimitiveV2,
@@ -104,9 +104,6 @@ export function entityDeserializer(
     json: Partial<JsonT>,
     field: Field<EntityT> | Link<EntityT>
   ) {
-    if (field instanceof EnumField){
-      return field.enumType[json[field._fieldName]];
-    }
     if (field instanceof EdmTypeField) {
       return edmToTs(json[field._fieldName], field.edmType);
     }
@@ -205,10 +202,6 @@ export function entityDeserializer(
     propertyValue: any,
     propertyMetadata: PropertyMetadata
   ) {
-    if (isEnum(propertyMetadata.type)){
-      return propertyMetadata.type[propertyValue];
-    }
-
     if (propertyMetadata.isCollection) {
       return deserializeCollectionType(propertyValue, propertyMetadata.type);
     }

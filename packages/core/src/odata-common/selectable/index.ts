@@ -7,7 +7,6 @@ export * from './constructor-or-field';
 export * from './create-complex-type';
 export * from './custom-field';
 export * from './edm-type-field';
-export * from './enum-field';
 export * from './field';
 export * from './field-builder';
 export * from './legacy';

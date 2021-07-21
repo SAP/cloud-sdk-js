@@ -5,6 +5,6 @@
  */
 
 export enum TestEnumType {
-  Member1 = 0,
-  Member2 = 1
+  Member1 = 'Member1',
+  Member2 = 'Member2'
 }

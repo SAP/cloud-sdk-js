@@ -41,7 +41,6 @@
     "@sap/edm-converters": "^1.0.21",
     "@types/fs-extra": "^9.0.1",
     "@types/glob": "^7.1.2",
-    "bignumber.js": "^9.0.0",
     "execa": "^5.0.0",
     "fast-xml-parser": "^3.16.0",
     "fs-extra": "^10.0.0",

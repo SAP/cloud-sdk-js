@@ -11,7 +11,7 @@ import {
   isComplexTypeNameSpace,
   EdmTypeShared,
   isEdmType,
-  PropertyMetadata, EnumField, isEnum
+  PropertyMetadata
 } from '../odata-common';
 import { toStaticPropertyFormat } from './name-converter';
 
@@ -76,9 +76,6 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   function serializeField(field: any, fieldValue: any): any {
     if (fieldValue === null || fieldValue === undefined) {
       return null;
-    }
-    if (field instanceof EnumField){
-      return field.enumType[fieldValue];
     }
     if (field instanceof EdmTypeField) {
       return tsToEdm(fieldValue, field.edmType);
@@ -177,10 +174,6 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     propertyValue: any,
     propertyMetadata: PropertyMetadata
   ): any {
-    if(isEnum(propertyMetadata.type)){
-      return propertyMetadata.type[propertyValue];
-    }
-
     if (propertyMetadata.isCollection) {
       return serializeCollection(propertyValue, propertyMetadata.type);
     }

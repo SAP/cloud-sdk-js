@@ -1,6 +1,6 @@
 import { EnumDeclarationStructure, StructureKind } from 'ts-morph';
-import { VdmEnumType } from '../vdm-types';
 import BigNumber from 'bignumber.js';
+import { VdmEnumType } from '../vdm-types';
 import { enumDocs } from '../typedoc';
 
 export function enumTypeClass(enumType: VdmEnumType): EnumDeclarationStructure {
@@ -15,6 +15,3 @@ export function enumTypeClass(enumType: VdmEnumType): EnumDeclarationStructure {
     docs: [enumDocs(enumType)]
   };
 }
-
-const fromBigNumber = (value: BigNumber): string =>
-  (value as BigNumber).toString();

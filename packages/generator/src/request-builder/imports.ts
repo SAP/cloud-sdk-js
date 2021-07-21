@@ -61,7 +61,11 @@ function entityImportDeclaration(
 function entityKeyImportDeclaration(
   properties: VdmProperty[]
 ): ImportDeclarationStructure[] {
-  return unique(properties.filter(property => property.isEnum).map(property => property.jsType)).map(type => ({
+  return unique(
+    properties
+      .filter(property => property.isEnum)
+      .map(property => property.jsType)
+  ).map(type => ({
     kind: StructureKind.ImportDeclaration,
     namedImports: [type],
     moduleSpecifier: `./${type}`

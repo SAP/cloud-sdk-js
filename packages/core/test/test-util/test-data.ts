@@ -1,6 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import { uriConverter } from '../../src/odata-v2';
-import { TestEntity, TestEntityMultiLink, TestEntitySingleLink } from './test-services/v2/test-service';
+import {
+  TestEntity,
+  TestEntityMultiLink,
+  TestEntitySingleLink
+} from './test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
   TestEntityMultiLink as TestEntityMultiLinkV4,
@@ -112,7 +116,9 @@ export function createOriginalTestEntityWithEnumKeyData() {
   };
 }
 
-export function createTestEntityWithEnumKey(originalData): TestEntityWithEnumKey {
+export function createTestEntityWithEnumKey(
+  originalData
+): TestEntityWithEnumKey {
   return TestEntityWithEnumKey.builder()
     .keyPropertyEnum1(originalData.KeyPropertyEnum1)
     .keyPropertyEnum2(originalData.KeyPropertyEnum2)

@@ -6,7 +6,17 @@
 import { TestEntity1RequestBuilder } from './TestEntity1RequestBuilder';
 import { TestComplexType1, TestComplexType1Field } from './TestComplexType1';
 import { TestEnumType1 } from './TestEnumType1';
-import { AllFields, Constructable, CustomFieldV4, EdmTypeField, EntityBuilderType, EntityV4, Field, FieldBuilder, OrderableEdmTypeField } from '@sap-cloud-sdk/core';
+import {
+  AllFields,
+  Constructable,
+  CustomFieldV4,
+  EdmTypeField,
+  EntityBuilderType,
+  EntityV4,
+  Field,
+  FieldBuilder,
+  OrderableEdmTypeField
+} from '@sap-cloud-sdk/core';
 
 /**
  * This class represents the entity "A_TestEntity1" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -82,31 +92,53 @@ export interface TestEntity1Type {
 }
 
 export namespace TestEntity1 {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntity1>> = new FieldBuilder(TestEntity1);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntity1>> =
+    new FieldBuilder(TestEntity1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false);
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
+    'KeyPropertyString',
+    'Edm.String',
+    false
+  );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true);
+  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'Int16Property',
+    'Edm.Int16',
+    true
+  );
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField('EnumProperty', 'Edm.Enum', true);
+  export const ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'EnumProperty',
+    'Edm.Enum',
+    true
+  );
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestComplexType1Field, true);
+  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
+    'ComplexTypeProperty',
+    TestComplexType1Field,
+    true
+  );
   /**
    * All fields of the TestEntity1 entity.
    */
-  export const _allFields: Array<EdmTypeField<TestEntity1, 'Edm.String', false, true> | OrderableEdmTypeField<TestEntity1, 'Edm.Int16', true, true> | EdmTypeField<TestEntity1, 'Edm.Enum', true, true> | TestComplexType1Field<TestEntity1, true, true>> = [
+  export const _allFields: Array<
+    | EdmTypeField<TestEntity1, 'Edm.String', false, true>
+    | OrderableEdmTypeField<TestEntity1, 'Edm.Int16', true, true>
+    | EdmTypeField<TestEntity1, 'Edm.Enum', true, true>
+    | TestComplexType1Field<TestEntity1, true, true>
+  > = [
     TestEntity1.KEY_PROPERTY_STRING,
     TestEntity1.INT_16_PROPERTY,
     TestEntity1.ENUM_PROPERTY,
@@ -115,16 +147,28 @@ export namespace TestEntity1 {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity1> = new AllFields('*', TestEntity1);
+  export const ALL_FIELDS: AllFields<TestEntity1> = new AllFields(
+    '*',
+    TestEntity1
+  );
   /**
    * All key fields of the TestEntity1 entity.
    */
-  export const _keyFields: Array<Field<TestEntity1, boolean, boolean>> = [TestEntity1.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<TestEntity1, boolean, boolean>> = [
+    TestEntity1.KEY_PROPERTY_STRING
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntity1.
    */
-  export const _keys: { [keys: string]: Field<TestEntity1, boolean, boolean> } = TestEntity1._keyFields.reduce((acc: { [keys: string]: Field<TestEntity1, boolean, boolean> }, field: Field<TestEntity1, boolean, boolean>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: { [keys: string]: Field<TestEntity1, boolean, boolean> } =
+    TestEntity1._keyFields.reduce(
+      (
+        acc: { [keys: string]: Field<TestEntity1, boolean, boolean> },
+        field: Field<TestEntity1, boolean, boolean>
+      ) => {
+        acc[field._fieldName] = field;
+        return acc;
+      },
+      {}
+    );
 }

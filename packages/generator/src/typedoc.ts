@@ -2,7 +2,8 @@ import { unixEOL, titleFormat } from '@sap-cloud-sdk/util';
 import { endWithDot } from './generator-utils';
 import {
   VdmComplexType,
-  VdmEntity, VdmEnumType,
+  VdmEntity,
+  VdmEnumType,
   VdmNavigationProperty,
   VdmProperty,
   VdmPropertyValueConstraints,
@@ -165,11 +166,14 @@ function tagToText(tag: string, descr = ''): string {
   return `${unixEOL}@${tag}` + (descr ? ` ${descr}` : '');
 }
 
-export function enumDocs(enumType: VdmEnumType): string{
-  const enumKeyValues = Object.entries(enumType.members).map(([key,value]) => (
-    `${key}: ${value.toString()}`));
-  return [`Enum type: [[${enumType.originalName}]] that reflects all the members in the metadata.`
-    , `The underlying type of this enum is ${enumType.underlyingType}`
-    , `The value of the enum entries are:`
-    , ...enumKeyValues].join(`${unixEOL}`)
+export function enumDocs(enumType: VdmEnumType): string {
+  const enumKeyValues = Object.entries(enumType.members).map(
+    ([key, value]) => `${key}: ${value.toString()}`
+  );
+  return [
+    `Enum type: [[${enumType.originalName}]] that reflects all the members in the metadata.`,
+    `The underlying type of this enum is ${enumType.underlyingType}`,
+    'The value of the enum entries are:',
+    ...enumKeyValues
+  ].join(`${unixEOL}`);
 }

@@ -6,7 +6,7 @@
  * Member2: 2
  */
 export declare enum TestEnumTypeInt64 {
-    Member1 = "Member1",
-    Member2 = "Member2"
+  Member1 = 'Member1',
+  Member2 = 'Member2'
 }
 //# sourceMappingURL=TestEnumTypeInt64.d.ts.map

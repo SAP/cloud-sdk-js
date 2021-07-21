@@ -4094,11 +4094,6 @@ dot-prop@^5.1.0, dot-prop@^5.1.1, dot-prop@^6.0.1:
   dependencies:
     is-obj "^2.0.0"
 
-drange@^1.0.2:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/drange/-/drange-1.1.1.tgz#b2aecec2aab82fcef11dbbd7b9e32b83f8f6c0b8"
-  integrity sha512-pYxfDYpued//QpnLIm4Avk7rsNtAtQkUES2cwAYSvD/wd2pKD71gN2Ebj3e7klzXwjocvE8c5vx/1fxwpqmSxA==
-
 dts-critic@latest:
   version "3.3.4"
   resolved "https://registry.npmjs.org/dts-critic/-/dts-critic-3.3.4.tgz#c15b7d4724190b8afaca7646f38271332f46dad7"
@@ -6854,14 +6849,12 @@ json-parse-even-better-errors@^2.3.0:
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
 json-schema-faker@^0.5.0-rcv.30:
-  version "0.5.0-rcv.35"
-  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.0-rcv.35.tgz#021bb4476b6c55d3382c837d0be577e482325672"
-  integrity sha512-UsIroMY2VdhO/4Fw2Vv40lnl37YjGp8pjadLJBW5k/eVldKED9xXV++TJUJaCEqnpwg7ixazLUKSm8C81APD4g==
+  version "0.5.0-rcv.37"
+  resolved "https://registry.npmjs.org/json-schema-faker/-/json-schema-faker-0.5.0-rcv.37.tgz#cee58750a99c11cb5cf9661bf0f1e1050198cbde"
+  integrity sha512-vsVCiQaevQfvyQ+2LNVETTafK8E/N6FR7HfHYxijZTwF3Qei3XAkD7LmyhQzOp5bChpL9cW0b4UlfpdUOUIuEg==
   dependencies:
     json-schema-ref-parser "^6.1.0"
     jsonpath-plus "^5.1.0"
-    randexp "^0.5.3"
-    yaml "^1.10.2"
 
 json-schema-ref-parser@^6.1.0:
   version "6.1.0"
@@ -9411,14 +9404,6 @@ quote-unquote@^1.0.0:
   resolved "https://registry.npmjs.org/quote-unquote/-/quote-unquote-1.0.0.tgz#67a9a77148effeaf81a4d428404a710baaac8a0b"
   integrity sha1-Z6mncUjv/q+BpNQoQEpxC6qsigs=
 
-randexp@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.npmjs.org/randexp/-/randexp-0.5.3.tgz#f31c2de3148b30bdeb84b7c3f59b0ebb9fec3738"
-  integrity sha512-U+5l2KrcMNOUPYvazA3h5ekF80FHTUG+87SEAmHZmolh1M+i/WyTCxVzmi+tidIa1tM4BSe8g2Y/D3loWDjj+w==
-  dependencies:
-    drange "^1.0.2"
-    ret "^0.2.0"
-
 range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
@@ -9858,11 +9843,6 @@ restore-cursor@^3.1.0:
   dependencies:
     onetime "^5.1.0"
     signal-exit "^3.0.2"
-
-ret@^0.2.0:
-  version "0.2.2"
-  resolved "https://registry.npmjs.org/ret/-/ret-0.2.2.tgz#b6861782a1f4762dce43402a71eb7a283f44573c"
-  integrity sha512-M0b3YWQs7R3Z917WRQy1HHA7Ba7D8hvZg6UE5mLykJxQVE2ju0IXbGlaHPPlkY+WN7wFP+wUMXmBFA0aV6vYGQ==
 
 ret@~0.1.10:
   version "0.1.15"
@@ -11764,7 +11744,7 @@ yallist@^4.0.0:
   resolved "https://registry.npmjs.org/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yaml@1.10.2, yaml@^1.10.0, yaml@^1.10.2:
+yaml@1.10.2, yaml@^1.10.0:
   version "1.10.2"
   resolved "https://registry.npmjs.org/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==

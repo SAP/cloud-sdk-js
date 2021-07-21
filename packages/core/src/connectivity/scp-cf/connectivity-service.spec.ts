@@ -10,7 +10,10 @@ import {
 import { mockServiceToken } from '../../../test/test-util/token-accessor-mocks';
 import { mockClientCredentialsGrantCall } from '../../../test/test-util/xsuaa-service-mocks';
 import { Destination } from './destination';
-import { addProxyConfiguration, proxyHostAndPort } from './connectivity-service';
+import {
+  addProxyConfiguration,
+  proxyHostAndPort
+} from './connectivity-service';
 import { Protocol } from '.';
 
 describe('connectivity-service', () => {
@@ -106,9 +109,9 @@ describe('connectivity-service', () => {
     });
 
     const expected = {
-        host: 'proxy.example.com',
-        port: 54321,
-        protocol: Protocol.HTTP
+      host: 'proxy.example.com',
+      port: 54321,
+      protocol: Protocol.HTTP
     };
 
     const hostAndPort = proxyHostAndPort();

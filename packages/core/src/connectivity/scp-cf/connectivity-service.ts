@@ -52,7 +52,7 @@ interface HostAndPort {
 export function proxyHostAndPort(): HostAndPort {
   const service = readConnectivityServiceBinding();
 
-  if(typeof service.credentials.onpremise_proxy_http_port !== 'undefined'){
+  if (typeof service.credentials.onpremise_proxy_http_port !== 'undefined') {
     return {
       host: service.credentials.onpremise_proxy_host,
       port: service.credentials.onpremise_proxy_http_port,

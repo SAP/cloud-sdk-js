@@ -33,6 +33,7 @@
         <Property Name="ComplexTypeCollectionProperty" Type="Collection(API_TEST_SRV.A_TestComplexType)"/>
 
         <Property Name="EnumProperty" Type="API_TEST_SRV.A_TestEnumType"/>
+        <Property Name="EnumPropertyInt64" Type="API_TEST_SRV.A_TestEnumType_Int64"/>
         <Property Name="EnumPropertyWithOneMember" Type="API_TEST_SRV.A_TestEnumType_WithOneMember"/>
         <Property Name="EnumCollectionProperty" Type="Collection(API_TEST_SRV.A_TestEnumType)"/>
 
@@ -46,6 +47,19 @@
           <PropertyRef Name="KeyProperty"/>
         </Key>
         <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntityWithEnumKeyType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyPropertyEnum1"/>
+          <PropertyRef Name="KeyPropertyEnum2"/>
+          <PropertyRef Name="KeyPropertyEnum3"/>
+        </Key>
+
+        <Property Name="KeyPropertyEnum1" Type="API_TEST_SRV.A_TestEnumType" Nullable="false"/>
+        <Property Name="KeyPropertyEnum2" Type="API_TEST_SRV.A_TestEnumType" Nullable="false"/>
+        <Property Name="KeyPropertyEnum3" Type="API_TEST_SRV.A_TestEnumType_Int64" Nullable="false"/>
+
       </EntityType>
 
       <EntityType Name="A_TestEntityTypeToBeShared">
@@ -156,8 +170,11 @@
       <ComplexType Name="A_TestLvl2NestedComplexType">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
       </ComplexType>
-
       <EnumType Name="A_TestEnumType">
+        <Member Name="Member1"/>
+        <Member Name="Member2"/>
+      </EnumType>
+      <EnumType Name="A_TestEnumType_Int64" UnderlyingType="Edm.Int64">
         <Member Name="Member1" Value="1"/>
         <Member Name="Member2" Value="2"/>
       </EnumType>
@@ -246,6 +263,8 @@
           <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityMultiLink"/>
           <NavigationPropertyBinding Path="to_OtherMultiLink" Target="A_TestEntityMultiLink"/>
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
+        </EntitySet>
+        <EntitySet Name="A_TestEntityWithEnumKey" EntityType="API_TEST_SRV.A_TestEntityWithEnumKeyType" sap:content-version="1">
         </EntitySet>
         <EntitySet Name="A_TestEntityWithSharedEntityType1" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
         </EntitySet>

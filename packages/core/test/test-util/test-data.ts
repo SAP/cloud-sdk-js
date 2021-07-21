@@ -1,16 +1,14 @@
 import { v4 as uuid } from 'uuid';
 import { uriConverter } from '../../src/odata-v2';
-import {
-  TestEntity,
-  TestEntitySingleLink,
-  TestEntityMultiLink
-} from './test-services/v2/test-service';
+import { TestEntity, TestEntityMultiLink, TestEntitySingleLink } from './test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
   TestEntityMultiLink as TestEntityMultiLinkV4,
-  TestEntitySingleLink as TestEntitySingleLinkV4
+  TestEntitySingleLink as TestEntitySingleLinkV4,
+  TestEntityWithEnumKey
 } from './test-services/v4/test-service';
 import { TestEnumType } from './test-services/v4/test-service/TestEnumType';
+import { TestEnumTypeInt64 } from './test-services/v4/test-service/TestEnumTypeInt64';
 
 const { convertToUriFormat } = uriConverter;
 
@@ -104,6 +102,23 @@ export function testEntityResourcePath(
     guid,
     'Edm.Guid'
   )},KeyPropertyString='${str}')`;
+}
+
+export function createOriginalTestEntityWithEnumKeyData() {
+  return {
+    KeyPropertyEnum1: TestEnumType[TestEnumType.Member1],
+    KeyPropertyEnum2: TestEnumType[TestEnumType.Member2],
+    KeyPropertyEnum3: TestEnumTypeInt64[TestEnumTypeInt64.Member1]
+  };
+}
+
+export function createTestEntityWithEnumKey(originalData): TestEntityWithEnumKey {
+  return TestEntityWithEnumKey.builder()
+    .keyPropertyEnum1(TestEnumType[originalData.KeyPropertyEnum1] as unknown as TestEnumType)
+    .keyPropertyEnum2(TestEnumType[originalData.KeyPropertyEnum2] as unknown as TestEnumType)
+    .keyPropertyEnum3(TestEnumTypeInt64[originalData.KeyPropertyEnum3] as unknown as TestEnumTypeInt64)
+    .build()
+    .setOrInitializeRemoteState();
 }
 
 // v4 toUriFormat

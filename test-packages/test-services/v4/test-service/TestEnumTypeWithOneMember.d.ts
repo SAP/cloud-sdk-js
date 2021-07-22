@@ -3,9 +3,9 @@
  * The members represent values of EDM type Edm.Int32.
  */
 export declare enum TestEnumTypeWithOneMember {
-  /**
-   * original value: 0
-   */
-  Member1 = 'Member1'
+    /**
+     * original value: 0
+     */
+    Member1 = "Member1"
 }
 //# sourceMappingURL=TestEnumTypeWithOneMember.d.ts.map

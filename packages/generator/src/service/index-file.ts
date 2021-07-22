@@ -17,6 +17,9 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
       ...service.complexTypes.map(complexType =>
         exportStatement(complexType.typeName)
       ),
+      ...service.enumTypes.map( enumType =>
+        exportStatement(enumType.typeName)
+      ),
       ...(service.functionImports && service.functionImports.length
         ? [exportStatement('function-imports')]
         : []),

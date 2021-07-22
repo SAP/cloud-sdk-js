@@ -8,7 +8,7 @@ import {
 } from '@sap-cloud-sdk/generator-common';
 import type { GenerationAndUsage } from '@sap-cloud-sdk/generator-common';
 import { VdmServiceMetadata } from '../vdm-types';
-import { codeSamples, genericCodeSample } from './code-samples/code-samples';
+import { codeSamples, genericCodeSample } from './code-samples';
 
 export async function getGenerationAndUsage(
   service: VdmServiceMetadata

@@ -3,7 +3,7 @@ import { writeFile, readFile, removeSync } from 'fs-extra';
 import execa = require('execa');
 import { VdmServiceMetadata } from '../vdm-types';
 import { getApiSpecificUsage } from './generation-and-usage';
-import {genericCodeSample} from "./code-samples/code-samples";
+import {genericCodeSample} from "./code-samples";
 
 describe('generation-and-usage', () => {
   const service = {

@@ -12,7 +12,7 @@ import { ConstructorOrField } from '../constructor-or-field';
 import { EdmTypeField } from '../edm-type-field';
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[OrderableEdmTypeField]] instead.
  * Represents a property with a number value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -63,7 +63,7 @@ export class NumberFieldBase<
 }
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[OrderableEdmTypeField]] instead.
  * Represents a selectable property with a number value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -74,7 +74,7 @@ export class NumberField<EntityT extends Entity> extends NumberFieldBase<
 > {}
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[OrderableEdmTypeField]] instead.
  * Represents a complex type property with a number value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to

@@ -43,11 +43,11 @@ export async function buildHttpRequest(
 ): Promise<DestinationHttpRequestConfig> {
   if (customHeaders) {
     logger.warn(
-      `The custom headers are provided with the keys: [ ${Object.keys(
+      `The following custom headers will overwrite headers created by the SDK:\n${Object.keys(
         customHeaders
-      ).join(
-        ', '
-      )} ]. These keys will overwrite the headers created by the SDK.`
+      )
+        .map(key => `  - "${key}"`)
+        .join('\n')}`
     );
   }
   const resolvedDestination = await resolveDestination(destination);

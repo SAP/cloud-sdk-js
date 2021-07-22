@@ -90,7 +90,10 @@ describe('generic http client', () => {
         'SAP-Connectivity-SCC-Location_ID': 'efg'
       });
       expect(warnSpy).toBeCalledWith(
-        'The custom headers are provided with the keys: [ authorization, sap-client, SAP-Connectivity-SCC-Location_ID ]. These keys will overwrite the headers created by the SDK.'
+        `The following custom headers will overwrite headers created by the SDK:
+  - "authorization"
+  - "sap-client"
+  - "SAP-Connectivity-SCC-Location_ID"`
       );
     });
 

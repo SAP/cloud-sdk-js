@@ -506,19 +506,34 @@ class DestinationFromServiceRetriever {
   private isProviderNeeded(
     resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
-    return (
-      this.options.selectionStrategy !== alwaysSubscriber &&
-      (this.options.selectionStrategy !== subscriberFirst ||
-        !resultFromSubscriber)
-    );
+    if (this.options.selectionStrategy === alwaysSubscriber) {
+      return false;
+    }
+
+    if (
+      this.options.selectionStrategy === subscriberFirst &&
+      resultFromSubscriber
+    ) {
+      return false;
+    }
+
+    return true;
   }
 
   private isSubscriberNeeded(): boolean {
-    return (
-      !!this.decodedUserJwt &&
-      this.options.selectionStrategy !== alwaysProvider &&
-      !this.isProviderAndSubscriberSameTenant()
-    );
+    if (!this.decodedUserJwt) {
+      return false;
+    }
+
+    if (this.options.selectionStrategy === alwaysProvider) {
+      return false;
+    }
+
+    if (this.isProviderAndSubscriberSameTenant()) {
+      return false;
+    }
+
+    return true;
   }
 
   private async searchProviderAccountForDestination(): Promise<

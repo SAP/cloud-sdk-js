@@ -6,7 +6,6 @@ import { ConstructorOrField } from '../constructor-or-field';
 import { EdmTypeField } from '../edm-type-field';
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a property with a enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -26,7 +25,6 @@ class EnumFieldBase<
 > {}
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a selectable property with a enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -41,7 +39,6 @@ export class EnumField<EntityT extends Entity> extends EnumFieldBase<
 }
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
  * Represents a complex type property with a enum value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to

@@ -11,7 +11,7 @@ import { ConstructorOrField } from '../constructor-or-field';
 import { EdmTypeField } from '../edm-type-field';
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a property with a boolean value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -22,7 +22,7 @@ export class BooleanFieldBase<
 > extends EdmTypeField<EntityT, boolean, false, SelectableT> {}
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a selectable property with a boolean value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -33,7 +33,7 @@ export class BooleanField<EntityT extends Entity> extends BooleanFieldBase<
 > {}
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a complex type property with a boolean value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to

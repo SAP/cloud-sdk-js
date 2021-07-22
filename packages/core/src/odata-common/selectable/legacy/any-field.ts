@@ -11,8 +11,8 @@ import { ConstructorOrField } from '../constructor-or-field';
 import { EdmTypeField } from '../edm-type-field';
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
- * Represents a property with an unknown or currently unsupported edm type like Edm.Geography.
+ * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
+ * Represents a property with an unknown or currently unsupported EDM type like Edm.Geography.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
@@ -22,8 +22,8 @@ class AnyFieldBase<
 > extends EdmTypeField<EntityT, any, false, SelectableT> {}
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
- * Represents a selectable property with with an unknown or currently unsupported edm type like Edm.Geography.
+ * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
+ * Represents a selectable property with with an unknown or currently unsupported EDM type like Edm.Geography.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
@@ -33,8 +33,8 @@ export class AnyField<EntityT extends Entity> extends AnyFieldBase<
 > {}
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
- * Represents a complex type property with with an unknown or currently unsupported edm type like Edm.Geography.
+ * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
+ * Represents a complex type property with with an unknown or currently unsupported EDM type like Edm.Geography.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
  */

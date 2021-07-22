@@ -11,7 +11,7 @@ import { ConstructorOrField } from '../constructor-or-field';
 import { EdmTypeField } from '../edm-type-field';
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a property with a binary value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -22,7 +22,7 @@ export class BinaryFieldBase<
 > extends EdmTypeField<EntityT, string, false, SelectableT> {}
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a selectable property with a binary value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -33,7 +33,7 @@ export class BinaryField<EntityT extends Entity> extends BinaryFieldBase<
 > {}
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a complex type property with a binary value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to

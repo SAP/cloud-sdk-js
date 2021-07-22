@@ -18,7 +18,7 @@
 
 ## New Functionality
 
-- [core] Support `OAuth2JWTBearer` authentication type.
+-
 
 ## Improvements
 
@@ -26,10 +26,24 @@
 
 ## Fixed Issues
 
+-
+
+
+# 1.47.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.47.0<br>
+Blog: TBD<br>
+
+## New Functionality
+
+- [core] Support `OAuth2JWTBearer` authentication type.
+
+## Fixed Issues
+
 - [proxy] Fix destination service calls using web proxies.
 - [core] Fix type error to allow `null` values in filters for nullable properties.
 - [core] Fix OData filter runtime error, when using lambda expression with operands like `or`.
-
 
 # 1.46.0
 

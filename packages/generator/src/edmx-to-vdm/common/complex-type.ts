@@ -118,9 +118,9 @@ export function getTypeMappingComplexProperties(
 
   if (isEnum) {
     return {
-      edmType: 'Edm.Enum',
+      edmType: 'Edm.String',
       jsType: enumTypeForName(typeName, enumTypes),
-      fieldType: 'EdmTypeField'
+      fieldType: 'EnumField'
     };
   }
 

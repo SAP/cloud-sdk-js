@@ -190,7 +190,11 @@ export function getGenericParameters(
 ): string {
   const params = [entityClassName];
   if (prop.isEnum) {
-    params.push("'Edm.Enum'");
+    if (prop.isCollection) {
+      params.push(`typeof ${prop.jsType}`);
+    } else {
+      params.push(`${prop.jsType}`);
+    }
   } else if (!prop.isComplex) {
     params.push(`'${prop.edmType}'`);
   } else if (prop.isCollection) {

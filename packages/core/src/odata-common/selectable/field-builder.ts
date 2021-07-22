@@ -196,9 +196,7 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
     });
   }
 
-  buildEnumField <
-    EnumT extends string,
-    NullableT extends boolean>(
+  buildEnumField<EnumT extends string, NullableT extends boolean>(
     fieldName: string,
     enumType: Record<string, EnumT>,
     isNullable: NullableT
@@ -206,10 +204,13 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
     EntityTypeFromFieldOf<FieldOfT>,
     EnumT,
     NullableT,
-    IsSelectableField<FieldOfT>> {
+    IsSelectableField<FieldOfT>
+  > {
     const isSelectable = (this.fieldOf instanceof
       ComplexTypeField) as IsSelectableField<FieldOfT>;
-    return new EnumField(fieldName, this.fieldOf, enumType, {isNullable, isSelectable});
+    return new EnumField(fieldName, this.fieldOf, enumType, {
+      isNullable,
+      isSelectable
+    });
   }
-
 }

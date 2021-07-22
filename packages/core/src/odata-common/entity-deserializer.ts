@@ -105,7 +105,7 @@ export function entityDeserializer(
     json: Partial<JsonT>,
     field: Field<EntityT> | Link<EntityT>
   ) {
-    if(field instanceof EnumField){
+    if (field instanceof EnumField) {
       return json[field._fieldName];
     }
     if (field instanceof EdmTypeField) {

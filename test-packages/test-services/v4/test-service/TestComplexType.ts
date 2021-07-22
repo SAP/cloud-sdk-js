@@ -16,6 +16,7 @@ import {
   ConstructorOrField,
   EdmTypeField,
   EntityV4,
+  EnumField,
   FieldBuilder,
   FieldOptions,
   FieldType,
@@ -285,8 +286,8 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  enumProperty: EdmTypeField<EntityT, 'Edm.Enum', true, false> =
-    this._fieldBuilder.buildEdmTypeField('EnumProperty', 'Edm.Enum', true);
+  enumProperty: EnumField<EntityT, TestEnumType, true, false> =
+    this._fieldBuilder.buildEnumField('EnumProperty', TestEnumType, true);
   /**
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -465,7 +466,7 @@ export namespace TestComplexType {
     {
       originalName: 'EnumProperty',
       name: 'enumProperty',
-      type: 'Edm.Enum',
+      type: 'Edm.String',
       isCollection: false
     },
     {

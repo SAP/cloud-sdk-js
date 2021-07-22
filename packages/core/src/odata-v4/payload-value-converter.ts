@@ -2,7 +2,6 @@
 
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { identity } from '@sap-cloud-sdk/util';
 import { Time, EdmTypeShared } from '../odata-common';
 import {
   deserializersCommon,
@@ -144,8 +143,7 @@ const deserializers: EdmTypeMapping = {
   'Edm.Date': edmDateToMoment,
   'Edm.DateTimeOffset': edmDateTimeOffsetToMoment,
   'Edm.Duration': edmDurationToMoment,
-  'Edm.TimeOfDay': edmTimeOfDayToTime,
-  'Edm.Enum': identity
+  'Edm.TimeOfDay': edmTimeOfDayToTime
 };
 
 const serializers: EdmTypeMapping = {
@@ -153,8 +151,7 @@ const serializers: EdmTypeMapping = {
   'Edm.Date': momentToEdmDate,
   'Edm.DateTimeOffset': momentToEdmDateTimeOffsetToMoment,
   'Edm.Duration': durationToEdmDuration,
-  'Edm.TimeOfDay': timeToEdmTimeOfDay,
-  'Edm.Enum': identity
+  'Edm.TimeOfDay': timeToEdmTimeOfDay
 };
 
 export {

@@ -96,7 +96,7 @@ export function createPropertyFieldInitializer(prop: VdmProperty): string {
     return `this._fieldBuilder.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
   }
 
-  if (prop.isEnum){
+  if (prop.isEnum) {
     return `this._fieldBuilder.buildEnumField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
   }
 

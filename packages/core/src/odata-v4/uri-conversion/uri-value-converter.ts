@@ -3,7 +3,6 @@
 import { identity } from '@sap-cloud-sdk/util';
 import { tsToEdm } from '../payload-value-converter';
 import {
-  convertToUriForEdmString,
   uriConvertersCommon,
   EdmTypeShared,
   UriConverter
@@ -21,8 +20,7 @@ export const uriConverters: UriConverterMapping = {
   'Edm.TimeOfDay': identity,
   'Edm.Decimal': value => String(value),
   'Edm.Duration': value => `duration'${value}'`,
-  'Edm.Guid': identity,
-  'Edm.Enum': value => convertToUriForEdmString(value)
+  'Edm.Guid': identity
 };
 /**
  * @hidden

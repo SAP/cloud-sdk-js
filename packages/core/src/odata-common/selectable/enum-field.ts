@@ -1,17 +1,16 @@
-import { Field, FieldOptions } from './field';
 import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
+import { Filter } from '../filter';
+import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
-import { Filter } from '../filter';
 
 export class EnumField<
   EntityT extends Entity,
   EnumT extends string,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-  > extends Field<EntityT, NullableT, SelectableT> {
-
+> extends Field<EntityT, NullableT, SelectableT> {
   edmType: EdmTypeShared<any> = 'Edm.String';
 
   /**
@@ -27,7 +26,8 @@ export class EnumField<
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
     readonly enumType: Record<string, EnumT>,
-    fieldOptions?: FieldOptions<NullableT, SelectableT>) {
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
+  ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
   }
 
@@ -41,16 +41,12 @@ export class EnumField<
       : this._fieldName;
   }
 
-
-
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'eq', i.e. `==`.
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  equals(
-    value: EnumType<EnumT>
-  ): Filter<EntityT, string> {
+  equals(value: EnumType<EnumT>): Filter<EntityT, string> {
     return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 
@@ -59,9 +55,7 @@ export class EnumField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  notEquals(
-    value: EnumType<EnumT>
-  ): Filter<EntityT, string> {
+  notEquals(value: EnumType<EnumT>): Filter<EntityT, string> {
     return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 }

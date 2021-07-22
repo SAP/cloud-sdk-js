@@ -78,7 +78,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     if (fieldValue === null || fieldValue === undefined) {
       return null;
     }
-    if (field instanceof EnumField){
+    if (field instanceof EnumField) {
       return fieldValue;
     }
     if (field instanceof EdmTypeField) {

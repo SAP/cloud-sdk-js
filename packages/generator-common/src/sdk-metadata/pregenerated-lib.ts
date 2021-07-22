@@ -1,6 +1,6 @@
 import { checkUrlExists } from '@sap-cloud-sdk/util';
+import axios from 'axios';
 import { InstructionWithText, PregeneratedLibrary } from './sdk-metadata-types';
-import { getVersionForClient } from './sdk-metadata';
 
 export async function isPublishedNpmPackage(
   npmPackageName: string
@@ -11,6 +11,16 @@ export async function isPublishedNpmPackage(
   } catch (e) {
     return false;
   }
+}
+
+export async function getLatestVersionOfNpmPackage(
+  npmPacakgeName: string
+): Promise<string> {
+  const response = await axios.request({
+    url: `http://registry.npmjs.org/${npmPacakgeName}/latest`,
+    method: 'GET'
+  });
+  return response.data.version;
 }
 
 export function getInstallationSnippet(
@@ -44,7 +54,7 @@ export async function getPregeneratedLibrary(
       compatibilityNotes: '',
       description,
       generatedAt: getTimeStamp(),
-      version: await getVersionForClient(versionInPackageJson)
+      version: await getLatestVersionOfNpmPackage(npmPackageName)
     };
   }
 }

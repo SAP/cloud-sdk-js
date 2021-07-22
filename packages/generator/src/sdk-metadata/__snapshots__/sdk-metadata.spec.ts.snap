@@ -11,7 +11,7 @@ Object {
 
 const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find a usage example for this API below.",
+      "text": "In the example below you query the top 5 entities of the  <code>TestEntity </code> type.",
     },
     "generationSteps": Object {
       "instructions": "<ul>
@@ -30,7 +30,7 @@ The steps above will generate a basic TypeScript client. For additional options 
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
+      "text": "In the example below you query the top 5 entities of the  <code>BusinessPartner </code> type.",
     },
     "links": Object {
       "apiHubTutorial": Object {
@@ -54,25 +54,14 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
         "url": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
       },
     },
+    "repository": "npm",
   },
   "language": "JavaScript",
-  "pregeneratedLibrary": Object {
-    "compatibilityNotes": "",
-    "dependencyName": "@sap/cloud-sdk-vdm-test-service",
-    "description": "SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service",
-    "generatedAt": "/Date(0)/",
-    "installLibrarySteps": Object {
-      "instructions": "npm i @sap/cloud-sdk-vdm-test-service:latest",
-      "text": "Execute the following npm command to install the pregenerated client.",
-    },
-    "repository": "npm",
-    "repositoryLink": "https://www.npmjs.com/package/@sap/cloud-sdk-vdm-test-service",
-    "version": "1.0.0",
-  },
+  "pregeneratedLibrary": undefined,
   "serviceStatus": Object {
-    "status": "certified",
-    "statusLongText": "You can download our pregenerated API client for this API.",
-    "statusText": "API Client available for download",
+    "status": "verified",
+    "statusLongText": "The SAP Cloud SDK team checked for this API that generating a API client works, but no pregenerated client is available. You can generate your own client for this API.",
+    "statusText": "API Client generation tested but no download available",
   },
 }
 `;
@@ -86,7 +75,7 @@ Object {
 
 const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find a usage example for this API below.",
+      "text": "In the example below you query the top 5 entities of the  <code>TestEntity </code> type.",
     },
     "generationSteps": Object {
       "instructions": "<ul>
@@ -105,7 +94,7 @@ The steps above will generate a basic TypeScript client. For additional options 
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
+      "text": "In the example below you query the top 5 entities of the  <code>BusinessPartner </code> type.",
     },
     "links": Object {
       "apiHubTutorial": Object {
@@ -129,6 +118,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
         "url": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
       },
     },
+    "repository": "npm",
   },
   "language": "JavaScript",
   "pregeneratedLibrary": undefined,

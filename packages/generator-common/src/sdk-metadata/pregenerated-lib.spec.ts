@@ -1,6 +1,7 @@
 import nock = require('nock');
 import {
   getInstallationSnippet,
+  getLatestVersionOfNpmPackage,
   getPregeneratedLibrary,
   getRepositoryLink,
   getTimeStamp,
@@ -38,6 +39,13 @@ describe('pregenerated-lib', () => {
       false
     );
   }, 30000);
+
+  it('gives version for exisitng client', async () => {
+    nock('http://registry.npmjs.org/')
+      .get(/@sap-cloud-sdk\/core\/latest/)
+      .reply(200, { version: '1.2.3' });
+    await getLatestVersionOfNpmPackage('@sap-cloud-sdk/core');
+  });
 
   it('returns pregenerated lib information for existing service', async () => {
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);

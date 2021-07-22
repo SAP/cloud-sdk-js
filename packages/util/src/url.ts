@@ -7,6 +7,6 @@ import axios from 'axios';
  */
 export async function checkUrlExists(url: string): Promise<number> {
   return axios
-    .request({ url, method: 'HEAD', timeout: 2 })
+    .request({ url, method: 'HEAD' })
     .then(response => response.status);
 }

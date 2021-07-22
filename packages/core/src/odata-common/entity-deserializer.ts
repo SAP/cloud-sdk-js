@@ -25,6 +25,7 @@ import {
   EdmType as EdmTypeV4
 } from '../odata-v4';
 import { toPropertyFormat } from './name-converter';
+import { EnumField } from './selectable/enum-field';
 
 const logger = createLogger({
   package: 'core',
@@ -104,6 +105,9 @@ export function entityDeserializer(
     json: Partial<JsonT>,
     field: Field<EntityT> | Link<EntityT>
   ) {
+    if(field instanceof EnumField){
+      return json[field._fieldName];
+    }
     if (field instanceof EdmTypeField) {
       return edmToTs(json[field._fieldName], field.edmType);
     }

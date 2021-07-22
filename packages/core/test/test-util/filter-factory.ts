@@ -126,6 +126,6 @@ export const testFilterLambdaExpressionFilterFunctionOnLink = {
 };
 
 export const testFilterEnum = {
-  filter: TestEntityV4.ENUM_PROPERTY.equals('test'),
-  odataStr: "EnumProperty eq 'test'"
+  filter: TestEntityV4.ENUM_PROPERTY.equals('Member1'),
+  odataStr: "EnumProperty eq 'Member1'"
 };

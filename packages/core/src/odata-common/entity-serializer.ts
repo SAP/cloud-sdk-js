@@ -14,6 +14,7 @@ import {
   PropertyMetadata
 } from '../odata-common';
 import { toStaticPropertyFormat } from './name-converter';
+import { EnumField } from './selectable/enum-field';
 
 const logger = createLogger({
   package: 'core',
@@ -76,6 +77,9 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   function serializeField(field: any, fieldValue: any): any {
     if (fieldValue === null || fieldValue === undefined) {
       return null;
+    }
+    if (field instanceof EnumField){
+      return fieldValue;
     }
     if (field instanceof EdmTypeField) {
       return tsToEdm(fieldValue, field.edmType);

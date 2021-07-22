@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestEnumTypeInt64 = void 0;
 /**
  * This enum represents the enum type "[[A_TestEnumType_Int64]]".
@@ -12,13 +12,16 @@ exports.TestEnumTypeInt64 = void 0;
  */
 var TestEnumTypeInt64;
 (function (TestEnumTypeInt64) {
-    /**
-     * original value: 99999999999999999999
-     */
-    TestEnumTypeInt64["Member1"] = "Member1";
-    /**
-     * original value: 88888888888888888888
-     */
-    TestEnumTypeInt64["Member2"] = "Member2";
-})(TestEnumTypeInt64 = exports.TestEnumTypeInt64 || (exports.TestEnumTypeInt64 = {}));
+  /**
+   * original value: 99999999999999999999
+   */
+  TestEnumTypeInt64['Member1'] = 'Member1';
+  /**
+   * original value: 88888888888888888888
+   */
+  TestEnumTypeInt64['Member2'] = 'Member2';
+})(
+  (TestEnumTypeInt64 =
+    exports.TestEnumTypeInt64 || (exports.TestEnumTypeInt64 = {}))
+);
 //# sourceMappingURL=TestEnumTypeInt64.js.map

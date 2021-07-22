@@ -50,6 +50,7 @@ function parseMember(edmxEnumType: EdmxEnumType): VdmEnumMemberType[] {
 
 function validateUniqueness(edmxEnumType: EdmxEnumType) {
   if (unique(edmxEnumType.Member).length !== edmxEnumType.Member.length) {
+    // TODO: when validation option is added, throw an error based on the option
     logger.warn(
       `The enum ${edmxEnumType.Name} has duplicate member names. To keep the uniqueness, only the last one is kept.`
     );
@@ -68,6 +69,7 @@ function validateUnderlyingType(edmxEnumType: EdmxEnumType) {
     !!edmxEnumType.UnderlyingType &&
     !validUnderlyingTypes.includes(edmxEnumType.UnderlyingType)
   ) {
+    // TODO: when validation option is added, throw an error based on the option
     logger.warn(
       `The enum ${edmxEnumType.Name} has invalid underlying type ${edmxEnumType.UnderlyingType}.`
     );

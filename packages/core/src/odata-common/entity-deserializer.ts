@@ -249,6 +249,8 @@ export function entityDeserializer(
     if (isComplexTypeNameSpace(fieldType)) {
       return json.map(val => deserializeComplexType(val, fieldType));
     }
+    // Enum
+    return json;
   }
 
   return {

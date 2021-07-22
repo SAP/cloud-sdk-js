@@ -1,12 +1,6 @@
-import {
-  TestEntity,
-  TestComplexType
-} from '../../test/test-util/test-services/v4/test-service';
+import { TestComplexType, TestEntity } from '../../test/test-util/test-services/v4/test-service';
 import { TestEnumType } from '../../test/test-util/test-services/v4/test-service/TestEnumType';
-import {
-  deserializeComplexType,
-  deserializeEntity
-} from './entity-deserializer';
+import { deserializeComplexType, deserializeEntity } from './entity-deserializer';
 
 describe('entity-deserializer', () => {
   it('should deserialize an enum property', () => {
@@ -22,6 +16,15 @@ describe('entity-deserializer', () => {
       deserializeEntity({ CollectionProperty: collectionProperty }, TestEntity)
     ).toEqual(
       TestEntity.builder().collectionProperty(collectionProperty).build()
+    );
+  });
+
+  it('should deserialize an entity with enum collection property', () => {
+    const enumCollectionProperty = [TestEnumType.Member1, TestEnumType.Member2];
+    expect(
+      deserializeEntity({ EnumCollectionProperty: enumCollectionProperty }, TestEntity)
+    ).toEqual(
+      TestEntity.builder().enumCollectionProperty(enumCollectionProperty).build()
     );
   });
 

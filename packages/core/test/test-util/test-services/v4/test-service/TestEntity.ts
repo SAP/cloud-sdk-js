@@ -17,7 +17,7 @@ import {
   CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
+  EntityV4, EnumField,
   Field,
   FieldBuilder,
   OneToManyLink,
@@ -228,7 +228,6 @@ import {
   TestEntitySingleLink,
   TestEntitySingleLinkType
 } from './TestEntitySingleLink';
-import { EnumField } from '../../../../../src/odata-common/selectable/enum-field';
 
 export interface TestEntityType {
   keyPropertyGuid: string;
@@ -508,7 +507,7 @@ export namespace TestEntity {
    */
   export const ENUM_COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField(
     'EnumCollectionProperty',
-    'Edm.Enum',
+    TestEnumType,
     true
   );
   /**
@@ -560,7 +559,7 @@ export namespace TestEntity {
     | EnumField<TestEntity, TestEnumType, true, true>
     | EnumField<TestEntity, TestEnumTypeInt64, true, true>
     | EnumField<TestEntity, TestEnumTypeWithOneMember, true, true>
-    | CollectionField<TestEntity, 'Edm.Enum', true, true>
+    | CollectionField<TestEntity, typeof TestEnumType, true, true>
     | OneToManyLink<TestEntity, TestEntityMultiLink>
     | OneToOneLink<TestEntity, TestEntitySingleLink>
   > = [

@@ -1,8 +1,4 @@
-import {
-  TestEntity,
-  TestComplexType,
-  TestEntitySingleLink
-} from '../../test/test-util/test-services/v4/test-service';
+import { TestComplexType, TestEntity, TestEntitySingleLink } from '../../test/test-util/test-services/v4/test-service';
 import { TestEnumType } from '../../test/test-util/test-services/v4/test-service/TestEnumType';
 import { serializeComplexType, serializeEntity } from './entity-serializer';
 
@@ -34,7 +30,7 @@ describe('entity-serializer', () => {
     });
   });
 
-  it('should serialize entity with collection field', () => {
+  it('should serialize entity with string collection field', () => {
     const collectionProperty = ['abc', 'def'];
     const testEntity = TestEntity.builder()
       .collectionProperty(collectionProperty)
@@ -42,6 +38,17 @@ describe('entity-serializer', () => {
 
     expect(serializeEntity(testEntity, TestEntity)).toEqual({
       CollectionProperty: collectionProperty
+    });
+  });
+
+  it('should serialize entity with enum collection field', () => {
+    const enumCollectionProperty = [TestEnumType.Member1, TestEnumType.Member2];
+    const testEntity = TestEntity.builder()
+      .enumCollectionProperty(enumCollectionProperty)
+      .build();
+
+    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+      EnumCollectionProperty: enumCollectionProperty
     });
   });
 

@@ -219,6 +219,8 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     if (isComplexTypeNameSpace(fieldType)) {
       return fieldValue.map(val => serializeComplexType(val, fieldType));
     }
+    // Enum
+    return fieldValue;
   }
 
   return {

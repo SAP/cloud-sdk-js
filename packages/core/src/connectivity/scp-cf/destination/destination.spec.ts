@@ -78,7 +78,7 @@ describe('parseDestination', () => {
           additionalHeader1: 'additionalHeader1',
           additionalHeader2: 'additionalHeader2'
         },
-        queries: {
+        queryParameters: {
           additionalQueryParam: 'additionalQueryParam'
         }
       })

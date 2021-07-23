@@ -64,31 +64,45 @@ export function parseDestination(
   });
 }
 
-function getAdditionalHeadersAndQueryParameters(
-  destinationConfig: DestinationConfiguration
+function getAdditionalProperties(
+  destinationConfig: DestinationConfiguration,
+  originalKeyPrefix: string
 ): Record<string, any> {
-  const configDestinationPropertyMapping = {
-    'URL.headers.': 'headers',
-    'URL.queries.': 'queries'
-  };
+  const relevantConfigEntries = Object.entries(destinationConfig).filter(
+    ([key]) => key.startsWith(originalKeyPrefix)
+  );
 
-  return Object.entries(destinationConfig).reduce(
-    (additionalHeaders: Record<string, any>, [originalKey, value]) => {
-      const mapping = Object.entries(configDestinationPropertyMapping).find(
-        ([configProperty]) => originalKey.startsWith(configProperty)
-      );
-      if (mapping) {
-        const [configProperty, destinationProperty] = mapping;
-        if (!additionalHeaders[destinationProperty]) {
-          additionalHeaders[destinationProperty] = {};
-        }
-        const headerKey = originalKey.replace(configProperty, '');
-        additionalHeaders[destinationProperty][headerKey] = value;
-      }
-      return additionalHeaders;
+  return relevantConfigEntries.reduce(
+    (additionalProperties: Record<string, any>, [originalKey, value]) => {
+      const headerKey = originalKey.replace(originalKeyPrefix, '');
+      additionalProperties[headerKey] = value;
+      return additionalProperties;
     },
     {}
   );
+}
+
+function getAdditionalHeadersAndQueryParameters(
+  destinationConfig: DestinationConfiguration
+): Record<string, any> {
+  const additionalHeaders = getAdditionalProperties(
+    destinationConfig,
+    'URL.headers.'
+  );
+  const additionalQueryParameters = getAdditionalProperties(
+    destinationConfig,
+    'URL.queries.'
+  );
+
+  const additionalProperties = {};
+  if (Object.keys(additionalHeaders).length) {
+    additionalProperties['headers'] = additionalHeaders;
+  }
+  if (Object.keys(additionalQueryParameters).length) {
+    additionalProperties['queryParameters'] = additionalQueryParameters;
+  }
+
+  return additionalProperties;
 }
 
 function getDestinationConfig(

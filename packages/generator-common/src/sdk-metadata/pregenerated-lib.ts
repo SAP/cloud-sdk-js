@@ -42,8 +42,7 @@ export function getTimeStamp(): string {
 
 export async function getPregeneratedLibrary(
   description: string,
-  npmPackageName: string,
-  versionInPackageJson?: string
+  npmPackageName: string
 ): Promise<PregeneratedLibrary | undefined> {
   if (await isPublishedNpmPackage(npmPackageName)) {
     return {

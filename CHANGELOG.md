@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- Adjustments for the internal metadata generation.
 
 ## Fixed Issues
 

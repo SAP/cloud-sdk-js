@@ -89,11 +89,13 @@ export async function getAuthHeaders(
     destination.headers
   );
 
-  return Object.keys(customAuthHeaders).length
-    ? customAuthHeaders
-    : Object.keys(additionalDestinationAuthHeaders).length
-    ? additionalDestinationAuthHeaders
-    : buildAuthorizationHeaders(destination);
+  if (Object.keys(customAuthHeaders).length) {
+    return customAuthHeaders;
+  }
+  if (Object.keys(additionalDestinationAuthHeaders).length) {
+    return additionalDestinationAuthHeaders;
+  }
+  return buildAuthorizationHeaders(destination);
 }
 
 /**

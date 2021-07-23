@@ -2,7 +2,8 @@ import { resolve } from 'path';
 import { writeFile, readFile, removeSync } from 'fs-extra';
 import execa = require('execa');
 import { VdmServiceMetadata } from '../vdm-types';
-import { getApiSpecificUsage, getGenericUsage } from './generation-and-usage';
+import { getApiSpecificUsage } from './generation-and-usage';
+import { genericCodeSample } from './code-samples';
 
 describe('generation-and-usage', () => {
   const service = {
@@ -11,7 +12,7 @@ describe('generation-and-usage', () => {
   } as VdmServiceMetadata;
 
   it('creates generic usage example', () => {
-    expect(getGenericUsage()).toMatchSnapshot();
+    expect(genericCodeSample()).toMatchSnapshot();
   });
 
   it('creates api specific usage for entity', () => {
@@ -19,7 +20,7 @@ describe('generation-and-usage', () => {
   });
 
   it('creates compiling generic usage', async () => {
-    const codeSnippet = getGenericUsage().instructions;
+    const codeSnippet = genericCodeSample().instructions;
     const tsFile = 'generic-get-all-code-sample.ts';
     const jsFile = tsFile.replace('.ts', '.js');
     await writeFile(resolve(__dirname, tsFile), codeSnippet);

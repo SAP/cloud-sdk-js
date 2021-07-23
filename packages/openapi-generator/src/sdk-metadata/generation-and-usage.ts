@@ -3,8 +3,6 @@ import {
   GenerationAndUsage,
   getLinks,
   getSdkVersion,
-  apiSpecificUsageText,
-  genericUsageText,
   getGenerationSteps,
   Links,
   InstructionWithTextAndHeader,
@@ -28,6 +26,7 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
     genericUsage: getGenericUsage(),
     apiSpecificUsage: undefined,
     links: getOpenApiLinks(),
+    repository: 'npm',
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/openapi-generator',
       'openapi-generator --inputDir <inputDirectory> --outputDir <outputDirectory>',
@@ -41,8 +40,7 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
 
 function getGenericUsage(): InstructionWithTextAndHeader {
   return {
-    instructions: genericCodeSample(),
-    text: genericUsageText,
+    ...genericCodeSample(),
     header: usageHeaderText
   };
 }
@@ -62,14 +60,14 @@ function getApiSpecificUsage(
       openApiDocument.serviceOptions.packageName
     );
     return {
-      instructions,
-      text: apiSpecificUsageText,
+      ...instructions,
+
       header: usageHeaderText
     };
   }
   return {
     instructions: '',
-    text: apiSpecificUsageText,
+    text: '',
     header: usageHeaderText
   };
 }

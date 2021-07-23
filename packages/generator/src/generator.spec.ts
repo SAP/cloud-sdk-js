@@ -11,7 +11,6 @@ import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { generateProject } from './generator';
 import { GeneratorOptions } from './generator-options';
 import * as csnGeneration from './service/csn';
-import {dummyOpenApiDocument} from "@sap-cloud-sdk/openapi-generator/test/test-util";
 
 describe('generator', () => {
   describe('common', () => {

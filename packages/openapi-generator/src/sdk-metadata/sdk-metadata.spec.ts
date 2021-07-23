@@ -11,7 +11,7 @@ describe('sdk-metadata', () => {
     expect(metadata).toMatchSnapshot({
       generationAndUsage: { generatorVersion: expect.any(String) }
     });
-    expect(metadata.pregeneratedLibrary).toBeUndefined()
+    expect(metadata.pregeneratedLibrary).toBeUndefined();
   });
 
   it('generates metadata content for services with pregenerated lib', async () => {
@@ -29,7 +29,7 @@ describe('sdk-metadata', () => {
     expect(metadata).toMatchSnapshot({
       generationAndUsage: { generatorVersion: expect.any(String) }
     });
-    expect(metadata.pregeneratedLibrary!.version).toBe('1.2.3')
-    expect(metadata.serviceStatus.status).toBe('certified')
-    });
+    expect(metadata.pregeneratedLibrary!.version).toBe('1.2.3');
+    expect(metadata.serviceStatus.status).toBe('certified');
+  });
 });

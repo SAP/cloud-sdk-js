@@ -57,11 +57,23 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
     "repository": "npm",
   },
   "language": "JavaScript",
-  "pregeneratedLibrary": undefined,
+  "pregeneratedLibrary": Object {
+    "compatibilityNotes": "",
+    "dependencyName": "@sap/cloud-sdk-vdm-test-service",
+    "description": "SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service",
+    "generatedAt": "/Date(0)/",
+    "installLibrarySteps": Object {
+      "instructions": "npm i @sap/cloud-sdk-vdm-test-service:latest",
+      "text": "Execute the following npm command to install the pregenerated client.",
+    },
+    "repository": "npm",
+    "repositoryLink": "https://www.npmjs.com/package/@sap/cloud-sdk-vdm-test-service",
+    "version": "1.2.3",
+  },
   "serviceStatus": Object {
-    "status": "verified",
-    "statusLongText": "The SAP Cloud SDK team checked for this API that generating a API client works, but no pregenerated client is available. You can generate your own client for this API.",
-    "statusText": "API Client generation tested but no download available",
+    "status": "certified",
+    "statusLongText": "You can download our pregenerated API client for this API.",
+    "statusText": "API Client available for download",
   },
 }
 `;

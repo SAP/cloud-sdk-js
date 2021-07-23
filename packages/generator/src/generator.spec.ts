@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import nock = require('nock');
 import { FunctionDeclaration, SourceFile } from 'ts-morph';
 import { createOptions } from '../test/test-util/create-generator-options';
 import {
@@ -10,6 +11,7 @@ import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 import { generateProject } from './generator';
 import { GeneratorOptions } from './generator-options';
 import * as csnGeneration from './service/csn';
+import {dummyOpenApiDocument} from "@sap-cloud-sdk/openapi-generator/test/test-util";
 
 describe('generator', () => {
   describe('common', () => {
@@ -32,6 +34,7 @@ describe('generator', () => {
     });
 
     it('generates the api hub metadata and writes to the input folder', async () => {
+      nock('http://registry.npmjs.org/').head(/.*/).reply(404);
       const project = await generateProject(
         createOptions({
           inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),

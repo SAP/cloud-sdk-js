@@ -52,8 +52,8 @@ describe('pregenerated-lib', () => {
   it('returns pregenerated lib information for existing service', async () => {
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);
     nock('http://registry.npmjs.org/')
-        .get(new RegExp(`/${npmPackageName}/latest`))
-        .reply(200, { version: '1.2.3' });
+      .get(new RegExp(`/${npmPackageName}/latest`))
+      .reply(200, { version: '1.2.3' });
     const result = await getPregeneratedLibrary('description', npmPackageName);
     // for an existing service like the business partner it should not be undefined the parts are tested independently
     expect(result).toBeDefined();

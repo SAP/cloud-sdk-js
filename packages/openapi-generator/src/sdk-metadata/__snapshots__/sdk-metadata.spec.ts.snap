@@ -53,11 +53,23 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
     "repository": "npm",
   },
   "language": "JavaScript",
-  "pregeneratedLibrary": undefined,
+  "pregeneratedLibrary": Object {
+    "compatibilityNotes": "",
+    "dependencyName": "@sap/dummy-package",
+    "description": "SAP Cloud SDK for JavaScript: Generated client for OpenAPI service @sap/dummy-package",
+    "generatedAt": "/Date(0)/",
+    "installLibrarySteps": Object {
+      "instructions": "npm i @sap/dummy-package:latest",
+      "text": "Execute the following npm command to install the pregenerated client.",
+    },
+    "repository": "npm",
+    "repositoryLink": "https://www.npmjs.com/package/@sap/dummy-package",
+    "version": "1.2.3",
+  },
   "serviceStatus": Object {
-    "status": "verified",
-    "statusLongText": "The SAP Cloud SDK team checked for this API that generating a API client works, but no pregenerated client is available. You can generate your own client for this API.",
-    "statusText": "API Client generation tested but no download available",
+    "status": "certified",
+    "statusLongText": "You can download our pregenerated API client for this API.",
+    "statusText": "API Client available for download",
   },
 }
 `;

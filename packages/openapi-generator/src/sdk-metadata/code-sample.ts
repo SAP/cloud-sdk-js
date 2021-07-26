@@ -11,7 +11,7 @@ export function apiSpecificCodeSample(
   packageName: string
 ): InstructionWithText {
   return {
-    text: `In the example you you execute the  <code>${functionName}</code> of the  <code>${apiName}</code> API.`,
+    text: `In the example below you execute the  <code>${functionName}</code> of the  <code>${apiName}</code> API.`,
     instructions: codeBlock`
 import { ${apiName} } from '${packageName}';
 

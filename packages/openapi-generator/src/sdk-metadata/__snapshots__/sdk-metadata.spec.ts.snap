@@ -8,7 +8,7 @@ Object {
       "instructions": "import { DummyApi } from '@sap/dummy-package';
 
 const responseData = await DummyApi.DummyFunction().execute({ destinationName:'myDestinationName' });",
-      "text": "In the example you you execute the  <code>DummyFunction</code> of the  <code>DummyApi</code> API.",
+      "text": "In the example below you execute the  <code>DummyFunction</code> of the  <code>DummyApi</code> API.",
     },
     "generationSteps": Object {
       "instructions": "<ul>
@@ -26,7 +26,7 @@ The steps above will generate a basic TypeScript client. For additional options 
       "instructions": "import { MyApi } from 'my-npm-package';
 
 const responseData = await MyApi.myFunction().execute({ destinationName:'myDestinationName' });",
-      "text": "In the example you you execute the  <code>myFunction</code> of the  <code>MyApi</code> API.",
+      "text": "In the example below you execute the  <code>myFunction</code> of the  <code>MyApi</code> API.",
     },
     "links": Object {
       "apiHubTutorial": Object {
@@ -82,7 +82,7 @@ Object {
       "instructions": "import { DummyApi } from '@sap/dummy-package';
 
 const responseData = await DummyApi.DummyFunction().execute({ destinationName:'myDestinationName' });",
-      "text": "In the example you you execute the  <code>DummyFunction</code> of the  <code>DummyApi</code> API.",
+      "text": "In the example below you execute the  <code>DummyFunction</code> of the  <code>DummyApi</code> API.",
     },
     "generationSteps": Object {
       "instructions": "<ul>
@@ -100,7 +100,7 @@ The steps above will generate a basic TypeScript client. For additional options 
       "instructions": "import { MyApi } from 'my-npm-package';
 
 const responseData = await MyApi.myFunction().execute({ destinationName:'myDestinationName' });",
-      "text": "In the example you you execute the  <code>myFunction</code> of the  <code>MyApi</code> API.",
+      "text": "In the example below you execute the  <code>myFunction</code> of the  <code>MyApi</code> API.",
     },
     "links": Object {
       "apiHubTutorial": Object {

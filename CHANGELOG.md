@@ -29,6 +29,12 @@
 -
 
 
+# 1.47.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.47.1<br>
+Blog: TBD<br>
+
 # 1.47.0
 
 Release Date: TBD<br>

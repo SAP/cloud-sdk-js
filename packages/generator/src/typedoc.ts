@@ -3,6 +3,7 @@ import { endWithDot } from './generator-utils';
 import {
   VdmComplexType,
   VdmEntity,
+  VdmEnumType,
   VdmNavigationProperty,
   VdmProperty,
   VdmPropertyValueConstraints,
@@ -163,4 +164,11 @@ export interface NamedDocType extends DocType {
 
 function tagToText(tag: string, descr = ''): string {
   return `${unixEOL}@${tag}` + (descr ? ` ${descr}` : '');
+}
+
+export function enumDocs(enumType: VdmEnumType): string {
+  return [
+    `This enum represents the enum type "[[${enumType.originalName}]]".`,
+    `The members represent values of EDM type ${enumType.underlyingType}.`
+  ].join(`${unixEOL}`);
 }

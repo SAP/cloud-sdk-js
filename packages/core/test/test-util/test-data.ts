@@ -2,14 +2,16 @@ import { v4 as uuid } from 'uuid';
 import { uriConverter } from '../../src/odata-v2';
 import {
   TestEntity,
-  TestEntitySingleLink,
-  TestEntityMultiLink
+  TestEntityMultiLink,
+  TestEntitySingleLink
 } from './test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
   TestEntityMultiLink as TestEntityMultiLinkV4,
-  TestEntitySingleLink as TestEntitySingleLinkV4
+  TestEntitySingleLink as TestEntitySingleLinkV4,
+  TestEntityWithEnumKey
 } from './test-services/v4/test-service';
+import { TestEnumType } from './test-services/v4/test-service/TestEnumType';
 
 const { convertToUriFormat } = uriConverter;
 
@@ -103,6 +105,21 @@ export function testEntityResourcePath(
     guid,
     'Edm.Guid'
   )},KeyPropertyString='${str}')`;
+}
+
+export function createOriginalTestEntityWithEnumKeyData() {
+  return {
+    KeyPropertyEnum1: TestEnumType.Member1
+  };
+}
+
+export function createTestEntityWithEnumKey(
+  originalData
+): TestEntityWithEnumKey {
+  return TestEntityWithEnumKey.builder()
+    .keyPropertyEnum1(originalData.KeyPropertyEnum1)
+    .build()
+    .setOrInitializeRemoteState();
 }
 
 // v4 toUriFormat

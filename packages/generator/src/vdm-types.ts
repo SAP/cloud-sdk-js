@@ -77,10 +77,16 @@ export interface VdmNavigationProperty extends VdmPropertyDescriptor {
   isMultiLink?: boolean;
 }
 
+export interface VdmEnumMemberType {
+  name: string;
+  originalValue: string;
+}
+
 export interface VdmEnumType {
   originalName: string;
   typeName: string;
-  members: string[];
+  underlyingType: string;
+  members: VdmEnumMemberType[];
 }
 
 // Complex types and function imports

@@ -29,6 +29,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 __exportStar(require('./TestEntity'), exports);
+__exportStar(require('./TestEntityWithEnumKey'), exports);
 __exportStar(require('./TestEntityWithSharedEntityType1'), exports);
 __exportStar(require('./TestEntityWithSharedEntityType2'), exports);
 __exportStar(require('./TestEntityMultiLink'), exports);
@@ -42,6 +43,7 @@ __exportStar(require('./TestEntityCircularLinkChild'), exports);
 __exportStar(require('./TestEntityEndsWith'), exports);
 __exportStar(require('./TestEntityEndsWithSomethingElse'), exports);
 __exportStar(require('./TestEntityRequestBuilder'), exports);
+__exportStar(require('./TestEntityWithEnumKeyRequestBuilder'), exports);
 __exportStar(
   require('./TestEntityWithSharedEntityType1RequestBuilder'),
   exports

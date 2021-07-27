@@ -69,7 +69,7 @@ function validateUnderlyingType(edmxEnumType: EdmxEnumType) {
     !!edmxEnumType.UnderlyingType &&
     !validUnderlyingTypes.includes(edmxEnumType.UnderlyingType)
   ) {
-    // TODO: when validation option is added, throw an error based on the option
+    // TODO: when validation option `skipValidation` is added, throw an error based on the option
     logger.warn(
       `The enum ${edmxEnumType.Name} has invalid underlying type ${edmxEnumType.UnderlyingType}.`
     );

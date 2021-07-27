@@ -76,6 +76,5 @@ function validateUnderlyingType(edmxEnumType: EdmxEnumType) {
 
 function areAllValuesSet(edmxEnumType: EdmxEnumType): boolean {
   const values = edmxEnumType.Member.map(member => member.Value);
-  const hasUnsetValues = values.some(value => !value);
-  return !hasUnsetValues;
+ return !values.some(value => !value);
 }

@@ -1667,14 +1667,14 @@
     antlr4 "4.8.0"
 
 "@sap/cds-dk@^4.0.7":
-  version "4.3.1"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.3.1.tgz#ebf5766e199321edb97e1de9bf700445aed5d897"
-  integrity sha512-tViC0JCuhJLPODfXn8r3C8RbS/Rgxtay3FL9Ojp9uCcNJ4rrV6E71y6/pva06GjY5AzFscEoRPgkdY+NrYQXtw==
+  version "4.3.3"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.3.3.tgz#328df62cc6a0a077a0416bd8769bbf294f36f54e"
+  integrity sha512-rNH+BjUcVDBtnr+2vutAclSf5LPeMhnZQBJoh1diV8OPP7Si9HBVVgDDq5K4S0CyFBctM/WZpxUxYFe7ZaidxA==
   dependencies:
     "@sap/cds" "^5.3.0"
     "@sap/cds-foss" "^2.3.1"
     "@sap/cds-sidecar-client" "^1.1.16"
-    "@sap/eslint-plugin-cds" "^2.0.4"
+    "@sap/eslint-plugin-cds" "2.0.4"
     axios "^0.21.0"
     connect-livereload "^0.6.1"
     eslint "^7.0.0"
@@ -1737,7 +1737,7 @@
     request "=2.88.0"
     xml-js "=1.6.8"
 
-"@sap/eslint-plugin-cds@^2.0.4":
+"@sap/eslint-plugin-cds@2.0.4":
   version "2.0.4"
   resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-2.0.4.tgz#f7adfad2e290e655a122b48d244d8d55cf3663d3"
   integrity sha512-lKH5rXCogV4DDf9N+J5a6FUqB/YQRIzpRQcQCg7BvA+nTHXiOt2aBf4SYVunkic6d88j5uapHqIl0D6x0rHFsA==
@@ -1971,9 +1971,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.20.16"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.16.tgz#1acf34f6456208f495dac0434dd540488d17f991"
-  integrity sha512-6CLxw83vQf6DKqXxMPwl8qpF8I7THFZuIwLt4TnNsumxkp1VsRZWT8txQxncT/Rl2UojTsFzWgDG4FRMwafrlA==
+  version "12.20.17"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.17.tgz#ffd44c2801fc527a6fe6e86bc9b900261df1c87e"
+  integrity sha512-so8EHl4S6MmatPS0f9sE1ND94/ocbcEshW5OpyYthRqeRpiYyW2uXYTo/84kmfdfeNrDycARkvuiXl6nO40NGg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"

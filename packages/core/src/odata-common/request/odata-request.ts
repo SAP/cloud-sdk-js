@@ -6,6 +6,7 @@ import {
   pickNonNullish,
   propertyExists
 } from '@sap-cloud-sdk/util';
+import axios from 'axios';
 import {
   Destination,
   sanitizeDestination,
@@ -62,12 +63,17 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Constructs a URL relative to the destination.
    * @param includeServicePath Whether or not to include the service path in the URL.
+   * @param includeQueryParameters Whether or not to include the query parameters in the URL.
    * @returns The relative URL for the request.
    */
-  relativeUrl(includeServicePath = true): string {
+  relativeUrl(
+    includeServicePath = true,
+    includeQueryParameters = true
+  ): string {
+    const query = includeQueryParameters ? this.query() : '';
     return `${removeTrailingSlashes(
       this.relativeResourceUrl(includeServicePath)
-    )}${this.config.appendedPaths.join('')}${this.query()}`;
+    )}${this.config.appendedPaths.join('')}${query}`;
   }
 
   /**
@@ -140,15 +146,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Query parameter string
    */
   query(): string {
-    const queryParameters = {
-      ...this.config.queryParameters(),
-      ...this.destination?.queryParameters,
-      ...this.config.customQueryParameters
-    };
-
-    const query = Object.entries(queryParameters)
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&');
+    const query = axios.getUri({ url: '', params: this.queryParameters() });
     return query.length ? `?${query}` : '';
   }
 
@@ -239,7 +237,8 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       {
         ...filterCustomRequestConfig(this.config.customRequestConfiguration),
         headers: await this.headers(),
-        url: this.relativeUrl(),
+        params: this.queryParameters(),
+        url: this.relativeUrl(true, false),
         method: this.config.method,
         data: this.config.payload
       },
@@ -256,6 +255,14 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     );
     const customHeaders = pickIgnoreCase(this.customHeaders(), ...keys);
     return mergeIgnoreCase(destinationHeaders, customHeaders);
+  }
+
+  private queryParameters(): Record<string, any> {
+    return {
+      ...this.config.queryParameters(),
+      ...this.destination?.queryParameters,
+      ...this.config.customQueryParameters
+    };
   }
 }
 

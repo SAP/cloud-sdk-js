@@ -3,6 +3,7 @@ import * as http from 'http';
 export interface DestinationHttpRequestConfig {
   baseURL: string;
   headers: Record<string, string>;
+  params?: Record<string, string>;
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
 }

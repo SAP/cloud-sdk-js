@@ -137,7 +137,7 @@ describe('GetAllRequestBuilder', () => {
         {
           query: {
             $expand:
-              "to_SingleLink,to_MultiLink($filter=((to_MultiLink1/any(a0:(a0/StringProperty ne 'test')))))"
+              "to_SingleLink,to_MultiLink($filter=((to_MultiLink1%2Fany(a0%3A(a0%2FStringProperty%20ne%20'test')))))"
           },
           responseBody: { value: [testEntity] }
         },

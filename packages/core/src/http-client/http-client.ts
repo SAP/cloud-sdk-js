@@ -156,6 +156,7 @@ function buildDestinationHttpRequestConfig(
   return {
     baseURL: destination.url,
     headers,
+    params: destination.queryParameters,
     ...getAgentConfig(destination)
   };
 }
@@ -205,6 +206,8 @@ function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest {
 }
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
+  // https://example.com/sap/opu/odata/sap/API_TEST_SRV/TestActionImportNoParameterNoReturnType?$format=json
+  // https://example.com/sap/opu/odata/sap/API_TEST_SRV/TestActionImportNoParameterNoReturnType?$format=json
   return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 
@@ -262,15 +265,15 @@ export function shouldHandleCsrfToken(
 
 async function getCsrfHeaders(
   destination: Destination | DestinationNameAndJwt,
-  headers: Record<string, string>,
-  url: string
+  request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
-  const csrfHeaders = pickIgnoreCase(headers, 'x-csrf-token');
+  const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
   return Object.keys(csrfHeaders).length
     ? csrfHeaders
     : buildCsrfHeaders(destination, {
-        headers,
-        url
+        params: request.params,
+        headers: request.headers,
+        url: request.url
       });
 }
 
@@ -281,7 +284,7 @@ async function addCsrfTokenToHeader(
 ): Promise<Record<string, string>> {
   const options = buildHttpRequestOptions(httpRequestOptions);
   const csrfHeaders = shouldHandleCsrfToken(request, options)
-    ? await getCsrfHeaders(destination, request.headers, request.url!)
+    ? await getCsrfHeaders(destination, request)
     : {};
   return { ...request.headers, ...csrfHeaders };
 }

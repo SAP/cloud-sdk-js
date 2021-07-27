@@ -22,7 +22,7 @@
 
 ## Improvements
 
-- [odata-generator] Add underlying type and value information as part of the API documentation.
+- [odata-generator] Add underlying type and value information as part of the API documentation for enums.
 
 ## Fixed Issues
 

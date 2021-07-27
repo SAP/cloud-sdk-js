@@ -33,7 +33,7 @@ describe('parseDestination', () => {
       ...basicMultipleResponse[0],
       TrustAll: 'TRUE'
     });
-    expect(actual.isTrustingAllCertificates).toEqual(true);
+    expect(actual.isTrustingAllCertificates).toBe(true);
   });
 
   it('`isTrustingAllCertificates` is set to false when TrustAll is not "TRUE"', () => {
@@ -41,15 +41,15 @@ describe('parseDestination', () => {
       ...basicMultipleResponse[0],
       TrustAll: 'NOT_TRUE'
     });
-    expect(actual.isTrustingAllCertificates).toEqual(false);
+    expect(actual.isTrustingAllCertificates).toBe(false);
   });
 
   it('parses certificates', () => {
     const actual = parseDestination(certificateSingleResponse);
-    expect(actual.authentication).toEqual('ClientCertificateAuthentication');
-    expect(actual.keyStoreName).toEqual('key.p12');
-    expect(actual.keyStorePassword).toEqual('password');
-    expect(actual.certificates!.length).toEqual(1);
+    expect(actual.authentication).toBe('ClientCertificateAuthentication');
+    expect(actual.keyStoreName).toBe('key.p12');
+    expect(actual.keyStorePassword).toBe('password');
+    expect(actual.certificates!.length).toBe(1);
     expect(actual.certificates![0]).toEqual({
       name: 'key.p12',
       content: 'base64string',
@@ -59,10 +59,10 @@ describe('parseDestination', () => {
 
   it('initializes certificates as empty array if none are present', () => {
     const actual = parseDestination(certificateMultipleResponse[0]);
-    expect(actual.authentication).toEqual('ClientCertificateAuthentication');
-    expect(actual.keyStoreName).toEqual('key.p12');
-    expect(actual.keyStorePassword).toEqual('password');
-    expect(actual.certificates!.length).toEqual(0);
+    expect(actual.authentication).toBe('ClientCertificateAuthentication');
+    expect(actual.keyStoreName).toBe('key.p12');
+    expect(actual.keyStorePassword).toBe('password');
+    expect(actual.certificates!.length).toBe(0);
   });
 
   it('parses additional headers and query parameters', () => {

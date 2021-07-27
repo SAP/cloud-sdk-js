@@ -15,8 +15,7 @@ export async function sdkMetadata(
   const [pregeneratedLibrary, generationAndUsage] = await Promise.all([
     getPregeneratedLibrary(
       packageDescription(openApiDocument.serviceOptions.packageName),
-      openApiDocument.serviceOptions.packageName,
-      options.packageVersion
+      openApiDocument.serviceOptions.packageName
     ),
     getGenerationAndUsage(openApiDocument)
   ]);

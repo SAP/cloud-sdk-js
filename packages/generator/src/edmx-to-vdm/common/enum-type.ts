@@ -50,9 +50,8 @@ function parseMember(edmxEnumType: EdmxEnumType): VdmEnumMemberType[] {
 
 function validateUniqueness(edmxEnumType: EdmxEnumType) {
   if (unique(edmxEnumType.Member).length !== edmxEnumType.Member.length) {
-    // TODO: when validation option is added, throw an error based on the option
     logger.warn(
-      `The enum ${edmxEnumType.Name} has duplicate member names. To keep the uniqueness, only the last one is kept.`
+      `The enum '${edmxEnumType.Name}' has duplicate member names. Only the last ones are kept.`
     );
   }
 }
@@ -69,7 +68,6 @@ function validateUnderlyingType(edmxEnumType: EdmxEnumType) {
     !!edmxEnumType.UnderlyingType &&
     !validUnderlyingTypes.includes(edmxEnumType.UnderlyingType)
   ) {
-    // TODO: when validation option `skipValidation` is added, throw an error based on the option
     logger.warn(
       `The enum ${edmxEnumType.Name} has invalid underlying type ${edmxEnumType.UnderlyingType}.`
     );
@@ -78,6 +76,5 @@ function validateUnderlyingType(edmxEnumType: EdmxEnumType) {
 
 function areAllValuesSet(edmxEnumType: EdmxEnumType): boolean {
   const values = edmxEnumType.Member.map(member => member.Value);
-  const hasUnsetValues = values.some(value => !value);
-  return !hasUnsetValues;
+  return !values.some(value => !value);
 }

@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import nock = require('nock');
 import { FunctionDeclaration, SourceFile } from 'ts-morph';
 import { createOptions } from '../test/test-util/create-generator-options';
 import {
@@ -32,6 +33,7 @@ describe('generator', () => {
     });
 
     it('generates the api hub metadata and writes to the input folder', async () => {
+      nock('http://registry.npmjs.org/').head(/.*/).reply(404);
       const project = await generateProject(
         createOptions({
           inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),

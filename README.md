@@ -8,7 +8,7 @@ An SDK to reduce your development effort when building side-by-side extension ap
 
 ## Looking for documentation?
 
-Check our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
+Check our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
 
 ### Table of Contents
 

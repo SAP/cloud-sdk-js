@@ -1,17 +1,14 @@
 import {
   getSdkVersion,
   getLinks,
-  apiSpecificUsageText,
-  genericUsageText,
   getGenerationSteps,
-  Links
+  Links,
+  InstructionWithTextAndHeader,
+  usageHeaderText
 } from '@sap-cloud-sdk/generator-common';
-import type {
-  GenerationAndUsage,
-  InstructionWithText
-} from '@sap-cloud-sdk/generator-common';
+import type { GenerationAndUsage } from '@sap-cloud-sdk/generator-common';
 import { VdmServiceMetadata } from '../vdm-types';
-import { genericGetAllCodeSample } from './code-samples/generic-get-all-code-sample';
+import { codeSamples, genericCodeSample } from './code-samples';
 
 export async function getGenerationAndUsage(
   service: VdmServiceMetadata
@@ -25,7 +22,8 @@ export async function getGenerationAndUsage(
 // will be used to generate metadata for failed and unknown case.
 export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
   return {
-    genericUsage: getGenericUsage(),
+    genericUsage: genericCodeSample(),
+    repository: 'npm',
     apiSpecificUsage: undefined,
     links: getODataLinks(),
     generationSteps: getGenerationSteps(
@@ -39,34 +37,32 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
   };
 }
 
-export function getGenericUsage(): InstructionWithText {
-  return {
-    instructions: genericGetAllCodeSample(
-      'BusinessPartner',
-      '@sap/cloud-sdk-vdm-business-partner-service'
-    ),
-    text: genericUsageText
-  };
-}
-
 export function getApiSpecificUsage(
   service: VdmServiceMetadata
-): InstructionWithText {
+): InstructionWithTextAndHeader {
   if (service.entities.length > 0) {
-    const codeSample = genericGetAllCodeSample(
+    const codeSample = codeSamples(
       service.entities[0].className,
       service.npmPackageName
     );
     return {
-      instructions: codeSample,
-      text: apiSpecificUsageText
+      ...codeSample,
+      header: usageHeaderText
     };
   }
   // TODO handle cases if no entity is there in the follow up ticket.
   if (service.functionImports.length > 0) {
-    return { instructions: '', text: apiSpecificUsageText };
+    return {
+      instructions: '',
+      text: '',
+      header: usageHeaderText
+    };
   }
-  return { instructions: '', text: apiSpecificUsageText };
+  return {
+    instructions: '',
+    text: '',
+    header: usageHeaderText
+  };
 }
 
 export const linkGenerationDocumentation =

@@ -1,0 +1,344 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@sap-cloud-sdk/openapi-generator | SAP Cloud SDK for JavaScript / TypeScript - v1.47.0</title>
+	<meta name="description" content="Documentation for SAP Cloud SDK for JavaScript / TypeScript - v1.47.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+<script src="https://sap.github.io/cloud-sdk/js/swa.js"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">SAP Cloud SDK for JavaScript / TypeScript - v1.47.0</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">SAP Cloud SDK for JavaScript / TypeScript - v1.47.0</a>
+				</li>
+				<li>
+					<a href="sap_cloud_sdk_openapi_generator">@sap-cloud-sdk/openapi-generator</a>
+				</li>
+			</ul>
+			<h1>Module @sap-cloud-sdk/openapi-generator</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<!-- sap-cloud-sdk-logo -->
+						<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
+						<p><a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a></p>
+						<!-- sap-cloud-sdk-logo-stop -->
+						<a href="#sap-cloud-sdkopenapi-generator" id="sap-cloud-sdkopenapi-generator" style="color: inherit; text-decoration: none;">
+							<h1>@sap-cloud-sdk/openapi-generator</h1>
+						</a>
+						<p>This package contains the generator to create your own service module using a OpenAPI specification.
+						This generator is based on the <a href="https://openapi-generator.tech/">OpenAPI Tools generator</a> for OpenAPI and adds some additional code for convenience to better integrate with the SAP Cloud SDK.</p>
+						<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+							<h2>Installation</h2>
+						</a>
+						<pre><code class="language-bash"><span style="color: #000000">$ npm install @sap-cloud-sdk/openapi-generator</span>
+</code></pre>
+						<a href="#usage-cli" id="usage-cli" style="color: inherit; text-decoration: none;">
+							<h2>Usage (CLI)</h2>
+						</a>
+						<!-- prettier-ignore-start -->
+						<!-- commands -->
+						<ul>
+							<li><a href="#generate-openapi-client---input-input---outputdir-outputdirectory"><code>generate-openapi-client --input &lt;input&gt; --outputDir &lt;outputDirectory&gt;</code></a></li>
+						</ul>
+						<a href="#generate-openapi-client---input-ltinputgt---outputdir-ltoutputdirectorygt" id="generate-openapi-client---input-ltinputgt---outputdir-ltoutputdirectorygt" style="color: inherit; text-decoration: none;">
+							<h2><code>generate-openapi-client --input &lt;input&gt; --outputDir &lt;outputDirectory&gt;</code></h2>
+						</a>
+						<p>Generate OpenAPI client(s), that use the connectivity features of the SAP Cloud SDK for JavaScript/TypeScript.</p>
+						<pre><code><span style="color: #0070C1">USAGE</span>
+<span style="color: #000000">  </span><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">generate</span><span style="color: #000000">-</span><span style="color: #001080">openapi</span><span style="color: #000000">-</span><span style="color: #001080">client</span><span style="color: #000000"> --</span><span style="color: #001080">input</span><span style="color: #000000"> &lt;</span><span style="color: #001080">input</span><span style="color: #000000">&gt; --</span><span style="color: #001080">outputDir</span><span style="color: #000000"> &lt;</span><span style="color: #001080">outputDirectory</span><span style="color: #000000">&gt;</span>
+
+<span style="color: #0070C1">OPTIONS</span>
+<span style="color: #000000">  -</span><span style="color: #001080">c</span><span style="color: #000000">, --</span><span style="color: #001080">config</span><span style="color: #000000">=&lt;</span><span style="color: #267F99">path</span><span style="color: #000000">/</span><span style="color: #267F99">to</span><span style="color: #000000">/</span><span style="color: #267F99">config</span><span style="color: #000000">.</span><span style="color: #267F99">json</span><span style="color: #000000">&gt;</span>
+<span style="color: #000000">      </span><span style="color: #267F99">Set</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">file</span><span style="color: #000000"> </span><span style="color: #001080">containing</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">options</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">generation</span><span style="color: #000000"> </span><span style="color: #001080">instead</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">setting</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">options</span><span style="color: #000000"> </span><span style="color: #001080">on</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">command</span><span style="color: #000000"> </span><span style="color: #001080">line</span><span style="color: #000000">. </span>
+<span style="color: #000000">      </span><span style="color: #001080">When</span><span style="color: #000000"> </span><span style="color: #001080">combining</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #A31515">`config`</span><span style="color: #000000"> </span><span style="color: #001080">option</span><span style="color: #000000"> </span><span style="color: #AF00DB">with</span><span style="color: #000000"> </span><span style="color: #001080">other</span><span style="color: #000000"> </span><span style="color: #001080">options</span><span style="color: #000000"> </span><span style="color: #001080">on</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">command</span><span style="color: #000000"> </span><span style="color: #001080">line</span><span style="color: #000000">, </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">command</span><span style="color: #000000"> </span><span style="color: #001080">line</span><span style="color: #000000"> </span><span style="color: #001080">options</span><span style="color: #000000"> </span><span style="color: #001080">take</span><span style="color: #000000"> </span><span style="color: #001080">precedence</span><span style="color: #000000">. </span>
+<span style="color: #000000">      </span><span style="color: #001080">If</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">passed</span><span style="color: #000000">, </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #A31515">`config.json`</span><span style="color: #000000"> </span><span style="color: #001080">file</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">read</span><span style="color: #000000"> </span><span style="color: #001080">from</span><span style="color: #000000"> </span><span style="color: #0000FF">this</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  -</span><span style="color: #001080">i</span><span style="color: #000000">, --</span><span style="color: #001080">input</span><span style="color: #000000">=&lt;</span><span style="color: #267F99">path</span><span style="color: #000000">/</span><span style="color: #267F99">to</span><span style="color: #000000">/</span><span style="color: #267F99">input</span><span style="color: #000000">&gt;</span>
+<span style="color: #000000">      (</span><span style="color: #001080">required</span><span style="color: #000000">) </span><span style="color: #001080">Specify</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000"> </span><span style="color: #001080">or</span><span style="color: #000000"> </span><span style="color: #001080">file</span><span style="color: #000000"> </span><span style="color: #001080">containing</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">OpenAPI</span><span style="color: #000000"> </span><span style="color: #001080">service</span><span style="color: #000000"> </span><span style="color: #795E26">definition</span><span style="color: #000000">(</span><span style="color: #001080">s</span><span style="color: #000000">) </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">generate</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">clients</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000">. </span><span style="color: #001080">Accepts</span><span style="color: #000000"> </span><span style="color: #001080">Swagger</span><span style="color: #000000"> </span><span style="color: #001080">and</span><span style="color: #000000"> </span><span style="color: #001080">OpenAPI</span><span style="color: #000000"> </span><span style="color: #001080">definitions</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">YAML</span><span style="color: #000000"> </span><span style="color: #267F99">and</span><span style="color: #000000"> </span><span style="color: #267F99">JSON</span><span style="color: #000000"> </span><span style="color: #267F99">files</span><span style="color: #000000">. </span><span style="color: #267F99">Throws</span><span style="color: #000000"> </span><span style="color: #267F99">an</span><span style="color: #000000"> </span><span style="color: #267F99">error</span><span style="color: #000000"> </span><span style="color: #267F99">if</span><span style="color: #000000"> </span><span style="color: #267F99">the</span><span style="color: #000000"> </span><span style="color: #267F99">path</span><span style="color: #000000"> </span><span style="color: #267F99">does</span><span style="color: #000000"> </span><span style="color: #267F99">not</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">exist</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  -</span><span style="color: #001080">o</span><span style="color: #000000">, --</span><span style="color: #001080">outputDir</span><span style="color: #000000">=&lt;</span><span style="color: #267F99">path</span><span style="color: #000000">/</span><span style="color: #267F99">to</span><span style="color: #000000">/</span><span style="color: #267F99">output</span><span style="color: #000000">&gt;</span>
+<span style="color: #000000">      (</span><span style="color: #001080">required</span><span style="color: #000000">) </span><span style="color: #001080">Specify</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">generate</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #795E26">client</span><span style="color: #000000">(</span><span style="color: #001080">s</span><span style="color: #000000">) </span><span style="color: #001080">in</span><span style="color: #000000">. </span><span style="color: #001080">Each</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">generated</span><span style="color: #000000"> </span><span style="color: #001080">into</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">subdirectory</span><span style="color: #000000"> </span><span style="color: #001080">within</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">given</span><span style="color: #000000"> </span><span style="color: #001080">output</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000">. </span><span style="color: #001080">Creates</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000"> </span><span style="color: #AF00DB">if</span><span style="color: #000000"> </span><span style="color: #001080">it</span><span style="color: #000000"> </span><span style="color: #001080">does</span><span style="color: #000000"> </span><span style="color: #001080">not</span><span style="color: #000000"> </span><span style="color: #001080">exist</span><span style="color: #000000">. </span><span style="color: #001080">Customize</span><span style="color: #000000"> </span><span style="color: #001080">subdirectory</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">naming</span><span style="color: #000000"> </span><span style="color: #001080">through</span><span style="color: #000000"> </span><span style="color: #A31515">`--optionsPerService`</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  -</span><span style="color: #001080">t</span><span style="color: #000000">, --</span><span style="color: #001080">transpile</span>
+<span style="color: #000000">      </span><span style="color: #001080">Transpile</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">generated</span><span style="color: #000000"> </span><span style="color: #001080">TypeScript</span><span style="color: #000000"> </span><span style="color: #001080">code</span><span style="color: #000000">. </span><span style="color: #001080">When</span><span style="color: #000000"> </span><span style="color: #001080">enabled</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> </span><span style="color: #A31515">`tsconfig.json`</span><span style="color: #000000"> </span><span style="color: #001080">will</span><span style="color: #000000"> </span><span style="color: #001080">be</span><span style="color: #000000"> </span><span style="color: #001080">generated</span><span style="color: #000000"> </span><span style="color: #001080">and</span><span style="color: #000000"> </span><span style="color: #001080">used</span><span style="color: #000000">. </span><span style="color: #001080">It</span><span style="color: #000000"> </span><span style="color: #001080">emits</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #A31515">`.js`</span><span style="color: #000000">, </span><span style="color: #A31515">`.js.map`</span><span style="color: #000000">, </span><span style="color: #A31515">`.d.ts`</span><span style="color: #000000"> </span><span style="color: #001080">and</span><span style="color: #000000"> </span><span style="color: #A31515">`.d.ts.map`</span><span style="color: #000000"> </span><span style="color: #001080">files</span><span style="color: #000000">. </span><span style="color: #001080">To</span><span style="color: #000000"> </span><span style="color: #001080">configure</span><span style="color: #000000"> </span><span style="color: #001080">transpilation</span><span style="color: #000000"> </span><span style="color: #001080">set</span><span style="color: #000000"> </span><span style="color: #A31515">`--tsconfig`</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  --</span><span style="color: #001080">clearOutputDir</span>
+<span style="color: #000000">      </span><span style="color: #001080">Remove</span><span style="color: #000000"> </span><span style="color: #001080">all</span><span style="color: #000000"> </span><span style="color: #001080">files</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">output</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000"> </span><span style="color: #001080">before</span><span style="color: #000000"> </span><span style="color: #001080">generation</span><span style="color: #000000">. </span><span style="color: #001080">Be</span><span style="color: #000000"> </span><span style="color: #001080">cautious</span><span style="color: #000000"> </span><span style="color: #001080">when</span><span style="color: #000000"> </span><span style="color: #001080">using</span><span style="color: #000000"> </span><span style="color: #0000FF">this</span><span style="color: #000000"> </span><span style="color: #001080">option</span><span style="color: #000000">, </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">it</span><span style="color: #000000"> </span><span style="color: #267F99">really</span><span style="color: #000000"> </span><span style="color: #267F99">removes</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #0070C1">EVERYTHING</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">output</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  --</span><span style="color: #001080">include</span><span style="color: #000000">=&lt;</span><span style="color: #267F99">glob</span><span style="color: #000000">/</span><span style="color: #267F99">to</span><span style="color: #000000">/</span><span style="color: #267F99">include</span><span style="color: #000000">&gt;</span>
+<span style="color: #000000">      </span><span style="color: #001080">Include</span><span style="color: #000000"> </span><span style="color: #001080">files</span><span style="color: #000000"> </span><span style="color: #001080">matching</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">given</span><span style="color: #000000"> </span><span style="color: #001080">glob</span><span style="color: #000000"> </span><span style="color: #001080">into</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">root</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">each</span><span style="color: #000000"> </span><span style="color: #001080">generated</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  --</span><span style="color: #001080">optionsPerService</span><span style="color: #000000">=&lt;</span><span style="color: #267F99">path</span><span style="color: #000000">/</span><span style="color: #267F99">to</span><span style="color: #000000">/</span><span style="color: #267F99">options</span><span style="color: #000000">-</span><span style="color: #267F99">per</span><span style="color: #000000">-</span><span style="color: #267F99">service</span><span style="color: #000000">.</span><span style="color: #267F99">json</span><span style="color: #000000">&gt;</span>
+<span style="color: #000000">      </span><span style="color: #267F99">Set</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">file</span><span style="color: #000000"> </span><span style="color: #001080">containing</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">options</span><span style="color: #000000"> </span><span style="color: #001080">per</span><span style="color: #000000"> </span><span style="color: #001080">service</span><span style="color: #000000">. </span><span style="color: #001080">The</span><span style="color: #000000"> </span><span style="color: #001080">configuration</span><span style="color: #000000"> </span><span style="color: #001080">allows</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">set</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #A31515">`directoryName`</span><span style="color: #000000"> </span><span style="color: #001080">and</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #A31515">`packageName`</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">every</span><span style="color: #000000"> </span><span style="color: #001080">service</span><span style="color: #000000">, </span><span style="color: #001080">identified</span><span style="color: #000000"> </span><span style="color: #001080">by</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">original</span><span style="color: #000000"> </span><span style="color: #001080">file</span><span style="color: #000000">. </span><span style="color: #001080">It</span><span style="color: #000000"> </span><span style="color: #001080">also</span><span style="color: #000000"> </span><span style="color: #001080">makes</span><span style="color: #000000"> </span><span style="color: #001080">sure</span><span style="color: #000000"> </span><span style="color: #001080">that</span><span style="color: #000000"> </span><span style="color: #001080">names</span><span style="color: #000000"> </span><span style="color: #AF00DB">do</span><span style="color: #000000"> </span><span style="color: #001080">not</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">change</span><span style="color: #000000"> </span><span style="color: #001080">between</span><span style="color: #000000"> </span><span style="color: #001080">generator</span><span style="color: #000000"> </span><span style="color: #001080">runs</span><span style="color: #000000">. </span><span style="color: #001080">If</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">passed</span><span style="color: #000000">, </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #A31515">`options-per-service.json`</span><span style="color: #000000"> </span><span style="color: #001080">file</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">read</span><span style="color: #000000">/</span><span style="color: #001080">created</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #0000FF">this</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">directory</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  --</span><span style="color: #001080">overwrite</span>
+<span style="color: #000000">      </span><span style="color: #001080">Allow</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">overwrite</span><span style="color: #000000"> </span><span style="color: #001080">files</span><span style="color: #000000">, </span><span style="color: #001080">that</span><span style="color: #000000"> </span><span style="color: #001080">already</span><span style="color: #000000"> </span><span style="color: #001080">exist</span><span style="color: #000000">. </span><span style="color: #001080">This</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">useful</span><span style="color: #000000">, </span><span style="color: #001080">when</span><span style="color: #000000"> </span><span style="color: #001080">running</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">generation</span><span style="color: #000000"> </span><span style="color: #001080">regularly</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  --</span><span style="color: #001080">packageJson</span>
+<span style="color: #000000">      </span><span style="color: #001080">When</span><span style="color: #000000"> </span><span style="color: #001080">enabled</span><span style="color: #000000">, </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #A31515">`package.json`</span><span style="color: #000000">, </span><span style="color: #001080">that</span><span style="color: #000000"> </span><span style="color: #001080">specifies</span><span style="color: #000000"> </span><span style="color: #001080">dependencies</span><span style="color: #000000"> </span><span style="color: #001080">and</span><span style="color: #000000"> </span><span style="color: #001080">scripts</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">transpilation</span><span style="color: #000000"> </span><span style="color: #001080">and</span><span style="color: #000000"> </span><span style="color: #001080">documentation</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">generation</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">generated</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  --</span><span style="color: #001080">skipValidation</span>
+<span style="color: #000000">      </span><span style="color: #001080">By</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000">, </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">generation</span><span style="color: #000000"> </span><span style="color: #001080">fails</span><span style="color: #000000">, </span><span style="color: #001080">when</span><span style="color: #000000"> </span><span style="color: #001080">there</span><span style="color: #000000"> </span><span style="color: #001080">are</span><span style="color: #000000"> </span><span style="color: #001080">duplicate</span><span style="color: #000000"> </span><span style="color: #001080">or</span><span style="color: #000000"> </span><span style="color: #001080">invalid</span><span style="color: #000000"> </span><span style="color: #001080">names</span><span style="color: #000000"> </span><span style="color: #001080">for</span><span style="color: #000000"> </span><span style="color: #001080">operations</span><span style="color: #000000"> </span><span style="color: #001080">and</span><span style="color: #000000">/</span><span style="color: #001080">or</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #001080">parameters</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">after</span><span style="color: #000000"> </span><span style="color: #001080">transforming</span><span style="color: #000000"> </span><span style="color: #001080">them</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">camel</span><span style="color: #000000"> </span><span style="color: #001080">case</span><span style="color: #000000">. </span><span style="color: #001080">Set</span><span style="color: #000000"> </span><span style="color: #0000FF">this</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">enable</span><span style="color: #000000"> </span><span style="color: #001080">unique</span><span style="color: #000000"> </span><span style="color: #001080">and</span><span style="color: #000000"> </span><span style="color: #001080">valid</span><span style="color: #000000"> </span><span style="color: #001080">name</span><span style="color: #000000"> </span><span style="color: #001080">generation</span><span style="color: #000000">. </span><span style="color: #001080">The</span><span style="color: #000000"> </span><span style="color: #001080">names</span><span style="color: #000000"> </span><span style="color: #001080">will</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">then</span><span style="color: #000000"> </span><span style="color: #001080">be</span><span style="color: #000000"> </span><span style="color: #001080">generated</span><span style="color: #000000"> </span><span style="color: #001080">by</span><span style="color: #000000"> </span><span style="color: #001080">appending</span><span style="color: #000000"> </span><span style="color: #001080">numbers</span><span style="color: #000000"> </span><span style="color: #001080">and</span><span style="color: #000000"> </span><span style="color: #001080">prepending</span><span style="color: #000000"> </span><span style="color: #001080">prefixes</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  --</span><span style="color: #001080">tsConfig</span><span style="color: #000000">=&lt;</span><span style="color: #267F99">path</span><span style="color: #000000">/</span><span style="color: #267F99">to</span><span style="color: #000000">/</span><span style="color: #267F99">tsconfig</span><span style="color: #000000">.</span><span style="color: #267F99">json</span><span style="color: #000000">&gt;</span>
+<span style="color: #000000">      </span><span style="color: #001080">Replace</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> </span><span style="color: #A31515">`tsconfig.json`</span><span style="color: #000000"> </span><span style="color: #001080">by</span><span style="color: #000000"> </span><span style="color: #001080">passing</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">path</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">custom</span><span style="color: #000000"> </span><span style="color: #001080">config</span><span style="color: #000000">. </span><span style="color: #001080">By</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000">, </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #A31515">`tsconfig.json`</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">only</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">generated</span><span style="color: #000000">, </span><span style="color: #001080">when</span><span style="color: #000000"> </span><span style="color: #001080">transpilation</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #795E26">enabled</span><span style="color: #000000"> (</span><span style="color: #A31515">`--transpile`</span><span style="color: #000000">). </span><span style="color: #001080">If</span><span style="color: #000000"> </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">passed</span><span style="color: #000000">, </span><span style="color: #001080">a</span><span style="color: #000000"> </span><span style="color: #A31515">`tsconfig.json`</span><span style="color: #000000"> </span><span style="color: #001080">file</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #001080">read</span><span style="color: #000000"> </span>
+<span style="color: #000000">      </span><span style="color: #001080">from</span><span style="color: #000000"> </span><span style="color: #0000FF">this</span><span style="color: #000000"> </span><span style="color: #001080">directory</span><span style="color: #000000">.</span>
+
+<span style="color: #000000">  --</span><span style="color: #001080">verbose</span>
+<span style="color: #000000">      </span><span style="color: #001080">Turn</span><span style="color: #000000"> </span><span style="color: #001080">on</span><span style="color: #000000"> </span><span style="color: #001080">verbose</span><span style="color: #000000"> </span><span style="color: #001080">logging</span><span style="color: #000000">.</span>
+
+<span style="color: #0070C1">EXAMPLES</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">// generate TypeScript clients from OpenAPI definitions in a directory</span>
+<span style="color: #000000">  </span><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">openapi</span><span style="color: #000000">-</span><span style="color: #001080">generator</span><span style="color: #000000"> --</span><span style="color: #001080">input</span><span style="color: #000000"> ./</span><span style="color: #001080">my</span><span style="color: #000000">-</span><span style="color: #001080">specs</span><span style="color: #000000"> --</span><span style="color: #001080">outputDir</span><span style="color: #000000"> ./</span><span style="color: #001080">clients</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">// generate a JavaScript client from a OpenAPI definition file</span>
+<span style="color: #000000">  </span><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">openapi</span><span style="color: #000000">-</span><span style="color: #001080">generator</span><span style="color: #000000"> --</span><span style="color: #001080">input</span><span style="color: #000000"> ./</span><span style="color: #001080">my</span><span style="color: #000000">-</span><span style="color: #001080">spec</span><span style="color: #000000">.</span><span style="color: #001080">yaml</span><span style="color: #000000"> --</span><span style="color: #001080">outputDir</span><span style="color: #000000"> ./</span><span style="color: #001080">client</span><span style="color: #000000"> --</span><span style="color: #001080">transpile</span>
+</code></pre>
+						<p><em>See code: <a href="https://github.com/SAP/cloud-sdk-js/blob/v1.47.0/dist/cli/index.ts">dist/cli/index.ts</a></em></p>
+						<!-- commandsstop -->
+						<!-- prettier-ignore-end -->
+						<a href="#usage-programatically" id="usage-programatically" style="color: inherit; text-decoration: none;">
+							<h2>Usage (programatically)</h2>
+						</a>
+						<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">generate</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@sap-cloud-sdk/openapi-generator&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// initialize generator options based on what you want to do</span>
+<span style="color: #008000">// note that inputDir and outputDir are mandatory</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">options</span><span style="color: #000000">: </span><span style="color: #267F99">GeneratorOptions</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">inputDir:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path/to/inputDir&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">outputDir:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;path/to/outputDir&#039;</span>
+<span style="color: #000000">};</span>
+
+<span style="color: #008000">// generates the files and writes them to the outputDir</span>
+<span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">generate</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">);</span>
+</code></pre>
+						<p>For more detailed overview visit our <a href="https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client">generator documentation</a>.</p>
+						<!-- sap-cloud-sdk-common-readme -->
+						<!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->
+						<a href="#support" id="support" style="color: inherit; text-decoration: none;">
+							<h2>Support</h2>
+						</a>
+						<p>The recommended way to get in touch with us is to create an issue in our <a href="https://github.com/SAP/cloud-sdk-js/issues">github repository</a>.
+							Select the issue category <code>Bug</code>, <code>Feature</code> or <code>Question</code> depending on the nature of your request.
+						We try to provide fixes, features and answers as soon as possible.</p>
+						<p>We also monitor questions on <a href="https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest">StackOverflow</a> and <a href="https://answers.sap.com/tags/73555000100800000895">ansers.sap.com</a> but prefer issues on github.</p>
+						<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+							<h2>Contribute</h2>
+						</a>
+						<p>If you would like to contribute to the SAP Cloud SDK, please make yourself familiar with our <a href="https://github.com/SAP/cloud-sdk-js/blob/main/CONTRIBUTING.md">contributing guidelines</a> and follow the given instructions.</p>
+						<a href="#links" id="links" style="color: inherit; text-decoration: none;">
+							<h2>Links</h2>
+						</a>
+						<ul>
+							<li><a href="https://github.com/SAP/cloud-sdk-js">Github</a></li>
+							<li><a href="https://github.com/SAP/cloud-sdk-js/releases">Github - Releases</a></li>
+						</ul>
+						<br>
+						<ul>
+							<li><a href="https://sap.github.io/cloud-sdk/">SAP Cloud SDK Documentation portal</a></li>
+							<li><a href="https://sap.github.io/cloud-sdk/docs/js/getting-started">SAP Cloud SDK Documentation portal - Getting started guide</a></li>
+							<li><a href="https://sap.github.io/cloud-sdk/docs/js/api-reference-js-ts">SAP Cloud SDK Documentation portal - API documentation</a></li>
+						</ul>
+						<br>
+						<ul>
+							<li><a href="https://developers.sap.com/topics/cloud-sdk.html">developers.sap.com - Product Overview</a></li>
+							<li><a href="https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&amp;tag=topic:javascript">developers.sap.com - Tutorials</a></li>
+						</ul>
+						<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+							<h2>License</h2>
+						</a>
+						<p>The SAP Cloud SDK is released under the <a href="http://www.apache.org/licenses/">Apache License Version 2.0.</a></p>
+						<!-- sap-cloud-sdk-common-readme-stop -->
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/sap_cloud_sdk_openapi_generator.GeneratorOptions" class="tsd-kind-icon">Generator<wbr>Options</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="sap_cloud_sdk_openapi_generator#generate" class="tsd-kind-icon">generate</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="generate" class="tsd-anchor"></a>
+					<h3>generate</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">generate<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/sap_cloud_sdk_openapi_generator.GeneratorOptions" class="tsd-signature-type" data-tsd-kind="Interface">GeneratorOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/SAP/cloud-sdk-js/blob/5ac65e81/packages/openapi-generator/src/generator.ts#L52">packages/openapi-generator/src/generator.ts:52</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Main entry point for the OpenAPI client generation.
+									Generates models and API files.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/sap_cloud_sdk_openapi_generator.GeneratorOptions" class="tsd-signature-type" data-tsd-kind="Interface">GeneratorOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Options to configure generation.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_analytics">@sap-<wbr>cloud-<wbr>sdk/analytics</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_core">@sap-<wbr>cloud-<wbr>sdk/core</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_generator">@sap-<wbr>cloud-<wbr>sdk/generator</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="sap_cloud_sdk_openapi_generator">@sap-<wbr>cloud-<wbr>sdk/openapi-<wbr>generator</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_test_util">@sap-<wbr>cloud-<wbr>sdk/test-<wbr>util</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="sap_cloud_sdk_util">@sap-<wbr>cloud-<wbr>sdk/util</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/sap_cloud_sdk_openapi_generator.GeneratorOptions" class="tsd-kind-icon">Generator<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="sap_cloud_sdk_openapi_generator#generate" class="tsd-kind-icon">generate</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+		</div>
+	</div>
+<div class="container"><p>Copyright Ⓒ 2021 SAP SE or an SAP affiliate company. All rights reserved.</p></div>
+</footer>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

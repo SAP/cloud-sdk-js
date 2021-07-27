@@ -75,9 +75,10 @@ export interface Links {
 export interface GenerationAndUsage {
   generatorVersion: string;
   generatorRepositoryLink: UrlString;
+  repository: 'Maven' | 'npm';
   generationSteps: InstructionWithText;
-  apiSpecificUsage: InstructionWithText | undefined;
-  genericUsage: InstructionWithText;
+  apiSpecificUsage: InstructionWithTextAndHeader | undefined;
+  genericUsage: InstructionWithTextAndHeader;
   links: Links;
 }
 
@@ -131,4 +132,11 @@ export interface EmergencyObject {
 export interface InstructionWithText {
   instructions: MultiLineText;
   text: string;
+}
+
+/**
+ *  Represents a instruction block e.g. generation steps with some text above the code block with a header
+ */
+export interface InstructionWithTextAndHeader extends InstructionWithText {
+  header: string;
 }

@@ -464,6 +464,11 @@ export declare namespace TestEntity {
     true
   >;
   /**
+   * Static representation of the [[enumPropertyInt64]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  const ENUM_PROPERTY_INT_64: EdmTypeField<TestEntity, 'Edm.Enum', true, true>;
+  /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */

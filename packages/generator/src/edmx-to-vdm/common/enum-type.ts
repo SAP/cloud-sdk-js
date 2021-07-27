@@ -51,7 +51,7 @@ function parseMember(edmxEnumType: EdmxEnumType): VdmEnumMemberType[] {
 function validateUniqueness(edmxEnumType: EdmxEnumType) {
   if (unique(edmxEnumType.Member).length !== edmxEnumType.Member.length) {
     logger.warn(
-      `The enum ${edmxEnumType.Name} has duplicate member names. To keep the uniqueness, only the last one is kept.`
+      `The enum '${edmxEnumType.Name}' has duplicate member names. Only the last ones are kept.`
     );
   }
 }

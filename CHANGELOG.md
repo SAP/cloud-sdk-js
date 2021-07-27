@@ -18,9 +18,7 @@
 
 ## New Functionality
 
-- [core] Support `OAuth2JWTBearer` authentication type.
 - [core] Support additional headers and query parameters, that are set on destinations.
--
 
 ## Improvements
 

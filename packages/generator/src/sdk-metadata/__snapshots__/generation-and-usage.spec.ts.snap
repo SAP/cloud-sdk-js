@@ -7,7 +7,7 @@ Object {
 
 const resultPromise = DummyClass.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-  "text": "Find a usage example for this API below.",
+  "text": "In the example below you query the top 5 entities of the  <code>DummyClass </code> type.",
 }
 `;
 
@@ -18,6 +18,6 @@ Object {
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-  "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
+  "text": "In the example below you query the top 5 entities of the  <code>BusinessPartner </code> type.",
 }
 `;

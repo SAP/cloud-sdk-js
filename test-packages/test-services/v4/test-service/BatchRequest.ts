@@ -15,6 +15,7 @@ import {
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   TestEntity,
+  TestEntityWithEnumKey,
   TestEntityWithSharedEntityType1,
   TestEntityWithSharedEntityType2,
   TestEntityMultiLink,
@@ -91,6 +92,7 @@ export function changeset(
 export const defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const map = {
   A_TestEntity: TestEntity,
+  A_TestEntityWithEnumKey: TestEntityWithEnumKey,
   A_TestEntityWithSharedEntityType1: TestEntityWithSharedEntityType1,
   A_TestEntityWithSharedEntityType2: TestEntityWithSharedEntityType2,
   A_TestEntityMultiLink: TestEntityMultiLink,
@@ -106,6 +108,7 @@ const map = {
 };
 export type ReadTestServiceRequestBuilder =
   | GetAllRequestBuilderV4<TestEntity>
+  | GetAllRequestBuilderV4<TestEntityWithEnumKey>
   | GetAllRequestBuilderV4<TestEntityWithSharedEntityType1>
   | GetAllRequestBuilderV4<TestEntityWithSharedEntityType2>
   | GetAllRequestBuilderV4<TestEntityMultiLink>
@@ -119,6 +122,7 @@ export type ReadTestServiceRequestBuilder =
   | GetAllRequestBuilderV4<TestEntityEndsWith>
   | GetAllRequestBuilderV4<TestEntityEndsWithSomethingElse>
   | GetByKeyRequestBuilderV4<TestEntity>
+  | GetByKeyRequestBuilderV4<TestEntityWithEnumKey>
   | GetByKeyRequestBuilderV4<TestEntityWithSharedEntityType1>
   | GetByKeyRequestBuilderV4<TestEntityWithSharedEntityType2>
   | GetByKeyRequestBuilderV4<TestEntityMultiLink>
@@ -135,6 +139,9 @@ export type WriteTestServiceRequestBuilder =
   | CreateRequestBuilderV4<TestEntity>
   | UpdateRequestBuilderV4<TestEntity>
   | DeleteRequestBuilderV4<TestEntity>
+  | CreateRequestBuilderV4<TestEntityWithEnumKey>
+  | UpdateRequestBuilderV4<TestEntityWithEnumKey>
+  | DeleteRequestBuilderV4<TestEntityWithEnumKey>
   | CreateRequestBuilderV4<TestEntityWithSharedEntityType1>
   | UpdateRequestBuilderV4<TestEntityWithSharedEntityType1>
   | DeleteRequestBuilderV4<TestEntityWithSharedEntityType1>

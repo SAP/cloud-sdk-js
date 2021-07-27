@@ -1,11 +1,11 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { caps, ODataVersion } from '@sap-cloud-sdk/util';
+import { caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
   coreImportDeclaration,
   corePropertyTypeImportNames,
   externalImportDeclarations
 } from '../imports';
-import { VdmEntity } from '../vdm-types';
+import { VdmEntity, VdmProperty } from '../vdm-types';
 
 export function importDeclarations(
   entity: VdmEntity,
@@ -17,7 +17,8 @@ export function importDeclarations(
       ...corePropertyTypeImportNames(entity.keys),
       ...requestBuilderCoreImportDeclarations(entity, oDataVersion)
     ]),
-    entityImportDeclaration(entity)
+    entityImportDeclaration(entity),
+    ...entityKeyImportDeclaration(entity.keys)
   ];
 }
 
@@ -55,4 +56,18 @@ function entityImportDeclaration(
     namedImports: [entity.className],
     moduleSpecifier: `./${entity.className}`
   };
+}
+
+function entityKeyImportDeclaration(
+  properties: VdmProperty[]
+): ImportDeclarationStructure[] {
+  return unique(
+    properties
+      .filter(property => property.isEnum)
+      .map(property => property.jsType)
+  ).map(type => ({
+    kind: StructureKind.ImportDeclaration,
+    namedImports: [type],
+    moduleSpecifier: `./${type}`
+  }));
 }

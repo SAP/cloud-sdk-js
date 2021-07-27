@@ -13,7 +13,7 @@ import { ConstructorOrField } from '../constructor-or-field';
 import { EdmTypeField } from '../edm-type-field';
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[OrderableEdmTypeField]] instead.
  * Represents a property with a time value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -64,7 +64,7 @@ export class TimeFieldBase<
 }
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[OrderableEdmTypeField]] instead.
  * Represents a selectable property with a time value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to
@@ -75,7 +75,7 @@ export class TimeField<EntityT extends Entity> extends TimeFieldBase<
 > {}
 
 /**
- * @deprecated Since v1.27.0. Use [[XY]] instead.
+ * @deprecated Since v1.47.0. Use [[OrderableEdmTypeField]] instead.
  * Represents a complex type property with a time value.
  *
  * @typeparam EntityT - Type of the entity the field belongs to

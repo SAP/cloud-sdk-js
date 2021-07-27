@@ -326,6 +326,15 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
     true
   );
   /**
+   * Static representation of the [[enumPropertyInt64]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  TestEntity.ENUM_PROPERTY_INT_64 = _fieldBuilder.buildEdmTypeField(
+    'EnumPropertyInt64',
+    'Edm.Enum',
+    true
+  );
+  /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -398,6 +407,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
     TestEntity.COMPLEX_TYPE_PROPERTY,
     TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY,
     TestEntity.ENUM_PROPERTY,
+    TestEntity.ENUM_PROPERTY_INT_64,
     TestEntity.ENUM_PROPERTY_WITH_ONE_MEMBER,
     TestEntity.ENUM_COLLECTION_PROPERTY,
     TestEntity.TO_MULTI_LINK,

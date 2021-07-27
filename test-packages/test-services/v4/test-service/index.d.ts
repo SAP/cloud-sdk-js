@@ -1,4 +1,5 @@
 export * from './TestEntity';
+export * from './TestEntityWithEnumKey';
 export * from './TestEntityWithSharedEntityType1';
 export * from './TestEntityWithSharedEntityType2';
 export * from './TestEntityMultiLink';
@@ -12,6 +13,7 @@ export * from './TestEntityCircularLinkChild';
 export * from './TestEntityEndsWith';
 export * from './TestEntityEndsWithSomethingElse';
 export * from './TestEntityRequestBuilder';
+export * from './TestEntityWithEnumKeyRequestBuilder';
 export * from './TestEntityWithSharedEntityType1RequestBuilder';
 export * from './TestEntityWithSharedEntityType2RequestBuilder';
 export * from './TestEntityMultiLinkRequestBuilder';

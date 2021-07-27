@@ -75,6 +75,7 @@ export interface Links {
 export interface GenerationAndUsage {
   generatorVersion: string;
   generatorRepositoryLink: UrlString;
+  repository: 'Maven' | 'npm';
   generationSteps: InstructionWithText;
   apiSpecificUsage: InstructionWithTextAndHeader | undefined;
   genericUsage: InstructionWithTextAndHeader;

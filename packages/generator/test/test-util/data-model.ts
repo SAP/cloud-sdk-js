@@ -109,7 +109,11 @@ export const foodService: VdmServiceMetadata = {
 export const enumMeal: VdmEnumType = {
   originalName: 'EnumMealName',
   typeName: 'EnumMealType',
-  members: ['member1', 'member2']
+  members: [
+    { name: 'member1', originalValue: '0' },
+    { name: 'member2', originalValue: '1' }
+  ],
+  underlyingType: 'Edm.Int32'
 };
 
 export const complexMeal: VdmComplexType = {

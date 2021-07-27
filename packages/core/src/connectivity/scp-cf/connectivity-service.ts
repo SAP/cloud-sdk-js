@@ -49,12 +49,13 @@ interface HostAndPort {
   protocol: Protocol.HTTP;
 }
 
-function proxyHostAndPort(): HostAndPort {
+export function proxyHostAndPort(): HostAndPort {
   const service = readConnectivityServiceBinding();
-
   return {
     host: service.credentials.onpremise_proxy_host,
-    port: service.credentials.onpremise_proxy_port,
+    port:
+      service.credentials.onpremise_proxy_http_port ||
+      service.credentials.onpremise_proxy_port,
     protocol: Protocol.HTTP
   };
 }

@@ -10,7 +10,11 @@ import {
 import { mockServiceToken } from '../../../test/test-util/token-accessor-mocks';
 import { mockClientCredentialsGrantCall } from '../../../test/test-util/xsuaa-service-mocks';
 import { Destination } from './destination';
-import { addProxyConfiguration } from './connectivity-service';
+import {
+  addProxyConfiguration,
+  proxyHostAndPort
+} from './connectivity-service';
+import { Protocol } from '.';
 
 describe('connectivity-service', () => {
   afterEach(() => {
@@ -92,6 +96,27 @@ describe('connectivity-service', () => {
       );
       done();
     });
+  });
+
+  it('returns onpremise_proxy_http_port instead of onpremise_proxy_port if both are present', () => {
+    mockConnectivityServiceBinding.credentials.onpremise_proxy_http_port = 54321;
+    process.env.VCAP_SERVICES = JSON.stringify({
+      connectivity: [
+        {
+          ...mockConnectivityServiceBinding
+        }
+      ]
+    });
+
+    const expected = {
+      host: 'proxy.example.com',
+      port: 54321,
+      protocol: Protocol.HTTP
+    };
+
+    const hostAndPort = proxyHostAndPort();
+
+    expect(hostAndPort).toEqual(expected);
   });
 
   it('throws an error if the client credentials grant fails', done => {

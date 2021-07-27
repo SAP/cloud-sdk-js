@@ -6,11 +6,12 @@ exports[`sdk-metadata generates the sdk metadata content for services with prege
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
+      "header": "Sample code for using the client library",
       "instructions": "import { TestEntity } from '@sap/cloud-sdk-vdm-test-service';
 
 const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find a usage example for this API below.",
+      "text": "In the example below you query the top 5 entities of the  <code>TestEntity </code> type.",
     },
     "generationSteps": Object {
       "instructions": "<ul>
@@ -24,11 +25,12 @@ The steps above will generate a basic TypeScript client. For additional options 
     "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/generator",
     "generatorVersion": Any<String>,
     "genericUsage": Object {
+      "header": "Sample code for using the client library",
       "instructions": "import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
+      "text": "In the example below you query the top 5 entities of the  <code>BusinessPartner </code> type.",
     },
     "links": Object {
       "apiHubTutorial": Object {
@@ -52,6 +54,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
         "url": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
       },
     },
+    "repository": "npm",
   },
   "language": "JavaScript",
   "pregeneratedLibrary": Object {
@@ -65,7 +68,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
     },
     "repository": "npm",
     "repositoryLink": "https://www.npmjs.com/package/@sap/cloud-sdk-vdm-test-service",
-    "version": "1.0.0",
+    "version": "1.2.3",
   },
   "serviceStatus": Object {
     "status": "certified",
@@ -79,11 +82,12 @@ exports[`sdk-metadata generates the sdk metadata content for services without pr
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
+      "header": "Sample code for using the client library",
       "instructions": "import { TestEntity } from '@sap/cloud-sdk-vdm-test-service';
 
 const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find a usage example for this API below.",
+      "text": "In the example below you query the top 5 entities of the  <code>TestEntity </code> type.",
     },
     "generationSteps": Object {
       "instructions": "<ul>
@@ -97,11 +101,12 @@ The steps above will generate a basic TypeScript client. For additional options 
     "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/generator",
     "generatorVersion": Any<String>,
     "genericUsage": Object {
+      "header": "Sample code for using the client library",
       "instructions": "import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
+      "text": "In the example below you query the top 5 entities of the  <code>BusinessPartner </code> type.",
     },
     "links": Object {
       "apiHubTutorial": Object {
@@ -125,6 +130,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
         "url": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
       },
     },
+    "repository": "npm",
   },
   "language": "JavaScript",
   "pregeneratedLibrary": undefined,

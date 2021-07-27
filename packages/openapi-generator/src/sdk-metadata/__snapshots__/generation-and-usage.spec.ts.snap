@@ -3,10 +3,11 @@
 exports[`generation-and-usage creates GenerationAndUsage from openApiDocument 1`] = `
 Object {
   "apiSpecificUsage": Object {
+    "header": "Sample code for using the client library",
     "instructions": "import { DummyApi } from '@sap/dummy-package';
 
 const responseData = await DummyApi.DummyFunction().execute({ destinationName:'myDestinationName' });",
-    "text": "Find a usage example for this API below.",
+    "text": "In the example below you execute the  <code>DummyFunction</code> of the  <code>DummyApi</code> API.",
   },
   "generationSteps": Object {
     "instructions": "<ul>
@@ -20,10 +21,11 @@ The steps above will generate a basic TypeScript client. For additional options 
   "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/openapi-generator",
   "generatorVersion": Any<String>,
   "genericUsage": Object {
+    "header": "Sample code for using the client library",
     "instructions": "import { MyApi } from 'my-npm-package';
 
 const responseData = await MyApi.myFunction().execute({ destinationName:'myDestinationName' });",
-    "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
+    "text": "In the example below you execute the  <code>myFunction</code> of the  <code>MyApi</code> API.",
   },
   "links": Object {
     "apiHubTutorial": Object {
@@ -47,5 +49,6 @@ const responseData = await MyApi.myFunction().execute({ destinationName:'myDesti
       "url": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
     },
   },
+  "repository": "npm",
 }
 `;

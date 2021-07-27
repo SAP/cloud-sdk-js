@@ -16,7 +16,4 @@ The steps above will generate a basic TypeScript client. For additional options 
   };
 }
 
-export const apiSpecificUsageText = 'Find a usage example for this API below.';
-
-export const genericUsageText =
-  'Find a generic example on how to execute requests with the SAP Cloud SDK below.';
+export const usageHeaderText = 'Sample code for using the client library';

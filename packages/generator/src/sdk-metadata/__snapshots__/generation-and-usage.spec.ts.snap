@@ -2,20 +2,22 @@
 
 exports[`generation-and-usage creates api specific usage for entity 1`] = `
 Object {
+  "header": "Sample code for using the client library",
   "instructions": "import { DummyClass } from '@sap/dummy-package';
 
 const resultPromise = DummyClass.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-  "text": "Find a usage example for this API below.",
+  "text": "In the example below you query the top 5 entities of the  <code>DummyClass </code> type.",
 }
 `;
 
 exports[`generation-and-usage creates generic usage example 1`] = `
 Object {
+  "header": "Sample code for using the client library",
   "instructions": "import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-  "text": "Find a generic example on how to execute requests with the SAP Cloud SDK below.",
+  "text": "In the example below you query the top 5 entities of the  <code>BusinessPartner </code> type.",
 }
 `;

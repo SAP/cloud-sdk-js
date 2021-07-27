@@ -1,6 +1,7 @@
 import nock = require('nock');
 import {
   getInstallationSnippet,
+  getLatestVersionOfNpmPackage,
   getPregeneratedLibrary,
   getRepositoryLink,
   getTimeStamp,
@@ -39,8 +40,20 @@ describe('pregenerated-lib', () => {
     );
   }, 30000);
 
+  it('gives version for exisitng client', async () => {
+    nock('http://registry.npmjs.org/')
+      .get(/@sap-cloud-sdk\/core\/latest/)
+      .reply(200, { version: '1.2.3' });
+    expect(await getLatestVersionOfNpmPackage('@sap-cloud-sdk/core')).toBe(
+      '1.2.3'
+    );
+  });
+
   it('returns pregenerated lib information for existing service', async () => {
     nock('http://registry.npmjs.org/').head(/.*/).reply(200);
+    nock('http://registry.npmjs.org/')
+      .get(new RegExp(`/${npmPackageName}/latest`))
+      .reply(200, { version: '1.2.3' });
     const result = await getPregeneratedLibrary('description', npmPackageName);
     // for an existing service like the business partner it should not be undefined the parts are tested independently
     expect(result).toBeDefined();

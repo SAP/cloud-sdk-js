@@ -6,19 +6,37 @@ import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 
 const parameterName = 'parameters';
 
+function functionImportReturnType(
+  functionImport: VdmFunctionImport,
+  oDataVersion: string
+) {
+  let type = functionImport.returnType.returnType;
+
+  if (functionImport.returnType.isCollection) {
+    type = `${type}[]`;
+  }
+  if (functionImport.returnType.isNullable) {
+    type = `${type}|null`;
+  }
+
+  type = `FunctionImportRequestBuilder${caps(oDataVersion)}<${
+    functionImport.parametersTypeName
+  }, ${type}>`;
+
+  if (isEntityNotDeserializable(functionImport.returnType)) {
+    type = `Omit<${type}, 'execute'>`;
+  }
+  return type;
+}
+
 export function functionImportFunction(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const returnType = isEntityNotDeserializable(functionImport.returnType)
-    ? `Omit<FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
-        functionImport.parametersTypeName
-      }, ${functionImport.returnType.returnType}>, 'execute'>`
-    : `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
-        functionImport.parametersTypeName
-      }, ${functionImport.returnType.returnType}${
-        functionImport.returnType.isCollection ? '[]' : ''
-      }>`;
+  const returnType = functionImportReturnType(
+    functionImport,
+    service.oDataVersion
+  );
   return {
     kind: StructureKind.Function,
     name: functionImport.name,

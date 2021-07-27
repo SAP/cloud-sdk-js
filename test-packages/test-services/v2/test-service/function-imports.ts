@@ -217,7 +217,7 @@ export function testFunctionImportSharedEntityReturnTypeCollection(
 ): Omit<
   FunctionImportRequestBuilderV2<
     TestFunctionImportSharedEntityReturnTypeCollectionParameters,
-    never
+    never[]
   >,
   'execute'
 > {
@@ -274,7 +274,7 @@ export interface TestFunctionImportUnsupportedEdmTypesParameters {
   /**
    * Simple Param.
    */
-  simpleParam: any;
+  simpleParam?: any | null;
 }
 
 /**
@@ -347,7 +347,7 @@ export interface TestFunctionImportGetParameters {
   /**
    * Simple Param.
    */
-  simpleParam: string;
+  simpleParam?: string | null;
 }
 
 /**
@@ -386,7 +386,7 @@ export interface TestFunctionImportPostParameters {
   /**
    * Simple Param.
    */
-  simpleParam: string;
+  simpleParam?: string | null;
 }
 
 /**
@@ -425,11 +425,11 @@ export interface TestFunctionImportMultipleParamsParameters {
   /**
    * String Param.
    */
-  stringParam: string;
+  stringParam?: string | null;
   /**
    * Boolean Param.
    */
-  booleanParam: boolean;
+  booleanParam?: boolean | null;
 }
 
 /**

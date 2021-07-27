@@ -1,10 +1,10 @@
 import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,
+  testActionImportNullableTest,
   testActionImportUnsupportedEdmTypes
 } from '@sap-cloud-sdk/test-services/v4/test-service/action-imports';
 
-// $ExpectType ActionImportRequestBuilder<TestActionImportNoParameterNoReturnTypeParameters, undefined>
 const noReturnTypeRequestBuilder = testActionImportNoParameterNoReturnType({});
 
 // $ExpectType Promise<undefined>
@@ -33,3 +33,15 @@ const unsupportedEdmTypesRequestBuilder = testActionImportUnsupportedEdmTypes({
 unsupportedEdmTypesRequestBuilder.execute({
   url: 'somePath'
 });
+
+// $ExpectError
+testActionImportNullableTest({});
+
+// $ExpectType ActionImportRequestBuilder
+testActionImportNullableTest({nonNullable:'someValue',nullablePerDefault:null,nullableExplicit:null});
+
+// $ExpectType ActionImportRequestBuilder
+testActionImportNullableTest({nonNullable:'someValue'});
+
+// $ExpectType Promise<TestComplexType[] | null>
+testActionImportNullableTest({nonNullable:'someValue'}).execute({url:'someUrl'});

@@ -7,7 +7,7 @@ export interface CreateTestEntityByIdParameters {
   /**
    * Id.
    */
-  id: number;
+  id?: number | null;
 }
 /**
  * Create Test Entity By Id.
@@ -25,7 +25,7 @@ export interface CreateTestEntityByIdReturnIdParameters {
   /**
    * Id.
    */
-  id: number;
+  id?: number | null;
 }
 /**
  * Create Test Entity By Id Return Id.

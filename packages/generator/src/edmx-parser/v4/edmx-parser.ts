@@ -68,14 +68,29 @@ export function parseActionImport(root: any): EdmxActionImport[] {
   return getPropertyFromEntityContainer(root, 'ActionImport');
 }
 
-function parseActionsFunctions(root, actionFunctionKey: 'Action' | 'Function') {
-  return getMergedPropertyWithNamespace(root, actionFunctionKey).map(
-    actionOrFunction => ({
-      ...actionOrFunction,
-      Parameter: forceArray(actionOrFunction.Parameter),
-      IsBound: false
-    })
-  );
+function parseActionsFunctions(
+  root,
+  actionFunctionKey: 'Action' | 'Function'
+): EdmxFunction[] | EdmxAction[] {
+  const actionsOrFuntions: EdmxFunction[] = getMergedPropertyWithNamespace(
+    root,
+    actionFunctionKey
+  ).map(actionOrFunction => ({
+    ...actionOrFunction,
+    Parameter: forceArray(actionOrFunction.Parameter),
+    IsBound: false
+  }));
+  return actionsOrFuntions.map(f => {
+    if (f.ReturnType) {
+      f.ReturnType.Nullable = !f.ReturnType.Nullable
+        ? 'true'
+        : f.ReturnType.Nullable;
+    }
+    f.Parameter.forEach(p => {
+      p.Nullable = !p.Nullable ? 'true' : p.Nullable;
+    });
+    return f;
+  });
 }
 
 export function parseFunctions(root: any): EdmxFunction[] {

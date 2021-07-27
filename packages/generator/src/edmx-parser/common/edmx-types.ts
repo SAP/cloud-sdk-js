@@ -30,7 +30,7 @@ export interface EdmxDocumented {
 
 export interface EdmxParameter extends EdmxDocumented, EdmxNamed {
   Type: string;
-  Nullable?: string;
+  Nullable: string;
 }
 
 export interface EdmxEntitySetBase extends EdmxNamed, EdmxNamespaced {

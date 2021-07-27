@@ -37,10 +37,10 @@
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" Nullable="false"/>
       </ComplexType>
       <Function Name="TestFunctionImportEntityReturnType1">
-        <ReturnType Type="Namespace1.A_TestEntityType1"/>
+        <ReturnType Type="Namespace1.A_TestEntityType1" Nullable="false"/>
       </Function>
       <Function Name="TestFunctionImportEntityReturnType2">
-        <ReturnType Type="Namespace2.A_TestEntityType2"/>
+        <ReturnType Type="Namespace2.A_TestEntityType2" Nullable="false"/>
       </Function>
     </Schema>
     <Schema Namespace="Namespace3" xmlns="http://docs.oasis-open.org/odata/ns/edm">

@@ -7,11 +7,11 @@ export interface ConcatStringsParameters {
   /**
    * Str 1.
    */
-  str1: string;
+  str1?: string | null;
   /**
    * Str 2.
    */
-  str2: string;
+  str2?: string | null;
 }
 /**
  * Concat Strings.
@@ -21,7 +21,7 @@ export interface ConcatStringsParameters {
  */
 export declare function concatStrings(
   parameters: ConcatStringsParameters
-): FunctionImportRequestBuilderV4<ConcatStringsParameters, string>;
+): FunctionImportRequestBuilderV4<ConcatStringsParameters, string | null>;
 /**
  * Type of the parameters to be passed to [[getAll]].
  */
@@ -42,7 +42,7 @@ export interface GetByKeyParameters {
   /**
    * Param.
    */
-  param: number;
+  param?: number | null;
 }
 /**
  * Get By Key.
@@ -52,7 +52,7 @@ export interface GetByKeyParameters {
  */
 export declare function getByKey(
   parameters: GetByKeyParameters
-): FunctionImportRequestBuilderV4<GetByKeyParameters, TestEntity>;
+): FunctionImportRequestBuilderV4<GetByKeyParameters, TestEntity | null>;
 /**
  * Type of the parameters to be passed to [[returnCollection]].
  */
@@ -60,7 +60,7 @@ export interface ReturnCollectionParameters {
   /**
    * Param.
    */
-  param: number;
+  param?: number | null;
 }
 /**
  * Return Collection.
@@ -78,7 +78,7 @@ export interface ReturnIntParameters {
   /**
    * Param.
    */
-  param: number;
+  param?: number | null;
 }
 /**
  * Return Int.
@@ -88,7 +88,7 @@ export interface ReturnIntParameters {
  */
 export declare function returnInt(
   parameters: ReturnIntParameters
-): FunctionImportRequestBuilderV4<ReturnIntParameters, number>;
+): FunctionImportRequestBuilderV4<ReturnIntParameters, number | null>;
 /**
  * Type of the parameters to be passed to [[returnSapCloudSdk]].
  */
@@ -101,7 +101,7 @@ export interface ReturnSapCloudSdkParameters {}
  */
 export declare function returnSapCloudSdk(
   parameters: ReturnSapCloudSdkParameters
-): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string>;
+): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string | null>;
 export declare const functionImports: {
   concatStrings: typeof concatStrings;
   getAll: typeof getAll;

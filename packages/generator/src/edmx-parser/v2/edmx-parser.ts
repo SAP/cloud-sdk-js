@@ -35,8 +35,17 @@ export function parseAssociationSets(root: any): EdmxAssociationSet[] {
 }
 
 export function parseFunctionImports(root: any): EdmxFunctionImport[] {
-  return getPropertyFromEntityContainer(root, 'FunctionImport').map(f => ({
+  const functionImports: EdmxFunctionImport[] = getPropertyFromEntityContainer(
+    root,
+    'FunctionImport'
+  ).map(f => ({
     ...f,
     Parameter: forceArray(f.Parameter)
   }));
+  return functionImports.map(f => {
+    f.Parameter.forEach(p => {
+      p.Nullable = !p.Nullable ? 'true' : p.Nullable;
+    });
+    return f;
+  });
 }

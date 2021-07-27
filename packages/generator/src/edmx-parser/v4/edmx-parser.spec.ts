@@ -21,8 +21,8 @@ describe('edmx-edmx-parser', () => {
 
     expect(parseEntitySets(metadataEdmx.root).length).toBe(13);
     expect(parseEntityType(metadataEdmx.root).length).toBe(13);
-    expect(parseFunctionImports(metadataEdmx.root).length).toBe(10);
-    expect(parseFunctions(metadataEdmx.root).length).toBe(10);
+    expect(parseFunctionImports(metadataEdmx.root).length).toBe(11);
+    expect(parseFunctions(metadataEdmx.root).length).toBe(11);
     expect(parseActionImport(metadataEdmx.root).length).toBe(8);
     expect(parseActions(metadataEdmx.root).length).toBe(7);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
@@ -65,6 +65,12 @@ describe('edmx-edmx-parser', () => {
 
     parseFunctions(metadataEdmx.root).forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
+      f.Parameter.forEach(parameter =>
+        expect(parameter.Nullable).toBeDefined()
+      );
+      if (f.ReturnType) {
+        expect(f.ReturnType.Nullable).toBeDefined();
+      }
     });
 
     parseComplexTypes(metadataEdmx.root).forEach(c => {

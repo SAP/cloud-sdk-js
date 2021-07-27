@@ -43,9 +43,14 @@ export interface EdmxActionImport extends EdmxNamed, EdmxNamespaced {
 }
 
 export interface EdmxFunction extends EdmxNamed, EdmxNamespaced {
-  ReturnType?: { Type: string };
+  ReturnType?: EdmxReturnType;
   Parameter: EdmxParameter[];
   IsBound: boolean;
+}
+
+export interface EdmxReturnType {
+  Type: string;
+  Nullable: string;
 }
 
 export type EdmxAction = EdmxFunction;

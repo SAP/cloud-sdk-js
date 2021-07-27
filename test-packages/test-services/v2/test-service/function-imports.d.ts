@@ -115,7 +115,7 @@ export declare function testFunctionImportSharedEntityReturnTypeCollection(
 ): Omit<
   FunctionImportRequestBuilderV2<
     TestFunctionImportSharedEntityReturnTypeCollectionParameters,
-    never
+    never[]
   >,
   'execute'
 >;
@@ -142,7 +142,7 @@ export interface TestFunctionImportUnsupportedEdmTypesParameters {
   /**
    * Simple Param.
    */
-  simpleParam: any;
+  simpleParam?: any | null;
 }
 /**
  * Test Function Import Unsupported Edm Types.
@@ -179,7 +179,7 @@ export interface TestFunctionImportGetParameters {
   /**
    * Simple Param.
    */
-  simpleParam: string;
+  simpleParam?: string | null;
 }
 /**
  * Test Function Import Get.
@@ -197,7 +197,7 @@ export interface TestFunctionImportPostParameters {
   /**
    * Simple Param.
    */
-  simpleParam: string;
+  simpleParam?: string | null;
 }
 /**
  * Test Function Import Post.
@@ -215,11 +215,11 @@ export interface TestFunctionImportMultipleParamsParameters {
   /**
    * String Param.
    */
-  stringParam: string;
+  stringParam?: string | null;
   /**
    * Boolean Param.
    */
-  booleanParam: boolean;
+  booleanParam?: boolean | null;
 }
 /**
  * Test Function Import Multiple Params.

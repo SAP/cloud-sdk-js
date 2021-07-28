@@ -10,12 +10,12 @@ describe('enum', () => {
       kind: StructureKind.Enum,
       members: [
         {
-          docs: ['\noriginal value: 0'],
+          docs: ['\nOriginal value: 0'],
           name: 'member1',
           value: 'member1'
         },
         {
-          docs: ['\noriginal value: 1'],
+          docs: ['\nOriginal value: 1'],
           name: 'member2',
           value: 'member2'
         }

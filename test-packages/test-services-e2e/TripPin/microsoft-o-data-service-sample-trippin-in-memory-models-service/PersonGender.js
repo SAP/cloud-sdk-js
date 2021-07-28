@@ -13,15 +13,15 @@ exports.PersonGender = void 0;
 var PersonGender;
 (function (PersonGender) {
   /**
-   * original value: 0
+   * Original value: 0
    */
   PersonGender['Male'] = 'Male';
   /**
-   * original value: 1
+   * Original value: 1
    */
   PersonGender['Female'] = 'Female';
   /**
-   * original value: 2
+   * Original value: 2
    */
   PersonGender['Unknown'] = 'Unknown';
 })((PersonGender = exports.PersonGender || (exports.PersonGender = {})));

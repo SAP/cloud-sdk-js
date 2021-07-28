@@ -318,13 +318,13 @@
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportGET" ReturnType="Edm.Boolean" m:HttpMethod="GET">
-          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In Nullable="false""/>
+          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In" Nullable="false"/>
           <!-- <Parameter Name="ComplexTypeParam" Type="API_TEST_SRV.A_TestComplexType" Mode="In"/>
           <Parameter Name="EntityParam" Type="API_TEST_SRV.A_TestEntityType" Mode="In" Nullable="false"/> -->
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportPOST" ReturnType="Edm.Boolean" m:HttpMethod="POST">
-          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In Nullable="false""/>
+          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In" Nullable="false"/>
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportMultipleParams" ReturnType="Edm.Boolean" m:HttpMethod="GET">

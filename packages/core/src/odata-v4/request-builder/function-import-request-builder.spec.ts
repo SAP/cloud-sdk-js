@@ -3,10 +3,7 @@ import { testFunctionImportMultipleParams } from '../../../test/test-util/test-s
 
 describe('FunctionImportRequestBuilder', () => {
   it('builds correct url for multiple parameters', async () => {
-    const params = {
-      stringParam: 'str1',
-      nonNullableStringParam: 'str2'
-    };
+    const params = { stringParam: 'str1', nonNullableStringParam: 'str2' };
 
     const requestBuilder = testFunctionImportMultipleParams(params);
 

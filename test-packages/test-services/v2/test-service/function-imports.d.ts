@@ -179,7 +179,7 @@ export interface TestFunctionImportGetParameters {
   /**
    * Simple Param.
    */
-  simpleParam?: string | null;
+  simpleParam: string;
 }
 /**
  * Test Function Import Get.
@@ -197,7 +197,7 @@ export interface TestFunctionImportPostParameters {
   /**
    * Simple Param.
    */
-  simpleParam?: string | null;
+  simpleParam: string;
 }
 /**
  * Test Function Import Post.

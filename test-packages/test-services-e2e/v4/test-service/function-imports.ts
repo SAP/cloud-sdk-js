@@ -21,11 +21,11 @@ export interface ConcatStringsParameters {
   /**
    * Str 1.
    */
-  str1?: string | null;
+  str1: string;
   /**
    * Str 2.
    */
-  str2?: string | null;
+  str2: string;
 }
 
 /**
@@ -36,7 +36,7 @@ export interface ConcatStringsParameters {
  */
 export function concatStrings(
   parameters: ConcatStringsParameters
-): FunctionImportRequestBuilderV4<ConcatStringsParameters, string | null> {
+): FunctionImportRequestBuilderV4<ConcatStringsParameters, string> {
   const params = {
     str1: new FunctionImportParameter('Str1', 'Edm.String', parameters.str1),
     str2: new FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
@@ -84,7 +84,7 @@ export interface GetByKeyParameters {
   /**
    * Param.
    */
-  param?: number | null;
+  param: number;
 }
 
 /**
@@ -95,7 +95,7 @@ export interface GetByKeyParameters {
  */
 export function getByKey(
   parameters: GetByKeyParameters
-): FunctionImportRequestBuilderV4<GetByKeyParameters, TestEntity | null> {
+): FunctionImportRequestBuilderV4<GetByKeyParameters, TestEntity> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   };
@@ -115,7 +115,7 @@ export interface ReturnCollectionParameters {
   /**
    * Param.
    */
-  param?: number | null;
+  param: number;
 }
 
 /**
@@ -149,7 +149,7 @@ export interface ReturnIntParameters {
   /**
    * Param.
    */
-  param?: number | null;
+  param: number;
 }
 
 /**
@@ -160,7 +160,7 @@ export interface ReturnIntParameters {
  */
 export function returnInt(
   parameters: ReturnIntParameters
-): FunctionImportRequestBuilderV4<ReturnIntParameters, number | null> {
+): FunctionImportRequestBuilderV4<ReturnIntParameters, number> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   };
@@ -189,7 +189,7 @@ export interface ReturnSapCloudSdkParameters {}
  */
 export function returnSapCloudSdk(
   parameters: ReturnSapCloudSdkParameters
-): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string | null> {
+): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string> {
   const params = {};
 
   return new FunctionImportRequestBuilderV4(

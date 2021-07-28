@@ -13,7 +13,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  EnumField,
+  EnumFieldV2,
   Field,
   FieldBuilder
 } from '@sap-cloud-sdk/core';
@@ -120,7 +120,7 @@ export namespace TestEntity3 {
    */
   export const _allFields: Array<
     | EdmTypeField<TestEntity3, 'Edm.String', false, true>
-    | EnumField<TestEntity3, TestEnumType2, true, true>
+    | EnumFieldV2<TestEntity3, TestEnumType2, true, true>
     | TestComplexType2Field<TestEntity3, true, true>
   > = [
     TestEntity3.KEY_PROPERTY_STRING,

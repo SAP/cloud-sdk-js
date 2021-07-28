@@ -4,11 +4,11 @@
  */
 export declare enum TestEnumType {
   /**
-   * original value: 0
+   * Original value: 0
    */
   Member1 = 'Member1',
   /**
-   * original value: 1
+   * Original value: 1
    */
   Member2 = 'Member2'
 }

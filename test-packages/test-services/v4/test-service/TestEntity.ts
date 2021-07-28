@@ -18,7 +18,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  EnumField,
+  EnumFieldV2,
   Field,
   FieldBuilder,
   OneToManyLink,
@@ -494,15 +494,6 @@ export namespace TestEntity {
     true
   );
   /**
-   * Static representation of the [[enumPropertyInt64]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const ENUM_PROPERTY_INT_64 = _fieldBuilder.buildEdmTypeField(
-    'EnumPropertyInt64',
-    'Edm.Enum',
-    true
-  );
-  /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
@@ -566,9 +557,9 @@ export namespace TestEntity {
     | CollectionField<TestEntity, 'Edm.String', true, true>
     | TestComplexTypeField<TestEntity, true, true>
     | CollectionField<TestEntity, TestComplexType, true, true>
-    | EnumField<TestEntity, TestEnumType, true, true>
-    | EnumField<TestEntity, TestEnumTypeInt64, true, true>
-    | EnumField<TestEntity, TestEnumTypeWithOneMember, true, true>
+    | EnumFieldV2<TestEntity, TestEnumType, true, true>
+    | EnumFieldV2<TestEntity, TestEnumTypeInt64, true, true>
+    | EnumFieldV2<TestEntity, TestEnumTypeWithOneMember, true, true>
     | CollectionField<TestEntity, typeof TestEnumType, true, true>
     | OneToManyLink<TestEntity, TestEntityMultiLink>
     | OneToOneLink<TestEntity, TestEntitySingleLink>

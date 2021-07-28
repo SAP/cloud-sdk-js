@@ -13,7 +13,7 @@ exports.TestEnumTypeWithOneMember = void 0;
 var TestEnumTypeWithOneMember;
 (function (TestEnumTypeWithOneMember) {
   /**
-   * original value: 0
+   * Original value: 0
    */
   TestEnumTypeWithOneMember['Member1'] = 'Member1';
 })(

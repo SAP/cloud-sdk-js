@@ -10,11 +10,11 @@
  */
 export enum TestEnumTypeInt64 {
   /**
-   * original value: 99999999999999999999
+   * Original value: 99999999999999999999
    */
   Member1 = 'Member1',
   /**
-   * original value: 88888888888888888888
+   * Original value: 88888888888888888888
    */
   Member2 = 'Member2'
 }

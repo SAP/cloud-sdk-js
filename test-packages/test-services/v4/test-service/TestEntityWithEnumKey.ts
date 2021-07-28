@@ -11,7 +11,7 @@ import {
   CustomFieldV4,
   EntityBuilderType,
   EntityV4,
-  EnumField,
+  EnumFieldV2,
   Field,
   FieldBuilder
 } from '@sap-cloud-sdk/core';
@@ -93,7 +93,7 @@ export namespace TestEntityWithEnumKey {
    * All fields of the TestEntityWithEnumKey entity.
    */
   export const _allFields: Array<
-    EnumField<TestEntityWithEnumKey, TestEnumType, false, true>
+    EnumFieldV2<TestEntityWithEnumKey, TestEnumType, false, true>
   > = [TestEntityWithEnumKey.KEY_PROPERTY_ENUM_1];
   /**
    * All fields selector.

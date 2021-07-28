@@ -13,11 +13,11 @@ exports.TestEnumType1 = void 0;
 var TestEnumType1;
 (function (TestEnumType1) {
   /**
-   * original value: 1
+   * Original value: 1
    */
   TestEnumType1['Member1'] = 'Member1';
   /**
-   * original value: 2
+   * Original value: 2
    */
   TestEnumType1['Member2'] = 'Member2';
 })((TestEnumType1 = exports.TestEnumType1 || (exports.TestEnumType1 = {})));

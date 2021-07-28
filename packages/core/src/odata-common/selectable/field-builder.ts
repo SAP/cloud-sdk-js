@@ -12,7 +12,7 @@ import { OrderableEdmTypeField } from './orderable-edm-type-field';
 import { CollectionField, CollectionFieldType } from './collection-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { FieldOptions } from './field';
-import { EnumField } from './enum-field';
+import { EnumFieldV2 } from './enum-field';
 
 type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<
@@ -200,7 +200,7 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
     fieldName: string,
     enumType: Record<string, EnumT>,
     isNullable: NullableT
-  ): EnumField<
+  ): EnumFieldV2<
     EntityTypeFromFieldOf<FieldOfT>,
     EnumT,
     NullableT,
@@ -208,7 +208,7 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
   > {
     const isSelectable = (this.fieldOf instanceof
       ComplexTypeField) as IsSelectableField<FieldOfT>;
-    return new EnumField(fieldName, this.fieldOf, enumType, {
+    return new EnumFieldV2(fieldName, this.fieldOf, enumType, {
       isNullable,
       isSelectable
     });

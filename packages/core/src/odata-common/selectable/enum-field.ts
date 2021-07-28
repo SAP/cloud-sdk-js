@@ -5,7 +5,7 @@ import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 
-export class EnumField<
+export class EnumFieldV2<
   EntityT extends Entity,
   EnumT extends string,
   NullableT extends boolean = false,

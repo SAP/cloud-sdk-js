@@ -61,6 +61,8 @@ type NonNullableFieldTypeByEdmType<
   ? moment.Duration
   : EdmOrFieldT extends 'Edm.TimeOfDay'
   ? Time
+  : EdmOrFieldT extends 'Edm.Enum'
+  ? string
   : EdmOrFieldT extends 'Edm.Any'
   ? any
   : EdmOrFieldT extends FieldType

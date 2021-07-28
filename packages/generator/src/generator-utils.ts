@@ -48,7 +48,7 @@ export type EdmTypeMapping = {
 };
 
 type EdmTypeMappingWithoutEnum = {
-  [key in EdmTypeShared<'any'>]: string | undefined;
+  [key in Exclude<EdmTypeShared<'any'>, 'Edm.Enum'>]: string | undefined;
 };
 
 const edmToTsTypeMapping: EdmTypeMappingWithoutEnum = {
@@ -102,7 +102,8 @@ const edmToFieldTypeMapping: EdmTypeMapping = {
   // OData v4 specific
   'Edm.Date': 'OrderableEdmTypeField',
   'Edm.Duration': 'OrderableEdmTypeField',
-  'Edm.TimeOfDay': 'OrderableEdmTypeField'
+  'Edm.TimeOfDay': 'OrderableEdmTypeField',
+  'Edm.Enum': 'EdmTypeField'
 };
 
 export function getFallbackEdmTypeIfNeeded(

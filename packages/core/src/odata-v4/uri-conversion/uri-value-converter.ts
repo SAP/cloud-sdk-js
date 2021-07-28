@@ -5,7 +5,8 @@ import { tsToEdm } from '../payload-value-converter';
 import {
   uriConvertersCommon,
   EdmTypeShared,
-  UriConverter
+  UriConverter,
+  convertToUriForEdmString
 } from '../../odata-common';
 import { EdmType } from '../edm-types';
 
@@ -20,7 +21,8 @@ export const uriConverters: UriConverterMapping = {
   'Edm.TimeOfDay': identity,
   'Edm.Decimal': value => String(value),
   'Edm.Duration': value => `duration'${value}'`,
-  'Edm.Guid': identity
+  'Edm.Guid': identity,
+  'Edm.Enum': value => convertToUriForEdmString(value)
 };
 /**
  * @hidden

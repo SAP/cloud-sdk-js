@@ -8,3 +8,4 @@ export * from './selectable';
 export * from './string-field';
 export * from './time-field';
 export * from './any-field';
+export * from './enum-field';

@@ -11,10 +11,10 @@ import {
   isComplexTypeNameSpace,
   EdmTypeShared,
   isEdmType,
-  PropertyMetadata
+  PropertyMetadata,
+  EnumFieldV2
 } from '../odata-common';
 import { toStaticPropertyFormat } from './name-converter';
-import { EnumField } from './selectable/enum-field';
 
 const logger = createLogger({
   package: 'core',
@@ -78,9 +78,6 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     if (fieldValue === null || fieldValue === undefined) {
       return null;
     }
-    if (field instanceof EnumField) {
-      return fieldValue;
-    }
     if (field instanceof EdmTypeField) {
       return tsToEdm(fieldValue, field.edmType);
     }
@@ -100,6 +97,9 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     }
     if (field instanceof CollectionField) {
       return serializeCollection(fieldValue, field._fieldType);
+    }
+    if (field instanceof EnumFieldV2) {
+      return fieldValue;
     }
   }
 

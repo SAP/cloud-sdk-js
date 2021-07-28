@@ -19,6 +19,7 @@ import {
   EntityBuilderType,
   EntityV4,
   EnumField,
+  EnumFieldV2,
   Field,
   FieldBuilder,
   OneToManyLink,
@@ -493,15 +494,25 @@ export namespace TestEntity {
     TestEnumTypeInt64,
     true
   );
+
+  ENUM_PROPERTY_INT_64.equals('a');
+  ENUM_PROPERTY_INT_64.equals('Member1');
+  ENUM_PROPERTY_INT_64.equals(TestEnumTypeInt64.Member2);
+
+  //todo type test
+  const lagacyEnum: EnumField<TestEntity> = new EnumField('field', TestEntity);
+  lagacyEnum.equals('a');
   /**
    * Static representation of the [[enumPropertyInt64]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY_INT_64 = _fieldBuilder.buildEdmTypeField(
+  // todo type test
+  export const ENUM_PROPERTY_INT_64_EDM = _fieldBuilder.buildEdmTypeField(
     'EnumPropertyInt64',
     'Edm.Enum',
     true
   );
+  ENUM_PROPERTY_INT_64_EDM.equals('a');
   /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -566,9 +577,9 @@ export namespace TestEntity {
     | CollectionField<TestEntity, 'Edm.String', true, true>
     | TestComplexTypeField<TestEntity, true, true>
     | CollectionField<TestEntity, TestComplexType, true, true>
-    | EnumField<TestEntity, TestEnumType, true, true>
-    | EnumField<TestEntity, TestEnumTypeInt64, true, true>
-    | EnumField<TestEntity, TestEnumTypeWithOneMember, true, true>
+    | EnumFieldV2<TestEntity, TestEnumType, true, true>
+    | EnumFieldV2<TestEntity, TestEnumTypeInt64, true, true>
+    | EnumFieldV2<TestEntity, TestEnumTypeWithOneMember, true, true>
     | CollectionField<TestEntity, typeof TestEnumType, true, true>
     | OneToManyLink<TestEntity, TestEntityMultiLink>
     | OneToOneLink<TestEntity, TestEntitySingleLink>

@@ -13,7 +13,8 @@ import {
   TestEntity as TestEntityV4,
   TestEntityLvl2MultiLink,
   TestEntityLvl2SingleLink,
-  TestEntityMultiLink as TestEntityMultiLinkV4, TestEnumType
+  TestEntityMultiLink as TestEntityMultiLinkV4,
+  TestEnumType
 } from './test-services/v4/test-service';
 
 export const testFilterString = {

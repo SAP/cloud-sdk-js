@@ -1,7 +1,7 @@
 {
   "name": "@sap-cloud-sdk/openapi-generator",
   "version": "1.47.1",
-  "description": "SAP Cloud SDK for JavaScript OpenApi client generator",
+  "description": "SAP Cloud SDK for JavaScript OpenAPI client generator",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
   "keywords": [

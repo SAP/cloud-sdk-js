@@ -1,4 +1,4 @@
-# OpenApi Client generator
+# OpenAPI Client generator
 
 ## Status
 

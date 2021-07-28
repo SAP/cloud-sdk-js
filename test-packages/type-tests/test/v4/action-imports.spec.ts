@@ -37,11 +37,17 @@ unsupportedEdmTypesRequestBuilder.execute({
 // $ExpectError
 testActionImportNullableTest({});
 
-// $ExpectType ActionImportRequestBuilder
-testActionImportNullableTest({nonNullable:'someValue',nullablePerDefault:null,nullableExplicit:null});
+// $ExpectType ActionImportRequestBuilder<TestActionImportNullableTestParameters, TestComplexType>
+testActionImportNullableTest({
+  nonNullable: 'someValue',
+  nullablePerDefault: null,
+  nullableExplicit: null
+});
 
-// $ExpectType ActionImportRequestBuilder
-testActionImportNullableTest({nonNullable:'someValue'});
+// $ExpectType ActionImportRequestBuilder<TestActionImportNullableTestParameters, TestComplexType>
+testActionImportNullableTest({ nonNullable: 'someValue' });
 
 // $ExpectType Promise<TestComplexType[] | null>
-testActionImportNullableTest({nonNullable:'someValue'}).execute({url:'someUrl'});
+testActionImportNullableTest({ nonNullable: 'someValue' }).execute({
+  url: 'someUrl'
+});

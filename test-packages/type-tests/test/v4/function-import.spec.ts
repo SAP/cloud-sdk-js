@@ -1,19 +1,18 @@
 import { testFunctionImportNullableTest } from '@sap-cloud-sdk/test-services/v4/test-service';
-import {FunctionImportRequestBuilderV4} from "@sap-cloud-sdk/core";
 
 // $ExpectError
 testFunctionImportNullableTest({});
 
-// $ExpectType FunctionImportRequestBuilderV4
+// $ExpectType FunctionImportRequestBuilder<TestFunctionImportNullableTestParameters, string[] | null>
 testFunctionImportNullableTest({
   nullableExplicit: null,
   nullablePerDefault: null,
   nonNullable: ''
 });
 
-// $ExpectType FunctionImportRequestBuilderV4
+// $ExpectType FunctionImportRequestBuilder<TestFunctionImportNullableTestParameters, string[] | null>
 testFunctionImportNullableTest({
-  nonNullable: ''
+  nonNullable: 'someValue'
 });
 
 // $ExpectType Promise<string[] | null>

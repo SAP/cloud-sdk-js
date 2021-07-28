@@ -7,15 +7,31 @@ import { additionalDocForEntityNotDeserializable } from './function';
 
 const parameterName = 'parameters';
 
+function actionImportReturnType(
+    actionImport: VdmActionImport
+) {
+    let type = actionImport.returnType.returnType;
+
+    if (actionImport.returnType.isCollection) {
+        type = `${type}[]`;
+    }
+    if (actionImport.returnType.isNullable) {
+        type = `${type}|null`;
+    }
+
+    type = `ActionImportRequestBuilder<${actionImport.parametersTypeName}, ${type}>`;
+
+    if (isEntityNotDeserializable(actionImport.returnType)) {
+        type = `Omit<${type}, 'execute'>`;
+    }
+    return type;
+}
+
 export function actionImportFunction(
   actionImport: VdmActionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const returnType = isEntityNotDeserializable(actionImport.returnType)
-    ? `Omit<ActionImportRequestBuilder<${actionImport.parametersTypeName}, ${actionImport.returnType.returnType}>, 'execute'>`
-    : `ActionImportRequestBuilder<${actionImport.parametersTypeName}, ${
-        actionImport.returnType.returnType
-      }${actionImport.returnType.isCollection ? '[]' : ''}>`;
+  const returnType = actionImportReturnType(actionImport)
   return {
     kind: StructureKind.Function,
     name: actionImport.name,

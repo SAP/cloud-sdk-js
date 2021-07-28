@@ -20,3 +20,6 @@ TestEntity.ENUM_PROPERTY.equals(TestEnumType.Member1);
 
 // $ExpectError
 TestEntity.ENUM_PROPERTY.equals('string');
+
+// $ExpectError
+TestEntity.ENUM_PROPERTY.equals(1);

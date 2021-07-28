@@ -11,7 +11,7 @@ export class EnumFieldV2<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
-  edmType: EdmTypeShared<any> = 'Edm.String';
+  readonly edmType: EdmTypeShared<any> = 'Edm.String';
 
   /**
    *

@@ -200,13 +200,24 @@ class EnumField<T extends string> {
   equals(value: EnumType<T>): void {}
 }
 
-const t = new EnumTypeField(X);
+const t = new EnumField(X);
 t.equals(X.Member1); // valid
 t.equals(X.Member2); // valid
 t.equals('Member1'); // valid
 t.equals('Member2'); // valid
 t.equals('peter'); // type error
 ```
+
+#### Pros and cons:
+
+##### Pros:
+
+- When building filters, it only allows valid parameters.
+- This approach uses `EnumField` instead of `EdmTypeField` for enum properties. We can use the real enum type (e.g., `TestEnumType`) as one of the generic type of `EnumField` instead of the `Edm.Enum` type as one of the generic type of `EdmTypeField`. `Edm.Enum` is not an official edm type, which might be confusing.
+
+##### Cons:
+
+- Having an enum specific field `EnumField` instead of using generic `EdmTypeField` makes the switch statement in the serializer/deserializer more complicated, as the `EnumField` has to be handled differently.
 
 ## Decision
 

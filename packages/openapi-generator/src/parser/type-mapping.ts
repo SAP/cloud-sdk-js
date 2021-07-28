@@ -3,7 +3,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 const logger = createLogger('openapi-generator');
 
 /**
- * Type names based on potential types from the OpenApi specification.
+ * Type names based on potential types from the OpenAPI specification.
  * Inspired by: https://github.com/OpenAPITools/openapi-generator/blob/5d27799bade1cfd3b121cda3ddb1599d9aed21e5/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/AbstractTypeScriptClientCodegen.java#L146
  */
 const typeMapping = {
@@ -38,8 +38,8 @@ const typeMapping = {
 };
 
 /**
- * Get the mapped TypeScript type for the given original OpenApi type.
- * @param originalType Original OpenApi type, to get a mapping for.
+ * Get the mapped TypeScript type for the given original OpenAPI type.
+ * @param originalType Original OpenAPI type, to get a mapping for.
  * @returns The mapped TypeScript type.
  */
 export function getType(originalType: string | undefined): string {

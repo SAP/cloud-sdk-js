@@ -9,6 +9,7 @@ import {
 } from '@sap-cloud-sdk/core';
 import {
   TestEntity,
+  TestEntityWithEnumKey,
   TestEntityWithSharedEntityType1,
   TestEntityWithSharedEntityType2,
   TestEntityMultiLink,
@@ -53,6 +54,7 @@ export declare function changeset(
 export declare const defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 export declare type ReadTestServiceRequestBuilder =
   | GetAllRequestBuilderV4<TestEntity>
+  | GetAllRequestBuilderV4<TestEntityWithEnumKey>
   | GetAllRequestBuilderV4<TestEntityWithSharedEntityType1>
   | GetAllRequestBuilderV4<TestEntityWithSharedEntityType2>
   | GetAllRequestBuilderV4<TestEntityMultiLink>
@@ -66,6 +68,7 @@ export declare type ReadTestServiceRequestBuilder =
   | GetAllRequestBuilderV4<TestEntityEndsWith>
   | GetAllRequestBuilderV4<TestEntityEndsWithSomethingElse>
   | GetByKeyRequestBuilderV4<TestEntity>
+  | GetByKeyRequestBuilderV4<TestEntityWithEnumKey>
   | GetByKeyRequestBuilderV4<TestEntityWithSharedEntityType1>
   | GetByKeyRequestBuilderV4<TestEntityWithSharedEntityType2>
   | GetByKeyRequestBuilderV4<TestEntityMultiLink>
@@ -82,6 +85,9 @@ export declare type WriteTestServiceRequestBuilder =
   | CreateRequestBuilderV4<TestEntity>
   | UpdateRequestBuilderV4<TestEntity>
   | DeleteRequestBuilderV4<TestEntity>
+  | CreateRequestBuilderV4<TestEntityWithEnumKey>
+  | UpdateRequestBuilderV4<TestEntityWithEnumKey>
+  | DeleteRequestBuilderV4<TestEntityWithEnumKey>
   | CreateRequestBuilderV4<TestEntityWithSharedEntityType1>
   | UpdateRequestBuilderV4<TestEntityWithSharedEntityType1>
   | DeleteRequestBuilderV4<TestEntityWithSharedEntityType1>

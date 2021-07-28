@@ -22,12 +22,11 @@
 
 ## Improvements
 
-- 
+- [odata-generator] Add underlying type and value information as part of the API documentation for enums.
 
 ## Fixed Issues
 
--
-
+- [odata-generator] Fix generation errors, when Enum type field is used as a key of an entity.
 
 # 1.47.1
 

@@ -127,11 +127,11 @@ describe('document-converter', () => {
       }
     };
 
-    it('converts Swagger documents to OpenApi', async () => {
+    it('converts Swagger documents to OpenAPI', async () => {
       expect(await convertDocToOpenApiV3(swaggerDoc)).toStrictEqual(openApiDoc);
     });
 
-    it('does not change OpenApi documents', async () => {
+    it('does not change OpenAPI documents', async () => {
       expect(await convertDocToOpenApiV3(openApiDoc)).toStrictEqual(openApiDoc);
     });
   });

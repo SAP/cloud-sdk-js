@@ -4,7 +4,7 @@ import { Method, SchemaNaming } from '../openapi-types';
 
 /**
  * Represents an object holding all relevant information for operation parsing.
- * The OpenApi path definitions have the following structure:
+ * The OpenAPI path definitions have the following structure:
  * "my/path-pattern": {
  *    parameters: [...],
  *    get: {...},

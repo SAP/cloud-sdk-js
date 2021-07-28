@@ -174,7 +174,7 @@ class DestinationFromServiceRetriever {
       providerClientCredentialsToken
     );
 
-    const defaultOptions =  {
+    const defaultOptions = {
       isolationStrategy: IsolationStrategy.Tenant,
       selectionStrategy: subscriberFirst,
       useCache: false,

@@ -43,7 +43,7 @@ describe('metadata', () => {
     }, 10000);
   });
 
-  describe('OpenApi', () => {
+  describe('OpenAPI', () => {
     it('gives a working generator repository link', async () => {
       const generationAndUsage = await getGenerationAndUsageOpenApi({
         apis: [] as any[]

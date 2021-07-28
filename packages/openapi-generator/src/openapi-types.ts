@@ -99,13 +99,13 @@ const supportedMethods = {
 } as const;
 
 /**
- * Methods supported by OpenApi and SAP Cloud SDK.
+ * Methods supported by OpenAPI and SAP Cloud SDK.
  */
 export type Method = typeof supportedMethods[keyof typeof supportedMethods];
 
 /**
  * Get supported methods.
- * @returns Methods supported by OpenApi and SAP Cloud SDK.
+ * @returns Methods supported by OpenAPI and SAP Cloud SDK.
  */
 export const methods: Method[] = Object.values(supportedMethods);
 

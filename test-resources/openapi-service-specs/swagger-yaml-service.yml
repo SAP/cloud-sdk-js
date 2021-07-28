@@ -1,6 +1,6 @@
 info:
   title: Swagger Test Service
-  description: Test Service for OpenApi version 2 aka. Swagger as YAML file.
+  description: Test Service for OpenAPI version 2 aka. Swagger as YAML file.
   version: 1.0.0
 swagger: '2.0'
 consumes:

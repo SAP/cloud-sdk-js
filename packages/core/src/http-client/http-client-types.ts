@@ -44,6 +44,7 @@ export enum HttpMethod {
  * This interface is compatible with AxiosRequestConfig.
  */
 export interface HttpRequestConfig {
+  [key: string]: any;
   url?: string;
   method: Method;
   data?: any;

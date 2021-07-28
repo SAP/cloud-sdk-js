@@ -6,7 +6,6 @@ import {
   pickNonNullish,
   propertyExists
 } from '@sap-cloud-sdk/util';
-import axios from 'axios';
 import {
   Destination,
   sanitizeDestination,
@@ -146,7 +145,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Query parameter string
    */
   query(): string {
-    const query = axios.getUri({ url: '', params: this.queryParameters() });
+    const query = Object.entries(this.queryParameters())
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&');
     return query.length ? `?${query}` : '';
   }
 

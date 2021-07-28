@@ -206,14 +206,11 @@ function mergeRequestWithAxiosDefaults(request: HttpRequest): HttpRequest {
 }
 
 function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
-  // https://example.com/sap/opu/odata/sap/API_TEST_SRV/TestActionImportNoParameterNoReturnType?$format=json
-  // https://example.com/sap/opu/odata/sap/API_TEST_SRV/TestActionImportNoParameterNoReturnType?$format=json
   return axios.request(mergeRequestWithAxiosDefaults(request));
 }
 
 /**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
- *
  * @returns AxiosRequestConfig with default parameters
  */
 export function getAxiosConfigWithDefaults(): HttpRequestConfig {
@@ -230,7 +227,11 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   return {
     proxy: false,
     httpAgent: new http.Agent(),
-    httpsAgent: new https.Agent()
+    httpsAgent: new https.Agent(),
+    paramsSerializer: (params = {}) =>
+      Object.entries(params)
+        .map(([key, value]) => `${key}=${value}`)
+        .join('&')
   };
 }
 

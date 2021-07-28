@@ -13,7 +13,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  EnumField,
+  EnumFieldV2,
   Field,
   FieldBuilder,
   OrderableEdmTypeField
@@ -137,7 +137,7 @@ export namespace TestEntity1 {
   export const _allFields: Array<
     | EdmTypeField<TestEntity1, 'Edm.String', false, true>
     | OrderableEdmTypeField<TestEntity1, 'Edm.Int16', true, true>
-    | EnumField<TestEntity1, TestEnumType1, true, true>
+    | EnumFieldV2<TestEntity1, TestEnumType1, true, true>
     | TestComplexType1Field<TestEntity1, true, true>
   > = [
     TestEntity1.KEY_PROPERTY_STRING,

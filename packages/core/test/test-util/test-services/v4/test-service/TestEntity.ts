@@ -18,7 +18,6 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  EnumField,
   EnumFieldV2,
   Field,
   FieldBuilder,
@@ -494,25 +493,6 @@ export namespace TestEntity {
     TestEnumTypeInt64,
     true
   );
-
-  ENUM_PROPERTY_INT_64.equals('a');
-  ENUM_PROPERTY_INT_64.equals('Member1');
-  ENUM_PROPERTY_INT_64.equals(TestEnumTypeInt64.Member2);
-
-  //todo type test
-  const lagacyEnum: EnumField<TestEntity> = new EnumField('field', TestEntity);
-  lagacyEnum.equals('a');
-  /**
-   * Static representation of the [[enumPropertyInt64]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  // todo type test
-  export const ENUM_PROPERTY_INT_64_EDM = _fieldBuilder.buildEdmTypeField(
-    'EnumPropertyInt64',
-    'Edm.Enum',
-    true
-  );
-  ENUM_PROPERTY_INT_64_EDM.equals('a');
   /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

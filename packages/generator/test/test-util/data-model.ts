@@ -219,7 +219,7 @@ export const complexMealWithDesert: VdmComplexType = {
   namespace: ''
 };
 
-export const orderBreakfast: VdmFunctionImport = {
+const orderBreakfastBuilder = (isNullable: boolean): VdmFunctionImport => ({
   description: 'order a breakfast',
   name: 'orderBreakfast',
   httpMethod: 'post',
@@ -228,7 +228,7 @@ export const orderBreakfast: VdmFunctionImport = {
     {
       originalName: 'WithHoneyToast',
       parameterName: 'withHoneyToast',
-      nullable: true,
+      nullable: isNullable,
       description: 'Breakfast includes a honey toast',
       edmType: 'Edm.Boolean',
       jsType: 'boolean',
@@ -240,9 +240,13 @@ export const orderBreakfast: VdmFunctionImport = {
     builderFunction: '(val) => edmToTs(val, Edm.String)',
     returnType: 'string',
     isCollection: false,
+    isNullable: false,
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE
   }
-};
+});
+
+export const orderBreakfast = orderBreakfastBuilder(false);
+export const orderBreakfastNullable = orderBreakfastBuilder(true);
 
 export const entityNotDeserializable: VdmFunctionImport = {
   description: 'entityNotDeserializable',
@@ -255,6 +259,7 @@ export const entityNotDeserializable: VdmFunctionImport = {
     builderFunction: '',
     returnType: 'never',
     isCollection: false,
+    isNullable: false,
     returnTypeCategory: VdmReturnTypeCategory.NEVER,
     unsupportedReason: VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
   }

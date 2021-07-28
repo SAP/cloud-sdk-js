@@ -44,6 +44,13 @@ The generator did not consider the property corretly which was reported in [this
 Since the [default value](http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/part3-csdl/odata-v4.0-errata03-os-part3-csdl-complete.html#_Toc453752529) for `Nullable` is true this is a potential breaking change.
 However, it is also fixing a bug.
 
+We implemented the following for v2 and v4:
+
+- In the edmx-parser.ts the default value of `Nullable="true"` is set for all parameters of function and action imports.
+- This is passed to the `edmx-to-vdm.ts` and cast to boolean.
+
+The default value is also set for the return type for oData v4.
+
 ## Decision
 
 Accepted, because `string` typed parameter is better than `number` typed, when building filters.

@@ -30,7 +30,10 @@ export interface CreateTestEntityByIdParameters {
  */
 export function createTestEntityById(
   parameters: CreateTestEntityByIdParameters
-): ActionImportRequestBuilder<CreateTestEntityByIdParameters, TestEntity> {
+): ActionImportRequestBuilder<
+  CreateTestEntityByIdParameters,
+  TestEntity | null
+> {
   const params = {
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
@@ -61,7 +64,10 @@ export interface CreateTestEntityByIdReturnIdParameters {
  */
 export function createTestEntityByIdReturnId(
   parameters: CreateTestEntityByIdReturnIdParameters
-): ActionImportRequestBuilder<CreateTestEntityByIdReturnIdParameters, number> {
+): ActionImportRequestBuilder<
+  CreateTestEntityByIdReturnIdParameters,
+  number | null
+> {
   const params = {
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };

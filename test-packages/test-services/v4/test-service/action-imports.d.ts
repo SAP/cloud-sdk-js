@@ -121,7 +121,7 @@ export declare function testActionImportSharedEntityReturnTypeCollection(
 ): Omit<
   ActionImportRequestBuilder<
     TestActionImportSharedEntityReturnTypeCollectionParameters,
-    never
+    never[]
   >,
   'execute'
 >;
@@ -152,7 +152,7 @@ export declare function testActionImportNullableTest(
   parameters: TestActionImportNullableTestParameters
 ): ActionImportRequestBuilder<
   TestActionImportNullableTestParameters,
-  TestComplexType
+  TestComplexType | null
 >;
 export declare const actionImports: {
   testActionImportNoParameterNoReturnType: typeof testActionImportNoParameterNoReturnType;

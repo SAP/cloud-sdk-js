@@ -230,7 +230,7 @@ export function testActionImportSharedEntityReturnTypeCollection(
 ): Omit<
   ActionImportRequestBuilder<
     TestActionImportSharedEntityReturnTypeCollectionParameters,
-    never
+    never[]
   >,
   'execute'
 > {
@@ -276,7 +276,7 @@ export function testActionImportNullableTest(
   parameters: TestActionImportNullableTestParameters
 ): ActionImportRequestBuilder<
   TestActionImportNullableTestParameters,
-  TestComplexType
+  TestComplexType | null
 > {
   const params = {
     nullablePerDefault: new ActionImportParameter(

@@ -15,7 +15,7 @@ export declare function testActionImportNoParameterComplexReturnType1(
   parameters: TestActionImportNoParameterComplexReturnType1Parameters
 ): ActionImportRequestBuilder<
   TestActionImportNoParameterComplexReturnType1Parameters,
-  TestComplexType1
+  TestComplexType1 | null
 >;
 /**
  * Type of the parameters to be passed to [[testActionImportNoParameterComplexReturnType2]].
@@ -31,7 +31,7 @@ export declare function testActionImportNoParameterComplexReturnType2(
   parameters: TestActionImportNoParameterComplexReturnType2Parameters
 ): ActionImportRequestBuilder<
   TestActionImportNoParameterComplexReturnType2Parameters,
-  TestComplexType2
+  TestComplexType2 | null
 >;
 export declare const actionImports: {
   testActionImportNoParameterComplexReturnType1: typeof testActionImportNoParameterComplexReturnType1;

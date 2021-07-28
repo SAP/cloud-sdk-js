@@ -17,7 +17,10 @@ export interface CreateTestEntityByIdParameters {
  */
 export declare function createTestEntityById(
   parameters: CreateTestEntityByIdParameters
-): ActionImportRequestBuilder<CreateTestEntityByIdParameters, TestEntity>;
+): ActionImportRequestBuilder<
+  CreateTestEntityByIdParameters,
+  TestEntity | null
+>;
 /**
  * Type of the parameters to be passed to [[createTestEntityByIdReturnId]].
  */
@@ -35,7 +38,10 @@ export interface CreateTestEntityByIdReturnIdParameters {
  */
 export declare function createTestEntityByIdReturnId(
   parameters: CreateTestEntityByIdReturnIdParameters
-): ActionImportRequestBuilder<CreateTestEntityByIdReturnIdParameters, number>;
+): ActionImportRequestBuilder<
+  CreateTestEntityByIdReturnIdParameters,
+  number | null
+>;
 export declare const actionImports: {
   createTestEntityById: typeof createTestEntityById;
   createTestEntityByIdReturnId: typeof createTestEntityByIdReturnId;

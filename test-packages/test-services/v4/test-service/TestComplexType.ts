@@ -130,6 +130,11 @@ export interface TestComplexType {
    */
   collectionStringProperty?: string[];
   /**
+   * Collection Enum Property.
+   * @nullable
+   */
+  collectionEnumProperty?: TestEnumType[];
+  /**
    * Collection Complex Type Property.
    * @nullable
    */
@@ -323,6 +328,20 @@ export class TestComplexTypeField<
     true
   );
   /**
+   * Representation of the [[TestComplexType.collectionEnumProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  collectionEnumProperty: CollectionField<
+    EntityT,
+    typeof TestEnumType,
+    true,
+    false
+  > = this._fieldBuilder.buildCollectionField(
+    'CollectionEnumProperty',
+    TestEnumType,
+    true
+  );
+  /**
    * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
@@ -484,6 +503,12 @@ export namespace TestComplexType {
     {
       originalName: 'CollectionStringProperty',
       name: 'collectionStringProperty',
+      type: 'Edm.String',
+      isCollection: true
+    },
+    {
+      originalName: 'CollectionEnumProperty',
+      name: 'collectionEnumProperty',
       type: 'Edm.String',
       isCollection: true
     },

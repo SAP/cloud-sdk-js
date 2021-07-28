@@ -209,6 +209,7 @@ t.equals('peter'); // type error
 ```
 
 #### Building Fields
+
 This approach uses `EnumField` (e.g., `EnumField<TestEntity, TestEnumType>`) instead of `EdmTypeField` (e.g., `EdmTypeField<TestEntity, "Edm.Enum">`) for enum properties in the client.
 
 #### Pros and cons:

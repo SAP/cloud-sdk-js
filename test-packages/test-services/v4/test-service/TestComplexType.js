@@ -243,6 +243,15 @@ var TestComplexTypeField = /** @class */ (function (_super) {
       true
     );
     /**
+     * Representation of the [[TestComplexType.collectionEnumProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    _this.collectionEnumProperty = _this._fieldBuilder.buildCollectionField(
+      'CollectionEnumProperty',
+      TestEnumType_1.TestEnumType,
+      true
+    );
+    /**
      * Representation of the [[TestComplexType.collectionComplexTypeProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
@@ -389,6 +398,12 @@ var TestComplexType;
     {
       originalName: 'CollectionStringProperty',
       name: 'collectionStringProperty',
+      type: 'Edm.String',
+      isCollection: true
+    },
+    {
+      originalName: 'CollectionEnumProperty',
+      name: 'collectionEnumProperty',
       type: 'Edm.String',
       isCollection: true
     },

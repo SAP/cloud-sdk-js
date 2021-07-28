@@ -174,12 +174,13 @@ class DestinationFromServiceRetriever {
       providerClientCredentialsToken
     );
 
-    this.options = {
+    const defaultOptions =  {
       isolationStrategy: IsolationStrategy.Tenant,
       selectionStrategy: subscriberFirst,
       useCache: false,
       ...options
     };
+    this.options = { ...defaultOptions, ...options };
   }
 
   private async searchDestinationWithSelectionStrategyAndCache(): Promise<

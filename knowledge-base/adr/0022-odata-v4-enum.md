@@ -208,12 +208,15 @@ t.equals('Member2'); // valid
 t.equals('peter'); // type error
 ```
 
+#### Building Fields
+This approach uses `EnumField` (e.g., `EnumField<TestEntity, TestEnumType>`) instead of `EdmTypeField` (e.g., `EdmTypeField<TestEntity, "Edm.Enum">`) for enum properties in the client.
+
 #### Pros and cons:
 
 ##### Pros:
 
 - When building filters, it only allows valid parameters.
-- This approach uses `EnumField` instead of `EdmTypeField` for enum properties. We can use the real enum type (e.g., `TestEnumType`) as one of the generic type of `EnumField` instead of the `Edm.Enum` type as one of the generic type of `EdmTypeField`. `Edm.Enum` is not an official edm type, which might be confusing.
+- We can use the real enum type (e.g., `TestEnumType`) as one of the generic type of `EnumField` instead of the `Edm.Enum` type as one of the generic type of `EdmTypeField`. `Edm.Enum` is not an official edm type, which might be confusing.
 
 ##### Cons:
 

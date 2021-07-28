@@ -15,7 +15,7 @@ export class EnumFieldV2<
 
   /**
    *
-   * Creates an instance of EnumField.
+   * Creates an instance of EnumFieldV2.
    *
    * @param fieldName - Actual name of the field used in the OData request.
    * @param _fieldOf - The constructor of the entity or the complex type field this field belongs to.

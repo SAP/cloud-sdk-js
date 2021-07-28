@@ -142,7 +142,7 @@ export interface TestFunctionImportUnsupportedEdmTypesParameters {
   /**
    * Simple Param.
    */
-  simpleParam?: any | null;
+  simpleParam: any;
 }
 /**
  * Test Function Import Unsupported Edm Types.
@@ -215,11 +215,11 @@ export interface TestFunctionImportMultipleParamsParameters {
   /**
    * String Param.
    */
-  stringParam?: string | null;
+  stringParam: string;
   /**
    * Boolean Param.
    */
-  booleanParam?: boolean | null;
+  booleanParam: boolean;
 }
 /**
  * Test Function Import Multiple Params.

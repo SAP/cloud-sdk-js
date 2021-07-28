@@ -27,7 +27,7 @@ export function testActionImportNoParameterComplexReturnType1(
   parameters: TestActionImportNoParameterComplexReturnType1Parameters
 ): ActionImportRequestBuilder<
   TestActionImportNoParameterComplexReturnType1Parameters,
-  TestComplexType1 | null
+  TestComplexType1
 > {
   const params = {};
 
@@ -57,7 +57,7 @@ export function testActionImportNoParameterComplexReturnType2(
   parameters: TestActionImportNoParameterComplexReturnType2Parameters
 ): ActionImportRequestBuilder<
   TestActionImportNoParameterComplexReturnType2Parameters,
-  TestComplexType2 | null
+  TestComplexType2
 > {
   const params = {};
 

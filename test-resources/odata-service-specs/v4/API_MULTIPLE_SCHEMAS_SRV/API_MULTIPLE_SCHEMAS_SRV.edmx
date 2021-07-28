@@ -19,10 +19,10 @@
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" Nullable="false"/>
       </ComplexType>
       <Action Name="TestActionImportNoParameterComplexReturnType1">
-        <ReturnType Type="Namespace1.A_TestComplexType1"/>
+        <ReturnType Type="Namespace1.A_TestComplexType1" Nullable="false"/>
       </Action>
       <Action Name="TestActionImportNoParameterComplexReturnType2">
-        <ReturnType Type="Namespace2.A_TestComplexType2"/>
+        <ReturnType Type="Namespace2.A_TestComplexType2" Nullable="false"/>
       </Action>
     </Schema>
     <Schema Namespace="Namespace2" xmlns="http://docs.oasis-open.org/odata/ns/edm">

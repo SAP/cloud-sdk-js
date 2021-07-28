@@ -7,7 +7,7 @@ export interface CreateTestEntityByIdParameters {
   /**
    * Id.
    */
-  id?: number | null;
+  id: number;
 }
 /**
  * Create Test Entity By Id.
@@ -17,10 +17,7 @@ export interface CreateTestEntityByIdParameters {
  */
 export declare function createTestEntityById(
   parameters: CreateTestEntityByIdParameters
-): ActionImportRequestBuilder<
-  CreateTestEntityByIdParameters,
-  TestEntity | null
->;
+): ActionImportRequestBuilder<CreateTestEntityByIdParameters, TestEntity>;
 /**
  * Type of the parameters to be passed to [[createTestEntityByIdReturnId]].
  */
@@ -28,7 +25,7 @@ export interface CreateTestEntityByIdReturnIdParameters {
   /**
    * Id.
    */
-  id?: number | null;
+  id: number;
 }
 /**
  * Create Test Entity By Id Return Id.
@@ -38,10 +35,7 @@ export interface CreateTestEntityByIdReturnIdParameters {
  */
 export declare function createTestEntityByIdReturnId(
   parameters: CreateTestEntityByIdReturnIdParameters
-): ActionImportRequestBuilder<
-  CreateTestEntityByIdReturnIdParameters,
-  number | null
->;
+): ActionImportRequestBuilder<CreateTestEntityByIdReturnIdParameters, number>;
 export declare const actionImports: {
   createTestEntityById: typeof createTestEntityById;
   createTestEntityByIdReturnId: typeof createTestEntityByIdReturnId;

@@ -19,7 +19,7 @@ export interface CreateTestEntityByIdParameters {
   /**
    * Id.
    */
-  id?: number | null;
+  id: number;
 }
 
 /**
@@ -30,10 +30,7 @@ export interface CreateTestEntityByIdParameters {
  */
 export function createTestEntityById(
   parameters: CreateTestEntityByIdParameters
-): ActionImportRequestBuilder<
-  CreateTestEntityByIdParameters,
-  TestEntity | null
-> {
+): ActionImportRequestBuilder<CreateTestEntityByIdParameters, TestEntity> {
   const params = {
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
@@ -53,7 +50,7 @@ export interface CreateTestEntityByIdReturnIdParameters {
   /**
    * Id.
    */
-  id?: number | null;
+  id: number;
 }
 
 /**
@@ -64,10 +61,7 @@ export interface CreateTestEntityByIdReturnIdParameters {
  */
 export function createTestEntityByIdReturnId(
   parameters: CreateTestEntityByIdReturnIdParameters
-): ActionImportRequestBuilder<
-  CreateTestEntityByIdReturnIdParameters,
-  number | null
-> {
+): ActionImportRequestBuilder<CreateTestEntityByIdReturnIdParameters, number> {
   const params = {
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };

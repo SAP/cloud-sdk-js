@@ -5,8 +5,7 @@ describe('FunctionImportRequestBuilder', () => {
   it('builds correct url for multiple parameters', async () => {
     const params = {
       stringParam: 'str1',
-      nonNullableStringParam: 'str2',
-      nullableBooleanParam: null
+      nonNullableStringParam: 'str2'
     };
 
     const requestBuilder = testFunctionImportMultipleParams(params);

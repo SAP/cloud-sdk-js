@@ -49,5 +49,6 @@ Since the [default value](http://docs.oasis-open.org/odata/odata/v4.0/errata03/o
 However, it is also fixing a bug.
 
 We implemented the following:
+
 - For v2 and v4 the function and action import parameter a nullable and the default is `true`.
 - For v4 also return types are nullable and the default is `true`.

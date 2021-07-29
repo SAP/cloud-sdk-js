@@ -9,11 +9,11 @@ accepted
 ## Context
 
 This document is about nullable parameters and return types of function imports and actions.
-The discussed properties apply to function and action imports for oData v4.
-In oData v2 there are no action imports.
+The discussed properties apply to function and action imports for OData v4.
+In OData v2 there are no action imports.
 To be more compact we give the code example for the functions.
 
-For oData v2 and v4 the function import parameter may contain the nullable property e.g.
+For OData v2 and v4 the function import parameter may contain the nullable property e.g.
 
 ```XML
 <Function Name="TestFunctionImportNullableTest">
@@ -29,7 +29,7 @@ nullableParameter?: string | null
 }
 ```
 
-For the return type oData v2 and v4 are different:
+For the return type OData v2 and v4 are different:
 
 ```XML
 <Function Name="FunctionImportV4">
@@ -40,7 +40,7 @@ For the return type oData v2 and v4 are different:
 </FunctionImport>
 ```
 
-Since the return type in oData v2 is just a string it is assumed to be not nullable.
+Since the return type in OData v2 is just a property on the `FunctionImport` it is assumed to be not nullable.
 For "Nullable" return types in v4 the type should be `T | null`.
 
 ## Consequences
@@ -53,5 +53,5 @@ We implemented the following for v2 and v4:
 - In the edmx-parser.ts the default value of `Nullable="true"` is set for all parameters of function and action imports.
 - This is passed to the `edmx-to-vdm.ts` and cast to boolean.
 
-The default value is also set for the return type for oData v4.
-The return type for oData v2 remains not nullable.
+The default value is also set for the return type for OData v4.
+The return type for OData v2 remains not nullable.

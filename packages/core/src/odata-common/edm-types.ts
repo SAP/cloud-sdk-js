@@ -25,7 +25,7 @@ export type ExclusiveEdmTypeV4 =
   | 'Edm.Date'
   | 'Edm.Duration'
   | 'Edm.TimeOfDay'
-  | 'Edm.Enum'; // There is no `Edm.Enum` in terms of OData spec. We use it so the serialization/de-serialization of the `Edm.String` can be reused.;
+  | 'Edm.Enum'; // There is no `Edm.Enum` in terms of OData spec. We use it so the serialization/de-serialization of the `Edm.String` can be reused.
 
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of typescript.
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */

@@ -55,8 +55,9 @@ export function parseDestination(
     }
   );
 
-  const additionalHeadersAndQueryParameters =
-    getAdditionalHeadersAndQueryParameters(destinationConfig);
+  const additionalHeadersAndQueryParameters = getAdditionalHeadersAndQueryParameters(
+    destinationConfig
+  );
 
   return sanitizeDestination({
     ...destination,
@@ -64,13 +65,19 @@ export function parseDestination(
   });
 }
 
+/**
+ * Get either additional headers or query parameters from a destination, depending on the given prefix.
+ * @param destinationConfig Original destination config that could include additional headers or query parameters.
+ * @param originalKeyPrefix This is what the additional header and query keys start with, when specified in the original destination config.
+ * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
+ */
 function getAdditionalProperties(
   destinationConfig: DestinationConfiguration,
-  originalKeyPrefix: string
+  originalKeyPrefix: 'URL.headers.' | 'URL.queries.'
 ): Record<string, any> {
-  const relevantConfigEntries = Object.entries(destinationConfig).filter(
-    ([key]) => key.startsWith(originalKeyPrefix)
-  );
+  const relevantConfigEntries = Object.entries(
+    destinationConfig
+  ).filter(([key]) => key.startsWith(originalKeyPrefix));
 
   return relevantConfigEntries.reduce(
     (additionalProperties: Record<string, any>, [originalKey, value]) => {
@@ -82,9 +89,17 @@ function getAdditionalProperties(
   );
 }
 
+/**
+ * Get additional headers and/or query parameters from a destination.
+ * Destinations can specify additional headers and/or query parameters, that should be added to every request against the given destination.
+ * They are specified in the following format:
+ * `URL.headers.<header-name>` or `URL.queries.<query-parameter-name>`
+ * @param destinationConfig Original destination config that could include additional headers or query parameters.
+ * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
+ */
 function getAdditionalHeadersAndQueryParameters(
   destinationConfig: DestinationConfiguration
-): Record<string, any> {
+): Pick<Destination, 'headers' | 'queryParameters'> {
   const additionalHeaders = getAdditionalProperties(
     destinationConfig,
     'URL.headers.'

@@ -12,7 +12,7 @@ import {
   EdmTypeShared,
   isEdmType,
   PropertyMetadata,
-  EnumFieldV2
+  EnumField
 } from '../odata-common';
 import { toStaticPropertyFormat } from './name-converter';
 
@@ -98,7 +98,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     if (field instanceof CollectionField) {
       return serializeCollection(fieldValue, field._fieldType);
     }
-    if (field instanceof EnumFieldV2) {
+    if (field instanceof EnumField) {
       return fieldValue;
     }
   }

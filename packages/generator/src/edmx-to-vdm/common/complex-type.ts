@@ -77,8 +77,9 @@ export function transformComplexTypesBase(
             c.Name,
             p.Name
           ),
-          propertyNameAsParam:
-            applyPrefixOnJsConfictParam(instancePropertyName),
+          propertyNameAsParam: applyPrefixOnJsConfictParam(
+            instancePropertyName
+          ),
           description: propertyDescription(p),
           technicalName: p.Name,
           nullable: isNullableProperty(p),
@@ -120,7 +121,7 @@ export function getTypeMappingComplexProperties(
     return {
       edmType: 'Edm.String',
       jsType: enumTypeForName(typeName, enumTypes),
-      fieldType: 'EnumFieldV2'
+      fieldType: 'EnumField'
     };
   }
 

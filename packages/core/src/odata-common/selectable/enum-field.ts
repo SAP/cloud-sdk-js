@@ -5,17 +5,20 @@ import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 
-export class EnumFieldV2<
+export class EnumField<
   EntityT extends Entity,
-  EnumT extends string,
+  EnumT extends string = string,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
-  readonly edmType: EdmTypeShared<any> = 'Edm.String';
+  /**
+   * @deprecated Since v1.48.0. This property is not used anymore.
+   */
+  readonly edmType: EdmTypeShared<any> = 'Edm.Enum';
 
   /**
    *
-   * Creates an instance of EnumFieldV2.
+   * Creates an instance of EnumField.
    *
    * @param fieldName - Actual name of the field used in the OData request.
    * @param _fieldOf - The constructor of the entity or the complex type field this field belongs to.
@@ -25,7 +28,7 @@ export class EnumFieldV2<
   constructor(
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
-    readonly enumType: Record<string, EnumT>,
+    readonly enumType?: Record<string, EnumT>,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);

@@ -1,14 +1,13 @@
 /* eslint-disable max-classes-per-file */
 
-import { Entity, Constructable } from '../../entity';
+import { Entity } from '../../entity';
 import { ComplexTypeField, getEntityConstructor } from '../complex-type-field';
 import { ConstructorOrField } from '../constructor-or-field';
 import { EdmTypeField } from '../edm-type-field';
 
 /**
- * @deprecated Since v1.48.0. Use [[XYZ]] instead.
+ * @deprecated Since v1.48.0. Use [[EnumField]] instead.
  * Represents a property with a enum value.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 class EnumFieldBase<
@@ -26,24 +25,8 @@ class EnumFieldBase<
 > {}
 
 /**
- * @deprecated Since v1.48.0. Use [[XYZ]] instead.
- * Represents a selectable property with a enum value.
- *
- * @typeparam EntityT - Type of the entity the field belongs to
- */
-export class EnumField<EntityT extends Entity> extends EnumFieldBase<
-  EntityT,
-  true
-> {
-  constructor(fieldName: string, fieldOf: Constructable<EntityT>) {
-    super(fieldName, fieldOf, 'Edm.Enum');
-  }
-}
-
-/**
- * @deprecated Since v1.48.0. Use [[XYZ]] instead.
+ * @deprecated Since v1.48.0. Use [[EnumField]] instead.
  * Represents a complex type property with a enum value.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeEnumPropertyField<
@@ -57,7 +40,6 @@ export class ComplexTypeEnumPropertyField<
 
   /**
    * Creates an instance of ComplexTypeEnumPropertyField.
-   *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
@@ -72,7 +54,6 @@ export class ComplexTypeEnumPropertyField<
 
   /**
    * Path to the field to be used in filter and order by queries. Combines the parent complex type name with the field name.
-   *
    * @returns Path to the field to be used in filter and order by queries.
    */
   fieldPath(): string {

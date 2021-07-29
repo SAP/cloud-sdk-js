@@ -196,6 +196,13 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
     });
   }
 
+  /**
+   * Build a field for a property with a enum type.
+   * @param fieldName - Name of the field.
+   * @param enumType - Enum type of this field.
+   * @param isNullable - Whether the field is nullable.
+   * @returns A collection field with the given collection type.
+   */
   buildEnumField<EnumT extends string, NullableT extends boolean>(
     fieldName: string,
     enumType: Record<string, EnumT>,

@@ -485,7 +485,7 @@ export namespace TestComplexType {
     {
       originalName: 'EnumProperty',
       name: 'enumProperty',
-      type: 'Edm.String',
+      type: 'Edm.Enum',
       isCollection: false
     },
     {
@@ -509,7 +509,7 @@ export namespace TestComplexType {
     {
       originalName: 'CollectionEnumProperty',
       name: 'collectionEnumProperty',
-      type: 'Edm.String',
+      type: 'Edm.Enum',
       isCollection: true
     },
     {

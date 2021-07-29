@@ -380,7 +380,7 @@ var TestComplexType;
     {
       originalName: 'EnumProperty',
       name: 'enumProperty',
-      type: 'Edm.String',
+      type: 'Edm.Enum',
       isCollection: false
     },
     {
@@ -404,7 +404,7 @@ var TestComplexType;
     {
       originalName: 'CollectionEnumProperty',
       name: 'collectionEnumProperty',
-      type: 'Edm.String',
+      type: 'Edm.Enum',
       isCollection: true
     },
     {

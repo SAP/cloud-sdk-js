@@ -7,7 +7,7 @@ import {
 import { parametersInterface } from './parameters-interface';
 
 describe('parameters-interface', () => {
-  it('functionImportParametersInterface not Nullable', () => {
+  it('functionImportParametersInterface not nullable', () => {
     expect(parametersInterface(orderBreakfast)).toEqual({
       kind: StructureKind.Interface,
       name: 'Params',

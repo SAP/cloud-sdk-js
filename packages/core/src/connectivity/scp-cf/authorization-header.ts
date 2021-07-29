@@ -246,7 +246,7 @@ async function getAuthenticationRelatedHeaders(
       return headerForPrincipalPropagation(destination);
     default:
       throw Error(
-        `The destination used "${destination.authentication}" as authentication type which is not supported by the SDK.`
+        `The destination used "${destination.authentication}" as authentication type which is not supported by the SAP Cloud SDK.`
       );
   }
 }

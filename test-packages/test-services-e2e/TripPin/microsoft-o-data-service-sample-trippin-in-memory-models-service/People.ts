@@ -15,7 +15,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  EnumFieldV2,
+  EnumField,
   Field,
   FieldBuilder,
   OneToManyLink,
@@ -216,7 +216,7 @@ export namespace People {
     | EdmTypeField<People, 'Edm.String', false, true>
     | CollectionField<People, 'Edm.String', true, true>
     | CollectionField<People, Location, true, true>
-    | EnumFieldV2<People, PersonGender, true, true>
+    | EnumField<People, PersonGender, true, true>
     | OrderableEdmTypeField<People, 'Edm.Int64', false, true>
     | OneToManyLink<People, People>
     | OneToOneLink<People, Photos>

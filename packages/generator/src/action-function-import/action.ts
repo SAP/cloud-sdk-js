@@ -4,27 +4,9 @@ import { VdmActionImport, VdmServiceMetadata } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 import { additionalDocForEntityNotDeserializable } from './function';
+import { actionImportReturnType } from './return-type';
 
 const parameterName = 'parameters';
-
-function actionImportReturnType(actionImport: VdmActionImport) {
-  let type = actionImport.returnType.returnType;
-
-  if (actionImport.returnType.isCollection) {
-    type = `${type}[]`;
-  }
-  
-  if (actionImport.returnType.isNullable) {
-    type = `${type} | null`;
-  }
-
-  type = `ActionImportRequestBuilder<${actionImport.parametersTypeName}, ${type}>`;
-
-  if (isEntityNotDeserializable(actionImport.returnType)) {
-    type = `Omit<${type}, 'execute'>`;
-  }
-  return type;
-}
 
 export function actionImportFunction(
   actionImport: VdmActionImport,

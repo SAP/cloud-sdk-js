@@ -41,7 +41,7 @@ For the return type oData v2 and v4 are different:
 ```
 
 Since the return type in oData v2 is just a string it is assumed to be not nullable.
-For return types in v4 the type should be `T | null` where `T` is return type if Nullable="true".
+For "Nullable" return types in v4 the type should be `T | null`.
 
 ## Consequences
 

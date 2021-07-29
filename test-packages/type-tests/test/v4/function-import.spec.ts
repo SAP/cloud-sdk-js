@@ -16,6 +16,6 @@ testFunctionImportNullableTest({
 });
 
 // $ExpectType Promise<string[] | null>
-const result = testFunctionImportNullableTest({
+testFunctionImportNullableTest({
   nonNullable: 'someValue'
 }).execute({ url: 'someURL' });

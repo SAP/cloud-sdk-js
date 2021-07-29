@@ -35,7 +35,6 @@ nullableParameter?: string | null
 ```
 
 For return types in v4 the type should be `T | null` where `T` is return type.
-The generator did not consider the property corretly which was reported in [this issue](https://github.com/SAP/cloud-sdk-js/issues/1439)
 
 ## Alternatives
 

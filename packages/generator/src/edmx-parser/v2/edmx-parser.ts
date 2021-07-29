@@ -42,10 +42,5 @@ export function parseFunctionImports(root: any): EdmxFunctionImport[] {
     ...f,
     Parameter: forceArray(f.Parameter)
   }));
-  return functionImports.map(f => {
-    f.Parameter.forEach(p => {
-      p.Nullable = !p.Nullable ? 'true' : p.Nullable;
-    });
-    return f;
-  });
+  return functionImports;
 }

@@ -40,7 +40,7 @@ For the return type OData v2 and v4 are different:
 </FunctionImport>
 ```
 
-Since the return type in OData v2 is just a property on the `FunctionImport` it is assumed to be not nullable.
+Since the return type in OData v2 is just a string it is assumed to be not nullable.
 For "Nullable" return types in v4 the type should be `T | null`.
 
 ## Consequences
@@ -48,10 +48,6 @@ For "Nullable" return types in v4 the type should be `T | null`.
 Since the [default value](http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/part3-csdl/odata-v4.0-errata03-os-part3-csdl-complete.html#_Toc453752529) for `Nullable` is true this is a potential breaking change.
 However, it is also fixing a bug.
 
-We implemented the following for v2 and v4:
-
-- In the edmx-parser.ts the default value of `Nullable="true"` is set for all parameters of function and action imports.
-- This is passed to the `edmx-to-vdm.ts` and cast to boolean.
-
-The default value is also set for the return type for OData v4.
-The return type for OData v2 remains not nullable.
+We implemented the following:
+- For v2 and v4 the function and action import parameter a nullable and the default is `true`.
+- For v4 also return types are nullable and the default is `true`.

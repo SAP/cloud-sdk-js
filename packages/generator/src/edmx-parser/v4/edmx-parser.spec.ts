@@ -65,12 +65,6 @@ describe('edmx-edmx-parser', () => {
 
     parseFunctions(metadataEdmx.root).forEach(f => {
       expect(f.Parameter).toBeInstanceOf(Array);
-      f.Parameter.forEach(parameter =>
-        expect(parameter.Nullable).toBeDefined()
-      );
-      if (f.ReturnType) {
-        expect(f.ReturnType.Nullable).toBeDefined();
-      }
     });
 
     parseComplexTypes(metadataEdmx.root).forEach(c => {

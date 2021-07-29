@@ -13,7 +13,7 @@ import {
   parseTypeName
 } from '../edmx-to-vdm-util';
 import { EdmxReturnType } from '../../edmx-parser/v4';
-import { isNullableParameter } from '../../generator-utils';
+import { isNullableProperty } from '../../generator-utils';
 
 export function parseFunctionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
@@ -59,7 +59,8 @@ function parseReturnTypes(
   }
 
   const isCollection = isCollectionType(returnType.Type);
-  const isNullable: boolean = isNullableParameter(returnType);
+  const isNullable: boolean =
+    typeof returnType === 'undefined' ? false : isNullableProperty(returnType);
 
   const edmType = findEdmType(returnType.Type);
   if (edmType) {

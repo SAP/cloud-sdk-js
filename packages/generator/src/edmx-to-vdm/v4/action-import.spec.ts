@@ -260,7 +260,7 @@ function createServiceWithActions(): ServiceMetadata {
   const actionWithReturnWithParameter = createAction(
     'ActionWithReturnWithParameter',
     'TestEntityType',
-    [{ Name: 'StringPara', Type: 'Edm.String', Nullable: 'false' }]
+    [{ Name: 'StringParameter', Type: 'Edm.String', Nullable: 'false' }]
   );
   return createTestServiceData([entityType], [entitySet], undefined, [
     actionNoReturnNoParameter,

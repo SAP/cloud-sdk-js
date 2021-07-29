@@ -81,17 +81,7 @@ function parseActionsFunctions(
     Parameter: forceArray(actionOrFunction.Parameter),
     IsBound: false
   }));
-  return actionsOrFuntions.map(f => {
-    if (f.ReturnType) {
-      f.ReturnType.Nullable = !f.ReturnType.Nullable
-        ? 'true'
-        : f.ReturnType.Nullable;
-    }
-    f.Parameter.forEach(p => {
-      p.Nullable = !p.Nullable ? 'true' : p.Nullable;
-    });
-    return f;
-  });
+  return actionsOrFuntions;
 }
 
 export function parseFunctions(root: any): EdmxFunction[] {

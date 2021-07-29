@@ -51,7 +51,7 @@ export interface EdmxFunction extends EdmxNamed, EdmxNamespaced {
 
 export interface EdmxReturnType {
   Type: string;
-  Nullable: string;
+  Nullable?: string;
 }
 
 export type EdmxAction = EdmxFunction;

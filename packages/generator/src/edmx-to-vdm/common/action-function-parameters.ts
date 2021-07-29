@@ -1,5 +1,5 @@
 import { VdmParameter } from '../../vdm-types';
-import { isNullableParameter } from '../../generator-utils';
+import { isNullableProperty } from '../../generator-utils';
 import { parameterDescription } from '../description-util';
 import { EdmxNamed, EdmxParameter } from '../../edmx-parser/common';
 import { SwaggerPath } from '../../swagger-parser/swagger-types';
@@ -59,7 +59,7 @@ function getParameter<T extends EdmxNamed>(
       edmType: typeMapping.edmType,
       jsType: typeMapping.jsType,
       fieldType: typeMapping.fieldType,
-      nullable: isNullableParameter(p),
+      nullable: isNullableProperty(p),
       description: parameterDescription(p, swaggerParameter)
     };
   });

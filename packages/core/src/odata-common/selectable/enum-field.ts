@@ -4,7 +4,16 @@ import { Filter } from '../filter';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
+import { TestEnumType } from '../../../test/test-util/test-services/v4/test-service';
 
+/**
+ * Represents a property with a enum value.
+ *
+ * @typeparam EntityT - Type of the entity the field belongs to
+ * @typeparam EnumT - Enum type that contains all valid enum entries for this field
+ * @typeparam NullableT - Boolean type that represents whether the field is nullable.
+ * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
+ */
 export class EnumField<
   EntityT extends Entity,
   EnumT extends string = string,
@@ -63,4 +72,9 @@ export class EnumField<
   }
 }
 
+/**
+ * Convenient type to reflect all the values of a string based enum as a union type.
+ * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#template-literal-types
+ * @typeparam T - String based enum type
+ */
 export type EnumType<T extends string> = `${T}`;

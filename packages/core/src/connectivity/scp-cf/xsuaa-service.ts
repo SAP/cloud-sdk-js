@@ -49,15 +49,15 @@ let circuitBreaker: XsuaaCircuitBreaker;
 /**
  * Executes a client credentials grant request.
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
- * If the first parameter is an URI, the response will not be verified.
+ * If the first parameter is a URI, the response will not be verified.
  *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
- * @param clientCredentials - Client credentials for which to request a token
- * @param options - Options to use by retrieving access token
- * @param customBody - Object containing value required for the body request
- * @returns A promise resolving to the response
+ * @param clientCredentials - Client credentials for which to request a token.
+ * @param options - Options to use by retrieving access token.
+ * @param customBody - Object containing value required for the body request.
+ * @returns A promise resolving to the response.
  */
-export function clientCredentialsGrant(
+export async function clientCredentialsGrant(
   tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
   clientCredentials: ClientCredentials,
   options?: ResilienceOptions,
@@ -66,16 +66,17 @@ export function clientCredentialsGrant(
   const authHeader = headerForClientCredentials(clientCredentials);
   const body = { grant_type: GrantType.CLIENT_CREDENTIALS, ...customBody };
 
-  return post(
-    tokenServiceUrlOrXsuaaServiceCredentials,
-    authHeader,
-    objectToXWwwUrlEncodedBodyString(body),
-    options
-  )
-    .then(resp => resp.data as ClientCredentialsResponse)
-    .catch(error =>
-      Promise.reject(accessTokenError(error, GrantType.CLIENT_CREDENTIALS))
+  try {
+    const { data } = await post(
+      tokenServiceUrlOrXsuaaServiceCredentials,
+      authHeader,
+      objectToXWwwUrlEncodedBodyString(body),
+      options
     );
+    return data;
+  } catch (error) {
+    throw accessTokenError(error, GrantType.CLIENT_CREDENTIALS);
+  }
 }
 
 /**
@@ -88,7 +89,7 @@ export function clientCredentialsGrant(
  * @param options - Options to use by retrieving access token
  * @returns A promise resolving to the response of the XSUAA service.
  */
-export function userTokenGrant(
+export async function userTokenGrant(
   tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
   userJwt: string,
   clientId: string,
@@ -101,16 +102,17 @@ export function userTokenGrant(
     response_type: 'token'
   });
 
-  return post(
-    tokenServiceUrlOrXsuaaServiceCredentials,
-    authHeader,
-    body,
-    options
-  )
-    .then(resp => resp.data as UserTokenResponse)
-    .catch(error =>
-      Promise.reject(accessTokenError(error, GrantType.USER_TOKEN))
+  try {
+    const { data } = await post(
+      tokenServiceUrlOrXsuaaServiceCredentials,
+      authHeader,
+      body,
+      options
     );
+    return data;
+  } catch (error) {
+    throw accessTokenError(error, GrantType.USER_TOKEN);
+  }
 }
 
 /**
@@ -125,7 +127,7 @@ export function userTokenGrant(
  * @param options - Options to use by retrieving access token.
  * @returns A promise resolving to the response of the XSUAA service.
  */
-export function refreshTokenGrant(
+export async function refreshTokenGrant(
   tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
   clientCredentials: ClientCredentials,
   refreshToken: string,
@@ -137,16 +139,17 @@ export function refreshTokenGrant(
     refresh_token: refreshToken
   });
 
-  return post(
-    tokenServiceUrlOrXsuaaServiceCredentials,
-    authHeader,
-    body,
-    options
-  )
-    .then(resp => resp.data as UserTokenResponse)
-    .catch(error =>
-      Promise.reject(accessTokenError(error, GrantType.REFRESH_TOKEN))
+  try {
+    const { data } = await post(
+      tokenServiceUrlOrXsuaaServiceCredentials,
+      authHeader,
+      body,
+      options
     );
+    return data;
+  } catch (error) {
+    throw accessTokenError(error, GrantType.REFRESH_TOKEN);
+  }
 }
 
 /**
@@ -158,7 +161,7 @@ export function refreshTokenGrant(
  * @param options - Options to use by retrieving access token.
  * @returns A promise resolving to the response of the XSUAA service.
  */
-export function jwtBearerTokenGrant(
+export async function jwtBearerTokenGrant(
   tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
   clientCredentials: ClientCredentials,
   userJwt: string,
@@ -172,16 +175,17 @@ export function jwtBearerTokenGrant(
     response_type: 'token'
   });
 
-  return post(
-    tokenServiceUrlOrXsuaaServiceCredentials,
-    authHeader,
-    body,
-    options
-  )
-    .then(resp => resp.data as ClientCredentialsResponse)
-    .catch(error =>
-      Promise.reject(accessTokenError(error, GrantType.JWT_BEARER_TOKEN))
+  try {
+    const { data } = await post(
+      tokenServiceUrlOrXsuaaServiceCredentials,
+      authHeader,
+      body,
+      options
     );
+    return data;
+  } catch (error) {
+    throw accessTokenError(error, GrantType.JWT_BEARER_TOKEN);
+  }
 }
 
 /**

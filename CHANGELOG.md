@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [core] Support additional headers and query parameters, that are set on destinations.
 
 ## Improvements
 

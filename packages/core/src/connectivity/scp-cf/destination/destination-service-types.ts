@@ -10,27 +10,26 @@ import { ResilienceOptions } from '../resilience-options';
  */
 export interface Destination {
   /**
-   * Name of the destination retrieved from SAP Cloud Platform, optional.
+   * Name of the destination retrieved from SAP Cloud Platform.
    */
   name?: string | null;
 
   /**
-   * Base URL for calls to this destination, mandatory.
-   *
-   * The URL needs to define at least scheme (protocol like `http://` or `https://`) and host.
+   * Base URL for calls to this destination.
+   * The URL has to define the protocol, like `http://` or `https://`, and a host.
    * The path for requests against this destination will be appended to the path defined in the URL as a new path segment.
    */
   url: string;
 
   /**
-   * Type of authentication to use, optional.
+   * Type of authentication to use.
    *
    * Defaults to `NoAuthentication`, unless [[username]] and [[password]] are provided, in which case the default is `BasicAuthentication`.
    */
   authentication?: AuthenticationType;
 
   /**
-   * Proxy type to specify whether the target resides on-premise, optional, not used.
+   * Proxy type to specify whether the target resides on-premise (not used).
    */
   proxyType?: DestinationProxyType;
 
@@ -42,7 +41,7 @@ export interface Destination {
   origin?: DestinationOrigin;
 
   /**
-   * Client to target in an SAP system, will be added as HTTP header `sap-client` if set, optional.
+   * Client to target in an SAP system, will be added as HTTP header `sap-client` if set.
    */
   sapClient?: string | undefined | null;
 
@@ -57,7 +56,7 @@ export interface Destination {
   password?: string | null;
 
   /**
-   * Authentication tokens returned from destination service on SAP Cloud Platform, optional.
+   * Authentication tokens returned from destination service on SAP Cloud Platform.
    */
   authTokens?: DestinationAuthToken[] | null;
 
@@ -135,6 +134,18 @@ export interface Destination {
    * System user to be used for OAuth2SAMLBearerAssertion authentication type.
    */
   systemUser?: string;
+
+  /**
+   * Additional headers to be used for calls against the destination, originally defined by `URL.headers.<header-name>`.
+   * The keys of this object denote the names of the headers and the values their values.
+   */
+  headers?: Record<string, any>;
+
+  /**
+   * Additional query parameters to be used for calls against the destination, originally defined by `URL.queries.<query-parameter-name>`.
+   * The keys of this object denote the names of the query parameters and the values their values.
+   */
+  queryParameters?: Record<string, any>;
 }
 
 /**

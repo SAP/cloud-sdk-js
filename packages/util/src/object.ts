@@ -238,7 +238,7 @@ export function mergeIgnoreCase<
 >(
   left: LeftT = {} as LeftT,
   right: RightT = {} as RightT
-): Partial<LeftT | RightT> {
+): Record<string, any> {
   return {
     ...mergeLeftIgnoreCase(left, right),
     ...right

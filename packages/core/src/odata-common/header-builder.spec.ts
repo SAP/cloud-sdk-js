@@ -11,7 +11,7 @@ import { Destination } from '../connectivity';
 import { buildHeaders } from './header-builder';
 
 describe('Header-Builder', () => {
-  it('customHeaders are not overwritten.', async () => {
+  it('customHeaders are not overwritten', async () => {
     const authString = 'initial';
     const request = createGetAllRequest(defaultDestination);
     request.config.customHeaders = { authorization: authString };

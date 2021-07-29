@@ -46,7 +46,7 @@ export async function serviceToken(
   const opts = {
     useCache: true,
     enableCircuitBreaker: true,
-    ...(options || {}) // Tsc complains otherwise
+    ...options
   };
 
   const xsuaa = multiTenantXsuaaCredentials(opts.userJwt);
@@ -58,27 +58,25 @@ export async function serviceToken(
       serviceCreds
     );
     if (cachedToken) {
-      return Promise.resolve(cachedToken.access_token);
+      return cachedToken.access_token;
     }
   }
-
-  return clientCredentialsGrant(xsuaa, serviceCreds, opts)
-    .then(resp => {
-      if (opts.useCache) {
-        clientCredentialsTokenCache.cacheRetrievedToken(
-          xsuaa.url,
-          serviceCreds,
-          resp
-        );
-      }
-      return resp.access_token;
-    })
-    .catch(error => {
-      throw new ErrorWithCause(
-        `Fetching an access token for service "${resolvedService.label}" failed!`,
-        error
+  try {
+    const resp = await clientCredentialsGrant(xsuaa, serviceCreds, opts);
+    if (opts.useCache) {
+      clientCredentialsTokenCache.cacheRetrievedToken(
+        xsuaa.url,
+        serviceCreds,
+        resp
       );
-    });
+    }
+    return resp.access_token;
+  } catch (error) {
+    throw new ErrorWithCause(
+      `Fetching an access token for service "${resolvedService.label}" failed.`,
+      error
+    );
+  }
 }
 
 /**
@@ -165,9 +163,7 @@ function multiTenantXsuaaCredentials(userJwt?: string | JwtPayload) {
       typeof userJwt === 'string' ? decodeJwt(userJwt) : userJwt;
 
     if (!decodedJwt.iss) {
-      throw Error(
-        'Property "iss" is missing from the provided user token! This shouldn\'t happen.'
-      );
+      throw Error('Property `iss` is missing in the provided user token.');
     }
 
     xsuaa.url = replaceSubdomain(decodedJwt.iss, xsuaa.url);

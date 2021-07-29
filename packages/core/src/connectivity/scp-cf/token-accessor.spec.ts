@@ -194,7 +194,7 @@ describe('token accessor', () => {
       expect(retrieveFromCacheSpy).toHaveBeenCalledTimes(0);
     });
 
-    it('throws an error if the client credentials request fails', done => {
+    it('throws an error if the client credentials request fails', async () => {
       mockClientCredentialsGrantCall(
         providerXsuaaUrl,
         {
@@ -206,63 +206,43 @@ describe('token accessor', () => {
         mockDestinationServiceBinding.credentials.clientsecret
       );
 
-      serviceToken('destination')
-        .then(() => {
-          done('Should have failed.');
-        })
-        .catch(error => {
-          expect(error.message).toBe(
-            'Fetching an access token for service "destination" failed!'
-          );
-          done();
-        });
+      await expect(
+        serviceToken('destination')
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Fetching an access token for service \\"destination\\" failed."'
+      );
     });
 
-    it('throws an error if no XSUAA service is bound', done => {
+    it('throws an error if no XSUAA service is bound', async () => {
       process.env.VCAP_SERVICES = JSON.stringify({
         destination: [mockDestinationServiceBinding]
       });
 
-      serviceToken('destination')
-        .then(() => {
-          done('Should have failed.');
-        })
-        .catch(error => {
-          expect(error.message).toBe(
-            'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application!'
-          );
-          done();
-        });
+      await expect(
+        serviceToken('destination')
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application."'
+      );
     });
 
-    it('throws an error if no target service is bound', done => {
+    it('throws an error if no target service is bound', async () => {
       process.env.VCAP_SERVICES = JSON.stringify({});
 
-      serviceToken('destination')
-        .then(() => {
-          done('Should have failed.');
-        })
-        .catch(error => {
-          expect(error.message).toBe(
-            'Unable to get access token for "destination" service! No service instance of type "destination" found.'
-          );
-          done();
-        });
+      await expect(
+        serviceToken('destination')
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
+      );
     });
 
-    it('throws an error if the issuer is missing in the JWT', done => {
+    it('throws an error if the issuer is missing in the JWT', async () => {
       const userJwt = signedJwt({ NOiss: 'https://testeroni.example.com' });
 
-      serviceToken('destination', { userJwt })
-        .then(() => {
-          done('Should have failed.');
-        })
-        .catch(error => {
-          expect(error.message).toBe(
-            'Property "iss" is missing from the provided user token! This shouldn\'t happen.'
-          );
-          done();
-        });
+      await expect(
+        serviceToken('destination', { userJwt })
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Property `iss` is missing in the provided user token."'
+      );
     });
   });
 
@@ -307,7 +287,7 @@ describe('token accessor', () => {
       expect(actual).toBe(expected);
     });
 
-    it('throws an error if the user token request fails', done => {
+    it('throws an error if the user token request fails', async () => {
       const userJwt = signedJwt({ iss: 'https://testeroni.example.com' });
 
       mockUserTokenGrantCall(
@@ -322,22 +302,19 @@ describe('token accessor', () => {
         mockDestinationServiceBinding.credentials.clientid
       );
 
-      userApprovedServiceToken(userJwt, 'destination')
-        .then(() => {
-          done('Should have failed.');
-        })
+      await expect(userApprovedServiceToken(userJwt, 'destination'))
+        .rejects.toThrow()
         .catch(error => {
           expect(error.message).toBe(
-            'Fetching a user approved access token for service "destination" failed!'
+            'Fetching a user approved access token for service "destination" failed.'
           );
           expect(error.stack.toLowerCase()).toContain(
             'user token grant failed'
           );
-          done();
         });
     });
 
-    it('throws an error if the refresh token request fails', done => {
+    it('throws an error if the refresh token request fails', async () => {
       const userJwt = signedJwt({ iss: 'https://testeroni.example.com' });
       const refreshToken = 'freshtoken';
 
@@ -364,68 +341,50 @@ describe('token accessor', () => {
         mockDestinationServiceBinding.credentials.clientsecret
       );
 
-      userApprovedServiceToken(userJwt, 'destination')
-        .then(() => {
-          done('Should have failed.');
-        })
+      await expect(userApprovedServiceToken(userJwt, 'destination'))
+        .rejects.toThrow()
         .catch(error => {
           expect(error.message).toBe(
-            'Fetching a user approved access token for service "destination" failed!'
+            'Fetching a user approved access token for service "destination" failed.'
           );
           expect(error.stack.toLowerCase()).toContain(
             'refresh token grant failed'
           );
-          done();
         });
     });
 
-    it('throws an error if no XSUAA service is bound', done => {
+    it('throws an error if no XSUAA service is bound', async () => {
       const userJwt = signedJwt({ iss: 'https://testeroni.example.com' });
       process.env.VCAP_SERVICES = JSON.stringify({
         destination: [mockDestinationServiceBinding]
       });
 
-      userApprovedServiceToken(userJwt, 'destination')
-        .then(() => {
-          done('Should have failed.');
-        })
-        .catch(error => {
-          expect(error.message).toBe(
-            'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application!'
-          );
-          done();
-        });
+      await expect(
+        userApprovedServiceToken(userJwt, 'destination')
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application."'
+      );
     });
 
-    it('throws an error if no target service is bound', done => {
+    it('throws an error if no target service is bound', async () => {
       const userJwt = signedJwt({ iss: 'https://testeroni.example.com' });
       process.env.VCAP_SERVICES = JSON.stringify({});
 
-      userApprovedServiceToken(userJwt, 'destination')
-        .then(() => {
-          done('Should have failed.');
-        })
-        .catch(error => {
-          expect(error.message).toBe(
-            'Unable to get access token for "destination" service! No service instance of type "destination" found.'
-          );
-          done();
-        });
+      await expect(
+        userApprovedServiceToken(userJwt, 'destination')
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
+      );
     });
 
-    it('throws an error if the issuer is missing in the JWT', done => {
+    it('throws an error if the issuer is missing in the JWT', async () => {
       const userJwt = signedJwt({ NOiss: 'toni-testeroni' });
 
-      userApprovedServiceToken(userJwt, 'destination')
-        .then(() => {
-          done('Should have failed.');
-        })
-        .catch(error => {
-          expect(error.message).toBe(
-            'Property "iss" is missing from the provided user token! This shouldn\'t happen.'
-          );
-          done();
-        });
+      await expect(
+        userApprovedServiceToken(userJwt, 'destination')
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Property `iss` is missing in the provided user token."'
+      );
     });
   });
 });

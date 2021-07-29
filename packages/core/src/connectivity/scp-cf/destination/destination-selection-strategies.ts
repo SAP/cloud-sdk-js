@@ -81,7 +81,7 @@ function findDestination(
 
   if (instanceDest && subAccountDest) {
     logger.warn(
-      `A destination with name ${destinationName} has been found for the destination serivce instance and subaccount. The instance destination will be used.`
+      `Found destinations named '${destinationName}' for both, the destination service instance and subaccount. Using instance destination.`
     );
   }
   return instanceDest || subAccountDest;

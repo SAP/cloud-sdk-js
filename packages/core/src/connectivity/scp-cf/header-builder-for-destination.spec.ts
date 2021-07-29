@@ -4,7 +4,7 @@ import { buildHeadersForDestination } from './header-builder-for-destination';
 import { checkHeaders } from './authorization-header.spec';
 
 describe('header builder for destination', () => {
-  it('warns if the destination and request config contains authorization information.', () => {
+  it('warns if the destination and request config contains authorization information', () => {
     const destination: Destination = {
       url: '',
       authentication: 'BasicAuthentication',
@@ -23,7 +23,7 @@ describe('header builder for destination', () => {
     );
   });
 
-  it("should still add header if the old 'NoAuthorization' workaround is used.", async () => {
+  it("should still add header if the old 'NoAuthorization' workaround is used", async () => {
     const destination = {
       url: '',
       authentication: 'NoAuthentication',
@@ -47,6 +47,68 @@ describe('header builder for destination', () => {
     } as Destination;
 
     const headers = await buildHeadersForDestination(destination);
-    expect(headers['SAP-Connectivity-SCC-Location_ID']).toBe('locationId');
+    expect(headers['SAP-Connectivity-SCC-Location_ID']).toEqual('locationId');
+  });
+
+  it('custom SAP headers take precedence over SDK built headers', async () => {
+    const destination = {
+      url: 'url',
+      sapClient: 'destinationProperty'
+    } as Destination;
+
+    const headers = await buildHeadersForDestination(destination, {
+      'sap-client': 'customHeader'
+    });
+    expect(headers['sap-client']).toEqual('customHeader');
+  });
+
+  it('destination SAP headers take precedence over SDK built headers', async () => {
+    const destination = {
+      url: 'url',
+      sapClient: 'destinationProperty',
+      headers: {
+        'sap-client': 'destinationHeader'
+      }
+    } as Destination;
+
+    const headers = await buildHeadersForDestination(destination);
+    expect(headers['sap-client']).toEqual('destinationHeader');
+  });
+
+  it('custom SAP headers take precedence over destination headers', async () => {
+    const destination = {
+      url: 'url',
+      sapClient: 'destinationProperty',
+      headers: {
+        'sap-client': 'destinationHeader'
+      }
+    } as Destination;
+
+    const headers = await buildHeadersForDestination(destination, {
+      'sap-client': 'customHeader'
+    });
+    expect(headers['sap-client']).toEqual('customHeader');
+  });
+
+  it('includes destination headers', async () => {
+    const destination = {
+      url: 'url',
+      sapClient: 'destinationProperty',
+      headers: {
+        'some-header': 'some header',
+        'header-to-overwrite': 'destinationHeader',
+        'SAP-client': 'destinationHeader'
+      }
+    } as Destination;
+
+    const headers = await buildHeadersForDestination(destination, {
+      'sap-CLIENT': 'customHeader',
+      'HEADER-to-overwrite': 'customHeader'
+    });
+    expect(headers).toEqual({
+      'some-header': 'some header',
+      'sap-CLIENT': 'customHeader',
+      'HEADER-to-overwrite': 'customHeader'
+    });
   });
 });

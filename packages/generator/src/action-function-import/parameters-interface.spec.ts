@@ -26,7 +26,7 @@ describe('parameters-interface', () => {
     });
   });
 
-  it('functionImportParametersInterface Nullable', () => {
+  it('functionImportParametersInterface nullable', () => {
     expect(parametersInterface(orderBreakfastNullable)).toEqual({
       kind: StructureKind.Interface,
       name: 'Params',

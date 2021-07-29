@@ -15,8 +15,9 @@ function functionImportReturnType(
   if (functionImport.returnType.isCollection) {
     type = `${type}[]`;
   }
+  
   if (functionImport.returnType.isNullable) {
-    type = `${type}|null`;
+    type = `${type} | null`;
   }
 
   type = `FunctionImportRequestBuilder${caps(oDataVersion)}<${

@@ -34,7 +34,7 @@ describe('parameters-interface', () => {
       properties: [
         {
           name: 'withHoneyToast',
-          type: 'boolean|null',
+          type: 'boolean | null',
           hasQuestionToken: true,
           docs: [`${unixEOL}Breakfast includes a honey toast`]
         }

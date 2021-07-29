@@ -26,7 +26,7 @@ In addition for oData v4 the return type is a also not just a string on the `<Fu
 
 ## Context
 
-The generator should consider this properties and make the types accordingly and make nullable parameters as:
+The generator should generate nullable properties for "Nullable" parameters:
 
 ```ts
 {

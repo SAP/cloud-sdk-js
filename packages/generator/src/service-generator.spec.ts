@@ -462,7 +462,7 @@ describe('service-generator', () => {
           propertyNameAsParam: 'enumPropertyWithOneMember',
           edmType: 'API_TEST_SRV.A_TestEnumType_WithOneMember',
           jsType: 'TestEnumTypeWithOneMember',
-          fieldType: 'EnumFieldV2',
+          fieldType: 'EnumField',
           description: '',
           nullable: true,
           isComplex: false,

@@ -15,7 +15,7 @@ import {
   EdmTypeShared,
   isEdmType,
   PropertyMetadata,
-  EnumFieldV2
+  EnumField
 } from '../odata-common';
 import {
   EdmToPrimitive as EdmToPrimitiveV2,
@@ -125,7 +125,7 @@ export function entityDeserializer(
         field._fieldType
       );
     }
-    if (field instanceof EnumFieldV2) {
+    if (field instanceof EnumField) {
       return json[field._fieldName];
     }
   }

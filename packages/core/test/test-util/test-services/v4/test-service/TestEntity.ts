@@ -18,7 +18,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
-  EnumFieldV2,
+  EnumField,
   Field,
   FieldBuilder,
   OneToManyLink,
@@ -557,9 +557,9 @@ export namespace TestEntity {
     | CollectionField<TestEntity, 'Edm.String', true, true>
     | TestComplexTypeField<TestEntity, true, true>
     | CollectionField<TestEntity, TestComplexType, true, true>
-    | EnumFieldV2<TestEntity, TestEnumType, true, true>
-    | EnumFieldV2<TestEntity, TestEnumTypeInt64, true, true>
-    | EnumFieldV2<TestEntity, TestEnumTypeWithOneMember, true, true>
+    | EnumField<TestEntity, TestEnumType, true, true>
+    | EnumField<TestEntity, TestEnumTypeInt64, true, true>
+    | EnumField<TestEntity, TestEnumTypeWithOneMember, true, true>
     | CollectionField<TestEntity, typeof TestEnumType, true, true>
     | OneToManyLink<TestEntity, TestEntityMultiLink>
     | OneToOneLink<TestEntity, TestEntitySingleLink>

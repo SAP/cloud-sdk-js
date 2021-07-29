@@ -184,18 +184,9 @@ describe('test-destination-provider', () => {
 
     it('throws a reasonable error when the JSON file cannot be found', () => {
       fs.switchMockOn();
-      expect(() => getTestDestinations()).toThrowErrorMatchingInlineSnapshot(`
-        "No systems.json could be found when searching in directory /Users/i824643/Development/cloud-sdk-js/packages/test-util and upwards and no paths have been provided directly. Format of systems.json is:
-        {
-          systems:[
-          {
-            alias:     A unique identifier. Used for matching a system and credentials.
-            uri:       A unique resource identifier like \\"http://mySystem.com\\"
-            sapClient?: The sap client as string e.g. \\"001\\"
-          },...
-          ]
-        }"
-      `);
+      expect(() => getTestDestinations()).toThrowError(
+        /^No systems.json could be found when searching in directory.*/
+      );
       fs.switchMockOff();
     });
 
@@ -203,10 +194,9 @@ describe('test-destination-provider', () => {
       fs.switchMockOn();
       fs.setReadDirSync(['systems.json']);
       fs.setReadFileSync('not proper JSON');
-      expect(() => getTestDestinations()).toThrowErrorMatchingInlineSnapshot(`
-        "File read from path /Users/i824643/Development/cloud-sdk-js/packages/test-util/systems.json is not valid JSON.
-              Original error: Unexpected token u in JSON at position 0"
-      `);
+      expect(() => getTestDestinations()).toThrowError(
+        /^File read from path.*is not valid JSON./
+      );
 
       fs.switchMockOff();
     });

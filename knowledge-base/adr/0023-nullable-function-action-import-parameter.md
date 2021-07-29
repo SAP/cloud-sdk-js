@@ -35,11 +35,8 @@ nullableParameter?: string | null
 ```
 
 For return types in v4 the type should be `T | null` where `T` is return type.
-The generator did not consider the property corretly which was reported in [this issue](https://github.com/SAP/cloud-sdk-js/issues/1439)
 
-## Alternatives
-
-### Option A
+## Consequences
 
 Since the [default value](http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/part3-csdl/odata-v4.0-errata03-os-part3-csdl-complete.html#_Toc453752529) for `Nullable` is true this is a potential breaking change.
 However, it is also fixing a bug.
@@ -50,11 +47,3 @@ We implemented the following for v2 and v4:
 - This is passed to the `edmx-to-vdm.ts` and cast to boolean.
 
 The default value is also set for the return type for oData v4.
-
-## Decision
-
-Accepted, because `string` typed parameter is better than `number` typed, when building filters.
-
-## Consequences
-
-- When there are real use cases about underlying types and values, it becomes easier to implement them as we parse these information to our VDM models.

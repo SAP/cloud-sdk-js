@@ -55,9 +55,8 @@ export function parseDestination(
     }
   );
 
-  const additionalHeadersAndQueryParameters = getAdditionalHeadersAndQueryParameters(
-    destinationConfig
-  );
+  const additionalHeadersAndQueryParameters =
+    getAdditionalHeadersAndQueryParameters(destinationConfig);
 
   return sanitizeDestination({
     ...destination,
@@ -75,9 +74,9 @@ function getAdditionalProperties(
   destinationConfig: DestinationConfiguration,
   originalKeyPrefix: 'URL.headers.' | 'URL.queries.'
 ): Record<string, any> {
-  const relevantConfigEntries = Object.entries(
-    destinationConfig
-  ).filter(([key]) => key.startsWith(originalKeyPrefix));
+  const relevantConfigEntries = Object.entries(destinationConfig).filter(
+    ([key]) => key.startsWith(originalKeyPrefix)
+  );
 
   return relevantConfigEntries.reduce(
     (additionalProperties: Record<string, any>, [originalKey, value]) => {

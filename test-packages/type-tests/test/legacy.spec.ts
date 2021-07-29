@@ -11,11 +11,11 @@ TestEntity.requestBuilder()
     TestEntity.TO_SINGLE_LINK
   );
 
-const enumFiled = new EnumField('fieldName', TestEntityV4);
+const enumField = new EnumField('fieldName', TestEntityV4);
 // $$ExpectType Filter<TestEntityV4, string>
-enumFiled.equals('enum');
+enumField.equals('enum');
 // $ExpectError
-enumFiled.equals(1);
+enumField.equals(1);
 
 const enumFieldAsEdmTypeField = new FieldBuilder(
   TestEntityV4

@@ -13,8 +13,9 @@ function actionImportReturnType(actionImport: VdmActionImport) {
   if (actionImport.returnType.isCollection) {
     type = `${type}[]`;
   }
+  
   if (actionImport.returnType.isNullable) {
-    type = `${type}|null`;
+    type = `${type} | null`;
   }
 
   type = `ActionImportRequestBuilder<${actionImport.parametersTypeName}, ${type}>`;

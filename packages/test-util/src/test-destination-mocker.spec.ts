@@ -1,4 +1,4 @@
-import { unlinkSync, writeFileSync } from 'fs';
+import mock from 'mock-fs';
 import { Destination } from '@sap-cloud-sdk/core';
 import { credentials, systems } from '../test/test-util/test-destinations';
 import {
@@ -16,13 +16,14 @@ describe('setTestDestinationInEnv', () => {
   };
 
   beforeAll(() => {
-    writeFileSync('./systems.json', JSON.stringify(systems));
-    writeFileSync('./credentials.json', JSON.stringify(credentials));
+    mock({
+      'systems.json': JSON.stringify(systems),
+      'credentials.json': JSON.stringify(credentials)
+    });
   });
 
   afterAll(() => {
-    unlinkSync('./systems.json');
-    unlinkSync('./credentials.json');
+    mock.restore();
   });
 
   afterEach(() => {

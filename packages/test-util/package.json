@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.47.1",
-    "@sap-cloud-sdk/util": "^1.47.1"
+    "@sap-cloud-sdk/util": "^1.47.1",
+    "mock-fs": "^5.0.0"
   }
 }

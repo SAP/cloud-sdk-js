@@ -11,7 +11,7 @@ export function parametersInterface(
     isExported: true,
     properties: actionFunctionImport.parameters.map(parameter => ({
       name: parameter.parameterName,
-      type: parameter.nullable ? `${parameter.jsType}|null` : parameter.jsType,
+      type: parameter.nullable ? `${parameter.jsType} | null` : parameter.jsType,
       hasQuestionToken: parameter.nullable,
       docs: [addLeadingNewline(parameter.description)]
     })),

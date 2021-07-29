@@ -85,7 +85,11 @@ function property(
 
 export function createPropertyFieldInitializer(prop: VdmProperty): string {
   if (prop.isCollection) {
-    if (prop.isComplex || prop.isEnum) {
+    if (prop.isEnum) {
+      return `this._fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+    }
+
+    if (prop.isComplex) {
       return `this._fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
 

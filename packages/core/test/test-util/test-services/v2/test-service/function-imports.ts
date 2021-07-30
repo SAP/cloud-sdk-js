@@ -217,7 +217,7 @@ export function testFunctionImportSharedEntityReturnTypeCollection(
 ): Omit<
   FunctionImportRequestBuilderV2<
     TestFunctionImportSharedEntityReturnTypeCollectionParameters,
-    never[]
+    never
   >,
   'execute'
 > {

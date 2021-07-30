@@ -39,7 +39,9 @@ export function generateFunctionImportsV2(
           ),
           httpMethod,
           returnType: parseFunctionImportReturnTypes(
-            f.ReturnType,
+            f.ReturnType
+              ? { Type: f.ReturnType, Nullable: 'false' }
+              : undefined,
             entities,
             complexTypes,
             extractResponse(f.Name),

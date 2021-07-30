@@ -3,6 +3,7 @@ import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
+import { functionImportReturnType } from './return-type';
 
 const parameterName = 'parameters';
 
@@ -10,15 +11,10 @@ export function functionImportFunction(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const returnType = isEntityNotDeserializable(functionImport.returnType)
-    ? `Omit<FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
-        functionImport.parametersTypeName
-      }, ${functionImport.returnType.returnType}>, 'execute'>`
-    : `FunctionImportRequestBuilder${caps(service.oDataVersion)}<${
-        functionImport.parametersTypeName
-      }, ${functionImport.returnType.returnType}${
-        functionImport.returnType.isCollection ? '[]' : ''
-      }>`;
+  const returnType = functionImportReturnType(
+    functionImport,
+    service.oDataVersion
+  );
   return {
     kind: StructureKind.Function,
     name: functionImport.name,

@@ -32,11 +32,11 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
   /**
    * Nullable Boolean Param.
    */
-  nullableBooleanParam?: boolean;
+  nullableBooleanParam?: boolean | null;
   /**
    * Nullable Geography Point Param.
    */
-  nullableGeographyPointParam?: any;
+  nullableGeographyPointParam?: any | null;
 }
 /**
  * Test Action Import Multiple Parameter Complex Return Type.
@@ -125,6 +125,35 @@ export declare function testActionImportSharedEntityReturnTypeCollection(
   >,
   'execute'
 >;
+/**
+ * Type of the parameters to be passed to [[testActionImportNullableTest]].
+ */
+export interface TestActionImportNullableTestParameters {
+  /**
+   * Nullable Per Default.
+   */
+  nullablePerDefault?: string | null;
+  /**
+   * Nullable Explicit.
+   */
+  nullableExplicit?: string | null;
+  /**
+   * Non Nullable.
+   */
+  nonNullable: string;
+}
+/**
+ * Test Action Import Nullable Test.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testActionImportNullableTest(
+  parameters: TestActionImportNullableTestParameters
+): ActionImportRequestBuilder<
+  TestActionImportNullableTestParameters,
+  TestComplexType | null
+>;
 export declare const actionImports: {
   testActionImportNoParameterNoReturnType: typeof testActionImportNoParameterNoReturnType;
   testActionImportMultipleParameterComplexReturnType: typeof testActionImportMultipleParameterComplexReturnType;
@@ -132,5 +161,6 @@ export declare const actionImports: {
   testActionImportNoParameterEntityReturnType: typeof testActionImportNoParameterEntityReturnType;
   testActionImportSharedEntityReturnType: typeof testActionImportSharedEntityReturnType;
   testActionImportSharedEntityReturnTypeCollection: typeof testActionImportSharedEntityReturnTypeCollection;
+  testActionImportNullableTest: typeof testActionImportNullableTest;
 };
 //# sourceMappingURL=action-imports.d.ts.map

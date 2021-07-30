@@ -55,43 +55,43 @@
                 <ReturnType Type="Edm.Int32"/>
             </Action>
             <Function Name="concatStrings" IsBound="false" IsComposable="false">
-                <Parameter Name="Str1" Type="Edm.String"/>
-                <Parameter Name="Str2" Type="Edm.String"/>
-                <ReturnType Type="Edm.String"/>
+                <Parameter Name="Str1" Type="Edm.String" Nullable="false"/>
+                <Parameter Name="Str2" Type="Edm.String" Nullable="false"/>
+                <ReturnType Type="Edm.String" Nullable="false"/>
             </Function>
             <Action Name="createTestEntityById" IsBound="false">
-                <Parameter Name="id" Type="Edm.Int32"/>
-                <ReturnType Type="TestService.TestEntity"/>
+                <Parameter Name="id" Type="Edm.Int32" Nullable="false"/>
+                <ReturnType Type="TestService.TestEntity" Nullable="false"/>
             </Action>
             <Action Name="createTestEntityByIdReturnId" IsBound="false">
-                <Parameter Name="id" Type="Edm.Int32"/>
-                <ReturnType Type="Edm.Int32"/>
+                <Parameter Name="id" Type="Edm.Int32" Nullable="false"/>
+                <ReturnType Type="Edm.Int32" Nullable="false"/>
             </Action>
             <Action Name="createTestEntityReturnId" IsBound="false">
-                <Parameter Name="param" Type="TestService.TestEntity"/>
-                <ReturnType Type="Edm.Int32"/>
+                <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>
+                <ReturnType Type="Edm.Int32" Nullable="false"/>
             </Action>
             <Function Name="getAll" IsBound="false" IsComposable="false">
                 <ReturnType Type="Collection(TestService.TestEntity)" Nullable="false"/>
             </Function>
             <Function Name="getByKey" IsBound="false" IsComposable="false">
-                <Parameter Name="param" Type="Edm.Int32"/>
-                <ReturnType Type="TestService.TestEntity"/>
+                <Parameter Name="param" Type="Edm.Int32" Nullable="false"/>
+                <ReturnType Type="TestService.TestEntity" Nullable="false"/>
             </Function>
             <Function Name="returnCollection" IsBound="false" IsComposable="false">
-                <Parameter Name="param" Type="Edm.Int32"/>
+                <Parameter Name="param" Type="Edm.Int32" Nullable="false"/>
                 <ReturnType Type="Collection(Edm.Int32)" Nullable="false"/>
             </Function>
             <Function Name="returnInt" IsBound="false" IsComposable="false">
-                <Parameter Name="param" Type="Edm.Int32"/>
-                <ReturnType Type="Edm.Int32"/>
+                <Parameter Name="param" Type="Edm.Int32" Nullable="false"/>
+                <ReturnType Type="Edm.Int32" Nullable="false"/>
             </Function>
             <Function Name="returnKey" IsBound="false" IsComposable="false">
-                <Parameter Name="param" Type="TestService.TestEntity"/>
-                <ReturnType Type="Edm.Int32"/>
+                <Parameter Name="param" Type="TestService.TestEntity" Nullable="false"/>
+                <ReturnType Type="Edm.Int32" Nullable="false"/>
             </Function>
-            <Function Name="returnSapCloudSdk" IsBound="false" IsComposable="false">
-                <ReturnType Type="Edm.String"/>
+            <Function Name="returnSapCloudSdk" IsBound="false" IsComposable="false" Nullable="false">
+                <ReturnType Type="Edm.String" Nullable="false"/>
             </Function>
         </Schema>
     </edmx:DataServices>

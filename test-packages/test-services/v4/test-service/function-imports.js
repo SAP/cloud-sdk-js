@@ -9,6 +9,7 @@ exports.functionImports =
   exports.testFunctionImportSharedEntityReturnType =
   exports.testFunctionImportEntityReturnTypeCollection =
   exports.testFunctionImportEntityReturnType =
+  exports.testFunctionImportNullableTest =
   exports.testFunctionImportEdmReturnTypeCollection =
   exports.testFunctionImportEdmReturnType =
     void 0;
@@ -61,6 +62,42 @@ function testFunctionImportEdmReturnTypeCollection(parameters) {
 }
 exports.testFunctionImportEdmReturnTypeCollection =
   testFunctionImportEdmReturnTypeCollection;
+/**
+ * Test Function Import Nullable Test.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+function testFunctionImportNullableTest(parameters) {
+  var params = {
+    nullablePerDefault: new core_1.FunctionImportParameter(
+      'NullablePerDefault',
+      'Edm.String',
+      parameters.nullablePerDefault
+    ),
+    nullableExplicit: new core_1.FunctionImportParameter(
+      'NullableExplicit',
+      'Edm.String',
+      parameters.nullableExplicit
+    ),
+    nonNullable: new core_1.FunctionImportParameter(
+      'NonNullable',
+      'Edm.String',
+      parameters.nonNullable
+    )
+  };
+  return new core_1.FunctionImportRequestBuilderV4(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestFunctionImportNullableTest',
+    function (data) {
+      return core_1.transformReturnValueForEdmTypeListV4(data, function (val) {
+        return core_1.edmToTsV4(val, 'Edm.String');
+      });
+    },
+    params
+  );
+}
+exports.testFunctionImportNullableTest = testFunctionImportNullableTest;
 /**
  * Test Function Import Entity Return Type.
  *
@@ -265,6 +302,7 @@ exports.functionImports = {
   testFunctionImportEdmReturnType: testFunctionImportEdmReturnType,
   testFunctionImportEdmReturnTypeCollection:
     testFunctionImportEdmReturnTypeCollection,
+  testFunctionImportNullableTest: testFunctionImportNullableTest,
   testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,
   testFunctionImportEntityReturnTypeCollection:
     testFunctionImportEntityReturnTypeCollection,

@@ -12,9 +12,11 @@ import {
   isCollectionType,
   parseTypeName
 } from '../edmx-to-vdm-util';
+import { EdmxReturnType } from '../../edmx-parser/v4';
+import { isNullableProperty } from '../../generator-utils';
 
 export function parseFunctionImportReturnTypes(
-  returnType: string | undefined,
+  returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   extractResponse: ExtractResponse,
@@ -30,7 +32,7 @@ export function parseFunctionImportReturnTypes(
 }
 
 export function parseActionImportReturnTypes(
-  returnType: string | undefined,
+  returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   extractResponse: ExtractResponse,
@@ -46,7 +48,7 @@ export function parseActionImportReturnTypes(
 }
 
 function parseReturnTypes(
-  returnType: string | undefined,
+  returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   extractResponse: ExtractResponse,
@@ -56,25 +58,34 @@ function parseReturnTypes(
     return getVoidReturnType();
   }
 
-  const isCollection = isCollectionType(returnType);
-  const edmType = findEdmType(returnType);
+  const isCollection = isCollectionType(returnType.Type);
+  const isNullable: boolean =
+    typeof returnType === 'undefined' ? false : isNullableProperty(returnType);
+
+  const edmType = findEdmType(returnType.Type);
   if (edmType) {
     return getEdmReturnType(
       isCollection,
+      isNullable,
       edmType,
       extractResponse,
       oDataVersion
     );
   }
 
-  const filteredEntities = findEntityTypes(returnType, entities);
+  const filteredEntities = findEntityTypes(returnType.Type, entities);
   if (filteredEntities.length) {
-    return getEntityReturnType(isCollection, filteredEntities);
+    return getEntityReturnType(isCollection, isNullable, filteredEntities);
   }
 
-  const complexType = findComplexType(returnType, complexTypes);
+  const complexType = findComplexType(returnType.Type, complexTypes);
   if (complexType) {
-    return getComplexReturnType(isCollection, complexType, oDataVersion);
+    return getComplexReturnType(
+      isCollection,
+      isNullable,
+      complexType,
+      oDataVersion
+    );
   }
 
   throw Error(`Unable to find a return type for name ${returnType}.`);
@@ -125,12 +136,14 @@ function getVoidReturnType(): VdmFunctionImportReturnType {
     returnType: 'undefined',
     builderFunction: '(val) => undefined',
     isMulti: false,
+    isNullable: false,
     isCollection: false
   };
 }
 
 function getEdmReturnType(
   isCollection: boolean,
+  isNullable: boolean,
   edmType: string,
   extractResponse: ExtractResponse,
   oDataVersion: ODataVersion
@@ -145,12 +158,14 @@ function getEdmReturnType(
       oDataVersion
     )}(${extracted}, '${typeMapping.edmType}')`,
     isMulti: isCollection,
+    isNullable,
     isCollection
   };
 }
 
 function getEntityReturnType(
   isCollection: boolean,
+  isNullable: boolean,
   entities: VdmEntity[]
 ): VdmFunctionImportReturnType {
   if (!entities.length) {
@@ -165,12 +180,14 @@ function getEntityReturnType(
         returnType: first(entities)!.className,
         builderFunction: first(entities)!.className,
         isMulti: isCollection,
+        isNullable,
         isCollection
       }
     : {
         returnTypeCategory: VdmReturnTypeCategory.NEVER,
         returnType: 'never',
         isMulti: isCollection,
+        isNullable,
         isCollection,
         unsupportedReason: VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
       };
@@ -178,6 +195,7 @@ function getEntityReturnType(
 
 function getComplexReturnType(
   isCollection: boolean,
+  isNullable: boolean,
   complexType: Omit<VdmComplexType, 'factoryName'>,
   oDataVersion: ODataVersion
 ): VdmFunctionImportReturnType {
@@ -188,6 +206,7 @@ function getComplexReturnType(
       oDataVersion
     )}(data, ${complexType.typeName})`,
     isMulti: isCollection,
+    isNullable,
     isCollection
   };
 }

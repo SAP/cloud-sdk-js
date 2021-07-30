@@ -410,10 +410,12 @@ export function parseReturnType(
       returnType: 'undefined',
       builderFunction: '(val) => undefined',
       isMulti: false,
+      isNullable: false,
       isCollection: false
     };
   }
   const isCollection = isCollectionType(returnType);
+  const isNullable = false;
   returnType = parseTypeName(returnType);
   if (returnType.startsWith('Edm.')) {
     return {
@@ -421,6 +423,7 @@ export function parseReturnType(
       returnType: propertyJsType(returnType)!,
       builderFunction: `(val) => edmToTs(val, '${returnType}')`,
       isMulti: isCollection,
+      isNullable,
       isCollection
     };
   }
@@ -432,6 +435,7 @@ export function parseReturnType(
       returnType: entity.className,
       builderFunction: entity.className,
       isMulti: isCollection,
+      isNullable,
       isCollection
     };
   }
@@ -446,6 +450,7 @@ export function parseReturnType(
     returnType: complexType.typeName,
     builderFunction: `${complexType.typeName}.build`,
     isMulti: isCollection,
+    isNullable,
     isCollection
   };
 }

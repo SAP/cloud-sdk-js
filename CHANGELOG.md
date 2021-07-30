@@ -14,7 +14,9 @@
 
 ## Compatibility Notes
 
--
+- [odata-generator] Consider the `Nullable` property on action and function import parameters and return types correctly. 
+For parameters this is uncritical because the type is extended from `T` to `T | null` if the property is nullable. 
+For return types the same extension could lead compile errors after client regeneration because the is broadened including `null`. 
 
 ## New Functionality
 
@@ -28,6 +30,7 @@
 ## Fixed Issues
 
 - [odata-generator] Fix generation errors, when Enum type field is used as a key of an entity.
+- [odata-generator] Fix action and function import typing, when parameter or return types are nullable.
 
 # 1.47.1
 

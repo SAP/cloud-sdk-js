@@ -1,6 +1,7 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.actionImports =
+  exports.testActionImportNullableTest =
   exports.testActionImportSharedEntityReturnTypeCollection =
   exports.testActionImportSharedEntityReturnType =
   exports.testActionImportNoParameterEntityReturnType =
@@ -175,6 +176,45 @@ function testActionImportSharedEntityReturnTypeCollection(parameters) {
 }
 exports.testActionImportSharedEntityReturnTypeCollection =
   testActionImportSharedEntityReturnTypeCollection;
+/**
+ * Test Action Import Nullable Test.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+function testActionImportNullableTest(parameters) {
+  var params = {
+    nullablePerDefault: new core_1.ActionImportParameter(
+      'NullablePerDefault',
+      'Edm.String',
+      parameters.nullablePerDefault
+    ),
+    nullableExplicit: new core_1.ActionImportParameter(
+      'NullableExplicit',
+      'Edm.String',
+      parameters.nullableExplicit
+    ),
+    nonNullable: new core_1.ActionImportParameter(
+      'NonNullable',
+      'Edm.String',
+      parameters.nonNullable
+    )
+  };
+  return new core_1.ActionImportRequestBuilder(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestActionImportNullableTest',
+    function (data) {
+      return core_1.transformReturnValueForComplexTypeV4(data, function (data) {
+        return core_1.deserializeComplexTypeV4(
+          data,
+          TestComplexType_1.TestComplexType
+        );
+      });
+    },
+    params
+  );
+}
+exports.testActionImportNullableTest = testActionImportNullableTest;
 exports.actionImports = {
   testActionImportNoParameterNoReturnType:
     testActionImportNoParameterNoReturnType,
@@ -186,6 +226,7 @@ exports.actionImports = {
   testActionImportSharedEntityReturnType:
     testActionImportSharedEntityReturnType,
   testActionImportSharedEntityReturnTypeCollection:
-    testActionImportSharedEntityReturnTypeCollection
+    testActionImportSharedEntityReturnTypeCollection,
+  testActionImportNullableTest: testActionImportNullableTest
 };
 //# sourceMappingURL=action-imports.js.map

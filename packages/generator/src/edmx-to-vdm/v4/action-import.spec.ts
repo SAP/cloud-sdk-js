@@ -152,7 +152,8 @@ function createAction(
     Parameter: parameter,
     ReturnType: returnType
       ? {
-          Type: returnType
+          Type: returnType,
+          Nullable: 'false'
         }
       : undefined,
     IsBound: false,
@@ -259,7 +260,7 @@ function createServiceWithActions(): ServiceMetadata {
   const actionWithReturnWithParameter = createAction(
     'ActionWithReturnWithParameter',
     'TestEntityType',
-    [{ Name: 'StringPara', Type: 'Edm.String' }]
+    [{ Name: 'StringParameter', Type: 'Edm.String', Nullable: 'false' }]
   );
   return createTestServiceData([entityType], [entitySet], undefined, [
     actionNoReturnNoParameter,

@@ -3,9 +3,9 @@ import { TestEnumType } from './TestEnumType';
 import {
   AllFields,
   CustomFieldV4,
-  EdmTypeField,
   EntityBuilderType,
   EntityV4,
+  EnumField,
   Field
 } from '@sap-cloud-sdk/core';
 /**
@@ -62,9 +62,9 @@ export declare namespace TestEntityWithEnumKey {
    * Static representation of the [[keyPropertyEnum1]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const KEY_PROPERTY_ENUM_1: EdmTypeField<
+  const KEY_PROPERTY_ENUM_1: EnumField<
     TestEntityWithEnumKey,
-    'Edm.Enum',
+    TestEnumType,
     false,
     true
   >;
@@ -72,7 +72,7 @@ export declare namespace TestEntityWithEnumKey {
    * All fields of the TestEntityWithEnumKey entity.
    */
   const _allFields: Array<
-    EdmTypeField<TestEntityWithEnumKey, 'Edm.Enum', false, true>
+    EnumField<TestEntityWithEnumKey, TestEnumType, false, true>
   >;
   /**
    * All fields selector.

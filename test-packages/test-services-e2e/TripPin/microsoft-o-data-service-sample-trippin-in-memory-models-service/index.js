@@ -40,6 +40,7 @@ __exportStar(require('./City'), exports);
 __exportStar(require('./Location'), exports);
 __exportStar(require('./EventLocation'), exports);
 __exportStar(require('./AirportLocation'), exports);
+__exportStar(require('./PersonGender'), exports);
 __exportStar(require('./function-imports'), exports);
 __exportStar(require('./BatchRequest'), exports);
 //# sourceMappingURL=index.js.map

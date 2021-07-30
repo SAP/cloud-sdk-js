@@ -235,7 +235,7 @@ export async function generateSourcesForService(
 
   service.enumTypes.forEach(enumType => {
     logger.info(
-      `[${service.originalFileName}] Generating enum type '${enumType.originalName}' ...`
+      `[${service.originalFileName}] Generating enum type ${enumType.originalName} ...`
     );
     sourceFile(
       serviceDir,

@@ -10,15 +10,15 @@
  */
 export enum PersonGender {
   /**
-   * original value: 0
+   * Original value: 0
    */
   Male = 'Male',
   /**
-   * original value: 1
+   * Original value: 1
    */
   Female = 'Female',
   /**
-   * original value: 2
+   * Original value: 2
    */
   Unknown = 'Unknown'
 }

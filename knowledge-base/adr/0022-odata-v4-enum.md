@@ -4,7 +4,7 @@ Handle Enum Type of OData V4
 
 ## Status
 
-accepted
+Accepted
 
 ## Background
 
@@ -82,7 +82,7 @@ However, none of the above works, if the values are not unique, which is the cas
 
 ### Decision
 
-As it cannot handle enums with duplicate values, it's not accepted.
+Not accepted, as it cannot handle enums with duplicate values.
 
 ### Option B (similar to C)
 
@@ -125,13 +125,14 @@ Below are the examples when building filters on the enum field.
 ```ts
 TestEntity.ENUM_FIELD.equal(TestEnumType.NOT_FOUND);
 TestEntity.ENUM_FIELD.equal(0);
+TestEntity.ENUM_FIELD.equal(999); // unfortunately, this works
 ```
 
 ### Decision
 
-As it accept `number` typed value when building filters, it is not accepted.
+Not accepted, as it accept all `number` typed value when building filters.
 
-### Option C (chosen)
+### Option C
 
 Similar to Option C, it has additional string based enum values.
 
@@ -157,6 +158,7 @@ Below are the examples when building filters on the enum field.
 ```ts
 TestEntity.ENUM_FIELD.equal(TestEnumType.NOT_FOUND);
 TestEntity.ENUM_FIELD.equal('NOT_FOUND');
+TestEntity.ENUM_FIELD.equal('String'); // unfortunately, this works
 ```
 
 #### Comparison between Option B and C
@@ -170,7 +172,60 @@ Using C, as `string` type is better than `number` type (index) in terms of reada
 
 ## Decision
 
-Accepted, because `string` typed parameter is better than `number` typed, when building filters.
+Not accepted, as it accept all `string` typed value when building filters.
+
+### Option D
+
+Similar to B and C, but it does not allow users to provide a random string when building filters.
+
+#### Generating Enum Types
+
+The same as C.
+
+#### Building Filters
+
+Below are the examples when building filters on the enum field.
+
+```ts
+enum TestEnumType {
+  Member1 = 'Member1',
+  Member2 = 'Member2'
+}
+// This magic works with typescript >= 4.1 (https://stackoverflow.com/questions/52393730/typescript-string-literal-union-type-from-enum/59496175)
+type EnumType<T extends string> = `${TestEnumType}`;
+
+class EnumField<T extends string> {
+  constructor(private fieldType: Record<string, T>) {}
+
+  equals(value: EnumType<T>): void {}
+}
+
+const t = new EnumField(X);
+t.equals(X.Member1); // valid
+t.equals(X.Member2); // valid
+t.equals('Member1'); // valid
+t.equals('Member2'); // valid
+t.equals('peter'); // type error
+```
+
+#### Building Fields
+
+This approach uses `EnumField` (e.g., `EnumField<TestEntity, TestEnumType>`) instead of `EdmTypeField` (e.g., `EdmTypeField<TestEntity, "Edm.Enum">`) for enum properties in the client.
+
+#### Pros and cons:
+
+##### Pros:
+
+- When building filters, it only allows valid parameters.
+- We can use the real enum type (e.g., `TestEnumType`) as one of the generic type of `EnumField` instead of the `Edm.Enum` type as one of the generic type of `EdmTypeField`. `Edm.Enum` is not an official edm type, which might be confusing.
+
+##### Cons:
+
+- Having an enum specific field `EnumField` instead of using generic `EdmTypeField` makes the switch statement in the serializer/deserializer more complicated, as the `EnumField` has to be handled differently.
+
+## Decision
+
+Accepted, as it only accept valid enum entries and values when building filters.
 
 ## Consequences
 

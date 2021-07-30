@@ -10,7 +10,7 @@
  */
 export enum TestEnumTypeWithOneMember {
   /**
-   * original value: 0
+   * Original value: 0
    */
   Member1 = 'Member1'
 }

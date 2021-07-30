@@ -53,6 +53,7 @@ exports.TestEntityWithEnumKey = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityWithEnumKeyRequestBuilder_1 = require('./TestEntityWithEnumKeyRequestBuilder');
+var TestEnumType_1 = require('./TestEnumType');
 var core_1 = require('@sap-cloud-sdk/core');
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
@@ -111,9 +112,9 @@ exports.TestEntityWithEnumKey = TestEntityWithEnumKey;
    * Static representation of the [[keyPropertyEnum1]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityWithEnumKey.KEY_PROPERTY_ENUM_1 = _fieldBuilder.buildEdmTypeField(
+  TestEntityWithEnumKey.KEY_PROPERTY_ENUM_1 = _fieldBuilder.buildEnumField(
     'KeyPropertyEnum1',
-    'Edm.Enum',
+    TestEnumType_1.TestEnumType,
     false
   );
   /**

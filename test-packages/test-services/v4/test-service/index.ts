@@ -35,5 +35,8 @@ export * from './TestComplexBaseType';
 export * from './TestComplexType';
 export * from './TestNestedComplexType';
 export * from './TestLvl2NestedComplexType';
+export * from './TestEnumType';
+export * from './TestEnumTypeInt64';
+export * from './TestEnumTypeWithOneMember';
 export * from './function-imports';
 export * from './BatchRequest';

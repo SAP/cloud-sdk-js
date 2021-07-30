@@ -38,6 +38,8 @@ __exportStar(require('./TestEntity3RequestBuilder'), exports);
 __exportStar(require('./TestEntity4RequestBuilder'), exports);
 __exportStar(require('./TestComplexType1'), exports);
 __exportStar(require('./TestComplexType2'), exports);
+__exportStar(require('./TestEnumType1'), exports);
+__exportStar(require('./TestEnumType2'), exports);
 __exportStar(require('./function-imports'), exports);
 __exportStar(require('./BatchRequest'), exports);
 //# sourceMappingURL=index.js.map

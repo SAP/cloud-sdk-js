@@ -36,6 +36,7 @@ exports.TestComplexType =
   exports.createTestComplexType =
     void 0;
 var TestNestedComplexType_1 = require('./TestNestedComplexType');
+var TestEnumType_1 = require('./TestEnumType');
 var core_1 = require('@sap-cloud-sdk/core');
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
@@ -209,9 +210,9 @@ var TestComplexTypeField = /** @class */ (function (_super) {
      * Representation of the [[TestComplexType.enumProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.enumProperty = _this._fieldBuilder.buildEdmTypeField(
+    _this.enumProperty = _this._fieldBuilder.buildEnumField(
       'EnumProperty',
-      'Edm.Enum',
+      TestEnumType_1.TestEnumType,
       true
     );
     /**
@@ -239,6 +240,15 @@ var TestComplexTypeField = /** @class */ (function (_super) {
     _this.collectionStringProperty = _this._fieldBuilder.buildCollectionField(
       'CollectionStringProperty',
       'Edm.String',
+      true
+    );
+    /**
+     * Representation of the [[TestComplexType.collectionEnumProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'filter' in the fluent request API.
+     */
+    _this.collectionEnumProperty = _this._fieldBuilder.buildCollectionField(
+      'CollectionEnumProperty',
+      TestEnumType_1.TestEnumType,
       true
     );
     /**
@@ -389,6 +399,12 @@ var TestComplexType;
       originalName: 'CollectionStringProperty',
       name: 'collectionStringProperty',
       type: 'Edm.String',
+      isCollection: true
+    },
+    {
+      originalName: 'CollectionEnumProperty',
+      name: 'collectionEnumProperty',
+      type: 'Edm.Enum',
       isCollection: true
     },
     {

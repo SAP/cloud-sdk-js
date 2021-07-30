@@ -10,11 +10,11 @@
  */
 export enum TestEnumType2 {
   /**
-   * original value: 1
+   * Original value: 1
    */
   Member1 = 'Member1',
   /**
-   * original value: 2
+   * Original value: 2
    */
   Member2 = 'Member2'
 }

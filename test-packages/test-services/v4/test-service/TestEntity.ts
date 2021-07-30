@@ -18,6 +18,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
+  EnumField,
   Field,
   FieldBuilder,
   OneToManyLink,
@@ -478,27 +479,27 @@ export namespace TestEntity {
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
+  export const ENUM_PROPERTY = _fieldBuilder.buildEnumField(
     'EnumProperty',
-    'Edm.Enum',
+    TestEnumType,
     true
   );
   /**
    * Static representation of the [[enumPropertyInt64]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY_INT_64 = _fieldBuilder.buildEdmTypeField(
+  export const ENUM_PROPERTY_INT_64 = _fieldBuilder.buildEnumField(
     'EnumPropertyInt64',
-    'Edm.Enum',
+    TestEnumTypeInt64,
     true
   );
   /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY_WITH_ONE_MEMBER = _fieldBuilder.buildEdmTypeField(
+  export const ENUM_PROPERTY_WITH_ONE_MEMBER = _fieldBuilder.buildEnumField(
     'EnumPropertyWithOneMember',
-    'Edm.Enum',
+    TestEnumTypeWithOneMember,
     true
   );
   /**
@@ -507,7 +508,7 @@ export namespace TestEntity {
    */
   export const ENUM_COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField(
     'EnumCollectionProperty',
-    'Edm.Enum',
+    TestEnumType,
     true
   );
   /**
@@ -556,8 +557,10 @@ export namespace TestEntity {
     | CollectionField<TestEntity, 'Edm.String', true, true>
     | TestComplexTypeField<TestEntity, true, true>
     | CollectionField<TestEntity, TestComplexType, true, true>
-    | EdmTypeField<TestEntity, 'Edm.Enum', true, true>
-    | CollectionField<TestEntity, 'Edm.Enum', true, true>
+    | EnumField<TestEntity, TestEnumType, true, true>
+    | EnumField<TestEntity, TestEnumTypeInt64, true, true>
+    | EnumField<TestEntity, TestEnumTypeWithOneMember, true, true>
+    | CollectionField<TestEntity, typeof TestEnumType, true, true>
     | OneToManyLink<TestEntity, TestEntityMultiLink>
     | OneToOneLink<TestEntity, TestEntitySingleLink>
   > = [

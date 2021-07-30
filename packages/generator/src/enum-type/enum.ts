@@ -10,7 +10,7 @@ export function enumTypeClass(enumType: VdmEnumType): EnumDeclarationStructure {
     members: enumType.members.map(member => ({
       name: member.name,
       value: member.name,
-      docs: [addLeadingNewline(`original value: ${member.originalValue}`)]
+      docs: [addLeadingNewline(`Original value: ${member.originalValue}`)]
     })),
     docs: [enumDocs(enumType)]
   };

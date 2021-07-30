@@ -189,12 +189,22 @@ export function getGenericParameters(
   isSelectable: boolean
 ): string {
   const params = [entityClassName];
-  if (prop.isEnum) {
-    params.push("'Edm.Enum'");
-  } else if (!prop.isComplex) {
-    params.push(`'${prop.edmType}'`);
-  } else if (prop.isCollection) {
-    params.push(prop.jsType);
+  if (prop.isCollection) {
+    if (prop.isEnum) {
+      params.push(`typeof ${prop.jsType}`);
+    } else if (prop.isComplex) {
+      params.push(prop.jsType);
+    } else {
+      params.push(`'${prop.edmType}'`);
+    }
+  } else {
+    if (prop.isEnum) {
+      params.push(`${prop.jsType}`);
+    } else if (prop.isComplex) {
+      // prettier-ignore
+    } else {
+      params.push(`'${prop.edmType}'`);
+    }
   }
 
   params.push(prop.nullable.toString());

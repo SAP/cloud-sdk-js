@@ -23,6 +23,7 @@
 ## Improvements
 
 - [odata-generator] Add underlying type and value information as part of the API documentation for enums.
+- [odata-generator] Disallow invalid enum entries or random string parameters when building filters on enum properties.
 
 ## Fixed Issues
 

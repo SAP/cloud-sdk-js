@@ -13,11 +13,11 @@ exports.TestEnumTypeInt64 = void 0;
 var TestEnumTypeInt64;
 (function (TestEnumTypeInt64) {
   /**
-   * original value: 99999999999999999999
+   * Original value: 99999999999999999999
    */
   TestEnumTypeInt64['Member1'] = 'Member1';
   /**
-   * original value: 88888888888888888888
+   * Original value: 88888888888888888888
    */
   TestEnumTypeInt64['Member2'] = 'Member2';
 })(

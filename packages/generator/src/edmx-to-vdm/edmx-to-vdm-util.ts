@@ -135,7 +135,7 @@ export function typesForCollection(
   if (isComplexTypeOrEnumType(typeInsideCollection)) {
     if (isEnumType(typeInsideCollection, enumTypes)) {
       return {
-        edmType: typeInsideCollection,
+        edmType: 'Edm.Enum',
         jsType: enumTypeForName(typeInsideCollection, enumTypes),
         fieldType: 'CollectionField'
       };

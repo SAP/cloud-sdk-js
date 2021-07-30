@@ -9,9 +9,9 @@ import {
   AllFields,
   Constructable,
   CustomFieldV4,
-  EdmTypeField,
   EntityBuilderType,
   EntityV4,
+  EnumField,
   Field,
   FieldBuilder
 } from '../../../../../src';
@@ -84,16 +84,16 @@ export namespace TestEntityWithEnumKey {
    * Static representation of the [[keyPropertyEnum1]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_ENUM_1 = _fieldBuilder.buildEdmTypeField(
+  export const KEY_PROPERTY_ENUM_1 = _fieldBuilder.buildEnumField(
     'KeyPropertyEnum1',
-    'Edm.Enum',
+    TestEnumType,
     false
   );
   /**
    * All fields of the TestEntityWithEnumKey entity.
    */
   export const _allFields: Array<
-    EdmTypeField<TestEntityWithEnumKey, 'Edm.Enum', false, true>
+    EnumField<TestEntityWithEnumKey, TestEnumType, false, true>
   > = [TestEntityWithEnumKey.KEY_PROPERTY_ENUM_1];
   /**
    * All fields selector.

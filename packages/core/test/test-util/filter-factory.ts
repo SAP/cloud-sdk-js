@@ -13,7 +13,8 @@ import {
   TestEntity as TestEntityV4,
   TestEntityLvl2MultiLink,
   TestEntityLvl2SingleLink,
-  TestEntityMultiLink as TestEntityMultiLinkV4
+  TestEntityMultiLink as TestEntityMultiLinkV4,
+  TestEnumType
 } from './test-services/v4/test-service';
 
 export const testFilterString = {
@@ -126,6 +127,6 @@ export const testFilterLambdaExpressionFilterFunctionOnLink = {
 };
 
 export const testFilterEnum = {
-  filter: TestEntityV4.ENUM_PROPERTY.equals('test'),
-  odataStr: "EnumProperty eq 'test'"
+  filter: TestEntityV4.ENUM_PROPERTY.equals(TestEnumType.Member1),
+  odataStr: "EnumProperty eq 'Member1'"
 };

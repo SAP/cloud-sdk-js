@@ -13,6 +13,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
+  EnumField,
   Field,
   FieldBuilder,
   OrderableEdmTypeField
@@ -116,9 +117,9 @@ export namespace TestEntity1 {
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
+  export const ENUM_PROPERTY = _fieldBuilder.buildEnumField(
     'EnumProperty',
-    'Edm.Enum',
+    TestEnumType1,
     true
   );
   /**
@@ -136,7 +137,7 @@ export namespace TestEntity1 {
   export const _allFields: Array<
     | EdmTypeField<TestEntity1, 'Edm.String', false, true>
     | OrderableEdmTypeField<TestEntity1, 'Edm.Int16', true, true>
-    | EdmTypeField<TestEntity1, 'Edm.Enum', true, true>
+    | EnumField<TestEntity1, TestEnumType1, true, true>
     | TestComplexType1Field<TestEntity1, true, true>
   > = [
     TestEntity1.KEY_PROPERTY_STRING,

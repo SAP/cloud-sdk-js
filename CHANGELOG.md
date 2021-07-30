@@ -28,6 +28,7 @@
 ## Fixed Issues
 
 - [odata-generator] Fix generation errors, when Enum type field is used as a key of an entity.
+- [core] Fix parsing of proxy environment variables to allow `-` in the host name.
 
 # 1.47.1
 

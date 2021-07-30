@@ -16,7 +16,7 @@ const logger = createLogger({
 
 /**
  * Determines the proxy strategy. If noProxy is set the ProxyConfiguration in the destination is omitted.
- * For onPremProxy or internetProxy the connectivy service or enviroment variables are checked to fill the [[ProxyConfiguration]].
+ * For onPremProxy or internetProxy the connectivity service or environment variables are checked to fill the [[ProxyConfiguration]].
  * @param destination - from which the proxy strategy is derived.
  * @returns ProxyStrategy possible values are noProxy, internetProxy or onPremProxy.
  */
@@ -160,7 +160,7 @@ const addAuthHeaders =
       return copy;
     }
 
-    if (groups.user.match(/[^\w%]/) || groups.pwd.match(/[^\w%]/)) {
+    if (groups.user.match(/[^\w%.-]/) || groups.pwd.match(/[^\w%.-]/)) {
       logger.warn(
         'Username:Password in proxy environment variable contains special characters like [@/:]. Use percent-encoding to mask them - no Proxy used'
       );
@@ -191,7 +191,7 @@ const addHost =
 
 /**
  * Parses the environment variable for the web proxy and extracts the values considering defaults like http for the protocol and 80 or 443 for the port.
- * The general pattern to be parsed is protocol://user:password@host:port, where everything besides the host is optional.
+ * The general pattern to be parsed is `protocol://user:password@host:port`, where everything besides the host is optional.
  * Special characters in the user and password need to be percent encoded.
  * @param proxyEnvValue - Environment variable which is parsed
  * @returns Configuration with default values or undefined if the parsing failed.
@@ -200,13 +200,13 @@ export function parseProxyEnv(
   proxyEnvValue: string
 ): ProxyConfiguration | undefined {
   const regex =
-    /(?<protocolWithDelimiter>(?<protocol>^.+):\/\/)?(?<userPwdWithDelimeter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
+    /(?<protocolWithDelimiter>(?<protocol>^\w+):\/\/)?(?<userPwdWithDelimiter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.-]+):?(?<port>.+)?)/;
   const parsed = regex.exec(proxyEnvValue);
 
   if (parsed?.groups) {
     const { groups } = parsed;
     logger.debug(
-      `Start to extract protocol, host and port from proxy env: ${proxyEnvValue}`
+      `Start to extract protocol, host and port from proxy env: '${proxyEnvValue}'.`
     );
 
     let proxyConfiguration = addHost(groups)({});

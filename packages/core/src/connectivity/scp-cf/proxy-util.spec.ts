@@ -198,7 +198,7 @@ describe('proxy-util', () => {
       );
     });
 
-    it('should parse  port with default.', () => {
+    it('should parse port with default', () => {
       expect(parseProxyEnv('use.Fallback.Port')?.port).toBe(80);
       expect(parseProxyEnv('://use.Fallback.Port')?.port).toBe(80);
       expect(parseProxyEnv('http://use.Fallback.Port')?.port).toBe(80);
@@ -220,7 +220,7 @@ describe('proxy-util', () => {
       expect(parseProxyEnv('no.Integer.port.No.Proxy:12X34')).toBe(undefined);
     });
 
-    it('should parse host if environment value is ok.', () => {
+    it('should parse host if environment value is ok', () => {
       expect(parseProxyEnv('some.host')?.host).toBe('some.host');
       expect(parseProxyEnv('http://some.host')?.host).toBe('some.host');
       expect(parseProxyEnv('http://some.host:1234')?.host).toBe('some.host');
@@ -231,6 +231,11 @@ describe('proxy-util', () => {
         'some.host'
       );
       expect(parseProxyEnv('user:password@some.host')?.host).toBe('some.host');
+
+      expect(parseProxyEnv('some-host')?.host).toBe('some-host');
+      expect(parseProxyEnv('us-er:pass-word@some-host')?.host).toBe(
+        'some-host'
+      );
 
       expect(parseProxyEnv('so@me.host:1234')).toBe(undefined);
       expect(parseProxyEnv('user:password@so@me.host:1234')).toBe(undefined);

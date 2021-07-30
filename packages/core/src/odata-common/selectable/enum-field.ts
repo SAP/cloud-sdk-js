@@ -6,10 +6,9 @@ import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 
 /**
- * Represents a property with a enum value.
- *
- * @typeparam EntityT - Type of the entity the field belongs to
- * @typeparam EnumT - Enum type that contains all valid enum entries for this field
+ * Represents a property with an enum value.
+ * @typeparam EntityT - Type of the entity the field belongs to.
+ * @typeparam EnumT - Enum type that contains all valid enum entries for this field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
@@ -25,9 +24,7 @@ export class EnumField<
   readonly edmType: EdmTypeShared<any> = 'Edm.Enum';
 
   /**
-   *
    * Creates an instance of EnumField.
-   *
    * @param fieldName - Actual name of the field used in the OData request.
    * @param _fieldOf - The constructor of the entity or the complex type field this field belongs to.
    * @param enumType - Enum type of the field according to the metadata description.

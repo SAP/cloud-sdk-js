@@ -201,7 +201,7 @@ export function getGenericParameters(
     if (prop.isEnum) {
       params.push(`${prop.jsType}`);
     } else if (prop.isComplex) {
-      continue;
+      // prettier-ignore
     } else {
       params.push(`'${prop.edmType}'`);
     }

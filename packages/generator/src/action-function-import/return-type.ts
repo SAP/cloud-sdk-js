@@ -3,16 +3,16 @@ import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 
 function actionFunctionImportReturnType(
-  actionOrFuncitonImport: VdmActionImport | VdmFunctionImport,
+  actionOrFunctionImport: VdmActionImport | VdmFunctionImport,
   requestBuilderName: string
 ): string {
-  let type = actionOrFuncitonImport.returnType.returnType;
-  const returnType = actionOrFuncitonImport.returnType;
+  let type = actionOrFunctionImport.returnType.returnType;
+  const returnType = actionOrFunctionImport.returnType;
 
   if (isEntityNotDeserializable(returnType)) {
     type = wrapRequestBuilderAroundType(
       requestBuilderName,
-      actionOrFuncitonImport.parametersTypeName,
+      actionOrFunctionImport.parametersTypeName,
       type
     );
     type = `Omit<${type}, 'execute'>`;
@@ -28,7 +28,7 @@ function actionFunctionImportReturnType(
   }
   type = wrapRequestBuilderAroundType(
     requestBuilderName,
-    actionOrFuncitonImport.parametersTypeName,
+    actionOrFunctionImport.parametersTypeName,
     type
   );
   return type;

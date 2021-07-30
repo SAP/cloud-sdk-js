@@ -35,12 +35,8 @@ export function parseAssociationSets(root: any): EdmxAssociationSet[] {
 }
 
 export function parseFunctionImports(root: any): EdmxFunctionImport[] {
-  const functionImports: EdmxFunctionImport[] = getPropertyFromEntityContainer(
-    root,
-    'FunctionImport'
-  ).map(f => ({
+  return getPropertyFromEntityContainer(root, 'FunctionImport').map(f => ({
     ...f,
     Parameter: forceArray(f.Parameter)
   }));
-  return functionImports;
 }

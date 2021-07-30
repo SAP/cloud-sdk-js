@@ -73,15 +73,13 @@ function parseActionsFunctions(
   root,
   actionFunctionKey: 'Action' | 'Function'
 ): EdmxFunction[] | EdmxAction[] {
-  const actionsOrFuntions: EdmxFunction[] = getMergedPropertyWithNamespace(
-    root,
-    actionFunctionKey
-  ).map(actionOrFunction => ({
-    ...actionOrFunction,
-    Parameter: forceArray(actionOrFunction.Parameter),
-    IsBound: false
-  }));
-  return actionsOrFuntions;
+  return getMergedPropertyWithNamespace(root, actionFunctionKey).map(
+    actionOrFunction => ({
+      ...actionOrFunction,
+      Parameter: forceArray(actionOrFunction.Parameter),
+      IsBound: false
+    })
+  );
 }
 
 export function parseFunctions(root: any): EdmxFunction[] {

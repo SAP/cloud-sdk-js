@@ -1,4 +1,5 @@
 import { AgentOptions } from 'https';
+import { URL } from 'url';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
@@ -86,9 +87,8 @@ function getNoProxyEnvValue(): string[] {
   return split;
 }
 
-const addProtocol =
-  (groups: any) =>
-  (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
+function addProtocol(groups: any) {
+  return (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
     if (!proxyConfiguration) {
       return;
     }
@@ -117,10 +117,10 @@ const addProtocol =
 
     return copy;
   };
+}
 
-const addPort =
-  (groups: any) =>
-  (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
+function addPort(groups: any) {
+  return (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
     if (!proxyConfiguration) {
       return;
     }
@@ -145,30 +145,33 @@ const addPort =
     );
     return copy;
   };
+}
 
-const addAuthHeaders =
-  (groups: any) =>
-  (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
+function addAuthHeaders(groups: any) {
+  return (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
     if (!proxyConfiguration) {
       return;
     }
     const copy = { ...proxyConfiguration };
-    if (!groups.user || !groups.pwd) {
+    if (!groups.username || !groups.password) {
       logger.debug(
         'No user and password given in proxy environment value. Nothing added to header.'
       );
       return copy;
     }
 
-    if (groups.user.match(/[^\w%.-]/) || groups.pwd.match(/[^\w%.-]/)) {
+    if (
+      groups.username.match(/[^\w%.-]/) ||
+      groups.password.match(/[^\w%.-]/)
+    ) {
       logger.warn(
         'Username:Password in proxy environment variable contains special characters like [@/:]. Use percent-encoding to mask them - no Proxy used'
       );
       return undefined;
     }
 
-    const userDecoded = decodeURIComponent(groups.user);
-    const pwdDecoded = decodeURIComponent(groups.pwd);
+    const userDecoded = decodeURIComponent(groups.username);
+    const pwdDecoded = decodeURIComponent(groups.password);
     copy.headers = {
       'Proxy-Authorization': basicHeader(userDecoded, pwdDecoded)
     };
@@ -177,17 +180,24 @@ const addAuthHeaders =
     );
     return copy;
   };
+}
 
-const addHost =
-  (groups: any) => (proxyConfiguration: Partial<ProxyConfiguration>) => {
-    if (groups.host) {
-      proxyConfiguration.host = groups.host;
+function addHost(groups: any) {
+  return (proxyConfiguration: Partial<ProxyConfiguration>) => {
+    if (groups.hostname) {
+      proxyConfiguration.host = groups.hostname;
       return proxyConfiguration;
     }
 
     logger.warn('Could not extract host from proxy env. - no proxy used');
     return;
   };
+}
+
+function getProtocol(href: string): string | undefined {
+  const test = href.match(/^\w+:\/\//);
+  return test ? test[0].slice(0, -2) : undefined;
+}
 
 /**
  * Parses the environment variable for the web proxy and extracts the values considering defaults like http for the protocol and 80 or 443 for the port.
@@ -199,20 +209,37 @@ const addHost =
 export function parseProxyEnv(
   proxyEnvValue: string
 ): ProxyConfiguration | undefined {
-  const regex =
-    /(?<protocolWithDelimiter>(?<protocol>^\w+):\/\/)?(?<userPwdWithDelimiter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.-]+):?(?<port>.+)?)/;
-  const parsed = regex.exec(proxyEnvValue);
+  // const regex =
+  //   /(?<protocolWithDelimiter>(?<protocol>^\w+):\/\/)?(?<userPwdWithDelimiter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.-]+):?(?<port>.+)?)/;
+  // const parsed = regex.exec(proxyEnvValue);
 
-  if (parsed?.groups) {
-    const { groups } = parsed;
+  const protocol = getProtocol(proxyEnvValue);
+
+  if (!protocol) {
+    logger.warn('No known protocol specified, using "http:".');
+    proxyEnvValue = `http://${proxyEnvValue}`;
+  } else if (protocol !== 'http:' && protocol !== 'https:') {
+    logger.warn(`Unsupported protocol "${protocol}" specified.`);
+    return;
+  }
+
+  try {
+    const url = new URL(proxyEnvValue);
+
+    if ((url.username && !url.password) || (url.password && !url.username)) {
+      logger.warn('Password or username missing');
+      return;
+    }
+
+    // const { groups } = parsed;
     logger.debug(
       `Start to extract protocol, host and port from proxy env: '${proxyEnvValue}'.`
     );
 
-    let proxyConfiguration = addHost(groups)({});
-    proxyConfiguration = addProtocol(groups)(proxyConfiguration);
-    proxyConfiguration = addPort(groups)(proxyConfiguration);
-    proxyConfiguration = addAuthHeaders(groups)(proxyConfiguration);
+    let proxyConfiguration = addHost(url)({});
+    proxyConfiguration = addProtocol(url)(proxyConfiguration);
+    proxyConfiguration = addPort(url)(proxyConfiguration);
+    proxyConfiguration = addAuthHeaders(url)(proxyConfiguration);
 
     if (proxyConfiguration) {
       logger.debug(`Used Proxy Configuration:
@@ -226,8 +253,9 @@ export function parseProxyEnv(
      }.`);
     }
     return proxyConfiguration as ProxyConfiguration;
+  } catch (err) {
+    logger.warn(`Unable to extract proxy config from ${proxyEnvValue}.`);
   }
-  logger.warn(`Unable to extract proxy config from ${proxyEnvValue}.`);
 }
 
 /**

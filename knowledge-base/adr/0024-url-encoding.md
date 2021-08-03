@@ -9,6 +9,7 @@ Accepted.
 OData and OpenAPI requests built by the SDK needs to be encoded.
 We should decide, which parts of the URL need to be encoded and which not.
 Let's start from the structure of a URL.
+Emojis :thumbsup: and :thumbsdown: are used in this doc for specifying whether encoding will be applied by the SDK.
 
 ### URL
 
@@ -127,7 +128,7 @@ Option B is the winner, as Option A does not fit our requirement.
 ##### Pros
 
 - We just need this method ONCE for the whole URL
-- The special characters like `/` (as path delimiter), `&` (as query delimiter) etc. are not encoded. (See Appendix for more details)
+- The special characters like `/` (as path delimiter), `&` (as query delimiter) etc. are not encoded. (See [Appendix](#appendix))
 
 ##### Cons
 
@@ -154,7 +155,7 @@ Not accepted, as it does not work for edge cases.
 ##### Pros
 
 - We can choose specific components for encoding, which is flexible.
-- It solves the problem of Option A, that `/` can be encoded. (See Appendix for more details)
+- It solves the problem of Option A, that `/` can be encoded. (See [Appendix](#appendix))
 - For custom values, the encoding can be skipped.
 
 ##### Cons
@@ -171,7 +172,8 @@ Chosen, as this is a valid solution.
 - For the chosen components, we are able to apply encoding properly.
 - There might be still some other parts like "host", "service path" and "entity name" etc., which need coding. Potential solutions are mentioned in this doc.
 
-## Appendix: The difference between `encodeURI` and `encodeURIComponent`.
+## Appendix
+The table below shows the difference between `encodeURI` and `encodeURIComponent`.
 
 | Character | encodeURI | encodeURIComponent |
 | --------- | --------- | ------------------ |

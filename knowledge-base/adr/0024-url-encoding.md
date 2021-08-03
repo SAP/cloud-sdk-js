@@ -173,6 +173,7 @@ Chosen, as this is a valid solution.
 - There might be still some other parts like "host", "service path" and "entity name" etc., which need coding. Potential solutions are mentioned in this doc.
 
 ## Appendix
+
 The table below shows the difference between `encodeURI` and `encodeURIComponent`.
 
 | Character | encodeURI | encodeURIComponent |

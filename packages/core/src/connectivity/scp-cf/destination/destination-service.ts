@@ -3,15 +3,10 @@ import {
   ErrorWithCause,
   propertyExists
 } from '@sap-cloud-sdk/util';
-import { AxiosError } from 'axios';
 import CircuitBreaker from 'opossum';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import {
-  executeHttpRequest,
-  HttpRequestConfig,
-  HttpRequestOptions,
-  HttpResponse
-} from '../../../http-client';
+import { getAgentConfig } from '../../../http-client';
 import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
@@ -20,14 +15,11 @@ import { CachingOptions } from '../cache';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
-  proxyStrategy
+  proxyStrategy,
+  urlAndAgent
 } from '../proxy-util';
 import { parseDestination } from './destination';
-import {
-  Destination,
-  DestinationNameAndJwt,
-  DestinationType
-} from './destination-service-types';
+import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 
 const logger = createLogger({
@@ -36,12 +28,8 @@ const logger = createLogger({
 });
 
 type DestinationCircuitBreaker = CircuitBreaker<
-  [
-    destination: Destination | DestinationNameAndJwt,
-    requestConfig: HttpRequestConfig,
-    options?: HttpRequestOptions | undefined
-  ],
-  HttpResponse
+  [requestConfig: AxiosRequestConfig],
+  AxiosResponse
 >;
 
 let circuitBreaker: DestinationCircuitBreaker;
@@ -232,32 +220,41 @@ function errorMessageFromResponse(error: AxiosError): string {
     : '';
 }
 
-function callDestinationService(
-  uri: string,
-  headers: Record<string, any>,
-  options: ResilienceOptions = { enableCircuitBreaker: true }
-): Promise<HttpResponse> {
-  const config: HttpRequestConfig = {
-    method: 'get',
-    headers
-  };
-
+function getAxiosConfig(uri, headers): AxiosRequestConfig {
   let destination: Destination = { url: uri, proxyType: 'Internet' };
   if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
     destination = addProxyConfigurationInternet(destination);
   }
+  return {
+    method: 'get',
+    baseURL: uri,
+    ...headers,
+    ...getAgentConfig(destination)
+  };
+}
+
+function callDestinationService(
+  uri: string,
+  headers: Record<string, any>,
+  options: ResilienceOptions = { enableCircuitBreaker: true }
+): Promise<AxiosResponse> {
+  const config: AxiosRequestConfig = {
+    ...urlAndAgent(uri),
+    method: 'get',
+    headers
+  };
 
   if (options.enableCircuitBreaker) {
-    return getCircuitBreaker().fire(destination, config);
+    return getCircuitBreaker().fire(config);
   }
 
-  return executeHttpRequest(destination, config);
+  return axios.request(config);
 }
 
 function getCircuitBreaker(): DestinationCircuitBreaker {
   if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(
-      executeHttpRequest,
+      axios.request,
       circuitBreakerDefaultOptions
     );
   }

@@ -2,7 +2,11 @@ import { AgentOptions } from 'https';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { HttpAgentConfig, HttpsAgentConfig } from '../../http-client';
+import {
+  HttpAgentConfig,
+  HttpRequestConfig,
+  HttpsAgentConfig
+} from '../../http-client';
 import { getProtocolOrDefault } from './get-protocol';
 import { Destination } from './destination';
 import { Protocol } from './protocol';
@@ -309,4 +313,23 @@ export enum ProxyStrategy {
   NO_PROXY,
   ON_PREMISE_PROXY,
   INTERNET_PROXY
+}
+
+/**
+ * Builds part of the request config containing the URL and if needed proxy agents or normal http agents.
+ * Considers the NO_Proxy env variable together with the targetUri.
+ * @param targetUri used as baseURL in request config
+ * @returns HttpRequestConfig containing baseUrl and http(s) agents.
+ */
+export function urlAndAgent(
+  targetUri: string
+): Pick<HttpRequestConfig, 'baseURL' | 'httpAgent' | 'httpsAgent'> {
+  let destination: Destination = { url: targetUri, proxyType: 'Internet' };
+  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
+    destination = addProxyConfigurationInternet(destination);
+  }
+  return {
+    baseURL: destination.url,
+    ...proxyAgent(destination)
+  };
 }

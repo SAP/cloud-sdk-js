@@ -32,105 +32,67 @@ export const certificateSingleResponse = {
   ]
 };
 
-export const oauthMultipleResponse: DestinationConfiguration[] = [
-  {
+function destionWithAuthType(
+  authType: AuthenticationType
+): DestinationConfiguration {
+  return {
     Name: 'FINAL-DESTINATION',
     Type: 'HTTP',
     URL: 'https://my.system.com/',
-    Authentication: 'OAuth2SAMLBearerAssertion' as AuthenticationType,
+    Authentication: authType,
     ProxyType: 'Internet',
     audience: 'https://my.system.com',
-    authnContextClassRef: 'urn:oasis:names:tc:SAML:2.0:ac:classes:X509',
     clientKey: 'password',
-    nameIdFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
     scope: 'SOME_SCOPE',
     tokenServiceUser: 'TOKEN_USER',
     tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
     userIdSource: 'email',
     tokenServicePassword: 'password'
-  }
-];
+  };
+}
 
-export const oauthSingleResponse: DestinationJson = {
-  owner: {
-    SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
-    InstanceId: null
-  },
-  destinationConfiguration: oauthMultipleResponse[0],
-  authTokens: [
-    {
-      type: 'Bearer',
-      value: 'token',
-      expires_in: '3600'
-    }
-  ]
-};
+function desintaionSingleResponse(
+  multipleResponse: DestinationConfiguration[]
+): DestinationJson {
+  return {
+    owner: {
+      SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
+      InstanceId: null
+    },
+    destinationConfiguration: oauthMultipleResponse[0],
+    authTokens: [
+      {
+        type: 'Bearer',
+        value: 'token',
+        expires_in: '3600'
+      }
+    ]
+  };
+}
+
+export const oauthMultipleResponse: DestinationConfiguration[] = [
+  destionWithAuthType('OAuth2SAMLBearerAssertion')
+];
+export const oauthSingleResponse: DestinationJson = desintaionSingleResponse(
+  oauthMultipleResponse
+);
 
 export const oauthUserTokenExchangeMultipleResponse: DestinationConfiguration[] =
-  [
-    {
-      Name: 'FINAL-DESTINATION',
-      Type: 'HTTP',
-      URL: 'https://my.system.com/',
-      Authentication: 'OAuth2UserTokenExchange' as AuthenticationType,
-      ProxyType: 'Internet',
-      audience: 'https://my.system.com',
-      clientKey: 'password',
-      scope: 'SOME_SCOPE',
-      tokenServiceUser: 'TOKEN_USER',
-      tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
-      userIdSource: 'email',
-      tokenServicePassword: 'password'
-    }
-  ];
+  [destionWithAuthType('OAuth2UserTokenExchange')];
+export const oauthUserTokenExchangeSingleResponse: DestinationJson =
+  desintaionSingleResponse(oauthUserTokenExchangeMultipleResponse);
+
+export const oauthPasswordMultipleResponse: DestinationConfiguration[] = [
+  destionWithAuthType('OAuth2Password')
+];
+export const oauthPasswordSingleResponse = desintaionSingleResponse(
+  oauthPasswordMultipleResponse
+);
 
 export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] =
-  [
-    {
-      Name: 'FINAL-DESTINATION',
-      Type: 'HTTP',
-      URL: 'https://my.system.com/',
-      Authentication: 'OAuth2ClientCredentials' as AuthenticationType,
-      ProxyType: 'Internet',
-      audience: 'https://my.system.com',
-      clientKey: 'password',
-      scope: 'SOME_SCOPE',
-      tokenServiceUser: 'TOKEN_USER',
-      tokenServiceURL: 'https://my.system.com/sap/bc/sec/oauth2/token',
-      userIdSource: 'email',
-      tokenServicePassword: 'password'
-    }
-  ];
-
-export const oauthUserTokenExchangeSingleResponse: DestinationJson = {
-  owner: {
-    SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
-    InstanceId: null
-  },
-  destinationConfiguration: oauthUserTokenExchangeMultipleResponse[0],
-  authTokens: [
-    {
-      type: 'Bearer',
-      value: 'token',
-      expires_in: '3600'
-    }
-  ]
-};
-
-export const oauthClientCredentialsSingleResponse: DestinationJson = {
-  owner: {
-    SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
-    InstanceId: null
-  },
-  destinationConfiguration: oauthClientCredentialsMultipleResponse[0],
-  authTokens: [
-    {
-      type: 'Bearer',
-      value: 'token',
-      expires_in: '3600'
-    }
-  ]
-};
+  [destionWithAuthType('OAuth2ClientCredentials')];
+export const oauthClientCredentialsSingleResponse: DestinationJson =
+  desintaionSingleResponse(oauthClientCredentialsMultipleResponse);
 
 export const onPremiseMultipleResponse: DestinationConfiguration[] = [
   {

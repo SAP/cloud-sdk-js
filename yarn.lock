@@ -1711,9 +1711,9 @@
     got "10.7.0"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.4.0":
-  version "5.4.0"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.4.0.tgz#cf2596c3ee564e523ee72934b478eea33629b18b"
-  integrity sha512-TWW33G+z9nWUCnkk7qOouTnbhZiEl1RX8CxrnkMXohQApowaay7sW11ivShJUUoSaH8laXDywp2q9hKPst7iUw==
+  version "5.4.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.4.1.tgz#92cb0542514346055a21ba97935fe44f659ca4c8"
+  integrity sha512-/Sr+OjGKehK38EgUwU5Eaaf62tJegNyRWRfB/aiehlu9vDusb1Z0QlcaB4Ft/nS70Ujz17fE2AC0ZhmoNe5yOQ==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"

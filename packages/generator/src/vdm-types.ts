@@ -130,6 +130,7 @@ export interface VdmFunctionImportReturnType {
    */
   isMulti?: boolean;
   isCollection: boolean;
+  isNullable: boolean;
   returnTypeCategory: VdmReturnTypeCategory;
   unsupportedReason?: VdmUnsupportedReason;
 }

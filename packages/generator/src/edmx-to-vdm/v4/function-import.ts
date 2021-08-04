@@ -103,7 +103,7 @@ export function generateFunctionImportsV4(
           ),
           httpMethod,
           returnType: parseFunctionImportReturnTypes(
-            edmxFunction.ReturnType?.Type,
+            edmxFunction.ReturnType,
             entities,
             complexTypes,
             extractResponse,

@@ -102,7 +102,7 @@ export function generateActionImportsV4(
           ),
           httpMethod,
           returnType: parseActionImportReturnTypes(
-            edmxAction.ReturnType?.Type,
+            edmxAction.ReturnType,
             entities,
             complexTypes,
             extractResponse,

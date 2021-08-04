@@ -34,6 +34,35 @@ export declare function testFunctionImportEdmReturnTypeCollection(
   string[]
 >;
 /**
+ * Type of the parameters to be passed to [[testFunctionImportNullableTest]].
+ */
+export interface TestFunctionImportNullableTestParameters {
+  /**
+   * Nullable Per Default.
+   */
+  nullablePerDefault?: string | null;
+  /**
+   * Nullable Explicit.
+   */
+  nullableExplicit?: string | null;
+  /**
+   * Non Nullable.
+   */
+  nonNullable: string;
+}
+/**
+ * Test Function Import Nullable Test.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export declare function testFunctionImportNullableTest(
+  parameters: TestFunctionImportNullableTestParameters
+): FunctionImportRequestBuilderV4<
+  TestFunctionImportNullableTestParameters,
+  string[] | null
+>;
+/**
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnType]].
  */
 export interface TestFunctionImportEntityReturnTypeParameters {}
@@ -150,11 +179,11 @@ export interface TestFunctionImportMultipleParamsParameters {
   /**
    * Nullable Boolean Param.
    */
-  nullableBooleanParam?: boolean;
+  nullableBooleanParam?: boolean | null;
   /**
    * Nullable Geography Point Param.
    */
-  nullableGeographyPointParam?: any;
+  nullableGeographyPointParam?: any | null;
 }
 /**
  * Test Function Import Multiple Params.
@@ -166,7 +195,7 @@ export declare function testFunctionImportMultipleParams(
   parameters: TestFunctionImportMultipleParamsParameters
 ): FunctionImportRequestBuilderV4<
   TestFunctionImportMultipleParamsParameters,
-  boolean
+  boolean | null
 >;
 /**
  * Type of the parameters to be passed to [[testFunctionImportWithDifferentName]].
@@ -187,6 +216,7 @@ export declare function testFunctionImportWithDifferentName(
 export declare const functionImports: {
   testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;
   testFunctionImportEdmReturnTypeCollection: typeof testFunctionImportEdmReturnTypeCollection;
+  testFunctionImportNullableTest: typeof testFunctionImportNullableTest;
   testFunctionImportEntityReturnType: typeof testFunctionImportEntityReturnType;
   testFunctionImportEntityReturnTypeCollection: typeof testFunctionImportEntityReturnTypeCollection;
   testFunctionImportSharedEntityReturnType: typeof testFunctionImportSharedEntityReturnType;

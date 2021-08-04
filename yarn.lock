@@ -1659,20 +1659,20 @@
   dependencies:
     debug "^4.1.1"
 
-"@sap/cds-compiler@^2.2.0":
-  version "2.4.4"
-  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.4.4.tgz#558b9da056fa85edfe0082837a09995f68cb8b8f"
-  integrity sha512-KkVy9Mb1Gq0Mg2JQ2nLWMdvH1c7eKAHxnigFIBOW9VSyMPrWPRiwFstk0z+1s5AP86/F0bf35W+OyOi0EvtGqA==
+"@sap/cds-compiler@^2.4.4":
+  version "2.5.0"
+  resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.5.0.tgz#a25ff3192dc265aaf38181e83277537530b98415"
+  integrity sha512-3mNCxOoGG4zrtHYaI/k6n6HpDr7yD4g/U8Tr2jZqdxf8DchReij/VLBvG0NFQAhy7TMN5KhpImdwn3zr18hZPQ==
   dependencies:
     antlr4 "4.8.0"
 
 "@sap/cds-dk@^4.0.7":
-  version "4.3.3"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.3.3.tgz#328df62cc6a0a077a0416bd8769bbf294f36f54e"
-  integrity sha512-rNH+BjUcVDBtnr+2vutAclSf5LPeMhnZQBJoh1diV8OPP7Si9HBVVgDDq5K4S0CyFBctM/WZpxUxYFe7ZaidxA==
+  version "4.4.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.4.1.tgz#1c028239e0fe1a5e7b06265af57c760e157ca71b"
+  integrity sha512-zJy1a2dEcY36TOnO1oAu6anLB78A/F0fFsC3PlMuQzfj8WOYIGRDC/N4bNLEjsrhwjiPxDZ7WcTGvRTbh7D7Mg==
   dependencies:
-    "@sap/cds" "^5.3.0"
-    "@sap/cds-foss" "^2.3.1"
+    "@sap/cds" "^5.4.0"
+    "@sap/cds-foss" "^3"
     "@sap/cds-sidecar-client" "^1.1.16"
     "@sap/eslint-plugin-cds" "2.0.4"
     axios "^0.21.0"
@@ -1681,7 +1681,7 @@
     express "^4.17.1"
     htmlparser2 "5.0.1"
     livereload-js "^3.3.1"
-    mustache "4.0.1"
+    mustache "^4.0.1"
     node-watch "0.6.4"
     passport "^0.4.1"
     pluralize "^8.0.0"
@@ -1690,14 +1690,14 @@
   optionalDependencies:
     sqlite3 "^5.0.2"
 
-"@sap/cds-foss@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-2.3.1.tgz#f73846c0fb2ac6e13872017f4c2788b35e2f305b"
-  integrity sha512-Scfvem8T7YFBJE2Ruphrl/YVBUah8kYtaSyhiCh7N3+Vop4vx09WWysa1geOT1hholbZL3UCZ87w5R+0wKMEoA==
+"@sap/cds-foss@^3":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-3.0.0.tgz#e7e7e8c7032acecc8055361eab796c3e0241f208"
+  integrity sha512-z+wJoJlA8ZSqDBjeFGtWFJ0Do+m3+b4Ee/Zh/3Iq9ll7hgsQjg7sUosCjU6r936zil5qlu+w8YVj+biTR7/Rgg==
   dependencies:
-    big.js "6.0.3"
-    fs-extra "9.1.0"
-    generic-pool "3.7.2"
+    big.js "6.1.1"
+    fs-extra "10.0.0"
+    generic-pool "3.7.8"
     uuid "8.3.2"
     xmlbuilder "15.1.1"
     yaml "1.10.2"
@@ -1710,15 +1710,15 @@
     fs-extra "9.0.1"
     got "10.7.0"
 
-"@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.3.0":
-  version "5.3.2"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.3.2.tgz#caf913d9a9192411247667e92090990c34e50bfc"
-  integrity sha512-6QdzhECCsA9QIjudqbL6rpQlAktZRcnijcGUqFEhWyZURqJiRxrRd8k243GqsK9c24TFY75Fu4OKNSk0pc81vw==
+"@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.4.0":
+  version "5.4.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.4.1.tgz#92cb0542514346055a21ba97935fe44f659ca4c8"
+  integrity sha512-/Sr+OjGKehK38EgUwU5Eaaf62tJegNyRWRfB/aiehlu9vDusb1Z0QlcaB4Ft/nS70Ujz17fE2AC0ZhmoNe5yOQ==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
-    "@sap/cds-compiler" "^2.2.0"
-    "@sap/cds-foss" "^2.3.1"
+    "@sap/cds-compiler" "^2.4.4"
+    "@sap/cds-foss" "^3"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
   version "1.26.0"
@@ -1971,9 +1971,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.20.17"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.17.tgz#ffd44c2801fc527a6fe6e86bc9b900261df1c87e"
-  integrity sha512-so8EHl4S6MmatPS0f9sE1ND94/ocbcEshW5OpyYthRqeRpiYyW2uXYTo/84kmfdfeNrDycARkvuiXl6nO40NGg==
+  version "12.20.18"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.18.tgz#37a0aab0560d1186da54ee5d62ff6a78cacb8c75"
+  integrity sha512-YoTiIwdKxM3VLiY2sM05x4iGuTveYiCcDaUVmo1L5ndrXxPGW/NEoZu+pGcBirziomizcZsnsQoemikKcB2fRA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -2056,72 +2056,72 @@
     "@types/yargs-parser" "*"
 
 "@typescript-eslint/eslint-plugin@^4.3.0":
-  version "4.28.5"
-  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.28.5.tgz#8197f1473e7da8218c6a37ff308d695707835684"
-  integrity sha512-m31cPEnbuCqXtEZQJOXAHsHvtoDi9OVaeL5wZnO2KZTnkvELk+u6J6jHg+NzvWQxk+87Zjbc4lJS4NHmgImz6Q==
+  version "4.29.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.29.0.tgz#b866c9cd193bfaba5e89bade0015629ebeb27996"
+  integrity sha512-eiREtqWRZ8aVJcNru7cT/AMVnYd9a2UHsfZT8MR1dW3UUEg6jDv9EQ9Cq4CUPZesyQ58YUpoAADGv71jY8RwgA==
   dependencies:
-    "@typescript-eslint/experimental-utils" "4.28.5"
-    "@typescript-eslint/scope-manager" "4.28.5"
+    "@typescript-eslint/experimental-utils" "4.29.0"
+    "@typescript-eslint/scope-manager" "4.29.0"
     debug "^4.3.1"
     functional-red-black-tree "^1.0.1"
     regexpp "^3.1.0"
     semver "^7.3.5"
     tsutils "^3.21.0"
 
-"@typescript-eslint/experimental-utils@4.28.5", "@typescript-eslint/experimental-utils@^4.0.1":
-  version "4.28.5"
-  resolved "https://registry.npmjs.org/@typescript-eslint/experimental-utils/-/experimental-utils-4.28.5.tgz#66c28bef115b417cf9d80812a713e0e46bb42a64"
-  integrity sha512-bGPLCOJAa+j49hsynTaAtQIWg6uZd8VLiPcyDe4QPULsvQwLHGLSGKKcBN8/lBxIX14F74UEMK2zNDI8r0okwA==
+"@typescript-eslint/experimental-utils@4.29.0", "@typescript-eslint/experimental-utils@^4.0.1":
+  version "4.29.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/experimental-utils/-/experimental-utils-4.29.0.tgz#19b1417602d0e1ef325b3312ee95f61220542df5"
+  integrity sha512-FpNVKykfeaIxlArLUP/yQfv/5/3rhl1ov6RWgud4OgbqWLkEq7lqgQU9iiavZRzpzCRQV4XddyFz3wFXdkiX9w==
   dependencies:
     "@types/json-schema" "^7.0.7"
-    "@typescript-eslint/scope-manager" "4.28.5"
-    "@typescript-eslint/types" "4.28.5"
-    "@typescript-eslint/typescript-estree" "4.28.5"
+    "@typescript-eslint/scope-manager" "4.29.0"
+    "@typescript-eslint/types" "4.29.0"
+    "@typescript-eslint/typescript-estree" "4.29.0"
     eslint-scope "^5.1.1"
     eslint-utils "^3.0.0"
 
 "@typescript-eslint/parser@^4.3.1-alpha.1":
-  version "4.28.5"
-  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-4.28.5.tgz#9c971668f86d1b5c552266c47788a87488a47d1c"
-  integrity sha512-NPCOGhTnkXGMqTznqgVbA5LqVsnw+i3+XA1UKLnAb+MG1Y1rP4ZSK9GX0kJBmAZTMIktf+dTwXToT6kFwyimbw==
+  version "4.29.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-4.29.0.tgz#e5367ca3c63636bb5d8e0748fcbab7a4f4a04289"
+  integrity sha512-+92YRNHFdXgq+GhWQPT2bmjX09X7EH36JfgN2/4wmhtwV/HPxozpCNst8jrWcngLtEVd/4zAwA6BKojAlf+YqA==
   dependencies:
-    "@typescript-eslint/scope-manager" "4.28.5"
-    "@typescript-eslint/types" "4.28.5"
-    "@typescript-eslint/typescript-estree" "4.28.5"
+    "@typescript-eslint/scope-manager" "4.29.0"
+    "@typescript-eslint/types" "4.29.0"
+    "@typescript-eslint/typescript-estree" "4.29.0"
     debug "^4.3.1"
 
-"@typescript-eslint/scope-manager@4.28.5":
-  version "4.28.5"
-  resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-4.28.5.tgz#3a1b70c50c1535ac33322786ea99ebe403d3b923"
-  integrity sha512-PHLq6n9nTMrLYcVcIZ7v0VY1X7dK309NM8ya9oL/yG8syFINIMHxyr2GzGoBYUdv3NUfCOqtuqps0ZmcgnZTfQ==
+"@typescript-eslint/scope-manager@4.29.0":
+  version "4.29.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-4.29.0.tgz#cf5474f87321bedf416ef65839b693bddd838599"
+  integrity sha512-HPq7XAaDMM3DpmuijxLV9Io8/6pQnliiXMQUcAdjpJJSR+fdmbD/zHCd7hMkjJn04UQtCQBtshgxClzg6NIS2w==
   dependencies:
-    "@typescript-eslint/types" "4.28.5"
-    "@typescript-eslint/visitor-keys" "4.28.5"
+    "@typescript-eslint/types" "4.29.0"
+    "@typescript-eslint/visitor-keys" "4.29.0"
 
-"@typescript-eslint/types@4.28.5":
-  version "4.28.5"
-  resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-4.28.5.tgz#d33edf8e429f0c0930a7c3d44e9b010354c422e9"
-  integrity sha512-MruOu4ZaDOLOhw4f/6iudyks/obuvvZUAHBDSW80Trnc5+ovmViLT2ZMDXhUV66ozcl6z0LJfKs1Usldgi/WCA==
+"@typescript-eslint/types@4.29.0":
+  version "4.29.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/types/-/types-4.29.0.tgz#c8f1a1e4441ea4aca9b3109241adbc145f7f8a4e"
+  integrity sha512-2YJM6XfWfi8pgU2HRhTp7WgRw78TCRO3dOmSpAvIQ8MOv4B46JD2chnhpNT7Jq8j0APlIbzO1Bach734xxUl4A==
 
-"@typescript-eslint/typescript-estree@4.28.5", "@typescript-eslint/typescript-estree@^4.8.2":
-  version "4.28.5"
-  resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-4.28.5.tgz#4906d343de693cf3d8dcc301383ed638e0441cd1"
-  integrity sha512-FzJUKsBX8poCCdve7iV7ShirP8V+ys2t1fvamVeD1rWpiAnIm550a+BX/fmTHrjEpQJ7ZAn+Z7ZZwJjytk9rZw==
+"@typescript-eslint/typescript-estree@4.29.0", "@typescript-eslint/typescript-estree@^4.8.2":
+  version "4.29.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-4.29.0.tgz#af7ab547757b86c91bfdbc54ff86845410856256"
+  integrity sha512-8ZpNHDIOyqzzgZrQW9+xQ4k5hM62Xy2R4RPO3DQxMc5Rq5QkCdSpk/drka+DL9w6sXNzV5nrdlBmf8+x495QXQ==
   dependencies:
-    "@typescript-eslint/types" "4.28.5"
-    "@typescript-eslint/visitor-keys" "4.28.5"
+    "@typescript-eslint/types" "4.29.0"
+    "@typescript-eslint/visitor-keys" "4.29.0"
     debug "^4.3.1"
     globby "^11.0.3"
     is-glob "^4.0.1"
     semver "^7.3.5"
     tsutils "^3.21.0"
 
-"@typescript-eslint/visitor-keys@4.28.5":
-  version "4.28.5"
-  resolved "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-4.28.5.tgz#ffee2c602762ed6893405ee7c1144d9cc0a29675"
-  integrity sha512-dva/7Rr+EkxNWdJWau26xU/0slnFlkh88v3TsyTgRS/IIYFi5iIfpCFM4ikw0vQTFUR9FYSSyqgK4w64gsgxhg==
+"@typescript-eslint/visitor-keys@4.29.0":
+  version "4.29.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-4.29.0.tgz#1ff60f240def4d85ea68d4fd2e4e9759b7850c04"
+  integrity sha512-LoaofO1C/jAJYs0uEpYMXfHboGXzOJeV118X4OsZu9f7rG7Pr9B3+4HTU8+err81rADa4xfQmAxnRnPAI2jp+Q==
   dependencies:
-    "@typescript-eslint/types" "4.28.5"
+    "@typescript-eslint/types" "4.29.0"
     eslint-visitor-keys "^2.0.0"
 
 "@vue/compiler-core@3.0.5":
@@ -2704,10 +2704,10 @@ before-after-hook@^2.1.0:
   resolved "https://registry.npmjs.org/before-after-hook/-/before-after-hook-2.1.1.tgz#99ae36992b5cfab4a83f6bee74ab27835f28f405"
   integrity sha512-5ekuQOvO04MDj7kYZJaMab2S8SPjGJbotVNyv7QYFCOAwrGZs/YnoDNlh1U+m5hl7H2D/+n0taaAV/tfyd3KMA==
 
-big.js@6.0.3:
-  version "6.0.3"
-  resolved "https://registry.npmjs.org/big.js/-/big.js-6.0.3.tgz#8b4d99ac7023668e0e465d3f78c23b8ac29ad381"
-  integrity sha512-n6yn1FyVL1EW2DBAr4jlU/kObhRzmr+NNRESl65VIOT8WBJj/Kezpx2zFdhJUqYI6qrtTW7moCStYL5VxeVdPA==
+big.js@6.1.1:
+  version "6.1.1"
+  resolved "https://registry.npmjs.org/big.js/-/big.js-6.1.1.tgz#63b35b19dc9775c94991ee5db7694880655d5537"
+  integrity sha512-1vObw81a8ylZO5ePrtMay0n018TcftpTA5HFKDaSuiUDBo8biRBtjIobw60OpwuvrGk+FsxKamqN4cnmj/eXdg==
 
 big.js@^5.2.2:
   version "5.2.2"
@@ -3027,9 +3027,9 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.3.0, chalk@^2.4.1, chalk@^2.4.2:
     supports-color "^5.3.0"
 
 chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/chalk/-/chalk-4.1.1.tgz#c80b3fab28bf6371e6863325eee67e618b77e6ad"
-  integrity sha512-diHzdDKxcU+bAsUboHLPEDQiw0qEe0qd7SYUn3HgcFlWgbDcfLGswOHYeGrHKzG9z6UYf01d9VFMfZxPM1xZSg==
+  version "4.1.2"
+  resolved "https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
+  integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
@@ -4107,9 +4107,9 @@ dts-critic@latest:
     yargs "^15.3.1"
 
 dtslint@^4.0.0:
-  version "4.1.2"
-  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.1.2.tgz#a15f17dc16bb53e1d5b579c5e56606d086d068c8"
-  integrity sha512-Y1wx10D3kKBxoJGhJKx8LEQL6ZsESV1XqBjpojAzVTA2PNKh0tz1TW8ucXufAFqoNU2bw36Wr38uF6loMRITlA==
+  version "4.1.3"
+  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.1.3.tgz#2e775ac0f45a6140cd5fd3b9b72748bcc0928a2c"
+  integrity sha512-UHW14DNpWnE5GkmORiDP0f4pc3AvgV7N0grB0skamXyExGOsbsHtNIe+8xeuAkPCrsf10O+Ph3W6+UgXvE4fiA==
   dependencies:
     "@definitelytyped/header-parser" latest
     "@definitelytyped/typescript-versions" latest
@@ -4475,9 +4475,9 @@ eslint-visitor-keys@^2.0.0:
   integrity sha512-QudtT6av5WXels9WjIM7qz1XD1cWGvX4gGXvp/zBn9nXG02D0utdU3Em2m/QjTnrsk6bBjmCygl3rmj118msQQ==
 
 eslint@^7.0.0, eslint@^7.5.0:
-  version "7.31.0"
-  resolved "https://registry.npmjs.org/eslint/-/eslint-7.31.0.tgz#f972b539424bf2604907a970860732c5d99d3aca"
-  integrity sha512-vafgJpSh2ia8tnTkNUkwxGmnumgckLh5aAbLa1xRmIn9+owi8qBNGKL+B881kNKNTy7FFqTEkpNkUvmw0n6PkA==
+  version "7.32.0"
+  resolved "https://registry.npmjs.org/eslint/-/eslint-7.32.0.tgz#c6d328a14be3fb08c8d1d21e12c02fdb7a2a812d"
+  integrity sha512-VHZ8gX+EDfz+97jGcgyGCyRia/dPOd6Xh9yPv8Bl1+SoaIwD+a/vlrOmGRUyOYu7MwUhc7CxqeaDZU13S4+EpA==
   dependencies:
     "@babel/code-frame" "7.12.11"
     "@eslint/eslintrc" "^0.4.3"
@@ -5045,6 +5045,15 @@ fs-constants@^1.0.0:
   resolved "https://registry.npmjs.org/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
   integrity sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
 
+fs-extra@10.0.0, fs-extra@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-10.0.0.tgz#9ff61b655dde53fb34a82df84bb214ce802e17c1"
+  integrity sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs-extra@9.0.1:
   version "9.0.1"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.0.1.tgz#910da0062437ba4c39fedd863f1675ccfefcb9fc"
@@ -5054,25 +5063,6 @@ fs-extra@9.0.1:
     graceful-fs "^4.2.0"
     jsonfile "^6.0.1"
     universalify "^1.0.0"
-
-fs-extra@9.1.0, fs-extra@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
-  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
-  dependencies:
-    at-least-node "^1.0.0"
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^2.0.0"
-
-fs-extra@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-10.0.0.tgz#9ff61b655dde53fb34a82df84bb214ce802e17c1"
-  integrity sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==
-  dependencies:
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^2.0.0"
 
 fs-extra@^6.0.1:
   version "6.0.1"
@@ -5091,6 +5081,16 @@ fs-extra@^8.1, fs-extra@^8.1.0:
     graceful-fs "^4.2.0"
     jsonfile "^4.0.0"
     universalify "^0.1.0"
+
+fs-extra@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
+  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
+  dependencies:
+    at-least-node "^1.0.0"
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
 
 fs-minipass@^1.2.5:
   version "1.2.7"
@@ -5165,10 +5165,10 @@ generic-names@^2.0.1:
   dependencies:
     loader-utils "^1.1.0"
 
-generic-pool@3.7.2:
-  version "3.7.2"
-  resolved "https://registry.npmjs.org/generic-pool/-/generic-pool-3.7.2.tgz#78c2e5f054fc8bb611568c435051ecea2418e965"
-  integrity sha512-Ec7D4KySmEtIdJBNRVS8jus84ejNAvYG7KaLsXMhIs4AVQ2RuXSjMtmpskTKDT0y6TFSPjo4H+cCmLKUb+vDzg==
+generic-pool@3.7.8:
+  version "3.7.8"
+  resolved "https://registry.npmjs.org/generic-pool/-/generic-pool-3.7.8.tgz#202087bf5ec5e0b3bae39842a0ef98bcd4c1e450"
+  integrity sha512-Pz93INFSbhjEROVbM91rurD05G+Kx8833rG+lVU57mznEBpzkc1f5/g+d511a1Yf8dbAEsm7DDA3QLytMFbiGA==
 
 gensync@^1.0.0-beta.1:
   version "1.0.0-beta.2"
@@ -7807,10 +7807,10 @@ multimatch@^5.0.0:
     arrify "^2.0.1"
     minimatch "^3.0.4"
 
-mustache@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/mustache/-/mustache-4.0.1.tgz#d99beb031701ad433338e7ea65e0489416c854a2"
-  integrity sha512-yL5VE97+OXn4+Er3THSmTdCFCtx5hHWzrolvH+JObZnUYwuaG7XV+Ch4fR2cIrcYI0tFHxS7iyFYl14bW8y2sA==
+mustache@^4.0.1:
+  version "4.2.0"
+  resolved "https://registry.npmjs.org/mustache/-/mustache-4.2.0.tgz#e5892324d60a12ec9c2a73359edca52972bf6f64"
+  integrity sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==
 
 mute-stream@0.0.8, mute-stream@~0.0.4:
   version "0.0.8"
@@ -11218,9 +11218,9 @@ typedoc-default-themes@^0.12.10:
   integrity sha512-fIS001cAYHkyQPidWXmHuhs8usjP5XVJjWB8oZGqkTowZaz3v7g3KDZeeqE82FBrmkAnIBOY3jgy7lnPnqATbA==
 
 typedoc@^0.21.0:
-  version "0.21.4"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.21.4.tgz#fced3cffdc30180db60a5dbfec9dbbb273cb5b31"
-  integrity sha512-slZQhvD9U0d9KacktYAyuNMMOXJRFNHy+Gd8xY2Qrqq3eTTTv3frv3N4au/cFnab9t3T5WA0Orb6QUjMc+1bDA==
+  version "0.21.5"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.21.5.tgz#45643618ede5c3d75e2040b964d05fcffed7ca58"
+  integrity sha512-uRDRmYheE5Iju9Zz0X50pTASTpBorIHFt02F5Y8Dt4eBt55h3mwk1CBSY2+EfwBxY16N4Xm7f8KXhnfFZ0AmBw==
   dependencies:
     glob "^7.1.7"
     handlebars "^4.7.7"

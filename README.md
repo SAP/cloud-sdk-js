@@ -1,6 +1,7 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 
 ![build](https://github.com/SAP/cloud-sdk-js/workflows/build/badge.svg)
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/cloud-sdk-js)](https://api.reuse.software/info/github.com/SAP/cloud-sdk-js)
 [![Fosstars security rating](https://github.com/SAP/cloud-sdk-js/blob/fosstars-report/fosstars_badge.svg)](https://github.com/SAP/cloud-sdk-js/blob/fosstars-report/fosstars_report.md)
 
 # SAP Cloud SDK

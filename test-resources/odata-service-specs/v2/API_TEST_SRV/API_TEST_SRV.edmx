@@ -311,25 +311,25 @@
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportUnsupportedEdmTypes" ReturnType="Edm.SomethingTheSDKDoesNotSupport" m:HttpMethod="GET">
-            <Parameter Name="SimpleParam" Type="Edm.SomethingTheSDKDoesNotSupport" Mode="In"/>
+            <Parameter Name="SimpleParam" Type="Edm.SomethingTheSDKDoesNotSupport" Mode="In" Nullable="false"/>
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportComplexReturnTypeCollection" ReturnType="Collection(API_TEST_SRV.A_TestComplexType)" m:HttpMethod="GET">
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportGET" ReturnType="Edm.Boolean" m:HttpMethod="GET">
-          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In"/>
+          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In" Nullable="false"/>
           <!-- <Parameter Name="ComplexTypeParam" Type="API_TEST_SRV.A_TestComplexType" Mode="In"/>
-          <Parameter Name="EntityParam" Type="API_TEST_SRV.A_TestEntityType" Mode="In"/> -->
+          <Parameter Name="EntityParam" Type="API_TEST_SRV.A_TestEntityType" Mode="In" Nullable="false"/> -->
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportPOST" ReturnType="Edm.Boolean" m:HttpMethod="POST">
-          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In"/>
+          <Parameter Name="SimpleParam" Type="Edm.String" Mode="In" Nullable="false"/>
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportMultipleParams" ReturnType="Edm.Boolean" m:HttpMethod="GET">
-          <Parameter Name="StringParam" Type="Edm.String" Mode="In"/>
-          <Parameter Name="BooleanParam" Type="Edm.Boolean" Mode="In"/>
+          <Parameter Name="StringParam" Type="Edm.String" Mode="In" Nullable="false"/>
+          <Parameter Name="BooleanParam" Type="Edm.Boolean" Mode="In" Nullable="false"/>
         </FunctionImport>
 
         <!-- clash_complex_type_factory_fn_import

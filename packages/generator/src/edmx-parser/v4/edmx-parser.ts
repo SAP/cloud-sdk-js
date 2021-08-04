@@ -69,7 +69,10 @@ export function parseActionImport(root: any): EdmxActionImport[] {
   return getPropertyFromEntityContainer(root, 'ActionImport');
 }
 
-function parseActionsFunctions(root, actionFunctionKey: 'Action' | 'Function') {
+function parseActionsFunctions(
+  root,
+  actionFunctionKey: 'Action' | 'Function'
+): EdmxFunction[] | EdmxAction[] {
   return getMergedPropertyWithNamespace(root, actionFunctionKey).map(
     actionOrFunction => ({
       ...actionOrFunction,

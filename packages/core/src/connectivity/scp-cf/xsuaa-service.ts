@@ -6,7 +6,7 @@ import {
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import CircuitBreaker from 'opossum';
-import { HttpRequestConfig } from '../../http-client';
+import {HttpRequestConfig, urlAndAgent} from '../../http-client';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
@@ -18,7 +18,6 @@ import {
   TokenKey,
   UserTokenResponse
 } from './xsuaa-service-types';
-import { urlAndAgent } from './proxy-util';
 
 const logger = createLogger({
   package: 'core',
@@ -278,6 +277,7 @@ function post(
 
   const config: AxiosRequestConfig = {
     ...urlAndAgent(targetUri),
+    // baseURL:targetUri,
     method: 'post',
     data: body,
     ...headers(authHeader)

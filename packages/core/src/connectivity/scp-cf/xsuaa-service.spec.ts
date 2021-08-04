@@ -15,6 +15,10 @@ import {
 import { TokenKey } from './xsuaa-service-types';
 import { Destination } from './destination';
 import { Protocol } from './protocol';
+import axios, {AxiosRequestConfig} from "axios";
+import {HttpsProxyAgent} from "https-proxy-agent";
+import * as Url from "url";
+import {URL} from "url";
 
 const expectedResponse200 = {
   access_token: 'sometoken',
@@ -39,19 +43,22 @@ describe('xsuaa', () => {
         .post('/oauth/token', 'grant_type=client_credentials')
         .reply(200, expectedResponse200);
       process.env.https_proxy = 'http://some.test.proxy.com:1234';
-      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
+      const spy = jest.spyOn(axios, 'request');
       await clientCredentialsGrant(providerXsuaaClientCredentials, creds);
-      const expectedDestination: Destination = {
-        url: 'https://provider.example.com/oauth/token',
-        proxyType: 'Internet',
-        proxyConfiguration: {
-          host: 'some.test.proxy.com',
-          protocol: Protocol.HTTP,
-          port: 1234
-        }
-      };
+      const expectedConfig: AxiosRequestConfig = {
+        baseURL: 'https://provider.example.com/oauth/token',
+        method: 'post',
+        data:'grant_type=client_credentials',
+        proxy:false,
+        headers: {
+          Accept: "application/json",
+          Authorization: "Basic aG9yc3RpOmJvcnN0aQ==",
+          'Content-Type'    :      "application/x-www-form-urlencoded"
+        },
+        httpsAgent:new HttpsProxyAgent({port:1234,host:'some.test.proxy.com',protocol:'http',rejectUnauthorized: true})
+    }
 
-      expect(spy).toHaveBeenCalledWith(expectedDestination, expect.anything());
+      expect(spy).toHaveBeenCalledWith(expectedConfig);
       delete process.env.https_proxy;
     });
 

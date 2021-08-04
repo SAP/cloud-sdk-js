@@ -14,7 +14,7 @@ import {
   useOrFetchDestination
 } from '../connectivity/scp-cf';
 import { buildCsrfHeaders } from '../http-client';
-import { getAgentConfig } from './http-agent';
+import { getAgentConfig } from '../http-agent/http-agent';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,

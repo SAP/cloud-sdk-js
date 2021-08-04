@@ -1667,14 +1667,14 @@
     antlr4 "4.8.0"
 
 "@sap/cds-dk@^4.0.7":
-  version "4.4.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.4.0.tgz#ea814950097556dc7f3eca733e44f01208b852c1"
-  integrity sha512-EuagcI/XWZvb5Z96MgUzCL4zpDbYhchhdmbwiBOyDR1mJ70hlfc7xpw0STx0qxATDSujODiGLLH6SnuIFT4W8A==
+  version "4.4.1"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.4.1.tgz#1c028239e0fe1a5e7b06265af57c760e157ca71b"
+  integrity sha512-zJy1a2dEcY36TOnO1oAu6anLB78A/F0fFsC3PlMuQzfj8WOYIGRDC/N4bNLEjsrhwjiPxDZ7WcTGvRTbh7D7Mg==
   dependencies:
     "@sap/cds" "^5.4.0"
     "@sap/cds-foss" "^3"
     "@sap/cds-sidecar-client" "^1.1.16"
-    "@sap/eslint-plugin-cds" "^2.0.4"
+    "@sap/eslint-plugin-cds" "2.0.4"
     axios "^0.21.0"
     connect-livereload "^0.6.1"
     eslint "^7.0.0"
@@ -1737,7 +1737,7 @@
     request "=2.88.0"
     xml-js "=1.6.8"
 
-"@sap/eslint-plugin-cds@^2.0.4":
+"@sap/eslint-plugin-cds@2.0.4":
   version "2.0.4"
   resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-2.0.4.tgz#f7adfad2e290e655a122b48d244d8d55cf3663d3"
   integrity sha512-lKH5rXCogV4DDf9N+J5a6FUqB/YQRIzpRQcQCg7BvA+nTHXiOt2aBf4SYVunkic6d88j5uapHqIl0D6x0rHFsA==

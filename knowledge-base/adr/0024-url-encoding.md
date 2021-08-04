@@ -4,7 +4,14 @@
 
 Accepted.
 
-## Context
+## Requirement
+
+The SDK will only encode the parts below:
+
+- The values of path parameters (the get by key structure of OData is called path parameter in OpenAPI)
+- The values of query parameters
+
+## Background
 
 OData and OpenAPI requests built by the SDK needs to be encoded.
 We should decide, which parts of the URL need to be encoded and which not.
@@ -34,6 +41,8 @@ One can use an IDN converter so `www.häuser.de` can be converted to `www.xn--hu
 As the host is usually configured in the destination, the SDK will not make any adjustment.
 
 ### Path
+
+Let's discuss OData path and OpenAPI path separately, as OData case is a bit complicated.
 
 #### OData
 
@@ -86,6 +95,8 @@ Similar to OData, only user input is considered when encoding, which is the "pat
 
 ### Query
 
+Similar to path section, we also discuss OData and OpenAPI separately.
+
 #### OData
 
 OData allows you to use the following query options:
@@ -107,17 +118,6 @@ Normal `$expand` has the same structure as `$select`, while for deep `$expand`, 
 #### OpenAPI
 
 The value of the query parameters should be encoded. :thumbsup:
-
-### Which parts are encoded by the SDK?
-
-To wrap up, the SDK will only encode the parts below:
-
-- The values of path parameters (the get by key structure of OData is called path parameter in OpenAPI)
-- The values of query parameters
-
-## Decision
-
-Option B is the winner, as Option A does not fit our requirement.
 
 ## Alternatives
 
@@ -146,8 +146,6 @@ Both of the 2 proposals will lead to double encoding.
 
 Not accepted, as it does not work for edge cases.
 
-####
-
 ### Option B: Use `encodeURIComponent` for the selected parts
 
 #### Pros and Cons
@@ -166,6 +164,10 @@ Not accepted, as it does not work for edge cases.
 #### Decision
 
 Chosen, as this is a valid solution.
+
+## Decision
+
+Option B is the winner, as Option A does not fit our requirement.
 
 ## Consequences
 

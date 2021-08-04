@@ -87,116 +87,42 @@ function getNoProxyEnvValue(): string[] {
   return split;
 }
 
-function addProtocol(groups: any) {
-  return (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
-    if (!proxyConfiguration) {
-      return;
-    }
-
-    const copy = { ...proxyConfiguration };
-    if (!groups.protocol) {
-      copy.protocol = Protocol.HTTP;
-      logger.info(
-        'Protocol not specified in proxy environment value. Http used as fallback.'
-      );
-      return copy;
-    }
-
-    copy.protocol = Protocol.of(groups.protocol)!;
-    if (!copy.protocol) {
-      logger.warn(
-        `Unsupported protocol requested in environment variable: ${groups.protocol}. Supported values are http and https - no proxy used.`
-      );
-      return undefined;
-    }
-    if (copy.protocol === Protocol.HTTPS) {
-      logger.info(
-        `You are using https to connect to a proxy" ${proxyConfiguration} - this is unusual but possible.`
-      );
-    }
-
-    return copy;
-  };
+function getPort(url: URL): number {
+  if (url.port) {
+    return parseInt(url.port);
+  }
+  return url.protocol === 'https:' ? 443 : 80;
 }
 
-function addPort(groups: any) {
-  return (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
-    if (!proxyConfiguration) {
-      return;
-    }
-
-    const copy = { ...proxyConfiguration };
-    if (groups.port) {
-      if (groups.port.match(/[\D]/)) {
-        logger.warn(
-          'Given port in proxy env variable is not an integer - no proxy used.'
-        );
-        return undefined;
-      }
-      copy.port = parseInt(groups.port);
-      return copy;
-    }
-
-    const fallBackPort =
-      proxyConfiguration.protocol === Protocol.HTTPS ? 443 : 80;
-    copy.port = fallBackPort;
-    logger.info(
-      `Port not specified in proxy environment value. ${fallBackPort} used as fallback.`
-    );
-    return copy;
-  };
-}
-
-function addAuthHeaders(groups: any) {
-  return (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
-    if (!proxyConfiguration) {
-      return;
-    }
-    const copy = { ...proxyConfiguration };
-    if (!groups.username || !groups.password) {
-      logger.debug(
-        'No user and password given in proxy environment value. Nothing added to header.'
-      );
-      return copy;
-    }
-
-    if (
-      groups.username.match(/[^\w%.-]/) ||
-      groups.password.match(/[^\w%.-]/)
-    ) {
-      logger.warn(
-        'Username:Password in proxy environment variable contains special characters like [@/:]. Use percent-encoding to mask them - no Proxy used'
-      );
-      return undefined;
-    }
-
-    const userDecoded = decodeURIComponent(groups.username);
-    const pwdDecoded = decodeURIComponent(groups.password);
-    copy.headers = {
-      'Proxy-Authorization': basicHeader(userDecoded, pwdDecoded)
-    };
-    logger.info(
-      'Username and password added to authorization of the proxy configuration.'
-    );
-    return copy;
-  };
-}
-
-function addHost(groups: any) {
-  return (proxyConfiguration: Partial<ProxyConfiguration>) => {
-    if (groups.hostname) {
-      proxyConfiguration.host = groups.hostname;
-      return proxyConfiguration;
-    }
-
-    logger.warn('Could not extract host from proxy env. - no proxy used');
-    return;
-  };
-}
-
-function getProtocol(href: string): string | undefined {
-  const test = href.match(/^\w+:\/\//);
+function getOriginalProtocol(href: string): string | undefined {
+  const test = href.match(/^[\w.-]+:\/\//);
   return test ? test[0].slice(0, -2) : undefined;
+}
+
+function sanitizeUrl(href: string): string {
+  const protocol = getOriginalProtocol(href);
+
+  if (!protocol) {
+    logger.debug('No protocol specified, using "http:".');
+    return `http://${href}`;
+  }
+  return href;
+}
+
+function validateUrl(url: URL): void {
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    throw new Error(`Unsupported protocol "${url.protocol}".`);
+  }
+
+  if (url.protocol === 'https:') {
+    logger.info(
+      'Using protocol "https:" to connect to a proxy. This is unusual but possible.'
+    );
+  }
+
+  if (url.username && !url.password) {
+    throw new Error('Password missing.');
+  }
 }
 
 /**
@@ -209,52 +135,44 @@ function getProtocol(href: string): string | undefined {
 export function parseProxyEnv(
   proxyEnvValue: string
 ): ProxyConfiguration | undefined {
-  // const regex =
-  //   /(?<protocolWithDelimiter>(?<protocol>^\w+):\/\/)?(?<userPwdWithDelimiter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.-]+):?(?<port>.+)?)/;
-  // const parsed = regex.exec(proxyEnvValue);
-
-  const protocol = getProtocol(proxyEnvValue);
-
-  if (!protocol) {
-    logger.warn('No known protocol specified, using "http:".');
-    proxyEnvValue = `http://${proxyEnvValue}`;
-  } else if (protocol !== 'http:' && protocol !== 'https:') {
-    logger.warn(`Unsupported protocol "${protocol}" specified.`);
-    return;
-  }
+  const href = sanitizeUrl(proxyEnvValue);
 
   try {
-    const url = new URL(proxyEnvValue);
+    const url = new URL(href);
+    validateUrl(url);
 
-    if ((url.username && !url.password) || (url.password && !url.username)) {
-      logger.warn('Password or username missing');
-      return;
+    const proxyConfig: ProxyConfiguration = {
+      host: url.hostname,
+      protocol: Protocol.of(url.protocol)!,
+      port: getPort(url)
+    };
+
+    if (url.username && url.password) {
+      proxyConfig.headers = {
+        'Proxy-Authorization': basicHeader(
+          decodeURIComponent(url.username),
+          decodeURIComponent(url.password)
+        )
+      };
     }
 
-    // const { groups } = parsed;
-    logger.debug(
-      `Start to extract protocol, host and port from proxy env: '${proxyEnvValue}'.`
-    );
-
-    let proxyConfiguration = addHost(url)({});
-    proxyConfiguration = addProtocol(url)(proxyConfiguration);
-    proxyConfiguration = addPort(url)(proxyConfiguration);
-    proxyConfiguration = addAuthHeaders(url)(proxyConfiguration);
-
-    if (proxyConfiguration) {
-      logger.debug(`Used Proxy Configuration:
-     host:${proxyConfiguration!.host}
-     protocol:${proxyConfiguration!.protocol}
-     port:${proxyConfiguration!.port}
-     headers: ${
-       proxyConfiguration!.headers
-         ? 'Authorization header present - Not logged for security reasons.'
-         : 'No header present.'
-     }.`);
+    if (proxyConfig) {
+      const loggableConfig = {
+        ...proxyConfig,
+        headers: proxyConfig.headers
+          ? 'Authorization header present. Not logged for security reasons.'
+          : 'No authorization header present.'
+      };
+      logger.debug(
+        `Used Proxy Configuration: ${JSON.stringify(loggableConfig, null, 2)}.`
+      );
     }
-    return proxyConfiguration as ProxyConfiguration;
+
+    return proxyConfig;
   } catch (err) {
-    logger.warn(`Unable to extract proxy config from ${proxyEnvValue}.`);
+    logger.warn(
+      `Could not parse proxy configuration from environment variable. Reason: ${err.message}`
+    );
   }
 }
 
@@ -284,7 +202,7 @@ export function addProxyConfigurationInternet(destination: any): Destination {
  * All additional options are forwarded to tls.connect and net.connect see https://github.com/TooTallNate/node-https-proxy-agent#new-httpsproxyagentobject-options
  *
  * @param destination - Destination containing the proxy configurations
- * @param options - Addiotional options for the agent
+ * @param options - Additional options for the agent
  * @returns The http(s)-agent containing the proxy configuration
  */
 export function proxyAgent(

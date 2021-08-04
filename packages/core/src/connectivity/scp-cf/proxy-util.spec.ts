@@ -182,11 +182,16 @@ describe('proxy-util', () => {
 
 describe('parseProxyEnv', () => {
   it('parses URL with "https:" protocol and hostname', () => {
+    const logger = createLogger('proxy-util');
+    const logSpy = spyOn(logger, 'info');
     expect(parseProxyEnv('https://some.proxy')).toEqual({
       protocol: 'https',
       host: 'some.proxy',
       port: 443
     });
+    expect(logSpy).toHaveBeenCalledWith(
+      'Using protocol "https:" to connect to a proxy. This is unusual but possible.'
+    );
   });
 
   it('parses URL with "http:" protocol and hostname', () => {
@@ -198,11 +203,16 @@ describe('parseProxyEnv', () => {
   });
 
   it('parses URL with only hostname', () => {
+    const logger = createLogger('proxy-util');
+    const logSpy = spyOn(logger, 'debug');
     expect(parseProxyEnv('some.proxy')).toEqual({
       protocol: 'http',
       host: 'some.proxy',
       port: 80
     });
+    expect(logSpy).toHaveBeenCalledWith(
+      'No protocol specified, using "http:".'
+    );
   });
 
   it('parses URL with dashes in hostname', () => {
@@ -215,10 +225,10 @@ describe('parseProxyEnv', () => {
 
   it('returns undefined for unknown protocol and logs warning', () => {
     const logger = createLogger('proxy-util');
-    const warnSpy = spyOn(logger, 'warn');
+    const logSpy = spyOn(logger, 'warn');
     expect(parseProxyEnv('rtc://some.proxy:1234')).toBeUndefined();
-    expect(warnSpy).toHaveBeenCalledWith(
-      'Unsupported protocol "rtc:" specified.'
+    expect(logSpy).toHaveBeenCalledWith(
+      'Could not parse proxy configuration from environment variable. Reason: Unsupported protocol "rtc:".'
     );
   });
 
@@ -303,6 +313,15 @@ describe('parseProxyEnv', () => {
       port: 80,
       headers: { 'Proxy-Authorization': basicHeader('us:er', 'pass:word') }
     });
+  });
+
+  it('returns undefined if no password is given', () => {
+    const logger = createLogger('proxy-util');
+    const logSpy = spyOn(logger, 'warn');
+    expect(parseProxyEnv('user@some.proxy')).toBeUndefined();
+    expect(logSpy).toHaveBeenCalledWith(
+      'Could not parse proxy configuration from environment variable. Reason: Password missing.'
+    );
   });
 
   it('returns undefined for incorrect URL', () => {

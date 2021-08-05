@@ -252,7 +252,7 @@ class DestinationFromServiceRetriever {
     }
     if (credentials.length > 1) {
       logger.info(
-        'more than on destination serivce instance found - first one used.'
+        'Found more than one destination service instance. Using the first one.'
       );
     }
 

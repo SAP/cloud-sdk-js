@@ -8,7 +8,7 @@ import {
   ProxyConfiguration
 } from '../connectivity';
 import { getAgentConfig, getUrlProtocol } from './http-agent';
-import {proxyAgent} from "./proxy-util";
+import { proxyAgent } from './proxy-util';
 
 describe('createAgent', () => {
   const baseDestination: Destination = {

@@ -1,4 +1,5 @@
 import { AgentOptions } from 'https';
+import { URL } from 'url';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
@@ -16,7 +17,7 @@ const logger = createLogger({
 
 /**
  * Determines the proxy strategy. If noProxy is set the ProxyConfiguration in the destination is omitted.
- * For onPremProxy or internetProxy the connectivy service or enviroment variables are checked to fill the [[ProxyConfiguration]].
+ * For onPremProxy or internetProxy the connectivity service or environment variables are checked to fill the [[ProxyConfiguration]].
  * @param destination - from which the proxy strategy is derived.
  * @returns ProxyStrategy possible values are noProxy, internetProxy or onPremProxy.
  */
@@ -86,112 +87,47 @@ function getNoProxyEnvValue(): string[] {
   return split;
 }
 
-const addProtocol =
-  (groups: any) =>
-  (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
-    if (!proxyConfiguration) {
-      return;
-    }
+function getPort(url: URL): number {
+  if (url.port) {
+    return parseInt(url.port);
+  }
+  return url.protocol === 'https:' ? 443 : 80;
+}
 
-    const copy = { ...proxyConfiguration };
-    if (!groups.protocol) {
-      copy.protocol = Protocol.HTTP;
-      logger.info(
-        'Protocol not specified in proxy environment value. Http used as fallback.'
-      );
-      return copy;
-    }
+function getOriginalProtocol(href: string): string | undefined {
+  const test = href.match(/^[\w.-]+:\/\//);
+  return test ? test[0].slice(0, -2) : undefined;
+}
 
-    copy.protocol = Protocol.of(groups.protocol)!;
-    if (!copy.protocol) {
-      logger.warn(
-        `Unsupported protocol requested in environment variable: ${groups.protocol}. Supported values are http and https - no proxy used.`
-      );
-      return undefined;
-    }
-    if (copy.protocol === Protocol.HTTPS) {
-      logger.info(
-        `You are using https to connect to a proxy" ${proxyConfiguration} - this is unusual but possible.`
-      );
-    }
+function sanitizeUrl(href: string): string {
+  const protocol = getOriginalProtocol(href);
 
-    return copy;
-  };
+  if (!protocol) {
+    logger.debug('No protocol specified, using "http:".');
+    return `http://${href}`;
+  }
+  return href;
+}
 
-const addPort =
-  (groups: any) =>
-  (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
-    if (!proxyConfiguration) {
-      return;
-    }
+function validateUrl(url: URL): void {
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    throw new Error(`Unsupported protocol "${url.protocol}".`);
+  }
 
-    const copy = { ...proxyConfiguration };
-    if (groups.port) {
-      if (groups.port.match(/[\D]/)) {
-        logger.warn(
-          'Given port in proxy env variable is not an integer - no proxy used.'
-        );
-        return undefined;
-      }
-      copy.port = parseInt(groups.port);
-      return copy;
-    }
-
-    const fallBackPort =
-      proxyConfiguration.protocol === Protocol.HTTPS ? 443 : 80;
-    copy.port = fallBackPort;
+  if (url.protocol === 'https:') {
     logger.info(
-      `Port not specified in proxy environment value. ${fallBackPort} used as fallback.`
+      'Using protocol "https:" to connect to a proxy. This is unusual but possible.'
     );
-    return copy;
-  };
+  }
 
-const addAuthHeaders =
-  (groups: any) =>
-  (proxyConfiguration: Partial<ProxyConfiguration> | undefined) => {
-    if (!proxyConfiguration) {
-      return;
-    }
-    const copy = { ...proxyConfiguration };
-    if (!groups.user || !groups.pwd) {
-      logger.debug(
-        'No user and password given in proxy environment value. Nothing added to header.'
-      );
-      return copy;
-    }
-
-    if (groups.user.match(/[^\w%]/) || groups.pwd.match(/[^\w%]/)) {
-      logger.warn(
-        'Username:Password in proxy environment variable contains special characters like [@/:]. Use percent-encoding to mask them - no Proxy used'
-      );
-      return undefined;
-    }
-
-    const userDecoded = decodeURIComponent(groups.user);
-    const pwdDecoded = decodeURIComponent(groups.pwd);
-    copy.headers = {
-      'Proxy-Authorization': basicHeader(userDecoded, pwdDecoded)
-    };
-    logger.info(
-      'Username and password added to authorization of the proxy configuration.'
-    );
-    return copy;
-  };
-
-const addHost =
-  (groups: any) => (proxyConfiguration: Partial<ProxyConfiguration>) => {
-    if (groups.host) {
-      proxyConfiguration.host = groups.host;
-      return proxyConfiguration;
-    }
-
-    logger.warn('Could not extract host from proxy env. - no proxy used');
-    return;
-  };
+  if (url.username && !url.password) {
+    throw new Error('Password missing.');
+  }
+}
 
 /**
  * Parses the environment variable for the web proxy and extracts the values considering defaults like http for the protocol and 80 or 443 for the port.
- * The general pattern to be parsed is protocol://user:password@host:port, where everything besides the host is optional.
+ * The general pattern to be parsed is `protocol://user:password@host:port`, where everything besides the host is optional.
  * Special characters in the user and password need to be percent encoded.
  * @param proxyEnvValue - Environment variable which is parsed
  * @returns Configuration with default values or undefined if the parsing failed.
@@ -199,35 +135,45 @@ const addHost =
 export function parseProxyEnv(
   proxyEnvValue: string
 ): ProxyConfiguration | undefined {
-  const regex =
-    /(?<protocolWithDelimiter>(?<protocol>^.+):\/\/)?(?<userPwdWithDelimeter>(?<user>.+):(?<pwd>.+)@)?(?<hostAndPort>(?<host>[\w.]+):?(?<port>.+)?)/;
-  const parsed = regex.exec(proxyEnvValue);
+  const href = sanitizeUrl(proxyEnvValue);
 
-  if (parsed?.groups) {
-    const { groups } = parsed;
-    logger.debug(
-      `Start to extract protocol, host and port from proxy env: ${proxyEnvValue}`
-    );
+  try {
+    const url = new URL(href);
+    validateUrl(url);
 
-    let proxyConfiguration = addHost(groups)({});
-    proxyConfiguration = addProtocol(groups)(proxyConfiguration);
-    proxyConfiguration = addPort(groups)(proxyConfiguration);
-    proxyConfiguration = addAuthHeaders(groups)(proxyConfiguration);
+    const proxyConfig: ProxyConfiguration = {
+      host: url.hostname,
+      protocol: Protocol.of(url.protocol)!,
+      port: getPort(url)
+    };
 
-    if (proxyConfiguration) {
-      logger.debug(`Used Proxy Configuration:
-     host:${proxyConfiguration!.host}
-     protocol:${proxyConfiguration!.protocol}
-     port:${proxyConfiguration!.port}
-     headers: ${
-       proxyConfiguration!.headers
-         ? 'Authorization header present - Not logged for security reasons.'
-         : 'No header present.'
-     }.`);
+    if (url.username && url.password) {
+      proxyConfig.headers = {
+        'Proxy-Authorization': basicHeader(
+          decodeURIComponent(url.username),
+          decodeURIComponent(url.password)
+        )
+      };
     }
-    return proxyConfiguration as ProxyConfiguration;
+
+    if (proxyConfig) {
+      const loggableConfig = {
+        ...proxyConfig,
+        headers: proxyConfig.headers
+          ? 'Authorization header present. Not logged for security reasons.'
+          : 'No authorization header present.'
+      };
+      logger.debug(
+        `Used Proxy Configuration: ${JSON.stringify(loggableConfig, null, 2)}.`
+      );
+    }
+
+    return proxyConfig;
+  } catch (err) {
+    logger.warn(
+      `Could not parse proxy configuration from environment variable. Reason: ${err.message}`
+    );
   }
-  logger.warn(`Unable to extract proxy config from ${proxyEnvValue}.`);
 }
 
 /**
@@ -256,7 +202,7 @@ export function addProxyConfigurationInternet(destination: any): Destination {
  * All additional options are forwarded to tls.connect and net.connect see https://github.com/TooTallNate/node-https-proxy-agent#new-httpsproxyagentobject-options
  *
  * @param destination - Destination containing the proxy configurations
- * @param options - Addiotional options for the agent
+ * @param options - Additional options for the agent
  * @returns The http(s)-agent containing the proxy configuration
  */
 export function proxyAgent(

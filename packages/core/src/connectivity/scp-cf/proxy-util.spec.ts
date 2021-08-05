@@ -1,4 +1,5 @@
 import { unmockAllTestDestinations } from '@sap-cloud-sdk/test-util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination } from './destination';
 import {
   addProxyConfigurationInternet,
@@ -153,7 +154,7 @@ describe('proxy-util', () => {
     expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.NO_PROXY);
   });
 
-  it('should ignore undefined and empty environment varialbes', () => {
+  it('should ignore undefined and empty environment variables', () => {
     process.env['HTTPS_PROXY'] = 'https://some.proxy.com';
     expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.INTERNET_PROXY);
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
@@ -177,93 +178,161 @@ describe('proxy-util', () => {
       addProxyConfigurationInternet(httpsDestination).proxyConfiguration
     ).toBe(undefined);
   });
+});
 
-  describe('regex testing', () => {
-    it('should parse the protocol with defaults', () => {
-      expect(parseProxyEnv('use.Fallback.Protocol')?.protocol).toBe('http');
-      expect(parseProxyEnv('://use.Fallback.Protocol')?.protocol).toBe('http');
-
-      expect(parseProxyEnv('https://some.https.proxy')?.protocol).toBe('https');
-      expect(
-        parseProxyEnv('https://some.https.proxy.with.port:1234')?.protocol
-      ).toBe('https');
-      expect(parseProxyEnv('http://some.http.proxy')?.protocol).toBe('http');
-
-      expect(
-        parseProxyEnv('http://user:pwd@some.http.proxy.with.password:4711')
-          ?.protocol
-      ).toBe('http');
-      expect(parseProxyEnv('rfc://unsupported.protocol.No.Proxy')).toBe(
-        undefined
-      );
+describe('parseProxyEnv', () => {
+  it('parses URL with "https:" protocol and hostname', () => {
+    const logger = createLogger('proxy-util');
+    const logSpy = spyOn(logger, 'info');
+    expect(parseProxyEnv('https://some.proxy')).toEqual({
+      protocol: 'https',
+      host: 'some.proxy',
+      port: 443
     });
+    expect(logSpy).toHaveBeenCalledWith(
+      'Using protocol "https:" to connect to a proxy. This is unusual but possible.'
+    );
+  });
 
-    it('should parse  port with default.', () => {
-      expect(parseProxyEnv('use.Fallback.Port')?.port).toBe(80);
-      expect(parseProxyEnv('://use.Fallback.Port')?.port).toBe(80);
-      expect(parseProxyEnv('http://use.Fallback.Port')?.port).toBe(80);
-      expect(
-        parseProxyEnv('http://user:pwd@some.http.proxy.with.password')?.port
-      ).toBe(80);
-      expect(
-        parseProxyEnv('https://user:pwd@some.http.proxy.with.password')?.port
-      ).toBe(443);
-
-      expect(parseProxyEnv('use.Fallback.Port:1234')?.port).toBe(1234);
-      expect(parseProxyEnv('://use.Fallback.Port:1234')?.port).toBe(1234);
-      expect(parseProxyEnv('http://use.Fallback.Port:1234')?.port).toBe(1234);
-      expect(
-        parseProxyEnv('http://user:pwd@some.http.proxy.with.password:1234')
-          ?.port
-      ).toBe(1234);
-
-      expect(parseProxyEnv('no.Integer.port.No.Proxy:12X34')).toBe(undefined);
+  it('parses URL with "http:" protocol and hostname', () => {
+    expect(parseProxyEnv('http://some.proxy')).toEqual({
+      protocol: 'http',
+      host: 'some.proxy',
+      port: 80
     });
+  });
 
-    it('should parse host if environment value is ok.', () => {
-      expect(parseProxyEnv('some.host')?.host).toBe('some.host');
-      expect(parseProxyEnv('http://some.host')?.host).toBe('some.host');
-      expect(parseProxyEnv('http://some.host:1234')?.host).toBe('some.host');
-      expect(parseProxyEnv('http://user:password@some.host:1234')?.host).toBe(
-        'some.host'
-      );
-      expect(parseProxyEnv('user:password@some.host:1234')?.host).toBe(
-        'some.host'
-      );
-      expect(parseProxyEnv('user:password@some.host')?.host).toBe('some.host');
-
-      expect(parseProxyEnv('so@me.host:1234')).toBe(undefined);
-      expect(parseProxyEnv('user:password@so@me.host:1234')).toBe(undefined);
-      expect(parseProxyEnv('://user:password@some.host:1234')).toBe(undefined);
+  it('parses URL with only hostname', () => {
+    const logger = createLogger('proxy-util');
+    const logSpy = spyOn(logger, 'debug');
+    expect(parseProxyEnv('some.proxy')).toEqual({
+      protocol: 'http',
+      host: 'some.proxy',
+      port: 80
     });
+    expect(logSpy).toHaveBeenCalledWith(
+      'No protocol specified, using "http:".'
+    );
+  });
 
-    it('should parse user and password', () => {
-      const userPwdEncoded = basicHeader('user', 'password');
-      expect(
-        parseProxyEnv('user:password@some.proxy.com')!.headers![
-          'Proxy-Authorization'
-        ]
-      ).toBe(userPwdEncoded);
-      expect(
-        parseProxyEnv('https://user:password@some.proxy.com')!.headers![
-          'Proxy-Authorization'
-        ]
-      ).toBe(userPwdEncoded);
-      expect(
-        parseProxyEnv('user:password@some.proxy.com:443')!.headers![
-          'Proxy-Authorization'
-        ]
-      ).toBe(userPwdEncoded);
-      expect(
-        parseProxyEnv('https://user:password@some.proxy.com:443')!.headers![
-          'Proxy-Authorization'
-        ]
-      ).toBe(userPwdEncoded);
+  it('parses URL with dashes in hostname', () => {
+    expect(parseProxyEnv('some-proxy')).toEqual({
+      protocol: 'http',
+      host: 'some-proxy',
+      port: 80
+    });
+  });
 
-      expect(parseProxyEnv('password@some.proxy.com')).toBe(undefined);
-      expect(parseProxyEnv('u@ser:password@some.proxy.com:443')).toBe(
-        undefined
-      );
+  it('returns undefined for unknown protocol and logs warning', () => {
+    const logger = createLogger('proxy-util');
+    const logSpy = spyOn(logger, 'warn');
+    expect(parseProxyEnv('rtc://some.proxy:1234')).toBeUndefined();
+    expect(logSpy).toHaveBeenCalledWith(
+      'Could not parse proxy configuration from environment variable. Reason: Unsupported protocol "rtc:".'
+    );
+  });
+
+  it('parses URL with hostname and port', () => {
+    expect(parseProxyEnv('some.proxy:1234')).toEqual({
+      protocol: 'http',
+      host: 'some.proxy',
+      port: 1234
+    });
+  });
+
+  it('parses URL with protocol, hostname and port', () => {
+    expect(parseProxyEnv('https://some.proxy:1234')).toEqual({
+      protocol: 'https',
+      host: 'some.proxy',
+      port: 1234
+    });
+  });
+
+  it('returns undefined for incorrect port', () => {
+    expect(parseProxyEnv('some.proxy:12X34')).toBeUndefined();
+  });
+
+  it('parses URL with protocol, username, password, hostname and port', () => {
+    expect(parseProxyEnv('https://user:password@some.proxy:1234')).toEqual({
+      protocol: 'https',
+      host: 'some.proxy',
+      port: 1234,
+      headers: { 'Proxy-Authorization': basicHeader('user', 'password') }
+    });
+  });
+
+  it('parses URL with username, password, hostname and port', () => {
+    expect(parseProxyEnv('user:password@some.proxy:1234')).toEqual({
+      protocol: 'http',
+      host: 'some.proxy',
+      port: 1234,
+      headers: { 'Proxy-Authorization': basicHeader('user', 'password') }
+    });
+  });
+
+  it('parses URL with username, password, hostname', () => {
+    expect(parseProxyEnv('user:password@some.proxy')).toEqual({
+      protocol: 'http',
+      host: 'some.proxy',
+      port: 80,
+      headers: { 'Proxy-Authorization': basicHeader('user', 'password') }
+    });
+  });
+
+  it('parses URL with "@" in username and password', () => {
+    expect(parseProxyEnv('us@er:pass@word@some.proxy')).toEqual({
+      protocol: 'http',
+      host: 'some.proxy',
+      port: 80,
+      headers: { 'Proxy-Authorization': basicHeader('us@er', 'pass@word') }
+    });
+  });
+
+  it('parses URL with "-" in username and password', () => {
+    expect(parseProxyEnv('us-er:pass-word@some.proxy:1234')).toEqual({
+      protocol: 'http',
+      host: 'some.proxy',
+      port: 1234,
+      headers: { 'Proxy-Authorization': basicHeader('us-er', 'pass-word') }
+    });
+  });
+
+  it('recognizes password after first ":"', () => {
+    expect(parseProxyEnv('us:er:pass:word@some.proxy')).toEqual({
+      protocol: 'http',
+      host: 'some.proxy',
+      port: 80,
+      headers: { 'Proxy-Authorization': basicHeader('us', 'er:pass:word') }
+    });
+  });
+
+  it('accepts ":" in username when encoded', () => {
+    expect(parseProxyEnv('us%3Aer:pass:word@some.proxy')).toEqual({
+      protocol: 'http',
+      host: 'some.proxy',
+      port: 80,
+      headers: { 'Proxy-Authorization': basicHeader('us:er', 'pass:word') }
+    });
+  });
+
+  it('returns undefined if no password is given', () => {
+    const logger = createLogger('proxy-util');
+    const logSpy = spyOn(logger, 'warn');
+    expect(parseProxyEnv('user@some.proxy')).toBeUndefined();
+    expect(logSpy).toHaveBeenCalledWith(
+      'Could not parse proxy configuration from environment variable. Reason: Password missing.'
+    );
+  });
+
+  it('returns undefined for incorrect URL', () => {
+    expect(parseProxyEnv('://some.proxy')).toBeUndefined();
+  });
+
+  it('parses IP', () => {
+    expect(parseProxyEnv('127.0.0.0:8080')).toEqual({
+      protocol: 'http',
+      host: '127.0.0.0',
+      port: 8080
     });
   });
 });

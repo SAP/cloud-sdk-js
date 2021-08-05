@@ -1,18 +1,20 @@
-import * as http from 'http';
-import * as https from 'https';
-import {assoc, createLogger, last} from '@sap-cloud-sdk/util';
+import https from 'https';
+import http from 'http';
+import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
 import {
-  addProxyConfigurationInternet,
   Destination,
   DestinationCertificate,
   getProtocolOrDefault,
-  Protocol,
+  Protocol
+} from '../connectivity/scp-cf';
+import { HttpRequestConfig } from '../http-client';
+import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
+import {
+  addProxyConfigurationInternet,
   proxyAgent,
   ProxyStrategy,
   proxyStrategy
-} from '../connectivity/scp-cf';
-import {HttpAgentConfig, HttpsAgentConfig} from './agent-config';
-import {HttpRequestConfig} from "../http-client";
+} from './proxy-util';
 
 const logger = createLogger({
   package: 'core',
@@ -184,9 +186,9 @@ export function getUrlProtocol(destination: Destination): Protocol | undefined {
  * @returns HttpRequestConfig containing baseUrl and http(s) agents.
  */
 export function urlAndAgent(
-    targetUri: string
+  targetUri: string
 ): Pick<HttpRequestConfig, 'baseURL' | 'httpAgent' | 'httpsAgent' | 'proxy'> {
-  let destination: Destination = {url: targetUri, proxyType: 'Internet'};
+  let destination: Destination = { url: targetUri, proxyType: 'Internet' };
   if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
     destination = addProxyConfigurationInternet(destination);
   }

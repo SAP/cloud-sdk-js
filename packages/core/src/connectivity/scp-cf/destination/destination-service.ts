@@ -6,7 +6,7 @@ import {
 import CircuitBreaker from 'opossum';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import {getAgentConfig, urlAndAgent} from '../../../http-client';
+import { getAgentConfig, urlAndAgent } from '../../../http-client';
 import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
@@ -16,7 +16,7 @@ import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
-} from '../proxy-util';
+} from '../../../http-agent/proxy-util';
 import { parseDestination } from './destination';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';

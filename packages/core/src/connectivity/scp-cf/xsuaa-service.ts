@@ -6,7 +6,7 @@ import {
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import CircuitBreaker from 'opossum';
-import {HttpRequestConfig, urlAndAgent} from '../../http-client';
+import { HttpRequestConfig, urlAndAgent } from '../../http-client';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
@@ -277,7 +277,7 @@ function post(
 
   const config: AxiosRequestConfig = {
     ...urlAndAgent(targetUri),
-    // baseURL:targetUri,
+    proxy: false,
     method: 'post',
     data: body,
     ...headers(authHeader)

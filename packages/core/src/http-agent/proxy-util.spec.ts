@@ -1,13 +1,13 @@
 import { unmockAllTestDestinations } from '@sap-cloud-sdk/test-util';
-import { Destination } from './destination';
+import { Destination } from '../connectivity/scp-cf/destination';
+import { Protocol } from '../connectivity/scp-cf/protocol';
+import { basicHeader } from '../connectivity/scp-cf/authorization-header';
 import {
   addProxyConfigurationInternet,
   parseProxyEnv,
   ProxyStrategy,
   proxyStrategy
 } from './proxy-util';
-import { Protocol } from './protocol';
-import { basicHeader } from './authorization-header';
 
 describe('proxy-util', () => {
   afterEach(() => {

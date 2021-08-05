@@ -1,11 +1,12 @@
 import { fail } from 'assert';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import nock from 'nock';
+import axios, { AxiosRequestConfig } from 'axios';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 import {
   providerXsuaaClientCredentials,
   providerXsuaaUrl
 } from '../../../test/test-util/environment-mocks';
-import * as httpClient from '../../http-client/http-client';
 import {
   clientCredentialsGrant,
   fetchVerificationKeys,
@@ -13,12 +14,6 @@ import {
   userTokenGrant
 } from './xsuaa-service';
 import { TokenKey } from './xsuaa-service-types';
-import { Destination } from './destination';
-import { Protocol } from './protocol';
-import axios, {AxiosRequestConfig} from "axios";
-import {HttpsProxyAgent} from "https-proxy-agent";
-import * as Url from "url";
-import {URL} from "url";
 
 const expectedResponse200 = {
   access_token: 'sometoken',
@@ -48,15 +43,20 @@ describe('xsuaa', () => {
       const expectedConfig: AxiosRequestConfig = {
         baseURL: 'https://provider.example.com/oauth/token',
         method: 'post',
-        data:'grant_type=client_credentials',
-        proxy:false,
+        data: 'grant_type=client_credentials',
+        proxy: false,
         headers: {
-          Accept: "application/json",
-          Authorization: "Basic aG9yc3RpOmJvcnN0aQ==",
-          'Content-Type'    :      "application/x-www-form-urlencoded"
+          Accept: 'application/json',
+          Authorization: 'Basic aG9yc3RpOmJvcnN0aQ==',
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
-        httpsAgent:new HttpsProxyAgent({port:1234,host:'some.test.proxy.com',protocol:'http',rejectUnauthorized: true})
-    }
+        httpsAgent: new HttpsProxyAgent({
+          port: 1234,
+          host: 'some.test.proxy.com',
+          protocol: 'http',
+          rejectUnauthorized: true
+        })
+      };
 
       expect(spy).toHaveBeenCalledWith(expectedConfig);
       delete process.env.https_proxy;
@@ -70,14 +70,28 @@ describe('xsuaa', () => {
         .reply(200, expectedResponse200);
       process.env.https_proxy = 'http://some.test.proxy.com:1234';
       process.env.no_proxy = 'https://provider.example.com/oauth/token';
-      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
+      const spy = jest.spyOn(axios, 'request');
       await clientCredentialsGrant(providerXsuaaClientCredentials, creds);
-      const expectedDestination: Destination = {
-        url: 'https://provider.example.com/oauth/token',
-        proxyType: 'Internet'
+      const expectedConfig: AxiosRequestConfig = {
+        baseURL: 'https://provider.example.com/oauth/token',
+        proxy: false,
+        method: 'post',
+        data: 'grant_type=client_credentials',
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Basic aG9yc3RpOmJvcnN0aQ==',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        // The jest matchers have problems to match two  instances of an httpsAgent.
+        // As a workaround I wanted to assert on proxy:undefined but was not able to achieve this.
+        // The "_events" property is only present for the httpAgent and not the httpProxyAgent so this works as an implicit test.
+        httpsAgent: expect.objectContaining({
+          _events: expect.anything(),
+          options: expect.objectContaining({ rejectUnauthorized: true })
+        })
       };
 
-      expect(spy).toHaveBeenCalledWith(expectedDestination, expect.anything());
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
       delete process.env.https_proxy;
       delete process.env.no_proxy;
     });

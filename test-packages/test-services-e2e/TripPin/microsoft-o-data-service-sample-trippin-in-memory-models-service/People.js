@@ -54,6 +54,7 @@ exports.People = void 0;
  */
 var PeopleRequestBuilder_1 = require('./PeopleRequestBuilder');
 var Location_1 = require('./Location');
+var PersonGender_1 = require('./PersonGender');
 var core_1 = require('@sap-cloud-sdk/core');
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
@@ -156,7 +157,11 @@ var Photos_1 = require('./Photos');
    * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.GENDER = _fieldBuilder.buildEdmTypeField('Gender', 'Edm.Enum', true);
+  People.GENDER = _fieldBuilder.buildEnumField(
+    'Gender',
+    PersonGender_1.PersonGender,
+    true
+  );
   /**
    * Static representation of the [[concurrency]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.

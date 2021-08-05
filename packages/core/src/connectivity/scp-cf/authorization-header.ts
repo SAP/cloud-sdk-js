@@ -83,9 +83,19 @@ export async function getAuthHeaders(
       'Found custom authorization headers. The given destination also provides authorization headers. This might be unintended. The custom headers from the request config will be used.'
     );
   }
-  return Object.keys(customAuthHeaders).length
-    ? customAuthHeaders
-    : buildAuthorizationHeaders(destination);
+
+  const additionalDestinationAuthHeaders = getCustomAuthHeaders(
+    destination,
+    destination.headers
+  );
+
+  if (Object.keys(customAuthHeaders).length) {
+    return customAuthHeaders;
+  }
+  if (Object.keys(additionalDestinationAuthHeaders).length) {
+    return additionalDestinationAuthHeaders;
+  }
+  return buildAuthorizationHeaders(destination);
 }
 
 /**
@@ -106,6 +116,7 @@ export function buildAndAddAuthorizationHeader(destination: Destination) {
     };
   };
 }
+
 function toAuthorizationHeader(authorization: string): Record<string, string> {
   return toSanitizedObject('authorization', authorization);
 }
@@ -116,7 +127,7 @@ function headerFromTokens(
 ): Record<string, string> {
   if (!authTokens || !authTokens.length) {
     throw Error(
-      `AuthenticationType is ${authenticationType}, but no AuthTokens could be fetched from the destination service!`
+      `\`AuthenticationType\` is "${authenticationType}", but no auth tokens could be fetched from the destination service.`
     );
   }
   const usableTokens = authTokens.filter(
@@ -246,7 +257,7 @@ async function getAuthenticationRelatedHeaders(
       return headerForPrincipalPropagation(destination);
     default:
       throw Error(
-        `The destination used "${destination.authentication}" as authentication type which is not supported by the SDK.`
+        `The destination used "${destination.authentication}" as authentication type which is not supported by the SAP Cloud SDK.`
       );
   }
 }

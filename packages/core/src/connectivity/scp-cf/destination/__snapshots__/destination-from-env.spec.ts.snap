@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`env-destination-accessor getDestinationByName() should throw for ill formatted JSON 1`] = `"Error in parsing the destinations from the environment variable."`;

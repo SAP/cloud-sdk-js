@@ -3,6 +3,7 @@ import { Moment, Duration } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
+import { TestEnumTypeInt64 } from './TestEnumTypeInt64';
 import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
 import {
   AllFields,
@@ -11,6 +12,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
+  EnumField,
   Field,
   OneToManyLink,
   OneToOneLink,
@@ -150,6 +152,11 @@ export declare class TestEntity extends EntityV4 implements TestEntityType {
    */
   enumProperty?: TestEnumType;
   /**
+   * Enum Property Int 64.
+   * @nullable
+   */
+  enumPropertyInt64?: TestEnumTypeInt64;
+  /**
    * Enum Property With One Member.
    * @nullable
    */
@@ -228,6 +235,7 @@ export interface TestEntityType {
   complexTypeProperty?: TestComplexType | null;
   complexTypeCollectionProperty?: TestComplexType[] | null;
   enumProperty?: TestEnumType | null;
+  enumPropertyInt64?: TestEnumTypeInt64 | null;
   enumPropertyWithOneMember?: TestEnumTypeWithOneMember | null;
   enumCollectionProperty?: TestEnumType[] | null;
   toMultiLink: TestEntityMultiLinkType[];
@@ -444,14 +452,24 @@ export declare namespace TestEntity {
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ENUM_PROPERTY: EdmTypeField<TestEntity, 'Edm.Enum', true, true>;
+  const ENUM_PROPERTY: EnumField<TestEntity, TestEnumType, true, true>;
+  /**
+   * Static representation of the [[enumPropertyInt64]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  const ENUM_PROPERTY_INT_64: EnumField<
+    TestEntity,
+    TestEnumTypeInt64,
+    true,
+    true
+  >;
   /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ENUM_PROPERTY_WITH_ONE_MEMBER: EdmTypeField<
+  const ENUM_PROPERTY_WITH_ONE_MEMBER: EnumField<
     TestEntity,
-    'Edm.Enum',
+    TestEnumTypeWithOneMember,
     true,
     true
   >;
@@ -461,7 +479,7 @@ export declare namespace TestEntity {
    */
   const ENUM_COLLECTION_PROPERTY: CollectionField<
     TestEntity,
-    'Edm.Enum',
+    typeof TestEnumType,
     true,
     true
   >;
@@ -506,8 +524,10 @@ export declare namespace TestEntity {
     | CollectionField<TestEntity, 'Edm.String', true, true>
     | TestComplexTypeField<TestEntity, true, true>
     | CollectionField<TestEntity, TestComplexType, true, true>
-    | EdmTypeField<TestEntity, 'Edm.Enum', true, true>
-    | CollectionField<TestEntity, 'Edm.Enum', true, true>
+    | EnumField<TestEntity, TestEnumType, true, true>
+    | EnumField<TestEntity, TestEnumTypeInt64, true, true>
+    | EnumField<TestEntity, TestEnumTypeWithOneMember, true, true>
+    | CollectionField<TestEntity, typeof TestEnumType, true, true>
     | OneToManyLink<TestEntity, TestEntityMultiLink>
     | OneToOneLink<TestEntity, TestEntitySingleLink>
   >;

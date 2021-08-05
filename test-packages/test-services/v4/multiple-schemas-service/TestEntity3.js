@@ -54,6 +54,7 @@ exports.TestEntity3 = void 0;
  */
 var TestEntity3RequestBuilder_1 = require('./TestEntity3RequestBuilder');
 var TestComplexType2_1 = require('./TestComplexType2');
+var TestEnumType2_1 = require('./TestEnumType2');
 var core_1 = require('@sap-cloud-sdk/core');
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
@@ -118,9 +119,9 @@ exports.TestEntity3 = TestEntity3;
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity3.ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
+  TestEntity3.ENUM_PROPERTY = _fieldBuilder.buildEnumField(
     'EnumProperty',
-    'Edm.Enum',
+    TestEnumType2_1.TestEnumType2,
     true
   );
   /**

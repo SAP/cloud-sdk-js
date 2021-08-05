@@ -54,6 +54,9 @@ exports.TestEntity = void 0;
  */
 var TestEntityRequestBuilder_1 = require('./TestEntityRequestBuilder');
 var TestComplexType_1 = require('./TestComplexType');
+var TestEnumType_1 = require('./TestEnumType');
+var TestEnumTypeInt64_1 = require('./TestEnumTypeInt64');
+var TestEnumTypeWithOneMember_1 = require('./TestEnumTypeWithOneMember');
 var core_1 = require('@sap-cloud-sdk/core');
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
@@ -320,18 +323,27 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.ENUM_PROPERTY = _fieldBuilder.buildEdmTypeField(
+  TestEntity.ENUM_PROPERTY = _fieldBuilder.buildEnumField(
     'EnumProperty',
-    'Edm.Enum',
+    TestEnumType_1.TestEnumType,
+    true
+  );
+  /**
+   * Static representation of the [[enumPropertyInt64]] property for query construction.
+   * Use to reference this property in query operations such as 'select' in the fluent request API.
+   */
+  TestEntity.ENUM_PROPERTY_INT_64 = _fieldBuilder.buildEnumField(
+    'EnumPropertyInt64',
+    TestEnumTypeInt64_1.TestEnumTypeInt64,
     true
   );
   /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.ENUM_PROPERTY_WITH_ONE_MEMBER = _fieldBuilder.buildEdmTypeField(
+  TestEntity.ENUM_PROPERTY_WITH_ONE_MEMBER = _fieldBuilder.buildEnumField(
     'EnumPropertyWithOneMember',
-    'Edm.Enum',
+    TestEnumTypeWithOneMember_1.TestEnumTypeWithOneMember,
     true
   );
   /**
@@ -340,7 +352,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    */
   TestEntity.ENUM_COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField(
     'EnumCollectionProperty',
-    'Edm.Enum',
+    TestEnumType_1.TestEnumType,
     true
   );
   /**
@@ -398,6 +410,7 @@ var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
     TestEntity.COMPLEX_TYPE_PROPERTY,
     TestEntity.COMPLEX_TYPE_COLLECTION_PROPERTY,
     TestEntity.ENUM_PROPERTY,
+    TestEntity.ENUM_PROPERTY_INT_64,
     TestEntity.ENUM_PROPERTY_WITH_ONE_MEMBER,
     TestEntity.ENUM_COLLECTION_PROPERTY,
     TestEntity.TO_MULTI_LINK,

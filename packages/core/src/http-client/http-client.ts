@@ -43,15 +43,19 @@ export async function buildHttpRequest(
 ): Promise<DestinationHttpRequestConfig> {
   if (customHeaders) {
     logger.warn(
-      `The custom headers are provided with the keys: ${Object.keys(
+      `The following custom headers will overwrite headers created by the SDK:\n${Object.keys(
         customHeaders
-      )}. These keys will overwrite the headers created by the SDK.`
+      )
+        .map(key => `  - "${key}"`)
+        .join('\n')}`
     );
   }
   const resolvedDestination = await resolveDestination(destination);
   if (!resolvedDestination) {
     throw Error(
-      `Failed to resolve the destination: ${toDestinationNameUrl(destination)}.`
+      `Failed to resolve the destination '${toDestinationNameUrl(
+        destination
+      )}'.`
     );
   }
   const headers = await buildHeaders(resolvedDestination, customHeaders);
@@ -82,7 +86,7 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
  * Returns a function that takes a destination and a request-config (extends [[HttpRequestConfig]]), builds an [[HttpRequest]] from them, and calls
  * the provided execute function.
  *
- * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead!
+ * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead.
  *
  * @param executeFn - A function that can execute an [[HttpRequestConfig]].
  * @returns A function expecting destination and a request.
@@ -152,6 +156,7 @@ function buildDestinationHttpRequestConfig(
   return {
     baseURL: destination.url,
     headers,
+    params: destination.queryParameters,
     ...getAgentConfig(destination)
   };
 }
@@ -161,10 +166,7 @@ function buildHeaders(
   customHeaders?: Record<string, any>
 ): Promise<Record<string, string>> {
   return buildHeadersForDestination(destination, customHeaders).catch(error => {
-    throw new ErrorWithCause(
-      'Failed to build HTTP request for destination: failed to build headers!',
-      error
-    );
+    throw new ErrorWithCause('Failed to build headers.', error);
   });
 }
 
@@ -172,10 +174,7 @@ function resolveDestination(
   destination: Destination | DestinationNameAndJwt
 ): Promise<Destination | null> {
   return useOrFetchDestination(destination).catch(error => {
-    throw new ErrorWithCause(
-      'Failed to build HTTP request for destination: failed to load destination!',
-      error
-    );
+    throw new ErrorWithCause('Failed to load destination.', error);
   });
 }
 
@@ -212,7 +211,6 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
 
 /**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
- *
  * @returns AxiosRequestConfig with default parameters
  */
 export function getAxiosConfigWithDefaults(): HttpRequestConfig {
@@ -229,7 +227,11 @@ export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   return {
     proxy: false,
     httpAgent: new http.Agent(),
-    httpsAgent: new https.Agent()
+    httpsAgent: new https.Agent(),
+    paramsSerializer: (params = {}) =>
+      Object.entries(params)
+        .map(([key, value]) => `${key}=${value}`)
+        .join('&')
   };
 }
 
@@ -264,15 +266,15 @@ export function shouldHandleCsrfToken(
 
 async function getCsrfHeaders(
   destination: Destination | DestinationNameAndJwt,
-  headers: Record<string, string>,
-  url: string
+  request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
-  const csrfHeaders = pickIgnoreCase(headers, 'x-csrf-token');
+  const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
   return Object.keys(csrfHeaders).length
     ? csrfHeaders
     : buildCsrfHeaders(destination, {
-        headers,
-        url
+        params: request.params,
+        headers: request.headers,
+        url: request.url
       });
 }
 
@@ -283,7 +285,7 @@ async function addCsrfTokenToHeader(
 ): Promise<Record<string, string>> {
   const options = buildHttpRequestOptions(httpRequestOptions);
   const csrfHeaders = shouldHandleCsrfToken(request, options)
-    ? await getCsrfHeaders(destination, request.headers, request.url!)
+    ? await getCsrfHeaders(destination, request)
     : {};
   return { ...request.headers, ...csrfHeaders };
 }

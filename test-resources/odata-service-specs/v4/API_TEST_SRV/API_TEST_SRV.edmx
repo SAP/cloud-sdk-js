@@ -33,6 +33,7 @@
         <Property Name="ComplexTypeCollectionProperty" Type="Collection(API_TEST_SRV.A_TestComplexType)"/>
 
         <Property Name="EnumProperty" Type="API_TEST_SRV.A_TestEnumType"/>
+        <Property Name="EnumPropertyInt64" Type="API_TEST_SRV.A_TestEnumType_Int64"/>
         <Property Name="EnumPropertyWithOneMember" Type="API_TEST_SRV.A_TestEnumType_WithOneMember"/>
         <Property Name="EnumCollectionProperty" Type="Collection(API_TEST_SRV.A_TestEnumType)"/>
 
@@ -46,6 +47,15 @@
           <PropertyRef Name="KeyProperty"/>
         </Key>
         <Property Name="KeyProperty" Type="Edm.String" Nullable="false" MaxLength="10"/>
+      </EntityType>
+
+      <EntityType Name="A_TestEntityWithEnumKeyType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyPropertyEnum1"/>
+        </Key>
+
+        <Property Name="KeyPropertyEnum1" Type="API_TEST_SRV.A_TestEnumType" Nullable="false"/>
+
       </EntityType>
 
       <EntityType Name="A_TestEntityTypeToBeShared">
@@ -145,6 +155,7 @@
         <Property CollectionKind="List" Name="ComplexTypeProperty" Nullable="true" Type="API_TEST_SRV.A_TestNestedComplexType"/>
 
         <Property Name="CollectionStringProperty" Type="Collection(Edm.String)"/>
+        <Property Name="CollectionEnumProperty" Type="Collection(API_TEST_SRV.A_TestEnumType)"/>
         <Property Name="CollectionComplexTypeProperty" Type="Collection(API_TEST_SRV.A_TestNestedComplexType)"/>
       </ComplexType>
 
@@ -156,10 +167,13 @@
       <ComplexType Name="A_TestLvl2NestedComplexType">
         <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
       </ComplexType>
-
       <EnumType Name="A_TestEnumType">
-        <Member Name="Member1" Value="1"/>
-        <Member Name="Member2" Value="2"/>
+        <Member Name="Member1"/>
+        <Member Name="Member2"/>
+      </EnumType>
+      <EnumType Name="A_TestEnumType_Int64" UnderlyingType="Edm.Int64">
+        <Member Name="Member1" Value="99999999999999999999"/>
+        <Member Name="Member2" Value="88888888888888888888"/>
       </EnumType>
 
       <EnumType Name="A_TestEnumType_WithOneMember">
@@ -170,75 +184,89 @@
       </Action>
 
       <Action Name="TestActionImportMultipleParameterComplexReturnType">
-        <Parameter Name="StringParam" Type="Edm.String"/>
+        <Parameter Name="StringParam" Type="Edm.String" Nullable="false"/>
         <Parameter Name="NonNullableStringParam" Type="Edm.String" Nullable="false"/>
         <Parameter Name="NullableBooleanParam" Type="Edm.Boolean" Nullable="true"/>
         <Parameter Name="NullableGeographyPointParam" Type="Edm.GeographyPoint" Nullable="true"/>
+        <ReturnType Type="API_TEST_SRV.A_TestComplexType" Nullable="false"/>
+      </Action>
+
+      <Action Name="TestActionImportNullableTest">
+        <Parameter Name="NullablePerDefault" Type="Edm.String" />
+        <Parameter Name="NullableExplicit" Type="Edm.String" Nullable="true" />
+        <Parameter Name="NonNullable" Type="Edm.String" Nullable="false" />
         <ReturnType Type="API_TEST_SRV.A_TestComplexType"/>
       </Action>
 
       <Action Name="TestActionImportUnsupportedEdmTypes">
-        <Parameter Name="SimpleParam" Type="Edm.SomethingTheSDKDoesNotSupport"/>
-        <ReturnType Type="Edm.SomethingTheSDKDoesNotSupport"/>
+        <Parameter Name="SimpleParam" Type="Edm.SomethingTheSDKDoesNotSupport" Nullable="false"/>
+        <ReturnType Type="Edm.SomethingTheSDKDoesNotSupport" Nullable="false"/>
       </Action>
 
       <Action Name="TestActionImportEntityParameterNoReturnType">
-        <Parameter Name="TestEntityParam" Type="API_TEST_SRV.A_TestEntityType"/>
+        <Parameter Name="TestEntityParam" Type="API_TEST_SRV.A_TestEntityType" Nullable="false"/>
       </Action>
 
       <Action Name="TestActionImportNoParameterEntityReturnType">
-        <ReturnType Type="API_TEST_SRV.A_TestEntityType"/>
+        <ReturnType Type="API_TEST_SRV.A_TestEntityType" Nullable="false"/>
       </Action>
 
       <Action Name="TestActionImportSharedEntityReturnType">
-        <ReturnType Type="API_TEST_SRV.A_TestEntityTypeToBeShared"/>
+        <ReturnType Type="API_TEST_SRV.A_TestEntityTypeToBeShared" Nullable="false"/>
       </Action>
 
       <Action Name="TestActionImportSharedEntityReturnTypeCollection">
-        <ReturnType Type="Collection(API_TEST_SRV.A_TestEntityTypeToBeShared)"/>
+        <ReturnType Type="Collection(API_TEST_SRV.A_TestEntityTypeToBeShared)" Nullable="false"/>
       </Action>
 
       <Function Name="TestFunctionImportNoReturnType">
       </Function>
 
       <Function Name="TestFunctionImportEdmReturnType">
-        <ReturnType Type="Edm.Boolean"/>
+        <ReturnType Type="Edm.Boolean" Nullable="false"/>
       </Function>
 
       <Function Name="TestFunctionImportEdmReturnTypeCollection">
-        <ReturnType Type="Collection(Edm.String)"/>
+        <ReturnType Type="Collection(Edm.String)" Nullable="false"/>
       </Function>
 
       <Function Name="TestFunctionImportEntityReturnType">
-        <ReturnType Type="API_TEST_SRV.A_TestEntityType"/>
+        <ReturnType Type="API_TEST_SRV.A_TestEntityType" Nullable="false"/>
       </Function>
 
       <Function Name="TestFunctionImportEntityReturnTypeCollection">
-        <ReturnType Type="Collection(API_TEST_SRV.A_TestEntityType)"/>
+        <ReturnType Type="Collection(API_TEST_SRV.A_TestEntityType)" Nullable="false"/>
       </Function>
 
       <Function Name="TestFunctionImportSharedEntityReturnType">
-        <ReturnType Type="API_TEST_SRV.A_TestEntityTypeToBeShared"/>
+        <ReturnType Type="API_TEST_SRV.A_TestEntityTypeToBeShared" Nullable="false"/>
       </Function>
 
       <Function Name="TestFunctionImportSharedEntityReturnTypeCollection">
-        <ReturnType Type="Collection(API_TEST_SRV.A_TestEntityTypeToBeShared)"/>
+        <ReturnType Type="Collection(API_TEST_SRV.A_TestEntityTypeToBeShared)" Nullable="false"/>
       </Function>
 
       <Function Name="TestFunctionImportComplexReturnType">
-        <ReturnType Type="API_TEST_SRV.A_TestComplexType"/>
+        <ReturnType Type="API_TEST_SRV.A_TestComplexType" Nullable="false"/>
       </Function>
 
       <Function Name="TestFunctionImportComplexReturnTypeCollection">
-        <ReturnType Type="Collection(API_TEST_SRV.A_TestComplexType)"/>
+        <ReturnType Type="Collection(API_TEST_SRV.A_TestComplexType)" Nullable="false"/>
       </Function>
 
       <Function Name="TestFunctionImportMultipleParams">
-        <Parameter Name="StringParam" Type="Edm.String"/>
+        <Parameter Name="StringParam" Type="Edm.String" Nullable="false"/>
         <Parameter Name="NonNullableStringParam" Type="Edm.String" Nullable="false"/>
         <Parameter Name="NullableBooleanParam" Type="Edm.Boolean" Nullable="true"/>
         <Parameter Name="NullableGeographyPointParam" Type="Edm.GeographyPoint" Nullable="true"/>
         <ReturnType Type="Edm.Boolean"/>
+      </Function>
+
+      <Function Name="TestFunctionImportNullableTest">
+        <Parameter Name="NullablePerDefault" Type="Edm.String" />
+        <Parameter Name="NullableExplicit" Type="Edm.String" Nullable="true" />
+        <Parameter Name="NonNullable" Type="Edm.String" Nullable="false" />
+        <ReturnType Type="Collection(Edm.String)"/>
       </Function>
 
       <EntityContainer Name="API_TEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
@@ -246,6 +274,8 @@
           <NavigationPropertyBinding Path="to_MultiLink" Target="A_TestEntityMultiLink"/>
           <NavigationPropertyBinding Path="to_OtherMultiLink" Target="A_TestEntityMultiLink"/>
           <NavigationPropertyBinding Path="to_SingleLink" Target="A_TestEntitySingleLink"/>
+        </EntitySet>
+        <EntitySet Name="A_TestEntityWithEnumKey" EntityType="API_TEST_SRV.A_TestEntityWithEnumKeyType" sap:content-version="1">
         </EntitySet>
         <EntitySet Name="A_TestEntityWithSharedEntityType1" EntityType="API_TEST_SRV.A_TestEntityTypeToBeShared" sap:content-version="1">
         </EntitySet>
@@ -308,10 +338,16 @@
         <ActionImport Name="TestActionImportSharedEntityReturnTypeCollection" Action="API_TEST_SRV.TestActionImportSharedEntityReturnTypeCollection">
         </ActionImport>
 
+        <ActionImport Name="TestActionImportNullableTest" Action="API_TEST_SRV.TestActionImportNullableTest">
+        </ActionImport>
+
         <FunctionImport Name="TestFunctionImportEdmReturnType" Function="API_TEST_SRV.TestFunctionImportEdmReturnType">
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportEdmReturnTypeCollection" Function="API_TEST_SRV.TestFunctionImportEdmReturnTypeCollection">
+        </FunctionImport>
+
+        <FunctionImport Name="TestFunctionImportNullableTest" Function="API_TEST_SRV.TestFunctionImportNullableTest">
         </FunctionImport>
 
         <FunctionImport Name="TestFunctionImportEntityReturnType" Function="API_TEST_SRV.TestFunctionImportEntityReturnType" EntitySet="A_TestEntity">

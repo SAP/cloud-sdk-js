@@ -10,6 +10,7 @@ export * from './City';
 export * from './Location';
 export * from './EventLocation';
 export * from './AirportLocation';
+export * from './PersonGender';
 export * from './function-imports';
 export * from './BatchRequest';
 //# sourceMappingURL=index.d.ts.map

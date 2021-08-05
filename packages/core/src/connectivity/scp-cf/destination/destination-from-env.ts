@@ -142,7 +142,7 @@ export function searchEnvVariablesForDestination(
   if (getDestinationsEnvVariable()) {
     logger.warn(
       "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
-        'This is discouraged for a productive application! ' +
+        'This is discouraged for productive applications. ' +
         'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
     );
 

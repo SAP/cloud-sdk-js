@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`generic http client buildHttpRequest throws useful error messages when building headers fails 1`] = `"Failed to build HTTP request for destination: failed to build headers!"`;
-
-exports[`generic http client buildHttpRequest throws useful error messages when finding the destination fails 1`] = `"Failed to build HTTP request for destination: failed to load destination!"`;
-
-exports[`generic http client executeHttpRequest propagates errors to the caller 1`] = `"Request failed with status code 500"`;

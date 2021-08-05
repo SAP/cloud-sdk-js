@@ -29,6 +29,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 __exportStar(require('./TestEntity'), exports);
+__exportStar(require('./TestEntityWithEnumKey'), exports);
 __exportStar(require('./TestEntityWithSharedEntityType1'), exports);
 __exportStar(require('./TestEntityWithSharedEntityType2'), exports);
 __exportStar(require('./TestEntityMultiLink'), exports);
@@ -42,6 +43,7 @@ __exportStar(require('./TestEntityCircularLinkChild'), exports);
 __exportStar(require('./TestEntityEndsWith'), exports);
 __exportStar(require('./TestEntityEndsWithSomethingElse'), exports);
 __exportStar(require('./TestEntityRequestBuilder'), exports);
+__exportStar(require('./TestEntityWithEnumKeyRequestBuilder'), exports);
 __exportStar(
   require('./TestEntityWithSharedEntityType1RequestBuilder'),
   exports
@@ -67,6 +69,9 @@ __exportStar(require('./TestComplexBaseType'), exports);
 __exportStar(require('./TestComplexType'), exports);
 __exportStar(require('./TestNestedComplexType'), exports);
 __exportStar(require('./TestLvl2NestedComplexType'), exports);
+__exportStar(require('./TestEnumType'), exports);
+__exportStar(require('./TestEnumTypeInt64'), exports);
+__exportStar(require('./TestEnumTypeWithOneMember'), exports);
 __exportStar(require('./function-imports'), exports);
 __exportStar(require('./BatchRequest'), exports);
 //# sourceMappingURL=index.js.map

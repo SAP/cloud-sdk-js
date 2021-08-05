@@ -87,16 +87,50 @@ describe('OData Request', () => {
     });
 
     function createRequestWithHeaders(
-      configConstrucor,
+      configConstructor,
       destination?
     ): ODataRequest<any> {
-      const req = createRequest(configConstrucor, destination);
+      const req = createRequest(configConstructor, destination);
       jest.spyOn(req, 'headers').mockResolvedValue({});
       return req;
     }
   });
 
-  describe('service url', () => {
+  describe('query', () => {
+    it.only('should have json parameter by default for get request', () => {
+      const request = createRequest(ODataGetAllRequestConfig);
+      expect(request.query()).toEqual('?$format=json');
+    });
+
+    it('should prioritize destination query parameters over SDK built parameters', () => {
+      const request = createRequest(ODataGetAllRequestConfig, {
+        url: '',
+        queryParameters: { $format: 'destinationParam' }
+      });
+      expect(request.query()).toEqual('?$format=destinationParam');
+    });
+
+    it('should prioritize custom query parameters over SDK built parameters', () => {
+      const request = createRequest(ODataGetAllRequestConfig);
+      request.config.customQueryParameters = {
+        $format: 'customParam'
+      };
+      expect(request.query()).toEqual('?$format=customParam');
+    });
+
+    it('should prioritize custom query parameters over destination parameters', () => {
+      const request = createRequest(ODataGetAllRequestConfig, {
+        url: '',
+        queryParameters: { $format: 'destinationParam' }
+      });
+      request.config.customQueryParameters = {
+        $format: 'customParam'
+      };
+      expect(request.query()).toEqual('?$format=customParam');
+    });
+  });
+
+  describe('serviceUrl', () => {
     it('should contain "sap/opu/odata/sap/"', () => {
       const request = createRequest(ODataGetAllRequestConfig);
       expect(request.serviceUrl()).toBe('/sap/opu/odata/sap/API_TEST_SRV');
@@ -212,7 +246,10 @@ describe('OData Request', () => {
   });
 });
 
-function createRequest(requestConfigConstructor, destination = { url: '' }) {
+function createRequest(
+  requestConfigConstructor,
+  destination: Destination = { url: '' }
+) {
   const config = new requestConfigConstructor(TestEntity, oDataUriV2);
   config.keys = {
     KeyPropertyGuid: uuid(),

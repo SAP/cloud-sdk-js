@@ -12,6 +12,7 @@ import { OrderableEdmTypeField } from './orderable-edm-type-field';
 import { CollectionField, CollectionFieldType } from './collection-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { FieldOptions } from './field';
+import { EnumField } from './enum-field';
 
 type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<
@@ -190,6 +191,31 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
     const isSelectable = (this.fieldOf instanceof
       ComplexTypeField) as IsSelectableField<FieldOfT>;
     return new CollectionField(fieldName, this.fieldOf, collectionFieldType, {
+      isNullable,
+      isSelectable
+    });
+  }
+
+  /**
+   * Build a field for a property with a enum type.
+   * @param fieldName - Name of the field.
+   * @param enumType - Enum type of this field.
+   * @param isNullable - Whether the field is nullable.
+   * @returns A collection field with the given collection type.
+   */
+  buildEnumField<EnumT extends string, NullableT extends boolean>(
+    fieldName: string,
+    enumType: Record<string, EnumT>,
+    isNullable: NullableT
+  ): EnumField<
+    EntityTypeFromFieldOf<FieldOfT>,
+    EnumT,
+    NullableT,
+    IsSelectableField<FieldOfT>
+  > {
+    const isSelectable = (this.fieldOf instanceof
+      ComplexTypeField) as IsSelectableField<FieldOfT>;
+    return new EnumField(fieldName, this.fieldOf, enumType, {
       isNullable,
       isSelectable
     });

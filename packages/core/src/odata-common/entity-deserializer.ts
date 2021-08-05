@@ -14,7 +14,8 @@ import {
   isComplexTypeNameSpace,
   EdmTypeShared,
   isEdmType,
-  PropertyMetadata
+  PropertyMetadata,
+  EnumField
 } from '../odata-common';
 import {
   EdmToPrimitive as EdmToPrimitiveV2,
@@ -123,6 +124,9 @@ export function entityDeserializer(
         json[field._fieldName],
         field._fieldType
       );
+    }
+    if (field instanceof EnumField) {
+      return json[field._fieldName];
     }
   }
 
@@ -245,6 +249,8 @@ export function entityDeserializer(
     if (isComplexTypeNameSpace(fieldType)) {
       return json.map(val => deserializeComplexType(val, fieldType));
     }
+    // Enum
+    return json;
   }
 
   return {

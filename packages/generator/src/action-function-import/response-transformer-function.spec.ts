@@ -1,18 +1,23 @@
 import { orderBreakfast } from '../../test/test-util/data-model';
-import { VdmReturnTypeCategory } from '../vdm-types';
+import {
+  VdmActionFunctionImportReturnType,
+  VdmReturnTypeCategory
+} from '../vdm-types';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
-const returnTypeEntity = {
+const returnTypeEntity: VdmActionFunctionImportReturnType = {
   builderFunction: '',
   returnType: 'Entity',
   isCollection: false,
+  isNullable: false,
   returnTypeCategory: VdmReturnTypeCategory.ENTITY
 };
 
-const returnTypeComplexType = {
+const returnTypeComplexType: VdmActionFunctionImportReturnType = {
   builderFunction: '',
   returnType: 'ComplexType',
   isCollection: true,
+  isNullable: false,
   returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE
 };
 

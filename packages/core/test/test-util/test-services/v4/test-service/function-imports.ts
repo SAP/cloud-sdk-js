@@ -81,6 +81,65 @@ export function testFunctionImportEdmReturnTypeCollection(
 }
 
 /**
+ * Type of the parameters to be passed to [[testFunctionImportNullableTest]].
+ */
+export interface TestFunctionImportNullableTestParameters {
+  /**
+   * Nullable Per Default.
+   */
+  nullablePerDefault?: string | null;
+  /**
+   * Nullable Explicit.
+   */
+  nullableExplicit?: string | null;
+  /**
+   * Non Nullable.
+   */
+  nonNullable: string;
+}
+
+/**
+ * Test Function Import Nullable Test.
+ *
+ * @param parameters - Object containing all parameters for the function import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export function testFunctionImportNullableTest(
+  parameters: TestFunctionImportNullableTestParameters
+): FunctionImportRequestBuilderV4<
+  TestFunctionImportNullableTestParameters,
+  string[] | null
+> {
+  const params = {
+    nullablePerDefault: new FunctionImportParameter(
+      'NullablePerDefault',
+      'Edm.String',
+      parameters.nullablePerDefault
+    ),
+    nullableExplicit: new FunctionImportParameter(
+      'NullableExplicit',
+      'Edm.String',
+      parameters.nullableExplicit
+    ),
+    nonNullable: new FunctionImportParameter(
+      'NonNullable',
+      'Edm.String',
+      parameters.nonNullable
+    )
+  };
+
+  return new FunctionImportRequestBuilderV4(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestFunctionImportNullableTest',
+    data =>
+      transformReturnValueForEdmTypeListV4(data, val =>
+        edmToTsV4(val, 'Edm.String')
+      ),
+    params
+  );
+}
+
+/**
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnType]].
  */
 export interface TestFunctionImportEntityReturnTypeParameters {}
@@ -277,11 +336,11 @@ export interface TestFunctionImportMultipleParamsParameters {
   /**
    * Nullable Boolean Param.
    */
-  nullableBooleanParam?: boolean;
+  nullableBooleanParam?: boolean | null;
   /**
    * Nullable Geography Point Param.
    */
-  nullableGeographyPointParam?: any;
+  nullableGeographyPointParam?: any | null;
 }
 
 /**
@@ -294,7 +353,7 @@ export function testFunctionImportMultipleParams(
   parameters: TestFunctionImportMultipleParamsParameters
 ): FunctionImportRequestBuilderV4<
   TestFunctionImportMultipleParamsParameters,
-  boolean
+  boolean | null
 > {
   const params = {
     stringParam: new FunctionImportParameter(
@@ -360,6 +419,7 @@ export function testFunctionImportWithDifferentName(
 export const functionImports = {
   testFunctionImportEdmReturnType,
   testFunctionImportEdmReturnTypeCollection,
+  testFunctionImportNullableTest,
   testFunctionImportEntityReturnType,
   testFunctionImportEntityReturnTypeCollection,
   testFunctionImportSharedEntityReturnType,

@@ -3,6 +3,7 @@ import * as http from 'http';
 export interface DestinationHttpRequestConfig {
   baseURL: string;
   headers: Record<string, string>;
+  params?: Record<string, string>;
   httpAgent?: http.Agent;
   httpsAgent?: http.Agent;
 }
@@ -43,6 +44,7 @@ export enum HttpMethod {
  * This interface is compatible with AxiosRequestConfig.
  */
 export interface HttpRequestConfig {
+  [key: string]: any;
   url?: string;
   method: Method;
   data?: any;

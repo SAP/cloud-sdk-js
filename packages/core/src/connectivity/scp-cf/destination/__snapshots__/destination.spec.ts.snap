@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Destination edmx-parser parseDestination throws an error if there is no URL given 1`] = `"Property 'URL' of destination configuration must not be undefined."`;
-
-exports[`Destination edmx-parser sanitizeDestination throws an error if there is no url given 1`] = `"Property 'url' of destination input must not be undefined."`;

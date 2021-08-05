@@ -327,6 +327,7 @@ describe('service-generator', () => {
           builderFunction:
             '(data) => deserializeComplexTypeV2(data, TestComplexType)',
           isCollection: false,
+          isNullable: false,
           isMulti: false
         };
 
@@ -462,7 +463,7 @@ describe('service-generator', () => {
           propertyNameAsParam: 'enumPropertyWithOneMember',
           edmType: 'API_TEST_SRV.A_TestEnumType_WithOneMember',
           jsType: 'TestEnumTypeWithOneMember',
-          fieldType: 'EdmTypeField',
+          fieldType: 'EnumField',
           description: '',
           nullable: true,
           isComplex: false,
@@ -500,7 +501,7 @@ describe('service-generator', () => {
 
         const actions = services[0].actionsImports;
 
-        expect(actions?.length).toEqual(6);
+        expect(actions?.length).toEqual(7);
         const actionWithUnsupportedEdmType = actions?.find(
           action =>
             action.originalName === 'TestActionImportUnsupportedEdmTypes'

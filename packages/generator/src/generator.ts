@@ -234,7 +234,9 @@ export async function generateSourcesForService(
   });
 
   service.enumTypes.forEach(enumType => {
-    logger.info(`[${service.originalFileName}] Generating enum type ...`);
+    logger.info(
+      `[${service.originalFileName}] Generating enum type ${enumType.originalName} ...`
+    );
     sourceFile(
       serviceDir,
       enumType.typeName,
@@ -244,7 +246,9 @@ export async function generateSourcesForService(
   });
 
   service.complexTypes.forEach(complexType => {
-    logger.info(`[${service.originalFileName}] Generating complex type ...`);
+    logger.info(
+      `[${service.originalFileName}] Generating complex type ${complexType.originalName} ...`
+    );
     sourceFile(
       serviceDir,
       complexType.typeName,

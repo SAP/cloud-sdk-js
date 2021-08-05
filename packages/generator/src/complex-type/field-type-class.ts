@@ -85,6 +85,10 @@ function property(
 
 export function createPropertyFieldInitializer(prop: VdmProperty): string {
   if (prop.isCollection) {
+    if (prop.isEnum) {
+      return `this._fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+    }
+
     if (prop.isComplex) {
       return `this._fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
@@ -94,6 +98,10 @@ export function createPropertyFieldInitializer(prop: VdmProperty): string {
 
   if (prop.isComplex) {
     return `this._fieldBuilder.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
+  }
+
+  if (prop.isEnum) {
+    return `this._fieldBuilder.buildEnumField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
   }
 
   return `this._fieldBuilder.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;

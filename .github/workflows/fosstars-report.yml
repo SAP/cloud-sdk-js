@@ -1,0 +1,16 @@
+name: 'Fosstars (Security)'
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  create_fosstars_report:
+    runs-on: ubuntu-latest
+    name: 'Security rating'
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: SAP/fosstars-rating-core-action@v1.3.0
+        with:
+          report-branch: fosstars-report
+          token: '${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}'

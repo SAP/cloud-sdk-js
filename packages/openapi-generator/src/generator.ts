@@ -346,7 +346,7 @@ async function generateMetadata(
   const clientFile = createFile(
     metadataDir,
     clientFileName,
-    JSON.stringify(await sdkMetadata(openApiDocument, options), null, 2),
+    JSON.stringify(await sdkMetadata(openApiDocument), null, 2),
     options.overwrite,
     false
   );

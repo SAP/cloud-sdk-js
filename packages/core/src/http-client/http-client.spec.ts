@@ -90,14 +90,19 @@ describe('generic http client', () => {
         'SAP-Connectivity-SCC-Location_ID': 'efg'
       });
       expect(warnSpy).toBeCalledWith(
-        'The custom headers are provided with the keys: authorization,sap-client,SAP-Connectivity-SCC-Location_ID. These keys will overwrite the headers created by the SDK.'
+        `The following custom headers will overwrite headers created by the SDK:
+  - "authorization"
+  - "sap-client"
+  - "SAP-Connectivity-SCC-Location_ID"`
       );
     });
 
     it('throws useful error messages when finding the destination fails', async () => {
       await expect(
         buildHttpRequest({ destinationName: 'does not exist' })
-      ).rejects.toThrowErrorMatchingSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Failed to load destination."'
+      );
     });
 
     it('throws useful error messages when building headers fails', async () => {
@@ -106,7 +111,9 @@ describe('generic http client', () => {
           url: 'https://example.com',
           authentication: 'BasicAuthentication'
         })
-      ).rejects.toThrowErrorMatchingSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Failed to build headers."'
+      );
     });
 
     it('defaults to NoAuthentication/does not throw if no credentials are provided', async () => {
@@ -116,9 +123,9 @@ describe('generic http client', () => {
     });
   });
 
-  describe('mergeIntoRequest', () => {
-    beforeAll(() => {
-      nock.cleanAll();
+  describe('addDestinationToRequestConfig', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
     });
 
     it('merges given headers with provided headers (but gives priority to custom headers)', async () => {
@@ -145,59 +152,6 @@ describe('generic http client', () => {
 
       expect(actual).toMatchObject(expected);
       expect(actual.httpsAgent).toBeDefined();
-    });
-
-    it('includes the default axios config in request', async () => {
-      const destination: Destination = { url: 'https://destinationUrl' };
-      // const destination:Destination = {url:'https://destinationUrl',proxyConfiguration:{host:'dummy',port:1234,protocol:Protocol.HTTP}}
-      const requestSpy = jest.spyOn(Axios, 'request');
-      await expect(
-        executeHttpRequest(destination, { method: 'get' })
-      ).rejects.toThrowError();
-      expect(requestSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          proxy: false,
-          httpsAgent: expect.anything(),
-          httpAgent: expect.anything()
-        })
-      );
-    });
-
-    it('overwrites the default axios config with destination related request config', async () => {
-      const destination: Destination = {
-        url: 'https://destinationUrl',
-        proxyConfiguration: {
-          host: 'dummy',
-          port: 1234,
-          protocol: Protocol.HTTP
-        }
-      };
-      const requestSpy = jest.spyOn(Axios, 'request');
-      await expect(
-        executeHttpRequest(destination, { method: 'get' })
-      ).rejects.toThrowError();
-      expect(requestSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          proxy: false,
-          httpsAgent: expect.objectContaining({
-            proxy: expect.objectContaining({ port: 1234 })
-          })
-        })
-      );
-    });
-
-    it('overwrites destination related request config with the explicit one', async () => {
-      const destination: Destination = { url: 'https://destinationUrl' };
-      const requestSpy = jest.spyOn(Axios, 'request');
-      await expect(
-        executeHttpRequest(destination, { method: 'post' })
-      ).rejects.toThrowError();
-
-      expect(requestSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          method: 'post'
-        })
-      );
     });
 
     it('overwrites baseURL and either httpAgent or httpsAgent', async () => {
@@ -252,8 +206,8 @@ describe('generic http client', () => {
   });
 
   describe('executeHttpRequest', () => {
-    beforeAll(() => {
-      nock.cleanAll();
+    afterEach(() => {
+      jest.restoreAllMocks();
     });
 
     // The base-agent dependency coming in via the http-proxy-agent did mess with the node https.
@@ -359,7 +313,9 @@ describe('generic http client', () => {
             b: 'b'
           }
         })
-      ).rejects.toThrowErrorMatchingSnapshot();
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Request failed with status code 500"'
+      );
     });
 
     it('fetches csrf token headers when fetchCsrfToken is true', async () => {
@@ -493,6 +449,58 @@ describe('generic http client', () => {
         fetchCsrfToken: true
       });
       expect(csrfHeaders.buildCsrfHeaders).not.toHaveBeenCalled();
+    });
+
+    it('includes the default axios config in request', async () => {
+      const destination: Destination = { url: 'https://destinationUrl' };
+      const requestSpy = jest.spyOn(Axios, 'request').mockResolvedValue(true);
+      await executeHttpRequest(destination, { method: 'get' });
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          proxy: false,
+          httpsAgent: expect.anything(),
+          httpAgent: expect.anything()
+        })
+      );
+
+      requestSpy.mockRestore();
+    });
+
+    it('overwrites the default axios config with destination related request config', async () => {
+      const destination: Destination = {
+        url: 'https://destinationUrl',
+        proxyConfiguration: {
+          host: 'dummy',
+          port: 1234,
+          protocol: Protocol.HTTP
+        }
+      };
+      const requestSpy = jest.spyOn(Axios, 'request').mockResolvedValue(true);
+      await expect(
+        executeHttpRequest(destination, { method: 'get' })
+      ).resolves.not.toThrow();
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          proxy: false,
+          httpsAgent: expect.objectContaining({
+            proxy: expect.objectContaining({ port: 1234 })
+          })
+        })
+      );
+    });
+
+    it('overwrites destination related request config with the explicit one', async () => {
+      const destination: Destination = { url: 'https://destinationUrl' };
+      const requestSpy = jest.spyOn(Axios, 'request').mockResolvedValue(true);
+      await expect(
+        executeHttpRequest(destination, { method: 'post' })
+      ).resolves.not.toThrow();
+
+      expect(requestSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: 'post'
+        })
+      );
     });
   });
 

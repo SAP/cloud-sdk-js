@@ -37,7 +37,7 @@ function mockCsrfTokenRequest(path?: string) {
 }
 
 describe('action import request builder', () => {
-  it('should call simple action.', async () => {
+  it('should call simple action', async () => {
     mockCsrfTokenRequest('TestActionImportNoParameterNoReturnType');
 
     nock(host, {

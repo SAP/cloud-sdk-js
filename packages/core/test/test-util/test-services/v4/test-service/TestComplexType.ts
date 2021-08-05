@@ -16,6 +16,7 @@ import {
   ConstructorOrField,
   EdmTypeField,
   EntityV4,
+  EnumField,
   FieldBuilder,
   FieldOptions,
   FieldType,
@@ -128,6 +129,11 @@ export interface TestComplexType {
    * @nullable
    */
   collectionStringProperty?: string[];
+  /**
+   * Collection Enum Property.
+   * @nullable
+   */
+  collectionEnumProperty?: TestEnumType[];
   /**
    * Collection Complex Type Property.
    * @nullable
@@ -285,8 +291,8 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  enumProperty: EdmTypeField<EntityT, 'Edm.Enum', true, false> =
-    this._fieldBuilder.buildEdmTypeField('EnumProperty', 'Edm.Enum', true);
+  enumProperty: EnumField<EntityT, TestEnumType, true, false> =
+    this._fieldBuilder.buildEnumField('EnumProperty', TestEnumType, true);
   /**
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -319,6 +325,20 @@ export class TestComplexTypeField<
   > = this._fieldBuilder.buildCollectionField(
     'CollectionStringProperty',
     'Edm.String',
+    true
+  );
+  /**
+   * Representation of the [[TestComplexType.collectionEnumProperty]] property for query construction.
+   * Use to reference this property in query operations such as 'filter' in the fluent request API.
+   */
+  collectionEnumProperty: CollectionField<
+    EntityT,
+    typeof TestEnumType,
+    true,
+    false
+  > = this._fieldBuilder.buildCollectionField(
+    'CollectionEnumProperty',
+    TestEnumType,
     true
   );
   /**
@@ -484,6 +504,12 @@ export namespace TestComplexType {
       originalName: 'CollectionStringProperty',
       name: 'collectionStringProperty',
       type: 'Edm.String',
+      isCollection: true
+    },
+    {
+      originalName: 'CollectionEnumProperty',
+      name: 'collectionEnumProperty',
+      type: 'Edm.Enum',
       isCollection: true
     },
     {

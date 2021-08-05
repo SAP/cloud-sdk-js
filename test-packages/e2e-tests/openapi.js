@@ -3,7 +3,7 @@ const OpenAPIBackend = require('openapi-backend').default;
 const express = require('express');
 const SwaggerParser = require('@apidevtools/swagger-parser');
 
-const jsf = require('json-schema-faker').default;
+const jsf = require('json-schema-faker');
 
 async function getSchemas() {
   // SchemaObject

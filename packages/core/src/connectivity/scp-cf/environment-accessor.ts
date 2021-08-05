@@ -91,7 +91,7 @@ export function getServiceList(service: string): Service[] {
  * @returns The first found service.
  */
 export function getService(service: string): Service | undefined {
-  const services = xsenv.filterServices({ label: service }) as Service[];
+  const services: Service[] = xsenv.filterServices({ label: service });
 
   if (!services.length) {
     logger.warn(
@@ -227,7 +227,7 @@ export function resolveService(service: string | Service): Service {
 
     if (!serviceInstance) {
       throw Error(
-        `Unable to get access token for "${service}" service! No service instance of type "${service}" found.`
+        `Unable to get access token for "${service}" service. No service instance of type "${service}" found.`
       );
     }
 
@@ -256,7 +256,7 @@ function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {
 
   if (!xsuaaInstances.length) {
     throw Error(
-      'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application!'
+      'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application.'
     );
   }
 

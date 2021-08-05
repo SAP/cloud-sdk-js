@@ -4,7 +4,6 @@ import {
   mergeIgnoreCase,
   pickIgnoreCase,
   pickNonNullish,
-  pickValueIgnoreCase,
   propertyExists
 } from '@sap-cloud-sdk/util';
 import {
@@ -63,12 +62,17 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Constructs a URL relative to the destination.
    * @param includeServicePath Whether or not to include the service path in the URL.
+   * @param includeQueryParameters Whether or not to include the query parameters in the URL.
    * @returns The relative URL for the request.
    */
-  relativeUrl(includeServicePath = true): string {
+  relativeUrl(
+    includeServicePath = true,
+    includeQueryParameters = true
+  ): string {
+    const query = includeQueryParameters ? this.query() : '';
     return `${removeTrailingSlashes(
       this.relativeResourceUrl(includeServicePath)
-    )}${this.config.appendedPaths.join('')}${this.query()}`;
+    )}${this.config.appendedPaths.join('')}${query}`;
   }
 
   /**
@@ -141,12 +145,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Query parameter string
    */
   query(): string {
-    const queryParameters = {
-      ...this.config.queryParameters(),
-      ...this.config.customQueryParameters
-    };
-
-    const query = Object.entries(queryParameters)
+    const query = Object.entries(this.queryParameters())
       .map(([key, value]) => `${key}=${value}`)
       .join('&');
     return query.length ? `?${query}` : '';
@@ -195,14 +194,13 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   defaultHeaders(): Record<string, any> {
-    const customDefaultHeaders = pickIgnoreCase(
-      this.customHeaders(),
+    const additionalHeaders = this.getAdditionalHeadersForKeys(
       ...Object.keys(this.config.defaultHeaders)
     );
 
     return mergeIgnoreCase(
       pickNonNullish(this.config.defaultHeaders),
-      customDefaultHeaders
+      additionalHeaders
     );
   }
 
@@ -211,8 +209,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   eTagHeaders(): Record<string, any> {
-    if (pickValueIgnoreCase(this.customHeaders(), 'if-match')) {
-      return pickIgnoreCase(this.customHeaders(), 'if-match');
+    const additionalIfMatchHeader =
+      this.getAdditionalHeadersForKeys('if-match');
+    if (Object.keys(additionalIfMatchHeader).length) {
+      return additionalIfMatchHeader;
     }
     const eTag = isWithETag(this.config)
       ? this.config.versionIdentifierIgnored
@@ -238,7 +238,8 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       {
         ...filterCustomRequestConfig(this.config.customRequestConfiguration),
         headers: await this.headers(),
-        url: this.relativeUrl(),
+        params: this.queryParameters(),
+        url: this.relativeUrl(true, false),
         method: this.config.method,
         data: this.config.payload
       },
@@ -246,6 +247,23 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     ).catch(error => {
       throw constructError(error, this.config.method, this.serviceUrl());
     });
+  }
+
+  private getAdditionalHeadersForKeys(...keys: string[]): Record<string, any> {
+    const destinationHeaders = pickIgnoreCase(
+      this.destination?.headers,
+      ...keys
+    );
+    const customHeaders = pickIgnoreCase(this.customHeaders(), ...keys);
+    return mergeIgnoreCase(destinationHeaders, customHeaders);
+  }
+
+  private queryParameters(): Record<string, any> {
+    return {
+      ...this.config.queryParameters(),
+      ...this.destination?.queryParameters,
+      ...this.config.customQueryParameters
+    };
   }
 }
 

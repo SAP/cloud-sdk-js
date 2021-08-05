@@ -118,7 +118,7 @@ describe('generator', () => {
     });
 
     it('generates expected number of files', () => {
-      expect(files.length).toBe(38);
+      expect(files.length).toBe(41);
     });
 
     it('generates TestEntity.ts file', () => {
@@ -139,6 +139,7 @@ describe('generator', () => {
         'bignumber.js',
         './TestComplexType',
         './TestEnumType',
+        './TestEnumTypeInt64',
         './TestEnumTypeWithOneMember',
         '@sap-cloud-sdk/core',
         './TestEntityMultiLink',
@@ -146,17 +147,17 @@ describe('generator', () => {
       ]);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(31);
+      expect(entityClass!.getProperties().length).toBe(32);
 
       checkStaticProperties(entityClass!);
 
       const entityNamespace = testEntityFile!.getModule('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(34);
+      expect(entityNamespace!.getVariableDeclarations().length).toBe(35);
     });
 
     it('generates function-imports.ts file', () => {
       const functionImports = getFunctionImportDeclarations(files);
-      expect(functionImports.length).toBe(10);
+      expect(functionImports.length).toBe(11);
       const functionImportNames = functionImports.map(fi => fi.getName());
       expect(functionImportNames).toEqual(
         expect.arrayContaining(['testFunctionImportWithDifferentName'])
@@ -168,7 +169,7 @@ describe('generator', () => {
 
     it('generates action-imports.ts file', () => {
       const actionImports = getActionImportDeclarations(files);
-      expect(actionImports.length).toBe(6);
+      expect(actionImports.length).toBe(7);
       const actionImportNames = actionImports.map(action => action.getName());
       expect(actionImportNames).toEqual(
         expect.arrayContaining(['testActionImportNoParameterNoReturnType'])

@@ -77,7 +77,7 @@ function createPropertyFieldInitializer(prop: VdmProperty): string {
       return `_fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
     if (prop.isEnum) {
-      return `_fieldBuilder.buildCollectionField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
+      return `_fieldBuilder.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
     }
     return `_fieldBuilder.buildCollectionField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
   }
@@ -87,7 +87,7 @@ function createPropertyFieldInitializer(prop: VdmProperty): string {
   }
 
   if (prop.isEnum) {
-    return `_fieldBuilder.buildEdmTypeField('${prop.originalName}', 'Edm.Enum', ${prop.nullable})`;
+    return `_fieldBuilder.buildEnumField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
   }
 
   return `_fieldBuilder.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;

@@ -59,11 +59,11 @@ export interface TestActionImportMultipleParameterComplexReturnTypeParameters {
   /**
    * Nullable Boolean Param.
    */
-  nullableBooleanParam?: boolean;
+  nullableBooleanParam?: boolean | null;
   /**
    * Nullable Geography Point Param.
    */
-  nullableGeographyPointParam?: any;
+  nullableGeographyPointParam?: any | null;
 }
 
 /**
@@ -248,11 +248,71 @@ export function testActionImportSharedEntityReturnTypeCollection(
   );
 }
 
+/**
+ * Type of the parameters to be passed to [[testActionImportNullableTest]].
+ */
+export interface TestActionImportNullableTestParameters {
+  /**
+   * Nullable Per Default.
+   */
+  nullablePerDefault?: string | null;
+  /**
+   * Nullable Explicit.
+   */
+  nullableExplicit?: string | null;
+  /**
+   * Non Nullable.
+   */
+  nonNullable: string;
+}
+
+/**
+ * Test Action Import Nullable Test.
+ *
+ * @param parameters - Object containing all parameters for the action import.
+ * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
+ */
+export function testActionImportNullableTest(
+  parameters: TestActionImportNullableTestParameters
+): ActionImportRequestBuilder<
+  TestActionImportNullableTestParameters,
+  TestComplexType | null
+> {
+  const params = {
+    nullablePerDefault: new ActionImportParameter(
+      'NullablePerDefault',
+      'Edm.String',
+      parameters.nullablePerDefault
+    ),
+    nullableExplicit: new ActionImportParameter(
+      'NullableExplicit',
+      'Edm.String',
+      parameters.nullableExplicit
+    ),
+    nonNullable: new ActionImportParameter(
+      'NonNullable',
+      'Edm.String',
+      parameters.nonNullable
+    )
+  };
+
+  return new ActionImportRequestBuilder(
+    '/sap/opu/odata/sap/API_TEST_SRV',
+    'TestActionImportNullableTest',
+    data =>
+      transformReturnValueForComplexTypeV4(data, data =>
+        deserializeComplexTypeV4(data, TestComplexType)
+      ),
+    params
+  );
+}
+
 export const actionImports = {
   testActionImportNoParameterNoReturnType,
   testActionImportMultipleParameterComplexReturnType,
   testActionImportUnsupportedEdmTypes,
   testActionImportNoParameterEntityReturnType,
   testActionImportSharedEntityReturnType,
-  testActionImportSharedEntityReturnTypeCollection
+  testActionImportSharedEntityReturnTypeCollection,
+  testActionImportNullableTest
 };

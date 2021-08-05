@@ -4,10 +4,15 @@ import {
 } from '../../../test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
+  createOriginalTestEntityWithEnumKeyData,
   createTestEntity,
+  createTestEntityWithEnumKey,
   testEntityResourcePath
 } from '../../../test/test-util/test-data';
-import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
+import {
+  TestEntity,
+  TestEntityWithEnumKey
+} from '../../../test/test-util/test-services/v4/test-service';
 import { uriConverter } from '../uri-conversion';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
@@ -34,6 +39,24 @@ describe('GetByKeyRequestBuilder', () => {
       const actual = await new GetByKeyRequestBuilder(TestEntity, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
+      }).execute(defaultDestination);
+      expect(actual).toEqual(expected);
+    });
+
+    it('returns entity with enum type as a key', async () => {
+      const entityData = createOriginalTestEntityWithEnumKeyData();
+      const expected = createTestEntityWithEnumKey(entityData);
+
+      mockGetRequest(
+        {
+          path: "A_TestEntityWithEnumKey(KeyPropertyEnum1='Member1')",
+          responseBody: entityData
+        },
+        TestEntityWithEnumKey
+      );
+
+      const actual = await new GetByKeyRequestBuilder(TestEntityWithEnumKey, {
+        KeyPropertyEnum1: expected.keyPropertyEnum1
       }).execute(defaultDestination);
       expect(actual).toEqual(expected);
     });

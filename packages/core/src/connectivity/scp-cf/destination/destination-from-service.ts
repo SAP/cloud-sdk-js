@@ -32,6 +32,9 @@ import type { DestinationOptions } from './destination-accessor';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
+type RequiredProperties<T, P extends keyof T> = Required<Pick<T, P>> &
+  Omit<T, P>;
+
 const logger = createLogger({
   package: 'core',
   messageContext: 'destination-accessor-service'
@@ -156,7 +159,10 @@ class DestinationFromServiceRetriever {
   }
 
   readonly decodedProviderClientCredentialsToken: JwtPayload;
-  private options: DestinationOptions;
+  private options: RequiredProperties<
+    DestinationOptions,
+    'isolationStrategy' | 'selectionStrategy' | 'useCache'
+  >;
 
   private constructor(
     readonly name: string,
@@ -164,22 +170,23 @@ class DestinationFromServiceRetriever {
     readonly decodedUserJwt: JwtPayload | undefined,
     readonly providerClientCredentialsToken: string
   ) {
-    this.options = { ...options };
     this.decodedProviderClientCredentialsToken = decodeJwt(
       providerClientCredentialsToken
     );
 
-    this.options.isolationStrategy =
-      options.isolationStrategy || IsolationStrategy.Tenant;
-    this.options.selectionStrategy =
-      options.selectionStrategy || subscriberFirst;
-    this.options.useCache = options.useCache || false;
+    const defaultOptions = {
+      isolationStrategy: IsolationStrategy.Tenant,
+      selectionStrategy: subscriberFirst,
+      useCache: false,
+      ...options
+    };
+    this.options = { ...defaultOptions, ...options };
   }
 
   private async searchDestinationWithSelectionStrategyAndCache(): Promise<
     DestinationSearchResult | undefined
   > {
-    let destinationSearchResult;
+    let destinationSearchResult: DestinationSearchResult | undefined;
     if (this.isSubscriberNeeded()) {
       destinationSearchResult =
         await this.searchSubscriberAccountForDestination();
@@ -190,12 +197,12 @@ class DestinationFromServiceRetriever {
         await this.searchProviderAccountForDestination();
     }
     if (destinationSearchResult && !destinationSearchResult.fromCache) {
-      logger.info(
+      logger.debug(
         'Successfully retrieved destination from destination service.'
       );
     }
     if (destinationSearchResult && destinationSearchResult.fromCache) {
-      logger.info(
+      logger.debug(
         `Successfully retrieved destination from destination service cache for ${destinationSearchResult.origin} destinations.`
       );
     }
@@ -232,7 +239,7 @@ class DestinationFromServiceRetriever {
     const credentials = getDestinationServiceCredentialsList();
     if (!credentials || credentials.length === 0) {
       throw Error(
-        'No binding to a Destination service instance found. Please bind a destination service instance to your application!'
+        'No binding to a destination service instance found. Please bind a destination service instance to your application.'
       );
     }
 
@@ -251,6 +258,7 @@ class DestinationFromServiceRetriever {
       this.options
     );
   }
+
   private async getAuthTokenForOAuth2UserTokenExchange(
     destinationOrigin: DestinationOrigin
   ): Promise<AuthAndExchangeTokens> {
@@ -340,7 +348,7 @@ class DestinationFromServiceRetriever {
               this.options
             );
       logger.debug(
-        `System user found on destination. The ${destinationOrigin} token: ${token} is used for destination fetching`
+        `System user found on destination. The ${destinationOrigin} token: ${token} is used for destination fetching.`
       );
 
       if (destinationOrigin) {
@@ -413,7 +421,7 @@ class DestinationFromServiceRetriever {
         ? this.decodedUserJwt!
         : this.decodedProviderClientCredentialsToken,
       destination,
-      this.options.isolationStrategy!
+      this.options.isolationStrategy
     );
   }
 
@@ -423,7 +431,7 @@ class DestinationFromServiceRetriever {
     const provider = await this.getInstanceAndSubaccountDestinations(
       this.providerClientCredentialsToken
     );
-    const destination = await this.options.selectionStrategy!(
+    const destination = this.options.selectionStrategy(
       {
         subscriber: emptyDestinationByType,
         provider
@@ -443,7 +451,7 @@ class DestinationFromServiceRetriever {
     const destination = destinationCache.retrieveDestinationFromCache(
       this.decodedProviderClientCredentialsToken,
       this.name,
-      this.options.isolationStrategy!
+      this.options.isolationStrategy
     );
 
     if (destination) {
@@ -461,7 +469,7 @@ class DestinationFromServiceRetriever {
     const subscriber = await this.getInstanceAndSubaccountDestinations(
       accessToken
     );
-    const destination = this.options.selectionStrategy!(
+    const destination = this.options.selectionStrategy(
       {
         subscriber,
         provider: emptyDestinationByType
@@ -478,7 +486,7 @@ class DestinationFromServiceRetriever {
     const destination = destinationCache.retrieveDestinationFromCache(
       this.decodedUserJwt!,
       this.name,
-      this.options.isolationStrategy!
+      this.options.isolationStrategy
     );
 
     if (destination) {
@@ -497,11 +505,12 @@ class DestinationFromServiceRetriever {
   }
 
   private isProviderNeeded(
-    resultFromSubscriber: DestinationSearchResult
+    resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
     if (this.options.selectionStrategy === alwaysSubscriber) {
       return false;
     }
+
     if (
       this.options.selectionStrategy === subscriberFirst &&
       resultFromSubscriber
@@ -531,22 +540,18 @@ class DestinationFromServiceRetriever {
   private async searchProviderAccountForDestination(): Promise<
     DestinationSearchResult | undefined
   > {
-    let destination;
-    if (this.options.useCache) {
-      destination = this.getProviderDestinationCache();
-    }
-
-    return destination || this.getProviderDestinationService();
+    return (
+      (this.options.useCache && this.getProviderDestinationCache()) ||
+      this.getProviderDestinationService()
+    );
   }
 
   private async searchSubscriberAccountForDestination(): Promise<
     DestinationSearchResult | undefined
   > {
-    let destination;
-    if (this.options.useCache) {
-      destination = this.getSubscriberDestinationCache();
-    }
-
-    return destination || this.getSubscriberDestinationService();
+    return (
+      (this.options.useCache && this.getSubscriberDestinationCache()) ||
+      this.getSubscriberDestinationService()
+    );
   }
 }

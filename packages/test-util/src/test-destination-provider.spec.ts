@@ -1,5 +1,5 @@
 import { fail } from 'assert';
-import { unlinkSync, writeFileSync } from 'fs';
+import mock from 'mock-fs';
 import { credentials, systems } from '../test/test-util/test-destinations';
 import {
   getTestDestinationByAlias,
@@ -12,9 +12,15 @@ const fs = require('fs');
 
 describe('test-destination-provider', () => {
   describe('getDestinations', () => {
+    afterEach(() => {
+      mock.restore();
+    });
+
     it('returns a list of destinations taken from the first matching file(s) found by recursively traversing the file hierarchy upwards starting at "./"', () => {
-      writeFileSync('./systems.json', JSON.stringify(systems));
-      writeFileSync('./credentials.json', JSON.stringify(credentials));
+      mock({
+        'systems.json': JSON.stringify(systems),
+        'credentials.json': JSON.stringify(credentials)
+      });
 
       const destinations = getTestDestinations();
       expect(destinations).toEqual([
@@ -35,14 +41,13 @@ describe('test-destination-provider', () => {
           isTestDestination: true
         }
       ]);
-
-      unlinkSync('./systems.json');
-      unlinkSync('./credentials.json');
     });
 
     it('allows providing paths to the systems and credentials file directly', () => {
-      writeFileSync('../systems.json', JSON.stringify(systems));
-      writeFileSync('../credentials.json', JSON.stringify(credentials));
+      mock({
+        '../systems.json': JSON.stringify(systems),
+        '../credentials.json': JSON.stringify(credentials)
+      });
 
       const destinations = getTestDestinations({
         systemsFilePath: '../systems.json',
@@ -66,41 +71,38 @@ describe('test-destination-provider', () => {
           isTestDestination: true
         }
       ]);
-
-      unlinkSync('../systems.json');
-      unlinkSync('../credentials.json');
     });
 
     it('throws an error if the provided systemFilePath is invalid', () => {
-      try {
+      expect(() =>
         getTestDestinations({
           systemsFilePath: 'blablabla',
           credentialsFilePath: 'irrelevant, could should fail beforehand'
-        });
-        fail('Expected an error to be thrown, but none has been.');
-      } catch (error) {
-        expect(error.message).toContain('The provided path');
-      }
+        })
+      ).toThrowErrorMatchingInlineSnapshot(
+        '"The provided path (blablabla) to the systems file is invalid!"'
+      );
     });
 
     it('throws an error if the provided credentialsFilePath is invalid', () => {
-      writeFileSync('./systems.json', JSON.stringify(systems));
+      mock({
+        'systems.json': JSON.stringify(systems)
+      });
 
-      try {
+      expect(() =>
         getTestDestinations({
           systemsFilePath: './systems.json',
           credentialsFilePath: 'nopenopenope'
-        });
-        fail('Expected an error to be thrown, but none has been.');
-      } catch (error) {
-        expect(error.message).toContain('The provided path');
-      }
-
-      unlinkSync('./systems.json');
+        })
+      ).toThrowErrorMatchingInlineSnapshot(
+        '"The provided path (nopenopenope) to the credentials file is invalid!"'
+      );
     });
 
     it('works when providing only a path to a systems.json', () => {
-      writeFileSync('./systems.json', JSON.stringify(systems));
+      mock({
+        'systems.json': JSON.stringify(systems)
+      });
 
       const destinations = getTestDestinations({
         systemsFilePath: './systems.json'
@@ -123,13 +125,13 @@ describe('test-destination-provider', () => {
           isTestDestination: true
         }
       ]);
-
-      unlinkSync('./systems.json');
     });
 
     it('works when providing only a path to a credentials.json when a systems.json can be found', () => {
-      writeFileSync('./systems.json', JSON.stringify(systems));
-      writeFileSync('../credentials.json', JSON.stringify(credentials));
+      mock({
+        'systems.json': JSON.stringify(systems),
+        '../credentials.json': JSON.stringify(credentials)
+      });
 
       const destinations = getTestDestinations({
         credentialsFilePath: '../credentials.json'
@@ -152,13 +154,12 @@ describe('test-destination-provider', () => {
           isTestDestination: true
         }
       ]);
-
-      unlinkSync('./systems.json');
-      unlinkSync('../credentials.json');
     });
 
     it('works if a systems.json is found but no credentials.json', () => {
-      writeFileSync('./systems.json', JSON.stringify(systems));
+      mock({
+        'systems.json': JSON.stringify(systems)
+      });
 
       const destinations = getTestDestinations();
       expect(destinations).toEqual([
@@ -179,40 +180,32 @@ describe('test-destination-provider', () => {
           isTestDestination: true
         }
       ]);
-
-      unlinkSync('./systems.json');
     });
 
     it('throws a reasonable error when the JSON file cannot be found', () => {
-      try {
-        fs.switchMockOn();
-        getTestDestinations();
-      } catch (error) {
-        expect(error.message).toMatch(
-          /No systems\.json could be found when searching in directory .+ and upwards and no paths have been provided directly\./
-        );
-      } finally {
-        fs.switchMockOff();
-      }
+      fs.switchMockOn();
+      expect(() => getTestDestinations()).toThrowError(
+        /^No systems.json could be found when searching in directory.*/
+      );
+      fs.switchMockOff();
     });
 
     it('throws a reasonable error when the file does not contain proper JSON', () => {
-      try {
-        fs.switchMockOn();
-        fs.setReadDirSync(['systems.json']);
-        fs.setReadFileSync('not proper JSON');
-        getTestDestinations();
-        fail('Expected an error to be thrown, but none has been.');
-      } catch (error) {
-        expect(error.message).toContain('is not valid JSON');
-      } finally {
-        fs.switchMockOff();
-      }
+      fs.switchMockOn();
+      fs.setReadDirSync(['systems.json']);
+      fs.setReadFileSync('not proper JSON');
+      expect(() => getTestDestinations()).toThrowError(
+        /^File read from path.*is not valid JSON./
+      );
+
+      fs.switchMockOff();
     });
   });
 
   it('throws a reasonable error when the format is not correct', () => {
-    writeFileSync('./systems.json', '{"systems":[{"alias":"Foo"}]}');
+    mock({
+      'systems.json': '{"systems":[{"alias":"Foo"}]}'
+    });
 
     try {
       getTestDestinations();
@@ -222,15 +215,19 @@ describe('test-destination-provider', () => {
         /A system in .* is not valid - Mandatory alias or url missing./
       );
     }
-
-    unlinkSync('./systems.json');
   });
 });
 
 describe('getDestinationByAlias', () => {
+  afterEach(() => {
+    mock.restore();
+  });
+
   it('locates the files and returns the destination by alias', () => {
-    writeFileSync('./systems.json', JSON.stringify(systems));
-    writeFileSync('./credentials.json', JSON.stringify(credentials));
+    mock({
+      'systems.json': JSON.stringify(systems),
+      'credentials.json': JSON.stringify(credentials)
+    });
 
     const sysOne = getTestDestinationByAlias('SYS_001');
     const sysTwo = getTestDestinationByAlias('SYS_002');
@@ -252,23 +249,18 @@ describe('getDestinationByAlias', () => {
       password: undefined,
       isTestDestination: true
     });
-
-    unlinkSync('./systems.json');
-    unlinkSync('./credentials.json');
   });
 
   it("throws an error if the specified destination can't be found", () => {
-    writeFileSync('./systems.json', JSON.stringify(systems));
-    writeFileSync('./credentials.json', JSON.stringify(credentials));
+    mock({
+      'systems.json': JSON.stringify(systems),
+      'credentials.json': JSON.stringify(credentials)
+    });
 
-    try {
-      getTestDestinationByAlias('NOPE');
-      fail('Expected an error to be thrown, but none has been.');
-    } catch (error) {
-      expect(error.message).toContain("Couldn't find destination that matches");
-    }
-
-    unlinkSync('./systems.json');
-    unlinkSync('./credentials.json');
+    expect(() => getTestDestinationByAlias('NOPE'))
+      .toThrowErrorMatchingInlineSnapshot(`
+      "Couldn't find destination that matches the provided name \\"NOPE\\".
+            The following destinations could be found: SYS_001, SYS_002"
+    `);
   });
 });

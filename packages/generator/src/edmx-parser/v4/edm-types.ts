@@ -25,10 +25,11 @@ export interface EdmxEntitySet extends EdmxEntitySetBase {
 }
 
 export interface EdmxEnumMember extends EdmxNamed {
-  Value: string;
+  Value?: string;
 }
 
 export interface EdmxEnumType extends EdmxNamed, EdmxNamespaced {
+  UnderlyingType?: string;
   Member: EdmxEnumMember[];
 }
 
@@ -43,9 +44,14 @@ export interface EdmxActionImport extends EdmxNamed, EdmxNamespaced {
 }
 
 export interface EdmxFunction extends EdmxNamed, EdmxNamespaced {
-  ReturnType?: { Type: string };
+  ReturnType?: EdmxReturnType;
   Parameter: EdmxParameter[];
   IsBound: boolean;
+}
+
+export interface EdmxReturnType {
+  Type: string;
+  Nullable?: string;
 }
 
 export type EdmxAction = EdmxFunction;

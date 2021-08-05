@@ -56,7 +56,7 @@ describe('destination-selection-strategies', () => {
     };
     subscriberFirst(allDestinations, 'testination');
     expect(warnSpy).toHaveBeenCalledWith(
-      'A destination with name testination has been found for the destination serivce instance and subaccount. The instance destination will be used.'
+      "Found destinations named 'testination' for both, the destination service instance and subaccount. Using instance destination."
     );
   });
 

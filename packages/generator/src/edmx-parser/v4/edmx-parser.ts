@@ -37,6 +37,7 @@ export function parseComplexTypes(root: any): EdmxComplexType[] {
 export function parseEnumTypes(root: any): EdmxEnumType[] {
   return getMergedPropertyWithNamespace(root, 'EnumType').map(edmxEnumType => ({
     Name: edmxEnumType.Name,
+    UnderlyingType: edmxEnumType.UnderlyingType,
     Member: forceArray(edmxEnumType.Member),
     Namespace: edmxEnumType.Namespace
   }));
@@ -68,7 +69,10 @@ export function parseActionImport(root: any): EdmxActionImport[] {
   return getPropertyFromEntityContainer(root, 'ActionImport');
 }
 
-function parseActionsFunctions(root, actionFunctionKey: 'Action' | 'Function') {
+function parseActionsFunctions(
+  root,
+  actionFunctionKey: 'Action' | 'Function'
+): EdmxFunction[] | EdmxAction[] {
   return getMergedPropertyWithNamespace(root, actionFunctionKey).map(
     actionOrFunction => ({
       ...actionOrFunction,

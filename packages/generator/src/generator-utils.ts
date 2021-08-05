@@ -15,30 +15,65 @@ function hasCapability(object: any, capability: string) {
   return !(capability in object) || object[capability] === 'true';
 }
 
+/**
+ * Checks if the 'sap:deletable' property is present on the given input.
+ * @param entity - Object to be checked.
+ * @returns true per default or if {sap:deletable:'true'} is in the object.
+ */
 export function isDeletable(entity: any): boolean {
   return hasCapability(entity, 'sap:deletable');
 }
 
+/**
+ * Checks if the 'sap:updatable' property is present on the given input.
+ * @param entity - Object to be checked.
+ * @returns true per default or if {sap:updatable:'true'} is in the object.
+ */
 export function isUpdatable(entity: any): boolean {
   return hasCapability(entity, 'sap:updatable');
 }
 
+/**
+ * Checks if the 'sap:creatable' property is present on the given input.
+ * @param entity - Object to be checked.
+ * @returns true per default or if {sap:creatable:'true'} is in the object.
+ */
 export function isCreatable(entity: any): boolean {
   return hasCapability(entity, 'sap:creatable');
 }
 
+/**
+ * Checks if the 'sap:sortable' property is present on the given input.
+ * @param property - Object to be checked.
+ * @returns true per default or if {sap:sortable:'true'} is in the object.
+ */
 export function isSortable(property: any): boolean {
   return hasCapability(property, 'sap:sortable');
 }
 
+/**
+ * Checks if the 'sap:filterable' property is present on the given input.
+ * @param property - Object to be checked.
+ * @returns true per default or if {sap:filterable:'true'} is in the object.
+ */
 export function isFilterable(property: any): boolean {
   return hasCapability(property, 'sap:filterable');
 }
 
+/**
+ * Checks if the 'Nullable' property is present on the given input.
+ * @param property - Object to be checked.
+ * @returns true per default or if {Nullable:'true'} is in the object.
+ */
 export function isNullableProperty(property: any): boolean {
   return hasCapability(property, 'Nullable');
 }
 
+/**
+ * Checks if the 'Nullable' property is present on the given input.
+ * @param parameter - Object to be checked.
+ * @returns false per default or if {Nullable:'false'} is in the object.
+ */
 export function isNullableParameter(parameter: any): boolean {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
 }
@@ -189,12 +224,22 @@ export function getGenericParameters(
   isSelectable: boolean
 ): string {
   const params = [entityClassName];
-  if (prop.isEnum) {
-    params.push("'Edm.Enum'");
-  } else if (!prop.isComplex) {
-    params.push(`'${prop.edmType}'`);
-  } else if (prop.isCollection) {
-    params.push(prop.jsType);
+  if (prop.isCollection) {
+    if (prop.isEnum) {
+      params.push(`typeof ${prop.jsType}`);
+    } else if (prop.isComplex) {
+      params.push(prop.jsType);
+    } else {
+      params.push(`'${prop.edmType}'`);
+    }
+  } else {
+    if (prop.isEnum) {
+      params.push(`${prop.jsType}`);
+    } else if (prop.isComplex) {
+      // prettier-ignore
+    } else {
+      params.push(`'${prop.edmType}'`);
+    }
   }
 
   params.push(prop.nullable.toString());

@@ -15,6 +15,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
+  EnumField,
   Field,
   FieldBuilder,
   OneToManyLink,
@@ -176,9 +177,9 @@ export namespace People {
    * Static representation of the [[gender]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GENDER = _fieldBuilder.buildEdmTypeField(
+  export const GENDER = _fieldBuilder.buildEnumField(
     'Gender',
-    'Edm.Enum',
+    PersonGender,
     true
   );
   /**
@@ -215,7 +216,7 @@ export namespace People {
     | EdmTypeField<People, 'Edm.String', false, true>
     | CollectionField<People, 'Edm.String', true, true>
     | CollectionField<People, Location, true, true>
-    | EdmTypeField<People, 'Edm.Enum', true, true>
+    | EnumField<People, PersonGender, true, true>
     | OrderableEdmTypeField<People, 'Edm.Int64', false, true>
     | OneToManyLink<People, People>
     | OneToOneLink<People, Photos>

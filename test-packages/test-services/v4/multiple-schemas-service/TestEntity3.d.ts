@@ -7,6 +7,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   EntityV4,
+  EnumField,
   Field
 } from '@sap-cloud-sdk/core';
 /**
@@ -79,7 +80,7 @@ export declare namespace TestEntity3 {
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  const ENUM_PROPERTY: EdmTypeField<TestEntity3, 'Edm.Enum', true, true>;
+  const ENUM_PROPERTY: EnumField<TestEntity3, TestEnumType2, true, true>;
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -90,7 +91,7 @@ export declare namespace TestEntity3 {
    */
   const _allFields: Array<
     | EdmTypeField<TestEntity3, 'Edm.String', false, true>
-    | EdmTypeField<TestEntity3, 'Edm.Enum', true, true>
+    | EnumField<TestEntity3, TestEnumType2, true, true>
     | TestComplexType2Field<TestEntity3, true, true>
   >;
   /**

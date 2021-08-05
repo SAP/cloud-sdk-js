@@ -1,1 +1,1 @@
-{"version":3,"file":"TestEnumType2.js","sourceRoot":"","sources":["TestEnumType2.ts"],"names":[],"mappings":";AAAA;;;;GAIG;;;AAEH,IAAY,aAGX;AAHD,WAAY,aAAa;IACvB,oCAAmB,CAAA;IACnB,oCAAmB,CAAA;AACrB,CAAC,EAHW,aAAa,GAAb,qBAAa,KAAb,qBAAa,QAGxB"}
+{"version":3,"file":"TestEnumType2.js","sourceRoot":"","sources":["TestEnumType2.ts"],"names":[],"mappings":";AAAA;;;;GAIG;;;AAEH;;;GAGG;AACH,IAAY,aASX;AATD,WAAY,aAAa;IACvB;;OAEG;IACH,oCAAmB,CAAA;IACnB;;OAEG;IACH,oCAAmB,CAAA;AACrB,CAAC,EATW,aAAa,GAAb,qBAAa,KAAb,qBAAa,QASxB"}

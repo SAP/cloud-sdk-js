@@ -185,7 +185,7 @@ export abstract class MethodRequestBuilder<
           );
         });
     }
-    return new ODataRequest(this.requestConfig, destination);
+    return new ODataRequest(this.requestConfig);
   }
 }
 

@@ -9,9 +9,7 @@ import {
 import {
   Destination,
   sanitizeDestination,
-  buildHeadersForDestination,
-  DestinationNameAndJwt,
-  DestinationRetrievalOptions
+  buildHeadersForDestination
 } from '../../connectivity';
 import {
   removeLeadingSlashes,
@@ -40,17 +38,16 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    */
   constructor(
     public config: RequestConfigT,
-    private _destination?: Destination | DestinationNameAndJwt | undefined,
-    private _destinationRetrievalOptions?: DestinationRetrievalOptions
+    private _destination?: Destination | undefined
   ) {}
 
   set destination(dest: Destination | undefined) {
     this._destination = dest && sanitizeDestination(dest);
   }
 
-  // get destination(): Destination | undefined {
-  //   return this._destination;
-  // }
+  get destination(): Destination | undefined {
+    return this._destination;
+  }
 
   /**
    * Constructs an absolute URL for the given request.

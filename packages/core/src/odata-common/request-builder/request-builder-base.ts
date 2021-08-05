@@ -1,8 +1,10 @@
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationNameAndJwt,
   DestinationRetrievalOptions,
-  isDestinationNameAndJwt
+  isDestinationNameAndJwt,
+  useOrFetchDestination
 } from '../../connectivity/scp-cf';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
@@ -168,22 +170,22 @@ export abstract class MethodRequestBuilder<
     destination?: Destination | DestinationNameAndJwt,
     options?: DestinationRetrievalOptions
   ): ODataRequest<RequestConfigT> | Promise<ODataRequest<RequestConfigT>> {
-    // if (destination) {
-    //   return useOrFetchDestination(destination, options)
-    //     .then(dest => {
-    //       if (!dest) {
-    //         throw Error(noDestinationErrorMessage(destination));
-    //       }
-    //       return new ODataRequest(this.requestConfig, dest);
-    //     })
-    //     .catch(error => {
-    //       throw new ErrorWithCause(
-    //         noDestinationErrorMessage(destination),
-    //         error
-    //       );
-    //     });
-    // }
-    return new ODataRequest(this.requestConfig, destination, options);
+    if (destination) {
+      return useOrFetchDestination(destination, options)
+        .then(dest => {
+          if (!dest) {
+            throw Error(noDestinationErrorMessage(destination));
+          }
+          return new ODataRequest(this.requestConfig, dest);
+        })
+        .catch(error => {
+          throw new ErrorWithCause(
+            noDestinationErrorMessage(destination),
+            error
+          );
+        });
+    }
+    return new ODataRequest(this.requestConfig, destination);
   }
 }
 

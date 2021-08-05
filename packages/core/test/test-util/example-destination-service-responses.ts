@@ -59,7 +59,7 @@ function desintaionSingleResponse(
       SubaccountId: 'a89ea924-d9c2-4eab-84fb-3ffcaadf5d24',
       InstanceId: null
     },
-    destinationConfiguration: oauthMultipleResponse[0],
+    destinationConfiguration: multipleResponse[0],
     authTokens: [
       {
         type: 'Bearer',

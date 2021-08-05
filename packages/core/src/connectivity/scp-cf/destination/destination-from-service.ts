@@ -332,7 +332,8 @@ class DestinationFromServiceRetriever {
   }
 
   /**
-   * The fetch by name delegates the oAuth token handling to the destination service.
+   * This methods calls the 'destination by name' of the destination service using a client credentials grant.
+   * The destination service will take care of OAuth flows and include the token in the destination.
    * @private
    */
   private async fetchDestinationByClientCrendentialsGrant(): Promise<Destination> {
@@ -354,7 +355,7 @@ class DestinationFromServiceRetriever {
               this.options
             );
       logger.debug(
-        `System user found on destination. The ${destinationResult.origin} token: ${token} is used for destination fetching.`
+        `System user found on destination: ${destinationResult.destination.name}`
       );
 
       if (destinationResult.origin) {

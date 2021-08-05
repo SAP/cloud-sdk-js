@@ -1,14 +1,14 @@
 import { unmockAllTestDestinations } from '@sap-cloud-sdk/test-util';
 import { createLogger } from '@sap-cloud-sdk/util';
+import { Destination } from '../connectivity/scp-cf/destination';
+import { Protocol } from '../connectivity/scp-cf/protocol';
+import { basicHeader } from '../connectivity/scp-cf/authorization-header';
 import {
   addProxyConfigurationInternet,
   parseProxyEnv,
   ProxyStrategy,
   proxyStrategy
 } from './proxy-util';
-import { Destination } from '../connectivity/scp-cf/destination';
-import { Protocol } from '../connectivity/scp-cf/protocol';
-import { basicHeader } from '../connectivity/scp-cf/authorization-header';
 
 describe('proxy-util', () => {
   afterEach(() => {
@@ -39,7 +39,7 @@ describe('proxy-util', () => {
     process.env['https_proxy'] = 'https://some.proxy.com:443';
 
     expect(proxyStrategy(onPremDestination)).toBe(
-        ProxyStrategy.ON_PREMISE_PROXY
+      ProxyStrategy.ON_PREMISE_PROXY
     );
     expect(addProxyConfigurationInternet(onPremDestination)).toStrictEqual({
       ...onPremDestination,
@@ -64,8 +64,8 @@ describe('proxy-util', () => {
     });
 
     process.env[
-        'no_proxy'
-        ] = `http://some.otherURL.com,${httpsDestination.url}`;
+      'no_proxy'
+    ] = `http://some.otherURL.com,${httpsDestination.url}`;
     expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.NO_PROXY);
   });
 
@@ -131,11 +131,11 @@ describe('proxy-util', () => {
     const userPwdEncoded = basicHeader('us@er', 'pass:/word');
     process.env['https_proxy'] = 'https://us@er:pass:/word@some.proxy.com:443';
     expect(
-        addProxyConfigurationInternet(httpsDestination).proxyConfiguration
+      addProxyConfigurationInternet(httpsDestination).proxyConfiguration
     ).toBe(undefined);
 
     process.env['https_proxy'] =
-        'https://us%40er:pass%3A%2Fword@some.proxy.com:443';
+      'https://us%40er:pass%3A%2Fword@some.proxy.com:443';
     expect(addProxyConfigurationInternet(httpsDestination)).toStrictEqual({
       ...httpsDestination,
       proxyConfiguration: {
@@ -169,13 +169,13 @@ describe('proxy-util', () => {
     process.env['HTTPS_PROXY'] = '';
     expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.NO_PROXY);
     expect(
-        addProxyConfigurationInternet(httpsDestination).proxyConfiguration
+      addProxyConfigurationInternet(httpsDestination).proxyConfiguration
     ).toBe(undefined);
 
     delete process.env['HTTPS_PROXY'];
     expect(proxyStrategy(httpsDestination)).toBe(ProxyStrategy.NO_PROXY);
     expect(
-        addProxyConfigurationInternet(httpsDestination).proxyConfiguration
+      addProxyConfigurationInternet(httpsDestination).proxyConfiguration
     ).toBe(undefined);
   });
 });
@@ -190,7 +190,7 @@ describe('parseProxyEnv', () => {
       port: 443
     });
     expect(logSpy).toHaveBeenCalledWith(
-        'Using protocol "https:" to connect to a proxy. This is unusual but possible.'
+      'Using protocol "https:" to connect to a proxy. This is unusual but possible.'
     );
   });
 
@@ -211,7 +211,7 @@ describe('parseProxyEnv', () => {
       port: 80
     });
     expect(logSpy).toHaveBeenCalledWith(
-        'No protocol specified, using "http:".'
+      'No protocol specified, using "http:".'
     );
   });
 
@@ -228,7 +228,7 @@ describe('parseProxyEnv', () => {
     const logSpy = spyOn(logger, 'warn');
     expect(parseProxyEnv('rtc://some.proxy:1234')).toBeUndefined();
     expect(logSpy).toHaveBeenCalledWith(
-        'Could not parse proxy configuration from environment variable. Reason: Unsupported protocol "rtc:".'
+      'Could not parse proxy configuration from environment variable. Reason: Unsupported protocol "rtc:".'
     );
   });
 
@@ -320,7 +320,7 @@ describe('parseProxyEnv', () => {
     const logSpy = spyOn(logger, 'warn');
     expect(parseProxyEnv('user@some.proxy')).toBeUndefined();
     expect(logSpy).toHaveBeenCalledWith(
-        'Could not parse proxy configuration from environment variable. Reason: Password missing.'
+      'Could not parse proxy configuration from environment variable. Reason: Password missing.'
     );
   });
 

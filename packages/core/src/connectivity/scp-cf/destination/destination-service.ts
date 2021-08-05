@@ -29,7 +29,7 @@ import {
   DestinationType
 } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
-import {DestinationOptions} from "./destination-accessor";
+import { DestinationOptions } from './destination-accessor';
 
 const logger = createLogger({
   package: 'core',
@@ -41,7 +41,7 @@ type DestinationCircuitBreaker = CircuitBreaker<
     destination: Destination | DestinationNameAndJwt,
     requestConfig: HttpRequestConfig,
     options?: HttpRequestOptions | undefined,
-      destinationOptions?:DestinationOptions | undefined
+    destinationOptions?: DestinationOptions | undefined
   ],
   HttpResponse
 >;

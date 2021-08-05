@@ -1,6 +1,10 @@
 /* eslint-disable max-classes-per-file */
 import { AxiosResponse } from 'axios';
-import {Destination, DestinationNameAndJwt, DestinationOptions} from '../connectivity';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationOptions
+} from '../connectivity';
 import {
   executeHttpRequest,
   filterCustomRequestConfig,
@@ -102,14 +106,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   /**
    * Execute request and get the response data. Use this to conveniently access the data of a service without technical information about the response.
    * @param destination Destination to execute the request against.
-   * @param options - Options to employ when fetching destinations.
+   * @param destinationOptions - Options to employ when fetching destinations.
    * @returns A promise resolving to the requested return type.
    */
   async execute(
     destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destinationOptions?: DestinationOptions
   ): Promise<ResponseT> {
-    const response = await this.executeRaw(destination,options);
+    const response = await this.executeRaw(destination, destinationOptions);
     if (isAxiosResponse(response)) {
       return response.data;
     }

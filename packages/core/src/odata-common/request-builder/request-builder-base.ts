@@ -1,6 +1,4 @@
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
-  useOrFetchDestination,
   Destination,
   DestinationNameAndJwt,
   DestinationRetrievalOptions,
@@ -185,7 +183,7 @@ export abstract class MethodRequestBuilder<
     //       );
     //     });
     // }
-    return new ODataRequest(this.requestConfig,destination,options);
+    return new ODataRequest(this.requestConfig, destination, options);
   }
 }
 

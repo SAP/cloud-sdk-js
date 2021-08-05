@@ -9,7 +9,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 import {
   buildHeadersForDestination,
   Destination,
-  DestinationNameAndJwt, DestinationOptions, DestinationRetrievalOptions,
+  DestinationNameAndJwt,
+  DestinationOptions,
   toDestinationNameUrl,
   useOrFetchDestination
 } from '../connectivity/scp-cf';
@@ -35,12 +36,13 @@ const logger = createLogger({
  *
  * @param destination - A destination or a destination name and a JWT.
  * @param customHeaders - Custom default headers for the resulting HTTP request.
+ * @param destinationOptions - Options to employ when fetching destinations.
  * @returns A [[DestinationHttpRequestConfig]].
  */
 export async function buildHttpRequest(
   destination: Destination | DestinationNameAndJwt,
   customHeaders?: Record<string, any>,
-  destinationOptions?:DestinationOptions
+  destinationOptions?: DestinationOptions
 ): Promise<DestinationHttpRequestConfig> {
   if (customHeaders) {
     logger.warn(
@@ -51,7 +53,10 @@ export async function buildHttpRequest(
         .join('\n')}`
     );
   }
-  const resolvedDestination = await resolveDestination(destination,destinationOptions);
+  const resolvedDestination = await resolveDestination(
+    destination,
+    destinationOptions
+  );
   if (!resolvedDestination) {
     throw Error(
       `Failed to resolve the destination '${toDestinationNameUrl(
@@ -97,7 +102,7 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     destination: Destination | DestinationNameAndJwt,
     requestConfig: T,
     httpRequestOptions?: HttpRequestOptions,
-    destinationOptions?:DestinationOptions
+    destinationOptions?: DestinationOptions
   ): Promise<ReturnT> {
     const destinationRequestConfig = await buildHttpRequest(
       destination,
@@ -149,9 +154,14 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: T,
   options?: HttpRequestOptions,
-  destinationOptions?:DestinationOptions
+  destinationOptions?: DestinationOptions
 ): Promise<HttpResponse> {
-  return execute(executeWithAxios)(destination, requestConfig, options, destinationOptions);
+  return execute(executeWithAxios)(
+    destination,
+    requestConfig,
+    options,
+    destinationOptions
+  );
 }
 
 function buildDestinationHttpRequestConfig(
@@ -177,9 +187,9 @@ function buildHeaders(
 
 function resolveDestination(
   destination: Destination | DestinationNameAndJwt,
-  destinationOptions?:DestinationOptions
+  destinationOptions?: DestinationOptions
 ): Promise<Destination | null> {
-  return useOrFetchDestination(destination,destinationOptions).catch(error => {
+  return useOrFetchDestination(destination, destinationOptions).catch(error => {
     throw new ErrorWithCause('Failed to load destination.', error);
   });
 }

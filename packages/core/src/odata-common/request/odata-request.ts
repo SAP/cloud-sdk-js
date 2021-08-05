@@ -9,7 +9,9 @@ import {
 import {
   Destination,
   sanitizeDestination,
-  buildHeadersForDestination, DestinationNameAndJwt, DestinationRetrievalOptions
+  buildHeadersForDestination,
+  DestinationNameAndJwt,
+  DestinationRetrievalOptions
 } from '../../connectivity';
 import {
   removeLeadingSlashes,

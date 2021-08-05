@@ -170,22 +170,22 @@ export abstract class MethodRequestBuilder<
     destination?: Destination | DestinationNameAndJwt,
     options?: DestinationRetrievalOptions
   ): ODataRequest<RequestConfigT> | Promise<ODataRequest<RequestConfigT>> {
-    if (destination) {
-      return useOrFetchDestination(destination, options)
-        .then(dest => {
-          if (!dest) {
-            throw Error(noDestinationErrorMessage(destination));
-          }
-          return new ODataRequest(this.requestConfig, dest);
-        })
-        .catch(error => {
-          throw new ErrorWithCause(
-            noDestinationErrorMessage(destination),
-            error
-          );
-        });
-    }
-    return new ODataRequest(this.requestConfig);
+    // if (destination) {
+    //   return useOrFetchDestination(destination, options)
+    //     .then(dest => {
+    //       if (!dest) {
+    //         throw Error(noDestinationErrorMessage(destination));
+    //       }
+    //       return new ODataRequest(this.requestConfig, dest);
+    //     })
+    //     .catch(error => {
+    //       throw new ErrorWithCause(
+    //         noDestinationErrorMessage(destination),
+    //         error
+    //       );
+    //     });
+    // }
+    return new ODataRequest(this.requestConfig,destination,options);
   }
 }
 

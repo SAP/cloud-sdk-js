@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { AxiosResponse } from 'axios';
-import { Destination, DestinationNameAndJwt } from '../connectivity';
+import {Destination, DestinationNameAndJwt, DestinationOptions} from '../connectivity';
 import {
   executeHttpRequest,
   filterCustomRequestConfig,
@@ -74,10 +74,12 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination Destination to execute the request against.
+   * @param options - Options to employ when fetching destinations.
    * @returns A promise resolving to an HttpResponse.
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
@@ -100,12 +102,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   /**
    * Execute request and get the response data. Use this to conveniently access the data of a service without technical information about the response.
    * @param destination Destination to execute the request against.
+   * @param options - Options to employ when fetching destinations.
    * @returns A promise resolving to the requested return type.
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt
+    destination: Destination | DestinationNameAndJwt,
+    options?: DestinationOptions
   ): Promise<ResponseT> {
-    const response = await this.executeRaw(destination);
+    const response = await this.executeRaw(destination,options);
     if (isAxiosResponse(response)) {
       return response.data;
     }

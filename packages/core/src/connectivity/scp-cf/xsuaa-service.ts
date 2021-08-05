@@ -23,7 +23,7 @@ import {
   TokenKey,
   UserTokenResponse
 } from './xsuaa-service-types';
-import { Destination, DestinationNameAndJwt } from './destination';
+import {Destination, DestinationNameAndJwt, DestinationOptions} from './destination';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -39,7 +39,8 @@ type XsuaaCircuitBreaker = CircuitBreaker<
   [
     destination: Destination | DestinationNameAndJwt,
     requestConfig: HttpRequestConfig,
-    options?: HttpRequestOptions | undefined
+    options?: HttpRequestOptions | undefined,
+    destinationOptions?:DestinationOptions | undefined
   ],
   HttpResponse
 >;

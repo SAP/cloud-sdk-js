@@ -108,7 +108,7 @@ class DestinationFromServiceRetriever {
     if (destination.authentication === 'OAuth2SAMLBearerAssertion') {
       /*
     This covers the two technical user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html (fetchDestinationBySystemUser)
-    If no system user is set the subscrider or provider destination is feteched depending on the content of the JWT (fetchDestinationByUserJwt)
+    If no system user is set the subscriber or provider destination is fetched depending on the content of the JWT (fetchDestinationByUserJwt)
     */
       destination =
         (await da.fetchDestinationBySystemUser(destinationResult)) ||
@@ -252,7 +252,7 @@ class DestinationFromServiceRetriever {
     }
     if (credentials.length > 1) {
       logger.info(
-        'more than on destination serivce instance found - first one used.'
+        'Found more than one destination service instance. Using the first one.'
       );
     }
 

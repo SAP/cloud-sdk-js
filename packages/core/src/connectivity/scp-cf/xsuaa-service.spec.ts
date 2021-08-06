@@ -33,7 +33,7 @@ describe('xsuaa', () => {
   describe('web proxy handling', () => {
     it('includes the proxy if present', async () => {
       nock(providerXsuaaUrl, {
-        reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
+        reqheaders: reqHeaders(basicHeader)
       })
         .post('/oauth/token', 'grant_type=client_credentials')
         .reply(200, expectedResponse200);
@@ -47,7 +47,7 @@ describe('xsuaa', () => {
         proxy: false,
         headers: {
           Accept: 'application/json',
-          Authorization: 'Basic aG9yc3RpOmJvcnN0aQ==',
+          Authorization: basicHeader,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         httpsAgent: new HttpsProxyAgent({
@@ -64,7 +64,7 @@ describe('xsuaa', () => {
 
     it('considers the no_proxy if present', async () => {
       nock(providerXsuaaUrl, {
-        reqheaders: reqHeaders('Basic aG9yc3RpOmJvcnN0aQ==')
+        reqheaders: reqHeaders(basicHeader)
       })
         .post('/oauth/token', 'grant_type=client_credentials')
         .reply(200, expectedResponse200);
@@ -79,7 +79,7 @@ describe('xsuaa', () => {
         data: 'grant_type=client_credentials',
         headers: {
           Accept: 'application/json',
-          Authorization: 'Basic aG9yc3RpOmJvcnN0aQ==',
+          Authorization: basicHeader,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         // The jest matchers have problems to match two  instances of an httpsAgent.

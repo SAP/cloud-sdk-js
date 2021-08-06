@@ -219,19 +219,6 @@ function errorMessageFromResponse(error: AxiosError): string {
     : '';
 }
 
-function getAxiosConfig(uri, headers): AxiosRequestConfig {
-  let destination: Destination = { url: uri, proxyType: 'Internet' };
-  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
-    destination = addProxyConfigurationInternet(destination);
-  }
-  return {
-    method: 'get',
-    baseURL: uri,
-    ...headers,
-    ...getAgentConfig(destination)
-  };
-}
-
 function callDestinationService(
   uri: string,
   headers: Record<string, any>,
@@ -239,6 +226,7 @@ function callDestinationService(
 ): Promise<AxiosResponse> {
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
+    proxy:false,
     method: 'get',
     headers
   };

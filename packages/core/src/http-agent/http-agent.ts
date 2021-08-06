@@ -194,7 +194,6 @@ export function urlAndAgent(
   }
   return {
     baseURL: destination.url,
-    proxy: false,
     ...getAgentConfig(destination)
   };
 }

@@ -14,7 +14,7 @@ var core_1 = require('@sap-cloud-sdk/core');
 exports.EntityApi = {
   /**
    * Get all entities
-   * @param queryParameters Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.
+   * @param queryParameters -  Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   getAllEntities: function (queryParameters) {
@@ -24,7 +24,7 @@ exports.EntityApi = {
   },
   /**
    * Create a request builder for execution of put requests to the '/entities' endpoint.
-   * @param body Request body.
+   * @param body -  Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   updateEntityWithPut: function (body) {
@@ -34,7 +34,7 @@ exports.EntityApi = {
   },
   /**
    * Create entity
-   * @param body Entity to create
+   * @param body -  Entity to create
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   createEntity: function (body) {
@@ -44,7 +44,7 @@ exports.EntityApi = {
   },
   /**
    * Create a request builder for execution of patch requests to the '/entities' endpoint.
-   * @param body Request body.
+   * @param body -  Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   updateEntity: function (body) {
@@ -54,7 +54,7 @@ exports.EntityApi = {
   },
   /**
    * Create a request builder for execution of delete requests to the '/entities' endpoint.
-   * @param body Request body.
+   * @param body -  Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   deleteEntity: function (body) {

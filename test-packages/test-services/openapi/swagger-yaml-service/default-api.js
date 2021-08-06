@@ -15,7 +15,7 @@ exports.DefaultApi = {
   /**
    * Test POST
    * @param pathParam Path parameter.
-   * @param queryParameters Object containing the following keys: queryParam.
+   * @param queryParameters -  Object containing the following keys: queryParam.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   postEntity: function (pathParam, queryParameters) {
@@ -27,7 +27,7 @@ exports.DefaultApi = {
   /**
    * Create a request builder for execution of patch requests to the '/entities/{pathParam}' endpoint.
    * @param pathParam Path parameter.
-   * @param body Request body.
+   * @param body -  Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   patchEntity: function (pathParam, body) {

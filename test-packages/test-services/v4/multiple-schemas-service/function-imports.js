@@ -14,7 +14,6 @@ var TestEntity1_1 = require('./TestEntity1');
 var TestEntity2_1 = require('./TestEntity2');
 /**
  * Test Function Import Entity Return Type 1.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -36,7 +35,6 @@ exports.testFunctionImportEntityReturnType1 =
   testFunctionImportEntityReturnType1;
 /**
  * Test Function Import Entity Return Type 2.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */

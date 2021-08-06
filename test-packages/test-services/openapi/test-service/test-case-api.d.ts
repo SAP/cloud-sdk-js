@@ -13,8 +13,8 @@ export declare const TestCaseApi: {
   /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
    * @param requiredPathItemPathParam Path parameter.
-   * @param body Request body.
-   * @param queryParameters Object containing the following keys: requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam, optionalPathItemQueryParam.
+   * @param body -  Request body.
+   * @param queryParameters -  Object containing the following keys: requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam, optionalPathItemQueryParam.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   testCaseGetRequiredParameters: (
@@ -30,8 +30,8 @@ export declare const TestCaseApi: {
   /**
    * Create a request builder for execution of post requests to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
    * @param requiredPathItemPathParam Path parameter.
-   * @param body Request body.
-   * @param queryParameters Object containing the following keys: optionalPathItemQueryParam, requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam.
+   * @param body -  Request body.
+   * @param queryParameters -  Object containing the following keys: optionalPathItemQueryParam, requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   testCasePostRequiredParameters: (
@@ -47,7 +47,7 @@ export declare const TestCaseApi: {
   /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters/{duplicateParam}' endpoint.
    * @param duplicateParam Path parameter.
-   * @param queryParameters Object containing the following keys: duplicateParam.
+   * @param queryParameters -  Object containing the following keys: duplicateParam.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   testCaseGetDuplicateParameters: (
@@ -79,7 +79,7 @@ export declare const TestCaseApi: {
   /**
    * Create a request builder for execution of get requests to the '/test-cases/reserved-keywords/{const1}' endpoint.
    * @param const1 Path parameter.
-   * @param queryParameters Object containing the following keys: const.
+   * @param queryParameters -  Object containing the following keys: const.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   export: (
@@ -90,7 +90,7 @@ export declare const TestCaseApi: {
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of get requests to the '/test-cases/complex-schemas' endpoint.
-   * @param body Request body.
+   * @param body -  Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   complexSchemas: (
@@ -98,7 +98,7 @@ export declare const TestCaseApi: {
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of post requests to the '/test-cases/complex-schemas' endpoint.
-   * @param body Request body.
+   * @param body -  Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   useNameWithSymbols: (
@@ -106,7 +106,7 @@ export declare const TestCaseApi: {
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of get requests to the '/test-cases/schema-name-integer' endpoint.
-   * @param body Request body.
+   * @param body -  Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   schemaNameInteger: (

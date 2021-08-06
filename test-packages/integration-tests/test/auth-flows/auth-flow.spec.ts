@@ -61,7 +61,7 @@ describe('OAuth flows', () => {
     const destination = await fetchDestination(
       destinationService!.credentials.uri,
       clientGrant,
-      systems.destination.providerOauth2Passwprd
+      systems.destination.providerOAuth2Password
     );
     expect(destination!.authTokens![0].type).toBe('bearer');
     expect(destination!.authTokens![0].value).toBeDefined();

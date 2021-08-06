@@ -24,7 +24,7 @@ export function getCollectionResult(data: any): any[] {
 /**
  * Checks if the data contains a collection result.
  * @param data - Response of the OData v4 service
- * @returns boolean - true if the data is a collection result
+ * @returns `true`, if the data is a collection result
  */
 export function isCollectionResult(data: any): boolean {
   return Array.isArray(data.value);

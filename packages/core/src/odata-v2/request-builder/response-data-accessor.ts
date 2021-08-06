@@ -24,7 +24,7 @@ export function getCollectionResult(data: any): any[] {
 /**
  * Checks if the data contains a collection result.
  * @param data - Response of the OData service.
- * @returns True if the data is a collection result.
+ * @returns `true`, if the data is a collection result.
  */
 export function isCollectionResult(data: any): boolean {
   return Array.isArray(data?.d?.results);
@@ -33,7 +33,7 @@ export function isCollectionResult(data: any): boolean {
 function validateCollectionResult(data: any): void {
   if (!isCollectionResult(data)) {
     logger.warn(
-      'The given reponse data does not have the standard OData v2 format for collections.'
+      'The given response data does not have the standard OData v2 format for collections.'
     );
   }
 }

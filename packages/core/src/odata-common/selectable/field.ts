@@ -31,7 +31,7 @@ export interface FieldOptions<
   SelectableT extends boolean = false
 > {
   /**
-   * Whether the value of the field can be null.
+   * Whether the value of the field can be `null`.
    */
   isNullable?: NullableT;
   /**

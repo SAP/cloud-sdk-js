@@ -236,9 +236,9 @@ function sanitizeVerificationKey(key: string) {
 }
 
 /**
- * Get the issuer url of a decoded JWT.
- * @param decodedToken - Token to read the issuer url from.
- * @returns The issuer url if available.
+ * Get the issuer URL of a decoded JWT.
+ * @param decodedToken - Token to read the issuer URL from.
+ * @returns The issuer URL if available.
  */
 export function issuerUrl(decodedToken: JwtPayload): string | undefined {
   return readPropertyWithWarn(decodedToken, 'iss');

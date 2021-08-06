@@ -197,7 +197,7 @@ export function fetchVerificationKeys(
 
 /**
  * Fetches verification keys from the XSUAA service for the given URL, with the given pair of credentials.
- * @param url - URL of the XSUAA service instance.
+ * @param URL - URL of the XSUAA service instance.
  * @param clientId - Client ID of the XSUAA service instance.
  * @param clientSecret - Client secret of the XSUAA service instance.
  * @returns An array of TokenKeys.

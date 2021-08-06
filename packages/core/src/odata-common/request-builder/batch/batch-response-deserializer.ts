@@ -97,7 +97,7 @@ export class BatchResponseDeserializer {
   /**
    * Retrieve the constructor for a specific single response body.
    * @param responseBody -  The body of a single response as an object.
-   * @returns The constructor if found in the mapping, undefined otherwise.
+   * @returns The constructor if found in the mapping, `undefined` otherwise.
    */
   private getConstructor(
     responseBody: Record<string, any>

@@ -8,36 +8,36 @@ export function flat<T>(arr: T[][]): T[] {
 }
 
 /**
- * Remove all duplicates from array
- * @param arr - Array that might contain duplicates
- * @returns Array of unique items
+ * Remove all duplicates from an array.
+ * @param arr - Array that might contain duplicates.
+ * @returns Array of unique items.
  */
 export function unique<T>(arr: T[]): T[] {
   return Array.from(new Set(arr));
 }
 
 /**
- * Get the last item from an array. Returns undefined if the array is empty.
- * @param arr - Array to get the last item of
- * @returns Last item of the array or undefined if the array was empty
+ * Get the last item from an array. Returns `undefined`, if the array is empty.
+ * @param arr - Array to get the last item of.
+ * @returns Last item of the array or `undefined`, if the array was empty.
  */
 export function last<T>(arr: T[]): T | undefined {
   return arr.length ? arr[arr.length - 1] : undefined;
 }
 
 /**
- * Get the first item from an array. Returns undefined if the array is empty.
- * @param arr - Array to get the first item of
- * @returns Fist item of the array or undefined if the array was empty
+ * Get the first item from an array. Returns `undefined`, if the array is empty.
+ * @param arr - Array to get the first item of.
+ * @returns Fist item of the array or `undefined`, if the array was empty.
  */
 export function first<T>(arr: T[]): T | undefined {
   return arr[0];
 }
 
 /**
- * Split the given array in chunks
+ * Split the given array in chunks.
  * @param arr - Array to be split into chunks.
- * @param chunkSize - Size of the chunks
+ * @param chunkSize - Size of the chunks.
  * @returns Two dimensional array with arrays of length chunkSize. The last subarray could be shorter.
  */
 export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {

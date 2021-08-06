@@ -64,7 +64,7 @@ export function getUniqueRefs(
 /**
  * Type guard to check whether an object is of type `OpenAPIV3.ReferenceObject`.
  * @param obj -  Object to check.
- * @returns True if the object is a reference object, false otherwise.
+ * @returns `true` if the object is a reference object, `false` otherwise.
  */
 export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
   return !!obj?.$ref;
@@ -73,7 +73,7 @@ export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
 /**
  * Type guard to check whether an object is of type `OpenApiArraySchema`.
  * @param obj -  Object to check.
- * @returns True if the object is an array schema, false otherwise.
+ * @returns `true` if the object is an array schema, `false` otherwise.
  */
 export function isArraySchema(obj: any): obj is OpenApiArraySchema {
   return obj?.items;
@@ -82,7 +82,7 @@ export function isArraySchema(obj: any): obj is OpenApiArraySchema {
 /**
  * Type guard to check whether an object is of type `OpenApiObjectSchema`.
  * @param obj -  Object to check.
- * @returns True if the object is an object schema, false otherwise.
+ * @returns `true` if the object is an object schema, `false` otherwise.
  */
 export function isObjectSchema(obj: any): obj is OpenApiObjectSchema {
   return obj?.properties;
@@ -91,7 +91,7 @@ export function isObjectSchema(obj: any): obj is OpenApiObjectSchema {
 /**
  * Type guard to check whether an object is of type `OpenApiEnumSchema`.
  * @param obj -  Object to check.
- * @returns True if the object is an enum schema, false otherwise.
+ * @returns `true` if the object is an enum schema, `false` otherwise.
  */
 export function isEnumSchema(obj: any): obj is OpenApiEnumSchema {
   return obj?.enum;
@@ -100,7 +100,7 @@ export function isEnumSchema(obj: any): obj is OpenApiEnumSchema {
 /**
  * Type guard to check whether an object is of type `OpenApiOneOfSchema`.
  * @param obj -  Object to check.
- * @returns True if the object is an oneOf schema, false otherwise.
+ * @returns `true` if the object is an oneOf schema, `false` otherwise.
  */
 export function isOneOfSchema(obj: any): obj is OpenApiOneOfSchema {
   return obj?.oneOf;
@@ -109,7 +109,7 @@ export function isOneOfSchema(obj: any): obj is OpenApiOneOfSchema {
 /**
  * Type guard to check whether an object is of type `OpenApiAllOfSchema`.
  * @param obj -  Object to check.
- * @returns True if the object is an allOf schema, false otherwise.
+ * @returns `true` if the object is an allOf schema, `false` otherwise.
  */
 export function isAllOfSchema(obj: any): obj is OpenApiAllOfSchema {
   return obj?.allOf;
@@ -118,7 +118,7 @@ export function isAllOfSchema(obj: any): obj is OpenApiAllOfSchema {
 /**
  * Type guard to check whether an object is of type `OpenApiAnyOfSchema`.
  * @param obj -  Object to check.
- * @returns True if the object is an anyOf schema, false otherwise.
+ * @returns `true` if the object is an anyOf schema, `false` otherwise.
  */
 export function isAnyOfSchema(obj: any): obj is OpenApiAnyOfSchema {
   return obj?.anyOf;
@@ -127,7 +127,7 @@ export function isAnyOfSchema(obj: any): obj is OpenApiAnyOfSchema {
 /**
  * Type guard to check whether an object is of type `OpenApiNotSchema`.
  * @param obj -  Object to check.
- * @returns True if the object is a not schema, false otherwise.
+ * @returns `true` if the object is a not schema, `false` otherwise.
  */
 export function isNotSchema(obj: any): obj is OpenApiNotSchema {
   return obj?.not;

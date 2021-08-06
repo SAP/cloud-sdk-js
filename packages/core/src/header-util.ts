@@ -57,7 +57,7 @@ export function getHeaders(
  * Get the value of a header based on the given key, independent of the case (lower / upper).
  * @param key - Name of the header to be found.
  * @param headers - Header object to be searched for given key.
- * @returns The value of the header with the given key or undefined.
+ * @returns The value of the header with the given key or `undefined`.
  */
 export function getHeaderValue(
   key: string,

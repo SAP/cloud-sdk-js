@@ -36,7 +36,7 @@ export function getDestinationBasicCredentials(): BasicCredentials {
 /**
  * First 'destination' credentials getter.
  *
- * @returns The 'destination' credentials object or null if it does not exist.
+ * @returns The 'destination' credentials object or `null`, if it does not exist.
  */
 export function getDestinationServiceCredentials(): any {
   return first(getDestinationServiceCredentialsList());
@@ -125,9 +125,9 @@ export function getDestinationService(): Service {
 
 /**
  * 'VCAP_SERVICES' Getter from environment variables.
- * This function returns the VCAP_SERVICES as object or null if it is not defined (i.e. no services are bound to the application).
+ * This function returns the VCAP_SERVICES as object or `null`, if it is not defined (i.e. no services are bound to the application).
  *
- * @returns 'VCAP_SERVICES' found in environment variables or null if not defined. The key denotes the name ov the service and the value is the definition.
+ * @returns 'VCAP_SERVICES' found in environment variables or `null`, if not defined. The key denotes the name ov the service and the value is the definition.
  */
 export function getVcapService(): Record<string, any> | null {
   const env = getEnvironmentVariable('VCAP_SERVICES');
@@ -174,7 +174,7 @@ export function getEnvironmentVariable(
  * NOTICE: If there exist more than one destination/uri, the function
  * returns the first entry.
  *
- * @returns The first existing uri in destination or null if not found.
+ * @returns The first existing uri in destination or `null`, if not found.
  */
 export function getDestinationServiceUri(): string | null {
   const destinationServiceCredentials = getDestinationServiceCredentialsList();
@@ -196,7 +196,7 @@ export function getDestinationServiceUri(): string | null {
  * that issued the JWT. Returns the credentials if a match is found, otherwise throws an error.
  * If no decoded JWT is specified, then returns the first existing XSUAA credential service plan "application".
  * @param token - Either an encoded or decoded JWT.
- * @returns The credentials for a match, otherwise null.
+ * @returns The credentials for a match, otherwise `null`.
  */
 export function getXsuaaServiceCredentials(
   token?: JwtPayload | string

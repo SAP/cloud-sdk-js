@@ -16,7 +16,7 @@ export abstract class FilterFunction<
    * Creates an instance of FilterFunction.
    * @param functionName - Name of the function.
    * @param parameters - Representation of the parameters passed to the filter function.
-   * @param edmType - EdmType of the return type of the filter function.
+   * @param edmType - EDM type of the return type of the filter function.
    */
   constructor(
     readonly functionName: string,
@@ -40,7 +40,7 @@ export abstract class FilterFunction<
   /**
    * Creates an instance of Filter for this filter function and the given value using the operator 'eq', i.e. `==`.
    * @param value - Value to be used in the filter
-   * @param edmType - EdmType of the value, used when converting the value to URL. Use `Edm.String` as default value.
+   * @param edmType - EDM type of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter
    */
   equals(value: ReturnT): Filter<EntityT, ReturnT> {
@@ -50,7 +50,7 @@ export abstract class FilterFunction<
   /**
    * Creates an instance of Filter for this filter function and the given value using the operator 'ne', i.e. `!=`.
    * @param value - Value to be used in the filter
-   * @param edmType - EdmType of the value, used when converting the value to URL. Use `Edm.String` as default value.
+   * @param edmType - EDM type of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter
    */
   notEquals(value: ReturnT): Filter<EntityT, ReturnT> {

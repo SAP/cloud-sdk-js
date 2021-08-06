@@ -4,7 +4,7 @@ import { isNullish } from './nullish';
  * Checks if a chain of properties exists on the given object.
  * @param obj - The object to be checked.
  * @param properties - Chained properties.
- * @returns True if the property chain leads to a truthy value, false otherwise.
+ * @returns `true` if the property chain leads to a truthy value, `false` otherwise.
  */
 export function propertyExists(
   obj: Record<string, any>,
@@ -168,7 +168,7 @@ export function pickIgnoreCase<T extends Record<string, any>>(
  * Returns the value of an object based on the given key, independent of casing.
  * @param obj - Object to be searched for the given key.
  * @param key - Key of the value to pick.
- * @returns The value of for the given key or undefined if not available.
+ * @returns The value of for the given key or `undefined`, if not available.
  */
 export function pickValueIgnoreCase<T extends Record<string, any>>(
   obj: T = {} as T,

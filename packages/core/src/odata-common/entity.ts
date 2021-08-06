@@ -94,7 +94,7 @@ export abstract class Entity {
 
   /**
    * ETag version identifier accessor.
-   * @returns The ETag version identifier of the retrieved entity, returns undefined if not retrieved
+   * @returns The ETag version identifier of the retrieved entity, returns `undefined` if not retrieved.
    */
   get versionIdentifier(): string {
     return this._versionIdentifier;

@@ -129,8 +129,8 @@ function validateUrl(url: URL): void {
  * Parses the environment variable for the web proxy and extracts the values considering defaults like http for the protocol and 80 or 443 for the port.
  * The general pattern to be parsed is `protocol://user:password@host:port`, where everything besides the host is optional.
  * Special characters in the user and password need to be percent encoded.
- * @param proxyEnvValue - Environment variable which is parsed
- * @returns Configuration with default values or undefined if the parsing failed.
+ * @param proxyEnvValue - Environment variable which is parsed.
+ * @returns Configuration with default values or `undefined` if the parsing failed.
  */
 export function parseProxyEnv(
   proxyEnvValue: string

@@ -161,9 +161,9 @@ function createDefaultAgent(
 
 /**
  * @deprecated Since v1.5.1. use getProtocolOrDefault instead
- * Takes the destination URL and return everything before the '://'.
+ * Takes the destination URL and return everything before the `://`.
  * @param destination - URL of this destination is parsed
- * @returns The protocol either undefined if no :// is found or anything before the delimiter.
+ * @returns The protocol either `undefined` if no `://` is found or anything before the delimiter.
  */
 export function getUrlProtocol(destination: Destination): Protocol | undefined {
   if (destination.url) {

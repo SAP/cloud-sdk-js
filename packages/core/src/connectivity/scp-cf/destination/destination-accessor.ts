@@ -44,7 +44,7 @@ export type DestinationOptions = DestinationAccessorOptions &
  * @deprecated Since v1.0.1. Use [[getDestination]] instead.
  *
  * Retrieves a destination with the given name from the Cloud Foundry destination service.
- * Returns null if no destination can be found.
+ * Returns `null`, if no destination can be found.
  * Requires the following service bindings: destination, XSUAA
  * By default, selects subscriber over provider and instance over subaccount destinations.
  *

@@ -8,7 +8,7 @@ const logger = createLogger({
 });
 
 /**
- * Extracts the http protocol from the destination url. The default value is http if no protocol is given.
+ * Extracts the http protocol from the destination URL. The default value is http if no protocol is given.
  * @param destination - URL of this destination is parsed
  * @throws Error in case a unsupported protocol is given in the destination URL like rfc://example.com.
  * @returns The protocol, either https or http.

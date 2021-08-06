@@ -49,7 +49,7 @@ export class Cache<T> implements CacheInterface<T> {
 
   /**
    * Default validity period for each entry in cache.
-   * If undefined, all cached entries will be valid indefinitely.
+   * If `undefined`, all cached entries will be valid indefinitely.
    */
   private defaultValidityTime: moment.MomentInputObject | undefined;
 
@@ -76,8 +76,8 @@ export class Cache<T> implements CacheInterface<T> {
 
   /**
    * Getter of cached entries.
-   * @param key - The key of the entry to retrieve
-   * @returns The corresponding entry to the provided key if it is still valid, returns undefined otherwise
+   * @param key - The key of the entry to retrieve.
+   * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
    */
   get(key: string): T | undefined {
     return this.hasKey(key) && !isExpired(this.cache[key])

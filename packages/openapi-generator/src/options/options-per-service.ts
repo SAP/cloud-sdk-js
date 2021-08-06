@@ -37,7 +37,7 @@ export interface ServiceOptions {
 
 /**
  * Get the options per service from the given path or an empty object if no path was given.
- * @param configPath - Path to the given per service configuration or undefined if no path was given.
+ * @param configPath - Path to the given per service configuration or `undefined`, if no path was given.
  * @returns The parsed configuration for all services.
  */
 export async function getOriginalOptionsPerService(

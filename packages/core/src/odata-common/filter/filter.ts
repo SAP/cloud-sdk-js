@@ -62,7 +62,7 @@ export class Filter<
    * @param field - Name of the field of the entity to be filtered on or a filter function
    * @param operator - Function to be used for matching
    * @param value - Value to be used by the operator
-   * @param edmType - EdmType of the field to filter on, needed for custom fields
+   * @param edmType - EDM type of the field to filter on, needed for custom fields
    */
 
   constructor(

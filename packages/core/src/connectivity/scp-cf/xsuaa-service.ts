@@ -269,7 +269,6 @@ function post(
   body: string,
   options: ResilienceOptions = { enableCircuitBreaker: true }
 ): Promise<AxiosResponse> {
-  // const config = wrapXsuaaPostRequestHeader(authHeader, body);
   const targetUri =
     typeof tokenServiceUrlOrXsuaaServiceCredentials === 'string'
       ? tokenServiceUrlOrXsuaaServiceCredentials

@@ -6,17 +6,19 @@ Accepted.
 
 ## Requirement
 
-The SDK will only encode the parts below:
+The SDK needs to encode the parts below:
 
-- The values of path parameters (the get by key structure of OData is called path parameter in OpenAPI)
-- The values of query parameters
+- User input values of path parameters
+  - e.g., for `/entities/a b`, the `a b` will be encoded to `a%20b`.
+  - e.g., for `/Entity(KeyName='va/ue')`, the `va/ue` will be encoded to `va%2Fue`.
+- User input values of query parameters
+  - e.g., for `$filter=Gender eq '/Female'`, the `Gender eq '/Female'` will be encoded to `Gender%20eq%20%27%2FFemale%27`.
 
 ## Background
 
 OData and OpenAPI requests built by the SDK need to be encoded.
 We should decide, which parts of the URL need to be encoded and which not.
 Let's start from the structure of a URL.
-Emojis :thumbsup: and :thumbsdown: are used in this doc for specifying whether encoding will be applied by the SDK.
 
 ### URL
 
@@ -26,14 +28,14 @@ https://www.example.com/path?param=1
 
 The example above consists of the following components:
 
-- protocol: `https` :thumbsdown:
-- host: `www.example.com` :thumbsdown:
-- path: `/path` :thumbsup:
-- query: `param=1` :thumbsup:
+- protocol: `https`
+- host: `www.example.com`
+- path: `/path`
+- query: `param=1`
 
 As the protocol will not be encoded, we will only discuss the rest of them.
 
-### Host :thumbsdown:
+### Host
 
 There are some cases where the host contains special characters like umlaut.
 As not all the browsers/http clients can handle such special characters, Internationalized Domain Name (IDN) plays a big role here.
@@ -52,22 +54,22 @@ Below is one example about how the path should look like in terms of OData
 /servicePath/Entity('key')/to_MultiLink('key')/to_SingleLink
 ```
 
-- service path: `/servicePath` :thumbsdown:
-- entity path: `/Entity(KeyName='value')` :thumbsup:
-- navigation property path: `/to_MultiLink(KeyName='value')/to_SingleLink` :thumbsup:
+- service path: `/servicePath`
+- entity path: `/Entity(KeyName='value')`
+- navigation property path: `/to_MultiLink(KeyName='value')/to_SingleLink`
 
-##### Service Path :thumbsdown:
+##### Service Path
 
 We assume the service path has not special characters that need to be encoded.
 If needed, the user can easily configure the service mapping file.
 
-##### Entity Path :thumbsup:
+##### Entity Path
 
 The entity path consists of the following parts:
 
-- an entity name: `Entity` :thumbsdown:
-- entity key names: `KeyName` :thumbsdown:
-- values of the entity key: `'value'` :thumbsup:
+- an entity name: `Entity`
+- entity key names: `KeyName`
+- values of the entity key: `value`
 
 We assume the "entity names" and "entity key names" provided by the metadata do not have to be encoded.
 If needed, based on the feedback, we can either do it during generation or ask the possibility to adjust the metadata.
@@ -76,7 +78,7 @@ On the other side, the "values of the entity key" of an entity is provided by th
 One of the users uses `/` as part of a key.
 Therefore, we have to encode the "values of the entity key".
 
-##### Navigation Property Path :thumbsup:
+##### Navigation Property Path
 
 Similar to entity path, only the "values of the navigation property key" are planned to be encoded.
 
@@ -88,8 +90,8 @@ The path pattern should look like the example below:
 "/entities/{entityId}"
 ```
 
-- path: `/entities` :thumbsdown:
-- path parameter: `{entityId}` :thumbsup:
+- path: `/entities`
+- path parameter: `{entityId}`
 
 Similar to OData, only user input is considered when encoding, which is the "path parameters"
 
@@ -101,15 +103,15 @@ Similar to path section, we also discuss OData and OpenAPI separately.
 
 OData allows you to use the following query options:
 
-- `$format=json` :thumbsdown:
-- `$top=1` :thumbsdown:
-- `$skip=1` :thumbsdown:
-- `$orderby=StringProperty` :thumbsdown:
-- `$select=StringProperty` :thumbsdown:
-- `$expand=to_MultiLink` :thumbsup:
-- `$filter=StringProperty eq 'string'` :thumbsup:
-- `$batch` :thumbsdown:
-- `$value` :thumbsdown:
+- `$format=json`
+- `$top=1`
+- `$skip=1`
+- `$orderby=StringProperty`
+- `$select=StringProperty`
+- `$expand=to_MultiLink`
+- `$filter=StringProperty eq 'string'`
+- `$batch`
+- `$value`
 
 `$filter` is the only one query option that contains user input.
 One spacial case is the `$expand`.
@@ -117,57 +119,15 @@ Normal `$expand` has the same structure as `$select`, while for deep `$expand`, 
 
 #### OpenAPI
 
-The value of the query parameters should be encoded. :thumbsup:
+The value of the query parameters should be encoded.
 
-## Alternatives
+### Why `encodeURI` does not solve our problem
 
-### Option A: Use `encodeURI` for the whole URL
-
-#### Pros and Cons
-
-##### Pros
-
-- We just need this method ONCE for the whole URL
-- The special characters like `/` (as path delimiter), `&` (as query delimiter) etc. are not encoded. (See [Appendix](#appendix))
-
-##### Cons
-
-- For custom values like custom query, we would like to respect the user input, but the encoding cannot be avoided.
-- When `/` is used as part of the parameter value like `/Entity('a/b/c')`, the `encoode` is not intelligent enough to encode it.
-
-#### Workaround based on this option
-
-- encode `a/b/c` first then apply Option A
-- ask the user to provide encoded value
-
-Both of the 2 proposals will lead to double encoding.
-
-#### Decision
-
-Not accepted, as it does not work for edge cases.
-
-### Option B: Use `encodeURIComponent` for the selected parts
-
-#### Pros and Cons
-
-##### Pros
-
-- We can choose specific components for encoding, which is flexible.
-- It solves the problem of Option A, that `/` can be encoded. (See [Appendix](#appendix))
-- For custom values, the encoding can be skipped.
-
-##### Cons
-
-- We have to call this function multiple times for all the parts that need encoding.
-- We have to be very careful to call `encodeURIComponent('a/b/c')` instead of `encodeURIComponent('/Entity('a/b/c')')`, as the latter one is wrong.
-
-#### Decision
-
-Chosen, as this is a valid solution.
+When `/` is used as part of the parameter value like `/Entity('a/b/c')`, the `encoode` is not intelligent enough to encode it. (See [Appendix](#appendix))
 
 ## Decision
 
-Option B is the winner, as Option A does not fit our requirement.
+Use `encodeURIComponent` for the selected parts.
 
 ## Consequences
 

@@ -355,7 +355,7 @@ class DestinationFromServiceRetriever {
               this.options
             );
       logger.debug(
-        `System user found on destination: ${destinationResult.destination.name}`
+        `System user found on destination: "${destinationResult.destination.name}".`
       );
 
       if (destinationResult.origin) {

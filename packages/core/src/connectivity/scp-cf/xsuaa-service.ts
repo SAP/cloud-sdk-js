@@ -6,7 +6,6 @@ import {
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import CircuitBreaker from 'opossum';
-import { HttpRequestConfig } from '../../http-client';
 import { urlAndAgent } from '../../http-agent';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
@@ -287,21 +286,6 @@ function post(
     return getCircuitBreaker().fire(config);
   }
   return axios.request(config);
-}
-
-function wrapXsuaaPostRequestHeader(
-  authHeader: string,
-  body: string
-): HttpRequestConfig {
-  return {
-    method: 'post',
-    data: body,
-    headers: {
-      Authorization: authHeader,
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Accept: 'application/json'
-    }
-  };
 }
 
 export function headerForClientCredentials(

@@ -53,6 +53,20 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
+  xit('OAuth2Password: Fetches destination and destiantion service has token', async () => {
+    const clientGrant = await serviceToken('destination', {
+      userJwt: accessToken.provider
+    });
+
+    const destination = await fetchDestination(
+      destinationService!.credentials.uri,
+      clientGrant,
+      systems.destination.providerOAuth2Password
+    );
+    expect(destination!.authTokens![0].type).toBe('bearer');
+    expect(destination!.authTokens![0].value).toBeDefined();
+  }, 60000);
+
   xit('BasicAuth: Provider Destination & Provider Token + GET request', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider

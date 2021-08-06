@@ -1,9 +1,9 @@
 import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
+import axios, { AxiosRequestConfig } from 'axios';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 import { destinationServiceUri } from '../../../../test/test-util/environment-mocks';
 import { privateKey } from '../../../../test/test-util/keys';
-import * as httpClient from '../../../http-client/http-client';
-import { Protocol } from '../protocol';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,
@@ -299,20 +299,26 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
-      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
+      const spy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, destinationName, {
         enableCircuitBreaker: false
       });
-      const expectedArgument: Destination = {
-        url: 'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
-        proxyType: 'Internet',
-        proxyConfiguration: {
-          host: 'some.foo.bar',
+      const expectedConfig: AxiosRequestConfig = {
+        baseURL:
+          'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
+        method: 'get',
+        proxy: false,
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        },
+        httpsAgent: new HttpsProxyAgent({
           port: 80,
-          protocol: Protocol.HTTP
-        }
+          host: 'some.foo.bar',
+          protocol: 'http',
+          rejectUnauthorized: true
+        })
       };
-      expect(spy).toHaveBeenCalledWith(expectedArgument, expect.anything());
+      expect(spy).toHaveBeenCalledWith(expectedConfig);
       delete process.env.HTTPS_PROXY;
     });
 
@@ -347,15 +353,29 @@ describe('destination service', () => {
       })
         .get('/destination-configuration/v1/destinations/HTTP-OAUTH')
         .reply(200, response);
-      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
+      const spy = jest.spyOn(axios, 'request');
       await fetchDestination(destinationServiceUri, jwt, destinationName, {
         enableCircuitBreaker: false
       });
-      const expectedArgument: Destination = {
-        url: 'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
-        proxyType: 'Internet'
+      const expectedConfig: AxiosRequestConfig = {
+        baseURL:
+          'https://destination.example.com/destination-configuration/v1/destinations/HTTP-OAUTH',
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        },
+        method: 'get',
+        proxy: false,
+        // The jest matchers have problems to match two  instances of an httpsAgent.
+        // As a workaround I wanted to assert on proxy:undefined but was not able to achieve this.
+        // The "_events" property is only present for the httpAgent and not the httpProxyAgent so this works as an implicit test.
+        httpsAgent: expect.objectContaining({
+          _events: expect.anything(),
+          options: expect.objectContaining({ rejectUnauthorized: true })
+        })
       };
-      expect(spy).toHaveBeenCalledWith(expectedArgument, expect.anything());
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining(expectedConfig));
+
+      expect(spy).toHaveBeenCalledWith(expectedConfig);
       delete process.env.HTTPS_PROXY;
       delete process.env.no_proxy;
     });

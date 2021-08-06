@@ -164,7 +164,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   ): string {
     const params = filterFunction.parameters
       .map(param => filterFunctionParameterToString(param, parentFieldNames))
-      .join(', ');
+      .join(',');
     return `${filterFunction.functionName}(${params})`;
   }
 

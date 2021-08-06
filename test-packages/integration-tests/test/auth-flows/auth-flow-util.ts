@@ -49,6 +49,6 @@ export interface Systems {
   };
   destination: {
     subscriberOAuth2UserTokenExchange: string;
-    providerOauth2Passwprd: string;
+    providerOAuth2Password: string;
   };
 }

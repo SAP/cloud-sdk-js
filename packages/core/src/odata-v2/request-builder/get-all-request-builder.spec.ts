@@ -15,6 +15,7 @@ import {
   TestEntitySingleLink
 } from '../../../test/test-util/test-services/v2/test-service';
 import {
+  allMocksUsed,
   certificateMultipleResponse,
   certificateSingleResponse,
   mockInstanceDestinationsCall,
@@ -165,31 +166,31 @@ describe('GetAllRequestBuilder', () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
+      const nocks = [
+          mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
       mockSubaccountDestinationsCall(
         nock,
         certificateMultipleResponse,
         200,
         onlyIssuerServiceToken
-      );
-
+      ),
       mockSingleDestinationCall(
         nock,
         certificateSingleResponse,
         200,
         'ERNIE-UND-CERT',
         wrapJwtInHeader(onlyIssuerServiceToken).headers
-      );
-
+      ),
       nock(certificateSingleResponse.destinationConfiguration.URL)
         .get(/.*/)
-        .reply(200, 'iss token used on the way');
+        .reply(200, 'iss token used on the way')
+      ];
       const spy = jest.spyOn(httpClient, 'executeHttpRequest');
       const response = await requestBuilder.executeRaw(
         { destinationName: 'ERNIE-UND-CERT' },
         { iss: onlyIssuerXsuaaUrl }
       );
-
+      allMocksUsed(nocks);
       expect(spy).toHaveBeenCalledWith(
         parseDestination(certificateSingleResponse),
         {

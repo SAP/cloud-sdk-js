@@ -4,6 +4,7 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination, Protocol, wrapJwtInHeader } from '../connectivity';
 import {
+  allMocksUsed,
   certificateMultipleResponse,
   certificateSingleResponse,
   mockInstanceDestinationsCall,
@@ -237,24 +238,25 @@ describe('generic http client', () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
+      const nocks = [
+          mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
       mockSubaccountDestinationsCall(
         nock,
         certificateMultipleResponse,
         200,
         onlyIssuerServiceToken
-      );
-
-      mockSingleDestinationCall(
+      ),
+        mockSingleDestinationCall(
         nock,
         certificateSingleResponse,
         200,
         'ERNIE-UND-CERT',
         wrapJwtInHeader(onlyIssuerServiceToken).headers
-      );
+      ),
       nock(certificateSingleResponse.destinationConfiguration.URL)
         .get(/.*/)
-        .reply(200, 'iss token used on the way');
+        .reply(200, 'iss token used on the way')
+          ];
 
       const response = await executeHttpRequest(
         { destinationName: 'ERNIE-UND-CERT' },
@@ -262,6 +264,7 @@ describe('generic http client', () => {
         {},
         { iss: onlyIssuerXsuaaUrl }
       );
+      allMocksUsed(nocks);
       expect(response.data).toBe('iss token used on the way');
     });
 

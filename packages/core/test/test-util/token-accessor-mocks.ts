@@ -1,3 +1,4 @@
+import nock from 'nock';
 import * as tokenAccessor from '../../src/connectivity/scp-cf/token-accessor';
 import { decodeJwt } from '../../src/connectivity/scp-cf';
 import { onlyIssuerXsuaaUrl, TestTenants } from './environment-mocks';
@@ -10,6 +11,14 @@ import {
   userApprovedProviderServiceToken,
   userApprovedSubscriberServiceToken
 } from './mocked-access-tokens';
+
+export function allMocksUsed(nocks: nock.Scope[]){
+    nocks.forEach(nock1=>{
+        if(!nock1.isDone()){
+            throw new Error('Not all mocks used.');
+        }
+    });
+}
 
 export function mockServiceToken() {
   return jest

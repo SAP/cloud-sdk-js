@@ -332,7 +332,7 @@ class DestinationFromServiceRetriever {
   }
 
   /**
-  * @hidden
+   * @hidden
    * This method calls the 'find destination by name' endpoint of the destination service using a client credentials grant.
    * For the find by name endpoint, the destination service will take care of OAuth flows and include the token in the destination.
    */

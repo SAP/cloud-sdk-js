@@ -6,17 +6,12 @@ import {
 import CircuitBreaker from 'opossum';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import { getAgentConfig, urlAndAgent } from '../../../http-client';
 import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
 } from '../resilience-options';
 import { CachingOptions } from '../cache';
-import {
-  addProxyConfigurationInternet,
-  ProxyStrategy,
-  proxyStrategy
-} from '../../../http-agent/proxy-util';
+import { urlAndAgent } from '../../../http-agent';
 import { parseDestination } from './destination';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
@@ -226,7 +221,7 @@ function callDestinationService(
 ): Promise<AxiosResponse> {
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
-    proxy:false,
+    proxy: false,
     method: 'get',
     headers
   };

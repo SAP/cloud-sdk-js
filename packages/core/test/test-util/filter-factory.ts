@@ -123,7 +123,7 @@ export const testFilterLambdaExpressionFilterFunctionOnLink = {
         .equals('test')
     )
   )._filters,
-  odataStr: "(to_MultiLink/any(a0:(substring(a0/StringProperty, 1) eq 'test')))"
+  odataStr: "(to_MultiLink/any(a0:(substring(a0/StringProperty,1) eq 'test')))"
 };
 
 export const testFilterEnum = {

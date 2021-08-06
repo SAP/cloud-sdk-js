@@ -4,14 +4,10 @@ import {
   ErrorWithCause,
   renameKeys
 } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import CircuitBreaker from 'opossum';
-import {
-  executeHttpRequest,
-  HttpRequestConfig,
-  HttpRequestOptions,
-  HttpResponse
-} from '../../http-client';
+import { HttpRequestConfig } from '../../http-client';
+import { urlAndAgent } from '../../http-agent';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
@@ -23,16 +19,6 @@ import {
   TokenKey,
   UserTokenResponse
 } from './xsuaa-service-types';
-import {
-  Destination,
-  DestinationNameAndJwt,
-  DestinationOptions
-} from './destination';
-import {
-  addProxyConfigurationInternet,
-  ProxyStrategy,
-  proxyStrategy
-} from './proxy-util';
 
 const logger = createLogger({
   package: 'core',
@@ -40,14 +26,9 @@ const logger = createLogger({
 });
 
 type XsuaaCircuitBreaker = CircuitBreaker<
-  [
-    destination: Destination | DestinationNameAndJwt,
-    requestConfig: HttpRequestConfig,
-    options?: HttpRequestOptions | undefined,
-    destinationOptions?: DestinationOptions | undefined
-  ],
-  HttpResponse
->;
+    [requestConfig: AxiosRequestConfig],
+    AxiosResponse
+    >;
 
 let circuitBreaker: XsuaaCircuitBreaker;
 
@@ -63,20 +44,20 @@ let circuitBreaker: XsuaaCircuitBreaker;
  * @returns A promise resolving to the response.
  */
 export async function clientCredentialsGrant(
-  tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
-  clientCredentials: ClientCredentials,
-  options?: ResilienceOptions,
-  customBody: Record<string, any> = {}
+    tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
+    clientCredentials: ClientCredentials,
+    options?: ResilienceOptions,
+    customBody: Record<string, any> = {}
 ): Promise<ClientCredentialsResponse> {
   const authHeader = headerForClientCredentials(clientCredentials);
   const body = { grant_type: GrantType.CLIENT_CREDENTIALS, ...customBody };
 
   try {
     const { data } = await post(
-      tokenServiceUrlOrXsuaaServiceCredentials,
-      authHeader,
-      objectToXWwwUrlEncodedBodyString(body),
-      options
+        tokenServiceUrlOrXsuaaServiceCredentials,
+        authHeader,
+        objectToXWwwUrlEncodedBodyString(body),
+        options
     );
     return data;
   } catch (error) {
@@ -95,10 +76,10 @@ export async function clientCredentialsGrant(
  * @returns A promise resolving to the response of the XSUAA service.
  */
 export async function userTokenGrant(
-  tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
-  userJwt: string,
-  clientId: string,
-  options?: ResilienceOptions
+    tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
+    userJwt: string,
+    clientId: string,
+    options?: ResilienceOptions
 ): Promise<UserTokenResponse> {
   const authHeader = 'Bearer ' + userJwt;
   const body = objectToXWwwUrlEncodedBodyString({
@@ -109,10 +90,10 @@ export async function userTokenGrant(
 
   try {
     const { data } = await post(
-      tokenServiceUrlOrXsuaaServiceCredentials,
-      authHeader,
-      body,
-      options
+        tokenServiceUrlOrXsuaaServiceCredentials,
+        authHeader,
+        body,
+        options
     );
     return data;
   } catch (error) {
@@ -133,10 +114,10 @@ export async function userTokenGrant(
  * @returns A promise resolving to the response of the XSUAA service.
  */
 export async function refreshTokenGrant(
-  tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
-  clientCredentials: ClientCredentials,
-  refreshToken: string,
-  options?: ResilienceOptions
+    tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
+    clientCredentials: ClientCredentials,
+    refreshToken: string,
+    options?: ResilienceOptions
 ): Promise<UserTokenResponse> {
   const authHeader = headerForClientCredentials(clientCredentials);
   const body = objectToXWwwUrlEncodedBodyString({
@@ -146,10 +127,10 @@ export async function refreshTokenGrant(
 
   try {
     const { data } = await post(
-      tokenServiceUrlOrXsuaaServiceCredentials,
-      authHeader,
-      body,
-      options
+        tokenServiceUrlOrXsuaaServiceCredentials,
+        authHeader,
+        body,
+        options
     );
     return data;
   } catch (error) {
@@ -167,10 +148,10 @@ export async function refreshTokenGrant(
  * @returns A promise resolving to the response of the XSUAA service.
  */
 export async function jwtBearerTokenGrant(
-  tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
-  clientCredentials: ClientCredentials,
-  userJwt: string,
-  options?: ResilienceOptions
+    tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
+    clientCredentials: ClientCredentials,
+    userJwt: string,
+    options?: ResilienceOptions
 ): Promise<ClientCredentialsResponse> {
   const authHeader = headerForClientCredentials(clientCredentials);
   const body = objectToXWwwUrlEncodedBodyString({
@@ -182,10 +163,10 @@ export async function jwtBearerTokenGrant(
 
   try {
     const { data } = await post(
-      tokenServiceUrlOrXsuaaServiceCredentials,
-      authHeader,
-      body,
-      options
+        tokenServiceUrlOrXsuaaServiceCredentials,
+        authHeader,
+        body,
+        options
     );
     return data;
   } catch (error) {
@@ -201,8 +182,8 @@ export async function jwtBearerTokenGrant(
  * @returns An array of TokenKeys.
  */
 export function fetchVerificationKeys(
-  xsuaaCredentials: XsuaaServiceCredentials,
-  jku?: string
+    xsuaaCredentials: XsuaaServiceCredentials,
+    jku?: string
 ): Promise<TokenKey[]>;
 
 /**
@@ -214,29 +195,29 @@ export function fetchVerificationKeys(
  * @returns An array of TokenKeys.
  */
 export function fetchVerificationKeys(
-  url: string,
-  clientId: string,
-  clientSecret: string
+    url: string,
+    clientId: string,
+    clientSecret: string
 ): Promise<TokenKey[]>;
 
 export function fetchVerificationKeys(
-  xsuaaUriOrCredentials: string | XsuaaServiceCredentials,
-  clientIdOrJku?: string,
-  clientSecret?: string
+    xsuaaUriOrCredentials: string | XsuaaServiceCredentials,
+    clientIdOrJku?: string,
+    clientSecret?: string
 ): Promise<TokenKey[]> {
   // The case where the XsuaaServiceCredentials are given as object
   if (typeof xsuaaUriOrCredentials !== 'string') {
     if (!clientIdOrJku) {
       logger.warn(
-        'JKU field from the JWT not provided. Use xsuaaClient.url/token_keys as fallback. ' +
+          'JKU field from the JWT not provided. Use xsuaaClient.url/token_keys as fallback. ' +
           'This will not work for subscriber accounts created after 14th of April 2020.' +
           'Please provide the right URL given by the field JKU present in the JWT header.'
       );
     }
     return fetchVerificationKeys(
-      clientIdOrJku || `${xsuaaUriOrCredentials.url}/token_keys`,
-      xsuaaUriOrCredentials.clientid,
-      xsuaaUriOrCredentials.clientsecret
+        clientIdOrJku || `${xsuaaUriOrCredentials.url}/token_keys`,
+        xsuaaUriOrCredentials.clientid,
+        xsuaaUriOrCredentials.clientsecret
     );
   }
   // The three strings case
@@ -253,14 +234,14 @@ export function fetchVerificationKeys(
   }
 
   return axios
-    .request(config)
-    .then(resp => resp.data.keys.map(k => renameKeys(tokenKeyKeyMapping, k)))
-    .catch(error => {
-      throw new ErrorWithCause(
-        `Failed to fetch verification keys from XSUAA service instance ${xsuaaUriOrCredentials}!`,
-        error
-      );
-    });
+      .request(config)
+      .then(resp => resp.data.keys.map(k => renameKeys(tokenKeyKeyMapping, k)))
+      .catch(error => {
+        throw new ErrorWithCause(
+            `Failed to fetch verification keys from XSUAA service instance ${xsuaaUriOrCredentials}!`,
+            error
+        );
+      });
 }
 
 const tokenKeyKeyMapping: { [key: string]: keyof TokenKey } = {
@@ -273,33 +254,44 @@ const tokenKeyKeyMapping: { [key: string]: keyof TokenKey } = {
   n: 'publicKeyModulus'
 };
 
-function post(
-  tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
-  authHeader: string,
-  body: string,
-  options: ResilienceOptions = { enableCircuitBreaker: true }
-): Promise<HttpResponse> {
-  const config = wrapXsuaaPostRequestHeader(authHeader, body);
-  const targetUri =
-    typeof tokenServiceUrlOrXsuaaServiceCredentials === 'string'
-      ? tokenServiceUrlOrXsuaaServiceCredentials
-      : getTokenServiceUrl(tokenServiceUrlOrXsuaaServiceCredentials);
+function headers(authHeader: string): Pick<AxiosRequestConfig, 'headers'> {
+  return {
+    headers: {
+      Authorization: authHeader,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'application/json'
+    }
+  };
+}
 
-  let destination: Destination = { url: targetUri, proxyType: 'Internet' };
-  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
-    destination = addProxyConfigurationInternet(destination);
-  }
+function post(
+    tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
+    authHeader: string,
+    body: string,
+    options: ResilienceOptions = { enableCircuitBreaker: true }
+): Promise<AxiosResponse> {
+  const targetUri =
+      typeof tokenServiceUrlOrXsuaaServiceCredentials === 'string'
+          ? tokenServiceUrlOrXsuaaServiceCredentials
+          : getTokenServiceUrl(tokenServiceUrlOrXsuaaServiceCredentials);
+
+  const config: AxiosRequestConfig = {
+    ...urlAndAgent(targetUri),
+    proxy: false,
+    method: 'post',
+    data: body,
+    ...headers(authHeader)
+  };
 
   if (options.enableCircuitBreaker) {
-    return getCircuitBreaker().fire(destination, config);
+    return getCircuitBreaker().fire(config);
   }
-
-  return executeHttpRequest(destination, config);
+  return axios.request(config);
 }
 
 function wrapXsuaaPostRequestHeader(
-  authHeader: string,
-  body: string
+    authHeader: string,
+    body: string
 ): HttpRequestConfig {
   return {
     method: 'post',
@@ -313,19 +305,19 @@ function wrapXsuaaPostRequestHeader(
 }
 
 export function headerForClientCredentials(
-  clientCredentials: ClientCredentials
+    clientCredentials: ClientCredentials
 ): string {
   return (
-    'Basic ' +
-    encodeBase64(`${clientCredentials.username}:${clientCredentials.password}`)
+      'Basic ' +
+      encodeBase64(`${clientCredentials.username}:${clientCredentials.password}`)
   );
 }
 function objectToXWwwUrlEncodedBodyString(
-  bodyAsObject: Record<string, any>
+    bodyAsObject: Record<string, any>
 ): string {
   return Object.entries(bodyAsObject)
-    .map(kv => kv.join('='))
-    .join('&');
+      .map(kv => kv.join('='))
+      .join('&');
 }
 
 enum GrantType {
@@ -336,27 +328,27 @@ enum GrantType {
 }
 
 function getTokenServiceUrl(
-  xsuaaServiceCredentials: XsuaaServiceCredentials
+    xsuaaServiceCredentials: XsuaaServiceCredentials
 ): string {
   const xsuaaUri = xsuaaServiceCredentials.url.replace(/\/$/, '');
   logger.info(
-    `Adding "/oauth/token" to the end of the target uri: ${xsuaaUri}.`
+      `Adding "/oauth/token" to the end of the target uri: ${xsuaaUri}.`
   );
   return `${xsuaaUri}/oauth/token`;
 }
 
 function accessTokenError(error: Error, grant: string): Error {
   return new ErrorWithCause(
-    `FetchTokenError: ${grantTypeMapper[grant]} Grant failed! ${error.message}`,
-    error
+      `FetchTokenError: ${grantTypeMapper[grant]} Grant failed! ${error.message}`,
+      error
   );
 }
 
 function getCircuitBreaker(): XsuaaCircuitBreaker {
   if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(
-      executeHttpRequest,
-      circuitBreakerDefaultOptions
+        axios.request,
+        circuitBreakerDefaultOptions
     );
   }
   return circuitBreaker;

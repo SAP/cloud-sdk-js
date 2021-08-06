@@ -14,7 +14,6 @@ export * from './xsuaa-service-types';
 export * from './protocol';
 export * from './authorization-header';
 export * from './get-protocol';
-export * from './proxy-util';
 export * from './header-builder-for-destination';
 export {
   mappingTenantFields,

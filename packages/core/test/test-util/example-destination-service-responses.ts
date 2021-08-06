@@ -71,28 +71,28 @@ function destinationSingleResponse(
 }
 
 export const oauthMultipleResponse: DestinationConfiguration[] = [
-  destionWithAuthType('OAuth2SAMLBearerAssertion')
+  destinationWithAuthType('OAuth2SAMLBearerAssertion')
 ];
-export const oauthSingleResponse: DestinationJson = desintaionSingleResponse(
+export const oauthSingleResponse: DestinationJson = destinationSingleResponse(
   oauthMultipleResponse
 );
 
 export const oauthUserTokenExchangeMultipleResponse: DestinationConfiguration[] =
-  [destionWithAuthType('OAuth2UserTokenExchange')];
+  [destinationWithAuthType('OAuth2UserTokenExchange')];
 export const oauthUserTokenExchangeSingleResponse: DestinationJson =
-  desintaionSingleResponse(oauthUserTokenExchangeMultipleResponse);
+    destinationSingleResponse(oauthUserTokenExchangeMultipleResponse);
 
 export const oauthPasswordMultipleResponse: DestinationConfiguration[] = [
-  destionWithAuthType('OAuth2Password')
+  destinationWithAuthType('OAuth2Password')
 ];
-export const oauthPasswordSingleResponse = desintaionSingleResponse(
+export const oauthPasswordSingleResponse = destinationSingleResponse(
   oauthPasswordMultipleResponse
 );
 
 export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] =
-  [destionWithAuthType('OAuth2ClientCredentials')];
+  [destinationWithAuthType('OAuth2ClientCredentials')];
 export const oauthClientCredentialsSingleResponse: DestinationJson =
-  desintaionSingleResponse(oauthClientCredentialsMultipleResponse);
+    destinationSingleResponse(oauthClientCredentialsMultipleResponse);
 
 export const onPremiseMultipleResponse: DestinationConfiguration[] = [
   {

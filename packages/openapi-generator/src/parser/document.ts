@@ -9,9 +9,9 @@ import { ParserOptions } from './options';
 
 /**
  * Parse an OpenAPI document.
- * @param fileContent Original OpenAPI document object.
- * @param serviceOptions Service options as defined in the options per service.
- * @param options Parser options.
+ * @param fileContent - Original OpenAPI document object.
+ * @param serviceOptions -  Service options as defined in the options per service.
+ * @param options -  Parser options.
  * @returns The parsed OpenAPI document representation
  */
 export async function parseOpenApiDocument(

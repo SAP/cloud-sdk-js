@@ -5,8 +5,8 @@ import { buildCsrfHeaders } from '../../http-client';
  * @deprecated Since v1.20.0, use [[buildCsrfHeaders]] instead.
  *
  * Add CSRF token and cookies for a request to destination related headers.
- * @param request The request to get CSRF headers for.
- * @param headers Destination related headers to include in the request.
+ * @param request - The request to get CSRF headers for.
+ * @param headers -  Destination related headers to include in the request.
  * @returns A promise to an object containing the CSRF related headers
  */
 export async function addCsrfTokenAndCookies<

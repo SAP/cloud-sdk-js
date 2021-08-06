@@ -5,7 +5,6 @@ import { Link } from './link';
 
 /**
  * Represents a link from one entity to one other linked entity (as opposed to a list of linked entities). In OData v2 a `OneToOneLink` can be used to filter and order a selection on an entity based on filters and orders on a linked entity.
- *
  * @typeparam EntityT - Type of the entity to be linked from
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
@@ -16,7 +15,6 @@ export class OneToOneLink<
   /**
    * @deprecated Since v1.21.0. Use [[clone]] instead.
    * Create a new one to one link based on a given link.
-   *
    * @typeparam EntityT - Type of the entity to be linked from
    * @typeparam LinkedEntityT - Type of the entity to be linked to
    * @param link - Link to be cloned
@@ -68,7 +66,6 @@ export class OneToOneLink<
 
   /**
    * Create filter statements to be applied to the OData request based on the linked entity values.
-   *
    * @param filters - Filters based on the linked entity
    * @returns Newly created Filterlink
    */

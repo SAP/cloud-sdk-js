@@ -19,7 +19,6 @@ export class UpdateRequestBuilder<
 > extends UpdateRequestBuilderBase<EntityT> {
   /**
    * Creates an instance of UpdateRequestBuilder.
-   *
    * @param _entityConstructor - Constructor type of the entity to be updated
    * @param _entity - Entity to be updated
    */
@@ -39,7 +38,6 @@ export class UpdateRequestBuilder<
 
   /**
    * Executes the query.
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the entity once it was updated
@@ -58,7 +56,6 @@ export class UpdateRequestBuilder<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to an [[HttpResponse]].

@@ -6,12 +6,12 @@ import { ParserOptions } from './options';
  * With `strictNaming` enabled, duplicate names lead to an error.
  * With `strictNaming` disabled, duplicate names are renamed.
  * The formatted (and renamed) list of names has the same order and length as the original list.
- * @param names List of names to ensure uniqueness for.
- * @param options Parser options.
- * @param namingOptions Object containing options to configure the transformation.
- * @param options.format Function to format the name. Defaults to camel case.
- * @param options.reservedWords Reserved words that should be handled as duplicates.
- * @param options.separator Character between index and original name
+ * @param names - List of names to ensure uniqueness for.
+ * @param options -  Parser options.
+ * @param namingOptions -  Object containing options to configure the transformation.
+ * @param options.format - Function to format the name. Defaults to camel case.
+ * @param options.reservedWords - Reserved words that should be handled as duplicates.
+ * @param options.separator - Character between index and original name.
  * @returns Unique names in the given order.
  */
 export function ensureUniqueNames(
@@ -40,9 +40,9 @@ export function ensureUniqueNames(
 /**
  * Validate uniqueness of names.
  * Takes a list of names and throws an error if there are duplicates after formatting.
- * @param names List of names to ensure uniqueness for.
- * @param formattedNames Original transformed names.
- * @param reservedWords Reserved words that should be handled as duplicates.
+ * @param names -  List of names to ensure uniqueness for.
+ * @param formattedNames -  Original transformed names.
+ * @param reservedWords -  Reserved words that should be handled as duplicates.
  */
 export function validateUniqueness(
   names: string[],
@@ -63,8 +63,8 @@ export function validateUniqueness(
  * Deduplicate names.
  * Takes a list of names and renames those that are duplicate.
  * The renamed list has the same order as the original list.
- * @param names List of names to deduplicate.
- * @param namingOptions Object containing options to configure the transformation.
+ * @param names -  List of names to deduplicate.
+ * @param namingOptions -  Object containing options to configure the transformation.
  * @param namingOptions.format Function to format the name.
  * @param namingOptions.reservedWords Reserved words that should be handled as duplicates.
  * @returns Unique names in the given order.
@@ -105,9 +105,9 @@ export function deduplicateNames(
 /**
  * Get the names within a list of names that won't have to be renamed.
  * Those are the names that are unique and don't need to be formatted.
- * @param names Names to check.
- * @param format Function to format the name.
- * @param reservedWords Reserved words that should be handled as duplicates.
+ * @param names -  Names to check.
+ * @param format -  Function to format the name.
+ * @param reservedWords -  Reserved words that should be handled as duplicates.
  * @returns A list of names that do not need to be renamed.
  */
 function getNonConflictingNames(
@@ -179,10 +179,10 @@ function getDuplicateErrorMessage(
 
 /**
  * Get the formatted error output.
- * @param originalNames The original names, that contain duplicates after formatting.
- * @param formattedNames Original transformed names.
- * @param uniqueNames The unique formatted names.
- * @param threshold Number of occurrences allowed.
+ * @param originalNames -  The original names, that contain duplicates after formatting.
+ * @param formattedNames -  Original transformed names.
+ * @param uniqueNames -  The unique formatted names.
+ * @param threshold -  Number of occurrences allowed.
  * @returns Formatted output for an error with duplicates.
  */
 function getDuplicateErrorLines(

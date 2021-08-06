@@ -48,7 +48,6 @@ let circuitBreaker: DestinationCircuitBreaker;
 
 /**
  * Fetches all instance destinations from the given URI.
- *
  * @param destinationServiceUri - The URI of the destination service
  * @param jwt - The access token
  * @param options - Options to use by retrieving destinations
@@ -69,7 +68,6 @@ export function fetchInstanceDestinations(
 
 /**
  * Fetches all subaccount destinations from the given URI.
- *
  * @param destinationServiceUri - The URI of the destination service
  * @param jwt - The access token
  * @param options - Options to use by retrieving destinations
@@ -148,7 +146,6 @@ export interface AuthAndExchangeTokens {
  * For destinations with authenticationType OAuth2SAMLBearerAssertion, this call will trigger the OAuth2SAMLBearerFlow against the target destination.
  * In this pass the access token as string.
  * Fetches a specific destination with authenticationType OAuth2UserTokenExchange by name from the given URI, including authorization tokens.
- *
  * @param destinationServiceUri - The URI of the destination service
  * @param token - The access token or AuthAndExchangeTokens if you want to include the X-user-token for OAuth2UserTokenExchange.
  * @param destinationName - The name of the desired destination

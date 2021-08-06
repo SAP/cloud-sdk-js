@@ -12,9 +12,9 @@ import { ParserOptions } from './options';
 
 /**
  * Parse an operation info into a serialization-ready object.
- * @param operationInfo Parsing relevant information on an operation.
- * @param refs Object representing cross references throughout the document.
- * @param options Parser options.
+ * @param operationInfo - Parsing relevant information on an operation.
+ * @param refs -  Object representing cross references throughout the document.
+ * @param options -  Parser options.
  * @returns A flat list of parsed operations.
  */
 export function parseOperation(

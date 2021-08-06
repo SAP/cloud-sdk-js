@@ -50,7 +50,6 @@ export abstract class ODataRequestConfig {
   );
   /**
    * Creates an instance of ODataRequest.
-   *
    * @param method - HTTP method of the request
    * @param defaultServicePath - default path of the according service
    * @param defaultHeadersOrContentType - The default headers of the given request as an object. When passing a string only set the content type header will be set. Setting the content type only is deprecated since v1.30.0.
@@ -114,7 +113,6 @@ export abstract class ODataRequestConfig {
 
   /**
    * Add custom headers to the request. This is useful in case you want to provide your own authorization headers for example.
-   *
    * @param headers - Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   addCustomHeaders(headers: Record<string, string>): void {
@@ -126,7 +124,6 @@ export abstract class ODataRequestConfig {
 
   /**
    * Add custom query parameters to the request. This is useful in case your OData service allows non-standard query parameters.
-   *
    * @param queryParameters - Key-value pairs where the key is the name of a query parameter and the value is the respective value
    */
   addCustomQueryParameters(queryParameters: Record<string, string>): void {
@@ -137,7 +134,6 @@ export abstract class ODataRequestConfig {
 
   /**
    * Add custom request configuration to the request.
-   *
    * @param requestConfiguration - Key-value pairs where the key is the name of a request configuration and the value is the respective value
    */
   addCustomRequestConfiguration(

@@ -1,5 +1,6 @@
 module.exports = {
   env: { node: true, jest: true },
+  plugins: ['eslint-plugin-tsdoc'],
   extends: ['@sap-cloud-sdk'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -40,6 +41,7 @@ module.exports = {
     }
   ],
   rules: {
-    radix: 'off'
+    radix: 'off',
+    'tsdoc/syntax': 'warn'
   }
 };

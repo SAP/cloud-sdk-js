@@ -43,7 +43,7 @@ export interface FieldOptions<
 /**
  * Get field options merged with default values.
  * The given options take precedence.
- * @param fieldOptions Given options.
+ * @param fieldOptions - Given options.
  * @returns Given options merged with default values.
  */
 export function getFieldOptions<
@@ -70,7 +70,6 @@ const defaultFieldOptions: Required<FieldOptions> = {
  * Fields are used to represent the domain of values that can be used in select, filter and order by functions.
  *
  * See also: [[Selectable]], [[EdmTypeField]], [[ComplexTypeField]]
- *
  * @typeparam EntityT - Type of the entity the field belongs to.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
@@ -85,7 +84,6 @@ export class Field<
   readonly _fieldOptions: Required<FieldOptions<NullableT, SelectableT>>;
   /**
    * Creates an instance of Field.
-   *
    * @param _fieldName - Actual name of the field used in the OData request
    * @param _entityConstructor - Constructor type of the entity the field belongs to
    * @param fieldOptions - Optional settings for this field.

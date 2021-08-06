@@ -18,7 +18,7 @@ import {
 
 /**
  * Serialize a schema.
- * @param schema Parsed schema to be serialized.
+ * @param schema - Parsed schema to be serialized.
  * @returns The serialized schema
  */
 export function serializeSchema(schema: OpenApiSchema): string {

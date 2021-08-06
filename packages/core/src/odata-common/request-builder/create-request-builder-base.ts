@@ -16,7 +16,6 @@ import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.
- *
  * @typeparam EntityT - Type of the entity to be created
  */
 export abstract class CreateRequestBuilder<EntityT extends Entity>
@@ -25,7 +24,6 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
 {
   /**
    * Creates an instance of CreateRequestBuilder.
-   *
    * @param _entityConstructor - Constructor type of the entity to be created
    * @param _entity - Entity to be created
    */
@@ -62,7 +60,6 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
 
   /**
    * Specifies the parent of the entity to create.
-   *
    * @param parentEntity - Parent of the entity to create
    * @param linkField - Static representation of the navigation property that navigates from the parent entity to the child entity
    * @returns The entity itself, to facilitate method chaining
@@ -81,7 +78,6 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
 
   /**
    * Execute query.
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the created entity
@@ -105,7 +101,6 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
 
   /**
    * Execute request and return an [[HttpResponse]].
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to an [[HttpResponse]].

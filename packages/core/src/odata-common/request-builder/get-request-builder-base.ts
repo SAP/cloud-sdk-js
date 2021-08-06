@@ -24,7 +24,6 @@ export abstract class GetRequestBuilder<
 
   /**
    * Creates an instance of GetAllRequestBuilder.
-   *
    * @param _entityConstructor - Constructor of the entity to create the request for.
    * @param requestConfig - Request config of the get all or get by key request.
    */
@@ -36,7 +35,6 @@ export abstract class GetRequestBuilder<
   }
   /**
    * Restrict the response to the given selection of properties in the request.
-   *
    * @param selects - Fields to select in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */
@@ -52,7 +50,6 @@ export abstract class GetRequestBuilder<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to an [[HttpResponse]].

@@ -24,7 +24,7 @@ export interface User extends UserData {
 
 /**
  * Extracts the custom attributes from the JWT.
- * @param jwtPayload Token payload to read the custom attributes from.
+ * @param jwtPayload - Token payload to read the custom attributes from.
  * @returns Custom attributes added by the XSUAA service to the issued JWT.
  */
 export function customAttributes(
@@ -66,7 +66,7 @@ export const mappingUserFields: JwtKeyMapping<
 
 /**
  * Get the user's given name from the JWT payload.
- * @param jwtPayload Token payload to read the user's given name from.
+ * @param jwtPayload -  Token payload to read the user's given name from.
  * @returns The user's given name if available.
  */
 export function userGivenName(jwtPayload: JwtPayload): string | undefined {
@@ -80,7 +80,7 @@ export function userGivenName(jwtPayload: JwtPayload): string | undefined {
 
 /**
  * Get the user's family name from the JWT payload.
- * @param jwtPayload Token payload to read the user's family from.
+ * @param jwtPayload -  Token payload to read the user's family from.
  * @returns The user's family name if available.
  */
 export function userFamilyName(jwtPayload: JwtPayload): string | undefined {
@@ -94,7 +94,7 @@ export function userFamilyName(jwtPayload: JwtPayload): string | undefined {
 
 /**
  * Get the user name from the JWT payload.
- * @param jwtPayload Token payload to read the user name from.
+ * @param jwtPayload -  Token payload to read the user name from.
  * @returns The user name if available.
  */
 export function userName(jwtPayload: JwtPayload): string | undefined {
@@ -103,7 +103,7 @@ export function userName(jwtPayload: JwtPayload): string | undefined {
 
 /**
  * Get the user's e-mail address from the JWT payload.
- * @param jwtPayload Token payload to read the user e-mail address from.
+ * @param jwtPayload -  Token payload to read the user e-mail address from.
  * @returns The user's e-mail address if available.
  */
 export function userEmail(jwtPayload: JwtPayload): string | undefined {
@@ -114,7 +114,7 @@ export function userEmail(jwtPayload: JwtPayload): string | undefined {
 
 /**
  * Get the user's scopes from the JWT payload.
- * @param jwtPayload Token payload to read the user's scopes from.
+ * @param jwtPayload -  Token payload to read the user's scopes from.
  * @returns The user's scopes if available.
  */
 export function userScopes(jwtPayload: JwtPayload): Scope[] {
@@ -128,7 +128,7 @@ export function userScopes(jwtPayload: JwtPayload): Scope[] {
 
 /**
  * Get the user id from the JWT payload.
- * @param jwtPayload Token payload to read the user id from.
+ * @param jwtPayload -  Token payload to read the user id from.
  * @returns The user id if available.
  */
 export function userId(jwtPayload: JwtPayload): string | undefined {
@@ -167,7 +167,7 @@ function hasScopeWrapper(scopes: Scope[]): hasScopeType {
 /**
  * Creates a user object from the decoded JWT.
  * Throws an error if no `id` or `userName` property is present on the JWT payload.
- * @param jwtPayload Token payload to get the user from.
+ * @param jwtPayload -  Token payload to get the user from.
  * @returns Representation of the user.
  */
 export function userFromJwt(jwtPayload: JwtPayload): User {

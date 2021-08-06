@@ -4,7 +4,6 @@ import { toPropertyFormat } from '../name-converter';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.
- *
  * @param entity - Entity to map
  * @param entityConstructor - The constructor of the entity
  * @returns object that includes all keys that represent given entity

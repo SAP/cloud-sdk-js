@@ -39,7 +39,6 @@ export abstract class FilterFunction<
 
   /**
    * Creates an instance of Filter for this filter function and the given value using the operator 'eq', i.e. `==`.
-   *
    * @param value - Value to be used in the filter
    * @param edmType - EdmType of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter
@@ -50,7 +49,6 @@ export abstract class FilterFunction<
 
   /**
    * Creates an instance of Filter for this filter function and the given value using the operator 'ne', i.e. `!=`.
-   *
    * @param value - Value to be used in the filter
    * @param edmType - EdmType of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter

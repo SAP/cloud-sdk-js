@@ -10,8 +10,8 @@ import { Import, serializeImports } from './imports';
 
 /**
  * Serialize an API representation to a string representing the resulting API file.
- * @param api Represenation of an API.
- * @param serviceName Service name for which the API is created.
+ * @param api - Represenation of an API.
+ * @param serviceName -  Service name for which the API is created.
  * @returns The serialized API file contents.
  */
 export function apiFile(api: OpenApiApi, serviceName: string): string {
@@ -28,7 +28,7 @@ export const ${api.name} = {
 
 /**
  * Get the unique reference schemas for all request body types in the given operation list.
- * @param operations The given operation list.
+ * @param operations -  The given operation list.
  * @returns The list of unique referenced body type schemas.
  */
 function collectRefsFromOperations(

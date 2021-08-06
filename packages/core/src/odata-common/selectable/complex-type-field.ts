@@ -19,7 +19,6 @@ import type { ConstructorOrField } from './constructor-or-field';
  * Moreover, classes implementing this abstract class will provide property fields, that can be used for filtering and ordering.
  *
  * See also: [[Selectable]]
- *
  * @typeparam EntityT - Type of the entity the field belongs to.
  * @typeparam ComplexT - Type of complex type represented by this field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
@@ -47,7 +46,6 @@ export abstract class ComplexTypeField<
    * @deprecated Since v1.19.0.
    *
    * Creates an instance of ComplexTypeField.
-   *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param entityConstructor - Constructor type of the entity the field belongs to.
    * @param complexTypeName - Name of the type of the field according to the metadata description.
@@ -61,7 +59,6 @@ export abstract class ComplexTypeField<
   /**
    * @deprecated Since v1.27.0. Use other constructors instead.
    * Creates an instance of ComplexTypeField.
-   *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
@@ -71,7 +68,6 @@ export abstract class ComplexTypeField<
   );
   /**
    * Creates an instance of ComplexTypeField.
-   *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    * @param complexType - The complex type of the complex type property represented by this.
@@ -87,7 +83,6 @@ export abstract class ComplexTypeField<
 
   /**
    * Creates an instance of ComplexTypeField.
-   *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    * @param complexTypeOrName - The complex type of the complex type property represented by this or the name of the type of the field according to the metadata description. Using the name here is deprecated.
@@ -120,7 +115,6 @@ export abstract class ComplexTypeField<
 
 /**
  * Convenience method to get the entity constructor of the parent of a complex type.
- *
  * @param fieldOf - Either an entity constructor or another complex type field.
  * @returns The constructor of the transitive parent entity;
  */

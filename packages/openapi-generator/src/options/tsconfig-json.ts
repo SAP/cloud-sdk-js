@@ -25,7 +25,7 @@ export const defaultTsConfig = {
 /**
  * Build a tsconfig.json file as string.
  * If the given options include a tsConfig setting, this config is read and returned.
- * @param options Options passed to the generator.
+ * @param options - Options passed to the generator.
  * @returns The serialized tsconfig.json contents.
  */
 export async function tsconfigJson(

@@ -4,7 +4,6 @@ import { Selectable, Link } from '../../odata-common';
 /**
  * Get an object containing the given expand as a query parameter, or an empty object if none was given.
  * In this OData v2 expand, selected properties are automatically added to the expand.
- *
  * @typeparam EntityT - Type of the entity to expand on
  * @param selects - The selects which are expanded if necessary
  * @param entityConstructor - Constructor type of the entity to expand on

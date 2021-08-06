@@ -39,7 +39,7 @@ export interface CachingOptions {
 
 /**
  * Representation of a cache to transiently store objects locally for faster access.
- * @typeparam T Type of the cache entries.
+ * @typeparam T - Type of the cache entries.
  */
 export class Cache<T> implements CacheInterface<T> {
   /**

@@ -59,7 +59,6 @@ export class Filter<
   // And deprecate passing a string as the field is needed later on
   /**
    * Creates an instance of Filter.
-   *
    * @param field - Name of the field of the entity to be filtered on or a filter function
    * @param operator - Function to be used for matching
    * @param value - Value to be used by the operator

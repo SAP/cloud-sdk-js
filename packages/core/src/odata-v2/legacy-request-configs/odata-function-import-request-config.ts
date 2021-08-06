@@ -8,7 +8,6 @@ import { ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBas
 /**
  * @deprecated Since v1.21.0. Use superclass instead.
  * OData function import request configuration for a set of parameters.
- *
  * @typeparam ParametersT - Type of the original parameters object
  */
 class ODataFunctionImportRequestConfig<
@@ -16,7 +15,6 @@ class ODataFunctionImportRequestConfig<
 > extends ODataFunctionImportRequestConfigBase<ParametersT> {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
-   *
    * @param method - HTTP method for the request
    * @param defaultServicePath - Default path of the service
    * @param functionImportName - The name of the function import.

@@ -2,7 +2,6 @@ import { isNullish } from './nullish';
 
 /**
  * Checks if a chain of properties exists on the given object.
- *
  * @param obj - The object to be checked.
  * @param properties - Chained properties.
  * @returns True if the property chain leads to a truthy value, false otherwise.
@@ -21,15 +20,13 @@ export function propertyExists(
 }
 
 /**
- * Adds the value to the object if it is neither null nor undefined.
- * Note that this is different to JS idiomatic checks for truthy/falsy values, i.e. an empty string will result in key/value pairs beeing added.
- *
  * @deprecated This will be removed in version 2.0 of the SDK.
- *
+ * Adds the value to the object if it is neither `null` nor `undefined`.
+ * Note that this is different to JS idiomatic checks for truthy/falsy values, i.e. an empty string will result in key/value pairs being added.
  * @param key - The key to associate with the given value.
  * @param value - The value to associate with the given key.
  * @param obj - The object on which to create the association.
- * @returns A copy of the input object with the new key-value pair if the value is neither null nor undefined.
+ * @returns A copy of the input object with the new key-value pair if the value is neither `null` nor `undefined`.
  */
 export const assocSome =
   <T>(key: string, value?: any) =>
@@ -41,14 +38,12 @@ export const assocSome =
   };
 
 /**
- * Merges the two objects, if second object is neither null nor undefined.
- * If a key exists on a and b the value from b is taken
- *
  * @deprecated This will be removed in version 2.0 of the SDK.
- *
+ * Merges the two objects, if second object is neither `null` nor `undefined`.
+ * If a key exists on `a` and `b` the value from `b` is taken.
  * @param a - The object to merge into.
- * @param b - The object which to merge into a.
- * @returns A copy of the merge(a, b) or a if b is undefined or null.
+ * @param b - The object which to merge into `a`.
+ * @returns A copy of the `merge(a, b)` or `a` if `b` is `undefined` or `null`.
  */
 export const mergeSome = (
   a: Record<string, any>,
@@ -64,7 +59,6 @@ export const mergeSome = (
  * Takes an object and returns a new object whose keys are renamed according to the provided key mapping.
  * Any keys in the input object not present in the key mapping will be present in the output object as-is.
  * If a key in the key mapping is not present in the input object, the output object will contain the key with value "undefined".
- *
  * @param keyMapping - An object mapping keys of the input object to keys of the output object.
  * @param obj - The input object.
  * @returns An object with renamed keys.
@@ -84,7 +78,6 @@ export const renameKeys = (
 /**
  * Create a shallow copy of the given object, that contains the given keys.
  * Non existing keys in the source object are ignored.
- *
  * @param keys - properties to be selected
  * @param obj - object from which the values are taken
  * @returns an object with the selected keys and corresponding values.
@@ -103,7 +96,6 @@ export const pick = <T>(keys: string[], obj: T): Partial<T> => {
 /**
  * Create a shallow copy of the given object, that does not contain the given keys.
  * Non existing keys in the source object are ignored.
- *
  * @param keys - properties to be selected
  * @param obj - object from which the values are taken
  * @returns an object with the selected keys and corresponding values.
@@ -122,7 +114,6 @@ export const exclude = <T>(keys: string[], obj: T): Partial<T> => {
 /**
  * Adds a key value pair to the given objects and returns a shallow copy.
  * If the key is already present it will be overwritten.
- *
  * @param key - key to be added
  * @param value - value to be added
  * @param obj - object the key value pair is added to.
@@ -139,7 +130,6 @@ export const assoc = <T>(
 
 /**
  * Create an object based on the given key and value if neither key nor value are nullish.
- *
  * @param key - Name of the header.
  * @param value - Value of the header.
  * @returns - An object containing the given key and value of an empty object.
@@ -154,7 +144,6 @@ export function toSanitizedObject(
 /**
  * Create a shallow copy of the given object, that contains the given keys, independent of casing.
  * Non existing keys in the source object are ignored.
- *
  * @param obj - Object to pick the given key from.
  * @param keys - Keys of the pair to be picked.
  * @returns - An object containing the given key-value pairs in its original case or an empty object if none of them are found.
@@ -177,7 +166,6 @@ export function pickIgnoreCase<T extends Record<string, any>>(
 
 /**
  * Returns the value of an object based on the given key, independent of casing.
- *
  * @param obj - Object to be searched for the given key.
  * @param key - Key of the value to pick.
  * @returns The value of for the given key or undefined if not available.
@@ -191,7 +179,6 @@ export function pickValueIgnoreCase<T extends Record<string, any>>(
 
 /**
  * Create a shallow copy of the given object, that contains all entries with non-nullish values.
- *
  * @param obj - An object to pick from.
  * @returns - A filtered object containing only keys with non-nullish values.
  */
@@ -205,7 +192,6 @@ export function pickNonNullish<T extends Record<string, any>>(
 
 /**
  * Create an object by merging the `right` object into a shallow copy of the `left` object ignoring casing, but keeping the `right` casing. Only keys present in the `left` object will be present in the merged object.
- *
  * @param left - Object to merge into. They keys of this object will be present in the returned object.
  * @param right - Object to merge. Only keys in `left` will be considered for merging.
  * @returns - An object containing all keys from the `left` object, where entries present in the `right` object are replaced. Note that the casing used by `right` will be used.

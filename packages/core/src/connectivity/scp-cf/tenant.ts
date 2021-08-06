@@ -15,7 +15,7 @@ export const mappingTenantFields: JwtKeyMapping<Tenant, 'zid' | 'zdn'> = {
 
 /**
  * Get the tenant id of a decoded JWT.
- * @param jwtPayload Token payload to read the tenant id from.
+ * @param jwtPayload - Token payload to read the tenant id from.
  * @returns The tenant id, if available.
  */
 export function tenantId(jwtPayload: JwtPayload): string | undefined {
@@ -24,7 +24,7 @@ export function tenantId(jwtPayload: JwtPayload): string | undefined {
 
 /**
  * Get the tenant name of a decoded JWT.
- * @param jwtPayload Token payload to read the tenant name from.
+ * @param jwtPayload -  Token payload to read the tenant name from.
  * @returns The tenant name, if available.
  */
 export function tenantName(jwtPayload: JwtPayload): string | undefined {
@@ -54,7 +54,7 @@ export interface Tenant {
 /**
  * Creates a tenant object from the JWT payload.
  * Throws an error if the property `id` is not present in the payload.
- * @param jwtPayload Token payload to get the tenant information from.
+ * @param jwtPayload -  Token payload to get the tenant information from.
  * @returns Representation of the tenant.
  */
 export function tenantFromJwt(jwtPayload: JwtPayload): Tenant {

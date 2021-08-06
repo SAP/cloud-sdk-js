@@ -22,7 +22,6 @@ const logger = createLogger({
 /**
  * @deprecated Since v1.20.0. Use [[buildAuthorizationHeaders]] instead.
  * Adds authorization headers for a given ODataRequest to existing headers.
- *
  * @param request - an ODataRequest.
  * @param headers - The headers that should be added to.
  * @returns The provided headers with the new authorization headers.
@@ -101,7 +100,6 @@ export async function getAuthHeaders(
 /**
  * @deprecated Since v1.20.0. Use [[buildAuthorizationHeaders]] instead.
  * Adds authorization headers for a given destination to existing headers.
- *
  * @param destination - A destination.
  * @param headers - The headers that should be added to.
  * @returns The provided headers with the new authorization headers.

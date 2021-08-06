@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { createLogger } from '@sap-cloud-sdk/util';
 import { EntityDeserializer } from '../../entity-deserializer';
 import { ResponseDataAccessor } from '../../response-data-accessor';

@@ -10,8 +10,8 @@ import { ensureValidSchemaNames } from './schema-naming';
 
 /**
  * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.
- * @param document The original OpenAPI document.
- * @param options Parser options.
+ * @param document - The original OpenAPI document.
+ * @param options -  Parser options.
  * @returns A promise to the reference representation.
  */
 export async function createRefs(
@@ -28,8 +28,8 @@ export async function createRefs(
 export class OpenApiDocumentRefs {
   /**
    * Create a representation of references within a document.
-   * @param document The original OpenAPI document.
-   * @param options Parser options.
+   * @param document -  The original OpenAPI document.
+   * @param options -  Parser options.
    * @returns A promise to the reference representation.
    */
   static async createRefs(
@@ -44,8 +44,8 @@ export class OpenApiDocumentRefs {
 
   /**
    * Parse mapping between schema references and their unique names.
-   * @param document The original OpenAPI document.
-   * @param options Parser options.
+   * @param document -  The original OpenAPI document.
+   * @param options -  Parser options.
    * @returns A mapping from schema references to schema naming objects.
    */
   private static parseSchemaRefMapping(
@@ -79,8 +79,8 @@ export class OpenApiDocumentRefs {
 
   /**
    * Creates a new instance of `OpenApiDocumentRefs`.
-   * @param refs Object representing the OpenAPI cross references.
-   * @param schemaRefMapping Mapping between schema references and schema naming.
+   * @param refs -  Object representing the OpenAPI cross references.
+   * @param schemaRefMapping -  Mapping between schema references and schema naming.
    */
   private constructor(
     private refs: $Refs,
@@ -90,7 +90,7 @@ export class OpenApiDocumentRefs {
   /**
    * Check whether the given object is a reference object and resolve if necessary.
    * This operates only on the current level and does not resolve the object recursively.
-   * @param obj Object to resolve if necessary.
+   * @param obj -  Object to resolve if necessary.
    * @returns A resolved object.
    */
   resolveObject<T>(obj: T | OpenAPIV3.ReferenceObject): T {
@@ -99,7 +99,7 @@ export class OpenApiDocumentRefs {
 
   /**
    * Parse the type name of a reference object.
-   * @param obj Reference object or reference path to get the type name from.
+   * @param obj -  Reference object or reference path to get the type name from.
    * @returns Parsed type name.
    */
   getSchemaNaming(obj: OpenAPIV3.ReferenceObject | string): SchemaNaming {

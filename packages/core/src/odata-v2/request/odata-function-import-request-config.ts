@@ -11,7 +11,6 @@ export class ODataFunctionImportRequestConfig<
 > extends ODataFunctionImportRequestConfigBase<ParametersT> {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
-   *
    * @param method - HTTP method for the request
    * @param defaultServicePath - Default path of the service
    * @param functionImportName - The name of the function import.

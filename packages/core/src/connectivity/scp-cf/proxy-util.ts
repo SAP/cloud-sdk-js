@@ -200,7 +200,6 @@ export function addProxyConfigurationInternet(destination: any): Destination {
  * Builds the http(s)-agent config. Note that the proxy agent type like http or https is determined by the destination RUL protocol.
  * The protocol from the proxy is unrelated to this and in most cases http.
  * All additional options are forwarded to tls.connect and net.connect see https://github.com/TooTallNate/node-https-proxy-agent#new-httpsproxyagentobject-options
- *
  * @param destination - Destination containing the proxy configurations
  * @param options - Additional options for the agent
  * @returns The http(s)-agent containing the proxy configuration

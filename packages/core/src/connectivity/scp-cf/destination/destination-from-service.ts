@@ -58,7 +58,6 @@ const emptyDestinationByType: DestinationsByType = {
  * By default, selects subscriber over provider and instance over subaccount destinations.
  *
  * If the destinations are read from the environment, the jwt will be ignored.
- *
  * @param name - The name of the destination to be retrieved.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.

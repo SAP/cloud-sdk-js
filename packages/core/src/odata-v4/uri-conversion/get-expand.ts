@@ -18,7 +18,6 @@ function prependDollar(param: string): string {
 
 /**
  * Get an object containing the given expand as a query parameter, or an empty object if none was given.
- *
  * @typeparam EntityT - Type of the entity to expand on
  * @param expands - The expands to transform to a query parameter
  * @param entityConstructor - Constructor type of the entity to expand on

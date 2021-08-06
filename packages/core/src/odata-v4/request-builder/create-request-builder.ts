@@ -10,7 +10,6 @@ import { entityDeserializer } from '../entity-deserializer';
 import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
- *
  * @typeparam EntityT - Type of the entity to be created
  */
 export class CreateRequestBuilder<EntityT extends Entity>
@@ -19,7 +18,6 @@ export class CreateRequestBuilder<EntityT extends Entity>
 {
   /**
    * Creates an instance of CreateRequestBuilder.
-   *
    * @param _entityConstructor - Constructor type of the entity to be created
    * @param _entity - Entity to be created
    */

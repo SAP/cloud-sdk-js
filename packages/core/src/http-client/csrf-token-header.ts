@@ -22,8 +22,8 @@ const logger = createLogger({
 /**
  * Get CSRF token and cookies for a destination and request configuration. The CSRF token and cookies will be retrieved based on the url of the destination and the custom configuration given by the `requestConfig`.
  * If there is a relative url in the `requestConfig` it will be appended to the destination's url, an absolute url overwrites the destination related url.
- * @param destination The destination to get the headers from
- * @param requestConfig An http request configuration containing additional information about the request, like url or headers
+ * @param destination - The destination to get the headers from
+ * @param requestConfig -  An http request configuration containing additional information about the request, like url or headers
  * @returns A promise to an object containing the CSRF related headers
  */
 export async function buildCsrfHeaders<T extends HttpRequestConfig>(

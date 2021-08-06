@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { ODataRequest } from '../../request/odata-request';
@@ -14,7 +12,7 @@ import type { BatchRequestBuilder } from './batch-request-builder';
 /**
  * Serialize change set to string.
  * @param changeSet - Change set containing a collection of write operations.
- * @param options Request serialization options.
+ * @param options - Request serialization options.
  * @returns The serialized string representation of a change set.
  */
 export function serializeChangeSet(
@@ -36,8 +34,8 @@ export function serializeChangeSet(
 
 /**
  * Serialize a multipart request to string.
- * @param request One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
- * @param options Request serialization options.
+ * @param request -  One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
+ * @param options -  Request serialization options.
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  */
 export function serializeRequest(
@@ -104,7 +102,7 @@ function validateOptions(options: BatchRequestSerializationOptions): void {
 /**
  * Serialize a batch request to string. This is used for the batch request payload when executing the request.
  * @param request - Batch request to serialize.
- * @param options Request serialization options.
+ * @param options -  Request serialization options.
  * @returns String representation of the batch request.
  */
 export function serializeBatchRequest(
@@ -138,9 +136,9 @@ export function serializeBatchRequest(
  * @deprecated Since v1.30.0. This function won't be replaced.
  * Serialize a request to a one line string containing the HTTP method, url and HTTP version.
  * For Example:
- * GET /sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartnerAddress?$format=json&$top=1 HTTP/1.1
- * @param request One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
- * @returns The seralized request as <HTTP method> <url> <HTTP version>.
+ * `GET /sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartnerAddress?$format=json&$top=1 HTTP/1.1`
+ * @param request -  One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
+ * @returns The serialized request as `<HTTP method> <url> <HTTP version>`.
  */
 export function getLine(request: MethodRequestBuilder): string {
   return `${request.requestConfig.method.toUpperCase()} /${request.relativeUrl()} HTTP/1.1`;

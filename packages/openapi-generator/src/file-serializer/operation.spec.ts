@@ -41,9 +41,9 @@ describe('serializeOperation', () => {
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of get requests to the 'test/{id}/{subId}' endpoint.
-       * @param id Path parameter.
-       * @param subId Path parameter.
-       * @param queryParameters Object containing the following keys: limit.
+       * @param id - Path parameter.
+       * @param subId -  Path parameter.
+       * @param queryParameters -  Object containing the following keys: limit.
        * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
        */
       getFn: (id: string, subId: string, queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<string>(
@@ -82,7 +82,7 @@ describe('serializeOperation', () => {
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of delete requests to the 'test/{id}' endpoint.
-       * @param id Path parameter.
+       * @param id -  Path parameter.
        * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
        */
       deleteFn: (id: string) => new OpenApiRequestBuilder<Record<string, any>>(
@@ -116,7 +116,7 @@ describe('serializeOperation', () => {
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of get requests to the 'test' endpoint.
-       * @param queryParameters Object containing the following keys: limit.
+       * @param queryParameters -  Object containing the following keys: limit.
        * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
        */
       getFn: (queryParameters?: {'limit'?: number}) => new OpenApiRequestBuilder<any>(
@@ -157,8 +157,8 @@ describe('serializeOperation', () => {
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of post requests to the 'test/{id}' endpoint.
-       * @param id Path parameter.
-       * @param body Request body.
+       * @param id -  Path parameter.
+       * @param body -  Request body.
        * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
        */
       createFn: (id: string, body: Record<string, any>) => new OpenApiRequestBuilder<any>(
@@ -193,7 +193,7 @@ describe('serializeOperation', () => {
     expect(serializeOperation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of post requests to the 'test' endpoint.
-       * @param body Request body.
+       * @param body -  Request body.
        * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
        */
       fnWithRefBody: (body: RefType | undefined) => new OpenApiRequestBuilder<string>(
@@ -243,7 +243,7 @@ describe('serializeOperation', () => {
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
-       * @param pathParameter1 Path parameter.
+       * @param pathParameter1 -  Path parameter.
        * @param path-parameter-2 Path parameter.
        * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
        */"
@@ -272,7 +272,7 @@ describe('serializeOperation', () => {
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
-       * @param queryParameters Object containing the following keys: queryParameter1, queryParameter2.
+       * @param queryParameters -  Object containing the following keys: queryParameter1, queryParameter2.
        * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
        */"
     `);
@@ -284,7 +284,7 @@ describe('serializeOperation', () => {
     expect(operationDocumentation(operation)).toMatchInlineSnapshot(`
       "/**
        * Create a request builder for execution of GET requests to the 'my/Api' endpoint.
-       * @param body Request body.
+       * @param body -  Request body.
        * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
        */"
     `);

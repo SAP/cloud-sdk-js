@@ -12,7 +12,6 @@ import {
 
 /**
  * A union of all types that can be used for filtering.
- *
  * @typeparam EntityT - Type of the entity to be filtered on
  */
 export type Filterable<
@@ -43,7 +42,6 @@ export type Filterable<
  *  .getAll()
  *  .filter(filterExp1, filterExp2);
  * ```
- *
  * @typeparam EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `and`.
  * @returns The newly created FilterList.
@@ -70,7 +68,6 @@ export function and<EntityT extends Entity>(
  *  .getAll()
  *  .filter(or(filterExp1, filterExp2));
  * ```
- *
  * @typeparam EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `or`
  * @returns The newly created FilterList
@@ -100,7 +97,7 @@ export function toFilterableList<
 
 /**
  * Negate a filter.
- * @param filter The filter to negate.
+ * @param filter - The filter to negate.
  * @returns The negated filter.
  */
 export function not<EntityT extends Entity>(

@@ -40,7 +40,6 @@ const DestinationCache = (cache: Cache<Destination>) => ({
  * Calculates a cache key based on the jwt and destination name for the given isolation strategy.
  * Cache keys for strategies are non-overlapping, i.e. using a cache key for strategy [[IsolationStrategy.Tenant]]
  * will not result in a cache hit for a destination that has been cached with strategy [[IsolationStrategy.Tenant_User]].
- *
  * @param decodedJwt - The decoded JWT of the current request.
  * @param destinationName - The name of the destination.
  * @param isolationStrategy - The strategy used to isolate cache entries.

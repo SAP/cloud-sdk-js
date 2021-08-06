@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   Destination,
@@ -22,7 +20,6 @@ import { responseDataAccessor } from './response-data-accessor';
 export class ODataBatchRequestBuilder extends BatchRequestBuilder {
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
-   *
    * @param destination - Targeted destination on which the request is performed.
    * @param options - Options to employ when fetching destinations.
    * @returns Promise resolving to the requested data.

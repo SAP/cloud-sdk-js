@@ -1,6 +1,6 @@
 /**
  * Flatten a two dimensional array into a one dimensional array
- * @param arr The array to be flattened.
+ * @param arr - The array to be flattened.
  * @returns A one dimensional array.
  */
 export function flat<T>(arr: T[][]): T[] {
@@ -53,14 +53,16 @@ export function splitInChunks<T>(arr: T[], chunkSize: number): T[][] {
 /**
  * We want to provide methods which accept a variable single number of elements and arrays.
  * The overloaded signature to achieve this is:
+ * ```
  * function doSomething(array: T[])
  * function doSomething(...varArgs: T[])
- * functiondoSomething(first: undefined | T | T[], ...rest: T[]) {
+ * function doSomething(first: undefined | T | T[], ...rest: T[]) {
  *   //implementation
  * }
+ * ```
  * This wrapper methods makes it easy build an array from the input.
- * @param firstOrArray - Either an array, the first element of the var args or undefined if no argument was given.
- * @param rest - Second to last element if var args were used, empty array if the frist argument is an array.
+ * @param firstOrArray - Either an array, the first element of the var args or `undefined`, if no argument was given.
+ * @param rest - Second to last element, if var args were used, empty array, if the first argument is an array.
  * @returns Array from the input or empty array if no input was given.
  */
 export function variadicArgumentToArray<T>(
@@ -76,7 +78,6 @@ export function variadicArgumentToArray<T>(
 /**
  * Flattens a array: [1,[2,[3,4]],5] will become [1,2,3,4,5].
  * Non primitive values are copied by reference.
- *
  * @param input - Array to be flattened
  * @returns The flattened array.
  */
@@ -98,9 +99,9 @@ export const flatten = (input: any[]): any[] => {
 
 /**
  * Merge two arrays by alternately adding inserting values from both arrays, starting from the left.
- * For example: `zip([1, 2], [3, 4, 5, 6])` => `[1, 3, 2, 4, 5, 6]`
- * @param left Array to start alternately merging from.
- * @param right Second array to merge.
+ * For example: `zip([1, 2], [3, 4, 5, 6])` results in `[1, 3, 2, 4, 5, 6]`
+ * @param left -  Array to start alternately merging from.
+ * @param right -  Second array to merge.
  * @returns Zipped array.
  */
 export function zip<T>(left: T[], right: T[]): T[] {
@@ -119,9 +120,9 @@ export function zip<T>(left: T[], right: T[]): T[] {
 
 /**
  * Split an array into two based on a condition.
- * @param arr Array to partition.
- * @param condition Function to determine to where to put each item.
- * @returns A two dimensional array containting two arrays, where the first one includes all items where the given condition was met and the second one includes all items where it was not met.
+ * @param arr -  Array to partition.
+ * @param condition -  Function to determine to where to put each item.
+ * @returns A two dimensional array containing two arrays, where the first one includes all items where the given condition was met and the second one includes all items where it was not met.
  */
 export function partition<T>(
   arr: T[],
@@ -137,9 +138,9 @@ export function partition<T>(
 }
 
 /**
- * Filter an array by removing duplicates and keeping the left most occurence. By default this compares by identity.
- * @param arr Array to remove duplicates from.
- * @param comparator Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
+ * Filter an array by removing duplicates and keeping the left most occurrence. By default this compares by identity.
+ * @param arr -  Array to remove duplicates from.
+ * @param comparator -  Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
  * @returns A filtered array containing no duplicates.
  */
 export function filterDuplicates<T>(
@@ -153,9 +154,9 @@ export function filterDuplicates<T>(
 }
 
 /**
- * Filter an array by removing duplicates and keeping the right most occurence. By default this compares by identity.
- * @param arr Array to remove duplicates from.
- * @param comparator Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
+ * Filter an array by removing duplicates and keeping the right most occurrence. By default this compares by identity.
+ * @param arr -  Array to remove duplicates from.
+ * @param comparator -  Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
  * @returns A filtered array containing no duplicates.
  */
 export function filterDuplicatesRight<T>(

@@ -20,8 +20,8 @@ const logger = createLogger('compiler');
 /**
  * Executes the TypeScript compilation for the given directory.
  * It recursively compiles all files ending with .ts
- * @param path Directory to be compiled.
- * @param compilerOptions Compiler options to be used
+ * @param path - Directory to be compiled.
+ * @param compilerOptions -  Compiler options to be used
  */
 export async function transpileDirectory(
   path: string,
@@ -86,7 +86,7 @@ function findPositions(
 
 /**
  * Reads and parses the compiler options a tsconfig.json.
- * @param pathToTsConfig Folder containing or path to a tsconfig.json files
+ * @param pathToTsConfig -  Folder containing or path to a tsconfig.json files
  * @returns Compiler options from the tsconfig.json
  */
 export async function readCompilerOptions(

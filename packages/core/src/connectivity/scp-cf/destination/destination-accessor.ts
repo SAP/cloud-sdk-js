@@ -20,7 +20,6 @@ import { DestinationAccessorOptions } from './destination-accessor-types';
  * - a binding to a destination service instance
  *
  * If either of the prerequisites is not met or one of the services returns an error, this function will either throw an error or return a promise that rejects.
- *
  * @param destination - A destination or the necessary parameters to fetch one.
  * @param options - Caching options by fetching destination.
  * @returns A promise resolving to the requested destination on success.
@@ -50,7 +49,6 @@ export type DestinationOptions = DestinationAccessorOptions &
  * By default, selects subscriber over provider and instance over subaccount destinations.
  *
  * If the destinations are read from the environment, the jwt will be ignored.
- *
  * @param name - The name of the destination to be retrieved.
  * @param options - The options of the fetching query of the destination that include the JWT of the current request and the strategy for selecting a destination.
  * @returns A promise returning the requested destination on success.
@@ -70,7 +68,6 @@ export async function getDestinationOptions(
  *
  * If you want to get a destination only from a specific source, use the corresponding function directly
  *  (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
- *
  * @param name - The name of the destination to be retrieved.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.

@@ -94,7 +94,6 @@ export abstract class Entity {
 
   /**
    * ETag version identifier accessor.
-   *
    * @returns The ETag version identifier of the retrieved entity, returns undefined if not retrieved
    */
   get versionIdentifier(): string {
@@ -103,7 +102,6 @@ export abstract class Entity {
 
   /**
    * Returns a map that contains all entity custom fields.
-   *
    * @returns A map of all defined custom fields in the entity
    */
   getCustomFields(): Record<string, any> {
@@ -112,7 +110,6 @@ export abstract class Entity {
 
   /**
    * Custom field value getter.
-   *
    * @param fieldName - The name of the custom field
    * @returns The value of the corresponding custom field
    */
@@ -123,7 +120,6 @@ export abstract class Entity {
   /**
    * Sets a new custom field in the entity or updates it.
    * Throws an error, if the provided custom field name is already defined by an original field in entity.
-   *
    * @param fieldName - The name of the custom field to update
    * @param value - The value of the field
    * @returns The entity itself, to facilitate method chaining
@@ -142,7 +138,6 @@ export abstract class Entity {
 
   /**
    * Validates whether a custom field exists in the entity.
-   *
    * @param fieldName - The name of the custom field to update
    * @returns A boolean value, that indicates whether a custom field is defined in entity
    */
@@ -165,9 +160,8 @@ export abstract class Entity {
   /**
    * @deprecated Since v1.34.1. Use [[setCustomFields]] instead.
    * Sets all retrieved custom fields in entity.
-   *
-   * @param customFields - Extracted custom fields from a retrieved entity
-   * @returns The entity itself, to facilitate method chaining
+   * @param customFields - Extracted custom fields from a retrieved entity.
+   * @returns The entity itself, to facilitate method chaining.
    */
   initializeCustomFields(customFields: Record<string, any>): this {
     return this.setCustomFields(customFields);
@@ -175,9 +169,8 @@ export abstract class Entity {
 
   /**
    * Set the ETag version identifier of the retrieved entity.
-   *
-   * @param etag - The returned ETag version of the entity
-   * @returns The entity itself, to facilitate method chaining
+   * @param etag - The returned ETag version of the entity.
+   * @returns The entity itself, to facilitate method chaining.
    */
   public setVersionIdentifier(etag: string | undefined): this {
     if (etag && typeof etag === 'string') {
@@ -188,11 +181,10 @@ export abstract class Entity {
   }
 
   /**
+   * @deprecated Since 1.12.0. Will be hidden in version 2.0.
    * Initializes or sets the remoteState of the entity.
    * This function is called on all read, create and update requests.
    * This function should be called after [[initializeCustomFields]], if custom fields are defined.
-   *
-   * @deprecated Since 1.12.0. Will be hidden in version 2.0.
    * @param state - State to be set as remote state.
    * @returns The entity itself, to facilitate method chaining
    */
@@ -215,7 +207,6 @@ export abstract class Entity {
 
   /**
    * Returns all updated custom field properties compared to the last known remote state.
-   *
    * @returns An object containing all updated custom properties, with their new values.
    */
   public getUpdatedCustomFields(): Record<string, any> {
@@ -267,7 +258,7 @@ export abstract class Entity {
   /**
    * @deprecated Since v1.34.1. Use [[asObject]] instead.
    * Returns a map of all defined fields in entity to their current values.
-   * @param visitedEntities List of entities to check in case of circular dependencies.
+   * @param visitedEntities - List of entities to check in case of circular dependencies.
    * @returns Entity with all defined entity fields
    */
   protected getCurrentMapKeys(visitedEntities: Entity[] = []): any {
@@ -302,7 +293,6 @@ export abstract class Entity {
 
   /**
    * Validates whether a field name does not conflict with an original field name and thus can be defined as custom fields.
-   *
    * @param customFieldName - Field name to check
    * @returns Boolean value that describes whether a field name can be defined as custom field
    */
@@ -314,7 +304,7 @@ export abstract class Entity {
 
   /**
    * Creates an object containing all defined properties, navigation properties and custom fields in the entity.
-   * @param visitedEntities List of entities to check in case of circular dependencies.
+   * @param visitedEntities -  List of entities to check in case of circular dependencies.
    * @returns Entity as an object with all defined entity fields
    */
   protected asObject(visitedEntities: Entity[] = []): Record<string, any> {

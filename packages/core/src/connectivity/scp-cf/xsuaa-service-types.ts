@@ -5,11 +5,13 @@ export interface ClientCredentials {
 
 /**
  * @hidden
- * @property expires_in - The number of seconds until the access token expires.
  */
 export interface ClientCredentialsResponse {
   access_token: string;
   token_type: string;
+  /**
+   * The number of seconds until the access token expires.
+   */
   expires_in: number;
   scope: string;
   jti: string;

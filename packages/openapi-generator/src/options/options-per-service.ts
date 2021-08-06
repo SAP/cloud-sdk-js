@@ -37,7 +37,7 @@ export interface ServiceOptions {
 
 /**
  * Get the options per service from the given path or an empty object if no path was given.
- * @param configPath Path to the given per service configuration or undefined if no path was given.
+ * @param configPath - Path to the given per service configuration or undefined if no path was given.
  * @returns The parsed configuration for all services.
  */
 export async function getOriginalOptionsPerService(
@@ -52,8 +52,8 @@ export async function getOriginalOptionsPerService(
  * Get the options per service for given service specifications.
  * If optionsPerServicePath is not given default values are used for the services.
  * If optionsPerServicePath is given existing values for the services are.
- * @param inputPaths Service spec file paths.
- * @param options Generator options.
+ * @param inputPaths -  Service spec file paths.
+ * @param options -  Generator options.
  * @returns The parsed options per service.
  */
 export async function getOptionsPerService(
@@ -151,7 +151,7 @@ function validateDirectoryNames(dirNamesByPaths: Record<string, string>): void {
 
 /**
  * Parse the name of the service directory based on the file path.
- * @param filePath Path of the service specification.
+ * @param filePath -  Path of the service specification.
  * @returns The parsed name.
  */
 function parseDirectoryName(filePath: string): string {
@@ -162,8 +162,8 @@ function parseDirectoryName(filePath: string): string {
  * Get the options for one service based on the options per service and the input file path.
  * If the file path does not exist in the options a default config is created.
  * If the service options for a file path are given only partially, default values are added for the missing values.
- * @param directoryName The directory name of the according service.
- * @param serviceOptions The original options for this service as specified in the per service options.
+ * @param directoryName -  The directory name of the according service.
+ * @param serviceOptions -  The original options for this service as specified in the per service options.
  * @returns Service options.
  */
 export function getServiceOptions(

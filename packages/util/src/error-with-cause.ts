@@ -6,8 +6,8 @@ import { unixEOL } from './string-formatter';
 export class ErrorWithCause extends Error {
   /**
    * Create an instance of ErrorWithCause.
-   * @param message Error message.
-   * @param cause Original error, causing this error.
+   * @param message - Error message.
+   * @param cause -  Original error, causing this error.
    */
   constructor(message: string, public readonly cause: Error) {
     // There is an issue with the prototype chain when extending from Error: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html#support-for-newtarget
@@ -32,7 +32,7 @@ export class ErrorWithCause extends Error {
 }
 /**
  * Type guard to check whether an error is of type ErrorWithCause.
- * @param err An error.
+ * @param err -  An error.
  * @returns Whether the given error is of type ErrorWithCause.
  */
 

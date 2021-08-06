@@ -21,7 +21,6 @@ export interface Client {
   language: 'Java' | 'JavaScript';
   /**
    * Status of the service.
-   * @memberof Client
    */
   serviceStatus: ServiceStatus;
 
@@ -31,9 +30,7 @@ export interface Client {
   emergencyObject?: EmergencyObject;
 
   /**
-   * The information on the pregenerated library. Undefined if there is no lib generated
-   * @type {PregeneratedLibrary}
-   * @memberof Client
+   * The information on the pregenerated library. `undefined` if there is no lib generated/
    */
   pregeneratedLibrary: PregeneratedLibrary | undefined;
   generationAndUsage: GenerationAndUsage;
@@ -41,23 +38,17 @@ export interface Client {
 
 export interface PregeneratedLibrary {
   /**
-   * Version of the published client library e.g. "1.23.0"  - It uses the [[getVersionForClient]] method to get it
-   * @type {string}
-   * @memberof PregeneratedLibrary
+   * Version of the published client library e.g. "1.23.0". It uses the [[getVersionForClient]] function to get it.
    */
   version: string;
   generatedAt: DateTimeString;
   description: string;
   /**
-   * Information how to install it via npm or maven
-   * @type {string}
-   * @memberof PregeneratedLibrary
+   * Information how to install it via npm or maven.
    */
   installLibrarySteps: InstructionWithText;
   /**
-   * Compatability version note. Is not filled yet since there is no flow to detect API changes since the versions are not maintend and the hash workaround is not yet in place.
-   * @type {string}
-   * @memberof PregeneratedLibrary
+   * Compatibility version note. Is not filled yet since there is no flow to detect API changes since the versions are not maintained and the hash workaround is not yet in place.
    */
   compatibilityNotes: '';
   repository: 'Maven' | 'npm';
@@ -95,17 +86,20 @@ export type MultiLineText = string;
 
 export interface ServiceStatus {
   /**
-   * certified -> Published lib, verified -> Generation worked
+   * Generation status of the service:
+   * `certified`: published libraries
+   * `verified`: generation tested and succeeded
+   * `unknown`: generation not tested
+   * `failed`: generation tested and failed
+   *
    */
   status: 'certified' | 'verified' | 'unknown' | 'failed';
   /**
    * Detailed text what the serviceStatus means.
-   * @memberof Client
    */
   statusText: string;
   /**
    * Like the short version but more information.
-   * @memberof Client
    */
   statusLongText: string;
 }

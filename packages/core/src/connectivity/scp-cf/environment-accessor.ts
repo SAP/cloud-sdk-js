@@ -55,7 +55,6 @@ export function getDestinationServiceCredentialsList(): DestinationServiceCreden
 
 /**
  * Credentials list getter for a given service.
- *
  * @param service - Service name
  * @returns Fetched credentials objects of existing service in 'VCAP_SERVICES'.
  */
@@ -76,7 +75,6 @@ export function getServiceCredentialsList(service: string): any[] {
 
 /**
  * Services getter for a given service.
- *
  * @param service - Service name.
  * @returns List of service bindings of the given type. Returns an empty array if no service binding exists for the given type.
  */
@@ -86,7 +84,6 @@ export function getServiceList(service: string): Service[] {
 
 /**
  * Returns the first found instance for the given service type.
- *
  * @param service - The service type.
  * @returns The first found service.
  */
@@ -158,7 +155,6 @@ export function getVcapService(): Record<string, any> | null {
 
 /**
  * Environment variables accessor.
- *
  * @param name - Environment variable name.
  * @returns Env variable value if defined.
  *           null: If not defined.
@@ -199,7 +195,6 @@ export function getDestinationServiceUri(): string | null {
  * Takes a decoded JWT and uses the client_id and audience claims to determine the XSUAA service instance
  * that issued the JWT. Returns the credentials if a match is found, otherwise throws an error.
  * If no decoded JWT is specified, then returns the first existing XSUAA credential service plan "application".
- *
  * @param token - Either an encoded or decoded JWT.
  * @returns The credentials for a match, otherwise null.
  */
@@ -217,7 +212,6 @@ export function getXsuaaServiceCredentials(
  * If the parameter is already an instance of [[Service]], it is returned directly.
  *
  * Throws an error when no service can be found for the given type.
- *
  * @param service - A string representing the service type or a [[Service]] instance.
  * @returns A [[Service]] instance.
  */
@@ -238,7 +232,6 @@ export function resolveService(service: string | Service): Service {
 
 /**
  * Extracts the credentials of a service into an instance of [[ClientCredentials]].
- *
  * @param serviceCreds - The credentials of a service as read from VCAP_SERVICES.
  * @returns A [[ClientCredentials]] instance.
  */

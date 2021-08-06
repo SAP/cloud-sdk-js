@@ -13,7 +13,6 @@ import type { GetAllRequestBuilder } from './get-all-request-builder-base';
  * Create an OData request to count entities based on the configuration of the request.
  * A `CountRequestBuilder` allows only for execution of the request.
  * If you want to apply query parameters like filter, skip or top do it on the [[GetAllRequestBuilder]] the count is created from.
- *
  * @typeparam EntityT - Type of the entity to be requested
  */
 export class CountRequestBuilder<
@@ -21,7 +20,6 @@ export class CountRequestBuilder<
 > extends MethodRequestBuilder<ODataCountRequestConfig<EntityT>> {
   /**
    * Creates an instance of CountRequestBuilder.
-   *
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
   constructor(readonly getAllRequest: GetAllRequestBuilder<EntityT>) {
@@ -29,7 +27,6 @@ export class CountRequestBuilder<
   }
   /**
    * Execute request.
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the number of entities
@@ -48,7 +45,6 @@ export class CountRequestBuilder<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to an [[HttpResponse]].

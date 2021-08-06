@@ -1,15 +1,15 @@
 import nock from 'nock';
 import {
-    allMocksUsed,
-    certificateMultipleResponse,
-    certificateSingleResponse,
-    mockInstanceDestinationsCall,
-    mockServiceBindings,
-    mockServiceToken,
-    mockSingleDestinationCall,
-    mockSubaccountDestinationsCall,
-    onlyIssuerServiceToken,
-    onlyIssuerXsuaaUrl
+  allMocksUsed,
+  certificateMultipleResponse,
+  certificateSingleResponse,
+  mockInstanceDestinationsCall,
+  mockServiceBindings,
+  mockServiceToken,
+  mockSingleDestinationCall,
+  mockSubaccountDestinationsCall,
+  onlyIssuerServiceToken,
+  onlyIssuerXsuaaUrl
 } from '../../test/test-util';
 import * as httpClient from '../http-client/http-client';
 import { wrapJwtInHeader } from '../connectivity';
@@ -100,25 +100,25 @@ describe('openapi-request-builder', () => {
     mockServiceBindings();
     mockServiceToken();
 
-    const nocks=[
-        mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-    mockSubaccountDestinationsCall(
-      nock,
-      certificateMultipleResponse,
-      200,
-      onlyIssuerServiceToken
-    ),
-    mockSingleDestinationCall(
-      nock,
-      certificateSingleResponse,
-      200,
-      'ERNIE-UND-CERT',
-      wrapJwtInHeader(onlyIssuerServiceToken).headers
-    ),
-        nock(certificateSingleResponse.destinationConfiguration.URL)
-            .get(/.*/)
-            .reply(200, 'iss token used on the way')
-        ];
+    const nocks = [
+      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
+      mockSubaccountDestinationsCall(
+        nock,
+        certificateMultipleResponse,
+        200,
+        onlyIssuerServiceToken
+      ),
+      mockSingleDestinationCall(
+        nock,
+        certificateSingleResponse,
+        200,
+        'ERNIE-UND-CERT',
+        wrapJwtInHeader(onlyIssuerServiceToken).headers
+      ),
+      nock(certificateSingleResponse.destinationConfiguration.URL)
+        .get(/.*/)
+        .reply(200, 'iss token used on the way')
+    ];
     const requestBuilder = new OpenApiRequestBuilder('get', '/test', {
       body: {
         limit: 100

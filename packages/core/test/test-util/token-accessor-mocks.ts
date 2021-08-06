@@ -12,12 +12,12 @@ import {
   userApprovedSubscriberServiceToken
 } from './mocked-access-tokens';
 
-export function allMocksUsed(nocks: nock.Scope[]){
-    nocks.forEach(nock1=>{
-        if(!nock1.isDone()){
-            throw new Error('Not all mocks used.');
-        }
-    });
+export function allMocksUsed(nocks: nock.Scope[]) {
+  nocks.forEach(nock1 => {
+    if (!nock1.isDone()) {
+      throw new Error('Not all mocks used.');
+    }
+  });
 }
 
 export function mockServiceToken() {

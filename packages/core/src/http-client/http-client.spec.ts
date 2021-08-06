@@ -239,24 +239,24 @@ describe('generic http client', () => {
       mockServiceToken();
 
       const nocks = [
-          mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-      mockSubaccountDestinationsCall(
-        nock,
-        certificateMultipleResponse,
-        200,
-        onlyIssuerServiceToken
-      ),
+        mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          certificateMultipleResponse,
+          200,
+          onlyIssuerServiceToken
+        ),
         mockSingleDestinationCall(
-        nock,
-        certificateSingleResponse,
-        200,
-        'ERNIE-UND-CERT',
-        wrapJwtInHeader(onlyIssuerServiceToken).headers
-      ),
-      nock(certificateSingleResponse.destinationConfiguration.URL)
-        .get(/.*/)
-        .reply(200, 'iss token used on the way')
-          ];
+          nock,
+          certificateSingleResponse,
+          200,
+          'ERNIE-UND-CERT',
+          wrapJwtInHeader(onlyIssuerServiceToken).headers
+        ),
+        nock(certificateSingleResponse.destinationConfiguration.URL)
+          .get(/.*/)
+          .reply(200, 'iss token used on the way')
+      ];
 
       const response = await executeHttpRequest(
         { destinationName: 'ERNIE-UND-CERT' },

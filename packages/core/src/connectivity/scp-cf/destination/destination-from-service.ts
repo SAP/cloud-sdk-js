@@ -5,7 +5,7 @@ import {
   addProxyConfigurationInternet,
   ProxyStrategy,
   proxyStrategy
-} from '../proxy-util';
+} from '../../../http-agent/proxy-util';
 import { IsolationStrategy } from '../cache';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
@@ -14,6 +14,7 @@ import {
   getDestinationServiceCredentialsList
 } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
+import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -102,19 +103,26 @@ class DestinationFromServiceRetriever {
     }
 
     let { destination } = destinationResult;
+
     if (destination.authentication === 'OAuth2SAMLBearerAssertion') {
-      destination = await da.addOAuthSamlAuth(
-        destination,
-        destinationResult.origin
-      );
+      /*
+    This covers the two technical user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html (fetchDestinationBySystemUser)
+    If no system user is set the subscriber or provider destination is fetched depending on the content of the JWT (fetchDestinationByUserJwt)
+    */
+      destination =
+        (await da.fetchDestinationBySystemUser(destinationResult)) ||
+        (await da.fetchDestinationByUserJwt());
     }
     if (destination.authentication === 'OAuth2UserTokenExchange') {
-      destination = await da.addOAuth2UserTokenExchange(
+      destination = await da.fetchDestinationByUserTokenExchange(
         destinationResult.origin
       );
     }
-    if (destination.authentication === 'OAuth2ClientCredentials') {
-      destination = await da.addOAuth2ClientCredentials();
+    if (
+      destination.authentication === 'OAuth2ClientCredentials' ||
+      destination.authentication === 'OAuth2Password'
+    ) {
+      destination = await da.fetchDestinationByClientCrendentialsGrant();
     }
     if (destination.authentication === 'OAuth2JWTBearer') {
       destination = await da.fetchDestinationByUserJwt();
@@ -234,11 +242,16 @@ class DestinationFromServiceRetriever {
     };
   }
 
-  private get destinationServiceCredentials() {
+  private get destinationServiceCredentials(): DestinationServiceCredentials {
     const credentials = getDestinationServiceCredentialsList();
     if (!credentials || credentials.length === 0) {
       throw Error(
         'No binding to a destination service instance found. Please bind a destination service instance to your application.'
+      );
+    }
+    if (credentials.length > 1) {
+      logger.info(
+        'Found more than one destination service instance. Using the first one.'
       );
     }
 
@@ -248,10 +261,8 @@ class DestinationFromServiceRetriever {
   private async fetchDestinationByToken(
     jwt: string | AuthAndExchangeTokens
   ): Promise<Destination> {
-    const destinationService = getDestinationService();
-
     return fetchDestination(
-      destinationService.credentials.uri,
+      this.destinationServiceCredentials.uri,
       jwt,
       this.name,
       this.options
@@ -309,7 +320,7 @@ class DestinationFromServiceRetriever {
     );
   }
 
-  private async addOAuth2UserTokenExchange(
+  private async fetchDestinationByUserTokenExchange(
     destinationOrigin: DestinationOrigin
   ): Promise<Destination> {
     // This covers the three OAuth2UserTokenExchange cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html
@@ -319,43 +330,37 @@ class DestinationFromServiceRetriever {
     return this.fetchDestinationByToken(token);
   }
 
-  private async addOAuth2ClientCredentials(): Promise<Destination> {
+  /**
+   * @hidden
+   * This method calls the 'find destination by name' endpoint of the destination service using a client credentials grant.
+   * For the find by name endpoint, the destination service will take care of OAuth flows and include the token in the destination.
+   */
+  private async fetchDestinationByClientCrendentialsGrant(): Promise<Destination> {
     const clientGrant = await serviceToken('destination', {
       userJwt: this.options.userJwt || this.providerClientCredentialsToken
     });
 
-    return fetchDestination(
-      this.destinationServiceCredentials.uri,
-      clientGrant,
-      this.name
-    );
+    return this.fetchDestinationByToken(clientGrant);
   }
 
-  private async addOAuthSamlAuth(
-    destination: Destination,
-    destinationOrigin: DestinationOrigin
-  ): Promise<Destination> {
-    /* This covers the two technical user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
-   If the destination comes from the provider account the client credentials token from the xsuaa.url is used (provider token).
-   If the destination comes from the subscriber account the subscriber subdomain is used fetch the client credentials token (subscriber token).
-   */
-    if (destination.systemUser) {
+  private async fetchDestinationBySystemUser(
+    destinationResult: DestinationSearchResult
+  ): Promise<Destination | undefined> {
+    if (destinationResult.destination.systemUser) {
       const token =
-        destinationOrigin === 'provider'
+        destinationResult.origin === 'provider'
           ? this.providerClientCredentialsToken
           : await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
               this.options
             );
       logger.debug(
-        `System user found on destination. The ${destinationOrigin} token: ${token} is used for destination fetching.`
+        `System user found on destination: "${destinationResult.destination.name}".`
       );
 
-      if (destinationOrigin) {
+      if (destinationResult.origin) {
         return this.fetchDestinationByToken(token);
       }
     }
-
-    return this.fetchDestinationByUserJwt();
   }
 
   private async fetchDestinationByUserJwt(): Promise<Destination> {

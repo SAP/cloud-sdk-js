@@ -4,14 +4,9 @@ import {
   ErrorWithCause,
   renameKeys
 } from '@sap-cloud-sdk/util';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import CircuitBreaker from 'opossum';
-import {
-  executeHttpRequest,
-  HttpRequestConfig,
-  HttpRequestOptions,
-  HttpResponse
-} from '../../http-client';
+import { urlAndAgent } from '../../http-agent';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
@@ -23,12 +18,6 @@ import {
   TokenKey,
   UserTokenResponse
 } from './xsuaa-service-types';
-import { Destination, DestinationNameAndJwt } from './destination';
-import {
-  addProxyConfigurationInternet,
-  ProxyStrategy,
-  proxyStrategy
-} from './proxy-util';
 
 const logger = createLogger({
   package: 'core',
@@ -36,12 +25,8 @@ const logger = createLogger({
 });
 
 type XsuaaCircuitBreaker = CircuitBreaker<
-  [
-    destination: Destination | DestinationNameAndJwt,
-    requestConfig: HttpRequestConfig,
-    options?: HttpRequestOptions | undefined
-  ],
-  HttpResponse
+  [requestConfig: AxiosRequestConfig],
+  AxiosResponse
 >;
 
 let circuitBreaker: XsuaaCircuitBreaker;
@@ -262,43 +247,39 @@ const tokenKeyKeyMapping: { [key: string]: keyof TokenKey } = {
   n: 'publicKeyModulus'
 };
 
-function post(
-  tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
-  authHeader: string,
-  body: string,
-  options: ResilienceOptions = { enableCircuitBreaker: true }
-): Promise<HttpResponse> {
-  const config = wrapXsuaaPostRequestHeader(authHeader, body);
-  const targetUri =
-    typeof tokenServiceUrlOrXsuaaServiceCredentials === 'string'
-      ? tokenServiceUrlOrXsuaaServiceCredentials
-      : getTokenServiceUrl(tokenServiceUrlOrXsuaaServiceCredentials);
-
-  let destination: Destination = { url: targetUri, proxyType: 'Internet' };
-  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
-    destination = addProxyConfigurationInternet(destination);
-  }
-
-  if (options.enableCircuitBreaker) {
-    return getCircuitBreaker().fire(destination, config);
-  }
-
-  return executeHttpRequest(destination, config);
-}
-
-function wrapXsuaaPostRequestHeader(
-  authHeader: string,
-  body: string
-): HttpRequestConfig {
+function headers(authHeader: string): Pick<AxiosRequestConfig, 'headers'> {
   return {
-    method: 'post',
-    data: body,
     headers: {
       Authorization: authHeader,
       'Content-Type': 'application/x-www-form-urlencoded',
       Accept: 'application/json'
     }
   };
+}
+
+function post(
+  tokenServiceUrlOrXsuaaServiceCredentials: string | XsuaaServiceCredentials,
+  authHeader: string,
+  body: string,
+  options: ResilienceOptions = { enableCircuitBreaker: true }
+): Promise<AxiosResponse> {
+  const targetUri =
+    typeof tokenServiceUrlOrXsuaaServiceCredentials === 'string'
+      ? tokenServiceUrlOrXsuaaServiceCredentials
+      : getTokenServiceUrl(tokenServiceUrlOrXsuaaServiceCredentials);
+
+  const config: AxiosRequestConfig = {
+    ...urlAndAgent(targetUri),
+    proxy: false,
+    method: 'post',
+    data: body,
+    ...headers(authHeader)
+  };
+
+  if (options.enableCircuitBreaker) {
+    return getCircuitBreaker().fire(config);
+  }
+  return axios.request(config);
 }
 
 export function headerForClientCredentials(
@@ -344,7 +325,7 @@ function accessTokenError(error: Error, grant: string): Error {
 function getCircuitBreaker(): XsuaaCircuitBreaker {
   if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(
-      executeHttpRequest,
+      axios.request,
       circuitBreakerDefaultOptions
     );
   }

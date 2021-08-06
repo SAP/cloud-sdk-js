@@ -21,6 +21,7 @@ For return types the same extension could lead compile errors after client regen
 ## New Functionality
 
 - [core] Support additional headers and query parameters, that are set on destinations.
+- [core] Support authentication type `OAuth2Password`.
 
 ## Improvements
 

@@ -1,14 +1,20 @@
-import * as http from 'http';
-import * as https from 'https';
+import https from 'https';
+import http from 'http';
 import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationCertificate,
-  Protocol,
-  proxyAgent,
-  getProtocolOrDefault
+  getProtocolOrDefault,
+  Protocol
 } from '../connectivity/scp-cf';
+import { HttpRequestConfig } from '../http-client';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
+import {
+  addProxyConfigurationInternet,
+  proxyAgent,
+  ProxyStrategy,
+  proxyStrategy
+} from './proxy-util';
 
 const logger = createLogger({
   package: 'core',
@@ -172,4 +178,23 @@ export function getUrlProtocol(destination: Destination): Protocol | undefined {
       return urlParts[0] as Protocol;
     }
   }
+}
+
+/**
+ * Builds part of the request config containing the URL and if needed proxy agents or normal http agents.
+ * Considers the NO_Proxy env variable together with the targetUri.
+ * @param targetUri used as baseURL in request config
+ * @returns HttpRequestConfig containing baseUrl and http(s) agents.
+ */
+export function urlAndAgent(
+  targetUri: string
+): Pick<HttpRequestConfig, 'baseURL' | 'httpAgent' | 'httpsAgent' | 'proxy'> {
+  let destination: Destination = { url: targetUri, proxyType: 'Internet' };
+  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
+    destination = addProxyConfigurationInternet(destination);
+  }
+  return {
+    baseURL: destination.url,
+    ...getAgentConfig(destination)
+  };
 }

@@ -333,8 +333,8 @@ class DestinationFromServiceRetriever {
 
   /**
   * @hidden
-   * This method calls the 'destination by name' of the destination service using a client credentials grant.
-   * The destination service will take care of OAuth flows and include the token in the destination.
+   * This method calls the 'find destination by name' endpoint of the destination service using a client credentials grant.
+   * For the find by name endpoint, the destination service will take care of OAuth flows and include the token in the destination.
    */
   private async fetchDestinationByClientCrendentialsGrant(): Promise<Destination> {
     const clientGrant = await serviceToken('destination', {

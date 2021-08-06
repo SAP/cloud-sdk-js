@@ -158,7 +158,7 @@ Not accepted, as it does not work for edge cases.
 
 ##### Cons
 
-- We have to call this method multiple times for all the parts that need encoding.
+- We have to call this function multiple times for all the parts that need encoding.
 - We have to be very careful to call `encodeURIComponent('a/b/c')` instead of `encodeURIComponent('/Entity('a/b/c')')`, as the latter one is wrong.
 
 #### Decision

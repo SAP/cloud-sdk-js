@@ -4,15 +4,20 @@
 
 Accepted.
 
-## Requirement
+## Decision
 
-The SDK needs to encode the parts below:
+Use `encodeURIComponent` for the parts below:
 
 - User input values of path parameters
   - e.g., for `/entities/a b`, the `a b` will be encoded to `a%20b`.
   - e.g., for `/Entity(KeyName='va/ue')`, the `va/ue` will be encoded to `va%2Fue`.
 - User input values of query parameters
   - e.g., for `$filter=Gender eq '/Female'`, the `Gender eq '/Female'` will be encoded to `Gender%20eq%20%27%2FFemale%27`.
+
+## Consequences
+
+- For the chosen components, we are able to apply encoding properly.
+- There might be still some other parts like "host", "service path" and "entity name" etc., which need coding. Potential solutions are mentioned in this doc. (See [Background](#background))
 
 ## Background
 
@@ -124,15 +129,6 @@ The value of the query parameters should be encoded.
 ### Why `encodeURI` does not solve our problem
 
 When `/` is used as part of the parameter value like `/Entity('a/b/c')`, the `encoode` is not intelligent enough to encode it. (See [Appendix](#appendix))
-
-## Decision
-
-Use `encodeURIComponent` for the selected parts.
-
-## Consequences
-
-- For the chosen components, we are able to apply encoding properly.
-- There might be still some other parts like "host", "service path" and "entity name" etc., which need coding. Potential solutions are mentioned in this doc.
 
 ## Appendix
 

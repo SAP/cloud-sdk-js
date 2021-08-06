@@ -80,7 +80,7 @@ export const oauthSingleResponse: DestinationJson = destinationSingleResponse(
 export const oauthUserTokenExchangeMultipleResponse: DestinationConfiguration[] =
   [destinationWithAuthType('OAuth2UserTokenExchange')];
 export const oauthUserTokenExchangeSingleResponse: DestinationJson =
-    destinationSingleResponse(oauthUserTokenExchangeMultipleResponse);
+  destinationSingleResponse(oauthUserTokenExchangeMultipleResponse);
 
 export const oauthPasswordMultipleResponse: DestinationConfiguration[] = [
   destinationWithAuthType('OAuth2Password')
@@ -92,7 +92,7 @@ export const oauthPasswordSingleResponse = destinationSingleResponse(
 export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] =
   [destinationWithAuthType('OAuth2ClientCredentials')];
 export const oauthClientCredentialsSingleResponse: DestinationJson =
-    destinationSingleResponse(oauthClientCredentialsMultipleResponse);
+  destinationSingleResponse(oauthClientCredentialsMultipleResponse);
 
 export const onPremiseMultipleResponse: DestinationConfiguration[] = [
   {

@@ -51,7 +51,7 @@ function destionWithAuthType(
   };
 }
 
-function desintaionSingleResponse(
+function destinationSingleResponse(
   multipleResponse: DestinationConfiguration[]
 ): DestinationJson {
   return {

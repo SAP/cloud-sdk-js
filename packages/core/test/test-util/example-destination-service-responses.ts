@@ -32,7 +32,7 @@ export const certificateSingleResponse = {
   ]
 };
 
-function destionWithAuthType(
+function destinationWithAuthType(
   authType: AuthenticationType
 ): DestinationConfiguration {
   return {

@@ -8,11 +8,13 @@ import { publicKey } from './keys';
 
 export enum TestTenants {
   PROVIDER = 'provider',
-  SUBSCRIBER = 'subscriber'
+  SUBSCRIBER = 'subscriber',
+  SUBSCRIBER_ONLY_ISS = 'subscriber-only-iss'
 }
 
 export const providerXsuaaUrl = `https://${TestTenants.PROVIDER}.example.com`;
 export const subscriberXsuaaUrl = `https://${TestTenants.SUBSCRIBER}.example.com`;
+export const onlyIssuerXsuaaUrl = `https://${TestTenants.SUBSCRIBER_ONLY_ISS}.example.com`;
 export const destinationServiceUri = 'https://destination.example.com';
 
 export const providerXsuaaClientCredentials = {

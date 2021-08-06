@@ -380,8 +380,8 @@ class DestinationFromServiceRetriever {
 
   private async addClientCertAuth(): Promise<Destination> {
     const accessToken = await serviceToken('destination', {
-      userJwt: this.decodedUserJwt,
-      ...this.options
+      ...this.options,
+      userJwt: this.decodedUserJwt
     });
 
     return fetchDestination(
@@ -463,8 +463,8 @@ class DestinationFromServiceRetriever {
     DestinationSearchResult | undefined
   > {
     const accessToken = await serviceToken('destination', {
-      userJwt: this.decodedUserJwt,
-      ...this.options
+      ...this.options,
+      userJwt: this.decodedUserJwt
     });
     const subscriber = await this.getInstanceAndSubaccountDestinations(
       accessToken

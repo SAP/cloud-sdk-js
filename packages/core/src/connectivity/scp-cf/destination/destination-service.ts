@@ -22,9 +22,9 @@ const logger = createLogger({
 });
 
 type DestinationCircuitBreaker = CircuitBreaker<
-    [requestConfig: AxiosRequestConfig],
-    AxiosResponse
-    >;
+  [requestConfig: AxiosRequestConfig],
+  AxiosResponse
+>;
 
 let circuitBreaker: DestinationCircuitBreaker;
 
@@ -37,15 +37,15 @@ let circuitBreaker: DestinationCircuitBreaker;
  * @returns A promise resolving to a list of instance destinations
  */
 export function fetchInstanceDestinations(
-    destinationServiceUri: string,
-    jwt: string,
-    options?: ResilienceOptions & CachingOptions
+  destinationServiceUri: string,
+  jwt: string,
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
-      destinationServiceUri,
-      jwt,
-      DestinationType.Instance,
-      options
+    destinationServiceUri,
+    jwt,
+    DestinationType.Instance,
+    options
   );
 }
 
@@ -58,36 +58,36 @@ export function fetchInstanceDestinations(
  * @returns A promise resolving to a list of subaccount destinations
  */
 export function fetchSubaccountDestinations(
-    destinationServiceUri: string,
-    jwt: string,
-    options?: ResilienceOptions & CachingOptions
+  destinationServiceUri: string,
+  jwt: string,
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination[]> {
   return fetchDestinations(
-      destinationServiceUri,
-      jwt,
-      DestinationType.Subaccount,
-      options
+    destinationServiceUri,
+    jwt,
+    DestinationType.Subaccount,
+    options
   );
 }
 
 async function fetchDestinations(
-    destinationServiceUri: string,
-    jwt: string,
-    type: DestinationType,
-    options?: ResilienceOptions & CachingOptions
+  destinationServiceUri: string,
+  jwt: string,
+  type: DestinationType,
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination[]> {
   const targetUri = `${destinationServiceUri.replace(
-      /\/$/,
-      ''
+    /\/$/,
+    ''
   )}/destination-configuration/v1/${type}Destinations`;
 
   if (options?.useCache) {
     const destinationsFromCache =
-        destinationServiceCache.retrieveDestinationsFromCache(
-            targetUri,
-            decodeJwt(jwt),
-            options.isolationStrategy
-        );
+      destinationServiceCache.retrieveDestinationsFromCache(
+        targetUri,
+        decodeJwt(jwt),
+        options.isolationStrategy
+      );
     if (destinationsFromCache) {
       return destinationsFromCache;
     }
@@ -96,28 +96,28 @@ async function fetchDestinations(
   const headers = wrapJwtInHeader(jwt).headers;
 
   return callDestinationService(targetUri, headers, options)
-      .then(response => {
-        const destinations: Destination[] = response.data.map(d =>
-            parseDestination(d)
+    .then(response => {
+      const destinations: Destination[] = response.data.map(d =>
+        parseDestination(d)
+      );
+      if (options?.useCache) {
+        destinationServiceCache.cacheRetrievedDestinations(
+          targetUri,
+          decodeJwt(jwt),
+          destinations,
+          options.isolationStrategy
         );
-        if (options?.useCache) {
-          destinationServiceCache.cacheRetrievedDestinations(
-              targetUri,
-              decodeJwt(jwt),
-              destinations,
-              options.isolationStrategy
-          );
-        }
-        return destinations;
-      })
-      .catch(error => {
-        throw new ErrorWithCause(
-            `Failed to fetch ${type} destinations.${errorMessageFromResponse(
-                error
-            )}`,
-            error
-        );
-      });
+      }
+      return destinations;
+    })
+    .catch(error => {
+      throw new ErrorWithCause(
+        `Failed to fetch ${type} destinations.${errorMessageFromResponse(
+          error
+        )}`,
+        error
+      );
+    });
 }
 
 export interface AuthAndExchangeTokens {
@@ -138,41 +138,41 @@ export interface AuthAndExchangeTokens {
  * @returns A Promise resolving to the destination
  */
 export async function fetchDestination(
-    destinationServiceUri: string,
-    token: string | AuthAndExchangeTokens,
-    destinationName: string,
-    options?: ResilienceOptions & CachingOptions
+  destinationServiceUri: string,
+  token: string | AuthAndExchangeTokens,
+  destinationName: string,
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination> {
   return fetchDestinationByTokens(
-      destinationServiceUri,
-      typeof token === 'string' ? { authHeaderJwt: token } : token,
-      destinationName,
-      options
+    destinationServiceUri,
+    typeof token === 'string' ? { authHeaderJwt: token } : token,
+    destinationName,
+    options
   );
 }
 
 async function fetchDestinationByTokens(
-    destinationServiceUri: string,
-    tokens: AuthAndExchangeTokens,
-    destinationName: string,
-    options?: ResilienceOptions & CachingOptions
+  destinationServiceUri: string,
+  tokens: AuthAndExchangeTokens,
+  destinationName: string,
+  options?: ResilienceOptions & CachingOptions
 ): Promise<Destination> {
   const targetUri = `${destinationServiceUri.replace(
-      /\/$/,
-      ''
+    /\/$/,
+    ''
   )}/destination-configuration/v1/destinations/${destinationName}`;
 
   if (options?.useCache) {
     const destinationsFromCache =
-        destinationServiceCache.retrieveDestinationsFromCache(
-            targetUri,
-            decodeJwt(tokens.authHeaderJwt),
-            options.isolationStrategy
-        );
+      destinationServiceCache.retrieveDestinationsFromCache(
+        targetUri,
+        decodeJwt(tokens.authHeaderJwt),
+        options.isolationStrategy
+      );
     if (destinationsFromCache) {
       if (destinationsFromCache.length > 1) {
         logger.warn(
-            'More than one destination found in the cache. This should not happen. First element used.'
+          'More than one destination found in the cache. This should not happen. First element used.'
         );
       }
       return destinationsFromCache[0];
@@ -180,44 +180,44 @@ async function fetchDestinationByTokens(
   }
   let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
   authHeader = tokens.exchangeHeaderJwt
-      ? { ...authHeader, 'X-user-token': tokens.exchangeHeaderJwt }
-      : authHeader;
+    ? { ...authHeader, 'X-user-token': tokens.exchangeHeaderJwt }
+    : authHeader;
 
   return callDestinationService(targetUri, authHeader, options)
-      .then(response => {
-        const destination: Destination = parseDestination(response.data);
-        if (options?.useCache) {
-          destinationServiceCache.cacheRetrievedDestinations(
-              targetUri,
-              decodeJwt(tokens.authHeaderJwt),
-              [destination],
-              options.isolationStrategy
-          );
-        }
-        return destination;
-      })
-      .catch(error => {
-        {
-          throw new ErrorWithCause(
-              `Failed to fetch destination ${destinationName}.${errorMessageFromResponse(
-                  error
-              )}`,
-              error
-          );
-        }
-      });
+    .then(response => {
+      const destination: Destination = parseDestination(response.data);
+      if (options?.useCache) {
+        destinationServiceCache.cacheRetrievedDestinations(
+          targetUri,
+          decodeJwt(tokens.authHeaderJwt),
+          [destination],
+          options.isolationStrategy
+        );
+      }
+      return destination;
+    })
+    .catch(error => {
+      {
+        throw new ErrorWithCause(
+          `Failed to fetch destination ${destinationName}.${errorMessageFromResponse(
+            error
+          )}`,
+          error
+        );
+      }
+    });
 }
 
 function errorMessageFromResponse(error: AxiosError): string {
   return propertyExists(error, 'response', 'data', 'ErrorMessage')
-      ? ` ${error.response!.data.ErrorMessage}`
-      : '';
+    ? ` ${error.response!.data.ErrorMessage}`
+    : '';
 }
 
 function callDestinationService(
-    uri: string,
-    headers: Record<string, any>,
-    options: ResilienceOptions = { enableCircuitBreaker: true }
+  uri: string,
+  headers: Record<string, any>,
+  options: ResilienceOptions = { enableCircuitBreaker: true }
 ): Promise<AxiosResponse> {
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
@@ -236,8 +236,8 @@ function callDestinationService(
 function getCircuitBreaker(): DestinationCircuitBreaker {
   if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(
-        axios.request,
-        circuitBreakerDefaultOptions
+      axios.request,
+      circuitBreakerDefaultOptions
     );
   }
   return circuitBreaker;

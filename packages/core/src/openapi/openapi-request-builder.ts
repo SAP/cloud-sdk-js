@@ -78,12 +78,12 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination Destination to execute the request against.
-   * @param options - Options to employ when fetching destinations.
+   * @param destinationOptions - Options to employ when fetching destinations.
    * @returns A promise resolving to an HttpResponse.
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destinationOptions?: DestinationOptions
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
@@ -99,7 +99,8 @@ export class OpenApiRequestBuilder<ResponseT = any> {
         data: this.parameters?.body
       },
       // TODO: Remove this in v 2.0, when this becomes true becomes the default
-      { fetchCsrfToken }
+      { fetchCsrfToken },
+      destinationOptions
     );
   }
 

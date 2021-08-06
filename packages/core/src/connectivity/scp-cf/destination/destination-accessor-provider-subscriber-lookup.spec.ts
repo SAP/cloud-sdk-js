@@ -6,12 +6,16 @@ import {
   mockVerifyJwt
 } from '../../../../test/test-util/destination-service-mocks';
 import {
+  onlyIssuerServiceToken,
   providerServiceToken,
   providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
-import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
+import {
+  mockServiceBindings,
+  onlyIssuerXsuaaUrl
+} from '../../../../test/test-util/environment-mocks';
 import { mockServiceToken } from '../../../../test/test-util/token-accessor-mocks';
 import {
   basicMultipleResponse,
@@ -234,29 +238,27 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
       mockSubaccountDestinationsCall(
         nock,
         certificateMultipleResponse,
         200,
-        subscriberServiceToken
+        onlyIssuerServiceToken
       );
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
       mockSingleDestinationCall(
         nock,
         certificateSingleResponse,
         200,
         'ERNIE-UND-CERT',
-        wrapJwtInHeader(subscriberServiceToken).headers
+        wrapJwtInHeader(onlyIssuerServiceToken).headers
       );
 
       const expected = parseDestination(certificateSingleResponse);
       const actual = await getDestinationFromDestinationService(
         'ERNIE-UND-CERT',
         {
-          iss: 'https://subscriber.example.com',
+          iss: onlyIssuerXsuaaUrl,
           cacheVerificationKeys: false
         }
       );

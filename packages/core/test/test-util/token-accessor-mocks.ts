@@ -1,7 +1,8 @@
 import * as tokenAccessor from '../../src/connectivity/scp-cf/token-accessor';
 import { decodeJwt } from '../../src/connectivity/scp-cf';
-import { TestTenants } from './environment-mocks';
+import { onlyIssuerXsuaaUrl, TestTenants } from './environment-mocks';
 import {
+  onlyIssuerServiceToken,
   providerJwtBearerToken,
   providerServiceToken,
   subscriberJwtBearerToken,
@@ -21,6 +22,10 @@ export function mockServiceToken() {
         typeof options.userJwt === 'string'
           ? decodeJwt(options.userJwt)
           : options.userJwt;
+
+      if (userJwt.iss === onlyIssuerXsuaaUrl) {
+        return Promise.resolve(onlyIssuerServiceToken);
+      }
 
       if (userJwt.zid === TestTenants.PROVIDER) {
         return Promise.resolve(providerServiceToken);

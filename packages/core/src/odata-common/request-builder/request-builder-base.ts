@@ -2,6 +2,7 @@ import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationNameAndJwt,
+  DestinationOptions,
   DestinationRetrievalOptions,
   isDestinationNameAndJwt,
   useOrFetchDestination
@@ -156,7 +157,7 @@ export abstract class MethodRequestBuilder<
   build(): ODataRequest<RequestConfigT>;
   build(
     destination: Destination | DestinationNameAndJwt,
-    options?: DestinationRetrievalOptions
+    options?: DestinationOptions
   ): Promise<ODataRequest<RequestConfigT>>;
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
@@ -168,7 +169,7 @@ export abstract class MethodRequestBuilder<
    */
   build(
     destination?: Destination | DestinationNameAndJwt,
-    options?: DestinationRetrievalOptions
+    options?: DestinationOptions
   ): ODataRequest<RequestConfigT> | Promise<ODataRequest<RequestConfigT>> {
     if (destination) {
       return useOrFetchDestination(destination, options)

@@ -63,7 +63,6 @@
     "type-tests": "yarn workspace @sap-cloud-sdk/type-tests"
   },
   "devDependencies": {
-    "@microsoft/tsdoc-config": "^0.15.2",
     "@types/jest": "^26.0.7",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/license-checker": "^25.0.1",

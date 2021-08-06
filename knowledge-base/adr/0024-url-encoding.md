@@ -13,7 +13,7 @@ The SDK will only encode the parts below:
 
 ## Background
 
-OData and OpenAPI requests built by the SDK needs to be encoded.
+OData and OpenAPI requests built by the SDK need to be encoded.
 We should decide, which parts of the URL need to be encoded and which not.
 Let's start from the structure of a URL.
 Emojis :thumbsup: and :thumbsdown: are used in this doc for specifying whether encoding will be applied by the SDK.

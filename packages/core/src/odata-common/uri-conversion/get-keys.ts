@@ -22,7 +22,9 @@ export function getEntityKeys<EntityT extends Entity>(
   return (entityConstructor._keyFields as Field<EntityT>[]).reduce(
     (prev, curr) => ({
       ...prev,
-      [curr._fieldName]: entity[toPropertyFormat(curr._fieldName)]
+      [curr._fieldName]: encodeURIComponent(
+        entity[toPropertyFormat(curr._fieldName)]
+      )
     }),
     {}
   );

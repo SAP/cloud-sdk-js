@@ -33,6 +33,7 @@ For return types the same extension could lead compile errors after client regen
 - [odata-generator] Fix generation errors, when Enum type field is used as a key of an entity.
 - [core] Fix parsing of proxy environment variables to allow `-` in the host name.
 - [odata-generator] Fix action and function import typing, when parameter or return types are nullable.
+- [core] Fix URL encoding for get by key, update and delete request builders, when a key of the entity contains special characters like `/`.
 
 # 1.47.1
 

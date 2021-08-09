@@ -29,7 +29,6 @@ import {
  * When no JWT is passed, the grant will be performed using the provider tenant.
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
- *
  * @param service - The type of the service or an instance of [[Service]].
  * @param options - Options to influence caching and resilience behavior (see [[CachingOptions]] and [[ResilienceOptions]], respectively) and a JWT. By default, caching and usage of a circuit breaker are enabled.
  * @returns Access token.
@@ -87,7 +86,6 @@ export async function serviceToken(
  * service perform principal propagation with SAP S/4HANA Cloud).
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
- *
  * @param userJwt - The JWT of the user for whom the access token should be fetched.
  * @param service - The type of the service or an instance of [[Service]].
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
@@ -126,10 +124,9 @@ export async function userApprovedServiceToken(
  * The token is fetched via a JWT bearer token grant using the user token + client credentials.
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
- *
- * @param userJwt  - The JWT of the user for whom the access token should be fetched
- * @param service  - The type of the service or an instance of [[Service]].
- * @param options - Options to influence resilience behaviour (see [[ResilienceOptions]]). By defaul,t usage of a circuit breaker is enabled.
+ * @param userJwt - The JWT of the user for whom the access token should be fetched
+ * @param service - The type of the service or an instance of [[Service]].
+ * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns A jwt bearer token.
  */
 export async function jwtBearerToken(

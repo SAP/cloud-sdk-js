@@ -1,4 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
 import { v4 as uuid } from 'uuid';
 import { BatchChangeSet } from '../odata-common/request-builder/batch/batch-change-set';
 import { Entity } from './entity';
@@ -28,8 +27,8 @@ export class ODataBatchChangeSet<
 
   /**
    * Create an instance of ODataBatchChangeSet.
-   * @param requests Requests to combine to one change set.
-   * @param boundary Boundary used in the multipart request.
+   * @param requests - Requests to combine to one change set.
+   * @param boundary - Boundary used in the multipart request.
    */
   constructor(
     readonly requests: RequestT[],

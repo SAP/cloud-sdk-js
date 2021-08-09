@@ -25,11 +25,12 @@ import '*' from './B';
 import '*' from './A';
 ```
 
-We can access **A** **from** **B**, but we the inverse yields **B** undefined in **A**. For more information see [wikipedia](https://en.wikipedia.org/wiki/Circular_dependency).
+We can access **A** **from** **B**, but we the inverse yields **B** `undefined` in **A**.
+For more information see [wikipedia](https://en.wikipedia.org/wiki/Circular_dependency).
 
 ## How ot solve this on application level
 
-To rescue to this behaviour, as **a work around**, a proposed solution as a fix for the undefinition of linked properties is to import the failing class by specifying its original path in the module. In usual case we import modules elements from the `index.js` file by calling `import { PhysInventoryDocItem } from @sap/cloud-vdm-physical-inventory-doc-service`. To dodge the deterministic compilation decided by `index.ts`, it can be fixed by calling while importing the class by:
+To rescue to this behavior, as **a workaround**, a proposed solution as a fix for the undefinition of linked properties is to import the failing class by specifying its original path in the module. In usual case we import modules elements from the `index.js` file by calling `import { PhysInventoryDocItem } from @sap/cloud-vdm-physical-inventory-doc-service`. To dodge the deterministic compilation decided by `index.ts`, it can be fixed by calling while importing the class by:
 
 ```ts
 import { PhysInventoryDocItem } from @sap/cloud-vdm-physical-inventory-doc-service/PhysInventoryDocItem

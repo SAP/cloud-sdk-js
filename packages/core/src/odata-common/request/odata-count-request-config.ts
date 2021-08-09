@@ -11,7 +11,6 @@ const logger = createLogger({
 
 /**
  * OData count request configuration for an entity type.
- *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataCountRequestConfig<
@@ -19,7 +18,6 @@ export class ODataCountRequestConfig<
 > extends ODataRequestConfig {
   /**
    * Creates an instance of ODataGetAllRequestConfig.
-   *
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(readonly getAllRequest: GetAllRequestBuilder<EntityT>) {

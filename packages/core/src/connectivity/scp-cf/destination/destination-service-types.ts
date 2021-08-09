@@ -35,7 +35,6 @@ export interface Destination {
 
   /**
    * @deprecated Since v1.0.1.
-   *
    * Origin of the destination in a multi-tenant setup on SAP Cloud Platform (either from provider or subscriber account), optional.
    */
   origin?: DestinationOrigin;

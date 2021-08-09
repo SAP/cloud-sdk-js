@@ -8,7 +8,6 @@ import { oDataUri } from '../uri-conversion';
 /**
  * @deprecated Since v1.21.0. Use superclass instead.
  * OData delete request configuration for an entity type.
- *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
 class ODataDeleteRequestConfig<

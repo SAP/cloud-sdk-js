@@ -13,7 +13,6 @@ import { ResponseDataAccessor } from '../response-data-accessor';
 import { GetRequestBuilder } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
- *
  * @typeparam EntityT - Type of the entity to be requested
  */
 export abstract class GetByKeyRequestBuilder<
@@ -21,7 +20,6 @@ export abstract class GetByKeyRequestBuilder<
 > extends GetRequestBuilder<EntityT, ODataGetByKeyRequestConfig<EntityT>> {
   /**
    * Creates an instance of GetByKeyRequestBuilder.
-   *
    * @param entityConstructor - Constructor of the entity to create the request for
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    * @param oDataUri - Uri conversion methods
@@ -43,7 +41,6 @@ export abstract class GetByKeyRequestBuilder<
 
   /**
    * Restrict the response to the given selection of properties in the request.
-   *
    * @param selects - Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
@@ -59,7 +56,6 @@ export abstract class GetByKeyRequestBuilder<
 
   /**
    * Execute request.
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the requested entity

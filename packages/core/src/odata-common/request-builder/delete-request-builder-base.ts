@@ -12,7 +12,6 @@ import type { FieldType } from '../selectable';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
- *
  * @typeparam EntityT - Type of the entity to be deleted
  */
 export abstract class DeleteRequestBuilder<EntityT extends Entity>
@@ -24,7 +23,6 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
-   *
    * @param entityConstructor - Constructor type of the entity to be deleted
    * @param oDataUri - ODataUri conversion interface at runtime either v2 or v4
    * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
@@ -49,7 +47,6 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
 
   /**
    * Instructs the request to force an overwrite of the entity by sending an 'If-Match: *' header instead of sending the ETag version identifier.
-   *
    * @returns this The request itself to ease chaining while executing the request
    */
   ignoreVersionIdentifier(): this {
@@ -59,7 +56,6 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
 
   /**
    * Execute query.
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving once the entity was deleted
@@ -80,7 +76,6 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
 
   /**
    * Execute request and return an [[HttpResponse]].
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to an [[HttpResponse]].

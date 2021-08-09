@@ -12,12 +12,13 @@ Those that are checked by lint are marked by the following symbol: ✓.
   - [Use pascal case for classes ✓](#use-pascal-case-for-classes-)
   - [Use pascal case for interface names and don't prefix them](#use-pascal-case-for-interface-names-and-dont-prefix-them)
   - [Use pascal case for enums and enum properties](#use-pascal-case-for-enums-and-enum-properties)
+  - [Use camel case for acronyms](#use-camel-case-for-acronyms)
   - [Use verbs in function names](#use-verbs-in-function-names)
 - [Strings](#strings)
   - [Use single quotes ✓](#use-single-quotes-)
   - [String concatenation](#string-concatenation)
 - [Arrays](#arrays)
-  - [Use `.forEach` rather than `for`](#use-foreach-rather-than-for)
+  - [Use `.forEach` and other array functions rather than `for`](#use-foreach-and-other-array-functions-rather-than-for)
 - [`null` and `undefined`](#null-and-undefined)
   - [Use optional parameters for optional values](#use-optional-parameters-for-optional-values)
   - [Use `undefined` for explicit absence of values](#use-undefined-for-explicit-absence-of-values)
@@ -29,7 +30,7 @@ Those that are checked by lint are marked by the following symbol: ✓.
 - [Comments](#comments)
   - [Document public API with TypeDoc comments](#document-public-api-with-typedoc-comments)
   - [Use `@deprecated` tag for deprecation](#use-deprecated-tag-for-deprecation)
-  - [Don't reference types in parameters an type parameters](#dont-reference-types-in-parameters-an-type-parameters)
+  - [Don't reference types in parameters and type parameters](#dont-reference-types-in-parameters-and-type-parameters)
   - [Use @returns if a function has a return value ✓](#use-returns-if-a-function-has-a-return-value-)
 - [Tests](#tests)
   - [Use .spec in test file names](#use-spec-in-test-file-names)
@@ -37,6 +38,7 @@ Those that are checked by lint are marked by the following symbol: ✓.
   - [Put unit test files next to source files](#put-unit-test-files-next-to-source-files)
 - [Promises](#promises)
   - [Use `async`/`await` rather than `.then`](#use-asyncawait-rather-than-then)
+  - [Use `try ... catch` and `.catch` with `async`/`await`](#use-try--catch-and-catch-with-asyncawait)
 - [Functions](#functions)
   - [Use arrow functions for callbacks](#use-arrow-functions-for-callbacks)
   - [Use function declarations to reference functions by name](#use-function-declarations-to-reference-functions-by-name)
@@ -342,7 +344,7 @@ Use optional parameters, if there is a default value or if it semantically makes
 ❌ Examples of **incorrect** code:
 
 ```ts
-/* Don't use explicit undefined if the parameter is semantically optional */
+/* Don't use explicit `undefined` if the parameter is semantically optional */
 function foo(options: Options | undefined) {
   ...
 }
@@ -370,7 +372,7 @@ Do not use optional parameters in those cases either, because the function shoul
 ❌ Examples of **incorrect** code:
 
 ```ts
-/* Don't use null for non-existent values */
+/* Don't use `null` for non-existent values */
 function foo(obj: SomeType | null) {
   ...
 }
@@ -384,7 +386,7 @@ function foo(obj?: SomeType) {
 ✅ Examples of **correct** code:
 
 ```ts
-/* Use undefined for non-existent values */
+/* Use `undefined` for non-existent values */
 function foo(obj: SomeType | undefined) {
   ...
 }
@@ -399,7 +401,7 @@ Consider whether there is a better API design that might avoid this.
 ❌ Examples of **incorrect** code:
 
 ```ts
-/* Don't use null for absence in general */
+/* Don't use `null` for absence in general */
 function foo(obj?: SomeType | null) {
   if (obj === null || obj === undefined) {
     ...
@@ -410,7 +412,7 @@ function foo(obj?: SomeType | null) {
 ✅ Examples of **correct** code:
 
 ```ts
-/* Use null if it semantically makes sense and is different from undefined */
+/* Use `null` if it semantically makes sense and is different from `undefined` */
 function foo(obj: SomeType | null | undefined) {
   if (obj === null) {
     ...
@@ -430,7 +432,7 @@ Of course, more fine granular checks should be applied if semantically needed.
 ❌ Examples of **incorrect** code:
 
 ```ts
-/* Don't use explicit comparison with undefined for objects */
+/* Don't use explicit comparison with `undefined` for objects */
 if(obj !== undefined) { ... }
 
 /* Don't use truthy/falsy checks for existence of primitives */

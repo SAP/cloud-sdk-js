@@ -31,7 +31,7 @@ describe('response data accessor', () => {
     it('logs warning for wrong format', () => {
       getCollectionResult({ d: { results: 1 } });
       expect(warnSpy).toHaveBeenCalledWith(
-        'The given reponse data does not have the standard OData v2 format for collections.'
+        'The given response data does not have the standard OData v2 format for collections.'
       );
     });
   });
@@ -63,7 +63,7 @@ describe('response data accessor', () => {
     it('logs warning for wrong format', () => {
       getSingleResult({ c: 'test' });
       expect(warnSpy).toHaveBeenCalledWith(
-        'The given reponse data does not have the standard OData v2 format for single results.'
+        'The given response data does not have the standard OData v2 format for single results.'
       );
     });
 
@@ -75,7 +75,7 @@ describe('response data accessor', () => {
     it('logs warning for collection result format', () => {
       getSingleResult({ d: { results: { a: 'b' } } });
       expect(warnSpy).toHaveBeenCalledWith(
-        'The given reponse data has the format for collections instead of the standard OData v2 format for single results.'
+        'The given response data has the format for collections instead of the standard OData v2 format for single results.'
       );
     });
   });

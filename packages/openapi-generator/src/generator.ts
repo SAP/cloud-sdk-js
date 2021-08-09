@@ -1,5 +1,3 @@
-/* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-
 import { promises as promisesFs } from 'fs';
 import { resolve, parse, basename, dirname, join, relative } from 'path';
 import {
@@ -47,7 +45,7 @@ const logger = createLogger('openapi-generator');
 /**
  * Main entry point for the OpenAPI client generation.
  * Generates models and API files.
- * @param options Options to configure generation.
+ * @param options - Options to configure generation.
  */
 export async function generate(options: GeneratorOptions): Promise<void> {
   return generateWithParsedOptions(parseGeneratorOptions(options));
@@ -56,7 +54,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
 /**
  * Main entry point for the OpenAPI client generation.
  * Generates models and API files.
- * @param options Options to configure generation.
+ * @param options - Options to configure generation.
  */
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
@@ -109,11 +107,11 @@ export async function generateWithParsedOptions(
 
 /**
  * Generate sources.
- * @param serviceDir Directory to generate the service to.
- * @param openApiDocument Parsed service.
- * @param inputFilePath Path to the input file.
- * @param tsConfig File content for the `tsconfig.json`.
- * @param options Generation options.
+ * @param serviceDir - Directory to generate the service to.
+ * @param openApiDocument - Parsed service.
+ * @param inputFilePath - Path to the input file.
+ * @param tsConfig - File content for the `tsconfig.json`.
+ * @param options - Generation options.
  */
 async function generateSources(
   serviceDir: string,
@@ -220,11 +218,11 @@ async function createSchemaFiles(
 
 /**
  * Generates an OpenAPI service from a file.
- * @param inputFilePath The file path where the service to generate is located.
- * @param options Options to configure generation.
- * @param serviceOptions Service options as defined in the options per service.
- * @param tsConfig File content for the `tsconfig.json`.
- * @param serviceName The unique service name to be used.
+ * @param inputFilePath - The file path where the service to generate is located.
+ * @param options - Options to configure generation.
+ * @param serviceOptions - Service options as defined in the options per service.
+ * @param tsConfig - File content for the `tsconfig.json`.
+ * @param serviceName - The unique service name to be used.
  */
 async function generateService(
   inputFilePath: string,
@@ -252,7 +250,7 @@ async function generateService(
 
 /**
  * Gives the relative path with respect tp pocess.cwd()/
- * @param absolutePath The absolute path
+ * @param absolutePath - The absolute path
  * @returns The relative path
  * @hidden
  */
@@ -262,7 +260,7 @@ export function getRelativePath(absolutePath: string): string {
 
 /**
  * Recursively searches through a given input path and returns all file paths as a string array.
- * @param input the path to the input directory.
+ * @param input - the path to the input directory.
  * @returns all file paths as a string array.
  */
 export async function getInputFilePaths(input: string): Promise<string[]> {

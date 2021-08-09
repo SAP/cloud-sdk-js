@@ -15,7 +15,7 @@ const logger = createLogger({
  * Type to describe possible inputs for `.fromJson`.
  * This is based on the JSON type of an entity and allows all properties to be optional recursively.
  * It also allows setting unknown properties, which will be treated as custom fields.
- * @typeparam JsonT JSON type of the entity
+ * @typeparam JsonT - JSON type of the entity
  */
 // prettier-ignore
 type FromJsonType<JsonT> = {

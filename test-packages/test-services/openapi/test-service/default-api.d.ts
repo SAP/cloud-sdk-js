@@ -6,12 +6,12 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 export declare const DefaultApi: {
   /**
    * Create a request builder for execution of get requests to the '/test-cases/default-tag' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   noTag: () => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of post requests to the '/test-cases/default-tag' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   defaultTag: () => OpenApiRequestBuilder<any>;
 };

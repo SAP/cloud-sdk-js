@@ -18,7 +18,6 @@ const logger = createLogger({
  * This function will reject if no connectivity service is bound, no XSUAA service with plan application is bound or the client credentials grant with the XSUAA service fails.
  *
  * @Deprecated Since v1.16.0. Use [[addProxyConfigurationOnPrem]] instead.
- *
  * @param destination - The destination to which the proxy configuration should be added.
  * @param jwt - The JWT of the current user.
  * @returns A promise resolving to the destination with the added proxy configuration.

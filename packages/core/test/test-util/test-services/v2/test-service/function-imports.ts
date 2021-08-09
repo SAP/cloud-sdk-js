@@ -27,7 +27,6 @@ export interface TestFunctionImportNoReturnTypeParameters {}
 
 /**
  * Test Function Import No Return Type.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -55,7 +54,6 @@ export interface TestFunctionImportEdmReturnTypeParameters {}
 
 /**
  * Test Function Import Edm Return Type.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -86,7 +84,6 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters {}
 
 /**
  * Test Function Import Edm Return Type Collection.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -117,7 +114,6 @@ export interface TestFunctionImportEntityReturnTypeParameters {}
 
 /**
  * Test Function Import Entity Return Type.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -145,7 +141,6 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters {}
 
 /**
  * Test Function Import Entity Return Type Collection.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -173,7 +168,6 @@ export interface TestFunctionImportSharedEntityReturnTypeParameters {}
 
 /**
  * Test Function Import Shared Entity Return Type. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -208,7 +202,6 @@ export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {}
 
 /**
  * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -243,7 +236,6 @@ export interface TestFunctionImportComplexReturnTypeParameters {}
 
 /**
  * Test Function Import Complex Return Type.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -279,7 +271,6 @@ export interface TestFunctionImportUnsupportedEdmTypesParameters {
 
 /**
  * Test Function Import Unsupported Edm Types.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -316,7 +307,6 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters {}
 
 /**
  * Test Function Import Complex Return Type Collection.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -352,7 +342,6 @@ export interface TestFunctionImportGetParameters {
 
 /**
  * Test Function Import Get.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -391,7 +380,6 @@ export interface TestFunctionImportPostParameters {
 
 /**
  * Test Function Import Post.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -434,7 +422,6 @@ export interface TestFunctionImportMultipleParamsParameters {
 
 /**
  * Test Function Import Multiple Params.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -476,7 +463,6 @@ export interface CreateTestComplexTypeParameters {}
 
 /**
  * Create Test Complex Type.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -507,7 +493,6 @@ export interface FContinueParameters {}
 
 /**
  * Continue.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */

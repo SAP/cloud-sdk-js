@@ -16,7 +16,7 @@ describe('function', () => {
       parameters: [{ name: 'parameters', type: 'Params' }],
       returnType: 'FunctionImportRequestBuilderV2<Params, string>',
       docs: [
-        `order a breakfast ${unixEOL}${unixEOL}@param parameters - Object containing all parameters for the function import.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
+        `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function import.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
       ],
       isExported: true,
       statements: `const params = {${unixEOL}withHoneyToast: new FunctionImportParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}}${unixEOL}${unixEOL}return new FunctionImportRequestBuilderV2('post', 'some/path/to/food', 'OrderBreakfast', (data) => transformReturnValueForEdmTypeV2(data, (val) => edmToTs(val, Edm.String)), params);`
@@ -32,7 +32,7 @@ describe('function', () => {
       returnType:
         "Omit<FunctionImportRequestBuilderV2<Params, never>, 'execute'>",
       docs: [
-        "entityNotDeserializable The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.\n\n@param parameters - Object containing all parameters for the function import.\n@returns A request builder that allows to overwrite some of the values and execute the resulting request."
+        "entityNotDeserializable The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.\n@param parameters - Object containing all parameters for the function import.\n@returns A request builder that allows to overwrite some of the values and execute the resulting request."
       ],
       isExported: true,
       statements:

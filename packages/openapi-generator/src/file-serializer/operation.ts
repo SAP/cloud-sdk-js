@@ -116,13 +116,13 @@ export function operationDocumentation(operation: OpenApiOperation): string {
   }
   if (operation.queryParameters.length > 0) {
     signature.push(
-      `@param queryParameters -  Object containing the following keys: ${operation.queryParameters
+      `@param queryParameters - Object containing the following keys: ${operation.queryParameters
         .map(param => `${param.name}`)
         .join(', ')}.`
     );
   }
   signature.push(
-    '@returns OpenApiRequestBuilder Use the execute() method to trigger the request.'
+    '@returns The request builder, use the `execute()` method to trigger the request.'
   );
   const lines = [getOperationDescriptionText(operation), ...signature];
   return documentationBlock`${lines.join(unixEOL)}`;

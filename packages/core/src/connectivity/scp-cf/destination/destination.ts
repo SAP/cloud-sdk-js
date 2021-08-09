@@ -65,7 +65,7 @@ export function parseDestination(
 /**
  * Get either additional headers or query parameters from a destination, depending on the given prefix.
  * @param destinationConfig - Original destination config that could include additional headers or query parameters.
- * @param originalKeyPrefix -  This is what the additional header and query keys start with, when specified in the original destination config.
+ * @param originalKeyPrefix - This is what the additional header and query keys start with, when specified in the original destination config.
  * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
  */
 function getAdditionalProperties(
@@ -91,7 +91,7 @@ function getAdditionalProperties(
  * Destinations can specify additional headers and/or query parameters, that should be added to every request against the given destination.
  * They are specified in the following format:
  * `URL.headers.<header-name>` or `URL.queries.<query-parameter-name>`
- * @param destinationConfig -  Original destination config that could include additional headers or query parameters.
+ * @param destinationConfig - Original destination config that could include additional headers or query parameters.
  * @returns An object with either the headers or query parameters and their values, depending on the `originalKeyPrefix`.
  */
 function getAdditionalHeadersAndQueryParameters(

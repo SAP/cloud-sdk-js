@@ -18,7 +18,7 @@ export function apiIndexFile(openApiDocument: OpenApiDocument): string {
 
 /**
  * Serialize an index file for the schema directory of the generated service.
- * @param openApiDocument -  The parsed document to serialize into an index file for the schema directory.
+ * @param openApiDocument - The parsed document to serialize into an index file for the schema directory.
  * @returns The serialized index file contents.
  */
 export function schemaIndexFile(openApiDocument: OpenApiDocument): string {

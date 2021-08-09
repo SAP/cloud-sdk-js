@@ -69,12 +69,12 @@ function isSingleResultAsCollection(data: any): boolean {
 function validateSingleResult(data: any): void {
   if (isSingleResultAsCollection(data)) {
     logger.warn(
-      'The given reponse data has the format for collections instead of the standard OData v2 format for single results.'
+      'The given response data has the format for collections instead of the standard OData v2 format for single results.'
     );
   }
   if (!data?.d) {
     logger.warn(
-      'The given reponse data does not have the standard OData v2 format for single results.'
+      'The given response data does not have the standard OData v2 format for single results.'
     );
   }
 }

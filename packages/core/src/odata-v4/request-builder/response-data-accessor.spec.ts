@@ -31,7 +31,7 @@ describe('response data accessor', () => {
     it('logs warning for wrong format', () => {
       getCollectionResult({ d: { results: 1 } });
       expect(warnSpy).toHaveBeenCalledWith(
-        'The given reponse data does not have the standard OData v4 format for collections.'
+        'The given response data does not have the standard OData v4 format for collections.'
       );
     });
   });

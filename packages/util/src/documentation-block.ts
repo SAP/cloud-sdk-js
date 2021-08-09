@@ -13,7 +13,7 @@ const logger = createLogger('documentation-block');
  * documentationBlock`Docs with ${arguments} and more content;`
  * ```
  * @param strings - Strings in the tagged template. In the example above that would be ['Docs with ', ' and more content;'].
- * @param args -  Arguments in the tagged template. In the example above that would be the resolved value for `arguments`;
+ * @param args - Arguments in the tagged template. In the example above that would be the resolved value for `arguments`;
  * @returns A string formatted as documentation block.
  */
 export function documentationBlock(

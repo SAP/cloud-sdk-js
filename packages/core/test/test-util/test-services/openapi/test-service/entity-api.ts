@@ -12,7 +12,7 @@ import type { TestEntity } from './schema';
 export const EntityApi = {
   /**
    * Get all entities
-   * @param queryParameters -  Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.
+   * @param queryParameters - Object containing the following keys: stringParameter, integerParameter, $dollarParameter, dot.parameter, enumStringParameter, enumInt32Parameter, enumDoubleParameter, enumBooleanParameter.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   getAllEntities: (queryParameters?: {
@@ -30,7 +30,7 @@ export const EntityApi = {
     }),
   /**
    * Create a request builder for execution of put requests to the '/entities' endpoint.
-   * @param body -  Request body.
+   * @param body - Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   updateEntityWithPut: (body: TestEntity[] | undefined) =>
@@ -39,7 +39,7 @@ export const EntityApi = {
     }),
   /**
    * Create entity
-   * @param body -  Entity to create
+   * @param body - Entity to create
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   createEntity: (body: TestEntity | undefined) =>
@@ -48,7 +48,7 @@ export const EntityApi = {
     }),
   /**
    * Create a request builder for execution of patch requests to the '/entities' endpoint.
-   * @param body -  Request body.
+   * @param body - Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   updateEntity: (body: Record<string, any> | undefined) =>
@@ -57,7 +57,7 @@ export const EntityApi = {
     }),
   /**
    * Create a request builder for execution of delete requests to the '/entities' endpoint.
-   * @param body -  Request body.
+   * @param body - Request body.
    * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
    */
   deleteEntity: (body: string[] | undefined) =>

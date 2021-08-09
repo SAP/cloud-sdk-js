@@ -30,7 +30,7 @@ export function detectNewLineSymbol(str: string): string {
 
 /**
  * Get the response body from the string representation of a response.
- * @param response -  String representation of a response.
+ * @param response - String representation of a response.
  * @returns The response body as a one line string.
  */
 export function getResponseBody(response: string): string {
@@ -49,7 +49,7 @@ export function getResponseBody(response: string): string {
 
 /**
  * Parse the headers in the string representation of a response headers into an object. This will only look at the highest level of headers.
- * @param response -  String representation of a response
+ * @param response - String representation of a response
  * @returns The headers as an object.
  */
 function parseHeaders(response: string): Record<string, any> {
@@ -64,7 +64,7 @@ function parseHeaders(response: string): Record<string, any> {
 
 /**
  * Get the boundary from the content type header value. Throws an error if no boundary can be found.
- * @param contentType -  Value of the content type header
+ * @param contentType - Value of the content type header
  * @returns The boundary.
  */
 function getBoundary(contentType: string | undefined): string {
@@ -81,7 +81,7 @@ function getBoundary(contentType: string | undefined): string {
 
 /**
  * Split a batch response into an array of sub responses for the retrieve requests and changesets.
- * @param response -  The raw HTTP response.
+ * @param response - The raw HTTP response.
  * @returns A list of sub responses represented as strings.
  */
 export function splitBatchResponse(response: HttpResponse): string[] {
@@ -102,7 +102,7 @@ export function splitBatchResponse(response: HttpResponse): string[] {
 
 /**
  * Split a changeset (sub) response into an array of sub responses.
- * @param changeSetResponse -  The string representation of a change set response.
+ * @param changeSetResponse - The string representation of a change set response.
  * @returns A list of sub responses represented as strings.
  */
 export function splitChangeSetResponse(changeSetResponse: string): string[] {
@@ -118,8 +118,8 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
 
 /**
  * Split a string representation of a response into sub responses given its boundary.
- * @param response -  The string representation of the response to split.
- * @param boundary -  The boundary to split by.
+ * @param response - The string representation of the response to split.
+ * @param boundary - The boundary to split by.
  * @returns A list of sub responses represented as strings.
  */
 export function splitResponse(response: string, boundary: string): string[] {
@@ -142,7 +142,7 @@ export function splitResponse(response: string, boundary: string): string[] {
 
 /**
  * Parse the HTTP code of response.
- * @param response -  String representation of the response.
+ * @param response - String representation of the response.
  * @returns The HTTP code.
  */
 export function parseHttpCode(response: string): number {
@@ -157,7 +157,7 @@ export function parseHttpCode(response: string): number {
 
 /**
  * Get the body from the given response and parse it to JSON.
- * @param response -  The string representation of a single response.
+ * @param response - The string representation of a single response.
  * @returns The parsed JSON representation of the response body.
  */
 function parseResponseBody(response: string): Record<string, any> {
@@ -176,7 +176,7 @@ function parseResponseBody(response: string): Record<string, any> {
 
 /**
  * Parse the body and http code of a batch sub response.
- * @param response -  A batch sub response.
+ * @param response - A batch sub response.
  * @returns The parsed response.s
  */
 export function parseResponseData(response: string): ResponseData {
@@ -188,7 +188,7 @@ export function parseResponseData(response: string): ResponseData {
 
 /**
  * Parse the complete batch HTTP response.
- * @param batchResponse -  HTTP response of a batch request.
+ * @param batchResponse - HTTP response of a batch request.
  * @returns An array of parsed sub responses of the batch response.
  */
 export function parseBatchResponse(

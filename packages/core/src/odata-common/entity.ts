@@ -304,7 +304,7 @@ export abstract class Entity {
 
   /**
    * Creates an object containing all defined properties, navigation properties and custom fields in the entity.
-   * @param visitedEntities -  List of entities to check in case of circular dependencies.
+   * @param visitedEntities - List of entities to check in case of circular dependencies.
    * @returns Entity as an object with all defined entity fields
    */
   protected asObject(visitedEntities: Entity[] = []): Record<string, any> {

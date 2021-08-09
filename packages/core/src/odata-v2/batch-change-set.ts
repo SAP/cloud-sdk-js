@@ -28,7 +28,7 @@ export class ODataBatchChangeSet<
   /**
    * Create an instance of ODataBatchChangeSet.
    * @param requests - Requests to combine to one change set.
-   * @param boundary -  Boundary used in the multipart request.
+   * @param boundary - Boundary used in the multipart request.
    */
   constructor(
     readonly requests: RequestT[],

@@ -4,7 +4,7 @@ import { unixEOL } from './string-formatter';
  * @deprecated Since v1.34.0. Use [[ErrorWithCause]] instead.
  * Creates a new Error and adds the stack trace of the original error to the stack trace of the new one.
  * @param message - Error message.
- * @param cause -  Original error, causing the new error.
+ * @param cause - Original error, causing the new error.
  * @returns A new error with the given cause.
  */
 export function errorWithCause(message: string, cause: Error): Error {

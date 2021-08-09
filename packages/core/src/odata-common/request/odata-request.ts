@@ -59,7 +59,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Constructs a URL relative to the destination.
    * @param includeServicePath - Whether or not to include the service path in the URL.
-   * @param includeQueryParameters -  Whether or not to include the query parameters in the URL.
+   * @param includeQueryParameters - Whether or not to include the query parameters in the URL.
    * @returns The relative URL for the request.
    */
   relativeUrl(
@@ -123,7 +123,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Returns the relative URL to a specific OData resource.
-   * @param includeServicePath -  Whether or not to include the service path in the URL.
+   * @param includeServicePath - Whether or not to include the service path in the URL.
    * @returns The relative URL of the resource.
    */
   relativeResourceUrl(includeServicePath = true): string {

@@ -18,8 +18,8 @@ const logger = createLogger('openapi-generator');
 /**
  * Parse the original schema or reference object to a serializable schema.
  * @param schema - Originally provided schema or reference object.
- * @param refs -  Object representing cross references throughout the document.
- * @param options -  Options that were set for service generation.
+ * @param refs - Object representing cross references throughout the document.
+ * @param options - Options that were set for service generation.
  * @returns The parsed schema.
  */
 export function parseSchema(
@@ -87,9 +87,9 @@ function parseReferenceSchema(
 
 /**
  * Parse a schema to an array schema.
- * @param schema -  Original schema representing an array.
- * @param refs -  Object representing cross references throughout the document.
- * @param options -  Options that were set for service generation.
+ * @param schema - Original schema representing an array.
+ * @param refs - Object representing cross references throughout the document.
+ * @param options - Options that were set for service generation.
  * @returns The recursively parsed array schema.
  */
 function parseArraySchema(
@@ -105,9 +105,9 @@ function parseArraySchema(
 
 /**
  * Parse a schema to an object schema.
- * @param schema -  Original schema representing an object.
- * @param refs -  Object representing cross references throughout the document.
- * @param options -  Options that were set for service generation.
+ * @param schema - Original schema representing an object.
+ * @param refs - Object representing cross references throughout the document.
+ * @param options - Options that were set for service generation.
  * @returns The recursively parsed object schema.
  */
 function parseObjectSchema(
@@ -141,9 +141,9 @@ function parseObjectSchema(
 
 /**
  * Parse properties of an object as property schemas.
- * @param schema -  Original schema representing an object.
- * @param refs -  Object representing cross references throughout the document.
- * @param options -  Options that were set for service generation.
+ * @param schema - Original schema representing an object.
+ * @param refs - Object representing cross references throughout the document.
+ * @param options - Options that were set for service generation.
  * @returns The list of parsed property schemas.
  */
 function parseObjectSchemaProperties(
@@ -169,8 +169,8 @@ function parseObjectSchemaProperties(
 
 /**
  * Parse an enum schema
- * @param schema -  Original schema representing an enum.
- * @param options -  Options that were set for service generation.
+ * @param schema - Original schema representing an enum.
+ * @param options - Options that were set for service generation.
  * @returns The parsed enum schema.
  */
 function parseEnumSchema(
@@ -206,10 +206,10 @@ function getEnumStringValue(input: string): string {
 
 /**
  * Parse a 'oneOf', 'allOf' or 'anyOf' schema.
- * @param schema -  Original schema to parse.
- * @param refs -  Object representing cross references throughout the document.
- * @param xOf -  Key to identify which schema to parse.
- * @param options -  Options that were set for service generation.
+ * @param schema - Original schema to parse.
+ * @param refs - Object representing cross references throughout the document.
+ * @param xOf - Key to identify which schema to parse.
+ * @param options - Options that were set for service generation.
  * @returns The parsed schema based on the given key.
  */
 function parseXOfSchema(

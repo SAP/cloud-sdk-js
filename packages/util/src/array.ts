@@ -100,8 +100,8 @@ export const flatten = (input: any[]): any[] => {
 /**
  * Merge two arrays by alternately adding inserting values from both arrays, starting from the left.
  * For example: `zip([1, 2], [3, 4, 5, 6])` results in `[1, 3, 2, 4, 5, 6]`
- * @param left -  Array to start alternately merging from.
- * @param right -  Second array to merge.
+ * @param left - Array to start alternately merging from.
+ * @param right - Second array to merge.
  * @returns Zipped array.
  */
 export function zip<T>(left: T[], right: T[]): T[] {
@@ -120,8 +120,8 @@ export function zip<T>(left: T[], right: T[]): T[] {
 
 /**
  * Split an array into two based on a condition.
- * @param arr -  Array to partition.
- * @param condition -  Function to determine to where to put each item.
+ * @param arr - Array to partition.
+ * @param condition - Function to determine to where to put each item.
  * @returns A two dimensional array containing two arrays, where the first one includes all items where the given condition was met and the second one includes all items where it was not met.
  */
 export function partition<T>(
@@ -139,8 +139,8 @@ export function partition<T>(
 
 /**
  * Filter an array by removing duplicates and keeping the left most occurrence. By default this compares by identity.
- * @param arr -  Array to remove duplicates from.
- * @param comparator -  Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
+ * @param arr - Array to remove duplicates from.
+ * @param comparator - Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
  * @returns A filtered array containing no duplicates.
  */
 export function filterDuplicates<T>(
@@ -155,8 +155,8 @@ export function filterDuplicates<T>(
 
 /**
  * Filter an array by removing duplicates and keeping the right most occurrence. By default this compares by identity.
- * @param arr -  Array to remove duplicates from.
- * @param comparator -  Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
+ * @param arr - Array to remove duplicates from.
+ * @param comparator - Optional comparator function, indicating whether two items are equal and therefore handled as duplicates. Defaults to identity.
  * @returns A filtered array containing no duplicates.
  */
 export function filterDuplicatesRight<T>(

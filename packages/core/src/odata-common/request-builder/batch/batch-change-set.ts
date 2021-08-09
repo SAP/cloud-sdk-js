@@ -9,7 +9,7 @@ export class BatchChangeSet<RequestT extends MethodRequestBuilder = any> {
   /**
    * Create an instance of BatchChangeSet.
    * @param requests - Requests to combine to one change set.
-   * @param boundary -  Request boundary for separation of sub requests. Defaults to an auto generated value.
+   * @param boundary - Request boundary for separation of sub requests. Defaults to an auto generated value.
    */
   constructor(
     readonly requests: RequestT[],

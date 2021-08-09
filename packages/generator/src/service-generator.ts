@@ -123,10 +123,10 @@ export function parseAllServices(
 }
 
 /**
- * @param serviceDefinitionPaths -  Path to the service definition
- * @param options -  Generator options
- * @param mappings -  mappings for VDM service names to desired name
- * @param globalNameFormatter -  Instance of global name formatter to be used for the parsing process
+ * @param serviceDefinitionPaths - Path to the service definition
+ * @param options - Generator options
+ * @param mappings - mappings for VDM service names to desired name
+ * @param globalNameFormatter - Instance of global name formatter to be used for the parsing process
  * @returns the parsed service
  */
 export function parseService(

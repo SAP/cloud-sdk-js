@@ -9,7 +9,7 @@ import { trim, trimRight } from './string';
  * codeBlock`Code with ${arguments} and more code;`
  * ```
  * @param strings - Strings in the tagged template. In the example above that would be ['Code with ', ' and more code;'].
- * @param args -  Arguments in the tagged template. In the example above that would be the resolved value for `arguments`;
+ * @param args - Arguments in the tagged template. In the example above that would be the resolved value for `arguments`;
  * @returns A string formatted as code block.
  */
 export function codeBlock(

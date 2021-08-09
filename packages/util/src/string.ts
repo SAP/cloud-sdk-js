@@ -10,7 +10,7 @@ export function encodeBase64(str: string): string {
 
 /**
  * Remove whitespace from the left side of a string.
- * @param string -  String to trim.
+ * @param string - String to trim.
  * @returns String without whitespace on the left side.
  */
 export function trimLeft(string: string): string {
@@ -23,7 +23,7 @@ export function trimLeft(string: string): string {
 
 /**
  * Remove whitespace from the right side of a string.
- * @param string -  String to trim.
+ * @param string - String to trim.
  * @returns String without whitespace on the right side.
  */
 export function trimRight(string: string): string {
@@ -36,7 +36,7 @@ export function trimRight(string: string): string {
 
 /**
  * Remove whitespace from the left side of a string.
- * @param string -  String to trim.
+ * @param string - String to trim.
  * @returns String without outer whitespace.
  */
 export function trim(string: string): string {
@@ -45,7 +45,7 @@ export function trim(string: string): string {
 
 /**
  * Remove file extension from a string, e.g. remove 'test.jpg' would return 'test'
- * @param fileName -  File name to remove the file extension from.
+ * @param fileName - File name to remove the file extension from.
  * @returns File name without extension.
  */
 export function removeFileExtension(fileName: string): string {

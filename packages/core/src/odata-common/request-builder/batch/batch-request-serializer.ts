@@ -34,8 +34,8 @@ export function serializeChangeSet(
 
 /**
  * Serialize a multipart request to string.
- * @param request -  One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
- * @param options -  Request serialization options.
+ * @param request - One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
+ * @param options - Request serialization options.
  * @returns The serialized string representation of a multipart request, including the multipart headers.
  */
 export function serializeRequest(
@@ -102,7 +102,7 @@ function validateOptions(options: BatchRequestSerializationOptions): void {
 /**
  * Serialize a batch request to string. This is used for the batch request payload when executing the request.
  * @param request - Batch request to serialize.
- * @param options -  Request serialization options.
+ * @param options - Request serialization options.
  * @returns String representation of the batch request.
  */
 export function serializeBatchRequest(
@@ -137,7 +137,7 @@ export function serializeBatchRequest(
  * Serialize a request to a one line string containing the HTTP method, URL and HTTP version.
  * For Example:
  * `GET /sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartnerAddress?$format=json&$top=1 HTTP/1.1`
- * @param request -  One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
+ * @param request - One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
  * @returns The serialized request as `<HTTP method> <URL> <HTTP version>`.
  */
 export function getLine(request: MethodRequestBuilder): string {

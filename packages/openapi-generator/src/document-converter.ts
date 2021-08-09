@@ -27,7 +27,7 @@ export async function convertOpenApiSpec(
 
 /**
  * Parse a JSON or YAML file and return it as JSON.
- * @param filePath -  Path to the file.
+ * @param filePath - Path to the file.
  * @returns JSON representation of the given file.
  */
 export async function parseFileAsJson(
@@ -50,7 +50,7 @@ export async function parseFileAsJson(
 /**
  * Convert Swagger documents to OpenAPI documents.
  * If an OpenAPI document is passed it is not modified.
- * @param openApiDocument -  OpenAPI version 2 (Swagger) or 3 document to be converted to version 3.
+ * @param openApiDocument - OpenAPI version 2 (Swagger) or 3 document to be converted to version 3.
  * @returns A promise of an OpenAPI version 3 document.
  */
 export async function convertDocToOpenApiV3(

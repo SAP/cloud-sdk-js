@@ -19,7 +19,7 @@ function makeSchemaNameValid(name: string): string {
  *  For example in TypeScript a type definition must not start with integer.
  *  The order of the input values is contained in the changing process.
  * @param names - List of names to be adjusted.
- * @param options -  Parser options.
+ * @param options - Parser options.
  * @returns A list of strings which are possible for schema names.
  */
 export function ensureValidSchemaNames(

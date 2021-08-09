@@ -24,8 +24,8 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   /**
    * Create an instance of `OpenApiRequestBuilder`.
    * @param method - HTTP method of the request to be built.
-   * @param pathPattern -  Path for the request containing path parameter references as in the OpenAPI specification.
-   * @param parameters -  Query parameters and or body to pass to the request.
+   * @param pathPattern - Path for the request containing path parameter references as in the OpenAPI specification.
+   * @param parameters - Query parameters and or body to pass to the request.
    */
   constructor(
     public method: Method,
@@ -35,7 +35,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   /**
    * Add custom headers to the request. If a header field with the given name already exists it is overwritten.
-   * @param headers -  Key-value pairs denoting additional custom headers.
+   * @param headers - Key-value pairs denoting additional custom headers.
    * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomHeaders(headers: Record<string, string>): this {
@@ -72,7 +72,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
-   * @param destination -  Destination to execute the request against.
+   * @param destination - Destination to execute the request against.
    * @returns A promise resolving to an HttpResponse.
    */
   async executeRaw(
@@ -98,7 +98,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   /**
    * Execute request and get the response data. Use this to conveniently access the data of a service without technical information about the response.
-   * @param destination -  Destination to execute the request against.
+   * @param destination - Destination to execute the request against.
    * @returns A promise resolving to the requested return type.
    */
   async execute(

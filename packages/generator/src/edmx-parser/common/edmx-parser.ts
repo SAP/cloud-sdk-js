@@ -52,7 +52,7 @@ function addNamespace<T>(obj: T, namespace: string): T & { Namespace: string } {
 /**
  * Merge a property defined in one or more schemas and add the namespace information
  * @param root - One or more schemas
- * @param property -  The property that will be merged
+ * @param property - The property that will be merged
  * @returns A collection containing the merged property
  */
 export function getMergedPropertyWithNamespace(

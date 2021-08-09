@@ -12,10 +12,10 @@ import type {
 export declare const TestCaseApi: {
   /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
-   * @param requiredPathItemPathParam Path parameter.
-   * @param body -  Request body.
-   * @param queryParameters -  Object containing the following keys: requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam, optionalPathItemQueryParam.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @param requiredPathItemPathParam - Path parameter.
+   * @param body - Request body.
+   * @param queryParameters - Object containing the following keys: requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam, optionalPathItemQueryParam.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   testCaseGetRequiredParameters: (
     requiredPathItemPathParam: string,
@@ -29,10 +29,10 @@ export declare const TestCaseApi: {
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of post requests to the '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}' endpoint.
-   * @param requiredPathItemPathParam Path parameter.
-   * @param body -  Request body.
-   * @param queryParameters -  Object containing the following keys: optionalPathItemQueryParam, requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @param requiredPathItemPathParam - Path parameter.
+   * @param body - Request body.
+   * @param queryParameters - Object containing the following keys: optionalPathItemQueryParam, requiredPathItemQueryParam, optionalQueryParam, requiredQueryParam.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   testCasePostRequiredParameters: (
     requiredPathItemPathParam: string,
@@ -46,9 +46,9 @@ export declare const TestCaseApi: {
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of get requests to the '/test-cases/parameters/{duplicateParam}' endpoint.
-   * @param duplicateParam Path parameter.
-   * @param queryParameters -  Object containing the following keys: duplicateParam.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @param duplicateParam - Path parameter.
+   * @param queryParameters - Object containing the following keys: duplicateParam.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   testCaseGetDuplicateParameters: (
     duplicateParam: string,
@@ -58,29 +58,29 @@ export declare const TestCaseApi: {
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of get requests to the '/test-cases/duplicate-operation-ids' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId: () => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of put requests to the '/test-cases/duplicate-operation-ids' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId1_1: () => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of post requests to the '/test-cases/duplicate-operation-ids' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId_1: () => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of patch requests to the '/test-cases/duplicate-operation-ids' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId1: () => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of get requests to the '/test-cases/reserved-keywords/{const1}' endpoint.
-   * @param const1 Path parameter.
-   * @param queryParameters -  Object containing the following keys: const.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @param const1 - Path parameter.
+   * @param queryParameters - Object containing the following keys: const.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   export: (
     const1: string,
@@ -90,31 +90,31 @@ export declare const TestCaseApi: {
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of get requests to the '/test-cases/complex-schemas' endpoint.
-   * @param body -  Request body.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @param body - Request body.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   complexSchemas: (
     body: ComplexTestEntity | undefined
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of post requests to the '/test-cases/complex-schemas' endpoint.
-   * @param body -  Request body.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @param body - Request body.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   useNameWithSymbols: (
     body: SimpleTestEntityWITHSymbols | undefined
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of get requests to the '/test-cases/schema-name-integer' endpoint.
-   * @param body -  Request body.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @param body - Request body.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   schemaNameInteger: (
     body: Schema123456 | undefined
   ) => OpenApiRequestBuilder<any>;
   /**
    * Create a request builder for execution of get requests to the '/test-cases/no-operation-id' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   getTestCasesNoOperationId: () => OpenApiRequestBuilder<any>;
 };

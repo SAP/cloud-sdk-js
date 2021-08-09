@@ -14,7 +14,7 @@ var core_1 = require('@sap-cloud-sdk/core');
 exports.TagSpaceApi = {
   /**
    * Create a request builder for execution of post requests to the '/test-cases/special-tag' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   tagWithSpace: function () {
     return new core_1.OpenApiRequestBuilder('post', '/test-cases/special-tag');

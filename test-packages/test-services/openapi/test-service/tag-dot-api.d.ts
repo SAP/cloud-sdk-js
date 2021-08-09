@@ -6,7 +6,7 @@ import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
 export declare const TagDotApi: {
   /**
    * Create a request builder for execution of get requests to the '/test-cases/special-tag' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   tagWithDot: () => OpenApiRequestBuilder<any>;
 };

@@ -133,12 +133,12 @@ function getSignatureOfPathParameters(
 ): string[] {
   return parameters.map(
     parameter =>
-      `@param ${parameter.name} ${parameter.description || 'Path parameter.'}`
+      `@param ${parameter.name} - ${parameter.description || 'Path parameter.'}`
   );
 }
 
 function getSignatureOfBody(body: OpenApiRequestBody): string {
-  return `@param body -  ${body.description || 'Request body.'}`;
+  return `@param body - ${body.description || 'Request body.'}`;
 }
 
 function getOperationDescriptionText(operation: OpenApiOperation): string {

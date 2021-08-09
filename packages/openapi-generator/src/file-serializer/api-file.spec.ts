@@ -35,7 +35,7 @@ describe('apiFile', () => {
         /**
          * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
          * @param id - Path parameter.
-         * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+         * @returns The request builder, use the \`execute()\` method to trigger the request.
          */
         getFn: (id: string) => new OpenApiRequestBuilder<any>(
           'get',
@@ -116,7 +116,7 @@ describe('apiFile', () => {
          * Create a request builder for execution of get requests to the 'test/{id}' endpoint.
          * @param id - Path parameter.
          * @param queryParameters - Object containing the following keys: queryParam.
-         * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+         * @returns The request builder, use the \`execute()\` method to trigger the request.
          */
         getFn: (id: string, queryParameters: {'queryParam': QueryParameterType}) => new OpenApiRequestBuilder<string>(
           'get',
@@ -129,7 +129,7 @@ describe('apiFile', () => {
         /**
          * Create a request builder for execution of post requests to the 'test' endpoint.
          * @param body - Request body.
-         * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+         * @returns The request builder, use the \`execute()\` method to trigger the request.
          */
         createFn: (body: RefType) => new OpenApiRequestBuilder<ResponseType>(
           'post',
@@ -167,7 +167,7 @@ describe('apiFile', () => {
       export const TestApi = {
         /**
          * Create a request builder for execution of get requests to the 'test' endpoint.
-         * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+         * @returns The request builder, use the \`execute()\` method to trigger the request.
          */
         getFn: () => new OpenApiRequestBuilder<any>(
           'get',

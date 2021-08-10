@@ -7,34 +7,40 @@ accepted
 ## Context
 
 Currently, we have only implemented one flow when you want to access a service:
+
 - You bind the service to the application and create a service key.
 - This creates a VCAP env variable entry including `clientID` and `clientSecret`
-- With this information you can ask the XSUAA to issue a token to access the service 
+- With this information you can ask the XSUAA to issue a token to access the service
 - Different grant types are available for the token (clientGrant, userGrant....)
 
 This changes slightly when you want to use certificates as a secret to request a token at the XSUAA
+
 - Now per default XSUAA accepts x509 as authentication type.
-You can configure this in the security descriptor JSON:
+  You can configure this in the security descriptor JSON:
+
 ```JSON
-{ 
-    "xsappname": "someName", 
+{
+    "xsappname": "someName",
     "oauth2-configuration": {
     "credential-types": ["binding-secret", "x509"]
-    } 
-}
-```
-- You bind the service and create a service key as usual `cf create-service-key myservice myservicekey -c parameters.json` where the parameters.json is:
-```json
-{
-    "credential-type": "x509",
-    "x509": {
-      "key-length": 2048,
-      "validity": 7,
-      "validity-type": "DAYS"
     }
 }
 ```
-- If you want to support multiple credential-types you have to create multiple service keys. 
+
+- You bind the service and create a service key as usual `cf create-service-key myservice myservicekey -c parameters.json` where the parameters.json is:
+
+```json
+{
+  "credential-type": "x509",
+  "x509": {
+    "key-length": 2048,
+    "validity": 7,
+    "validity-type": "DAYS"
+  }
+}
+```
+
+- If you want to support multiple credential-types you have to create multiple service keys.
 - This binding leads to a `certificate` and `key` property in the VCAP service variables.
 - You add this certificate to the HTTP client (mTLS) making the call to the XSUAA instead of the `clientSecret` in the payload.
 - The XSUAA returns a token to access the desired service
@@ -42,6 +48,7 @@ You can configure this in the security descriptor JSON:
 ### Advantages of x509
 
 At first glance it seems like one string in the service keys:
+
 ```json
 {
  "apiurl": "https://api.authentication.sap.hana.ondemand.com",
@@ -51,7 +58,9 @@ At first glance it seems like one string in the service keys:
  ...
 }
 ```
+
 is replaced by another string (certificate and key):
+
 ```json
 {
  "apiurl": "https://api.authentication.sap.hana.ondemand.com",
@@ -64,8 +73,9 @@ is replaced by another string (certificate and key):
 ```
 
 However, the certificate based approach has some advantages:
+
 - The secret is not part of HTTP traffic but the TLS layer.
-So if customers switch on the HTTP trace you will not see secrets in the logs
+  So if customers switch on the HTTP trace you will not see secrets in the logs
 - The lifetime of a certificate can be set so that even in the token retrieval you can not use an old stolen secret
 
 ### Rollout and Compatibility
@@ -93,7 +103,7 @@ But it is also possible to bring your own certificate when you create the servic
 }
 ```
 
-In this case the `key` property is not part of the VCAP service variables, and you need to bring it from the outside. 
+In this case the `key` property is not part of the VCAP service variables, and you need to bring it from the outside.
 
 ## Decision
 
@@ -111,6 +121,7 @@ This would require the current changes:
 - Depending on the value use the http client with certificate or clientSecret to get a token.
 
 Note that the xsuaa endpoints are different:
+
 - X.509: https://<subdomain>.authentication.cert.<landscape domain>/oauth/token
 - clientSecret: https://<subdomain>.authentication.<landscape domain>/oauth/token
 
@@ -129,9 +140,10 @@ We all agree to go for library.
 With option B we are future-proof for other things to come.
 Also, from a security point of view we should use the the `xssec` and not a homemade implementation.
 We make the assumptions:
+
 - non-breaking change
 - licence of xssec compatible with SDK licence
 
 ## Consequences
 
-The SDK supports token retrieval via `credential-type` x509. 
+The SDK supports token retrieval via `credential-type` x509.

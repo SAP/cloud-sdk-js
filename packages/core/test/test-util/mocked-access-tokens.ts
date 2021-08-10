@@ -26,7 +26,7 @@ const subscriberServiceTokenPayload = {
 
 export const subscriberServiceToken = signedJwt(subscriberServiceTokenPayload);
 
-// This tokens are used to test cases when as a user Jwt only {iss:someXSUAAurl} is provided.
+// These tokens are used to test cases when the provided user JWT only contains `{ iss: someXSUAAurl }`.
 // See docs on [[DestinationAccessorOptions]] for mor details
 export const onlyIssuerServiceTokenPayload = {
   iat,

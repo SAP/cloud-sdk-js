@@ -7,14 +7,14 @@ accepted
 ## Context
 
 Currently, we have only implemented one flow when you want to access a service:
-- You bind the service to the application
+- You bind the service to the application and create a service key.
 - This creates a VCAP env variable entry including `clientID` and `clientSecret`
 - With this information you can ask the XSUAA to issue a token to access the service 
 - Different grant types are available for the token (clientGrant, userGrant....)
 
 This changes slightly when you want to use certificates as a secret to request a token at the XSUAA
 - Now per default XSUAA accepts x509 as authentication type.
-You can configure this in the security descriptor:
+You can configure this in the security descriptor JSON:
 ```JSON
 { 
     "xsappname": "someName", 
@@ -23,7 +23,7 @@ You can configure this in the security descriptor:
     } 
 }
 ```
-- You bind the service and create a service key as usual `cf create-service-key myservice myservicekey -c parameters.json`
+- You bind the service and create a service key as usual `cf create-service-key myservice myservicekey -c parameters.json` where the parameters.json is:
 ```json
 {
     "credential-type": "x509",
@@ -80,7 +80,7 @@ In Q3 and Q4 the SDK relevant services like XSUAA, destination and connectivity 
 
 We have discussed the XSUAA managed flow up to know.
 In this case the certificates are created by the XSUAA.
-But it is also possible to to bring your own certificate when you create the service key:
+But it is also possible to bring your own certificate when you create the service key:
 
 ```json
 {

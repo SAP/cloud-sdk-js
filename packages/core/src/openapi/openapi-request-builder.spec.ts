@@ -93,7 +93,7 @@ describe('openapi-request-builder', () => {
     );
   });
 
-  it('executes a request using the (iss) token instead of the whole jwt', async () => {
+  it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
     mockServiceBindings();
     mockServiceToken();
 

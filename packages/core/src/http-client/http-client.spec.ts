@@ -4,7 +4,7 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Destination, Protocol, wrapJwtInHeader } from '../connectivity';
 import {
-  allMocksUsed,
+  expectAllMocksUsed,
   certificateMultipleResponse,
   certificateSingleResponse,
   mockInstanceDestinationsCall,
@@ -261,10 +261,9 @@ describe('generic http client', () => {
       const response = await executeHttpRequest(
         { destinationName: 'ERNIE-UND-CERT' },
         { method: 'get' },
-        {},
         { iss: onlyIssuerXsuaaUrl }
       );
-      allMocksUsed(nocks);
+      expectAllMocksUsed(nocks);
       expect(response.data).toBe('iss token used on the way');
     });
 

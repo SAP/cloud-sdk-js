@@ -1,6 +1,6 @@
 import nock from 'nock';
 import {
-  allMocksUsed,
+  expectAllMocksUsed,
   certificateMultipleResponse,
   certificateSingleResponse,
   mockInstanceDestinationsCall,
@@ -43,8 +43,7 @@ describe('openapi-request-builder', () => {
         params: undefined,
         data: undefined
       },
-      { fetchCsrfToken: false },
-      undefined
+      { fetchCsrfToken: false }
     );
     expect(response.data).toBe(dummyResponse);
   });
@@ -67,8 +66,7 @@ describe('openapi-request-builder', () => {
         },
         data: undefined
       },
-      { fetchCsrfToken: false },
-      undefined
+      { fetchCsrfToken: false }
     );
     expect(response.data).toBe(dummyResponse);
   });
@@ -91,8 +89,7 @@ describe('openapi-request-builder', () => {
           limit: 100
         }
       },
-      { fetchCsrfToken: true },
-      undefined
+      { fetchCsrfToken: true }
     );
   });
 
@@ -128,7 +125,7 @@ describe('openapi-request-builder', () => {
       { destinationName: 'ERNIE-UND-CERT' },
       { iss: onlyIssuerXsuaaUrl }
     );
-    allMocksUsed(nocks);
+    expectAllMocksUsed(nocks);
     expect(httpSpy).toHaveBeenLastCalledWith(
       { destinationName: 'ERNIE-UND-CERT' },
       {
@@ -140,8 +137,7 @@ describe('openapi-request-builder', () => {
           limit: 100
         }
       },
-      { fetchCsrfToken: false },
-      { iss: onlyIssuerXsuaaUrl }
+      { fetchCsrfToken: false, iss: onlyIssuerXsuaaUrl }
     );
     expect(response.data).toBe('iss token used on the way');
   });
@@ -160,8 +156,7 @@ describe('openapi-request-builder', () => {
         params: undefined,
         data: undefined
       },
-      { fetchCsrfToken: false },
-      undefined
+      { fetchCsrfToken: false }
     );
     expect(response.data).toBe(dummyResponse);
   });
@@ -192,8 +187,7 @@ describe('openapi-request-builder', () => {
         params: undefined,
         data: undefined
       },
-      { fetchCsrfToken: false },
-      undefined
+      { fetchCsrfToken: false }
     );
     expect(response.data).toBe(dummyResponse);
   });
@@ -213,8 +207,7 @@ describe('openapi-request-builder', () => {
         data: undefined,
         responseType: 'arraybuffer'
       },
-      { fetchCsrfToken: false },
-      undefined
+      { fetchCsrfToken: false }
     );
     expect(response.data).toEqual(Buffer.from(dummyResponse, 'utf-8'));
   });
@@ -234,8 +227,7 @@ describe('openapi-request-builder', () => {
         params: undefined,
         data: undefined
       },
-      { fetchCsrfToken: false },
-      undefined
+      { fetchCsrfToken: false }
     );
   });
 });

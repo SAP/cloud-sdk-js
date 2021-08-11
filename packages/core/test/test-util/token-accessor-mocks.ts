@@ -12,7 +12,7 @@ import {
   userApprovedSubscriberServiceToken
 } from './mocked-access-tokens';
 
-export function allMocksUsed(nocks: nock.Scope[]) {
+export function expectAllMocksUsed(nocks: nock.Scope[]) {
   nocks.forEach(nock1 => {
     if (!nock1.isDone()) {
       throw new Error('Not all mocks used.');

@@ -30,10 +30,10 @@ export async function useOrFetchDestination(
   options: DestinationOptions = {}
 ): Promise<Destination | null> {
   return isDestinationNameAndJwt(destination)
-    ? getDestination(destination.destinationName, {
-        userJwt: destination.jwt,
-        ...options
-      })
+    ? getDestination(
+        destination.destinationName,
+        destination.jwt ? { userJwt: destination.jwt, ...options } : options
+      )
     : sanitizeDestination(destination);
 }
 

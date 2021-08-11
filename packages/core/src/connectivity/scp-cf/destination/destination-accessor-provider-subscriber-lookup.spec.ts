@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
@@ -234,6 +235,25 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       expect(actual).toMatchObject(expected);
     });
 
+    it('it warns if you use iss property and user jwt', async () => {
+      const logger = createLogger({
+        package: 'core',
+        messageContext: 'destination-accessor-service'
+      });
+      const warnSpy = jest.spyOn(logger, 'warn');
+      await expect(
+        getDestinationFromDestinationService('someDest', {
+          userJwt: 'someJwt',
+          iss: 'someIss'
+        })
+      ).rejects.toThrowError(
+        'The given jwt payload does not encode valid JSON.'
+      );
+      expect(warnSpy).toHaveBeenCalledWith(
+        'You have provided the userJwt and iss option to fetch the destination. This is most likely unintentional. The userJwt will be used.'
+      );
+    });
+
     it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
       mockServiceBindings();
       mockServiceToken();
@@ -254,6 +274,11 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         wrapJwtInHeader(onlyIssuerServiceToken).headers
       );
 
+      const logger = createLogger({
+        package: 'core',
+        messageContext: 'destination-accessor-service'
+      });
+      const infoSpy = jest.spyOn(logger, 'info');
       const expected = parseDestination(certificateSingleResponse);
       const actual = await getDestinationFromDestinationService(
         'ERNIE-UND-CERT',
@@ -263,6 +288,9 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         }
       );
       expect(actual).toMatchObject(expected);
+      expect(infoSpy).toHaveBeenCalledWith(
+        'You use the iss option to fetch a destination instead of a full JWT. No validation is performed.'
+      );
     });
 
     it('noUserToken && alwaysSubscriber: should return null since the token does not match subscriber', async () => {

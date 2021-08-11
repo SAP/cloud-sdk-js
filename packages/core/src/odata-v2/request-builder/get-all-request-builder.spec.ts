@@ -15,7 +15,7 @@ import {
   TestEntitySingleLink
 } from '../../../test/test-util/test-services/v2/test-service';
 import {
-  allMocksUsed,
+  expectAllMocksUsed,
   certificateMultipleResponse,
   certificateSingleResponse,
   mockInstanceDestinationsCall,
@@ -190,7 +190,7 @@ describe('GetAllRequestBuilder', () => {
         { destinationName: 'ERNIE-UND-CERT' },
         { iss: onlyIssuerXsuaaUrl }
       );
-      allMocksUsed(nocks);
+      expectAllMocksUsed(nocks);
       expect(spy).toHaveBeenCalledWith(
         parseDestination(certificateSingleResponse),
         {

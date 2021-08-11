@@ -14,7 +14,7 @@ import {
 
 /**
  * Request builder for OpenAPI requests.
- * @typeParam ResponseT Type of the response for the request.
+ * @typeParam ResponseT - Type of the response for the request.
  */
 export class OpenApiRequestBuilder<ResponseT = any> {
   private static isPlaceholder(pathPart: string): boolean {
@@ -27,9 +27,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   /**
    * Create an instance of `OpenApiRequestBuilder`.
-   * @param method HTTP method of the request to be built.
-   * @param pathPattern Path for the request containing path parameter references as in the OpenAPI specification.
-   * @param parameters Query parameters and or body to pass to the request.
+   * @param method - HTTP method of the request to be built.
+   * @param pathPattern - Path for the request containing path parameter references as in the OpenAPI specification.
+   * @param parameters - Query parameters and or body to pass to the request.
    */
   constructor(
     public method: Method,
@@ -39,7 +39,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   /**
    * Add custom headers to the request. If a header field with the given name already exists it is overwritten.
-   * @param headers Key-value pairs denoting additional custom headers.
+   * @param headers - Key-value pairs denoting additional custom headers.
    * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomHeaders(headers: Record<string, string>): this {

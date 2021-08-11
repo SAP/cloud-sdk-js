@@ -1738,9 +1738,9 @@
     got "10.7.0"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.4.0":
-  version "5.4.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.4.1.tgz#92cb0542514346055a21ba97935fe44f659ca4c8"
-  integrity sha512-/Sr+OjGKehK38EgUwU5Eaaf62tJegNyRWRfB/aiehlu9vDusb1Z0QlcaB4Ft/nS70Ujz17fE2AC0ZhmoNe5yOQ==
+  version "5.4.2"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.4.2.tgz#bbea33e32e7858af0412d1e1b413339b17d0e674"
+  integrity sha512-b3u8wjWVARNLP9TjWho4gwKNQvLvjwUwGd/KW+yvr+dZFC4mU4c8BIknscY7W8UOXOCIDlk/qTHr0TNHCHWgqA==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
@@ -10781,9 +10781,9 @@ tar-stream@^2.1.4:
     readable-stream "^3.1.1"
 
 tar@>=6.1.2, tar@^2.0.0, tar@^2.2.2, tar@^4, tar@^4.4.12, tar@^6.0.2, tar@^6.1.0:
-  version "6.1.6"
-  resolved "https://registry.npmjs.org/tar/-/tar-6.1.6.tgz#c23d797b0a1efe5d479b1490805c5443f3560c5d"
-  integrity sha512-oaWyu5dQbHaYcyZCTfyPpC+VmI62/OM2RTUYavTk1MDr1cwW5Boi3baeYQKiZbY2uSQJGr+iMOzb/JFxLrft+g==
+  version "6.1.8"
+  resolved "https://registry.npmjs.org/tar/-/tar-6.1.8.tgz#4fc50cfe56511c538ce15b71e05eebe66530cbd4"
+  integrity sha512-sb9b0cp855NbkMJcskdSYA7b11Q8JsX4qe4pyUAfHp+Y6jBjJeek2ZVlwEfWayshEIwlIzXx0Fain3QG9JPm2A==
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"

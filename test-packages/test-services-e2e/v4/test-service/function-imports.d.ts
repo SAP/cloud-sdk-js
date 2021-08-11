@@ -15,7 +15,6 @@ export interface ConcatStringsParameters {
 }
 /**
  * Concat Strings.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -28,7 +27,6 @@ export declare function concatStrings(
 export interface GetAllParameters {}
 /**
  * Get All.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -46,7 +44,6 @@ export interface GetByKeyParameters {
 }
 /**
  * Get By Key.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -64,7 +61,6 @@ export interface ReturnCollectionParameters {
 }
 /**
  * Return Collection.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -82,7 +78,6 @@ export interface ReturnIntParameters {
 }
 /**
  * Return Int.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
@@ -95,7 +90,6 @@ export declare function returnInt(
 export interface ReturnSapCloudSdkParameters {}
 /**
  * Return Sap Cloud Sdk.
- *
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */

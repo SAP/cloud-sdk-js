@@ -41,7 +41,7 @@ export type ParsedGeneratorOptions =
  * This function is only used when invoking the generator programmatically.
  * It parses the options that were passed to [[generate]] and sets default values where necessary.
  * The parsing is done through the `parse` function and `default` value on the `OpenApiGenerator` command's flags.
- * @param options Options that match the CLI options.
+ * @param options - Options that match the CLI options.
  * @returns Parsed options with default values.
  */
 export function parseGeneratorOptions(
@@ -63,7 +63,7 @@ export function parseGeneratorOptions(
 
 /**
  * Parses a given path to a config file or directory and returns its content
- * @param configPath path to a config file or a directory containing a config.json
+ * @param configPath - path to a config file or a directory containing a config.json
  * @returns Options to configure generation
  */
 export async function parseOptionsFromConfig(
@@ -92,8 +92,8 @@ export async function parseOptionsFromConfig(
 
 /**
  * Returns only values that were specified
- * @param options parsed generator options
- * @param rawInputFlags the raw input keys
+ * @param options - parsed generator options
+ * @param rawInputFlags - the raw input keys
  * @returns generator options that were used in the raw input
  */
 export function getSpecifiedFlags(

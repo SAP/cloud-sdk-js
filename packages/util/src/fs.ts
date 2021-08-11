@@ -25,7 +25,7 @@ export function findProjectRoot(path: string, lastPath: string = path): string {
 
 /**
  * Read a JSON file from the file system.
- * @param path The path to the JSON file.
+ * @param path - The path to the JSON file.
  * @returns An object parsed from the JSON file.
  */
 export function readJSON(path: PathLike): { [key: string]: any } {

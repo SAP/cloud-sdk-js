@@ -2,10 +2,10 @@ import { unixEOL } from '@sap-cloud-sdk/util';
 
 /**
  * Generate the package.json for an openapi client so it can be released as an npm module.
- * @param packageName The name of the npm package.
- * @param description The description of the  npm package.
- * @param sdkVersion The version of the SAP Cloud SDK used.
- * @param packageVersion The version of the npm package.
+ * @param packageName - The name of the npm package.
+ * @param description - The description of the  npm package.
+ * @param sdkVersion - The version of the SAP Cloud SDK used.
+ * @param packageVersion - The version of the npm package.
  * @returns The package.json contents.
  */
 export function packageJson(

@@ -5,12 +5,14 @@ import { Method, SchemaNaming } from '../openapi-types';
 /**
  * Represents an object holding all relevant information for operation parsing.
  * The OpenAPI path definitions have the following structure:
+ * ```
  * "my/path-pattern": {
  *    parameters: [...],
  *    get: {...},
  *    post {...}
  *    ...
  *  }
+ * ```
  * Each path (pattern), e. g. "my/path-pattern", can define operations for multiple HTTP methods.
  * Each of those operations are then referenced by the same path and can have shared parameters defined on the path.
  */

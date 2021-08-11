@@ -35,7 +35,6 @@ let circuitBreaker: XsuaaCircuitBreaker;
  * Executes a client credentials grant request.
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
  * If the first parameter is a URI, the response will not be verified.
- *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
  * @param clientCredentials - Client credentials for which to request a token.
  * @param options - Options to use by retrieving access token.
@@ -67,7 +66,6 @@ export async function clientCredentialsGrant(
 /**
  * @deprecated Since v1.41.0 Use [[jwtBearerTokenGrant]] instead.
  * Executes a user token grant request against the given URI.
- *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
  * @param userJwt - The JWT of the user on whose behalf the request is executed.
  * @param clientId - The client_id of the target XSUAA service instance.
@@ -105,7 +103,6 @@ export async function userTokenGrant(
  * Executes a refresh token grant request against the given URI.
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
  * If the first parameter is an URI, the response will not be verified.
- *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
  * @param clientCredentials - The credentials (client_id, client_secret) of the target XSUAA service instance.
  * @param refreshToken - The refresh token that should be used to generate a new access token.
@@ -139,7 +136,6 @@ export async function refreshTokenGrant(
 
 /**
  * Executes a JWT bearer token grant request against the given URI.
- *
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
  * @param clientCredentials - The credentials (client_id, client_secret) of the target XSUAA service instance.
  * @param userJwt - The JWT of the user on whose behalf the request is executed.
@@ -175,7 +171,6 @@ export async function jwtBearerTokenGrant(
 
 /**
  * Fetches verification keys from the XSUAA service for the given credentials.
- *
  * @param xsuaaCredentials - Credentials of the XSUAA service instance.
  * @param jku - Value of the jku property in the JWT header. If not provided the old legacy URL xsuaaCredentials.url/token_keys is used as a fallback which will not work for subscriber accounts created after 14th of April 2020.
  * @returns An array of TokenKeys.
@@ -187,8 +182,7 @@ export function fetchVerificationKeys(
 
 /**
  * Fetches verification keys from the XSUAA service for the given URL, with the given pair of credentials.
- *
- * @param url - URL of the XSUAA service instance.
+ * @param URL - URL of the XSUAA service instance.
  * @param clientId - Client ID of the XSUAA service instance.
  * @param clientSecret - Client secret of the XSUAA service instance.
  * @returns An array of TokenKeys.

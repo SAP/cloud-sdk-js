@@ -2,7 +2,7 @@ import { unixEOL } from '@sap-cloud-sdk/util';
 import { OpenApiDocument } from '../openapi-types';
 /**
  * Generate the readme for an openapi client.
- * @param openApiDocument Parsed service.
+ * @param openApiDocument - Parsed service.
  * @returns The readme contents.
  */
 export function readme(openApiDocument: OpenApiDocument): string {

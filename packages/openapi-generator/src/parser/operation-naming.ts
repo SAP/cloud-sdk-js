@@ -7,7 +7,7 @@ import { OperationInfo } from './parsing-info';
  * Give all given operations an initial name.
  * All operations with an extension will be renamed.
  * Operations that don't have a name thereafter, will be named based on their method and path pattern.
- * @param operations Original information on the operations, that are relevant for parsing.
+ * @param operations - Original information on the operations, that are relevant for parsing.
  * @returns Operation information, where every operation has an operationId.
  */
 export function nameOperations(operations: OperationInfo[]): OperationInfo[] {

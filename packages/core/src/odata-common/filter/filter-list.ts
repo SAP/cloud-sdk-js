@@ -3,7 +3,6 @@ import type { Filterable } from './filterable';
 
 /**
  * Data structure to combine [[Filterable]]s conjunctively and / or disjunctively. A FilterList matches when all filterables within the `andFilters` match and when at least one filterable within the `orFilters` matches. Should not be used directly.
- *
  * @typeparam EntityT -
  */
 export class FilterList<EntityT extends Entity>
@@ -20,7 +19,6 @@ export class FilterList<EntityT extends Entity>
 
   /**
    * Creates an instance of FilterList.
-   *
    * @param andFilters - Filters to be combined by logical conjunction (`and`)
    * @param orFilters - Filters to be combined by logical disjunction (`or`)
    */
@@ -30,10 +28,9 @@ export class FilterList<EntityT extends Entity>
   ) {}
 
   /**
-   * Flattens `andFilters` and `orFilters` as far as possible while staying logically equivalent.
-   *
    * @deprecated Since v1.28.1. This function should not be used, since some OData Services might not support the flattened filter expression.
-   * @returns Flattened filter list
+   * Flattens `andFilters` and `orFilters` as far as possible while staying logically equivalent.
+   * @returns Flattened filter list.
    */
   flatten(): FilterList<EntityT> {
     this._flatten('andFilters');

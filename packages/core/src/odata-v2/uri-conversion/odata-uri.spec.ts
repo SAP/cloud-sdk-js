@@ -299,4 +299,18 @@ describe('getEntityKeys', () => {
       KeyPropertyString: entity.keyPropertyString
     });
   });
+
+  it('should encode entity keys correctly', () => {
+    const entity = TestEntity.builder()
+      .keyPropertyGuid(uuid())
+      .keyPropertyString('/')
+      .build();
+
+    const actual = oDataUri.getEntityKeys(entity, TestEntity);
+
+    expect(actual).toEqual({
+      KeyPropertyGuid: entity.keyPropertyGuid,
+      KeyPropertyString: encodeURIComponent(entity.keyPropertyString)
+    });
+  });
 });

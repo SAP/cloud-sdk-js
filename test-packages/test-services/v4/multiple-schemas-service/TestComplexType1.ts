@@ -51,7 +51,6 @@ export class TestComplexType1Field<
 
   /**
    * Creates an instance of TestComplexType1Field.
-   *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */

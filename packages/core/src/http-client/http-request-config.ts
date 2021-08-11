@@ -7,8 +7,8 @@ const logger = createLogger({
 
 /**
  * Filter disallowed keys from a given custom request config object.
- * @param customRequestConfig a given custom request config object to be filtered
- * @param disallowedKeys A list of keys that are not allowed to be customized.
+ * @param customRequestConfig - a given custom request config object to be filtered
+ * @param disallowedKeys - A list of keys that are not allowed to be customized.
  * @returns Filtered custom request config object.
  */
 export function filterCustomRequestConfig(

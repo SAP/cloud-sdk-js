@@ -9,7 +9,6 @@ import { WithGetAllRestrictions } from './odata-request-traits';
 
 /**
  * OData getAll request configuration for an entity type.
- *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataGetAllRequestConfig<EntityT extends Entity>
@@ -25,7 +24,6 @@ export class ODataGetAllRequestConfig<EntityT extends Entity>
 
   /**
    * Creates an instance of ODataGetAllRequestConfig.
-   *
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(

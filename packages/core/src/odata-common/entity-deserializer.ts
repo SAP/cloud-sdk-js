@@ -75,7 +75,6 @@ export function entityDeserializer(
    * Converts the JSON payload for a single entity into an instance of the corresponding generated entity class.
    * It sets the remote state to the data provided by the JSON payload.
    * If a version identifier is found in the '__metadata' or in the request header, the method also sets it.
-   *
    * @param json - The JSON payload.
    * @param entityConstructor - The constructor function of the entity class.
    * @param requestHeader - Optional parameter which may be used to add a version identifier (etag) to the entity
@@ -266,7 +265,6 @@ export function extractEtagFromHeader(headers: any): string | undefined {
 /**
  * Extracts all custom fields from the JSON payload for a single entity.
  * In this context, a custom fields is every property that is not known in the corresponding entity class.
- *
  * @param json - The JSON payload.
  * @param entityConstructor - The constructor function of the entity class.
  * @returns An object containing the custom fields as key-value pairs.

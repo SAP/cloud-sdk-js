@@ -2,7 +2,7 @@ import { codeBlock } from '@sap-cloud-sdk/util';
 
 /**
  * Serialize a list of imports.
- * @param imports The imports to serialize.
+ * @param imports - The imports to serialize.
  * @returns The serialized imports as a multiline string.
  */
 export function serializeImports(imports: Import[]): string {

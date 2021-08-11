@@ -70,7 +70,6 @@ export class EnumField<
 
 /**
  * Convenient type to reflect all the values of a string based enum as a union type.
- *
  * @typeparam T - String based enum type
  * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#template-literal-types
  */

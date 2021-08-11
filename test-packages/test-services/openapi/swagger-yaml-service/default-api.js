@@ -14,9 +14,9 @@ var core_1 = require('@sap-cloud-sdk/core');
 exports.DefaultApi = {
   /**
    * Test POST
-   * @param pathParam Path parameter.
-   * @param queryParameters Object containing the following keys: queryParam.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @param pathParam - Path parameter.
+   * @param queryParameters - Object containing the following keys: queryParam.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   postEntity: function (pathParam, queryParameters) {
     return new core_1.OpenApiRequestBuilder('post', '/entities/{pathParam}', {
@@ -26,9 +26,9 @@ exports.DefaultApi = {
   },
   /**
    * Create a request builder for execution of patch requests to the '/entities/{pathParam}' endpoint.
-   * @param pathParam Path parameter.
-   * @param body Request body.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @param pathParam - Path parameter.
+   * @param body - Request body.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   patchEntity: function (pathParam, body) {
     return new core_1.OpenApiRequestBuilder('patch', '/entities/{pathParam}', {

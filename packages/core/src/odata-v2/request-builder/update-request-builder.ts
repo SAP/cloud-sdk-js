@@ -25,7 +25,6 @@ const logger = createLogger({
 });
 /**
  * Create OData query to update an entity.
- *
  * @typeparam EntityT - Type of the entity to be updated
  */
 export class UpdateRequestBuilder<EntityT extends Entity>
@@ -34,7 +33,6 @@ export class UpdateRequestBuilder<EntityT extends Entity>
 {
   /**
    * Creates an instance of UpdateRequestBuilder.
-   *
    * @param _entityConstructor - Constructor type of the entity to be updated
    * @param _entity - Entity to be updated
    */
@@ -54,7 +52,6 @@ export class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Executes the query.
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the entity once it was updated
@@ -75,10 +72,9 @@ export class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Execute request and return an [[HttpResponse]]. The request is only executed if some properties of the entity are modified.
-   *
    * @param destination - Destination to execute the request against
    * @param options - Options to employ when fetching destinations
-   * @returns A promise resolving to an [[HttpResponse]] when the request is executed or undefined otherwise.
+   * @returns A promise resolving to an [[HttpResponse]] when the request is executed or `undefined` otherwise.
    */
   async executeRaw(
     destination: Destination | DestinationNameAndJwt,

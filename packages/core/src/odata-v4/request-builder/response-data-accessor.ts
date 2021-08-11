@@ -13,8 +13,8 @@ const logger = createLogger({
 /**
  * Extract the collection data from the response.
  * If the data does not contain a collection an empty array is returned.
- * @param data - Response of the OData v4 service
- * @returns any[] - Collection extracted from the response
+ * @param data - Response of the OData v4 service.
+ * @returns Collection extracted from the response.
  */
 export function getCollectionResult(data: any): any[] {
   validateCollectionResult(data);
@@ -24,7 +24,7 @@ export function getCollectionResult(data: any): any[] {
 /**
  * Checks if the data contains a collection result.
  * @param data - Response of the OData v4 service
- * @returns boolean - true if the data is a collection result
+ * @returns `true`, if the data is a collection result
  */
 export function isCollectionResult(data: any): boolean {
   return Array.isArray(data.value);
@@ -33,7 +33,7 @@ export function isCollectionResult(data: any): boolean {
 function validateCollectionResult(data): void {
   if (!isCollectionResult(data)) {
     logger.warn(
-      'The given reponse data does not have the standard OData v4 format for collections.'
+      'The given response data does not have the standard OData v4 format for collections.'
     );
   }
 }
@@ -41,8 +41,8 @@ function validateCollectionResult(data): void {
 /**
  * Extract the collection data from the one to many link response.
  * If the data does not contain a collection an empty array is returned.
- * @param data - Response of the one to many link
- * @returns any[] - Collection extracted from the response
+ * @param data - Response of the one to many link.
+ * @returns Collection extracted from the response.
  */
 export function getLinkedCollectionResult(data: any): any[] {
   return Array.isArray(data) ? data : [];
@@ -51,8 +51,8 @@ export function getLinkedCollectionResult(data: any): any[] {
 /**
  * Extract the single entry data from the response.
  * If the data does not contain a single object an empty object is returned.
- * @param data - Response of the OData v4 service
- * @returns Record<string, any> - single object extracted from the response
+ * @param data - Response of the OData v4 service.
+ * @returns A single object extracted from the response.
  */
 export function getSingleResult(data: any): Record<string, any> {
   validateSingleResult(data);

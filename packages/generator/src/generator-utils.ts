@@ -16,54 +16,54 @@ function hasCapability(object: any, capability: string) {
 }
 
 /**
- * Checks if the 'sap:deletable' property is present on the given input.
+ * Checks if the `sap:deletable` property is present on the given input.
  * @param entity - Object to be checked.
- * @returns true per default or if {sap:deletable:'true'} is in the object.
+ * @returns `true` if the property `sap:deletable` has the value 'true' or is not present in the object.
  */
 export function isDeletable(entity: any): boolean {
   return hasCapability(entity, 'sap:deletable');
 }
 
 /**
- * Checks if the 'sap:updatable' property is present on the given input.
+ * Checks if the `sap:updatable` property is present on the given input.
  * @param entity - Object to be checked.
- * @returns true per default or if {sap:updatable:'true'} is in the object.
+ * @returns `true` if the property `sap:updatable` has the value 'true' or is not present in the object.
  */
 export function isUpdatable(entity: any): boolean {
   return hasCapability(entity, 'sap:updatable');
 }
 
 /**
- * Checks if the 'sap:creatable' property is present on the given input.
+ * Checks if the `sap:creatable` property is present on the given input.
  * @param entity - Object to be checked.
- * @returns true per default or if {sap:creatable:'true'} is in the object.
+ * @returns `true` if the property `sap:creatable` has the value 'true' or is not present in the object.
  */
 export function isCreatable(entity: any): boolean {
   return hasCapability(entity, 'sap:creatable');
 }
 
 /**
- * Checks if the 'sap:sortable' property is present on the given input.
+ * Checks if the `sap:sortable` property is present on the given input.
  * @param property - Object to be checked.
- * @returns true per default or if {sap:sortable:'true'} is in the object.
+ * @returns `true` if the property `sap:sortable` has the value 'true' or is not present in the object.
  */
 export function isSortable(property: any): boolean {
   return hasCapability(property, 'sap:sortable');
 }
 
 /**
- * Checks if the 'sap:filterable' property is present on the given input.
+ * Checks if the `sap:filterable` property is present on the given input.
  * @param property - Object to be checked.
- * @returns true per default or if {sap:filterable:'true'} is in the object.
+ * @returns `true` if the property `sap:filterable` has the value 'true' or is not present in the object.
  */
 export function isFilterable(property: any): boolean {
   return hasCapability(property, 'sap:filterable');
 }
 
 /**
- * Checks if the 'Nullable' property is present on the given input.
+ * Checks if the `Nullable` property is present on the given input.
  * @param property - Object to be checked.
- * @returns true per default or if {Nullable:'true'} is in the object.
+ * @returns `true` if the property `Nullable` has the value 'true' or is not present in the object.
  */
 export function isNullableProperty(property: any): boolean {
   return hasCapability(property, 'Nullable');
@@ -72,7 +72,7 @@ export function isNullableProperty(property: any): boolean {
 /**
  * Checks if the 'Nullable' property is present on the given input.
  * @param parameter - Object to be checked.
- * @returns false per default or if {Nullable:'false'} is in the object.
+ * @returns `false` if the property `Nullable` has the value 'false' or is not present in the object.
  */
 export function isNullableParameter(parameter: any): boolean {
   return !!parameter['Nullable'] && parameter['Nullable'] !== 'false';
@@ -250,7 +250,6 @@ export function getGenericParameters(
 
 /**
  * Applies a prefix to a string if present.
- *
  * @param string - The string to be prefixed.
  * @param prefix - The optional prefix.
  * @returns Prefixed string.
@@ -261,7 +260,6 @@ export function prefixString(string: string, prefix?: string): string {
 
 /**
  * Takes a name and returns a transformation that is guaranteed to be compliant with npm naming rules.
- *
  * @param name - The name to be transformed if necessary.
  * @returns Name that is guaranteed to be compliant.
  */

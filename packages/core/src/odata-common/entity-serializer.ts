@@ -57,7 +57,6 @@ type TsToEdmType = (
 export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service.
-   *
    * @param entity - An instance of an entity.
    * @param entityConstructor - The constructor function of that entity.
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
@@ -105,7 +104,6 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
 
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service, ignoring custom fields.
-   *
    * @param entity - An instance of an entity.
    * @param entityConstructor - The constructor function of that entity.
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.

@@ -90,7 +90,6 @@ export function enableExceptionLogger(): void {
  *
  * To retrieve a logger after its creation use [[getLogger]].
  * If you want to change the log level of a logger use [[setLogLevel]].
- *
  * @param messageContext - Either a key for the message context of all messages produced by the logger or an object with additional keys to set in the message.
  * @returns A newly created or an already existing logger for the given context.
  */
@@ -168,7 +167,7 @@ export function setLogLevel(
 /**
  * Change the global log level of the container which will set default level for all active loggers.
  * E. g., to set the global log level call `setGlobalLogLevel('debug')`.
- * @param level: LogLevel
+ * @param level - The log level to set the global log level to.
  */
 export function setGlobalLogLevel(level: LogLevel): void {
   container.options.level = level;

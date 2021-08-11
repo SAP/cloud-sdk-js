@@ -6,7 +6,6 @@ import { OrderLink } from './order-link';
 
 /**
  * A union of all types that can be used for ordering.
- *
  * @typeparam EntityT - Type of the entity to be ordered
  */
 export type Orderable<EntityT extends Entity> =
@@ -15,7 +14,6 @@ export type Orderable<EntityT extends Entity> =
 
 /**
  * A union of all types that can be used as input for ordering.
- *
  * @typeparam EntityT - Type of the entity to be ordered
  */
 export type OrderableInput<EntityT extends Entity> =
@@ -25,7 +23,6 @@ export type OrderableInput<EntityT extends Entity> =
 
 /**
  * Create new Order by `orderBy._fieldName` in ascending order.
- *
  * @typeparam EntityT - Type of the entity to be ordered
  * @param orderBy - Field or link to be ordered by
  * @returns New order
@@ -41,7 +38,6 @@ export function asc<EntityT extends Entity>(
 
 /**
  * Create new Order by `orderBy._fieldName` in descending order.
- *
  * @typeparam EntityT - Type of the entity to be ordered
  * @param orderBy - Field or link to be ordered by
  * @returns New order

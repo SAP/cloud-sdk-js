@@ -13,7 +13,6 @@ import { EdmTypeField } from '../edm-type-field';
 /**
  * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a property with an unknown or currently unsupported EDM type like Edm.Geography.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 class AnyFieldBase<
@@ -24,7 +23,6 @@ class AnyFieldBase<
 /**
  * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a selectable property with with an unknown or currently unsupported EDM type like Edm.Geography.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class AnyField<EntityT extends Entity> extends AnyFieldBase<
@@ -35,7 +33,6 @@ export class AnyField<EntityT extends Entity> extends AnyFieldBase<
 /**
  * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a complex type property with with an unknown or currently unsupported EDM type like Edm.Geography.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeAnyPropertyField<
@@ -49,7 +46,6 @@ export class ComplexTypeAnyPropertyField<
 
   /**
    * Creates an instance of ComplexTypeAnyPropertyField.
-   *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
@@ -75,7 +71,6 @@ export class ComplexTypeAnyPropertyField<
 
   /**
    * Path to the field to be used in filter and order by queries. Combines the parent complex type name with the field name.
-   *
    * @returns Path to the field to be used in filter and order by queries.
    */
   fieldPath(): string {

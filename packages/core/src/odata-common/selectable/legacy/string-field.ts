@@ -13,7 +13,6 @@ import { EdmTypeField } from '../edm-type-field';
 /**
  * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a property with a string value.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 class StringFieldBase<
@@ -24,7 +23,6 @@ class StringFieldBase<
 /**
  * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a selectable property with a string value.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class StringField<EntityT extends Entity> extends StringFieldBase<
@@ -35,7 +33,6 @@ export class StringField<EntityT extends Entity> extends StringFieldBase<
 /**
  * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a complex type property with a string value.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeStringPropertyField<
@@ -49,7 +46,6 @@ export class ComplexTypeStringPropertyField<
 
   /**
    * Creates an instance of ComplexTypeStringPropertyField.
-   *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
@@ -64,7 +60,6 @@ export class ComplexTypeStringPropertyField<
    * @deprecated Since v1.19.0.
    *
    * Creates an instance of ComplexTypeStringPropertyField.
-   *
    * @param fieldName - Actual name of the field used in the OData request
    * @param entityConstructor - Constructor type of the entity the field belongs to
    * @param parentTypeName - Name of the parent complex type
@@ -92,7 +87,6 @@ export class ComplexTypeStringPropertyField<
 
   /**
    * Path to the field to be used in filter and order by queries. Combines the parent complex type name with the field name.
-   *
    * @returns Path to the field to be used in filter and order by queries.
    */
   fieldPath(): string {

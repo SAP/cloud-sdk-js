@@ -4,7 +4,6 @@ import { Selectable, Link } from '../../odata-common';
 /**
  * Get an object containing the given Selectables as query parameter, or an empty object if none were given.
  * This retrieves where in addition to the selection (`select`) there is also an expansion (`expand`) needed.
- *
  * @typeparam EntityT - Type of the entity to get the selection for
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object

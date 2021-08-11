@@ -32,9 +32,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @param parameters Query parameters and or body to pass to the request.
    */
   constructor(
-    public method: Method,
-    private pathPattern: string,
-    private parameters?: OpenApiRequestParameters
+      public method: Method,
+      private pathPattern: string,
+      private parameters?: OpenApiRequestParameters
   ) {}
 
   /**
@@ -57,7 +57,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns The request builder itself, to facilitate method chaining.
    */
   addCustomRequestConfiguration(
-    requestConfiguration: Record<string, string>
+      requestConfiguration: Record<string, string>
   ): this {
     Object.entries(requestConfiguration).forEach(([key, value]) => {
       this.customRequestConfiguration[key] = value;
@@ -82,24 +82,24 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns A promise resolving to an HttpResponse.
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    destinationOptions?: DestinationOptions
+      destination: Destination | DestinationNameAndJwt,
+      destinationOptions?: DestinationOptions
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
-      this._fetchCsrfToken &&
-      ['post', 'put', 'patch', 'delete'].includes(this.method.toLowerCase());
+        this._fetchCsrfToken &&
+        ['post', 'put', 'patch', 'delete'].includes(this.method.toLowerCase());
     return executeHttpRequest(
-      destination,
-      {
-        ...filterCustomRequestConfig(this.customRequestConfiguration),
-        method: this.method,
-        url: this.getPath(),
-        headers: this.customHeaders,
-        params: this.parameters?.queryParameters,
-        data: this.parameters?.body
-      },
-      // TODO: Remove fetch CsrfToken this in v 2.0, when this becomes true becomes the default
-      { fetchCsrfToken, ...destinationOptions }
+        destination,
+        {
+          ...filterCustomRequestConfig(this.customRequestConfiguration),
+          method: this.method,
+          url: this.getPath(),
+          headers: this.customHeaders,
+          params: this.parameters?.queryParameters,
+          data: this.parameters?.body
+        },
+        // TODO: Remove fetch CsrfToken this in v 2.0, when this becomes true becomes the default
+        { fetchCsrfToken, ...destinationOptions }
     );
   }
 
@@ -110,15 +110,15 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns A promise resolving to the requested return type.
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    destinationOptions?: DestinationOptions
+      destination: Destination | DestinationNameAndJwt,
+      destinationOptions?: DestinationOptions
   ): Promise<ResponseT> {
     const response = await this.executeRaw(destination, destinationOptions);
     if (isAxiosResponse(response)) {
       return response.data;
     }
     throw new Error(
-      'Could not access response data. Response was not an axios response.'
+        'Could not access response data. Response was not an axios response.'
     );
   }
 
@@ -127,20 +127,20 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
     const pathParts = this.pathPattern.split('/');
     return pathParts
-      .map(part => {
-        if (OpenApiRequestBuilder.isPlaceholder(part)) {
-          const paramName = part.slice(1, -1);
-          const paramValue = pathParameters[paramName];
-          if (!paramValue) {
-            throw new Error(
-              `Cannot execute request, no path parameter provided for '${paramName}'.`
-            );
+        .map(part => {
+          if (OpenApiRequestBuilder.isPlaceholder(part)) {
+            const paramName = part.slice(1, -1);
+            const paramValue = pathParameters[paramName];
+            if (!paramValue) {
+              throw new Error(
+                  `Cannot execute request, no path parameter provided for '${paramName}'.`
+              );
+            }
+            return encodeURIComponent(paramValue);
           }
-          return encodeURIComponent(paramValue);
-        }
-        return part;
-      })
-      .join('/');
+          return part;
+        })
+        .join('/');
   }
 }
 

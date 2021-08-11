@@ -77,7 +77,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
-   * @param destination Destination to execute the request against.
+   * @param destination - Destination to execute the request against.
    * @param destinationOptions - Options to employ when fetching destinations.
    * @returns A promise resolving to an HttpResponse.
    */
@@ -105,7 +105,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   /**
    * Execute request and get the response data. Use this to conveniently access the data of a service without technical information about the response.
-   * @param destination Destination to execute the request against.
+   * @param destination - Destination to execute the request against.
    * @param destinationOptions - Options to employ when fetching destinations.
    * @returns A promise resolving to the requested return type.
    */

@@ -1,9 +1,12 @@
 /* eslint-disable max-classes-per-file */
 import { AxiosResponse } from 'axios';
+import { isNullish } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationNameAndJwt,
-  DestinationOptions
+  DestinationOptions,
+  noDestinationErrorMessage,
+  useOrFetchDestination
 } from '../connectivity';
 import {
   executeHttpRequest,
@@ -88,8 +91,16 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
       ['post', 'put', 'patch', 'delete'].includes(this.method.toLowerCase());
-    return executeHttpRequest(
+
+    const resolvedDestination = await useOrFetchDestination(
       destination,
+      destinationOptions
+    );
+    if (isNullish(destination)) {
+      throw Error(noDestinationErrorMessage(destination));
+    }
+    return executeHttpRequest(
+      resolvedDestination as Destination,
       {
         ...filterCustomRequestConfig(this.customRequestConfiguration),
         method: this.method,
@@ -99,7 +110,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
         data: this.parameters?.body
       },
       // TODO: Remove fetch CsrfToken this in v 2.0, when this becomes true becomes the default
-      { fetchCsrfToken, ...destinationOptions }
+      { fetchCsrfToken }
     );
   }
 

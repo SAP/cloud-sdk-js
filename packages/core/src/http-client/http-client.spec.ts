@@ -2,19 +2,7 @@ import https from 'https';
 import Axios from 'axios';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Destination, Protocol, wrapJwtInHeader } from '../connectivity';
-import {
-  expectAllMocksUsed,
-  certificateMultipleResponse,
-  certificateSingleResponse,
-  mockInstanceDestinationsCall,
-  mockServiceBindings,
-  mockServiceToken,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
-  onlyIssuerServiceToken,
-  onlyIssuerXsuaaUrl
-} from '../../test/test-util';
+import { Destination, Protocol } from '../connectivity';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
@@ -232,39 +220,6 @@ describe('generic http client', () => {
           response.statusCode === 200 ? resolve(200) : reject()
         )
       );
-    });
-
-    it('is possible to execute against a non principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
-      mockServiceBindings();
-      mockServiceToken();
-
-      const nocks = [
-        mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          certificateMultipleResponse,
-          200,
-          onlyIssuerServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          certificateSingleResponse,
-          200,
-          'ERNIE-UND-CERT',
-          wrapJwtInHeader(onlyIssuerServiceToken).headers
-        ),
-        nock(certificateSingleResponse.destinationConfiguration.URL)
-          .get(/.*/)
-          .reply(200, 'iss token used on the way')
-      ];
-
-      const response = await executeHttpRequest(
-        { destinationName: 'ERNIE-UND-CERT' },
-        { method: 'get' },
-        { iss: onlyIssuerXsuaaUrl }
-      );
-      expectAllMocksUsed(nocks);
-      expect(response.data).toBe('iss token used on the way');
     });
 
     it('takes a generic HTTP request and executes it', async () => {

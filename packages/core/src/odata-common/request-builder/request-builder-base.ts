@@ -4,7 +4,7 @@ import {
   DestinationNameAndJwt,
   DestinationOptions,
   DestinationRetrievalOptions,
-  isDestinationNameAndJwt,
+  noDestinationErrorMessage,
   useOrFetchDestination
 } from '../../connectivity/scp-cf';
 import { ODataRequest } from '../request/odata-request';
@@ -177,14 +177,6 @@ export abstract class MethodRequestBuilder<
     }
     return new ODataRequest(this.requestConfig);
   }
-}
-
-function noDestinationErrorMessage(
-  destination: Destination | DestinationNameAndJwt
-): string {
-  return isDestinationNameAndJwt(destination)
-    ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
-    : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
 
 export { MethodRequestBuilder as MethodRequestBuilderBase };

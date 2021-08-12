@@ -12,7 +12,11 @@ import {
   onlyIssuerXsuaaUrl
 } from '../../test/test-util';
 import * as httpClient from '../http-client/http-client';
-import { wrapJwtInHeader } from '../connectivity';
+import {
+  parseDestination,
+  sanitizeDestination,
+  wrapJwtInHeader
+} from '../connectivity';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {
@@ -35,7 +39,7 @@ describe('openapi-request-builder', () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
     const response = await requestBuilder.executeRaw(destination);
     expect(httpSpy).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test',
@@ -56,7 +60,7 @@ describe('openapi-request-builder', () => {
     });
     const response = await requestBuilder.executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test',
@@ -79,7 +83,7 @@ describe('openapi-request-builder', () => {
     });
     await requestBuilder.executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'post',
         url: '/test',
@@ -127,7 +131,7 @@ describe('openapi-request-builder', () => {
     );
     expectAllMocksUsed(nocks);
     expect(httpSpy).toHaveBeenLastCalledWith(
-      { destinationName: 'ERNIE-UND-CERT' },
+      sanitizeDestination(parseDestination(certificateSingleResponse)),
       {
         method: 'get',
         url: '/test',
@@ -137,7 +141,7 @@ describe('openapi-request-builder', () => {
           limit: 100
         }
       },
-      { fetchCsrfToken: false, iss: onlyIssuerXsuaaUrl }
+      { fetchCsrfToken: false }
     );
     expect(response.data).toBe('iss token used on the way');
   });
@@ -148,7 +152,7 @@ describe('openapi-request-builder', () => {
       .addCustomHeaders({ myCustomHeader: 'custom-header' })
       .executeRaw(destination);
     expect(httpSpy).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test',
@@ -179,7 +183,7 @@ describe('openapi-request-builder', () => {
     });
     const response = await requestBuilder.executeRaw(destination);
     expect(httpSpy).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test/%23test',
@@ -198,7 +202,7 @@ describe('openapi-request-builder', () => {
       .addCustomRequestConfiguration({ responseType: 'arraybuffer' })
       .executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test',
@@ -219,7 +223,7 @@ describe('openapi-request-builder', () => {
     ).skipCsrfTokenFetching();
     await requestBuilder.executeRaw(destination);
     expect(httpSpy).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'post',
         url: '/test',

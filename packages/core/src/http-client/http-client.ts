@@ -35,13 +35,11 @@ const logger = createLogger({
  * If a destination name (and a JWT) are provided, it will try to resolve the destination.
  * @param destination - A destination or a destination name and a JWT.
  * @param customHeaders - Custom default headers for the resulting HTTP request.
- * @param destinationOptions - Options to employ when fetching destinations.
  * @returns A [[DestinationHttpRequestConfig]].
  */
 export async function buildHttpRequest(
   destination: Destination | DestinationNameAndJwt,
-  customHeaders?: Record<string, any>,
-  destinationOptions?: DestinationOptions
+  customHeaders?: Record<string, any>
 ): Promise<DestinationHttpRequestConfig> {
   if (customHeaders) {
     logger.warn(
@@ -52,10 +50,7 @@ export async function buildHttpRequest(
         .join('\n')}`
     );
   }
-  const resolvedDestination = await resolveDestination(
-    destination,
-    destinationOptions
-  );
+  const resolvedDestination = await resolveDestination(destination);
   if (!resolvedDestination) {
     throw Error(
       `Failed to resolve the destination '${toDestinationNameUrl(
@@ -98,12 +93,11 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   return async function <T extends HttpRequestConfig>(
     destination: Destination | DestinationNameAndJwt,
     requestConfig: T,
-    options?: HttpRequestOptions & DestinationOptions
+    options?: HttpRequestOptions
   ): Promise<ReturnT> {
     const destinationRequestConfig = await buildHttpRequest(
       destination,
-      requestConfig.headers,
-      options
+      requestConfig.headers
     );
     const request = merge(destinationRequestConfig, requestConfig);
     request.headers = await addCsrfTokenToHeader(destination, request, options);
@@ -137,14 +131,14 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  * and executes it (using Axios).
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
- * @param options - An [[HttpRequestOptions]]  of the http request for configuring e.g., csrf token delegation and [[DestinationOptions]] to configure destination retrieval options. By default, the SDK will not fetch the csrf token.
+ * @param options - An [[HttpRequestOptions]]  of the http request for configuring e.g., csrf token delegation. By default, the SDK will not fetch the csrf token.
  * @param destinationOptions - Options to employ when fetching destinations.
  * @returns A promise resolving to an [[HttpResponse]].
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
   destination: Destination | DestinationNameAndJwt,
   requestConfig: T,
-  options?: HttpRequestOptions & DestinationOptions
+  options?: HttpRequestOptions
 ): Promise<HttpResponse> {
   return execute(executeWithAxios)(destination, requestConfig, options);
 }

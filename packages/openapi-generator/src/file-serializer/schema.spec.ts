@@ -82,9 +82,7 @@ describe('serializeSchema for object schemas', () => {
             name: 'simpleProperty',
             required: true,
             schema: { type: 'integer' },
-            typeProperties: { 
-                    
-            }
+            typeProperties: { }
           }
         ],
         additionalProperties: { type: 'string' }

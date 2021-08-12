@@ -123,7 +123,7 @@ export function schemaPropertyDocumentation(
     signature.push(`@example ${JSON.stringify(schema.schema?.example)}`);
   }
 
-  for(var propertyName in schema.typeProperties) {
+  for(const propertyName in schema.typeProperties) {
     if(schema.typeProperties[propertyName]) {
       signature.push(`${titleFormat(propertyName)} ${schema.typeProperties[propertyName]}. `);
     }

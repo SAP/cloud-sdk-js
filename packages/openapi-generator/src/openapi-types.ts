@@ -220,7 +220,7 @@ export interface OpenApiArraySchema {
 /**
  * Any schema that is no other specific schema. This includes primitive types.
  */
-export interface OpenApiSimpleSchema { 
+export interface OpenApiSimpleSchema {
   /**
    * Type represented by the schema.
    */
@@ -303,7 +303,7 @@ export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
   /**
    * Denotes the type specific keywords for the according object's properties.
    */
-  typeProperties?: OpenApiTypeSpecificProperty
+  typeProperties?: OpenApiTypeSpecificProperty;
 }
 
 /**
@@ -331,7 +331,7 @@ export interface OpenApiAdditionalSchemaProperty {
    * Denotes whether the schemas or schema property is deprecated
    */
   deprecated?: boolean;
-  
+
   /**
    * Example value for schema or schema property
    */
@@ -340,7 +340,7 @@ export interface OpenApiAdditionalSchemaProperty {
 
 export interface OpenApiTypeSpecificProperty {
   /**
-   * Serves as a hint at the contents of the type 
+   * Serves as a hint at the contents of the type
    */
   format?: string;
 
@@ -372,7 +372,7 @@ export interface OpenApiTypeSpecificProperty {
   /**
    * Denotes the minimum length of a string
    */
-  minLength?: number; 
+  minLength?: number;
 
   /**
    * Denotes the minimum length of an array

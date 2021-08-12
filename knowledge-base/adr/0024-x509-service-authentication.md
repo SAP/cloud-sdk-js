@@ -8,7 +8,7 @@ accepted
 
 Currently, we have only implemented one flow when you want to access a service:
 
-- You bind the service to the application and create a service key.
+- You bind the service to the application or create a service key.
 - This creates a VCAP env variable entry including `clientID` and `clientSecret`
 - With this information you can ask the XSUAA to issue a token to access the service
 - Different grant types are available for the token (clientGrant, userGrant....)
@@ -27,7 +27,7 @@ This changes slightly when you want to use certificates as a secret to request a
 }
 ```
 
-- You bind the service and create a service key as usual `cf create-service-key myservice myservicekey -c parameters.json` where the parameters.json is:
+- You bind the service or create a service key as usual `cf create-service-key myservice myservicekey -c parameters.json` where the parameters.json is:
 
 ```json
 {
@@ -116,7 +116,7 @@ Implementation is easy it is more a security question.
 We could extend our current code to support the x509 authentication.
 This would require the current changes:
 
-- Ensure the right service keys are found in the VCAP (should already be the case).
+- Ensure the right service credentials are found in the VCAP (should already be the case).
 - Investigate the `credential-type` if it is `instance-secret` or `x509`.
 - Depending on the value use the http client with certificate or clientSecret to get a token.
 
@@ -131,7 +131,7 @@ We change the token retrieval to the [xssec](https://www.npmjs.com/package/@sap/
 We would need to do the following:
 
 - Replace our exising call with the lib
-- Ensure the right service keys are found in the VCAP (should already be the case)
+- Ensure the right service credentials are found in the VCAP (should already be the case)
 - The lib will take care of evaluation which type the service key is.
 
 ### Comparison A versus B

@@ -14,7 +14,7 @@ var core_1 = require('@sap-cloud-sdk/core');
 exports.DefaultApi = {
   /**
    * Create a request builder for execution of get requests to the '/' endpoint.
-   * @returns OpenApiRequestBuilder Use the execute() method to trigger the request.
+   * @returns The request builder, use the `execute()` method to trigger the request.
    */
   get: function () {
     return new core_1.OpenApiRequestBuilder('get', '/');

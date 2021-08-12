@@ -6,7 +6,7 @@ import { Import, serializeImports } from './imports';
 
 /**
  * Serialize a schema representation to a string representing the according schema file contents.
- * @param namedSchema A named schema.
+ * @param namedSchema - A named schema.
  * @returns The serialized schema file contents.
  */
 export function schemaFile(namedSchema: OpenApiPersistedSchema): string {

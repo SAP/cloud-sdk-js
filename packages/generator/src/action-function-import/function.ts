@@ -44,7 +44,7 @@ function getDocDescription(functionImport: VdmFunctionImport) {
     isEntityNotDeserializable(functionImport.returnType)
       ? additionalDocForEntityNotDeserializable
       : ''
-  }${unixEOL}`;
+  }`;
 }
 
 function getFunctionImportStatements(

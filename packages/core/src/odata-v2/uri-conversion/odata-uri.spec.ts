@@ -197,7 +197,7 @@ describe('getFilter for filter functions', () => {
       TestEntity.DOUBLE_PROPERTY
     );
     expect(oDataUri.getFilter(fn.equals(1), TestEntity).filter).toBe(
-      encodeURIComponent("fn('str', 1, DoubleProperty) eq 1")
+      encodeURIComponent("fn('str',1,DoubleProperty) eq 1")
     );
   });
 
@@ -253,7 +253,7 @@ describe('getFilter for filter functions', () => {
         filterFunctions.startsWith('string', 'str').equals(false),
         TestEntity
       ).filter
-    ).toBe(encodeURIComponent("startswith('string', 'str') eq false"));
+    ).toBe(encodeURIComponent("startswith('string','str') eq false"));
   });
 
   it('for startsWith filter function without eq/ne', () => {
@@ -262,7 +262,7 @@ describe('getFilter for filter functions', () => {
         filterFunctions.startsWith('string', 'str'),
         TestEntity
       ).filter
-    ).toBe(encodeURIComponent("startswith('string', 'str')"));
+    ).toBe(encodeURIComponent("startswith('string','str')"));
   });
 
   it('for startsWith filter function with not operator with eq/ne', () => {
@@ -271,7 +271,7 @@ describe('getFilter for filter functions', () => {
         not(filterFunctions.startsWith('string', 'str').equals(false)),
         TestEntity
       ).filter
-    ).toBe(encodeURIComponent("not (startswith('string', 'str') eq false)"));
+    ).toBe(encodeURIComponent("not (startswith('string','str') eq false)"));
   });
 
   it('for startsWith filter function with not operator without eq/ne', () => {
@@ -280,7 +280,7 @@ describe('getFilter for filter functions', () => {
         not(filterFunctions.startsWith('string', 'str')),
         TestEntity
       ).filter
-    ).toBe(encodeURIComponent("not (startswith('string', 'str'))"));
+    ).toBe(encodeURIComponent("not (startswith('string','str'))"));
   });
 });
 
@@ -297,6 +297,20 @@ describe('getEntityKeys', () => {
     expect(actual).toEqual({
       KeyPropertyGuid: entity.keyPropertyGuid,
       KeyPropertyString: entity.keyPropertyString
+    });
+  });
+
+  it('should encode entity keys correctly', () => {
+    const entity = TestEntity.builder()
+      .keyPropertyGuid(uuid())
+      .keyPropertyString('/')
+      .build();
+
+    const actual = oDataUri.getEntityKeys(entity, TestEntity);
+
+    expect(actual).toEqual({
+      KeyPropertyGuid: entity.keyPropertyGuid,
+      KeyPropertyString: encodeURIComponent(entity.keyPropertyString)
     });
   });
 });

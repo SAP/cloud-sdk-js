@@ -32,12 +32,11 @@ const defaultOptions = {
 };
 
 /**
+ * @hidden
  * Get and send development environment data based on the context of the given caller path using the given options.
  * The callerPath is necessary to determine whether usage analytics data will be sent or not.
- *
- * @param callerPath - Abolute path of the script from which the function is called
- * @param options - Usage analytic options
- * @hidden
+ * @param callerPath - Absolute path of the script from which the function is called.
+ * @param options - Usage analytic options.
  */
 export async function performUsageAnalytics(
   callerPath: string,
@@ -65,14 +64,13 @@ export async function performUsageAnalytics(
 }
 
 /**
+ * @hidden
  * Sends development environment data to SAP Web Analytics.
- * For detailed information, check https://github.com/SAP/cloud-sdk-cli/blob/main/usage-analytics.md
- *
+ * For detailed information, check https://github.com/SAP/cloud-sdk-cli/blob/main/usage-analytics.md.
  * @param config - Configuration for web analytics.
  * @param data - Data to be sent.
- * @param options - Analytics options
- * @returns A promise to the response of the request
- * @hidden
+ * @param options - Analytics options.
+ * @returns A promise to the response of the request.
  */
 export async function sendAnalyticsData(
   config: UsageAnalyticsProjectConfig,
@@ -98,11 +96,10 @@ export async function sendAnalyticsData(
 }
 
 /**
- * Creates SAP Web Analytics regular parameters.
- *
- * @param options - Request options
- * @returns SAP Web Analytics regular parameters
  * @hidden
+ * Creates SAP Web Analytics regular parameters.
+ * @param options - Request options.
+ * @returns SAP Web Analytics regular parameters.
  */
 function getSWAParameters(
   options: UsageAnalyticsOptions
@@ -125,7 +122,7 @@ function calledFromCentralDependency(callerPath: string): boolean {
     .split(sep)
     .filter(dir => dir === 'node_modules').length;
 
-  // Assuming that npm will always flatten/dedupe dependencies when it can, we can deduce the following
+  // Assuming that npm will always flatten and dedupe dependencies when it can, we can deduce the following
   // If there is no "node_modules" in the given path, this script is probably called as part of the SDK dev lifecycle
   // If there are more than 1 "node_modules" path segments, this dependency is the dependency of another dependency
   // This can happen if users depend on e.g. core@1.2.3 and bupa@1.2.4 (then there will be both core@1.2.3 and core@1.2.4)
@@ -134,8 +131,10 @@ function calledFromCentralDependency(callerPath: string): boolean {
 }
 
 /**
+ * @hidden
  * Creates SAP Web Analytics custom parameters. It maps user data to an object format compliant with SAP Web Analytics requirements.
  * Example:
+ * ```
  * {
  *   project_id: "myProjectId",
  *   os: "myOsInfo",
@@ -145,7 +144,9 @@ function calledFromCentralDependency(callerPath: string): boolean {
  *   sdk_dependencies: "myCloudDependencies",
  *   third_party_dependencies: "myDependencies"
  * }
+ * ```
  * is converted to
+ * ```
  * {
  *   custom1: "project_id",
  *   e_a: "myProjectId",
@@ -162,12 +163,10 @@ function calledFromCentralDependency(callerPath: string): boolean {
  *   custom7: "third_party_dependencies",
  *   e_7: "myDependencies"
  * }
- *
+ *```
  * Notice: Properties order of the passed parameters is relevant in determining the values of the mapped object.
- *
- * @param params - User data
- * @returns SAP Web Analytics custom parameters
- * @hidden
+ * @param params - User data.
+ * @returns SAP Web Analytics custom parameters.
  */
 function payloadToCustomParameters(
   params: AnalyticsData

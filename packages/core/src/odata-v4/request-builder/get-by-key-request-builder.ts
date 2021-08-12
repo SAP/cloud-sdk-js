@@ -15,7 +15,6 @@ import { responseDataAccessor } from './response-data-accessor';
  * The properties available in the response can be restricted by creating a [[GetByKeyRequestBuilderV4.select selection]], where no selection is equal to selecting all fields of the entity.
  * Navigational properties need to expanded explicitly by [[GetAllRequestBuilderV4.expand]].
  * where no selection is equal to selecting all fields.
- *
  * @typeparam EntityT - Type of the entity to be requested
  */
 export class GetByKeyRequestBuilder<EntityT extends Entity>
@@ -26,7 +25,6 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
 
   /**
    * Creates an instance of GetByKeyRequestBuilder.
-   *
    * @param _entityConstructor - Constructor of the entity to create the request for
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    */

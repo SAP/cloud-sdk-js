@@ -3,12 +3,12 @@ import { URL } from 'url';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { HttpAgentConfig, HttpsAgentConfig } from '../../http-client';
-import { getProtocolOrDefault } from './get-protocol';
-import { Destination } from './destination';
-import { Protocol } from './protocol';
-import { ProxyConfiguration } from './connectivity-service-types';
-import { basicHeader } from './authorization-header';
+import { getProtocolOrDefault } from '../connectivity/scp-cf/get-protocol';
+import { Destination } from '../connectivity/scp-cf/destination';
+import { Protocol } from '../connectivity/scp-cf/protocol';
+import { ProxyConfiguration } from '../connectivity/scp-cf/connectivity-service-types';
+import { basicHeader } from '../connectivity/scp-cf/authorization-header';
+import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({
   package: 'core',
@@ -129,8 +129,8 @@ function validateUrl(url: URL): void {
  * Parses the environment variable for the web proxy and extracts the values considering defaults like http for the protocol and 80 or 443 for the port.
  * The general pattern to be parsed is `protocol://user:password@host:port`, where everything besides the host is optional.
  * Special characters in the user and password need to be percent encoded.
- * @param proxyEnvValue - Environment variable which is parsed
- * @returns Configuration with default values or undefined if the parsing failed.
+ * @param proxyEnvValue - Environment variable which is parsed.
+ * @returns Configuration with default values or `undefined` if the parsing failed.
  */
 export function parseProxyEnv(
   proxyEnvValue: string
@@ -200,7 +200,6 @@ export function addProxyConfigurationInternet(destination: any): Destination {
  * Builds the http(s)-agent config. Note that the proxy agent type like http or https is determined by the destination RUL protocol.
  * The protocol from the proxy is unrelated to this and in most cases http.
  * All additional options are forwarded to tls.connect and net.connect see https://github.com/TooTallNate/node-https-proxy-agent#new-httpsproxyagentobject-options
- *
  * @param destination - Destination containing the proxy configurations
  * @param options - Additional options for the agent
  * @returns The http(s)-agent containing the proxy configuration

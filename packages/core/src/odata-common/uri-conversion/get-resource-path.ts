@@ -21,8 +21,7 @@ interface GetResourcePathForKeys<EntityT extends Entity = any> {
 /**
  * Creates a getResourcePathForKeys function using the OData v2 or OData v4 URI converter.
  * The concrete instances for v2 or v4 are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
- *
- * @param uriConverter Uri converter for v2 or v4.
+ * @param uriConverter - Uri converter for v2 or v4.
  * @returns The filter getter. See [[GetFilter]]
  */
 export function createGetResourcePathForKeys(
@@ -30,7 +29,6 @@ export function createGetResourcePathForKeys(
 ): GetResourcePathForKeys {
   /**
    * Get the resource path of an entity specified by key-value pairs.
-   *
    * @typeparam EntityT - Type of the entity to get the resource path for
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    * @param entityConstructor - Constructor type of the entity to get the resource path for

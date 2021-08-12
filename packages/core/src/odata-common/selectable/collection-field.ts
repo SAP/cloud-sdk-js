@@ -19,13 +19,11 @@ export class CollectionField<
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
   /**
-   *
    * Creates an instance of CollectionField.
-   *
    * @param fieldName - Actual name of the field used in the OData request.
    * @param _fieldOf - The constructor of the entity or the complex type field this field belongs to.
    * @param _fieldType - Edm type of the field according to the metadata description.
-   *  @param fieldOptions - Optional settings for this field.
+   * @param fieldOptions - Optional settings for this field.
    */
   constructor(
     fieldName: string,

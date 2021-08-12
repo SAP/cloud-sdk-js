@@ -35,7 +35,6 @@ export interface Destination {
 
   /**
    * @deprecated Since v1.0.1.
-   *
    * Origin of the destination in a multi-tenant setup on SAP Cloud Platform (either from provider or subscriber account), optional.
    */
   origin?: DestinationOrigin;
@@ -259,7 +258,8 @@ export type AuthenticationType =
   | 'OAuth2ClientCredentials'
   | 'OAuth2UserTokenExchange'
   | 'ClientCertificateAuthentication'
-  | 'OAuth2JWTBearer';
+  | 'OAuth2JWTBearer'
+  | 'OAuth2Password';
 
 /**
  * The destinations endpoint distinguished between destinations maintained on service level (instance) and account level (subaccount).

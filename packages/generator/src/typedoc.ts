@@ -57,9 +57,9 @@ export function getPropertyDescription(
 }
 
 /**
- * Adds a leading \n to a documentation string so that the ts-morph makes a block comment out of it.
- * @param documentation text.
- * @returns documentation text with leading \n.
+ * Adds a leading `\n` to a documentation string so that the ts-morph makes a block comment out of it.
+ * @param documentation - Documentation text.
+ * @returns Documentation text with leading `\n`.
  */
 export function addLeadingNewline(documentation: string): string {
   if (!documentation.startsWith(unixEOL)) {

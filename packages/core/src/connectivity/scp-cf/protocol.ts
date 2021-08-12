@@ -8,7 +8,7 @@ export enum Protocol {
 export namespace Protocol {
   /**
    * Get [[Protocol]] from its string representation.
-   * @param protocol Protocol as string, either 'http'/'https' or 'http:'/'https:'.
+   * @param protocol - Protocol as string, either 'http'/'https' or 'http:'/'https:'.
    * @returns Either the matching protocol or undefined
    */
   export function of(protocol: string): Protocol | undefined {

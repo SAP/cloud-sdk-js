@@ -3,31 +3,17 @@ import {
   ErrorWithCause,
   propertyExists
 } from '@sap-cloud-sdk/util';
-import { AxiosError } from 'axios';
 import CircuitBreaker from 'opossum';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
-import {
-  executeHttpRequest,
-  HttpRequestConfig,
-  HttpRequestOptions,
-  HttpResponse
-} from '../../../http-client';
 import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
 } from '../resilience-options';
 import { CachingOptions } from '../cache';
-import {
-  addProxyConfigurationInternet,
-  ProxyStrategy,
-  proxyStrategy
-} from '../proxy-util';
+import { urlAndAgent } from '../../../http-agent';
 import { parseDestination } from './destination';
-import {
-  Destination,
-  DestinationNameAndJwt,
-  DestinationType
-} from './destination-service-types';
+import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 
 const logger = createLogger({
@@ -36,19 +22,14 @@ const logger = createLogger({
 });
 
 type DestinationCircuitBreaker = CircuitBreaker<
-  [
-    destination: Destination | DestinationNameAndJwt,
-    requestConfig: HttpRequestConfig,
-    options?: HttpRequestOptions | undefined
-  ],
-  HttpResponse
+  [requestConfig: AxiosRequestConfig],
+  AxiosResponse
 >;
 
 let circuitBreaker: DestinationCircuitBreaker;
 
 /**
  * Fetches all instance destinations from the given URI.
- *
  * @param destinationServiceUri - The URI of the destination service
  * @param jwt - The access token
  * @param options - Options to use by retrieving destinations
@@ -69,7 +50,6 @@ export function fetchInstanceDestinations(
 
 /**
  * Fetches all subaccount destinations from the given URI.
- *
  * @param destinationServiceUri - The URI of the destination service
  * @param jwt - The access token
  * @param options - Options to use by retrieving destinations
@@ -148,7 +128,6 @@ export interface AuthAndExchangeTokens {
  * For destinations with authenticationType OAuth2SAMLBearerAssertion, this call will trigger the OAuth2SAMLBearerFlow against the target destination.
  * In this pass the access token as string.
  * Fetches a specific destination with authenticationType OAuth2UserTokenExchange by name from the given URI, including authorization tokens.
- *
  * @param destinationServiceUri - The URI of the destination service
  * @param token - The access token or AuthAndExchangeTokens if you want to include the X-user-token for OAuth2UserTokenExchange.
  * @param destinationName - The name of the desired destination
@@ -236,28 +215,25 @@ function callDestinationService(
   uri: string,
   headers: Record<string, any>,
   options: ResilienceOptions = { enableCircuitBreaker: true }
-): Promise<HttpResponse> {
-  const config: HttpRequestConfig = {
+): Promise<AxiosResponse> {
+  const config: AxiosRequestConfig = {
+    ...urlAndAgent(uri),
+    proxy: false,
     method: 'get',
     headers
   };
 
-  let destination: Destination = { url: uri, proxyType: 'Internet' };
-  if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
-    destination = addProxyConfigurationInternet(destination);
-  }
-
   if (options.enableCircuitBreaker) {
-    return getCircuitBreaker().fire(destination, config);
+    return getCircuitBreaker().fire(config);
   }
 
-  return executeHttpRequest(destination, config);
+  return axios.request(config);
 }
 
 function getCircuitBreaker(): DestinationCircuitBreaker {
   if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(
-      executeHttpRequest,
+      axios.request,
       circuitBreakerDefaultOptions
     );
   }

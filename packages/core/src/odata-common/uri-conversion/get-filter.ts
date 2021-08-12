@@ -36,14 +36,12 @@ export interface GetFilter<EntityT extends Entity = any> {
 /**
  * Creates a getFilter function using the OData v2 or OData v4 URI converter.
  * The concrete filter getters are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
- *
- * @param uriConverter Uri converter for v2 or v4.
+ * @param uriConverter - Uri converter for v2 or v4.
  * @returns The filter getter. See interface [[GetFilter]]
  */
 export function createGetFilter(uriConverter: UriConverter): GetFilter {
   /**
    * Get an object containing the given filter as query parameter, or an empty object if none was given.
-   *
    * @typeparam EntityT - Type of the entity to filter on
    * @param filter - The filter to transform to a query parameter
    * @param entityConstructor - Constructor type of the entity to filter on
@@ -164,7 +162,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   ): string {
     const params = filterFunction.parameters
       .map(param => filterFunctionParameterToString(param, parentFieldNames))
-      .join(', ');
+      .join(',');
     return `${filterFunction.functionName}(${params})`;
   }
 

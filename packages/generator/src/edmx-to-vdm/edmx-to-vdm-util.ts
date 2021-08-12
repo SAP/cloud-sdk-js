@@ -42,7 +42,7 @@ export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
 
 /**
  * @deprecated since version 1.27.0. Use [[isEdmType]] and [[complexTypeName]] if you want to extract type names of non Edm types.
- * @param typeName Name of the edm type for example "Edm.String" or "Namespace.ComplexType"
+ * @param typeName - Name of the edm type for example "Edm.String" or "Namespace.ComplexType"
  * @returns the typename input for Edm types e.g. "Edm.String" or the type without the namesapce.
  */
 export function parseType(typeName: string): string {

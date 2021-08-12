@@ -8,9 +8,9 @@ import { ParserOptions } from './options';
 const logger = createLogger('openapi-generator');
 /**
  * Parse the type of a resolved request body or response object.
- * @param bodyOrResponseObject The request body or response object to parse the type from.
- * @param refs Object representing cross references throughout the document.
- * @param options Options that were set for service generation.
+ * @param bodyOrResponseObject - The request body or response object to parse the type from.
+ * @param refs - Object representing cross references throughout the document.
+ * @param options - Options that were set for service generation.
  * @returns The type name of the request body if there is one.
  */
 export function parseApplicationJsonMediaType(
@@ -78,8 +78,8 @@ export function getMediaTypes(
 
 /**
  * Get the media type for a specific content type from a request body or response object.
- * @param bodyOrResponseObject Request body or response object to get the media type from.
- * @param contentType Content type to retrieve the media type by.
+ * @param bodyOrResponseObject - Request body or response object to get the media type from.
+ * @param contentType - Content type to retrieve the media type by.
  * @returns The media type for the given content type if available.
  */
 function getMediaTypeObject(

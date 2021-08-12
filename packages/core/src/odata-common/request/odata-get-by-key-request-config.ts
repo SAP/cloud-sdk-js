@@ -7,7 +7,6 @@ import { WithKeys, WithSelection } from './odata-request-traits';
 
 /**
  * OData getByKey request configuration for an entity type.
- *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataGetByKeyRequestConfig<EntityT extends Entity>
@@ -20,7 +19,6 @@ export class ODataGetByKeyRequestConfig<EntityT extends Entity>
 
   /**
    * Creates an instance of ODataGetByKeyRequestConfig.
-   *
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(

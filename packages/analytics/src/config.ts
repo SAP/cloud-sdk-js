@@ -58,7 +58,6 @@ export function generateConfig(path: string): void {
 
 /**
  * Validates the given config and updates it if necessary.
- *
  * @param config - The config to validate
  * @returns The config in a valid state.
  * @hidden

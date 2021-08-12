@@ -47,9 +47,9 @@ export class ServiceNameFormatter {
   /**
    * @deprecated since version 1.25.0. The name formatters for the sets, types and function imports are initialized lazy now so there is no need to pass the names beforehand.
    * Use the argument free constructor instead.
-   * @param entitySetNames The entity set names.
-   * @param complexTypeNames The complex type names.
-   * @param functionImportNames Then function import names.
+   * @param entitySetNames - The entity set names.
+   * @param complexTypeNames - The complex type names.
+   * @param functionImportNames - Then function import names.
    */
   constructor(
     entitySetNames: string[],
@@ -61,7 +61,7 @@ export class ServiceNameFormatter {
     complexTypeNames: string[] = [],
     functionImportNames: string[] = []
   ) {
-    // Here we assume that entitysets and complextypes cannot have the same original name
+    // Here we assume that entity sets and complex types cannot have the same original name
     [...entitySetNames, ...complexTypeNames].forEach(
       entitySetOrComplexTypeName => {
         this.staticPropertyNameGenerators[entitySetOrComplexTypeName] =
@@ -138,9 +138,7 @@ export class ServiceNameFormatter {
 
   typeNameToFactoryName(str: string): string;
   /**
-   * @deprecated since version 1.25.0. In the refactored version of the generator the reserved names are obsolete.
-   * @param str
-   * @param reservedNames
+   * @deprecated Since v1.25.0. In the refactored version of the generator the reserved names are obsolete.
    */
   /* eslint-disable-next-line  @typescript-eslint/unified-signatures */
   typeNameToFactoryName(str: string, reservedNames: Set<string>): string;

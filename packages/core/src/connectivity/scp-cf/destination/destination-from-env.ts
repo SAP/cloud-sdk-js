@@ -3,7 +3,7 @@ import {
   proxyStrategy,
   ProxyStrategy,
   addProxyConfigurationInternet
-} from '../proxy-util';
+} from '../../../http-agent/proxy-util';
 import {
   sanitizeDestination,
   isDestinationConfiguration,
@@ -64,7 +64,6 @@ export function getDestinations(): Destination[] {
  * Get a destination from the environment variables by name. If there are multiple destinations with the same name the first one will be used.
  * This is discouraged for productive use! Use destination-accessor/useOrFetchDestination for fetching destinations
  * from the Cloud Foundry destination service.
- *
  * @param name - Name of the destination
  * @returns The requested destination if existent, otherwise `null`
  */
@@ -92,7 +91,6 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
  * Get a destination from the environment variables by name. Throws an error if there are multiple destinations with the same name.
  * This is discouraged for productive use! Use destination-accessor/useOrFetchDestination for fetching destinations
  * from the Cloud Foundry destination service.
- *
  * @param name - Name of the destination
  * @returns The requested destination if existent, otherwise `null`
  */

@@ -89,8 +89,8 @@ function validateAuthHeader(header: string | undefined): boolean {
 /**
  * The URL for fetching the verfication certificate should have the same domain as the XSUAA. So if the UUA domain is "authentication.sap.hana.ondemand.com" the URL should be like
  * http://something.authentication.sap.hana.ondemand.com/somePath so the host should end with the domain.
- * @param verificationKeyURL URL used for obtaining the verification key
- * @param uaaDomain domain given in the XSUAA credentials
+ * @param verificationKeyURL - URL used for obtaining the verification key
+ * @param uaaDomain - domain given in the XSUAA credentials
  */
 function checkDomainVerificationKeyURL(
   verificationKeyURL: string,
@@ -206,7 +206,6 @@ function cacheVerificationKey(
 
 /**
  * Verifies the given JWT with the given key and returns the decoded payload.
- *
  * @param token - JWT to be verified.
  * @param key - Key to use for verification.
  * @returns A Promise to the decoded and verified JWT.
@@ -237,9 +236,9 @@ function sanitizeVerificationKey(key: string) {
 }
 
 /**
- * Get the issuer url of a decoded JWT.
- * @param decodedToken - Token to read the issuer url from.
- * @returns The issuer url if available.
+ * Get the issuer URL of a decoded JWT.
+ * @param decodedToken - Token to read the issuer URL from.
+ * @returns The issuer URL if available.
  */
 export function issuerUrl(decodedToken: JwtPayload): string | undefined {
   return readPropertyWithWarn(decodedToken, 'iss');

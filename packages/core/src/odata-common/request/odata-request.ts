@@ -25,16 +25,13 @@ import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 /**
  * OData request configuration for an entity type.
- *
  * @typeparam EntityT - Type of the entity to setup a request for
  */
 export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**
    * Creates an instance of ODataRequest.
-   *
-   * @param config - Configuration of the request
-   * @param _destination - Destination to setup the request against
-   * @memberof ODataRequest
+   * @param config - Configuration of the request.
+   * @param _destination - Destination to setup the request against.
    */
   constructor(
     public config: RequestConfigT,
@@ -51,7 +48,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Constructs an absolute URL for the given request.
-   * @returns The absolute URL for the request
+   * @returns The absolute URL for the request.
    */
   url(): string {
     return `${removeTrailingSlashes(
@@ -61,8 +58,8 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Constructs a URL relative to the destination.
-   * @param includeServicePath Whether or not to include the service path in the URL.
-   * @param includeQueryParameters Whether or not to include the query parameters in the URL.
+   * @param includeServicePath - Whether or not to include the service path in the URL.
+   * @param includeQueryParameters - Whether or not to include the query parameters in the URL.
    * @returns The relative URL for the request.
    */
   relativeUrl(
@@ -77,9 +74,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Specifies whether the destination needs a specific authentication or not.
-   *
    * @returns A boolean value that specifies whether the destination needs authentication or not
-   * @memberof ODataRequest
    */
   needsAuthentication(): boolean {
     return (
@@ -128,7 +123,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Returns the relative URL to a specific OData resource.
-   * @param includeServicePath Whether or not to include the service path in the URL.
+   * @param includeServicePath - Whether or not to include the service path in the URL.
    * @returns The relative URL of the resource.
    */
   relativeResourceUrl(includeServicePath = true): string {
@@ -141,7 +136,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Get query parameters as string. Leads with `?` if  there are parameters to return.
-   *
    * @returns Query parameter string
    */
   query(): string {
@@ -153,7 +147,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Create object containing all headers, including custom headers for the given request.
-   *
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
   async headers(): Promise<Record<string, any>> {
@@ -224,7 +217,6 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
 
   /**
    * Execute the given request and return the according promise.
-   *
    * @returns Promise resolving to the requested data
    */
   async execute(): Promise<HttpResponse> {

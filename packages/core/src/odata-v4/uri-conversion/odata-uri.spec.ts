@@ -88,7 +88,7 @@ describe('getFilter', () => {
         TestEntity
       ).filter
     ).toBe(
-      encodeURIComponent("hassubset(['1','2'], CollectionProperty) eq true")
+      encodeURIComponent("hassubset(['1','2'],CollectionProperty) eq true")
     );
   });
 

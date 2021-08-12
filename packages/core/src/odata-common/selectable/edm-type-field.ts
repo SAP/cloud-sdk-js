@@ -104,7 +104,6 @@ export type EdmTypeForEdmOrFieldType<
  * can be supplied as argument to the select function, e.g. `BusinessPartner.FIRST_NAME`.
  *
  * See also: [[Selectable]]
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  * @typeparam EdmOrFieldT - EDM type of the field. Deprecated: Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.

@@ -13,7 +13,6 @@ import { EdmTypeField } from '../edm-type-field';
 /**
  * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a property with a binary value.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class BinaryFieldBase<
@@ -24,7 +23,6 @@ export class BinaryFieldBase<
 /**
  * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a selectable property with a binary value.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class BinaryField<EntityT extends Entity> extends BinaryFieldBase<
@@ -35,7 +33,6 @@ export class BinaryField<EntityT extends Entity> extends BinaryFieldBase<
 /**
  * @deprecated Since v1.47.0. Use [[EdmTypeField]] instead.
  * Represents a complex type property with a binary value.
- *
  * @typeparam EntityT - Type of the entity the field belongs to
  */
 export class ComplexTypeBinaryPropertyField<
@@ -49,7 +46,6 @@ export class ComplexTypeBinaryPropertyField<
 
   /**
    * Creates an instance of ComplexTypeBinaryPropertyField.
-   *
    * @param fieldName - Actual name of the field used in the OData request
    * @param fieldOf - The constructor of the entity or the complex type this field belongs to
    * @param edmType - Type of the field according to the metadata description
@@ -64,7 +60,6 @@ export class ComplexTypeBinaryPropertyField<
    * @deprecated Since v1.19.0.
    *
    * Creates an instance of ComplexTypeBinaryPropertyField.
-   *
    * @param fieldName - Actual name of the field used in the OData request
    * @param entityConstructor - Constructor type of the entity the field belongs to
    * @param parentTypeName - Name of the parent complex type
@@ -92,7 +87,6 @@ export class ComplexTypeBinaryPropertyField<
 
   /**
    * Path to the field to be used in filter and order by queries. Combines the parent complex type name with the field name.
-   *
    * @returns Path to the field to be used in filter and order by queries.
    */
   fieldPath(): string {

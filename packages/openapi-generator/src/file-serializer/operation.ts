@@ -8,7 +8,7 @@ import { serializeSchema } from './schema';
 
 /**
  * Serialize an operation to a string.
- * @param operation Operation to serialize.
+ * @param operation - Operation to serialize.
  * @returns The operation as a string.
  */
 export function serializeOperation(operation: OpenApiOperation): string {
@@ -116,13 +116,13 @@ export function operationDocumentation(operation: OpenApiOperation): string {
   }
   if (operation.queryParameters.length > 0) {
     signature.push(
-      `@param queryParameters Object containing the following keys: ${operation.queryParameters
+      `@param queryParameters - Object containing the following keys: ${operation.queryParameters
         .map(param => `${param.name}`)
         .join(', ')}.`
     );
   }
   signature.push(
-    '@returns OpenApiRequestBuilder Use the execute() method to trigger the request.'
+    '@returns The request builder, use the `execute()` method to trigger the request.'
   );
   const lines = [getOperationDescriptionText(operation), ...signature];
   return documentationBlock`${lines.join(unixEOL)}`;
@@ -133,12 +133,12 @@ function getSignatureOfPathParameters(
 ): string[] {
   return parameters.map(
     parameter =>
-      `@param ${parameter.name} ${parameter.description || 'Path parameter.'}`
+      `@param ${parameter.name} - ${parameter.description || 'Path parameter.'}`
   );
 }
 
 function getSignatureOfBody(body: OpenApiRequestBody): string {
-  return `@param body ${body.description || 'Request body.'}`;
+  return `@param body - ${body.description || 'Request body.'}`;
 }
 
 function getOperationDescriptionText(operation: OpenApiOperation): string {

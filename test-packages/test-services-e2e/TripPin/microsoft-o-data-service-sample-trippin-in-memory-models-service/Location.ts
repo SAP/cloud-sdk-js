@@ -62,7 +62,6 @@ export class LocationField<
 
   /**
    * Creates an instance of LocationField.
-   *
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */

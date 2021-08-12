@@ -21,7 +21,6 @@ export class GetAllRequestBuilder<EntityT extends Entity>
 
   /**
    * Creates an instance of GetAllRequestBuilder.
-   *
    * @param entityConstructor - Constructor of the entity to create the request for
    */
   constructor(entityConstructor: Constructable<EntityT>) {
@@ -46,7 +45,6 @@ export class GetAllRequestBuilder<EntityT extends Entity>
   // TODO: Reconsider the OneToManyLink here
   /**
    * Add filter statements to the request.
-   *
    * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */

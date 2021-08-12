@@ -14,7 +14,7 @@ import {
   useOrFetchDestination
 } from '../connectivity/scp-cf';
 import { buildCsrfHeaders } from '../http-client';
-import { getAgentConfig } from './http-agent';
+import { getAgentConfig } from '../http-agent/http-agent';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -32,7 +32,6 @@ const logger = createLogger({
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination.
  * If a destination name (and a JWT) are provided, it will try to resolve the destination.
- *
  * @param destination - A destination or a destination name and a JWT.
  * @param customHeaders - Custom default headers for the resulting HTTP request.
  * @returns A [[DestinationHttpRequestConfig]].
@@ -67,7 +66,6 @@ export async function buildHttpRequest(
  * Builds a [[DestinationHttpRequestConfig]] for the given destination
  * and then merges it into the given request configuration.
  * Setting of the given request configuration take precedence over any destination related configuration.
- *
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
  * @returns The given request config merged with the config built for the given destination.
@@ -87,7 +85,6 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
  * the provided execute function.
  *
  * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead.
- *
  * @param executeFn - A function that can execute an [[HttpRequestConfig]].
  * @returns A function expecting destination and a request.
  */
@@ -135,7 +132,6 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
  * and executes it (using Axios).
- *
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
  * @param options - An [[HttpRequestOptions]] of the http request for configuring e.g., csrf token delegation. By default, the SDK will not fetch the csrf token.

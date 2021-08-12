@@ -10,7 +10,6 @@ import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.
- *
  * @typeparam EntityT - Type of the entity to be updated
  */
 export abstract class UpdateRequestBuilder<EntityT extends Entity>
@@ -22,7 +21,6 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Creates an instance of UpdateRequestBuilder.
-   *
    * @param _entityConstructor - Constructor type of the entity to be updated
    * @param _entity - Entity to be updated
    * @param oDataUri - Collection of URI conversion methods
@@ -77,7 +75,7 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Explicitly configure 'PUT' as the method of the update request. By default, only the properties that have changed compared to the last known remote state are sent using 'PATCH', while with 'PUT', the whole entity is sent.
-   * @returns The entity itself, to facilitate method chaining
+   * @returns The entity itself, to facilitate method chaining.
    */
   replaceWholeEntityWithPut(): this {
     this.requestConfig.updateWithPut();
@@ -86,11 +84,10 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Specifies required entity keys for the update request.
-   *
-   * @param fields - Enumeration of the fields to be required
-   * @returns The entity itself, to facilitate method chaining
    * @deprecated Since version 1.34.0 Use [[setRequiredFields]] instead.
+   * Specifies required entity keys for the update request.
+   * @param fields - Enumeration of the fields to be required.
+   * @returns The entity itself, to facilitate method chaining.
    */
   requiredFields(...fields: Selectable<EntityT>[]): this;
   requiredFields(fields: Selectable<EntityT>[]): this;
@@ -105,9 +102,8 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Sets required entity keys for the update request.
-   *
-   * @param fields - Enumeration of the fields to be required
-   * @returns The entity itself, to facilitate method chaining
+   * @param fields - Enumeration of the fields to be required.
+   * @returns The entity itself, to facilitate method chaining.
    */
   setRequiredFields(...fields: Selectable<EntityT>[]): this;
   setRequiredFields(fields: Selectable<EntityT>[]): this;
@@ -121,11 +117,10 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Specifies entity fields to ignore by the update request.
-   *
-   * @param fields - Enumeration of the fields to be ignored
-   * @returns The entity itself, to facilitate method chaining
    * @deprecated Since version 1.34.0 Use [[setIgnoredFields]] instead.
+   * Specifies entity fields to ignore by the update request.
+   * @param fields - Enumeration of the fields to be ignored.
+   * @returns The entity itself, to facilitate method chaining.
    */
   ignoredFields(...fields: Selectable<EntityT>[]): this;
   ignoredFields(fields: Selectable<EntityT>[]): this;
@@ -140,9 +135,8 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Sets entity fields to ignore by the update request.
-   *
-   * @param fields - Enumeration of the fields to be ignored
-   * @returns The entity itself, to facilitate method chaining
+   * @param fields - Enumeration of the fields to be ignored.
+   * @returns The entity itself, to facilitate method chaining.
    */
   setIgnoredFields(...fields: Selectable<EntityT>[]): this;
   setIgnoredFields(fields: Selectable<EntityT>[]): this;
@@ -157,8 +151,7 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Instructs the request to force an overwrite of the entity by sending an 'If-Match: *' header instead of sending the ETag version identifier.
-   *
-   * @returns this The request itself to ease chaining while executing the request
+   * @returns The request itself to ease chaining while executing the request.
    */
   ignoreVersionIdentifier(): this {
     this.requestConfig.versionIdentifierIgnored = true;
@@ -166,11 +159,10 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
   }
 
   /**
-   * Specifies a custom ETag version identifier of the entity to update.
-   *
-   * @param etag - Custom ETag version identifier to be sent in the header of the request
-   * @returns The request itself to ease chaining while executing the request
    * @deprecated Since version 1.34.0 Use [[setVersionIdentifier]] instead.
+   * Specifies a custom ETag version identifier of the entity to update.
+   * @param etag - Custom ETag version identifier to be sent in the header of the request.
+   * @returns The request itself to ease chaining while executing the request.
    */
   withCustomVersionIdentifier(etag: string): this {
     this.requestConfig.eTag = etag;
@@ -179,9 +171,8 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Sets ETag version identifier of the entity to update.
-   *
-   * @param etag - Custom ETag version identifier to be sent in the header of the request
-   * @returns The request itself to ease chaining while executing the request
+   * @param etag - Custom ETag version identifier to be sent in the header of the request.
+   * @returns The request itself to ease chaining while executing the request.
    */
   setVersionIdentifier(etag: string): this {
     this.requestConfig.eTag = etag;
@@ -190,9 +181,8 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Executes the query.
-   *
-   * @param request - Request object to be executed
-   * @returns A promise resolving to the entity once it was updated
+   * @param request - Request object to be executed.
+   * @returns A promise resolving to the entity once it was updated.
    */
   protected async executeRequest(
     request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
@@ -293,8 +283,9 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
   }
 }
 
-/*
-hidden
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @hidden
  */
 export function removePropertyOnCondition(
   condition: (objectEntry: [string, any]) => boolean,

@@ -18,7 +18,7 @@ describe('schemaFile', () => {
               schema: {
                 type: 'string'
               },
-              typeProperties: { }
+              typeProperties: {}
             }
           ]
         }
@@ -49,7 +49,7 @@ describe('schemaFile', () => {
                 schemaName: 'OtherSchema1',
                 fileName: 'other-schema-1'
               },
-              typeProperties: { }
+              typeProperties: {}
             },
             {
               name: 'otherSchema2',
@@ -60,7 +60,7 @@ describe('schemaFile', () => {
                 schemaName: 'OtherSchema2',
                 fileName: 'other-schema-2'
               },
-              typeProperties: { }
+              typeProperties: {}
             }
           ]
         }
@@ -144,7 +144,7 @@ describe('schemaFile', () => {
               schema: {
                 type: 'string'
               },
-              typeProperties: { }
+              typeProperties: {}
             },
             {
               name: 'string-property-no-description',
@@ -152,7 +152,7 @@ describe('schemaFile', () => {
               schema: {
                 type: 'string'
               },
-              typeProperties: { }
+              typeProperties: {}
             }
           ]
         }

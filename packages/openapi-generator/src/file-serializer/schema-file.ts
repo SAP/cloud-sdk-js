@@ -33,12 +33,16 @@ function getImports(namedSchema: OpenApiPersistedSchema): Import[] {
 
 export function schemaDocumentation(schema: OpenApiPersistedSchema): string {
   const signature: string[] = [];
-  if(schema.schema?.deprecated) {
+  if (schema.schema?.deprecated) {
     signature.push('@deprecated');
   }
-  if(schema.schema?.example) {
+  if (schema.schema?.example) {
     signature.push(`@example ${JSON.stringify(schema.schema?.example)}`);
   }
-  const lines = [schema.description || `Representation of the '${schema.schemaName}' schema.`, ...signature];
+  const lines = [
+    schema.description ||
+      `Representation of the '${schema.schemaName}' schema.`,
+    ...signature
+  ];
   return documentationBlock`${lines.join(unixEOL)}`;
 }

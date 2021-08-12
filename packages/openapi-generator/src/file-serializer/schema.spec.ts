@@ -19,7 +19,7 @@ describe('serializeSchema for object schemas', () => {
             name: 'simpleProperty',
             required: true,
             schema: { type: 'integer' },
-            typeProperties: { }
+            typeProperties: {}
           },
           {
             name: 'nested-property',
@@ -30,11 +30,11 @@ describe('serializeSchema for object schemas', () => {
                   name: 'stringProperty',
                   required: false,
                   schema: { type: 'string' },
-                  typeProperties: {   }
+                  typeProperties: {}
                 }
               ]
             },
-            typeProperties: {   }
+            typeProperties: {}
           }
         ]
       })
@@ -82,7 +82,7 @@ describe('serializeSchema for object schemas', () => {
             name: 'simpleProperty',
             required: true,
             schema: { type: 'integer' },
-            typeProperties: { }
+            typeProperties: {}
           }
         ],
         additionalProperties: { type: 'string' }

@@ -110,7 +110,7 @@ describe('parseSchema', () => {
             schema: {
               type: 'string',
               deprecated: undefined,
-              example: undefined,
+              example: undefined
             },
             typeProperties: {
               default: undefined,
@@ -122,8 +122,8 @@ describe('parseSchema', () => {
               minLength: undefined,
               minimum: undefined,
               multipleOf: undefined,
-              pattern: undefined,
-             }
+              pattern: undefined
+            }
           },
           {
             name: 'nestedObjectProperty',
@@ -156,7 +156,7 @@ describe('parseSchema', () => {
                       minLength: undefined,
                       minimum: undefined,
                       multipleOf: undefined,
-                      pattern: undefined,
+                      pattern: undefined
                     }
                   }
                 ]
@@ -173,8 +173,8 @@ describe('parseSchema', () => {
               minLength: undefined,
               minimum: undefined,
               multipleOf: undefined,
-              pattern: undefined,
-             }
+              pattern: undefined
+            }
           }
         ],
         additionalProperties: { type: 'any' }

@@ -144,8 +144,8 @@ export interface OpenApiRequestBody {
 /**
  * Represents all possible Types of schemas.
  */
-export type OpenApiSchema =
-  (| OpenApiReferenceSchema
+export type OpenApiSchema = (
+  | OpenApiReferenceSchema
   | OpenApiArraySchema
   | OpenApiSimpleSchema
   | OpenApiObjectSchema
@@ -153,9 +153,9 @@ export type OpenApiSchema =
   | OpenApiOneOfSchema
   | OpenApiAllOfSchema
   | OpenApiAnyOfSchema
-  | OpenApiNotSchema)
-  & OpenApiAdditionalSchemaProperty
-  ;
+  | OpenApiNotSchema
+) &
+  OpenApiAdditionalSchemaProperty;
 
 /**
  * Represents a reference to a schema, that has a name.
@@ -327,7 +327,7 @@ export interface SchemaNaming {
 }
 
 export interface OpenApiAdditionalSchemaProperty {
-   /**
+  /**
    * Denotes whether the schemas or schema property is deprecated
    */
   deprecated?: boolean;
@@ -377,15 +377,15 @@ export interface OpenApiTypeSpecificProperty {
   /**
    * Denotes the minimum length of an array
    */
-   minItems?: number;
+  minItems?: number;
 
-   /**
+  /**
    * Denotes the maximum length of an array
    */
-   maxItems?: number;
+  maxItems?: number;
 
-   /**
+  /**
    * Denotes a regular expression template for the string value
    */
-   pattern?: string;
+  pattern?: string;
 }

@@ -4,8 +4,8 @@ import { isNullish } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationNameAndJwt,
-  DestinationOptions,
-  noDestinationErrorMessage,
+  DestinationOptions, isDestinationNameAndJwt, noDestinationErrorMessage,
+
   useOrFetchDestination
 } from '../connectivity';
 import {

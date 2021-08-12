@@ -30,6 +30,7 @@ import {
 } from './destination-service';
 import { destinationCache } from './destination-cache';
 import type { DestinationOptions } from './destination-accessor';
+// import {signedJwt} from "../../../../test/test-util";
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -77,9 +78,9 @@ export async function getDestinationFromDestinationService(
 class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
     name: string,
-    options: DestinationOptions
+    options: DestinationOptions,
   ): Promise<Destination | null> {
-    const decodedUserJwt =
+    const subscriberToken =
       await DestinationFromServiceRetriever.getDecodedUserJwt(options);
     const providerToken =
       await DestinationFromServiceRetriever.getProviderClientCredentialsToken(
@@ -88,7 +89,7 @@ class DestinationFromServiceRetriever {
     const da = new DestinationFromServiceRetriever(
       name,
       options,
-      decodedUserJwt,
+      subscriberToken,
       providerToken
     );
 
@@ -138,7 +139,7 @@ class DestinationFromServiceRetriever {
 
   private static async getDecodedUserJwt(
     options: DestinationOptions
-  ): Promise<JwtPayload | undefined> {
+  ): Promise<Jwt | IssuerJwt| undefined> {
     if (options.userJwt && options.iss) {
       logger.warn(
         'You have provided the userJwt and iss option to fetch the destination. This is most likely unintentional. The userJwt will be used.'
@@ -149,20 +150,21 @@ class DestinationFromServiceRetriever {
         'You use the iss option to fetch a destination instead of a full JWT. No validation is performed.'
       );
     }
-
-    return options.userJwt
-      ? verifyJwt(options.userJwt, options)
-      : options.iss
-      ? { iss: options.iss }
-      : undefined;
+    if(options.userJwt){
+      return {encoded:options.userJwt,decoded:verifyJwt(options.userJwt, options)}
+    }
+    if(options.iss){
+      return {decoded:{ iss: options.iss }}
+    }
   }
 
   private static async getProviderClientCredentialsToken(
     options: DestinationOptions
-  ): Promise<string> {
+  ): Promise<Jwt> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userJwt, ...optionsWithoutJwt } = options;
-    return serviceToken('destination', optionsWithoutJwt);
+    const encoded = await  serviceToken('destination', optionsWithoutJwt);
+    return {encoded,decoded:decodeJwt(encoded)}
   }
 
   private static async getSubscriberClientCredentialsToken(
@@ -176,21 +178,17 @@ class DestinationFromServiceRetriever {
     return serviceToken('destination', options);
   }
 
-  readonly decodedProviderClientCredentialsToken: JwtPayload;
   private options: RequiredProperties<
-    DestinationOptions,
+    Omit<DestinationOptions,'userJwt'|'iss'>,
     'isolationStrategy' | 'selectionStrategy' | 'useCache'
   >;
 
   private constructor(
     readonly name: string,
     options: DestinationOptions,
-    readonly decodedUserJwt: JwtPayload | undefined,
-    readonly providerClientCredentialsToken: string
+    readonly subscriberToken: Jwt | IssuerJwt | undefined,
+    readonly providerClientCredentialsToken: Jwt
   ) {
-    this.decodedProviderClientCredentialsToken = decodeJwt(
-      providerClientCredentialsToken
-    );
 
     const defaultOptions = {
       isolationStrategy: IsolationStrategy.Tenant,
@@ -280,10 +278,14 @@ class DestinationFromServiceRetriever {
     );
   }
 
+  private isUserToken(token:Jwt|IssuerJwt|undefined): token is Jwt{
+    return (token as Jwt).encoded !== undefined;
+}
+
   private async getAuthTokenForOAuth2UserTokenExchange(
     destinationOrigin: DestinationOrigin
   ): Promise<AuthAndExchangeTokens> {
-    if (!this.options.userJwt) {
+    if (!this.isUserToken(this.subscriberToken)) {
       throw Error(
         'No user token (JWT) has been provided. This is strictly necessary for `OAuth2UserTokenExchange`.'
       );
@@ -296,7 +298,7 @@ class DestinationFromServiceRetriever {
       );
       return {
         authHeaderJwt: await jwtBearerToken(
-          this.options.userJwt,
+          this.subscriberToken.encoded,
           getDestinationService(),
           this.options
         )
@@ -308,8 +310,8 @@ class DestinationFromServiceRetriever {
         `OAuth2UserTokenExchange flow started for destination ${this.name} of the provider account.`
       );
       return {
-        authHeaderJwt: this.providerClientCredentialsToken,
-        exchangeHeaderJwt: this.options.userJwt
+        authHeaderJwt: this.providerClientCredentialsToken.encoded,
+        exchangeHeaderJwt: this.subscriberToken.encoded
       };
     }
 
@@ -323,7 +325,7 @@ class DestinationFromServiceRetriever {
           await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
             this.options
           ),
-        exchangeHeaderJwt: this.options.userJwt
+        exchangeHeaderJwt: this.subscriberToken.encoded
       };
     }
     throw new Error(
@@ -348,7 +350,7 @@ class DestinationFromServiceRetriever {
    */
   private async fetchDestinationByClientCrendentialsGrant(): Promise<Destination> {
     const clientGrant = await serviceToken('destination', {
-      userJwt: this.options.userJwt || this.providerClientCredentialsToken
+      userJwt: this?.subscriberToken?.decoded || this.providerClientCredentialsToken
     });
 
     return this.fetchDestinationByToken(clientGrant);
@@ -360,7 +362,7 @@ class DestinationFromServiceRetriever {
     if (destinationResult.destination.systemUser) {
       const token =
         destinationResult.origin === 'provider'
-          ? this.providerClientCredentialsToken
+          ? this.providerClientCredentialsToken.encoded
           : await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
               this.options
             );
@@ -380,13 +382,13 @@ class DestinationFromServiceRetriever {
     /* This covers the two business user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
      The two cases are JWT issued from provider or JWT from subscriber - the two cases are handled automatically.
      In the provider case the subdomain replacement in the xsuaa.url with the iss value does nothing but this does not hurt. */
-    if (!this.options.userJwt) {
+    if (!this.isUserToken(this.subscriberToken)) {
       throw Error(
         'No user token (JWT) has been provided. This is strictly necessary for principal propagation.'
       );
     }
     const accessToken = await jwtBearerToken(
-      this.options.userJwt,
+      this.subscriberToken.encoded,
       destinationService,
       this.options
     );
@@ -396,7 +398,7 @@ class DestinationFromServiceRetriever {
   private async addClientCertAuth(): Promise<Destination> {
     const accessToken = await serviceToken('destination', {
       ...this.options,
-      userJwt: this.decodedUserJwt
+      userJwt: this.subscriberToken
     });
 
     return fetchDestination(
@@ -412,7 +414,10 @@ class DestinationFromServiceRetriever {
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case ProxyStrategy.ON_PREMISE_PROXY:
-        return addProxyConfigurationOnPrem(destination, this.options.userJwt);
+        if(!this.isUserToken(this.subscriberToken)){
+          throw new Error('For principal propagation a user jwt is needed.')
+        }
+        return addProxyConfigurationOnPrem(destination, this.subscriberToken.encoded);
       case ProxyStrategy.INTERNET_PROXY:
         return addProxyConfigurationInternet(destination);
       case ProxyStrategy.NO_PROXY:
@@ -433,8 +438,8 @@ class DestinationFromServiceRetriever {
     }
     destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'
-        ? this.decodedUserJwt!
-        : this.decodedProviderClientCredentialsToken,
+        ? this.subscriberToken!
+        : this.providerClientCredentialsToken.decoded,
       destination,
       this.options.isolationStrategy
     );
@@ -444,7 +449,7 @@ class DestinationFromServiceRetriever {
     DestinationSearchResult | undefined
   > {
     const provider = await this.getInstanceAndSubaccountDestinations(
-      this.providerClientCredentialsToken
+      this.providerClientCredentialsToken.encoded
     );
     const destination = this.options.selectionStrategy(
       {
@@ -464,7 +469,7 @@ class DestinationFromServiceRetriever {
 
   private getProviderDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
-      this.decodedProviderClientCredentialsToken,
+      this.providerClientCredentialsToken.decoded,
       this.name,
       this.options.isolationStrategy
     );
@@ -479,7 +484,7 @@ class DestinationFromServiceRetriever {
   > {
     const accessToken = await serviceToken('destination', {
       ...this.options,
-      userJwt: this.decodedUserJwt
+      userJwt: this.subscriberToken
     });
     const subscriber = await this.getInstanceAndSubaccountDestinations(
       accessToken
@@ -499,7 +504,7 @@ class DestinationFromServiceRetriever {
 
   private getSubscriberDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
-      this.decodedUserJwt!,
+      this.subscriberToken!,
       this.name,
       this.options.isolationStrategy
     );
@@ -511,10 +516,10 @@ class DestinationFromServiceRetriever {
 
   private isProviderAndSubscriberSameTenant() {
     return (
-      this.decodedUserJwt &&
+      this.subscriberToken &&
       isIdenticalTenant(
-        this.decodedUserJwt,
-        this.decodedProviderClientCredentialsToken
+        this.subscriberToken,
+        this.providerClientCredentialsToken.decoded
       )
     );
   }
@@ -537,7 +542,7 @@ class DestinationFromServiceRetriever {
   }
 
   private isSubscriberNeeded(): boolean {
-    if (!this.decodedUserJwt) {
+    if (!this.subscriberToken) {
       return false;
     }
 
@@ -569,4 +574,13 @@ class DestinationFromServiceRetriever {
       this.getSubscriberDestinationService()
     );
   }
+}
+
+type Jwt = {
+  decoded:JwtPayload,
+  encoded:string
+}
+
+type IssuerJwt = {
+  decoded: {iss:string}
 }

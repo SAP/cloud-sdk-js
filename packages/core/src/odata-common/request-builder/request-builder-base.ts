@@ -3,8 +3,8 @@ import {
   Destination,
   DestinationNameAndJwt,
   DestinationOptions,
-  DestinationRetrievalOptions,
-  noDestinationErrorMessage,
+  DestinationRetrievalOptions, isDestinationNameAndJwt, noDestinationErrorMessage,
+
   useOrFetchDestination
 } from '../../connectivity/scp-cf';
 import { ODataRequest } from '../request/odata-request';

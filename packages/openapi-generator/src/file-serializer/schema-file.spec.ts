@@ -17,7 +17,8 @@ describe('schemaFile', () => {
               required: true,
               schema: {
                 type: 'string'
-              }
+              },
+              typeProperties: { }
             }
           ]
         }
@@ -47,7 +48,8 @@ describe('schemaFile', () => {
                 $ref: '#/components/schema/OtherSchema1',
                 schemaName: 'OtherSchema1',
                 fileName: 'other-schema-1'
-              }
+              },
+              typeProperties: { }
             },
             {
               name: 'otherSchema2',
@@ -57,7 +59,8 @@ describe('schemaFile', () => {
                 $ref: '#/components/schema/OtherSchema2',
                 schemaName: 'OtherSchema2',
                 fileName: 'other-schema-2'
-              }
+              },
+              typeProperties: { }
             }
           ]
         }
@@ -110,7 +113,8 @@ describe('schemaFile', () => {
                 $ref: '#/components/schema/MySchema',
                 schemaName: 'MySchema',
                 fileName: 'my-schema'
-              }
+              },
+              typeProperties: {}
             }
           ]
         }
@@ -139,14 +143,16 @@ describe('schemaFile', () => {
               required: true,
               schema: {
                 type: 'string'
-              }
+              },
+              typeProperties: { }
             },
             {
               name: 'string-property-no-description',
               required: true,
               schema: {
                 type: 'string'
-              }
+              },
+              typeProperties: { }
             }
           ]
         }

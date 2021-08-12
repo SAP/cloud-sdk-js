@@ -37,7 +37,11 @@ export function parseSchema(
   }
 
   if (schema.type === 'array') {
-    return parseArraySchema(schema, refs, options);
+    return {
+      deprecated: schema.deprecated,
+      example: schema.example,
+      ...parseArraySchema(schema, refs, options)
+    };
   }
 
   if (
@@ -45,11 +49,19 @@ export function parseSchema(
     schema.properties ||
     'additionalProperties' in schema
   ) {
-    return parseObjectSchema(schema, refs, options);
+    return {
+      deprecated: schema.deprecated,
+      example: schema.example,
+      ...parseObjectSchema(schema, refs, options)
+    };
   }
 
   if (schema.enum?.length) {
-    return parseEnumSchema(schema, options);
+    return {
+      deprecated: schema.deprecated,
+      example: schema.example,
+      ...parseEnumSchema(schema, options)
+    };
   }
 
   if (schema.oneOf?.length) {
@@ -71,7 +83,9 @@ export function parseSchema(
   }
 
   return {
-    type: getType(schema.type)
+    type: getType(schema.type),
+    deprecated: schema.deprecated,
+    example: schema.example,
   };
 }
 
@@ -160,7 +174,39 @@ function parseObjectSchemaProperties(
           ? undefined
           : propSchema.description,
         name: propName,
-        required: schema.required?.includes(propName) || false
+        required: schema.required?.includes(propName) || false,
+        typeProperties: {
+          format: isReferenceObject(propSchema)
+        ? undefined
+        : propSchema.format,
+        default: isReferenceObject(propSchema)
+        ? undefined
+        : propSchema.default,
+        multipleOf: isReferenceObject(propSchema)
+        ? undefined
+        : propSchema.multipleOf,
+        maximum: isReferenceObject(propSchema)
+        ? undefined
+        : propSchema.maximum,
+        minimum: isReferenceObject(propSchema)
+        ? undefined
+        : propSchema.minimum,
+        maxLength: isReferenceObject(propSchema)
+        ? undefined
+        : propSchema.maxLength,
+        minLength: isReferenceObject(propSchema)
+        ? undefined
+        : propSchema.minLength,
+        minItems: isReferenceObject(propSchema)
+        ? undefined
+        : propSchema.minItems,
+        maxItems: isReferenceObject(propSchema)
+        ? undefined
+        :  propSchema.maxItems,
+        pattern: isReferenceObject(propSchema)
+        ? undefined
+        : propSchema.pattern
+        }
       }
     ],
     []

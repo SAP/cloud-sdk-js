@@ -145,7 +145,7 @@ export interface OpenApiRequestBody {
  * Represents all possible Types of schemas.
  */
 export type OpenApiSchema =
-  | OpenApiReferenceSchema
+  (| OpenApiReferenceSchema
   | OpenApiArraySchema
   | OpenApiSimpleSchema
   | OpenApiObjectSchema
@@ -153,7 +153,9 @@ export type OpenApiSchema =
   | OpenApiOneOfSchema
   | OpenApiAllOfSchema
   | OpenApiAnyOfSchema
-  | OpenApiNotSchema;
+  | OpenApiNotSchema)
+  & OpenApiAdditionalSchemaProperty
+  ;
 
 /**
  * Represents a reference to a schema, that has a name.
@@ -218,7 +220,7 @@ export interface OpenApiArraySchema {
 /**
  * Any schema that is no other specific schema. This includes primitive types.
  */
-export interface OpenApiSimpleSchema {
+export interface OpenApiSimpleSchema { 
   /**
    * Type represented by the schema.
    */
@@ -297,6 +299,11 @@ export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
    * Denotes whether the parameter is required for the according object.
    */
   required: boolean;
+
+  /**
+   * Denotes the type specific keywords for the according object's properties.
+   */
+  typeProperties?: OpenApiTypeSpecificProperty
 }
 
 /**
@@ -317,4 +324,68 @@ export interface SchemaNaming {
    * File name of the referenced schema file.
    */
   fileName: string;
+}
+
+export interface OpenApiAdditionalSchemaProperty {
+   /**
+   * Denotes whether the schemas or schema property is deprecated
+   */
+  deprecated?: boolean;
+  
+  /**
+   * Example value for schema or schema property
+   */
+  example?: any;
+}
+
+export interface OpenApiTypeSpecificProperty {
+  /**
+   * Serves as a hint at the contents of the type 
+   */
+  format?: string;
+
+  /**
+   * Denotes the default value for a property
+   */
+  default?: any;
+
+  /**
+   * Specifies that a number must be the multiple of another number
+   */
+  multipleOf?: number;
+
+  /**
+   * Denotes the maximum range of possible values
+   */
+  maximum?: number;
+
+  /**
+   * Denotes the minimum range of possible values
+   */
+  minimum?: number;
+
+  /**
+   * Denotes the maximum length of a string
+   */
+  maxLength?: number;
+
+  /**
+   * Denotes the minimum length of a string
+   */
+  minLength?: number; 
+
+  /**
+   * Denotes the minimum length of an array
+   */
+   minItems?: number;
+
+   /**
+   * Denotes the maximum length of an array
+   */
+   maxItems?: number;
+
+   /**
+   * Denotes a regular expression template for the string value
+   */
+   pattern?: string;
 }

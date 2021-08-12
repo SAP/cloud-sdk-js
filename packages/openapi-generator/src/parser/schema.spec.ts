@@ -100,28 +100,81 @@ describe('parseSchema', () => {
     };
     expect(parseSchema(schema, await createTestRefs(), defaultOptions)).toEqual(
       {
+        deprecated: undefined,
+        example: undefined,
         properties: [
           {
             name: 'simpleProperty',
+            description: undefined,
             required: true,
-            schema: { type: 'string' }
+            schema: {
+              type: 'string',
+              deprecated: undefined,
+              example: undefined,
+            },
+            typeProperties: {
+              default: undefined,
+              format: undefined,
+              maxItems: undefined,
+              maxLength: undefined,
+              maximum: undefined,
+              minItems: undefined,
+              minLength: undefined,
+              minimum: undefined,
+              multipleOf: undefined,
+              pattern: undefined,
+             }
           },
           {
             name: 'nestedObjectProperty',
             required: false,
+            description: undefined,
             schema: {
+              deprecated: undefined,
+              example: undefined,
               additionalProperties: {
+                deprecated: undefined,
+                example: undefined,
                 additionalProperties: { type: 'any' },
                 properties: [
                   {
                     name: 'simpleProperty',
+                    description: undefined,
                     required: false,
-                    schema: { type: 'string' }
+                    schema: {
+                      type: 'string',
+                      deprecated: undefined,
+                      example: undefined
+                    },
+                    typeProperties: {
+                      default: undefined,
+                      format: undefined,
+                      maxItems: undefined,
+                      maxLength: undefined,
+                      maximum: undefined,
+                      minItems: undefined,
+                      minLength: undefined,
+                      minimum: undefined,
+                      multipleOf: undefined,
+                      pattern: undefined,
+                    }
                   }
                 ]
               },
               properties: []
-            }
+            },
+            typeProperties: {
+              default: undefined,
+              format: undefined,
+              maxItems: undefined,
+              maxLength: undefined,
+              maximum: undefined,
+              minItems: undefined,
+              minLength: undefined,
+              minimum: undefined,
+              multipleOf: undefined,
+              pattern: undefined,
+             }
           }
         ],
         additionalProperties: { type: 'any' }

@@ -131,7 +131,7 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  * and executes it (using Axios).
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
- * @param options - An [[HttpRequestOptions]]  of the http request for configuring e.g., csrf token delegation. By default, the SDK will not fetch the csrf token.
+ * @param options - An [[HttpRequestOptions]] of the http request for configuring e.g., csrf token delegation. By default, the SDK will not fetch the csrf token.
  * @param destinationOptions - Options to employ when fetching destinations.
  * @returns A promise resolving to an [[HttpResponse]].
  */

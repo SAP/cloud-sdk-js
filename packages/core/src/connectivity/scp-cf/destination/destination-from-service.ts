@@ -78,7 +78,7 @@ export async function getDestinationFromDestinationService(
 class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
     name: string,
-    options: DestinationOptions,
+    options: DestinationOptions
   ): Promise<Destination | null> {
     const subscriberToken =
       await DestinationFromServiceRetriever.getDecodedUserJwt(options);
@@ -139,7 +139,7 @@ class DestinationFromServiceRetriever {
 
   private static async getDecodedUserJwt(
     options: DestinationOptions
-  ): Promise<Jwt | IssuerJwt| undefined> {
+  ): Promise<Jwt | IssuerJwt | undefined> {
     if (options.userJwt && options.iss) {
       logger.warn(
         'You have provided the userJwt and iss option to fetch the destination. This is most likely unintentional. The userJwt will be used.'
@@ -150,11 +150,14 @@ class DestinationFromServiceRetriever {
         'You use the iss option to fetch a destination instead of a full JWT. No validation is performed.'
       );
     }
-    if(options.userJwt){
-      return {encoded:options.userJwt,decoded:verifyJwt(options.userJwt, options)}
+    if (options.userJwt) {
+      return {
+        encoded: options.userJwt,
+        decoded: verifyJwt(options.userJwt, options)
+      };
     }
-    if(options.iss){
-      return {decoded:{ iss: options.iss }}
+    if (options.iss) {
+      return { decoded: { iss: options.iss } };
     }
   }
 
@@ -163,8 +166,8 @@ class DestinationFromServiceRetriever {
   ): Promise<Jwt> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userJwt, ...optionsWithoutJwt } = options;
-    const encoded = await  serviceToken('destination', optionsWithoutJwt);
-    return {encoded,decoded:decodeJwt(encoded)}
+    const encoded = await serviceToken('destination', optionsWithoutJwt);
+    return { encoded, decoded: decodeJwt(encoded) };
   }
 
   private static async getSubscriberClientCredentialsToken(
@@ -179,7 +182,7 @@ class DestinationFromServiceRetriever {
   }
 
   private options: RequiredProperties<
-    Omit<DestinationOptions,'userJwt'|'iss'>,
+    Omit<DestinationOptions, 'userJwt' | 'iss'>,
     'isolationStrategy' | 'selectionStrategy' | 'useCache'
   >;
 
@@ -189,7 +192,6 @@ class DestinationFromServiceRetriever {
     readonly subscriberToken: Jwt | IssuerJwt | undefined,
     readonly providerClientCredentialsToken: Jwt
   ) {
-
     const defaultOptions = {
       isolationStrategy: IsolationStrategy.Tenant,
       selectionStrategy: subscriberFirst,
@@ -278,9 +280,9 @@ class DestinationFromServiceRetriever {
     );
   }
 
-  private isUserToken(token:Jwt|IssuerJwt|undefined): token is Jwt{
+  private isUserToken(token: Jwt | IssuerJwt | undefined): token is Jwt {
     return (token as Jwt).encoded !== undefined;
-}
+  }
 
   private async getAuthTokenForOAuth2UserTokenExchange(
     destinationOrigin: DestinationOrigin
@@ -350,7 +352,8 @@ class DestinationFromServiceRetriever {
    */
   private async fetchDestinationByClientCrendentialsGrant(): Promise<Destination> {
     const clientGrant = await serviceToken('destination', {
-      userJwt: this?.subscriberToken?.decoded || this.providerClientCredentialsToken
+      userJwt:
+        this?.subscriberToken?.decoded || this.providerClientCredentialsToken
     });
 
     return this.fetchDestinationByToken(clientGrant);
@@ -414,10 +417,13 @@ class DestinationFromServiceRetriever {
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case ProxyStrategy.ON_PREMISE_PROXY:
-        if(!this.isUserToken(this.subscriberToken)){
-          throw new Error('For principal propagation a user jwt is needed.')
+        if (!this.isUserToken(this.subscriberToken)) {
+          throw new Error('For principal propagation a user jwt is needed.');
         }
-        return addProxyConfigurationOnPrem(destination, this.subscriberToken.encoded);
+        return addProxyConfigurationOnPrem(
+          destination,
+          this.subscriberToken.encoded
+        );
       case ProxyStrategy.INTERNET_PROXY:
         return addProxyConfigurationInternet(destination);
       case ProxyStrategy.NO_PROXY:
@@ -576,11 +582,11 @@ class DestinationFromServiceRetriever {
   }
 }
 
-type Jwt = {
-  decoded:JwtPayload,
-  encoded:string
+interface Jwt {
+  decoded: JwtPayload;
+  encoded: string;
 }
 
-type IssuerJwt = {
-  decoded: {iss:string}
+interface IssuerJwt {
+  decoded: { iss: string };
 }

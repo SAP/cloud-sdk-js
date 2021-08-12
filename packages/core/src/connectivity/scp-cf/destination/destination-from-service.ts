@@ -30,7 +30,6 @@ import {
 } from './destination-service';
 import { destinationCache } from './destination-cache';
 import type { DestinationOptions } from './destination-accessor';
-// import {signedJwt} from "../../../../test/test-util";
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -129,7 +128,7 @@ class DestinationFromServiceRetriever {
       destination = await da.fetchDestinationByUserJwt();
     }
     if (destination.authentication === 'ClientCertificateAuthentication') {
-      destination = await da.addClientCertAuth();
+      destination = await da.addClientCertAuth(destinationResult.origin);
     }
 
     const withProxySetting = await da.addProxyConfiguration(destination);
@@ -153,7 +152,7 @@ class DestinationFromServiceRetriever {
     if (options.userJwt) {
       return {
         encoded: options.userJwt,
-        decoded: verifyJwt(options.userJwt, options)
+        decoded: await verifyJwt(options.userJwt, options)
       };
     }
     if (options.iss) {
@@ -189,7 +188,7 @@ class DestinationFromServiceRetriever {
   private constructor(
     readonly name: string,
     options: DestinationOptions,
-    readonly subscriberToken: Jwt | IssuerJwt | undefined,
+    readonly userOrIssToken: Jwt | IssuerJwt | undefined,
     readonly providerClientCredentialsToken: Jwt
   ) {
     const defaultOptions = {
@@ -280,14 +279,16 @@ class DestinationFromServiceRetriever {
     );
   }
 
+  // The user JWT can be a full JWT containing user information but also a reduced one setting only the iss value
+  // This method divides the two cases.
   private isUserToken(token: Jwt | IssuerJwt | undefined): token is Jwt {
-    return (token as Jwt).encoded !== undefined;
+    return (token as Jwt)?.encoded !== undefined;
   }
 
   private async getAuthTokenForOAuth2UserTokenExchange(
     destinationOrigin: DestinationOrigin
   ): Promise<AuthAndExchangeTokens> {
-    if (!this.isUserToken(this.subscriberToken)) {
+    if (!this.isUserToken(this.userOrIssToken)) {
       throw Error(
         'No user token (JWT) has been provided. This is strictly necessary for `OAuth2UserTokenExchange`.'
       );
@@ -300,7 +301,7 @@ class DestinationFromServiceRetriever {
       );
       return {
         authHeaderJwt: await jwtBearerToken(
-          this.subscriberToken.encoded,
+          this.userOrIssToken.encoded,
           getDestinationService(),
           this.options
         )
@@ -313,7 +314,7 @@ class DestinationFromServiceRetriever {
       );
       return {
         authHeaderJwt: this.providerClientCredentialsToken.encoded,
-        exchangeHeaderJwt: this.subscriberToken.encoded
+        exchangeHeaderJwt: this.userOrIssToken.encoded
       };
     }
 
@@ -327,7 +328,7 @@ class DestinationFromServiceRetriever {
           await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
             this.options
           ),
-        exchangeHeaderJwt: this.subscriberToken.encoded
+        exchangeHeaderJwt: this.userOrIssToken.encoded
       };
     }
     throw new Error(
@@ -353,7 +354,8 @@ class DestinationFromServiceRetriever {
   private async fetchDestinationByClientCrendentialsGrant(): Promise<Destination> {
     const clientGrant = await serviceToken('destination', {
       userJwt:
-        this?.subscriberToken?.decoded || this.providerClientCredentialsToken
+        this?.userOrIssToken?.decoded ||
+        this.providerClientCredentialsToken.decoded
     });
 
     return this.fetchDestinationByToken(clientGrant);
@@ -385,23 +387,28 @@ class DestinationFromServiceRetriever {
     /* This covers the two business user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
      The two cases are JWT issued from provider or JWT from subscriber - the two cases are handled automatically.
      In the provider case the subdomain replacement in the xsuaa.url with the iss value does nothing but this does not hurt. */
-    if (!this.isUserToken(this.subscriberToken)) {
+    if (!this.isUserToken(this.userOrIssToken)) {
       throw Error(
         'No user token (JWT) has been provided. This is strictly necessary for principal propagation.'
       );
     }
     const accessToken = await jwtBearerToken(
-      this.subscriberToken.encoded,
+      this.userOrIssToken.encoded,
       destinationService,
       this.options
     );
     return this.fetchDestinationByToken(accessToken);
   }
 
-  private async addClientCertAuth(): Promise<Destination> {
+  private async addClientCertAuth(
+    origin: DestinationOrigin
+  ): Promise<Destination> {
     const accessToken = await serviceToken('destination', {
       ...this.options,
-      userJwt: this.subscriberToken
+      userJwt:
+        origin === 'subscriber'
+          ? this.userOrIssToken!.decoded
+          : this.providerClientCredentialsToken.decoded
     });
 
     return fetchDestination(
@@ -417,12 +424,12 @@ class DestinationFromServiceRetriever {
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case ProxyStrategy.ON_PREMISE_PROXY:
-        if (!this.isUserToken(this.subscriberToken)) {
+        if (!this.isUserToken(this.userOrIssToken)) {
           throw new Error('For principal propagation a user jwt is needed.');
         }
         return addProxyConfigurationOnPrem(
           destination,
-          this.subscriberToken.encoded
+          this.userOrIssToken.encoded
         );
       case ProxyStrategy.INTERNET_PROXY:
         return addProxyConfigurationInternet(destination);
@@ -444,7 +451,7 @@ class DestinationFromServiceRetriever {
     }
     destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'
-        ? this.subscriberToken!
+        ? this.userOrIssToken!.decoded
         : this.providerClientCredentialsToken.decoded,
       destination,
       this.options.isolationStrategy
@@ -488,9 +495,15 @@ class DestinationFromServiceRetriever {
   private async getSubscriberDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
+    if (!this.userOrIssToken) {
+      throw new Error(
+        'Try to get destinations from subscriber account but user JWT was not set.'
+      );
+    }
+
     const accessToken = await serviceToken('destination', {
       ...this.options,
-      userJwt: this.subscriberToken
+      userJwt: this.userOrIssToken.decoded
     });
     const subscriber = await this.getInstanceAndSubaccountDestinations(
       accessToken
@@ -510,7 +523,7 @@ class DestinationFromServiceRetriever {
 
   private getSubscriberDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
-      this.subscriberToken!,
+      this.userOrIssToken!.decoded,
       this.name,
       this.options.isolationStrategy
     );
@@ -522,9 +535,9 @@ class DestinationFromServiceRetriever {
 
   private isProviderAndSubscriberSameTenant() {
     return (
-      this.subscriberToken &&
+      this.userOrIssToken &&
       isIdenticalTenant(
-        this.subscriberToken,
+        this.userOrIssToken.decoded,
         this.providerClientCredentialsToken.decoded
       )
     );
@@ -548,7 +561,7 @@ class DestinationFromServiceRetriever {
   }
 
   private isSubscriberNeeded(): boolean {
-    if (!this.subscriberToken) {
+    if (!this.userOrIssToken) {
       return false;
     }
 

@@ -27,6 +27,7 @@ For return types the same extension could lead compile errors after client regen
 
 - [odata-generator] Add underlying type and value information as part of the API documentation for enums.
 - [odata-generator] Disallow invalid enum entries or random string parameters when building filters on enum properties.
+- [openapi-generator] Add additional type-specific keywords when generating the schema documentation
 
 ## Fixed Issues
 

@@ -78,6 +78,18 @@ However, the certificate based approach has some advantages:
   So if customers switch on the HTTP trace you will not see secrets in the logs
 - The lifetime of a certificate can be set so that even in the token retrieval you can not use an old stolen secret
 
+### Disadvantages of x509
+
+We are still investigating the details, but we are afraid of a higher support load.
+Assume the following flow:
+- Customer creates new application using the SDK
+- Binds XSUAA and destination service to the application
+- Per default the credentials-type will be `x509` and the XSUAA manages the certificate 
+- Everything works fine initially, but after 7 days the certificate expires.
+- The support request will go to the SDK, because we throw the error.
+
+You can of course configure the duration of the certificate validity but it seems to be limited to a maximum of one year.
+
 ### Rollout and Compatibility
 
 For existing bindings and service keys nothing will change.

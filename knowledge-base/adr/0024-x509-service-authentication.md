@@ -149,8 +149,8 @@ We would need to do the following:
 
 ### Comparison A versus B
 
-We all agree to go for library.  
-With option B we are future-proof for other things to come.
+Option B is the winner.
+With the library we are future-proof for other things to come.
 Also, from a security point of view we should use the the `xssec` and not a homemade implementation.
 
 ## Consequences

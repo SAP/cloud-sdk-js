@@ -139,23 +139,23 @@ class DestinationFromServiceRetriever {
   private static async getDecodedUserJwt(
     options: DestinationOptions
   ): Promise<Jwt | IssuerJwt | undefined> {
-    if (options.userJwt && options.iss) {
-      logger.warn(
-        'You have provided the userJwt and iss option to fetch the destination. This is most likely unintentional. The userJwt will be used.'
-      );
-    }
-    if (!options.userJwt && options.iss) {
-      logger.info(
-        'You use the iss option to fetch a destination instead of a full JWT. No validation is performed.'
-      );
-    }
     if (options.userJwt) {
+      if (options.iss) {
+        logger.warn(
+          'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
+        );
+      }
+      
       return {
         encoded: options.userJwt,
         decoded: await verifyJwt(options.userJwt, options)
       };
     }
+    
     if (options.iss) {
+      logger.info(
+        'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
+      );
       return { decoded: { iss: options.iss } };
     }
   }

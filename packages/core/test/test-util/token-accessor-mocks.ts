@@ -14,9 +14,7 @@ import {
 
 export function expectAllMocksUsed(nocks: nock.Scope[]) {
   nocks.forEach(nock1 => {
-    if (!nock1.isDone()) {
-      throw new Error('Not all mocks used.');
-    }
+    expect(nock1.isDone()).toBe(true);
   });
 }
 

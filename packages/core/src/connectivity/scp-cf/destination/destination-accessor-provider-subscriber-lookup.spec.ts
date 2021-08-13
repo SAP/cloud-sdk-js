@@ -250,7 +250,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         'The given jwt payload does not encode valid JSON.'
       );
       expect(warnSpy).toHaveBeenCalledWith(
-        'You have provided the userJwt and iss option to fetch the destination. This is most likely unintentional. The userJwt will be used.'
+        'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
       );
     });
 
@@ -289,7 +289,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       );
       expect(actual).toMatchObject(expected);
       expect(infoSpy).toHaveBeenCalledWith(
-        'You use the iss option to fetch a destination instead of a full JWT. No validation is performed.'
+        'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
       );
     });
 

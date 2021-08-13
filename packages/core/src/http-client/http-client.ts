@@ -10,7 +10,6 @@ import {
   buildHeadersForDestination,
   Destination,
   DestinationNameAndJwt,
-  DestinationOptions,
   toDestinationNameUrl,
   useOrFetchDestination
 } from '../connectivity/scp-cf';

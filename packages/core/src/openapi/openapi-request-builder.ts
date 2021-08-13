@@ -109,7 +109,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
         params: this.parameters?.queryParameters,
         data: this.parameters?.body
       },
-      // TODO: Remove fetch CsrfToken this in v 2.0, when this becomes true becomes the default
+      // TODO: Remove this in v 2.0, when this becomes true becomes the default
       { fetchCsrfToken }
     );
   }

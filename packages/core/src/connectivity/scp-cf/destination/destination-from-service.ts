@@ -425,7 +425,7 @@ class DestinationFromServiceRetriever {
     switch (proxyStrategy(destination)) {
       case ProxyStrategy.ON_PREMISE_PROXY:
         if (!this.isUserToken(this.userOrIssToken)) {
-          throw new Error('For principal propagation a user jwt is needed.');
+          throw new Error('For principal propagation a user JWT is needed.');
         }
         return addProxyConfigurationOnPrem(
           destination,

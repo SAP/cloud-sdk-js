@@ -1,3 +1,4 @@
+import nock from 'nock';
 import {
   defaultDestination,
   mockDestinationsEnv,
@@ -13,6 +14,20 @@ import {
   TestEntity,
   TestEntitySingleLink
 } from '../../../test/test-util/test-services/v2/test-service';
+import {
+  expectAllMocksUsed,
+  certificateMultipleResponse,
+  certificateSingleResponse,
+  mockInstanceDestinationsCall,
+  mockServiceBindings,
+  mockServiceToken,
+  mockSingleDestinationCall,
+  mockSubaccountDestinationsCall,
+  onlyIssuerServiceToken,
+  onlyIssuerXsuaaUrl
+} from '../../../test/test-util';
+import { parseDestination, wrapJwtInHeader } from '../../connectivity';
+import * as httpClient from '../../http-client/http-client';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {
@@ -146,5 +161,54 @@ describe('GetAllRequestBuilder', () => {
       expect(actual.data).toEqual(rawResponse);
       expect(actual.request.method).toBe('GET');
     });
+
+    it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
+      mockServiceBindings();
+      mockServiceToken();
+
+      const nocks = [
+        mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          certificateMultipleResponse,
+          200,
+          onlyIssuerServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          certificateSingleResponse,
+          200,
+          'ERNIE-UND-CERT',
+          wrapJwtInHeader(onlyIssuerServiceToken).headers
+        ),
+        nock(certificateSingleResponse.destinationConfiguration.URL)
+          .get(/.*/)
+          .reply(200, 'iss token used on the way')
+      ];
+      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
+      const response = await requestBuilder.executeRaw(
+        { destinationName: 'ERNIE-UND-CERT' },
+        { iss: onlyIssuerXsuaaUrl }
+      );
+      expectAllMocksUsed(nocks);
+      expect(spy).toHaveBeenCalledWith(
+        parseDestination(certificateSingleResponse),
+        {
+          headers: {
+            accept: 'application/json',
+            'content-type': 'application/json'
+          },
+          params: {
+            $format: 'json'
+          },
+          url: 'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity',
+          method: 'get',
+
+          data: undefined
+        },
+        { fetchCsrfToken: true }
+      );
+      expect(response.data).toBe('iss token used on the way');
+    }, 60000);
   });
 });

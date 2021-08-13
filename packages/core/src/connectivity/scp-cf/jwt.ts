@@ -409,3 +409,30 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT>(
     );
   }
 }
+
+/**
+ * Object holding a decoded JWT payload received by decoding the encoded string also in this object.
+ */
+export interface JwtPair {
+  decoded: JwtPayload;
+  encoded: string;
+}
+
+/**
+ * The user JWT can be a full JWT containing user information but also a reduced one setting only the iss value
+ * This method divides the two cases.
+ * @param token - Token to be investigated
+ * @returns Boolean value with true if the input is a UserJwtPair
+ */
+export function isUserToken(token: JwtPair | undefined): token is JwtPair {
+  if (!token) {
+    return false;
+  }
+  // Check if it is an Issuer Payload
+  const keys = Object.keys(token.decoded);
+  if (keys.length === 1 && keys[0] === 'iss') {
+    return false;
+  }
+
+  return true;
+}

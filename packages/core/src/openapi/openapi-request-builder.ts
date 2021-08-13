@@ -1,6 +1,13 @@
 /* eslint-disable max-classes-per-file */
 import { AxiosResponse } from 'axios';
-import { Destination, DestinationNameAndJwt } from '../connectivity';
+import { isNullish } from '@sap-cloud-sdk/util';
+import {
+  Destination,
+  DestinationNameAndJwt,
+  DestinationOptions,
+  noDestinationErrorMessage,
+  useOrFetchDestination
+} from '../connectivity';
 import {
   executeHttpRequest,
   filterCustomRequestConfig,
@@ -10,7 +17,7 @@ import {
 
 /**
  * Request builder for OpenAPI requests.
- * @typeparam ResponseT - Type of the response for the request.
+ * @typeParam ResponseT - Type of the response for the request.
  */
 export class OpenApiRequestBuilder<ResponseT = any> {
   private static isPlaceholder(pathPart: string): boolean {
@@ -48,6 +55,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   /**
    * Add custom request configuration to the request. Typically, this is used when specifying response type for downloading files.
    * If the custom request configuration contains keys in this list [[defaultDisallowedKeys]], they will be removed.
+   *
    * @param requestConfiguration - Key-value pairs denoting additional custom request configuration options to be set in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */
@@ -73,16 +81,26 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
    * @param destination - Destination to execute the request against.
+   * @param destinationOptions - Options to employ when fetching destinations.
    * @returns A promise resolving to an HttpResponse.
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt
+    destination: Destination | DestinationNameAndJwt,
+    destinationOptions?: DestinationOptions
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
       ['post', 'put', 'patch', 'delete'].includes(this.method.toLowerCase());
-    return executeHttpRequest(
+
+    const resolvedDestination = await useOrFetchDestination(
       destination,
+      destinationOptions
+    );
+    if (isNullish(destination)) {
+      throw Error(noDestinationErrorMessage(destination));
+    }
+    return executeHttpRequest(
+      resolvedDestination as Destination,
       {
         ...filterCustomRequestConfig(this.customRequestConfiguration),
         method: this.method,
@@ -99,12 +117,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   /**
    * Execute request and get the response data. Use this to conveniently access the data of a service without technical information about the response.
    * @param destination - Destination to execute the request against.
+   * @param destinationOptions - Options to employ when fetching destinations.
    * @returns A promise resolving to the requested return type.
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt
+    destination: Destination | DestinationNameAndJwt,
+    destinationOptions?: DestinationOptions
   ): Promise<ResponseT> {
-    const response = await this.executeRaw(destination);
+    const response = await this.executeRaw(destination, destinationOptions);
     if (isAxiosResponse(response)) {
       return response.data;
     }

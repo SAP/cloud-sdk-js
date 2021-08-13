@@ -410,6 +410,9 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT>(
   }
 }
 
+/**
+ * Object holding a decoded JWT payload received by decoding the encoded string also in this object.
+ */
 export interface JwtPair {
   decoded: JwtPayload;
   encoded: string;

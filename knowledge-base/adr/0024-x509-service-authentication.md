@@ -82,9 +82,10 @@ However, the certificate based approach has some advantages:
 
 We are still investigating the details, but we are afraid of a higher support load.
 Assume the following flow:
+
 - Customer creates new application using the SDK
 - Binds XSUAA and destination service to the application
-- Per default the credentials-type will be `x509` and the XSUAA manages the certificate 
+- Per default the credentials-type will be `x509` and the XSUAA manages the certificate
 - Everything works fine initially, but after 7 days the certificate expires.
 - The support request will go to the SDK, because we throw the error.
 
@@ -151,10 +152,6 @@ We would need to do the following:
 We all agree to go for library.  
 With option B we are future-proof for other things to come.
 Also, from a security point of view we should use the the `xssec` and not a homemade implementation.
-We make the assumptions:
-
-- non-breaking change
-- licence of xssec compatible with SDK licence
 
 ## Consequences
 

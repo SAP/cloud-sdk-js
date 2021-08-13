@@ -183,7 +183,7 @@ export function getUrlProtocol(destination: Destination): Protocol | undefined {
 /**
  * Builds part of the request config containing the URL and if needed proxy agents or normal http agents.
  * Considers the NO_Proxy env variable together with the targetUri.
- * @param targetUri - used as baseURL in request config
+ * @param targetUri - Used as baseURL in request config.
  * @returns HttpRequestConfig containing baseUrl and http(s) agents.
  */
 export function urlAndAgent(

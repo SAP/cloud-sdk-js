@@ -165,10 +165,9 @@ function buildHeaders(
 }
 
 function resolveDestination(
-  destination: Destination | DestinationNameAndJwt,
-  destinationOptions?: DestinationOptions
+  destination: Destination | DestinationNameAndJwt
 ): Promise<Destination | null> {
-  return useOrFetchDestination(destination, destinationOptions).catch(error => {
+  return useOrFetchDestination(destination).catch(error => {
     throw new ErrorWithCause('Failed to load destination.', error);
   });
 }

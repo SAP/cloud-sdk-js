@@ -79,8 +79,8 @@ class DestinationFromServiceRetriever {
     name: string,
     options: DestinationOptions
   ): Promise<Destination | null> {
-    const subscriberToken =
-      await DestinationFromServiceRetriever.getDecodedUserJwt(options);
+    const userOrIssToken =
+      await DestinationFromServiceRetriever.getUserOrIssToken(options);
     const providerToken =
       await DestinationFromServiceRetriever.getProviderClientCredentialsToken(
         options
@@ -88,7 +88,7 @@ class DestinationFromServiceRetriever {
     const da = new DestinationFromServiceRetriever(
       name,
       options,
-      subscriberToken,
+      userOrIssToken,
       providerToken
     );
 
@@ -136,9 +136,9 @@ class DestinationFromServiceRetriever {
     return withProxySetting;
   }
 
-  private static async getDecodedUserJwt(
+  private static async getUserOrIssToken(
     options: DestinationOptions
-  ): Promise<Jwt | IssuerJwt | undefined> {
+  ): Promise<JwtPair | IssuerJwt | undefined> {
     if (options.userJwt && options.iss) {
       logger.warn(
         'You have provided the userJwt and iss option to fetch the destination. This is most likely unintentional. The userJwt will be used.'
@@ -162,7 +162,7 @@ class DestinationFromServiceRetriever {
 
   private static async getProviderClientCredentialsToken(
     options: DestinationOptions
-  ): Promise<Jwt> {
+  ): Promise<JwtPair> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userJwt, ...optionsWithoutJwt } = options;
     const encoded = await serviceToken('destination', optionsWithoutJwt);
@@ -188,8 +188,8 @@ class DestinationFromServiceRetriever {
   private constructor(
     readonly name: string,
     options: DestinationOptions,
-    readonly userOrIssToken: Jwt | IssuerJwt | undefined,
-    readonly providerClientCredentialsToken: Jwt
+    readonly userOrIssToken: JwtPair | IssuerJwt | undefined,
+    readonly providerClientCredentialsToken: JwtPair
   ) {
     const defaultOptions = {
       isolationStrategy: IsolationStrategy.Tenant,
@@ -279,10 +279,14 @@ class DestinationFromServiceRetriever {
     );
   }
 
-  // The user JWT can be a full JWT containing user information but also a reduced one setting only the iss value
-  // This method divides the two cases.
-  private isUserToken(token: Jwt | IssuerJwt | undefined): token is Jwt {
-    return (token as Jwt)?.encoded !== undefined;
+  /**
+   * The user JWT can be a full JWT containing user information but also a reduced one setting only the iss value
+   * This method divides the two cases.
+   * @param token - Token to be investigated
+   * @private
+   */
+  private isUserToken(token: JwtPair | IssuerJwt | undefined): token is JwtPair {
+    return (token as JwtPair)?.encoded !== undefined;
   }
 
   private async getAuthTokenForOAuth2UserTokenExchange(
@@ -595,7 +599,7 @@ class DestinationFromServiceRetriever {
   }
 }
 
-interface Jwt {
+interface JwtPair {
   decoded: JwtPayload;
   encoded: string;
 }

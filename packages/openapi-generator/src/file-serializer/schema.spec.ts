@@ -45,12 +45,12 @@ describe('serializeSchema for object schemas', () => {
     ).toMatchInlineSnapshot(`
       "{
             /**
-             * Minimum 8.
+             * Minimum: 8.
              */
             'simpleProperty': number;
             'nested-property'?: {
                   /**
-                   * Pattern \\"^[p{L}-.^_|~d]+$\\".
+                   * Pattern: \\"^[p{L}-.^_|~d]+$\\".
                    */
                   'stringProperty'?: string;
                 };

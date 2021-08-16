@@ -36,7 +36,7 @@ describe('schemaFile', () => {
            */
           export type MySchema = {
             /**
-             * Max Length 10.
+             * Max Length: 10.
              */
             'string-property': string;
           };"
@@ -180,7 +180,7 @@ describe('schemaFile', () => {
           export type MySchema = {
             /**
              * My description
-             * Min Length 2.
+             * Min Length: 2.
              */
             'string-property': string;
             'string-property-no-description': string;

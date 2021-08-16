@@ -14,7 +14,7 @@ import {
   isAllOfSchema,
   isAnyOfSchema,
   isNotSchema,
-  getSchemaTagsDocumentation
+  getSchemaPropertiesDocumentation
 } from '../schema-util';
 
 /**
@@ -116,7 +116,9 @@ export function schemaPropertyDocumentation(
     signature.push(schema.description);
   }
 
-  signature.push(...getSchemaTagsDocumentation(schema.namedSchemaProperties));
+  signature.push(
+    ...getSchemaPropertiesDocumentation(schema.namedSchemaProperties)
+  );
 
   return documentationBlock`${signature.join(unixEOL)}`;
 }

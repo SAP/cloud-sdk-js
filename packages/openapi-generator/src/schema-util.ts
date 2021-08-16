@@ -154,7 +154,7 @@ export function getSchemaNamingFromRef(
   return schemaNaming;
 }
 
-export function getSchemaTagsDocumentation(
+export function getSchemaPropertiesDocumentation(
   schema: OpenApiSchemaProperties
 ): string[] {
   const signature: string[] = [];
@@ -166,7 +166,7 @@ export function getSchemaTagsDocumentation(
         signature.push(`@example ${JSON.stringify(schema?.example, null, 2)}`);
       } else if (value) {
         signature.push(
-          `${titleFormat(propertyName)} ${JSON.stringify(value, null, 2)}.`
+          `${titleFormat(propertyName)}: ${JSON.stringify(value, null, 2)}.`
         );
       }
     });

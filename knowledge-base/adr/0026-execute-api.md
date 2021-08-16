@@ -7,7 +7,7 @@ accepted
 ## Context
 
 We have three execute methods:
-1. In the odata request builders e.g. [get-all-request-builder-base.ts](https://github.com/SAP/cloud-sdk-js/blob/6c9e8fa67ffbf4e84208e4bf0c790c04550a0cc7/packages/core/src/odata-common/request-builder/get-all-request-builder-base.ts#L100)
+1. In the OData request builders e.g. [get-all-request-builder-base.ts](https://github.com/SAP/cloud-sdk-js/blob/6c9e8fa67ffbf4e84208e4bf0c790c04550a0cc7/packages/core/src/odata-common/request-builder/get-all-request-builder-base.ts#L100)
 2. In the [openapi-request-builder.ts](https://github.com/SAP/cloud-sdk-js/blob/6c9e8fa67ffbf4e84208e4bf0c790c04550a0cc7/packages/core/src/openapi/openapi-request-builder.ts#L104)
 3. In the [http-client.ts](https://github.com/SAP/cloud-sdk-js/blob/6c9e8fa67ffbf4e84208e4bf0c790c04550a0cc7/packages/core/src/http-client/http-client.ts#L91)
 
@@ -15,7 +15,7 @@ All three entry points have in common, that they allow for a flexible destinatio
 - A destination object which must contain at least an url
 - A destination name and JWT to fetch the destination via the destination service
 
-For the latter case there exist [DestinationOptions](https://github.com/SAP/cloud-sdk-js/blob/6c9e8fa67ffbf4e84208e4bf0c790c04550a0cc7/packages/core/src/connectivity/scp-cf/destination/destination-accessor.ts#L39), which change the behaviour how destination are received.
+For the latter case there exist [DestinationOptions](https://github.com/SAP/cloud-sdk-js/blob/6c9e8fa67ffbf4e84208e4bf0c790c04550a0cc7/packages/core/src/connectivity/scp-cf/destination/destination-accessor.ts#L39), which change the behaviour how destinations are received.
 There are topics like caching, subscriber/provider first but also the `iss` option which replaces the full JWT in destination fetching.
 
 The `DestinationOptions` are only passed to methods 1. and 2. and not to the http-client.

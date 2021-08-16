@@ -1,6 +1,6 @@
 import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import { OpenApiPersistedSchema } from '../openapi-types';
-import { collectRefs } from '../schema-util';
+import { collectRefs, getSchemaTagsDocumentation } from '../schema-util';
 import { serializeSchema } from './schema';
 import { Import, serializeImports } from './imports';
 
@@ -32,17 +32,10 @@ function getImports(namedSchema: OpenApiPersistedSchema): Import[] {
 }
 
 export function schemaDocumentation(schema: OpenApiPersistedSchema): string {
-  const signature: string[] = [];
-  if (schema.schema?.deprecated) {
-    signature.push('@deprecated');
-  }
-  if (schema.schema?.example) {
-    signature.push(`@example ${JSON.stringify(schema.schema?.example)}`);
-  }
   const lines = [
     schema.description ||
       `Representation of the '${schema.schemaName}' schema.`,
-    ...signature
+    ...getSchemaTagsDocumentation(schema.persistedSchemaProperties)
   ];
   return documentationBlock`${lines.join(unixEOL)}`;
 }

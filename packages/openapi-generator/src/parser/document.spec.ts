@@ -96,10 +96,9 @@ describe('parseOpenApiDocument', () => {
         schemaName: 'SimpleSchema',
         fileName: 'simple-schema',
         schema: {
-          deprecated: undefined,
-          example: undefined,
           type: 'string'
-        }
+        },
+        persistedSchemaProperties: {}
       }
     ]);
   });

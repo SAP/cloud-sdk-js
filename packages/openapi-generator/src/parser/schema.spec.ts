@@ -90,7 +90,12 @@ describe('parseSchema', () => {
     const schema: OpenAPIV3.SchemaObject = {
       required: ['simpleProperty'],
       properties: {
-        simpleProperty: { type: 'string' },
+        simpleProperty: {
+          type: 'string',
+          deprecated: true,
+          example: 'test',
+          maxLength: 10
+        },
         nestedObjectProperty: {
           additionalProperties: {
             properties: { simpleProperty: { type: 'string' } }
@@ -100,29 +105,18 @@ describe('parseSchema', () => {
     };
     expect(parseSchema(schema, await createTestRefs(), defaultOptions)).toEqual(
       {
-        deprecated: undefined,
-        example: undefined,
         properties: [
           {
             name: 'simpleProperty',
             description: undefined,
             required: true,
             schema: {
-              type: 'string',
-              deprecated: undefined,
-              example: undefined
+              type: 'string'
             },
-            typeProperties: {
-              default: undefined,
-              format: undefined,
-              maxItems: undefined,
-              maxLength: undefined,
-              maximum: undefined,
-              minItems: undefined,
-              minLength: undefined,
-              minimum: undefined,
-              multipleOf: undefined,
-              pattern: undefined
+            namedSchemaProperties: {
+              deprecated: true,
+              example: 'test',
+              maxLength: 10
             }
           },
           {
@@ -130,11 +124,7 @@ describe('parseSchema', () => {
             required: false,
             description: undefined,
             schema: {
-              deprecated: undefined,
-              example: undefined,
               additionalProperties: {
-                deprecated: undefined,
-                example: undefined,
                 additionalProperties: { type: 'any' },
                 properties: [
                   {
@@ -142,39 +132,15 @@ describe('parseSchema', () => {
                     description: undefined,
                     required: false,
                     schema: {
-                      type: 'string',
-                      deprecated: undefined,
-                      example: undefined
+                      type: 'string'
                     },
-                    typeProperties: {
-                      default: undefined,
-                      format: undefined,
-                      maxItems: undefined,
-                      maxLength: undefined,
-                      maximum: undefined,
-                      minItems: undefined,
-                      minLength: undefined,
-                      minimum: undefined,
-                      multipleOf: undefined,
-                      pattern: undefined
-                    }
+                    namedSchemaProperties: {}
                   }
                 ]
               },
               properties: []
             },
-            typeProperties: {
-              default: undefined,
-              format: undefined,
-              maxItems: undefined,
-              maxLength: undefined,
-              maximum: undefined,
-              minItems: undefined,
-              minLength: undefined,
-              minimum: undefined,
-              multipleOf: undefined,
-              pattern: undefined
-            }
+            namedSchemaProperties: {}
           }
         ],
         additionalProperties: { type: 'any' }

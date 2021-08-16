@@ -18,17 +18,26 @@ describe('schemaFile', () => {
               schema: {
                 type: 'string'
               },
-              typeProperties: {}
+              namedSchemaProperties: {
+                maxLength: 10
+              }
             }
           ]
+        },
+        persistedSchemaProperties: {
+          deprecated: true
         }
       })
     ).toMatchInlineSnapshot(`
       "    
           /**
            * Representation of the 'MySchema' schema.
+           * @deprecated
            */
           export type MySchema = {
+            /**
+             * Max Length 10.
+             */
             'string-property': string;
           };"
     `);
@@ -39,6 +48,7 @@ describe('schemaFile', () => {
       schemaFile({
         schemaName: 'MySchema',
         fileName: 'my-schema',
+        persistedSchemaProperties: {},
         schema: {
           properties: [
             {
@@ -49,7 +59,7 @@ describe('schemaFile', () => {
                 schemaName: 'OtherSchema1',
                 fileName: 'other-schema-1'
               },
-              typeProperties: {}
+              namedSchemaProperties: {}
             },
             {
               name: 'otherSchema2',
@@ -60,7 +70,7 @@ describe('schemaFile', () => {
                 schemaName: 'OtherSchema2',
                 fileName: 'other-schema-2'
               },
-              typeProperties: {}
+              namedSchemaProperties: {}
             }
           ]
         }
@@ -88,7 +98,8 @@ describe('schemaFile', () => {
         fileName: 'my-schema',
         schema: {
           items: { not: { type: 'integer' } }
-        }
+        },
+        persistedSchemaProperties: {}
       })
     ).toMatchInlineSnapshot(`
       "    
@@ -114,10 +125,11 @@ describe('schemaFile', () => {
                 schemaName: 'MySchema',
                 fileName: 'my-schema'
               },
-              typeProperties: {}
+              namedSchemaProperties: {}
             }
           ]
-        }
+        },
+        persistedSchemaProperties: {}
       })
     ).toMatchInlineSnapshot(`
       "    
@@ -144,7 +156,9 @@ describe('schemaFile', () => {
               schema: {
                 type: 'string'
               },
-              typeProperties: {}
+              namedSchemaProperties: {
+                minLength: 2
+              }
             },
             {
               name: 'string-property-no-description',
@@ -152,10 +166,11 @@ describe('schemaFile', () => {
               schema: {
                 type: 'string'
               },
-              typeProperties: {}
+              namedSchemaProperties: {}
             }
           ]
-        }
+        },
+        persistedSchemaProperties: {}
       })
     ).toMatchInlineSnapshot(`
       "    
@@ -165,6 +180,7 @@ describe('schemaFile', () => {
           export type MySchema = {
             /**
              * My description
+             * Min Length 2.
              */
             'string-property': string;
             'string-property-no-description': string;

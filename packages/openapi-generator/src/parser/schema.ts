@@ -7,7 +7,8 @@ import {
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty,
   OpenApiReferenceSchema,
-  OpenApiSchema
+  OpenApiSchema,
+  OpenApiSchemaProperties
 } from '../openapi-types';
 import { getType } from './type-mapping';
 import { OpenApiDocumentRefs } from './refs';
@@ -37,11 +38,7 @@ export function parseSchema(
   }
 
   if (schema.type === 'array') {
-    return {
-      deprecated: schema.deprecated,
-      example: schema.example,
-      ...parseArraySchema(schema, refs, options)
-    };
+    return parseArraySchema(schema, refs, options);
   }
 
   if (
@@ -49,19 +46,11 @@ export function parseSchema(
     schema.properties ||
     'additionalProperties' in schema
   ) {
-    return {
-      deprecated: schema.deprecated,
-      example: schema.example,
-      ...parseObjectSchema(schema, refs, options)
-    };
+    return parseObjectSchema(schema, refs, options);
   }
 
   if (schema.enum?.length) {
-    return {
-      deprecated: schema.deprecated,
-      example: schema.example,
-      ...parseEnumSchema(schema, options)
-    };
+    return parseEnumSchema(schema, options);
   }
 
   if (schema.oneOf?.length) {
@@ -83,9 +72,7 @@ export function parseSchema(
   }
 
   return {
-    type: getType(schema.type),
-    deprecated: schema.deprecated,
-    example: schema.example
+    type: getType(schema.type)
   };
 }
 
@@ -175,36 +162,7 @@ function parseObjectSchemaProperties(
           : propSchema.description,
         name: propName,
         required: schema.required?.includes(propName) || false,
-        typeProperties: {
-          format: isReferenceObject(propSchema) ? undefined : propSchema.format,
-          default: isReferenceObject(propSchema)
-            ? undefined
-            : propSchema.default,
-          multipleOf: isReferenceObject(propSchema)
-            ? undefined
-            : propSchema.multipleOf,
-          maximum: isReferenceObject(propSchema)
-            ? undefined
-            : propSchema.maximum,
-          minimum: isReferenceObject(propSchema)
-            ? undefined
-            : propSchema.minimum,
-          maxLength: isReferenceObject(propSchema)
-            ? undefined
-            : propSchema.maxLength,
-          minLength: isReferenceObject(propSchema)
-            ? undefined
-            : propSchema.minLength,
-          minItems: isReferenceObject(propSchema)
-            ? undefined
-            : propSchema.minItems,
-          maxItems: isReferenceObject(propSchema)
-            ? undefined
-            : propSchema.maxItems,
-          pattern: isReferenceObject(propSchema)
-            ? undefined
-            : propSchema.pattern
-        }
+        namedSchemaProperties: { ...parseSchemaProperties(propSchema) }
       }
     ],
     []
@@ -265,4 +223,37 @@ function parseXOfSchema(
   return {
     [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry, refs, options))
   };
+}
+
+/**
+ * Parse schema properties e.g. 'maxLength', 'minimum', etc.
+ * @param schema - Original schema representing a ref or schema object.
+ * @returns The parsed schema properties object.
+ */
+export function parseSchemaProperties(
+  schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
+): OpenApiSchemaProperties {
+  if (isReferenceObject(schema)) {
+    return {};
+  }
+  const schemaPropertyNames = [
+    'deprecated',
+    'example',
+    'format',
+    'default',
+    'multipleOf',
+    'maximum',
+    'minimum',
+    'maxLength',
+    'minLength',
+    'minItems',
+    'maxItems',
+    'pattern'
+  ];
+  return schemaPropertyNames.reduce((properties, propertyName) => {
+    if (schema[propertyName]) {
+      return { ...properties, [propertyName]: schema[propertyName] };
+    }
+    return properties;
+  }, {});
 }

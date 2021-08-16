@@ -19,7 +19,8 @@ describe('collectRefs', () => {
                 schema: {
                   $ref: 'ref1',
                   schemaName: 'Ref1'
-                } as OpenApiReferenceSchema
+                } as OpenApiReferenceSchema,
+                namedSchemaProperties: {}
               }
             ]
           },

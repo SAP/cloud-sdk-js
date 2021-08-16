@@ -144,7 +144,7 @@ export interface OpenApiRequestBody {
 /**
  * Represents all possible Types of schemas.
  */
-export type OpenApiSchema = (
+export type OpenApiSchema =
   | OpenApiReferenceSchema
   | OpenApiArraySchema
   | OpenApiSimpleSchema
@@ -153,9 +153,7 @@ export type OpenApiSchema = (
   | OpenApiOneOfSchema
   | OpenApiAllOfSchema
   | OpenApiAnyOfSchema
-  | OpenApiNotSchema
-) &
-  OpenApiAdditionalSchemaProperty;
+  | OpenApiNotSchema;
 
 /**
  * Represents a reference to a schema, that has a name.
@@ -175,6 +173,11 @@ export interface OpenApiNamedSchema {
    * Description of the schema.
    */
   description?: string;
+
+  /**
+   * Denotes the type specific keywords for the according object's properties.
+   */
+  namedSchemaProperties: OpenApiSchemaProperties;
 }
 
 /**
@@ -190,6 +193,11 @@ export interface OpenApiPersistedSchema extends SchemaNaming {
    * Description of the schema.
    */
   description?: string;
+
+  /**
+   * Denotes the type specific keywords for the according object's properties.
+   */
+  persistedSchemaProperties: OpenApiSchemaProperties;
 }
 
 /**
@@ -299,11 +307,6 @@ export interface OpenApiObjectSchemaProperty extends OpenApiNamedSchema {
    * Denotes whether the parameter is required for the according object.
    */
   required: boolean;
-
-  /**
-   * Denotes the type specific keywords for the according object's properties.
-   */
-  typeProperties?: OpenApiTypeSpecificProperty;
 }
 
 /**
@@ -326,66 +329,64 @@ export interface SchemaNaming {
   fileName: string;
 }
 
-export interface OpenApiAdditionalSchemaProperty {
+export interface OpenApiSchemaProperties {
   /**
-   * Denotes whether the schemas or schema property is deprecated
-   */
-  deprecated?: boolean;
-
-  /**
-   * Example value for schema or schema property
-   */
-  example?: any;
-}
-
-export interface OpenApiTypeSpecificProperty {
-  /**
-   * Serves as a hint at the contents of the type
+   * Serves as a hint at the contents of the type.
    */
   format?: string;
 
   /**
-   * Denotes the default value for a property
+   * Denotes the default value for a property.
    */
   default?: any;
 
   /**
-   * Specifies that a number must be the multiple of another number
+   * Specifies that a number must be the multiple of another number.
    */
   multipleOf?: number;
 
   /**
-   * Denotes the maximum range of possible values
+   * Denotes the maximum range of possible values.
    */
   maximum?: number;
 
   /**
-   * Denotes the minimum range of possible values
+   * Denotes the minimum range of possible values.
    */
   minimum?: number;
 
   /**
-   * Denotes the maximum length of a string
+   * Denotes the maximum length of a string.
    */
   maxLength?: number;
 
   /**
-   * Denotes the minimum length of a string
+   * Denotes the minimum length of a string.
    */
   minLength?: number;
 
   /**
-   * Denotes the minimum length of an array
+   * Denotes the minimum length of an array.
    */
   minItems?: number;
 
   /**
-   * Denotes the maximum length of an array
+   * Denotes the maximum length of an array.
    */
   maxItems?: number;
 
   /**
-   * Denotes a regular expression template for the string value
+   * Denotes a regular expression template for the string value.
    */
   pattern?: string;
+
+  /**
+   * Denotes whether the schemas or schema property is deprecated.
+   */
+  deprecated?: boolean;
+
+  /**
+   * Example value for schema or schema property.
+   */
+  example?: any;
 }

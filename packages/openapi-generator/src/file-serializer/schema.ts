@@ -1,9 +1,4 @@
-import {
-  codeBlock,
-  documentationBlock,
-  titleFormat,
-  unixEOL
-} from '@sap-cloud-sdk/util';
+import { codeBlock, documentationBlock, unixEOL } from '@sap-cloud-sdk/util';
 import {
   OpenApiSchema,
   OpenApiObjectSchema,
@@ -18,7 +13,8 @@ import {
   isOneOfSchema,
   isAllOfSchema,
   isAnyOfSchema,
-  isNotSchema
+  isNotSchema,
+  getSchemaTagsDocumentation
 } from '../schema-util';
 
 /**
@@ -120,20 +116,7 @@ export function schemaPropertyDocumentation(
     signature.push(schema.description);
   }
 
-  if (schema.schema?.deprecated) {
-    signature.push('@deprecated');
-  }
+  signature.push(...getSchemaTagsDocumentation(schema.namedSchemaProperties));
 
-  if (schema.schema?.example) {
-    signature.push(`@example ${JSON.stringify(schema.schema?.example)}`);
-  }
-
-  for (const propertyName in schema.typeProperties) {
-    if (schema.typeProperties[propertyName]) {
-      signature.push(
-        `${titleFormat(propertyName)} ${schema.typeProperties[propertyName]}. `
-      );
-    }
-  }
   return documentationBlock`${signature.join(unixEOL)}`;
 }

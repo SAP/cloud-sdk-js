@@ -174,6 +174,7 @@ export function parseParameters(
   return pathParameters.map(param => ({
     ...param,
     originalName: param.name,
-    schema: parseSchema(param.schema, refs, options)
+    schema: parseSchema(param.schema, refs, options),
+    namedSchemaProperties: {}
   }));
 }

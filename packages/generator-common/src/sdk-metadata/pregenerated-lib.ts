@@ -1,6 +1,6 @@
 import { checkUrlExists } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { InstructionWithText, PregeneratedLibrary } from './sdk-metadata-types';
+import {InstructionWithText, InstructionWithTextAndHeader, PregeneratedLibrary} from './sdk-metadata-types';
 
 export async function isPublishedNpmPackage(
   npmPackageName: string
@@ -25,8 +25,9 @@ export async function getLatestVersionOfNpmPackage(
 
 export function getInstallationSnippet(
   npmPackageName: string
-): InstructionWithText {
+): InstructionWithTextAndHeader {
   return {
+    header: 'Installation',
     instructions: `npm i ${npmPackageName}:latest`,
     text: 'Execute the following npm command to install the pregenerated client.'
   };

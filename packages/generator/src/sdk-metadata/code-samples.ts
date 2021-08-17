@@ -10,7 +10,7 @@ export function codeSamples(
   packageName: string
 ): InstructionWithText {
   return {
-    text: `In the example below you query the top 5 entities of the  <code>${entityName} </code> type.`,
+    text: `In the example below you query the top 5 entities of the  '${entityName}' type.`,
     instructions: codeBlock`
 import { ${entityName} } from '${packageName}';
 

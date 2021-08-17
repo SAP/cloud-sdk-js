@@ -61,7 +61,6 @@ function getApiSpecificUsage(
     );
     return {
       ...instructions,
-
       header: usageHeaderText
     };
   }

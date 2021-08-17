@@ -1,4 +1,5 @@
 import {
+  onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   subscriberXsuaaUrl,
   TestTenants
@@ -24,6 +25,16 @@ const subscriberServiceTokenPayload = {
 };
 
 export const subscriberServiceToken = signedJwt(subscriberServiceTokenPayload);
+
+/**
+ * These tokens are used to test cases when the provided user JWT only contains `{ iss: someXSUAAurl }`.
+ * See docs on [[DestinationAccessorOptions]] for more details.
+ */
+export const onlyIssuerServiceTokenPayload = {
+  iss: onlyIssuerXsuaaUrl
+};
+
+export const onlyIssuerServiceToken = signedJwt(onlyIssuerServiceTokenPayload);
 
 export const subscriberServiceTokenWithVerificationURL =
   signedJwtForVerification(

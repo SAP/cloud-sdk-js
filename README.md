@@ -112,4 +112,7 @@ Want to contribute? Check out our [contribution](./CONTRIBUTING.md) guide and fo
 
 ## License
 
-This project is licensed under Apache 2.0 except as noted otherwise in the [license file](./LICENSES/Apache-2.0.txt).
+This project is licensed under the terms of the Apache 2.0 license as noted in the [license file](./LICENSES/Apache-2.0.txt).
+
+This project depends on libraries licensed under the [SAP Developer license agreement](https://tools.eu1.hana.ondemand.com/developer-license-3_1.txt).
+This limits the use of those dependencies to development purposes only.

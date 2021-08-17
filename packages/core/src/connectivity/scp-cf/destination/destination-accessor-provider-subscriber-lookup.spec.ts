@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
@@ -6,12 +7,16 @@ import {
   mockVerifyJwt
 } from '../../../../test/test-util/destination-service-mocks';
 import {
+  onlyIssuerServiceToken,
   providerServiceToken,
   providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
-import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
+import {
+  mockServiceBindings,
+  onlyIssuerXsuaaUrl
+} from '../../../../test/test-util/environment-mocks';
 import { mockServiceToken } from '../../../../test/test-util/token-accessor-mocks';
 import {
   basicMultipleResponse,
@@ -230,37 +235,62 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       expect(actual).toMatchObject(expected);
     });
 
+    it('it warns if you use iss property and user jwt', async () => {
+      const logger = createLogger({
+        package: 'core',
+        messageContext: 'destination-accessor-service'
+      });
+      const warnSpy = jest.spyOn(logger, 'warn');
+      await expect(
+        getDestinationFromDestinationService('someDest', {
+          userJwt: 'someJwt',
+          iss: 'someIss'
+        })
+      ).rejects.toThrowError(
+        'The given jwt payload does not encode valid JSON.'
+      );
+      expect(warnSpy).toHaveBeenCalledWith(
+        'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
+      );
+    });
+
     it('is possible to get a non-principal propagation destination by only providing the subdomain (iss) instead of the whole jwt', async () => {
       mockServiceBindings();
       mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
       mockSubaccountDestinationsCall(
         nock,
         certificateMultipleResponse,
         200,
-        subscriberServiceToken
+        onlyIssuerServiceToken
       );
-      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
-      mockSubaccountDestinationsCall(nock, [], 200, providerServiceToken);
 
       mockSingleDestinationCall(
         nock,
         certificateSingleResponse,
         200,
         'ERNIE-UND-CERT',
-        wrapJwtInHeader(subscriberServiceToken).headers
+        wrapJwtInHeader(onlyIssuerServiceToken).headers
       );
 
+      const logger = createLogger({
+        package: 'core',
+        messageContext: 'destination-accessor-service'
+      });
+      const infoSpy = jest.spyOn(logger, 'info');
       const expected = parseDestination(certificateSingleResponse);
       const actual = await getDestinationFromDestinationService(
         'ERNIE-UND-CERT',
         {
-          iss: 'https://subscriber.example.com',
+          iss: onlyIssuerXsuaaUrl,
           cacheVerificationKeys: false
         }
       );
       expect(actual).toMatchObject(expected);
+      expect(infoSpy).toHaveBeenCalledWith(
+        'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
+      );
     });
 
     it('noUserToken && alwaysSubscriber: should return null since the token does not match subscriber', async () => {

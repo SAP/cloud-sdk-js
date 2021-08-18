@@ -18,6 +18,9 @@ export interface UserData {
   customAttributes: Map<string, string[]>;
 }
 
+/**
+ * Representation of the user i.e. authenticated persona. The authentication is done by the XSUAA.
+ */
 export interface User extends UserData {
   hasScope: (scope: Scope) => boolean;
 }

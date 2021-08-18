@@ -23,6 +23,7 @@ export {
   isIdenticalTenant
 } from './tenant';
 export {
+  User,
   RegisteredJWTClaimsUser,
   Scope,
   mappingUserFields,

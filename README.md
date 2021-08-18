@@ -8,6 +8,13 @@
 
 An SDK to reduce your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 
+## Announcement - Upgrade Strategy
+
+Our team is working on a version 2 of the SAP Cloud SDK for JavaScript, expected to be released January 2022.
+We outlined our upgrade strategy in a post on our documentation portal: https://sap.github.io/cloud-sdk/docs/js/upgrade-strategy
+
+Please share your ideas, suggestions or improvements in our GitHub discussion: https://github.com/SAP/cloud-sdk-js/discussions/1518
+
 ## Looking for documentation?
 
 Check our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api) and [getting started](https://sap.github.io/cloud-sdk/docs/js/getting-started) guide on our [documentation portal](https://sap.github.io/cloud-sdk/).
@@ -31,7 +38,6 @@ Check our [API documentation](https://sap.github.io/cloud-sdk/docs/js/api) and [
 ## Packages
 
 This project publishes multiple packages and is managed using [lerna](https://github.com/lerna/lerna).
-To use the SDK in your project, we recommend using our [commandline interface](#sap-cloud-sdk-cli).
 
 ### @sap-cloud-sdk/core
 

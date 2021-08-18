@@ -10,7 +10,7 @@ export function codeSamples(
   packageName: string
 ): InstructionWithText {
   return {
-    text: `In the example below you query the top 5 entities of the  '${entityName}' type.`,
+    text: 'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose "OData Consumption Manual" from the "Helpful Links" menu.',
     instructions: codeBlock`
 import { ${entityName} } from '${packageName}';
 

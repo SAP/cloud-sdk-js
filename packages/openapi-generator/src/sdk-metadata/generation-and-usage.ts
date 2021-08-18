@@ -30,7 +30,8 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/openapi-generator',
       'openapi-generator --inputDir <inputDirectory> --outputDir <outputDirectory>',
-      linkGenerationDocumentation
+      linkGenerationDocumentation,
+      'OpenApi'
     ),
     generatorVersion: await getSdkVersion(),
     generatorRepositoryLink:
@@ -77,6 +78,7 @@ export const linkGenerationDocumentation =
 export function getOpenApiLinks(): Links {
   return getLinks(
     'https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request',
-    'https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client'
+    'https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client',
+    'OpenApi'
   );
 }

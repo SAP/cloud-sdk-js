@@ -29,7 +29,8 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/generator',
       'generate-odata-client --inputDir path/to/service-spec --outputDir path/to/',
-      linkGenerationDocumentation
+      linkGenerationDocumentation,
+      'OData'
     ),
     generatorVersion: await getSdkVersion(),
     generatorRepositoryLink:
@@ -71,6 +72,7 @@ export const linkGenerationDocumentation =
 export function getODataLinks(): Links {
   return getLinks(
     'https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request',
-    'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client'
+    'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client',
+    'OData'
   );
 }

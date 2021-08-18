@@ -1,29 +1,30 @@
 import type { Links } from './sdk-metadata-types';
 
 export function getLinks(
-  apiHubTutorialUrl: string,
-  generationManualUrl: string
+  executeRequestUrl: string,
+  generationManualUrl: string,
+  apiType: 'OData' | 'OpenApi'
 ): Links {
   return {
-    sdkDocumentation: {
-      url: 'https://sap.github.io/cloud-sdk/',
-      name: 'SDK Documentation'
+    gettingStarted: {
+      name: 'Getting Started with SDK for JavaScript',
+      url: 'https://sap.github.io/cloud-sdk/docs/js/getting-started'
     },
-    featureDocumentation: {
-      name: 'Feature Documentation',
-      url: 'https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript'
-    },
-    support: {
-      name: 'Support',
-      url: 'https://github.com/SAP/cloud-sdk-js/issues/new/choose'
-    },
-    apiHubTutorial: {
-      name: 'API Hub Tutorial',
-      url: apiHubTutorialUrl
+    overviewDocumentation: {
+      name: `${apiType} consumption manual`,
+      url: executeRequestUrl
     },
     generationManual: {
-      name: 'Generation Manual',
+      name: `${apiType} client generation manual`,
       url: generationManualUrl
+    },
+    sdkDocumentation: {
+      url: 'https://sap.github.io/cloud-sdk/',
+      name: 'The SAP Cloud SDK documentation'
+    },
+    support: {
+      name: 'Get support or give feedback',
+      url: 'https://sap.github.io/cloud-sdk/docs/overview/get-support'
     }
   };
 }

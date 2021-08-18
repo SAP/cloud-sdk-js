@@ -11,7 +11,7 @@ export function apiSpecificCodeSample(
   packageName: string
 ): InstructionWithText {
   return {
-    text: `In the example below you execute the  '{functionName}' of the  '${apiName}' API.`,
+    text: 'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose "OData Consumption Manual" from the "Helpful Links" menu.',
     instructions: codeBlock`
 import { ${apiName} } from '${packageName}';
 

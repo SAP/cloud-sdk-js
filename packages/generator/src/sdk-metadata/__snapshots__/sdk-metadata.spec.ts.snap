@@ -6,52 +6,57 @@ exports[`sdk-metadata generates the sdk metadata content for services with prege
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
-      "header": "Sample code for using the client library",
+      "header": "Usage Example",
       "instructions": "import { TestEntity } from '@sap/cloud-sdk-vdm-test-service';
 
 const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "In the example below you query the top 5 entities of the  <code>TestEntity </code> type.",
+      "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose \\"OData Consumption Manual\\" from the \\"Helpful Links\\" menu.",
     },
     "generationSteps": Object {
+      "header": "Installation & Generation Steps",
       "instructions": "<ul>
-<li>Download the API specification to your local computer.</li>
-<li>Install the generator <code>npm install -g @sap-cloud-sdk/generator</code></li>
+<li>Install <a href=\\"https://docs.npmjs.com/downloading-and-installing-node-js-and-npm\\">Node and npm.</a>. The use of the LTS version is preferred.</li>
+<li>Download the API specification from Overview -> API Specification section. Chose EDMX format.</li>
+<li>Generate a typed client by running <code>npm install -g @sap-cloud-sdk/generator</code> to install the code generator.</li>
 <li>Execute the generator <code>generate-odata-client --inputDir path/to/service-spec --outputDir path/to/</code></li>
-</ul>
-The steps above will generate a basic TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client\\">documentation.</a>",
-      "text": "Follow the following generation steps to generate the client.",
+<li>You should now find generated classes in the output directory specified in step 4.</li>
+<li>By default we generate TypeScript only. If you need to transpile it to JavaScript check the <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client#options>\\"code generator CLI parameters in the documentation.</a></li>
+<li>In case of any issues carefully check your configuration and refer to our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client\\">extended typed client generation manual.</a></li>
+<li>Congratulations! Check the usage example below to import and invoke your typed OData client library.</li>
+</ul>",
+      "text": "You can generate a typed OData client for this service yourself. Follow the instructions below to install the tooling and complete the generation steps:",
     },
     "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/generator",
     "generatorVersion": Any<String>,
     "genericUsage": Object {
-      "header": "Sample code for using the client library",
+      "header": "Usage Example",
       "instructions": "import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "In the example below you query the top 5 entities of the  <code>BusinessPartner </code> type.",
+      "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose \\"OData Consumption Manual\\" from the \\"Helpful Links\\" menu.",
     },
     "links": Object {
-      "apiHubTutorial": Object {
-        "name": "API Hub Tutorial",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request",
-      },
-      "featureDocumentation": Object {
-        "name": "Feature Documentation",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript",
-      },
       "generationManual": Object {
-        "name": "Generation Manual",
+        "name": "OData client generation manual",
         "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client",
       },
+      "gettingStarted": Object {
+        "name": "Getting Started with SDK for JavaScript",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
+      },
+      "overviewDocumentation": Object {
+        "name": "OData consumption manual",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request",
+      },
       "sdkDocumentation": Object {
-        "name": "SDK Documentation",
+        "name": "The SAP Cloud SDK documentation",
         "url": "https://sap.github.io/cloud-sdk/",
       },
       "support": Object {
-        "name": "Support",
-        "url": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
+        "name": "Get support or give feedback",
+        "url": "https://sap.github.io/cloud-sdk/docs/overview/get-support",
       },
     },
     "repository": "npm",
@@ -63,8 +68,9 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
     "description": "SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service",
     "generatedAt": "/Date(0)/",
     "installLibrarySteps": Object {
+      "header": "Installation",
       "instructions": "npm i @sap/cloud-sdk-vdm-test-service:latest",
-      "text": "Execute the following npm command to install the pregenerated client.",
+      "text": "Add this typed client library as a dependency to your JavaScript project by running the npm command below in the root folder of your project. For more details take a look at our \\"Getting Started with SDK for JavaScript\\" guide in the \\"Helpful Links\\" menu.",
     },
     "repository": "npm",
     "repositoryLink": "https://www.npmjs.com/package/@sap/cloud-sdk-vdm-test-service",
@@ -82,52 +88,57 @@ exports[`sdk-metadata generates the sdk metadata content for services without pr
 Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
-      "header": "Sample code for using the client library",
+      "header": "Usage Example",
       "instructions": "import { TestEntity } from '@sap/cloud-sdk-vdm-test-service';
 
 const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "In the example below you query the top 5 entities of the  <code>TestEntity </code> type.",
+      "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose \\"OData Consumption Manual\\" from the \\"Helpful Links\\" menu.",
     },
     "generationSteps": Object {
+      "header": "Installation & Generation Steps",
       "instructions": "<ul>
-<li>Download the API specification to your local computer.</li>
-<li>Install the generator <code>npm install -g @sap-cloud-sdk/generator</code></li>
+<li>Install <a href=\\"https://docs.npmjs.com/downloading-and-installing-node-js-and-npm\\">Node and npm.</a>. The use of the LTS version is preferred.</li>
+<li>Download the API specification from Overview -> API Specification section. Chose EDMX format.</li>
+<li>Generate a typed client by running <code>npm install -g @sap-cloud-sdk/generator</code> to install the code generator.</li>
 <li>Execute the generator <code>generate-odata-client --inputDir path/to/service-spec --outputDir path/to/</code></li>
-</ul>
-The steps above will generate a basic TypeScript client. For additional options like transpiling to JavaScript etc. visit our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client\\">documentation.</a>",
-      "text": "Follow the following generation steps to generate the client.",
+<li>You should now find generated classes in the output directory specified in step 4.</li>
+<li>By default we generate TypeScript only. If you need to transpile it to JavaScript check the <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client#options>\\"code generator CLI parameters in the documentation.</a></li>
+<li>In case of any issues carefully check your configuration and refer to our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client\\">extended typed client generation manual.</a></li>
+<li>Congratulations! Check the usage example below to import and invoke your typed OData client library.</li>
+</ul>",
+      "text": "You can generate a typed OData client for this service yourself. Follow the instructions below to install the tooling and complete the generation steps:",
     },
     "generatorRepositoryLink": "https://www.npmjs.com/package/@sap-cloud-sdk/generator",
     "generatorVersion": Any<String>,
     "genericUsage": Object {
-      "header": "Sample code for using the client library",
+      "header": "Usage Example",
       "instructions": "import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 
 const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
-      "text": "In the example below you query the top 5 entities of the  <code>BusinessPartner </code> type.",
+      "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose \\"OData Consumption Manual\\" from the \\"Helpful Links\\" menu.",
     },
     "links": Object {
-      "apiHubTutorial": Object {
-        "name": "API Hub Tutorial",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request",
-      },
-      "featureDocumentation": Object {
-        "name": "Feature Documentation",
-        "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/use-odata-v2-type-safe-client-for-javascript-typescript",
-      },
       "generationManual": Object {
-        "name": "Generation Manual",
+        "name": "OData client generation manual",
         "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client",
       },
+      "gettingStarted": Object {
+        "name": "Getting Started with SDK for JavaScript",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/getting-started",
+      },
+      "overviewDocumentation": Object {
+        "name": "OData consumption manual",
+        "url": "https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request",
+      },
       "sdkDocumentation": Object {
-        "name": "SDK Documentation",
+        "name": "The SAP Cloud SDK documentation",
         "url": "https://sap.github.io/cloud-sdk/",
       },
       "support": Object {
-        "name": "Support",
-        "url": "https://github.com/SAP/cloud-sdk-js/issues/new/choose",
+        "name": "Get support or give feedback",
+        "url": "https://sap.github.io/cloud-sdk/docs/overview/get-support",
       },
     },
     "repository": "npm",

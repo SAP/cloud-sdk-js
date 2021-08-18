@@ -57,11 +57,11 @@ export interface PregeneratedLibrary {
 }
 
 export interface Links {
+  gettingStarted: LinkWithName;
   sdkDocumentation: LinkWithName;
-  featureDocumentation: LinkWithName;
   support: LinkWithName;
-  apiHubTutorial: LinkWithName;
   generationManual: LinkWithName;
+  overviewDocumentation: LinkWithName;
 }
 export interface GenerationAndUsage {
   generatorVersion: string;

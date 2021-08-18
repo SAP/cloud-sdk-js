@@ -74,8 +74,7 @@
   integrity sha512-DSA7ruZrY4WI8VxuS1jWSRezFnghEoYEFrZcw9BizQRmOZiUsiHl59+qEARGPqPikwA/GPTyRCi7isuCK/oyqg==
   dependencies:
     "@babel/types" "^7.12.17"
-    
-     "^2.5.1"
+    jsesc "^2.5.1"
     source-map "^0.5.0"
 
 "@babel/helper-function-name@^7.12.13":

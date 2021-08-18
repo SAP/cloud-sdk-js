@@ -250,7 +250,7 @@ describe('name-formatter', () => {
       );
     });
 
-    it('should add the function inport name to the service wide cache', () => {
+    it('should add the function import name to the service wide cache', () => {
       const formatter = getFreshNameFormatter();
       formatter.originalToFunctionImportName('MyFunctionImport');
       expect(formatter['serviceWideNameGenerator']['usedNames'].pop()).toBe(

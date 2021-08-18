@@ -8,7 +8,7 @@ _Status:_ Proposal
 There are two versions of S/4HANA, Cloud and On-Premise.
 Cloud is publicly reachable, on-premise may not be.
 Cloud Foundry allows you to use your on-premise system with a Cloud Connector.
-The Cloud Connector acts as a proxy that allows users to securly tunnel traffic from Cloud Foundry to the on-premise system.
+The Cloud Connector acts as a proxy that allows users to securely tunnel traffic from Cloud Foundry to the on-premise system.
 It has to be running and be configured for the subaccount the destinations are defined in.
 The connectivity service is the "missing link" that allows you to connect to the cloud connector.
 

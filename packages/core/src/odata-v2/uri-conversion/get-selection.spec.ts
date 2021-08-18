@@ -20,7 +20,7 @@ describe('get selection', () => {
     ).toBe('StringProperty,BooleanProperty');
   });
 
-  it('removes reduncancy for selection of all fields', () => {
+  it('removes redundancy for selection of all fields', () => {
     expect(
       getQueryParametersForSelection([
         TestEntity.ALL_FIELDS,

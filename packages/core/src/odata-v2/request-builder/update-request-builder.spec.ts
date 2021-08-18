@@ -265,7 +265,7 @@ describe('UpdateRequestBuilder', () => {
     await expect(updateRequest).rejects.toThrowErrorMatchingSnapshot();
   });
 
-  it('should set the remote state and etag', async () => {
+  it('should set the remote state and ETag', async () => {
     const eTag = 'someEtag';
 
     const entity = createTestEntity().setVersionIdentifier('not-a-star');

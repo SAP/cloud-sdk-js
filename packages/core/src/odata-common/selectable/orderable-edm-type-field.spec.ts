@@ -22,7 +22,7 @@ describe('Number Field', () => {
   const fieldName = 'SomeField';
   const filterValue = 100;
 
-  describe('orderable edm type field', () => {
+  describe('orderable EDM type field', () => {
     const field = new OrderableEdmTypeField(fieldName, TestEntity, 'Edm.Int16');
 
     it('should create filter for "equals"', () => {

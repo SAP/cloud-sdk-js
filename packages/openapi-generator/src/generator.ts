@@ -249,7 +249,7 @@ async function generateService(
 }
 
 /**
- * Gives the relative path with respect tp pocess.cwd()/
+ * Gives the relative path with respect to process.cwd().
  * @param absolutePath - The absolute path
  * @returns The relative path
  * @hidden

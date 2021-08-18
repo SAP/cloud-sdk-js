@@ -5,7 +5,7 @@
 
 # @sap-cloud-sdk/generator
 
-This packages contains the generator to create your own service module using a service specification (.edmx file).
+This packages contains the generator to create your own service module using a service specification (`.edmx` file).
 
 ## Installation
 

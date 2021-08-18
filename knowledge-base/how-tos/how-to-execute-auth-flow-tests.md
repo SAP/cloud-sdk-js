@@ -7,7 +7,7 @@ The purpose of these tests is the convenience to debug auth flows locally within
 Our nightly E2E tests cover auth flows as well, but to execute flows quickly and locally is an advantage.
 You need to maintain some data explained in the next chapter to make the tests runs.
 
-There is a recoding availible where the steps to get all information is explained:
+There is a recoding available where the steps to get all information is explained:
 
 https://web.microsoftstream.com/video/c55e627b-16e9-463d-8c5f-3014db69596f
 
@@ -34,7 +34,7 @@ An easy way to get the tokens is to use postman with the following input:
 
 - `Callback URL`: Path to the application protected by the XSUAA
 - `Auth URL`: Path to the authentication endpoint using the provider or subscriber subdomain and the values for the callback url e.g. `https://<subdomain>.authentication.sap.hana.ondemand.com/oauth/authorize?redirect_uri=<redirectURL>`
-- `Token URL`: Path to the token endpoint using the provider or subscriber subdiomain e.g. https://<subdomain>.authentication.sap.hana.ondemand.com/oauth/token`
+- `Token URL`: Path to the token endpoint using the provider or subscriber subdomain e.g. https://<subdomain>.authentication.sap.hana.ondemand.com/oauth/token`
 - `Client ID` and `Client secret` from the XSUAA (either VCAP variables or service keys)
 - Do not check the `Authorize using browser checkbox`
 - Cookies will remember the user name and password entered in the IdP login form which makes fetching new tokens super quick.
@@ -53,7 +53,7 @@ Create a file `vcap-services.json` containing the VCAP variables of an applicati
 ### Systems
 
 Create a `systems.json` containing the destination names in the provider and subscriber account.
-The format of this JSON is given by the `Systems` type defined in [oatuh-flow-util.ts](../../test-packages/integration-tests/test/auth-flows/auth-flow-util.ts)
+The format of this JSON is given by the `Systems` type defined in [oauth-flow-util.ts](../../test-packages/integration-tests/test/auth-flows/auth-flow-util.ts)
 Internal developers can use the existing destinations of the E2E test landscape.
 
 ## Running the Tests

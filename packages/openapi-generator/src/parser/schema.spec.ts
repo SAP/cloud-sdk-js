@@ -177,7 +177,7 @@ describe('parseSchema', () => {
     ).toEqual('Property Description');
   });
 
-  it('throws an error if there are neither propertes nor additional properties', async () => {
+  it('throws an error if there are neither properties nor additional properties', async () => {
     const refs = await createTestRefs();
     expect(() =>
       parseSchema(

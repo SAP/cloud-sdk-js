@@ -4,7 +4,7 @@ import { orderBreakfast } from '../../test/test-util/data-model';
 import { importDeclarationsAction } from './import';
 
 describe('function-import generation', () => {
-  it('creates correct imports when there is an edm return types', () => {
+  it('creates correct imports when there is an EDM return types', () => {
     const service = {
       functionImports: [orderBreakfast]
     };

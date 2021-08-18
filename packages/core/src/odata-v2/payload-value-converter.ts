@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Time, EdmTypeShared } from '../odata-common';
 import {
   deserializersCommon,
-  serializersCommom
+  serializersCommon
 } from '../odata-common/payload-value-converter';
 import { EdmType } from './edm-types';
 
@@ -139,7 +139,7 @@ const deserializers: EdmTypeMapping = {
 };
 
 const serializers: EdmTypeMapping = {
-  ...serializersCommom,
+  ...serializersCommon,
   'Edm.DateTime': momentToEdmDateTime,
   'Edm.DateTimeOffset': momentToEdmDateTime,
   'Edm.Time': fromTime

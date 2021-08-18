@@ -22,7 +22,7 @@ export function documentationBlock(
 ): string {
   const firstLineTrimmed = removeLeadingEmptyLines(strings.raw[0]);
   const textIndentation = getIndentation(firstLineTrimmed);
-  const argsWithIndentation = addIndentationToArgumnets(args, textIndentation);
+  const argsWithIndentation = addIndentationToArguments(args, textIndentation);
 
   let content = zip(
     [firstLineTrimmed, ...strings.raw.slice(1)],
@@ -56,7 +56,7 @@ function removeLeadingEmptyLines(firstLine: string): string {
 /*
  The arguments do not contain any indentation so this is added via this method.
  */
-function addIndentationToArgumnets(
+function addIndentationToArguments(
   args: string[],
   textIndentation: number
 ): string[] {

@@ -69,7 +69,7 @@ describe('Environment Accessor', () => {
       expect(EnvironmentAccessor.getVcapService()).toBe(null);
     });
 
-    it('throws an error if VCAP_SERVICES is not parseable', () => {
+    it('throws an error if VCAP_SERVICES is not parsable', () => {
       process.env.VCAP_SERVICES = '{JSON?!';
       expect(() => EnvironmentAccessor.getVcapService()).toThrowError(
         "Failed to parse environment variable 'VCAP_SERVICES'."

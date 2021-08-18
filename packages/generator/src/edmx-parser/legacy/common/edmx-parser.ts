@@ -82,7 +82,7 @@ export function getRoot(edmx: any): any {
         'There are more than two schemas in the input metadata file.'
       );
     }
-    // We assume SFSF edmx files to always have multiple schema tags
+    // We assume SFSF EDMX files to always have multiple schema tags
     logger.info(`${schema.length} schemas found. Schemas will be merged.`);
     return schema.reduce(
       (mergedSchemas, schemaEntry) => ({ ...mergedSchemas, ...schemaEntry }),

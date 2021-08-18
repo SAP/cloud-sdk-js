@@ -6,7 +6,7 @@ Please make sure, that you are familiar with our [style guide](./STYLEGUIDE.md).
 
 ## Project Structure
 
-This project containes multiple packages, that are managed using [lerna](https://github.com/lerna/lerna) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/). Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
+This project contains multiple packages, that are managed using [lerna](https://github.com/lerna/lerna) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/). Productive packages are located in the [`packages`](./packages) directory, test packages are located in the [`test-packages`](./test-packages) directory.
 All dependencies that are used in more than one of the packages are hoisted into the root project. Dependencies, that occur only once and binaries will be placed in the node_modules of that specific package. Some of the packages are interdependent, therefore `yarn install` won't work from within those packages. Run `yarn install` in the root directory instead.
 
 ## Testing
@@ -83,7 +83,7 @@ This server is used by the E2E tests located at [test-packages/e2e-tests](./test
 **Attention** The imports in the E2E tests use the root packages e.g. `@sap-cloud-sdk/core` to mimic the way a customer would use it.
 So if you made code changes in one of the packages you need to run `yarn compile` to make the changes take effect.
 
-For manual E2E to a real remote system we have also some tests agains the [TripPin service](https://www.odata.org/blog/trippin-new-odata-v4-sample-service/) which is the standard OData V4 sample service.
+For manual E2E to a real remote system we have also some tests against the [TripPin service](https://www.odata.org/blog/trippin-new-odata-v4-sample-service/) which is the standard OData V4 sample service.
 Since the remote service is not really stable we commented out the tests under [test-packages/e2e-tests/test/TripPin](./test-packages/e2e-tests/test/TripPin) but for manual testing they can be useful.
 
 ## Linting

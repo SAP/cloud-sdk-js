@@ -6,7 +6,6 @@ import {
 } from '../../generator-utils';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType, VdmMappedEdmType, VdmEnumType } from '../../vdm-types';
-import { applyPrefixOnJsConfictParam } from '../../name-formatting-strategies';
 import { propertyDescription } from '../description-util';
 import {
   checkCollectionKind,
@@ -20,6 +19,7 @@ import {
   typesForCollection
 } from '../edmx-to-vdm-util';
 import { EdmxComplexTypeBase } from '../../edmx-parser/common';
+import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
 import { enumTypeForName } from './entity';
 
 // TODO: this should be removed once the deprecated complex type factory is removed
@@ -78,7 +78,7 @@ export function transformComplexTypesBase(
             p.Name
           ),
           propertyNameAsParam:
-            applyPrefixOnJsConfictParam(instancePropertyName),
+            applyPrefixOnJsConflictParam(instancePropertyName),
           description: propertyDescription(p),
           technicalName: p.Name,
           nullable: isNullableProperty(p),

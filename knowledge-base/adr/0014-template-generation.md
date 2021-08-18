@@ -6,7 +6,7 @@ proposed
 
 ## Context
 
-The OData client generator is currently based on the ts-morph library, that provides functionality to programatically navigate and manipulate typescript code.
+The OData client generator is currently based on the ts-morph library, that provides functionality to programmatically navigate and manipulate typescript code.
 
 ## Proposal
 
@@ -26,7 +26,7 @@ It seems to be similar when including transpilation, although there are no final
 ### Readability and convenience
 
 Without ts-morph we don't need to handle the additional layer of abstraction it brings along.
-It is very useful when analysing code, but not really necessary when generating code.
+It is very useful when analyzing code, but not really necessary when generating code.
 With native string templates we are free to use structures that suit our purpose and name them accordingly.
 The `VdmEntity` abstraction should be enough to deduct the resulting files from it.
 New team mates won't need to get used to the ts-morph API.

@@ -2,7 +2,7 @@ import { SourceFileStructure, StructureKind } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
 import { batchFunction, changesetFunction } from './function';
 import { importBatchDeclarations } from './imports';
-import { readRequestType, writeReqeustType } from './type';
+import { readRequestType, writeRequestType } from './type';
 
 export function batchSourceFile(
   service: VdmServiceMetadata
@@ -16,7 +16,7 @@ export function batchSourceFile(
       `export const default${service.className}Path = '${service.servicePath}';`,
       `const map = ${mappingInitializer(service)};`,
       readRequestType(service),
-      writeReqeustType(service)
+      writeRequestType(service)
     ]
   };
 }

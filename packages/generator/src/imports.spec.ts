@@ -116,7 +116,7 @@ describe('imports', () => {
       ).toEqual(['EdmTypeField', 'OrderableEdmTypeField']);
     });
 
-    it('contains unique multilink import', () => {
+    it('contains unique one-to-many link import', () => {
       expect(
         coreNavPropertyFieldTypeImportNames([multiLink, multiLink], 'v2')
       ).toEqual(['Link']);

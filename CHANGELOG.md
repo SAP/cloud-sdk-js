@@ -138,7 +138,7 @@ Blog: TBD<br>
 ## Compatibility Notes
 
 - [core] Use `HEAD` instead of `GET` when fetching CSRF tokens. Change the URL for CSRF token fetching in OData requests from the service URL to the request URL. 
-- [test-util] Use `HEAD` for `mockHeaderRequest()` to align with the core behaviour.
+- [test-util] Use `HEAD` for `mockHeaderRequest()` to align with the core behavior.
 - [core] Remove experimental `Exclude` type, which was accidentally exposed as non-experimental.
 - [openapi-generator] Rename the CLI generator command from `generate-openapi-client` to `openapi-generator`.
 - [openapi-generator] Rename some generator options and default behavior of those options ([details](./knowledge-base/adr/0020-generator-options.md)).
@@ -357,12 +357,12 @@ Blog: TBD<br>
 
 ## Compatibility Notes
 
-- [Generator] In order to support multi-schema generation, the edmx schema/namespace related types have been extended.
+- [Generator] In order to support multi-schema generation, the EDMX schema/namespace related types have been extended.
 - [Generator] The deprecated static property `_serviceName` will not be generated.
 
 ## New Functionality
 
-- [Generator] Support parsing of multiple schemas in the edmx service specification.
+- [Generator] Support parsing of multiple schemas in the EDMX service specification.
 - [Util] Add string formatting functions.
 
 ## Improvements
@@ -435,7 +435,7 @@ Blog: TBD<br>
 
 ## Fixed Issues
 
-- [Generator] Fix function imports (OData V2 + V4) and action imports, where the return type is a primitive edm type like `Edm.String`.
+- [Generator] Fix function imports (OData V2 + V4) and action imports, where the return type is a primitive EDM type like `Edm.String`.
 - [Generator] Fix path references in generator configuration file to be treated as relative to the configuration file.
 - [Core] Fix expiration times in the client credentials cache.
 - [Core] Fix csrf request redirects against On-Premise systems
@@ -475,7 +475,7 @@ Blog: TBD<br>
 
 ## Compatibility Notes
 
-- [Generator] The interface `EnityTypeForceMandatory` (e.g., `BusinessPartnerTypeForceMandatory`) is removed.
+- [Generator] The interface `EntityTypeForceMandatory` (e.g., `BusinessPartnerTypeForceMandatory`) is removed.
 
 ## New Functionality
 
@@ -549,7 +549,7 @@ Blog: TBD<br>
 ## New Functionality
 
 - Added experimental support for OData V4 enum type. Use the `@sap/cloud-sdk-generator` to generate the type safe client.
-- Include fallback `Edm.Any` for previously unsupported edm types like Edm.Geography.
+- Include fallback `Edm.Any` for previously unsupported EDM types like Edm.Geography.
   Type safety and related features like URI conversion are not supported for the fallback type.
 
 ## Improvements
@@ -633,8 +633,8 @@ Blog: TBD<br>
 
 ## Known Issues
 
-- The internal deserialization and serialization of `Edm.TimeOfDay` representations is not lossless for corner cases where the fractional seconds contain trailing zeros. As a sideeffect `12:12:12.0` can potentially be transformed to `12:12:12` when performing a GET and PATCH / PUT request subsequently.
-- OData v4 edm types that are unknown to the SAP Cloud SDK are ignored, such that properties and parameters of those types are missing.
+- The internal deserialization and serialization of `Edm.TimeOfDay` representations is not lossless for corner cases where the fractional seconds contain trailing zeros. As a side effect `12:12:12.0` can potentially be transformed to `12:12:12` when performing a GET and PATCH / PUT request subsequently.
+- OData v4 EDM types that are unknown to the SAP Cloud SDK are ignored, such that properties and parameters of those types are missing.
 
 ## Compatibility Notes
 
@@ -681,7 +681,7 @@ Blog: TBD<br>
 - The properties `isMulti` of the type`VdmFunctionImportReturnType` and `isMultiLink` as well as `multiplicity` of `VdmNavigationProperty` were deprecated and replaced by `isCollection`.
 - The interface `VdmServiceMetadata` now also contains a property `oDataVersion` that is mandatory.
 - Due to the fix in the generator regarding the name clash it is possible that the order of suffixes could change.
-  If you regenerate a VDM with a name clash the Enitiy_1 and Entity_2 could swap.
+  If you regenerate a VDM with a name clash the Entity_1 and Entity_2 could swap.
 
 ## New Functionality
 
@@ -788,7 +788,7 @@ Blog: https://blogs.sap.com/?p=1068438<br>
 
 ## Compatibility Notes
 
-- Due to the intoroduced validation for destination configurations, destinations of type `HTTP` are expected to contain a `url` or `URL` property. Note that when retrieving a destination from the `destinations` environment variable, all destinations are validated. This validation applies even to destinations that are not read.
+- Due to the introduced validation for destination configurations, destinations of type `HTTP` are expected to contain a `url` or `URL` property. Note that when retrieving a destination from the `destinations` environment variable, all destinations are validated. This validation applies even to destinations that are not read.
 
 ## Improvements
 
@@ -831,7 +831,7 @@ Blog: https://blogs.sap.com/?p=1060707<br>
 
 ## Improvements
 
-- Allow the definition of a custom version for the gerated `package.json` by passing the desired version to the generator as an argument `versionInPackageJson`.
+- Allow the definition of a custom version for the generated `package.json` by passing the desired version to the generator as an argument `versionInPackageJson`.
 
 # 1.17.2
 
@@ -852,7 +852,7 @@ Blog: https://blogs.sap.com/?p=1053508<br>
 - Consider proxy environment variables (`HTTP_PROXY`, `HTTPS_PROXY`, `http_proxy`, `https_proxy`) for destinations configured in VCAP service bindings (e.g. when using SAP Extension Factory).
 - _OData client generator_ Fix a generation issue, where wrong type names were generated for nested complex types in certain circumstances.
 - Fix the return value of OData DELETE requests. It now returns a Promise<void> as indicated by the type instead of the full Axios response.
-- Fix the return type of the functions [`asc`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/modules/_sap_cloud_sdk_core.html#asc) and [`desc`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/modules/_sap_cloud_sdk_core.html#desc) to be more specific, now returning [`Order`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/classes/_sap_cloud_sdk_core.order.html) insteaf of [`Orderable`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/modules/_sap_cloud_sdk_core.html#orderable).
+- Fix the return type of the functions [`asc`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/modules/_sap_cloud_sdk_core.html#asc) and [`desc`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/modules/_sap_cloud_sdk_core.html#desc) to be more specific, now returning [`Order`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/classes/_sap_cloud_sdk_core.order.html) instead of [`Orderable`](https://help.sap.com/doc/a7b688ee8d9441a8b70da5d384b4248a/1.0/en-US/modules/_sap_cloud_sdk_core.html#orderable).
 
 # 1.17.0
 
@@ -983,7 +983,7 @@ Blog: https://blogs.sap.com/?p=899516<br>
 - Fix a bug where the location ID of a destination for on-premise connectivity was ignored when trying to fetch CSRF tokens.
 - Fix a bug with the lookup of test destination files on windows systems related to a hard coded `/`.
 - Fix an issue when [`sanitizeDestination`](https://help.sap.com/doc/7e044f5dba0c4007afa148c74ff79a33/1.0/en-US/modules/_sap_cloud_sdk_core.html#sanitizedestination) led to an error when called multiple times on the same destination object.
-- Fix an OData client generation bug where the number of generated entities with default name pattern was unintenionally limited to 10.
+- Fix an OData client generation bug where the number of generated entities with default name pattern was unintentionally limited to 10.
 
 # 1.12.0
 
@@ -1050,7 +1050,7 @@ Blog: https://blogs.sap.com/2019/08/10/new-versions-of-sap-cloud-sdk-3.5.0-for-j
   - Use the new method `batch` that each module for a OData service exposes (see [example for business partner service](https://help.sap.com/doc/505cd8d2cbd340a38eeae8b63b5df753/1.0/en-US/modules/_sap_cloud_sdk_vdm_business_partner_service.html#batch)) to [construct a batch request](https://help.sap.com/doc/505cd8d2cbd340a38eeae8b63b5df753/1.0/en-US/classes/_sap_cloud_sdk_core.odatabatchrequestbuilder.html). Pass prepared query and by-key request builders as parameters to the method (instead of executing them), as well as change sets.
   - Use the new method `changeset` that each module for a OData service exposes (see [example for business partner service](https://help.sap.com/doc/505cd8d2cbd340a38eeae8b63b5df753/1.0/en-US/modules/_sap_cloud_sdk_vdm_business_partner_service.html#changeset)) to construct a [change set](https://help.sap.com/doc/505cd8d2cbd340a38eeae8b63b5df753/1.0/en-US/classes/_sap_cloud_sdk_core.odatabatchchangeset.html). Pass prepared create, update, and delete request builders as parameters to the method (instead of executing them). Then, pass the constructed change set to the `batch` method.
   - Execute the batch request like any other request builder using the method [`execute`](https://help.sap.com/doc/505cd8d2cbd340a38eeae8b63b5df753/1.0/en-US/classes/_sap_cloud_sdk_core.odatabatchrequestbuilder.html#execute), which returns a promise of a list of [`BatchResponse`](https://help.sap.com/doc/505cd8d2cbd340a38eeae8b63b5df753/1.0/en-US/modules/_sap_cloud_sdk_core.html#batchresponse).
-  - [`BatchResponse`](https://help.sap.com/doc/505cd8d2cbd340a38eeae8b63b5df753/1.0/en-US/modules/_sap_cloud_sdk_core.html#batchresponse) is a union type, representing the response of an indiviual retrieve request or change set that was passed to the batch request. Use `isSuccess` to verify that the retrieve request or change set was successful. Then, use a type assertion like `response as ReadResponse` based on your knowledge of the expected response to further work with the response.
+  - [`BatchResponse`](https://help.sap.com/doc/505cd8d2cbd340a38eeae8b63b5df753/1.0/en-US/modules/_sap_cloud_sdk_core.html#batchresponse) is a union type, representing the response of an individual retrieve request or change set that was passed to the batch request. Use `isSuccess` to verify that the retrieve request or change set was successful. Then, use a type assertion like `response as ReadResponse` based on your knowledge of the expected response to further work with the response.
 - _OData client for SAP S/4HANA Cloud_: Include CSN files for all SAP S/4HANA Cloud APIs out-of-the-box. They are available from the corresponding folder in `node_modules` after npm-installing an SDK module.
   - CSN files are used in [SAP Cloud Application Programming Model (CAP)](https://cap.cloud.sap/docs/about/) when modeling a business domain using CDS. Having them generated by the generator of the SAP Cloud SDK allows immediately leveraging them in CDS models.
 

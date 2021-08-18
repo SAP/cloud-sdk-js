@@ -31,8 +31,8 @@ export class DeleteRequestBuilder<EntityT extends Entity>
 
   /**
    * Add ETag version identifier in the delete request header.
-   * @param etag - The version identifier of the entity
-   * @returns The builder itself, to facilitate method chaining
+   * @param etag - The version identifier of the entity.
+   * @returns The builder itself, to facilitate method chaining.
    */
   setVersionIdentifier(etag: string): this {
     if (etag) {

@@ -247,7 +247,7 @@ export function proxyAgent(
 }
 
 /**
- * Enum representing the different strategies for proxying request. Possible situations are "NO_PROXY", use the connectivity service proxy for On-Premise connection or a usual web proxy.
+ * Enum representing the different strategies for proxies on requests. Possible situations are "NO_PROXY", use the connectivity service proxy for On-Premise connection or a usual web proxy.
  * See also [[ProxyConfiguration]] for more details.
  */
 export enum ProxyStrategy {

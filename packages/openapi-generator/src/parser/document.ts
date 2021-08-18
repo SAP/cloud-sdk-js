@@ -41,7 +41,7 @@ export function parseSchemas(
       ...refs.getSchemaNaming(`#/components/schemas/${name}`),
       schema: parseSchema(schema, refs, options),
       description: refs.resolveObject(schema).description,
-      persistedSchemaProperties: parseSchemaProperties(schema)
+      schemaProperties: parseSchemaProperties(schema)
     })
   );
 }

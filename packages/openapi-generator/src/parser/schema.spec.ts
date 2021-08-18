@@ -233,15 +233,13 @@ describe('parseSchema', () => {
       maximum: 1000,
       default: 10
     };
-    expect(parseSchemaProperties(schemaProperties)).toEqual(
-      {
-        deprecated: true,
-        example: 100,
-        minimum: 10,
-        maximum: 1000,
-        default: 10
-      }
-    );
+    expect(parseSchemaProperties(schemaProperties)).toEqual({
+      deprecated: true,
+      example: 100,
+      minimum: 10,
+      maximum: 1000,
+      default: 10
+    });
   });
 
   it('throws an error if there are neither propertes nor additional properties', async () => {

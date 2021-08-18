@@ -116,9 +116,7 @@ export function schemaPropertyDocumentation(
     signature.push(schema.description);
   }
 
-  signature.push(
-    ...getSchemaPropertiesDocumentation(schema.schemaProperties)
-  );
+  signature.push(...getSchemaPropertiesDocumentation(schema.schemaProperties));
 
   return documentationBlock`${signature.join(unixEOL)}`;
 }

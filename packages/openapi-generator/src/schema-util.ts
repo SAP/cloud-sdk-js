@@ -160,10 +160,11 @@ export function getSchemaPropertiesDocumentation(
   if (schemaProperties) {
     return Object.entries(schemaProperties).map(([propertyName, value]) => {
       if (propertyName === 'deprecated') {
-          return '@deprecated';
-      } else if (propertyName === 'example') {
+        return '@deprecated';
+      }
+      if (propertyName === 'example') {
         return `@example ${JSON.stringify(schemaProperties?.example, null, 2)}`;
-      } 
+      }
       return `${titleFormat(propertyName)}: ${JSON.stringify(value, null, 2)}.`;
     });
   }

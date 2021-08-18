@@ -1,4 +1,7 @@
-import { OpenApiReferenceSchema, OpenApiSchemaProperties } from './openapi-types';
+import {
+  OpenApiReferenceSchema,
+  OpenApiSchemaProperties
+} from './openapi-types';
 import { collectRefs, getSchemaPropertiesDocumentation } from './schema-util';
 
 describe('collectRefs', () => {
@@ -49,14 +52,12 @@ describe('collectRefs', () => {
       maxLength: 10,
       default: 'test'
     };
-    expect(getSchemaPropertiesDocumentation(schemaProperties)).toEqual(
-      [
-        '@deprecated',
-        '@example \"testString\"',
-        'Min Length: 2.',
-        'Max Length: 10.',
-        'Default: \"test\".'
-      ]
-    );
+    expect(getSchemaPropertiesDocumentation(schemaProperties)).toEqual([
+      '@deprecated',
+      '@example "testString"',
+      'Min Length: 2.',
+      'Max Length: 10.',
+      'Default: "test".'
+    ]);
   });
 });

@@ -98,7 +98,7 @@ describe('parseOpenApiDocument', () => {
         schema: {
           type: 'string'
         },
-        persistedSchemaProperties: {}
+        schemaProperties: {}
       }
     ]);
   });

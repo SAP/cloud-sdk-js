@@ -155,21 +155,17 @@ export function getSchemaNamingFromRef(
 }
 
 export function getSchemaPropertiesDocumentation(
-  schema: OpenApiSchemaProperties
+  schemaProperties: OpenApiSchemaProperties
 ): string[] {
-  const signature: string[] = [];
-  if (schema) {
-    Object.entries(schema).map(([propertyName, value]) => {
-      if (propertyName === 'deprecated' && schema?.deprecated) {
-        signature.push('@deprecated');
-      } else if (propertyName === 'example' && schema?.example) {
-        signature.push(`@example ${JSON.stringify(schema?.example, null, 2)}`);
-      } else if (value) {
-        signature.push(
-          `${titleFormat(propertyName)}: ${JSON.stringify(value, null, 2)}.`
-        );
-      }
+  if (schemaProperties) {
+    return Object.entries(schemaProperties).map(([propertyName, value]) => {
+      if (propertyName === 'deprecated') {
+          return '@deprecated';
+      } else if (propertyName === 'example') {
+        return `@example ${JSON.stringify(schemaProperties?.example, null, 2)}`;
+      } 
+      return `${titleFormat(propertyName)}: ${JSON.stringify(value, null, 2)}.`;
     });
   }
-  return signature;
+  return [];
 }

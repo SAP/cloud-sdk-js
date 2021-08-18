@@ -17,7 +17,7 @@ describe('apiFile', () => {
               originalName: 'id',
               schema: { type: 'string' },
               required: true,
-              namedSchemaProperties: {}
+              schemaProperties: {}
             }
           ],
           queryParameters: [],
@@ -67,7 +67,7 @@ describe('apiFile', () => {
                 schemaName: 'PathParameterType'
               } as OpenApiReferenceSchema,
               required: true,
-              namedSchemaProperties: {}
+              schemaProperties: {}
             }
           ],
           queryParameters: [
@@ -80,7 +80,7 @@ describe('apiFile', () => {
                 schemaName: 'QueryParameterType'
               } as OpenApiReferenceSchema,
               required: true,
-              namedSchemaProperties: {}
+              schemaProperties: {}
             }
           ],
           pathPattern: 'test/{id}',

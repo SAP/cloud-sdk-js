@@ -117,7 +117,7 @@ export function schemaPropertyDocumentation(
   }
 
   signature.push(
-    ...getSchemaPropertiesDocumentation(schema.namedSchemaProperties)
+    ...getSchemaPropertiesDocumentation(schema.schemaProperties)
   );
 
   return documentationBlock`${signature.join(unixEOL)}`;

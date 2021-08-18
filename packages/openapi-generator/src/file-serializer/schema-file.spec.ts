@@ -18,13 +18,13 @@ describe('schemaFile', () => {
               schema: {
                 type: 'string'
               },
-              namedSchemaProperties: {
+              schemaProperties: {
                 maxLength: 10
               }
             }
           ]
         },
-        persistedSchemaProperties: {
+        schemaProperties: {
           deprecated: true
         }
       })
@@ -48,7 +48,7 @@ describe('schemaFile', () => {
       schemaFile({
         schemaName: 'MySchema',
         fileName: 'my-schema',
-        persistedSchemaProperties: {},
+        schemaProperties: {},
         schema: {
           properties: [
             {
@@ -59,7 +59,7 @@ describe('schemaFile', () => {
                 schemaName: 'OtherSchema1',
                 fileName: 'other-schema-1'
               },
-              namedSchemaProperties: {}
+              schemaProperties: {}
             },
             {
               name: 'otherSchema2',
@@ -70,7 +70,7 @@ describe('schemaFile', () => {
                 schemaName: 'OtherSchema2',
                 fileName: 'other-schema-2'
               },
-              namedSchemaProperties: {}
+              schemaProperties: {}
             }
           ]
         }
@@ -99,7 +99,7 @@ describe('schemaFile', () => {
         schema: {
           items: { not: { type: 'integer' } }
         },
-        persistedSchemaProperties: {}
+        schemaProperties: {}
       })
     ).toMatchInlineSnapshot(`
       "    
@@ -125,11 +125,11 @@ describe('schemaFile', () => {
                 schemaName: 'MySchema',
                 fileName: 'my-schema'
               },
-              namedSchemaProperties: {}
+              schemaProperties: {}
             }
           ]
         },
-        persistedSchemaProperties: {}
+        schemaProperties: {}
       })
     ).toMatchInlineSnapshot(`
       "    
@@ -156,7 +156,7 @@ describe('schemaFile', () => {
               schema: {
                 type: 'string'
               },
-              namedSchemaProperties: {
+              schemaProperties: {
                 minLength: 2
               }
             },
@@ -166,11 +166,11 @@ describe('schemaFile', () => {
               schema: {
                 type: 'string'
               },
-              namedSchemaProperties: {}
+              schemaProperties: {}
             }
           ]
         },
-        persistedSchemaProperties: {}
+        schemaProperties: {}
       })
     ).toMatchInlineSnapshot(`
       "    

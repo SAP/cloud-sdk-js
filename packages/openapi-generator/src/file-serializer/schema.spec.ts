@@ -19,7 +19,7 @@ describe('serializeSchema for object schemas', () => {
             name: 'simpleProperty',
             required: true,
             schema: { type: 'integer' },
-            namedSchemaProperties: {
+            schemaProperties: {
               minimum: 8
             }
           },
@@ -32,13 +32,13 @@ describe('serializeSchema for object schemas', () => {
                   name: 'stringProperty',
                   required: false,
                   schema: { type: 'string' },
-                  namedSchemaProperties: {
+                  schemaProperties: {
                     pattern: '^[p{L}-.^_|~d]+$'
                   }
                 }
               ]
             },
-            namedSchemaProperties: {}
+            schemaProperties: {}
           }
         ]
       })
@@ -92,7 +92,7 @@ describe('serializeSchema for object schemas', () => {
             name: 'simpleProperty',
             required: true,
             schema: { type: 'integer' },
-            namedSchemaProperties: {}
+            schemaProperties: {}
           }
         ],
         additionalProperties: { type: 'string' }

@@ -35,7 +35,7 @@ export function schemaDocumentation(schema: OpenApiPersistedSchema): string {
   const lines = [
     schema.description ||
       `Representation of the '${schema.schemaName}' schema.`,
-    ...getSchemaPropertiesDocumentation(schema.persistedSchemaProperties)
+    ...getSchemaPropertiesDocumentation(schema.schemaProperties)
   ];
   return documentationBlock`${lines.join(unixEOL)}`;
 }

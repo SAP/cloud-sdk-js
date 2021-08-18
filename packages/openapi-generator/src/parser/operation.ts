@@ -175,6 +175,6 @@ export function parseParameters(
     ...param,
     originalName: param.name,
     schema: parseSchema(param.schema, refs, options),
-    namedSchemaProperties: {}
+    schemaProperties: {}
   }));
 }

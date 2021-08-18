@@ -162,7 +162,7 @@ function parseObjectSchemaProperties(
           : propSchema.description,
         name: propName,
         required: schema.required?.includes(propName) || false,
-        namedSchemaProperties: { ...parseSchemaProperties(propSchema) }
+        schemaProperties: { ...parseSchemaProperties(propSchema) }
       }
     ],
     []

@@ -175,9 +175,9 @@ export interface OpenApiNamedSchema {
   description?: string;
 
   /**
-   * Denotes the type specific keywords for the according object's properties.
+   * Denotes the schema properties.
    */
-  namedSchemaProperties: OpenApiSchemaProperties;
+  schemaProperties: OpenApiSchemaProperties;
 }
 
 /**
@@ -195,9 +195,9 @@ export interface OpenApiPersistedSchema extends SchemaNaming {
   description?: string;
 
   /**
-   * Denotes the type specific keywords for the according object's properties.
+   * Denotes the schema properties.
    */
-  persistedSchemaProperties: OpenApiSchemaProperties;
+  schemaProperties: OpenApiSchemaProperties;
 }
 
 /**

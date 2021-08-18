@@ -105,7 +105,7 @@ describe('parseParameters', () => {
         originalName: 'pathParam',
         in: 'path',
         schema: emptyObjectSchema,
-        namedSchemaProperties: {}
+        schemaProperties: {}
       }
     ]);
   });
@@ -220,28 +220,28 @@ describe('parsePathTemplate', () => {
         originalName: 'path-param',
         in: 'path',
         schema: { type: 'string' },
-        namedSchemaProperties: {}
+        schemaProperties: {}
       },
       {
         name: 'pathParam1',
         originalName: 'pathParam',
         in: 'path',
         schema: { type: 'string' },
-        namedSchemaProperties: {}
+        schemaProperties: {}
       },
       {
         name: 'pathParam2',
         originalName: 'PathParam1',
         in: 'path',
         schema: { type: 'string' },
-        namedSchemaProperties: {}
+        schemaProperties: {}
       },
       {
         name: 'pathParam3',
         originalName: 'path_param',
         in: 'path',
         schema: { type: 'string' },
-        namedSchemaProperties: {}
+        schemaProperties: {}
       }
     ];
     expect(

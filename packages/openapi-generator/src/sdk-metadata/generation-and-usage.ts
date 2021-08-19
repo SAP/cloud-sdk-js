@@ -29,7 +29,7 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
     repository: 'npm',
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/openapi-generator',
-      'openapi-generator --inputDir <inputDirectory> --outputDir <outputDirectory>',
+      'openapi-generator --inputDir path/to/specification/ --outputDir path/to/client/',
       linkGenerationDocumentation,
       'OpenApi'
     ),

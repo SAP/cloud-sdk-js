@@ -28,7 +28,7 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
     links: getODataLinks(),
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/generator',
-      'generate-odata-client --inputDir path/to/service-spec --outputDir path/to/',
+      'generate-odata-client --inputDir path/to/specification/ --outputDir path/to/client/',
       linkGenerationDocumentation,
       'OData'
     ),

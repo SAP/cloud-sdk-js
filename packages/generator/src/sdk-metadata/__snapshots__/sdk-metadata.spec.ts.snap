@@ -21,7 +21,7 @@ const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ dest
 <li>Generate a typed client by running <code>npm install -g @sap-cloud-sdk/generator</code> to install the code generator.</li>
 <li>Execute the generator <code>generate-odata-client --inputDir path/to/service-spec --outputDir path/to/</code></li>
 <li>You should now find generated classes in the output directory specified in step 4.</li>
-<li>By default we generate TypeScript only. If you need to transpile it to JavaScript check the <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client#options>\\"code generator CLI parameters in the documentation.</a></li>
+<li>By default we generate TypeScript only. If you need to transpile it to JavaScript, check the <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client#options\\">code generator CLI parameters in the documentation</a>.</li>
 <li>In case of any issues carefully check your configuration and refer to our <a href=\\"https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client\\">extended typed client generation manual.</a></li>
 <li>Congratulations! Check the usage example below to import and invoke your typed OData client library.</li>
 </ul>",

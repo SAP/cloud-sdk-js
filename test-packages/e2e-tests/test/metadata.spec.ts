@@ -23,7 +23,8 @@ describe('metadata', () => {
       getGenerationSteps(
         'install command',
         'generate command',
-        linkGenerationDocumentation, 'OData'
+        linkGenerationDocumentation,
+        'OData'
       ).instructions
     ).toContain(linkGenerationDocumentation);
     await checkUrlExists(linkGenerationDocumentation);

@@ -20,6 +20,9 @@ export async function getGenerationAndUsage(
   };
 }
 
+export const linkGenerationDocumentation =
+  'https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client';
+
 // will be used to generate metadata for failed and unknown case.
 export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
   return {
@@ -31,7 +34,7 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
       'npm install -g @sap-cloud-sdk/openapi-generator',
       'openapi-generator --inputDir path/to/specification/ --outputDir path/to/client/',
       linkGenerationDocumentation,
-      'OpenApi'
+      'OpenAPI'
     ),
     generatorVersion: await getSdkVersion(),
     generatorRepositoryLink:
@@ -72,13 +75,10 @@ function getApiSpecificUsage(
   };
 }
 
-export const linkGenerationDocumentation =
-  'https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client';
-
 export function getOpenApiLinks(): Links {
   return getLinks(
     'https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request',
-    'https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client',
-    'OpenApi'
+    linkGenerationDocumentation,
+    'OpenAPI'
   );
 }

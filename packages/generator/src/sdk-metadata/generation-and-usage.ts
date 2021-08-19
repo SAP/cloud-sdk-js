@@ -19,6 +19,9 @@ export async function getGenerationAndUsage(
   };
 }
 
+export const linkGenerationDocumentation =
+  'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
+
 // will be used to generate metadata for failed and unknown case.
 export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
   return {
@@ -66,13 +69,10 @@ export function getApiSpecificUsage(
   };
 }
 
-export const linkGenerationDocumentation =
-  'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
-
 export function getODataLinks(): Links {
   return getLinks(
     'https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request',
-    'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client',
+    linkGenerationDocumentation,
     'OData'
   );
 }

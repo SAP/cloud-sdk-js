@@ -3,11 +3,11 @@ import type { Links } from './sdk-metadata-types';
 export function getLinks(
   executeRequestUrl: string,
   generationManualUrl: string,
-  apiType: 'OData' | 'OpenApi'
+  apiType: 'OData' | 'OpenAPI'
 ): Links {
   return {
     gettingStarted: {
-      name: 'Getting Started with SDK for JavaScript',
+      name: 'Getting Started with the SAP Cloud SDK for JavaScript',
       url: 'https://sap.github.io/cloud-sdk/docs/js/getting-started'
     },
     sdkDocumentation: {

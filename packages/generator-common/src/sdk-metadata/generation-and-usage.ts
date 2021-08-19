@@ -10,7 +10,7 @@ export function getGenerationSteps(
     header: 'Installation & Generation Steps',
     instructions: `<ul>
 <li>Install <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">Node and npm</a>. The use of the LTS version is preferred.</li>
-<li>Download the API specification from Overview -> API Specification section. ${
+<li>Download the API specification from Overview -&gt; API Specification section. ${
       apiType === 'OData' ? 'Chose EDMX format.' : 'Chose JSON format.'
     }</li>
 <li>Generate a typed client by running <code>${installCommand}</code> to install the code generator.</li>

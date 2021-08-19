@@ -10,6 +10,10 @@ export function getLinks(
       name: 'Getting Started with SDK for JavaScript',
       url: 'https://sap.github.io/cloud-sdk/docs/js/getting-started'
     },
+    sdkDocumentation: {
+      url: 'https://sap.github.io/cloud-sdk/',
+      name: 'The SAP Cloud SDK documentation'
+    },
     overviewDocumentation: {
       name: `${apiType} consumption manual`,
       url: executeRequestUrl
@@ -17,10 +21,6 @@ export function getLinks(
     generationManual: {
       name: `${apiType} client generation manual`,
       url: generationManualUrl
-    },
-    sdkDocumentation: {
-      url: 'https://sap.github.io/cloud-sdk/',
-      name: 'The SAP Cloud SDK documentation'
     },
     support: {
       name: 'Get support or give feedback',

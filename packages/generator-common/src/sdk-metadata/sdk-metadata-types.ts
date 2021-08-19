@@ -46,7 +46,7 @@ export interface PregeneratedLibrary {
   /**
    * Information how to install it via npm or maven.
    */
-  installLibrarySteps: InstructionWithText;
+  installLibrarySteps: InstructionWithTextAndHeader;
   /**
    * Compatibility version note. Is not filled yet since there is no flow to detect API changes since the versions are not maintained and the hash workaround is not yet in place.
    */
@@ -57,17 +57,17 @@ export interface PregeneratedLibrary {
 }
 
 export interface Links {
+  gettingStarted: LinkWithName;
   sdkDocumentation: LinkWithName;
-  featureDocumentation: LinkWithName;
   support: LinkWithName;
-  apiHubTutorial: LinkWithName;
   generationManual: LinkWithName;
+  overviewDocumentation: LinkWithName;
 }
 export interface GenerationAndUsage {
   generatorVersion: string;
   generatorRepositoryLink: UrlString;
   repository: 'Maven' | 'npm';
-  generationSteps: InstructionWithText;
+  generationSteps: InstructionWithTextAndHeader;
   apiSpecificUsage: InstructionWithTextAndHeader | undefined;
   genericUsage: InstructionWithTextAndHeader;
   links: Links;

@@ -1,6 +1,9 @@
 import { checkUrlExists } from '@sap-cloud-sdk/util';
 import axios from 'axios';
-import { InstructionWithText, PregeneratedLibrary } from './sdk-metadata-types';
+import {
+  InstructionWithTextAndHeader,
+  PregeneratedLibrary
+} from './sdk-metadata-types';
 
 export async function isPublishedNpmPackage(
   npmPackageName: string
@@ -25,10 +28,11 @@ export async function getLatestVersionOfNpmPackage(
 
 export function getInstallationSnippet(
   npmPackageName: string
-): InstructionWithText {
+): InstructionWithTextAndHeader {
   return {
+    header: 'Installation',
     instructions: `npm i ${npmPackageName}:latest`,
-    text: 'Execute the following npm command to install the pregenerated client.'
+    text: 'Add this client library as a dependency to your JavaScript project by running the npm command below in the root folder of your project. For more details take a look at our "Getting Started with the SAP Cloud SDK for JavaScript" guide in the "Helpful Links" menu.'
   };
 }
 

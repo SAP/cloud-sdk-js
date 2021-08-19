@@ -94,7 +94,7 @@ const responseData = await DummyApi.DummyFunction().execute({ destinationName:'m
       "header": "Installation & Generation Steps",
       "instructions": "<ul>
 <li>Install <a href=\\"https://docs.npmjs.com/downloading-and-installing-node-js-and-npm\\">Node and npm.</a>. The use of the LTS version is preferred.</li>
-<li>Download the API specification from Overview -> API Specification section. Chose JSON format.</li>
+<li>Download the API specification from Overview -&gt; API Specification section. Chose JSON format.</li>
 <li>Generate a typed client by running <code>npm install -g @sap-cloud-sdk/openapi-generator</code> to install the code generator.</li>
 <li>Execute the generator <code>openapi-generator --inputDir <inputDirectory> --outputDir <outputDirectory></code></li>
 <li>You should now find generated classes in the output directory specified in step 4.</li>

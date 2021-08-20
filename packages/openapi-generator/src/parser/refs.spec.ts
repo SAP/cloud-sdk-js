@@ -103,7 +103,7 @@ describe('OpenApiDocumentRefs', () => {
         }
       );
 
-      // The to camalCase removes the _ in the origirnal name.
+      // The to camelCase removes the _ in the original name.
       expect(
         refs.getSchemaNaming('#/components/schemas/schema12345_6')
       ).toEqual({

@@ -7,10 +7,10 @@ import { URL } from 'url';
  */
 export function replaceSubdomain(issuerUrl: string, xsuaaUrl: string): string {
   if (!isValidURL(issuerUrl)) {
-    throw new Error('Jwt issuer url is not valid "' + issuerUrl + '".');
+    throw new Error('JWT issuer URL is not valid "' + issuerUrl + '".');
   }
   if (!isValidURL(xsuaaUrl)) {
-    throw new Error('Xsuaa url is not valid "' + xsuaaUrl + '".');
+    throw new Error('XSUAA URL is not valid "' + xsuaaUrl + '".');
   }
   const subdomain = parseSubdomain(issuerUrl);
   return replace(xsuaaUrl, subdomain);

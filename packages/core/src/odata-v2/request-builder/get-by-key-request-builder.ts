@@ -8,6 +8,7 @@ import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
 import { oDataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
+
 /**
  * Create an OData request to get a single entity based on its key properties.
  * The properties available in the response can be restricted by creating a [[GetAllRequestBuilder.select selection]], where no selection is equal to selecting all fields.

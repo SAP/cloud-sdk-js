@@ -1,4 +1,4 @@
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
 import {
   isSelectedProperty,
   Field,
@@ -62,7 +62,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * Constructs an entityDeserializer given the OData v2 or v4 specific methods.
  * The concrete deserializers are created in odata/v2/entity-deserializer.ts and odata/v4/entity-deserializer.ts
  * @param edmToTs - Converters  emd input to ts values.
- * @param extractODataETag - Extractor for the Etag.
+ * @param extractODataETag - Extractor for the ETag.
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
  * @returns a entity deserializer as defined by [[EntityDeserializer]]
  */
@@ -77,7 +77,7 @@ export function entityDeserializer(
    * If a version identifier is found in the '__metadata' or in the request header, the method also sets it.
    * @param json - The JSON payload.
    * @param entityConstructor - The constructor function of the entity class.
-   * @param requestHeader - Optional parameter which may be used to add a version identifier (etag) to the entity
+   * @param requestHeader - Optional parameter which may be used to add a version identifier (ETag) to the entity
    * @returns An instance of the entity class.
    */
   function deserializeEntity<EntityT extends Entity, JsonT>(
@@ -259,7 +259,7 @@ export function entityDeserializer(
 }
 
 export function extractEtagFromHeader(headers: any): string | undefined {
-  return headers ? headers['Etag'] || headers['etag'] : undefined;
+  return pickValueIgnoreCase(headers, 'etag');
 }
 
 /**

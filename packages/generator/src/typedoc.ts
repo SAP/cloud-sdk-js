@@ -162,8 +162,8 @@ export interface NamedDocType extends DocType {
   name: string;
 }
 
-function tagToText(tag: string, descr = ''): string {
-  return `${unixEOL}@${tag}` + (descr ? ` ${descr}` : '');
+function tagToText(tag: string, description = ''): string {
+  return `${unixEOL}@${tag}` + (description ? ` ${description}` : '');
 }
 
 export function enumDocs(enumType: VdmEnumType): string {

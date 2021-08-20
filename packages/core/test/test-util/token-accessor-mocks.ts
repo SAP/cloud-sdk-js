@@ -1,7 +1,9 @@
+import nock from 'nock';
 import * as tokenAccessor from '../../src/connectivity/scp-cf/token-accessor';
 import { decodeJwt } from '../../src/connectivity/scp-cf';
-import { TestTenants } from './environment-mocks';
+import { onlyIssuerXsuaaUrl, TestTenants } from './environment-mocks';
 import {
+  onlyIssuerServiceToken,
   providerJwtBearerToken,
   providerServiceToken,
   subscriberJwtBearerToken,
@@ -9,6 +11,12 @@ import {
   userApprovedProviderServiceToken,
   userApprovedSubscriberServiceToken
 } from './mocked-access-tokens';
+
+export function expectAllMocksUsed(nocks: nock.Scope[]) {
+  nocks.forEach(nock1 => {
+    expect(nock1.isDone()).toBe(true);
+  });
+}
 
 export function mockServiceToken() {
   return jest
@@ -21,6 +29,10 @@ export function mockServiceToken() {
         typeof options.userJwt === 'string'
           ? decodeJwt(options.userJwt)
           : options.userJwt;
+
+      if (userJwt.iss === onlyIssuerXsuaaUrl) {
+        return Promise.resolve(onlyIssuerServiceToken);
+      }
 
       if (userJwt.zid === TestTenants.PROVIDER) {
         return Promise.resolve(providerServiceToken);

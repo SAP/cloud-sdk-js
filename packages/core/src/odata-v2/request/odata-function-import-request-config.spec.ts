@@ -37,7 +37,7 @@ describe('ODataFunctionImportRequestConfig', () => {
     );
   });
 
-  it('resourcePath is the funtion import name', () => {
+  it('resourcePath is the function import name', () => {
     expect(config.resourcePath()).toBe('Config');
   });
 

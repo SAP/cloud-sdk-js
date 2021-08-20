@@ -262,7 +262,7 @@ const responses: BatchResponse[] = await batch(
   changeset(createRequestBuilder, deleteRequestBuilder, updateRequestBuilder)
 ).execute(destination);
 
-if (responses.every(response => response.isSucces())) {
+if (responses.every(response => response.isSuccess())) {
   // Why is isSuccess a function?
   const bupas = (responses[0] as ReadResponse).as(BusinessPartner); // It is unfortunate that I have to cast
   const changeSetResponse: WriteResponses = responses[1] as WriteResponses;

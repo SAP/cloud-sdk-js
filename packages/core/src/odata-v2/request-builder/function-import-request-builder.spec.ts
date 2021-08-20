@@ -72,7 +72,7 @@ describe('FunctionImportRequestBuilder', () => {
     ).resolves.not.toThrow();
   });
 
-  it('returns single edm type', async () => {
+  it('returns single EDM type', async () => {
     const requestBuilder = testFunctionImportEdmReturnType({});
 
     nock(defaultHost)
@@ -84,7 +84,7 @@ describe('FunctionImportRequestBuilder', () => {
     expect(returnValue).toBe(true);
   });
 
-  it('return any type for unsupported edm type in function module', async () => {
+  it('return any type for unsupported EDM type in function module', async () => {
     const requestBuilder = testFunctionImportUnsupportedEdmTypes({
       simpleParam: 'SomeUntypedValue'
     });

@@ -87,7 +87,7 @@ function validateAuthHeader(header: string | undefined): boolean {
 }
 
 /**
- * The URL for fetching the verfication certificate should have the same domain as the XSUAA. So if the UUA domain is "authentication.sap.hana.ondemand.com" the URL should be like
+ * The URL for fetching the verification certificate should have the same domain as the XSUAA. So if the UUA domain is "authentication.sap.hana.ondemand.com" the URL should be like
  * http://something.authentication.sap.hana.ondemand.com/somePath so the host should end with the domain.
  * @param verificationKeyURL - URL used for obtaining the verification key
  * @param uaaDomain - domain given in the XSUAA credentials
@@ -408,4 +408,31 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT>(
       `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
     );
   }
+}
+
+/**
+ * Object holding a decoded JWT payload received by decoding the encoded string also in this object.
+ */
+export interface JwtPair {
+  decoded: JwtPayload;
+  encoded: string;
+}
+
+/**
+ * The user JWT can be a full JWT containing user information but also a reduced one setting only the iss value
+ * This method divides the two cases.
+ * @param token - Token to be investigated
+ * @returns Boolean value with true if the input is a UserJwtPair
+ */
+export function isUserToken(token: JwtPair | undefined): token is JwtPair {
+  if (!token) {
+    return false;
+  }
+  // Check if it is an Issuer Payload
+  const keys = Object.keys(token.decoded);
+  if (keys.length === 1 && keys[0] === 'iss') {
+    return false;
+  }
+
+  return true;
 }

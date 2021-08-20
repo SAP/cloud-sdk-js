@@ -1,22 +1,45 @@
-jest.mock('../http-client/http-client');
-
+import nock from 'nock';
+import {
+  expectAllMocksUsed,
+  certificateMultipleResponse,
+  certificateSingleResponse,
+  mockInstanceDestinationsCall,
+  mockServiceBindings,
+  mockServiceToken,
+  mockSingleDestinationCall,
+  mockSubaccountDestinationsCall,
+  onlyIssuerServiceToken,
+  onlyIssuerXsuaaUrl
+} from '../../test/test-util';
 import * as httpClient from '../http-client/http-client';
+import {
+  parseDestination,
+  sanitizeDestination,
+  wrapJwtInHeader
+} from '../connectivity';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {
   url: 'http://example.com'
 };
 
+const httpSpy = jest.spyOn(httpClient, 'executeHttpRequest');
+const dummyResponse = 'dummy response';
+
 describe('openapi-request-builder', () => {
+  beforeEach(() => {
+    nock(destination.url).get(/.*/).reply(200, dummyResponse);
+    nock(destination.url).post(/.*/).reply(200);
+  });
   afterEach(() => {
-    jest.resetAllMocks();
+    httpSpy.mockClear();
   });
 
-  it('executeRaw executes a request without parameters', () => {
+  it('executeRaw executes a request without parameters', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
-    requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+    const response = await requestBuilder.executeRaw(destination);
+    expect(httpSpy).toHaveBeenCalledWith(
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test',
@@ -26,17 +49,18 @@ describe('openapi-request-builder', () => {
       },
       { fetchCsrfToken: false }
     );
+    expect(response.data).toBe(dummyResponse);
   });
 
-  it('executeRaw executes a request with query parameters', () => {
+  it('executeRaw executes a request with query parameters', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test', {
       queryParameters: {
         limit: 100
       }
     });
-    requestBuilder.executeRaw(destination);
+    const response = await requestBuilder.executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test',
@@ -48,17 +72,18 @@ describe('openapi-request-builder', () => {
       },
       { fetchCsrfToken: false }
     );
+    expect(response.data).toBe(dummyResponse);
   });
 
-  it('executeRaw executes a request with body', () => {
+  it('executeRaw executes a request with body', async () => {
     const requestBuilder = new OpenApiRequestBuilder('post', '/test', {
       body: {
         limit: 100
       }
     });
-    requestBuilder.executeRaw(destination);
+    await requestBuilder.executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'post',
         url: '/test',
@@ -72,13 +97,62 @@ describe('openapi-request-builder', () => {
     );
   });
 
-  it('addCustomHeaders', () => {
+  it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
+    mockServiceBindings();
+    mockServiceToken();
+
+    const nocks = [
+      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
+      mockSubaccountDestinationsCall(
+        nock,
+        certificateMultipleResponse,
+        200,
+        onlyIssuerServiceToken
+      ),
+      mockSingleDestinationCall(
+        nock,
+        certificateSingleResponse,
+        200,
+        'ERNIE-UND-CERT',
+        wrapJwtInHeader(onlyIssuerServiceToken).headers
+      ),
+      nock(certificateSingleResponse.destinationConfiguration.URL)
+        .get(/.*/)
+        .reply(200, 'iss token used on the way')
+    ];
+    const requestBuilder = new OpenApiRequestBuilder('get', '/test', {
+      body: {
+        limit: 100
+      }
+    });
+    const response = await requestBuilder.executeRaw(
+      { destinationName: 'ERNIE-UND-CERT' },
+      { iss: onlyIssuerXsuaaUrl }
+    );
+    expectAllMocksUsed(nocks);
+    expect(httpSpy).toHaveBeenLastCalledWith(
+      sanitizeDestination(parseDestination(certificateSingleResponse)),
+      {
+        method: 'get',
+        url: '/test',
+        headers: {},
+        params: undefined,
+        data: {
+          limit: 100
+        }
+      },
+      { fetchCsrfToken: false }
+    );
+    expect(response.data).toBe('iss token used on the way');
+  });
+
+  it('addCustomHeaders', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
-    requestBuilder
+    const response = await requestBuilder
       .addCustomHeaders({ myCustomHeader: 'custom-header' })
       .executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+    expect(httpSpy).toHaveBeenCalledWith(
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test',
@@ -88,6 +162,7 @@ describe('openapi-request-builder', () => {
       },
       { fetchCsrfToken: false }
     );
+    expect(response.data).toBe(dummyResponse);
   });
 
   it('throws an error if the path parameters do not match the path pattern', async () => {
@@ -102,13 +177,13 @@ describe('openapi-request-builder', () => {
     );
   });
 
-  it('encodes path parameters', () => {
+  it('encodes path parameters', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test/{id}', {
       pathParameters: { id: '#test' }
     });
-    requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+    const response = await requestBuilder.executeRaw(destination);
+    expect(httpSpy).toHaveBeenCalledWith(
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test/%23test',
@@ -118,15 +193,16 @@ describe('openapi-request-builder', () => {
       },
       { fetchCsrfToken: false }
     );
+    expect(response.data).toBe(dummyResponse);
   });
 
-  it('addCustomRequestConfig', () => {
+  it('addCustomRequestConfig', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
-    requestBuilder
+    const response = await requestBuilder
       .addCustomRequestConfiguration({ responseType: 'arraybuffer' })
       .executeRaw(destination);
     expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+      sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test',
@@ -137,16 +213,17 @@ describe('openapi-request-builder', () => {
       },
       { fetchCsrfToken: false }
     );
+    expect(response.data).toEqual(Buffer.from(dummyResponse, 'utf-8'));
   });
 
-  it('will not fetch csrf token when skipping the csrf token request', () => {
+  it('will not fetch csrf token when skipping the csrf token request', async () => {
     const requestBuilder = new OpenApiRequestBuilder(
       'post',
       '/test'
     ).skipCsrfTokenFetching();
-    requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
-      destination,
+    await requestBuilder.executeRaw(destination);
+    expect(httpSpy).toHaveBeenCalledWith(
+      sanitizeDestination(destination),
       {
         method: 'post',
         url: '/test',

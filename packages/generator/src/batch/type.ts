@@ -13,7 +13,7 @@ export function readRequestType(
   };
 }
 
-export function writeReqeustType(
+export function writeRequestType(
   service: VdmServiceMetadata
 ): TypeAliasDeclarationStructure {
   return {

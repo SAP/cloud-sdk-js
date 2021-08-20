@@ -90,7 +90,7 @@ const b = TestEntity.builder(serializers).int32Property('test').build();
 TestEntity.requestBuilder(serializers).create(b).execute();
 ```
 
-The middleware has a structure like below to define (de)serializers for some edm types. In this example, only two edm types are considered.
+The middleware has a structure like below to define (de)serializers for some EDM types. In this example, only two EDM types are considered.
 
 ```ts
 interface DeSerializationMiddlewareInterface<T1, T2> {
@@ -108,9 +108,9 @@ interface DeSerializationMiddlewareInterface<T1, T2> {
 **Please note**
 
 With the api design above, when applying it for replacing the moment lib, we will introduce multiple generic types for `Entity`, `RequestBuilder`, `TestEntity` and `TestEntityRequestBuilder`, which makes our code more complicated, but the users should not be affected.
-The number of generic types depends on the number of related edm types.
-For example, for `ODataV4`, 4 edm types (`Edm.DateTimeOffset`, `Edm.Date`, `Edm.Duration` and `Edm.TimeOfDay`) are relevant, which means it will introduce 4 generic types for all the classes mentioned above.
-In the PoC example, the string/number example looks like below, where only two generic types are used for two edm types (`Edm.String` and `Edm.Int32`):
+The number of generic types depends on the number of related EDM types.
+For example, for `ODataV4`, 4 EDM types (`Edm.DateTimeOffset`, `Edm.Date`, `Edm.Duration` and `Edm.TimeOfDay`) are relevant, which means it will introduce 4 generic types for all the classes mentioned above.
+In the PoC example, the string/number example looks like below, where only two generic types are used for two EDM types (`Edm.String` and `Edm.Int32`):
 
 ```ts
 export class TestEntityTemporal<T1 = string, T2 = number> extends EntityV4<T1, T2> implements TestEntityType<T1, T2> {
@@ -124,9 +124,9 @@ export class TestEntityTemporal<T1 = string, T2 = number> extends EntityV4<T1, T
 
 - Request builders has the same complexity.
 - Serializer has the same complexity as the Deserializer.
-- The URL converter uses the serialiser, so it might not be part of the middleware.
+- The URL converter uses the serializer, so it might not be part of the middleware.
 - OData V2 has the same complexity as the OData V4.
-- Advanced data type like Complex/Collection type can be handled like the basic edm type.
+- Advanced data type like Complex/Collection type can be handled like the basic EDM type.
 
 ### Scope
 
@@ -182,18 +182,18 @@ const res4 = await TestEntityTemporal.requestBuilder(customMiddlewarePartial)
 #### Prerequisites
 
 - The middleware pattern is implemented so the SDK supports custom (de)serializer middleware in addition to the default one.
-- The `temporal` lib (or other alternatives) is ready to replace `moment` as the default (de)serialzier.
+- The `temporal` lib (or other alternatives) is ready to replace `moment` as the default (de)serializer.
 
 #### Steps
 
-1. Switch the default (de)seralizer from `moment` to e.g., `temporal`, so our sdk core will not have `moment` as a dependency but `temporal`. (breaking change)
-2. Realease a new package which contains a prebuild consts as a moment (de)serializer middleware, using `moment` as a dependency, so a user can switch the (de)serializer on demand. This allows you to use latest sdk core with `moment` instead of the default (de)serializer.
+1. Switch the default (de)serializer from `moment` to e.g., `temporal`, so our sdk core will not have `moment` as a dependency but `temporal`. (breaking change)
+2. Release a new package which contains a prebuilt constants as a moment (de)serializer middleware, using `moment` as a dependency, so a user can switch the (de)serializer on demand. This allows you to use latest sdk core with `moment` instead of the default (de)serializer.
 
 ### Next steps
 
 - Refactor the middleware structure to align with the design mentioned above
 - In addition to the `GetAllRequestBuilder`, handle all kinds of the request builders.
-- In addition to `deserialzer`, handle `serializer` and `uri-converter`.
+- In addition to `deserializer`, handle `serializer` and `uri-converter`.
 - In addition to `ODataV4`, handle `ODataV2`.
-- In addition to basic edm types, handle advances types like collection and complex types
+- In addition to basic EDM types, handle advances types like collection and complex types
 - Release a new package (`@sap-cloud-sdk/date-time-temporal`/`@sap-cloud-sdk/date-time-moment`) as a middleware component, so users can consume directly.

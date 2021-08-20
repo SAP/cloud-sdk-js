@@ -98,7 +98,7 @@ export function importDeclarationsFunction(
     service.actionsImports.map(actionImport => actionImport.parameters)
   );
   const returnTypes = service.actionsImports.map(
-    actionImpot => actionImpot.returnType
+    actionImport => actionImport.returnType
   );
   return actionFunctionImportDeclarations(
     returnTypes,

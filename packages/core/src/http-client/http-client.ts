@@ -92,18 +92,14 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   return async function <T extends HttpRequestConfig>(
     destination: Destination | DestinationNameAndJwt,
     requestConfig: T,
-    httpRequestOptions?: HttpRequestOptions
+    options?: HttpRequestOptions
   ): Promise<ReturnT> {
     const destinationRequestConfig = await buildHttpRequest(
       destination,
       requestConfig.headers
     );
     const request = merge(destinationRequestConfig, requestConfig);
-    request.headers = await addCsrfTokenToHeader(
-      destination,
-      request,
-      httpRequestOptions
-    );
+    request.headers = await addCsrfTokenToHeader(destination, request, options);
     return executeFn(request);
   };
 }

@@ -10,7 +10,7 @@ import { Import, serializeImports } from './imports';
 
 /**
  * Serialize an API representation to a string representing the resulting API file.
- * @param api - Represenation of an API.
+ * @param api - Representation of an API.
  * @param serviceName - Service name for which the API is created.
  * @returns The serialized API file contents.
  */

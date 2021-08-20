@@ -1,6 +1,5 @@
-import { createLogger } from '@sap-cloud-sdk/util';
-import { JwtPayload } from 'jsonwebtoken';
-import { decodeJwt, verifyJwt } from '../jwt';
+import { createLogger, encodeBase64 } from '@sap-cloud-sdk/util';
+import { decodeJwt, isUserToken, JwtPair, verifyJwt } from '../jwt';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -79,8 +78,8 @@ class DestinationFromServiceRetriever {
     name: string,
     options: DestinationOptions
   ): Promise<Destination | null> {
-    const decodedUserJwt =
-      await DestinationFromServiceRetriever.getDecodedUserJwt(options);
+    const subscriberToken =
+      await DestinationFromServiceRetriever.getSubscriberToken(options);
     const providerToken =
       await DestinationFromServiceRetriever.getProviderClientCredentialsToken(
         options
@@ -88,7 +87,7 @@ class DestinationFromServiceRetriever {
     const da = new DestinationFromServiceRetriever(
       name,
       options,
-      decodedUserJwt,
+      subscriberToken,
       providerToken
     );
 
@@ -128,7 +127,7 @@ class DestinationFromServiceRetriever {
       destination = await da.fetchDestinationByUserJwt();
     }
     if (destination.authentication === 'ClientCertificateAuthentication') {
-      destination = await da.addClientCertAuth();
+      destination = await da.addClientCertAuth(destinationResult.origin);
     }
 
     const withProxySetting = await da.addProxyConfiguration(destination);
@@ -136,22 +135,40 @@ class DestinationFromServiceRetriever {
     return withProxySetting;
   }
 
-  private static async getDecodedUserJwt(
+  private static async getSubscriberToken(
     options: DestinationOptions
-  ): Promise<JwtPayload | undefined> {
-    return options.userJwt
-      ? verifyJwt(options.userJwt, options)
-      : options.iss
-      ? { iss: options.iss }
-      : undefined;
+  ): Promise<JwtPair | undefined> {
+    if (options.userJwt) {
+      if (options.iss) {
+        logger.warn(
+          'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
+        );
+      }
+      return {
+        decoded: await verifyJwt(options.userJwt, options),
+        encoded: options.userJwt
+      };
+    }
+
+    if (options.iss) {
+      logger.info(
+        'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
+      );
+      const payload = { iss: options.iss };
+      return {
+        decoded: payload,
+        encoded: encodeBase64(JSON.stringify(payload))
+      };
+    }
   }
 
   private static async getProviderClientCredentialsToken(
     options: DestinationOptions
-  ): Promise<string> {
+  ): Promise<JwtPair> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userJwt, ...optionsWithoutJwt } = options;
-    return serviceToken('destination', optionsWithoutJwt);
+    const encoded = await serviceToken('destination', optionsWithoutJwt);
+    return { encoded, decoded: decodeJwt(encoded) };
   }
 
   private static async getSubscriberClientCredentialsToken(
@@ -165,22 +182,17 @@ class DestinationFromServiceRetriever {
     return serviceToken('destination', options);
   }
 
-  readonly decodedProviderClientCredentialsToken: JwtPayload;
   private options: RequiredProperties<
-    DestinationOptions,
+    Omit<DestinationOptions, 'userJwt' | 'iss'>,
     'isolationStrategy' | 'selectionStrategy' | 'useCache'
   >;
 
   private constructor(
     readonly name: string,
     options: DestinationOptions,
-    readonly decodedUserJwt: JwtPayload | undefined,
-    readonly providerClientCredentialsToken: string
+    readonly subscriberToken: JwtPair | undefined,
+    readonly providerClientCredentialsToken: JwtPair
   ) {
-    this.decodedProviderClientCredentialsToken = decodeJwt(
-      providerClientCredentialsToken
-    );
-
     const defaultOptions = {
       isolationStrategy: IsolationStrategy.Tenant,
       selectionStrategy: subscriberFirst,
@@ -272,7 +284,7 @@ class DestinationFromServiceRetriever {
   private async getAuthTokenForOAuth2UserTokenExchange(
     destinationOrigin: DestinationOrigin
   ): Promise<AuthAndExchangeTokens> {
-    if (!this.options.userJwt) {
+    if (!isUserToken(this.subscriberToken)) {
       throw Error(
         'No user token (JWT) has been provided. This is strictly necessary for `OAuth2UserTokenExchange`.'
       );
@@ -285,7 +297,7 @@ class DestinationFromServiceRetriever {
       );
       return {
         authHeaderJwt: await jwtBearerToken(
-          this.options.userJwt,
+          this.subscriberToken.encoded,
           getDestinationService(),
           this.options
         )
@@ -297,8 +309,8 @@ class DestinationFromServiceRetriever {
         `OAuth2UserTokenExchange flow started for destination ${this.name} of the provider account.`
       );
       return {
-        authHeaderJwt: this.providerClientCredentialsToken,
-        exchangeHeaderJwt: this.options.userJwt
+        authHeaderJwt: this.providerClientCredentialsToken.encoded,
+        exchangeHeaderJwt: this.subscriberToken.encoded
       };
     }
 
@@ -312,7 +324,7 @@ class DestinationFromServiceRetriever {
           await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
             this.options
           ),
-        exchangeHeaderJwt: this.options.userJwt
+        exchangeHeaderJwt: this.subscriberToken.encoded
       };
     }
     throw new Error(
@@ -337,7 +349,9 @@ class DestinationFromServiceRetriever {
    */
   private async fetchDestinationByClientCrendentialsGrant(): Promise<Destination> {
     const clientGrant = await serviceToken('destination', {
-      userJwt: this.options.userJwt || this.providerClientCredentialsToken
+      userJwt:
+        this?.subscriberToken?.decoded ||
+        this.providerClientCredentialsToken.decoded
     });
 
     return this.fetchDestinationByToken(clientGrant);
@@ -349,7 +363,7 @@ class DestinationFromServiceRetriever {
     if (destinationResult.destination.systemUser) {
       const token =
         destinationResult.origin === 'provider'
-          ? this.providerClientCredentialsToken
+          ? this.providerClientCredentialsToken.encoded
           : await DestinationFromServiceRetriever.getSubscriberClientCredentialsToken(
               this.options
             );
@@ -369,23 +383,28 @@ class DestinationFromServiceRetriever {
     /* This covers the two business user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
      The two cases are JWT issued from provider or JWT from subscriber - the two cases are handled automatically.
      In the provider case the subdomain replacement in the xsuaa.url with the iss value does nothing but this does not hurt. */
-    if (!this.options.userJwt) {
+    if (!isUserToken(this.subscriberToken)) {
       throw Error(
         'No user token (JWT) has been provided. This is strictly necessary for principal propagation.'
       );
     }
     const accessToken = await jwtBearerToken(
-      this.options.userJwt,
+      this.subscriberToken.encoded,
       destinationService,
       this.options
     );
     return this.fetchDestinationByToken(accessToken);
   }
 
-  private async addClientCertAuth(): Promise<Destination> {
+  private async addClientCertAuth(
+    origin: DestinationOrigin
+  ): Promise<Destination> {
     const accessToken = await serviceToken('destination', {
-      userJwt: this.decodedUserJwt,
-      ...this.options
+      ...this.options,
+      userJwt:
+        origin === 'subscriber'
+          ? this.subscriberToken!.decoded
+          : this.providerClientCredentialsToken.decoded
     });
 
     return fetchDestination(
@@ -401,7 +420,13 @@ class DestinationFromServiceRetriever {
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case ProxyStrategy.ON_PREMISE_PROXY:
-        return addProxyConfigurationOnPrem(destination, this.options.userJwt);
+        if (!isUserToken(this.subscriberToken)) {
+          throw new Error('For principal propagation a user JWT is needed.');
+        }
+        return addProxyConfigurationOnPrem(
+          destination,
+          this.subscriberToken.encoded
+        );
       case ProxyStrategy.INTERNET_PROXY:
         return addProxyConfigurationInternet(destination);
       case ProxyStrategy.NO_PROXY:
@@ -422,8 +447,8 @@ class DestinationFromServiceRetriever {
     }
     destinationCache.cacheRetrievedDestination(
       destinationOrigin === 'subscriber'
-        ? this.decodedUserJwt!
-        : this.decodedProviderClientCredentialsToken,
+        ? this.subscriberToken!.decoded
+        : this.providerClientCredentialsToken.decoded,
       destination,
       this.options.isolationStrategy
     );
@@ -433,7 +458,7 @@ class DestinationFromServiceRetriever {
     DestinationSearchResult | undefined
   > {
     const provider = await this.getInstanceAndSubaccountDestinations(
-      this.providerClientCredentialsToken
+      this.providerClientCredentialsToken.encoded
     );
     const destination = this.options.selectionStrategy(
       {
@@ -453,7 +478,7 @@ class DestinationFromServiceRetriever {
 
   private getProviderDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
-      this.decodedProviderClientCredentialsToken,
+      this.providerClientCredentialsToken.decoded,
       this.name,
       this.options.isolationStrategy
     );
@@ -466,9 +491,15 @@ class DestinationFromServiceRetriever {
   private async getSubscriberDestinationService(): Promise<
     DestinationSearchResult | undefined
   > {
+    if (!this.subscriberToken) {
+      throw new Error(
+        'Try to get destinations from subscriber account but user JWT was not set.'
+      );
+    }
+
     const accessToken = await serviceToken('destination', {
-      userJwt: this.decodedUserJwt,
-      ...this.options
+      ...this.options,
+      userJwt: this.subscriberToken.decoded
     });
     const subscriber = await this.getInstanceAndSubaccountDestinations(
       accessToken
@@ -488,7 +519,7 @@ class DestinationFromServiceRetriever {
 
   private getSubscriberDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
-      this.decodedUserJwt!,
+      this.subscriberToken!.decoded,
       this.name,
       this.options.isolationStrategy
     );
@@ -500,10 +531,10 @@ class DestinationFromServiceRetriever {
 
   private isProviderAndSubscriberSameTenant() {
     return (
-      this.decodedUserJwt &&
+      this.subscriberToken &&
       isIdenticalTenant(
-        this.decodedUserJwt,
-        this.decodedProviderClientCredentialsToken
+        this.subscriberToken.decoded,
+        this.providerClientCredentialsToken.decoded
       )
     );
   }
@@ -526,7 +557,7 @@ class DestinationFromServiceRetriever {
   }
 
   private isSubscriberNeeded(): boolean {
-    if (!this.decodedUserJwt) {
+    if (!this.subscriberToken) {
       return false;
     }
 

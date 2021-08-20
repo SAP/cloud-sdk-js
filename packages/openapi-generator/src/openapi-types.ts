@@ -260,7 +260,7 @@ export interface OpenApiObjectSchema {
 }
 
 /**
- * Represets a type where one of the given schemas can be chosen exclusively.
+ * Represents a type where one of the given schemas can be chosen exclusively.
  */
 export interface OpenApiOneOfSchema {
   /**
@@ -270,7 +270,7 @@ export interface OpenApiOneOfSchema {
 }
 
 /**
- * Represets a type where all of the given schemas are combined into one.
+ * Represents a type where all of the given schemas are combined into one.
  */
 export interface OpenApiAllOfSchema {
   /**
@@ -280,7 +280,7 @@ export interface OpenApiAllOfSchema {
 }
 
 /**
- * Represets a type where one of the given schemas can be chosen inclusively.
+ * Represents a type where one of the given schemas can be chosen inclusively.
  */
 export interface OpenApiAnyOfSchema {
   /**
@@ -290,7 +290,7 @@ export interface OpenApiAnyOfSchema {
 }
 
 /**
- * Represets a type where any type can be used except the given one.
+ * Represents a type where any type can be used except the given one.
  */
 export interface OpenApiNotSchema {
   /**

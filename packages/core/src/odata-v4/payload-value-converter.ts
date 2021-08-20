@@ -6,7 +6,7 @@ import { identity } from '@sap-cloud-sdk/util';
 import { Time, EdmTypeShared } from '../odata-common';
 import {
   deserializersCommon,
-  serializersCommom
+  serializersCommon
 } from '../odata-common/payload-value-converter';
 import { EdmType } from './edm-types';
 
@@ -149,7 +149,7 @@ const deserializers: EdmTypeMapping = {
 };
 
 const serializers: EdmTypeMapping = {
-  ...serializersCommom,
+  ...serializersCommon,
   'Edm.Date': momentToEdmDate,
   'Edm.DateTimeOffset': momentToEdmDateTimeOffsetToMoment,
   'Edm.Duration': durationToEdmDuration,

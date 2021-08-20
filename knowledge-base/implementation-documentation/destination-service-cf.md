@@ -78,7 +78,7 @@ This nets us an access token that, when used for the destination service, will g
 Finally, there's one more relevant case for us.
 Suppose you have a destination with authentication type Basic.
 Then you will get the username and password directly when retrieving it as instance/subaccount destination.
-For destinations with autentication type OAuth2SAMLBearerAssertion (aka destinations that are S/4 system and for which principal propagation should be used), we need to trigger the propagation of the principal.
+For destinations with authentication type OAuth2SAMLBearerAssertion (aka destinations that are S/4 system and for which principal propagation should be used), we need to trigger the propagation of the principal.
 We do this by calling the destination service's `destination/{name}` endpoint for the given destination.
 However, since we want to propagate the principal (i.e. the user on whose behalf we are retrieving the destination), we need some kind of access token that reflects this user.
 We do this by first executing a user token grant request with the user's JWT and the client_id of the destination service:

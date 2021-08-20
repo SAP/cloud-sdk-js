@@ -74,7 +74,7 @@ const certificateOptions =
     if (destination.keyStoreName && destination.keyStorePassword) {
       const certificate = selectCertificate(destination);
 
-      logger.debug(`Certifcate with name "${certificate.name}" selected.`);
+      logger.debug(`Certificate with name "${certificate.name}" selected.`);
 
       return {
         ...options,
@@ -135,9 +135,9 @@ function selectCertificate(destination): DestinationCertificate {
   if (!hasSupportedFormat(certificate)) {
     const format: string | undefined = last(certificate.name.split('.'));
     throw Error(
-      `The format of the provided certificate ${
+      `The format of the provided certificate '${
         certificate.name
-      } is not supported. Supported formats are: ${supportedCertificateFormats.join(
+      }' is not supported. Supported formats are: ${supportedCertificateFormats.join(
         ', '
       )}. ${
         format && ['jks', 'keystore'].includes(format)
@@ -182,8 +182,8 @@ export function getUrlProtocol(destination: Destination): Protocol | undefined {
 
 /**
  * Builds part of the request config containing the URL and if needed proxy agents or normal http agents.
- * Considers the NO_Proxy env variable together with the targetUri.
- * @param targetUri used as baseURL in request config
+ * Considers the `no_proxy` environment variable together with the `targetUri`.
+ * @param targetUri - Used as baseURL in request config.
  * @returns HttpRequestConfig containing baseUrl and http(s) agents.
  */
 export function urlAndAgent(

@@ -1,10 +1,11 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
-  useOrFetchDestination,
   Destination,
   DestinationNameAndJwt,
+  DestinationOptions,
   DestinationRetrievalOptions,
-  isDestinationNameAndJwt
+  noDestinationErrorMessage,
+  useOrFetchDestination
 } from '../../connectivity/scp-cf';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
@@ -146,7 +147,7 @@ export abstract class MethodRequestBuilder<
   build(): ODataRequest<RequestConfigT>;
   build(
     destination: Destination | DestinationNameAndJwt,
-    options?: DestinationRetrievalOptions
+    options?: DestinationOptions
   ): Promise<ODataRequest<RequestConfigT>>;
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
@@ -157,7 +158,7 @@ export abstract class MethodRequestBuilder<
    */
   build(
     destination?: Destination | DestinationNameAndJwt,
-    options?: DestinationRetrievalOptions
+    options?: DestinationOptions
   ): ODataRequest<RequestConfigT> | Promise<ODataRequest<RequestConfigT>> {
     if (destination) {
       return useOrFetchDestination(destination, options)
@@ -176,14 +177,6 @@ export abstract class MethodRequestBuilder<
     }
     return new ODataRequest(this.requestConfig);
   }
-}
-
-function noDestinationErrorMessage(
-  destination: Destination | DestinationNameAndJwt
-): string {
-  return isDestinationNameAndJwt(destination)
-    ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
-    : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }
 
 export { MethodRequestBuilder as MethodRequestBuilderBase };

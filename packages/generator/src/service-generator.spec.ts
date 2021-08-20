@@ -60,7 +60,7 @@ describe('service-generator', () => {
     });
 
     describe('parseAllServices', () => {
-      it('generates vdm from edmx', () => {
+      it('generates vdm from EDMX', () => {
         const services = parseAllServices(
           createOptions({
             inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
@@ -77,7 +77,7 @@ describe('service-generator', () => {
         expect(services[0].entities.length).toEqual(14);
       });
 
-      it('generates vdm from edmx using swagger', () => {
+      it('generates vdm from EDMX using swagger', () => {
         const services = parseAllServices(
           createOptions({
             inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
@@ -353,7 +353,7 @@ describe('service-generator', () => {
         expect(functionImport.name).toEqual('fContinue');
       });
 
-      it('function imports edm return types are read correctly', () => {
+      it('function imports EDM return types are read correctly', () => {
         const [service] = parseAllServices(
           createOptions({
             inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
@@ -473,7 +473,7 @@ describe('service-generator', () => {
         });
       });
 
-      it('v4 function imports edm return types are read correctly', () => {
+      it('v4 function imports EDM return types are read correctly', () => {
         const [service] = parseAllServices(
           createOptions({
             inputDir: resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV'),

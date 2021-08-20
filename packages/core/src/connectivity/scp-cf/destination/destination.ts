@@ -316,3 +316,11 @@ const configMapping: Record<string, keyof Destination> = {
   KeyStorePassword: 'keyStorePassword',
   SystemUser: 'systemUser'
 };
+
+export function noDestinationErrorMessage(
+  destination: Destination | DestinationNameAndJwt
+): string {
+  return isDestinationNameAndJwt(destination)
+    ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
+    : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
+}

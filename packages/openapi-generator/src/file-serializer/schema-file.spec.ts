@@ -202,9 +202,9 @@ describe('schemaFile', () => {
     expect(
       schemaDocumentation({
         schemaName: 'mySchema',
-        description: 'My schmema description.'
+        description: 'My schema description.'
       } as OpenApiPersistedSchema)
-    ).toMatch(/My schmema description/);
+    ).toMatch(/My schema description/);
   });
 
   it('creates a schema property documentation', () => {

@@ -127,9 +127,9 @@ describe('edmToTsType', () => {
 });
 
 describe('getFallbackEdmTypeIfNeeded', () => {
-  it('return Edm.Any for unknown/unsupported edm types', () => {
+  it('return Edm.Any for unknown/unsupported EDM types', () => {
     expect(getFallbackEdmTypeIfNeeded('Edm.String')).toBe('Edm.String');
-    expect(getFallbackEdmTypeIfNeeded('Edm.Unsuported')).toBe('Edm.Any');
+    expect(getFallbackEdmTypeIfNeeded('Edm.UnsuPported')).toBe('Edm.Any');
   });
 });
 

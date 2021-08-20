@@ -7,7 +7,8 @@ import {
   OpenApiObjectSchema,
   OpenApiObjectSchemaProperty,
   OpenApiReferenceSchema,
-  OpenApiSchema
+  OpenApiSchema,
+  OpenApiSchemaProperties
 } from '../openapi-types';
 import { getType } from './type-mapping';
 import { OpenApiDocumentRefs } from './refs';
@@ -160,7 +161,8 @@ function parseObjectSchemaProperties(
           ? undefined
           : propSchema.description,
         name: propName,
-        required: schema.required?.includes(propName) || false
+        required: schema.required?.includes(propName) || false,
+        schemaProperties: { ...parseSchemaProperties(propSchema) }
       }
     ],
     []
@@ -221,4 +223,37 @@ function parseXOfSchema(
   return {
     [xOf]: (schema[xOf] || []).map(entry => parseSchema(entry, refs, options))
   };
+}
+
+/**
+ * Parse schema properties e.g. 'maxLength', 'minimum', etc.
+ * @param schema - Original schema representing a ref or schema object.
+ * @returns The parsed schema properties object.
+ */
+export function parseSchemaProperties(
+  schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
+): OpenApiSchemaProperties {
+  if (isReferenceObject(schema)) {
+    return {};
+  }
+  const schemaPropertyNames = [
+    'deprecated',
+    'example',
+    'format',
+    'default',
+    'multipleOf',
+    'maximum',
+    'minimum',
+    'maxLength',
+    'minLength',
+    'minItems',
+    'maxItems',
+    'pattern'
+  ];
+  return schemaPropertyNames.reduce((properties, propertyName) => {
+    if (schema[propertyName]) {
+      return { ...properties, [propertyName]: schema[propertyName] };
+    }
+    return properties;
+  }, {});
 }

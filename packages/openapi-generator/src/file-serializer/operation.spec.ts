@@ -17,14 +17,16 @@ describe('serializeOperation', () => {
           name: 'id',
           originalName: 'id',
           schema: { type: 'string' },
-          required: true
+          required: true,
+          schemaProperties: {}
         },
         {
           in: 'path',
           name: 'subId',
           originalName: 'subId',
           schema: { type: 'string' },
-          required: true
+          required: true,
+          schemaProperties: {}
         }
       ],
       queryParameters: [
@@ -32,7 +34,8 @@ describe('serializeOperation', () => {
           in: 'query',
           name: 'limit',
           originalName: 'limit',
-          schema: { type: 'number' }
+          schema: { type: 'number' },
+          schemaProperties: {}
         }
       ],
       response: { type: 'string' },
@@ -68,7 +71,8 @@ describe('serializeOperation', () => {
           name: 'id',
           originalName: 'id',
           schema: { type: 'string' },
-          required: true
+          required: true,
+          schemaProperties: {}
         }
       ],
       queryParameters: [],
@@ -106,7 +110,8 @@ describe('serializeOperation', () => {
           in: 'query',
           name: 'limit',
           originalName: 'limit',
-          schema: { type: 'number' }
+          schema: { type: 'number' },
+          schemaProperties: {}
         }
       ],
       response: { type: 'any' },
@@ -140,7 +145,8 @@ describe('serializeOperation', () => {
           name: 'id',
           originalName: 'id',
           schema: { type: 'string' },
-          required: true
+          required: true,
+          schemaProperties: {}
         }
       ],
       queryParameters: [],

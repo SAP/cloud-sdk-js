@@ -2,7 +2,7 @@ import { OpenAPIV3 } from 'openapi-types';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { createTestRefs, emptyObjectSchema } from '../../test/test-util';
 import { OpenApiObjectSchema } from '../openapi-types';
-import { parseSchema } from './schema';
+import { parseSchema, parseSchemaProperties } from './schema';
 
 describe('parseSchema', () => {
   const defaultOptions = { strictNaming: true };
@@ -90,7 +90,9 @@ describe('parseSchema', () => {
     const schema: OpenAPIV3.SchemaObject = {
       required: ['simpleProperty'],
       properties: {
-        simpleProperty: { type: 'string' },
+        simpleProperty: {
+          type: 'string'
+        },
         nestedObjectProperty: {
           additionalProperties: {
             properties: { simpleProperty: { type: 'string' } }
@@ -103,24 +105,70 @@ describe('parseSchema', () => {
         properties: [
           {
             name: 'simpleProperty',
+            description: undefined,
             required: true,
-            schema: { type: 'string' }
+            schema: {
+              type: 'string'
+            },
+            schemaProperties: {}
           },
           {
             name: 'nestedObjectProperty',
             required: false,
+            description: undefined,
             schema: {
               additionalProperties: {
                 additionalProperties: { type: 'any' },
                 properties: [
                   {
                     name: 'simpleProperty',
+                    description: undefined,
                     required: false,
-                    schema: { type: 'string' }
+                    schema: {
+                      type: 'string'
+                    },
+                    schemaProperties: {}
                   }
                 ]
               },
               properties: []
+            },
+            schemaProperties: {}
+          }
+        ],
+        additionalProperties: { type: 'any' }
+      }
+    );
+  });
+
+  it('parses object schema with schema properties', async () => {
+    const schema: OpenAPIV3.SchemaObject = {
+      required: ['simpleProperty'],
+      properties: {
+        simpleProperty: {
+          type: 'string',
+          deprecated: true,
+          example: 'test',
+          maxLength: 10,
+          default: 'testString'
+        }
+      }
+    };
+    expect(parseSchema(schema, await createTestRefs(), defaultOptions)).toEqual(
+      {
+        properties: [
+          {
+            name: 'simpleProperty',
+            description: undefined,
+            required: true,
+            schema: {
+              type: 'string'
+            },
+            schemaProperties: {
+              deprecated: true,
+              example: 'test',
+              maxLength: 10,
+              default: 'testString'
             }
           }
         ],
@@ -175,6 +223,27 @@ describe('parseSchema', () => {
         ) as OpenApiObjectSchema
       ).properties[0].description
     ).toEqual('Property Description');
+  });
+
+  it('parses schema properties and ignores unknown and undefined properties', () => {
+    const schemaProperties = {
+      deprecated: true,
+      example: 100,
+      minimum: 10,
+      maximum: 1000,
+      default: 10,
+      maxLength: undefined,
+      minLength: undefined,
+      format: undefined,
+      unknownProperty: undefined
+    };
+    expect(parseSchemaProperties(schemaProperties)).toEqual({
+      deprecated: true,
+      example: 100,
+      minimum: 10,
+      maximum: 1000,
+      default: 10
+    });
   });
 
   it('throws an error if there are neither properties nor additional properties', async () => {

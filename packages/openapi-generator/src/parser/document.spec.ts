@@ -95,7 +95,10 @@ describe('parseOpenApiDocument', () => {
         description: 'Schema Description',
         schemaName: 'SimpleSchema',
         fileName: 'simple-schema',
-        schema: { type: 'string' }
+        schema: {
+          type: 'string'
+        },
+        schemaProperties: {}
       }
     ]);
   });

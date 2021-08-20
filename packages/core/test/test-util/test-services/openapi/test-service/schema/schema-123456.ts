@@ -9,6 +9,9 @@
  */
 export type Schema123456 =
   | {
+      /**
+       * @example "Schema name only integers"
+       */
       someProperty?: string;
     }
   | Record<string, any>;

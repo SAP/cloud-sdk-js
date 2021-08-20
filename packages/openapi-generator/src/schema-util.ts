@@ -166,5 +166,4 @@ export function getSchemaPropertiesDocumentation(
       }
       return `${titleFormat(propertyName)}: ${JSON.stringify(value, null, 2)}.`;
     });
-  }
 }

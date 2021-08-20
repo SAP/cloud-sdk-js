@@ -11,7 +11,7 @@ An SDK to reduce your development effort when building side-by-side extension ap
 ## Announcement - Upgrade Strategy
 
 Our team is working on a version 2 of the SAP Cloud SDK for JavaScript, expected to be released January 2022.
-We outlined our upgrade strategy in a [post on our documentation portal](https://sap.github.io/cloud-sdk/docs/js/upgrade-strategy).
+We announced the release in a [post on our documentation portal](https://sap.github.io/cloud-sdk/docs/js/announcing-version-2).
 
 Please share your ideas, suggestions or improvements in our [GitHub discussion](https://github.com/SAP/cloud-sdk-js/discussions/1518).
 

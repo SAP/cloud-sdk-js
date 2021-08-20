@@ -22,7 +22,7 @@ In real URLs they must be percent-encoded as %20.
 - Using `count` on a filtered list: `http://host/service/Products/$count?$filter=Price gt 5.00`
   or even with filter on navigation `http://host/service/Categories/$count?filter=Products/Price gt 5.00`
 - Using `count` on navigation property: `http://host/service/Categories(1)/Products/$count`
-  or even with multiple navigations `http://host/service/Categories(1)/Products(2)/Items/$count`
+  or even with multiple levels of navigation `http://host/service/Categories(1)/Products(2)/Items/$count`
 
 #### v4 Only
 
@@ -48,7 +48,7 @@ const myCount: number = await TestEntity.requestBuilder()
   .execute(destination);
 ```
 
-The `count()` will return a `CountReqeustBuilder` returning `Promise<number>` on execute.
+The `count()` will return a `CountRequestBuilder` returning `Promise<number>` on execute.
 It will not contain any methods like `filter,top...`.
 
 #### B: Count with filter (v2 & v4)
@@ -96,7 +96,7 @@ The `count` is in the `filter` or `orderBy` scope and returns a number/orderable
 We propose a new lambda function like `any` or `and`:
 
 ```ts
-TestEndtiy.requestBuilder()
+TestEntity.requestBuilder()
   .getAll()
   .filter(count(TestEntity.TO_MULTI_LINK).greaterOrEqual(2))
   .execute(destination);
@@ -105,7 +105,7 @@ TestEndtiy.requestBuilder()
 the nesting described above would look like:
 
 ```ts
-TestEndtiy.requestBuilder()
+TestEntity.requestBuilder()
   .getAll()
   .filter(
     count(

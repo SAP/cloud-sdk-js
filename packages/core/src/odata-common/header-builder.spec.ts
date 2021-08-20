@@ -43,8 +43,8 @@ describe('Header-Builder', () => {
     expect(headers.authorization).toBe('Bearer some.token');
   });
 
-  describe('update request header with etag', () => {
-    it('if-match should not be set when no etag is specified', async () => {
+  describe('update request header with ETag', () => {
+    it('if-match should not be set when no ETag is specified', async () => {
       const request = createUpdateRequest(defaultDestination);
 
       mockHeaderRequest({ request });
@@ -53,7 +53,7 @@ describe('Header-Builder', () => {
       expect(actual['if-match']).toBeUndefined();
     });
 
-    it('if-match should be set when etag is specified in header-builder', async () => {
+    it('if-match should be set when ETag is specified in header-builder', async () => {
       const request = createUpdateRequest(defaultDestination);
       request.config.eTag = 'W//';
 

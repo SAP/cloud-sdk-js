@@ -34,23 +34,23 @@ export class UniqueNameGenerator {
   }
 
   /**
-   * Generate a unique name by appending an index seperated by the indexSeparator if necessary, e. g. if `MyName` is already taken `MyName_1` will be found by default.
+   * Generate a unique name by appending an index separated by the `indexSeparator` if necessary, e. g. if `MyName` is already taken `MyName_1` will be found by default.
    * If the name is already unique nothing is appended.
    * @param name - The name to get a unique name from.
    * @param caseSensitive - Whether to check the already used names in a case sensitive manner.
-   * @returns A unique name
+   * @returns A unique name.
    */
   public generateUniqueName(name: string, caseSensitive = true): string {
     return this.generateUniqueNamesWithSuffixes(name, [], caseSensitive)[0];
   }
 
   /**
-   * Generate a unique name by appending an index seperated by the indexSeparator if necessary, e. g. if `MyName` is already taken `MyName_1` will be found by default.
+   * Generate a unique name by appending an index separated by the `indexSeparator` if necessary, e. g. if `MyName` is already taken `MyName_1` will be found by default.
    * The generated name is added to the used names.
    * If the name is already unique nothing is appended.
    * @param name - The name to get a unique name from.
    * @param caseSensitive - Whether to check the already used names in a case sensitive manner.
-   * @returns A unique name
+   * @returns A unique name.
    */
   public generateAndSaveUniqueName(name: string, caseSensitive = true): string {
     const uniqueName = this.generateUniqueName(name, caseSensitive);
@@ -59,7 +59,7 @@ export class UniqueNameGenerator {
   }
 
   /**
-   * Generate unique names by appending an index seperated by the indexSeparator if necessary, while respecting the given suffixes.
+   * Generate unique names by appending an index separated by the `indexSeparator` if necessary, while respecting the given suffixes.
    * If the name is already unique nothing is appended.
    * Each given suffix is appended to the unique name in the result.
    * The resulting names are also checked for uniqueness.
@@ -101,7 +101,7 @@ export class UniqueNameGenerator {
   }
 
   /**
-   * Generate unique names by appending an index seperated by the indexSeparator if necessary, while respecting the given suffixes.
+   * Generate unique names by appending an index separated by the `indexSeparator` if necessary, while respecting the given suffixes.
    * If the name is already unique nothing is appended.
    * The generated names are added to the used names.
    * Each given suffix is appended to the unique name in the result.

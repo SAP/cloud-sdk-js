@@ -78,7 +78,7 @@ describe('renameKeys', () => {
     expect(pick(['a', 'd'], input)).toEqual({ a: 1, d: 4 });
   });
 
-  it('picks elements ignoring non exisiting keys', () => {
+  it('picks elements ignoring non existing keys', () => {
     const input = { a: 1, b: 2, c: 3, d: 4 };
     expect(pick(['a', 'f'], input)).toEqual({ a: 1 });
   });

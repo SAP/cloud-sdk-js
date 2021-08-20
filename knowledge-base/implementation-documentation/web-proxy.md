@@ -52,7 +52,7 @@ For the `no_proxy` no wildcards like `*` are considered.
 
 ## Evaluation Flow
 
-In the `destination-accesor.ts` the following flow is used to build the proxy configuration:
+In the `destination-accessor.ts` the following flow is used to build the proxy configuration:
 
 1. If the destination proxy type is `onPremise` the proxy settings from the connectivity service are taken
 2. The protocol of the destination is evaluated [default: https]

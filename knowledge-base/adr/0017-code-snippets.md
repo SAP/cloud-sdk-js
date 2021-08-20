@@ -1,4 +1,4 @@
-/* eslint-disable */
+```ts
 namespace Classes {
   class SomeClass {
     foo(): SomeClassFooCalled {
@@ -125,3 +125,4 @@ namespace Omit {
   someClass.bar().foo().bar().execute(); //ERROR
   someClass.execute();
 }
+```

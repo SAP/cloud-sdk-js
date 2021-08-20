@@ -6,7 +6,7 @@ decided
 
 ## Context 1
 
-When generating only from one spec (either generator), which is probably the most common use case, when doing this mannually, the resulting folder structure is `<outputDir>/serviceDir`, which in turn is unexpected.
+When generating only from one spec (either generator), which is probably the most common use case, when doing this manually, the resulting folder structure is `<outputDir>/serviceDir`, which in turn is unexpected.
 The name of the generator command is: `generate-X-client` indicating that only one client will be generated.
 
 ## Decision 1
@@ -31,9 +31,9 @@ Depending on the decided option, the behavior might be considered inconsistent b
 
 ## Context 2
 
-The option naming is slighly inconsistent and quite long at times.
+The option naming is slightly inconsistent and quite long at times.
 Some of the defaults might lead to many files being generated and transpiled by default - potentially more than necessary.
-We should discuss the details of those defaults and make a concious decision on whether to keep or adjust them.
+We should discuss the details of those defaults and make a conscious decision on whether to keep or adjust them.
 
 ## Decision 2
 

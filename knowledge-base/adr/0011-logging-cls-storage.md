@@ -1,10 +1,10 @@
-# Logging request specific informaiton
+# Logging request specific information
 
 We got the [request](https://github.com/SAP/cloud-sdk-js/issues/484) of logging context specific information like tenant.
 This imposes the problem how to distribute this information around.
 The information contains:
 
-- Stuff fromt the JWT (tenant,user)
+- Stuff from the JWT (tenant, user)
 - Potential custom information set on the request builder by the user.
 
 ## Option A - Passing it around
@@ -17,7 +17,7 @@ and you would have to go over all the changes and add it
 
 Pros:
 
-- works on all node vesions
+- works on all node versions
 - performance will not be affected
 
 Cons:
@@ -31,7 +31,7 @@ Since node is a single thread server you need an alternative to the concept of `
 In the node world this is the continuation local storage concept.
 This concept of continuation local storage was mainly implemented by this [npm package](https://www.npmjs.com/package/continuation-local-storage).
 Since there has been no update since 3 years it is claimed that the thing simply works by I would not have a good feeling to introduce it.
-However, in the `async_hooks` node package there is an alternative availible since version 13 calles [AsyncLocalStorage](https://nodejs.org/api/async_hooks.html#async_hooks_class_asynclocalstorage).
+However, in the `async_hooks` node package there is an alternative available since version 13 called [AsyncLocalStorage](https://nodejs.org/api/async_hooks.html#async_hooks_class_asynclocalstorage).
 
 The idea is always the same: You have a storage context attached to your chain of function you can write and read from at any point in the chain.
 
@@ -66,8 +66,8 @@ Two findings from Artem were:
 
 ### What are the supported node version on CF
 
-I have checked via `cf buildpacks` that nodejs buildpack with version `1.7.25` is availible.
-The availible [node version](https://github.com/cloudfoundry/nodejs-buildpack/releases/tag/v1.7.25) for this tag are 10,12,14.
+I have checked via `cf buildpacks` that nodejs buildpack with version `1.7.25` is available.
+The available [node version](https://github.com/cloudfoundry/nodejs-buildpack/releases/tag/v1.7.25) for this tag are 10,12,14.
 They can be specified via the [engines.npm](https://docs.cloudfoundry.org/buildpacks/node/index.html) attribute in the package.json
 
 ### Older node version support
@@ -79,7 +79,7 @@ For node 10 it is really not there. An easy way to ensure compatibility with nod
 const AsyncLocalStorage1 = require('async_hooks')
 export const instance = AsyncLocalStorage1?.AsyncLocalStorage ? new AsyncLocalStorage1.AsyncLocalStorage():undefined
 
-//The instance.run executes the function call asyn and does not return something.
+//The instance.run executes the function call asynchronously and does not return anything.
 //To get the result one could wrap it like this.
 new Promise<TestEntity[]>(resolve => {
   if(instance) {

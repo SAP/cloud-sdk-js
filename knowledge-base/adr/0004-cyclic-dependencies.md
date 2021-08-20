@@ -30,15 +30,15 @@ For more information see [wikipedia](https://en.wikipedia.org/wiki/Circular_depe
 
 ## How ot solve this on application level
 
-To rescue to this behavior, as **a workaround**, a proposed solution as a fix for the undefinition of linked properties is to import the failing class by specifying its original path in the module. In usual case we import modules elements from the `index.js` file by calling `import { PhysInventoryDocItem } from @sap/cloud-vdm-physical-inventory-doc-service`. To dodge the deterministic compilation decided by `index.ts`, it can be fixed by calling while importing the class by:
+To rescue to this behavior, as **a workaround**, a proposed solution as a fix for the undefined linked properties is to import the failing class by specifying its original path in the module. In usual case we import modules elements from the `index.js` file by calling `import { PhysInventoryDocItem } from @sap/cloud-vdm-physical-inventory-doc-service`. To dodge the deterministic compilation decided by `index.ts`, it can be fixed by calling while importing the class by:
 
 ```ts
 import { PhysInventoryDocItem } from @sap/cloud-vdm-physical-inventory-doc-service/PhysInventoryDocItem
 ```
 
-to fix the undefinition, when it occurs.
+to fix the undefined entity, when it occurs.
 
-However, due to the `static` constraint in vdm's class definitions, the suggested fix to integrate both cyclic classes in a single file and the method described in the tutorial proposed in this [medium post](https://medium.com/visual-development/how-to-fix-nasty-circular-dependency-issues-once-and-for-all-in-javascript-typescript-a04c987cf0de) won't work unfortunately.
+However, due to the `static` constraint in the pregenerated client's class definitions, the suggested fix to integrate both cyclic classes in a single file and the method described in the tutorial proposed in this [medium post](https://medium.com/visual-development/how-to-fix-nasty-circular-dependency-issues-once-and-for-all-in-javascript-typescript-a04c987cf0de) won't work unfortunately.
 
 ## Solution proposal #1
 
@@ -138,7 +138,7 @@ describe.only('Cyclic Dependency', () => {
 
 Comment:
 
-Although the provided fix is considered as a ~~hacky~~ work-around to the native javascript compilation behavior, it is to mention that it provides a solution that can be integrated on both generator and core to ensure the smoothness of de-serialization by entities participating in such cyclic dependency. The firstly provided work-around, however, can be implemented only on application level.
+Although the provided fix is considered as a ~~hacky~~ work-around to the native JavaScript compilation behavior, it is to mention that it provides a solution that can be integrated on both generator and core to ensure the smoothness of de-serialization by entities participating in such cyclic dependency. The firstly provided work-around, however, can be implemented only on application level.
 
 ## Solution proposal #2
 

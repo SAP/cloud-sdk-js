@@ -123,7 +123,7 @@ describe('env-destination-accessor', () => {
       );
     });
 
-    it('should take the first destination if multple have the same name', () => {
+    it('should take the first destination if multiple have the same name', () => {
       mockDestinationsEnv(
         {
           Name: 'FINAL-DESTINATION',

@@ -74,7 +74,7 @@ const certificateOptions =
     if (destination.keyStoreName && destination.keyStorePassword) {
       const certificate = selectCertificate(destination);
 
-      logger.debug(`Certifcate with name "${certificate.name}" selected.`);
+      logger.debug(`Certificate with name "${certificate.name}" selected.`);
 
       return {
         ...options,
@@ -135,9 +135,9 @@ function selectCertificate(destination): DestinationCertificate {
   if (!hasSupportedFormat(certificate)) {
     const format: string | undefined = last(certificate.name.split('.'));
     throw Error(
-      `The format of the provided certificate ${
+      `The format of the provided certificate '${
         certificate.name
-      } is not supported. Supported formats are: ${supportedCertificateFormats.join(
+      }' is not supported. Supported formats are: ${supportedCertificateFormats.join(
         ', '
       )}. ${
         format && ['jks', 'keystore'].includes(format)

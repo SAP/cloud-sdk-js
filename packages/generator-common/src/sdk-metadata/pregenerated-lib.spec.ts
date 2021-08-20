@@ -40,7 +40,7 @@ describe('pregenerated-lib', () => {
     );
   }, 30000);
 
-  it('gives version for exisitng client', async () => {
+  it('gives version for existing client', async () => {
     nock('http://registry.npmjs.org/')
       .get(/@sap-cloud-sdk\/core\/latest/)
       .reply(200, { version: '1.2.3' });

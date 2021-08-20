@@ -40,7 +40,7 @@ import { getDestinationFromDestinationService } from './destination-from-service
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
   afterEach(() => {
     nock.cleanAll();
-    jest.clearAllMocks(); // clears alls spyes
+    jest.clearAllMocks();
   });
 
   const destName = 'DESTINATION';

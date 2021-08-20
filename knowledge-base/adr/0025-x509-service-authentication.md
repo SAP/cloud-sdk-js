@@ -143,7 +143,7 @@ Note that the xsuaa endpoints are different:
 We change the token retrieval to the [xssec](https://www.npmjs.com/package/@sap/xssec) library.
 We would need to do the following:
 
-- Replace our exising call with the lib
+- Replace our existing call with the lib
 - Ensure the right service credentials are found in the VCAP (should already be the case)
 - The lib will take care of evaluation which type the service key is.
 

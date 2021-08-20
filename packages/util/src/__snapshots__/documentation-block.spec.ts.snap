@@ -4,7 +4,7 @@ exports[`documentation-block allows for indentation of content 1`] = `
 "/**
  * First line
  *      Second line with indentation   
- * ird line with identation
+ * ird line with indentation
  */"
 `;
 
@@ -27,7 +27,7 @@ exports[`documentation-block creates multi line documentation in block form 1`] 
 
 exports[`documentation-block handles new lines in arguments 1`] = `
 "/**
- * A single line of documentaiton with new lines in argument
+ * A single line of documentation with new lines in argument
  * First Line
  * Second Line
  * Third Line.

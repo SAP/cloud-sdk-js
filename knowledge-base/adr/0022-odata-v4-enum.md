@@ -111,7 +111,7 @@ export enum TestEnumType {
   NOT_FOUND,
   INTERNAL_ERROR
 }
-// which is equivilant to the one below
+// which is equivalent to the one below
 export enum TestEnumType {
   NOT_FOUND = 0,
   INTERNAL_ERROR = 1
@@ -217,7 +217,7 @@ This approach uses `EnumField` (e.g., `EnumField<TestEntity, TestEnumType>`) ins
 ##### Pros:
 
 - When building filters, it only allows valid parameters.
-- We can use the real enum type (e.g., `TestEnumType`) as one of the generic type of `EnumField` instead of the `Edm.Enum` type as one of the generic type of `EdmTypeField`. `Edm.Enum` is not an official edm type, which might be confusing.
+- We can use the real enum type (e.g., `TestEnumType`) as one of the generic type of `EnumField` instead of the `Edm.Enum` type as one of the generic type of `EdmTypeField`. `Edm.Enum` is not an official EDM type, which might be confusing.
 
 ##### Cons:
 

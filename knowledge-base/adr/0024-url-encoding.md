@@ -128,7 +128,7 @@ The value of the query parameters should be encoded.
 
 ### Why `encodeURI` does not solve our problem
 
-When `/` is used as part of the parameter value like `/Entity('a/b/c')`, the `encoode` is not intelligent enough to encode it. (See [Appendix](#appendix))
+When `/` is used as part of the parameter value like `/Entity('a/b/c')`, the `encode` is not intelligent enough to encode it. (See [Appendix](#appendix))
 
 ## Appendix
 

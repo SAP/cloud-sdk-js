@@ -37,9 +37,9 @@ describe('documentation-block', () => {
   });
 
   it('creates single line documentation', () => {
-    const actual = documentationBlock`A single line of documentaiton.`;
+    const actual = documentationBlock`A single line of documentation.`;
     expect(actual).toBe(
-      `/**${unixEOL} * A single line of documentaiton.${unixEOL} */`
+      `/**${unixEOL} * A single line of documentation.${unixEOL} */`
     );
   });
 
@@ -86,15 +86,15 @@ describe('documentation-block', () => {
       'Third Line'
     ].join(unixEOL);
     const actual = documentationBlock`
-    A single line of documentaiton with new lines in argument
+    A single line of documentation with new lines in argument
     ${argumentWithNewLines}.`;
     expect(actual).toMatchSnapshot();
   });
 
   it('masks */ character', () => {
-    const actual = documentationBlock`A single line of */ documentaiton with illegal */.`;
+    const actual = documentationBlock`A single line of */ documentation with illegal */.`;
     expect(actual).toBe(
-      `/**${unixEOL} * A single line of \\*\\/ documentaiton with illegal \\*\\/.${unixEOL} */`
+      `/**${unixEOL} * A single line of \\*\\/ documentation with illegal \\*\\/.${unixEOL} */`
     );
   });
 
@@ -102,7 +102,7 @@ describe('documentation-block', () => {
     const actual = documentationBlock`
     First line
          Second line with indentation   
-  Third line with identation`;
+  Third line with indentation`;
     expect(actual).toMatchSnapshot();
   });
 });

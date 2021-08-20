@@ -3,7 +3,7 @@
 Here's the best practices of error handling (in asynchronous scenarios):
 
 - ALWAYS use `Error` objects, as they automatically capture their context in the program (i.e. stacktrace)
-- consequently, NEVER throw or reject litarals or plain objects
+- consequently, NEVER throw or reject literals or plain objects
 - in the utils package (`@sap-cloud-sdk/util`) there's a class `ErrorWithCause` that "concatenates" errors, e.g.:
 
 ```
@@ -47,4 +47,4 @@ async function goGetIt2() {
 
 - => throwing in an async function is equivalent to `Promise.reject`
 - while it's possible to extend `Error` to introduce custom fields (e.g. `statusCode`) or something, it's impossible to communicate this to consumers (as long as we still use `Promise`)
-  - sidenote: Other people draw the conclusion to not throw errors then and instead to have return types like `string | SomethingSomethingDangerZoneError`. I disagree, but that's a separate discussion.
+  - side note: Other people draw the conclusion to not throw errors then and instead to have return types like `string | SomethingSomethingDangerZoneError`. I disagree, but that's a separate discussion.

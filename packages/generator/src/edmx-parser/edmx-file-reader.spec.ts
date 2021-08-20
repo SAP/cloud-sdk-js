@@ -13,7 +13,7 @@ import {
 import { parseComplexTypesBase } from './common';
 
 describe('edmx-file-reader', () => {
-  it('does not fail for multiple schema entries in the edmx file', () => {
+  it('does not fail for multiple schema entries in the EDMX file', () => {
     expect(() =>
       readEdmxFile(
         resolve(

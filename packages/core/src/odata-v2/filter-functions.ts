@@ -26,7 +26,7 @@ export function substringOf<EntityT extends Entity>(
 }
 
 /**
- * Build a filter function to replace the occurence of a search string with another string. Evaluates to string.
+ * Build a filter function to replace the occurrence of a search string with another string. Evaluates to string.
  * @param str - The string to get the index from. This can either be a string, a reference to a field or another filter function.
  * @param searchStr - The substring to get the index for. This can either be a string, a reference to a field or another filter function.
  * @param replaceStr - The substring to get the index for. This can either be a string, a reference to a field or another filter function.

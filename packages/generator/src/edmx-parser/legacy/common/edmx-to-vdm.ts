@@ -258,9 +258,9 @@ function longDescription(
 ): string {
   let docs = '';
   if (documented.Documentation) {
-    const summmary = ensureString(documented.Documentation.Summary);
+    const summary = ensureString(documented.Documentation.Summary);
     const longDesc = ensureString(documented.Documentation.LongDescription);
-    docs = `${summmary}${unixEOL}${longDesc}`.trim();
+    docs = `${summary}${unixEOL}${longDesc}`.trim();
   }
   if (!docs && described) {
     docs = ensureString(described.description);

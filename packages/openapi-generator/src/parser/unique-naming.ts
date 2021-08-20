@@ -1,6 +1,7 @@
 import { UniqueNameGenerator, camelCase, unique } from '@sap-cloud-sdk/util';
 import { ParserOptions } from './options';
 
+/* eslint-disable tsdoc/syntax */
 /**
  * Format names and ensure uniqueness of names.
  * With `strictNaming` enabled, duplicate names lead to an error.
@@ -36,6 +37,7 @@ export function ensureUniqueNames(
   }
   return deduplicateNames(names, { format, reservedWords, separator });
 }
+/* eslint-enable */
 
 /**
  * Validate uniqueness of names.
@@ -59,6 +61,7 @@ export function validateUniqueness(
   }
 }
 
+/* eslint-disable tsdoc/syntax */
 /**
  * Deduplicate names.
  * Takes a list of names and renames those that are duplicate.
@@ -101,6 +104,7 @@ export function deduplicateNames(
     return nameGenerator.generateAndSaveUniqueName(format(name));
   }, {});
 }
+/* eslint-enable */
 
 /**
  * Get the names within a list of names that won't have to be renamed.

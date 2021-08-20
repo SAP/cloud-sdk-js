@@ -55,7 +55,7 @@ describe('action import request builder', () => {
     expect(result).toBe(undefined);
   });
 
-  it('is possible to call actions with unknown edm types', async () => {
+  it('is possible to call actions with unknown EDM types', async () => {
     const responseValue = 'SomeUntypedResponse';
     const response = { value: responseValue };
 

@@ -55,7 +55,7 @@ describe('complex type imports', () => {
     ]);
   });
 
-  it('importDeclarations for a complex type that includes a complex type and no property with an edm type', () => {
+  it('importDeclarations for a complex type that includes a complex type and no property with an EDM type', () => {
     //  We test here the use-case where a complex type includes only complex type properties `edmToTs`. The only deviation with the previous test, is that the 'edmToTs' function should not be imported from core.
 
     const complexMealWithDesertWithoutEdmProperty: VdmComplexType = {

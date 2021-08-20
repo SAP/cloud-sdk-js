@@ -31,7 +31,7 @@ describe('entity', () => {
     });
   });
 
-  it('transforms collection type properties for unknown edmx types', () => {
+  it('transforms collection type properties for unknown EDMX types', () => {
     const service = createTestServiceData(
       [
         createEntityType('TestEntityType', [

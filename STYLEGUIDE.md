@@ -305,7 +305,7 @@ Use the correct function for your use case (e. g. `.map`, `.reduce`, `.filter`, 
 In some cases it makes sense to resort to the imperative `for`, for example, when performance is of the essence, if you have to iterate over every n-th element or if you want to execute asynchronous actions sequentially.
 Be aware of the effects of asynchronicity.
 The callback passed to `.forEach` is invoked for every item of a list sequentially.
-If the callback is asynchronous it will still be invoked sequentially, but its asynchronous action will not be awaited before the next invokation, which can lead to unexpected results.
+If the callback is asynchronous it will still be invoked sequentially, but its asynchronous action will not be awaited before the next invocation, which can lead to unexpected results.
 Do not use `.forEach` if you need sequential invocation or move the parts that have to be executed sequentially up before any asynchronous actions are executed.
 
 ❌ Examples of **incorrect** code:
@@ -601,7 +601,7 @@ The description should end with a full stop.
  * @param param The description.
  */
 
-/* Don't leave out the fullstop */
+/* Don't leave out the full stop */
 /**
  * @param param - The description
  */
@@ -638,7 +638,7 @@ They technically return a promise, which does not need an extra description.
  * @return The description of the return value.
  */
 
-/* Don't leave out the fullstop */
+/* Don't leave out the full stop */
 /**
  * @returns The description of the return value
  */
@@ -771,7 +771,7 @@ Invoke `.catch` when handling an error of one asynchronous call, use `try ... ca
 ❌ Examples of **incorrect** code:
 
 ```ts
-/* Avoid try ... catch for one asynchrounous call */
+/* Avoid try ... catch for one asynchronous call */
 function foo() {
   try {
     return await asyncWait();
@@ -784,12 +784,12 @@ function foo() {
 ✅ Examples of **correct** code:
 
 ```ts
-/* Use .catch for one asynchrounous call */
+/* Use .catch for one asynchronous call */
 function foo() {
   return asyncWait().catch(err => handleError(err));
 }
 
-/* Use try ... catch for multiple asynchrounous calls */
+/* Use try ... catch for multiple asynchronous calls */
 async function foo() {
   try {
     await asyncWait1();

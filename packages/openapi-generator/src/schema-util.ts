@@ -157,8 +157,7 @@ export function getSchemaNamingFromRef(
 export function getSchemaPropertiesDocumentation(
   schemaProperties: OpenApiSchemaProperties
 ): string[] {
-  if (schemaProperties) {
-    return Object.entries(schemaProperties).map(([propertyName, value]) => {
+    return Object.entries(schemaProperties || []).map(([propertyName, value]) => {
       if (propertyName === 'deprecated') {
         return '@deprecated';
       }
@@ -168,5 +167,4 @@ export function getSchemaPropertiesDocumentation(
       return `${titleFormat(propertyName)}: ${JSON.stringify(value, null, 2)}.`;
     });
   }
-  return [];
 }

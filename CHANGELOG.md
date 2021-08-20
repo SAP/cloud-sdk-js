@@ -14,6 +14,29 @@
 
 ## Compatibility Notes
 
+-
+
+## New Functionality
+
+-
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.48.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.48.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
 - [odata-generator] Consider the `Nullable` property on action and function import parameters and return types correctly. 
 For parameters this is uncritical because the type is extended from `T` to `T | null` if the property is nullable. 
 For return types the same extension could lead compile errors after client regeneration because the is broadened including `null`. 

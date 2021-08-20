@@ -225,13 +225,17 @@ describe('parseSchema', () => {
     ).toEqual('Property Description');
   });
 
-  it('parses schema object properties', () => {
-    const schemaProperties: OpenAPIV3.SchemaObject = {
+  it('parses schema properties and ignores unknown and undefined properties', () => {
+    const schemaProperties = {
       deprecated: true,
       example: 100,
       minimum: 10,
       maximum: 1000,
-      default: 10
+      default: 10,
+      maxLength: undefined,
+      minLength: undefined,
+      format: undefined,
+      unknownProperty: undefined
     };
     expect(parseSchemaProperties(schemaProperties)).toEqual({
       deprecated: true,

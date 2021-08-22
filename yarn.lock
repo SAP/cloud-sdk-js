@@ -1758,11 +1758,11 @@
     "@sap/cds-foss" "^3"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
-  version "1.26.0"
-  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.26.0.tgz#9a5a0921a91e2ea383990f0949369d91a39ed220"
-  integrity sha512-N7S/3flaVk31ZMRglqrzDZ6slHWZaHpuFg/PDd+1j2TUGg3PEnvjIvC6IBELQJVKJMAu7PP8voRSMs0CeYk/qA==
+  version "1.27.0"
+  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.27.0.tgz#e25ca729c97c538598553a9d50ea46be98c96a41"
+  integrity sha512-tptY7irXAtd1KIsIrL2YKHXxbJdh4OmVKcpQhMe0DrNcbqxwLyIWTH/XDaXkfLb8v3unfhqfEUBSxjOFIG5MVA==
   dependencies:
-    "@sap-cloud-sdk/core" "^1.44.0"
+    "@sap-cloud-sdk/core" "^1.47.1"
 
 "@sap/edm-converters@^1.0.21":
   version "1.0.41"
@@ -2003,9 +2003,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.20.19"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.19.tgz#538e61fc220f77ae4a4663c3d8c3cb391365c209"
-  integrity sha512-niAuZrwrjKck4+XhoCw6AAVQBENHftpXw9F4ryk66fTgYaKQ53R4FI7c9vUGGw5vQis1HKBHDR1gcYI/Bq1xvw==
+  version "12.20.20"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.20.tgz#ce3d6c13c15c5e622a85efcd3a1cb2d9c7fa43a6"
+  integrity sha512-kqmxiJg4AT7rsSPIhO6eoBIx9mNwwpeH42yjtgQh6X2ANSpLpvToMXv+LMFdfxpwG1FZXZ41OGZMiUAtbBLEvg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"

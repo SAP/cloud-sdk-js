@@ -11,6 +11,7 @@ jest.mock('../../generator-common', () => {
 });
 
 const { readFile } = promises;
+const path = require('path');
 
 describe('generator', () => {
   afterAll(() => {
@@ -30,9 +31,9 @@ describe('generator', () => {
     });
 
     expect(await getInputFilePaths('/path/to/test/dir')).toEqual([
-      '/path/to/test/dir/sub-dir/sub-directory-service.txt',
-      '/path/to/test/dir/sub-dir/test-service.txt',
-      '/path/to/test/dir/test-service.txt'
+      path.resolve('/path/to/test/dir/sub-dir/sub-directory-service.txt'),
+      path.resolve('/path/to/test/dir/sub-dir/test-service.txt'),
+      path.resolve('/path/to/test/dir/test-service.txt')
     ]);
 
     mock.restore();
@@ -154,7 +155,7 @@ describe('generator', () => {
           })
         },
         existingConfig:
-          '{ "inputDir/spec.json": {"directoryName": "customName" } }'
+          JSON.stringify({ [path.normalize("inputDir/spec.json")]: {"directoryName": "customName" } })
       });
     });
 
@@ -171,16 +172,13 @@ describe('generator', () => {
 
       const actual = readFile('options.json', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatchInlineSnapshot(`
-              "{
-                \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"spec\\",
-                  \\"directoryName\\": \\"spec\\",
-                  \\"serviceName\\": \\"spec\\"
-                }
-              }
-              "
-            `);
+       expect(JSON.parse(await actual)).toEqual({
+        [`${path.join('inputDir/spec.json')}`]: {
+          "packageName": "spec",
+          "directoryName": "spec",
+          "serviceName": "spec"
+        }
+      });
     });
 
     it('overwrites writes options per service', async () => {
@@ -192,16 +190,13 @@ describe('generator', () => {
 
       const actual = readFile('existingConfig', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatchInlineSnapshot(`
-              "{
-                \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"customName\\",
-                  \\"directoryName\\": \\"customName\\",
-                  \\"serviceName\\": \\"customName\\"
-                }
-              }
-              "
-            `);
+      expect(JSON.parse(await actual)).toEqual({
+        [`${path.join('inputDir/spec.json')}`]: {
+          "packageName": "customName",
+          "directoryName": "customName",
+          "serviceName": "customName"
+        }
+      });
     });
   });
 

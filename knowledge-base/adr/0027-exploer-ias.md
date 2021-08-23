@@ -59,6 +59,6 @@ The table below also shows some major differences between IAS and XSUAA.
 
 |                       | IAS                                         | XSUAA                 |
 | --------------------- | ------------------------------------------- | --------------------- |
-| Standard              | OIDC (on the top of OAuth + authentication) | OAuth (authorization) |
+| Standard              | [OIDC](https://openid.net) (on the top of OAuth + authentication) | [OAuth](https://oauth.net/2/) (authorization) |
 | Support 3rd party IdP | yes                                         | no                    |
 | Runtime               | CF + Neo                                    | CF                    |

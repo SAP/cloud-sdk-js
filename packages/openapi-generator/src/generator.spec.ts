@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
+import path = require('path');
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
 import { emptyDocument } from '../test/test-util';
@@ -11,7 +12,6 @@ jest.mock('../../generator-common', () => {
 });
 
 const { readFile } = promises;
-const path = require('path');
 
 describe('generator', () => {
   afterAll(() => {
@@ -154,8 +154,11 @@ describe('generator', () => {
             }
           })
         },
-        existingConfig:
-          JSON.stringify({ [path.normalize("inputDir/spec.json")]: {"directoryName": "customName" } })
+        existingConfig: JSON.stringify({
+          [path.normalize('inputDir/spec.json')]: {
+            directoryName: 'customName'
+          }
+        })
       });
     });
 
@@ -172,11 +175,11 @@ describe('generator', () => {
 
       const actual = readFile('options.json', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-       expect(JSON.parse(await actual)).toEqual({
+      expect(JSON.parse(await actual)).toEqual({
         [`${path.join('inputDir/spec.json')}`]: {
-          "packageName": "spec",
-          "directoryName": "spec",
-          "serviceName": "spec"
+          packageName: 'spec',
+          directoryName: 'spec',
+          serviceName: 'spec'
         }
       });
     });
@@ -192,9 +195,9 @@ describe('generator', () => {
       await expect(actual).resolves.toMatch(endsWithNewLine);
       expect(JSON.parse(await actual)).toEqual({
         [`${path.join('inputDir/spec.json')}`]: {
-          "packageName": "customName",
-          "directoryName": "customName",
-          "serviceName": "customName"
+          packageName: 'customName',
+          directoryName: 'customName',
+          serviceName: 'customName'
         }
       });
     });

@@ -1,3 +1,4 @@
+import path = require('path');
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generateWithParsedOptions } from '../generator';
@@ -5,7 +6,6 @@ import {
   parseGeneratorOptions,
   parseOptionsFromConfig
 } from './generator-options';
-const path = require('path');
 
 describe('parseGeneratorOptions', () => {
   beforeEach(() => {
@@ -57,7 +57,10 @@ describe('parseGeneratorOptions', () => {
         optionsPerService: 'non-existent-directory/config.json'
       })
     ).toMatchObject({
-      optionsPerService: path.join(process.cwd(), 'non-existent-directory/config.json')
+      optionsPerService: path.join(
+        process.cwd(),
+        'non-existent-directory/config.json'
+      )
     });
   });
 
@@ -69,7 +72,10 @@ describe('parseGeneratorOptions', () => {
         optionsPerService: 'existent-directory/existent-file'
       })
     ).toMatchObject({
-      optionsPerService: path.join(process.cwd(), 'existent-directory/existent-file')
+      optionsPerService: path.join(
+        process.cwd(),
+        'existent-directory/existent-file'
+      )
     });
   });
 
@@ -81,7 +87,10 @@ describe('parseGeneratorOptions', () => {
         optionsPerService: 'non-existent-directory'
       })
     ).toMatchObject({
-      optionsPerService: path.join(process.cwd(), 'non-existent-directory/options-per-service.json')
+      optionsPerService: path.join(
+        process.cwd(),
+        'non-existent-directory/options-per-service.json'
+      )
     });
   });
 
@@ -93,7 +102,10 @@ describe('parseGeneratorOptions', () => {
         optionsPerService: 'existent-directory'
       })
     ).toMatchObject({
-      optionsPerService: path.join(process.cwd(), 'existent-directory/options-per-service.json')
+      optionsPerService: path.join(
+        process.cwd(),
+        'existent-directory/options-per-service.json'
+      )
     });
   });
 

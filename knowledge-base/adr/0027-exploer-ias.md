@@ -40,7 +40,7 @@ You'll find some potential use cases below.
 
 #### Identity provisioning
 
-Customers using multiple cloud solutions can provision user from e.g., SAP SuccessFactors to some other non-SAP cloud solutions.
+Customers using multiple cloud solutions can provision users from e.g., SAP SuccessFactors to some other non-SAP cloud solutions.
 REST Services are available on the [api hub](https://api.sap.com/package/SCPIdentityServices?section=Artifacts).
 User endpoint, for example, supports CRUD operations.
 

@@ -1,5 +1,14 @@
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, dirname, join, relative } from 'path';
+import {
+  resolve,
+  parse,
+  basename,
+  dirname,
+  join,
+  relative,
+  posix,
+  sep
+} from 'path';
 import {
   createLogger,
   kebabCase,
@@ -255,7 +264,7 @@ async function generateService(
  * @hidden
  */
 export function getRelativePath(absolutePath: string): string {
-  return relative(process.cwd(), absolutePath);
+  return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);
 }
 
 /**

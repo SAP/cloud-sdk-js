@@ -1,6 +1,5 @@
 import { resolve } from 'path';
 import { existsSync, promises } from 'fs';
-import path = require('path');
 import mock from 'mock-fs';
 import { readJSON } from '@sap-cloud-sdk/util';
 import { emptyDocument } from '../test/test-util';
@@ -31,9 +30,9 @@ describe('generator', () => {
     });
 
     expect(await getInputFilePaths('/path/to/test/dir')).toEqual([
-      path.resolve('/path/to/test/dir/sub-dir/sub-directory-service.txt'),
-      path.resolve('/path/to/test/dir/sub-dir/test-service.txt'),
-      path.resolve('/path/to/test/dir/test-service.txt')
+      resolve('/path/to/test/dir/sub-dir/sub-directory-service.txt'),
+      resolve('/path/to/test/dir/sub-dir/test-service.txt'),
+      resolve('/path/to/test/dir/test-service.txt')
     ]);
 
     mock.restore();
@@ -154,11 +153,8 @@ describe('generator', () => {
             }
           })
         },
-        existingConfig: JSON.stringify({
-          [path.normalize('inputDir/spec.json')]: {
-            directoryName: 'customName'
-          }
-        })
+        existingConfig:
+          '{ "inputDir/spec.json": {"directoryName": "customName" } }'
       });
     });
 
@@ -175,13 +171,16 @@ describe('generator', () => {
 
       const actual = readFile('options.json', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-      expect(JSON.parse(await actual)).toEqual({
-        [`${path.join('inputDir/spec.json')}`]: {
-          packageName: 'spec',
-          directoryName: 'spec',
-          serviceName: 'spec'
-        }
-      });
+      await expect(actual).resolves.toMatchInlineSnapshot(`
+              "{
+                \\"inputDir/spec.json\\": {
+                  \\"packageName\\": \\"spec\\",
+                  \\"directoryName\\": \\"spec\\",
+                  \\"serviceName\\": \\"spec\\"
+                }
+              }
+              "
+            `);
     });
 
     it('overwrites writes options per service', async () => {
@@ -193,13 +192,16 @@ describe('generator', () => {
 
       const actual = readFile('existingConfig', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-      expect(JSON.parse(await actual)).toEqual({
-        [`${path.join('inputDir/spec.json')}`]: {
-          packageName: 'customName',
-          directoryName: 'customName',
-          serviceName: 'customName'
-        }
-      });
+      await expect(actual).resolves.toMatchInlineSnapshot(`
+              "{
+                \\"inputDir/spec.json\\": {
+                  \\"packageName\\": \\"customName\\",
+                  \\"directoryName\\": \\"customName\\",
+                  \\"serviceName\\": \\"customName\\"
+                }
+              }
+              "
+            `);
     });
   });
 

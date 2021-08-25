@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
-- [openapi-generator] Paths referenced in options per service configuration  file use `/` separator. Existing config files generated on Windows using `\\` in paths should be updated manually to `/`.
+- [openapi-generator] Paths referenced in the options per service configuration now use POSIX-style separators (`/`) independent of the operating system. Existing configuration files generated on Windows contain Windows-style separators (`\\`) in the paths. Those paths will not be read correctly and should be updated manually to `/`.
 
 ## New Functionality
 

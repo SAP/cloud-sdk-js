@@ -1,5 +1,8 @@
-import { OpenApiReferenceSchema } from './openapi-types';
-import { collectRefs } from './schema-util';
+import {
+  OpenApiReferenceSchema,
+  OpenApiSchemaProperties
+} from './openapi-types';
+import { collectRefs, getSchemaPropertiesDocumentation } from './schema-util';
 
 describe('collectRefs', () => {
   it('collects empty array for undefined', () => {
@@ -19,7 +22,8 @@ describe('collectRefs', () => {
                 schema: {
                   $ref: 'ref1',
                   schemaName: 'Ref1'
-                } as OpenApiReferenceSchema
+                } as OpenApiReferenceSchema,
+                schemaProperties: {}
               }
             ]
           },
@@ -38,5 +42,22 @@ describe('collectRefs', () => {
   it('collects one reference if the schema is a reference', () => {
     const ref = { $ref: 'test', schemaName: 'Test' } as OpenApiReferenceSchema;
     expect(collectRefs(ref)).toEqual([ref]);
+  });
+
+  it('creates documentation for schema properties', () => {
+    const schemaProperties: OpenApiSchemaProperties = {
+      deprecated: true,
+      example: 'testString',
+      minLength: 2,
+      maxLength: 10,
+      default: 'test'
+    };
+    expect(getSchemaPropertiesDocumentation(schemaProperties)).toEqual([
+      '@deprecated',
+      '@example "testString"',
+      'Min Length: 2.',
+      'Max Length: 10.',
+      'Default: "test".'
+    ]);
   });
 });

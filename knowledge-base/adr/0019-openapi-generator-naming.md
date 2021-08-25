@@ -55,7 +55,7 @@ Examples:
 ### Operation naming
 
 Operations are named based on their given `operationId`.
-If no `operationId` is given the name is parsed from the method and the path under which the operation occured.
+If no `operationId` is given the name is parsed from the method and the path under which the operation occurred.
 Example:
 
 - path: `entity/{id}`

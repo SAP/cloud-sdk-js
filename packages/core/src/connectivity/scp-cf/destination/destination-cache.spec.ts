@@ -85,7 +85,7 @@ function mockDestinationsWithSameName() {
     URL: 'https://subscriber.example',
     Name: 'SubscriberDest',
     ProxyType: 'any',
-    Authentication: 'NoAuthentification'
+    Authentication: 'NoAuthentication'
   };
   mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
   mockSubaccountDestinationsCall(nock, [dest], 200, subscriberServiceToken);
@@ -93,7 +93,7 @@ function mockDestinationsWithSameName() {
   mockSubaccountDestinationsCall(nock, [dest], 200, providerServiceToken);
 }
 
-describe('caching destination integraion tests', () => {
+describe('caching destination integration tests', () => {
   afterEach(() => {
     destinationCache.clear();
     destinationServiceCache.clear();
@@ -109,19 +109,19 @@ describe('caching destination integraion tests', () => {
         URL: 'https://subscriber.example',
         Name: 'SubscriberDest',
         ProxyType: 'any',
-        Authentication: 'NoAuthentification'
+        Authentication: 'NoAuthentication'
       };
       const subscriberDest2 = {
         URL: 'https://subscriber2.example',
         Name: 'SubscriberDest2',
         ProxyType: 'any',
-        Authentication: 'NoAuthentification'
+        Authentication: 'NoAuthentication'
       };
       const providerDest = {
         URL: 'https://provider.example',
         Name: 'ProviderDest',
         ProxyType: 'any',
-        Authentication: 'NoAuthentification'
+        Authentication: 'NoAuthentication'
       };
 
       mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
@@ -247,7 +247,7 @@ describe('caching destination integraion tests', () => {
       expect(c2).toBeUndefined();
     });
 
-    it('caches only the found destination not other ones received from the servie', async () => {
+    it('caches only the found destination not other ones received from the service', async () => {
       mockVerifyJwt();
       await getDestination('SubscriberDest2', {
         userJwt: subscriberUserJwt,
@@ -419,7 +419,7 @@ describe('caching destination integraion tests', () => {
       mockServiceBindings();
       mockVerifyJwt();
 
-      const authType = 'NoAuthentification' as AuthenticationType;
+      const authType = 'NoAuthentication' as AuthenticationType;
       const subscriberDest = {
         URL: 'https://subscriber.example',
         Name: 'SubscriberDest',
@@ -449,7 +449,7 @@ describe('caching destination integraion tests', () => {
       mockVerifyJwt();
       mockServiceToken();
 
-      const authType = 'NoAuthentification' as AuthenticationType;
+      const authType = 'NoAuthentication' as AuthenticationType;
       const providerDest = {
         URL: 'https://provider.example',
         Name: 'ProviderDest',
@@ -479,7 +479,7 @@ describe('caching destination integraion tests', () => {
       mockVerifyJwt();
       mockServiceToken();
 
-      const authType = 'NoAuthentification' as AuthenticationType;
+      const authType = 'NoAuthentication' as AuthenticationType;
       const providerDest = {
         URL: 'https://provider.example',
         Name: 'ProviderDest',

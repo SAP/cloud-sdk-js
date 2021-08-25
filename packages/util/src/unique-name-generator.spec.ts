@@ -33,12 +33,12 @@ describe('UniqueNameGenerator', () => {
     expect(generator.generateUniqueName('MyClass_1ABC')).toBe('MyClass_1ABC');
   });
 
-  it('should ignore other seperators', () => {
+  it('should ignore other separators', () => {
     const generator = new UniqueNameGenerator('_', ['MyClass', 'MyClass-1']);
     expect(generator.generateUniqueName('MyClass')).toBe('MyClass_1');
   });
 
-  it('should ignore other seperators when suffixes are used', () => {
+  it('should ignore other separators when suffixes are used', () => {
     const generator = new UniqueNameGenerator('_', [
       'MyClassType',
       'MyClass_1Type',

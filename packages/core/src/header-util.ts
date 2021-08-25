@@ -39,7 +39,7 @@ export function getHeader(
 /**
  * @deprecated Since v1.32.0. Use [[pickIgnoreCase]] instead.
  *
- * Find headers in a given header object, if available, indepdendent of the case (lower / upper).
+ * Find headers in a given header object, if available, independent of the case (lower / upper).
  * @param keys - Name of the header to be found.
  * @param headers - Header object to be searched for given key.
  * @returns - An object containing the given keys (and values) in its original case, as found in `headers` or an empty object if not found.

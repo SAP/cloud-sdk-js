@@ -52,7 +52,7 @@ describe('GetByKeyRequestBuilder', () => {
       expect(actual.versionIdentifier).toBeUndefined();
     });
 
-    it('etag should be pulled from __metadata', async () => {
+    it('ETag should be pulled from __metadata', async () => {
       const entityData = createOriginalTestEntityData1();
       const versionIdentifier = 'etagInMetadata';
       entityData['__metadata'] = { etag: versionIdentifier };
@@ -74,7 +74,7 @@ describe('GetByKeyRequestBuilder', () => {
       expect(actual).toEqual(expected);
     });
 
-    it('etag should be pulled from response header when __metadata has no etag property', async () => {
+    it('ETag should be pulled from response header when __metadata has no ETag property', async () => {
       const entityData = createOriginalTestEntityData1();
       const expected = createTestEntity(entityData);
       const versionIdentifier = 'etagInHeader';

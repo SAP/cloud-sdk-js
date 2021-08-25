@@ -41,7 +41,7 @@ describe('CreateRequestBuilder', () => {
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
 
-  it('should set the remote state and etag', async () => {
+  it('should set the remote state and ETag', async () => {
     const stringProp = 'etagTest';
     const eTag = 'someEtag';
 

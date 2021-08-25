@@ -130,7 +130,7 @@ describe('compilation', () => {
     await expect(
       transpileDirectory('test-src', {
         ...compilerConfig,
-        lib: ['non-exisiting-lib']
+        lib: ['non-existing-lib']
       })
     ).rejects.toThrowError(
       /error TS6231: Could not resolve the path .* with the extensions: '\.ts', '\.tsx', '\.d\.ts'\./

@@ -17,7 +17,7 @@ All three entry points have in common, that they allow for a flexible destinatio
 - A destination object which must contain at least an url
 - A destination name and JWT to fetch the destination via the destination service
 
-For the latter case there exist [DestinationOptions](https://github.com/SAP/cloud-sdk-js/blob/6c9e8fa67ffbf4e84208e4bf0c790c04550a0cc7/packages/core/src/connectivity/scp-cf/destination/destination-accessor.ts#L39), which change the behaviour how destinations are received.
+For the latter case there exist [DestinationOptions](https://github.com/SAP/cloud-sdk-js/blob/6c9e8fa67ffbf4e84208e4bf0c790c04550a0cc7/packages/core/src/connectivity/scp-cf/destination/destination-accessor.ts#L39), which change the behavior how destinations are received.
 There are topics like caching, subscriber/provider first but also the `iss` option which replaces the full JWT in destination fetching.
 
 The `DestinationOptions` are only passed to methods 1. and 2. and not to the http-client.
@@ -60,7 +60,7 @@ Some sub-options are:
 - Remove the options from the `execute9()` method and use a `withDestinationOption()`.
   We should adjust the `execute()` method if the `withDestinationOption()` was set passing the full destination should be removed.
 - Removed all arguments from the `execute()` and make a `withDestination()` or `withDestinationByName()` methods.
-  In this case we should exclude the `execute()` method as long as the `withDestination()` has not been called and add a execpetion of JS.
+  In this case we should exclude the `execute()` method as long as the `withDestination()` has not been called and add a exception of JS.
 
 ## Decision
 
@@ -96,7 +96,7 @@ Where the `DestinationFetchOptions` is an object containing all the options:
 type DestinationFetchOptions ={
     destinationName: string,
     userJwt?: string,
-    isolationStrategy: IsoloationStrategy,
+    isolationStrategy: IsolationStrategy,
     iss: string,
     ...
 }

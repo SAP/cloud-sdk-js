@@ -17,17 +17,27 @@ describe('schemaFile', () => {
               required: true,
               schema: {
                 type: 'string'
+              },
+              schemaProperties: {
+                maxLength: 10
               }
             }
           ]
+        },
+        schemaProperties: {
+          deprecated: true
         }
       })
     ).toMatchInlineSnapshot(`
       "    
           /**
            * Representation of the 'MySchema' schema.
+           * @deprecated
            */
           export type MySchema = {
+            /**
+             * Max Length: 10.
+             */
             'string-property': string;
           };"
     `);
@@ -38,6 +48,7 @@ describe('schemaFile', () => {
       schemaFile({
         schemaName: 'MySchema',
         fileName: 'my-schema',
+        schemaProperties: {},
         schema: {
           properties: [
             {
@@ -47,7 +58,8 @@ describe('schemaFile', () => {
                 $ref: '#/components/schema/OtherSchema1',
                 schemaName: 'OtherSchema1',
                 fileName: 'other-schema-1'
-              }
+              },
+              schemaProperties: {}
             },
             {
               name: 'otherSchema2',
@@ -57,7 +69,8 @@ describe('schemaFile', () => {
                 $ref: '#/components/schema/OtherSchema2',
                 schemaName: 'OtherSchema2',
                 fileName: 'other-schema-2'
-              }
+              },
+              schemaProperties: {}
             }
           ]
         }
@@ -85,7 +98,8 @@ describe('schemaFile', () => {
         fileName: 'my-schema',
         schema: {
           items: { not: { type: 'integer' } }
-        }
+        },
+        schemaProperties: {}
       })
     ).toMatchInlineSnapshot(`
       "    
@@ -110,10 +124,12 @@ describe('schemaFile', () => {
                 $ref: '#/components/schema/MySchema',
                 schemaName: 'MySchema',
                 fileName: 'my-schema'
-              }
+              },
+              schemaProperties: {}
             }
           ]
-        }
+        },
+        schemaProperties: {}
       })
     ).toMatchInlineSnapshot(`
       "    
@@ -139,6 +155,9 @@ describe('schemaFile', () => {
               required: true,
               schema: {
                 type: 'string'
+              },
+              schemaProperties: {
+                minLength: 2
               }
             },
             {
@@ -146,10 +165,12 @@ describe('schemaFile', () => {
               required: true,
               schema: {
                 type: 'string'
-              }
+              },
+              schemaProperties: {}
             }
           ]
-        }
+        },
+        schemaProperties: {}
       })
     ).toMatchInlineSnapshot(`
       "    
@@ -159,6 +180,7 @@ describe('schemaFile', () => {
           export type MySchema = {
             /**
              * My description
+             * Min Length: 2.
              */
             'string-property': string;
             'string-property-no-description': string;
@@ -180,9 +202,9 @@ describe('schemaFile', () => {
     expect(
       schemaDocumentation({
         schemaName: 'mySchema',
-        description: 'My schmema description.'
+        description: 'My schema description.'
       } as OpenApiPersistedSchema)
-    ).toMatch(/My schmema description/);
+    ).toMatch(/My schema description/);
   });
 
   it('creates a schema property documentation', () => {

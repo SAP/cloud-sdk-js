@@ -164,7 +164,7 @@ describe('EntityBuilder', () => {
       expect(entity).toStrictEqual(expectedEntity);
     });
 
-    it('should build an entity from json with legacy _customFileds', () => {
+    it('should build an entity from json with legacy _customFields', () => {
       const logger = createLogger('entity-builder');
       const warnSpy = jest.spyOn(logger, 'warn');
       const entityJson = {

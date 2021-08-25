@@ -13,7 +13,8 @@ import {
   isOneOfSchema,
   isAllOfSchema,
   isAnyOfSchema,
-  isNotSchema
+  isNotSchema,
+  getSchemaPropertiesDocumentation
 } from '../schema-util';
 
 /**
@@ -110,5 +111,12 @@ function serializePropertyWithDocumentation(
 export function schemaPropertyDocumentation(
   schema: OpenApiObjectSchemaProperty
 ): string {
-  return schema.description ? documentationBlock`${schema.description}` : '';
+  const signature: string[] = [];
+  if (schema.description) {
+    signature.push(schema.description);
+  }
+
+  signature.push(...getSchemaPropertiesDocumentation(schema.schemaProperties));
+
+  return documentationBlock`${signature.join(unixEOL)}`;
 }

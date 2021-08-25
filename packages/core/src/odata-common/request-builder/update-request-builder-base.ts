@@ -25,7 +25,7 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
    * @param _entity - Entity to be updated
    * @param oDataUri - Collection of URI conversion methods
    * @param entitySerializer - Entity serializer
-   * @param extractODataEtag - Extractor for etag from payload
+   * @param extractODataEtag - Extractor for ETag from payload
    * @param payloadManipulator - Manipulator for the payload.
    */
   constructor(

@@ -1,6 +1,6 @@
 {
   "name": "sap-cloud-sdk",
-  "version": "1.47.1",
+  "version": "1.48.0",
   "private": true,
   "sideEffects": false,
   "description": "SAP Cloud SDK for JavaScript",

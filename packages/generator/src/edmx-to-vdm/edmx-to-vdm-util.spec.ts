@@ -13,7 +13,7 @@ describe('edmx-parser-util', () => {
     expect(stripNamespace('name')).toEqual('name');
   });
 
-  it('checks collection for edm types', () => {
+  it('checks collection for EDM types', () => {
     expect(isCollectionType('Collection(Edm.String)')).toBe(true);
     expect(isCollectionType('Edm.String')).toBe(false);
   });

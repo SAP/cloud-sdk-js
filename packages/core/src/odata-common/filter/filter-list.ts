@@ -58,12 +58,12 @@ export class FilterList<EntityT extends Entity>
     while (this.canFlatten(property)) {
       this[property] = this[property].reduce((flatList, current) => {
         if (current instanceof FilterList) {
-          const flattendFilters = [...flatList, ...current[property]];
+          const flattenedFilters = [...flatList, ...current[property]];
           if (current[otherProperty].length) {
             current[property] = [];
-            flattendFilters.push(current.flatten());
+            flattenedFilters.push(current.flatten());
           }
-          return flattendFilters;
+          return flattenedFilters;
         }
         return [...flatList, current];
       }, []);

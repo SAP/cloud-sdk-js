@@ -51,7 +51,7 @@ ${getExpectedHelpfulLinks()}
     );
   });
 
-  it('does not create a link if no apiBusinessHubMetada is defined', () => {
+  it('does not create a link if no apiBusinessHubMetadata is defined', () => {
     expect(
       readme({
         npmPackageName,

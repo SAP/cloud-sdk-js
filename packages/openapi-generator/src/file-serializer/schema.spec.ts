@@ -18,7 +18,10 @@ describe('serializeSchema for object schemas', () => {
           {
             name: 'simpleProperty',
             required: true,
-            schema: { type: 'integer' }
+            schema: { type: 'integer' },
+            schemaProperties: {
+              minimum: 8
+            }
           },
           {
             name: 'nested-property',
@@ -28,17 +31,27 @@ describe('serializeSchema for object schemas', () => {
                 {
                   name: 'stringProperty',
                   required: false,
-                  schema: { type: 'string' }
+                  schema: { type: 'string' },
+                  schemaProperties: {
+                    pattern: '^[p{L}-.^_|~d]+$'
+                  }
                 }
               ]
-            }
+            },
+            schemaProperties: {}
           }
         ]
       })
     ).toMatchInlineSnapshot(`
       "{
+            /**
+             * Minimum: 8.
+             */
             'simpleProperty': number;
             'nested-property'?: {
+                  /**
+                   * Pattern: \\"^[p{L}-.^_|~d]+$\\".
+                   */
                   'stringProperty'?: string;
                 };
           }"
@@ -78,7 +91,8 @@ describe('serializeSchema for object schemas', () => {
           {
             name: 'simpleProperty',
             required: true,
-            schema: { type: 'integer' }
+            schema: { type: 'integer' },
+            schemaProperties: {}
           }
         ],
         additionalProperties: { type: 'string' }

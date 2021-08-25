@@ -44,8 +44,8 @@ export async function transpileDirectory(
   logger.verbose(`Transpiling files in directory: ${path} finished.`);
 }
 
-function getErrorList(diagnostis: Diagnostic[]): string[] {
-  return diagnostis.map(diagnostic => {
+function getErrorList(diagnostics: Diagnostic[]): string[] {
+  return diagnostics.map(diagnostic => {
     if (diagnostic.file) {
       const { lineNumber, linePosition } = findPositions(
         diagnostic.file.statements,

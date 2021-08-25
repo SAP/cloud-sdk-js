@@ -263,9 +263,7 @@ async function generateService(
  * @returns The relative path
  * @hidden
  */
-export function getRelPathWithPosixSeparator(
-  absolutePath: string
-): string {
+export function getRelPathWithPosixSeparator(absolutePath: string): string {
   return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);
 }
 

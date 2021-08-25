@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-util": "^1.48.0",
-    "@types/opossum": "^4.1.1",
+    "@types/opossum": "^6.2.0",
     "nock": "^13.0.11"
   }
 }

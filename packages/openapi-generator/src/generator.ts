@@ -87,7 +87,7 @@ export async function generateWithParsedOptions(
     generateService(
       inputFilePath,
       options,
-      optionsPerService[getPosixSeparatedRelPath(inputFilePath)],
+      optionsPerService[getRelPathWithPosixSeparator(inputFilePath)],
       tsConfig
     )
   );
@@ -263,7 +263,7 @@ async function generateService(
  * @returns The relative path
  * @hidden
  */
-export function getPosixSeparatedRelPath(
+export function getRelPathWithPosixSeparator(
   absolutePath: string
 ): string {
   return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);

@@ -1,7 +1,7 @@
 import { existsSync, promises } from 'fs';
 import { parse } from 'path';
 import { unique, UniqueNameGenerator } from '@sap-cloud-sdk/util';
-import { getRelativePath } from '../generator';
+import { getPosixSeparatedRelPath } from '../generator';
 import { ParsedGeneratorOptions } from './generator-options';
 
 const { readFile } = promises;
@@ -76,7 +76,7 @@ export async function getOptionsPerService(
 
   const optionsPerService: OptionsPerService = inputPaths.reduce(
     (previousOptions, inputPath) => {
-      const relativePath = getRelativePath(inputPath);
+      const relativePath = getPosixSeparatedRelPath(inputPath);
 
       const uniqueDirName = uniqueNameGenerator.generateAndSaveUniqueName(
         directoryNamesByPaths[inputPath]
@@ -99,7 +99,7 @@ function getDirectoryNamesByPaths(
   originalOptionsPerService: PartialOptionsPerService
 ): Record<string, string> {
   return inputPaths.reduce((directoryNamesByPaths, inputPath) => {
-    const relativePath = getRelativePath(inputPath);
+    const relativePath = getPosixSeparatedRelPath(inputPath);
     const directoryName =
       originalOptionsPerService[relativePath]?.directoryName ||
       parseDirectoryName(relativePath);

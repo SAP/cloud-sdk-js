@@ -16,8 +16,8 @@ export function getGenerationSteps(
 <li>Download the API specification from the Overview -&gt; API Specification section. ${
       apiType === 'OData' ? 'Choose EDMX format.' : 'Choose JSON format.'
     }</li>
-<li>Generate a typed client by running <code>${installCommand}</code> to install the generator.</li>
-<li>Execute the generator <code>${generateCommand}</code></li>
+<li>Generate a typed client by running <code><b>${installCommand}</b></code> to install the generator.</li>
+<li>Execute the generator <code><b>${generateCommand}</b></code></li>
 <li>You should now find generated classes in the output directory specified in step 4.</li>
 <li>By default we generate TypeScript only. If you need to transpile it to JavaScript, check the <a href="${generationDocLink}${anchor}"> CLI options in the documentation</a>.</li>
 <li>If you encounter issues during generation, carefully check your configuration and refer to the <a href="${generationDocLink}">extended documentation</a> on generating ${apiType} clients</a>.</li>

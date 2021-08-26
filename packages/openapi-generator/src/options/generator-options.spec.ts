@@ -1,3 +1,4 @@
+import { join } from 'path';
 import mock from 'mock-fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generateWithParsedOptions } from '../generator';
@@ -42,8 +43,8 @@ describe('parseGeneratorOptions', () => {
         outputDir: 'outputDir'
       })
     ).toEqual({
-      input: `${process.cwd()}/inputDir`,
-      outputDir: `${process.cwd()}/outputDir`,
+      input: join(process.cwd(), 'inputDir'),
+      outputDir: join(process.cwd(), 'outputDir'),
       ...options
     });
   });
@@ -56,7 +57,10 @@ describe('parseGeneratorOptions', () => {
         optionsPerService: 'non-existent-directory/config.json'
       })
     ).toMatchObject({
-      optionsPerService: `${process.cwd()}/non-existent-directory/config.json`
+      optionsPerService: join(
+        process.cwd(),
+        'non-existent-directory/config.json'
+      )
     });
   });
 
@@ -68,7 +72,7 @@ describe('parseGeneratorOptions', () => {
         optionsPerService: 'existent-directory/existent-file'
       })
     ).toMatchObject({
-      optionsPerService: `${process.cwd()}/existent-directory/existent-file`
+      optionsPerService: join(process.cwd(), 'existent-directory/existent-file')
     });
   });
 
@@ -80,7 +84,10 @@ describe('parseGeneratorOptions', () => {
         optionsPerService: 'non-existent-directory'
       })
     ).toMatchObject({
-      optionsPerService: `${process.cwd()}/non-existent-directory/options-per-service.json`
+      optionsPerService: join(
+        process.cwd(),
+        'non-existent-directory/options-per-service.json'
+      )
     });
   });
 
@@ -92,7 +99,10 @@ describe('parseGeneratorOptions', () => {
         optionsPerService: 'existent-directory'
       })
     ).toMatchObject({
-      optionsPerService: `${process.cwd()}/existent-directory/options-per-service.json`
+      optionsPerService: join(
+        process.cwd(),
+        'existent-directory/options-per-service.json'
+      )
     });
   });
 
@@ -104,7 +114,7 @@ describe('parseGeneratorOptions', () => {
         tsConfig: 'someDir'
       })
     ).toMatchObject({
-      tsConfig: `${process.cwd()}/someDir`
+      tsConfig: join(process.cwd(), 'someDir')
     });
   });
 

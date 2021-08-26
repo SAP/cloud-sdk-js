@@ -54,7 +54,7 @@ export function getSdkMetadataClient(
 }
 
 export const sdkMetadataHeaderIntroText =
-  'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.';
+  'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build cloud-native applications on the SAP Business Technology Platform. To simplify the consumption of multiple services published on the SAP API Business Hub, the SDK offers code generators for OData and OpenAPI together with pregenerated typed client libraries. These libraries are seamlessly integrated with connectivity, authentication, multi-tenancy, and other abstractions to speed up application development.';
 
 export const ServiceStatusValues: Record<
   ServiceStatus['status'],
@@ -69,7 +69,7 @@ export const ServiceStatusValues: Record<
     status: 'verified',
     statusText: 'API Client generation tested but no download available',
     statusLongText:
-      'The SAP Cloud SDK team checked for this API that generating a API client works, but no pregenerated client is available. You can generate your own client for this API.'
+      'The SAP Cloud SDK team checked for this API that generating an API client works, but no pregenerated client is available. You can generate your own client for this API.'
   },
   unknown: {
     status: 'unknown',
@@ -81,6 +81,6 @@ export const ServiceStatusValues: Record<
     status: 'failed',
     statusText: 'API Client generation has failed',
     statusLongText:
-      'The SAP Cloud SDK team checked for this API if generating a API client works, which has failed. You might try it on your own.'
+      'The SAP Cloud SDK team checked for this API if generating an API client works, which has failed. You might try it on your own.'
   }
 };

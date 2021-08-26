@@ -1,6 +1,10 @@
 import nock from 'nock';
-import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
 import {
+  mockServiceBindings,
+  onlyIssuerXsuaaUrl
+} from '../../../../test/test-util/environment-mocks';
+import {
+  expectAllMocksUsed,
   mockJwtBearerToken,
   mockServiceToken
 } from '../../../../test/test-util/token-accessor-mocks';
@@ -11,6 +15,7 @@ import {
   mockVerifyJwt
 } from '../../../../test/test-util/destination-service-mocks';
 import {
+  onlyIssuerServiceToken,
   providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
@@ -30,7 +35,10 @@ import {
   oauthPasswordSingleResponse,
   oauthSingleResponse,
   oauthUserTokenExchangeMultipleResponse,
-  oauthUserTokenExchangeSingleResponse
+  oauthUserTokenExchangeSingleResponse,
+  onPremiseBasicMultipleResponse,
+  onPremiseBasicSingleResponse,
+  onPremisePrincipalPropagationMultipleResponse
 } from '../../../../test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { wrapJwtInHeader } from '../jwt';
@@ -77,7 +85,7 @@ describe('authentication types', () => {
         userJwt: subscriberUserJwt
       });
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
 
     it('returns a destination with authTokens if its authenticationType is OAuth2SAMLBearerFlow, provider tenant', async () => {
@@ -110,7 +118,7 @@ describe('authentication types', () => {
       });
 
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
 
     it('should use provider client credentials token for SystemUser exists in provider destination', async () => {
@@ -145,7 +153,7 @@ describe('authentication types', () => {
         cacheVerificationKeys: false
       });
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
 
     it('should use subscriber client credentials token for SystemUser exists in subscriber destination', async () => {
@@ -181,7 +189,7 @@ describe('authentication types', () => {
         userJwt: subscriberUserJwt
       });
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
   });
 
@@ -214,7 +222,7 @@ describe('authentication types', () => {
         userJwt: subscriberUserJwt
       });
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
 
     it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, provider tenant', async () => {
@@ -243,7 +251,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
       const actual = await getDestination(destinationName);
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
   });
 
@@ -276,7 +284,7 @@ describe('authentication types', () => {
         userJwt: providerUserJwt
       });
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
 
     it('should use the provider access token as auth header and subscriber jwt as exchange header for provider destination and provider jwt', async () => {
@@ -311,7 +319,7 @@ describe('authentication types', () => {
         userJwt: subscriberUserJwt
       });
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
 
     it('should use the subscriber access token as auth header and subscriber jwt as exchange header for provider destination and provider jwt', async () => {
@@ -346,7 +354,7 @@ describe('authentication types', () => {
         userJwt: subscriberUserJwt
       });
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
   });
 
@@ -381,7 +389,7 @@ describe('authentication types', () => {
       expect(actual!.certificates!.length).toBe(1);
       expect(actual!.keyStoreName).toBe('key.p12');
       expect(actual!.keyStorePassword).toBe('password');
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
 
     it('returns a destination with certificates if the authentication type is ClientCertificateAuthentication, provider tenant', async () => {
@@ -413,7 +421,7 @@ describe('authentication types', () => {
       expect(actual!.certificates!.length).toBe(1);
       expect(actual!.keyStoreName).toBe('key.p12');
       expect(actual!.keyStorePassword).toBe('password');
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
   });
 
@@ -422,18 +430,54 @@ describe('authentication types', () => {
       clientCredentialsTokenCache.clear();
     });
 
+    it('returns a destination with OnPrem connectivity and basic auth', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          onPremiseBasicMultipleResponse,
+          200,
+          subscriberServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          onPremiseBasicSingleResponse,
+          200,
+          destinationName,
+          wrapJwtInHeader(subscriberServiceToken).headers
+        )
+      ];
+
+      const actual = await getDestination('OnPremise', {
+        userJwt: subscriberServiceToken,
+        cacheVerificationKeys: false,
+        selectionStrategy: alwaysSubscriber
+      });
+      expect(actual?.proxyConfiguration).toMatchObject({
+        host: 'proxy.example.com',
+        port: 12345,
+        protocol: 'http',
+        headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) }
+      });
+    });
+
     it('returns a destination without authTokens if its authenticationType is Basic', async () => {
       mockServiceBindings();
       mockVerifyJwt();
       const serviceTokenSpy = mockServiceToken();
 
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
-      mockSubaccountDestinationsCall(
-        nock,
-        basicMultipleResponse,
-        200,
-        subscriberServiceToken
-      );
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          basicMultipleResponse,
+          200,
+          subscriberServiceToken
+        )
+      ];
 
       const expected = parseDestination(basicMultipleResponse[0]);
       const actual = await getDestination(destinationName, {
@@ -442,6 +486,83 @@ describe('authentication types', () => {
       });
       expect(actual).toMatchObject(expected);
       expect(serviceTokenSpy).toHaveBeenCalled();
+      expectAllMocksUsed(httpMocks);
+    });
+  });
+
+  describe('authentication type Principal Propagation', () => {
+    it('returns a destination with onPrem connectivity and principal propagation', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          onPremisePrincipalPropagationMultipleResponse,
+          200,
+          subscriberServiceToken
+        )
+      ];
+
+      const actual = await getDestination('OnPremise', {
+        userJwt: subscriberServiceToken,
+        cacheVerificationKeys: false,
+        selectionStrategy: alwaysSubscriber
+      });
+      expect(actual?.proxyConfiguration).toMatchObject({
+        host: 'proxy.example.com',
+        port: 12345,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': expect.stringMatching(/Bearer.*/),
+          'SAP-Connectivity-Authentication': expect.stringMatching(/Bearer.*/)
+        }
+      });
+      expectAllMocksUsed(httpMocks);
+    });
+
+    it('fails for Principal Propagation and no user JWT', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          onPremisePrincipalPropagationMultipleResponse,
+          200,
+          providerServiceToken
+        )
+      ];
+
+      await expect(getDestination('OnPremise')).rejects.toThrowError(
+        'For principal propagation a user JWT is needed.'
+      );
+      expectAllMocksUsed(httpMocks);
+    });
+
+    it('fails for Principal Propagation and issuer JWT', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          onPremisePrincipalPropagationMultipleResponse,
+          200,
+          onlyIssuerServiceToken
+        )
+      ];
+
+      await expect(
+        getDestination('OnPremise', { iss: onlyIssuerXsuaaUrl })
+      ).rejects.toThrowError('For principal propagation a user JWT is needed.');
+      expectAllMocksUsed(httpMocks);
     });
   });
 
@@ -476,7 +597,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthPasswordSingleResponse);
       const actual = await getDestination(destinationName, {});
       expect(actual).toMatchObject(expected);
-      httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expectAllMocksUsed(httpMocks);
     });
   });
 });

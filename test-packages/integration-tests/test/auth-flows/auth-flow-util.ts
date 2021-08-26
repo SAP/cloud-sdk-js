@@ -36,6 +36,9 @@ export interface UserAccessTokens {
 }
 
 export interface Systems {
+  s4onPrem: {
+    providerBasic: string;
+  };
   s4: {
     providerBasic: string;
     providerClientCert: string;

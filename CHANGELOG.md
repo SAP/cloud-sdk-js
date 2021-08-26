@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [openapi-generator] Paths referenced in the options per service configuration now use POSIX-style separators (`/`) independent of the operating system. Existing configuration files generated on Windows contain Windows-style separators (`\\`) in the paths. Those paths will not be read correctly and should be updated manually to `/`.
 
 ## New Functionality
 
@@ -26,7 +26,8 @@
 
 ## Fixed Issues
 
--
+- [core] Fix failing destination retrieval for `OnPremise` proxy type and basic authentication. 
+- [openapi-generator] Fix generation of options per service configuration files to always use POSIX-style file path separators independent of operating system.
 
 
 # 1.48.0
@@ -45,6 +46,7 @@ For return types the same extension could lead compile errors after client regen
 
 - [core] Support additional headers and query parameters, that are set on destinations.
 - [core] Support authentication type `OAuth2Password`.
+- [core] Support `DestinationOptions` on OpenAPI request builders.
 
 ## Improvements
 

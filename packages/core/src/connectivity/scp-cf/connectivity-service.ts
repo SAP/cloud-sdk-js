@@ -46,7 +46,8 @@ export function addProxyConfigurationOnPrem(
   destination: Destination,
   jwt: string | JwtPair | undefined
 ): Promise<Destination> {
-  const jwtPair = typeof jwt === 'string' ? { encoded: jwt, decoded: decodeJwt(jwt) } : jwt;
+  const jwtPair =
+    typeof jwt === 'string' ? { encoded: jwt, decoded: decodeJwt(jwt) } : jwt;
   if (
     destination.authentication === 'PrincipalPropagation' &&
     !isUserToken(jwtPair)

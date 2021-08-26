@@ -69,7 +69,7 @@ export const ServiceStatusValues: Record<
     status: 'verified',
     statusText: 'API Client generation tested but no download available',
     statusLongText:
-      'The SAP Cloud SDK team checked for this API that generating a API client works, but no pregenerated client is available. You can generate your own client for this API.'
+      'The SAP Cloud SDK team checked for this API that generating an API client works, but no pregenerated client is available. You can generate your own client for this API.'
   },
   unknown: {
     status: 'unknown',
@@ -81,6 +81,6 @@ export const ServiceStatusValues: Record<
     status: 'failed',
     statusText: 'API Client generation has failed',
     statusLongText:
-      'The SAP Cloud SDK team checked for this API if generating a API client works, which has failed. You might try it on your own.'
+      'The SAP Cloud SDK team checked for this API if generating an API client works, which has failed. You might try it on your own.'
   }
 };

@@ -36,7 +36,7 @@ export function addProxyConfiguration(
     }));
 }
 
-// remove string in version 2.0TODO: Remove in v2.0
+// remove string argument in version 2.0 TODO: Remove in v2.0
 export function addProxyConfigurationOnPrem(
   destination: Destination,
   jwt: string | JwtPair | undefined

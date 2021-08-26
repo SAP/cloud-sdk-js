@@ -1,4 +1,4 @@
-import { ErrorWithCause } from '@sap-cloud-sdk/util';
+import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { Protocol } from './protocol';
 import { ProxyConfiguration } from './connectivity-service-types';
 import {
@@ -9,6 +9,11 @@ import { EnvironmentAccessor } from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { serviceToken } from './token-accessor';
 import { decodeJwt, isUserToken, JwtPair } from './jwt';
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'connectivity-service'
+});
 
 /**
  * Given a destination and a JWT (required for subscriber destinations), this function will add a proxy configuration to a destination.
@@ -136,7 +141,12 @@ function sapConnectivityAuthenticationHeader(
     }
     throw new Error(
       `Unable to create "SAP-Connectivity-Authentication" header: no JWT found on the current request.
-    Continuing without header. Connecting to on-premise systems via principle propagation will not be possible.`
+     Connecting to on-premise systems via principle propagation is not possible.`
+    );
+  }
+  if (authenticationType === 'BasicAuthentication') {
+    logger.warn(
+      'You are connecting to an On-Premise system using basic authentication. For productive usage Principal propagation is recommended.'
     );
   }
 

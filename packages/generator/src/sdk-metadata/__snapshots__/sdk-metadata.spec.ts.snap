@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`pregenerated-lib returns description of the service 1`] = `"SAP Cloud SDK for JavaScript: Virtual Data Model (VDM) for service test-service"`;
-
 exports[`sdk-metadata generates the sdk metadata content for services with pregenerated lib 1`] = `
 Object {
   "generationAndUsage": Object {
@@ -129,7 +127,7 @@ const resultPromise = BusinessPartner.requestBuilder().getAll().top(5).execute({
   "pregeneratedLibrary": undefined,
   "serviceStatus": Object {
     "status": "verified",
-    "statusLongText": "The SAP Cloud SDK team checked for this API that generating an API client works, but no pregenerated client is available. You can generate your own client for this API.",
+    "statusLongText": "The SAP Cloud SDK team checked for this API that generating a API client works, but no pregenerated client is available. You can generate your own client for this API.",
     "statusText": "API Client generation tested but no download available",
   },
 }

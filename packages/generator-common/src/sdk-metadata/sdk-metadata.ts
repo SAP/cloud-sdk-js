@@ -54,7 +54,7 @@ export function getSdkMetadataClient(
 }
 
 export const sdkMetadataHeaderIntroText =
-  'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build applications in a cloud-native way and host them on the SAP Business Technology Platform or other runtimes.';
+  'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build cloud-native applications on the SAP Business Technology Platform. To simplify the consumption of multiple services published on the SAP API Business Hub, the SDK offers code generators for OData and OpenAPI together with pregenerated typed client libraries. These libraries are seamlessly integrated with connectivity, authentication, multi-tenancy, and other abstractions to speed up application development.';
 
 export const ServiceStatusValues: Record<
   ServiceStatus['status'],

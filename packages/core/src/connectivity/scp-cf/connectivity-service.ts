@@ -41,17 +41,12 @@ export function addProxyConfiguration(
     }));
 }
 
-// remove string argument in version 2.0 TODO: Remove in v2.0
+// TODO: remove string argument in v2.0
 export function addProxyConfigurationOnPrem(
   destination: Destination,
   jwt: string | JwtPair | undefined
 ): Promise<Destination> {
-  let jwtPair: JwtPair | undefined;
-  if (typeof jwt === 'string') {
-    jwtPair = { encoded: jwt, decoded: decodeJwt(jwt) };
-  } else {
-    jwtPair = jwt;
-  }
+  const jwtPair = typeof jwt === 'string' ? { encoded: jwt, decoded: decodeJwt(jwt) } : jwt;
   if (
     destination.authentication === 'PrincipalPropagation' &&
     !isUserToken(jwtPair)

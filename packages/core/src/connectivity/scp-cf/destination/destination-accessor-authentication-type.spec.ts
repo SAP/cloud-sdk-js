@@ -519,7 +519,7 @@ describe('authentication types', () => {
       });
     });
 
-    it('fails for Principal Propagation and  no user JWT', async () => {
+    it('fails for Principal Propagation and no user JWT', async () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();

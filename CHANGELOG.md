@@ -45,6 +45,7 @@ For return types the same extension could lead compile errors after client regen
 
 - [core] Support additional headers and query parameters, that are set on destinations.
 - [core] Support authentication type `OAuth2Password`.
+- [core] Support `DestinationOptions` on OpenAPI request builders.
 
 ## Improvements
 

@@ -95,12 +95,7 @@ export const oauthClientCredentialsSingleResponse: DestinationJson =
   destinationSingleResponse(oauthClientCredentialsMultipleResponse);
 
 export const onPremiseMultipleResponse: DestinationConfiguration[] = [
-  {
-    Name: 'OnPremise',
-    URL: 'my.on.premise.system:54321',
-    ProxyType: 'OnPremise',
-    Authentication: 'NoAuthentication' as AuthenticationType
-  }
+  getOnPremDestination('NoAuthentication')
 ];
 
 export const basicMultipleResponse: DestinationConfiguration[] = [
@@ -115,3 +110,23 @@ export const basicMultipleResponse: DestinationConfiguration[] = [
     Password: 'password'
   }
 ];
+
+export const onPremiseBasicMultipleResponse: DestinationConfiguration[] = [
+  getOnPremDestination('BasicAuthentication')
+];
+export const onPremiseBasicSingleResponse: DestinationJson =
+  destinationSingleResponse(oauthMultipleResponse);
+
+export const onPremisePrincipalPropagationMultipleResponse: DestinationConfiguration[] =
+  [getOnPremDestination('PrincipalPropagation')];
+export const onPremisePrincipalPropagationSingleResponse: DestinationJson =
+  destinationSingleResponse(onPremisePrincipalPropagationMultipleResponse);
+
+function getOnPremDestination(authType: AuthenticationType) {
+  return {
+    Name: 'OnPremise',
+    URL: 'my.on.premise.system:54321',
+    ProxyType: 'OnPremise',
+    Authentication: authType
+  };
+}

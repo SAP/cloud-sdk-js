@@ -30,7 +30,11 @@ import {
   oauthPasswordSingleResponse,
   oauthSingleResponse,
   oauthUserTokenExchangeMultipleResponse,
-  oauthUserTokenExchangeSingleResponse
+  oauthUserTokenExchangeSingleResponse,
+  onPremiseBasicMultipleResponse,
+  onPremiseBasicSingleResponse,
+  onPremisePrincipalPropagationMultipleResponse,
+  onPremisePrincipalPropagationSingleResponse
 } from '../../../../test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { wrapJwtInHeader } from '../jwt';
@@ -422,6 +426,39 @@ describe('authentication types', () => {
       clientCredentialsTokenCache.clear();
     });
 
+    it('returns a destination with OnPrem connectivity and basic auth', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        onPremiseBasicMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockSingleDestinationCall(
+        nock,
+        onPremiseBasicSingleResponse,
+        200,
+        destinationName,
+        wrapJwtInHeader(subscriberServiceToken).headers
+      );
+
+      const actual = await getDestination('OnPremise', {
+        userJwt: subscriberServiceToken,
+        cacheVerificationKeys: false,
+        selectionStrategy: alwaysSubscriber
+      });
+      expect(actual?.proxyConfiguration).toMatchObject({
+        host: 'proxy.example.com',
+        port: 12345,
+        protocol: 'http',
+        headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) }
+      });
+    });
+
     it('returns a destination without authTokens if its authenticationType is Basic', async () => {
       mockServiceBindings();
       mockVerifyJwt();
@@ -442,6 +479,69 @@ describe('authentication types', () => {
       });
       expect(actual).toMatchObject(expected);
       expect(serviceTokenSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('authentication type Principal Propagation', () => {
+    it('returns a destination with onPrem connectivity and principal propagation', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        onPremisePrincipalPropagationMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockSingleDestinationCall(
+        nock,
+        onPremisePrincipalPropagationSingleResponse,
+        200,
+        destinationName,
+        wrapJwtInHeader(subscriberServiceToken).headers
+      );
+
+      const actual = await getDestination('OnPremise', {
+        userJwt: subscriberServiceToken,
+        cacheVerificationKeys: false,
+        selectionStrategy: alwaysSubscriber
+      });
+      expect(actual?.proxyConfiguration).toMatchObject({
+        host: 'proxy.example.com',
+        port: 12345,
+        protocol: 'http',
+        headers: {
+          'Proxy-Authorization': expect.stringMatching(/Bearer.*/),
+          'SAP-Connectivity-Authentication': expect.stringMatching(/Bearer.*/)
+        }
+      });
+    });
+
+    it('fails for Principal Propagation and  no user JWT', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      mockInstanceDestinationsCall(nock, [], 200, providerServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        onPremisePrincipalPropagationMultipleResponse,
+        200,
+        providerServiceToken
+      );
+      mockSingleDestinationCall(
+        nock,
+        onPremisePrincipalPropagationSingleResponse,
+        200,
+        destinationName,
+        wrapJwtInHeader(providerServiceToken).headers
+      );
+
+      await expect(getDestination('OnPremise')).rejects.toThrowError(
+        'For principal propagation a user JWT is needed.'
+      );
     });
   });
 

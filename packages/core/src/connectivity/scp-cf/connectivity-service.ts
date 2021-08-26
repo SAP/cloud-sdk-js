@@ -1,15 +1,14 @@
-import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
+import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { Protocol } from './protocol';
 import { ProxyConfiguration } from './connectivity-service-types';
-import { Destination } from './destination/destination-service-types';
+import {
+  AuthenticationType,
+  Destination
+} from './destination/destination-service-types';
 import { EnvironmentAccessor } from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { serviceToken } from './token-accessor';
-
-const logger = createLogger({
-  package: 'core',
-  messageContext: 'connectivity-service'
-});
+import { decodeJwt, isUserToken, JwtPair } from './jwt';
 
 /**
  * Given a destination and a JWT (required for subscriber destinations), this function will add a proxy configuration to a destination.
@@ -28,18 +27,34 @@ export function addProxyConfiguration(
 ): Promise<Destination> {
   return Promise.resolve()
     .then(() => proxyHostAndPort())
-    .then(hostAndPort => addHeaders(hostAndPort, jwt))
+    .then(hostAndPort =>
+      addHeaders(hostAndPort, destination.authentication, jwt)
+    )
     .then(proxyConfiguration => ({
       ...destination,
       proxyConfiguration
     }));
 }
 
+// remove string in version 2.0TODO: Remove in v2.0
 export function addProxyConfigurationOnPrem(
   destination: Destination,
-  jwt?: string
+  jwt: string | JwtPair | undefined
 ): Promise<Destination> {
-  return addProxyConfiguration(destination, jwt);
+  let jwtPair: JwtPair | undefined;
+  if (typeof jwt === 'string') {
+    jwtPair = { encoded: jwt, decoded: decodeJwt(jwt) };
+  } else {
+    jwtPair = jwt;
+  }
+  if (
+    destination.authentication === 'PrincipalPropagation' &&
+    !isUserToken(jwtPair)
+  ) {
+    throw new Error('For principal propagation a user JWT is needed.');
+  }
+
+  return addProxyConfiguration(destination, jwtPair?.encoded);
 }
 
 interface HostAndPort {
@@ -73,6 +88,7 @@ function readConnectivityServiceBinding(): Service {
 
 function addHeaders(
   hostAndPort: HostAndPort,
+  authenticationType: AuthenticationType | undefined,
   jwt?: string
 ): Promise<ProxyConfiguration> {
   const connServiceBinding = readConnectivityServiceBinding();
@@ -81,7 +97,7 @@ function addHeaders(
     .then(() => proxyAuthorizationHeader(connServiceBinding, jwt))
     .then(proxyAuthHeader => ({
       ...proxyAuthHeader,
-      ...sapConnectivityAuthenticationHeader(jwt)
+      ...sapConnectivityAuthenticationHeader(authenticationType, jwt)
     }))
     .then(
       headers =>
@@ -109,16 +125,20 @@ function proxyAuthorizationHeader(
 }
 
 function sapConnectivityAuthenticationHeader(
+  authenticationType: AuthenticationType | undefined,
   jwt?: string
 ): Record<string, string> {
-  if (jwt) {
-    return {
-      'SAP-Connectivity-Authentication': `Bearer ${jwt}`
-    };
+  if (authenticationType === 'PrincipalPropagation') {
+    if (jwt) {
+      return {
+        'SAP-Connectivity-Authentication': `Bearer ${jwt}`
+      };
+    }
+    throw new Error(
+      `Unable to create "SAP-Connectivity-Authentication" header: no JWT found on the current request.
+    Continuing without header. Connecting to on-premise systems via principle propagation will not be possible.`
+    );
   }
-  logger.warn(
-    `Unable to create "SAP-Connectivity-Authentication" header: no JWT found on the current request.
-    Continuing without header. Connecting to on-premise systems may not be possible.`
-  );
+
   return {};
 }

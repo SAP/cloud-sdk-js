@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [core] Fix failing destination retrieval for `OnPremise` proxy type and basic authentication. 
 
 
 # 1.48.0

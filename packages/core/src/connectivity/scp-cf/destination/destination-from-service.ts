@@ -420,13 +420,7 @@ class DestinationFromServiceRetriever {
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case ProxyStrategy.ON_PREMISE_PROXY:
-        if (!isUserToken(this.subscriberToken)) {
-          throw new Error('For principal propagation a user JWT is needed.');
-        }
-        return addProxyConfigurationOnPrem(
-          destination,
-          this.subscriberToken.encoded
-        );
+        return addProxyConfigurationOnPrem(destination, this.subscriberToken);
       case ProxyStrategy.INTERNET_PROXY:
         return addProxyConfigurationInternet(destination);
       case ProxyStrategy.NO_PROXY:

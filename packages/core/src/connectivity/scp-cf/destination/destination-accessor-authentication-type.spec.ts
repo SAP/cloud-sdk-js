@@ -1,5 +1,8 @@
 import nock from 'nock';
-import { mockServiceBindings } from '../../../../test/test-util/environment-mocks';
+import {
+  mockServiceBindings,
+  onlyIssuerXsuaaUrl
+} from '../../../../test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
   mockServiceToken
@@ -11,6 +14,7 @@ import {
   mockVerifyJwt
 } from '../../../../test/test-util/destination-service-mocks';
 import {
+  onlyIssuerServiceToken,
   providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
@@ -542,6 +546,31 @@ describe('authentication types', () => {
       await expect(getDestination('OnPremise')).rejects.toThrowError(
         'For principal propagation a user JWT is needed.'
       );
+    });
+
+    it('fails for Principal Propagation and issuer JWT', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+
+      mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        onPremisePrincipalPropagationMultipleResponse,
+        200,
+        onlyIssuerServiceToken
+      );
+      mockSingleDestinationCall(
+        nock,
+        onPremisePrincipalPropagationSingleResponse,
+        200,
+        destinationName,
+        wrapJwtInHeader(onlyIssuerServiceToken).headers
+      );
+
+      await expect(
+        getDestination('OnPremise', { iss: onlyIssuerXsuaaUrl })
+      ).rejects.toThrowError('For principal propagation a user JWT is needed.');
     });
   });
 

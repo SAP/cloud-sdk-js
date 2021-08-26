@@ -1,5 +1,14 @@
 import { promises as promisesFs } from 'fs';
-import { resolve, parse, basename, dirname, join, relative } from 'path';
+import {
+  resolve,
+  parse,
+  basename,
+  dirname,
+  join,
+  relative,
+  posix,
+  sep
+} from 'path';
 import {
   createLogger,
   kebabCase,
@@ -78,7 +87,7 @@ export async function generateWithParsedOptions(
     generateService(
       inputFilePath,
       options,
-      optionsPerService[getRelativePath(inputFilePath)],
+      optionsPerService[getRelPathWithPosixSeparator(inputFilePath)],
       tsConfig
     )
   );
@@ -249,13 +258,13 @@ async function generateService(
 }
 
 /**
- * Gives the relative path with respect to process.cwd().
+ * Gives the relative path with respect to process.cwd() using posix file separator '/'.
  * @param absolutePath - The absolute path
  * @returns The relative path
  * @hidden
  */
-export function getRelativePath(absolutePath: string): string {
-  return relative(process.cwd(), absolutePath);
+export function getRelPathWithPosixSeparator(absolutePath: string): string {
+  return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);
 }
 
 /**

@@ -1,4 +1,4 @@
-// TODO 1728: The following is duplicate in the openapi generator
+// TODO 1728: The following is duplicate in the OpenAPI generator
 export const reservedJsKeywords: readonly string[] = [
   'break',
   'case',

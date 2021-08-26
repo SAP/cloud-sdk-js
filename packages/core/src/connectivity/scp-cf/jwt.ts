@@ -87,7 +87,7 @@ function validateAuthHeader(header: string | undefined): boolean {
 }
 
 /**
- * The URL for fetching the verfication certificate should have the same domain as the XSUAA. So if the UUA domain is "authentication.sap.hana.ondemand.com" the URL should be like
+ * The URL for fetching the verification certificate should have the same domain as the XSUAA. So if the UUA domain is "authentication.sap.hana.ondemand.com" the URL should be like
  * http://something.authentication.sap.hana.ondemand.com/somePath so the host should end with the domain.
  * @param verificationKeyURL - URL used for obtaining the verification key
  * @param uaaDomain - domain given in the XSUAA credentials

@@ -45,7 +45,7 @@ export const generatorOptionsCli: KeysToOptions = {
   inputDir: {
     alias: 'i',
     describe:
-      'This directory will be recursively searched for .edmx/.xml files.',
+      'This directory will be recursively searched for `.edmx`/`.xml` files.',
     normalize: true,
     coerce: coercePathArg,
     type: 'string',
@@ -71,7 +71,7 @@ export const generatorOptionsCli: KeysToOptions = {
   },
   useSwagger: {
     describe:
-      'Augment parsed information with information from swagger-parser definition files. Files are expected to have the same name as the edmx file, but with .json as suffix.',
+      'Augment parsed information with information from swagger-parser definition files. Files are expected to have the same name as the EDMX file, but with .json as suffix.',
     type: 'boolean',
     default: false,
     hidden: true

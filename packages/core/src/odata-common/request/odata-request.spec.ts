@@ -186,7 +186,7 @@ describe('OData Request', () => {
       requestSpy.mockRestore();
     });
 
-    it('request config contains headers without etag value when there is no etag config', async () => {
+    it('request config contains headers without ETag value when there is no ETag config', async () => {
       const destination: Destination = {
         url: 'http://example.com'
       };

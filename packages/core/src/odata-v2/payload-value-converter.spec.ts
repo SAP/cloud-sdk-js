@@ -233,7 +233,7 @@ describe('tsToEdm()', () => {
   });
 });
 
-describe('edm to ts to edm does not lead to information loss', () => {
+describe('EDM to ts to EDM does not lead to information loss', () => {
   it('Edm.String', () => {
     const expected = 'teststring';
     expect(tsToEdm(edmToTs(expected, 'Edm.String'), 'Edm.String')).toBe(
@@ -336,7 +336,7 @@ describe('edm to ts to edm does not lead to information loss', () => {
   });
 });
 
-describe('toNumber from edm type input', () => {
+describe('toNumber from EDM type input', () => {
   it('parses a number from string or returns the corresponding Number construct for INF, -INF and NaN', () => {
     expect(fromEdmToNumber('INF')).toEqual(Number.POSITIVE_INFINITY);
     expect(fromEdmToNumber('-INF')).toEqual(Number.NEGATIVE_INFINITY);
@@ -370,8 +370,8 @@ describe('toNumber from ts type input', () => {
   });
 });
 
-describe('edm to moment and back', () => {
-  describe('edm to moment', () => {
+describe('EDM to moment and back', () => {
+  describe('EDM to moment', () => {
     it('returns a non utc date if there is no offset', () => {
       const aMoment = edmDateTimeToMoment('/Date(1556630382000)/');
       expect(aMoment['_isUTC']).toBeFalsy();
@@ -389,7 +389,7 @@ describe('edm to moment and back', () => {
     });
   });
 
-  describe('moment to edm', () => {
+  describe('moment to EDM', () => {
     it('returns no offset for non-utc dates', () => {
       const edmDateTime = momentToEdmDateTime(moment(1556630382000));
       expect(edmDateTime).toBe('/Date(1556630382000)/');
@@ -417,7 +417,7 @@ describe('edm to moment and back', () => {
     });
   });
 
-  it('edm to moment to edm has no information loss', () => {
+  it('EDM to moment to EDM has no information loss', () => {
     const valueWithoutOffset = '/Date(1556630382000)/';
     const valueWithOffset = '/Date(1556630382000+0120)/';
 

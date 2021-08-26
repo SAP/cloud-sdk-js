@@ -24,26 +24,26 @@ const singleDest = {
   URL: 'https://destination1.example',
   Name: 'destName',
   ProxyType: 'any',
-  Authentication: 'NoAuthentification'
+  Authentication: 'NoAuthentication'
 };
 
 const subscriberDest = {
   URL: 'https://subscriber.example',
   Name: 'SubscriberDest',
   ProxyType: 'any',
-  Authentication: 'NoAuthentification'
+  Authentication: 'NoAuthentication'
 };
 const subscriberDest2 = {
   URL: 'https://subscriber2.example',
   Name: 'SubscriberDest2',
   ProxyType: 'any',
-  Authentication: 'NoAuthentification'
+  Authentication: 'NoAuthentication'
 };
 const providerDest = {
   URL: 'https://provider.example',
   Name: 'ProviderDest',
   ProxyType: 'any',
-  Authentication: 'NoAuthentification'
+  Authentication: 'NoAuthentication'
 };
 
 describe('DestinationServiceCache', () => {

@@ -22,8 +22,8 @@ export abstract class ActionFunctionImportRequestBuilder<
 > {
   /**
    * Base class for function  and actions imports
-   * @param responseTransformer - Transformation function for the response
-   * @param requestConfig - Request config for a action or funciton import
+   * @param responseTransformer - Transformation function for the response.
+   * @param requestConfig - Request config for a action or function import.
    */
   protected constructor(
     readonly responseTransformer: (data: any) => ReturnT,

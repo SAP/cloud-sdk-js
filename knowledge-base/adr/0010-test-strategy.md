@@ -18,7 +18,7 @@
 - Mock what you need to mock, but don't mock everything
   - Mocks should be simple and easy to understand
   - Mocks should not stay alive after test (TBD)
-  - Mocked destinations should be used expilcitly (close to test code)
+  - Mocked destinations should be used explicitly (close to test code)
 - Snapshot testing (TBD)
 - Testing private functions (TBD)
 - Usage of spies (TBD)

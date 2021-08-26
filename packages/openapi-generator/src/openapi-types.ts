@@ -173,6 +173,11 @@ export interface OpenApiNamedSchema {
    * Description of the schema.
    */
   description?: string;
+
+  /**
+   * Denotes the schema properties.
+   */
+  schemaProperties: OpenApiSchemaProperties;
 }
 
 /**
@@ -188,6 +193,11 @@ export interface OpenApiPersistedSchema extends SchemaNaming {
    * Description of the schema.
    */
   description?: string;
+
+  /**
+   * Denotes the schema properties.
+   */
+  schemaProperties: OpenApiSchemaProperties;
 }
 
 /**
@@ -250,7 +260,7 @@ export interface OpenApiObjectSchema {
 }
 
 /**
- * Represets a type where one of the given schemas can be chosen exclusively.
+ * Represents a type where one of the given schemas can be chosen exclusively.
  */
 export interface OpenApiOneOfSchema {
   /**
@@ -260,7 +270,7 @@ export interface OpenApiOneOfSchema {
 }
 
 /**
- * Represets a type where all of the given schemas are combined into one.
+ * Represents a type where all of the given schemas are combined into one.
  */
 export interface OpenApiAllOfSchema {
   /**
@@ -270,7 +280,7 @@ export interface OpenApiAllOfSchema {
 }
 
 /**
- * Represets a type where one of the given schemas can be chosen inclusively.
+ * Represents a type where one of the given schemas can be chosen inclusively.
  */
 export interface OpenApiAnyOfSchema {
   /**
@@ -280,7 +290,7 @@ export interface OpenApiAnyOfSchema {
 }
 
 /**
- * Represets a type where any type can be used except the given one.
+ * Represents a type where any type can be used except the given one.
  */
 export interface OpenApiNotSchema {
   /**
@@ -317,4 +327,66 @@ export interface SchemaNaming {
    * File name of the referenced schema file.
    */
   fileName: string;
+}
+
+export interface OpenApiSchemaProperties {
+  /**
+   * Serves as a hint at the contents of the type.
+   */
+  format?: string;
+
+  /**
+   * Denotes the default value for a property.
+   */
+  default?: any;
+
+  /**
+   * Specifies that a number must be the multiple of another number.
+   */
+  multipleOf?: number;
+
+  /**
+   * Denotes the maximum range of possible values.
+   */
+  maximum?: number;
+
+  /**
+   * Denotes the minimum range of possible values.
+   */
+  minimum?: number;
+
+  /**
+   * Denotes the maximum length of a string.
+   */
+  maxLength?: number;
+
+  /**
+   * Denotes the minimum length of a string.
+   */
+  minLength?: number;
+
+  /**
+   * Denotes the minimum length of an array.
+   */
+  minItems?: number;
+
+  /**
+   * Denotes the maximum length of an array.
+   */
+  maxItems?: number;
+
+  /**
+   * Denotes a regular expression template for the string value.
+   */
+  pattern?: string;
+
+  /**
+   * Denotes whether the schemas or schema property is deprecated.
+   */
+  deprecated?: boolean;
+
+  /**
+   * Example value for schema or schema property.
+   */
+  example?: any;
 }

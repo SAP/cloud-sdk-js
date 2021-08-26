@@ -2,7 +2,7 @@ import { parse } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
 import { ServiceOptions } from '../options';
-import { parseSchema } from './schema';
+import { parseSchema, parseSchemaProperties } from './schema';
 import { parseApis } from './api';
 import { createRefs, OpenApiDocumentRefs } from './refs';
 import { ParserOptions } from './options';
@@ -40,7 +40,8 @@ export function parseSchemas(
     ([name, schema]) => ({
       ...refs.getSchemaNaming(`#/components/schemas/${name}`),
       schema: parseSchema(schema, refs, options),
-      description: refs.resolveObject(schema).description
+      description: refs.resolveObject(schema).description,
+      schemaProperties: parseSchemaProperties(schema)
     })
   );
 }

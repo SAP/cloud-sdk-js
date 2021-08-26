@@ -7,9 +7,9 @@ import { EdmTypeShared } from '../edm-types';
 export class FunctionImportParameter<ValueT> {
   /**
    * Creates an instance of FunctionImportParameter.
-   * @param originalName - The original name of the parameter in the OData service
-   * @param edmType - Original edm Type
-   * @param value - Value to be used as parameter
+   * @param originalName - The original name of the parameter in the OData service.
+   * @param edmType - Original EDM type.
+   * @param value - Value to be used as parameter.
    */
   constructor(
     public originalName: string,
@@ -20,7 +20,7 @@ export class FunctionImportParameter<ValueT> {
 
 /**
  * Internal representation of all parameters of a function import as a map
- * @typeparam ParametersT - External represenation of all parameters
+ * @typeparam ParametersT - External representation of all parameters
  */
 export type FunctionImportParameters<ParametersT> = {
   [K in keyof ParametersT]: FunctionImportParameter<ParametersT[K]>;

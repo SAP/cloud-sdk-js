@@ -41,9 +41,9 @@ export function complexTypeName(type: string): string | undefined {
 export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
 
 /**
- * @deprecated since version 1.27.0. Use [[isEdmType]] and [[complexTypeName]] if you want to extract type names of non Edm types.
- * @param typeName - Name of the edm type for example "Edm.String" or "Namespace.ComplexType"
- * @returns the typename input for Edm types e.g. "Edm.String" or the type without the namesapce.
+ * @deprecated since version 1.27.0. Use [[isEdmType]] and [[complexTypeName]] if you want to extract type names of non EDM types.
+ * @param typeName - Name of the EDM type for example "Edm.String" or "Namespace.ComplexType"
+ * @returns the typename input for Edm types e.g. "Edm.String" or the type without the namespace.
  */
 export function parseType(typeName: string): string {
   return typeName.startsWith('Edm')
@@ -151,7 +151,7 @@ export function typesForCollection(
     };
   }
   throw new Error(
-    'Types in inside a collection must be either have complex or edm types'
+    'Types in inside a collection must be either have complex or EDM types.'
   );
 }
 

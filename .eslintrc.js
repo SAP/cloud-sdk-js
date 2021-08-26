@@ -42,6 +42,6 @@ module.exports = {
   ],
   rules: {
     radix: 'off',
-    'tsdoc/syntax': 'warn'
+    'tsdoc/syntax': 'error'
   }
 };

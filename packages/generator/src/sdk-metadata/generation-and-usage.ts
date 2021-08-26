@@ -19,6 +19,9 @@ export async function getGenerationAndUsage(
   };
 }
 
+export const linkGenerationDocumentation =
+  'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
+
 // will be used to generate metadata for failed and unknown case.
 export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
   return {
@@ -28,8 +31,9 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
     links: getODataLinks(),
     generationSteps: getGenerationSteps(
       'npm install -g @sap-cloud-sdk/generator',
-      'generate-odata-client --inputDir path/to/service-spec --outputDir path/to/',
-      linkGenerationDocumentation
+      'generate-odata-client --inputDir path/to/specification/ --outputDir path/to/client/',
+      linkGenerationDocumentation,
+      'OData'
     ),
     generatorVersion: await getSdkVersion(),
     generatorRepositoryLink:
@@ -65,12 +69,10 @@ export function getApiSpecificUsage(
   };
 }
 
-export const linkGenerationDocumentation =
-  'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client';
-
 export function getODataLinks(): Links {
   return getLinks(
     'https://sap.github.io/cloud-sdk/docs/js/features/odata/execute-odata-request',
-    'https://sap.github.io/cloud-sdk/docs/js/features/odata/generate-odata-client'
+    linkGenerationDocumentation,
+    'OData'
   );
 }

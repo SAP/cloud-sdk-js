@@ -1,4 +1,4 @@
-import { flat } from '@sap-cloud-sdk/util';
+import { flat, titleFormat } from '@sap-cloud-sdk/util';
 import { OpenAPIV3 } from 'openapi-types';
 import {
   OpenApiAllOfSchema,
@@ -10,6 +10,7 @@ import {
   OpenApiOneOfSchema,
   OpenApiReferenceSchema,
   OpenApiSchema,
+  OpenApiSchemaProperties,
   SchemaNaming
 } from './openapi-types';
 import { SchemaRefMapping } from './parser/parsing-info';
@@ -151,4 +152,18 @@ export function getSchemaNamingFromRef(
     );
   }
   return schemaNaming;
+}
+
+export function getSchemaPropertiesDocumentation(
+  schemaProperties: OpenApiSchemaProperties
+): string[] {
+  return Object.entries(schemaProperties || []).map(([propertyName, value]) => {
+    if (propertyName === 'deprecated') {
+      return '@deprecated';
+    }
+    if (propertyName === 'example') {
+      return `@example ${JSON.stringify(schemaProperties?.example, null, 2)}`;
+    }
+    return `${titleFormat(propertyName)}: ${JSON.stringify(value, null, 2)}.`;
+  });
 }

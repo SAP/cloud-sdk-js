@@ -305,8 +305,7 @@ export function isOf<EntityT extends Entity>(
 
 /**
  * Filter functions common to both OData v2 and OData v4. See below for version specific filter functions.
- *
- * Filter functions are used to create more complex filtering expresions, e. g. when filtering by the first letter of a property:
+ * Filter functions are used to create more complex filtering expressions, e. g. when filtering by the first letter of a property:
  * ```
  *  .filter(startsWith(BusinessPartner.FIRST_NAME, 'A').equals(true))
  * ```

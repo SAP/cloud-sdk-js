@@ -29,7 +29,7 @@ The current request builder APIs are not able to handle some odata requests like
 So far, the SDK user can build a request with the pattern like:
 
 ```ts
-People.reqeustBuilder().someOperation(params); // getAll(), getByKey(...keys), create(entity), update(entity), delete(entity | ...keys)
+People.requestBuilder().someOperation(params); // getAll(), getByKey(...keys), create(entity), update(entity), delete(entity | ...keys)
 ```
 
 which then generates url like below that has only **ONE** level:

@@ -11,7 +11,7 @@ import {
 import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 
 describe('edmx-edmx-parser', () => {
-  it('v2: parses edmx file to JSON and coerces properties to arrays', () => {
+  it('v2: parses EDMX file to JSON and coerces properties to arrays', () => {
     const metadataEdmx = readEdmxFile(
       resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV', 'API_TEST_SRV.edmx')
     );

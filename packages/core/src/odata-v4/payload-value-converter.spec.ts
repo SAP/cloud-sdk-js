@@ -158,7 +158,7 @@ describe('tsToEdm()', () => {
   });
 });
 
-describe('edm to ts to edm does not lead to information loss', () => {
+describe('EDM to TS to EDM does not lead to information loss', () => {
   it('should not loose information for Edm.Date', () => {
     const expected = '2020-05-13';
     expect(tsToEdm(edmToTs(expected, 'Edm.Date'), 'Edm.Date')).toBe(expected);

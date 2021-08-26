@@ -51,7 +51,7 @@ The issue raised by the customer asked to have the root cause in a more structur
 ```typescript
 interface HttpError {
   name: string;
-  statucCode: number;
+  statusCode: number;
   message: string;
 }
 ```
@@ -83,7 +83,7 @@ Pros:
 
 Cons:
 
-- Not very JavaScripty
+- Not very JavaScript-like
 - We need to find the right type in the `errorWithCause` -> big exception mapper factory
 - The consumer needs some kind of "down cast" to find the actual error type returned (catch blocks, instanceof check)
   This becomes even more problematic since there are no `throws declaration` possible.
@@ -99,7 +99,7 @@ class ErrorWithRoot extends Error {
   stack?: string;
   originalError?: Error;
   get rootError(): Error | undefined {
-    //recursibly check if originalError is of type ErrorWithRoot and return the first non  ErrorWithRoot error in this chain.
+    // recursively check if originalError is of type ErrorWithRoot and return the first non  ErrorWithRoot error in this chain.
     if (this.originalError instanceof ErrorWithRoot) {
       return this.originalError.rootError;
     }

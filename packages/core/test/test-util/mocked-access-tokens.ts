@@ -46,7 +46,7 @@ const userApprovedProviderTokenPayload = {
   iat,
   iss: providerXsuaaUrl,
   zid: TestTenants.PROVIDER,
-  user_id: 'service-prov-approvded'
+  user_id: 'service-prov-approved'
 };
 
 export const userApprovedProviderServiceToken = signedJwt(
@@ -57,7 +57,7 @@ const userApprovedSubscriberTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,
   zid: TestTenants.SUBSCRIBER,
-  user_id: 'service-sub-approvded'
+  user_id: 'service-sub-approved'
 };
 
 export const userApprovedSubscriberServiceToken = signedJwt(

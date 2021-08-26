@@ -3,5 +3,6 @@
   "singleQuote": true,
   "filepath": "*.ts",
   "trailingComma": "none",
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
+  "endOfLine": "lf"
 }

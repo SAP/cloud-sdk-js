@@ -7,7 +7,7 @@ decided
 ## Context
 
 We are currently using the [Java-based OpenAPI generator CLI](https://www.npmjs.com/package/@openapitools/openapi-generator-cli).
-As this generator is targeting many different programming languages in some points it does not fit our needs, e. g. handling of unique names or API files, which also differ between compontents.
+As this generator is targeting many different programming languages in some points it does not fit our needs, e. g. handling of unique names or API files, which also differ between components.
 In our current approach we wrap the generated API with our own to fit those needs, but we realized, that we ended up writing many workarounds.
 Many workarounds can currently only be covered by preprocessing/manipulating the original service definition.
 At the moment, some API designs cannot be realized or are not worth investing into.

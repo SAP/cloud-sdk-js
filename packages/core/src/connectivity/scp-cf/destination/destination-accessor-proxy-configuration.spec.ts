@@ -31,7 +31,7 @@ describe('proxy configuration', () => {
     delete process.env['https_proxy'];
   });
 
-  it('should take the enviorment varaible.', async () => {
+  it('should take the environment variable.', async () => {
     mockServiceBindings();
     mockVerifyJwt();
     mockServiceToken();

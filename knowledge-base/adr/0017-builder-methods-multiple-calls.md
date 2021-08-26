@@ -7,11 +7,11 @@ decided
 ## Context
 
 In the request builder you can currently call methods like `filter` and `top` multiple times.
-In this document we discuss possibilities to unify this the behaviour when this is done.
+In this document we discuss possibilities to unify this the behavior when this is done.
 
 ## Options
 
-We could decide on each method for a behaviour or we make it the same for all methods.
+We could decide on each method for a behavior or we make it the same for all methods.
 Potentials options are:
 
 ### Option A: Last Call Counts
@@ -67,15 +67,15 @@ For configuration related builder methods we will use the verbs `add` or `set` t
 
 The relevant builder methods (the one containing arguments) are listed in the table below including the decision on the option:
 
-| class                          | methods                                                                                                                                                                              |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| request-builder-base           | withCustomHeader ( refactor to addCustomHeaders B)<br>withCustomQueryParameters (refactor to addCustomQueryParameters B)<br>withCustomServicePath (A rename to setCustomServicePath) |
-| get-all-request-builder-base   | select (A) <br>orderBy (A) <br>top (A) <br>skip (A)                                                                                                                                  |
-| get-all-request-builder-v2/v4  | filter (A)<br>expand(v4)                                                                                                                                                             |
-| get-by-key-requestbuilder-base | select (A refactoring move to base)                                                                                                                                                  |
-| get-by-key-requestbuilder-v4   | expand(A)                                                                                                                                                                            |
-| delete-request-builder-v2/v4   | setVersionIdentifier (A)                                                                                                                                                             |
-| update-request-builder-base    | requiredFields (refactor setRequiredFields A)<br>ignoredFields (refactor setRequiredFields A)<br>withCustomVersionIdentifier (refactor align with setVersionIdentifier A)            |
+| class                           | methods                                                                                                                                                                              |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| request-builder-base            | withCustomHeader ( refactor to addCustomHeaders B)<br>withCustomQueryParameters (refactor to addCustomQueryParameters B)<br>withCustomServicePath (A rename to setCustomServicePath) |
+| get-all-request-builder-base    | select (A) <br>orderBy (A) <br>top (A) <br>skip (A)                                                                                                                                  |
+| get-all-request-builder-v2/v4   | filter (A)<br>expand(v4)                                                                                                                                                             |
+| get-by-key-request-builder-base | select (A refactoring move to base)                                                                                                                                                  |
+| get-by-key-request-builder-v4   | expand(A)                                                                                                                                                                            |
+| delete-request-builder-v2/v4    | setVersionIdentifier (A)                                                                                                                                                             |
+| update-request-builder-base     | requiredFields (refactor setRequiredFields A)<br>ignoredFields (refactor setRequiredFields A)<br>withCustomVersionIdentifier (refactor align with setVersionIdentifier A)            |
 
 ## Consequences
 

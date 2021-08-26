@@ -102,14 +102,14 @@ function warnIfNavigation<EntityT extends Entity>(
   entity: EntityT,
   entityConstructor: Constructable<EntityT>
 ): ODataRequest<ODataUpdateRequestConfig<EntityT>> {
-  const setNavigationsProperties = Object.keys(entity).filter(
+  const setNavigationProperties = Object.keys(entity).filter(
     key =>
       !isNullish(entity[key]) && isNavigationProperty(key, entityConstructor)
   );
 
-  if (setNavigationsProperties.length) {
+  if (setNavigationProperties.length) {
     logger.warn(
-      `The navigation properties ${setNavigationsProperties} have been included in your update request. Update of navigation properties is not supported and will be ignored.`
+      `The navigation properties ${setNavigationProperties} have been included in your update request. Update of navigation properties is not supported and will be ignored.`
     );
   }
 

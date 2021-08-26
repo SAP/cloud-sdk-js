@@ -11,7 +11,7 @@ export function apiSpecificCodeSample(
   packageName: string
 ): InstructionWithText {
   return {
-    text: `In the example below you execute the  <code>${functionName}</code> of the  <code>${apiName}</code> API.`,
+    text: 'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose "OpenAPI Consumption Manual" from the "Helpful Links" menu.',
     instructions: codeBlock`
 import { ${apiName} } from '${packageName}';
 

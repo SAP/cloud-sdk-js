@@ -6,7 +6,8 @@ import {
   serviceToken,
   userApprovedServiceToken,
   wrapJwtInHeader,
-  jwtBearerToken
+  jwtBearerToken,
+  getDestinationFromDestinationService
 } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import {
@@ -83,6 +84,20 @@ describe('OAuth flows', () => {
       .top(1)
       .execute(destination);
     expect(result.length).toBe(1);
+  }, 60000);
+
+  xit('BasicAuth onPrem  Basic Authentication', async () => {
+    const destination = await getDestinationFromDestinationService(
+      systems.s4onPrem.providerBasic,
+      {}
+    );
+
+    expect(destination!.proxyConfiguration).toMatchObject({
+      headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) },
+      host: expect.stringMatching(/.*sap\.hana\.ondemand\.com/),
+      port: expect.stringMatching(/\d+/),
+      protocol: 'http'
+    });
   }, 60000);
 
   xit('BasicAuth: Provider Destination & Provider Token + PUT request (csrf token)', async () => {

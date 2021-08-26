@@ -26,6 +26,7 @@
 
 ## Fixed Issues
 
+- [core] Fix failing destination retrieval for `OnPremise` proxy type and basic authentication. 
 - [openapi-generator] Fix generation of options per service configuration files to always use POSIX-style file path separators independent of operating system.
 
 

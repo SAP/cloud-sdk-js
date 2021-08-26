@@ -14,13 +14,13 @@ import {
 } from '../../../../test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
-  subscriberServiceToken,
-  subscriberUserJwt
+  subscriberServiceToken
 } from '../../../../test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
   destinationName,
-  onPremiseMultipleResponse
+  onPremiseMultipleResponse,
+  onPremisePrincipalPropagationMultipleResponse
 } from '../../../../test/test-util/example-destination-service-responses';
 import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
@@ -69,7 +69,7 @@ describe('proxy configuration', () => {
     const httpMocks = [
       mockInstanceDestinationsCall(
         nock,
-        onPremiseMultipleResponse,
+        onPremisePrincipalPropagationMultipleResponse,
         200,
         subscriberServiceToken
       ),
@@ -99,15 +99,13 @@ describe('proxy configuration', () => {
     mockServiceToken();
 
     const httpMocks = [
-      mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
       mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
       mockSubaccountDestinationsCall(
         nock,
         onPremiseMultipleResponse,
         200,
         providerServiceToken
-      ),
-      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken)
+      )
     ];
 
     const expected = {
@@ -120,14 +118,11 @@ describe('proxy configuration', () => {
       proxyConfiguration: {
         ...mockedConnectivityServiceProxyConfig,
         headers: {
-          'Proxy-Authorization': `Bearer ${subscriberServiceToken}`,
-          'SAP-Connectivity-Authentication': `Bearer ${subscriberUserJwt}`
+          'Proxy-Authorization': `Bearer ${providerServiceToken}`
         }
       }
     };
-    const actual = await getDestination('OnPremise', {
-      userJwt: subscriberUserJwt
-    });
+    const actual = await getDestination('OnPremise');
     expect(actual).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });

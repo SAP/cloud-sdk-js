@@ -28,7 +28,7 @@ import {
   destinationName,
   oauthMultipleResponse,
   oauthSingleResponse,
-  onPremiseMultipleResponse
+  onPremisePrincipalPropagationMultipleResponse
 } from '../../../../test/test-util/example-destination-service-responses';
 import { destinationServiceCache } from './destination-service-cache';
 import { getDestination } from './destination-accessor';
@@ -372,7 +372,7 @@ describe('caching destination integration tests', () => {
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
         mockSubaccountDestinationsCall(
           nock,
-          onPremiseMultipleResponse,
+          onPremisePrincipalPropagationMultipleResponse,
           200,
           providerServiceToken
         )
@@ -398,7 +398,7 @@ describe('caching destination integration tests', () => {
           Name: 'OnPremise',
           URL: 'my.on.premise.system:54321',
           ProxyType: 'OnPremise',
-          Authentication: 'NoAuthentication'
+          Authentication: 'PrincipalPropagation'
         }),
         proxyConfiguration: {
           ...mockedConnectivityServiceProxyConfig,

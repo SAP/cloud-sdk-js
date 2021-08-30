@@ -2008,9 +2008,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.20.20"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.20.tgz#ce3d6c13c15c5e622a85efcd3a1cb2d9c7fa43a6"
-  integrity sha512-kqmxiJg4AT7rsSPIhO6eoBIx9mNwwpeH42yjtgQh6X2ANSpLpvToMXv+LMFdfxpwG1FZXZ41OGZMiUAtbBLEvg==
+  version "12.20.21"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.21.tgz#575e91f59c2e79318c2d39a48286c6954e484fd5"
+  integrity sha512-Qk7rOvV2A4vNgXNS88vEvbJE1NDFPCQ8AU+pNElrU2bA4yrRDef3fg3SUe+xkwyin3Bpg/Xh5JkNWTlsOcS2tA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -4154,9 +4154,9 @@ dts-critic@latest:
     yargs "^15.3.1"
 
 dtslint@^4.0.0:
-  version "4.1.5"
-  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.1.5.tgz#bb9b75a4b5d2d3c05a98ca88ca9876b52fac8763"
-  integrity sha512-fsuFGA2F9PBZTviMOH35m60KGkTt9ZugfVfOWKIz+l97epnWEcUI0xwHsI4z5j12dSlt3/N1qBJOr/IA34VfJw==
+  version "4.1.6"
+  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.1.6.tgz#0399a34583ba1057d260b1c0009d5c6fa8b3d79e"
+  integrity sha512-AlEYz68dHznzxtSsxaULqxGdXUObhv/YyyNBny9w90Z+EQygFGpbfaPLqq5jZwEBslCKPjsrpElqGtVHZXAw6g==
   dependencies:
     "@definitelytyped/header-parser" latest
     "@definitelytyped/typescript-versions" latest
@@ -10912,9 +10912,9 @@ tar-stream@^2.1.4:
     readable-stream "^3.1.1"
 
 tar@>=6.1.2, tar@^2.0.0, tar@^2.2.2, tar@^4, tar@^4.4.12, tar@^6.0.2, tar@^6.1.0:
-  version "6.1.10"
-  resolved "https://registry.npmjs.org/tar/-/tar-6.1.10.tgz#8a320a74475fba54398fa136cd9883aa8ad11175"
-  integrity sha512-kvvfiVvjGMxeUNB6MyYv5z7vhfFRwbwCXJAeL0/lnbrttBVqcMOnpHUf0X42LrPMR8mMpgapkJMchFH4FSHzNA==
+  version "6.1.11"
+  resolved "https://registry.npmjs.org/tar/-/tar-6.1.11.tgz#6760a38f003afa1b2ffd0ffe9e9abbd0eab3d621"
+  integrity sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"

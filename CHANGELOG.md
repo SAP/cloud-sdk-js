@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [core] Support authorization through client certificates (X.509) in client credentials grant requests.
 
 ## Improvements
 

@@ -33,8 +33,10 @@ export interface ProxyConfiguration {
    * the 'SAP-Connectivity-Authentication' header if a JWT is present on the current request.
    * For web proxies only the 'Proxy-Authorization' enter the header fields if provided.
    */
-  headers?: {
-    'Proxy-Authorization': string;
-    'SAP-Connectivity-Authentication'?: string;
-  };
+  headers?: ProxyConfigurationHeaders;
+}
+
+export interface ProxyConfigurationHeaders {
+  'Proxy-Authorization': string;
+  'SAP-Connectivity-Authentication'?: string;
 }

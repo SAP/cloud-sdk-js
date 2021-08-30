@@ -34,6 +34,17 @@ describe('OAuth flows', () => {
     destinationService = getService('destination');
   });
 
+  it('token retrieval', async () => {
+    // const token = await serviceTokenOld('destination');
+    const token = serviceToken('destination');
+    // const clientCredentialsToken = await getClientCredentialsToken(
+    //   'xsuaa',
+    //   'eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vczRzZGsuYXV0aGVudGljYXRpb24uc2FwLmhhbmEub25kZW1hbmQuY29tL3Rva2VuX2tleXMiLCJraWQiOiJrZXktaWQtMSIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MzIzY2NlNzNjYmQ0YzJmODkyY2U3YzU3MDk5ODMzNCIsImV4dF9hdHRyIjp7ImVuaGFuY2VyIjoiWFNVQUEiLCJzdWJhY2NvdW50aWQiOiJhODllYTkyNC1kOWMyLTRlYWItODRmYi0zZmZjYWFkZjVkMjQiLCJ6ZG4iOiJzNHNkayJ9LCJjbmYiOnsieDV0I1MyNTYiOiJKNnV6LV9rT2UxbHFFbjgwSDBzTzVGNXR3NFVjSTZ2bjNvNk1nc1NNMVlZIn0sInN1YiI6InNiLXhzYXBwLWNlcnQhdDI0OTkiLCJhdXRob3JpdGllcyI6WyJ1YWEucmVzb3VyY2UiXSwic2NvcGUiOlsidWFhLnJlc291cmNlIl0sImNsaWVudF9pZCI6InNiLXhzYXBwLWNlcnQhdDI0OTkiLCJjaWQiOiJzYi14c2FwcC1jZXJ0IXQyNDk5IiwiYXpwIjoic2IteHNhcHAtY2VydCF0MjQ5OSIsImdyYW50X3R5cGUiOiJjbGllbnRfY3JlZGVudGlhbHMiLCJyZXZfc2lnIjoiMTQzNzA2OWIiLCJpYXQiOjE2MzAwNzQ1NDksImV4cCI6MTYzMDExNzc0OSwiaXNzIjoiaHR0cDovL3M0c2RrLmxvY2FsaG9zdDo4MDgwL3VhYS9vYXV0aC90b2tlbiIsInppZCI6ImE4OWVhOTI0LWQ5YzItNGVhYi04NGZiLTNmZmNhYWRmNWQyNCIsImF1ZCI6WyJ1YWEiLCJzYi14c2FwcC1jZXJ0IXQyNDk5Il19.PINNZHMdHD1j1wEb_cxzrvV2zWibyHi9cxXXS6qccc4tE82swzhGPKmay-Ygf4FvbrXLjtB-XMPNpH4bwZGSOOZ6_zfPMhZDVTsL2hw3c5HKPtKUoLOts7DsbS2QVpvYYdS5Imza9TAj0zE_IFUb7hoReIzR2jA4fmZ0mPPSNuc6cl7ktHranqsynyVBcOrOrY-BQR4kwqR8p4A6WXc9CxZ3OSrrcDqB5BCF6JHxJ8RLqlXnPcdkg0jgFn6cKER-UBQtovIiOMFVq64orOXVhJ-5yKtEac9AYCqWcCYxP6pt6uO2o2JqRJhYi-1dp3X3TL9aeM2ggg2L4IAXOxIStw'
+    // );
+
+    console.log(token);
+  });
+
   xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
     const userGrant = await userApprovedServiceToken(
       accessToken.provider,
@@ -54,7 +65,7 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  xit('OAuth2Password: Fetches destination and destiantion service has token', async () => {
+  xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider
     });

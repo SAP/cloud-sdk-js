@@ -23,12 +23,15 @@ function replace(xsuaaUrl: string, subdomain: string): string {
   return scheme + subdomain + xsuaaDomain;
 }
 
-function parseSubdomain(stringUrl: string): string {
-  const url = new URL(stringUrl);
+/**
+ * @hidden
+ */
+export function parseSubdomain(issuerUrl: string): string {
+  const url = new URL(issuerUrl);
   const host = url.host;
   if (!host || host.indexOf('.') === -1) {
     throw new Error(
-      'Failed to determine sub-domain: invalid host in "' + stringUrl + '".'
+      'Failed to determine sub-domain: invalid host in "' + issuerUrl + '".'
     );
   }
   return host.split('.')[0];

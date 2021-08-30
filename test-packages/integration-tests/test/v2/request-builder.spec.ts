@@ -33,7 +33,7 @@ const getAllResponse = testEntityCollectionResponse();
 
 const providerToken = jwt.sign(
   { zid: 'provider_token', iss: providerXsuaaUrl },
-  privateKey(),
+  privateKey,
   {
     algorithm: 'RS512'
   }
@@ -154,8 +154,7 @@ describe('Request Builder', () => {
       providerXsuaaUrl,
       { access_token: providerToken },
       200,
-      mockDestinationServiceBinding.credentials.clientid,
-      mockDestinationServiceBinding.credentials.clientsecret
+      mockDestinationServiceBinding.credentials
     );
 
     mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
@@ -586,8 +585,7 @@ describe('Request Builder', () => {
       providerXsuaaUrl,
       { access_token: providerToken },
       200,
-      mockDestinationServiceBinding.credentials.clientid,
-      mockDestinationServiceBinding.credentials.clientsecret
+      mockDestinationServiceBinding.credentials
     );
 
     mockInstanceDestinationsCall(nock, [destination], 200, providerToken);

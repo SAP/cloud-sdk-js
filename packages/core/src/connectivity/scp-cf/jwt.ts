@@ -319,7 +319,7 @@ function getVerificationKeyURL(token: string): string {
   const decodedJwt = decodeJwtComplete(token);
   if (!decodedJwt.header.jku) {
     throw new Error(
-      'Field jku containing the URL for JWT verification not part of header.'
+      'Field `jku` containing the URL for JWT verification is not part of the header.'
     );
   }
   return decodedJwt.header.jku;

@@ -13,7 +13,7 @@ import {
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
-  privateKey(),
+  privateKey,
   {
     algorithm: 'RS512'
   }

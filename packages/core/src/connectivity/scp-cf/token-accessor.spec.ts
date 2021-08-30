@@ -1,7 +1,9 @@
 import nock from 'nock';
 import {
   mockDestinationServiceBinding,
+  mockDestinationServiceCertBinding,
   mockServiceBindings,
+  providerXsuaaCertUrl,
   providerXsuaaUrl,
   subscriberXsuaaUrl
 } from '../../../test/test-util/environment-mocks';
@@ -14,6 +16,7 @@ import {
 } from '../../../test/test-util/mocked-access-tokens';
 import {
   mockClientCredentialsGrantCall,
+  mockClientCredentialsGrantWithCertCall,
   mockRefreshTokenGrantCall,
   mockUserTokenGrantCall
 } from '../../../test/test-util/xsuaa-service-mocks';
@@ -39,8 +42,7 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: expected },
         200,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        mockDestinationServiceBinding.credentials
       );
 
       const actual = await serviceToken('destination');
@@ -49,17 +51,33 @@ describe('token accessor', () => {
 
     it("uses the JWT's issuer as tenant", async () => {
       const expected = signedJwt({ dummy: 'content' });
-      const userJwt = signedJwt({ iss: 'https://testeroni.example.com' });
+      const userJwt = signedJwt({
+        iss: 'https://testeroni.example.com'
+      });
 
       mockClientCredentialsGrantCall(
         'https://testeroni.example.com',
         { access_token: expected },
         200,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        mockDestinationServiceBinding.credentials
       );
 
       const actual = await serviceToken('destination', { userJwt });
+      expect(actual).toBe(expected);
+    });
+
+    it('authenticates with certificate', async () => {
+      mockServiceBindings(true);
+      const expected = signedJwt({ dummy: 'content' });
+
+      mockClientCredentialsGrantWithCertCall(
+        providerXsuaaCertUrl,
+        { access_token: expected },
+        200,
+        mockDestinationServiceCertBinding.credentials
+      );
+
+      const actual = await serviceToken('destination');
       expect(actual).toBe(expected);
     });
 
@@ -70,8 +88,33 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: expected },
         200,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        mockDestinationServiceBinding.credentials
+      );
+
+      const retrieveFromCacheSpy = jest.spyOn(
+        clientCredentialsTokenCache,
+        'getGrantTokenFromCache'
+      );
+
+      const first = await serviceToken('destination');
+      const second = await serviceToken('destination');
+      expect(first).toBe(expected);
+      expect(second).toBe(first);
+      expect(retrieveFromCacheSpy).toHaveBeenCalledTimes(2);
+      expect(retrieveFromCacheSpy).toHaveNthReturnedWith(2, {
+        access_token: expected
+      });
+    });
+
+    it('caches tokens for certificate authentication', async () => {
+      mockServiceBindings(true);
+      const expected = signedJwt({ dummy: 'content' });
+
+      mockClientCredentialsGrantWithCertCall(
+        providerXsuaaCertUrl,
+        { access_token: expected },
+        200,
+        mockDestinationServiceCertBinding.credentials
       );
 
       const retrieveFromCacheSpy = jest.spyOn(
@@ -94,16 +137,14 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: providerServiceToken },
         200,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        mockDestinationServiceBinding.credentials
       );
 
       mockClientCredentialsGrantCall(
         subscriberXsuaaUrl,
         { access_token: subscriberServiceToken },
         200,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        mockDestinationServiceBinding.credentials
       );
 
       const providerToken = await serviceToken('destination', {
@@ -124,8 +165,8 @@ describe('token accessor', () => {
           password: mockDestinationServiceBinding.credentials.clientsecret
         });
 
-      expect(providerTokenFromCache!.access_token).toEqual(providerToken);
-      expect(subscriberTokenFromCache!.access_token).toEqual(subscriberToken);
+      expect(providerTokenFromCache?.access_token).toEqual(providerToken);
+      expect(subscriberTokenFromCache?.access_token).toEqual(subscriberToken);
 
       expect(
         clientCredentialsTokenCache.getGrantTokenFromCache(
@@ -162,7 +203,7 @@ describe('token accessor', () => {
       ).toBeUndefined();
     });
 
-    it("ignores the cache if it's disabled", async () => {
+    it('ignores the cache if it is disabled', async () => {
       const expected1 = signedJwt({ dummy: 'content' });
       const expected2 = signedJwt({ dummy: 'content2' });
 
@@ -170,16 +211,14 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: expected1 },
         200,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        mockDestinationServiceBinding.credentials
       );
 
       mockClientCredentialsGrantCall(
         providerXsuaaUrl,
         { access_token: expected2 },
         200,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        mockDestinationServiceBinding.credentials
       );
 
       const retrieveFromCacheSpy = jest.spyOn(
@@ -202,14 +241,13 @@ describe('token accessor', () => {
           error_description: 'Bad credentials'
         },
         401,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        mockDestinationServiceBinding.credentials
       );
 
       await expect(
         serviceToken('destination')
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Fetching an access token for service \\"destination\\" failed."'
+        '"Could not fetch client credentials token for service of type \\"destination\\"."'
       );
     });
 

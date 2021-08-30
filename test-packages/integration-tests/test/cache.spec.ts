@@ -38,7 +38,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
         zid: 'provider_token',
         user_id: 'user_id'
       },
-      privateKey(),
+      privateKey,
       {
         algorithm: 'RS512'
       }
@@ -48,8 +48,7 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
       providerXsuaaUrl,
       { access_token: providerToken },
       200,
-      mockDestinationServiceBinding.credentials.clientid,
-      mockDestinationServiceBinding.credentials.clientsecret
+      mockDestinationServiceBinding.credentials
     );
     mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
     mockSubaccountDestinationsCall(nock, [], 200, providerToken);

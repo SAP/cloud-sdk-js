@@ -67,7 +67,7 @@ describe('token accessor', () => {
     });
 
     it('authenticates with certificate', async () => {
-      mockServiceBindings(true);
+      mockServiceBindings({ mockDestinationBindingWithCert: true });
       const expected = signedJwt({ dummy: 'content' });
 
       mockClientCredentialsGrantWithCertCall(
@@ -107,7 +107,7 @@ describe('token accessor', () => {
     });
 
     it('caches tokens for certificate authentication', async () => {
-      mockServiceBindings(true);
+      mockServiceBindings({ mockDestinationBindingWithCert:true });
       const expected = signedJwt({ dummy: 'content' });
 
       mockClientCredentialsGrantWithCertCall(
@@ -173,7 +173,8 @@ describe('token accessor', () => {
           'https://doesnotexist.example.com',
           {
             username: destinationBindingClientSecretMock.credentials.clientid,
-            password: destinationBindingClientSecretMock.credentials.clientsecret
+            password:
+              destinationBindingClientSecretMock.credentials.clientsecret
           }
         )
       ).toBeUndefined();

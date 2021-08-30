@@ -9,7 +9,7 @@ import {
   subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
 import {
-  mockedConnectivityServiceProxyConfig,
+  connectivityProxyConfigMock,
   mockServiceBindings
 } from '../../../../test/test-util/environment-mocks';
 import {
@@ -401,7 +401,7 @@ describe('caching destination integration tests', () => {
           Authentication: 'PrincipalPropagation'
         }),
         proxyConfiguration: {
-          ...mockedConnectivityServiceProxyConfig,
+          ...connectivityProxyConfigMock,
           headers: {
             'Proxy-Authorization': `Bearer ${providerServiceToken}`,
             'SAP-Connectivity-Authentication': `Bearer ${providerUserJwt}`

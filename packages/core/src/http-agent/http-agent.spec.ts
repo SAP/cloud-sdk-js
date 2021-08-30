@@ -1,6 +1,6 @@
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { mockedConnectivityServiceProxyConfig } from '../../test/test-util/environment-mocks';
+import { connectivityProxyConfigMock } from '../../test/test-util/environment-mocks';
 import {
   Destination,
   getProtocolOrDefault,
@@ -19,7 +19,7 @@ describe('createAgent', () => {
   const proxyDestination: Destination = {
     ...baseDestination,
     proxyConfiguration: {
-      ...mockedConnectivityServiceProxyConfig,
+      ...connectivityProxyConfigMock,
       headers: {
         'Proxy-Authorization': 'Bearer jwt'
       }
@@ -39,7 +39,7 @@ describe('createAgent', () => {
   it('returns a proxy agent if there is a proxy setting on the destination', () => {
     expect(getAgentConfig(proxyDestination)['httpsAgent']).toEqual(
       new HttpsProxyAgent({
-        ...mockedConnectivityServiceProxyConfig,
+        ...connectivityProxyConfigMock,
         rejectUnauthorized: true
       })
     );
@@ -76,7 +76,7 @@ describe('createAgent', () => {
       ]
     ).toEqual(
       new HttpsProxyAgent({
-        ...mockedConnectivityServiceProxyConfig,
+        ...connectivityProxyConfigMock,
         rejectUnauthorized: false
       })
     );

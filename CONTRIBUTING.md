@@ -108,4 +108,4 @@ Due to legal reasons, contributors will be asked to accept a DCO before they sub
 
 ## Release Process
 
-Information on the release process can be found in the [release documentation](./knowledge-base/how-tos/release.md).
+Information on the release process can be found in the [release documentation](./knowledge-base/how-tos/0001-release.md).

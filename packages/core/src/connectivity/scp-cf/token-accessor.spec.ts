@@ -107,7 +107,7 @@ describe('token accessor', () => {
     });
 
     it('caches tokens for certificate authentication', async () => {
-      mockServiceBindings({ mockDestinationBindingWithCert:true });
+      mockServiceBindings({ mockDestinationBindingWithCert: true });
       const expected = signedJwt({ dummy: 'content' });
 
       mockClientCredentialsGrantWithCertCall(

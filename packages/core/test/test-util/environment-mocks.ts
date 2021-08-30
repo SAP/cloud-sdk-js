@@ -22,7 +22,7 @@ export const providerXsuaaClientCredentials = {
   url: providerXsuaaUrl
 } as XsuaaServiceCredentials;
 
-export const mockXsuaaBinding: Service = {
+export const xsuaaBindingMock: Service = {
   plan: 'application',
   label: 'xsuaa',
   name: 'my-xsuaa',
@@ -37,7 +37,7 @@ export const mockXsuaaBinding: Service = {
   }
 };
 
-export const mockDestinationServiceBinding: Service = {
+export const destinationBindingClientSecretMock: Service = {
   plan: 'lite',
   label: 'destination',
   name: 'my-destination',
@@ -50,7 +50,7 @@ export const mockDestinationServiceBinding: Service = {
   }
 };
 
-export const mockDestinationServiceCertBinding: Service = {
+export const destinationBindingCertMock: Service = {
   plan: 'lite',
   label: 'destination',
   name: 'my-destination',
@@ -65,13 +65,13 @@ export const mockDestinationServiceCertBinding: Service = {
   }
 };
 
-export const mockedConnectivityServiceProxyConfig: ProxyConfiguration = {
+export const connectivityProxyConfigMock: ProxyConfiguration = {
   host: 'proxy.example.com',
   port: 12345,
   protocol: Protocol.HTTP
 };
 
-export const mockConnectivityServiceBinding: Service = {
+export const connectivityBindingMock: Service = {
   plan: 'application',
   label: 'connectivity',
   name: 'my-connectivity',
@@ -79,8 +79,8 @@ export const mockConnectivityServiceBinding: Service = {
   credentials: {
     clientid: 'clientid',
     clientsecret: 'clientsecret',
-    onpremise_proxy_host: mockedConnectivityServiceProxyConfig.host,
-    onpremise_proxy_port: mockedConnectivityServiceProxyConfig.port
+    onpremise_proxy_host: connectivityProxyConfigMock.host,
+    onpremise_proxy_port: connectivityProxyConfigMock.port
   }
 };
 
@@ -92,13 +92,13 @@ interface MockServiceBindings {
 
 export function mockServiceBindings(mockWithCert = false): MockServiceBindings {
   const mockServiceEnv = {
-    xsuaa: [mockXsuaaBinding],
+    xsuaa: [xsuaaBindingMock],
     destination: [
       mockWithCert
-        ? mockDestinationServiceCertBinding
-        : mockDestinationServiceBinding
+        ? destinationBindingCertMock
+        : destinationBindingClientSecretMock
     ],
-    connectivity: [mockConnectivityServiceBinding]
+    connectivity: [connectivityBindingMock]
   };
 
   process.env['VCAP_SERVICES'] = JSON.stringify(mockServiceEnv);

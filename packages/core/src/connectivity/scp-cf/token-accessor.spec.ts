@@ -1,7 +1,7 @@
 import nock from 'nock';
 import {
-  mockDestinationServiceBinding,
-  mockDestinationServiceCertBinding,
+  destinationBindingClientSecretMock,
+  destinationBindingCertMock,
   mockServiceBindings,
   providerXsuaaCertUrl,
   providerXsuaaUrl,
@@ -42,7 +42,7 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: expected },
         200,
-        mockDestinationServiceBinding.credentials
+        destinationBindingClientSecretMock.credentials
       );
 
       const actual = await serviceToken('destination');
@@ -59,7 +59,7 @@ describe('token accessor', () => {
         'https://testeroni.example.com',
         { access_token: expected },
         200,
-        mockDestinationServiceBinding.credentials
+        destinationBindingClientSecretMock.credentials
       );
 
       const actual = await serviceToken('destination', { userJwt });
@@ -74,7 +74,7 @@ describe('token accessor', () => {
         providerXsuaaCertUrl,
         { access_token: expected },
         200,
-        mockDestinationServiceCertBinding.credentials
+        destinationBindingCertMock.credentials
       );
 
       const actual = await serviceToken('destination');
@@ -88,7 +88,7 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: expected },
         200,
-        mockDestinationServiceBinding.credentials
+        destinationBindingClientSecretMock.credentials
       );
 
       const retrieveFromCacheSpy = jest.spyOn(
@@ -114,7 +114,7 @@ describe('token accessor', () => {
         providerXsuaaCertUrl,
         { access_token: expected },
         200,
-        mockDestinationServiceCertBinding.credentials
+        destinationBindingCertMock.credentials
       );
 
       const retrieveFromCacheSpy = jest.spyOn(
@@ -137,14 +137,14 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: providerServiceToken },
         200,
-        mockDestinationServiceBinding.credentials
+        destinationBindingClientSecretMock.credentials
       );
 
       mockClientCredentialsGrantCall(
         subscriberXsuaaUrl,
         { access_token: subscriberServiceToken },
         200,
-        mockDestinationServiceBinding.credentials
+        destinationBindingClientSecretMock.credentials
       );
 
       const providerToken = await serviceToken('destination', {
@@ -156,13 +156,13 @@ describe('token accessor', () => {
 
       const providerTokenFromCache =
         clientCredentialsTokenCache.getGrantTokenFromCache(providerXsuaaUrl, {
-          username: mockDestinationServiceBinding.credentials.clientid,
-          password: mockDestinationServiceBinding.credentials.clientsecret
+          username: destinationBindingClientSecretMock.credentials.clientid,
+          password: destinationBindingClientSecretMock.credentials.clientsecret
         });
       const subscriberTokenFromCache =
         clientCredentialsTokenCache.getGrantTokenFromCache(subscriberXsuaaUrl, {
-          username: mockDestinationServiceBinding.credentials.clientid,
-          password: mockDestinationServiceBinding.credentials.clientsecret
+          username: destinationBindingClientSecretMock.credentials.clientid,
+          password: destinationBindingClientSecretMock.credentials.clientsecret
         });
 
       expect(providerTokenFromCache?.access_token).toEqual(providerToken);
@@ -172,8 +172,8 @@ describe('token accessor', () => {
         clientCredentialsTokenCache.getGrantTokenFromCache(
           'https://doesnotexist.example.com',
           {
-            username: mockDestinationServiceBinding.credentials.clientid,
-            password: mockDestinationServiceBinding.credentials.clientsecret
+            username: destinationBindingClientSecretMock.credentials.clientid,
+            password: destinationBindingClientSecretMock.credentials.clientsecret
           }
         )
       ).toBeUndefined();
@@ -211,14 +211,14 @@ describe('token accessor', () => {
         providerXsuaaUrl,
         { access_token: expected1 },
         200,
-        mockDestinationServiceBinding.credentials
+        destinationBindingClientSecretMock.credentials
       );
 
       mockClientCredentialsGrantCall(
         providerXsuaaUrl,
         { access_token: expected2 },
         200,
-        mockDestinationServiceBinding.credentials
+        destinationBindingClientSecretMock.credentials
       );
 
       const retrieveFromCacheSpy = jest.spyOn(
@@ -241,7 +241,7 @@ describe('token accessor', () => {
           error_description: 'Bad credentials'
         },
         401,
-        mockDestinationServiceBinding.credentials
+        destinationBindingClientSecretMock.credentials
       );
 
       await expect(
@@ -253,7 +253,7 @@ describe('token accessor', () => {
 
     it('throws an error if no XSUAA service is bound', async () => {
       process.env.VCAP_SERVICES = JSON.stringify({
-        destination: [mockDestinationServiceBinding]
+        destination: [destinationBindingClientSecretMock]
       });
 
       await expect(
@@ -307,7 +307,7 @@ describe('token accessor', () => {
         },
         200,
         userJwt,
-        mockDestinationServiceBinding.credentials.clientid
+        destinationBindingClientSecretMock.credentials.clientid
       );
 
       mockRefreshTokenGrantCall(
@@ -317,8 +317,8 @@ describe('token accessor', () => {
         },
         200,
         refreshToken,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        destinationBindingClientSecretMock.credentials.clientid,
+        destinationBindingClientSecretMock.credentials.clientsecret
       );
 
       const actual = await userApprovedServiceToken(userJwt, 'destination');
@@ -337,7 +337,7 @@ describe('token accessor', () => {
         },
         401,
         userJwt,
-        mockDestinationServiceBinding.credentials.clientid
+        destinationBindingClientSecretMock.credentials.clientid
       );
 
       await expect(userApprovedServiceToken(userJwt, 'destination'))
@@ -363,7 +363,7 @@ describe('token accessor', () => {
         },
         200,
         userJwt,
-        mockDestinationServiceBinding.credentials.clientid
+        destinationBindingClientSecretMock.credentials.clientid
       );
 
       mockRefreshTokenGrantCall(
@@ -375,8 +375,8 @@ describe('token accessor', () => {
         },
         401,
         refreshToken,
-        mockDestinationServiceBinding.credentials.clientid,
-        mockDestinationServiceBinding.credentials.clientsecret
+        destinationBindingClientSecretMock.credentials.clientid,
+        destinationBindingClientSecretMock.credentials.clientsecret
       );
 
       await expect(userApprovedServiceToken(userJwt, 'destination'))
@@ -394,7 +394,7 @@ describe('token accessor', () => {
     it('throws an error if no XSUAA service is bound', async () => {
       const userJwt = signedJwt({ iss: 'https://testeroni.example.com' });
       process.env.VCAP_SERVICES = JSON.stringify({
-        destination: [mockDestinationServiceBinding]
+        destination: [destinationBindingClientSecretMock]
       });
 
       await expect(

@@ -12,7 +12,7 @@ import {
 } from '@sap-cloud-sdk/core/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
-  mockDestinationServiceBinding,
+  destinationBindingClientSecretMock,
   mockServiceBindings,
   providerXsuaaUrl
 } from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
@@ -154,7 +154,7 @@ describe('Request Builder', () => {
       providerXsuaaUrl,
       { access_token: providerToken },
       200,
-      mockDestinationServiceBinding.credentials
+      destinationBindingClientSecretMock.credentials
     );
 
     mockInstanceDestinationsCall(nock, [destination], 200, providerToken);
@@ -585,7 +585,7 @@ describe('Request Builder', () => {
       providerXsuaaUrl,
       { access_token: providerToken },
       200,
-      mockDestinationServiceBinding.credentials
+      destinationBindingClientSecretMock.credentials
     );
 
     mockInstanceDestinationsCall(nock, [destination], 200, providerToken);

@@ -127,8 +127,7 @@ describe('connectivity-service', () => {
       'https://provider.example.com',
       { error: 'nope' },
       500,
-      'clientid',
-      'clientsecret'
+      { clientid: 'clientid', clientsecret: 'clientsecret' }
     );
 
     addProxyConfiguration({ url: '' }).catch(error => {

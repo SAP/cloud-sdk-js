@@ -90,11 +90,13 @@ interface MockServiceBindings {
   connectivity: Service[];
 }
 
-export function mockServiceBindings(mockWithCert = false): MockServiceBindings {
+export function mockServiceBindings(options?: {
+  mockDestinationBindingWithCert: boolean;
+}): MockServiceBindings {
   const mockServiceEnv = {
     xsuaa: [xsuaaBindingMock],
     destination: [
-      mockWithCert
+      options?.mockDestinationBindingWithCert
         ? destinationBindingCertMock
         : destinationBindingClientSecretMock
     ],

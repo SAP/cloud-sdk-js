@@ -1,11 +1,11 @@
-## Set up identity service on the CF
+## Set up identity service (IAS) on CF
 
 As SDK developers, we would like to have an e2e test running on the CF for testing the IAS features.
-This documentation shows how to set up such e2e test landscape.
+This documentation shows how to set up an e2e test landscape.
 
 ### You will learn
 
-After reading this tutorial, you will be able to:
+After reading this "how-to" document, you will be able to:
 
 - create an identity service
 - create a service key for the identity service
@@ -14,15 +14,15 @@ After reading this tutorial, you will be able to:
 
 ### Prerequisites
 
-This documentation assumes you know how to set up a minimal e2e test landscape on the CF, which includes:
+This documentation assumes you know how to set up a minimal e2e test landscape on CF, which includes:
 
-- a space
-- xsuaa service
-- saas registry service
-- app router set up and deployment
-- your application set up and deployment
+- creating a space
+- creating an XSUAA service instance
+- creating a saas registry service instance
+- configuring and deploying an App Router
+- configuring and deploying an application
 
-### Step 1: Create identity service on the CF
+### Step 1: Create an identity service instance on CF
 
 To create your identity service, you can use the command below:
 
@@ -79,7 +79,7 @@ Follow the steps below for the IdP management:
 1. Click `Applications & Resources`.
 1. Click `Applications`.
 1. Search for your identity service name and select it.
-1. Make sure the `Multitenant Application` is checked.
+1. Make sure `Multitenant Application` is checked.
 1. You can configure other settings of the default IdP.
 
 ### Step 4 Verify the IAS token from the identity service
@@ -99,7 +99,7 @@ Similarly, add the same identity service to the `manifest.yaml`.
 
 ##### Configure `route` and `TENANT_HOST_PATTERN`
 
-The `route` url looks like below, where the `tenant id` part of the URL has to be the `tenant id` on the CF (with the GUID pattern).
+The `route` URL looks like below, where the `tenant id` part of the URL has to be the `tenant id` on the CF (with the GUID pattern).
 Therefore, if you reuse a `manifest.yaml` from the current VDM e2e test, make sure the route uses `tenant id` instead of `subdomain` (string based value, used with XSUAA service).
 
 ```
@@ -111,6 +111,8 @@ The `TENANT_HOST_PATTERN` regex then looks like below, so the `tenant id` info c
 ```
 TENANT_HOST_PATTERN: '^(.*)-router-abcd.xx.xx.xx.xx.ondemand.com'
 ```
+
+Here is the [wiki page about why URL pattern looks differently in the case of XSUAA and IAS](https://wiki.wdf.sap.corp/wiki/pages/viewpage.action?spaceKey=CloudFront&title=IAS+Support+in+Approuter#IASSupportinApprouter-RuntimeURLPatternsandAuthenticationType).
 
 #### Verify IAS token in the application
 

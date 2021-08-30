@@ -37,6 +37,7 @@ export interface ProxyConfiguration {
 }
 
 export interface ProxyConfigurationHeaders {
+  [header: string]: string | undefined;
   'Proxy-Authorization': string;
   'SAP-Connectivity-Authentication'?: string;
 }

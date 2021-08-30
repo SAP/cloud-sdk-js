@@ -146,23 +146,24 @@ export async function verifyJwt(
   return fetchAndCacheKeyAndVerify(creds, verificationKeyURL, token, options); // Verify only here
 }
 
-function fetchAndCacheKeyAndVerify(
+async function fetchAndCacheKeyAndVerify(
   creds: XsuaaServiceCredentials,
   verificationKeyURL: string,
   token: string,
   options?: VerifyJwtOptions
-) {
-  return getVerificationKey(creds, verificationKeyURL)
-    .catch(error => {
-      throw new ErrorWithCause(
-        'Failed to verify JWT. Could not retrieve verification key.',
-        error
-      );
-    })
-    .then(key =>
-      options ? cacheVerificationKey(verificationKeyURL, key, options) : key
-    )
-    .then(key => verifyJwtWithKey(token, key.value));
+): Promise<JwtPayload> {
+  try {
+    const key = await getVerificationKey(creds, verificationKeyURL);
+    if (options?.cacheVerificationKeys) {
+      verificationKeyCache.set(verificationKeyURL, key);
+    }
+    return verifyJwtWithKey(token, key.value);
+  } catch (error) {
+    throw new ErrorWithCause(
+      'Failed to verify JWT. Could not retrieve verification key.',
+      error
+    );
+  }
 }
 
 /**
@@ -192,17 +193,6 @@ function getVerificationKey(
 
 // 15 minutes is the default value used by the xssec lib
 export const verificationKeyCache = new Cache({ minutes: 15 });
-
-function cacheVerificationKey(
-  verificationKeyURL: string,
-  key: TokenKey,
-  options: VerifyJwtOptions
-): TokenKey {
-  if (options.cacheVerificationKeys) {
-    verificationKeyCache.set(verificationKeyURL, key);
-  }
-  return key;
-}
 
 /**
  * Verifies the given JWT with the given key and returns the decoded payload.

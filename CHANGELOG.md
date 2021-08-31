@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
-- [openapi-generator] Paths referenced in the options per service configuration now use POSIX-style separators (`/`) independent of the operating system. Existing configuration files generated on Windows contain Windows-style separators (`\\`) in the paths. Those paths will not be read correctly and should be updated manually to `/`.
+-
 
 ## New Functionality
 
@@ -26,9 +26,23 @@
 
 ## Fixed Issues
 
+-
+
+
+# 1.48.1
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.48.1<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [openapi-generator] Paths referenced in the options per service configuration now use POSIX-style separators (`/`) independent of the operating system. Existing configuration files generated on Windows contain Windows-style separators (`\\`) in the paths. Those paths will not be read correctly and should be updated manually to `/`.
+
+## Fixed Issues
+
 - [core] Fix failing destination retrieval for `OnPremise` proxy type and basic authentication. 
 - [openapi-generator] Fix generation of options per service configuration files to always use POSIX-style file path separators independent of operating system.
-
 
 # 1.48.0
 

@@ -146,3 +146,33 @@ The payload of the decoded IAS (JWT) looks like below, where `user_uuid` (IdP `u
   "email": "xxx"
 }
 ```
+
+#### Verify IAS token via HTTP request
+
+You can use the client id/secret for getting the IAS token via the token endpoint, after creating the service key in step 2.
+
+##### With client credentials grant
+
+Use the `POST` request below and the basic auth (`username` = `client id` and `password` = `secret`) and the `Content-Type` with the value like below in the header.
+
+```
+POST https://ma.accounts400.ondemand.com/oauth2/token?grant_type=client_credentials&scope=openid,Application
+```
+
+```
+Content-Type: application/x-www-form-urlencoded
+```
+
+The IAS token from this approach will not contain the user information like the `user_uuid`, because no user information is provided.
+The `zone_uuid` can be found in the JWT.
+This IAS token might be used in the case that only `zone_uuid` is needed like the destination service.
+
+##### With user password grant
+
+If you need the user information (e.g., `user_uuid`) as part of the IAS token, you should use the password grant like below, where `username`/`password` of a real user of the IdP should be provided as query parameters.
+
+```
+POST https://ma.accounts400.ondemand.com/oauth2/token?grant_type=password&username=<username>&password=<password>&scope=openid,Application
+```
+
+Use the same `Content-Type` value like the client credentials grant.

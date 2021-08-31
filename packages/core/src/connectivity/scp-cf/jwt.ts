@@ -1,9 +1,10 @@
 import { IncomingMessage } from 'http';
 import * as url from 'url';
+import * as xssec from '@sap/xssec';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { AxiosRequestConfig } from 'axios';
 import { decode, Jwt, JwtPayload, verify } from 'jsonwebtoken';
-import { getXsuaaServiceCredentials } from './environment-accessor';
+import { resolveService } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { Cache } from './cache';
@@ -104,6 +105,24 @@ function checkDomainVerificationKeyURL(
   }
 }
 
+async function verifyJwtXssec(
+  token: string,
+  options: VerifyJwtOptions
+): Promise<any> {
+  const xsuaaService = resolveService('xsuaa').credentials;
+  if (!options.cacheVerificationKeys) {
+    // disable cache
+    xsuaaService.keyCache = {
+      cacheSize: 0
+    };
+  }
+  return new Promise((resolve, reject) => {
+    xssec.createSecurityContext(token, xsuaaService, (error, securityContext) =>
+      error ? reject(error) : resolve(securityContext)
+    );
+  });
+}
+
 /**
  * Verifies the given JWT and returns the decoded payload.
  * @param token - JWT to be verified
@@ -115,35 +134,11 @@ export async function verifyJwt(
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
   options = { ...defaultVerifyJwtOptions, ...options };
+  await verifyJwtXssec(token, options).catch(err => {
+    throw new ErrorWithCause('Could not verify JWT.', err);
+  });
 
-  const creds = getXsuaaServiceCredentials(token);
-  const verificationKeyURL = getVerificationKeyURL(token);
-  if (verificationKeyURL) {
-    checkDomainVerificationKeyURL(verificationKeyURL, creds.uaadomain);
-  }
-
-  if (
-    options.cacheVerificationKeys &&
-    verificationKeyCache.get(verificationKeyURL)
-  ) {
-    const key = verificationKeyCache.get(verificationKeyURL) as TokenKey;
-
-    return verifyJwtWithKey(token, key.value).catch(error => {
-      logger.warn(
-        'Unable to verify JWT with cached key, fetching new verification key.'
-      );
-      logger.warn(`Original error: ${error.message}`);
-
-      return fetchAndCacheKeyAndVerify(
-        creds,
-        verificationKeyURL,
-        token,
-        options
-      );
-    });
-  }
-
-  return fetchAndCacheKeyAndVerify(creds, verificationKeyURL, token, options); // Verify only here
+  return decodeJwt(token);
 }
 
 function fetchAndCacheKeyAndVerify(

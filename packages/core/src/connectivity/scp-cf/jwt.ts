@@ -152,17 +152,18 @@ async function fetchAndCacheKeyAndVerify(
   token: string,
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
-    const key = await getVerificationKey(creds, verificationKeyURL).catch(error => {
+  const key = await getVerificationKey(creds, verificationKeyURL).catch(
+    error => {
       throw new ErrorWithCause(
         'Failed to verify JWT. Could not retrieve verification key.',
         error
       );
-    });
-    if (options?.cacheVerificationKeys) {
-      verificationKeyCache.set(verificationKeyURL, key);
     }
-    return verifyJwtWithKey(token, key.value);
+  );
+  if (options?.cacheVerificationKeys) {
+    verificationKeyCache.set(verificationKeyURL, key);
   }
+  return verifyJwtWithKey(token, key.value);
 }
 
 /**

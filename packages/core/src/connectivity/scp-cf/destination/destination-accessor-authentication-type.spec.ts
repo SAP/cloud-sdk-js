@@ -434,22 +434,21 @@ describe('authentication types', () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
-      const httpMocks = [
-        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
-        mockSubaccountDestinationsCall(
-          nock,
-          onPremiseBasicMultipleResponse,
-          200,
-          subscriberServiceToken
-        ),
-        mockSingleDestinationCall(
-          nock,
-          onPremiseBasicSingleResponse,
-          200,
-          destinationName,
-          wrapJwtInHeader(subscriberServiceToken).headers
-        )
-      ];
+
+      mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
+      mockSubaccountDestinationsCall(
+        nock,
+        onPremiseBasicMultipleResponse,
+        200,
+        subscriberServiceToken
+      );
+      mockSingleDestinationCall(
+        nock,
+        onPremiseBasicSingleResponse,
+        200,
+        destinationName,
+        wrapJwtInHeader(subscriberServiceToken).headers
+      );
 
       const actual = await getDestination('OnPremise', {
         userJwt: subscriberServiceToken,

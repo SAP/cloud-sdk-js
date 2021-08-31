@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { Cache } from './cache';
-import { headerForClientCredentials } from './xsuaa-service';
 import {
   ClientCredentials,
   ClientCredentialsResponse
@@ -12,18 +11,18 @@ const ClientCredentialsTokenCache = (
   // TODO: this method name can be shortened
   getGrantTokenFromCache: (
     url,
-    credentials: ClientCredentials
+    credentialsOrClientId: ClientCredentials | string
   ): ClientCredentialsResponse | undefined =>
-    cache.get(getGrantTokenCacheKey(url, credentials)),
+    cache.get(getGrantTokenCacheKey(url, credentialsOrClientId)),
 
   // TODO: this method name can be shortened
   cacheRetrievedToken: (
     url,
-    credentials: ClientCredentials,
+    credentialsOrClientId: ClientCredentials | string,
     token: ClientCredentialsResponse
   ): void => {
     cache.set(
-      getGrantTokenCacheKey(url, credentials),
+      getGrantTokenCacheKey(url, credentialsOrClientId),
       token,
       token.expires_in
         ? moment().add(token.expires_in, 'second').unix() * 1000
@@ -38,9 +37,13 @@ const ClientCredentialsTokenCache = (
 
 export function getGrantTokenCacheKey(
   url: string,
-  credentials: ClientCredentials
+  credentialsOrClientId: ClientCredentials | string
 ): string {
-  return [url, headerForClientCredentials(credentials).substring(6)].join(':');
+  const clientId =
+    typeof credentialsOrClientId === 'string'
+      ? credentialsOrClientId
+      : credentialsOrClientId.username;
+  return [url, clientId].join(':');
 }
 
 export const clientCredentialsTokenCache = ClientCredentialsTokenCache(

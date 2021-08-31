@@ -14,13 +14,13 @@ Additionally, the destination service itself differentiates between instance and
 Instance destinations are destinations defined for a specific instance of the destination service.
 We do not recommend customers to use them (and haven't found a use for them yet), but still need to support them.
 Subaccount destinations are destinations defined for a whole subaccount, i.e. every application that belongs to the respective subaccount can access them.
-The destination service itself will give preference to instance destination over subaccount destinations.
+The destination service itself will give preference to instance destinations over subaccount destinations.
 
 Accessing the destination service requires an access token.
 Such a token can be retrieved from the XSUAA service.
 Depending on the use case, one of two flows has to be used.
 For simply retrieving a list of destinations, the client credentials flow is sufficient.
-For triggering the OAuth2SAMLBearerFlow between Cloud Platform and the destination (e.g. an S/4 system), the user token + refresh token flow is needed.
+For triggering the OAuth2SAMLBearerFlow between SAP BTP and the destination (e.g. an S/4 system), the user token + refresh token flow is needed.
 
 All in all, when an SDK user wants to access a specific destination, we need to consider the cross product of (subscriber,provider) and (instance,subaccount).
 So for each of these possibilities, we need to get an access token and then retrieve the necessary destinations.
@@ -73,7 +73,7 @@ For instanceDestinations, simply use the other endpoint.
 In order to retrieve subscriber destinations, we can do the same with only a little change to how we get an access token.
 Instead of talking to the XSUAA via `https://prov.authentication.sap.hana.ondemand.com/oauth/token`, we simply substitute the tenant-specific subdomain (`prov`) by the respective subscriber tenant, in this case `sub`.
 This gives us the final URL `https://sub.authentication.sap.hana.ondemand.com/oauth/token`.
-This nets us an access token that, when used for the destination service, will give us the subscriber's instance and subaccount destinations.
+This gives us an access token that, when used for the destination service, will give us the subscriber's instance and subaccount destinations.
 
 Finally, there's one more relevant case for us.
 Suppose you have a destination with authentication type Basic.

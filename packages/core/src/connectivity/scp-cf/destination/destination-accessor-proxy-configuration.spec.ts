@@ -1,6 +1,6 @@
 import nock from 'nock';
 import {
-  mockedConnectivityServiceProxyConfig,
+  connectivityProxyConfigMock,
   mockServiceBindings
 } from '../../../../test/test-util/environment-mocks';
 import {
@@ -78,7 +78,7 @@ describe('proxy configuration', () => {
 
     process.env['https_proxy'] = 'some.proxy.com:1234';
     const expected = {
-      ...mockedConnectivityServiceProxyConfig,
+      ...connectivityProxyConfigMock,
       headers: {
         'Proxy-Authorization': `Bearer ${subscriberServiceToken}`,
         'SAP-Connectivity-Authentication': `Bearer ${subscriberServiceToken}`
@@ -116,7 +116,7 @@ describe('proxy configuration', () => {
         Authentication: 'NoAuthentication'
       }),
       proxyConfiguration: {
-        ...mockedConnectivityServiceProxyConfig,
+        ...connectivityProxyConfigMock,
         headers: {
           'Proxy-Authorization': `Bearer ${providerServiceToken}`
         }

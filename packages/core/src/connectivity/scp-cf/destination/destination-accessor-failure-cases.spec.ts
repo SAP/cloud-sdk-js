@@ -1,7 +1,7 @@
 import nock from 'nock';
 import {
   mockServiceBindings,
-  mockXsuaaBinding
+  xsuaaBindingMock
 } from '../../../../test/test-util/environment-mocks';
 import {
   providerServiceToken,
@@ -36,7 +36,7 @@ describe('Failure cases', () => {
 
   it('fails if no destination service is bound', async () => {
     process.env['VCAP_SERVICES'] = JSON.stringify({
-      xsuaa: [mockXsuaaBinding]
+      xsuaa: [xsuaaBindingMock]
     });
 
     await expect(

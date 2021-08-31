@@ -1,5 +1,6 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { JwtPayload } from 'jsonwebtoken';
+import * as xssec from '@sap/xssec';
 import { decodeJwt } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
@@ -10,9 +11,8 @@ import {
 } from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { ResilienceOptions } from './resilience-options';
-import { replaceSubdomain } from './subdomain-replacer';
+import { parseSubdomain, replaceSubdomain } from './subdomain-replacer';
 import {
-  clientCredentialsGrant,
   jwtBearerTokenGrant,
   refreshTokenGrant,
   userTokenGrant
@@ -21,6 +21,35 @@ import {
   ClientCredentialsResponse,
   UserTokenResponse
 } from './xsuaa-service-types';
+
+async function getClientCredentialsToken(
+  service: string | Service,
+  userJwt?: string
+): Promise<ClientCredentialsResponse> {
+  const serviceCredentials = resolveService(service).credentials;
+
+  let subdomain: string;
+  let zoneId: string;
+
+  if (userJwt) {
+    const decodedJwt = decodeJwt(userJwt);
+    if (decodedJwt.iss) {
+      subdomain = parseSubdomain(decodedJwt.iss);
+    }
+    zoneId = decodedJwt.zid;
+  }
+
+  return new Promise((resolve, reject) => {
+    xssec.requests.requestClientCredentialsToken(
+      subdomain,
+      serviceCredentials,
+      undefined,
+      zoneId,
+      (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
+        err ? reject(err) : resolve(tokenResponse)
+    );
+  });
+}
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -40,40 +69,48 @@ export async function serviceToken(
       userJwt?: string | JwtPayload;
     }
 ): Promise<string> {
-  const resolvedService = resolveService(service);
-
   const opts = {
     useCache: true,
     enableCircuitBreaker: true,
     ...options
   };
 
+  service = resolveService(service);
+  const serviceCredentials = service.credentials;
   const xsuaa = multiTenantXsuaaCredentials(opts.userJwt);
-  const serviceCreds = extractClientCredentials(resolvedService.credentials);
 
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getGrantTokenFromCache(
       xsuaa.url,
-      serviceCreds
+      serviceCredentials.clientid
     );
     if (cachedToken) {
       return cachedToken.access_token;
     }
   }
+
+  // TODO: handle Payload as well
+  let userJwt = options?.userJwt;
+  if (typeof userJwt !== 'string' && typeof userJwt !== 'undefined') {
+    userJwt = undefined;
+  }
+
   try {
-    const resp = await clientCredentialsGrant(xsuaa, serviceCreds, opts);
+    const token = await getClientCredentialsToken(service, userJwt);
+
     if (opts.useCache) {
       clientCredentialsTokenCache.cacheRetrievedToken(
         xsuaa.url,
-        serviceCreds,
-        resp
+        serviceCredentials.clientid,
+        token
       );
     }
-    return resp.access_token;
-  } catch (error) {
+    // TODO: Token responses can have id_token instead of access_token (xssec does that correctly)
+    return token.access_token;
+  } catch (err) {
     throw new ErrorWithCause(
-      `Fetching an access token for service "${resolvedService.label}" failed.`,
-      error
+      `Could not fetch client credentials token for service of type "${service.label}".`,
+      err
     );
   }
 }

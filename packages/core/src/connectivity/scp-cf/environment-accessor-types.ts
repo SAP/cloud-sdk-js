@@ -9,11 +9,18 @@ export interface Service {
 /**
  * Unspecific representation of a service's credentials as read from VCAP_SERVICES (for Cloud Foundry) or mounted secrets (for K8S).
  */
-export interface ServiceCredentials {
+export type ServiceCredentials = {
   [other: string]: any;
   clientid: string;
-  clientsecret: string;
-}
+} & (
+  | {
+      clientsecret: string;
+    }
+  | {
+      certificate: string;
+      key: string;
+    }
+);
 
 /**
  * Credentials for the Destination service.

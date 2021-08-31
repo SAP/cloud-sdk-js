@@ -151,6 +151,7 @@ The payload of the decoded IAS (JWT) looks like below, where `user_uuid` (IdP `u
 
 You can use the client id/secret for getting the IAS token via the token endpoint (`/oauth2/token`), after creating the service key in step 2.
 We assume the domain of your default IdP looks like `https://xx.xx.ondemand.com/`.
+
 ##### With client credentials grant
 
 Use the `POST` request below and the basic auth (`username` = `client id` and `password` = `secret`) and the `Content-Type` with the value like below in the header.

@@ -1,5 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`generation-and-usage create api specific usage for action import 1`] = `
+Object {
+  "header": "Usage Example",
+  "instructions": "import { dummyActionImport, dummyParamType } from '@sap/dummy-package/action-imports';
+
+const parameter: dummyParamType = { dummyParam1: 'dummyParam1' };
+    
+const resultPromise = dummyActionImport(parameter).execute({ destinationName:'myDestinationName' });",
+  "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose \\"OData Consumption Manual\\" from the \\"Helpful Links\\" menu.",
+}
+`;
+
+exports[`generation-and-usage create api specific usage for function import 1`] = `
+Object {
+  "header": "Usage Example",
+  "instructions": "import { dummyFunc, dummyParamType } from '@sap/dummy-package/function-imports';
+
+const parameter: dummyParamType = { dummyParam1: 'dummyParam1', dummyParam2: 'dummyParam2', ... };
+    
+const resultPromise = dummyFunc(parameter).execute({ destinationName:'myDestinationName' });",
+  "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose \\"OData Consumption Manual\\" from the \\"Helpful Links\\" menu.",
+}
+`;
+
+exports[`generation-and-usage create api specific usage for function import with minimum parameters 1`] = `
+Object {
+  "header": "Usage Example",
+  "instructions": "import { dummyFunc, dummyParamType } from '@sap/dummy-package/function-imports';
+
+const parameter: dummyParamType = { dummyParam1: 'dummyParam1' };
+    
+const resultPromise = dummyFunc(parameter).execute({ destinationName:'myDestinationName' });",
+  "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose \\"OData Consumption Manual\\" from the \\"Helpful Links\\" menu.",
+}
+`;
+
 exports[`generation-and-usage creates api specific usage for entity 1`] = `
 Object {
   "header": "Usage Example",

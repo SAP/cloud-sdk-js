@@ -16,9 +16,10 @@ import {
   VdmActionImport
 } from '../vdm-types';
 import {
-  codeSamples,
-  importsCodeSample,
-  genericCodeSample
+  actionImportCodeSample,
+  entityCodeSample,
+  functionImportCodeSample,
+  genericEntityCodeSample
 } from './code-samples';
 
 const distanceThreshold = 5;
@@ -38,7 +39,7 @@ export const linkGenerationDocumentation =
 // will be used to generate metadata for failed and unknown case.
 export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
   return {
-    genericUsage: genericCodeSample(),
+    genericUsage: genericEntityCodeSample(),
     repository: 'npm',
     apiSpecificUsage: undefined,
     links: getODataLinks(),
@@ -60,7 +61,7 @@ export function getApiSpecificUsage(
   if (service.entities?.length > 0) {
     const entity = getODataEntity(service.originalFileName, service.entities);
     return {
-      ...codeSamples(entity.className, service.npmPackageName),
+      ...entityCodeSample(entity.className, service.npmPackageName),
       header: usageHeaderText
     };
   }
@@ -71,7 +72,7 @@ export function getApiSpecificUsage(
       service.functionImports
     );
     return {
-      ...importsCodeSample(
+      ...functionImportCodeSample(
         functionImport,
         `${service.npmPackageName}/function-imports`
       ),
@@ -84,7 +85,7 @@ export function getApiSpecificUsage(
       service.actionsImports
     );
     return {
-      ...importsCodeSample(
+      ...actionImportCodeSample(
         actionImport,
         `${service.npmPackageName}/action-imports`
       ),
@@ -171,12 +172,7 @@ function getLevensteinClosestFunction(
 function getFunctionWithoutParameters(
   actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
 ): VdmFunctionImport | VdmActionImport | undefined {
-  const functionsWithoutParams = actionFunctionImports.filter(
-    func => func.parameters?.length === 0
-  );
-  if (functionsWithoutParams) {
-    return functionsWithoutParams[0];
-  }
+  return actionFunctionImports.find(func => func.parameters?.length === 0);
 }
 
 // Sorts and gets a function import having minimum input parameters.

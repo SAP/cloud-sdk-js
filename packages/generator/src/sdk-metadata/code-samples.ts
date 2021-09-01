@@ -6,12 +6,15 @@ import {
 } from '@sap-cloud-sdk/generator-common';
 import { VdmActionImport, VdmFunctionImport, VdmParameter } from '../vdm-types';
 
-export function codeSamples(
+const instructionsText =
+  'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose "OData Consumption Manual" from the "Helpful Links" menu.';
+
+export function entityCodeSample(
   entityName: string,
   packageName: string
 ): InstructionWithText {
   return {
-    text: 'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose "OData Consumption Manual" from the "Helpful Links" menu.',
+    text: instructionsText,
     instructions: codeBlock`
 import { ${entityName} } from '${packageName}';
 
@@ -21,9 +24,9 @@ const resultPromise = ${entityName}.requestBuilder().getAll().top(5).execute({ d
   };
 }
 
-export function genericCodeSample(): InstructionWithTextAndHeader {
+export function genericEntityCodeSample(): InstructionWithTextAndHeader {
   return {
-    ...codeSamples(
+    ...entityCodeSample(
       'BusinessPartner',
       '@sap/cloud-sdk-vdm-business-partner-service'
     ),
@@ -31,12 +34,26 @@ export function genericCodeSample(): InstructionWithTextAndHeader {
   };
 }
 
-export function importsCodeSample(
+export function functionImportCodeSample(
+  functionImport: VdmFunctionImport,
+  packageName: string
+): InstructionWithText {
+  return importsCodeSample(functionImport, packageName);
+}
+
+export function actionImportCodeSample(
+  actionImport: VdmActionImport,
+  packageName: string
+): InstructionWithText {
+  return importsCodeSample(actionImport, packageName);
+}
+
+function importsCodeSample(
   actionFunctionImport: VdmFunctionImport | VdmActionImport,
   packageName: string
 ): InstructionWithText {
   return {
-    text: 'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose "OData Consumption Manual" from the "Helpful Links" menu.',
+    text: instructionsText,
     instructions: codeBlock`
 import { ${actionFunctionImport.name}${
       actionFunctionImport.parametersTypeName

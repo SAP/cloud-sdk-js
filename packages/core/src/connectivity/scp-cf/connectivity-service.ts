@@ -1,6 +1,9 @@
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { Protocol } from './protocol';
-import { ProxyConfiguration } from './connectivity-service-types';
+import {
+  ProxyConfiguration,
+  ProxyConfigurationHeaders
+} from './connectivity-service-types';
 import {
   AuthenticationType,
   Destination
@@ -26,19 +29,15 @@ const logger = createLogger({
  * @param jwt - The JWT of the current user.
  * @returns A promise resolving to the destination with the added proxy configuration.
  */
-export function addProxyConfiguration(
+export async function addProxyConfiguration(
   destination: Destination,
   jwt?: string
 ): Promise<Destination> {
-  return Promise.resolve()
-    .then(() => proxyHostAndPort())
-    .then(hostAndPort =>
-      addHeaders(hostAndPort, destination.authentication, jwt)
-    )
-    .then(proxyConfiguration => ({
-      ...destination,
-      proxyConfiguration
-    }));
+  const proxyConfiguration: ProxyConfiguration = {
+    ...proxyHostAndPort(),
+    headers: { ...(await proxyHeaders(destination.authentication, jwt)) }
+  };
+  return { ...destination, proxyConfiguration };
 }
 
 // TODO: remove string argument in v2.0
@@ -87,48 +86,40 @@ function readConnectivityServiceBinding(): Service {
   return serviceBindings[0];
 }
 
-function addHeaders(
-  hostAndPort: HostAndPort,
+async function proxyHeaders(
   authenticationType: AuthenticationType | undefined,
   jwt?: string
-): Promise<ProxyConfiguration> {
-  const connServiceBinding = readConnectivityServiceBinding();
-
-  return Promise.resolve()
-    .then(() => proxyAuthorizationHeader(connServiceBinding, jwt))
-    .then(proxyAuthHeader => ({
-      ...proxyAuthHeader,
-      ...sapConnectivityAuthenticationHeader(authenticationType, jwt)
-    }))
-    .then(
-      headers =>
-        ({
-          ...hostAndPort,
-          headers
-        } as ProxyConfiguration)
-    );
+): Promise<ProxyConfigurationHeaders> {
+  const proxyAuthHeader = await proxyAuthorizationHeader(jwt);
+  const sapConnectivityHeader = sapConnectivityAuthenticationHeader(
+    authenticationType,
+    jwt
+  );
+  return {
+    ...proxyAuthHeader,
+    ...sapConnectivityHeader
+  };
 }
 
-function proxyAuthorizationHeader(
-  connectivityServiceBinding: Service,
+async function proxyAuthorizationHeader(
   userJwt?
-): Promise<Record<string, string>> {
-  return serviceToken(connectivityServiceBinding, { userJwt })
-    .then(token => ({
-      'Proxy-Authorization': `Bearer ${token}`
-    }))
-    .catch(error => {
-      throw new ErrorWithCause(
-        'Failed to add proxy authorization header - client credentials grant failed!',
-        error
-      );
-    });
+): Promise<{ 'Proxy-Authorization': string }> {
+  try {
+    const connServiceBinding = readConnectivityServiceBinding();
+    const token = await serviceToken(connServiceBinding, { userJwt });
+    return { 'Proxy-Authorization': `Bearer ${token}` };
+  } catch (error) {
+    throw new ErrorWithCause(
+      'Failed to add proxy authorization header - client credentials grant failed!',
+      error
+    );
+  }
 }
 
 function sapConnectivityAuthenticationHeader(
   authenticationType: AuthenticationType | undefined,
   jwt?: string
-): Record<string, string> {
+): { 'SAP-Connectivity-Authentication'?: string } {
   if (authenticationType === 'PrincipalPropagation') {
     if (jwt) {
       return {

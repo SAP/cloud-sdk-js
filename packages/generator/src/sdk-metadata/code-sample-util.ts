@@ -22,7 +22,7 @@ export function getODataEntity(
       serviceNameFormatted,
       getWordWithoutSpecialChars(entity.className)
     );
-    if (distance < minDistance) {
+    if (distance <= minDistance) {
       minDistance = distance;
       closestEntity = entity;
     }

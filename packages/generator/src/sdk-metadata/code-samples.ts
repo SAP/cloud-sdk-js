@@ -4,7 +4,8 @@ import {
   InstructionWithTextAndHeader,
   usageHeaderText
 } from '@sap-cloud-sdk/generator-common';
-import { VdmActionImport, VdmFunctionImport, VdmParameter } from '../vdm-types';
+import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
+import { getActionFunctionParams } from './code-sample-util';
 
 const instructionsText =
   'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose "OData Consumption Manual" from the "Helpful Links" menu.';
@@ -77,17 +78,4 @@ function getParameterCodeSample(functionImport: VdmFunctionImport): string {
     `;
   }
   return '';
-}
-
-function getActionFunctionParams(parameters: VdmParameter[]): string {
-  const paramString = Object.entries(parameters || [])
-    .slice(0, 2)
-    .reduce(
-      (cumulator, currentParam) =>
-        `${cumulator}, ${currentParam[1].parameterName}: '${currentParam[1].parameterName}'`,
-      ''
-    );
-  return `{${paramString.substring(1)}${
-    parameters.length > 2 ? ', ...' : ''
-  } }`;
 }

@@ -11,40 +11,27 @@ import {
 } from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { ResilienceOptions } from './resilience-options';
-import { parseSubdomain, replaceSubdomain } from './subdomain-replacer';
-import {
-  jwtBearerTokenGrant,
-  refreshTokenGrant,
-  userTokenGrant
-} from './xsuaa-service';
+import { replaceSubdomain } from './subdomain-replacer';
+import { refreshTokenGrant, userTokenGrant } from './xsuaa-service';
 import {
   ClientCredentialsResponse,
   UserTokenResponse
 } from './xsuaa-service-types';
+import { getSubdomainAndZoneId, requestUserToken } from './xsuaa-service-xssec';
 
 async function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string
 ): Promise<ClientCredentialsResponse> {
   const serviceCredentials = resolveService(service).credentials;
-
-  let subdomain: string;
-  let zoneId: string;
-
-  if (userJwt) {
-    const decodedJwt = decodeJwt(userJwt);
-    if (decodedJwt.iss) {
-      subdomain = parseSubdomain(decodedJwt.iss);
-    }
-    zoneId = decodedJwt.zid;
-  }
+  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
   return new Promise((resolve, reject) => {
     xssec.requests.requestClientCredentialsToken(
-      subdomain,
+      subdomainAndZoneId.subdomain,
       serviceCredentials,
-      undefined,
-      zoneId,
+      null,
+      subdomainAndZoneId.zoneId,
       (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
         err ? reject(err) : resolve(tokenResponse)
     );
@@ -171,22 +158,22 @@ export async function jwtBearerToken(
   service: string | Service,
   options?: ResilienceOptions
 ): Promise<string> {
-  const xsuaa = multiTenantXsuaaCredentials(userJwt);
   const resolvedService = resolveService(service);
-  const serviceCreds = extractClientCredentials(resolvedService.credentials);
+  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
+
   const opts: ResilienceOptions = {
     enableCircuitBreaker: true,
     ...options
   };
 
-  return jwtBearerTokenGrant(xsuaa, serviceCreds, userJwt, opts)
-    .then((response: ClientCredentialsResponse) => response.access_token)
-    .catch(error => {
-      throw new ErrorWithCause(
-        `Fetching a JWT Bearer Token for service "${resolvedService.label}" failed!`,
-        error
-      );
-    });
+  return requestUserToken(
+    {
+      userJwt,
+      serviceCredentials: resolvedService.credentials,
+      subdomainAndZoneId
+    },
+    opts
+  );
 }
 
 function multiTenantXsuaaCredentials(userJwt?: string | JwtPayload) {

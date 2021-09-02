@@ -32,6 +32,7 @@ type XsuaaCircuitBreaker = CircuitBreaker<
 let circuitBreaker: XsuaaCircuitBreaker;
 
 /**
+ * @deprecated Since v1.49.0 Use `@sap/xssec` lib instead.
  * Executes a client credentials grant request.
  * If the first parameter is an instance of [[XsuaaServiceCredentials]], the response's access_token will be verified.
  * If the first parameter is a URI, the response will not be verified.
@@ -135,6 +136,7 @@ export async function refreshTokenGrant(
 }
 
 /**
+ * @deprecated Since v1.49.0 Use `@sap/xssec` lib instead.
  * Executes a JWT bearer token grant request against the given URI.
  * @param tokenServiceUrlOrXsuaaServiceCredentials - The URL of the token service or the credentials of a XSUAA service instance.
  * @param clientCredentials - The credentials (client_id, client_secret) of the target XSUAA service instance.

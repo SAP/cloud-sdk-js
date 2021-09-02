@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [core] Uses `@sap/xssec` for requesting `user token` and `client credentials token` from the XSUAA service instead of our own implementations.
 
 ## Fixed Issues
 

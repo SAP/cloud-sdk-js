@@ -2,8 +2,7 @@ import {
   VdmActionImport,
   VdmEntity,
   VdmFunctionImport,
-  VdmParameter,
-  VdmServiceMetadata
+  VdmParameter
 } from '../vdm-types';
 import {
   getActionFunctionImport,
@@ -16,25 +15,25 @@ import {
 
 describe('code-sample-utils entity', () => {
   it('gets entity based on levenshtein algorithm', () => {
-     const entities = [
-       { className: 'DummyCollection' },
-       { className: 'DummyClass' }
-      ] as VdmEntity[];
-
-    expect(getODataEntity('DummyClass', entities)).toEqual(
+    const entities = [
+      { className: 'DummyCollection' },
       { className: 'DummyClass' }
-    );
+    ] as VdmEntity[];
+
+    expect(getODataEntity('DummyClass', entities)).toEqual({
+      className: 'DummyClass'
+    });
   });
 
   it('gets entity with shortest name when closest match is not found', () => {
     const entities = [
       { className: 'TestEntity' },
       { className: 'TestCollection' }
-     ] as VdmEntity[];
-     
-    expect(getODataEntity('DummyClass', entities)).toEqual(
-      { className: 'TestEntity' }
-    );
+    ] as VdmEntity[];
+
+    expect(getODataEntity('DummyClass', entities)).toEqual({
+      className: 'TestEntity'
+    });
   });
 });
 describe('code-sample-utils imports', () => {
@@ -52,7 +51,13 @@ describe('code-sample-utils imports', () => {
   const functionImportsZeroParams = [
     { name: 'serviceFuncA', parameters: [{ parameterName: 'dummyParam' }] },
     { name: 'serviceFuncB', parameters: [] },
-    { name: 'serviceFuncC', parameters: [{ parameterName: 'dummyParam' }, { parameterName: 'dummyParam' }] },
+    {
+      name: 'serviceFuncC',
+      parameters: [
+        { parameterName: 'dummyParam' },
+        { parameterName: 'dummyParam' }
+      ]
+    }
   ] as VdmFunctionImport[];
 
   it('gets undefined when func import based on levenshtein algorithm is not found', () => {
@@ -62,9 +67,10 @@ describe('code-sample-utils imports', () => {
   });
 
   it('gets func import without parameters when no closest match found', () => {
-    expect(getFunctionWithoutParameters(functionImportsZeroParams)).toEqual(
-      { name: 'serviceFuncB', parameters: [] }
-    );
+    expect(getFunctionWithoutParameters(functionImportsZeroParams)).toEqual({
+      name: 'serviceFuncB',
+      parameters: []
+    });
   });
 
   const functionImportsMinParams = [
@@ -81,12 +87,10 @@ describe('code-sample-utils imports', () => {
     }
   ] as VdmFunctionImport[];
   it('gets func import with min parameters when methods without params not found ', () => {
-    expect(getFunctionWithMinParameters(functionImportsMinParams)).toEqual(
-      {
-        name: 'serviceFunctionA',
-        parameters: [{ parameterName: 'dummyParam1' }]
-      }
-    );
+    expect(getFunctionWithMinParameters(functionImportsMinParams)).toEqual({
+      name: 'serviceFunctionA',
+      parameters: [{ parameterName: 'dummyParam1' }]
+    });
   });
 
   const actionsImports = [
@@ -95,15 +99,17 @@ describe('code-sample-utils imports', () => {
   ] as VdmActionImport[];
 
   it('gets action import based on levenshtein algorithm', () => {
-    expect(getActionFunctionImport('DummyClass', actionsImports!)).toEqual(
-      { name: 'dummy_Class_Actn', parameters: [{ parameterName: 'param' }] }
-    );
+    expect(getActionFunctionImport('DummyClass', actionsImports!)).toEqual({
+      name: 'dummy_Class_Actn',
+      parameters: [{ parameterName: 'param' }]
+    });
   });
 
   it('gets action import without min parameters when no closest match found', () => {
-    expect(getActionFunctionImport('API_TestAction', actionsImports!)).toEqual(
-      { name: 'service_Actn', parameters: [] }
-    );
+    expect(getActionFunctionImport('API_TestAction', actionsImports!)).toEqual({
+      name: 'service_Actn',
+      parameters: []
+    });
   });
 });
 

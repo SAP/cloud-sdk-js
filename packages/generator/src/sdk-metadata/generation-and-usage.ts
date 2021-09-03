@@ -8,7 +8,13 @@ import {
 } from '@sap-cloud-sdk/generator-common';
 import type { GenerationAndUsage } from '@sap-cloud-sdk/generator-common';
 import { VdmServiceMetadata } from '../vdm-types';
-import { codeSamples, genericCodeSample } from './code-samples';
+import {
+  actionImportCodeSample,
+  entityCodeSample,
+  functionImportCodeSample,
+  genericEntityCodeSample
+} from './code-samples';
+import { getActionFunctionImport, getODataEntity } from './code-sample-util';
 
 export async function getGenerationAndUsage(
   service: VdmServiceMetadata
@@ -25,7 +31,7 @@ export const linkGenerationDocumentation =
 // will be used to generate metadata for failed and unknown case.
 export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
   return {
-    genericUsage: genericCodeSample(),
+    genericUsage: genericEntityCodeSample(),
     repository: 'npm',
     apiSpecificUsage: undefined,
     links: getODataLinks(),
@@ -44,21 +50,37 @@ export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage
 export function getApiSpecificUsage(
   service: VdmServiceMetadata
 ): InstructionWithTextAndHeader {
-  if (service.entities.length > 0) {
-    const codeSample = codeSamples(
-      service.entities[0].className,
-      service.npmPackageName
-    );
+  if (service.entities?.length > 0) {
+    const entity = getODataEntity(service.originalFileName, service.entities);
     return {
-      ...codeSample,
+      ...entityCodeSample(entity.className, service.npmPackageName),
       header: usageHeaderText
     };
   }
-  // TODO handle cases if no entity is there in the follow up ticket.
-  if (service.functionImports.length > 0) {
+  // Return function/action import usage if no entity is found.
+  if (service.functionImports?.length > 0) {
+    const functionImport = getActionFunctionImport(
+      service.originalFileName,
+      service.functionImports
+    );
     return {
-      instructions: '',
-      text: '',
+      ...functionImportCodeSample(
+        functionImport,
+        `${service.npmPackageName}/function-imports`
+      ),
+      header: usageHeaderText
+    };
+  }
+  if (service.actionsImports) {
+    const actionImport = getActionFunctionImport(
+      service.originalFileName,
+      service.actionsImports
+    );
+    return {
+      ...actionImportCodeSample(
+        actionImport,
+        `${service.npmPackageName}/action-imports`
+      ),
       header: usageHeaderText
     };
   }

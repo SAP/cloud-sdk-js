@@ -7,9 +7,9 @@ Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
       "header": "Usage Example",
-      "instructions": "import { TestEntity } from '@sap/cloud-sdk-vdm-test-service';
+      "instructions": "import { CaseTest } from '@sap/cloud-sdk-vdm-test-service';
 
-const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
+const resultPromise = CaseTest.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
       "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose \\"OData Consumption Manual\\" from the \\"Helpful Links\\" menu.",
     },
@@ -80,9 +80,9 @@ Object {
   "generationAndUsage": Object {
     "apiSpecificUsage": Object {
       "header": "Usage Example",
-      "instructions": "import { TestEntity } from '@sap/cloud-sdk-vdm-test-service';
+      "instructions": "import { CaseTest } from '@sap/cloud-sdk-vdm-test-service';
 
-const resultPromise = TestEntity.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
+const resultPromise = CaseTest.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 ",
       "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose \\"OData Consumption Manual\\" from the \\"Helpful Links\\" menu.",
     },

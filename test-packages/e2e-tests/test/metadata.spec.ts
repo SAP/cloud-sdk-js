@@ -14,6 +14,7 @@ import { OpenApiDocument } from '@sap-cloud-sdk/openapi-generator/dist/openapi-t
 
 const service = {
   npmPackageName: '@sap/dummy-package',
+  originalFileName: 'DummyClass',
   entities: [{ className: 'DummyClass' }]
 } as VdmServiceMetadata;
 

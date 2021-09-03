@@ -182,10 +182,10 @@ export function fetchVerificationKeys(
 
 /**
  * Fetches verification keys from the XSUAA service for the given URL, with the given pair of credentials.
- * @param URL - URL of the XSUAA service instance.
+ * @param url - URL of the XSUAA service instance.
  * @param clientId - Client ID of the XSUAA service instance.
  * @param clientSecret - Client secret of the XSUAA service instance.
- * @returns An array of TokenKeys.
+ * @returns An array of token keys.
  */
 export function fetchVerificationKeys(
   url: string,
@@ -204,23 +204,37 @@ export function fetchVerificationKeys(
       logger.warn(
         'JKU field from the JWT not provided. Use xsuaaClient.url/token_keys as fallback. ' +
           'This will not work for subscriber accounts created after 14th of April 2020.' +
-          'Please provide the right URL given by the field JKU present in the JWT header.'
+          'Please provide the right URL given by the field `jku` in the JWT header.'
+      );
+      return executeFetchVerificationKeys(
+        `${xsuaaUriOrCredentials.url}/token_keys`,
+        xsuaaUriOrCredentials.clientid,
+        xsuaaUriOrCredentials.clientsecret
       );
     }
-    return fetchVerificationKeys(
-      clientIdOrJku || `${xsuaaUriOrCredentials.url}/token_keys`,
-      xsuaaUriOrCredentials.clientid,
-      xsuaaUriOrCredentials.clientsecret
-    );
+
+    return executeFetchVerificationKeys(clientIdOrJku);
   }
   // The three strings case
+  return executeFetchVerificationKeys(
+    xsuaaUriOrCredentials,
+    clientIdOrJku,
+    clientSecret
+  );
+}
+
+function executeFetchVerificationKeys(
+  url: string,
+  clientId?: string,
+  clientSecret?: string
+): Promise<TokenKey[]> {
   const config: AxiosRequestConfig = {
-    url: xsuaaUriOrCredentials,
+    url,
     method: 'GET'
   };
-  if (clientIdOrJku && clientSecret) {
+  if (clientId && clientSecret) {
     const authHeader = headerForClientCredentials({
-      username: clientIdOrJku,
+      username: clientId,
       password: clientSecret
     });
     config.headers = { Authorization: authHeader };
@@ -231,7 +245,7 @@ export function fetchVerificationKeys(
     .then(resp => resp.data.keys.map(k => renameKeys(tokenKeyKeyMapping, k)))
     .catch(error => {
       throw new ErrorWithCause(
-        `Failed to fetch verification keys from XSUAA service instance ${xsuaaUriOrCredentials}!`,
+        `Failed to fetch verification keys from XSUAA service instance ${url}!`,
         error
       );
     });

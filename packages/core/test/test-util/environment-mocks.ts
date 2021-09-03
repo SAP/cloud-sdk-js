@@ -29,7 +29,7 @@ export const xsuaaBindingMock: Service = {
   tags: ['xsuaa'],
   credentials: {
     url: providerXsuaaUrl,
-    xsappname: 'app-name',
+    xsappname: 'xsapp-myapp!123',
     clientid: 'clientid',
     clientsecret: 'clientsecret',
     verificationkey: publicKey,

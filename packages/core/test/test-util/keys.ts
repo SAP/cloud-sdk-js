@@ -15,10 +15,10 @@ export function signedJwt(payload, algorithm: Algorithm = 'RS512') {
 export function signedJwtForVerification(
   payload,
   jku,
-  algorithm: Algorithm = 'RS512'
+  algorithm: Algorithm = 'RS256'
 ) {
   return sign(payload, privateKey, {
-    header: { jku } as JwtHeader,
+    header: { jku, kid: 'key-id-1' } as JwtHeader,
     algorithm
   });
 }

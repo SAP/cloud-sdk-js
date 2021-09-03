@@ -26,8 +26,10 @@ import {
   oauthMultipleResponse
 } from '../../../../test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
-import { wrapJwtInHeader } from '../jwt';
+import * as jwt from '../jwt';
 import { getDestination } from './destination-accessor';
+
+const { wrapJwtInHeader } = jwt;
 
 describe('Failure cases', () => {
   beforeEach(() => {
@@ -39,13 +41,19 @@ describe('Failure cases', () => {
       xsuaa: [xsuaaBindingMock]
     });
 
+    jest
+      .spyOn(jwt, 'verifyJwt')
+      .mockResolvedValue(
+        jwt.decodeJwt(subscriberServiceTokenWithVerificationURL)
+      );
+
     await expect(
       getDestination(destinationName, {
         userJwt: subscriberServiceTokenWithVerificationURL,
         cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Failed to verify JWT. Could not retrieve verification key."'
+      '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
     );
   }, 50000);
 

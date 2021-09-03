@@ -21,10 +21,20 @@ import { getSubdomainAndZoneId, requestUserToken } from './xsuaa-service-xssec';
 
 async function getClientCredentialsToken(
   service: string | Service,
-  userJwt?: string
+  userJwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
   const serviceCredentials = resolveService(service).credentials;
-  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
+
+  let subdomain: string;
+  let zoneId: string;
+
+  if (userJwt) {
+    const decodedJwt = decodeJwt(userJwt);
+    if (decodedJwt.iss) {
+      subdomain = parseSubdomain(decodedJwt.iss);
+    }
+    zoneId = decodedJwt.zid;
+  }
 
   return new Promise((resolve, reject) => {
     xssec.requests.requestClientCredentialsToken(
@@ -76,14 +86,8 @@ export async function serviceToken(
     }
   }
 
-  // TODO: handle Payload as well
-  let userJwt = options?.userJwt;
-  if (typeof userJwt !== 'string' && typeof userJwt !== 'undefined') {
-    userJwt = undefined;
-  }
-
   try {
-    const token = await getClientCredentialsToken(service, userJwt);
+    const token = await getClientCredentialsToken(service, options?.userJwt);
 
     if (opts.useCache) {
       clientCredentialsTokenCache.cacheRetrievedToken(

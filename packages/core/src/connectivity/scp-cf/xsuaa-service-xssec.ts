@@ -1,5 +1,6 @@
 import * as xssec from '@sap/xssec';
 import CircuitBreaker from 'opossum';
+import { JwtPayload } from 'jsonwebtoken';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import { ServiceCredentials } from './environment-accessor-types';
@@ -35,18 +36,20 @@ interface SubdomainAndZoneId {
  * @returns subdomain and zoneId from the JWT
  * @hidden
  */
-export function getSubdomainAndZoneId(jwt?: string): SubdomainAndZoneId {
+export function getSubdomainAndZoneId(
+  jwt?: string | JwtPayload
+): SubdomainAndZoneId {
   let subdomain: string | null = null;
   let zoneId: string | null = null;
   if (!jwt) {
     return { subdomain, zoneId };
   }
 
-  const decodedJwt = decodeJwt(jwt);
-  if (decodedJwt.iss) {
-    subdomain = parseSubdomain(decodedJwt.iss);
+  const jwtPayload = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
+  if (jwtPayload.iss) {
+    subdomain = parseSubdomain(jwtPayload.iss);
   }
-  zoneId = decodedJwt.zid || zoneId;
+  zoneId = jwtPayload.zid || zoneId;
   return { subdomain, zoneId };
 }
 
@@ -57,7 +60,7 @@ export interface RequestUserTokenParam {
 }
 
 /**
- * Make a user token request against the XSUAA service
+ * Make a user token request against the XSUAA service.
  * @param param - The parameters for make the request.
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns User token.

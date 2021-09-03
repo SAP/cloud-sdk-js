@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [core] Do not use client credentials to fetch public keys for token verification.
 
 ## New Functionality
 
@@ -26,7 +26,8 @@
 
 ## Fixed Issues
 
--
+- [core] Fix verification key retrieval to match the given key id (`kid`).
+- [core] Fix the missing export for files under `http-agent` directory.
 
 
 # 1.48.1

@@ -450,9 +450,7 @@ describe('xsuaa', () => {
         ]
       };
 
-      nock(providerXsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/')
-        .reply(200, response);
+      nock(providerXsuaaUrl).get('/').reply(200, response);
 
       const expected: TokenKey[] = [
         {
@@ -485,26 +483,19 @@ describe('xsuaa', () => {
       expect(actual).toEqual(expected);
     });
 
-    it('provides some useful message on failure', done => {
+    it('provides some useful message on failure', async () => {
       const response = {
-        error: 'unauthorized',
-        error_description: 'Bad credentials'
+        error: 'bad_request',
+        error_description: 'Bad request'
       };
 
-      nock(providerXsuaaUrl, { reqheaders: { Authorization: basicHeader } })
-        .get('/')
-        .reply(401, response);
+      nock(providerXsuaaUrl).get('/').reply(400, response);
 
-      fetchVerificationKeys(providerXsuaaUrl, creds.username, creds.password)
-        .then(() => done('Should have failed!'))
-        .catch(error => {
-          expect(
-            error.message.includes(
-              `Failed to fetch verification keys from XSUAA service instance ${providerXsuaaUrl}!`
-            )
-          ).toBe(true);
-          done();
-        });
+      await expect(
+        fetchVerificationKeys(providerXsuaaUrl, creds.username, creds.password)
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Failed to fetch verification keys from XSUAA service instance \\"https://provider.example.com\\"."'
+      );
     });
   });
 });

@@ -1,5 +1,6 @@
 import os from 'os';
 import nock from 'nock';
+import { expectAllMocksUsed } from '@sap-cloud-sdk/core/test/test-util';
 import { UsageAnalyticsOptions } from './analytics-types';
 import { sendAnalyticsData } from './usage-analytics';
 import { getAnalyticsData } from './analytics-data';
@@ -26,7 +27,7 @@ describe('sendAnalyticsData()', () => {
     ).resolves.toBeUndefined();
   });
 
-  it('sendAnalyticsData should execute the request correctly', done => {
+  it('sendAnalyticsData should execute the request correctly', async () => {
     const swaRoute = nock('http://example.com')
       .get(/\/mockedUrl.*/)
       .reply(204);
@@ -36,19 +37,14 @@ describe('sendAnalyticsData()', () => {
       idsitesub: 'test-jssdk',
       event_type: 'test_event'
     };
-    getAnalyticsData({ enabled: true, salt }).then(data => {
+    const data = await getAnalyticsData({ enabled: true, salt });
+    await expect(
       sendAnalyticsData({ enabled: true, salt }, data, options)
-        .then(() => {
-          expect(swaRoute.isDone()).toBe(true);
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
+    ).resolves.toBeDefined();
+    expectAllMocksUsed([swaRoute]);
   });
 
-  it('sendAnalyticsData should throw an error when the request fails', done => {
+  it('sendAnalyticsData should throw an error when the request fails', async () => {
     const swaRoute = nock('http://example.com')
       .get(/\/mockedUrl.*/)
       .reply(401);
@@ -58,13 +54,10 @@ describe('sendAnalyticsData()', () => {
       idsitesub: 'test-jssdk',
       event_type: 'test_event'
     };
-    getAnalyticsData({ enabled: true, salt }).then(data => {
+    const data = await getAnalyticsData({ enabled: true, salt });
+    await expect(
       sendAnalyticsData({ enabled: true, salt }, data, options)
-        .then(() => done('Should have failed.'))
-        .catch(() => {
-          expect(swaRoute.isDone()).toBe(true);
-          done();
-        });
-    });
+    ).rejects.toThrowError('Failed to send usage analytics data.');
+    expectAllMocksUsed([swaRoute]);
   });
 });

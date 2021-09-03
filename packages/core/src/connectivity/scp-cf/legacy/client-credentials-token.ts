@@ -1,9 +1,9 @@
-import { Destination } from './destination/destination-service-types';
-import { clientCredentialsGrant } from './xsuaa-service';
+import { Destination } from '../destination/destination-service-types';
 import {
   ClientCredentials,
   ClientCredentialsResponse
-} from './xsuaa-service-types';
+} from '../xsuaa-service-types';
+import { clientCredentialsGrant } from './xsuaa-service';
 
 /**
  * @deprecated Since v1.47.0.

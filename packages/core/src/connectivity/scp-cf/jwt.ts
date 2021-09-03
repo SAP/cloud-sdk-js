@@ -7,7 +7,7 @@ import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { Cache } from './cache';
-import { fetchVerificationKeys } from './xsuaa-service';
+import { fetchVerificationKeys } from './xsuaa-service-xssec';
 import type { RegisteredJWTClaimsTenant } from './tenant';
 import type { RegisteredJWTClaimsUser } from './user';
 

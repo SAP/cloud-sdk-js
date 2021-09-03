@@ -12,7 +12,10 @@ import {
 import { Service } from './environment-accessor-types';
 import { ResilienceOptions } from './resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
-import { refreshTokenGrant, userTokenGrant } from './xsuaa-service';
+import {
+  refreshTokenGrant,
+  userTokenGrant
+} from './legacy/xsuaa-service';
 import {
   ClientCredentialsResponse,
   UserTokenResponse

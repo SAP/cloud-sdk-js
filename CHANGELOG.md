@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [core] Fix the missing export for files under `http-agent` directory.
 
 
 # 1.48.1

@@ -257,12 +257,12 @@ export function verifyJwtWithKey(
   return new Promise((resolve, reject) => {
     verify(token, sanitizeVerificationKey(key), (err, decodedToken) => {
       if (err) {
-        reject(new ErrorWithCause('Invalid JWT.', err));
-      } else if (!decodedToken) {
-        reject('Invalid JWT. Token verification yielded `undefined`.');
-      } else {
-        resolve(decodedToken);
+        return reject(new ErrorWithCause('Invalid JWT.', err));
       }
+      if (!decodedToken) {
+        return reject('Invalid JWT. Token verification yielded `undefined`.');
+      }
+      return resolve(decodedToken);
     });
   });
 }

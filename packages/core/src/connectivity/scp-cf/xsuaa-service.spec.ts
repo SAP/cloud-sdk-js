@@ -1,10 +1,7 @@
-import nock from 'nock/types';
+import nock from 'nock';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { providerXsuaaUrl } from '../../../test/test-util';
-import {
-  fetchVerificationKeys,
-  getSubdomainAndZoneId
-} from './xsuaa-service-xssec';
+import { fetchVerificationKeys, getSubdomainAndZoneId } from './xsuaa-service';
 import * as jwt from './jwt';
 import { TokenKey } from '.';
 

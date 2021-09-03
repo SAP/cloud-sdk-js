@@ -6,6 +6,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
 import {
+  Service,
   ServiceCredentials,
   XsuaaServiceCredentials
 } from './environment-accessor-types';
@@ -13,29 +14,43 @@ import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
 } from './resilience-options';
-import { TokenKey } from './xsuaa-service-types';
+import { ClientCredentialsResponse, TokenKey } from './xsuaa-service-types';
+import { resolveService } from '.';
 
 const logger = createLogger({
   package: 'core',
   messageContext: 'xsuaa-service'
 });
 
-type XsuaaServiceXssecCircuitBreaker = CircuitBreaker<
-  [requestUserTokenParam: RequestUserTokenParam],
-  string
->;
-let circuitBreaker: XsuaaServiceXssecCircuitBreaker;
-function getCircuitBreaker(): XsuaaServiceXssecCircuitBreaker {
+let circuitBreaker: any;
+
+function executeFunction<T extends (...args: any[]) => any>(
+  fn: T,
+  ...parameters: Parameters<T>
+): ReturnType<T> {
+  return fn(...parameters);
+}
+
+function getCircuitBreaker() {
   if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(
-      xssec.requests.requestUserToken,
+      executeFunction,
       circuitBreakerDefaultOptions
     );
   }
   return circuitBreaker;
 }
 
-// `@sap/xssec` uses/checks `null` in general without considering `undefined`.
+function wrapInCircuitBreaker<T extends (...args: any[]) => any>(
+  fn: T
+): (...parameters: Parameters<T>) => ReturnType<T> {
+  return (...parameters: Parameters<T>) =>
+    getCircuitBreaker().fire(fn, ...parameters, {
+      enableCircuitBreaker: false
+    });
+}
+
+// `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
   subdomain: string | null;
   zoneId: string | null;
@@ -67,10 +82,27 @@ export function getSubdomainAndZoneId(
   return { subdomain, zoneId };
 }
 
-export interface RequestUserTokenParam {
-  userJwt: string;
-  serviceCredentials: ServiceCredentials;
-  subdomainAndZoneId: SubdomainAndZoneId;
+export function getClientCredentialsToken(
+  service: string | Service,
+  userJwt?: string | JwtPayload,
+  options: ResilienceOptions = { enableCircuitBreaker: true }
+): Promise<ClientCredentialsResponse> {
+  if (options.enableCircuitBreaker) {
+    return wrapInCircuitBreaker(getClientCredentialsToken)(service, userJwt);
+  }
+  const serviceCredentials = resolveService(service).credentials;
+  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
+
+  return new Promise((resolve, reject) => {
+    xssec.requests.requestClientCredentialsToken(
+      subdomainAndZoneId.subdomain,
+      serviceCredentials,
+      null,
+      subdomainAndZoneId.zoneId,
+      (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
+        err ? reject(err) : resolve(tokenResponse)
+    );
+  });
 }
 
 /**
@@ -81,24 +113,29 @@ export interface RequestUserTokenParam {
  * @hidden
  */
 export function requestUserToken(
-  param: RequestUserTokenParam,
+  userJwt: string,
+  serviceCredentials: ServiceCredentials,
+  subdomainAndZoneId: SubdomainAndZoneId,
   options: ResilienceOptions = { enableCircuitBreaker: true }
 ): Promise<string> {
   if (options.enableCircuitBreaker) {
-    return getCircuitBreaker().fire(param);
-  }
-
-  return new Promise((resolve: (token: string) => void, reject) => {
-    xssec.requests.requestUserToken(
-      param.userJwt,
-      param.serviceCredentials,
-      null,
-      null,
-      param.subdomainAndZoneId.subdomain,
-      param.subdomainAndZoneId.zoneId,
-      (err: Error, token: string) => (err ? reject(err) : resolve(token))
+    return wrapInCircuitBreaker(requestUserToken)(
+      userJwt,
+      serviceCredentials,
+      subdomainAndZoneId
     );
-  });
+  }
+  return new Promise((resolve: (token: string) => void, reject) =>
+    xssec.requests.requestUserToken(
+      userJwt,
+      serviceCredentials,
+      null,
+      null,
+      subdomainAndZoneId.subdomain,
+      subdomainAndZoneId.zoneId,
+      (err: Error, token: string) => (err ? reject(err) : resolve(token))
+    )
+  );
 }
 
 /**

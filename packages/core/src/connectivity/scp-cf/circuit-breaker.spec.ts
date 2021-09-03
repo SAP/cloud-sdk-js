@@ -2,13 +2,13 @@ import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
 import {
   destinationServiceUri,
-  providerXsuaaClientCredentials,
-  providerXsuaaUrl
-} from '../../../../test/test-util/environment-mocks';
-import { privateKey } from '../../../../test/test-util/keys';
-import { circuitBreakerDefaultOptions } from '../resilience-options';
-import { clientCredentialsGrant } from '../xsuaa-service';
-import { fetchDestination } from './destination-service';
+  providerXsuaaUrl,
+  xsuaaBindingMock
+} from '../../../test/test-util/environment-mocks';
+import { privateKey } from '../../../test/test-util/keys';
+import { circuitBreakerDefaultOptions } from './resilience-options';
+import { getClientCredentialsToken } from './xsuaa-service';
+import { fetchDestination } from './destination/destination-service';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),
@@ -32,28 +32,30 @@ describe('circuit breaker', () => {
     nock(destinationServiceUri).get(/.*/).times(attempts).reply(400);
 
     // First attempt should succeed
-    expect(await request()).toBeDefined();
+    await expect(request()).resolves.toBeDefined();
 
     // Following attempts should fail
     for (let i = 0; i < attempts - 1; i++) {
       await expectToThrowWithRootCause(
         request,
-        'Request failed with status code 400'
+        ({ message }) => message === 'Request failed with status code 400'
       );
     }
 
     // Last attempt should open the circuit breaker
-    await expectToThrowWithRootCause(request, 'Breaker is open');
+    await expectToThrowWithRootCause(
+      request,
+      ({ message }) => message === 'Breaker is open'
+    );
   });
 
   it('opens after 50% failed request attempts (with at least 10 recorded requests) for xsuaa service', async () => {
-    const request = () =>
-      clientCredentialsGrant(providerXsuaaClientCredentials, {
-        username: 'user',
-        password: 'pass'
-      });
+    const request = () => getClientCredentialsToken(xsuaaBindingMock);
 
-    nock(providerXsuaaUrl).post('/oauth/token').times(1).reply(200);
+    nock(providerXsuaaUrl)
+      .post('/oauth/token')
+      .times(1)
+      .reply(200, { access_token: 'token' });
 
     nock(providerXsuaaUrl).post('/oauth/token').times(attempts).reply(400);
 
@@ -62,25 +64,26 @@ describe('circuit breaker', () => {
 
     // Following attempts should fail
     for (let i = 0; i < attempts - 1; i++) {
-      await expectToThrowWithRootCause(
-        request,
-        'Request failed with status code 400'
+      await expectToThrowWithRootCause(request, rootCause =>
+        expect(rootCause).toBeUndefined()
       );
     }
 
     // Last attempt should open the circuit breaker
-    await expectToThrowWithRootCause(request, 'Breaker is open');
+    await expectToThrowWithRootCause(
+      request,
+      ({ message }) => message === 'Breaker is open'
+    );
   });
 });
 
 async function expectToThrowWithRootCause(
   fn: () => any,
-  rootCause: string
+  expectation: (rootCause: Error) => void
 ): Promise<void> {
-  try {
-    await fn();
-    fail('Expected to throw.');
-  } catch (err) {
-    expect(err.rootCause.message).toEqual(rootCause);
-  }
+  await expect(fn())
+    .rejects.toThrowError()
+    .catch(err => {
+      expectation(err.rootCause);
+    });
 }

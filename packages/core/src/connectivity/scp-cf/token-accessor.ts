@@ -20,7 +20,7 @@ import {
   ClientCredentialsResponse,
   UserTokenResponse
 } from './xsuaa-service-types';
-import { getSubdomainAndZoneId, requestUserToken } from './xsuaa-service-xssec';
+import { getSubdomainAndZoneId, requestUserToken } from './xsuaa-service';
 
 async function getClientCredentialsToken(
   service: string | Service,

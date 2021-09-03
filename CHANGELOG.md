@@ -14,7 +14,8 @@
 
 ## Compatibility Notes
 
-- [core] Do not use client credentials to fetch public keys for token verification.
+- [core] Stop using client credentials to fetch public keys for token verification.
+- [core] Replace own implementation for requesting user tokens and client credential tokens from the XSUAA service with the `@sap/xssec` library.
 
 ## New Functionality
 
@@ -22,13 +23,12 @@
 
 ## Improvements
 
-- [core] Uses `@sap/xssec` for requesting `user token` and `client credentials token` from the XSUAA service instead of our own implementations.
+-
 
 ## Fixed Issues
 
 - [core] Fix verification key retrieval to match the given key id (`kid`).
 - [core] Fix the missing export for files under `http-agent` directory.
-
 
 # 1.48.1
 

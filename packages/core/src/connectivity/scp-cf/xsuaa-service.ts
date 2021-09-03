@@ -5,11 +5,7 @@ import { renameKeys, ErrorWithCause, createLogger } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import { parseSubdomain } from './subdomain-replacer';
 import { decodeJwt } from './jwt';
-import {
-  Service,
-  ServiceCredentials,
-  XsuaaServiceCredentials
-} from './environment-accessor-types';
+import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
 import {
   circuitBreakerDefaultOptions,
   ResilienceOptions
@@ -41,6 +37,18 @@ function getCircuitBreaker() {
   return circuitBreaker;
 }
 
+/**
+ * Wrap a function in a circuit breaker. IMPORTANT: This assumes that the last parameter of the function is `ResilienceOptions` and you do not pass it to the execution of this function.
+ * Example:
+ * ```
+ * function myFn(param: string, options: ResilienceOptions = { enableCircuitBreaker: true }) {
+ * if (options.enableCircuitBreaker) {
+ *   return wrapInCircuitBreaker(getClientCredentialsToken)(service, userJwt);
+ * }
+ * ```
+ * @param fn - Function to wrap.
+ * @returns A function to be called with the original parameters, by omitting the options parameter.
+ */
 function wrapInCircuitBreaker<T extends (...args: any[]) => any>(
   fn: T
 ): (...parameters: Parameters<T>) => ReturnType<T> {
@@ -82,6 +90,14 @@ export function getSubdomainAndZoneId(
   return { subdomain, zoneId };
 }
 
+/**
+ * Make a user token request against the XSUAA service.
+ * @param service - Service as it is defined in the environment variable.
+ * @param userJwt - User JWT.
+ * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
+ * @returns Client credentials token.
+ * @hidden
+ */
 export function getClientCredentialsToken(
   service: string | Service,
   userJwt?: string | JwtPayload,
@@ -107,28 +123,26 @@ export function getClientCredentialsToken(
 
 /**
  * Make a user token request against the XSUAA service.
- * @param param - The parameters for make the request.
+ * @param service - Service as it is defined in the environment variable.
+ * @param userJwt - User JWT.
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns User token.
  * @hidden
  */
-export function requestUserToken(
+export function getUserToken(
+  service: Service,
   userJwt: string,
-  serviceCredentials: ServiceCredentials,
-  subdomainAndZoneId: SubdomainAndZoneId,
   options: ResilienceOptions = { enableCircuitBreaker: true }
 ): Promise<string> {
   if (options.enableCircuitBreaker) {
-    return wrapInCircuitBreaker(requestUserToken)(
-      userJwt,
-      serviceCredentials,
-      subdomainAndZoneId
-    );
+    return wrapInCircuitBreaker(getUserToken)(service, userJwt);
   }
+  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
+
   return new Promise((resolve: (token: string) => void, reject) =>
     xssec.requests.requestUserToken(
       userJwt,
-      serviceCredentials,
+      service.credentials,
       null,
       null,
       subdomainAndZoneId.subdomain,

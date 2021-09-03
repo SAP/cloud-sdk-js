@@ -1,6 +1,5 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import { JwtPayload } from 'jsonwebtoken';
-import * as xssec from '@sap/xssec';
 import { decodeJwt } from './jwt';
 import { CachingOptions } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
@@ -12,34 +11,9 @@ import {
 import { Service } from './environment-accessor-types';
 import { ResilienceOptions } from './resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
-import {
-  refreshTokenGrant,
-  userTokenGrant
-} from './legacy/xsuaa-service';
-import {
-  ClientCredentialsResponse,
-  UserTokenResponse
-} from './xsuaa-service-types';
-import { getSubdomainAndZoneId, requestUserToken } from './xsuaa-service';
-
-async function getClientCredentialsToken(
-  service: string | Service,
-  userJwt?: string | JwtPayload
-): Promise<ClientCredentialsResponse> {
-  const serviceCredentials = resolveService(service).credentials;
-  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
-
-  return new Promise((resolve, reject) => {
-    xssec.requests.requestClientCredentialsToken(
-      subdomainAndZoneId.subdomain,
-      serviceCredentials,
-      null,
-      subdomainAndZoneId.zoneId,
-      (err: Error, token: string, tokenResponse: ClientCredentialsResponse) =>
-        err ? reject(err) : resolve(tokenResponse)
-    );
-  });
-}
+import { refreshTokenGrant, userTokenGrant } from './legacy/xsuaa-service';
+import { UserTokenResponse } from './xsuaa-service-types';
+import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -80,7 +54,11 @@ export async function serviceToken(
   }
 
   try {
-    const token = await getClientCredentialsToken(service, options?.userJwt);
+    const token = await getClientCredentialsToken(
+      service,
+      options?.userJwt,
+      options
+    );
 
     if (opts.useCache) {
       clientCredentialsTokenCache.cacheRetrievedToken(
@@ -89,7 +67,7 @@ export async function serviceToken(
         token
       );
     }
-    // TODO: Token responses can have id_token instead of access_token (xssec does that correctly)
+
     return token.access_token;
   } catch (err) {
     throw new ErrorWithCause(
@@ -156,21 +134,13 @@ export async function jwtBearerToken(
   options?: ResilienceOptions
 ): Promise<string> {
   const resolvedService = resolveService(service);
-  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
   const opts: ResilienceOptions = {
     enableCircuitBreaker: true,
     ...options
   };
 
-  return requestUserToken(
-    {
-      userJwt,
-      serviceCredentials: resolvedService.credentials,
-      subdomainAndZoneId
-    },
-    opts
-  );
+  return getUserToken(resolvedService, userJwt, opts);
 }
 
 function multiTenantXsuaaCredentials(userJwt?: string | JwtPayload) {

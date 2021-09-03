@@ -24,7 +24,7 @@ import {
 
 async function getClientCredentialsToken(
   service: string | Service,
-  userJwt?: string
+  userJwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
   const serviceCredentials = resolveService(service).credentials;
 
@@ -32,11 +32,12 @@ async function getClientCredentialsToken(
   let zoneId: string;
 
   if (userJwt) {
-    const decodedJwt = decodeJwt(userJwt);
-    if (decodedJwt.iss) {
-      subdomain = parseSubdomain(decodedJwt.iss);
+    const jwtPayload =
+      typeof userJwt === 'string' ? decodeJwt(userJwt) : userJwt;
+    if (jwtPayload.iss) {
+      subdomain = parseSubdomain(jwtPayload.iss);
     }
-    zoneId = decodedJwt.zid;
+    zoneId = jwtPayload.zid;
   }
 
   return new Promise((resolve, reject) => {
@@ -89,14 +90,8 @@ export async function serviceToken(
     }
   }
 
-  // TODO: handle Payload as well
-  let userJwt = options?.userJwt;
-  if (typeof userJwt !== 'string' && typeof userJwt !== 'undefined') {
-    userJwt = undefined;
-  }
-
   try {
-    const token = await getClientCredentialsToken(service, userJwt);
+    const token = await getClientCredentialsToken(service, options?.userJwt);
 
     if (opts.useCache) {
       clientCredentialsTokenCache.cacheRetrievedToken(

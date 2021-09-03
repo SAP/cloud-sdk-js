@@ -9,6 +9,7 @@ const ClientCredentialsTokenCache = (
   cache: Cache<ClientCredentialsResponse>
 ) => ({
   // TODO: this method name can be shortened
+  // TODO: Remove client credentials in v2.0
   getGrantTokenFromCache: (
     url,
     credentialsOrClientId: ClientCredentials | string

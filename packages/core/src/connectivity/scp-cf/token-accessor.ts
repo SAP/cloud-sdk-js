@@ -24,17 +24,7 @@ async function getClientCredentialsToken(
   userJwt?: string | JwtPayload
 ): Promise<ClientCredentialsResponse> {
   const serviceCredentials = resolveService(service).credentials;
-
-  let subdomain: string;
-  let zoneId: string;
-
-  if (userJwt) {
-    const decodedJwt = decodeJwt(userJwt);
-    if (decodedJwt.iss) {
-      subdomain = parseSubdomain(decodedJwt.iss);
-    }
-    zoneId = decodedJwt.zid;
-  }
+  const subdomainAndZoneId = getSubdomainAndZoneId(userJwt);
 
   return new Promise((resolve, reject) => {
     xssec.requests.requestClientCredentialsToken(

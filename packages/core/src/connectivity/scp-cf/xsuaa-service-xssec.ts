@@ -41,15 +41,18 @@ export function getSubdomainAndZoneId(
 ): SubdomainAndZoneId {
   let subdomain: string | null = null;
   let zoneId: string | null = null;
-  if (!jwt) {
-    return { subdomain, zoneId };
+
+  if (jwt) {
+    const jwtPayload = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
+
+    if (jwtPayload.iss) {
+      subdomain = parseSubdomain(jwtPayload.iss);
+    }
+    if (jwtPayload.zid) {
+      zoneId = jwtPayload.zid;
+    }
   }
 
-  const jwtPayload = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;
-  if (jwtPayload.iss) {
-    subdomain = parseSubdomain(jwtPayload.iss);
-  }
-  zoneId = jwtPayload.zid || zoneId;
   return { subdomain, zoneId };
 }
 

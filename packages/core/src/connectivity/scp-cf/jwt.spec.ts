@@ -18,12 +18,6 @@ const jwtPayload = {
   zid: 'my-zone'
 };
 
-const jwtPayload2 = {
-  sub: '1234567890',
-  name: 'Jane Doe',
-  iat: 1516239022
-};
-
 function responseWithPublicKey(key = publicKey) {
   return {
     keys: [
@@ -124,6 +118,21 @@ describe('jwt', () => {
       });
     });
 
+    it('fails for incorrect key id', async () => {
+      const response = responseWithPublicKey();
+      response.keys[0].kid = 'unknown';
+      nock(jku).get('/').reply(200, response);
+
+      await expect(() =>
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+      ).rejects.toMatchObject({
+        message: 'Failed to verify JWT. Could not retrieve verification key.',
+        cause: {
+          message: 'Could not find verification key for the given key ID.'
+        }
+      });
+    });
+
     it('fails for jku URL and xsuaa different domain', async () => {
       await expect(() =>
         verifyJwt(
@@ -183,7 +192,14 @@ describe('jwt', () => {
         .reply(200, responseWithPublicKey());
 
       const jwt1 = signedJwtForVerification(jwtPayload, jku);
-      const jwt2 = signedJwtForVerification(jwtPayload2, jku);
+      const jwt2 = signedJwtForVerification(
+        {
+          sub: '1234567890',
+          name: 'Jane Doe',
+          iat: 1516239022
+        },
+        jku
+      );
 
       await verifyJwt(jwt1);
       verificationKeyCache.clear();

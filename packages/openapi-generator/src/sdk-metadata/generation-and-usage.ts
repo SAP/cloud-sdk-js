@@ -56,7 +56,7 @@ function getApiSpecificUsage(
     api => api.operations?.length > 0
   );
 
-  if (apisWithOperations) {
+  if (apisWithOperations.length > 0) {
     const mainApi = getMainApi(openApiDocument.serviceName, apisWithOperations);
     const operation = getMainOperation(mainApi);
 

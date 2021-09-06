@@ -20,6 +20,7 @@ export const emptyObjectSchema = {
 };
 
 export const dummyOpenApiDocument: OpenApiDocument = {
+  serviceName: 'dummy',
   serviceOptions: {
     packageName: '@sap/dummy-package',
     directoryName: 'dummy-package'
@@ -29,7 +30,51 @@ export const dummyOpenApiDocument: OpenApiDocument = {
       name: 'DummyApi',
       operations: [
         {
-          operationId: 'DummyFunction'
+          operationId: 'DummyFunction',
+          pathParameters: [
+            {
+              name: 'dummyId'
+            }
+          ],
+          requestBody: {
+            required: false
+          },
+          queryParameters: [
+            {
+              name: 'query_1',
+              required: true
+            },
+            {
+              name: 'query_2',
+              required: false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'ResourceApi',
+      operations: [
+        {
+          operationId: 'ResourceFunction',
+          pathParameters: [
+            {
+              name: 'resourceId'
+            }
+          ],
+          requestBody: {
+            required: false
+          },
+          queryParameters: [
+            {
+              name: 'query_1',
+              required: true
+            },
+            {
+              name: 'query_2',
+              required: false
+            }
+          ]
         }
       ]
     }

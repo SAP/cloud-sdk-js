@@ -7,7 +7,7 @@ Object {
       "header": "Usage Example",
       "instructions": "import { DummyApi } from '@sap/dummy-package';
 
-const responseData = await DummyApi.DummyFunction().execute({ destinationName:'myDestinationName' });",
+const responseData = await DummyApi.DummyFunction(dummyId, undefined, { query_1: 'myQuery1' }).execute({ destinationName:'myDestinationName' });",
       "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose \\"OpenAPI Consumption Manual\\" from the \\"Helpful Links\\" menu.",
     },
     "generationSteps": Object {
@@ -78,7 +78,7 @@ Object {
       "header": "Usage Example",
       "instructions": "import { DummyApi } from '@sap/dummy-package';
 
-const responseData = await DummyApi.DummyFunction().execute({ destinationName:'myDestinationName' });",
+const responseData = await DummyApi.DummyFunction(dummyId, undefined, { query_1: 'myQuery1' }).execute({ destinationName:'myDestinationName' });",
       "text": "To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose \\"OpenAPI Consumption Manual\\" from the \\"Helpful Links\\" menu.",
     },
     "generationSteps": Object {

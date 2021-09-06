@@ -107,11 +107,11 @@ export function getFunctionWithMinParameters(
 }
 
 export function getActionFunctionParams(parameters: VdmParameter[]): string {
-  const paramString = Object.entries(parameters || [])
+  const paramString = parameters
     .slice(0, 2)
     .reduce(
       (cumulator, currentParam) =>
-        `${cumulator}, ${currentParam[1].parameterName}: '${currentParam[1].parameterName}'`,
+        `${cumulator}, ${currentParam.parameterName}: '${currentParam.parameterName}'`,
       ''
     );
   return `{${paramString.substring(1)}${

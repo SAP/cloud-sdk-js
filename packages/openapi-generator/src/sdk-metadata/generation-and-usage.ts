@@ -53,7 +53,7 @@ function getApiSpecificUsage(
   openApiDocument: OpenApiDocument
 ): InstructionWithTextAndHeader {
   const apisWithOperations = openApiDocument.apis.filter(
-    api => api.operations.length > 0
+    api => api.operations?.length > 0
   );
 
   if (apisWithOperations) {

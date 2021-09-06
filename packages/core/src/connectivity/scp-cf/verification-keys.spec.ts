@@ -1,8 +1,8 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import nock from 'nock/types';
+import nock from 'nock';
 import { providerXsuaaUrl } from '../../../test/test-util';
 import { fetchVerificationKeys } from './verification-keys';
-import { TokenKey } from '.';
+import { TokenKey } from './xsuaa-service-types';
 
 describe('fetchVerificationKeys', () => {
   it('fetches verification keys', async () => {

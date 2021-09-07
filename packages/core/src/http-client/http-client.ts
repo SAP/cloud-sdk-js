@@ -266,7 +266,10 @@ async function getCsrfHeaders(
     : buildCsrfHeaders(destination, {
         params: request.params,
         headers: request.headers,
-        url: request.url
+        url: request.url,
+        proxy: request.proxy,
+        httpAgent: request.httpAgent,
+        httpsAgent: request.httpsAgent
       });
 }
 

@@ -29,6 +29,7 @@
 
 - [core] Fix verification key retrieval to match the given key id (`kid`).
 - [core] Fix the missing export for files under `http-agent` directory.
+- [core] Support using custom http(s)Agent when sending CSRF token requests.
 
 # 1.48.1
 

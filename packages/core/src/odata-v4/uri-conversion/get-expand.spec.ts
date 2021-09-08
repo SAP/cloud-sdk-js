@@ -33,6 +33,8 @@ describe('get expand', () => {
   });
 });
 
+const encodedSpace = encodeURIComponent(' ');
+
 const testExpandSingleLink = {
   expand: TestEntity.TO_SINGLE_LINK.select(
     TestEntitySingleLink.STRING_PROPERTY,
@@ -51,5 +53,5 @@ const testExpandMultiLink = {
     .top(1)
     .skip(1),
   odataStr:
-    "to_MultiLink($select=StringProperty,BooleanProperty;$filter=(StringProperty%20eq%20'test');$skip=1;$top=1;$orderby=StringProperty asc)"
+    `to_MultiLink($select=StringProperty,BooleanProperty;$filter=(StringProperty%20eq%20'test');$skip=1;$top=1;$orderby=StringProperty${encodedSpace}asc)`
 };

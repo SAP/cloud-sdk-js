@@ -6,6 +6,8 @@ import {
 import { getQueryParametersForOrderBy } from './get-orderby';
 
 describe('get orderby', () => {
+  const encodedSpace = encodeURIComponent(' ');
+  
   it('is empty for empty orderbys', () => {
     expect(getQueryParametersForOrderBy([])).toEqual({});
   });
@@ -20,7 +22,7 @@ describe('get orderby', () => {
         )
       ]).orderby
     ).toBe(
-      'Int16Property asc,StringProperty asc,to_SingleLink/GuidProperty desc'
+      `Int16Property${encodedSpace}asc,StringProperty${encodedSpace}asc,to_SingleLink/GuidProperty${encodedSpace}desc`
     );
   });
 
@@ -31,7 +33,7 @@ describe('get orderby', () => {
         desc(TestEntity.COMPLEX_TYPE_PROPERTY.int16Property)
       ]).orderby
     ).toBe(
-      'ComplexTypeProperty/StringProperty asc,ComplexTypeProperty/Int16Property desc'
+      `ComplexTypeProperty/StringProperty${encodedSpace}asc,ComplexTypeProperty/Int16Property${encodedSpace}desc`
     );
   });
 
@@ -40,6 +42,6 @@ describe('get orderby', () => {
       getQueryParametersForOrderBy([
         asc(TestEntity.COMPLEX_TYPE_PROPERTY.complexTypeProperty.stringProperty)
       ]).orderby
-    ).toBe('ComplexTypeProperty/ComplexTypeProperty/StringProperty asc');
+    ).toBe(`ComplexTypeProperty/ComplexTypeProperty/StringProperty${encodedSpace}asc`);
   });
 });

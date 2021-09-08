@@ -42,6 +42,8 @@ describe('get orderby', () => {
       getQueryParametersForOrderBy([
         asc(TestEntity.COMPLEX_TYPE_PROPERTY.complexTypeProperty.stringProperty)
       ]).orderby
-    ).toBe(`ComplexTypeProperty/ComplexTypeProperty/StringProperty${encodedSpace}asc`);
+    ).toBe(
+      `ComplexTypeProperty/ComplexTypeProperty/StringProperty${encodedSpace}asc`
+    );
   });
 });

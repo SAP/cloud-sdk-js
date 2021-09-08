@@ -52,6 +52,5 @@ const testExpandMultiLink = {
     .filter(TestEntityMultiLink.STRING_PROPERTY.equals('test'))
     .top(1)
     .skip(1),
-  odataStr:
-    `to_MultiLink($select=StringProperty,BooleanProperty;$filter=(StringProperty%20eq%20'test');$skip=1;$top=1;$orderby=StringProperty${encodedSpace}asc)`
+  odataStr: `to_MultiLink($select=StringProperty,BooleanProperty;$filter=(StringProperty%20eq%20'test');$skip=1;$top=1;$orderby=StringProperty${encodedSpace}asc)`
 };

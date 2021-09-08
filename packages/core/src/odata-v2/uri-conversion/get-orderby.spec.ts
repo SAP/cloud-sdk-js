@@ -7,7 +7,7 @@ import { getQueryParametersForOrderBy } from './get-orderby';
 
 describe('get orderby', () => {
   const encodedSpace = encodeURIComponent(' ');
-  
+
   it('is empty for empty orderbys', () => {
     expect(getQueryParametersForOrderBy([])).toEqual({});
   });

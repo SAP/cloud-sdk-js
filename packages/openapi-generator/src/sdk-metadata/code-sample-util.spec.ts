@@ -1,3 +1,4 @@
+import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common';
 import {
   OpenApiApi,
   OpenApiOperation,
@@ -6,8 +7,8 @@ import {
 import {
   getGetAllOperation,
   getGetOperation,
-  getLevensteinClosestOperation,
   getMainApi,
+  getMainOperation,
   getOperationParamCode
 } from './code-sample-util';
 
@@ -19,45 +20,50 @@ describe('code-sample-util api', () => {
   const queryParam2 = { name: 'query-Param2', required: false };
   const queryParam3 = { name: 'query-Param3', required: true };
 
-  const api_1 = {
+  const api_1: OpenApiApi = {
     name: 'DummyApi',
     operations: [
       {
         operationId: 'DummyFunction',
         method: 'get',
-        pathParameters: [] as OpenApiParameter[],
-        queryParameters: [] as OpenApiParameter[]
+        tags: [],
+        pathParameters: [],
+        queryParameters: [],
+        response: { type: 'any' },
+        pathPattern: ''
       }
     ]
-  } as OpenApiApi;
+  };
 
-  const api_2 = {
+  const api_2: OpenApiApi = {
     name: 'TestApi',
     operations: [
       {
         operationId: 'getAll',
-        pathParameters: [] as OpenApiParameter[],
-        queryParameters: [] as OpenApiParameter[]
+        method: 'get',
+        tags: [],
+        pathParameters: [],
+        queryParameters: [],
+        response: { type: 'any' },
+        pathPattern: ''
       },
       {
-        operationId: 'TestFunc',
-        pathParameters: [] as OpenApiParameter[],
-        queryParameters: [] as OpenApiParameter[]
+        operationId: 'Test',
+        method: 'get',
+        tags: [],
+        pathParameters: [],
+        queryParameters: [],
+        response: { type: 'any' },
+        pathPattern: ''
       }
     ]
-  } as OpenApiApi;
+  };
+
   it('gets main api based on levenshtein algo', () => {
-    expect(getMainApi('dummy', [api_1, api_2])).toEqual({
-      name: 'DummyApi',
-      operations: [
-        {
-          operationId: 'DummyFunction',
-          method: 'get',
-          pathParameters: [],
-          queryParameters: []
-        }
-      ]
-    });
+    expect(getMainApi('dummy', [api_1, api_2])).toEqual(
+      expect.objectContaining({
+      name: 'DummyApi'
+    }));
   });
 
   it('gets main api with getAll operation', () => {
@@ -66,30 +72,38 @@ describe('code-sample-util api', () => {
         operations: [
           {
             operationId: 'getAll',
-            pathParameters: [] as OpenApiParameter[],
-            queryParameters: [] as OpenApiParameter[]
+            method: 'get',
+            tags: [],
+            pathParameters: [],
+            queryParameters: [],
+            response: { type: 'any' },
+            pathPattern: ''
           },
           {
-            operationId: 'TestFunc',
-            pathParameters: [] as OpenApiParameter[],
-            queryParameters: [] as OpenApiParameter[]
+            operationId: 'Test',
+            method: 'get',
+            tags: [],
+            pathParameters: [],
+            queryParameters: [],
+            response: { type: 'any' },
+            pathPattern: ''
           }
         ]
       })
     );
   });
-
   it('gets main operationId based on levenshtein algo', () => {
-    expect(getLevensteinClosestOperation(api_2.name, api_2.operations)).toEqual(
+    expect(getMainOperation(api_2)).toEqual(
       expect.objectContaining({
-        operationId: 'TestFunc'
+        operationId: 'Test'
       })
     );
   });
 
   it('gets undefined main operationId if no closest match found using levenshtein algo', () => {
+    const extractorFn = (x: OpenApiOperation) => x.operationId;
     expect(
-      getLevensteinClosestOperation('ResourceApi', api_2.operations)
+      getLevenshteinClosest('ResourceApi', api_2.operations, extractorFn)
     ).toBeUndefined();
   });
 
@@ -116,14 +130,17 @@ describe('code-sample-util api', () => {
 
   it('returns empty params string if there are no parameters', () => {
     const operation = {
-      operationId: 'getAll'
+      operationId: 'getAll',
+      pathParameters: [] as OpenApiParameter[],
+      queryParameters: [] as OpenApiParameter[]
     } as OpenApiOperation;
     expect(getOperationParamCode(operation)).toEqual('');
   });
 
   it('generates param string with path params', () => {
     const operation = {
-      pathParameters: [pathParam1, pathParam2]
+      pathParameters: [pathParam1, pathParam2],
+      queryParameters: [] as OpenApiParameter[]
     } as OpenApiOperation;
 
     expect(getOperationParamCode(operation)).toMatchInlineSnapshot(
@@ -145,6 +162,7 @@ describe('code-sample-util api', () => {
   it('generates param string with path params and mandatory request body', () => {
     const operation = {
       pathParameters: [pathParam1],
+      queryParameters: [] as OpenApiParameter[],
       requestBody: { required: true }
     } as OpenApiOperation;
 

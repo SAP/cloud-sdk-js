@@ -1,39 +1,29 @@
-import levenstein from 'fast-levenshtein';
+import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common';
 import { codeBlock, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenApiApi, OpenApiOperation } from '../openapi-types';
 
-const distanceThreshold = 5;
 export function getMainApi(
   serviceName: string,
   apis: OpenApiApi[]
 ): OpenApiApi {
-  let closestApi: OpenApiApi | undefined;
-  let minDistance = distanceThreshold;
+return getLevenshteinClosest(serviceName, apis, (x) => x.name) ||
+getApiWithMaxOperations(apis);
+}
 
-  apis.forEach(api => {
-    const distance = getLevensteinDistance(serviceName, api.name);
-    if (distance <= minDistance) {
-      minDistance = distance;
-      closestApi = api;
-    }
-  });
-  if (closestApi) {
-    return closestApi;
-  }
-  // If no closest api found, return the api with most operations
+export function getApiWithMaxOperations(apis: OpenApiApi[]): OpenApiApi {
   const sortedByOperationsLength = apis.sort((a, b) =>
-    a.operations.length > b.operations.length ? -1 : 1
-  );
-  const withGetAll = sortedByOperationsLength.filter(api =>
-    api.operations.find(operation =>
-      operation.operationId.toLocaleLowerCase('getall')
-    )
-  );
-  if (withGetAll) {
-    return withGetAll[0];
-  }
-  // return the one with most methods
-  return sortedByOperationsLength[0];
+  a.operations.length > b.operations.length ? -1 : 1
+);
+const withGetAll = sortedByOperationsLength.find(api =>
+  api.operations.find(operation =>
+    operation.operationId.toLocaleLowerCase('getall')
+  )
+);
+if (withGetAll) {
+  return withGetAll;
+}
+// return the one with most methods
+return sortedByOperationsLength[0];
 }
 
 export function getMainOperation(api: OpenApiApi): OpenApiOperation {
@@ -41,7 +31,7 @@ export function getMainOperation(api: OpenApiApi): OpenApiOperation {
     return api.operations[0];
   }
   return (
-    getLevensteinClosestOperation(api.name, api.operations) ||
+    getLevenshteinClosest(api.name, api.operations, (op) => op.operationId) ||
     getGetAllOperation(api.operations) ||
     getGetOperation(api.operations) ||
     getAnyOperationWithoutParams(api.operations) ||
@@ -49,30 +39,12 @@ export function getMainOperation(api: OpenApiApi): OpenApiOperation {
   );
 }
 
-export function getLevensteinClosestOperation(
-  apiName: string,
-  operations: OpenApiOperation[]
-): OpenApiOperation | undefined {
-  let closestOperation: OpenApiOperation | undefined;
-  let minDistance = distanceThreshold;
-
-  operations.forEach(operation => {
-    const distance = getLevensteinDistance(apiName, operation.operationId);
-    if (distance <= minDistance) {
-      minDistance = distance;
-      closestOperation = operation;
-    }
-  });
-  return closestOperation;
-}
-
 export function getGetAllOperation(
   operations: OpenApiOperation[]
 ): OpenApiOperation | undefined {
   return operations.find(
     operation =>
-      operation.operationId.toLowerCase() === 'getall' &&
-      operation.pathParameters.length === 0
+      operation.operationId.toLowerCase() === 'getall'
   );
 }
 
@@ -110,16 +82,9 @@ export function getAnyOperationWithoutParams(
 }
 
 export function getOperationParamCode(operation: OpenApiOperation): string {
-  if (
-    operation.pathParameters?.length === 0 &&
-    operation.queryParameters?.filter(param => param.required).length === 0 &&
-    operation.requestBody === undefined
-  ) {
-    return '';
-  }
 
   const paramSignature: string[] = [];
-  if (operation.pathParameters?.length > 0) {
+  if (operation.pathParameters) {
     paramSignature.push(
       operation.pathParameters.map(pathParam => pathParam.name).join(', ')
     );
@@ -133,35 +98,17 @@ export function getOperationParamCode(operation: OpenApiOperation): string {
     paramSignature.push(reqBody);
   }
 
-  if (operation.queryParameters?.length > 0) {
+  if (operation.queryParameters) {
     const queryParams = operation.queryParameters
       .filter(queryParam => queryParam.required)
       .map(
         queryParam => `${queryParam.name}: 'my${pascalCase(queryParam.name)}'`
       );
 
-    if (queryParams) {
+    if (queryParams.length > 0) {
       paramSignature.push(`{ ${queryParams.join(', ')} }`);
     }
   }
 
   return codeBlock`${paramSignature.join(', ')}`;
-}
-
-/**
- * Calculate levenshtein distance of the two strings.
- * @param stringA - The first string.
- * @param stringB - The second string.
- * @returns The levenshtein distance (0 and above).
- * @hidden
- */
-function getLevensteinDistance(stringA: string, stringB: string): number {
-  return levenstein.get(
-    getWordWithoutSpecialChars(stringA).toLowerCase(),
-    getWordWithoutSpecialChars(stringB).toLowerCase()
-  );
-}
-
-function getWordWithoutSpecialChars(text: string): string {
-  return text.replace('_', '');
 }

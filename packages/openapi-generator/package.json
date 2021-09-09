@@ -49,8 +49,7 @@
     "glob": "^7.1.6",
     "js-yaml": "^4.0.0",
     "openapi-types": "^8.0.0",
-    "swagger2openapi": "^7.0.4",
-    "fast-levenshtein": "^3.0.0"
+    "swagger2openapi": "^7.0.4"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",

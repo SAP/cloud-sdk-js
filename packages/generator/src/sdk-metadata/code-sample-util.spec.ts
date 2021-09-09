@@ -1,3 +1,4 @@
+import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common';
 import {
   VdmActionImport,
   VdmEntity,
@@ -9,7 +10,6 @@ import {
   getActionFunctionParams,
   getFunctionWithMinParameters,
   getFunctionWithoutParameters,
-  getLevensteinClosestFunction,
   getODataEntity
 } from './code-sample-util';
 
@@ -37,13 +37,14 @@ describe('code-sample-utils entity', () => {
   });
 });
 describe('code-sample-utils imports', () => {
+  const extractorFn = (x: VdmFunctionImport) => x.name;
   it('gets function import based on levenshtein algorithm', () => {
     const functionImports = [
       { name: 'dummy_Class_Func' },
       { name: 'some_Other_Function' }
     ] as VdmFunctionImport[];
 
-    expect(getLevensteinClosestFunction('DummyClass', functionImports)).toEqual(
+    expect(getLevenshteinClosest('DummyClass', functionImports, extractorFn)).toEqual(
       { name: 'dummy_Class_Func' }
     );
   });
@@ -62,7 +63,7 @@ describe('code-sample-utils imports', () => {
 
   it('gets undefined when func import based on levenshtein algorithm is not found', () => {
     expect(
-      getLevensteinClosestFunction('DummyClass', functionImportsZeroParams)
+      getLevenshteinClosest('DummyClass', functionImportsZeroParams, extractorFn)
     ).toBeUndefined();
   });
 

@@ -54,7 +54,13 @@ export function getSdkMetadataClient(
     generationAndUsage
   };
 }
-
+/**
+ * Gets the closest matching object using Levenshtein distance algorithm.
+ * @param name - Name of the service or api class.
+ * @param objectsToCheck - List of objects, e.g. VdmEntity, FunctionImports, etc.
+ * @param extractorFn - Function to get the object's property to match against name.
+ * @returns - closest matched object or undefined if not found.
+ */
 export function getLevenshteinClosest<T>(
   name: string,
   objectsToCheck: T[],
@@ -80,7 +86,7 @@ function getLevenshteinDistance(stringA: string, stringB: string): number {
 }
 
 function getSanitizedString(text: string): string {
-  return text.replace(/[^A-Za-z]/g, '').toLowerCase(); // new RegExp('[^A-Za-z]/g')
+  return text.replace(/[^A-Za-z]/g, '').toLowerCase();
 }
 
 export const sdkMetadataHeaderIntroText =

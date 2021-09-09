@@ -6,24 +6,26 @@ export function getMainApi(
   serviceName: string,
   apis: OpenApiApi[]
 ): OpenApiApi {
-return getLevenshteinClosest(serviceName, apis, (x) => x.name) ||
-getApiWithMaxOperations(apis);
+  return (
+    getLevenshteinClosest(serviceName, apis, x => x.name) ||
+    getApiWithMaxOperations(apis)
+  );
 }
 
 export function getApiWithMaxOperations(apis: OpenApiApi[]): OpenApiApi {
   const sortedByOperationsLength = apis.sort((a, b) =>
-  a.operations.length > b.operations.length ? -1 : 1
-);
-const withGetAll = sortedByOperationsLength.find(api =>
-  api.operations.find(operation =>
-    operation.operationId.toLocaleLowerCase('getall')
-  )
-);
-if (withGetAll) {
-  return withGetAll;
-}
-// return the one with most methods
-return sortedByOperationsLength[0];
+    a.operations.length > b.operations.length ? -1 : 1
+  );
+  const withGetAll = sortedByOperationsLength.find(api =>
+    api.operations.find(operation =>
+      operation.operationId.toLocaleLowerCase('getall')
+    )
+  );
+  if (withGetAll) {
+    return withGetAll;
+  }
+  // return the one with most methods
+  return sortedByOperationsLength[0];
 }
 
 export function getMainOperation(api: OpenApiApi): OpenApiOperation {
@@ -31,7 +33,7 @@ export function getMainOperation(api: OpenApiApi): OpenApiOperation {
     return api.operations[0];
   }
   return (
-    getLevenshteinClosest(api.name, api.operations, (op) => op.operationId) ||
+    getLevenshteinClosest(api.name, api.operations, op => op.operationId) ||
     getGetAllOperation(api.operations) ||
     getGetOperation(api.operations) ||
     getAnyOperationWithoutParams(api.operations) ||
@@ -43,8 +45,7 @@ export function getGetAllOperation(
   operations: OpenApiOperation[]
 ): OpenApiOperation | undefined {
   return operations.find(
-    operation =>
-      operation.operationId.toLowerCase() === 'getall'
+    operation => operation.operationId.toLowerCase() === 'getall'
   );
 }
 
@@ -82,7 +83,6 @@ export function getAnyOperationWithoutParams(
 }
 
 export function getOperationParamCode(operation: OpenApiOperation): string {
-
   const paramSignature: string[] = [];
   if (operation.pathParameters) {
     paramSignature.push(

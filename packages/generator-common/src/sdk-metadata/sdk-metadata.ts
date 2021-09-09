@@ -55,20 +55,24 @@ export function getSdkMetadataClient(
   };
 }
 
-export function getLevenshteinClosest<T>(name: string, objectsToCheck: T[], extractorFn: (x: T) => string): T|undefined {
+export function getLevenshteinClosest<T>(
+  name: string,
+  objectsToCheck: T[],
+  extractorFn: (x: T) => string
+): T | undefined {
   const distBelowThreshold = objectsToCheck.reduce((prev, obj) => {
     const levenshteinDist = getLevenshteinDistance(name, extractorFn(obj));
-    if(levenshteinDist < distanceThreshold) {
-     return [ ...prev, { dist: levenshteinDist, obj } ];
+    if (levenshteinDist < distanceThreshold) {
+      return [...prev, { dist: levenshteinDist, obj }];
     }
     return prev;
-  },[]);
-  if(distBelowThreshold.length > 0) {
-    return distBelowThreshold.sort((a,b) => a.dist < b.dist ? -1 : 1)[0].obj;
+  }, []);
+  if (distBelowThreshold.length > 0) {
+    return distBelowThreshold.sort((a, b) => (a.dist < b.dist ? -1 : 1))[0].obj;
   }
 }
 
- function getLevenshteinDistance(stringA: string, stringB: string): number {
+function getLevenshteinDistance(stringA: string, stringB: string): number {
   return levenstein.get(
     getSanitizedString(stringA),
     getSanitizedString(stringB)

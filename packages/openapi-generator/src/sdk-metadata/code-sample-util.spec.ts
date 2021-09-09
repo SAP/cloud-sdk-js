@@ -62,8 +62,9 @@ describe('code-sample-util api', () => {
   it('gets main api based on levenshtein algo', () => {
     expect(getMainApi('dummy', [api_1, api_2])).toEqual(
       expect.objectContaining({
-      name: 'DummyApi'
-    }));
+        name: 'DummyApi'
+      })
+    );
   });
 
   it('gets main api with getAll operation', () => {

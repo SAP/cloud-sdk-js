@@ -44,9 +44,9 @@ describe('code-sample-utils imports', () => {
       { name: 'some_Other_Function' }
     ] as VdmFunctionImport[];
 
-    expect(getLevenshteinClosest('DummyClass', functionImports, extractorFn)).toEqual(
-      { name: 'dummy_Class_Func' }
-    );
+    expect(
+      getLevenshteinClosest('DummyClass', functionImports, extractorFn)
+    ).toEqual({ name: 'dummy_Class_Func' });
   });
 
   const functionImportsZeroParams = [
@@ -63,7 +63,11 @@ describe('code-sample-utils imports', () => {
 
   it('gets undefined when func import based on levenshtein algorithm is not found', () => {
     expect(
-      getLevenshteinClosest('DummyClass', functionImportsZeroParams, extractorFn)
+      getLevenshteinClosest(
+        'DummyClass',
+        functionImportsZeroParams,
+        extractorFn
+      )
     ).toBeUndefined();
   });
 

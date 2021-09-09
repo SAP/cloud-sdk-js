@@ -10,15 +10,17 @@ export function getODataEntity(
   serviceName: string,
   vdmEntities: VdmEntity[]
 ): VdmEntity {
-  return getLevenshteinClosest(serviceName, vdmEntities, (x) => x.className) ||
-  getShortestNameEntity(vdmEntities);
+  return (
+    getLevenshteinClosest(serviceName, vdmEntities, x => x.className) ||
+    getShortestNameEntity(vdmEntities)
+  );
 }
 
 export function getShortestNameEntity(vdmEntities: VdmEntity[]): VdmEntity {
-   // If no closest entity found, return the entity with shortest name
-   return vdmEntities.sort((a, b) =>
-   a.className.length < b.className.length ? -1 : 1
- )[0];
+  // If no closest entity found, return the entity with shortest name
+  return vdmEntities.sort((a, b) =>
+    a.className.length < b.className.length ? -1 : 1
+  )[0];
 }
 
 export function getActionFunctionImport(
@@ -30,7 +32,7 @@ export function getActionFunctionImport(
   }
 
   return (
-    getLevenshteinClosest(serviceName, actionFunctionImports, (x) => x.name) ||
+    getLevenshteinClosest(serviceName, actionFunctionImports, x => x.name) ||
     getFunctionWithoutParameters(actionFunctionImports) ||
     getFunctionWithMinParameters(actionFunctionImports)
   );

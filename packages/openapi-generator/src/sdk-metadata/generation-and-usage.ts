@@ -1,4 +1,3 @@
-import { first } from '@sap-cloud-sdk/util';
 import {
   GenerationAndUsage,
   getLinks,
@@ -10,6 +9,7 @@ import {
 } from '@sap-cloud-sdk/generator-common';
 import { OpenApiDocument } from '../openapi-types';
 import { apiSpecificCodeSample, genericCodeSample } from './code-sample';
+import { getMainApi, getMainOperation } from './code-sample-util';
 
 export async function getGenerationAndUsage(
   openApiDocument: OpenApiDocument
@@ -52,15 +52,17 @@ function getGenericUsage(): InstructionWithTextAndHeader {
 function getApiSpecificUsage(
   openApiDocument: OpenApiDocument
 ): InstructionWithTextAndHeader {
-  const apiWithOperations = first(
-    openApiDocument.apis.filter(api => api.operations.length > 0)
+  const apisWithOperations = openApiDocument.apis.filter(
+    api => api.operations?.length > 0
   );
 
-  if (apiWithOperations) {
-    const operation = first(apiWithOperations.operations)!;
+  if (apisWithOperations.length > 0) {
+    const mainApi = getMainApi(openApiDocument.serviceName, apisWithOperations);
+    const operation = getMainOperation(mainApi);
+
     const instructions = apiSpecificCodeSample(
-      apiWithOperations.name,
-      operation.operationId,
+      mainApi.name,
+      operation,
       openApiDocument.serviceOptions.packageName
     );
     return {

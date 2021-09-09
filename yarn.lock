@@ -1790,7 +1790,7 @@
     debug "4.2.0"
     verror "1.10.0"
 
-"@sap/xssec@^3.2.3":
+"@sap/xssec@3.2.3":
   version "3.2.3"
   resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.3.tgz#a7d68e14ed1d6bd24bc58aa23df499bfb49ac5f5"
   integrity sha512-4gOWZszdUFR7c0wZhKgN4YpucIm2iVn+qGjuHLq06WPRO/ufFJYkQ0bY8xDZj/3WrIq2rokx8xiMavNHP92I0A==
@@ -4843,7 +4843,7 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   resolved "https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
-fast-levenshtein@^3.0.0:
+fast-levenshtein@~3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-3.0.0.tgz#37b899ae47e1090e40e3fd2318e4d5f0142ca912"
   integrity sha512-hKKNajm46uNmTlhHSyZkmToAc56uZJwYq7yrciZjqOxnlfQwERDQJmHPUp7m1m9wx8vgOe8IaCKZ5Kv2k1DdCQ==

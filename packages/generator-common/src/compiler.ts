@@ -29,7 +29,9 @@ export async function transpileDirectory(
 ): Promise<void> {
   logger.verbose(`Transpiling files in the directory: ${path} started.`);
 
-  const files = new GlobSync(resolve(path, '**/*.ts'), {}).found;
+  const files = new GlobSync(resolve(path, '**/*.ts'), {
+    ignore: resolve(path, '**/*.d.ts')
+  }).found;
   const program = await createProgram(files, compilerOptions);
   const emitResult = await program.emit();
 

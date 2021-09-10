@@ -35,7 +35,7 @@
     "@sap-cloud-sdk/analytics": "^1.48.1",
     "@sap-cloud-sdk/util": "^1.48.1",
     "@sap/xsenv": "^3.0.0",
-    "@sap/xssec": "3.2.3",
+    "@sap/xssec": "3.2.5",
     "@types/jsonwebtoken": "^8.3.8",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.0",

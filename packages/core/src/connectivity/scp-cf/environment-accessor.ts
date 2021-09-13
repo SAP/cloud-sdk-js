@@ -271,9 +271,9 @@ function selectWithoutJwt(
   logger.warn(
     `The following XSUAA instances are bound: ${xsuaaServices.map(
       x => x.credentials.xsappname
-    )} and no JWT is given to decide which one to use. The following one will be selected: ${
-      xsuaaServices[0].credentials.xsappname
-    }`
+    )} and no JWT is given to decide which one to use. Choosing the first one (xsappname: ${
+      first(xsuaaServices)!.credentials.xsappname
+    }).`
   );
   return xsuaaServices[0].credentials;
 }
@@ -298,7 +298,9 @@ function selectViaJwt(
 
   if (selected.length > 1) {
     logger.warn(
-      `Multiple XSUAA instances could be matched to the given JWT! Choosing the first one (xsappname: ${
+      `Multiple XSUAA instances could be matched to the given JWT: ${xsuaaServices.map(
+        x => x.credentials.xsappname
+      )}. Choosing the first one (xsappname: ${
         first(selected)!.credentials.xsappname
       }).`
     );
@@ -331,7 +333,6 @@ function matchingAudience(
     audiences(token).has(xsuaa.credentials.xsappname)
   );
 }
-
 
 interface BasicCredentials {
   clientid: string;

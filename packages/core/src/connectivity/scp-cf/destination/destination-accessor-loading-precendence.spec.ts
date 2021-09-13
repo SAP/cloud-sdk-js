@@ -75,8 +75,6 @@ describe('destination loading precedence', () => {
         { destinationName: 'non-existent' },
         { cacheVerificationKeys: false }
       )
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
-    );
+    ).rejects.toThrowError('No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application.')
   });
 });

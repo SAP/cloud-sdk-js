@@ -245,19 +245,55 @@ export function extractClientCredentials(
 }
 
 function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {
-  const xsuaaInstances = getServiceList('xsuaa');
+  const xsuaaInstances: XsuaaService[] = getServiceList('xsuaa') as any;
 
-  if (!xsuaaInstances.length) {
+  return (
+    selectViaJwt(xsuaaInstances, token) || selectWithoutJwt(xsuaaInstances)
+  );
+}
+
+function selectWithoutJwt(
+  xsuaaServices: XsuaaService[]
+): XsuaaServiceCredentials {
+  if (!xsuaaServices.length) {
     throw Error(
       'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application.'
     );
   }
 
-  const strategies = [matchingClientId, matchingAudience, takeFirstAndWarn];
-  const selected = applyStrategiesInOrder(strategies, xsuaaInstances, token);
+  if (xsuaaServices.length === 1) {
+    logger.debug(
+      `Only one XSUAA instance bound. This one is used: ${xsuaaServices[0].credentials.xsappname}`
+    );
+    return xsuaaServices[0].credentials;
+  }
 
-  if (selected.length === 0) {
-    throw Error('No XSUAA instances are found from the given JWT.');
+  logger.warn(
+    `The following XSUAA instances are bound: ${xsuaaServices.map(
+      x => x.credentials.xsappname
+    )} and no JWT is given to decide which one to use. The following one will be selected: ${
+      xsuaaServices[0].credentials.xsappname
+    }`
+  );
+  return xsuaaServices[0].credentials;
+}
+
+function selectViaJwt(
+  xsuaaServices: XsuaaService[],
+  jwt?: JwtPayload
+): XsuaaServiceCredentials | undefined {
+  if (!jwt) {
+    return undefined;
+  }
+  const selected = [
+    ...matchingClientId(xsuaaServices, jwt),
+    ...matchingAudience(xsuaaServices, jwt)
+  ];
+  if (selected.length === 1) {
+    logger.debug(
+      `One XSUAA instance found using JWT in service binding. Used service name is: ${xsuaaServices[0].credentials.xsappname}`
+    );
+    return xsuaaServices[0].credentials;
   }
 
   if (selected.length > 1) {
@@ -266,64 +302,36 @@ function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {
         first(selected)!.credentials.xsappname
       }).`
     );
+    return selected[0].credentials;
   }
-
-  return first(selected)!.credentials;
 }
 
-function applyStrategiesInOrder(
-  selectionStrategies: SelectionStrategyFn[],
-  xsuaaInstances: Record<string, any>[],
-  token?: JwtPayload
-): Record<string, any>[] {
-  return selectionStrategies.reduce(
-    (result, strategy) =>
-      result.length ? result : strategy(xsuaaInstances, token),
-    []
-  );
+interface XsuaaService {
+  [other: string]: any;
+  name: string;
+  label: string;
+  tags: string[];
+  credentials: XsuaaServiceCredentials;
 }
-
-type SelectionStrategyFn = (
-  xsuaaInstances: Record<string, any>[],
-  token?: JwtPayload
-) => Record<string, any>[];
 
 function matchingClientId(
-  xsuaaInstances: Record<string, any>[],
-  token?: JwtPayload
-): Record<string, any>[] {
-  if (!token) {
-    return [];
-  }
+  xsuaaInstances: XsuaaService[],
+  token: JwtPayload
+): XsuaaService[] {
   return xsuaaInstances.filter(
     xsuaa => xsuaa.credentials.clientid === token.client_id
   );
 }
 
 function matchingAudience(
-  xsuaaInstances: Record<string, any>[],
-  token?: JwtPayload
-): Record<string, any>[] {
-  if (!token) {
-    return [];
-  }
+  xsuaaInstances: XsuaaService[],
+  token: JwtPayload
+): XsuaaService[] {
   return xsuaaInstances.filter(xsuaa =>
     audiences(token).has(xsuaa.credentials.xsappname)
   );
 }
 
-function takeFirstAndWarn(
-  xsuaaInstances: Record<string, any>[]
-): Record<string, any>[] {
-  logger.warn(
-    `Unable to match a specific XSUAA service instance to the given JWT. The following XSUAA instances are bound: ${xsuaaInstances.map(
-      x => x.credentials.xsappname
-    )}. The following one will be selected: ${
-      xsuaaInstances[0].credentials.xsappname
-    }. This might produce errors in other parts of the system!`
-  );
-  return xsuaaInstances.slice(0, 1);
-}
 
 interface BasicCredentials {
   clientid: string;

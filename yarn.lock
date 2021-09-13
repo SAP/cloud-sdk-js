@@ -1748,9 +1748,9 @@
     fs-extra "9.0.1"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.4.0":
-  version "5.4.3"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.4.3.tgz#a02fb6e9b79c2043cc46575a03733a9263d4a648"
-  integrity sha512-Qje6gdQiiqjpb0JyTjI1eIF9Nr62m7PCQ2KyDOhUTc4dQN2En5jH2FuHWeiY5Yzq0oxUQ8tbkGBJmYvFKKkbLg==
+  version "5.4.4"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.4.4.tgz#235ad78f4a91b976aebe24dded42684720011977"
+  integrity sha512-eIuV6ACql81Yk612XvoYVF5FXEgHwEFK09lFp6MeL0t6agQ2WpdLL/W7i21Qu6zBlpVKKidVrNAhvnfC+CNHGw==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
@@ -1987,9 +1987,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^12.0.0", "@types/node@^12.12.29":
-  version "12.20.23"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.23.tgz#d0d5885bb885ee9b1ed114a04ea586540a1b2e2a"
-  integrity sha512-FW0q7NI8UnjbKrJK8NGr6QXY69ATw9IFe6ItIo5yozPwA9DU/xkhiPddctUVyrmFXvyFYerYgQak/qu200UBDw==
+  version "12.20.24"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.24.tgz#c37ac69cb2948afb4cef95f424fa0037971a9a5c"
+  integrity sha512-yxDeaQIAJlMav7fH5AQqPH1u8YIuhYJXYBzxaQ4PifsU0GDO38MSdmEDeRlIxrKbC6NbEaaEHDanWb+y30U8SQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"

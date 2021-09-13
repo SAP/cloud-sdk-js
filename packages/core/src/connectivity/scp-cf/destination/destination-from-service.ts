@@ -82,10 +82,10 @@ class DestinationFromServiceRetriever {
     name: string,
     options: DestinationOptions
   ): Promise<Destination | null> {
-    const xsuaaCredentials = getXsuaaServiceCredentials(options.userJwt);
-
     const subscriberToken =
       await DestinationFromServiceRetriever.getSubscriberToken(options);
+
+    const xsuaaCredentials = getXsuaaServiceCredentials(options.userJwt);
     const providerToken =
       await DestinationFromServiceRetriever.getProviderClientCredentialsToken(
         xsuaaCredentials,

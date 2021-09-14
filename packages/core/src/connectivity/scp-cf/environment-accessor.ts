@@ -252,7 +252,7 @@ function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {
   );
 }
 
-function selectWithoutJwt(
+function selectXsuaaInstanceWithoutJwt(
   xsuaaServices: XsuaaService[]
 ): XsuaaServiceCredentials {
   if (!xsuaaServices.length) {

@@ -278,7 +278,7 @@ function selectWithoutJwt(
   return xsuaaServices[0].credentials;
 }
 
-function selectViaJwt(
+function selectXsuaaInstanceWithJwt(
   xsuaaServices: XsuaaService[],
   jwt?: JwtPayload
 ): XsuaaServiceCredentials | undefined {

@@ -22,9 +22,9 @@ A clear and concise description of any alternative solutions or features you've 
 <!--
  Please briefly state how this issue impacts your project and what your timeline is.
  -->
- 
+
 Affected development phase: e.g. Getting Started, Development, Release, Production
- 
+
 Impact: e.g. No Impact, Inconvenience, Impaired, Blocked
 
 Timeline: e.g. Go-Live is in 12 weeks.

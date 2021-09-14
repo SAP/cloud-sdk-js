@@ -33,6 +33,8 @@ function readJson(fileName: string) {
 export interface UserAccessTokens {
   provider: string;
   subscriber: string;
+  iasProvider: string;
+  iasSubscriber: string;
 }
 
 export interface Systems {

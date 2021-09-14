@@ -7,7 +7,7 @@ import {
   userApprovedServiceToken,
   wrapJwtInHeader,
   jwtBearerToken,
-  getDestinationFromDestinationService
+  getDestinationFromDestinationService, ClientCredentialsResponse
 } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import {
@@ -17,6 +17,7 @@ import {
   Systems,
   UserAccessTokens
 } from './auth-flow-util';
+import * as xssec from '@sap/xssec';
 
 /* Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests. */
 
@@ -266,5 +267,20 @@ describe('OAuth flows', () => {
       .top(1)
       .execute(destination);
     expect(result.length).toBe(1);
+  }, 60000);
+
+  it('ias token to xsuaa token exchange', async () => {
+    const iasToken = accessToken.iasProvider;
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0].credentials
+    const token = await new Promise((resolve, reject) => {
+      xssec.requests.requestUserToken(iasToken, xsuaaConfig, null, null, null, xsuaaConfig.subaccountid, function(err, xsuaaToken, json) {
+        if(err) {
+          console.log(err);
+        } else {
+          resolve(xsuaaToken);
+        }
+      })
+    });
+    console.log(token);
   }, 60000);
 });

@@ -24,11 +24,11 @@ export function getDestinationBasicCredentials(): BasicCredentials {
   const destinationCredentials = getDestinationServiceCredentials();
   const basicCredentials: BasicCredentials = {
     clientid: destinationCredentials.clientid
-        ? destinationCredentials.clientid
-        : null,
+      ? destinationCredentials.clientid
+      : null,
     clientsecret: destinationCredentials.clientsecret
-        ? destinationCredentials.clientsecret
-        : null
+      ? destinationCredentials.clientsecret
+      : null
   };
   return basicCredentials;
 }
@@ -49,7 +49,7 @@ export function getDestinationServiceCredentials(): any {
  */
 export function getDestinationServiceCredentialsList(): DestinationServiceCredentials[] {
   return getServiceList('destination').map(
-      s => s.credentials as DestinationServiceCredentials
+    s => s.credentials as DestinationServiceCredentials
   );
 }
 
@@ -65,7 +65,7 @@ export function getServiceCredentialsList(service: string): any[] {
       credentials.push(entry['credentials']);
     } else {
       logger.warn(
-          `Skipping a service in ${service}. Object has no 'credentials'.`
+        `Skipping a service in ${service}. Object has no 'credentials'.`
       );
     }
   });
@@ -92,16 +92,16 @@ export function getService(service: string): Service | undefined {
 
   if (!services.length) {
     logger.warn(
-        `No services of type ${service} found! This might cause errors in other parts of the application.`
+      `No services of type ${service} found! This might cause errors in other parts of the application.`
     );
 
     return undefined;
   }
   if (services.length > 1) {
     logger.warn(
-        `Found more than one service instance for service type ${service}. Found: ${services
-            .map(s => s.name)
-            .join(', ')}. Selecting the first one.`
+      `Found more than one service instance for service type ${service}. Found: ${services
+        .map(s => s.name)
+        .join(', ')}. Selecting the first one.`
     );
   }
 
@@ -140,13 +140,13 @@ export function getVcapService(): Record<string, any> | null {
     vcapServices = JSON.parse(env);
   } catch (error) {
     throw new ErrorWithCause(
-        "Failed to parse environment variable 'VCAP_SERVICES'.",
-        error
+      "Failed to parse environment variable 'VCAP_SERVICES'.",
+      error
     );
   }
   if (!Object.keys(vcapServices).length) {
     throw new Error(
-        "Environment variable 'VCAP_SERVICES' is defined but empty. This should not happen."
+      "Environment variable 'VCAP_SERVICES' is defined but empty. This should not happen."
     );
   }
 
@@ -160,7 +160,7 @@ export function getVcapService(): Record<string, any> | null {
  *           null: If not defined.
  */
 export function getEnvironmentVariable(
-    name: string
+  name: string
 ): string | undefined | null {
   if (process.env[name]) {
     return process.env[name];
@@ -184,7 +184,7 @@ export function getDestinationServiceUri(): string | null {
       uris.push(credential['uri']);
     } else {
       logger.info(
-          "Skipping credentials in 'destination'. 'uri' property not defined"
+        "Skipping credentials in 'destination'. 'uri' property not defined"
       );
     }
   }
@@ -199,11 +199,11 @@ export function getDestinationServiceUri(): string | null {
  * @returns The credentials for a match, otherwise `null`.
  */
 export function getXsuaaServiceCredentials(
-    token?: JwtPayload | string
+  token?: JwtPayload | string
 ): XsuaaServiceCredentials {
   return typeof token === 'string'
-      ? selectXsuaaInstance(decodeJwt(token))
-      : selectXsuaaInstance(token);
+    ? selectXsuaaInstance(decodeJwt(token))
+    : selectXsuaaInstance(token);
 }
 
 /**
@@ -220,7 +220,7 @@ export function resolveService(service: string | Service): Service {
 
     if (!serviceInstance) {
       throw Error(
-          `Unable to get access token for "${service}" service. No service instance of type "${service}" found.`
+        `Unable to get access token for "${service}" service. No service instance of type "${service}" found.`
       );
     }
 
@@ -235,7 +235,7 @@ export function resolveService(service: string | Service): Service {
  * @returns A [[ClientCredentials]] instance.
  */
 export function extractClientCredentials(
-    serviceCreds: ServiceCredentials
+  serviceCreds: ServiceCredentials
 ): ClientCredentials {
   return {
     username: serviceCreds.clientid,
@@ -245,56 +245,56 @@ export function extractClientCredentials(
 
 function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {
   const xsuaaCredentials: XsuaaServiceCredentials[] = getServiceList(
-      'xsuaa'
+    'xsuaa'
   ).map(service => service.credentials as XsuaaServiceCredentials);
 
   if (!xsuaaCredentials.length) {
     throw Error(
-        'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application.'
+      'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application.'
     );
   }
 
   if (token) {
-    return selectViaJwt(xsuaaCredentials, token);
+    return selectXsuaaInstanceWithJwt(xsuaaCredentials, token);
   }
-  return selectWithoutJwt(xsuaaCredentials);
+  return selectXsuaaInstanceWithoutJwt(xsuaaCredentials);
 }
 
 function handleOneXsuuaInstance(
-    xsuaaCredentials: XsuaaServiceCredentials[]
+  xsuaaCredentials: XsuaaServiceCredentials[]
 ): XsuaaServiceCredentials {
   if (xsuaaCredentials.length !== 1) {
     throw new Error(
-        `This method should be called with an array of size 1. Xsappname: ${xsuaaCredentials.map(
-            credentials => credentials.xsappname
-        )}`
+      `This method should be called with an array of size 1. Xsappname: ${xsuaaCredentials.map(
+        credentials => credentials.xsappname
+      )}`
     );
   }
   logger.debug(
-      `Only one XSUAA instance bound. This one is used: ${xsuaaCredentials[0].xsappname}`
+    `Only one XSUAA instance bound. This one is used: ${xsuaaCredentials[0].xsappname}`
   );
   return xsuaaCredentials[0];
 }
 
-function selectWithoutJwt(
-    xsuaaCredentials: XsuaaServiceCredentials[]
+function selectXsuaaInstanceWithoutJwt(
+  xsuaaCredentials: XsuaaServiceCredentials[]
 ): XsuaaServiceCredentials {
   if (xsuaaCredentials.length > 1) {
     logger.warn(
-        `The following XSUAA instances are bound: ${xsuaaCredentials.map(
-            x => x.credentials.xsappname
-        )} and no JWT is given to decide which one to use. Choosing the first one (xsappname: ${
-            first(xsuaaCredentials)!.credentials.xsappname
-        }).`
+      `The following XSUAA instances are bound: ${xsuaaCredentials.map(
+        x => x.credentials.xsappname
+      )} and no JWT is given to decide which one to use. Choosing the first one (xsappname: ${
+        first(xsuaaCredentials)!.credentials.xsappname
+      }).`
     );
     return xsuaaCredentials[0];
   }
   return handleOneXsuuaInstance(xsuaaCredentials);
 }
 
-function selectViaJwt(
-    xsuaaServices: XsuaaServiceCredentials[],
-    jwt: JwtPayload
+function selectXsuaaInstanceWithJwt(
+  xsuaaServices: XsuaaServiceCredentials[],
+  jwt: JwtPayload
 ): XsuaaServiceCredentials {
   const selected = [
     ...matchingClientId(xsuaaServices, jwt),
@@ -302,29 +302,29 @@ function selectViaJwt(
   ];
   if (selected.length === 1) {
     logger.debug(
-        `One XSUAA instance found using JWT in service binding. Used service name is: ${xsuaaServices[0].credentials.xsappname}`
+      `One XSUAA instance found using JWT in service binding. Used service name is: ${xsuaaServices[0].credentials.xsappname}`
     );
     return xsuaaServices[0].credentials;
   }
 
   if (selected.length > 1) {
     logger.warn(
-        `Multiple XSUAA instances could be matched to the given JWT: ${xsuaaServices.map(
-            x => x.credentials.xsappname
-        )}. Choosing the first one (xsappname: ${
-            first(selected)!.credentials.xsappname
-        }).`
+      `Multiple XSUAA instances could be matched to the given JWT: ${xsuaaServices.map(
+        x => x.credentials.xsappname
+      )}. Choosing the first one (xsappname: ${
+        first(selected)!.credentials.xsappname
+      }).`
     );
     return selected[0].credentials;
   }
 
   if (xsuaaServices.length > 0) {
     logger.warn(
-        `Multiple XSUAA instances present and selection via JWT did not narrow it down: ${xsuaaServices.map(
-            x => x.credentials.xsappname
-        )}. Choosing the first one (xsappname: ${
-            first(selected)!.credentials.xsappname
-        }).`
+      `Multiple XSUAA instances present and selection via JWT did not narrow it down: ${xsuaaServices.map(
+        x => x.credentials.xsappname
+      )}. Choosing the first one (xsappname: ${
+        first(selected)!.credentials.xsappname
+      }).`
     );
     return selected[0].credentials;
   }
@@ -340,20 +340,20 @@ interface XsuaaService {
 }
 
 function matchingClientId(
-    xsuaaCredentials: XsuaaServiceCredentials[],
-    token: JwtPayload
+  xsuaaCredentials: XsuaaServiceCredentials[],
+  token: JwtPayload
 ): XsuaaServiceCredentials[] {
   return xsuaaCredentials.filter(
-      credentials => credentials.clientid === token.client_id
+    credentials => credentials.clientid === token.client_id
   );
 }
 
 function matchingAudience(
-    xsuaaCredentials: XsuaaServiceCredentials[],
-    token: JwtPayload
+  xsuaaCredentials: XsuaaServiceCredentials[],
+  token: JwtPayload
 ): XsuaaServiceCredentials[] {
   return xsuaaCredentials.filter(credentials =>
-      audiences(token).has(credentials.xsappname)
+    audiences(token).has(credentials.xsappname)
   );
 }
 

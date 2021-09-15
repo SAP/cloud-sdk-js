@@ -75,7 +75,7 @@ describe('destination loading precedence', () => {
         { destinationName: 'non-existent' },
         { cacheVerificationKeys: false }
       )
-    ).rejects.toThrowError(
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
       'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application.'
     );
   });

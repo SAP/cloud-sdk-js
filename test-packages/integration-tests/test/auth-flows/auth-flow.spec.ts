@@ -283,4 +283,20 @@ describe('OAuth flows', () => {
     });
     console.log(token);
   }, 60000);
+
+  it('xssec context', async () => {
+    const iasToken = accessToken.iasProvider;
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0].credentials
+    const token = await new Promise((resolve: (p: any) => void, reject) => {
+      xssec.createSecurityContext(iasToken, xsuaaConfig, function(error, securityContext, tokenInfo) {
+        if (error) {
+          console.log('Security Context creation failed');
+          return;
+        }
+        console.log('Security Context created successfully');
+        resolve(tokenInfo.getTokenValue());
+      });
+    });
+    console.log(token);
+  }, 60000);
 });

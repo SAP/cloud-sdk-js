@@ -43,7 +43,7 @@ export async function serviceToken(
 
   service = resolveService(service);
   const serviceCredentials = service.credentials;
-  const xsuaa = multiTenantXsuaaCredentials({ ...options });
+  const xsuaa = multiTenantXsuaaCredentials(options);
 
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getGrantTokenFromCache(
@@ -145,10 +145,12 @@ export async function jwtBearerToken(
   return getUserToken(resolvedService, userJwt, opts);
 }
 
-function multiTenantXsuaaCredentials(options: {
-  userJwt?: string | JwtPayload;
-  xsuaaCredentials?: XsuaaServiceCredentials;
-}): XsuaaServiceCredentials {
+function multiTenantXsuaaCredentials(
+  options: {
+    userJwt?: string | JwtPayload;
+    xsuaaCredentials?: XsuaaServiceCredentials;
+  } = {}
+): XsuaaServiceCredentials {
   const xsuaa = options.xsuaaCredentials
     ? { ...options.xsuaaCredentials }
     : getXsuaaServiceCredentials(options.userJwt);

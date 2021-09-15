@@ -201,10 +201,9 @@ export function getDestinationServiceUri(): string | null {
 export function getXsuaaServiceCredentials(
   token?: JwtPayload | string
 ): XsuaaServiceCredentials {
-  if (typeof token === 'string') {
-    return getXsuaaServiceCredentials(decodeJwt(token)); // Decode without verifying
-  }
-  return selectXsuaaInstance(token);
+  return typeof token === 'string'
+    ? selectXsuaaInstance(decodeJwt(token))
+    : selectXsuaaInstance(token);
 }
 
 /**
@@ -245,46 +244,58 @@ export function extractClientCredentials(
 }
 
 function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {
-  const xsuaaInstances: XsuaaService[] = getServiceList('xsuaa') as any;
+  const xsuaaCredentials: XsuaaServiceCredentials[] = getServiceList(
+    'xsuaa'
+  ).map(service => service.credentials as XsuaaServiceCredentials);
 
-  return (
-    selectViaJwt(xsuaaInstances, token) || selectWithoutJwt(xsuaaInstances)
-  );
-}
-
-function selectWithoutJwt(
-  xsuaaServices: XsuaaService[]
-): XsuaaServiceCredentials {
-  if (!xsuaaServices.length) {
+  if (!xsuaaCredentials.length) {
     throw Error(
       'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application.'
     );
   }
 
-  if (xsuaaServices.length === 1) {
-    logger.debug(
-      `Only one XSUAA instance bound. This one is used: ${xsuaaServices[0].credentials.xsappname}`
-    );
-    return xsuaaServices[0].credentials;
+  if (token) {
+    return selectViaJwt(xsuaaCredentials, token);
   }
+  return selectWithoutJwt(xsuaaCredentials);
+}
 
-  logger.warn(
-    `The following XSUAA instances are bound: ${xsuaaServices.map(
-      x => x.credentials.xsappname
-    )} and no JWT is given to decide which one to use. Choosing the first one (xsappname: ${
-      first(xsuaaServices)!.credentials.xsappname
-    }).`
+function handleOneXsuuaInstance(
+  xsuaaCredentials: XsuaaServiceCredentials[]
+): XsuaaServiceCredentials {
+  if (xsuaaCredentials.length !== 1) {
+    throw new Error(
+      `This method should be called with an array of size 1. Xsappname: ${xsuaaCredentials.map(
+        credentials => credentials.xsappname
+      )}`
+    );
+  }
+  logger.debug(
+    `Only one XSUAA instance bound. This one is used: ${xsuaaCredentials[0].xsappname}`
   );
-  return xsuaaServices[0].credentials;
+  return xsuaaCredentials[0];
+}
+
+function selectWithoutJwt(
+  xsuaaCredentials: XsuaaServiceCredentials[]
+): XsuaaServiceCredentials {
+  if (xsuaaCredentials.length > 1) {
+    logger.warn(
+      `The following XSUAA instances are bound: ${xsuaaCredentials.map(
+        x => x.credentials.xsappname
+      )} and no JWT is given to decide which one to use. Choosing the first one (xsappname: ${
+        first(xsuaaCredentials)!.credentials.xsappname
+      }).`
+    );
+    return xsuaaCredentials[0];
+  }
+  return handleOneXsuuaInstance(xsuaaCredentials);
 }
 
 function selectViaJwt(
-  xsuaaServices: XsuaaService[],
-  jwt?: JwtPayload
-): XsuaaServiceCredentials | undefined {
-  if (!jwt) {
-    return undefined;
-  }
+  xsuaaServices: XsuaaServiceCredentials[],
+  jwt: JwtPayload
+): XsuaaServiceCredentials {
   const selected = [
     ...matchingClientId(xsuaaServices, jwt),
     ...matchingAudience(xsuaaServices, jwt)
@@ -306,6 +317,18 @@ function selectViaJwt(
     );
     return selected[0].credentials;
   }
+
+  if (xsuaaServices.length > 0) {
+    logger.warn(
+      `Multiple XSUAA instances present and selection via JWT did not narrow it down: ${xsuaaServices.map(
+        x => x.credentials.xsappname
+      )}. Choosing the first one (xsappname: ${
+        first(selected)!.credentials.xsappname
+      }).`
+    );
+    return selected[0].credentials;
+  }
+  return handleOneXsuuaInstance(xsuaaServices);
 }
 
 interface XsuaaService {
@@ -317,20 +340,20 @@ interface XsuaaService {
 }
 
 function matchingClientId(
-  xsuaaInstances: XsuaaService[],
+  xsuaaCredentials: XsuaaServiceCredentials[],
   token: JwtPayload
-): XsuaaService[] {
-  return xsuaaInstances.filter(
-    xsuaa => xsuaa.credentials.clientid === token.client_id
+): XsuaaServiceCredentials[] {
+  return xsuaaCredentials.filter(
+    credentials => credentials.clientid === token.client_id
   );
 }
 
 function matchingAudience(
-  xsuaaInstances: XsuaaService[],
+  xsuaaCredentials: XsuaaServiceCredentials[],
   token: JwtPayload
-): XsuaaService[] {
-  return xsuaaInstances.filter(xsuaa =>
-    audiences(token).has(xsuaa.credentials.xsappname)
+): XsuaaServiceCredentials[] {
+  return xsuaaCredentials.filter(credentials =>
+    audiences(token).has(credentials.xsappname)
   );
 }
 

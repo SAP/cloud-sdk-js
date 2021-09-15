@@ -237,6 +237,11 @@ export function resolveService(service: string | Service): Service {
 export function extractClientCredentials(
   serviceCreds: ServiceCredentials
 ): ClientCredentials {
+  if (!serviceCreds.clientsecret) {
+    throw new Error(
+      `Cloud not extract client secret for clientId: ${serviceCreds.clientid}.`
+    );
+  }
   return {
     username: serviceCreds.clientid,
     password: serviceCreds.clientsecret
@@ -282,9 +287,9 @@ function selectXsuaaInstanceWithoutJwt(
   if (xsuaaCredentials.length > 1) {
     logger.warn(
       `The following XSUAA instances are bound: ${xsuaaCredentials.map(
-        x => x.credentials.xsappname
+        x => x.xsappname
       )} and no JWT is given to decide which one to use. Choosing the first one (xsappname: ${
-        first(xsuaaCredentials)!.credentials.xsappname
+        first(xsuaaCredentials)!.xsappname
       }).`
     );
     return xsuaaCredentials[0];
@@ -293,42 +298,38 @@ function selectXsuaaInstanceWithoutJwt(
 }
 
 function selectXsuaaInstanceWithJwt(
-  xsuaaServices: XsuaaServiceCredentials[],
+  xsuaaCredentials: XsuaaServiceCredentials[],
   jwt: JwtPayload
 ): XsuaaServiceCredentials {
   const selected = [
-    ...matchingClientId(xsuaaServices, jwt),
-    ...matchingAudience(xsuaaServices, jwt)
+    ...matchingClientId(xsuaaCredentials, jwt),
+    ...matchingAudience(xsuaaCredentials, jwt)
   ];
   if (selected.length === 1) {
     logger.debug(
-      `One XSUAA instance found using JWT in service binding. Used service name is: ${xsuaaServices[0].credentials.xsappname}`
+      `One XSUAA instance found using JWT in service binding. Used service name is: ${xsuaaCredentials[0].xsappname}`
     );
-    return xsuaaServices[0].credentials;
+    return xsuaaCredentials[0];
   }
 
   if (selected.length > 1) {
     logger.warn(
-      `Multiple XSUAA instances could be matched to the given JWT: ${xsuaaServices.map(
-        x => x.credentials.xsappname
-      )}. Choosing the first one (xsappname: ${
-        first(selected)!.credentials.xsappname
-      }).`
+      `Multiple XSUAA instances could be matched to the given JWT: ${xsuaaCredentials.map(
+        x => x.xsappname
+      )}. Choosing the first one (xsappname: ${first(selected)!.xsappname}).`
     );
-    return selected[0].credentials;
+    return selected[0];
   }
 
-  if (xsuaaServices.length > 0) {
+  if (xsuaaCredentials.length > 1) {
     logger.warn(
-      `Multiple XSUAA instances present and selection via JWT did not narrow it down: ${xsuaaServices.map(
-        x => x.credentials.xsappname
-      )}. Choosing the first one (xsappname: ${
-        first(selected)!.credentials.xsappname
-      }).`
+      `Multiple XSUAA instances present and selection via JWT did not narrow it down: ${xsuaaCredentials.map(
+        x => x.xsappname
+      )}. Choosing the first one (xsappname: ${first(selected)!.xsappname}).`
     );
-    return selected[0].credentials;
+    return selected[0];
   }
-  return handleOneXsuuaInstance(xsuaaServices);
+  return handleOneXsuuaInstance(xsuaaCredentials);
 }
 
 interface XsuaaService {

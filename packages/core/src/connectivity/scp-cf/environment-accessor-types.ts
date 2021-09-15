@@ -22,6 +22,8 @@ export type ServiceCredentials = {
     }
 );
 
+const foo: ServiceCredentials = { clientid: 'fad', clientsecret: 'abx' };
+
 /**
  * Credentials for the Destination service.
  */

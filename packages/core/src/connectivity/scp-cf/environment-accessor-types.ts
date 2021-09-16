@@ -25,9 +25,7 @@ export type ServiceCredentials = {
 /**
  * Credentials for the Destination service.
  */
-export interface DestinationServiceCredentials {
-  clientid: string;
-  clientsecret: string;
+export type DestinationServiceCredentials = ServiceCredentials & {
   identityzone: string;
   instanceid: string;
   tenantid: string;
@@ -37,14 +35,12 @@ export interface DestinationServiceCredentials {
   url: string;
   verificationkey: string;
   xsappname: string;
-}
+};
 
 /**
  * Credentials for the XSUAA service.
  */
-export interface XsuaaServiceCredentials {
-  clientid: string;
-  clientsecret: string;
+export type XsuaaServiceCredentials = ServiceCredentials & {
   identityzone: string;
   identityzoneid: string;
   sburl: string;
@@ -54,4 +50,4 @@ export interface XsuaaServiceCredentials {
   url: string;
   verificationkey: string;
   xsappname: string;
-}
+};

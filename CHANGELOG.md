@@ -23,7 +23,7 @@
 
 ## Improvements
 
--
+- [core] Reduce the number of warnings when selecting an XSUAA instance.
 
 ## Fixed Issues
 

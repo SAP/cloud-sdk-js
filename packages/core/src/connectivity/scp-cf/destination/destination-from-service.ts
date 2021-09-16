@@ -10,10 +10,14 @@ import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
   getDestinationService,
-  getDestinationServiceCredentialsList
+  getDestinationServiceCredentialsList,
+  getXsuaaServiceCredentials
 } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
-import { DestinationServiceCredentials } from '../environment-accessor-types';
+import {
+  DestinationServiceCredentials,
+  XsuaaServiceCredentials
+} from '../environment-accessor-types';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -80,13 +84,16 @@ class DestinationFromServiceRetriever {
   ): Promise<Destination | null> {
     const subscriberToken =
       await DestinationFromServiceRetriever.getSubscriberToken(options);
+
+    const xsuaaCredentials = getXsuaaServiceCredentials(options.userJwt);
     const providerToken =
       await DestinationFromServiceRetriever.getProviderClientCredentialsToken(
+        xsuaaCredentials,
         options
       );
     const da = new DestinationFromServiceRetriever(
       name,
-      options,
+      { ...options, xsuaaCredentials },
       subscriberToken,
       providerToken
     );
@@ -163,11 +170,15 @@ class DestinationFromServiceRetriever {
   }
 
   private static async getProviderClientCredentialsToken(
+    xsuaaCredentials: XsuaaServiceCredentials,
     options: DestinationOptions
   ): Promise<JwtPair> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userJwt, ...optionsWithoutJwt } = options;
-    const encoded = await serviceToken('destination', optionsWithoutJwt);
+    const encoded = await serviceToken('destination', {
+      ...optionsWithoutJwt,
+      xsuaaCredentials
+    });
     return { encoded, decoded: decodeJwt(encoded) };
   }
 
@@ -189,7 +200,7 @@ class DestinationFromServiceRetriever {
 
   private constructor(
     readonly name: string,
-    options: DestinationOptions,
+    options: DestinationOptions & { xsuaaCredentials: XsuaaServiceCredentials },
     readonly subscriberToken: JwtPair | undefined,
     readonly providerClientCredentialsToken: JwtPair
   ) {

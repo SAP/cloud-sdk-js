@@ -37,8 +37,7 @@ export type EntityBuilderType<EntityT extends Entity, EntityTypeT> = {
   [property in keyof Required<EntityTypeT>]: (
     value: EntityTypeT[property]
   ) => EntityBuilderType<EntityT, EntityTypeT>;
-} &
-  EntityBuilder<EntityT, EntityTypeT>;
+} & EntityBuilder<EntityT, EntityTypeT>;
 
 /**
  * Super class for all representations of OData entity types.

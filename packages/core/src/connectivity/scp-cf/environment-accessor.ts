@@ -1,4 +1,9 @@
-import { createLogger, ErrorWithCause, first } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  ErrorWithCause,
+  first,
+  unique
+} from '@sap-cloud-sdk/util';
 import * as xsenv from '@sap/xsenv';
 import { JwtPayload } from 'jsonwebtoken';
 import { audiences, decodeJwt } from './jwt';
@@ -253,42 +258,47 @@ function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {
     'xsuaa'
   ).map(service => service.credentials as XsuaaServiceCredentials);
 
-  if (!xsuaaCredentials.length) {
+  if (!arrayHasAtLeastOneElement(xsuaaCredentials)) {
     throw Error(
       'No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application.'
     );
   }
 
-return token ? selectXsuaaInstanceWithJwt(xsuaaCredentials, token) : selectXsuaaInstanceWithoutJwt(xsuaaCredentials);
+  return token
+    ? selectXsuaaInstanceWithJwt(xsuaaCredentials, token)
+    : selectXsuaaInstanceWithoutJwt(xsuaaCredentials);
 }
 
 function handleOneXsuuaInstance(
-  xsuaaCredentials: XsuaaServiceCredentials[]
+  xsuaaCredentials: [XsuaaServiceCredentials]
 ): XsuaaServiceCredentials {
-  if (xsuaaCredentials.length !== 1) {
-    throw new Error(
-      `This function should be called with an array of size 1. Xsappname: ${xsuaaCredentials.map(
-        credentials => credentials.xsappname
-      )}`
-    );
-  }
   logger.debug(
     `Only one XSUAA instance bound. This one is used: ${xsuaaCredentials[0].xsappname}`
   );
   return xsuaaCredentials[0];
 }
 
+function arrayHasAtLeastOneElement<T>(
+  array: T[] | [T, ...T[]]
+): array is [T, ...T[]] {
+  return !!array.length && array.length > 0;
+}
+
+function arrayHasExactlyOneElement<T>(array: T[] | [T]): array is [T] {
+  return array.length === 1;
+}
+
 function selectXsuaaInstanceWithoutJwt(
-  xsuaaCredentials: XsuaaServiceCredentials[]
+  xsuaaCredentials: [XsuaaServiceCredentials, ...XsuaaServiceCredentials[]]
 ): XsuaaServiceCredentials {
-  if (xsuaaCredentials.length > 1) {
+  if (!arrayHasExactlyOneElement(xsuaaCredentials)) {
     logger.warn(
       `The following XSUAA instances are bound: ${xsuaaCredentials.map(
-        x => `\n\t- {x.xsappname}`
+        x => '\n\t- {x.xsappname}'
       )}
-      No JWT given to select XSUAA instance. Choosing the first one (xsappname: "${
-        first(xsuaaCredentials)!.xsappname
-      }").`
+      No JWT given to select XSUAA instance. ${choseFirstOneText(
+        xsuaaCredentials
+      )}`
     );
     return xsuaaCredentials[0];
   }
@@ -296,47 +306,55 @@ function selectXsuaaInstanceWithoutJwt(
 }
 
 function selectXsuaaInstanceWithJwt(
-  xsuaaCredentials: XsuaaServiceCredentials[],
+  xsuaaCredentials: [XsuaaServiceCredentials, ...XsuaaServiceCredentials[]],
   jwt: JwtPayload
 ): XsuaaServiceCredentials {
-  const selected = [
+  const selectedAll = [
     ...matchingClientId(xsuaaCredentials, jwt),
     ...matchingAudience(xsuaaCredentials, jwt)
   ];
-  if (selected.length === 1) {
+
+  const selectedUnique = unique(selectedAll.map(x => x.clientid)).map(
+    id => selectedAll.find(y => y.clientid === id)!
+  );
+
+  if (selectedUnique.length === 1) {
     logger.debug(
       `One XSUAA instance found using JWT in service binding. Used service name is: ${xsuaaCredentials[0].xsappname}`
     );
     return xsuaaCredentials[0];
   }
 
-  if (selected.length > 1) {
+  if (selectedUnique.length > 1) {
     logger.warn(
       `Multiple XSUAA instances could be matched to the given JWT: ${xsuaaCredentials.map(
-        x => x.xsappname
-      )}. Choosing the first one (xsappname: ${first(selected)!.xsappname}).`
+        x => `\n\t- ${x.xsappname}`
+      )}
+      ${choseFirstOneText(xsuaaCredentials)}`
     );
-    return selected[0];
+    return selectedUnique[0];
   }
 
-  if (xsuaaCredentials.length > 1) {
+  if (!arrayHasExactlyOneElement(xsuaaCredentials)) {
     logger.warn(
       `Multiple XSUAA instances found: ${xsuaaCredentials.map(
         x => `\n\t- ${x.xsappname}`
       )}
-      None of those match either client id or audience from the given JWT. Choosing the first one (xsappname: "${first(selected)!.xsappname}").`
+      None of those match either client id or audience from the given JWT. ${choseFirstOneText(
+        xsuaaCredentials
+      )}`
     );
-    return selected[0];
+    return xsuaaCredentials[0];
   }
   return handleOneXsuuaInstance(xsuaaCredentials);
 }
 
-interface XsuaaService {
-  [other: string]: any;
-  name: string;
-  label: string;
-  tags: string[];
-  credentials: XsuaaServiceCredentials;
+function choseFirstOneText(
+  xsuaaCredentials: XsuaaServiceCredentials[]
+): string {
+  return `Choosing the first one (xsappname: "${
+    first(xsuaaCredentials)!.xsappname
+  }").`;
 }
 
 function matchingClientId(

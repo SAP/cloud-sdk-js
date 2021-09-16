@@ -324,9 +324,10 @@ function selectXsuaaInstanceWithJwt(
 
   if (xsuaaCredentials.length > 1) {
     logger.warn(
-      `Multiple XSUAA instances present and selection via JWT did not narrow it down: ${xsuaaCredentials.map(
-        x => x.xsappname
-      )}. Choosing the first one (xsappname: ${first(selected)!.xsappname}).`
+      `Multiple XSUAA instances found: ${xsuaaCredentials.map(
+        x => `\n\t- ${x.xsappname}`
+      )}
+      None of those match either client id or audience from the given JWT. Choosing the first one (xsappname: "${first(selected)!.xsappname}").`
     );
     return selected[0];
   }

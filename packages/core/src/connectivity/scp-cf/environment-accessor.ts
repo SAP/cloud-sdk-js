@@ -270,7 +270,7 @@ function handleOneXsuuaInstance(
 ): XsuaaServiceCredentials {
   if (xsuaaCredentials.length !== 1) {
     throw new Error(
-      `This method should be called with an array of size 1. Xsappname: ${xsuaaCredentials.map(
+      `This function should be called with an array of size 1. Xsappname: ${xsuaaCredentials.map(
         credentials => credentials.xsappname
       )}`
     );

@@ -81,7 +81,11 @@ describe('code-sample-util api', () => {
             pathParameters: [],
             queryParameters: [],
             response: { type: 'any' },
-            pathPattern: ''
+            pathPattern: '', responses: {
+              200: {
+                description: 'some response description'
+              }
+            },
           },
           {
             operationId: 'Test',
@@ -90,7 +94,12 @@ describe('code-sample-util api', () => {
             pathParameters: [],
             queryParameters: [],
             response: { type: 'any' },
-            pathPattern: ''
+            pathPattern: '',
+            responses: {
+              200: {
+                description: 'some response description'
+              }
+            },
           }
         ]
       })

@@ -38,7 +38,7 @@ describe('serializeOperation', () => {
           schemaProperties: {}
         }
       ],
-      responses:{200:{description:'some response description'}},
+      responses: { 200: { description: 'some response description' } },
       response: { type: 'string' },
       pathPattern: 'test/{id}/{subId}'
     };
@@ -77,7 +77,7 @@ describe('serializeOperation', () => {
         }
       ],
       queryParameters: [],
-      responses:{200:{description:'some response description'}},
+      responses: { 200: { description: 'some response description' } },
       response: {
         additionalProperties: { type: 'any' },
         properties: []
@@ -116,7 +116,7 @@ describe('serializeOperation', () => {
           schemaProperties: {}
         }
       ],
-      responses:{200:{description:'some response description'}},
+      responses: { 200: { description: 'some response description' } },
       response: { type: 'any' },
       pathPattern: 'test'
     };
@@ -160,7 +160,7 @@ describe('serializeOperation', () => {
           additionalProperties: { type: 'any' }
         }
       },
-      responses:{200:{description:'some response description'}},
+      responses: { 200: { description: 'some response description' } },
       response: { type: 'any' },
       pathPattern: 'test/{id}'
     };
@@ -189,7 +189,7 @@ describe('serializeOperation', () => {
       tags: [],
       pathParameters: [],
       queryParameters: [],
-      responses:{200:{description:'some response description'}},
+      responses: { 200: { description: 'some response description' } },
       requestBody: {
         required: false,
         schema: {

@@ -259,10 +259,7 @@ function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {
     );
   }
 
-  if (token) {
-    return selectXsuaaInstanceWithJwt(xsuaaCredentials, token);
-  }
-  return selectXsuaaInstanceWithoutJwt(xsuaaCredentials);
+return token ? selectXsuaaInstanceWithJwt(xsuaaCredentials, token) : selectXsuaaInstanceWithoutJwt(xsuaaCredentials);
 }
 
 function handleOneXsuuaInstance(

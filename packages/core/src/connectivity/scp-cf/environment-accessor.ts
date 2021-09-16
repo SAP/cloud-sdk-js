@@ -287,10 +287,11 @@ function selectXsuaaInstanceWithoutJwt(
   if (xsuaaCredentials.length > 1) {
     logger.warn(
       `The following XSUAA instances are bound: ${xsuaaCredentials.map(
-        x => x.xsappname
-      )} and no JWT is given to decide which one to use. Choosing the first one (xsappname: ${
+        x => `\n\t- {x.xsappname}`
+      )}
+      No JWT given to select XSUAA instance. Choosing the first one (xsappname: "${
         first(xsuaaCredentials)!.xsappname
-      }).`
+      }").`
     );
     return xsuaaCredentials[0];
   }

@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/core",
-  "version": "1.48.1",
+  "version": "1.49.0",
   "description": "SAP Cloud SDK for JavaScript core",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -32,8 +32,8 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.48.1",
-    "@sap-cloud-sdk/util": "^1.48.1",
+    "@sap-cloud-sdk/analytics": "^1.49.0",
+    "@sap-cloud-sdk/util": "^1.49.0",
     "@sap/xsenv": "^3.0.0",
     "@sap/xssec": "3.2.3",
     "@types/jsonwebtoken": "^8.3.8",
@@ -48,7 +48,7 @@
     "voca": "^1.4.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-util": "^1.48.1",
+    "@sap-cloud-sdk/test-util": "^1.49.0",
     "@types/opossum": "^6.2.0",
     "nock": "^13.0.11"
   }

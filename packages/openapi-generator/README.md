@@ -90,7 +90,7 @@ EXAMPLES
   $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile
 ```
 
-_See code: [dist/cli/index.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.48.1/dist/cli/index.ts)_
+_See code: [dist/cli/index.ts](https://github.com/SAP/cloud-sdk-js/blob/v1.49.0/dist/cli/index.ts)_
 <!-- commandsstop -->
 <!-- prettier-ignore-end -->
 

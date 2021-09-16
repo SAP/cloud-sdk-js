@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/integration-tests",
-  "version": "1.48.1",
+  "version": "1.49.0",
   "description": "SAP Cloud SDK for JavaScript integration tests",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -12,15 +12,15 @@
     "check:dependencies": "depcheck . --ignores=@sap-cloud-sdk/generator,@sap-cloud-sdk/openapi-generator"
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.48.1",
-    "@sap-cloud-sdk/core": "^1.48.1",
-    "@sap-cloud-sdk/test-services": "^1.48.1",
-    "@sap-cloud-sdk/test-util": "^1.48.1",
-    "@sap-cloud-sdk/util": "^1.48.1"
+    "@sap-cloud-sdk/analytics": "^1.49.0",
+    "@sap-cloud-sdk/core": "^1.49.0",
+    "@sap-cloud-sdk/test-services": "^1.49.0",
+    "@sap-cloud-sdk/test-util": "^1.49.0",
+    "@sap-cloud-sdk/util": "^1.49.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/generator": "^1.48.1",
-    "@sap-cloud-sdk/openapi-generator": "^1.48.1",
+    "@sap-cloud-sdk/generator": "^1.49.0",
+    "@sap-cloud-sdk/openapi-generator": "^1.49.0",
     "@sap/cloud-sdk-vdm-business-partner-service": "^1.23.0",
     "bignumber.js": "^9.0.0",
     "execa": "^5.0.0",

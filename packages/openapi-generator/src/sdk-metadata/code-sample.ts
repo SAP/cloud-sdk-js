@@ -1,21 +1,30 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
 import { InstructionWithText } from '@sap-cloud-sdk/generator-common';
+import { OpenApiOperation } from '../openapi-types';
+import { getOperationParamCode } from './code-sample-util';
 
+const instructionsText =
+  'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose "OpenAPI Consumption Manual" from the "Helpful Links" menu.';
 export function genericCodeSample(): InstructionWithText {
-  return apiSpecificCodeSample('MyApi', 'myFunction', 'my-npm-package');
+  const operation = { operationId: 'myFunction' } as OpenApiOperation;
+  return apiSpecificCodeSample('MyApi', operation, 'my-npm-package');
 }
 
 export function apiSpecificCodeSample(
   apiName: string,
-  functionName: string,
+  operation: OpenApiOperation,
   packageName: string
 ): InstructionWithText {
   return {
-    text: 'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OpenAPI client libraries chose "OpenAPI Consumption Manual" from the "Helpful Links" menu.',
+    text: instructionsText,
     instructions: codeBlock`
 import { ${apiName} } from '${packageName}';
 
-const responseData = await ${apiName}.${functionName}().execute({ destinationName:'myDestinationName' });
+const responseData = await ${apiName}.${
+      operation.operationId
+    }(${getOperationParamCode(
+      operation
+    )}).execute({ destinationName:'myDestinationName' });
 `
   };
 }

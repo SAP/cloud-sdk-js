@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/type-tests",
-  "version": "1.48.1",
+  "version": "1.49.0",
   "description": "Tests to ensure correct types in the SAP Cloud SDK for JavaScript.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -12,8 +12,8 @@
     "check:dependencies": "echo Nothing to check here."
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.48.1",
-    "@sap-cloud-sdk/test-services": "^1.48.1"
+    "@sap-cloud-sdk/core": "^1.49.0",
+    "@sap-cloud-sdk/test-services": "^1.49.0"
   },
   "devDependencies": {
     "dtslint": "^4.0.0"

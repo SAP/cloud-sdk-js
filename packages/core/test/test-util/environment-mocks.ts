@@ -13,6 +13,7 @@ export enum TestTenants {
 }
 
 export const providerXsuaaUrl = `https://${TestTenants.PROVIDER}.example.com`;
+export const providerXsuaaCertUrl = `https://${TestTenants.PROVIDER}.cert.example.com`;
 export const subscriberXsuaaUrl = `https://${TestTenants.SUBSCRIBER}.example.com`;
 export const onlyIssuerXsuaaUrl = `https://${TestTenants.SUBSCRIBER_ONLY_ISS}.example.com`;
 export const destinationServiceUri = 'https://destination.example.com';
@@ -21,21 +22,22 @@ export const providerXsuaaClientCredentials = {
   url: providerXsuaaUrl
 } as XsuaaServiceCredentials;
 
-export const mockXsuaaBinding: Service = {
+export const xsuaaBindingMock: Service = {
   plan: 'application',
   label: 'xsuaa',
   name: 'my-xsuaa',
   tags: ['xsuaa'],
   credentials: {
     url: providerXsuaaUrl,
+    xsappname: 'xsapp-myapp!123',
     clientid: 'clientid',
     clientsecret: 'clientsecret',
-    verificationkey: publicKey(),
+    verificationkey: publicKey,
     uaadomain: 'authentication.sap.hana.ondemand.com'
   }
 };
 
-export const mockDestinationServiceBinding: Service = {
+export const destinationBindingClientSecretMock: Service = {
   plan: 'lite',
   label: 'destination',
   name: 'my-destination',
@@ -43,19 +45,33 @@ export const mockDestinationServiceBinding: Service = {
   credentials: {
     clientid: 'destinationClient',
     clientsecret: 'destinationSecret',
-    uri: destinationServiceUri
+    uri: destinationServiceUri,
+    url: providerXsuaaUrl
   }
 };
 
-export const mockedConnectivityServiceProxyConfig: ProxyConfiguration = {
+export const destinationBindingCertMock: Service = {
+  plan: 'lite',
+  label: 'destination',
+  name: 'my-destination',
+  tags: ['destination', 'conn', 'connsvc'],
+  credentials: {
+    clientid: 'destinationClient',
+    certificate: 'certificate',
+    key: 'certificateKey',
+    uri: destinationServiceUri,
+    url: providerXsuaaUrl,
+    certurl: providerXsuaaCertUrl
+  }
+};
+
+export const connectivityProxyConfigMock: ProxyConfiguration = {
   host: 'proxy.example.com',
   port: 12345,
   protocol: Protocol.HTTP
 };
 
-// export const mockedConnectivityServiceProxyURL = `${mockedConnectivityServiceProxyConfig.protocol}://${mockedConnectivityServiceProxyConfig.host}:${mockedConnectivityServiceProxyConfig.port}`;
-
-export const mockConnectivityServiceBinding: Service = {
+export const connectivityBindingMock: Service = {
   plan: 'application',
   label: 'connectivity',
   name: 'my-connectivity',
@@ -63,8 +79,8 @@ export const mockConnectivityServiceBinding: Service = {
   credentials: {
     clientid: 'clientid',
     clientsecret: 'clientsecret',
-    onpremise_proxy_host: mockedConnectivityServiceProxyConfig.host,
-    onpremise_proxy_port: mockedConnectivityServiceProxyConfig.port
+    onpremise_proxy_host: connectivityProxyConfigMock.host,
+    onpremise_proxy_port: connectivityProxyConfigMock.port
   }
 };
 
@@ -74,11 +90,17 @@ interface MockServiceBindings {
   connectivity: Service[];
 }
 
-export function mockServiceBindings(): MockServiceBindings {
+export function mockServiceBindings(options?: {
+  mockDestinationBindingWithCert: boolean;
+}): MockServiceBindings {
   const mockServiceEnv = {
-    xsuaa: [mockXsuaaBinding],
-    destination: [mockDestinationServiceBinding],
-    connectivity: [mockConnectivityServiceBinding]
+    xsuaa: [xsuaaBindingMock],
+    destination: [
+      options?.mockDestinationBindingWithCert
+        ? destinationBindingCertMock
+        : destinationBindingClientSecretMock
+    ],
+    connectivity: [connectivityBindingMock]
   };
 
   process.env['VCAP_SERVICES'] = JSON.stringify(mockServiceEnv);

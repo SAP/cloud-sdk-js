@@ -1,6 +1,6 @@
 import {
-  mockConnectivityServiceBinding,
-  mockedConnectivityServiceProxyConfig,
+  connectivityBindingMock,
+  connectivityProxyConfigMock,
   mockServiceBindings
 } from '../../../test/test-util/environment-mocks';
 import {
@@ -35,7 +35,7 @@ describe('connectivity-service', () => {
       url: 'https://example.com',
       proxyType: 'OnPremise',
       proxyConfiguration: {
-        ...mockedConnectivityServiceProxyConfig,
+        ...connectivityProxyConfigMock,
         headers: {
           'Proxy-Authorization': `Bearer ${providerServiceToken}`
         }
@@ -61,7 +61,7 @@ describe('connectivity-service', () => {
       proxyType: 'OnPremise',
       authentication: 'PrincipalPropagation',
       proxyConfiguration: {
-        ...mockedConnectivityServiceProxyConfig,
+        ...connectivityProxyConfigMock,
         headers: {
           'Proxy-Authorization': `Bearer ${providerServiceToken}`,
           'SAP-Connectivity-Authentication': `Bearer ${providerUserJwt}`
@@ -87,7 +87,7 @@ describe('connectivity-service', () => {
           plan: 'lite',
           label: 'connectivity',
           name: 'my-connectivity',
-          credentials: mockConnectivityServiceBinding.credentials
+          credentials: connectivityBindingMock.credentials
         }
       ]
     });
@@ -101,11 +101,11 @@ describe('connectivity-service', () => {
   });
 
   it('returns onpremise_proxy_http_port instead of onpremise_proxy_port if both are present', () => {
-    mockConnectivityServiceBinding.credentials.onpremise_proxy_http_port = 54321;
+    connectivityBindingMock.credentials.onpremise_proxy_http_port = 54321;
     process.env.VCAP_SERVICES = JSON.stringify({
       connectivity: [
         {
-          ...mockConnectivityServiceBinding
+          ...connectivityBindingMock
         }
       ]
     });
@@ -127,8 +127,7 @@ describe('connectivity-service', () => {
       'https://provider.example.com',
       { error: 'nope' },
       500,
-      'clientid',
-      'clientsecret'
+      { clientid: 'clientid', clientsecret: 'clientsecret' }
     );
 
     addProxyConfiguration({ url: '' }).catch(error => {

@@ -18,9 +18,7 @@ import {
   UserAccessTokens
 } from './auth-flow-util';
 
-/*
-Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests.
- */
+/* Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests. */
 
 describe('OAuth flows', () => {
   let destinationService;
@@ -54,7 +52,7 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  xit('OAuth2Password: Fetches destination and destiantion service has token', async () => {
+  xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider
     });

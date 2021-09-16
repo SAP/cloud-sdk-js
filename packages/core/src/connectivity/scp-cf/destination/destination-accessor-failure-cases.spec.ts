@@ -1,7 +1,7 @@
 import nock from 'nock';
 import {
   mockServiceBindings,
-  mockXsuaaBinding
+  xsuaaBindingMock
 } from '../../../../test/test-util/environment-mocks';
 import {
   providerServiceToken,
@@ -26,8 +26,10 @@ import {
   oauthMultipleResponse
 } from '../../../../test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
-import { wrapJwtInHeader } from '../jwt';
+import * as jwt from '../jwt';
 import { getDestination } from './destination-accessor';
+
+const { wrapJwtInHeader } = jwt;
 
 describe('Failure cases', () => {
   beforeEach(() => {
@@ -36,8 +38,14 @@ describe('Failure cases', () => {
 
   it('fails if no destination service is bound', async () => {
     process.env['VCAP_SERVICES'] = JSON.stringify({
-      xsuaa: [mockXsuaaBinding]
+      xsuaa: [xsuaaBindingMock]
     });
+
+    jest
+      .spyOn(jwt, 'verifyJwt')
+      .mockResolvedValue(
+        jwt.decodeJwt(subscriberServiceTokenWithVerificationURL)
+      );
 
     await expect(
       getDestination(destinationName, {
@@ -45,7 +53,7 @@ describe('Failure cases', () => {
         cacheVerificationKeys: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Failed to verify JWT. Could not retrieve verification key."'
+      '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
     );
   }, 50000);
 

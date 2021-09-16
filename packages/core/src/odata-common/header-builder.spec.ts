@@ -1,4 +1,4 @@
-import { mockedConnectivityServiceProxyConfig } from '../../test/test-util/environment-mocks';
+import { connectivityProxyConfigMock } from '../../test/test-util/environment-mocks';
 import {
   defaultDestination,
   mockHeaderRequest
@@ -86,7 +86,7 @@ describe('Header-Builder', () => {
       url: 'https://destination.example.com',
       proxyType: 'OnPremise',
       proxyConfiguration: {
-        ...mockedConnectivityServiceProxyConfig,
+        ...connectivityProxyConfigMock,
         headers: proxyHeaders
       }
     };

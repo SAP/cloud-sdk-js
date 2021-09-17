@@ -294,7 +294,7 @@ function selectXsuaaInstanceWithoutJwt(
   if (!arrayHasExactlyOneElement(xsuaaCredentials)) {
     logger.warn(
       `The following XSUAA instances are bound: ${xsuaaCredentials.map(
-        x => '\n\t- {x.xsappname}'
+        x => `\n\t- ${x.xsappname}`
       )}
       No JWT given to select XSUAA instance. ${choseFirstOneText(
         xsuaaCredentials

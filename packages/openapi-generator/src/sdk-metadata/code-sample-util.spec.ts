@@ -26,6 +26,7 @@ describe('code-sample-util api', () => {
       {
         operationId: 'DummyFunction',
         method: 'get',
+        responses: { 200: { description: 'some response description' } },
         tags: [],
         pathParameters: [],
         queryParameters: [],
@@ -41,6 +42,7 @@ describe('code-sample-util api', () => {
       {
         operationId: 'getAll',
         method: 'get',
+        responses: { 200: { description: 'some response description' } },
         tags: [],
         pathParameters: [],
         queryParameters: [],
@@ -50,6 +52,7 @@ describe('code-sample-util api', () => {
       {
         operationId: 'Test',
         method: 'get',
+        responses: { 200: { description: 'some response description' } },
         tags: [],
         pathParameters: [],
         queryParameters: [],
@@ -78,7 +81,12 @@ describe('code-sample-util api', () => {
             pathParameters: [],
             queryParameters: [],
             response: { type: 'any' },
-            pathPattern: ''
+            pathPattern: '',
+            responses: {
+              200: {
+                description: 'some response description'
+              }
+            }
           },
           {
             operationId: 'Test',
@@ -87,7 +95,12 @@ describe('code-sample-util api', () => {
             pathParameters: [],
             queryParameters: [],
             response: { type: 'any' },
-            pathPattern: ''
+            pathPattern: '',
+            responses: {
+              200: {
+                description: 'some response description'
+              }
+            }
           }
         ]
       })

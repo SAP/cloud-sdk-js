@@ -8,7 +8,11 @@ import {
   ModuleResolutionKind,
   ScriptTarget
 } from 'typescript';
-import { readCompilerOptions, transpileDirectory } from './compiler';
+import {
+  readCompilerOptions,
+  readIncludeExcludeWithDefaults,
+  transpileDirectory
+} from './compiler';
 
 describe('compiler options', () => {
   beforeAll(() => {
@@ -27,12 +31,34 @@ describe('compiler options', () => {
       }),
       'config5/tsconfig.json': JSON.stringify({
         compilerOptions: { module: 'AMD' }
+      }),
+      'config6/tsconfig.json': JSON.stringify({
+        exclude: ['def'],
+        include: ['abc']
       })
     });
   });
 
   afterAll(() => {
     mock.restore();
+  });
+
+  it('reads the include and exclude with defaults', async () => {
+    await expect(
+      readIncludeExcludeWithDefaults('config1/tsconfig.json')
+    ).resolves.toEqual({
+      include: ['**/*.ts'],
+      exclude: ['dist/**/*', '**/*.d.ts', '**/*.spec.ts', 'node_modules/**/*']
+    });
+  });
+
+  it('reads the include and exclude from file', async () => {
+    await expect(
+      readIncludeExcludeWithDefaults('config6/tsconfig.json')
+    ).resolves.toEqual({
+      include: ['abc'],
+      exclude: ['def']
+    });
   });
 
   it('reads the compiler options with file path', async () => {
@@ -81,6 +107,7 @@ describe('compilation', () => {
       'test-src/file-1.ts': "export type someOtherType = 'A' | 'B'",
       'test-src/index.ts': "export * from './file-1'",
       'test-src/sub-folder/file-2.ts': "export type someType = 'A' | 'B'",
+      'test-src/test-file.spec.ts': 'This should be excluded per default',
       'test-src/sub-folder/index.ts': "export * from './file-2'",
       'broken-src/file.ts': `const foo = 1;${EOL}const bar = 1;${EOL}   foo = 2;`,
       [rootNodeModules]: mock.load(rootNodeModules),
@@ -105,6 +132,7 @@ describe('compilation', () => {
   it('compiles all files', async () => {
     await transpileDirectory('test-src', compilerConfig);
     const files = await promises.readdir('test-dist');
+    expect(files.includes('test-file.spec.js')).toBe(false);
     expect(files).toIncludeAnyMembers([
       'file-1.js',
       'file-1.d.ts',

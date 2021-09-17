@@ -22,31 +22,31 @@ describe('parseApis', () => {
         '/x': {
           get: {
             tags: ['api1'],
-            responses:{ 200:{ description:'some response description' } },
+            responses: { 200: { description: 'some response description' } },
             operationId: 'getX'
           },
           post: {
             tags: ['api2'],
-            responses:{ 200:{ description:'some response description' } },
+            responses: { 200: { description: 'some response description' } },
             operationId: 'createX'
           }
         },
         '/y': {
           get: {
             tags: ['api1'],
-            responses:{ 200:{ description:'some response description' } },
+            responses: { 200: { description: 'some response description' } },
             operationId: 'getY'
           },
           post: {
             tags: ['api2'],
-            responses:{ 200:{ description:'some response description' } },
+            responses: { 200: { description: 'some response description' } },
             operationId: 'createY'
           }
         },
         '/z': {
           get: {
             operationId: 'getZ',
-            responses:{ 200:{ description:'some response description' } },
+            responses: { 200: { description: 'some response description' } }
           }
         }
       }
@@ -89,9 +89,12 @@ describe('parseApis', () => {
   });
 
   it('parses APIs based on extensions', async () => {
-    interface ExtensionType { [apiNameExtension]?: string};
-    type DocumentWithExtensions<T> = Omit<OpenAPIV3.Document<T>,'paths'> & ExtensionType& {paths: OpenAPIV3.PathsObject<T,ExtensionType>};
-    const document: DocumentWithExtensions<ExtensionType>= {
+    interface ExtensionType {
+      [apiNameExtension]?: string;
+    }
+    type DocumentWithExtensions<T> = Omit<OpenAPIV3.Document<T>, 'paths'> &
+      ExtensionType & { paths: OpenAPIV3.PathsObject<T, ExtensionType> };
+    const document: DocumentWithExtensions<ExtensionType> = {
       ...emptyDocument,
       [apiNameExtension]: 'root',
       paths: {
@@ -101,23 +104,23 @@ describe('parseApis', () => {
             tags: ['api1'],
             [apiNameExtension]: 'operationWithTag',
             operationId: 'operationWithTagOperation',
-            responses:{ 200:{ description:'some response description' } }
+            responses: { 200: { description: 'some response description' } }
           },
           post: {
             [apiNameExtension]: 'operationWithoutTag',
             operationId: 'operationWithoutTagOperation',
-            responses:{ 200:{ description:'some response description' } }
+            responses: { 200: { description: 'some response description' } }
           },
           delete: {
             operationId: 'pathOperation',
-            responses:{ 200:{ description:'some response description' } }
+            responses: { 200: { description: 'some response description' } }
           }
         },
         '/y': {
           get: {
             tags: ['api1'],
             operationId: 'rootOperation',
-            responses:{ 200:{ description:'some response description' } }
+            responses: { 200: { description: 'some response description' } }
           }
         }
       }
@@ -162,15 +165,17 @@ describe('parseApis', () => {
   });
 
   it("parses API names without trailing 'api'", async () => {
-    interface DocumentWithExtensions extends OpenAPIV3.Document  { [apiNameExtension]: string}
-    const document: DocumentWithExtensions= {
+    interface DocumentWithExtensions extends OpenAPIV3.Document {
+      [apiNameExtension]: string;
+    }
+    const document: DocumentWithExtensions = {
       ...emptyDocument,
       [apiNameExtension]: 'RootApi',
       paths: {
         '/x': {
           get: {
             tags: [],
-            responses:{ 200:{ description:'some response description' } },
+            responses: { 200: { description: 'some response description' } },
             operationId: 'someOperation'
           }
         }

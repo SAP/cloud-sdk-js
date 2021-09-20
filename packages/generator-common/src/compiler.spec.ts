@@ -8,6 +8,7 @@ import {
   ModuleResolutionKind,
   ScriptTarget
 } from 'typescript';
+import { GlobSync } from 'glob';
 import {
   readCompilerOptions,
   readIncludeExcludeWithDefaults,
@@ -114,23 +115,25 @@ describe('compilation', () => {
       [packageNodeModules]: mock.load(packageNodeModules)
     });
   });
-  const compilerConfig: CompilerOptions = {
-    outDir: 'test-dist',
-    target: ScriptTarget.ES5,
-    declaration: true,
-    declarationMap: true,
-    sourceMap: true,
-    moduleResolution: ModuleResolutionKind.NodeJs,
-    module: ModuleKind.CommonJS,
-    lib: ['lib.esnext.d.ts']
-  };
+  function compilerConfig(outFolder): CompilerOptions {
+    return {
+      outDir: outFolder,
+      target: ScriptTarget.ES5,
+      declaration: true,
+      declarationMap: true,
+      sourceMap: true,
+      moduleResolution: ModuleResolutionKind.NodeJs,
+      module: ModuleKind.CommonJS,
+      lib: ['lib.esnext.d.ts']
+    };
+  }
 
   afterAll(() => {
     mock.restore();
   });
 
   it('compiles all files', async () => {
-    await transpileDirectory('test-src', compilerConfig);
+    await transpileDirectory('test-src', compilerConfig('test-dist'));
     const files = await promises.readdir('test-dist');
     expect(files.includes('test-file.spec.js')).toBe(false);
     expect(files).toIncludeAnyMembers([
@@ -146,9 +149,31 @@ describe('compilation', () => {
     ]);
   });
 
+  it('considers includes correctly', async () => {
+    await transpileDirectory('test-src', compilerConfig('test-dist-1'), {
+      include: ['file-1.ts', '**/file-2.ts'],
+      exclude: []
+    });
+    const files = new GlobSync('**/*.js', {
+      cwd: 'test-dist-1'
+    }).found;
+    expect(files).toIncludeSameMembers(['file-1.js', 'sub-folder/file-2.js']);
+  });
+
+  it('considers exclude correctly', async () => {
+    await transpileDirectory('test-src', compilerConfig('test-dist-2'), {
+      include: ['**/*.ts'],
+      exclude: ['**/index.ts', 'test-file.spec.ts']
+    });
+    const files = new GlobSync('**/*.js', {
+      cwd: 'test-dist-2'
+    }).found;
+    expect(files).toIncludeSameMembers(['file-1.js', 'sub-folder/file-2.js']);
+  });
+
   it('throws error with file information on broken source file', async () => {
     await expect(
-      transpileDirectory('broken-src', compilerConfig)
+      transpileDirectory('broken-src', compilerConfig('broken-dist'))
     ).rejects.toThrowError(
       "broken-src/file.ts:3:4 - error TS2588: Cannot assign to 'foo' because it is a constant"
     );

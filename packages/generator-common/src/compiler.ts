@@ -1,7 +1,7 @@
 import { parse, resolve } from 'path';
 import { existsSync, promises } from 'fs';
 import { EOL } from 'os';
-import { createLogger, flatten } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
   CompilerOptions,
   createProgram,
@@ -31,22 +31,24 @@ export async function transpileDirectory(
 ): Promise<void> {
   logger.verbose(`Transpiling files in the directory: ${path} started.`);
 
-  const includes = includeExclude.include.map(include =>
-    resolve(path, include)
-  );
-  const excludes = includeExclude.exclude.map(exclude =>
-    resolve(path, exclude)
-  );
-  const allFiles: string[] = flatten(
-    includes.map(
-      include =>
-        new GlobSync(resolve(path, include), {
-          ignore: excludes
-        }).found
-    )
-  );
+  const includes =
+    includeExclude.include.length > 1
+      ? `{${includeExclude.include.join(',')}}`
+      : includeExclude.include[0];
+  const excludes =
+    includeExclude.exclude.length > 1
+      ? `{${includeExclude.exclude.join(',')}}`
+      : includeExclude.exclude[0];
 
-  const program = await createProgram(allFiles, compilerOptions);
+  const allFiles2 = new GlobSync(includes, {
+    ignore: excludes,
+    cwd: path
+  }).found;
+
+  const program = await createProgram(
+    allFiles2.map(file => resolve(path, file)),
+    compilerOptions
+  );
   const emitResult = await program.emit();
 
   const allDiagnostics = getPreEmitDiagnostics(program).concat(

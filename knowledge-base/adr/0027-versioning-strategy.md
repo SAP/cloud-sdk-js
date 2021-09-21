@@ -48,11 +48,14 @@ In general most service will have no changes.
 
 Potential Flow/Rules:
 - Major version increase should not happen on API level - in principle.
+- A major version increase in SDK is likely to change also the client API.
+Hence, we could align major version of SDK and Client.
 - A patch version is also unlikely, because the API spec can not fix an issue
 - So potentially every change is a minor change in a simple approximation.
 - Detect a change via git diff on generated sources.
 This ensures real change detection - not a publishing date change. 
 - Every two weeks we could run the release pipeline, generate clients detect changes and bump version and publish if needed.
+
 
 
 ## Consequences

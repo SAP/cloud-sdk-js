@@ -22,17 +22,33 @@ const logger = createLogger('compiler');
  * It recursively compiles all files ending with .ts
  * @param path - Directory to be compiled.
  * @param compilerOptions - Compiler options to be used
+ * @param includeExclude - Included and excluded files for compilation
  */
 export async function transpileDirectory(
   path: string,
-  compilerOptions: CompilerOptions
+  compilerOptions: CompilerOptions,
+  includeExclude: IncludeExclude = defaultIncludeExclude
 ): Promise<void> {
   logger.verbose(`Transpiling files in the directory: ${path} started.`);
 
-  const files = new GlobSync(resolve(path, '**/*.ts'), {
-    ignore: resolve(path, '**/*.d.ts')
+  const includes =
+    includeExclude.include.length > 1
+      ? `{${includeExclude.include.join(',')}}`
+      : includeExclude.include[0];
+  const excludes =
+    includeExclude.exclude.length > 1
+      ? `{${includeExclude.exclude.join(',')}}`
+      : includeExclude.exclude[0];
+
+  const allFiles2 = new GlobSync(includes, {
+    ignore: excludes,
+    cwd: path
   }).found;
-  const program = await createProgram(files, compilerOptions);
+
+  const program = await createProgram(
+    allFiles2.map(file => resolve(path, file)),
+    compilerOptions
+  );
   const emitResult = await program.emit();
 
   const allDiagnostics = getPreEmitDiagnostics(program).concat(
@@ -86,14 +102,9 @@ function findPositions(
   return response;
 }
 
-/**
- * Reads and parses the compiler options a tsconfig.json.
- * @param pathToTsConfig - Folder containing or path to a tsconfig.json files
- * @returns Compiler options from the tsconfig.json
- */
-export async function readCompilerOptions(
+async function readTsConfig(
   pathToTsConfig: string
-): Promise<CompilerOptions> {
+): Promise<Record<string, any>> {
   const fullPath =
     parse(pathToTsConfig).base === 'tsconfig.json'
       ? pathToTsConfig
@@ -102,12 +113,47 @@ export async function readCompilerOptions(
   if (!existsSync(fullPath)) {
     throw new Error(`No tsconfig found under path ${fullPath}`);
   }
+  return JSON.parse(
+    await promises.readFile(fullPath, {
+      encoding: 'utf8'
+    })
+  );
+}
+interface IncludeExclude {
+  include: string[];
+  exclude: string[];
+}
+
+const defaultIncludeExclude: IncludeExclude = {
+  include: ['**/*.ts'],
+  exclude: ['dist/**/*', '**/*.d.ts', '**/*.spec.ts', 'node_modules/**/*']
+};
+
+/**
+ * Reads the include and exclude property from the tsconfig.json using  ['**\/*.ts'] and ["dist/**\/*", "**\/*.spec.ts", "**\/*.d.ts", "node_modules/**\/*"] as default values.
+ * @param pathToTsConfig - Folder containing or path to a tsconfig.json files
+ * @returns IncludeExclude options for include and exclude files for compilation
+ */
+export async function readIncludeExcludeWithDefaults(
+  pathToTsConfig: string
+): Promise<IncludeExclude | undefined> {
+  const tsConfig = await readTsConfig(pathToTsConfig);
+  return {
+    include: tsConfig.include || defaultIncludeExclude.include,
+    exclude: tsConfig.exclude || defaultIncludeExclude.exclude
+  };
+}
+
+/**
+ * Reads and parses the compiler options a tsconfig.json.
+ * @param pathToTsConfig - Folder containing or path to a tsconfig.json files
+ * @returns Compiler options from the tsconfig.json
+ */
+export async function readCompilerOptions(
+  pathToTsConfig: string
+): Promise<CompilerOptions> {
   const options: CompilerOptions =
-    JSON.parse(
-      await promises.readFile(fullPath, {
-        encoding: 'utf8'
-      })
-    )['compilerOptions'] || {};
+    (await readTsConfig(pathToTsConfig))['compilerOptions'] || {};
 
   if (options.moduleResolution) {
     options.moduleResolution = parseModuleResolutionKind(

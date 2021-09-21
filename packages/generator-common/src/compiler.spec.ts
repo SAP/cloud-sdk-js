@@ -8,7 +8,12 @@ import {
   ModuleResolutionKind,
   ScriptTarget
 } from 'typescript';
-import { readCompilerOptions, transpileDirectory } from './compiler';
+import { GlobSync } from 'glob';
+import {
+  readCompilerOptions,
+  readIncludeExcludeWithDefaults,
+  transpileDirectory
+} from './compiler';
 
 describe('compiler options', () => {
   beforeAll(() => {
@@ -27,12 +32,34 @@ describe('compiler options', () => {
       }),
       'config5/tsconfig.json': JSON.stringify({
         compilerOptions: { module: 'AMD' }
+      }),
+      'config6/tsconfig.json': JSON.stringify({
+        exclude: ['def'],
+        include: ['abc']
       })
     });
   });
 
   afterAll(() => {
     mock.restore();
+  });
+
+  it('reads the include and exclude with defaults', async () => {
+    await expect(
+      readIncludeExcludeWithDefaults('config1/tsconfig.json')
+    ).resolves.toEqual({
+      include: ['**/*.ts'],
+      exclude: ['dist/**/*', '**/*.d.ts', '**/*.spec.ts', 'node_modules/**/*']
+    });
+  });
+
+  it('reads the include and exclude from file', async () => {
+    await expect(
+      readIncludeExcludeWithDefaults('config6/tsconfig.json')
+    ).resolves.toEqual({
+      include: ['abc'],
+      exclude: ['def']
+    });
   });
 
   it('reads the compiler options with file path', async () => {
@@ -81,30 +108,34 @@ describe('compilation', () => {
       'test-src/file-1.ts': "export type someOtherType = 'A' | 'B'",
       'test-src/index.ts': "export * from './file-1'",
       'test-src/sub-folder/file-2.ts': "export type someType = 'A' | 'B'",
+      'test-src/test-file.spec.ts': 'This should be excluded per default',
       'test-src/sub-folder/index.ts': "export * from './file-2'",
       'broken-src/file.ts': `const foo = 1;${EOL}const bar = 1;${EOL}   foo = 2;`,
       [rootNodeModules]: mock.load(rootNodeModules),
       [packageNodeModules]: mock.load(packageNodeModules)
     });
   });
-  const compilerConfig: CompilerOptions = {
-    outDir: 'test-dist',
-    target: ScriptTarget.ES5,
-    declaration: true,
-    declarationMap: true,
-    sourceMap: true,
-    moduleResolution: ModuleResolutionKind.NodeJs,
-    module: ModuleKind.CommonJS,
-    lib: ['lib.esnext.d.ts']
-  };
+  function compilerConfig(outFolder): CompilerOptions {
+    return {
+      outDir: outFolder,
+      target: ScriptTarget.ES5,
+      declaration: true,
+      declarationMap: true,
+      sourceMap: true,
+      moduleResolution: ModuleResolutionKind.NodeJs,
+      module: ModuleKind.CommonJS,
+      lib: ['lib.esnext.d.ts']
+    };
+  }
 
   afterAll(() => {
     mock.restore();
   });
 
   it('compiles all files', async () => {
-    await transpileDirectory('test-src', compilerConfig);
+    await transpileDirectory('test-src', compilerConfig('test-dist'));
     const files = await promises.readdir('test-dist');
+    expect(files.includes('test-file.spec.js')).toBe(false);
     expect(files).toIncludeAnyMembers([
       'file-1.js',
       'file-1.d.ts',
@@ -118,9 +149,31 @@ describe('compilation', () => {
     ]);
   });
 
+  it('considers includes correctly', async () => {
+    await transpileDirectory('test-src', compilerConfig('test-dist-1'), {
+      include: ['file-1.ts', '**/file-2.ts'],
+      exclude: []
+    });
+    const files = new GlobSync('**/*.js', {
+      cwd: 'test-dist-1'
+    }).found;
+    expect(files).toIncludeSameMembers(['file-1.js', 'sub-folder/file-2.js']);
+  });
+
+  it('considers exclude correctly', async () => {
+    await transpileDirectory('test-src', compilerConfig('test-dist-2'), {
+      include: ['**/*.ts'],
+      exclude: ['**/index.ts', 'test-file.spec.ts']
+    });
+    const files = new GlobSync('**/*.js', {
+      cwd: 'test-dist-2'
+    }).found;
+    expect(files).toIncludeSameMembers(['file-1.js', 'sub-folder/file-2.js']);
+  });
+
   it('throws error with file information on broken source file', async () => {
     await expect(
-      transpileDirectory('broken-src', compilerConfig)
+      transpileDirectory('broken-src', compilerConfig('broken-dist'))
     ).rejects.toThrowError(
       "broken-src/file.ts:3:4 - error TS2588: Cannot assign to 'foo' because it is a constant"
     );

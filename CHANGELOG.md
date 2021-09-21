@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [generator] Include and exclude options added to the `transpileDirectory()` method
 
 ## Fixed Issues
 

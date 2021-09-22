@@ -7,6 +7,7 @@ accepted
 ## Context
 
 The SDK has two parts:
+
 - The API independent parts contained in this repository from now on referred to as `core`.
 - The typed clients for each OData and openApi from now on referred to as `clients`.
 
@@ -18,6 +19,7 @@ In this document we discuss the versioning strategy for core and client.
 The core has multiple packages e.g. `generator`,`openapi-generator`, `util`, etc..
 Currently, we use the same version for all parts and a new release increases the version on all packages.
 We will keep this approach because:
+
 - It is very simple to have a fixed version for all packages.
   No need to monitor which packages have been changes to which extent.
 - It is easy to use/install the SDK, because all SDK parts have the same version.
@@ -30,6 +32,7 @@ The drawback of having new version without changes is taken into account for the
 For the clients the situation is much less coupled than for core.
 Some services will update every two weeks (workflow) other every year (S/4 OnPremise).
 We will do versioning in the following way:
+
 - Major versions of clients aligns with major version of core.
 - Core versions are not fixed in the clients -> installation updates core to latest.
 - Pipeline generates the clients and detects changes.

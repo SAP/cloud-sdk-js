@@ -23,7 +23,7 @@ We will keep this approach because:
 - It is very simple to have a fixed version for all packages.
   No need to monitor which packages have been changes to which extent.
 - It is easy to use/install the SDK, because all SDK parts have the same version.
-- It is done the same way by oter monorepos like [nest](https://github.com/nestjs/nest) or [anguar](https://github.com/angular/angular).
+- It is done the same way by other monorepos like [nest](https://github.com/nestjs/nest) or [anguar](https://github.com/angular/angular).
 
 The drawback of having new version without changes is taken into account for the simplicity.
 

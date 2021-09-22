@@ -34,9 +34,9 @@ export function mockClientCredentialsGrantWithCertCall(
       response_type: 'token'
     })
     .reply(responseCode, function () {
-      const requestOptions = (this.req as any).options;
-      expect(requestOptions.cert).toEqual(serviceCredentials.certificate);
-      expect(requestOptions.key).toEqual(serviceCredentials.key);
+      const agentOptions = (this.req as any).options.agent.options;
+      expect(agentOptions.cert).toEqual(serviceCredentials.certificate);
+      expect(agentOptions.key).toEqual(serviceCredentials.key);
       return response;
     });
 }

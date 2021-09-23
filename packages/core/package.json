@@ -39,7 +39,7 @@
     "@types/jsonwebtoken": "^8.3.8",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.0",
-    "http-proxy-agent": "^4.0.1",
+    "http-proxy-agent": "^5.0.0",
     "https-proxy-agent": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.0",

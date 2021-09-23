@@ -145,6 +145,11 @@ export interface Destination {
    * The keys of this object denote the names of the query parameters and the values their values.
    */
   queryParameters?: Record<string, any>;
+
+  /**
+   * If set to true the auth token provided to the request execution is forwarded to the destination target.
+   */
+  forwardAuthToken?: boolean;
 }
 
 /**

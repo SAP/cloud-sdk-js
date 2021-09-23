@@ -4,12 +4,14 @@ import {
   ProxyStrategy,
   addProxyConfigurationInternet
 } from '../../../http-agent/proxy-util';
+import { decodeJwt } from '../jwt';
 import {
   sanitizeDestination,
   isDestinationConfiguration,
   parseDestination
 } from './destination';
-import { Destination } from './destination-service-types';
+import { Destination, DestinationAuthToken } from './destination-service-types';
+import { DestinationOptions } from './destination-accessor';
 
 const logger = createLogger({
   package: 'core',
@@ -133,23 +135,27 @@ function validateDestinations(destinations: any[]) {
  * @hidden
  */
 export function searchEnvVariablesForDestination(
-  name: string
+  name: string,
+  options: DestinationOptions = {}
 ): Destination | undefined {
   logger.info('Attempting to retrieve destination from environment variable.');
 
   if (getDestinationsEnvVariable()) {
-    logger.warn(
-      "Environment variable 'destinations' is set. Destinations will be read from this variable. " +
-        'This is discouraged for productive applications. ' +
-        'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
-    );
-
     try {
       const destination = getDestinationFromEnvByName(name);
       if (destination) {
-        logger.info(
-          'Successfully retrieved destination from environment variable.'
-        );
+        if (destination.forwardAuthToken) {
+          destination.authTokens = destinationAuthToken(options.userJwt);
+          logger.info(
+            `Successfully retrieved destination '${name}' from environment variable.`
+          );
+        } else {
+          logger.warn(
+            `Successfully retrieved destination '${name}' from environment variable.` +
+              'This is discouraged for productive applications. ' +
+              'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
+          );
+        }
         return destination;
       }
     } catch (error) {
@@ -160,4 +166,27 @@ export function searchEnvVariablesForDestination(
   }
 
   logger.info('No environment variable set.');
+}
+
+function destinationAuthToken(
+  token?: string
+): [DestinationAuthToken] | undefined {
+  if (token) {
+    const decoded = decodeJwt(token);
+    logger.info(
+      "Option 'forwardAuthToken' enabled on destination. Using the initial token for the destination."
+    );
+    return [
+      {
+        value: token,
+        expiresIn: decoded.exp!.toString(),
+        error: null,
+        http_header: { key: 'Authorization', value: `Bearer ${token}` },
+        type: 'Bearer'
+      }
+    ];
+  }
+  logger.warn(
+    "Option 'forwardAuthToken' was set on destination but no token was provided to forward. This is most likely unintended and will lead to a authorization error on request execution."
+  );
 }

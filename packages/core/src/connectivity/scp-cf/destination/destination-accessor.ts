@@ -77,7 +77,7 @@ export async function getDestination(
   options: DestinationOptions = {}
 ): Promise<Destination | null> {
   return (
-    searchEnvVariablesForDestination(name) ||
+    searchEnvVariablesForDestination(name, options) ||
     searchServiceBindingForDestination(name) ||
     getDestinationFromDestinationService(name, options)
   );

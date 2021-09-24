@@ -35,38 +35,6 @@ jobs:
           SANDBOX_TOKEN: ${{ secrets.API_HUB_SANDBOX_TOKEN }}
       - run: yarn test:integration
       - run: yarn test:type
-  tests-windows:
-    runs-on: ${{ matrix.os }}
-    continue-on-error: true
-    timeout-minutes: 15
-    strategy:
-      matrix:
-        os: [windows-latest]
-        node-version: [12.x]
-    steps:
-      - uses: actions/checkout@v2
-      - run: git fetch --depth=1
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - run: yarn test:unit -- -- --no-bail -- -- -- --json --outputFile=unit-test-output.json
-      - run: yarn test:integration --json --outputFile=int-test-output.json
-        if: always()
-      - run: yarn test:type
-      - name: Archive results
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: windows-test-results
-          path: '*packages/**/*-test-output.json'
   checks:
     runs-on: ubuntu-latest
     steps:

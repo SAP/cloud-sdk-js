@@ -10,8 +10,11 @@ import {
   isDestinationConfiguration,
   parseDestination
 } from './destination';
-import { Destination, DestinationAuthToken } from './destination-service-types';
-import { DestinationOptions } from './destination-accessor';
+import type {
+  Destination,
+  DestinationAuthToken
+} from './destination-service-types';
+import type { DestinationOptions } from './destination-accessor';
 
 const logger = createLogger({
   package: 'core',

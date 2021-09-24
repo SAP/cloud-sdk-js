@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [connectivity] Allow token forwarding for local destination stored in the environment variables.
 
 ## Improvements
 

@@ -7,7 +7,7 @@ on:
       - 'docs/**'
 
 jobs:
-  test-windows:
+  tests:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:

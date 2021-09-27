@@ -53,6 +53,8 @@ type NonNullableFieldTypeByEdmType<
   ? number
   : EdmOrFieldT extends 'Edm.DateTime'
   ? moment.Moment
+  : EdmOrFieldT extends 'Edm.DateTimeOffset'
+  ? moment.Moment
   : EdmOrFieldT extends 'Edm.Time'
   ? Time
   : EdmOrFieldT extends 'Edm.Date'

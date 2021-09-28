@@ -43,7 +43,8 @@ import {
   tsconfigJson,
   ServiceOptions,
   OptionsPerService,
-  getOptionsPerService
+  getOptionsPerService,
+  GeneratorOptions2
 } from './options';
 import { sdkMetadata } from './sdk-metadata';
 import { GeneratorOptions } from '.';
@@ -66,7 +67,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
  * @param options - Options to configure generation.
  */
 export async function generateWithParsedOptions(
-  options: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions | GeneratorOptions2
 ): Promise<void> {
   if (options.input === '' || options.outputDir === '') {
     throw new Error('Either input or outputDir were not set.');
@@ -127,7 +128,7 @@ async function generateSources(
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
   tsConfig: string | undefined,
-  options: ParsedGeneratorOptions
+  options: ParsedGeneratorOptions | GeneratorOptions2
 ): Promise<void> {
   await mkdir(serviceDir, { recursive: true });
 
@@ -168,32 +169,32 @@ async function generateSources(
 async function generateMandatorySources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
+  { overwrite }: ParsedGeneratorOptions | GeneratorOptions2
 ) {
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
-    await createSchemaFiles(schemaDir, openApiDocument, options);
+    await createSchemaFiles(schemaDir, openApiDocument, !!overwrite);
     await createFile(
       schemaDir,
       'index.ts',
       schemaIndexFile(openApiDocument),
-      options.overwrite
+      !!overwrite
     );
   }
 
-  await createApis(serviceDir, openApiDocument, options);
+  await createApis(serviceDir, openApiDocument, !!overwrite);
   await createFile(
     serviceDir,
     'index.ts',
     apiIndexFile(openApiDocument),
-    options.overwrite
+    !!overwrite
   );
 }
 
 async function createApis(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
+  overwrite: boolean
 ): Promise<void> {
   await Promise.all(
     openApiDocument.apis.map(api =>
@@ -201,7 +202,7 @@ async function createApis(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
         apiFile(api, openApiDocument.serviceName),
-        options.overwrite
+        overwrite
       )
     )
   );
@@ -210,17 +211,12 @@ async function createApis(
 async function createSchemaFiles(
   dir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
+  overwrite: boolean
 ): Promise<void> {
   await mkdir(dir, { recursive: true });
   await Promise.all(
     openApiDocument.schemas.map(schema =>
-      createFile(
-        dir,
-        `${schema.fileName}.ts`,
-        schemaFile(schema),
-        options.overwrite
-      )
+      createFile(dir, `${schema.fileName}.ts`, schemaFile(schema), overwrite)
     )
   );
 }
@@ -235,7 +231,7 @@ async function createSchemaFiles(
  */
 async function generateService(
   inputFilePath: string,
-  options: ParsedGeneratorOptions,
+  options: ParsedGeneratorOptions | GeneratorOptions2,
   serviceOptions: ServiceOptions,
   tsConfig: string | undefined
 ): Promise<void> {
@@ -328,7 +324,7 @@ function generateReadme(
 async function generateMetadata(
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
-  options: ParsedGeneratorOptions
+  { packageVersion, overwrite }: ParsedGeneratorOptions
 ) {
   const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
   const { clientFileName, headerFileName } =
@@ -341,11 +337,11 @@ async function generateMetadata(
     metadataDir,
     headerFileName,
     JSON.stringify(
-      await sdkMetadataHeader('rest', inputFileName, options.packageVersion),
+      await sdkMetadataHeader('rest', inputFileName, packageVersion),
       null,
       2
     ),
-    options.overwrite,
+    overwrite,
     false
   );
 
@@ -354,7 +350,7 @@ async function generateMetadata(
     metadataDir,
     clientFileName,
     JSON.stringify(await sdkMetadata(openApiDocument), null, 2),
-    options.overwrite,
+    overwrite,
     false
   );
   return Promise.all([headerFile, clientFile]);

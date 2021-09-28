@@ -1,5 +1,6 @@
 import { resolve, extname } from 'path';
 import { existsSync, lstatSync } from 'fs';
+import { GlobSync } from 'glob';
 import { flags } from '@oclif/command';
 
 export const generatorOptions = {
@@ -28,6 +29,7 @@ export const generatorOptions = {
   },
   include: {
     string: true,
+    coerce: (input: string): string[] => new GlobSync(input).found,
     description:
       'Include files matching the given glob into the root of each generated client directory.'
   },
@@ -101,7 +103,8 @@ export const generatorOptions = {
   config: {
     string: true,
     alias: 'c',
-    parse: (input: string): string => resolve(input),
+    // config: true,
+    coerce: (input: string): string => resolve(input),
     description:
       'Set the path to a file containing the options for generation instead of setting the options on the command line. When combining the `config` option with other options on the command line, the command line options take precedence. If a directory is passed, a `config.json` file is read from this directory.'
   }

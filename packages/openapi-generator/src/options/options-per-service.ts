@@ -3,6 +3,7 @@ import { parse } from 'path';
 import { unique, UniqueNameGenerator } from '@sap-cloud-sdk/util';
 import { getRelPathWithPosixSeparator } from '../generator';
 import { ParsedGeneratorOptions } from './generator-options';
+import { GeneratorOptions2 } from '.';
 
 const { readFile } = promises;
 
@@ -58,10 +59,13 @@ export async function getOriginalOptionsPerService(
  */
 export async function getOptionsPerService(
   inputPaths: string[],
-  options: ParsedGeneratorOptions
+  {
+    optionsPerService,
+    skipValidation
+  }: ParsedGeneratorOptions | GeneratorOptions2
 ): Promise<OptionsPerService> {
   const originalOptionsPerService = await getOriginalOptionsPerService(
-    options.optionsPerService
+    optionsPerService
   );
 
   const uniqueNameGenerator = new UniqueNameGenerator('-');
@@ -70,11 +74,11 @@ export async function getOptionsPerService(
     inputPaths,
     originalOptionsPerService
   );
-  if (!options.skipValidation) {
+  if (!skipValidation) {
     validateDirectoryNames(directoryNamesByPaths);
   }
 
-  const optionsPerService: OptionsPerService = inputPaths.reduce(
+  const optsPerService: OptionsPerService = inputPaths.reduce(
     (previousOptions, inputPath) => {
       const relativePath = getRelPathWithPosixSeparator(inputPath);
 
@@ -91,7 +95,7 @@ export async function getOptionsPerService(
     {}
   );
 
-  return optionsPerService;
+  return optsPerService;
 }
 
 function getDirectoryNamesByPaths(

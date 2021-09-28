@@ -2,7 +2,7 @@ import { promises } from 'fs';
 import { resolve } from 'path';
 import Parser from '@oclif/parser';
 import { ErrorWithCause, createLogger } from '@sap-cloud-sdk/util';
-import OpenApiGenerator from '../cli';
+import { OpenApiGenerator } from '../cli';
 import { generatorFlags } from './flags';
 const { readFile, lstat } = promises;
 
@@ -27,6 +27,24 @@ export interface GeneratorOptions {
   metadata?: boolean;
   verbose?: boolean;
   overwrite?: boolean;
+  config?: string;
+}
+
+export interface GeneratorOptions2 {
+  input: string;
+  outputDir: string;
+  transpile: boolean;
+  include?: string[];
+  overwrite: boolean;
+  clearOutputDir: boolean;
+  skipValidation: boolean;
+  tsConfig?: string;
+  packageJson: boolean;
+  verbose: boolean;
+  optionsPerService?: string;
+  packageVersion?: string;
+  readme: boolean;
+  metadata: boolean;
   config?: string;
 }
 

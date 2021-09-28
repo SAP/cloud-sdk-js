@@ -3,15 +3,40 @@ import { cli } from 'cli-ux';
 import { createLogger } from '@sap-cloud-sdk/util';
 // eslint-disable-next-line import/no-internal-modules
 import { FlagToken } from '@oclif/parser/lib/parse';
+import yargs from 'yargs';
+// eslint-disable-next-line import/no-internal-modules
+import { hideBin } from 'yargs/helpers';
 import {
   parseOptionsFromConfig,
   getSpecifiedFlags,
-  generatorFlags
+  generatorFlags,
+  generatorOptions
 } from '../options';
 import { generate, generateWithParsedOptions } from '../generator';
 
 const logger = createLogger('openapi-generator');
-class OpenApiGenerator extends Command {
+
+export async function parseCmdArgs(): Promise<void> {
+  const argv = await yargs(hideBin(process.argv))
+    .usage('--input <input> --outputDir <outputDirectory>')
+    .options(generatorOptions)
+    .strict().argv;
+
+  if (argv.config) {
+    await generate({
+      ...(await parseOptionsFromConfig(argv.config)),
+      ...getSpecifiedFlags(
+        argv,
+        (parsed.raw as FlagToken[]).map(({ flag }) => flag)
+      )
+    });
+  } else {
+    await generateWithParsedOptions(argv);
+  }
+  return;
+}
+
+export class OpenApiGenerator extends Command {
   static description =
     'Generate OpenAPI client(s), that use the connectivity features of the SAP Cloud SDK for JavaScript/TypeScript.';
 
@@ -50,5 +75,3 @@ $ openapi-generator --input ./my-spec.yaml --outputDir ./client --transpile`
     }
   }
 }
-
-export = OpenApiGenerator;

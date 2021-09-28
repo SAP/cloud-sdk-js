@@ -70,7 +70,7 @@ export function parseGeneratorOptions(
       const value = options[name];
       if (typeof value !== 'undefined') {
         parsedOptions[name] = flag.parse(value as never, undefined);
-      } else if (typeof flag.default !== undefined) {
+      } else if (typeof flag.default !== 'undefined') {
         parsedOptions[name] = flag.default;
       }
       return parsedOptions;

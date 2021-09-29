@@ -81,7 +81,7 @@ describe('batch response transformer', () => {
 
     it('returns undefined for empty collection result and logs a warning', () => {
       const logger = createLogger('batch-response-transformer');
-      spyOn(logger, 'warn');
+      jest.spyOn(logger, 'warn');
       expect(
         batchTransformerCollection['getConstructor']({ d: { results: [] } })
       ).toBeUndefined();

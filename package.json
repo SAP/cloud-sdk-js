@@ -100,6 +100,7 @@
     "agent-base": ">=6.0.2",
     "color-string": ">=1.5.5",
     "dot-prop": ">=5.1.1",
+    "expect": ">=27.2.3",
     "netmask": ">=2.0.1 ",
     "path-parse": ">=1.0.7",
     "postcss": ">=8.2.10",

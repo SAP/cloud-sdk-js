@@ -47,7 +47,7 @@ describe('parseOpenApiDocument', () => {
       }
     };
 
-    spyOn(api, 'parseApis');
+    jest.spyOn(api, 'parseApis');
 
     const parsedDocument = await parseOpenApiDocument(
       input,
@@ -115,7 +115,7 @@ describe('parseOpenApiDocument', () => {
       }
     };
 
-    spyOn(api, 'parseApis');
+    jest.spyOn(api, 'parseApis');
 
     const parsedDocument = await parseOpenApiDocument(
       input,

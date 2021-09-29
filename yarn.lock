@@ -1752,15 +1752,14 @@
     antlr4 "4.8.0"
 
 "@sap/cds-dk@^4.0.7":
-  version "4.4.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.4.2.tgz#0838440e470aa55722e02a4f4b145a77de7158f0"
-  integrity sha512-ckfyHfCWE17PO5q/WkxhOLo/M/IDjrIRWbknLnSs44WNmbwmraQO/lJ96soNGY/RgZ30JFHQMdxrKZV8co7/pw==
+  version "4.5.0"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.5.0.tgz#03dba5de09a8fdc10a0b28edbb3f4dc30ade9708"
+  integrity sha512-wwxrB3yu+ZYuTfbZzHR5+Ls76YikaQuHaOC9FamoCY9pCEbkYEhQh6oLoHR9cuc+yKXPB/puldWgSfm/mgCoew==
   dependencies:
-    "@sap/cds" "^5.4.0"
+    "@sap/cds" "^5.5.0"
     "@sap/cds-foss" "^3"
-    "@sap/cds-sidecar-client" "^1.1.23"
-    "@sap/eslint-plugin-cds" "2.0.4"
-    axios "^0.21.0"
+    "@sap/eslint-plugin-cds" "^2.1.0"
+    axios "^0.21.4"
     connect-livereload "^0.6.1"
     eslint "^7.0.0"
     express "^4.17.1"
@@ -1787,15 +1786,7 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds-sidecar-client@^1.1.23":
-  version "1.1.23"
-  resolved "https://registry.npmjs.org/@sap/cds-sidecar-client/-/cds-sidecar-client-1.1.23.tgz#d928ce33809587724dc30da4b83ce99131eeda66"
-  integrity sha512-4IQStF2NJnqECLU0e7EohhkmCeSc2QjGJ/bcewegoJl+x4IBOu8LzkgJaSGirzT7INuy/Z4BOJVkVh1Ek+P5Qw==
-  dependencies:
-    axios "^0.21.1"
-    fs-extra "9.0.1"
-
-"@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.4.0":
+"@sap/cds@^5.0.0", "@sap/cds@^5.0.6", "@sap/cds@^5.5.0":
   version "5.5.1"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.5.1.tgz#befab3636dc25a5f5e92a1504a9042fca1e596cf"
   integrity sha512-8XkYO17kYTyuxn4A5LQtH01tO+y3GgiSpD7vUiB+M9Velo4jIcBwy4KcaJxPy/GUuX/8pBU9MVUGxZaQ5v0ebw==
@@ -1822,10 +1813,10 @@
     request "=2.88.0"
     xml-js "=1.6.8"
 
-"@sap/eslint-plugin-cds@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-2.0.4.tgz#f7adfad2e290e655a122b48d244d8d55cf3663d3"
-  integrity sha512-lKH5rXCogV4DDf9N+J5a6FUqB/YQRIzpRQcQCg7BvA+nTHXiOt2aBf4SYVunkic6d88j5uapHqIl0D6x0rHFsA==
+"@sap/eslint-plugin-cds@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-2.1.0.tgz#dd1e88d1c653ba1fc6de54d6675f2cea4584aa85"
+  integrity sha512-RbFoLx/RQjfxPCS+g7HD9jvnhzhxjOe54C27l8bEttf+5/uYHJWQeqD7yz6TC6qtEqHhGBmdm/zerLqXkddIyA==
   dependencies:
     "@sap/cds" "^5.0.0"
     semver "^7.3.4"
@@ -5038,16 +5029,6 @@ fs-extra@10.0.0, fs-extra@^10.0.0:
     graceful-fs "^4.2.0"
     jsonfile "^6.0.1"
     universalify "^2.0.0"
-
-fs-extra@9.0.1:
-  version "9.0.1"
-  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.0.1.tgz#910da0062437ba4c39fedd863f1675ccfefcb9fc"
-  integrity sha512-h2iAoN838FqAFJY2/qVpzFXy+EBxfVE220PalAqQLDVsFOHLJrZvut5puAbCdNv6WJk+B8ihI+k0c7JK5erwqQ==
-  dependencies:
-    at-least-node "^1.0.0"
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^1.0.0"
 
 fs-extra@^6.0.1:
   version "6.0.1"
@@ -10915,11 +10896,6 @@ universalify@^0.1.0, universalify@^0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
-
-universalify@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/universalify/-/universalify-1.0.0.tgz#b61a1da173e8435b2fe3c67d29b9adf8594bd16d"
-  integrity sha512-rb6X1W158d7pRQBg5gkR8uPaSfiids68LTJQYOtEUhoJUWBdaQHsuT/EUduxXYxcrt4r5PJ4fuHW1MHT6p0qug==
 
 universalify@^2.0.0:
   version "2.0.0"

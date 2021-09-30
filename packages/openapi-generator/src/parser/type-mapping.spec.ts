@@ -8,7 +8,7 @@ describe('getType', () => {
 
   it('logs warning for unknown values and returns any', () => {
     const logger = createLogger('openapi-generator');
-    spyOn(logger, 'verbose');
+    jest.spyOn(logger, 'verbose');
     expect(getType('unknown')).toEqual('any');
     expect(logger.verbose).toHaveBeenCalledWith(
       "Could not map type 'unknown' to a native type. Using any."

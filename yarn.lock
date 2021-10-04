@@ -1723,9 +1723,9 @@
     antlr4 "4.8.0"
 
 "@sap/cds-dk@^4.0.7":
-  version "4.5.0"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.5.0.tgz#03dba5de09a8fdc10a0b28edbb3f4dc30ade9708"
-  integrity sha512-wwxrB3yu+ZYuTfbZzHR5+Ls76YikaQuHaOC9FamoCY9pCEbkYEhQh6oLoHR9cuc+yKXPB/puldWgSfm/mgCoew==
+  version "4.5.2"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.5.2.tgz#0a2a0bb95970254564d10a0cc52aa345d4d2a107"
+  integrity sha512-88FVO85voXzOIpMl5mglJpHSBBSBnqP7LYLbPJMIAxEoO3/Xi6x/keJ5ARFfSlPgnUrweySUD47vBrXh2mmS2g==
   dependencies:
     "@sap/cds" "^5.5.0"
     "@sap/cds-foss" "^3"
@@ -1736,6 +1736,7 @@
     express "^4.17.1"
     htmlparser2 "5.0.1"
     livereload-js "^3.3.1"
+    md5 "^2.3.0"
     mustache "^4.0.1"
     node-watch "0.6.4"
     passport "^0.4.1"
@@ -2939,6 +2940,11 @@ chardet@^0.7.0:
   resolved "https://registry.npmjs.org/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
+charenc@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
+  integrity sha1-wKHS86cJLgN3S/qD8UwPxXkKhmc=
+
 charm@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/charm/-/charm-1.0.2.tgz#8add367153a6d9a581331052c4090991da995e35"
@@ -3446,6 +3452,11 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+crypt@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
+  integrity sha1-iNf/fsDfuG9xPch7u0LQRNPmxBs=
 
 cssom@^0.4.4:
   version "0.4.4"
@@ -4397,15 +4408,15 @@ exit@^0.1.2:
   integrity sha1-BjJjj42HfMghB9MKD/8aF8uhzQw=
 
 expect@>=27.2.3, expect@^24.1.0, expect@^27.2.4:
-  version "27.2.3"
-  resolved "https://registry.npmjs.org/expect/-/expect-27.2.3.tgz#9ce766b50c6a5f22edd07ca5510845ac8bcb0b10"
-  integrity sha512-qT+ItBIdpS2QkRzZNGFmqpV2xTjK20gftUnJ4CLmpjdGzpoEtjxb43Y80GraXLtwB+wt5kRmXURINeM3s2fQtQ==
+  version "27.2.4"
+  resolved "https://registry.npmjs.org/expect/-/expect-27.2.4.tgz#4debf546050bcdad8914a8c95fec7662e02bf67c"
+  integrity sha512-gOtuonQ8TCnbNNCSw2fhVzRf8EFYDII4nB5NmG4IEV0rbUnW1I5zXvoTntU4iicB/Uh0oZr20NGlOLdJiwsOZA==
   dependencies:
-    "@jest/types" "^27.2.3"
+    "@jest/types" "^27.2.4"
     ansi-styles "^5.0.0"
     jest-get-type "^27.0.6"
-    jest-matcher-utils "^27.2.3"
-    jest-message-util "^27.2.3"
+    jest-matcher-utils "^27.2.4"
+    jest-message-util "^27.2.4"
     jest-regex-util "^27.0.6"
 
 express@^4.17.1:
@@ -5449,6 +5460,11 @@ is-boolean-object@^1.1.0:
     call-bind "^1.0.2"
     has-tostringtag "^1.0.0"
 
+is-buffer@~1.1.6:
+  version "1.1.6"
+  resolved "https://registry.npmjs.org/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
+  integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
+
 is-callable@^1.1.4, is-callable@^1.2.4:
   version "1.2.4"
   resolved "https://registry.npmjs.org/is-callable/-/is-callable-1.2.4.tgz#47301d58dd0259407865547853df6d61fe471945"
@@ -5856,16 +5872,6 @@ jest-diff@^27.0.0:
     jest-get-type "^27.0.6"
     pretty-format "^27.2.0"
 
-jest-diff@^27.2.3:
-  version "27.2.3"
-  resolved "https://registry.npmjs.org/jest-diff/-/jest-diff-27.2.3.tgz#4298ecc53f7476571d0625e8fda3ade13607a864"
-  integrity sha512-ihRKT1mbm/Lw+vaB1un4BEof3WdfYIXT0VLvEyLUTU3XbIUgyiljis3YzFf2RFn+ECFAeyilqJa35DeeRV2NeQ==
-  dependencies:
-    chalk "^4.0.0"
-    diff-sequences "^27.0.6"
-    jest-get-type "^27.0.6"
-    pretty-format "^27.2.3"
-
 jest-diff@^27.2.4:
   version "27.2.4"
   resolved "https://registry.npmjs.org/jest-diff/-/jest-diff-27.2.4.tgz#171c51d3d2c105c457100fee6e7bf7cee51c8d8c"
@@ -6009,16 +6015,6 @@ jest-matcher-utils@^22.0.0:
     jest-get-type "^22.4.3"
     pretty-format "^22.4.3"
 
-jest-matcher-utils@^27.2.3:
-  version "27.2.3"
-  resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-27.2.3.tgz#db7f992f3921f5004f4de36aafa0c03f2565122a"
-  integrity sha512-8n2/iAEOtNoDxVtUuaGtQdbSVYtZn6saT+PyV8UIf9fJErzDdozjB4fUxJm7TX1DzhhoAKFpIFH8UNvG4942PA==
-  dependencies:
-    chalk "^4.0.0"
-    jest-diff "^27.2.3"
-    jest-get-type "^27.0.6"
-    pretty-format "^27.2.3"
-
 jest-matcher-utils@^27.2.4:
   version "27.2.4"
   resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-27.2.4.tgz#008fff018151415ad1b6cfc083fd70fe1e012525"
@@ -6028,21 +6024,6 @@ jest-matcher-utils@^27.2.4:
     jest-diff "^27.2.4"
     jest-get-type "^27.0.6"
     pretty-format "^27.2.4"
-
-jest-message-util@^27.2.3:
-  version "27.2.3"
-  resolved "https://registry.npmjs.org/jest-message-util/-/jest-message-util-27.2.3.tgz#cd1091a3f0f3ff919756b15cfccc0ba43eeeeff0"
-  integrity sha512-yjVqTQ2Ds1WCGXsTuW0m1uK8RXOE44SJDw7tWUrhn6ZttWDbPmLhH8npDsGGfAmSayKFSo2C0NX0tP2qblc3Gw==
-  dependencies:
-    "@babel/code-frame" "^7.12.13"
-    "@jest/types" "^27.2.3"
-    "@types/stack-utils" "^2.0.0"
-    chalk "^4.0.0"
-    graceful-fs "^4.2.4"
-    micromatch "^4.0.4"
-    pretty-format "^27.2.3"
-    slash "^3.0.0"
-    stack-utils "^2.0.3"
 
 jest-message-util@^27.2.4:
   version "27.2.4"
@@ -6914,6 +6895,15 @@ marked@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/marked/-/marked-3.0.4.tgz#b8a1539e5e05c6ea9e93f15c0bad1d54ce890406"
   integrity sha512-jBo8AOayNaEcvBhNobg6/BLhdsK3NvnKWJg33MAAPbvTWiG4QBn9gpW1+7RssrKu4K1dKlN+0goVQwV41xEfOA==
+
+md5@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/md5/-/md5-2.3.0.tgz#c3da9a6aae3a30b46b7b0c349b87b110dc3bda4f"
+  integrity sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==
+  dependencies:
+    charenc "0.0.2"
+    crypt "0.0.2"
+    is-buffer "~1.1.6"
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -8348,16 +8338,6 @@ pretty-format@^27.0.0, pretty-format@^27.2.0:
   dependencies:
     "@jest/types" "^27.1.1"
     ansi-regex "^5.0.0"
-    ansi-styles "^5.0.0"
-    react-is "^17.0.1"
-
-pretty-format@^27.2.3:
-  version "27.2.3"
-  resolved "https://registry.npmjs.org/pretty-format/-/pretty-format-27.2.3.tgz#c76710de6ebd8b1b412a5668bacf4a6c2f21a029"
-  integrity sha512-wvg2HzuGKKEE/nKY4VdQ/LM8w8pRZvp0XpqhwgaZBbjTwd5UdF2I4wvwZjyUwu8G+HI6g4t6u9b2FZlKhlzxcQ==
-  dependencies:
-    "@jest/types" "^27.2.3"
-    ansi-regex "^5.0.1"
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 

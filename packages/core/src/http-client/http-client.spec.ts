@@ -445,7 +445,7 @@ describe('generic http client', () => {
         }
       };
 
-      spyOn(csrfHeaders, 'buildCsrfHeaders');
+      jest.spyOn(csrfHeaders, 'buildCsrfHeaders');
       await executeHttpRequest(httpsDestination, config, {
         fetchCsrfToken: true
       });

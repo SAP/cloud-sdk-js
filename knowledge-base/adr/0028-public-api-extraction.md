@@ -10,7 +10,7 @@ For a typescript library it is common to use [barrels](https://basarat.gitbook.i
 A barrel is simply an `index.ts` re-exporting content of other source file.
 As a consumer you can then import all parts of the public API via the root `index.ts`.
 
-In the past we exported everything via a * in the barrels:
+In the past we exported everything via multiple barrel file in each folder and a * in the barrels:
 ```ts
 export * from './some-file.ts'
 ```
@@ -23,8 +23,8 @@ This ADR proposes a way to improve the situation.
 ## API Categories 
 
 Our new strategy should provide the following options:
-- `Exported Public API`: This is a cautious decision and consumer can rely on stable contract for minor versions.
-- `Exported Internal API`: Exported for technical reasons but not meant to be used by consumer so no stable contract.
+- `Exported Public API`: This is a cautious decision and consumer can rely on stable contract for minor versions. This API is reachable via the root level import.
+- `Exported Internal API`: Exported for technical reasons but not meant to be used by consumer so no stable contract. This API is not accessible without [dirty tricks](https://www.goodreads.com/quotes/7714510-c-protects-against-accident-not-against-fraud).
 - `Not exported`: Should be used wherever possible
 
 Each object like constant, function, interface, type, class **must** be in one of the categories.
@@ -40,15 +40,19 @@ To have a minimal API exposed here one has to avoid `*` in the export statements
 
 There are tools like [barrelsby](https://github.com/bencoveney/barrelsby#readme) to create the barrels for you.
 However, these tools do not create named minimal exports.
-Hence, we propose the following flow:
+Hence, we propose the following approach:
 
-1. Maintain minimal named exports in the root `index.ts`.
-2. Maintain `@internal` annotation and `stripInternal` compiler option on parts of the internal API.
+- You go over the code and manually maintain the API:
+  1. Use `@internal` annotation and `stripInternal` compiler option for parts the internal API.
+  This removes the internal API form  the `d.ts` files. 
+  2. Maintain minimal named exports in the root `index.ts` pointing to the objects of the public API.
+  This creates also minimal module exports in the JavaScript usecase.
 
-The two points should lead the same API and are used to build checks.
-We plan the following automation:
-- Have a check to avoid `export * from 'ABC'` in the root `index.ts`.
-- Have a check to enforce `export * from 'ABC'` for barrel file below the root.
+This is a large manual effort initially and seems to be redundant because the minimal `index.ts` alone would already do the trick. 
+However, the double maintenance makes better check rules possible.
+We plan to implement the following checks:
+- Have a check to avoid any `*` exports in the root `index.ts`.
+- Have a check to enforce a single `index.ts` on root level specifying all public exports.
 - Have a check to enforce exposed object from `d.ts` match the named exports of the root `index.ts`. 
    - A missing value in the `index.ts` denotes: You have exported something in the code but not added it to the relevant barrel or missed the `@internal`.
    - A missing value in the `d.ts` denotes: You have violated the API contract and marked a previously exported object as `@internal`. 

@@ -37,7 +37,7 @@
     "@sap/xsenv": "^3.0.0",
     "@sap/xssec": "^3.2.7",
     "@types/jsonwebtoken": "^8.3.8",
-    "axios": "^0.21.1",
+    "axios": "^0.22.0",
     "bignumber.js": "^9.0.0",
     "http-proxy-agent": "^5.0.0",
     "https-proxy-agent": "^5.0.0",

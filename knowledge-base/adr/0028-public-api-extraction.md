@@ -12,7 +12,7 @@ As a consumer you can then import all parts of the public API via the root `inde
 
 In the past we exported everything via a * in the barrels:
 ```ts
-export * from '.some-file.ts'
+export * from './some-file.ts'
 ```
 This was convenient for us, but we had no distinction between:
 - This is part of the `public` API where a consumer can rely on stability.

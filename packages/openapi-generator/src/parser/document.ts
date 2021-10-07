@@ -26,6 +26,7 @@ export async function parseOpenApiDocument(
   return {
     apis: parseApis(document, refs, options),
     serviceName: serviceOptions.serviceName,
+    serviceDescription: document.info.description,
     serviceOptions,
     schemas: parseSchemas(document, refs, options)
   };

@@ -20,7 +20,7 @@ The test-util package makes writing tests for your SAP Cloud Platform applicatio
 For example, you can create a mock destination for your tests by using the function `mockTestDestination`.
 
 ```
-import { mockTestDestination } from '@sap-cloud-sdk/util';
+import { mockTestDestination } from '@sap-cloud-sdk/test-util';
 mockTestDestination('mockDestinationName');
 ```
 

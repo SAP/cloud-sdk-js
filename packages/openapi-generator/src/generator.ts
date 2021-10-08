@@ -39,15 +39,13 @@ import { convertOpenApiSpec } from './document-converter';
 import { createFile, copyFile } from './file-writer';
 import {
   parseGeneratorOptions,
-  ParsedGeneratorOptions,
   tsconfigJson,
   ServiceOptions,
   OptionsPerService,
   getOptionsPerService,
-  GeneratorOptions2
+  GeneratorOptions
 } from './options';
 import { sdkMetadata } from './sdk-metadata';
-import { GeneratorOptions } from '.';
 
 const { readdir, rmdir, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -67,7 +65,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
  * @param options - Options to configure generation.
  */
 export async function generateWithParsedOptions(
-  options: ParsedGeneratorOptions | GeneratorOptions2
+  options: GeneratorOptions
 ): Promise<void> {
   if (options.input === '' || options.outputDir === '') {
     throw new Error('Either input or outputDir were not set.');
@@ -128,7 +126,7 @@ async function generateSources(
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
   tsConfig: string | undefined,
-  options: ParsedGeneratorOptions | GeneratorOptions2
+  options: GeneratorOptions
 ): Promise<void> {
   await mkdir(serviceDir, { recursive: true });
 
@@ -169,7 +167,7 @@ async function generateSources(
 async function generateMandatorySources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  { overwrite }: ParsedGeneratorOptions | GeneratorOptions2
+  { overwrite }: GeneratorOptions
 ) {
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
@@ -231,7 +229,7 @@ async function createSchemaFiles(
  */
 async function generateService(
   inputFilePath: string,
-  options: ParsedGeneratorOptions | GeneratorOptions2,
+  options: GeneratorOptions,
   serviceOptions: ServiceOptions,
   tsConfig: string | undefined
 ): Promise<void> {
@@ -319,7 +317,7 @@ async function copyAdditionalFiles(
 function generateReadme(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  { overwrite }: ParsedGeneratorOptions | GeneratorOptions2
+  { overwrite }: GeneratorOptions
 ): Promise<void> {
   logger.verbose(`Generating readme in ${serviceDir}.`);
 
@@ -335,7 +333,7 @@ function generateReadme(
 async function generateMetadata(
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
-  { packageVersion, overwrite }: ParsedGeneratorOptions | GeneratorOptions2
+  { packageVersion, overwrite }: GeneratorOptions
 ) {
   const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
   const { clientFileName, headerFileName } =
@@ -370,7 +368,7 @@ async function generateMetadata(
 async function generatePackageJson(
   serviceDir: string,
   { packageName, directoryName }: ServiceOptions,
-  { packageVersion, overwrite }: ParsedGeneratorOptions | GeneratorOptions2
+  { packageVersion, overwrite }: GeneratorOptions
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);
 

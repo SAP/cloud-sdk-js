@@ -4,7 +4,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
 import {
   generate as generateOpenApi,
-  GeneratorOptions
+  GeneratorOptions2
 } from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
 
@@ -39,16 +39,22 @@ const generatorConfigOData = {
   s4hanaCloud: false
 };
 
-const generatorConfigOpenApi: GeneratorOptions = {
+const generatorConfigOpenApi: GeneratorOptions2 = {
   input: path.resolve('test-resources', 'openapi-service-specs'),
   outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
   clearOutputDir: true,
   transpile: true,
   packageJson: true,
   packageVersion: '1.2.3',
-  include: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',
+  include: [
+    'test-resources/CHANGELOG.md',
+    'test-resources/some-test-markdown.md'
+  ],
   readme: true,
-  skipValidation: true
+  skipValidation: true,
+  overwrite: false,
+  verbose: false,
+  metadata: false
 };
 
 const logger = createLogger('generate-test-service');

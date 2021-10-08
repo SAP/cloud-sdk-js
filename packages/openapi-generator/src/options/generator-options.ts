@@ -1,11 +1,10 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
-import Parser from '@oclif/parser';
+import yargs from 'yargs';
 import { ErrorWithCause, createLogger } from '@sap-cloud-sdk/util';
-import { OpenApiGenerator } from '../cli';
-import { generatorFlags } from './flags';
-const { readFile, lstat } = promises;
+import { generatorOptions } from './flags';
 
+const { readFile, lstat } = promises;
 const logger = createLogger('openapi-generator');
 
 /**
@@ -13,24 +12,6 @@ const logger = createLogger('openapi-generator');
  * The options match the CLI options.
  */
 export interface GeneratorOptions {
-  input: string;
-  outputDir: string;
-  transpile?: boolean;
-  include?: string;
-  clearOutputDir?: boolean;
-  skipValidation?: boolean;
-  tsConfig?: string;
-  packageJson?: boolean;
-  optionsPerService?: string;
-  packageVersion?: string;
-  readme?: boolean;
-  metadata?: boolean;
-  verbose?: boolean;
-  overwrite?: boolean;
-  config?: string;
-}
-
-export interface GeneratorOptions2 {
   input: string;
   outputDir: string;
   transpile: boolean;
@@ -49,12 +30,6 @@ export interface GeneratorOptions2 {
 }
 
 /**
- * Parsed options with default values.
- */
-export type ParsedGeneratorOptions =
-  typeof OpenApiGenerator extends Parser.Input<infer F> ? F : never;
-
-/**
  * Parse the given generator options for programmatic use.
  * This function is only used when invoking the generator programmatically.
  * It parses the options that were passed to [[generate]] and sets default values where necessary.
@@ -64,18 +39,18 @@ export type ParsedGeneratorOptions =
  */
 export function parseGeneratorOptions(
   options: GeneratorOptions
-): ParsedGeneratorOptions {
-  return Object.entries(generatorFlags).reduce(
-    (parsedOptions, [name, flag]) => {
+): GeneratorOptions {
+  return Object.entries(generatorOptions).reduce(
+    (parsedOptions, [name, flag]: [string, yargs.Options]) => {
       const value = options[name];
       if (typeof value !== 'undefined') {
-        parsedOptions[name] = flag.parse(value as never, undefined);
+        parsedOptions[name] = value;
       } else if (typeof flag.default !== 'undefined') {
         parsedOptions[name] = flag.default;
       }
       return parsedOptions;
     },
-    {} as ParsedGeneratorOptions
+    {} as GeneratorOptions
   );
 }
 
@@ -91,15 +66,15 @@ export async function parseOptionsFromConfig(
     if ((await lstat(configPath)).isDirectory()) {
       configPath = resolve(configPath, 'config.json');
     }
-    const generatorOptions = JSON.parse(await readFile(configPath, 'utf8'));
-    Object.keys(generatorOptions).forEach(key => {
-      if (!Object.keys(generatorFlags).includes(key)) {
+    const generatorOpts = JSON.parse(await readFile(configPath, 'utf8'));
+    Object.keys(generatorOpts).forEach(key => {
+      if (!Object.keys(generatorOptions).includes(key)) {
         logger.warn(
           `"${key}" is not part of the configuration and will be ignored.`
         );
       }
     });
-    return generatorOptions;
+    return generatorOpts;
   } catch (err) {
     throw new ErrorWithCause(
       `Could not read configuration file at ${configPath}.`,
@@ -115,7 +90,7 @@ export async function parseOptionsFromConfig(
  * @returns generator options that were used in the raw input
  */
 export function getSpecifiedFlags(
-  options: ParsedGeneratorOptions | GeneratorOptions2,
+  options: GeneratorOptions,
   rawInputFlags: string[]
 ): GeneratorOptions {
   return rawInputFlags.reduce((reducedOptions, name) => {

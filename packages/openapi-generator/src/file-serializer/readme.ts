@@ -42,9 +42,10 @@ function addUsageExample(openApiDocument: OpenApiDocument): string[] {
   if (usageText.instructions) {
     return [
       `## ${usageText.header}`,
-      '~~~',
+      '```',
       `${usageText.instructions}`,
-      '~~~'
+      '```',
+      ''
     ];
   }
   return [];

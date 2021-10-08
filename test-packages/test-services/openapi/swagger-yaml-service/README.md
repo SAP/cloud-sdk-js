@@ -4,11 +4,12 @@ This package contains the OpenAPI client for the swagger-yaml-service.
 Test Service for OpenAPI version 2 aka. Swagger as YAML file.
 
 ## Usage Example
-~~~
+```
 import { DefaultApi } from 'swagger-yaml-service';
 
 const responseData = await DefaultApi.postEntity(pathParam).execute({ destinationName:'myDestinationName' });
-~~~
+```
+
 ## Helpful Links
 
 - [SAP Cloud SDK](https://github.com/SAP/cloud-sdk-js)

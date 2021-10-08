@@ -4,11 +4,12 @@ This package contains the OpenAPI client for the no-schema-service.
 
 
 ## Usage Example
-~~~
+```
 import { DefaultApi } from 'no-schema-service';
 
 const responseData = await DefaultApi.get().execute({ destinationName:'myDestinationName' });
-~~~
+```
+
 ## Helpful Links
 
 - [SAP Cloud SDK](https://github.com/SAP/cloud-sdk-js)

@@ -4,11 +4,12 @@ This package contains the OpenAPI client for the test-service.
 Test API
 
 ## Usage Example
-~~~
+```
 import { TestCaseApi } from 'test-service';
 
 const responseData = await TestCaseApi.duplicateOperationId().execute({ destinationName:'myDestinationName' });
-~~~
+```
+
 ## Helpful Links
 
 - [SAP Cloud SDK](https://github.com/SAP/cloud-sdk-js)

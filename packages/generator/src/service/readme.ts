@@ -78,9 +78,10 @@ function addUsageExample(service: VdmServiceMetadata): string[] {
   if (usageText.instructions) {
     return [
       `## ${usageText.header}`,
-      '~~~',
+      '```',
       `${usageText.instructions}`,
-      '~~~'
+      '```',
+      ''
     ];
   }
   return [];

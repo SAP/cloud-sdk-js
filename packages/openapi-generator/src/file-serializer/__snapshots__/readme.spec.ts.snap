@@ -27,11 +27,12 @@ This package contains the OpenAPI client for the WorkflowAPI.
 With the API, you can, for example, start new workflow instances and work with tasks.
 
 ## Usage Example
-~~~
+\`\`\`
 import { testApi } from '@sap-cloud-sdk/workflow-service';
 
 const responseData = await testApi.getAll().execute({ destinationName:'myDestinationName' });
-~~~
+\`\`\`
+
 ## Helpful Links
 
 - [SAP Cloud SDK](https://github.com/SAP/cloud-sdk-js)

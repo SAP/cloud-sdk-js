@@ -287,15 +287,26 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
 // TODO 1728 move to a new package to reduce code duplication.
 async function copyAdditionalFiles(
   serviceDir: string,
-  additionalFiles: string,
+  additionalFiles: string | string[],
   overwrite: boolean
 ): Promise<void[]> {
   logger.verbose(
     `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
   );
 
+  if (typeof additionalFiles === 'string') {
+    return Promise.all(
+      new GlobSync(additionalFiles!).found.map(filePath =>
+        copyFile(
+          resolve(filePath),
+          join(serviceDir, basename(filePath)),
+          overwrite
+        )
+      )
+    );
+  }
   return Promise.all(
-    new GlobSync(additionalFiles!).found.map(filePath =>
+    additionalFiles.map(filePath =>
       copyFile(
         resolve(filePath),
         join(serviceDir, basename(filePath)),
@@ -308,7 +319,7 @@ async function copyAdditionalFiles(
 function generateReadme(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
+  { overwrite }: ParsedGeneratorOptions | GeneratorOptions2
 ): Promise<void> {
   logger.verbose(`Generating readme in ${serviceDir}.`);
 
@@ -316,7 +327,7 @@ function generateReadme(
     serviceDir,
     'README.md',
     readme(openApiDocument),
-    options.overwrite,
+    overwrite,
     false
   );
 }
@@ -324,7 +335,7 @@ function generateReadme(
 async function generateMetadata(
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
-  { packageVersion, overwrite }: ParsedGeneratorOptions
+  { packageVersion, overwrite }: ParsedGeneratorOptions | GeneratorOptions2
 ) {
   const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
   const { clientFileName, headerFileName } =
@@ -359,7 +370,7 @@ async function generateMetadata(
 async function generatePackageJson(
   serviceDir: string,
   { packageName, directoryName }: ServiceOptions,
-  options: ParsedGeneratorOptions
+  { packageVersion, overwrite }: ParsedGeneratorOptions | GeneratorOptions2
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);
 
@@ -370,9 +381,9 @@ async function generatePackageJson(
       packageName,
       genericDescription(directoryName),
       await getSdkVersion(),
-      options.packageVersion
+      packageVersion || '1.0.0'
     ),
-    options.overwrite,
+    overwrite,
     false
   );
 }

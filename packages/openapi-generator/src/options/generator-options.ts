@@ -115,10 +115,10 @@ export async function parseOptionsFromConfig(
  * @returns generator options that were used in the raw input
  */
 export function getSpecifiedFlags(
-  options: ParsedGeneratorOptions,
+  options: ParsedGeneratorOptions | GeneratorOptions2,
   rawInputFlags: string[]
 ): GeneratorOptions {
-  return Object.entries(rawInputFlags).reduce((reducedOptions, [name]) => {
+  return rawInputFlags.reduce((reducedOptions, name) => {
     const value = options[name];
     if (value !== undefined) {
       reducedOptions[name] = value;

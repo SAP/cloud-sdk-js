@@ -27,7 +27,7 @@ export async function parseCmdArgs(): Promise<void> {
       ...(await parseOptionsFromConfig(argv.config)),
       ...getSpecifiedFlags(
         argv,
-        (parsed.raw as FlagToken[]).map(({ flag }) => flag)
+        Object.keys(await yargs(hideBin(process.argv)).argv)
       )
     });
   } else {

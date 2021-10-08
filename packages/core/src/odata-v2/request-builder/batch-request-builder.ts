@@ -3,7 +3,7 @@ import {
   Destination,
   DestinationNameAndJwt,
   DestinationOptions
-} from '../../connectivity/scp-cf';
+} from '@sap-cloud-sdk/connectivity';
 import {
   BatchRequestBuilder,
   deserializeBatchResponse,

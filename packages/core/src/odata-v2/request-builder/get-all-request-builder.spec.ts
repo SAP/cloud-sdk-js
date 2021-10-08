@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { parseDestination, wrapJwtInHeader } from '@sap-cloud-sdk/connectivity';
 import {
   defaultDestination,
   mockDestinationsEnv,
@@ -26,7 +27,6 @@ import {
   onlyIssuerServiceToken,
   onlyIssuerXsuaaUrl
 } from '../../../test/test-util';
-import { parseDestination, wrapJwtInHeader } from '../../connectivity';
 import * as httpClient from '../../http-client/http-client';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 

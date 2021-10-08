@@ -11,10 +11,10 @@ import {
   Destination,
   DestinationNameAndJwt,
   toDestinationNameUrl,
-  useOrFetchDestination
-} from '../connectivity/scp-cf';
+  useOrFetchDestination,
+  getAgentConfig
+} from '@sap-cloud-sdk/connectivity';
 import { buildCsrfHeaders } from '../http-client';
-import { getAgentConfig } from '../http-agent/http-agent';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,

@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { basicHeader, ServiceCredentials } from '../../src/connectivity/scp-cf';
+import { basicHeader, ServiceCredentials } from '@sap-cloud-sdk/connectivity';
 
 export function mockClientCredentialsGrantCall(
   uri: string,

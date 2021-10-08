@@ -1,3 +1,4 @@
+import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
   batch,
   TestEntity
@@ -7,7 +8,6 @@ import {
   createChangeSetWithFakeId
 } from '../../../../test/test-util/batch-test-util';
 import { ODataBatchRequestConfig } from '../../request';
-import { Destination } from '../../../connectivity';
 import {
   serializeBatchRequest,
   serializeChangeSet,

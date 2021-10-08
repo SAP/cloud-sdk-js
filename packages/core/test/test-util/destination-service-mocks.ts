@@ -1,5 +1,5 @@
 import nock from 'nock';
-import * as sdkJwt from '../../src/connectivity/scp-cf/jwt';
+import * as sdkJwt from '@sap-cloud-sdk/connectivity';
 import { destinationServiceUri } from './environment-mocks';
 
 type nockFunction = (a: string, b: nock.Options) => nock.Scope;

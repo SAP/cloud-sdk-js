@@ -10,7 +10,7 @@ import {
   Destination,
   sanitizeDestination,
   buildHeadersForDestination
-} from '../../connectivity';
+} from '@sap-cloud-sdk/connectivity';
 import {
   removeLeadingSlashes,
   removeSlashes,

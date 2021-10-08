@@ -16,7 +16,7 @@ import {
   parseDestination,
   sanitizeDestination,
   wrapJwtInHeader
-} from '../connectivity';
+} from '../../../connectivity/src';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {

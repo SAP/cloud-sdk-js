@@ -3,7 +3,7 @@ import {
   Destination,
   DestinationNameAndJwt,
   DestinationOptions
-} from '../connectivity/scp-cf';
+} from '@sap-cloud-sdk/connectivity';
 import { BatchResponse } from '../odata-common';
 import { parseBatchResponse } from '../odata-common/request-builder/batch/batch-response-parser';
 import { BatchRequestBuilder } from '../odata-common/request-builder/batch/batch-request-builder';

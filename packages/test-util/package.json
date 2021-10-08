@@ -30,7 +30,7 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/core": "^1.50.0",
+    "@sap-cloud-sdk/connectivity": "^2.0.0",
     "@sap-cloud-sdk/util": "^1.50.0",
     "mock-fs": "^5.0.0"
   }

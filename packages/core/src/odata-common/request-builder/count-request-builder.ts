@@ -1,10 +1,10 @@
-import { Entity } from '../entity';
-import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import {
   DestinationOptions,
   Destination,
   DestinationNameAndJwt
-} from '../../connectivity/scp-cf';
+} from '@sap-cloud-sdk/connectivity';
+import { Entity } from '../entity';
+import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
 import { HttpResponse } from '../../http-client';
 import type { GetAllRequestBuilder } from './get-all-request-builder-base';

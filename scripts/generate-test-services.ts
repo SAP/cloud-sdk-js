@@ -2,10 +2,7 @@ import { promises, Dirent } from 'fs';
 import path from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
-import {
-  generate as generateOpenApi,
-  GeneratorOptions2
-} from '../packages/openapi-generator/src';
+import { generate as generateOpenApi } from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
 
 const { readFile, readdir, writeFile } = promises;
@@ -39,7 +36,7 @@ const generatorConfigOData = {
   s4hanaCloud: false
 };
 
-const generatorConfigOpenApi: GeneratorOptions2 = {
+const generatorConfigOpenApi: Partial<GeneratorOptions> = {
   input: path.resolve('test-resources', 'openapi-service-specs'),
   outputDir: path.resolve('test-packages', 'test-services', 'openapi'),
   clearOutputDir: true,
@@ -50,11 +47,7 @@ const generatorConfigOpenApi: GeneratorOptions2 = {
     'test-resources/CHANGELOG.md',
     'test-resources/some-test-markdown.md'
   ],
-  readme: true,
-  skipValidation: true,
-  overwrite: false,
-  verbose: false,
-  metadata: false
+  readme: true
 };
 
 const logger = createLogger('generate-test-service');
@@ -72,7 +65,7 @@ function generateTestServicesPackage(
 }
 
 async function generateTestServicesWithLocalCoreModules(
-  outputDirBase,
+  outputDirBase: string,
   version: ODataVersion | 'openapi'
 ): Promise<void> {
   const outputDir = path.resolve(outputDirBase, version);
@@ -106,13 +99,15 @@ async function generateTestServicesWithLocalCoreModules(
     )
   );
 
-  function readServiceDirectories() {
-    return readdir(outputDir).catch(dirErr => {
+  async function readServiceDirectories() {
+    try {
+      return readdir(outputDir);
+    } catch (dirErr) {
       throw Error(`Reading output directory failed: ${dirErr}`);
-    });
+    }
   }
 
-  function readServiceDirectory(serviceDirectory): Promise<Dirent[]> {
+  async function readServiceDirectory(serviceDirectory): Promise<Dirent[]> {
     return readdir(path.resolve(outputDir, serviceDirectory), {
       withFileTypes: true
     }).catch(serviceDirErr => {
@@ -120,7 +115,7 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  function readServiceFile(serviceDirectory, file) {
+  async function readServiceFile(serviceDirectory, file) {
     return readFile(path.resolve(outputDir, serviceDirectory, file), {
       encoding: 'utf8'
     }).catch(fileReadErr => {
@@ -128,7 +123,7 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  function replaceWithLocalModules(serviceDirectory, file, data) {
+  async function replaceWithLocalModules(serviceDirectory, file, data) {
     return writeFile(
       path.resolve(outputDir, serviceDirectory, file),
       data.replace('@sap-cloud-sdk/core', '../../../../../src'),

@@ -23,7 +23,7 @@ export interface GeneratorOptions {
   packageJson: boolean;
   verbose: boolean;
   optionsPerService?: string;
-  packageVersion?: string;
+  packageVersion: string;
   readme: boolean;
   metadata: boolean;
   config?: string;
@@ -38,7 +38,7 @@ export interface GeneratorOptions {
  * @returns Parsed options with default values.
  */
 export function parseGeneratorOptions(
-  options: GeneratorOptions
+  options: Partial<GeneratorOptions>
 ): GeneratorOptions {
   return Object.entries(generatorOptions).reduce(
     (parsedOptions, [name, flag]: [string, yargs.Options]) => {
@@ -92,12 +92,12 @@ export async function parseOptionsFromConfig(
 export function getSpecifiedFlags(
   options: GeneratorOptions,
   rawInputFlags: string[]
-): GeneratorOptions {
+): Partial<GeneratorOptions> {
   return rawInputFlags.reduce((reducedOptions, name) => {
     const value = options[name];
     if (value !== undefined) {
       reducedOptions[name] = value;
     }
     return reducedOptions;
-  }, {} as GeneratorOptions);
+  }, {} as Partial<GeneratorOptions>);
 }

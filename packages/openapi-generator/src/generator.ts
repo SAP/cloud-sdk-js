@@ -16,7 +16,6 @@ import {
   setLogLevel,
   formatJson
 } from '@sap-cloud-sdk/util';
-import { GlobSync } from 'glob';
 import {
   getSdkMetadataFileNames,
   getSdkVersion,
@@ -168,24 +167,24 @@ async function generateMandatorySources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
   { overwrite }: GeneratorOptions
-) {
+): Promise<void> {
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
-    await createSchemaFiles(schemaDir, openApiDocument, !!overwrite);
+    await createSchemaFiles(schemaDir, openApiDocument, overwrite);
     await createFile(
       schemaDir,
       'index.ts',
       schemaIndexFile(openApiDocument),
-      !!overwrite
+      overwrite
     );
   }
 
-  await createApis(serviceDir, openApiDocument, !!overwrite);
+  await createApis(serviceDir, openApiDocument, overwrite);
   await createFile(
     serviceDir,
     'index.ts',
     apiIndexFile(openApiDocument),
-    !!overwrite
+    overwrite
   );
 }
 
@@ -285,24 +284,13 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
 // TODO 1728 move to a new package to reduce code duplication.
 async function copyAdditionalFiles(
   serviceDir: string,
-  additionalFiles: string | string[],
+  additionalFiles: string[],
   overwrite: boolean
 ): Promise<void[]> {
   logger.verbose(
     `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
   );
 
-  if (typeof additionalFiles === 'string') {
-    return Promise.all(
-      new GlobSync(additionalFiles!).found.map(filePath =>
-        copyFile(
-          resolve(filePath),
-          join(serviceDir, basename(filePath)),
-          overwrite
-        )
-      )
-    );
-  }
   return Promise.all(
     additionalFiles.map(filePath =>
       copyFile(
@@ -379,7 +367,7 @@ async function generatePackageJson(
       packageName,
       genericDescription(directoryName),
       await getSdkVersion(),
-      packageVersion || '1.0.0'
+      packageVersion
     ),
     overwrite,
     false

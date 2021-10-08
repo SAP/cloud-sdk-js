@@ -1,7 +1,7 @@
 # swagger-yaml-service
 
 This package contains the OpenAPI client for the swagger-yaml-service.
-Test Service for OpenAPI version 2 aka. Swagger as YAML file.
+Test Service for OpenAPI version 2 (also known as Swagger) as YAML file.
 
 ## Usage Example
 ```

@@ -252,6 +252,33 @@ describe('generic http client', () => {
       expect(response.headers).toMatchObject({ sharp: 'header' });
     });
 
+    it('logs request information', async () => {
+      nock('https://example.com', {
+        reqheaders: {
+          authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
+          'sap-client': '001'
+        }
+      })
+        .get('/api/entity')
+        .reply(200, { res: 'ult' }, { sharp: 'header' });
+
+      const config = {
+        method: HttpMethod.GET,
+        url: '/api/entity'
+      };
+      const logger = createLogger({
+        package: 'core',
+        messageContext: 'http-client'
+      });
+      const debugSpy = jest.spyOn(logger, 'debug');
+      const response = await executeHttpRequest(httpsDestination, config);
+      expect(debugSpy)
+        .toHaveBeenCalledWith(`Execute 'GET' request with target: /api/entity.
+The headers of the request are:
+authorization:*******
+sap-client:001`);
+    });
+
     it('also works also in more complex cases in more complex cases', async () => {
       nock('https://custom.example.com', {
         reqheaders: {

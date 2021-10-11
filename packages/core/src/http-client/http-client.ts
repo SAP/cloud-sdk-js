@@ -108,10 +108,15 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
 
 function logRequestInformation(request: HttpRequestConfig) {
   const basicRequestInfo = `Execute '${request.method}' request with target: ${request.url}.`;
-  const headerText = Object.keys(request.headers).reduce(
-    (previous, key) => `${previous}${unixEOL}${key}:${request.headers[key]}`,
-    'The headers of the request are:'
-  );
+  const headerText = Object.keys(request.headers).reduce((previous, key) => {
+    if (
+      key.toLowerCase().includes('authentication') ||
+      key.toLowerCase().includes('authorization')
+    ) {
+      return `${previous}${unixEOL}${key}:*******`;
+    }
+    return `${previous}${unixEOL}${key}:${request.headers[key]}`;
+  }, 'The headers of the request are:');
   logger.debug(`${basicRequestInfo}${unixEOL}${headerText}`);
 }
 

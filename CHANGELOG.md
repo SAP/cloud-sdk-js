@@ -28,7 +28,7 @@
 
 - [core] Fix a type error, when `moment()` is used in filtering an OData field of type `Edm.DateTimeOffset`
 - [core] Fix missing `Proxy-Authorization` header if custom authorization headers are set.
-- [core] Fix warning that custom headers are given and will overwrite destination headers.
+- [core] Remove wrongly given warning that custom headers are given and will overwrite destination headers.
 
 
 # 1.49.0

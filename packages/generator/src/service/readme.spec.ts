@@ -66,4 +66,20 @@ ${getExpectedHelpfulLinks()}
 `
     );
   });
+
+  it('does not create usage example if none exist', () => {
+    expect(
+      readme({
+        npmPackageName,
+        speakingModuleName
+      } as VdmServiceMetadata)
+    ).toBe(
+      `# business-partner-service
+
+This package contains the OData VDM for the Business Partner Service.
+
+${getExpectedHelpfulLinks()}
+`
+    );
+  });
 });

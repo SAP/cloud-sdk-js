@@ -11,6 +11,11 @@ export interface OpenApiDocument {
   serviceName: string;
 
   /**
+   * Description of the service. This is used for documentation.
+   */
+  serviceDescription?: string;
+
+  /**
    * Configuration as defined in the options per service.
    */
   serviceOptions: ServiceOptions;

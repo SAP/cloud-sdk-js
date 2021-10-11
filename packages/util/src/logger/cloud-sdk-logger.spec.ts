@@ -199,6 +199,13 @@ describe('Cloud SDK Logger', () => {
       setLogLevel(level, logger);
       expect(logger.level).toEqual(level);
     });
+
+    it('set global log level after logger creation should override the log level', () => {
+      logger = createLogger({ messageContext: messageContext, level: level});
+      setGlobalLogLevel('error');
+
+      expect(getGlobalLogLevel()).toEqual(logger.level);
+    });
   });
 
   describe('set global log level', () => {

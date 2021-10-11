@@ -54,7 +54,9 @@ const logger = createLogger('openapi-generator');
  * Generates models and API files.
  * @param options - Options to configure generation.
  */
-export async function generate(options: GeneratorOptions): Promise<void> {
+export async function generate(
+  options: Partial<GeneratorOptions>
+): Promise<void> {
   return generateWithParsedOptions(parseGeneratorOptions(options));
 }
 

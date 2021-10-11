@@ -2,7 +2,10 @@ import { promises, Dirent } from 'fs';
 import path from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
-import { generate as generateOpenApi } from '../packages/openapi-generator/src';
+import {
+  generate as generateOpenApi,
+  GeneratorOptions
+} from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
 
 const { readFile, readdir, writeFile } = promises;

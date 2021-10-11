@@ -7,7 +7,7 @@ Those that are checked by lint are marked by the following symbol: ✓.
 #### Table of Contents
 
 - [Naming](#naming)
-  - [Use kebap case for file names](#use-kebap-case-for-file-names)
+  - [Use kebab case for file names](#use-kebab-case-for-file-names)
   - [Use camel case for variable names ✓](#use-camel-case-for-variable-names-)
   - [Use pascal case for classes ✓](#use-pascal-case-for-classes-)
   - [Use pascal case for interface names and don't prefix them](#use-pascal-case-for-interface-names-and-dont-prefix-them)
@@ -45,9 +45,9 @@ Those that are checked by lint are marked by the following symbol: ✓.
 
 ## Naming
 
-### Use kebap case for file names
+### Use kebab case for file names
 
-Use kebap case for all file names and directories, except for generated files and markdown files, that are not in the knowledge base.
+Use kebab case for all file names and directories, except for generated files and markdown files, that are not in the knowledge base.
 
 ❌ Examples of **incorrect** code:
 
@@ -65,7 +65,7 @@ some_dir / some_class.ts;
 ✅ Examples of **correct** code:
 
 ```ts
-/* Use kebap case */
+/* Use kebab case */
 some-dir/some-class.ts
 
 /* Exceptions apply for generated files and some markdown files */
@@ -122,7 +122,7 @@ class FooBar {
 ### Use pascal case for interface names and don't prefix them
 
 Pascal case is common in most JavaScript/TypeScript projects for interfaces.
-Don't prefix interfaces with the hungarian notation 'I' (or other prefixes).
+Don't prefix interfaces with the Hungarian notation 'I' (or other prefixes).
 If you have a class with the same name as an interface, consider a more general name for the interface or a more specific name for the class - if they are different things it should be possible to name them differently.
 
 ❌ Examples of **incorrect** code:
@@ -200,7 +200,7 @@ function parseJson() { ... }
 
 Every function should do something and that action should be described with a verb.
 The verb should fit the return type and value.
-An exception to this can be methods, that operate on an instance directly, e. g. `instance.toString()`, `instance.asObject()`.
+An exception to this can be methods, that operate on an instance directly, e.g. `instance.toString()`, `instance.asObject()`.
 
 ❌ Examples of **incorrect** code:
 
@@ -253,7 +253,7 @@ class FooBar {
 
 ### Use single quotes ✓
 
-Use single quotes, unless not possible otherwise, e. g. when your string contains single quotes.
+Use single quotes, unless not possible otherwise, e.g. when your string contains single quotes.
 
 ❌ Examples of **incorrect** code:
 
@@ -301,7 +301,7 @@ const foo = `foo ${fn(bar + 'bar')}`;
 ### Use `.forEach` and other array functions rather than `for`
 
 Use the functional language concepts of JavaScript in favor of the imperative ones, when possible.
-Use the correct function for your use case (e. g. `.map`, `.reduce`, `.filter`, `.find`, `.some`, `.every`).
+Use the correct function for your use case (e.g. `.map`, `.reduce`, `.filter`, `.find`, `.some`, `.every`).
 In some cases it makes sense to resort to the imperative `for`, for example, when performance is of the essence, if you have to iterate over every n-th element or if you want to execute asynchronous actions sequentially.
 Be aware of the effects of asynchronicity.
 The callback passed to `.forEach` is invoked for every item of a list sequentially.
@@ -395,7 +395,7 @@ function foo(obj: SomeType | undefined) {
 ### Use `null` for intentional explicit absence of values or if it is part of an external API
 
 If a value can both be non-existent and intentionally absent and those states are semantically different it may make sense to allow the usage of `null`.
-Those cases should however be rather rare and are more common when calling external APIs, e. g. through HTTP requests.
+Those cases should however be rather rare and are more common when calling external APIs, e.g. through HTTP requests.
 Consider whether there is a better API design that might avoid this.
 
 ❌ Examples of **incorrect** code:
@@ -425,7 +425,7 @@ function foo(obj: SomeType | null | undefined) {
 ### Use truthy/falsy checks where possible
 
 In most cases it is possible to check for truthiness/falsiness instead of explicitly comparing values.
-This should be used when possible, but carefully considered in cases where falsy values are valid and therefore semantically truthy values, e. g. 0, ''.
+This should be used when possible, but carefully considered in cases where falsy values are valid and therefore semantically truthy values, e.g. 0, ''.
 Therefore, when checking for existence of primitives, don't use truthy/falsy checks.
 Of course, more fine granular checks should be applied if semantically needed.
 
@@ -433,37 +433,37 @@ Of course, more fine granular checks should be applied if semantically needed.
 
 ```ts
 /* Don't use explicit comparison with `undefined` for objects */
-if(obj !== undefined) { ... }
+if (obj !== undefined) { ... }
 
 /* Don't use truthy/falsy checks for existence of primitives */
 function checkIfExist(obj: string | number) {
-  if(obj) { ... }
+  if (obj) { ... }
 }
 
 /* Don't use explicit comparison for array length (or other numbers)*/
-if(arr.length !== 0) { ... }
+if (arr.length !== 0) { ... }
 
 /* Don't use explicit comparison for booleans */
-if(isFoo !== false) { ... }
+if (isFoo !== false) { ... }
 
 /* Don't use explicit comparison when checking for empty string */
-if(someString !== '') { ... }
+if (someString !== '') { ... }
 ```
 
 ✅ Examples of **correct** code:
 
 ```ts
 /* Use truthy/falsy check for objects */
-if(obj) { ... }
+if (obj) { ... }
 
 /* Use truthy/falsy check for array length (or other numbers)*/
-if(arr.length) { ... }
+if (arr.length) { ... }
 
 /* Use truthy/falsy for booleans */
-if(!isFoo) { ... }
+if (!isFoo) { ... }
 
 /* Use truthy/falsy check when checking for empty string */
-if(someString) { ... }
+if (someString) { ... }
 ```
 
 ## White space
@@ -483,7 +483,7 @@ arr.forEach(item => {
 
 /* Don't use tabs */
 arr.forEach(item => {
-⇥const property = item.property;
+  const property = item.property;
 });
 ```
 
@@ -556,7 +556,7 @@ There should be no empty lines in between, except if it is part of the descripti
 ### Use `@deprecated` tag for deprecation
 
 When deprecating public API, this is done through the TypeDoc comments.
-The first line of the comment should start with `@deprecated` followed by a note mentioning since which version this is deprecated (e. g. `Since v1.0.0.`) and a note of what to use instead (or alternatively that it won't be replaced).
+The first line of the comment should start with `@deprecated` followed by a note mentioning since which version this is deprecated (e.g. `Since v1.0.0.`) and a note of what to use instead (or alternatively that it won't be replaced).
 
 ❌ Examples of **incorrect** code:
 
@@ -616,7 +616,7 @@ The description should end with a full stop.
  */
 ```
 
-### Use @returns if a function has a return value ✓
+### Use `@returns` if a function has a return value ✓
 
 Functions that return something should have an `@returns` statement in the documentation, followed by a description of the return value.
 The description should end with a full stop.
@@ -827,7 +827,7 @@ arr.forEach(item => {
 
 ### Use function declarations to reference functions by name
 
-Arrow functions require less boilerplate code than function declarations, especially if the function returns something directly, e. g. in one-liners.
+Arrow functions require less boilerplate code than function declarations, especially if the function returns something directly, e.g. in one-liners.
 For more complex functions, there is no significant difference.
 Arrow functions cannot be named and therefore have to be assigned to variables - much like function expressions.
 Function declarations are visually easier to differentiate from other variables than functions assigned to variables.

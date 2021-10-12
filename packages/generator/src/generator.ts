@@ -17,12 +17,9 @@ import {
   getSdkMetadataFileNames,
   getVersionForClient,
   sdkMetadataHeader,
-  getSdkVersion,
   transpileDirectory,
   readCompilerOptions
 } from '@sap-cloud-sdk/generator-common';
-import { packageJson as aggregatorPackageJson } from './aggregator-package/package-json';
-import { readme as aggregatorReadme } from './aggregator-package/readme';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
@@ -32,9 +29,7 @@ import {
   GeneratorOptions
 } from './generator-options';
 import {
-  cloudSdkVdmHack,
   hasEntities,
-  npmCompliantName
 } from './generator-utils';
 import { parseAllServices } from './edmx-to-vdm';
 import { requestBuilderSourceFile } from './request-builder/file';

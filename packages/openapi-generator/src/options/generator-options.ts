@@ -82,7 +82,7 @@ export function parseGeneratorOptions(
  */
 export async function parseOptionsFromConfig(
   configPath: string
-): Promise<GeneratorOptions> {
+): Promise<ParsedGeneratorOptions> {
   try {
     if ((await lstat(configPath)).isDirectory()) {
       configPath = resolve(configPath, 'config.json');
@@ -95,7 +95,7 @@ export async function parseOptionsFromConfig(
         );
       }
     });
-    return generatorOpts;
+    return parseGeneratorOptions(generatorOpts);
   } catch (err) {
     throw new ErrorWithCause(
       `Could not read configuration file at ${configPath}.`,
@@ -111,14 +111,14 @@ export async function parseOptionsFromConfig(
  * @returns generator options that were used in the raw input
  */
 export function getSpecifiedFlags(
-  options: GeneratorOptions,
+  options: ParsedGeneratorOptions,
   rawInputFlags: string[]
-): GeneratorOptions {
+): ParsedGeneratorOptions {
   return rawInputFlags.reduce((reducedOptions, name) => {
     const value = options[name];
     if (value !== undefined) {
       reducedOptions[name] = value;
     }
     return reducedOptions;
-  }, {} as GeneratorOptions);
+  }, {} as ParsedGeneratorOptions);
 }

@@ -93,6 +93,11 @@ Always use `beta` as the tag for `beta` release AND `release candidate`s.
 We can use another tag like `dev` (e.g., `2.0.0-dev.0`), which is similar to the `canary` of `main`.
 Automation is needed. (Create follow-ups).
 
+### Lerna command example
+```
+lerna publish --canary major --no-push --no-git-tag-version --dist-tag dev --force-publish --preid "${date}-dev" -y
+```
+
 ### Which sdk version should I use
 
 | tag name | version example                                            | description                                                                          |

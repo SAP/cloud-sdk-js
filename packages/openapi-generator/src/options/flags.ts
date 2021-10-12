@@ -1,5 +1,6 @@
 import { resolve, extname } from 'path';
 import { existsSync, lstatSync } from 'fs';
+import { GlobSync } from 'glob';
 
 export const generatorOptions = {
   input: {
@@ -27,7 +28,7 @@ export const generatorOptions = {
   },
   include: {
     string: true,
-    // coerce: (input: string): string[] => new GlobSync(input).found,
+    coerce: (input: string): string[] => new GlobSync(input).found,
     description:
       'Include files matching the given glob into the root of each generated client directory.'
   },

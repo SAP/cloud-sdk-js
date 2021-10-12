@@ -15,7 +15,7 @@ export interface GeneratorOptions {
   input: string;
   outputDir: string;
   transpile: boolean;
-  include?: string | unknown;
+  include?: string[];
   overwrite: boolean;
   clearOutputDir: boolean;
   skipValidation: boolean;
@@ -44,7 +44,7 @@ export function parseGeneratorOptions(
     (parsedOptions, [name, flag]: [string, yargs.Options]) => {
       const value = options[name];
       if (typeof value !== 'undefined') {
-        parsedOptions[name] = value;
+        parsedOptions[name] = flag.coerce ? flag.coerce(value) : value;
       } else if (typeof flag.default !== 'undefined') {
         parsedOptions[name] = flag.default;
       }

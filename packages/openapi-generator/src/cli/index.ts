@@ -7,7 +7,7 @@ import {
   getSpecifiedFlags,
   generatorOptions
 } from '../options';
-import { generate, generateWithParsedOptions } from '../generator';
+import { generateWithParsedOptions } from '../generator';
 
 const logger = createLogger('openapi-generator');
 
@@ -21,7 +21,7 @@ export async function parseCmdArgs(): Promise<void> {
       .strict().argv;
 
     if (argv.config) {
-      await generate({
+      await generateWithParsedOptions({
         ...(await parseOptionsFromConfig(argv.config)),
         ...getSpecifiedFlags(
           argv,

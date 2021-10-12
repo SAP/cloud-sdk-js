@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { createLogger } from '@sap-cloud-sdk/util';
 import yargs from 'yargs';
 // eslint-disable-next-line import/no-internal-modules

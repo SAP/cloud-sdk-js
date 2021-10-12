@@ -14,8 +14,6 @@ export interface GeneratorOptions {
   additionalFiles?: string;
   forceOverwrite: boolean;
   clearOutputDir: boolean;
-  aggregatorNpmPackageName?: string;
-  aggregatorDirectoryName?: string;
   generateNpmrc: boolean;
   generateTypedocJson: boolean;
   generatePackageJson: boolean;
@@ -102,17 +100,6 @@ export const generatorOptionsCli: KeysToOptions = {
       'When set to true, the generator will delete EVERYTHING in the specified output directory before generating code.',
     type: 'boolean',
     default: false
-  },
-  aggregatorNpmPackageName: {
-    describe:
-      'When provided, the generator will generate an additional package with the provided name that has dependencies to all other generated packages.',
-    type: 'string',
-    hidden: true
-  },
-  aggregatorDirectoryName: {
-    describe: 'Hack for cloud-sdk-vdm package',
-    type: 'string',
-    hidden: true
   },
   generateNpmrc: {
     describe:

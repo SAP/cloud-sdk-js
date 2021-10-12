@@ -124,58 +124,7 @@ export async function generateProject(
     { overwrite: true }
   );
 
-  await generateAggregatorPackage(services, options, project);
-
   return project;
-}
-
-async function generateAggregatorPackage(
-  services: VdmServiceMetadata[],
-  options: GeneratorOptions,
-  project: Project
-): Promise<void> {
-  if (
-    typeof options.aggregatorNpmPackageName !== 'undefined' &&
-    typeof options.aggregatorDirectoryName !== 'undefined'
-  ) {
-    const aggregatorPackageDir = project.createDirectory(
-      resolvePath(options.aggregatorDirectoryName, options)
-    );
-    logger.info(
-      `Generating package.json for project: ${aggregatorPackageDir}...`
-    );
-    otherFile(
-      aggregatorPackageDir,
-      'package.json',
-      aggregatorPackageJson(
-        cloudSdkVdmHack(npmCompliantName(options.aggregatorNpmPackageName)),
-        services.map(service => service.npmPackageName),
-        options.versionInPackageJson,
-        await getSdkVersion()
-      ),
-      options.forceOverwrite
-    );
-
-    if (options.writeReadme) {
-      logger.info(
-        `Generating README.md for project: ${aggregatorPackageDir}...`
-      );
-      otherFile(
-        aggregatorPackageDir,
-        'README.md',
-        aggregatorReadme(services, options.aggregatorNpmPackageName),
-        options.forceOverwrite
-      );
-    }
-
-    if (options.additionalFiles) {
-      logger.info(
-        `Copying additional files matching ${options.additionalFiles} for project: ${aggregatorPackageDir}...`
-      );
-
-      copyAdditionalFiles(aggregatorPackageDir, options);
-    }
-  }
 }
 
 export async function generateSourcesForService(
@@ -401,8 +350,6 @@ function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
   options.serviceMapping =
     options.serviceMapping ||
     resolve(options.inputDir.toString(), 'service-mapping.json');
-  options.aggregatorDirectoryName =
-    options.aggregatorDirectoryName || options.aggregatorNpmPackageName;
   return options;
 }
 

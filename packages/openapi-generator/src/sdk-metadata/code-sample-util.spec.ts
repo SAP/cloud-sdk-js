@@ -185,6 +185,18 @@ describe('code-sample-util api', () => {
     );
   });
 
+  it('generates param  with only mandatory request body', () => {
+    const operation = {
+      pathParameters: [] as OpenApiParameter[],
+      queryParameters: [] as OpenApiParameter[],
+      requestBody: { required: true }
+    } as OpenApiOperation;
+
+    expect(getOperationParamCode(operation)).toMatchInlineSnapshot(
+      '"myRequestBody"'
+    );
+  });
+
   it('generates param string with path, mandatory query params and optional request body', () => {
     const operation = {
       pathParameters: [pathParam1],

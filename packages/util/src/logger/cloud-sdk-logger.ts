@@ -171,6 +171,10 @@ export function setLogLevel(
  */
 export function setGlobalLogLevel(level: LogLevel): void {
   container.options.level = level;
+  // Update existing loggers' log level with global level.
+  container.loggers.forEach(logger => {
+    logger.level = level;
+  });
 }
 
 export function getGlobalLogLevel(): string | undefined {

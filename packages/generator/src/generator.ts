@@ -28,9 +28,7 @@ import {
   defaultValueProcessesJsGeneration,
   GeneratorOptions
 } from './generator-options';
-import {
-  hasEntities,
-} from './generator-utils';
+import { hasEntities } from './generator-utils';
 import { parseAllServices } from './edmx-to-vdm';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';

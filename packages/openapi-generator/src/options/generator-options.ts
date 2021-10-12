@@ -14,6 +14,27 @@ const logger = createLogger('openapi-generator');
 export interface GeneratorOptions {
   input: string;
   outputDir: string;
+  transpile?: boolean;
+  include?: string;
+  overwrite?: boolean;
+  clearOutputDir?: boolean;
+  skipValidation?: boolean;
+  tsConfig?: string;
+  packageJson?: boolean;
+  verbose?: boolean;
+  optionsPerService?: string;
+  packageVersion?: string;
+  readme?: boolean;
+  metadata?: boolean;
+  config?: string;
+}
+
+/**
+ * Parsed options with default values.
+ */
+export interface ParsedGeneratorOptions {
+  input: string;
+  outputDir: string;
   transpile: boolean;
   include?: string[];
   overwrite: boolean;
@@ -38,8 +59,8 @@ export interface GeneratorOptions {
  * @returns Parsed options with default values.
  */
 export function parseGeneratorOptions(
-  options: Partial<GeneratorOptions>
-): GeneratorOptions {
+  options: GeneratorOptions
+): ParsedGeneratorOptions {
   return Object.entries(generatorOptions).reduce(
     (parsedOptions, [name, flag]: [string, yargs.Options]) => {
       const value = options[name];
@@ -50,7 +71,7 @@ export function parseGeneratorOptions(
       }
       return parsedOptions;
     },
-    {} as GeneratorOptions
+    {} as ParsedGeneratorOptions
   );
 }
 
@@ -92,12 +113,12 @@ export async function parseOptionsFromConfig(
 export function getSpecifiedFlags(
   options: GeneratorOptions,
   rawInputFlags: string[]
-): Partial<GeneratorOptions> {
+): GeneratorOptions {
   return rawInputFlags.reduce((reducedOptions, name) => {
     const value = options[name];
     if (value !== undefined) {
       reducedOptions[name] = value;
     }
     return reducedOptions;
-  }, {} as Partial<GeneratorOptions>);
+  }, {} as GeneratorOptions);
 }

@@ -2,7 +2,7 @@ import { existsSync, promises } from 'fs';
 import { parse } from 'path';
 import { unique, UniqueNameGenerator } from '@sap-cloud-sdk/util';
 import { getRelPathWithPosixSeparator } from '../generator';
-import { GeneratorOptions } from './generator-options';
+import { ParsedGeneratorOptions } from './generator-options';
 
 const { readFile } = promises;
 
@@ -58,7 +58,7 @@ export async function getOriginalOptionsPerService(
  */
 export async function getOptionsPerService(
   inputPaths: string[],
-  { optionsPerService, skipValidation }: GeneratorOptions
+  { optionsPerService, skipValidation }: ParsedGeneratorOptions
 ): Promise<OptionsPerService> {
   const originalOptionsPerService = await getOriginalOptionsPerService(
     optionsPerService

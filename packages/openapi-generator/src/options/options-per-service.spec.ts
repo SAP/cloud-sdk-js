@@ -10,7 +10,7 @@ jest.mock('path', () => {
 });
 
 import mock from 'mock-fs';
-import { GeneratorOptions } from './generator-options';
+import { ParsedGeneratorOptions } from './generator-options';
 import {
   getOptionsPerService,
   getOriginalOptionsPerService,
@@ -97,7 +97,7 @@ describe('getOptionsPerService', () => {
 
   it('builds PerService config without options per service.', async () => {
     await expect(
-      getOptionsPerService(['/user/path/service'], {} as GeneratorOptions)
+      getOptionsPerService(['/user/path/service'], {} as ParsedGeneratorOptions)
     ).resolves.toEqual({
       'path/service': {
         directoryName: 'service',
@@ -125,7 +125,7 @@ describe('getOptionsPerService', () => {
     await expect(
       getOptionsPerService(['/user/path/service'], {
         optionsPerService: 'path/myConfig.json'
-      } as GeneratorOptions)
+      } as ParsedGeneratorOptions)
     ).resolves.toEqual({
       'path/service': {
         directoryName: 'dirName',
@@ -152,7 +152,7 @@ describe('getOptionsPerService', () => {
     await expect(
       getOptionsPerService(['/user/path/service'], {
         optionsPerService: 'path/myPartialConfig.json'
-      } as GeneratorOptions)
+      } as ParsedGeneratorOptions)
     ).resolves.toEqual({
       'path/service': {
         directoryName: 'service',
@@ -166,7 +166,7 @@ describe('getOptionsPerService', () => {
     await expect(
       getOptionsPerService(['/user/path1/service', '/user/path2/service'], {
         skipValidation: false
-      } as GeneratorOptions)
+      } as ParsedGeneratorOptions)
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
             "Duplicate service directory names found. Customize directory names with \`optionsPerService\` or enable automatic name adjustment with \`skipValidation\`.
             	Duplicates:
@@ -181,7 +181,7 @@ describe('getOptionsPerService', () => {
     await expect(
       getOptionsPerService(['/user/path1/service', '/user/path2/service'], {
         skipValidation: true
-      } as GeneratorOptions)
+      } as ParsedGeneratorOptions)
     ).resolves.toEqual({
       'path1/service': {
         directoryName: 'service',

@@ -1,7 +1,7 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
 import { ErrorWithCause, formatJson } from '@sap-cloud-sdk/util';
-import { GeneratorOptions } from './generator-options';
+import { ParsedGeneratorOptions } from './generator-options';
 const { readFile, lstat } = promises;
 
 export const defaultTsConfig = {
@@ -31,7 +31,7 @@ export const defaultTsConfig = {
 export async function tsconfigJson({
   transpile,
   tsConfig
-}: GeneratorOptions): Promise<string | undefined> {
+}: ParsedGeneratorOptions): Promise<string | undefined> {
   if (transpile || tsConfig) {
     return tsConfig
       ? readCustomTsConfig(tsConfig)

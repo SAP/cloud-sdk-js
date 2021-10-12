@@ -77,23 +77,23 @@ Create a 2.0 breaking change doc (`2.0-traceability-notes.md`) with the followin
 - `function signature changed` when changing the parameters/return value, meaning users have to update their function calls.
 - `implementation changed` when the signature keeps the same but implementation details changed, meaning users should use these functions with cautions.
 
-## Release `Beta` and `Release candidate`
+## Release `beta` and `release candidate`
 
 ### Agreement?
 
-Always use `beta` as the tag for `beta` release and `release candidate`s.
+Always use `beta` as the tag for `beta` release AND `release candidate`s.
 
 - `2.0.0-beta.0` (tag: `beta`), `2.0.0-beta.1` (tag: `beta`)...
 - `2.0.0-rc.0` (tag: `beta`), `2.0.0-rc.1` (tag: `beta`)...
 
-## Release a version for every commit
+## Release a version for every commit on `2.0`
 
 ### Agreement?
 
 We can use another tag like `dev` (e.g., `2.0.0-dev.0`), which is similar to the `canary` of `main`.
 Automation is needed. (Create follow-ups).
 
-## Which sdk version should I use
+### Which sdk version should I use
 
 | tag name | version example                                            | description                                                                          |
 | -------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------ |

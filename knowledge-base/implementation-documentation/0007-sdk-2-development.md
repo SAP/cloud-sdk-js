@@ -29,14 +29,15 @@ The complete test coverage of the current SDK contains the following:
 
 ### Agreement?
 
-In general, during 2.0 development, we should avoid committing to both branches to avoid additional efforts.
+In general, during 2.0 development, we should not commit to both branches for avoiding additional maintenance efforts.
+
 The tables below shows a rough guidance based on the priority and complexity.
 
 #### Should we commit to both branches for this `feature`?
 
 |                 | prio:low | prio:mid                  | prio:high          |
 | --------------- | -------- | ------------------------- | ------------------ |
-| complexity:high | :x:      | :x:                       | :speech_balloon:   |
+| complexity:high | :x:      | :warning::x:              | :speech_balloon:   |
 | complexity:mid  | :x:      | :warning::speech_balloon: | :white_check_mark: |
 | complexity:low  | :x:      | :white_check_mark:        | :white_check_mark: |
 
@@ -44,14 +45,14 @@ The tables below shows a rough guidance based on the priority and complexity.
 
 |                 | prio:low | prio:mid                | prio:high          |
 | --------------- | -------- | ----------------------- | ------------------ |
-| complexity:high | :x:      | :x:                     | :speech_balloon:   |
+| complexity:high | :x:      | :warning::construction: | :speech_balloon:   |
 | complexity:mid  | :x:      | :warning::construction: | :white_check_mark: |
 | complexity:low  | :x:      | :white_check_mark:      | :white_check_mark: |
 
 - :white_check_mark: : Yes, merge both
-- :x: : No, won't do
+- :x: : No, won't work on this thicket
 - :speech_balloon: : Discuss, case by case
-- :construction: : No, will only release in 2.0
+- :construction: : No, the changes will only be committed on `2.0` branch
 - :warning: : Warning, we treat features and bugs differently
 
 ### Process
@@ -81,7 +82,7 @@ Create a 2.0 breaking change doc (`2.0-traceability-notes.md`) with the followin
 
 ### Agreement?
 
-Always use `beta` as the tag for `beta` release AND `release candidate`s.
+Always use `beta` as the tag for `beta` release AND `release candidates`.
 
 - `2.0.0-beta.0` (tag: `beta`), `2.0.0-beta.1` (tag: `beta`)...
 - `2.0.0-rc.0` (tag: `beta`), `2.0.0-rc.1` (tag: `beta`)...
@@ -90,10 +91,11 @@ Always use `beta` as the tag for `beta` release AND `release candidate`s.
 
 ### Agreement?
 
-We can use another tag like `dev` (e.g., `2.0.0-dev.0`), which is similar to the `canary` of `main`.
+We can use another tag like `dev` (e.g., `2.0.0-dev.0`), which is similar to the `canary` tag used by the `main` branch.
 Automation is needed. (Create follow-ups).
 
 ### Lerna command example
+
 ```
 lerna publish --canary major --no-push --no-git-tag-version --dist-tag dev --force-publish --preid "${date}-dev" -y
 ```

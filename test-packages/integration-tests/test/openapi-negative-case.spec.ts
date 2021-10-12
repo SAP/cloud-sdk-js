@@ -18,9 +18,9 @@ describe('openapi negative tests', () => {
         'npx',
         [
           'openapi-generator',
-          '--input',
+          '-i',
           resolve(testResourcesDir, 'faulty-openapi'),
-          '--outputDir',
+          '-o',
           output,
           '--clearOutputDir'
         ],
@@ -43,7 +43,7 @@ describe('openapi negative tests', () => {
         'npx',
         [
           'openapi-generator',
-          '--input',
+          '-i',
           resolve(testDir, '../openapi-service-specs/test-service.json'),
           '-o',
           output,

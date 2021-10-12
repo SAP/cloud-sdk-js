@@ -22,6 +22,7 @@ import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
  * @param service - The type of the service or an instance of [[Service]].
  * @param options - Options to influence caching and resilience behavior (see [[CachingOptions]] and [[ResilienceOptions]], respectively) and a JWT. By default, caching and usage of a circuit breaker are enabled.
  * @returns Access token.
+ * @internal
  */
 export async function serviceToken(
   service: string | Service,
@@ -85,6 +86,7 @@ export async function serviceToken(
  * @param service - The type of the service or an instance of [[Service]].
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns A jwt bearer token.
+ * @internal
  */
 export async function jwtBearerToken(
   userJwt: string,

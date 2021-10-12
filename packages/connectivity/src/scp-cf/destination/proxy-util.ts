@@ -20,6 +20,7 @@ const logger = createLogger({
  * For onPremProxy or internetProxy the connectivity service or environment variables are checked to fill the [[ProxyConfiguration]].
  * @param destination - from which the proxy strategy is derived.
  * @returns ProxyStrategy possible values are noProxy, internetProxy or onPremProxy.
+ * @internal
  */
 export function proxyStrategy(destination: Destination): ProxyStrategy {
   if (destination.proxyType === 'OnPremise') {
@@ -131,6 +132,7 @@ function validateUrl(url: URL): void {
  * Special characters in the user and password need to be percent encoded.
  * @param proxyEnvValue - Environment variable which is parsed.
  * @returns Configuration with default values or `undefined` if the parsing failed.
+ * @internal
  */
 export function parseProxyEnv(
   proxyEnvValue: string
@@ -180,6 +182,7 @@ export function parseProxyEnv(
  * Adds the proxy configuration to a destination based on web proxies defined in environment variables. See [[ProxyConfiguration]] and [[proxyStrategy]] for details.
  * @param destination - to which the proxy configuration is added.
  * @returns Destination containing the configuration for web proxy.
+ * @internal
  */
 export function addProxyConfigurationInternet(destination: any): Destination {
   const proxyEnvValue = getProxyEnvValue(getProtocolOrDefault(destination));
@@ -203,6 +206,7 @@ export function addProxyConfigurationInternet(destination: any): Destination {
  * @param destination - Destination containing the proxy configurations
  * @param options - Additional options for the agent
  * @returns The http(s)-agent containing the proxy configuration
+ * @internal
  */
 export function proxyAgent(
   destination: Destination,
@@ -249,6 +253,7 @@ export function proxyAgent(
 /**
  * Enum representing the different strategies for proxies on requests. Possible situations are "NO_PROXY", use the connectivity service proxy for On-Premise connection or a usual web proxy.
  * See also [[ProxyConfiguration]] for more details.
+ * @internal
  */
 export enum ProxyStrategy {
   NO_PROXY,

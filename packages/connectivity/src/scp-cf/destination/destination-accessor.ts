@@ -51,6 +51,7 @@ export type DestinationOptions = DestinationAccessorOptions &
  * @param name - The name of the destination to be retrieved.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
+ * @internal
  */
 export async function getDestination(
   name: string,

@@ -15,6 +15,7 @@ const logger = createLogger({
  * @param serviceInstanceName - The name of the service.
  * @param options - Options to customize the behavior of this function.
  * @returns A destination.
+ * @internal
  */
 export function destinationForServiceBinding(
   serviceInstanceName: string,
@@ -34,6 +35,7 @@ export function destinationForServiceBinding(
 
 /**
  * Options to customize the behavior of [[destinationForServiceBinding]].
+ * @internal
  */
 export interface DestinationForServiceBindingsOptions {
   /**
@@ -63,6 +65,7 @@ export interface DestinationForServiceBindingsOptions {
  * ```
  *
  * In this example, the key "s4-hana-cloud" refers to an array of service bindings.
+ * @internal
  */
 export interface ServiceBinding {
   [key: string]: any;
@@ -172,7 +175,7 @@ function xfS4hanaCloudBindingToDestination(
 }
 
 /*
- * @hidden
+ * @internal
  */
 export function searchServiceBindingForDestination(
   name: string

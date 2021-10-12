@@ -18,6 +18,7 @@ const logger = createLogger({
  * Decode JWT.
  * @param token - JWT to be decoded
  * @returns Decoded payload.
+ *  @internal
  */
 export function decodeJwt(token: string): JwtPayload {
   return decodeJwtComplete(token).payload;
@@ -27,6 +28,7 @@ export function decodeJwt(token: string): JwtPayload {
  * Decode JWT and return the complete decoded token.
  * @param token - JWT to be decoded.
  * @returns Decoded token containing payload, header and signature.
+ *  @internal
  */
 export function decodeJwtComplete(token: string): Jwt {
   const decodedToken = decode(token, { complete: true });
@@ -42,6 +44,7 @@ export function decodeJwtComplete(token: string): Jwt {
  * Retrieve JWT from a request that is based on the node `IncomingMessage`. Fails if no authorization header is given or has the wrong format. Expected format is 'Bearer <TOKEN>'.
  * @param req - Request to retrieve the JWT from
  * @returns JWT found in header
+ *  @internal
  */
 export function retrieveJwt(req: IncomingMessage): string | undefined {
   const header = authHeader(req);
@@ -91,6 +94,7 @@ function validateAuthHeader(header: string | undefined): boolean {
  * "http://something.authentication.sap.hana.ondemand.com/somePath" so the host should end with the domain.
  * @param header - JWT header.
  * @param uaaDomain - Domain given in the XSUAA credentials.
+ *  @internal
  */
 function validateJwtHeaderForVerification(
   header: JwtHeader,
@@ -142,6 +146,7 @@ function validateJwtHeaderForVerification(
  * @param token - JWT to be verified
  * @param options - Options to control certain aspects of JWT verification behavior.
  * @returns A Promise to the decoded and verified JWT.
+ *  @internal
  */
 export async function verifyJwt(
   token: string,
@@ -194,6 +199,7 @@ async function fetchAndCacheKeyAndVerify(
 
 /**
  * Options to control certain aspects of JWT verification behavior.
+ *  @internal
  */
 export interface VerifyJwtOptions {
   cacheVerificationKeys?: boolean;
@@ -227,7 +233,10 @@ function getVerificationKey(
   );
 }
 
-// 15 minutes is the default value used by the xssec lib
+/**
+ * 15 minutes is the default value used by the xssec lib
+ *  @internal
+ */
 export const verificationKeyCache = new Cache<TokenKey>({ minutes: 15 });
 
 function buildCacheKey(
@@ -247,6 +256,7 @@ function buildCacheKey(
  * @param token - JWT to be verified.
  * @param key - Key to use for verification.
  * @returns A Promise to the decoded and verified JWT.
+ *  @internal
  */
 export function verifyJwtWithKey(
   token: string,
@@ -277,6 +287,7 @@ function sanitizeVerificationKey(key: string) {
  * Get the issuer URL of a decoded JWT.
  * @param decodedToken - Token to read the issuer URL from.
  * @returns The issuer URL if available.
+ *  @internal
  */
 export function issuerUrl(decodedToken: JwtPayload): string | undefined {
   return readPropertyWithWarn(decodedToken, 'iss');
@@ -286,6 +297,7 @@ export function issuerUrl(decodedToken: JwtPayload): string | undefined {
  * Retrieve the audiences of a decoded JWT based on the audiences and scopes in the token.
  * @param decodedToken - Token to retrieve the audiences from.
  * @returns A set of audiences.
+ *  @internal
  */
 // Comments taken from the Java SDK implementation
 // Currently, scopes containing dots are allowed.
@@ -330,11 +342,17 @@ function audiencesFromScope(decodedToken: JwtPayload): string[] {
  * Wraps the access token in header's authorization.
  * @param token - Token to attach in request header
  * @returns The request header that holds the access token
+ * @internal
  */
 export function wrapJwtInHeader(token: string): AxiosRequestConfig {
   return { headers: { Authorization: 'Bearer ' + token } };
 }
 
+/**
+ * @internal
+ * @param jwtPayload
+ * @param property
+ */
 export function readPropertyWithWarn(
   jwtPayload: JwtPayload,
   property: string
@@ -348,6 +366,9 @@ export function readPropertyWithWarn(
   return jwtPayload[property];
 }
 
+/**
+ * @internal
+ */
 export type JwtKeyMapping<InterfaceT, JwtKeysT> = {
   [key in keyof InterfaceT]: {
     // This second part of the conditional type is deprecated and should be removed in version 2.0.
@@ -361,6 +382,7 @@ export type JwtKeyMapping<InterfaceT, JwtKeysT> = {
  * @param key - The key of the representation in typescript
  * @param mapping - The mapping between the typescript keys and the JWT key
  * @param jwtPayload - JWT payload to check fo the given key.
+ * @internal
  */
 export function checkMandatoryValue<InterfaceT, JwtKeysT>(
   key: keyof InterfaceT,
@@ -377,6 +399,7 @@ export function checkMandatoryValue<InterfaceT, JwtKeysT>(
 
 /**
  * Object holding a decoded JWT payload received by decoding the encoded string also in this object.
+ * @internal
  */
 export interface JwtPair {
   decoded: JwtPayload;
@@ -388,6 +411,7 @@ export interface JwtPair {
  * This method divides the two cases.
  * @param token - Token to be investigated
  * @returns Boolean value with true if the input is a UserJwtPair
+ * @internal
  */
 export function isUserToken(token: JwtPair | undefined): token is JwtPair {
   if (!token) {

@@ -9,12 +9,11 @@ import {
   defaultBasicCredentials,
   defaultDestination
 } from '@sap-cloud-sdk/core/test/test-util/request-mocker';
-import { Destination } from './destination';
 import {
-  addAuthorizationHeader,
-  buildAndAddAuthorizationHeader,
+  buildAuthorizationHeaders,
   getAuthHeaders
 } from './authorization-header';
+import {Destination} from "./destination/destination-service-types";
 
 const principalPropagationDestination = {
   url: '',
@@ -344,7 +343,7 @@ describe('[deprecated]', () => {
       Authorization: 'Basic SOMETHINGSOMETHING'
     });
 
-    const headers = await addAuthorizationHeader(request, {});
+    const headers = await buildAuthorizationHeaders(request);
     expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
   });
 
@@ -357,31 +356,31 @@ describe('[deprecated]', () => {
       authorization: 'Basic SOMETHINGSOMETHING'
     });
 
-    const headers = await addAuthorizationHeader(request, {});
+    const headers = await buildAuthorizationHeaders(request);
     expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
   });
 
   it('does not throw on NoAuthentication', async () => {
     await expect(
-      buildAndAddAuthorizationHeader({
+      buildAuthorizationHeaders({
         url: 'https://example.com',
         authentication: 'NoAuthentication'
-      })({})
+      })
     ).resolves.not.toThrow();
   });
 
   it('does not throw on ClientCertificateAuthentication', async () => {
     await expect(
-      buildAndAddAuthorizationHeader({
+      buildAuthorizationHeaders({
         url: 'https://example.com',
         authentication: 'ClientCertificateAuthentication'
-      })({})
+      })
     ).resolves.not.toThrow();
   });
 
   it('defaults to NoAuthentication', async () => {
     await expect(
-      buildAndAddAuthorizationHeader({ url: 'https://example.com' })({})
+      buildAuthorizationHeaders({ url: 'https://example.com' })
     ).resolves.not.toThrow();
   });
 
@@ -398,7 +397,7 @@ describe('[deprecated]', () => {
       }
     } as Destination;
 
-    const headers = await buildAndAddAuthorizationHeader(destination)({});
+    const headers = await buildAuthorizationHeaders(destination);
     expect(headers['SAP-Connectivity-Authentication']).toBe('someValue');
     expect(headers['Proxy-Authorization']).toBe('someProxyValue');
 
@@ -406,7 +405,7 @@ describe('[deprecated]', () => {
       'SAP-Connectivity-Authentication'
     ];
     await expect(
-      buildAndAddAuthorizationHeader(destination)({})
+        buildAuthorizationHeaders(destination)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Principal propagation was selected in destination, but no SAP-Connectivity-Authentication bearer header was added by connectivity service."'
     );

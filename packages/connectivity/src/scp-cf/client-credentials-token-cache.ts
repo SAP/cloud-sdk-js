@@ -36,6 +36,11 @@ const ClientCredentialsTokenCache = (
   getCacheInstance: () => cache
 });
 
+/** *
+ * @internal
+ * @param url
+ * @param credentialsOrClientId
+ */
 export function getGrantTokenCacheKey(
   url: string,
   credentialsOrClientId: ClientCredentials | string
@@ -47,6 +52,9 @@ export function getGrantTokenCacheKey(
   return [url, clientId].join(':');
 }
 
+/**
+ * @internal
+ */
 export const clientCredentialsTokenCache = ClientCredentialsTokenCache(
   new Cache<ClientCredentialsResponse>()
 );

@@ -24,6 +24,7 @@ const logger = createLogger({
  * Basic Credentials Getter from Destination service credentials needed for JWT generator.
  *
  * @returns Basic credentials.
+ * @internal
  */
 export function getDestinationBasicCredentials(): BasicCredentials {
   const destinationCredentials = getDestinationServiceCredentials();
@@ -42,6 +43,7 @@ export function getDestinationBasicCredentials(): BasicCredentials {
  * First 'destination' credentials getter.
  *
  * @returns The 'destination' credentials object or `null`, if it does not exist.
+ * @internal
  */
 export function getDestinationServiceCredentials(): any {
   return first(getDestinationServiceCredentialsList());
@@ -51,6 +53,7 @@ export function getDestinationServiceCredentials(): any {
  * Destination credentials getter.
  *
  * @returns A list of 'credentials' objects in 'destination' service.
+ * @internal
  */
 export function getDestinationServiceCredentialsList(): DestinationServiceCredentials[] {
   return getServiceList('destination').map(
@@ -62,6 +65,7 @@ export function getDestinationServiceCredentialsList(): DestinationServiceCreden
  * Credentials list getter for a given service.
  * @param service - Service name
  * @returns Fetched credentials objects of existing service in 'VCAP_SERVICES'.
+ * @internal
  */
 export function getServiceCredentialsList(service: string): any[] {
   const credentials: any[] = [];
@@ -82,6 +86,7 @@ export function getServiceCredentialsList(service: string): any[] {
  * Services getter for a given service.
  * @param service - Service name.
  * @returns List of service bindings of the given type. Returns an empty array if no service binding exists for the given type.
+ * @internal
  */
 export function getServiceList(service: string): Service[] {
   return xsenv.filterServices({ label: service }); // TODO: how do we allow propagating custom secret paths for k8s?
@@ -91,6 +96,7 @@ export function getServiceList(service: string): Service[] {
  * Returns the first found instance for the given service type.
  * @param service - The service type.
  * @returns The first found service.
+ * @internal
  */
 export function getService(service: string): Service | undefined {
   const services: Service[] = xsenv.filterServices({ label: service });
@@ -118,6 +124,7 @@ export function getService(service: string): Service | undefined {
  *
  * @returns Destination service
  * @throws Error in case no destination service is found in the VCAP variables
+ * @internal
  */
 export function getDestinationService(): Service {
   const destinationService = getService('destination');
@@ -133,6 +140,7 @@ export function getDestinationService(): Service {
  * This function returns the VCAP_SERVICES as object or `null`, if it is not defined (i.e. no services are bound to the application).
  *
  * @returns 'VCAP_SERVICES' found in environment variables or `null`, if not defined. The key denotes the name ov the service and the value is the definition.
+ *  @internal
  */
 export function getVcapService(): Record<string, any> | null {
   const env = getEnvironmentVariable('VCAP_SERVICES');
@@ -163,6 +171,7 @@ export function getVcapService(): Record<string, any> | null {
  * @param name - Environment variable name.
  * @returns Env variable value if defined.
  *           null: If not defined.
+ *             @internal
  */
 export function getEnvironmentVariable(
   name: string
@@ -180,6 +189,7 @@ export function getEnvironmentVariable(
  * returns the first entry.
  *
  * @returns The first existing uri in destination or `null`, if not found.
+ *   @internal
  */
 export function getDestinationServiceUri(): string | null {
   const destinationServiceCredentials = getDestinationServiceCredentialsList();
@@ -202,6 +212,7 @@ export function getDestinationServiceUri(): string | null {
  * If no decoded JWT is specified, then returns the first existing XSUAA credential service plan "application".
  * @param token - Either an encoded or decoded JWT.
  * @returns The credentials for a match, otherwise `null`.
+ *   @internal
  */
 export function getXsuaaServiceCredentials(
   token?: JwtPayload | string
@@ -218,6 +229,7 @@ export function getXsuaaServiceCredentials(
  * Throws an error when no service can be found for the given type.
  * @param service - A string representing the service type or a [[Service]] instance.
  * @returns A [[Service]] instance.
+ *   @internal
  */
 export function resolveService(service: string | Service): Service {
   if (typeof service === 'string') {
@@ -238,6 +250,7 @@ export function resolveService(service: string | Service): Service {
  * Extracts the credentials of a service into an instance of [[ClientCredentials]].
  * @param serviceCreds - The credentials of a service as read from VCAP_SERVICES.
  * @returns A [[ClientCredentials]] instance.
+ *   @internal
  */
 export function extractClientCredentials(
   serviceCreds: ServiceCredentials

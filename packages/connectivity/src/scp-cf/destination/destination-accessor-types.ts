@@ -2,7 +2,7 @@ import { Destination } from './destination-service-types';
 import { DestinationSelectionStrategy } from './destination-selection-strategies';
 
 /**
- * @hidden
+ * @internal
  */
 export interface AllDestinations {
   subscriber: DestinationsByType;
@@ -10,13 +10,16 @@ export interface AllDestinations {
 }
 
 /**
- * @hidden
+ * @internal
  */
 export interface DestinationsByType {
   instance: Destination[];
   subaccount: Destination[];
 }
 
+/**
+ * @internal
+ */
 export interface DestinationAccessorOptions {
   /**
    * Method that implements the selection strategy of the retrieved destination. Uses [[subscriberFirst]] per default. Use the selector helper [[DestinationSelectionStrategies]] to select the appropriate selection strategy.

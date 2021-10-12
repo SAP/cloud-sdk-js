@@ -61,6 +61,7 @@ const emptyDestinationByType: DestinationsByType = {
  * @param name - The name of the destination to be retrieved.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
+ * @internal
  */
 export async function getDestinationFromDestinationService(
   name: string,
@@ -73,6 +74,9 @@ export async function getDestinationFromDestinationService(
   );
 }
 
+/**
+ * @internal
+ */
 class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
     name: string,
@@ -350,7 +354,7 @@ class DestinationFromServiceRetriever {
   }
 
   /**
-   * @hidden
+   * @internal
    * This method calls the 'find destination by name' endpoint of the destination service using a client credentials grant.
    * For the find by name endpoint, the destination service will take care of OAuth flows and include the token in the destination.
    */

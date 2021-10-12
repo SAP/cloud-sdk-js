@@ -14,6 +14,7 @@ const logger = createLogger({
  * @param xsuaaCredentials - Credentials of the XSUAA service instance.
  * @param jku - Value of the jku property in the JWT header. If not provided the old legacy URL xsuaaCredentials.url/token_keys is used as a fallback which will not work for subscriber accounts created after 14th of April 2020.
  * @returns An array of TokenKeys.
+ * @internal
  */
 export function fetchVerificationKeys(
   xsuaaCredentials: XsuaaServiceCredentials,
@@ -27,6 +28,7 @@ export function fetchVerificationKeys(
  * @param clientId - Client ID of the XSUAA service instance.
  * @param clientSecret - Client secret of the XSUAA service instance.
  * @returns An array of token keys.
+ * @internal
  */
 export function fetchVerificationKeys(
   url: string,
@@ -38,6 +40,7 @@ export function fetchVerificationKeys(
  * Fetches verification keys from the XSUAA service for the given URL.
  * @param url - URL of the XSUAA service instance.
  * @returns An array of token keys.
+ * @internal
  */
 export function fetchVerificationKeys(url: string): Promise<TokenKey[]>;
 

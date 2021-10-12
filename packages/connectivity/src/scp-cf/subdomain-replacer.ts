@@ -3,7 +3,7 @@
 import { URL } from 'url';
 
 /**
- * @hidden
+ * @internal
  */
 export function replaceSubdomain(issuerUrl: string, xsuaaUrl: string): string {
   if (!isValidURL(issuerUrl)) {
@@ -24,7 +24,7 @@ function replace(xsuaaUrl: string, subdomain: string): string {
 }
 
 /**
- * @hidden
+ * @internal
  */
 export function parseSubdomain(issuerUrl: string): string {
   const url = new URL(issuerUrl);

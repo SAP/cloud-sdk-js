@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export interface Service {
   [other: string]: any;
   name: string;
@@ -8,6 +11,7 @@ export interface Service {
 
 /**
  * Unspecific representation of a service's credentials as read from VCAP_SERVICES (for Cloud Foundry) or mounted secrets (for K8S).
+ * @internal
  */
 export type ServiceCredentials = {
   [other: string]: any;
@@ -24,6 +28,7 @@ export type ServiceCredentials = {
 
 /**
  * Credentials for the Destination service.
+ *  @internal
  */
 export type DestinationServiceCredentials = ServiceCredentials & {
   identityzone: string;
@@ -39,6 +44,7 @@ export type DestinationServiceCredentials = ServiceCredentials & {
 
 /**
  * Credentials for the XSUAA service.
+ *  @internal
  */
 export type XsuaaServiceCredentials = ServiceCredentials & {
   identityzone: string;

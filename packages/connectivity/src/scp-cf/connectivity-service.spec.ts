@@ -9,14 +9,14 @@ import {
 } from '@sap-cloud-sdk/core/test/test-util/mocked-access-tokens';
 import { mockServiceToken } from '@sap-cloud-sdk/core/test/test-util/token-accessor-mocks';
 import { mockClientCredentialsGrantCall } from '@sap-cloud-sdk/core/test/test-util/xsuaa-service-mocks';
-import { Destination } from './destination';
 import {
   addProxyConfigurationOnPrem,
 
   proxyHostAndPort
 } from './connectivity-service';
-import {Protocol} from "./protocol";
-import {addProxyConfigurationInternet} from "./destination/proxy-util";
+import { Protocol } from './protocol';
+import { addProxyConfigurationInternet } from './destination/proxy-util';
+import { Destination } from './destination/destination-service-types';
 
 describe('connectivity-service', () => {
   afterEach(() => {
@@ -71,7 +71,7 @@ describe('connectivity-service', () => {
       }
     };
 
-    const withProxy = await addProxyConfigurationOnPrem(input, providerUserJwt);
+    const withProxy = await addProxyConfigurationOnPrem(input, { encoded:providerUserJwt,decoded:{} });
     expect(withProxy).toEqual(expected);
   });
 
@@ -132,7 +132,7 @@ describe('connectivity-service', () => {
       { clientid: 'clientid', clientsecret: 'clientsecret' }
     );
 
-    addProxyConfigurationOnPrem({ url: '' }).catch(error => {
+    addProxyConfigurationOnPrem({ url: '' },undefined).catch(error => {
       expect(error.message).toContain(
         'Failed to add proxy authorization header'
       );

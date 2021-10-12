@@ -7,6 +7,7 @@ import {
 
 /**
  * Representation of the user i.e. authenticated persona. The authentication is done by the XSUAA.
+ *  @internal
  */
 export interface UserData {
   id: string;
@@ -20,6 +21,7 @@ export interface UserData {
 
 /**
  * Representation of the user i.e. authenticated persona. The authentication is done by the XSUAA.
+ *  @internal
  */
 export interface User extends UserData {
   hasScope: (scope: Scope) => boolean;
@@ -29,6 +31,7 @@ export interface User extends UserData {
  * Extracts the custom attributes from the JWT.
  * @param jwtPayload - Token payload to read the custom attributes from.
  * @returns Custom attributes added by the XSUAA service to the issued JWT.
+ *  @internal
  */
 export function customAttributes(
   jwtPayload: JwtPayload
@@ -44,6 +47,7 @@ export function customAttributes(
 
 /**
  * Mapping between key name in the User and key name in decoded JWT and the
+ *  @internal
  */
 export const mappingUserFields: JwtKeyMapping<
   UserData,
@@ -71,6 +75,7 @@ export const mappingUserFields: JwtKeyMapping<
  * Get the user's given name from the JWT payload.
  * @param jwtPayload - Token payload to read the user's given name from.
  * @returns The user's given name if available.
+ *  @internal
  */
 export function userGivenName(jwtPayload: JwtPayload): string | undefined {
   if (mappingUserFields.givenName) {
@@ -85,6 +90,7 @@ export function userGivenName(jwtPayload: JwtPayload): string | undefined {
  * Get the user's family name from the JWT payload.
  * @param jwtPayload - Token payload to read the user's family from.
  * @returns The user's family name if available.
+ *  @internal
  */
 export function userFamilyName(jwtPayload: JwtPayload): string | undefined {
   if (mappingUserFields.familyName) {
@@ -99,6 +105,7 @@ export function userFamilyName(jwtPayload: JwtPayload): string | undefined {
  * Get the user name from the JWT payload.
  * @param jwtPayload - Token payload to read the user name from.
  * @returns The user name if available.
+ * @internal
  */
 export function userName(jwtPayload: JwtPayload): string | undefined {
   return readPropertyWithWarn(jwtPayload, mappingUserFields.userName.keyInJwt);
@@ -108,6 +115,7 @@ export function userName(jwtPayload: JwtPayload): string | undefined {
  * Get the user's e-mail address from the JWT payload.
  * @param jwtPayload - Token payload to read the user e-mail address from.
  * @returns The user's e-mail address if available.
+ *  @internal
  */
 export function userEmail(jwtPayload: JwtPayload): string | undefined {
   if (mappingUserFields.email) {
@@ -119,6 +127,7 @@ export function userEmail(jwtPayload: JwtPayload): string | undefined {
  * Get the user's scopes from the JWT payload.
  * @param jwtPayload - Token payload to read the user's scopes from.
  * @returns The user's scopes if available.
+ *  @internal
  */
 export function userScopes(jwtPayload: JwtPayload): Scope[] {
   if (!(jwtPayload.scope instanceof Array && jwtPayload.scope.length)) {
@@ -133,6 +142,7 @@ export function userScopes(jwtPayload: JwtPayload): Scope[] {
  * Get the user id from the JWT payload.
  * @param jwtPayload - Token payload to read the user id from.
  * @returns The user id if available.
+ *  @internal
  */
 export function userId(jwtPayload: JwtPayload): string | undefined {
   return readPropertyWithWarn(jwtPayload, mappingUserFields.id.keyInJwt);
@@ -140,6 +150,7 @@ export function userId(jwtPayload: JwtPayload): string | undefined {
 
 /**
  * Representation of the scope. A scope is assigned to a user via role-collection in cloud foundry.
+ * @internal
  */
 export interface Scope {
   name: string;
@@ -158,6 +169,7 @@ function hasScopeWrapper(scopes: Scope[]): hasScopeType {
  * Throws an error if no `id` or `userName` property is present on the JWT payload.
  * @param jwtPayload - Token payload to get the user from.
  * @returns Representation of the user.
+ * @internal
  */
 export function userFromJwt(jwtPayload: JwtPayload): User {
   checkMandatoryValue('id', mappingUserFields, jwtPayload);

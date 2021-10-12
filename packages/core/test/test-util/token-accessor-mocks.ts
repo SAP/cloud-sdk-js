@@ -1,15 +1,13 @@
 import nock from 'nock';
-import * as tokenAccessor from '@sap-cloud-sdk/connectivity';
-import { decodeJwt } from '@sap-cloud-sdk/connectivity';
+import * as tokenAccessor from '../../../connectivity/src/scp-cf/token-accessor';
+import { decodeJwt } from '../../../connectivity/src/scp-cf/jwt';
 import { onlyIssuerXsuaaUrl, TestTenants } from './environment-mocks';
 import {
   onlyIssuerServiceToken,
   providerJwtBearerToken,
   providerServiceToken,
   subscriberJwtBearerToken,
-  subscriberServiceToken,
-  userApprovedProviderServiceToken,
-  userApprovedSubscriberServiceToken
+  subscriberServiceToken
 } from './mocked-access-tokens';
 
 export function expectAllMocksUsed(nocks: nock.Scope[]) {
@@ -39,17 +37,6 @@ export function mockServiceToken() {
       }
 
       return Promise.resolve(subscriberServiceToken);
-    });
-}
-
-export function mockUserApprovedServiceToken() {
-  return jest
-    .spyOn(tokenAccessor, 'userApprovedServiceToken')
-    .mockImplementation(userJwt => {
-      if (decodeJwt(userJwt).zid === TestTenants.SUBSCRIBER) {
-        return Promise.resolve(userApprovedSubscriberServiceToken);
-      }
-      return Promise.resolve(userApprovedProviderServiceToken);
     });
 }
 

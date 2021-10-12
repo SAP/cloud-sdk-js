@@ -22,6 +22,7 @@ const logger = createLogger({
  * This is discouraged for productive use! Use [[useOrFetchDestination]] for fetching destinations from the Cloud Foundry destination service.
  *
  * @returns A list of destinations
+ * @internal
  */
 export function getDestinationsFromEnv(): Destination[] {
   const destinationsEnv = getDestinationsEnvVariable();
@@ -54,6 +55,7 @@ export function getDestinationsFromEnv(): Destination[] {
  * from the Cloud Foundry destination service.
  * @param name - Name of the destination
  * @returns The requested destination if existent, otherwise `null`
+ * @internal
  */
 export function getDestinationFromEnvByName(name: string): Destination | null {
   const matchingDestinations = getDestinationsFromEnv().filter(
@@ -76,7 +78,7 @@ export function getDestinationFromEnvByName(name: string): Destination | null {
 /* eslint-disable valid-jsdoc */
 
 /**
- * @hidden
+ * @internal
  */
 export function getDestinationConfig(
   dest: string | Destination = 'ErpQueryEndpoint'
@@ -85,7 +87,7 @@ export function getDestinationConfig(
 }
 
 /**
- * @hidden
+ * @internal
  */
 export function getDestinationsEnvVariable(): string | undefined {
   return process.env['destinations'];
@@ -105,7 +107,7 @@ function validateDestinations(destinations: any[]) {
 }
 
 /**
- * @hidden
+ * @internal
  */
 export function searchEnvVariablesForDestination(
   name: string,

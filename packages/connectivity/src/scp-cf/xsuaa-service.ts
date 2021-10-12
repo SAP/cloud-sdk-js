@@ -61,7 +61,7 @@ interface SubdomainAndZoneId {
  * Get subdomain and zoneId value from a given JWT.
  * @param jwt - A JWT from the current user.
  * @returns subdomain and zoneId from the JWT
- * @hidden
+ * @internal
  */
 export function getSubdomainAndZoneId(
   jwt?: string | JwtPayload
@@ -89,7 +89,7 @@ export function getSubdomainAndZoneId(
  * @param userJwt - User JWT.
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns Client credentials token.
- * @hidden
+ * @internal
  */
 export function getClientCredentialsToken(
   service: string | Service,
@@ -120,7 +120,7 @@ export function getClientCredentialsToken(
  * @param userJwt - User JWT.
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns User token.
- * @hidden
+ * @internal
  */
 export function getUserToken(
   service: Service,

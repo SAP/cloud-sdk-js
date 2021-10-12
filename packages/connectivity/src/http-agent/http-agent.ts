@@ -81,7 +81,7 @@ const certificateOptions =
     return options;
   };
 /**
- * @hidden
+ * @internal
  * The http agents (proxy and default) use node tls for the certificate handling. This method creates the options with the pfx and passphrase.
  * https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options
  * @param destination - Destination object
@@ -148,7 +148,7 @@ function selectCertificate(destination): DestinationCertificate {
 
 // eslint-disable-next-line valid-jsdoc
 /**
- * @hidden
+ * @internal
  * See https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener for details on the possible options
  */
 function createDefaultAgent(

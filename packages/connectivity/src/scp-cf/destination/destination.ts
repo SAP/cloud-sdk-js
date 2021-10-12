@@ -32,6 +32,7 @@ export function sanitizeDestination(
  * This function only accepts destination configurations of type 'HTTP' and will error if no 'URL' is given.
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
+ * @internal
  */
 export function parseDestination(
   destinationJson: DestinationJson | DestinationConfiguration
@@ -156,9 +157,10 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
   );
 }
 
-/* eslint-disable-next-line valid-jsdoc */
 /**
- * @hidden
+ * Transform Destination to strings containing destination information.
+ * @param destination Either destiatnation object or destinationName and Jwt.
+ * @returns string containing information on the destination
  */
 export function toDestinationNameUrl(
   destination: Destination | DestinationNameAndJwt
@@ -246,6 +248,7 @@ function getAuthenticationType(destination: Destination): AuthenticationType {
 
 /**
  * Destination configuration alongside authtokens and certificates.
+ * @internal
  */
 export interface DestinationJson {
   [key: string]: any;
@@ -256,6 +259,7 @@ export interface DestinationJson {
 
 /**
  * Configuration of a destination as it is available through the destination service.
+ * @internal
  */
 export interface DestinationConfiguration {
   [key: string]: any;
@@ -277,7 +281,7 @@ export interface DestinationConfiguration {
 }
 /* eslint-disable-next-line valid-jsdoc */
 /**
- * @hidden
+ * @internal
  */
 export function isDestinationConfiguration(
   destination: any
@@ -287,7 +291,7 @@ export function isDestinationConfiguration(
 
 /* eslint-disable-next-line valid-jsdoc */
 /**
- * @hidden
+ * @internal
  */
 export function isDestinationJson(
   destination: any

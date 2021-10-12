@@ -148,6 +148,7 @@ export interface Destination {
 
 /**
  * Represents authentication token returned from destination service.
+ * @internal
  */
 export interface DestinationAuthToken {
   type: string;
@@ -160,10 +161,14 @@ export interface DestinationAuthToken {
   };
 }
 
+/**
+ * @internal
+ */
 export type DestinationProxyType = 'OnPremise' | 'Internet' | null;
 
 /**
  * Represents a certificate attached to a destination.
+ * @internal
  */
 export interface DestinationCertificate {
   /**
@@ -209,16 +214,25 @@ export type DestinationRetrievalOptions =    CachingOptions
  &
   ResilienceOptions;
 
+/**
+ * @internal
+ */
 export function isDestinationNameAndJwt(
   destination: any
 ): destination is DestinationNameAndJwt {
   return destination.destinationName !== undefined;
 }
 
+/**
+ * @internal
+ */
 export function isDestination(destination: any): destination is Destination {
   return destination.url !== undefined;
 }
 
+/**
+ * @internal
+ */
 export type AuthenticationType =
   | 'PrincipalPropagation'
   | 'NoAuthentication'
@@ -233,6 +247,7 @@ export type AuthenticationType =
 /**
  * The destinations endpoint distinguished between destinations maintained on service level (instance) and account level (subaccount).
  * This enum is used as a switch in the [[fetchInstanceDestinations]], [[fetchSubaccountDestinations]]  and [[destinationServiceCache]]
+  * @internal
  */
 export enum DestinationType {
   Instance = 'instance',

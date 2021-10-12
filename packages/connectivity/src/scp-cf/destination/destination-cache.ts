@@ -44,7 +44,7 @@ const DestinationCache = (cache: Cache<Destination>) => ({
  * @param destinationName - The name of the destination.
  * @param isolationStrategy - The strategy used to isolate cache entries.
  * @returns The cache key.
- * @hidden
+ * @internal
  */
 export function getDestinationCacheKey(
   decodedJwt: Record<string, any>,
@@ -77,6 +77,9 @@ function cacheRetrievedDestination(
   cache.set(key, destination);
 }
 
+/**
+ * @internal
+ */
 export const destinationCache = DestinationCache(
   new Cache<Destination>({ hours: 0, minutes: 5, seconds: 0 })
 );

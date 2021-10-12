@@ -10,6 +10,9 @@ const logger = createLogger({
   messageContext: 'destination-selection-strategies'
 });
 
+/**
+ * @internal
+ */
 export type DestinationSelectionStrategy = (
   allDestinations: AllDestinations,
   destinationName: string
@@ -20,6 +23,7 @@ export type DestinationSelectionStrategy = (
  * @param allDestinations - Retrieved destinations.
  * @param destinationName - Name of the destination to retrieve.
  * @returns the destination to retrieve, returns `null`, if no matched provider destination is found.
+ * @internal
  */
 export function alwaysProvider(
   allDestinations: AllDestinations,
@@ -33,6 +37,7 @@ export function alwaysProvider(
  * @param allDestinations - Retrieved destinations.
  * @param destinationName - Name of the destination to retrieve.
  * @returns the destination to retrieve, returns `null`, if no matched subscriber destination is found.
+ * @internal
  */
 export function alwaysSubscriber(
   allDestinations: AllDestinations,
@@ -46,6 +51,7 @@ export function alwaysSubscriber(
  * @param allDestinations - Retrieved destinations.
  * @param destinationName - Name of the destination to retrieve.
  * @returns the destination to retrieve, returns `null` if no matched destination is found.
+ * @internal
  */
 export function subscriberFirst(
   allDestinations: AllDestinations,
@@ -60,6 +66,7 @@ export function subscriberFirst(
 
 /**
  * Selector of destination selection strategies. See [[alwaysProvider]], [[alwaysSubscriber]] and [[subscriberFirst]] for more information available selection strategies.
+ * @internal
  */
 export const DestinationSelectionStrategies = {
   alwaysProvider,

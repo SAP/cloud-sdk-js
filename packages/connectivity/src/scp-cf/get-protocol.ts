@@ -12,6 +12,7 @@ const logger = createLogger({
  * @param destination - URL of this destination is parsed
  * @throws Error in case a unsupported protocol is given in the destination URL like rfc://example.com.
  * @returns The protocol, either https or http.
+ * @internal
  */
 export function getProtocolOrDefault(destination: Destination): Protocol {
   const protocol = destination?.url?.toLowerCase()?.split('://');

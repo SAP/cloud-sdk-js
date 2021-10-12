@@ -40,7 +40,10 @@ function getCustomAuthHeaders(
 }
 
 /**
- *  @internal
+ * @internal
+ * @param destination
+ * @param customHeaders
+ * @returns auth header
  */
 export async function getAuthHeaders(
   destination: Destination,
@@ -113,7 +116,10 @@ function headerFromBasicAuthDestination(
 }
 
 /**
- *  @internal
+ * @internal
+ * @param username
+ * @param password
+ * @returns basic header as string
  */
 export function basicHeader(username: string, password: string): string {
   return 'Basic ' + encodeBase64(`${username}:${password}`);
@@ -217,7 +223,9 @@ async function getAuthenticationRelatedHeaders(
 }
 
 /**
- *  @internal
+ * @param destination
+ * @returns authorization headers build from destination
+ * @internal
  */
 export async function buildAuthorizationHeaders(
   destination: Destination

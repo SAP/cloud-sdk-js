@@ -7,11 +7,19 @@ export function typeDescriptorPaths(cwd: string): string[]{
     return files.filter(file=>!file.includes('index.d.ts')).map(file=>join(cwd,file));
 }
 
-export function parseTypeDefinitionFile(fileContent: string): string[]{
-    const normalizd = fileContent.replace(/\n+/g,'');
-    const nonInterfaces = captureGroupsFromGlobalRegex(/export declare (?:function|const|enum|class|type) (\w+)/g,normalizd);// Array.from(normalizd.matchAll())
-    const interfaces =  captureGroupsFromGlobalRegex(/export interface (\w+)/g,normalizd);
-    return [...nonInterfaces,...interfaces];
+export interface ExportedObject{
+    name: string;
+        type: string;
+    path: string;
+}
+
+export function parseTypeDefinitionFile(fileContent: string): Omit<ExportedObject,'path'>[]{
+    const normalized = fileContent.replace(/\n+/g,'');
+    return  ['function','const','enum','class','type','interface'].reduce((allObjects,objectType)=>{
+        const regex = objectType === 'interface' ? new RegExp(`export ${objectType} (\\w+)`,'g') :new RegExp(`export declare ${objectType} (\\w+)`,'g');
+        const exported = captureGroupsFromGlobalRegex(regex,normalized).map(element=>({ name:element,type:objectType }));
+        return[...allObjects,...exported];
+    },[]);
 }
 
 export function indexFiles(cwd: string): string[]{

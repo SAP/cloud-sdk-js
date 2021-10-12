@@ -34,6 +34,7 @@ let circuitBreaker: DestinationCircuitBreaker;
  * @param jwt - The access token
  * @param options - Options to use by retrieving destinations
  * @returns A promise resolving to a list of instance destinations
+ * @internal
  */
 export function fetchInstanceDestinations(
   destinationServiceUri: string,
@@ -54,6 +55,7 @@ export function fetchInstanceDestinations(
  * @param jwt - The access token
  * @param options - Options to use by retrieving destinations
  * @returns A promise resolving to a list of subaccount destinations
+ * @internal
  */
 export function fetchSubaccountDestinations(
   destinationServiceUri: string,
@@ -118,6 +120,9 @@ async function fetchDestinations(
     });
 }
 
+/**
+ *  @internal
+ */
 export interface AuthAndExchangeTokens {
   authHeaderJwt: string;
   exchangeHeaderJwt?: string;
@@ -133,6 +138,7 @@ export interface AuthAndExchangeTokens {
  * @param destinationName - The name of the desired destination
  * @param options - Options to use by retrieving destinations
  * @returns A Promise resolving to the destination
+ * @internal
  */
 export async function fetchDestination(
   destinationServiceUri: string,

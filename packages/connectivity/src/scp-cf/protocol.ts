@@ -1,10 +1,14 @@
-/* eslint-disable-next-line */
+/**
+ * @internal
+ */
 export enum Protocol {
   HTTP = 'http',
   HTTPS = 'https'
 }
 
-/* eslint-disable-next-line */
+/**
+ * @internal
+ */
 export namespace Protocol {
   /**
    * Get [[Protocol]] from its string representation.

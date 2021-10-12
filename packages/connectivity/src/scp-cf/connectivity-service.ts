@@ -11,23 +11,25 @@ import {
 import { getServiceList } from './environment-accessor';
 import { Service } from './environment-accessor-types';
 import { serviceToken } from './token-accessor';
-import { decodeJwt, isUserToken, JwtPair } from './jwt';
+import { isUserToken, JwtPair } from './jwt';
 
 const logger = createLogger({
   package: 'core',
   messageContext: 'connectivity-service'
 });
 
-// TODO: remove string argument in v2.0
+/**
+ * @internal
+ * @param destination
+ * @param jwt
+ */
 export async function addProxyConfigurationOnPrem(
   destination: Destination,
-  jwt: JwtPair | undefined
+  jwt?: JwtPair
 ): Promise<Destination> {
-  const jwtPair =
-    typeof jwt === 'string' ? { encoded: jwt, decoded: decodeJwt(jwt) } : jwt;
   if (
     destination.authentication === 'PrincipalPropagation' &&
-    !isUserToken(jwtPair)
+    !isUserToken(jwt)
   ) {
     throw new Error('For principal propagation a user JWT is needed.');
   }
@@ -45,6 +47,9 @@ interface HostAndPort {
   protocol: Protocol.HTTP;
 }
 
+/**
+ * @internal
+ */
 export function proxyHostAndPort(): HostAndPort {
   const service = readConnectivityServiceBinding();
   return {

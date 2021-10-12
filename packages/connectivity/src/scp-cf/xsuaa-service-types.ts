@@ -1,10 +1,13 @@
+/**
+ * @internal
+ */
 export interface ClientCredentials {
   username: string;
   password: string;
 }
 
 /**
- * @hidden
+ * @internal
  */
 export interface ClientCredentialsResponse {
   access_token: string;
@@ -18,7 +21,7 @@ export interface ClientCredentialsResponse {
 }
 
 /**
- * @hidden
+ * @internal
  */
 export interface UserTokenResponse extends ClientCredentialsResponse {
   refresh_token: string;
@@ -27,6 +30,7 @@ export interface UserTokenResponse extends ClientCredentialsResponse {
 /**
  * Response element returned from the XSUAA service's /token_key endpoint.
  * Value holds the key that is used for verifying JWTs.
+ * @internal
  */
 export interface TokenKey {
   /**

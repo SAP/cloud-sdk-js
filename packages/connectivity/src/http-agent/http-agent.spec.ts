@@ -3,10 +3,9 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import { connectivityProxyConfigMock } from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
 import { proxyAgent } from '../scp-cf/destination/proxy-util';
 import { Protocol } from '../scp-cf/protocol';
-import { getProtocolOrDefault } from '../scp-cf/get-protocol';
 import { ProxyConfiguration } from '../scp-cf/connectivity-service-types';
 import { Destination } from '../scp-cf/destination/destination-service-types';
-import { getAgentConfig, getUrlProtocol } from './http-agent';
+import { getAgentConfig } from './http-agent';
 
 describe('createAgent', () => {
   const baseDestination: Destination = {
@@ -77,35 +76,6 @@ describe('createAgent', () => {
         ...connectivityProxyConfigMock,
         rejectUnauthorized: false
       })
-    );
-  });
-
-  it('should return the http protocol', () => {
-    expect(getUrlProtocol({ url: 'http://test.com' })).toBe(Protocol.HTTP);
-    expect(getUrlProtocol({ url: 'https://test.com' })).toBe(Protocol.HTTPS);
-    expect(getUrlProtocol({ url: 'noProtocol.com' })).toBe(undefined);
-    expect(getUrlProtocol({ url: 'rfc://unsupportedProtocol.com' })).toBe(
-      'rfc'
-    );
-    expect(getUrlProtocol({ url: '://missingProtocol.com' })).toBe('');
-
-    expect(getProtocolOrDefault({ url: 'http://test.com' })).toBe(
-      Protocol.HTTP
-    );
-    expect(getProtocolOrDefault({ url: 'https://test.com' })).toBe(
-      Protocol.HTTPS
-    );
-    expect(getProtocolOrDefault({ url: 'default.com' })).toBe(Protocol.HTTPS);
-
-    expect(() => getProtocolOrDefault({ url: '://test.com' })).toThrowError(
-      new Error(
-        'Protocol of the provided destination (://test.com) is not supported! Currently only HTTP and HTTPS are supported.'
-      )
-    );
-    expect(() => getProtocolOrDefault({ url: 'rfc://test.com' })).toThrowError(
-      new Error(
-        'Protocol of the provided destination (rfc://test.com) is not supported! Currently only HTTP and HTTPS are supported.'
-      )
     );
   });
 

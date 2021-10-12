@@ -1,6 +1,12 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { EnvironmentAccessor } from './environment-accessor';
 import { DestinationServiceCredentials } from './environment-accessor-types';
+import {
+  getDestinationBasicCredentials,
+  getDestinationServiceCredentialsList,
+  getDestinationServiceUri,
+  getEnvironmentVariable, getServiceList,
+  getVcapService, getXsuaaServiceCredentials
+} from './environment-accessor';
 
 const logger = createLogger('environment-accessor');
 
@@ -48,44 +54,44 @@ describe('Environment Accessor', () => {
       const env = services;
       const expected = JSON.stringify(env);
       const actual =
-        EnvironmentAccessor.getEnvironmentVariable('VCAP_SERVICES');
+        getEnvironmentVariable('VCAP_SERVICES');
       expect(actual).toBe(expected);
     });
 
     it('should return null, when the environment variable is not defined', () => {
       const expected = null;
-      const actual = EnvironmentAccessor.getEnvironmentVariable('random_env');
+      const actual = getEnvironmentVariable('random_env');
       expect(actual).toBe(expected);
     });
 
     it('should return "VCAP_SERVICES" json object', () => {
       const expected = services;
-      const actual = EnvironmentAccessor.getVcapService();
+      const actual = getVcapService();
       expect(actual).toEqual(expected);
     });
 
     it('returns null if VCAP_SERVICES is not defined', () => {
       delete process.env.VCAP_SERVICES;
-      expect(EnvironmentAccessor.getVcapService()).toBe(null);
+      expect(getVcapService()).toBe(null);
     });
 
     it('throws an error if VCAP_SERVICES is not parsable', () => {
       process.env.VCAP_SERVICES = '{JSON?!';
-      expect(() => EnvironmentAccessor.getVcapService()).toThrowError(
+      expect(() => getVcapService()).toThrowError(
         "Failed to parse environment variable 'VCAP_SERVICES'."
       );
     });
 
     it('throws an error if VCAP_SERVICES is empty', () => {
       process.env.VCAP_SERVICES = JSON.stringify({});
-      expect(() => EnvironmentAccessor.getVcapService()).toThrowError(
+      expect(() => getVcapService()).toThrowError(
         "Environment variable 'VCAP_SERVICES' is defined but empty. This should not happen."
       );
     });
 
     it('check a non defined service in env variables', () => {
       const undefinedService = 'not_existing_variable';
-      expect(EnvironmentAccessor.getServiceList(undefinedService)).toEqual([]);
+      expect(getServiceList(undefinedService)).toEqual([]);
     });
 
     it('get a credentials list from "destination"', () => {
@@ -96,7 +102,7 @@ describe('Environment Accessor', () => {
         expected.push(dest.credentials);
       }
 
-      const actual = EnvironmentAccessor.getDestinationServiceCredentialsList();
+      const actual = getDestinationServiceCredentialsList();
       expect(actual).toEqual(expected);
     });
 
@@ -105,7 +111,7 @@ describe('Environment Accessor', () => {
       process.env.VCAP_SERVICES = JSON.stringify({
         destination: [{ name: 'my-destination' }]
       });
-      const actual = EnvironmentAccessor.getDestinationServiceCredentialsList();
+      const actual = getDestinationServiceCredentialsList();
       expect(actual).toEqual(expected);
     });
   });
@@ -117,7 +123,7 @@ describe('Environment Accessor', () => {
 
     it('get uri from destination service class', () => {
       const expected = 'https://..';
-      const actual = EnvironmentAccessor.getDestinationServiceUri();
+      const actual = getDestinationServiceUri();
       expect(actual).toBe(expected);
     });
 
@@ -132,7 +138,7 @@ describe('Environment Accessor', () => {
       };
       process.env.VCAP_SERVICES = JSON.stringify(mutatedVcap_services);
       const expected = null;
-      const actual = EnvironmentAccessor.getDestinationServiceUri();
+      const actual = getDestinationServiceUri();
       expect(actual).toEqual(expected);
     });
 
@@ -142,13 +148,13 @@ describe('Environment Accessor', () => {
       };
       process.env.VCAP_SERVICES = JSON.stringify(mutatedVcap_services);
       const expected = null;
-      const actual = EnvironmentAccessor.getDestinationServiceUri();
+      const actual = getDestinationServiceUri();
       expect(actual).toEqual(expected);
     });
 
     it('get destination basic credentials', () => {
       const expected = { clientid: 'sb-clone', clientsecret: 'jQZB..' };
-      const actual = EnvironmentAccessor.getDestinationBasicCredentials();
+      const actual = getDestinationBasicCredentials();
       expect(actual).toEqual(expected);
     });
   });
@@ -167,7 +173,7 @@ describe('Environment Accessor', () => {
       };
 
       expect(
-        EnvironmentAccessor.getXsuaaServiceCredentials(decodedJwt).clientid
+        getXsuaaServiceCredentials(decodedJwt).clientid
       ).toBe(expected);
     });
 
@@ -180,7 +186,7 @@ describe('Environment Accessor', () => {
       };
 
       expect(
-        EnvironmentAccessor.getXsuaaServiceCredentials(decodedJwt).clientid
+        getXsuaaServiceCredentials(decodedJwt).clientid
       ).toBe(expected);
     });
 
@@ -194,13 +200,13 @@ describe('Environment Accessor', () => {
       };
 
       expect(
-        EnvironmentAccessor.getXsuaaServiceCredentials(decodedJwt).clientid
+        getXsuaaServiceCredentials(decodedJwt).clientid
       ).toBe(expected);
     });
 
     it('Throws error if no match can be found', () => {
       expect(() =>
-        EnvironmentAccessor.getXsuaaServiceCredentials({})
+        getXsuaaServiceCredentials({})
       ).toThrow();
     });
   });

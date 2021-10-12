@@ -26,23 +26,23 @@ The tables below shows a rough guidance based on the priority and complexity.
 
 | |prio:low|prio:mid|prio:high|
 |---|---|---|---|
-|complexity:high| :x: | :x: | :warning::construction: |
-|complexity:mid| :x: | :construction: | :white_check_mark: |
+|complexity:high| :x: | :x: | :warning::speech_balloon: |
+|complexity:mid| :x: | :warning::speech_balloon: | :white_check_mark: |
 |complexity:low| :x: | :white_check_mark: | :white_check_mark: |
 
 #### Should we commit to both branches for this `bug`?
 
 | |prio:low|prio:mid|prio:high|
 |---|---|---|---|
-|complexity:high| :x: | :x: | :warning::speech_balloon: |
-|complexity:mid| :x: | :warning::speech_balloon: | :white_check_mark: |
+|complexity:high| :x: | :x: | :warning::construction: |
+|complexity:mid| :x: | :warning::construction: | :white_check_mark: |
 |complexity:low| :x: | :white_check_mark: | :white_check_mark: |
 
 - :white_check_mark: : Yes, merge both
 - :x: : No, won't do
 - :speech_balloon: : Discuss, case by case
-- :construction: No, will only release in 2.0
-- :warning: Warning, we treat features and bugs differently.
+- :construction: : No, will only release in 2.0
+- :warning: : Warning, we treat features and bugs differently
 
 ### Process
 The steps below describe how to determine, whether we should commit to both branches for a specific ticket.

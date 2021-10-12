@@ -1,20 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es5" ,
+    "target": "es5",
     "module": "commonjs",
-    "lib": [
-      "esnext"
-    ],
-    "sourceMap": true  ,
-    "declaration": true  ,
-    "declarationMap": true ,
-        "incremental": true,
+    "lib": ["esnext"],
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
     "skipLibCheck": true,
-       "strictNullChecks": true  ,
+    "strictNullChecks": true,
 
-    "moduleResolution": "node"  ,
+    "moduleResolution": "node",
 
-    "allowSyntheticDefaultImports": true ,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "inlineSources": false
   }

@@ -2,7 +2,10 @@ import { join, resolve } from 'path';
 import { promises } from 'fs';
 import { createLogger } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
-import { readCompilerOptions, transpileDirectory } from '@sap-cloud-sdk/generator-common';
+import {
+  readCompilerOptions,
+  transpileDirectory
+} from '@sap-cloud-sdk/generator-common';
 import { CompilerOptions } from 'typescript';
 import {
   checkSingleIndexFile,
@@ -14,52 +17,69 @@ import {
 } from './check-public-api';
 
 const logger = createLogger('check-public-api');
-const pathToTsConfigRoot = join(__dirname,'../tsconfig.json');
-const pathRootNodeModules = resolve(__dirname,'../node_modules');
+const pathToTsConfigRoot = join(__dirname, '../tsconfig.json');
+const pathRootNodeModules = resolve(__dirname, '../node_modules');
 
-async function readAllTypeDefinitions(pathCompiled: string): Promise<{path: string;content: string}[]>{
+async function readAllTypeDefinitions(
+  pathCompiled: string
+): Promise<{ path: string; content: string }[]> {
   const typeDefinitionPaths = typeDescriptorPaths(pathCompiled);
- return Promise.all(
-      typeDefinitionPaths.map(async path => ({
-        path,
-        content: await promises.readFile(path, 'utf8')
-      }))
+  return Promise.all(
+    typeDefinitionPaths.map(async path => ({
+      path,
+      content: await promises.readFile(path, 'utf8')
+    }))
   );
 }
 
-function mockFileSystem(pathToPackage: string){
-  const{ pathToSource,pathToTsConfig } = paths(pathToPackage);
+function mockFileSystem(pathToPackage: string) {
+  const { pathToSource, pathToTsConfig } = paths(pathToPackage);
   mock({
     [pathToTsConfig]: mock.load(pathToTsConfig),
     [pathToSource]: mock.load(pathToSource),
-    [pathRootNodeModules]:mock.load(pathRootNodeModules),
-    [pathToTsConfigRoot]:mock.load(pathToTsConfigRoot)
+    [pathRootNodeModules]: mock.load(pathRootNodeModules),
+    [pathToTsConfigRoot]: mock.load(pathToTsConfigRoot)
   });
 }
 
-function paths(pathToPackage: string): {pathToSource: string;pathToTsConfig: string;pathCompiled: string}{
+function paths(pathToPackage: string): {
+  pathToSource: string;
+  pathToTsConfig: string;
+  pathCompiled: string;
+} {
   return {
-    pathToSource:join(pathToPackage,'src'),
-    pathToTsConfig: join(pathToPackage,'tsconfig.json'),
-    pathCompiled:'dist'
+    pathToSource: join(pathToPackage, 'src'),
+    pathToTsConfig: join(pathToPackage, 'tsconfig.json'),
+    pathCompiled: 'dist'
   };
 }
 
-async function getCompilerOptions(pathToPackage: string): Promise<CompilerOptions>{
-  const{ pathToSource,pathToTsConfig,pathCompiled } = paths(pathToPackage);
+async function getCompilerOptions(
+  pathToPackage: string
+): Promise<CompilerOptions> {
+  const { pathToSource, pathToTsConfig, pathCompiled } = paths(pathToPackage);
   const compilerOptions = await readCompilerOptions(pathToTsConfig);
   const compilerOptionsRoot = await readCompilerOptions(pathToTsConfigRoot);
-  return { ...compilerOptionsRoot,...compilerOptions,stripInternal:true,rootDir:pathToSource,outDir:pathCompiled };
+  return {
+    ...compilerOptionsRoot,
+    ...compilerOptions,
+    stripInternal: true,
+    rootDir: pathToSource,
+    outDir: pathCompiled
+  };
 }
 
-function processResult(allExportedIndex: string[],allExportedTypes: ExportedObject[]): boolean{
+function processResult(
+  allExportedIndex: string[],
+  allExportedTypes: ExportedObject[]
+): boolean {
   let somethingWrong = false;
   for (const exportedType of allExportedTypes) {
     if (
-        !allExportedIndex.find(nameInIndex => exportedType.name === nameInIndex)
+      !allExportedIndex.find(nameInIndex => exportedType.name === nameInIndex)
     ) {
       logger.error(
-          `The ${exportedType.type} "${exportedType.name}" in file: ${exportedType.path} is not listed in the index.ts but also not marked as internal.`
+        `The ${exportedType.type} "${exportedType.name}" in file: ${exportedType.path} is not listed in the index.ts but also not marked as internal.`
       );
       somethingWrong = true;
     }
@@ -67,10 +87,10 @@ function processResult(allExportedIndex: string[],allExportedTypes: ExportedObje
 
   for (const nameInIndex of allExportedIndex) {
     if (
-        !allExportedTypes.find(exportedType => exportedType.name === nameInIndex)
+      !allExportedTypes.find(exportedType => exportedType.name === nameInIndex)
     ) {
       logger.error(
-          `The object "${nameInIndex}" is the index.ts but marked as internal.`
+        `The object "${nameInIndex}" is the index.ts but marked as internal.`
       );
       somethingWrong = true;
     }
@@ -79,9 +99,12 @@ function processResult(allExportedIndex: string[],allExportedTypes: ExportedObje
 }
 
 async function checkApiOfPackage(pathToPackage: string): Promise<void> {
-  const{ pathToSource,pathCompiled } = paths(pathToPackage);
-  mockFileSystem(pathToPackage)
-  await transpileDirectory(pathToSource,await getCompilerOptions(pathToPackage));
+  const { pathToSource, pathCompiled } = paths(pathToPackage);
+  mockFileSystem(pathToPackage);
+  await transpileDirectory(
+    pathToSource,
+    await getCompilerOptions(pathToPackage)
+  );
 
   checkSingleIndexFile(join(pathToPackage, 'src'));
   const allFiles = await readAllTypeDefinitions(pathCompiled);
@@ -97,12 +120,14 @@ async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     await promises.readFile(indexFiles(pathToPackage)[0], 'utf8')
   );
 
-  const somethingWrong = processResult(allExportedIndex,allExportedTypes);
+  const somethingWrong = processResult(allExportedIndex, allExportedTypes);
   mock.restore();
   if (somethingWrong) {
     process.exit(1);
   }
-  logger.info(`The index.ts of package ${pathToPackage} is in sync with the type annotations.`);
+  logger.info(
+    `The index.ts of package ${pathToPackage} is in sync with the type annotations.`
+  );
 }
 
 checkApiOfPackage(resolve(__dirname, '../packages/connectivity'));

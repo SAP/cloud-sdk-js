@@ -21,11 +21,12 @@ import {
   certificateSingleResponse,
   mockInstanceDestinationsCall,
   mockServiceBindings,
-  mockServiceToken,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   onlyIssuerServiceToken,
-  onlyIssuerXsuaaUrl
+  onlyIssuerXsuaaUrl,
+  providerXsuaaUrl,
+  providerServiceToken
 } from '../../../test/test-util';
 import * as httpClient from '../../http-client/http-client';
 import { parseDestination } from '../../../../connectivity/src/scp-cf/destination/destination';
@@ -165,9 +166,17 @@ describe('GetAllRequestBuilder', () => {
 
     it('executes a request using the (iss) to build a token instead of a user JWT', async () => {
       mockServiceBindings();
-      mockServiceToken();
+      jest.clearAllMocks();
 
       const nocks = [
+        nock(onlyIssuerXsuaaUrl)
+          .post('/oauth/token')
+          .times(2)
+          .reply(200, { access_token: onlyIssuerServiceToken }),
+        nock(providerXsuaaUrl)
+          .post('/oauth/token')
+          .times(1)
+          .reply(200, { access_token: providerServiceToken }),
         mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
         mockSubaccountDestinationsCall(
           nock,

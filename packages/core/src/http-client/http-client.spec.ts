@@ -2,6 +2,8 @@ import https from 'https';
 import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
+import { Destination } from '@sap-cloud-sdk/connectivity';
+import { Protocol } from '../../../connectivity/src/scp-cf/protocol';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
@@ -16,8 +18,6 @@ import {
   executeHttpRequest,
   shouldHandleCsrfToken
 } from './http-client';
-import {Destination} from "@sap-cloud-sdk/connectivity";
-import {Protocol} from "../../../connectivity/src/scp-cf/protocol";
 
 describe('generic http client', () => {
   const httpsDestination: Destination = {

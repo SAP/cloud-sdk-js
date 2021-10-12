@@ -216,6 +216,7 @@ export type DestinationRetrievalOptions = CachingOptions & ResilienceOptions;
  * Typeguard to find if object is DestinationNameAndJwt.
  * @param destination - Destination to be checked
  * @returns boolean
+ * @internal
  */
 export function isDestinationNameAndJwt(
   destination: any

@@ -10,7 +10,11 @@ import type {
   DestinationAuthToken
 } from './destination-service-types';
 import type { DestinationOptions } from './destination-accessor';
-import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from './proxy-util';
+import {
+  addProxyConfigurationInternet,
+  ProxyStrategy,
+  proxyStrategy
+} from './proxy-util';
 
 const logger = createLogger({
   package: 'core',

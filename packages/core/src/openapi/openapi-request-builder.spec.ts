@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,
@@ -12,11 +13,8 @@ import {
   onlyIssuerXsuaaUrl
 } from '../../test/test-util';
 import * as httpClient from '../http-client/http-client';
-import {
-  parseDestination,
-  sanitizeDestination,
-  wrapJwtInHeader
-} from '../../../connectivity/src';
+import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
+import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {

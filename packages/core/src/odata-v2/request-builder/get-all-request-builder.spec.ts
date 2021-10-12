@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { parseDestination, wrapJwtInHeader } from '@sap-cloud-sdk/connectivity';
+import { wrapJwtInHeader } from '../../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
   mockDestinationsEnv,
@@ -28,6 +28,7 @@ import {
   onlyIssuerXsuaaUrl
 } from '../../../test/test-util';
 import * as httpClient from '../../http-client/http-client';
+import { parseDestination } from '../../../../connectivity/src/scp-cf/destination/destination';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {

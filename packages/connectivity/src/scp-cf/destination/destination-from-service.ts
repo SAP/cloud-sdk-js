@@ -28,7 +28,11 @@ import {
 } from './destination-service';
 import { destinationCache } from './destination-cache';
 import type { DestinationOptions } from './destination-accessor';
-import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from './proxy-util';
+import {
+  addProxyConfigurationInternet,
+  ProxyStrategy,
+  proxyStrategy
+} from './proxy-util';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 

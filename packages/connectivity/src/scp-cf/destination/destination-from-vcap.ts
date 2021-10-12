@@ -1,7 +1,11 @@
 import { flatten, createLogger } from '@sap-cloud-sdk/util';
 import { getVcapService } from '../environment-accessor';
 import { Destination } from './destination-service-types';
-import { addProxyConfigurationInternet, ProxyStrategy, proxyStrategy } from './proxy-util';
+import {
+  addProxyConfigurationInternet,
+  ProxyStrategy,
+  proxyStrategy
+} from './proxy-util';
 
 const logger = createLogger({
   package: 'core',

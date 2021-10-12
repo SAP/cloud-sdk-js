@@ -1,19 +1,10 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
-  ODataGetAllRequestConfig,
-  ODataRequest
-} from '@sap-cloud-sdk/core/dist/odata-common/request';
-import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/core/dist/odata-v2/uri-conversion';
-import {
   defaultBasicCredentials,
   defaultDestination
 } from '@sap-cloud-sdk/core/test/test-util/request-mocker';
-import {
-  buildAuthorizationHeaders,
-  getAuthHeaders
-} from './authorization-header';
-import {Destination} from "./destination/destination-service-types";
+import { getAuthHeaders } from './authorization-header';
+import { Destination } from './destination/destination-service-types';
 
 const principalPropagationDestination = {
   url: '',
@@ -330,85 +321,6 @@ describe('getAuthHeaders', () => {
         '"AuthenticationType is \\"BasicAuthentication\\", but \\"username\\" and / or \\"password\\" are missing!"'
       );
     });
-  });
-});
-
-describe('[deprecated]', () => {
-  it('Prioritizes custom Authorization headers (upper case A)', async () => {
-    const request = new ODataRequest(
-      new ODataGetAllRequestConfig(TestEntity, oDataUriV2),
-      defaultDestination
-    );
-    request.config.addCustomHeaders({
-      Authorization: 'Basic SOMETHINGSOMETHING'
-    });
-
-    const headers = await buildAuthorizationHeaders(request);
-    expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
-  });
-
-  it('Prioritizes custom Authorization headers (lower case A)', async () => {
-    const request = new ODataRequest(
-      new ODataGetAllRequestConfig(TestEntity, oDataUriV2),
-      defaultDestination
-    );
-    request.config.addCustomHeaders({
-      authorization: 'Basic SOMETHINGSOMETHING'
-    });
-
-    const headers = await buildAuthorizationHeaders(request);
-    expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
-  });
-
-  it('does not throw on NoAuthentication', async () => {
-    await expect(
-      buildAuthorizationHeaders({
-        url: 'https://example.com',
-        authentication: 'NoAuthentication'
-      })
-    ).resolves.not.toThrow();
-  });
-
-  it('does not throw on ClientCertificateAuthentication', async () => {
-    await expect(
-      buildAuthorizationHeaders({
-        url: 'https://example.com',
-        authentication: 'ClientCertificateAuthentication'
-      })
-    ).resolves.not.toThrow();
-  });
-
-  it('defaults to NoAuthentication', async () => {
-    await expect(
-      buildAuthorizationHeaders({ url: 'https://example.com' })
-    ).resolves.not.toThrow();
-  });
-
-  it('does not throw on Principal Propagation', async () => {
-    const destination = {
-      url: '',
-      authentication: 'PrincipalPropagation',
-      proxyType: 'OnPremise',
-      proxyConfiguration: {
-        headers: {
-          'SAP-Connectivity-Authentication': 'someValue',
-          'Proxy-Authorization': 'someProxyValue'
-        }
-      }
-    } as Destination;
-
-    const headers = await buildAuthorizationHeaders(destination);
-    expect(headers['SAP-Connectivity-Authentication']).toBe('someValue');
-    expect(headers['Proxy-Authorization']).toBe('someProxyValue');
-
-    delete destination!.proxyConfiguration!.headers![
-      'SAP-Connectivity-Authentication'
-    ];
-    await expect(
-        buildAuthorizationHeaders(destination)
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Principal propagation was selected in destination, but no SAP-Connectivity-Authentication bearer header was added by connectivity service."'
-    );
   });
 });
 

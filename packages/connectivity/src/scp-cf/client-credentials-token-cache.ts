@@ -38,8 +38,9 @@ const ClientCredentialsTokenCache = (
 
 /** *
  * @internal
- * @param url
- * @param credentialsOrClientId
+ * @param url - URL from where the token is fetched
+ * @param credentialsOrClientId - Credentials to fetch the token
+ * @returns the token
  */
 export function getGrantTokenCacheKey(
   url: string,

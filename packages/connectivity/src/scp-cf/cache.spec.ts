@@ -1,11 +1,11 @@
-import {
-  AuthenticationType,
-  Destination,
-  destinationCache
-} from './destination';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
 import { Cache } from './cache';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
+import {
+  AuthenticationType,
+  Destination
+} from './destination/destination-service-types';
+import { destinationCache } from './destination/destination-cache';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',

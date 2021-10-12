@@ -1,11 +1,3 @@
-import {
-  alwaysProvider,
-  clientCredentialsTokenCache,
-  destinationServiceCache,
-  destinationCache,
-  getDestination,
-  IsolationStrategy
-} from '@sap-cloud-sdk/core';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import {
@@ -19,6 +11,12 @@ import {
 } from '../../../packages/core/test/test-util/environment-mocks';
 import { privateKey } from '../../../packages/core/test/test-util/keys';
 import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
+import { destinationCache } from '../../../packages/connectivity/src/scp-cf/destination/destination-cache';
+import { destinationServiceCache } from '../../../packages/connectivity/src/scp-cf/destination/destination-service-cache';
+import { clientCredentialsTokenCache } from '../../../packages/connectivity/src/scp-cf/client-credentials-token-cache';
+import { getDestination } from '../../../packages/connectivity/src/scp-cf/destination/destination-accessor';
+import { alwaysProvider } from '../../../packages/connectivity/src/scp-cf/destination/destination-selection-strategies';
+import { IsolationStrategy } from '../../../packages/connectivity/src/scp-cf/cache';
 
 describe('CacheDestination & CacheClientCredentialToken', () => {
   beforeEach(() => {

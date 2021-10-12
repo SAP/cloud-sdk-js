@@ -1,4 +1,7 @@
-import { Service,XsuaaServiceCredentials } from '../../../connectivity/src/scp-cf/environment-accessor-types';
+import {
+  Service,
+  XsuaaServiceCredentials
+} from '../../../connectivity/src/scp-cf/environment-accessor-types';
 import { Protocol } from '../../../connectivity/src/scp-cf/protocol';
 import { ProxyConfiguration } from '../../../connectivity/src/scp-cf/connectivity-service-types';
 import { publicKey } from './keys';

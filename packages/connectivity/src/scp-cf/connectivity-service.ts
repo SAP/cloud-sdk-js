@@ -20,8 +20,9 @@ const logger = createLogger({
 
 /**
  * @internal
- * @param destination
- * @param jwt
+ * @param destination - Destination which is extended
+ * @param jwt - The user jwt
+ * @returns Destination containing the proxy config
  */
 export async function addProxyConfigurationOnPrem(
   destination: Destination,
@@ -36,7 +37,9 @@ export async function addProxyConfigurationOnPrem(
 
   const proxyConfiguration: ProxyConfiguration = {
     ...proxyHostAndPort(),
-    headers: { ...(await proxyHeaders(destination.authentication, jwt?.encoded)) }
+    headers: {
+      ...(await proxyHeaders(destination.authentication, jwt?.encoded))
+    }
   };
   return { ...destination, proxyConfiguration };
 }
@@ -49,6 +52,7 @@ interface HostAndPort {
 
 /**
  * @internal
+ * @returns Proxy host and port
  */
 export function proxyHostAndPort(): HostAndPort {
   const service = readConnectivityServiceBinding();

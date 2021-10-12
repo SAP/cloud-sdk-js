@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Destination } from './destination';
 import { buildHeadersForDestination } from './header-builder-for-destination';
 import { checkHeaders } from './authorization-header.spec';
+import { Destination } from './destination/destination-service-types';
 
 describe('header builder for destination', () => {
   it('warns if the destination and request config contains authorization information', () => {

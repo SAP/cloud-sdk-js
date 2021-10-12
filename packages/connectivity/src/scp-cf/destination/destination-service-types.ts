@@ -210,12 +210,12 @@ export interface DestinationNameAndJwt {
 /**
  * Options to use while fetching destinations. Encompasses both [[DestinationCachingOptions]] and [[ResilienceOptions]] interfaces.
  */
-export type DestinationRetrievalOptions =    CachingOptions
- &
-  ResilienceOptions;
+export type DestinationRetrievalOptions = CachingOptions & ResilienceOptions;
 
 /**
- * @internal
+ * Typeguard to find if object is DestinationNameAndJwt.
+ * @param destination - Destination to be checked
+ * @returns boolean
  */
 export function isDestinationNameAndJwt(
   destination: any
@@ -224,6 +224,9 @@ export function isDestinationNameAndJwt(
 }
 
 /**
+ * Typeguard to find if object is DestinationNameAndJwt.
+ * @param destination - Destination to be checked
+ * @returns boolean
  * @internal
  */
 export function isDestination(destination: any): destination is Destination {
@@ -247,7 +250,7 @@ export type AuthenticationType =
 /**
  * The destinations endpoint distinguished between destinations maintained on service level (instance) and account level (subaccount).
  * This enum is used as a switch in the [[fetchInstanceDestinations]], [[fetchSubaccountDestinations]]  and [[destinationServiceCache]]
-  * @internal
+ * @internal
  */
 export enum DestinationType {
   Instance = 'instance',

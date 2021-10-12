@@ -4,8 +4,10 @@ import {
   getDestinationBasicCredentials,
   getDestinationServiceCredentialsList,
   getDestinationServiceUri,
-  getEnvironmentVariable, getServiceList,
-  getVcapService, getXsuaaServiceCredentials
+  getEnvironmentVariable,
+  getServiceList,
+  getVcapService,
+  getXsuaaServiceCredentials
 } from './environment-accessor';
 
 const logger = createLogger('environment-accessor');
@@ -53,8 +55,7 @@ describe('Environment Accessor', () => {
     it('should return the defined environment variable with the respective name', () => {
       const env = services;
       const expected = JSON.stringify(env);
-      const actual =
-        getEnvironmentVariable('VCAP_SERVICES');
+      const actual = getEnvironmentVariable('VCAP_SERVICES');
       expect(actual).toBe(expected);
     });
 
@@ -172,9 +173,7 @@ describe('Environment Accessor', () => {
         client_id: CLIENT_ID
       };
 
-      expect(
-        getXsuaaServiceCredentials(decodedJwt).clientid
-      ).toBe(expected);
+      expect(getXsuaaServiceCredentials(decodedJwt).clientid).toBe(expected);
     });
 
     it('uses the audience for matching when no match can be found using the clientid', () => {
@@ -185,9 +184,7 @@ describe('Environment Accessor', () => {
         aud: [CLIENT_ID]
       };
 
-      expect(
-        getXsuaaServiceCredentials(decodedJwt).clientid
-      ).toBe(expected);
+      expect(getXsuaaServiceCredentials(decodedJwt).clientid).toBe(expected);
     });
 
     it('uses scope if audience array is empty for matching when no match can be found using the clientid', () => {
@@ -199,15 +196,11 @@ describe('Environment Accessor', () => {
         scope: [CLIENT_ID + '.rest.of.the.link']
       };
 
-      expect(
-        getXsuaaServiceCredentials(decodedJwt).clientid
-      ).toBe(expected);
+      expect(getXsuaaServiceCredentials(decodedJwt).clientid).toBe(expected);
     });
 
     it('Throws error if no match can be found', () => {
-      expect(() =>
-        getXsuaaServiceCredentials({})
-      ).toThrow();
+      expect(() => getXsuaaServiceCredentials({})).toThrow();
     });
   });
 });

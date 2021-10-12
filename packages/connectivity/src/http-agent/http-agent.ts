@@ -1,7 +1,10 @@
 import https from 'https';
 import http from 'http';
 import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
-import { Destination, DestinationCertificate } from '../scp-cf/destination/destination-service-types';
+import {
+  Destination,
+  DestinationCertificate
+} from '../scp-cf/destination/destination-service-types';
 import { getProtocolOrDefault } from '../scp-cf/get-protocol';
 import { Protocol } from '../scp-cf/protocol';
 import {
@@ -168,9 +171,11 @@ function createDefaultAgent(
  * @param targetUri - Used as baseURL in request config.
  * @returns HttpRequestConfig containing baseUrl and http(s) agents.
  */
-export function urlAndAgent(
-  targetUri: string
-): {baseURL: string; httpAgent?: http.Agent; httpsAgent?:  http.Agent} {
+export function urlAndAgent(targetUri: string): {
+  baseURL: string;
+  httpAgent?: http.Agent;
+  httpsAgent?: http.Agent;
+} {
   let destination: Destination = { url: targetUri, proxyType: 'Internet' };
   if (proxyStrategy(destination) === ProxyStrategy.INTERNET_PROXY) {
     destination = addProxyConfigurationInternet(destination);

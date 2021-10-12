@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
+import { Destination } from '@sap-cloud-sdk/connectivity';
 import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
-import { Destination } from '../@sap-cloud-sdk/connectivity';
 import { oDataUri as oDataUriV2 } from '../../odata-v2/uri-conversion';
 import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
 import { ODataUpdateRequestConfig } from './odata-update-request-config';

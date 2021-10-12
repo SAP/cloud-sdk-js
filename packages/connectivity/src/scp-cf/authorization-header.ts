@@ -6,7 +6,11 @@ import {
   toSanitizedObject,
   encodeBase64
 } from '@sap-cloud-sdk/util';
-import { AuthenticationType, Destination, DestinationAuthToken } from './destination/destination-service-types';
+import {
+  AuthenticationType,
+  Destination,
+  DestinationAuthToken
+} from './destination/destination-service-types';
 import { sanitizeDestination } from './destination/destination';
 
 const logger = createLogger({
@@ -41,8 +45,8 @@ function getCustomAuthHeaders(
 
 /**
  * @internal
- * @param destination
- * @param customHeaders
+ * @param destination - Destination from which headers are extracted
+ * @param customHeaders - Custom and default headers.
  * @returns auth header
  */
 export async function getAuthHeaders(
@@ -117,8 +121,8 @@ function headerFromBasicAuthDestination(
 
 /**
  * @internal
- * @param username
- * @param password
+ * @param username - The username
+ * @param password - The password
  * @returns basic header as string
  */
 export function basicHeader(username: string, password: string): string {
@@ -223,8 +227,8 @@ async function getAuthenticationRelatedHeaders(
 }
 
 /**
- * @param destination
- * @returns authorization headers build from destination
+ * @param destination - Destination from which headers are build
+ * @returns authorization - headers build from destination
  * @internal
  */
 export async function buildAuthorizationHeaders(

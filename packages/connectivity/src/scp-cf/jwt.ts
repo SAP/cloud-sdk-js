@@ -350,8 +350,9 @@ export function wrapJwtInHeader(token: string): AxiosRequestConfig {
 
 /**
  * @internal
- * @param jwtPayload
- * @param property
+ * @param jwtPayload - The jwt payload.
+ * @param property - The property to be read.
+ * @returns the property if present.
  */
 export function readPropertyWithWarn(
   jwtPayload: JwtPayload,

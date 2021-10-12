@@ -15,7 +15,7 @@ export interface GeneratorOptions {
   input: string;
   outputDir: string;
   transpile: boolean;
-  include?: string[];
+  include?: string | unknown;
   overwrite: boolean;
   clearOutputDir: boolean;
   skipValidation: boolean;

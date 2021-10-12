@@ -9,6 +9,7 @@ import {
   posix,
   sep
 } from 'path';
+import { GlobSync } from 'glob';
 import {
   createLogger,
   kebabCase,
@@ -145,7 +146,7 @@ async function generateSources(
     );
   }
 
-  if (options.include) {
+  if (typeof options.include === 'string') {
     await copyAdditionalFiles(serviceDir, options.include, options.overwrite);
   }
 
@@ -286,15 +287,15 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
 // TODO 1728 move to a new package to reduce code duplication.
 async function copyAdditionalFiles(
   serviceDir: string,
-  additionalFiles: string[],
+  additionalFilesGlob: string,
   overwrite: boolean
 ): Promise<void[]> {
   logger.verbose(
-    `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
+    `Copying additional files matching ${additionalFilesGlob} into ${serviceDir}.`
   );
 
   return Promise.all(
-    additionalFiles.map(filePath =>
+    new GlobSync(additionalFilesGlob).found.map(filePath =>
       copyFile(
         resolve(filePath),
         join(serviceDir, basename(filePath)),

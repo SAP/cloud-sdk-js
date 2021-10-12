@@ -46,10 +46,7 @@ const generatorConfigOpenApi: Partial<GeneratorOptions> = {
   transpile: true,
   packageJson: true,
   packageVersion: '1.2.3',
-  include: [
-    'test-resources/CHANGELOG.md',
-    'test-resources/some-test-markdown.md'
-  ],
+  include: 'test-resources/*',
   readme: true
 };
 

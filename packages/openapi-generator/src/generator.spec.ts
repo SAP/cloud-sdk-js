@@ -67,10 +67,7 @@ describe('generator', () => {
         skipValidation: true,
         transpile: true,
         metadata: true,
-        include: [
-          'root/additionalFiles/CHANGELOG.md',
-          'root/additionalFiles/OtherFile.txt'
-        ],
+        include: 'root/additionalFiles/*',
         readme: true,
         packageJson: true,
         packageVersion: '1.2.3'
@@ -104,7 +101,7 @@ describe('generator', () => {
     });
 
     it('should create a package.json with the provided version', async () => {
-      const packageJson = await readJSON(resolve(outputPath, 'package.json'));
+      const packageJson = readJSON(resolve(outputPath, 'package.json'));
       expect(packageJson.version).toBe('1.2.3');
     });
 

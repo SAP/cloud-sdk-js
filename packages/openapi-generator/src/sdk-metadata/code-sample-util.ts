@@ -84,7 +84,7 @@ export function getAnyOperationWithoutParams(
 
 export function getOperationParamCode(operation: OpenApiOperation): string {
   const paramSignature: string[] = [];
-  if (operation.pathParameters.length) {
+  if (operation.pathParameters?.length) {
     paramSignature.push(
       operation.pathParameters.map(pathParam => pathParam.name).join(', ')
     );

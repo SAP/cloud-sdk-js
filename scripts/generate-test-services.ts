@@ -46,8 +46,9 @@ const generatorConfigOpenApi: GeneratorOptions = {
   transpile: true,
   packageJson: true,
   packageVersion: '1.2.3',
-  include: 'test-resources/*',
-  readme: true
+  include: 'test-resources/{CHANGELOG.md,some-test-markdown.md}',
+  readme: true,
+  skipValidation: true
 };
 
 const logger = createLogger('generate-test-service');

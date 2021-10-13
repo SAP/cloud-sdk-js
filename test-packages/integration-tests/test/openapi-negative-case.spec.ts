@@ -7,6 +7,10 @@ import {
 } from '../../../test-resources/generator';
 
 describe('openapi negative tests', () => {
+  const pathToGenerator = resolve(
+    '../../node_modules/@sap-cloud-sdk/openapi-generator/dist/cli/index.js'
+  );
+
   it('should fail on generation for faulty spec file', async () => {
     const output = resolve(
       testOutputRootDir,
@@ -15,12 +19,9 @@ describe('openapi negative tests', () => {
     );
     await expect(
       execa(
-        'npx',
+        'node',
         [
-          '--no-save',
-          '-p',
-          '@sap-cloud-sdk/openapi-generator',
-          'openapi-generator',
+          pathToGenerator,
           '--input',
           resolve(testResourcesDir, 'faulty-openapi'),
           '--outputDir',
@@ -43,12 +44,9 @@ describe('openapi negative tests', () => {
     );
     await expect(
       execa(
-        'npx',
+        'node',
         [
-          '--no-save',
-          '-p',
-          '@sap-cloud-sdk/openapi-generator',
-          'openapi-generator',
+          pathToGenerator,
           '--input',
           resolve(testDir, '../openapi-service-specs/test-service.json'),
           '-o',
@@ -74,12 +72,9 @@ describe('openapi negative tests', () => {
     );
     await expect(
       execa(
-        'npx',
+        'node',
         [
-          '--no-save',
-          '-p',
-          '@sap-cloud-sdk/openapi-generator',
-          'openapi-generator',
+          pathToGenerator,
           '-i',
           resolve(testDir, '../openapi-service-specs/test-service.json'),
           '-o',

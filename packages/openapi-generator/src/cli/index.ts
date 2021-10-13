@@ -15,7 +15,7 @@ const logger = createLogger('openapi-generator');
 
 parseCmdArgs();
 
-export async function parseCmdArgs(): Promise<void> {
+export default async function parseCmdArgs(): Promise<void> {
   try {
     const argv = await yargs(hideBin(process.argv))
       .usage('--input <input> --outputDir <outputDirectory>')

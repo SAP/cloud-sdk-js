@@ -30,7 +30,7 @@ export const generatorOptions = {
   },
   include: {
     string: true,
-    coerce: (input: string): string[] | undefined =>
+    coerce: (input?: string): string[] | undefined =>
       typeof input !== 'undefined' ? new GlobSync(input).found : undefined,
     description:
       'Include files matching the given glob into the root of each generated client directory.'
@@ -57,7 +57,7 @@ export const generatorOptions = {
     string: true,
     description:
       'Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read from this directory.',
-    coerce: (input: string): string | undefined =>
+    coerce: (input?: string): string | undefined =>
       typeof input !== 'undefined' ? resolve(input) : undefined
   },
   packageJson: {
@@ -76,12 +76,14 @@ export const generatorOptions = {
     string: true,
     description:
       'Set the path to a file containing the options per service. The configuration allows to set a `directoryName` and `packageName` for every service, identified by the path to the original file. It also makes sure that names do not change between generator runs. If a directory is passed, a `options-per-service.json` file is read/created in this directory.',
-    coerce: (input: string): string => {
-      const isFilePath =
-        (existsSync(input) && lstatSync(input).isFile()) || !!extname(input);
-      return isFilePath
-        ? resolve(input)
-        : resolve(input, 'options-per-service.json');
+    coerce: (input?: string): string | undefined => {
+      if (typeof input !== 'undefined') {
+        const isFilePath =
+          (existsSync(input) && lstatSync(input).isFile()) || !!extname(input);
+        return isFilePath
+          ? resolve(input)
+          : resolve(input, 'options-per-service.json');
+      }
     }
   },
   packageVersion: {
@@ -107,7 +109,7 @@ export const generatorOptions = {
     string: true,
     alias: 'c',
     // config: true, // Disabled to maintain backwards compatibility with the oclif behavior
-    coerce: (input: string): string | undefined =>
+    coerce: (input?: string): string | undefined =>
       typeof input !== 'undefined' ? resolve(input) : undefined,
     description:
       'Set the path to a file containing the options for generation instead of setting the options on the command line. When combining the `config` option with other options on the command line, the command line options take precedence. If a directory is passed, a `config.json` file is read from this directory.'

@@ -73,9 +73,9 @@ When merging to two branches, make sure using `squash merge` for the first PR on
 
 Create a 2.0 breaking change doc (`2.0-traceability-notes.md`) with the following categories:
 
-- `function does not exist` when deleting a function, meaning users should switch to another function or find their own solution.
-- `switch to a different package` when moving a function to a new package, meaning users should change the import statement.
-- `function signature changed` when changing the parameters/return value, meaning users have to update their function calls.
+- `function removed` when deleting a function, meaning users should switch to another function or find their own solution.
+- `function moved` when moving a function to a new package, meaning users should change the import statement.
+- `signature changed` when changing the parameters/return value, meaning users have to update their function calls.
 - `implementation changed` when the signature keeps the same but implementation details changed, meaning users should use these functions with cautions.
 
 ## Release `beta` and `release candidate`

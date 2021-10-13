@@ -10,7 +10,7 @@ This package contains the connectivity functionality of the SAP Cloud SDK as wel
 ## Installation
 
 ```
-$ npm install @sap-cloud-sdk/core
+$ npm install @sap-cloud-sdk/connectivity
 ```
 
 ## Usage

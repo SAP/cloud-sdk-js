@@ -24,7 +24,7 @@ Blog: TBD<br>
 
 ## Compatibility Notes
 
-- 
+-
 
 ## Fixed Issues
 

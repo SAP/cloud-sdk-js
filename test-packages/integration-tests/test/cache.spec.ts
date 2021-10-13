@@ -11,12 +11,12 @@ import {
 } from '../../../packages/core/test/test-util/environment-mocks';
 import { privateKey } from '../../../packages/core/test/test-util/keys';
 import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
-import { destinationCache } from '../../../packages/connectivity/src/scp-cf/destination/destination-cache';
-import { destinationServiceCache } from '../../../packages/connectivity/src/scp-cf/destination/destination-service-cache';
-import { clientCredentialsTokenCache } from '../../../packages/connectivity/src/scp-cf/client-credentials-token-cache';
-import { getDestination } from '../../../packages/connectivity/src/scp-cf/destination/destination-accessor';
-import { alwaysProvider } from '../../../packages/connectivity/src/scp-cf/destination/destination-selection-strategies';
-import { IsolationStrategy } from '../../../packages/connectivity/src/scp-cf/cache';
+import {alwaysProvider} from "@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-selection-strategies";
+import {destinationCache} from "@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-cache";
+import {destinationServiceCache} from "@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-service-cache";
+import {clientCredentialsTokenCache} from "@sap-cloud-sdk/connectivity/dist/scp-cf/client-credentials-token-cache";
+import {getDestination} from "@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-accessor";
+import {IsolationStrategy} from "@sap-cloud-sdk/connectivity/dist/scp-cf/cache";
 
 describe('CacheDestination & CacheClientCredentialToken', () => {
   beforeEach(() => {

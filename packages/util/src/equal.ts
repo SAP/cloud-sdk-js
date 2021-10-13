@@ -24,7 +24,7 @@ export function equal<T>(item1: T, item2: T): boolean {
   if (
     typeof item1 === 'object' &&
     typeof item2 === 'object' &&
-    !(item1 === null && item2 === null)
+    !(item1 === null || item2 === null)
   ) {
     return equalObjects(item1, item2);
   }

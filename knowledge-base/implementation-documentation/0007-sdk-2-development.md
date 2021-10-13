@@ -2,7 +2,7 @@
 
 This document is an internal agreement for the SDK 2.0 development including the following topics:
 
-- the test coverage of the 2.0 branch
+- the test coverage of the `2.0` branch (called `v2`)
 - the process of committing to both `2.0` and `main` branches
 - the traceability notes about breaking changes
 - the release of `beta` versions and the `release candidate`s
@@ -105,12 +105,12 @@ lerna publish --canary major --no-push --no-git-tag-version --dist-tag dev --for
 
 ### Which sdk version should I use
 
-| tag name | version example                                            | description                                                                          |
-| -------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| `latest` | `1.50.0`, `2.0.0`                                          | the latest stable version for production                                             |
-| `canary` | `1.50.1-20211012062552.0`                                  | the latest status that reflects the `main` branch for testing before stable versions |
+| tag name | version example              | description                                                                          |
+| -------- | ---------------------------- | ------------------------------------------------------------------------------------ |
+| `latest` | `1.50.0`, `2.0.0`            | the latest stable version for production                                             |
+| `canary` | `1.50.1-20211012062552.0`    | the latest status that reflects the `main` branch for testing before stable versions |
 | `beta`   | `2.0.0-beta.0`, `2.0.0-rc.0` | the latest `beta` or `release candidate` versions                                    |
-| `dev`    | `2.0.0-20211012091004-dev.0`                               | the latest status that reflects the `2.0` branch for testing 2.0 development         |
+| `dev`    | `2.0.0-20211012091004-dev.0` | the latest status that reflects the `2.0` branch for testing 2.0 development         |
 
 ## Communication channel for collecting feedback after Beta
 

@@ -8,7 +8,8 @@ export const generatorOptions = {
     alias: 'i',
     description:
       'Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.',
-    coerce: (input: string): string => resolve(input),
+    coerce: (input: string): string =>
+      typeof input !== 'undefined' ? resolve(input) : '',
     default: ''
   },
   outputDir: {
@@ -16,7 +17,8 @@ export const generatorOptions = {
     alias: 'o',
     description:
       'Specify the path to the directory to generate the client(s) in. Each client is generated into a subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory naming through `--optionsPerService`.',
-    coerce: (input: string): string => resolve(input),
+    coerce: (input: string): string =>
+      typeof input !== 'undefined' ? resolve(input) : '',
     default: ''
   },
   transpile: {
@@ -28,7 +30,8 @@ export const generatorOptions = {
   },
   include: {
     string: true,
-    coerce: (input: string): string[] => new GlobSync(input).found,
+    coerce: (input: string): string[] | undefined =>
+      typeof input !== 'undefined' ? new GlobSync(input).found : undefined,
     description:
       'Include files matching the given glob into the root of each generated client directory.'
   },
@@ -54,7 +57,8 @@ export const generatorOptions = {
     string: true,
     description:
       'Replace the default `tsconfig.json` by passing a path to a custom config. By default, a `tsconfig.json` is only generated, when transpilation is enabled (`--transpile`). If a directory is passed, a `tsconfig.json` file is read from this directory.',
-    coerce: (input: string): string => resolve(input)
+    coerce: (input: string): string | undefined =>
+      typeof input !== 'undefined' ? resolve(input) : undefined
   },
   packageJson: {
     boolean: true,
@@ -103,7 +107,8 @@ export const generatorOptions = {
     string: true,
     alias: 'c',
     // config: true, // Disabled to maintain backwards compatibility with the oclif behavior
-    coerce: (input: string): string => resolve(input),
+    coerce: (input: string): string | undefined =>
+      typeof input !== 'undefined' ? resolve(input) : undefined,
     description:
       'Set the path to a file containing the options for generation instead of setting the options on the command line. When combining the `config` option with other options on the command line, the command line options take precedence. If a directory is passed, a `config.json` file is read from this directory.'
   }

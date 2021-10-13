@@ -17,6 +17,9 @@ describe('openapi negative tests', () => {
       execa(
         'npx',
         [
+          '--no-save',
+          '-p',
+          '@sap-cloud-sdk/openapi-generator',
           'openapi-generator',
           '--input',
           resolve(testResourcesDir, 'faulty-openapi'),
@@ -42,6 +45,9 @@ describe('openapi negative tests', () => {
       execa(
         'npx',
         [
+          '--no-save',
+          '-p',
+          '@sap-cloud-sdk/openapi-generator',
           'openapi-generator',
           '--input',
           resolve(testDir, '../openapi-service-specs/test-service.json'),
@@ -70,6 +76,9 @@ describe('openapi negative tests', () => {
       execa(
         'npx',
         [
+          '--no-save',
+          '-p',
+          '@sap-cloud-sdk/openapi-generator',
           'openapi-generator',
           '-i',
           resolve(testDir, '../openapi-service-specs/test-service.json'),

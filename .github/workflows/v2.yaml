@@ -1,7 +1,6 @@
-name: v2
+name: v2-next-release
 
 on:
-  pull_request: ~
   push:
     branches: [v2]
 

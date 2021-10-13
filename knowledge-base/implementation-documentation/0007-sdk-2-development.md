@@ -94,13 +94,15 @@ Use the example above for versioning without timestamps.
 
 ### Agreement
 
-We can use another tag like `dev` (e.g., `2.0.0-dev.0`), which is similar to the `canary` tag used by the `main` branch.
+We can use another tag like `next` (e.g., `2.0.0-next.0`), which is similar to the `canary` tag used by the `main` branch.
 Automation is needed. (Create follow-ups).
+
+Create a follow up.
 
 ### Lerna command example
 
 ```
-lerna publish --canary major --no-push --no-git-tag-version --dist-tag dev --force-publish --preid "dev" -y
+lerna publish --canary major --no-push --no-git-tag-version --dist-tag next --force-publish --preid "next" -y
 ```
 
 ### Which sdk version should I use
@@ -110,16 +112,14 @@ lerna publish --canary major --no-push --no-git-tag-version --dist-tag dev --for
 | `latest` | `1.50.0`, `2.0.0`            | the latest stable version for production                                             |
 | `canary` | `1.50.1-20211012062552.0`    | the latest status that reflects the `main` branch for testing before stable versions |
 | `beta`   | `2.0.0-beta.0`, `2.0.0-rc.0` | the latest `beta` or `release candidate` versions                                    |
-| `dev`    | `2.0.0-20211012091004-dev.0` | the latest status that reflects the `2.0` branch for testing 2.0 development         |
+| `next`    | `2.0.0-20211012091004-next.0` | the latest status that reflects the `2.0` branch for testing 2.0 development         |
 
 ## Communication channel for collecting feedback after Beta
 
-### Agreement?
+### Agreement
 
-Use the [GitHub Discussions](https://github.com/SAP/cloud-sdk-js/discussions/1518) as communication channel.
-Create a follow-up for e.g., sending emails.
-
-TBD
+Use the [GitHub Discussions](https://github.com/SAP/cloud-sdk-js/discussions/1518) as communication channel, which should be mentioned in the post install.
+Create a follow-up for e.g., sending initial emails.
 
 ## Reference
 

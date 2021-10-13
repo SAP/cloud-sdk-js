@@ -1,6 +1,6 @@
 # SDK 2.0 Development
 
-This document is an internal agreement for the SDK 2.0 development including the following topics:
+This document is an agreement for the SDK 2.0 development including the following topics:
 
 - the test coverage of the `2.0` branch (called `v2`)
 - the process of committing to both `2.0` and `main` branches
@@ -65,7 +65,11 @@ The steps below describe how to determine, whether we should commit to both bran
 
 ### Hint
 
-When merging to two branches, make sure using `squash merge` for the first PR on the `main` branch, then either apply a `git cherry pick` or manual merge based on the **single** commit.
+Consider the following steps:
+
+1. when merging to two branches, make sure using `squash merge` for the first PR on the `main` branch.
+1. try to apply a `git cherry pick`
+1. manual merge based on the **single** commit by `squash merge`.
 
 ## Traceability notes about breaking changes
 
@@ -107,12 +111,12 @@ lerna publish --canary major --no-push --no-git-tag-version --dist-tag next --fo
 
 ### Which sdk version should I use
 
-| tag name | version example              | description                                                                          |
-| -------- | ---------------------------- | ------------------------------------------------------------------------------------ |
-| `latest` | `1.50.0`, `2.0.0`            | the latest stable version for production                                             |
-| `canary` | `1.50.1-20211012062552.0`    | the latest status that reflects the `main` branch for testing before stable versions |
-| `beta`   | `2.0.0-beta.0`, `2.0.0-rc.0` | the latest `beta` or `release candidate` versions                                    |
-| `next`    | `2.0.0-20211012091004-next.0` | the latest status that reflects the `2.0` branch for testing 2.0 development         |
+| tag name | version example               | description                                                                          |
+| -------- | ----------------------------- | ------------------------------------------------------------------------------------ |
+| `latest` | `1.50.0`, `2.0.0`             | the latest stable version for production                                             |
+| `canary` | `1.50.1-20211012062552.0`     | the latest status that reflects the `main` branch for testing before stable versions |
+| `beta`   | `2.0.0-beta.0`, `2.0.0-rc.0`  | the latest `beta` or `release candidate` versions                                    |
+| `next`   | `2.0.0-20211012091004-next.0` | the latest status that reflects the `2.0` branch for testing 2.0 development         |
 
 ## Communication channel for collecting feedback after Beta
 

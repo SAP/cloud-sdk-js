@@ -35,5 +35,6 @@ export default async function parseCmdArgs(): Promise<void> {
     }
   } catch (err) {
     logger.error(err);
+    yargs.exit(1, new Error());
   }
 }

@@ -9,5 +9,9 @@
   "include": ["src/**/*.ts"],
   "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],
   "files": [],
-  "references": [{ "path": "../util" }, { "path": "../analytics" },{"path": "../connectivity"}]
+  "references": [
+    { "path": "../util" },
+    { "path": "../analytics" },
+    { "path": "../connectivity" }
+  ]
 }

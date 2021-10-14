@@ -1,8 +1,7 @@
 import { join } from 'path';
+import { readFileSync } from 'fs';
 import { GlobSync } from 'glob';
 import { flatten } from '@sap-cloud-sdk/util';
-import {readFileSync} from "fs";
-
 
 export function typeDescriptorPaths(cwd: string): string[] {
   const files = new GlobSync('**/*.d.ts', { cwd }).found;
@@ -66,9 +65,9 @@ export function checkSingleIndexFile(cwd: string): void {
   if (files[0] !== join(cwd, 'index.ts')) {
     throw new Error(`Index file is not in root foldes ${files[0]}`);
   }
-  const content = readFileSync(files[0])
+  const content = readFileSync(files[0]);
   if(content.includes('*')){
-    throw new Error(`There is a '*' in ${files[0]}`)
+    throw new Error(`There is a '*' in ${files[0]}`);
   }
 }
 

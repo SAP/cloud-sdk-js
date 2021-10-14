@@ -133,7 +133,6 @@ async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   );
 }
 
-
 /*
 For a deatailed explaination what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
  */

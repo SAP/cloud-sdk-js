@@ -28,7 +28,7 @@
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
-    "readme": "echo 'TODO'",
+    "readme": "npx ts-node generate-readme.ts",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck ."

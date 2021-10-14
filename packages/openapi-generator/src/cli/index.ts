@@ -4,11 +4,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import yargs from 'yargs';
 // eslint-disable-next-line import/no-internal-modules
 import { hideBin } from 'yargs/helpers';
-import {
-  parseOptionsFromConfig,
-  getSpecifiedFlags,
-  generatorOptions
-} from '../options';
+import { parseOptionsFromConfig, getSpecifiedFlags, cli } from '../options';
 import { generateWithParsedOptions } from '../generator';
 
 const logger = createLogger('openapi-generator');
@@ -17,10 +13,7 @@ parseCmdArgs();
 
 export default async function parseCmdArgs(): Promise<void> {
   try {
-    const argv = await yargs(hideBin(process.argv))
-      .usage('--input <input> --outputDir <outputDirectory>')
-      .options(generatorOptions)
-      .strict().argv;
+    const argv = await cli(process.argv).argv;
 
     if (argv.config) {
       await generateWithParsedOptions({

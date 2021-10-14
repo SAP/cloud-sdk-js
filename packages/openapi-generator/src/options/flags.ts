@@ -1,6 +1,24 @@
 import { resolve, extname } from 'path';
 import { existsSync, lstatSync } from 'fs';
 import { GlobSync } from 'glob';
+import yargs from 'yargs';
+// eslint-disable-next-line import/no-internal-modules
+import { hideBin } from 'yargs/helpers';
+
+// eslint-disable-next-line
+export function cli(argv: string[]) {
+  return (
+    yargs(hideBin(argv))
+      .usage(
+        'Usage: openapi-generator --input <input> --outputDir <outputDirectory>'
+      )
+      .options(generatorOptions)
+      // This needs to be specified separately due to following bug: https://github.com/yargs/yargs/issues/1928
+      .demandOption('input')
+      .demandOption('outputDir')
+      .strict()
+  );
+}
 
 export const generatorOptions = {
   input: {
@@ -9,8 +27,7 @@ export const generatorOptions = {
     description:
       'Specify the path to the directory or file containing the OpenAPI service definition(s) to generate clients for. Accepts Swagger and OpenAPI definitions as YAML and JSON files. Throws an error if the path does not exist.',
     coerce: (input: string): string =>
-      typeof input !== 'undefined' ? resolve(input) : '',
-    default: ''
+      typeof input !== 'undefined' ? resolve(input) : ''
   },
   outputDir: {
     string: true,
@@ -18,8 +35,7 @@ export const generatorOptions = {
     description:
       'Specify the path to the directory to generate the client(s) in. Each client is generated into a subdirectory within the given output directory. Creates the directory if it does not exist. Customize subdirectory naming through `--optionsPerService`.',
     coerce: (input: string): string =>
-      typeof input !== 'undefined' ? resolve(input) : '',
-    default: ''
+      typeof input !== 'undefined' ? resolve(input) : ''
   },
   transpile: {
     boolean: true,

@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js';
 import nock from 'nock';
 import { asc } from '@sap-cloud-sdk/core';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
-import { basicHeader } from '../../../../packages/connectivity/src/scp-cf/authorization-header';
+import {basicHeader} from "@sap-cloud-sdk/connectivity/dist/scp-cf/authorization-header";
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = TestEntity._entityName;

@@ -132,7 +132,7 @@ export function searchEnvVariablesForDestination(
           logger.warn(
             `Successfully retrieved destination '${name}' from environment variable.` +
               'This is discouraged for productive applications. ' +
-              'Unset the variable to read destinations from the destination service on SAP Cloud Platform.'
+              'Unset the variable to read destinations from the destination service on SAP Business Technology Platform.'
           );
         }
         return destination;

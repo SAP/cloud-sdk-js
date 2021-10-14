@@ -1,6 +1,6 @@
 ## Version: 1.50.0
 
-The SAP Cloud SDK for JavaScript and TypeScript consists of multiple libraries to enable you to write side-by-side extensions on SAP Cloud Platform.
+The SAP Cloud SDK for JavaScript and TypeScript consists of multiple libraries to enable you to write side-by-side extensions on SAP Business Technology Platform.
 
 You can find tutorials that showcase some of the typical use cases on [developers.sap.com](https://developers.sap.com/tutorial-navigator.html?tag=products:technology-platform/sap-cloud-sdk/sap-cloud-sdk&tag=topic:javascript).
 If you have questions, you can reach out to us on [StackOverflow](https://stackoverflow.com/questions/tagged/sap-cloud-sdk?tab=Newest) using the tag `sap-cloud-sdk` and on [answers.sap.com](https://answers.sap.com/tags/73555000100800000895) using the tag `SAP Cloud SDK`.

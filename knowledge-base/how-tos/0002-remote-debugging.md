@@ -1,4 +1,4 @@
-# How to remote debug an application on SAP Cloud Platform
+# How to remote debug an application on SAP Business Technology Platform
 
 ## TLDR;
 
@@ -17,7 +17,7 @@ Change your app to start in debug mode, ssh tunnel your local port 9229 to the r
 Replace the start script to run in debug mode.
 E. g. instead of `node start.js` use `node --inspect start.js` for node and instead of `ts-node start.ts` use `node -r ts-node/register --inspect start.ts`.
 You can do this by either changing your `start` script in the `package.json` or the `command` script in the `manifest.yml`.
-**Note:** Don't use `--inspect-brk`, this will make the start timeout on SAP Cloud Platform.
+**Note:** Don't use `--inspect-brk`, this will make the start timeout on SAP Business Technology Platform.
 
 Deploy your application as usual, run:
 

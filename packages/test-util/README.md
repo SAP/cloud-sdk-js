@@ -15,12 +15,12 @@ $ npm install @sap-cloud-sdk/test-util
 
 ## Usage
 
-The test-util package makes writing tests for your SAP Cloud Platform application more convenient.
+The test-util package makes writing tests for your SAP Business Technology Platform application more convenient.
 
 For example, you can create a mock destination for your tests by using the function `mockTestDestination`.
 
 ```
-import { mockTestDestination } from '@sap-cloud-sdk/util';
+import { mockTestDestination } from '@sap-cloud-sdk/test-util';
 mockTestDestination('mockDestinationName');
 ```
 

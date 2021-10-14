@@ -1,4 +1,4 @@
-import { CachingOptions, IsolationStrategy } from '../cache';
+import { CachingOptions } from '../cache';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { ResilienceOptions } from '../resilience-options';
 

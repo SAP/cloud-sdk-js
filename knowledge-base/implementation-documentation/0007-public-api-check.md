@@ -1,7 +1,7 @@
 # Public Api Check
 
-This document explains what has been implemented in `check-public-api.ts`.
-The implementation was motivated by the requirements given in `0028-public-api-extraction.md`.
+This document explains what has been implemented in [check-public-api.ts](../../scripts/check-public-api.ts).
+The implementation was motivated by the requirements given in [0028-public-api-extraction.md](../adr/0028-public-api-extraction.md).
 
 ## Idea for the Check
 
@@ -25,17 +25,16 @@ This is the simple part. Here we do the following:
 
 ### The `.d.ts` files
 
-This is more tricky.
 We added the `@internal` flag in the code, which is considered by the `stripInternal` compiler flag.
 However, we do not want to strip away the types in the actual compilation:
 
 1. We want to give also TypeScript users a way to use something non-public by navigating to the path e.g. `@sap-cloud-sdk/core/dis/some-thing`.
-2. The resulting `.d.ts` are erroneous for cases in which we do not export the :
+2. The resulting `.d.ts` are erroneous for cases in which we do not export the type used in function arguments:
 
 ```ts
 //file-a.d.ts
 @internal
-export type InternalType ....
+export type InternalType ...
 
 //file-b.d.ts
 import {InternalType} from './file-a.ts'
@@ -43,9 +42,9 @@ import {InternalType} from './file-a.ts'
 export function publicFuntion(a:InternalType)
 ```
 
-3. You would need to ensure the `dist` folder is in sync on each API check
+3. You would need to ensure the `dist` folder is in sync on each API check.
 
-So we do the following to overcome the issues above
+So we do the following to overcome the issues above:
 
 - We do a in-memory compilation using `mock-fs` on every API check execution
 - The compilation uses the `stripInternal` flag

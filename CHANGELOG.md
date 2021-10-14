@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [odata] Fix parsing of `edm.time` missing some part of the time e.g. `PT1H21S`.
 
 
 # 1.50.0

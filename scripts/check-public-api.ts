@@ -1,6 +1,8 @@
 import { join } from 'path';
 import { GlobSync } from 'glob';
 import { flatten } from '@sap-cloud-sdk/util';
+import {readFileSync} from "fs";
+
 
 export function typeDescriptorPaths(cwd: string): string[] {
   const files = new GlobSync('**/*.d.ts', { cwd }).found;
@@ -15,6 +17,10 @@ export interface ExportedObject {
   path: string;
 }
 
+/*
+ For a deatailed explaination what is happening here have a look at `0007-public-api-check.md` in the implementation documentation.
+ Parses a `d.ts` file for the exported objects  in it.
+ */
 export function parseTypeDefinitionFile(
   fileContent: string
 ): Omit<ExportedObject, 'path'>[] {
@@ -34,6 +40,10 @@ export function parseTypeDefinitionFile(
   );
 }
 
+/**
+ * Get all index files in the cwd
+ * @param cwd
+ */
 export function indexFiles(cwd: string): string[] {
   const files = new GlobSync('**/index.ts', { cwd }).found;
   return files
@@ -41,6 +51,10 @@ export function indexFiles(cwd: string): string[] {
     .map(file => join(cwd, file));
 }
 
+/**
+ * Checks that there is exatly one index file on root level.
+ * @param cwd
+ */
 export function checkSingleIndexFile(cwd: string): void {
   const files = indexFiles(cwd);
   if (files.length > 1) {
@@ -52,8 +66,16 @@ export function checkSingleIndexFile(cwd: string): void {
   if (files[0] !== join(cwd, 'index.ts')) {
     throw new Error(`Index file is not in root foldes ${files[0]}`);
   }
+  const content = readFileSync(files[0])
+  if(content.includes('*')){
+    throw new Error(`There is a '*' in ${files[0]}`)
+  }
 }
 
+/**
+ * Parse an index file for the exported objects
+ * @param fileContent
+ */
 export function parseIndexFile(fileContent: string): string[] {
   const normalized = fileContent.replace(/\s+/g, '');
   const groups = captureGroupsFromGlobalRegex(/\{([\w,]+)\}/g, normalized);

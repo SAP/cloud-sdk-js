@@ -49,7 +49,7 @@ function getGenericUsage(): InstructionWithTextAndHeader {
   };
 }
 
-function getApiSpecificUsage(
+export function getApiSpecificUsage(
   openApiDocument: OpenApiDocument
 ): InstructionWithTextAndHeader {
   const apisWithOperations = openApiDocument.apis.filter(

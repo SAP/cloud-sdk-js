@@ -2,7 +2,7 @@ name: v2-next-release
 
 on:
   push:
-    branches: [v2]
+    branches: [2.0]
 
 jobs:
   tests:

@@ -8,7 +8,7 @@ Blog: TBD<br>
 
 ## Breaking Changes
 
-- [generator] Remove the option: aggregatorDirectoryName and aggregatorNpmPackageName
+- [generator] Remove the option: `aggregatorDirectoryName` and `aggregatorNpmPackageName`
 
 ## New Functionality
 

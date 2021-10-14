@@ -5,7 +5,7 @@
 
 # @sap-cloud-sdk/core
 
-This package contains the core functionality of the SAP Cloud SDK as well as the Cloud Platform abstractions.
+This package contains the core functionality of the SAP Cloud SDK as well as the SAP Business Technology Platform abstractions.
 
 ## Installation
 

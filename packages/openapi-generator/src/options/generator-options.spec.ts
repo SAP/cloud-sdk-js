@@ -176,7 +176,7 @@ describe('parseGeneratorOptions', () => {
 
   it('logs a warning if wrong configuration keys were used', async () => {
     const logger = createLogger('openapi-generator');
-    spyOn(logger, 'warn');
+    jest.spyOn(logger, 'warn');
     const config = {
       input: 'some-repository',
       wrong_key: 'random-value'

@@ -22,6 +22,7 @@ describe('apiFile', () => {
           ],
           queryParameters: [],
           response: { type: 'any' },
+          responses: { 200: { description: 'some response description' } },
           pathPattern: 'test/{id}'
         }
       ]
@@ -56,6 +57,7 @@ describe('apiFile', () => {
         {
           operationId: 'getFn',
           method: 'get',
+          responses: { 200: { description: 'some response description' } },
           tags: [],
           pathParameters: [
             {
@@ -89,6 +91,7 @@ describe('apiFile', () => {
         {
           operationId: 'createFn',
           method: 'post',
+          responses: { 201: { description: 'some response description' } },
           tags: [],
           pathParameters: [],
           queryParameters: [],
@@ -152,6 +155,7 @@ describe('apiFile', () => {
         {
           operationId: 'getFn',
           method: 'get',
+          responses: { 200: { description: 'some response description' } },
           tags: [],
           pathParameters: [],
           queryParameters: [],

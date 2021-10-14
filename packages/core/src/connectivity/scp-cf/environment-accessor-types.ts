@@ -9,18 +9,23 @@ export interface Service {
 /**
  * Unspecific representation of a service's credentials as read from VCAP_SERVICES (for Cloud Foundry) or mounted secrets (for K8S).
  */
-export interface ServiceCredentials {
+export type ServiceCredentials = {
   [other: string]: any;
   clientid: string;
-  clientsecret: string;
-}
+} & (
+  | {
+      clientsecret: string;
+    }
+  | {
+      certificate: string;
+      key: string;
+    }
+);
 
 /**
  * Credentials for the Destination service.
  */
-export interface DestinationServiceCredentials {
-  clientid: string;
-  clientsecret: string;
+export type DestinationServiceCredentials = ServiceCredentials & {
   identityzone: string;
   instanceid: string;
   tenantid: string;
@@ -30,14 +35,12 @@ export interface DestinationServiceCredentials {
   url: string;
   verificationkey: string;
   xsappname: string;
-}
+};
 
 /**
  * Credentials for the XSUAA service.
  */
-export interface XsuaaServiceCredentials {
-  clientid: string;
-  clientsecret: string;
+export type XsuaaServiceCredentials = ServiceCredentials & {
   identityzone: string;
   identityzoneid: string;
   sburl: string;
@@ -47,4 +50,4 @@ export interface XsuaaServiceCredentials {
   url: string;
   verificationkey: string;
   xsappname: string;
-}
+};

@@ -183,7 +183,7 @@ describe('proxy-util', () => {
 describe('parseProxyEnv', () => {
   it('parses URL with "https:" protocol and hostname', () => {
     const logger = createLogger('proxy-util');
-    const logSpy = spyOn(logger, 'info');
+    const logSpy = jest.spyOn(logger, 'info');
     expect(parseProxyEnv('https://some.proxy')).toEqual({
       protocol: 'https',
       host: 'some.proxy',
@@ -204,7 +204,7 @@ describe('parseProxyEnv', () => {
 
   it('parses URL with only hostname', () => {
     const logger = createLogger('proxy-util');
-    const logSpy = spyOn(logger, 'debug');
+    const logSpy = jest.spyOn(logger, 'debug');
     expect(parseProxyEnv('some.proxy')).toEqual({
       protocol: 'http',
       host: 'some.proxy',
@@ -225,7 +225,7 @@ describe('parseProxyEnv', () => {
 
   it('returns undefined for unknown protocol and logs warning', () => {
     const logger = createLogger('proxy-util');
-    const logSpy = spyOn(logger, 'warn');
+    const logSpy = jest.spyOn(logger, 'warn');
     expect(parseProxyEnv('rtc://some.proxy:1234')).toBeUndefined();
     expect(logSpy).toHaveBeenCalledWith(
       'Could not parse proxy configuration from environment variable. Reason: Unsupported protocol "rtc:".'
@@ -317,7 +317,7 @@ describe('parseProxyEnv', () => {
 
   it('returns undefined if no password is given', () => {
     const logger = createLogger('proxy-util');
-    const logSpy = spyOn(logger, 'warn');
+    const logSpy = jest.spyOn(logger, 'warn');
     expect(parseProxyEnv('user@some.proxy')).toBeUndefined();
     expect(logSpy).toHaveBeenCalledWith(
       'Could not parse proxy configuration from environment variable. Reason: Password missing.'

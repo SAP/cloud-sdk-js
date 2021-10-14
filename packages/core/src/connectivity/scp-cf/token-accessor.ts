@@ -8,19 +8,12 @@ import {
   getXsuaaServiceCredentials,
   resolveService
 } from './environment-accessor';
-import { Service } from './environment-accessor-types';
+import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
 import { ResilienceOptions } from './resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
-import {
-  clientCredentialsGrant,
-  jwtBearerTokenGrant,
-  refreshTokenGrant,
-  userTokenGrant
-} from './xsuaa-service';
-import {
-  ClientCredentialsResponse,
-  UserTokenResponse
-} from './xsuaa-service-types';
+import { refreshTokenGrant, userTokenGrant } from './legacy/xsuaa-service';
+import { UserTokenResponse } from './xsuaa-service-types';
+import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
 
 /**
  * Returns an access token that can be used to call the given service. The token is fetched via a client credentials grant with the credentials of the given service.
@@ -38,42 +31,50 @@ export async function serviceToken(
   options?: CachingOptions &
     ResilienceOptions & {
       userJwt?: string | JwtPayload;
+      // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here
+      xsuaaCredentials?: XsuaaServiceCredentials;
     }
 ): Promise<string> {
-  const resolvedService = resolveService(service);
-
   const opts = {
     useCache: true,
     enableCircuitBreaker: true,
     ...options
   };
 
-  const xsuaa = multiTenantXsuaaCredentials(opts.userJwt);
-  const serviceCreds = extractClientCredentials(resolvedService.credentials);
+  service = resolveService(service);
+  const serviceCredentials = service.credentials;
+  const xsuaa = multiTenantXsuaaCredentials(options);
 
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getGrantTokenFromCache(
       xsuaa.url,
-      serviceCreds
+      serviceCredentials.clientid
     );
     if (cachedToken) {
       return cachedToken.access_token;
     }
   }
+
   try {
-    const resp = await clientCredentialsGrant(xsuaa, serviceCreds, opts);
+    const token = await getClientCredentialsToken(
+      service,
+      options?.userJwt,
+      options
+    );
+
     if (opts.useCache) {
       clientCredentialsTokenCache.cacheRetrievedToken(
         xsuaa.url,
-        serviceCreds,
-        resp
+        serviceCredentials.clientid,
+        token
       );
     }
-    return resp.access_token;
-  } catch (error) {
+
+    return token.access_token;
+  } catch (err) {
     throw new ErrorWithCause(
-      `Fetching an access token for service "${resolvedService.label}" failed.`,
-      error
+      `Could not fetch client credentials token for service of type "${service.label}".`,
+      err
     );
   }
 }
@@ -103,7 +104,7 @@ export async function userApprovedServiceToken(
     ...options
   };
 
-  const xsuaa = multiTenantXsuaaCredentials(userJwt);
+  const xsuaa = multiTenantXsuaaCredentials({ userJwt });
   const serviceCreds = extractClientCredentials(resolvedService.credentials);
 
   return userTokenGrant(xsuaa, userJwt, serviceCreds.username, opts)
@@ -134,30 +135,31 @@ export async function jwtBearerToken(
   service: string | Service,
   options?: ResilienceOptions
 ): Promise<string> {
-  const xsuaa = multiTenantXsuaaCredentials(userJwt);
   const resolvedService = resolveService(service);
-  const serviceCreds = extractClientCredentials(resolvedService.credentials);
+
   const opts: ResilienceOptions = {
     enableCircuitBreaker: true,
     ...options
   };
 
-  return jwtBearerTokenGrant(xsuaa, serviceCreds, userJwt, opts)
-    .then((response: ClientCredentialsResponse) => response.access_token)
-    .catch(error => {
-      throw new ErrorWithCause(
-        `Fetching a JWT Bearer Token for service "${resolvedService.label}" failed!`,
-        error
-      );
-    });
+  return getUserToken(resolvedService, userJwt, opts);
 }
 
-function multiTenantXsuaaCredentials(userJwt?: string | JwtPayload) {
-  const xsuaa = getXsuaaServiceCredentials(userJwt);
+function multiTenantXsuaaCredentials(
+  options: {
+    userJwt?: string | JwtPayload;
+    xsuaaCredentials?: XsuaaServiceCredentials;
+  } = {}
+): XsuaaServiceCredentials {
+  const xsuaa = options.xsuaaCredentials
+    ? { ...options.xsuaaCredentials }
+    : getXsuaaServiceCredentials(options.userJwt);
 
-  if (userJwt) {
+  if (options.userJwt) {
     const decodedJwt =
-      typeof userJwt === 'string' ? decodeJwt(userJwt) : userJwt;
+      typeof options.userJwt === 'string'
+        ? decodeJwt(options.userJwt)
+        : options.userJwt;
 
     if (!decodedJwt.iss) {
       throw Error('Property `iss` is missing in the provided user token.');

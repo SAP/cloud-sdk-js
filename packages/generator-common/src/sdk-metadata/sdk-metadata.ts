@@ -1,4 +1,5 @@
 import { removeFileExtension } from '@sap-cloud-sdk/util';
+import levenstein from 'fast-levenshtein';
 import { getSdkVersion } from './util';
 import {
   Client,
@@ -8,6 +9,7 @@ import {
   ServiceStatus
 } from './sdk-metadata-types';
 
+const distanceThreshold = 5;
 export function getSdkMetadataFileNames(originalFileName: string): {
   clientFileName: string;
   headerFileName: string;
@@ -51,6 +53,40 @@ export function getSdkMetadataClient(
     pregeneratedLibrary,
     generationAndUsage
   };
+}
+/**
+ * Gets the closest matching object using Levenshtein distance algorithm.
+ * @param name - Name of the service or api class.
+ * @param objectsToCheck - List of objects, e.g. VdmEntity, FunctionImports, etc.
+ * @param extractorFn - Function to get the object's property to match against name.
+ * @returns - closest matched object or undefined if not found.
+ */
+export function getLevenshteinClosest<T>(
+  name: string,
+  objectsToCheck: T[],
+  extractorFn: (x: T) => string
+): T | undefined {
+  const distBelowThreshold = objectsToCheck.reduce((prev, obj) => {
+    const levenshteinDist = getLevenshteinDistance(name, extractorFn(obj));
+    if (levenshteinDist < distanceThreshold) {
+      return [...prev, { dist: levenshteinDist, obj }];
+    }
+    return prev;
+  }, []);
+  if (distBelowThreshold.length > 0) {
+    return distBelowThreshold.sort((a, b) => (a.dist < b.dist ? -1 : 1))[0].obj;
+  }
+}
+
+function getLevenshteinDistance(stringA: string, stringB: string): number {
+  return levenstein.get(
+    getSanitizedString(stringA),
+    getSanitizedString(stringB)
+  );
+}
+
+function getSanitizedString(text: string): string {
+  return text.replace(/[^A-Za-z]/g, '').toLowerCase();
 }
 
 export const sdkMetadataHeaderIntroText =

@@ -315,7 +315,7 @@ describe('parseSchema', () => {
 
   it('parses string enum schema with a null value, no nullable set, and skipValidation set to false', async () => {
     const logger = createLogger('openapi-generator');
-    spyOn(logger, 'warn');
+    jest.spyOn(logger, 'warn');
     const schema: OpenAPIV3.SchemaObject = {
       enum: [1, 2, 3, null],
       type: 'string'

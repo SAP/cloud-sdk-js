@@ -57,19 +57,19 @@ const toTime = (value: string): Time => {
  * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
  */
 export function edmDateTimeToMoment(edmDateTime: string): moment.Moment {
-  const dateTimeOffsetComponents = /.*\((-?\d+)(?:([+-])(\d{4})\))?/.exec(
-    edmDateTime
-  );
+  const dateTimeOffsetComponents =
+    /^\/Date\((?<ticks>\d+)((?<sign>[+-])(?<offset>\d{4}))?\)\/$/.exec(
+      edmDateTime
+    )?.groups;
   if (!dateTimeOffsetComponents) {
     throw new Error(`Failed to parse edmDateTime: ${edmDateTime} to moment.`);
   }
 
-  const timestamp = moment(parseInt(dateTimeOffsetComponents[1]));
+  const timestamp = moment(parseInt(dateTimeOffsetComponents.ticks));
 
-  if (dateTimeOffsetComponents[2] && dateTimeOffsetComponents[3]) {
-    const offsetMultiplier = dateTimeOffsetComponents[2] === '+' ? 1 : -1;
-    const offsetInMinutes = parseInt(dateTimeOffsetComponents[3]);
-
+  if (dateTimeOffsetComponents.sign && dateTimeOffsetComponents.offset) {
+    const offsetMultiplier = dateTimeOffsetComponents.sign === '+' ? 1 : -1;
+    const offsetInMinutes = parseInt(dateTimeOffsetComponents.offset);
     return timestamp.utc().utcOffset(offsetMultiplier * offsetInMinutes);
   }
 

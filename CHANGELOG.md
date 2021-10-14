@@ -29,6 +29,50 @@
 -
 
 
+# 1.50.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.50.0<br>
+Blog: TBD<br>
+
+## New Functionality
+
+- [connectivity] Allow token forwarding for local destination stored in the environment variables.
+
+## Improvements
+
+- [generator] Include and exclude options added to the `transpileDirectory()` method
+
+## Fixed Issues
+
+- [core] Fix a type error, when `moment()` is used in filtering an OData field of type `Edm.DateTimeOffset`
+
+# 1.49.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.49.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [core] Stop using client credentials to fetch public keys for token verification.
+- [core] Replace own implementation for requesting user tokens and client credential tokens from the XSUAA service with the `@sap/xssec` library.
+
+## New Functionality
+
+- [core] Support authorization through client certificates (X.509) in client credentials grant requests.
+
+## Improvements
+
+- [core] Reduce the number of warnings when selecting an XSUAA instance.
+
+## Fixed Issues
+
+- [core] Fix verification key retrieval to match the given key id (`kid`).
+- [core] Fix the missing export for files under `http-agent` directory.
+- [core] Support using custom http(s)Agent when sending CSRF token requests.
+- [core] Fix URL encoding for `$orderby` query parameter of OData requests.
+
 # 1.48.1
 
 Release Date: TBD<br>

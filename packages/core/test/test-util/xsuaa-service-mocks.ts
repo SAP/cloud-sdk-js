@@ -1,18 +1,44 @@
 import nock from 'nock';
-import { basicHeader } from '../../src/connectivity/scp-cf';
+import { basicHeader, ServiceCredentials } from '../../src/connectivity/scp-cf';
 
 export function mockClientCredentialsGrantCall(
   uri: string,
   response: any,
   responseCode: number,
-  clientId: string,
-  clientSecret: string
+  serviceCredentials: ServiceCredentials
 ) {
   return nock(uri, {
-    reqheaders: xsuaaRequestHeaders(basicHeader(clientId, clientSecret))
+    reqheaders: xsuaaRequestHeaders()
   })
-    .post('/oauth/token', 'grant_type=client_credentials')
+    .post('/oauth/token', {
+      grant_type: 'client_credentials',
+      client_id: serviceCredentials.clientid,
+      client_secret: serviceCredentials.clientsecret,
+      response_type: 'token'
+    })
     .reply(responseCode, response);
+}
+
+export function mockClientCredentialsGrantWithCertCall(
+  uri: string,
+  response: any,
+  responseCode: number,
+  serviceCredentials: ServiceCredentials
+) {
+  return nock(uri, {
+    reqheaders: xsuaaRequestHeaders()
+  })
+    .post('/oauth/token', {
+      grant_type: 'client_credentials',
+      client_id: serviceCredentials.clientid,
+      response_type: 'token'
+    })
+    .reply(responseCode, function () {
+      const agentOptions = (this.req as any).options.agent.options;
+      expect(agentOptions.cert).toEqual(serviceCredentials.certificate);
+      expect(agentOptions.key).toEqual(serviceCredentials.key);
+      return response;
+    });
 }
 
 export function mockUserTokenGrantCall(
@@ -23,12 +49,13 @@ export function mockUserTokenGrantCall(
   clientId: string
 ) {
   return nock(uri, {
-    reqheaders: xsuaaRequestHeaders(`Bearer ${accessToken}`)
+    reqheaders: xsuaaRequestHeaders({ authorization: `Bearer ${accessToken}` })
   })
-    .post(
-      '/oauth/token',
-      `client_id=${clientId}&grant_type=user_token&response_type=token`
-    )
+    .post('/oauth/token', {
+      client_id: clientId,
+      grant_type: 'user_token',
+      response_type: 'token'
+    })
     .reply(responseCode, response);
 }
 
@@ -41,19 +68,21 @@ export function mockRefreshTokenGrantCall(
   clientSecret: string
 ) {
   return nock(uri, {
-    reqheaders: xsuaaRequestHeaders(basicHeader(clientId, clientSecret))
+    reqheaders: xsuaaRequestHeaders({
+      authorization: basicHeader(clientId, clientSecret)
+    })
   })
-    .post(
-      '/oauth/token',
-      `grant_type=refresh_token&refresh_token=${refreshToken}`
-    )
+    .post('/oauth/token', {
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken
+    })
     .reply(responseCode, response);
 }
 
-function xsuaaRequestHeaders(authHeader: string) {
+function xsuaaRequestHeaders(additionalHeaders: Record<string, string> = {}) {
   return {
-    Authorization: authHeader,
     'Content-Type': 'application/x-www-form-urlencoded',
-    Accept: 'application/json'
+    Accept: 'application/json',
+    ...additionalHeaders
   };
 }

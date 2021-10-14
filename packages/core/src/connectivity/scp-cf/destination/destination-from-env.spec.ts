@@ -1,5 +1,6 @@
 import * as assert from 'assert';
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, encodeBase64 } from '@sap-cloud-sdk/util';
+import { JwtHeader, JwtPayload } from 'jsonwebtoken';
 import {
   mockDestinationsEnv,
   unmockDestinationsEnv
@@ -9,6 +10,7 @@ import {
   getDestinationFromEnvByName,
   getDestinationsFromEnv
 } from './destination-from-env';
+import { getDestination } from './destination-accessor';
 
 const environmentDestination = {
   name: 'FINAL-DESTINATION',
@@ -33,6 +35,12 @@ const destinationFromEnv: Destination = {
   url: 'https://mys4hana.com'
 };
 
+const destinationWithForwarding: Destination = {
+  forwardAuthToken: true,
+  url: 'https://mys4hana.com',
+  name: 'FORWARD-TOKEN-DESTINATION'
+};
+
 const environmentDestinationConfig = {
   Name: 'TESTINATION',
   URL: 'https://mys4hana.com'
@@ -54,6 +62,51 @@ describe('env-destination-accessor', () => {
   afterEach(() => {
     unmockDestinationsEnv();
     jest.resetAllMocks();
+  });
+
+  describe('getDestination', () => {
+    it('adds the auth token if forwardAuthToken is enabled', async () => {
+      mockDestinationsEnv(destinationWithForwarding);
+      const jwtPayload: JwtPayload = { exp: 1234 };
+      const jwtHeader: JwtHeader = { alg: 'HS256' };
+      const fullToken = `${encodeBase64(
+        JSON.stringify(jwtHeader)
+      )}.${encodeBase64(JSON.stringify(jwtPayload))}.SomeHash`;
+      const actual = await getDestination('FORWARD-TOKEN-DESTINATION', {
+        userJwt: fullToken
+      });
+      expect(actual?.authTokens![0].expiresIn).toEqual('1234');
+      expect(actual?.authTokens![0].value).toEqual(fullToken);
+      expect(actual?.authTokens![0].http_header.value).toEqual(
+        `Bearer ${fullToken}`
+      );
+    });
+
+    it('warns if forwardAuthToken is enabled but no token provided.', async () => {
+      mockDestinationsEnv(destinationWithForwarding);
+
+      const logger = createLogger('env-destination-accessor');
+      const warnSpy = jest.spyOn(logger, 'warn');
+      await getDestination('FORWARD-TOKEN-DESTINATION');
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /Option 'forwardAuthToken' was set on destination but no token was provided to forward./
+        )
+      );
+    });
+
+    it('warns if destination are read from enviorment and forwardAuthToken is not enabled.', async () => {
+      mockDestinationsEnv(destinationFromEnv);
+
+      const logger = createLogger('env-destination-accessor');
+      const warnSpy = jest.spyOn(logger, 'warn');
+      await getDestination('FINAL-DESTINATION');
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringMatching(
+          /from environment variable.This is discouraged for productive applications./
+        )
+      );
+    });
   });
 
   describe('getDestinationsFromEnv()', () => {

@@ -18,21 +18,21 @@ const logger = createLogger({
 });
 
 function getAuthHeader(
-    authenticationType: AuthenticationType | undefined,
-    customHeaders?: Record<string, any>
+  authenticationType: AuthenticationType | undefined,
+  customHeaders?: Record<string, any>
 ): AuthenticationHeaderOnPrem | AuthenticationHeaderCloud | undefined {
   if (authenticationType === 'PrincipalPropagation') {
     const principalPropagationHeader = pickValueIgnoreCase(
-        customHeaders,
-        'SAP-Connectivity-Authentication'
+      customHeaders,
+      'SAP-Connectivity-Authentication'
     );
     if (principalPropagationHeader) {
       return { 'SAP-Connectivity-Authentication': principalPropagationHeader };
     }
   }
   const authorizationHeader = pickValueIgnoreCase(
-      customHeaders,
-      'authorization'
+    customHeaders,
+    'authorization'
   );
   if (authorizationHeader) {
     return { authorization: authorizationHeader };
@@ -57,11 +57,11 @@ export async function getAuthHeaders(
   return buildAuthorizationHeaders(destination, customAuthHeader);
 }
 
-  function toAuthorizationHeader(
-      authorization: string
-  ): AuthenticationHeaderCloud {
-    return { authorization };
-  }
+function toAuthorizationHeader(
+  authorization: string
+): AuthenticationHeaderCloud {
+  return { authorization };
+}
 function headerFromTokens(
   authenticationType: AuthenticationType,
   authTokens?: DestinationAuthToken[] | null

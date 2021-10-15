@@ -41,14 +41,19 @@ export function tsToEdm(value: any, edmType: EdmTypeShared<'v2'>): any {
 type EdmTypeMapping = { [key in EdmType]: (value: any) => any };
 
 const toTime = (value: string): Time => {
-  const timeComponents = /PT(\d{1,2})H(\d{1,2})M(\d{1,2})S/.exec(value);
-  if (!timeComponents) {
+  const regexResult =
+    /PT(?<hours>\d{1,2}H)?(?<minutes>\d{1,2}M)?(?<seconds>\d{1,2}S)?/.exec(
+      value
+    );
+  if (!regexResult) {
     throw new Error(`Failed to parse the value: ${value} to time.`);
   }
+  const { hours, minutes, seconds } = regexResult?.groups || {};
+
   return {
-    hours: parseInt(timeComponents[1], 10),
-    minutes: parseInt(timeComponents[2], 10),
-    seconds: parseInt(timeComponents[3], 10)
+    hours: hours ? parseInt(hours.replace('H', ''), 10) : 0,
+    minutes: minutes ? parseInt(minutes.replace('M', ''), 10) : 0,
+    seconds: seconds ? parseInt(seconds.replace('S', ''), 10) : 0
   };
 };
 

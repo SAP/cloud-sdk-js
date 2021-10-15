@@ -34,7 +34,7 @@
   "dependencies": {
     "@sap-cloud-sdk/analytics": "^1.50.0",
     "@sap-cloud-sdk/util": "^1.50.0",
-    "@sap-cloud-sdk/connectivity": "^2.0.0",
+    "@sap-cloud-sdk/connectivity": "^1.50.0",
     "@types/jsonwebtoken": "^8.3.8",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.0",

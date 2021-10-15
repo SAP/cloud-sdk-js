@@ -37,51 +37,6 @@ function getAuthHeader(
   if (authorizationHeader) {
     return { authorization: authorizationHeader };
   }
-/**
- * @deprecated Since v1.20.0. Use [[buildAuthorizationHeaders]] instead.
- * Adds authorization headers for a given ODataRequest to existing headers.
- * @param request - an ODataRequest.
- * @param headers - The headers that should be added to.
- * @returns The provided headers with the new authorization headers.
- */
-export async function addAuthorizationHeader<
-  RequestT extends ODataRequestConfig
->(
-  request: ODataRequest<RequestT>,
-  headers: Record<string, string>
-): Promise<Record<string, string>> {
-  const destination = request.destination;
-  if (!destination) {
-    return headers;
-  }
-  const authHeaders = await getAuthHeaders(
-    destination,
-    request.config.customHeaders
-  );
-  return {
-    ...headers,
-    ...authHeaders
-  };
-}
-
-function getAuthHeader(
-  authenticationType: AuthenticationType | undefined,
-): AuthenticationHeaderOnPrem | AuthenticationHeaderCloud | undefined {
-  if (authenticationType === 'PrincipalPropagation') {
-    const principalPropagationHeader = pickValueIgnoreCase(
-      customHeaders,
-      'SAP-Connectivity-Authentication'
-    );
-    if (principalPropagationHeader) {
-      return { 'SAP-Connectivity-Authentication': principalPropagationHeader };
-    }
-  const authorizationHeader = pickValueIgnoreCase(
-    customHeaders,
-    'authorization'
-  );
-  if (authorizationHeader) {
-    return { authorization: authorizationHeader };
-  }
 }
 
 /**
@@ -207,6 +162,21 @@ function legacyNoAuthOnPremiseProxy(
   };
 }
 
+interface AuthenticationHeaderCloud {
+  authorization: string;
+}
+interface AuthenticationHeaderOnPrem {
+  'SAP-Connectivity-Authentication': string;
+}
+interface AuthenticationHeaderProxy {
+  'Proxy-Authorization': string;
+}
+interface AuthenticationHeaders {
+  authorization?: string;
+  'Proxy-Authorization'?: string;
+  'SAP-Connectivity-Authentication'?: string;
+}
+
 function getProxyRelatedAuthHeaders(
   destination: Destination
 ): AuthenticationHeaderProxy | undefined {
@@ -284,6 +254,7 @@ async function getAuthenticationRelatedHeaders(
 
 /**
  * @param destination - Destination from which headers are build
+ * @param customAuthHeader - Additional custom headers
  * @returns authorization - headers build from destination
  * @internal
  */

@@ -2,7 +2,7 @@
 
 This document is an agreement for the SDK 2.0 development including the following topics:
 
-- the test coverage of the `2.0` branch (called `v2`)
+- the test coverage of the `2.0` branch (called `2.0`)
 - the process of committing to both `2.0` and `main` branches
 - the traceability notes about breaking changes
 - the release of `beta` versions and the `release candidate`s
@@ -75,7 +75,7 @@ Consider the following steps:
 
 ### Agreement
 
-Create a 2.0 breaking change doc (`2.0-traceability-notes.md`) with the following categories:
+Create a 2.0 breaking change doc (`CHANGELOG-v2.md`) with the following categories:
 
 - `function removed` when deleting a function, meaning users should switch to another function or find their own solution.
 - `function moved` when moving a function to a new package, meaning users should change the import statement.

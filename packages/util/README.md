@@ -16,7 +16,7 @@ $ npm install @sap-cloud-sdk/util
 
 ### Usage
 
-The util package collects useful tools that help build your SAP Cloud Platform application.
+The util package collects useful tools that help build your SAP Business Technology Platform application.
 For example, the following code snippet changes the log level of the destination accessor of the SDK.
 
 ```

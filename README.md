@@ -6,7 +6,7 @@
 
 # SAP Cloud SDK
 
-An SDK to reduce your development effort when building side-by-side extension applications on SAP Cloud Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
+An SDK to reduce your development effort when building side-by-side extension applications on SAP Business Technology Platform that integrate with SAP solutions and services such as SAP S/4HANA, SAP SuccessFactors, and many others.
 
 ## Announcement - Upgrade Strategy
 
@@ -61,7 +61,7 @@ $ npm install @sap-cloud-sdk/generator
 
 ### @sap-cloud-sdk/test-util
 
-The test-util package makes writing tests for your SAP Cloud Platform application more convenient.
+The test-util package makes writing tests for your SAP Business Technology Platform application more convenient.
 
 To install the SAP Cloud SDK test-util as development dependencies in your project, run:
 
@@ -78,7 +78,7 @@ If you are using an old version of the SAP Cloud SDK, you might want to read [ho
 
 ### SAP Cloud SDK CLI
 
-To reduce the development effort even more, you can use the [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) to start a new [NestJS](https://github.com/nestjs/nest) project, including the SDK right from the get go and supporting you do deploy your project to SAP Cloud Platform.
+To reduce the development effort even more, you can use the [SAP Cloud SDK command line interface (CLI)](https://github.com/sap/cloud-sdk-cli) to start a new [NestJS](https://github.com/nestjs/nest) project, including the SDK right from the get go and supporting you do deploy your project to SAP Business Technology Platform.
 
 ### Virtual Data Model (VDM)
 
@@ -95,7 +95,7 @@ In the example above, `service name` is the name of the service you want to use,
 ### Project "Piper"
 
 Continuous delivery is a method to develop software with short feedback cycles.
-It is applicable to projects both for SAP Cloud Platform and SAP on-premise platforms.
+It is applicable to projects both for SAP Business Technology Platform and SAP on-premise platforms.
 SAP implements tooling for continuous delivery in the open-source [project "Piper"](https://sap.github.io/jenkins-library/).
 The goal of project "Piper" is to substantially ease setting up continuous delivery in your project using SAP technologies.
 

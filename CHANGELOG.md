@@ -26,7 +26,8 @@
 
 ## Fixed Issues
 
--
+- [util] `setGlobalLogLevel(level)` sets log levels of all existing loggers globally.
+- [util] Fix `equal(item1, item2)` method to return `false` when either object is `null` or `undefined` 
 
 
 # 1.50.0

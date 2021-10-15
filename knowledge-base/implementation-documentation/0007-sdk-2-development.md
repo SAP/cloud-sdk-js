@@ -2,7 +2,7 @@
 
 This document is an agreement for the SDK 2.0 development including the following topics:
 
-- the test coverage of the `2.0` branch (called `2.0`)
+- the test coverage of the `2.0` branch
 - the process of committing to both `2.0` and `main` branches
 - the traceability notes about breaking changes
 - the release of `beta` versions and the `release candidate`s

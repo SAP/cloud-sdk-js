@@ -8,7 +8,7 @@ import {
 
 describe('openapi negative tests', () => {
   const pathToGenerator = resolve(
-    '../../node_modules/@sap-cloud-sdk/openapi-generator/dist/cli/index.js'
+    '../../node_modules/@sap-cloud-sdk/openapi-generator/dist/cli.js'
   );
 
   it('should fail on generation for faulty spec file', async () => {

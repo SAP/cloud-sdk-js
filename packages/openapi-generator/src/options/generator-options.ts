@@ -2,7 +2,7 @@ import { promises } from 'fs';
 import { resolve } from 'path';
 import yargs from 'yargs';
 import { ErrorWithCause, createLogger } from '@sap-cloud-sdk/util';
-import { generatorOptions } from './flags';
+import { generatorOptions } from './options';
 
 const { readFile, lstat } = promises;
 const logger = createLogger('openapi-generator');

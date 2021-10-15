@@ -1,4 +1,4 @@
-import { Destination } from '../../../connectivity/scp-cf';
+import { Destination } from '@sap-cloud-sdk/connectivity';
 
 /**
  * The path in the sub request should be serialized as an absolute or relative URL.

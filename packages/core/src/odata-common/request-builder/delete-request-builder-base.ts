@@ -3,7 +3,7 @@ import {
   DestinationOptions,
   Destination,
   DestinationNameAndJwt
-} from '../../connectivity/scp-cf';
+} from '@sap-cloud-sdk/connectivity';
 import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataDeleteRequestConfig } from '../request';
 import { HttpResponse } from '../../http-client';

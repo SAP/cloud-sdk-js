@@ -1,8 +1,7 @@
 import nock = require('nock');
+import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
-  basicHeader,
   Constructable,
-  Destination,
   GetAllRequestBuilderV2,
   GetAllRequestBuilderV4,
   oDataUri
@@ -15,6 +14,7 @@ import {
   ODataUpdateRequestConfig
 } from '../../src/odata-common';
 import { oDataUriV4 } from '../../src/odata-v4';
+import { basicHeader } from '../../../connectivity/src/scp-cf/authorization-header';
 import { TestEntity } from './test-services/v2/test-service/TestEntity';
 import { TestEntity as TestEntityV4 } from './test-services/v4/test-service/TestEntity';
 

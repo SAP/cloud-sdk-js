@@ -1,6 +1,7 @@
-import { basicHeader, Destination } from '@sap-cloud-sdk/core';
 import { functionImports } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/authorization-header';
+import { Destination } from '@sap-cloud-sdk/connectivity';
 import { errorResponse } from '../test-data/error-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 

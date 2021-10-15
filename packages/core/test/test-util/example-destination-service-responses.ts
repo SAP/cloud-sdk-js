@@ -1,8 +1,8 @@
 import {
-  AuthenticationType,
   DestinationConfiguration,
   DestinationJson
-} from '../../src';
+} from '../../../connectivity/src/scp-cf/destination/destination';
+import { AuthenticationType } from '../../../connectivity/src/scp-cf/destination/destination-service-types';
 
 export const destinationName = 'FINAL-DESTINATION';
 export const certificateMultipleResponse: DestinationConfiguration[] = [

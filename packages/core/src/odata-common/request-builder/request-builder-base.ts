@@ -6,7 +6,7 @@ import {
   DestinationRetrievalOptions,
   noDestinationErrorMessage,
   useOrFetchDestination
-} from '../../connectivity/scp-cf';
+} from '@sap-cloud-sdk/connectivity';
 import { ODataRequest } from '../request/odata-request';
 import { ODataRequestConfig } from '../request/odata-request-config';
 

@@ -4,5 +4,5 @@ outputs:
   changelog:
     description: 'The current changelog'
 runs:
-  using: 'node14'
+  using: 'node12'
   main: 'dist/.github/actions/get-changelog/index.js'

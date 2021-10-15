@@ -17,7 +17,7 @@ jobs:
           token: ${{ secrets.GH_CLOUD_SDK_JS_ADMIN_WRITE_TOKEN }}
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '12.x'
       - run: yarn install --frozen-lockfile
       - name: Setup git
         run: |

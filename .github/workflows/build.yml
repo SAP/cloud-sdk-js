@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [14.x]
+        node-version: [12.x]
     steps:
       - uses: actions/checkout@v2
       - run: git fetch --depth=1
@@ -42,7 +42,7 @@ jobs:
       - run: git fetch --depth=1
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '12.x'
       - uses: actions/cache@v2
         id: cache
         with:
@@ -72,7 +72,7 @@ jobs:
       - run: git fetch --depth=1
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '12.x'
       - uses: actions/cache@v2
         id: cache
         with:
@@ -91,7 +91,7 @@ jobs:
       - run: git fetch --depth=1
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '12.x'
       - uses: actions/cache@v2
         id: cache
         with:
@@ -116,7 +116,7 @@ jobs:
       - run: git fetch --depth=1
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '12.x'
       - uses: actions/cache@v2
         id: cache
         with:

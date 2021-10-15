@@ -82,18 +82,18 @@ describe('generator', () => {
       mock.restore();
     });
 
-    // it('should transpile the generated sources', async () => {
-    //   const files = await promises.readdir(outputPath);
+    it('should transpile the generated sources', async () => {
+      const files = await promises.readdir(outputPath);
 
-    //   const expectedFiles: string[] = [];
-    //   ['default-api', 'entity-api', 'test-case-api'].forEach(file =>
-    //     ['js', 'd.ts.map', 'd.ts'].forEach(postfix =>
-    //       expectedFiles.push(`${file}.${postfix}`)
-    //     )
-    //   );
+      const expectedFiles: string[] = [];
+      ['default-api', 'entity-api', 'test-case-api'].forEach(file =>
+        ['js', 'd.ts.map', 'd.ts'].forEach(postfix =>
+          expectedFiles.push(`${file}.${postfix}`)
+        )
+      );
 
-    //   expect(files).toIncludeAllMembers(expectedFiles);
-    // });
+      expect(files).toIncludeAllMembers(expectedFiles);
+    });
 
     it('should create a package.json', () => {
       const packageJson = resolve(outputPath, 'package.json');

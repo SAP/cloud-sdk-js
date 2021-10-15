@@ -1,6 +1,10 @@
-import { readFile, writeFile } from 'fs/promises';
+import { readFile as rf, writeFile as wf } from 'fs';
+import { promisify } from 'util';
 import { resolve } from 'path';
 import { cli } from './src/options';
+
+const readFile = promisify(rf);
+const writeFile = promisify(wf);
 
 writeReadMe();
 

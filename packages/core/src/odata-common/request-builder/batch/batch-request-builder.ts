@@ -1,12 +1,12 @@
-import { MethodRequestBuilder } from '../request-builder-base';
-import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
-import { Constructable, Entity } from '../../entity';
 import {
   Destination,
   DestinationNameAndJwt,
   DestinationOptions,
   DestinationRetrievalOptions
-} from '../../../connectivity/scp-cf';
+} from '@sap-cloud-sdk/connectivity';
+import { MethodRequestBuilder } from '../request-builder-base';
+import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
+import { Constructable, Entity } from '../../entity';
 import { ODataRequest } from '../../request/odata-request';
 import { HttpResponse } from '../../../http-client';
 import { BatchChangeSet } from './batch-change-set';

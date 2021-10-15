@@ -6,11 +6,11 @@ import {
   pickNonNullish,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import { removeTrailingSlashes } from '../odata-common/remove-slashes';
 import {
   Destination,
   DestinationNameAndJwt
-} from '../connectivity/scp-cf/destination';
+} from '@sap-cloud-sdk/connectivity';
+import { removeTrailingSlashes } from '../odata-common/remove-slashes';
 import { executeHttpRequest } from '../http-client';
 import { HttpRequestConfig } from './http-client-types';
 

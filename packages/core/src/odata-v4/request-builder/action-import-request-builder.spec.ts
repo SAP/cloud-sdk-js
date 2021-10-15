@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { Destination } from '../../../src/connectivity';
+import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,

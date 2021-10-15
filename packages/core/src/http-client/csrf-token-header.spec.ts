@@ -1,5 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
+import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
   defaultBasicCredentials,
   defaultDestination,
@@ -7,7 +8,6 @@ import {
   mockHeaderRequest,
   createCreateRequest
 } from '../../test/test-util';
-import { Destination } from '../connectivity/scp-cf';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 
 const standardHeaders = {

@@ -1,5 +1,5 @@
 import mock from 'mock-fs';
-import { Destination } from '@sap-cloud-sdk/core';
+import { Destination } from '@sap-cloud-sdk/connectivity';
 import { credentials, systems } from '../test/test-util/test-destinations';
 import {
   mockAllTestDestinations,

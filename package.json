@@ -14,6 +14,7 @@
   "repository": "github:SAP/cloud-sdk-js",
   "workspaces": [
     "packages/analytics",
+    "packages/connectivity",
     "packages/core",
     "packages/eslint-config",
     "packages/generator",
@@ -51,6 +52,7 @@
     "check:dependencies": "yarn workspaces run check:dependencies",
     "check:license": "ts-node scripts/check-licenses.ts",
     "check:test-service": "yarn generate:test-services && yarn ts-node scripts/check-test-service-for-changes.ts",
+    "check:public-api": "ts-node scripts/check-public-api-cli.ts",
     "analytics": "yarn workspace @sap-cloud-sdk/analytics",
     "core": "yarn workspace @sap-cloud-sdk/core",
     "generator": "yarn workspace @sap-cloud-sdk/generator",

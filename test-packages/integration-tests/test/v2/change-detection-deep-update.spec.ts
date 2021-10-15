@@ -3,7 +3,7 @@ import {
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/core';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/authorization-header';
 import {
   testEntityKeyPropGuid,
   testEntityKeyPropString

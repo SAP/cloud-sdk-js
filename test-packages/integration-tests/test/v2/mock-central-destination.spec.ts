@@ -5,7 +5,7 @@ import {
   unmockAllTestDestinations
 } from '@sap-cloud-sdk/test-util';
 import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/core';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/authorization-header';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 
 describe('mockAllTestDestinations', () => {

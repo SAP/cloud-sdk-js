@@ -3,7 +3,7 @@ import {
   DestinationOptions,
   Destination,
   DestinationNameAndJwt
-} from '../../connectivity/scp-cf';
+} from '@sap-cloud-sdk/connectivity';
 import { ODataCreateRequestConfig } from '../request';
 import { HttpResponse } from '../../http-client';
 import type { EntitySerializer } from '../entity-serializer';

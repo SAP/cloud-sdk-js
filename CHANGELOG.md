@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
-- [core] Tightened the return type of `getAuthHeaders()` and `buildAuthorizationHeaders()` methods.
+- [core] Tighten the return type of the `getAuthHeaders()` and `buildAuthorizationHeaders()` functions.
 
 ## New Functionality
 
@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [openapi-generator] Replace `oclif` library with `yargs`. This is a refactoring without functional changes.
 
 ## Fixed Issues
 
@@ -42,7 +42,6 @@ Blog: TBD<br>
 ## Improvements
 
 - [generator] Include and exclude options added to the `transpileDirectory()` method
-- [openapi-generator] Replace `oclif` library with `yargs`. This is a refactoring without functional changes.
 
 ## Fixed Issues
 

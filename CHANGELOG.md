@@ -42,6 +42,7 @@ Blog: TBD<br>
 ## Improvements
 
 - [generator] Include and exclude options added to the `transpileDirectory()` method
+- [openapi-generator] Replace `oclif` library with `yargs`. This is a refactoring without functional changes.
 
 ## Fixed Issues
 

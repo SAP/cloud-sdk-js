@@ -58,10 +58,10 @@ export async function getOriginalOptionsPerService(
  */
 export async function getOptionsPerService(
   inputPaths: string[],
-  options: ParsedGeneratorOptions
+  { optionsPerService, skipValidation }: ParsedGeneratorOptions
 ): Promise<OptionsPerService> {
   const originalOptionsPerService = await getOriginalOptionsPerService(
-    options.optionsPerService
+    optionsPerService
   );
 
   const uniqueNameGenerator = new UniqueNameGenerator('-');
@@ -70,11 +70,11 @@ export async function getOptionsPerService(
     inputPaths,
     originalOptionsPerService
   );
-  if (!options.skipValidation) {
+  if (!skipValidation) {
     validateDirectoryNames(directoryNamesByPaths);
   }
 
-  const optionsPerService: OptionsPerService = inputPaths.reduce(
+  const optsPerService: OptionsPerService = inputPaths.reduce(
     (previousOptions, inputPath) => {
       const relativePath = getRelPathWithPosixSeparator(inputPath);
 
@@ -91,7 +91,7 @@ export async function getOptionsPerService(
     {}
   );
 
-  return optionsPerService;
+  return optsPerService;
 }
 
 function getDirectoryNamesByPaths(

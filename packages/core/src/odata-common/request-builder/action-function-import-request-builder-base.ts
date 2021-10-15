@@ -2,7 +2,7 @@ import {
   DestinationOptions,
   Destination,
   DestinationNameAndJwt
-} from '../../connectivity/scp-cf';
+} from '@sap-cloud-sdk/connectivity';
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
 import { ODataActionImportRequestConfig } from '../../odata-v4';

@@ -7,7 +7,7 @@ import {
   createGetAllRequest,
   createUpdateRequest
 } from '../../test/test-util/create-requests';
-import { Destination } from '../connectivity';
+import { Destination } from '../../../connectivity/src';
 import { buildHeaders } from './header-builder';
 
 describe('Header-Builder', () => {

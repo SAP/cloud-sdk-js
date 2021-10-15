@@ -1,13 +1,13 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { Constructable, Entity } from '../entity';
-import { Selectable } from '../selectable/selectable';
-import { Orderable } from '../order/orderable';
-import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
 import {
   DestinationOptions,
   Destination,
   DestinationNameAndJwt
-} from '../../connectivity/scp-cf';
+} from '@sap-cloud-sdk/connectivity';
+import { Constructable, Entity } from '../entity';
+import { Selectable } from '../selectable/selectable';
+import { Orderable } from '../order/orderable';
+import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
 import { CountRequestBuilder } from '../request-builder/count-request-builder';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';

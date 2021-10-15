@@ -1,15 +1,14 @@
-import {
-  executeHttpRequest,
-  fetchDestination,
-  getDestination,
-  getService,
-  serviceToken,
-  userApprovedServiceToken,
-  wrapJwtInHeader,
-  jwtBearerToken,
-  getDestinationFromDestinationService
-} from '@sap-cloud-sdk/core';
+import { executeHttpRequest } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
+import { getService } from '@sap-cloud-sdk/connectivity/dist/scp-cf/environment-accessor';
+import {
+  jwtBearerToken,
+  serviceToken
+} from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
+import { fetchDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-service';
+import { getDestinationFromDestinationService } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-from-service';
+import { getDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-accessor';
+import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
 import {
   loadLocalVcap,
   readSystems,
@@ -33,7 +32,7 @@ describe('OAuth flows', () => {
   });
 
   xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
-    const userGrant = await userApprovedServiceToken(
+    const userGrant = await jwtBearerToken(
       accessToken.provider,
       destinationService
     );

@@ -1,15 +1,15 @@
 import { identity } from '@sap-cloud-sdk/util';
 import {
+  DestinationOptions,
+  Destination,
+  DestinationNameAndJwt
+} from '@sap-cloud-sdk/connectivity';
+import {
   Constructable,
   UpdateRequestBuilder as UpdateRequestBuilderBase
 } from '../../odata-common';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
-import {
-  DestinationOptions,
-  Destination,
-  DestinationNameAndJwt
-} from '../../connectivity/scp-cf';
 import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
 import { HttpResponse } from '../../http-client';

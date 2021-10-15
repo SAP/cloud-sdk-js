@@ -4,6 +4,7 @@
     "./packages/util/**/*",
     "./packages/analytics/**/*",
     "./packages/core/**/*",
+    "./packages/connectivity/**/*",
     "./packages/generator/**/*",
     "./packages/openapi-generator/**/*",
     "./packages/test-util/**/*"
@@ -18,6 +19,9 @@
     },
     {
       "path": "./packages/core"
+    },
+    {
+      "path": "./packages/connectivity"
     },
     {
       "path": "./packages/generator"
@@ -35,6 +39,7 @@
       "packages/util/src/index.ts",
       "packages/analytics/src/index.ts",
       "packages/core/src/index.ts",
+      "packages/connectivity/src/index.ts",
       "packages/generator/src/index.ts",
       "packages/openapi-generator/src/index.ts",
       "packages/test-util/src/index.ts"

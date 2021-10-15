@@ -7,10 +7,10 @@ import {
   propertyExists
 } from '@sap-cloud-sdk/util';
 import {
+  buildHeadersForDestination,
   Destination,
-  sanitizeDestination,
-  buildHeadersForDestination
-} from '../../connectivity';
+  sanitizeDestination
+} from '@sap-cloud-sdk/connectivity';
 import {
   removeLeadingSlashes,
   removeSlashes,

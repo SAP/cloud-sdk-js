@@ -7,7 +7,7 @@ import {
   DestinationOptions,
   noDestinationErrorMessage,
   useOrFetchDestination
-} from '../connectivity';
+} from '@sap-cloud-sdk/connectivity';
 import {
   executeHttpRequest,
   filterCustomRequestConfig,

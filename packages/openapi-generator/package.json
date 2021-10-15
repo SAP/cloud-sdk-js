@@ -13,7 +13,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "openapi-generator": "./dist/cli/index.js"
+    "openapi-generator": "./dist/cli.js"
   },
   "publishConfig": {
     "access": "public"

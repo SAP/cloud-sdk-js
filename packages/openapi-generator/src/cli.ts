@@ -4,8 +4,8 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import yargs from 'yargs';
 // eslint-disable-next-line import/no-internal-modules
 import { hideBin } from 'yargs/helpers';
-import { parseOptionsFromConfig, getSpecifiedFlags, cli } from '../options';
-import { generateWithParsedOptions } from '../generator';
+import { parseOptionsFromConfig, getSpecifiedFlags, cli } from './options';
+import { generateWithParsedOptions } from './generator';
 
 const logger = createLogger('openapi-generator');
 

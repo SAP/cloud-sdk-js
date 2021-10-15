@@ -114,6 +114,26 @@ describe('edmToTs()', () => {
     expect(actual).toEqual(expected);
   });
 
+  it('should parse Edm.Time with one skipped part', () => {
+    const expected = {
+      hours: 0,
+      minutes: 20,
+      seconds: 0
+    };
+    const actual = edmToTs('PT20M', 'Edm.Time');
+    expect(actual).toEqual(expected);
+  });
+
+  it('should parse Edm.Time with no parts', () => {
+    const expected = {
+      hours: 0,
+      minutes: 0,
+      seconds: 0
+    };
+    const actual = edmToTs('PT', 'Edm.Time');
+    expect(actual).toEqual(expected);
+  });
+
   it('should parse Edm.Binary to base64 string', () => {
     const expected = '23A0';
     const actual = edmToTs('23A0', 'Edm.Binary');

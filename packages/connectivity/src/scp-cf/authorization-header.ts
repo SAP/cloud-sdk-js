@@ -2,9 +2,8 @@ import {
   unixEOL,
   isNullish,
   createLogger,
-  pickIgnoreCase,
-  toSanitizedObject,
-  encodeBase64
+  encodeBase64,
+  pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
 import {
   AuthenticationType,
@@ -18,29 +17,26 @@ const logger = createLogger({
   messageContext: 'authorization-header'
 });
 
-function needsAuthHeaders(destination: Destination): boolean {
-  if (!destination.authentication) {
-    return false;
-  }
-  const authTypesWithAuthorizationHeader: AuthenticationType[] = [
-    'BasicAuthentication',
-    'OAuth2ClientCredentials',
-    'OAuth2SAMLBearerAssertion',
-    'OAuth2UserTokenExchange',
-    'OAuth2JWTBearer',
-    'PrincipalPropagation'
-  ];
-  return authTypesWithAuthorizationHeader.includes(destination.authentication);
-}
-
-function getCustomAuthHeaders(
-  destination: Destination,
+function getAuthHeader(
+  authenticationType: AuthenticationType | undefined,
   customHeaders?: Record<string, any>
-) {
-  if (destination.authentication === 'PrincipalPropagation') {
-    return pickIgnoreCase(customHeaders, 'SAP-Connectivity-Authentication');
+): AuthenticationHeaderOnPrem | AuthenticationHeaderCloud | undefined {
+  if (authenticationType === 'PrincipalPropagation') {
+    const principalPropagationHeader = pickValueIgnoreCase(
+      customHeaders,
+      'SAP-Connectivity-Authentication'
+    );
+    if (principalPropagationHeader) {
+      return { 'SAP-Connectivity-Authentication': principalPropagationHeader };
+    }
   }
-  return pickIgnoreCase(customHeaders, 'authorization');
+  const authorizationHeader = pickValueIgnoreCase(
+    customHeaders,
+    'authorization'
+  );
+  if (authorizationHeader) {
+    return { authorization: authorizationHeader };
+  }
 }
 
 /**
@@ -52,37 +48,24 @@ function getCustomAuthHeaders(
 export async function getAuthHeaders(
   destination: Destination,
   customHeaders?: Record<string, any>
-): Promise<Record<string, string>> {
-  const customAuthHeaders = getCustomAuthHeaders(destination, customHeaders);
-
-  if (Object.keys(customAuthHeaders).length && needsAuthHeaders(destination)) {
-    logger.warn(
-      'Found custom authorization headers. The given destination also provides authorization headers. This might be unintended. The custom headers from the request config will be used.'
-    );
-  }
-
-  const additionalDestinationAuthHeaders = getCustomAuthHeaders(
-    destination,
-    destination.headers
+): Promise<AuthenticationHeaders> {
+  const customAuthHeader = getAuthHeader(
+    destination.authentication,
+    customHeaders
   );
 
-  if (Object.keys(customAuthHeaders).length) {
-    return customAuthHeaders;
-  }
-  if (Object.keys(additionalDestinationAuthHeaders).length) {
-    return additionalDestinationAuthHeaders;
-  }
-  return buildAuthorizationHeaders(destination);
+  return buildAuthorizationHeaders(destination, customAuthHeader);
 }
 
-function toAuthorizationHeader(authorization: string): Record<string, string> {
-  return toSanitizedObject('authorization', authorization);
+function toAuthorizationHeader(
+  authorization: string
+): AuthenticationHeaderCloud {
+  return { authorization };
 }
-
 function headerFromTokens(
   authenticationType: AuthenticationType,
   authTokens?: DestinationAuthToken[] | null
-): Record<string, string> {
+): AuthenticationHeaderCloud {
   if (!authTokens || !authTokens.length) {
     throw Error(
       `\`AuthenticationType\` is "${authenticationType}", but no auth tokens could be fetched from the destination service.`
@@ -107,7 +90,7 @@ function headerFromTokens(
 
 function headerFromBasicAuthDestination(
   destination: Destination
-): Record<string, string> {
+): AuthenticationHeaderCloud {
   if (isNullish(destination.username) || isNullish(destination.password)) {
     throw Error(
       'AuthenticationType is "BasicAuthentication", but "username" and / or "password" are missing!'
@@ -131,7 +114,7 @@ export function basicHeader(username: string, password: string): string {
 
 function headerForPrincipalPropagation(
   destination: Destination
-): Record<string, any> {
+): AuthenticationHeaderOnPrem {
   const principalPropagationHeader =
     destination?.proxyConfiguration?.headers?.[
       'SAP-Connectivity-Authentication'
@@ -146,11 +129,14 @@ function headerForPrincipalPropagation(
   };
 }
 
-function headerForProxy(destination: Destination): Record<string, any> {
-  const proxyAuthHeader =
+function headerForProxy(
+  destination: Destination
+): AuthenticationHeaderProxy | undefined {
+  const authHeader =
     destination?.proxyConfiguration?.headers?.['Proxy-Authorization'];
-
-  return proxyAuthHeader ? { 'Proxy-Authorization': proxyAuthHeader } : {};
+  if (authHeader) {
+    return { 'Proxy-Authorization': authHeader };
+  }
 }
 
 // TODO the proxy header are for OnPrem auth and are now handled correctly and should be removed here
@@ -176,26 +162,66 @@ function legacyNoAuthOnPremiseProxy(
   };
 }
 
+interface AuthenticationHeaderCloud {
+  authorization: string;
+}
+interface AuthenticationHeaderOnPrem {
+  'SAP-Connectivity-Authentication': string;
+}
+interface AuthenticationHeaderProxy {
+  'Proxy-Authorization': string;
+}
+interface AuthenticationHeaders {
+  authorization?: string;
+  'Proxy-Authorization'?: string;
+  'SAP-Connectivity-Authentication'?: string;
+}
+
 function getProxyRelatedAuthHeaders(
   destination: Destination
-): Record<string, any> {
+): AuthenticationHeaderProxy | undefined {
   if (
     destination.proxyType === 'OnPremise' &&
     destination.authentication === 'NoAuthentication'
   ) {
-    return legacyNoAuthOnPremiseProxy(destination);
+    return legacyNoAuthOnPremiseProxy(destination) as any;
   }
 
   // The connectivity service will raise an exception if it can not obtain the 'Proxy-Authorization' and the destination lookup will fail early
   return headerForProxy(destination);
 }
 
+interface AuthenticationHeaderCloud {
+  authorization: string;
+}
+interface AuthenticationHeaderOnPrem {
+  'SAP-Connectivity-Authentication': string;
+}
+interface AuthenticationHeaderProxy {
+  'Proxy-Authorization': string;
+}
+interface AuthenticationHeaders {
+  authorization?: string;
+  'Proxy-Authorization'?: string;
+  'SAP-Connectivity-Authentication'?: string;
+}
+
 async function getAuthenticationRelatedHeaders(
   destination: Destination
-): Promise<Record<string, string>> {
+): Promise<AuthenticationHeaderCloud | AuthenticationHeaderOnPrem | undefined> {
+  const destinationAuthHeaders = getAuthHeader(
+    destination.authentication,
+    destination.headers
+  );
+
   logger.debug(
     `Getting authentication related headers for authentication type: ${destination.authentication}`
   );
+
+  if (destinationAuthHeaders) {
+    logger.debug("Authentication header from 'destination.headers' used.");
+    return destinationAuthHeaders;
+  }
 
   switch (destination.authentication) {
     case null:
@@ -203,10 +229,10 @@ async function getAuthenticationRelatedHeaders(
       logger.warn(
         'No authentication type is specified on the destination! Assuming "NoAuthentication".'
       );
-      return {};
+      return;
     case 'NoAuthentication':
     case 'ClientCertificateAuthentication':
-      return {};
+      return;
     case 'OAuth2SAMLBearerAssertion':
     case 'OAuth2UserTokenExchange':
     case 'OAuth2JWTBearer':
@@ -228,13 +254,23 @@ async function getAuthenticationRelatedHeaders(
 
 /**
  * @param destination - Destination from which headers are build
+ * @param customAuthHeader - Additional custom headers
  * @returns authorization - headers build from destination
  * @internal
  */
 export async function buildAuthorizationHeaders(
-  destination: Destination
-): Promise<Record<string, string>> {
+  destination: Destination,
+  customAuthHeader?: AuthenticationHeaderCloud | AuthenticationHeaderOnPrem
+): Promise<AuthenticationHeaders> {
   const sanitizedDestination = sanitizeDestination(destination);
+
+  if (customAuthHeader && Object.keys(customAuthHeader).length) {
+    return {
+      ...customAuthHeader,
+      ...getProxyRelatedAuthHeaders(sanitizedDestination)
+    };
+  }
+
   return {
     ...(await getAuthenticationRelatedHeaders(sanitizedDestination)),
     ...getProxyRelatedAuthHeaders(sanitizedDestination)

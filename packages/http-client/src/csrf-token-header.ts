@@ -10,8 +10,8 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
-import { removeTrailingSlashes } from '../odata-common/remove-slashes';
-import { executeHttpRequest } from '../http-client';
+import { removeTrailingSlashes } from '@sap-cloud-sdk/core/src/odata-common/remove-slashes';
+import { executeHttpRequest } from '.';
 import { HttpRequestConfig } from './http-client-types';
 
 const logger = createLogger({
@@ -40,6 +40,9 @@ export async function buildCsrfHeaders<T extends HttpRequestConfig>(
   });
 }
 
+/**
+ * @internal
+ */
 export function buildCsrfFetchHeaders(headers: any): Record<string, any> {
   const fetchHeader = !pickValueIgnoreCase(headers, 'x-csrf-token') && {
     'x-csrf-token': 'Fetch'

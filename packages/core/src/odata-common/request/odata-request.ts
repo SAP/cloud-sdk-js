@@ -20,7 +20,7 @@ import {
   HttpResponse,
   executeHttpRequest,
   filterCustomRequestConfig
-} from '../../http-client';
+} from '@sap-cloud-sdk/http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 /**

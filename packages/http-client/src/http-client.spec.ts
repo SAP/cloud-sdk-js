@@ -3,11 +3,10 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { Protocol } from '../../../connectivity/src/scp-cf/protocol';
+import { Protocol } from '@sap-cloud-sdk/connectivity/src/scp-cf/protocol';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
-  HttpMethod,
   HttpRequest,
   HttpRequestConfig,
   HttpResponse
@@ -239,7 +238,7 @@ describe('generic http client', () => {
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
       const config = {
-        method: HttpMethod.GET,
+        method: 'GET',
         url: '/api/entity',
         params: {
           a: 'a',
@@ -272,7 +271,7 @@ describe('generic http client', () => {
 
       const config: HttpRequest = {
         baseURL: 'https://custom.example.com',
-        method: HttpMethod.POST,
+        method: 'POST',
         url: '/api/entity',
         headers: {
           'content-type': 'application/json',
@@ -350,7 +349,7 @@ describe('generic http client', () => {
 
       const config: HttpRequest = {
         baseURL: 'https://example.com',
-        method: HttpMethod.POST,
+        method: 'POST',
         url: '/api/entity',
         headers: {
           authorization: 'custom-auth-header',
@@ -397,7 +396,7 @@ describe('generic http client', () => {
 
       const config: HttpRequest = {
         baseURL: 'https://example.com',
-        method: HttpMethod.POST,
+        method: 'POST',
         url: '/api/entity',
         headers: {
           authorization: 'custom-auth-header',
@@ -433,7 +432,7 @@ describe('generic http client', () => {
 
       const config: HttpRequest = {
         baseURL: 'https://example.com',
-        method: HttpMethod.POST,
+        method: 'POST',
         url: '/api/entity',
         headers: {
           authorization: 'custom-auth-header',

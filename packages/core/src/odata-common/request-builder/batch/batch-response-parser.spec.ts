@@ -1,5 +1,5 @@
 import { unixEOL, createLogger } from '@sap-cloud-sdk/util';
-import { HttpResponse } from '../../../http-client';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   detectNewLineSymbol,
   getResponseBody,

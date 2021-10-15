@@ -28,7 +28,7 @@ import {
   providerXsuaaUrl,
   providerServiceToken
 } from '../../../test/test-util';
-import * as httpClient from '../../http-client/http-client';
+import * as httpClient from '@sap-cloud-sdk/http-client';
 import { parseDestination } from '../../../../connectivity/src/scp-cf/destination/destination';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 

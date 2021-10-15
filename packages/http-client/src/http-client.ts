@@ -14,7 +14,7 @@ import {
   useOrFetchDestination,
   getAgentConfig
 } from '@sap-cloud-sdk/connectivity';
-import { buildCsrfHeaders } from '../http-client';
+import { buildCsrfHeaders } from '.';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,

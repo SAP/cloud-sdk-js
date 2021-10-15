@@ -6,7 +6,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataDeleteRequestConfig } from '../request';
-import { HttpResponse } from '../../http-client';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { ODataUri } from '../uri-conversion';
 import type { FieldType } from '../selectable';
 import { MethodRequestBuilder } from './request-builder-base';

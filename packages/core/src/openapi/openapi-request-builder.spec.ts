@@ -13,7 +13,7 @@ import {
   providerXsuaaUrl,
   providerServiceToken
 } from '../../test/test-util';
-import * as httpClient from '../http-client/http-client';
+import * as httpClient from '@sap-cloud-sdk/http-client';
 import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import { OpenApiRequestBuilder } from './openapi-request-builder';

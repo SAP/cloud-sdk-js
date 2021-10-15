@@ -5,7 +5,7 @@ import { ODataUri } from '../uri-conversion';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
-import { HttpResponse } from '../../http-client';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**

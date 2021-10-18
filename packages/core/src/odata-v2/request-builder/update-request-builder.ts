@@ -4,6 +4,7 @@ import {
   DestinationNameAndJwt,
   DestinationOptions
 } from '@sap-cloud-sdk/connectivity';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   Constructable,
   EntityIdentifiable,
@@ -17,7 +18,6 @@ import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
 
 const logger = createLogger({
   package: 'core',

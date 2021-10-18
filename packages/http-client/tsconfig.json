@@ -12,5 +12,6 @@
   "references": [
     { "path": "../util" },
     { "path": "../analytics" },
-    { "path": "../connectivity"}]
+    { "path": "../connectivity" }
+  ]
 }

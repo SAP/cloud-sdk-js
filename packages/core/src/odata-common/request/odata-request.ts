@@ -4,18 +4,16 @@ import {
   mergeIgnoreCase,
   pickIgnoreCase,
   pickNonNullish,
-  propertyExists
+  propertyExists,
+  removeLeadingSlashes,
+  removeSlashes,
+  removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 import {
   buildHeadersForDestination,
   Destination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
-import {
-  removeLeadingSlashes,
-  removeSlashes,
-  removeTrailingSlashes
-} from '../remove-slashes';
 import {
   HttpResponse,
   executeHttpRequest,

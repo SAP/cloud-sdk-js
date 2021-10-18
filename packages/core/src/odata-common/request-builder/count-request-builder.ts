@@ -3,10 +3,10 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Entity } from '../entity';
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { GetAllRequestBuilder } from './get-all-request-builder-base';
 
 /**

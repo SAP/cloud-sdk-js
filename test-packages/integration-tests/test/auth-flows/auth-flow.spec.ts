@@ -1,4 +1,4 @@
-import { executeHttpRequest } from '@sap-cloud-sdk/core';
+import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import { getService } from '@sap-cloud-sdk/connectivity/dist/scp-cf/environment-accessor';
 import {

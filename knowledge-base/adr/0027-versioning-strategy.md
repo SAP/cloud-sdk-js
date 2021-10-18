@@ -23,14 +23,14 @@ We will keep this approach because:
 - It is very simple to have a fixed version for all packages.
   No need to monitor which packages have been changes to which extent.
 - It is easy to use/install the SDK, because all SDK parts have the same version.
-- It is done the same way by other monorepos like [nest](https://github.com/nestjs/nest) or [anguar](https://github.com/angular/angular).
+- It is done the same way by other monorepos like [nest](https://github.com/nestjs/nest) or [angular](https://github.com/angular/angular).
 
 The drawback of having new version without changes is taken into account for the simplicity.
 
 ## Decision Clients
 
 For the clients the situation is much less coupled than for core.
-Some services will update every two weeks (workflow) other every year (S/4 OnPremise).
+Some services will update every two weeks (workflow) other every year (SAP S/4HANA OnPremise).
 We will do versioning in the following way:
 
 - Major versions of clients aligns with major version of core.
@@ -40,7 +40,7 @@ We will do versioning in the following way:
 - Pipeline runs every two weeks and publishes only the changed clients with increased minor version.
 - Errors on the client layer are rare and in such a case we trigger a bump of all affected clients.
 
-This approach challenges the current release practice to a higer degree of automation.
+This approach challenges the current release practice to a higher degree of automation.
 
 ## Consequences
 

@@ -3,7 +3,8 @@ import * as https from 'https';
 import {
   createLogger,
   ErrorWithCause,
-  pickIgnoreCase
+  pickIgnoreCase,
+  unixEOL
 } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import {
@@ -41,7 +42,7 @@ export async function buildHttpRequest(
   customHeaders?: Record<string, any>
 ): Promise<DestinationHttpRequestConfig> {
   if (customHeaders) {
-    logger.warn(
+    logger.info(
       `The following custom headers will overwrite headers created by the SDK:\n${Object.keys(
         customHeaders
       )
@@ -100,8 +101,23 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
     );
     const request = merge(destinationRequestConfig, requestConfig);
     request.headers = await addCsrfTokenToHeader(destination, request, options);
+    logRequestInformation(request);
     return executeFn(request);
   };
+}
+
+function logRequestInformation(request: HttpRequestConfig) {
+  const basicRequestInfo = `Execute '${request.method}' request with target: ${request.url}.`;
+  const headerText = Object.keys(request.headers).reduce((previous, key) => {
+    if (
+      key.toLowerCase().includes('authentication') ||
+      key.toLowerCase().includes('authorization')
+    ) {
+      return `${previous}${unixEOL}${key}:*******`;
+    }
+    return `${previous}${unixEOL}${key}:${request.headers[key]}`;
+  }, 'The headers of the request are:');
+  logger.debug(`${basicRequestInfo}${unixEOL}${headerText}`);
 }
 
 /**

@@ -28,12 +28,13 @@ export const defaultTsConfig = {
  * @param options - Options passed to the generator.
  * @returns The serialized tsconfig.json contents.
  */
-export async function tsconfigJson(
-  options: ParsedGeneratorOptions
-): Promise<string | undefined> {
-  if (options.transpile || options.tsConfig) {
-    return options.tsConfig
-      ? readCustomTsConfig(options.tsConfig)
+export async function tsconfigJson({
+  transpile,
+  tsConfig
+}: ParsedGeneratorOptions): Promise<string | undefined> {
+  if (transpile || tsConfig) {
+    return tsConfig
+      ? readCustomTsConfig(tsConfig)
       : formatJson(defaultTsConfig);
   }
 }

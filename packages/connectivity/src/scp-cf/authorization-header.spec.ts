@@ -1,4 +1,3 @@
-import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultBasicCredentials,
   defaultDestination
@@ -12,7 +11,7 @@ const principalPropagationDestination = {
   proxyType: 'OnPremise',
   proxyConfiguration: {
     headers: {
-      'SAP-Connectivity-Authentication': 'someValue',
+      'SAP-Connectivity-Authentication': 'someValueDestination',
       'Proxy-Authorization': 'someProxyValue'
     }
   }
@@ -114,33 +113,25 @@ describe('getAuthHeaders', () => {
       );
     });
 
-    it('logs a warning for custom `SAP-Connectivity-Authentication` header', async () => {
-      const logger = createLogger('authorization-header');
-      const warnSpy = jest.spyOn(logger, 'warn');
-
-      const authHeader = { 'SAP-Connectivity-Authentication': 'token' };
+    it('gets `SAP-Connectivity-Authentication` header from custom headers first', async () => {
+      const authHeader = {
+        'SAP-Connectivity-Authentication': 'someValueCustom'
+      };
       await expect(
-        getAuthHeaders(
-          removeSapConnectivityAuthentication(principalPropagationDestination),
-          authHeader
-        )
-      ).resolves.toEqual(authHeader);
-
-      expect(warnSpy).toHaveBeenCalledWith(
-        'Found custom authorization headers. The given destination also provides authorization headers. This might be unintended. The custom headers from the request config will be used.'
-      );
+        getAuthHeaders(principalPropagationDestination, authHeader)
+      ).resolves.toEqual({
+        'Proxy-Authorization': 'someProxyValue',
+        'SAP-Connectivity-Authentication': 'someValueCustom'
+      });
     });
 
-    it('gets `SAP-Connectivity-Authentication` header from destination headers', async () => {
-      const authHeader = { 'SAP-Connectivity-Authentication': 'token' };
+    it('gets `SAP-Connectivity-Authentication` header from destination headers second', async () => {
       await expect(
-        getAuthHeaders({
-          ...removeSapConnectivityAuthentication(
-            principalPropagationDestination
-          ),
-          headers: authHeader
-        })
-      ).resolves.toEqual(authHeader);
+        getAuthHeaders(principalPropagationDestination)
+      ).resolves.toEqual({
+        'Proxy-Authorization': 'someProxyValue',
+        'SAP-Connectivity-Authentication': 'someValueDestination'
+      });
     });
   });
 
@@ -325,6 +316,8 @@ describe('getAuthHeaders', () => {
 });
 
 export function checkHeaders(headers: Record<string, any>) {
-  expect(headers['SAP-Connectivity-Authentication']).toBe('someValue');
+  expect(headers['SAP-Connectivity-Authentication']).toBe(
+    'someValueDestination'
+  );
   expect(headers['Proxy-Authorization']).toBe('someProxyValue');
 }

@@ -2,7 +2,7 @@ import {
   createTestEntityById,
   createTestEntityByIdReturnId
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/action-imports';
-import { destination } from './test-util';
+import {destination, timeOut} from './test-util';
 import { deleteEntity } from './test-utils/test-entity-operations';
 
 const entityKey = 999;
@@ -16,7 +16,7 @@ describe('action', () => {
       .skipCsrfTokenFetching()
       .execute(destination);
     expect(response.keyTestEntity).toBe(entityKey);
-  });
+  },timeOut);
 
   it('should return single number', async () => {
     const response = await createTestEntityByIdReturnId({
@@ -25,5 +25,5 @@ describe('action', () => {
       .skipCsrfTokenFetching()
       .execute(destination);
     expect(response).toBe(entityKey);
-  });
+  },timeOut);
 });

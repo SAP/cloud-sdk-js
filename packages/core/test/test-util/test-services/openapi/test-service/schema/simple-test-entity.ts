@@ -3,15 +3,13 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-
-/**
- * SimpleTestEntity schema
- */
-export type SimpleTestEntity =
-  | {
+    
+    /**
+     * SimpleTestEntity schema
+     */
+    export type SimpleTestEntity = {
       /**
        * @example "Example string"
        */
-      stringProperty: string;
-    }
-  | Record<string, any>;
+      'stringProperty': string;
+    } | Record<string, any>;

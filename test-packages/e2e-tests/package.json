@@ -24,8 +24,8 @@
     "@sap-cloud-sdk/test-services": "^1.50.0",
     "@sap-cloud-sdk/test-services-e2e": "^1.50.0",
     "@sap-cloud-sdk/util": "^1.50.0",
-    "@sap/cds": "~5.0.6",
-    "@sap/cds-dk": "~4.5.4",
+    "@sap/cds": "^5.5.4",
+    "@sap/cds-dk": "^4.5.4",
     "express": "^4.17.1",
     "json-schema-faker": "^0.5.0-rcv.30",
     "moment": "^2.29.0",
@@ -40,9 +40,7 @@
     "requires": {
       "db": {
         "kind": "sqlite",
-        "credentials": {
-          "database": "sqlite.db"
-        }
+        "model": "*"
       }
     }
   }

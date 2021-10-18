@@ -1604,7 +1604,7 @@
   optionalDependencies:
     npmlog "2 || ^3.1.0 || ^4.0.0"
 
-"@sap/cds-compiler@^2.1.6", "@sap/cds-compiler@^2.4.4":
+"@sap/cds-compiler@^2.4.4":
   version "2.7.0"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.7.0.tgz#f7d06c16746a21be37c9d0feab63d233b9d8c68e"
   integrity sha512-GfifUHd+FePYH2y+BKksUrnHT5VWzVQWublZrxCbB+HpSbb1HSADOd0SlK0+aUObmSxPlPMAOwpmS19dXB1l7A==
@@ -1635,18 +1635,6 @@
   optionalDependencies:
     sqlite3 "^5.0.2"
 
-"@sap/cds-foss@^2", "@sap/cds-foss@^2.2.0":
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-2.3.1.tgz#f73846c0fb2ac6e13872017f4c2788b35e2f305b"
-  integrity sha512-Scfvem8T7YFBJE2Ruphrl/YVBUah8kYtaSyhiCh7N3+Vop4vx09WWysa1geOT1hholbZL3UCZ87w5R+0wKMEoA==
-  dependencies:
-    big.js "6.0.3"
-    fs-extra "9.1.0"
-    generic-pool "3.7.2"
-    uuid "8.3.2"
-    xmlbuilder "15.1.1"
-    yaml "1.10.2"
-
 "@sap/cds-foss@^3":
   version "3.0.0"
   resolved "https://registry.npmjs.org/@sap/cds-foss/-/cds-foss-3.0.0.tgz#e7e7e8c7032acecc8055361eab796c3e0241f208"
@@ -1659,16 +1647,7 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds-runtime@~3.0.6":
-  version "3.0.9"
-  resolved "https://registry.npmjs.org/@sap/cds-runtime/-/cds-runtime-3.0.9.tgz#81aab8a05cf8cb91a01495c3246f6ba1d6516447"
-  integrity sha512-cESV5LSmfHmaUUlX2viXkgulX7QDuftTJShUz3JbVvE2RXIDkWFL0a4JGHRIQqV2WMTueglykEacebzy9ELQlQ==
-  dependencies:
-    "@sap-cloud-sdk/core" "^1.41"
-    "@sap-cloud-sdk/util" "^1.41"
-    "@sap/cds-foss" "^2.2.0"
-
-"@sap/cds@^5.0.0", "@sap/cds@^5.5.0":
+"@sap/cds@^5.0.0", "@sap/cds@^5.5.0", "@sap/cds@~5.5.4":
   version "5.5.4"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.5.4.tgz#76d931ec5f274fb947b7af81954a3c8e5519a096"
   integrity sha512-q9AVRfm8zlPjcVqrz9SVu5mB/Xtodd+DjQyKe/xJ1zVj83I2yOrH0Q+0NPonMGSHvnOFZhduu4ZswHLCXZM0jw==
@@ -1677,15 +1656,6 @@
     "@sap-cloud-sdk/util" "^1.41"
     "@sap/cds-compiler" "^2.4.4"
     "@sap/cds-foss" "^3"
-
-"@sap/cds@~5.0.6":
-  version "5.0.6"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.0.6.tgz#0d15e7b6814d8a25fad883e1945e5f6f965978fd"
-  integrity sha512-Zht1jOPq0sJmL4J1X07Ym/jtMnB7ohZaf6W/yFkjNhewg08iMPRn5MO3cudWyC9dd+PkXKKu0VPoIB5kBURW0g==
-  dependencies:
-    "@sap/cds-compiler" "^2.1.6"
-    "@sap/cds-foss" "^2"
-    "@sap/cds-runtime" "~3.0.6"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0", "@sap/cloud-sdk-vdm-business-partner-service@^1.24.0":
   version "1.27.0"
@@ -2626,11 +2596,6 @@ before-after-hook@^2.2.0:
   version "2.2.2"
   resolved "https://registry.npmjs.org/before-after-hook/-/before-after-hook-2.2.2.tgz#a6e8ca41028d90ee2c24222f201c90956091613e"
   integrity sha512-3pZEU3NT5BFUo/AD5ERPWOgQOCZITni6iavr5AUw5AUwQjMlI0kzu5btnyD39AF0gUEsDPwJT+oY1ORBJijPjQ==
-
-big.js@6.0.3:
-  version "6.0.3"
-  resolved "https://registry.npmjs.org/big.js/-/big.js-6.0.3.tgz#8b4d99ac7023668e0e465d3f78c23b8ac29ad381"
-  integrity sha512-n6yn1FyVL1EW2DBAr4jlU/kObhRzmr+NNRESl65VIOT8WBJj/Kezpx2zFdhJUqYI6qrtTW7moCStYL5VxeVdPA==
 
 big.js@6.1.1:
   version "6.1.1"
@@ -4598,16 +4563,6 @@ fs-extra@10.0.0, fs-extra@^10.0.0:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
-fs-extra@9.1.0, fs-extra@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
-  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
-  dependencies:
-    at-least-node "^1.0.0"
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^2.0.0"
-
 fs-extra@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-6.0.1.tgz#8abc128f7946e310135ddc93b98bddb410e7a34b"
@@ -4625,6 +4580,16 @@ fs-extra@^8.1.0:
     graceful-fs "^4.2.0"
     jsonfile "^4.0.0"
     universalify "^0.1.0"
+
+fs-extra@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
+  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
+  dependencies:
+    at-least-node "^1.0.0"
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
 
 fs-minipass@^2.0.0, fs-minipass@^2.1.0:
   version "2.1.0"
@@ -4684,11 +4649,6 @@ gauge@~2.7.3:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
-
-generic-pool@3.7.2:
-  version "3.7.2"
-  resolved "https://registry.npmjs.org/generic-pool/-/generic-pool-3.7.2.tgz#78c2e5f054fc8bb611568c435051ecea2418e965"
-  integrity sha512-Ec7D4KySmEtIdJBNRVS8jus84ejNAvYG7KaLsXMhIs4AVQ2RuXSjMtmpskTKDT0y6TFSPjo4H+cCmLKUb+vDzg==
 
 generic-pool@3.7.8:
   version "3.7.8"

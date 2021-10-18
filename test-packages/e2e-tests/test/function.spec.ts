@@ -5,7 +5,6 @@ import {
   getAll,
   returnCollection
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/function-imports';
-import {timeOut} from "./test-util";
 
 const url = 'http://localhost:4004/';
 const destination = { url };
@@ -17,11 +16,11 @@ describe('functions', () => {
       expect(await request.url(destination)).toBe(
         `${url}odata/test-service/returnSapCloudSdk()?$format=json`
       );
-    },timeOut);
+    });
 
     it('should execute request', async () => {
       expect(await request.execute(destination)).toBe('SapCloudSdk');
-    },timeOut);
+    });
   });
 
   describe('without parameters, returns array', () => {
@@ -29,7 +28,7 @@ describe('functions', () => {
 
     it('should execute request', async () => {
       expect((await request.execute(destination)).length).toBe(4);
-    },timeOut);
+    });
   });
 
   describe('string parameters, returns string', () => {
@@ -42,11 +41,11 @@ describe('functions', () => {
       expect(await request.url(destination)).toBe(
         `${url}odata/test-service/concatStrings(Str1='test',Str2='string')?$format=json`
       );
-    },timeOut);
+    });
 
     it('should execute request', async () => {
       expect(await request.execute(destination)).toBe('teststring');
-    },timeOut);
+    });
   });
 
   describe('integer parameter, returns entity', () => {
@@ -56,7 +55,7 @@ describe('functions', () => {
 
     it('should execute request', async () => {
       expect((await request.execute(destination)).keyTestEntity).toBe(101);
-    },timeOut);
+    });
   });
 
   describe('integer parameter, returns array', () => {
@@ -64,6 +63,6 @@ describe('functions', () => {
 
     it('should execute request', async () => {
       expect(await request.execute(destination)).toStrictEqual([1]);
-    },timeOut);
+    });
   });
 });

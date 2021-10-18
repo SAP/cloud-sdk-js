@@ -1611,7 +1611,7 @@
   dependencies:
     antlr4 "4.8.0"
 
-"@sap/cds-dk@~4.5.4":
+"@sap/cds-dk@4.5.4":
   version "4.5.4"
   resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.5.4.tgz#9f3e16c8caff522e5733c0ed3061a9f21cf9a07f"
   integrity sha512-cP2FiQccTHCqdrltyJI4+SOZgSw2ZxuWmC8IxzV+b6qk9p5B2GIHNb8a++ukOKescVVKxCbIaMJeXNAdVJPd/Q==
@@ -1647,7 +1647,17 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds@^5.0.0", "@sap/cds@^5.5.0", "@sap/cds@~5.5.4":
+"@sap/cds@5.5.0":
+  version "5.5.0"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.5.0.tgz#5f901b13593b98e180f94c743c7cdc52d6b67862"
+  integrity sha512-5LhMUeVnSdjU2bRcKQgLDAMAHyOyMVb7/mzFqf8Nkdc0QbnCoXrC1aKOzWyRdY9+lPln7+EnXQQSwUPShBxa3A==
+  dependencies:
+    "@sap-cloud-sdk/core" "^1.41"
+    "@sap-cloud-sdk/util" "^1.41"
+    "@sap/cds-compiler" "^2.4.4"
+    "@sap/cds-foss" "^3"
+
+"@sap/cds@^5.0.0", "@sap/cds@^5.5.0":
   version "5.5.4"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.5.4.tgz#76d931ec5f274fb947b7af81954a3c8e5519a096"
   integrity sha512-q9AVRfm8zlPjcVqrz9SVu5mB/Xtodd+DjQyKe/xJ1zVj83I2yOrH0Q+0NPonMGSHvnOFZhduu4ZswHLCXZM0jw==
@@ -9026,7 +9036,7 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-sqlite3@^5.0.0, sqlite3@^5.0.2:
+sqlite3@^5.0.2:
   version "5.0.2"
   resolved "https://registry.npmjs.org/sqlite3/-/sqlite3-5.0.2.tgz#00924adcc001c17686e0a6643b6cbbc2d3965083"
   integrity sha512-1SdTNo+BVU211Xj1csWa8lV6KM0CtucDwRyA0VHl91wEH1Mgh7RxUpI4rVvG7OhHrzCSGaVyW5g8vKvlrk9DJA==

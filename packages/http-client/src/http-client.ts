@@ -23,7 +23,7 @@ import {
   HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
-import { buildCsrfHeaders } from '.';
+import { buildCsrfHeaders } from './csrf-token-header';
 
 const logger = createLogger({
   package: 'core',

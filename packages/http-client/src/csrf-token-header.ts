@@ -12,7 +12,7 @@ import {
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
 import { HttpRequestConfig } from './http-client-types';
-import { executeHttpRequest } from '.';
+import { executeHttpRequest } from './http-client';
 
 const logger = createLogger({
   package: 'core',

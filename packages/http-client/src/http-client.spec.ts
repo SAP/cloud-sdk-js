@@ -262,8 +262,8 @@ describe('generic http client', () => {
         .get('/api/entity')
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
-      const config = {
-        method: HttpMethod.GET,
+      const config: HttpRequestConfig = {
+        method: 'GET',
         url: '/api/entity'
       };
       const logger = createLogger({

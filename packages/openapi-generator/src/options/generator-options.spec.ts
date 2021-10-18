@@ -157,21 +157,23 @@ describe('parseGeneratorOptions', () => {
     );
   });
 
-  it('parses a given path to a config file and returns its content as generator options', async () => {
+  it('parses a given path to a config file and returns its content as parsed generator options', async () => {
     const config = {
-      input: 'some-repository'
+      input: 'some-repository',
+      include: '/path/*'
     };
     const parameters = {
       config: '/path/config.json'
     };
     mock({
       '/path/': {
-        'config.json': JSON.stringify(config)
+        'config.json': JSON.stringify(config),
+        'README.md': 'Test File'
       }
     });
-    await expect(parseOptionsFromConfig(parameters.config)).resolves.toEqual(
-      config
-    );
+    const parsed = await parseOptionsFromConfig(parameters.config);
+    expect(parsed.input).toContain(config.input);
+    expect(parsed.include).toEqual(['/path/config.json', '/path/README.md']);
   });
 
   it('logs a warning if wrong configuration keys were used', async () => {

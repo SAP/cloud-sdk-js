@@ -18,6 +18,3 @@ export {
 } from './scp-cf/destination/destination-accessor';
 
 export { getAgentConfig } from './http-agent/http-agent';
-
-
-export type HttpDataResponseType= Record<string, any>

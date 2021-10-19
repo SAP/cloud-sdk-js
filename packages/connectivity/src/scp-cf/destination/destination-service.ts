@@ -12,10 +12,13 @@ import {
 } from '../resilience-options';
 import { CachingOptions } from '../cache';
 import { urlAndAgent } from '../../http-agent/http-agent';
-import {DestinationConfiguration, DestinationJson, parseDestination} from './destination';
+import {
+  DestinationConfiguration,
+  DestinationJson,
+  parseDestination
+} from './destination';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
-import {HttpDataResponseType} from "../../index";
 
 const logger = createLogger({
   package: 'core',
@@ -27,7 +30,9 @@ type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
   AxiosResponse<ResponseType>
 >;
 
-let circuitBreaker: DestinationCircuitBreaker<DestinationJson | DestinationConfiguration>;
+let circuitBreaker: DestinationCircuitBreaker<
+  DestinationJson | DestinationConfiguration
+>;
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -212,7 +217,9 @@ async function fetchDestinationByTokens(
     });
 }
 
-function errorMessageFromResponse(error: AxiosError<HttpDataResponseType>): string {
+function errorMessageFromResponse(
+  error: AxiosError<{ ErrorMessage: string }>
+): string {
   return propertyExists(error, 'response', 'data', 'ErrorMessage')
     ? ` ${error.response!.data.ErrorMessage}`
     : '';
@@ -231,20 +238,22 @@ function callDestinationService(
   };
 
   if (options.enableCircuitBreaker) {
-    const typeVar:DestinationJson | DestinationConfiguration={}as any
+    const typeVar: DestinationJson | DestinationConfiguration = {} as any;
     return getCircuitBreaker().fire(config);
   }
 
   return axios.request(config);
 }
 
-function getCircuitBreaker(): DestinationCircuitBreaker<DestinationJson | DestinationConfiguration> {
-  const typed: (config: AxiosRequestConfig)=>Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> = axios.request
+function getCircuitBreaker(): DestinationCircuitBreaker<
+  DestinationJson | DestinationConfiguration
+> {
+  const typed: (
+    config: AxiosRequestConfig
+  ) => Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> =
+    axios.request;
   if (!circuitBreaker) {
-    circuitBreaker = new CircuitBreaker(
-        typed,
-      circuitBreakerDefaultOptions
-    );
+    circuitBreaker = new CircuitBreaker(typed, circuitBreakerDefaultOptions);
   }
   return circuitBreaker;
 }

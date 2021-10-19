@@ -272,7 +272,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         certificateSingleResponse,
         200,
         'ERNIE-UND-CERT',
-        wrapJwtInHeader(onlyIssuerServiceToken).headers
+        wrapJwtInHeader(onlyIssuerServiceToken).headers!
       );
 
       const logger = createLogger({

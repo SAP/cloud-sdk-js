@@ -189,7 +189,7 @@ describe('GetAllRequestBuilder', () => {
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
-          wrapJwtInHeader(onlyIssuerServiceToken).headers
+          wrapJwtInHeader(onlyIssuerServiceToken).headers!
         ),
         nock(certificateSingleResponse.destinationConfiguration.URL)
           .get(/.*/)

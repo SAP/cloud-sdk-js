@@ -597,7 +597,7 @@ describe('Request Builder', () => {
       destination,
       200,
       destinationName,
-      wrapJwtInHeader(providerToken).headers
+      wrapJwtInHeader(providerToken).headers!
     );
 
     nock(destination.URL, {

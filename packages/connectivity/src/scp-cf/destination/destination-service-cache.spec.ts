@@ -71,7 +71,7 @@ describe('DestinationServiceCache', () => {
       singleDest,
       200,
       singleDest.Name,
-      wrapJwtInHeader(subscriberServiceToken).headers,
+      wrapJwtInHeader(subscriberServiceToken).headers!,
       destinationServiceUrl
     );
   });

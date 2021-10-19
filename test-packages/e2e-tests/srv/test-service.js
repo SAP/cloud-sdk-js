@@ -42,9 +42,6 @@ module.exports = async srv => {
   });
 
   srv.on('getByKey', async oRequest => {
-    console.log(JSON.stringify(oRequest.data));
-    console.log('TestEntity' + TestEntity);
-    console.error(JSON.stringify(db));
     const param = oRequest.data.param;
     const entity = await SELECT.one
       .from(TestEntity)

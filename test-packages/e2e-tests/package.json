@@ -9,7 +9,7 @@
   "scripts": {
     "pretest": "yarn deploy && yarn start",
     "posttest": "yarn stop",
-    "start": "pm2 start server.js   -f || pm2 restart server.js  -f ",
+    "start": "pm2 start server.js || pm2 restart server.js",
     "stop": "pm2 stop server.js",
     "deploy": "cds deploy --to sqlite",
     "test": "yarn jest",

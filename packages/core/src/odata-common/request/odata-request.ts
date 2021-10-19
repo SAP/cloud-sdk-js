@@ -4,7 +4,10 @@ import {
   mergeIgnoreCase,
   pickIgnoreCase,
   pickNonNullish,
-  propertyExists
+  propertyExists,
+  removeLeadingSlashes,
+  removeSlashes,
+  removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 import {
   buildHeadersForDestination,
@@ -12,15 +15,10 @@ import {
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
 import {
-  removeLeadingSlashes,
-  removeSlashes,
-  removeTrailingSlashes
-} from '../remove-slashes';
-import {
   HttpResponse,
   executeHttpRequest,
   filterCustomRequestConfig
-} from '../../http-client';
+} from '@sap-cloud-sdk/http-client';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 /**

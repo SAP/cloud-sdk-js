@@ -3,10 +3,10 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder/request-builder-base';
 import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
 import { ODataActionImportRequestConfig } from '../../odata-v4';
-import { HttpResponse } from '../../http-client';
 
 /**
  * Create OData request to execute a action or function import.

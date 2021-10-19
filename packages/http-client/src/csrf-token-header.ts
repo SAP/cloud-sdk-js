@@ -4,15 +4,15 @@ import {
   first,
   pickIgnoreCase,
   pickNonNullish,
-  pickValueIgnoreCase
+  pickValueIgnoreCase,
+  removeTrailingSlashes
 } from '@sap-cloud-sdk/util';
 import {
   Destination,
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
-import { removeTrailingSlashes } from '../odata-common/remove-slashes';
-import { executeHttpRequest } from '../http-client';
 import { HttpRequestConfig } from './http-client-types';
+import { executeHttpRequest } from '.';
 
 const logger = createLogger({
   package: 'core',
@@ -40,6 +40,11 @@ export async function buildCsrfHeaders<T extends HttpRequestConfig>(
   });
 }
 
+/**
+ * @param headers - Request header information.
+ * @returns CSRF related headers.
+ * @internal
+ */
 export function buildCsrfFetchHeaders(headers: any): Record<string, any> {
   const fetchHeader = !pickValueIgnoreCase(headers, 'x-csrf-token') && {
     'x-csrf-token': 'Fetch'

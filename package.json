@@ -16,6 +16,7 @@
     "packages/analytics",
     "packages/connectivity",
     "packages/core",
+    "packages/http-client",
     "packages/eslint-config",
     "packages/generator",
     "packages/test-util",

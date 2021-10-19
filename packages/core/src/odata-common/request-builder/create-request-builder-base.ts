@@ -4,8 +4,8 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { ODataCreateRequestConfig } from '../request';
-import { HttpResponse } from '../../http-client';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion/odata-uri';
 import type { Constructable, Entity, EntityIdentifiable } from '../entity';

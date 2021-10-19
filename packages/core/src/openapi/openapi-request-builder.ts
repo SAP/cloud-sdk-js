@@ -13,7 +13,7 @@ import {
   filterCustomRequestConfig,
   HttpResponse,
   Method
-} from '../http-client';
+} from '@sap-cloud-sdk/http-client';
 
 /**
  * Request builder for OpenAPI requests.

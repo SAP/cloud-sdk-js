@@ -12,7 +12,6 @@
   "references": [
     { "path": "../util" },
     { "path": "../analytics" },
-    { "path": "../connectivity" },
-    { "path": "../http-client" }
+    { "path": "../connectivity" }
   ]
 }

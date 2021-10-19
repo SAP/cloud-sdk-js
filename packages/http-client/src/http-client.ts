@@ -15,7 +15,6 @@ import {
   useOrFetchDestination,
   getAgentConfig
 } from '@sap-cloud-sdk/connectivity';
-import { buildCsrfHeaders } from '../http-client';
 import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
@@ -24,6 +23,7 @@ import {
   HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
+import { buildCsrfHeaders } from '.';
 
 const logger = createLogger({
   package: 'core',

@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
-import { $Refs, resolve } from '@apidevtools/swagger-parser';
+import { $Refs, resolve, parse } from '@apidevtools/swagger-parser';
 import { pascalCase, kebabCase } from '@sap-cloud-sdk/util';
 import { isReferenceObject } from '../schema-util';
 import { SchemaNaming } from '../openapi-types';
@@ -7,6 +7,8 @@ import { SchemaRefMapping } from './parsing-info';
 import { ensureUniqueNames } from './unique-naming';
 import { ParserOptions } from './options';
 import { ensureValidSchemaNames } from './schema-naming';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const SwaggerParser = require('@apidevtools/swagger-parser');
 
 /**
  * Convenience function to invoke the creation of the OpenApiDocumentRefs builder.
@@ -19,6 +21,28 @@ export async function createRefs(
   options: ParserOptions
 ): Promise<OpenApiDocumentRefs> {
   return OpenApiDocumentRefs.createRefs(document, options);
+}
+
+/**
+ * Manual setting of the 'this' context  in the resolve method see here: https://github.com/APIDevTools/swagger-parser/issues/186
+ * Typescript 4.4.X has tightened the rules for inheriting the 'this' pointer.
+ * @param document - document to be resolved
+ * @returns resolve document
+ */
+export async function resolveBound(
+  document: OpenAPIV3.Document
+): Promise<$Refs> {
+  return resolve.bind(SwaggerParser)(document);
+}
+
+/**
+ * Manual setting of the 'this' context  in the resolve method see here: https://github.com/APIDevTools/swagger-parser/issues/186
+ * Typescript 4.4.X has tightened the rules for inheriting the 'this' pointer.
+ * @param content - content to be parsed
+ * @returns resolve document
+ */
+export async function parseBound(content: any): Promise<any> {
+  return parse.bind(SwaggerParser)(content);
 }
 
 /**
@@ -37,7 +61,7 @@ export class OpenApiDocumentRefs {
     options: ParserOptions
   ): Promise<OpenApiDocumentRefs> {
     return new OpenApiDocumentRefs(
-      await resolve(document),
+      await resolveBound(document),
       OpenApiDocumentRefs.parseSchemaRefMapping(document, options)
     );
   }

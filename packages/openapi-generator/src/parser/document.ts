@@ -1,10 +1,9 @@
-import { parse } from '@apidevtools/swagger-parser';
 import { OpenAPIV3 } from 'openapi-types';
 import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
 import { ServiceOptions } from '../options';
 import { parseSchema, parseSchemaProperties } from './schema';
 import { parseApis } from './api';
-import { createRefs, OpenApiDocumentRefs } from './refs';
+import { createRefs, OpenApiDocumentRefs, parseBound } from './refs';
 import { ParserOptions } from './options';
 
 /**
@@ -20,7 +19,7 @@ export async function parseOpenApiDocument(
   options: ParserOptions
 ): Promise<OpenApiDocument> {
   const clonedContent = JSON.parse(JSON.stringify(fileContent));
-  const document = (await parse(clonedContent)) as OpenAPIV3.Document;
+  const document = (await parseBound(clonedContent)) as OpenAPIV3.Document;
   const refs = await createRefs(document, options);
 
   return {

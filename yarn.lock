@@ -5684,7 +5684,7 @@ jest-config@^27.3.0:
     micromatch "^4.0.4"
     pretty-format "^27.3.0"
 
-jest-diff@^27.0.0, jest-diff@^27.3.0:
+jest-diff@^27.0.0, jest-diff@^27.2.5, jest-diff@^27.3.0:
   version "27.3.0"
   resolved "https://registry.npmjs.org/jest-diff/-/jest-diff-27.3.0.tgz#4d6f6f9d34f7e2a359b3c7eb142bba4de1e37695"
   integrity sha512-Nl2rE58B2ye+RvPcU4hN+6wBCHxX7aWz6RMTMFxe9jAg8ZueMj5QQ+T/nmHRutbBc5BEjrbbEWOrRzp9rUEsYA==
@@ -5738,11 +5738,12 @@ jest-environment-node@^27.3.0:
     jest-util "^27.3.0"
 
 jest-extended@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/jest-extended/-/jest-extended-1.0.0.tgz#b102e420431ba2b2edc73c3cbac241205ce2940e"
-  integrity sha512-zHll0BX8F0Aqmv/iSW23F3WUhiWrEbpA+IN9WFDVGnn/qf0cxBWSw/kR1rAIYHAawtYkAYiXxjsJV1oKNii15A==
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/jest-extended/-/jest-extended-1.1.0.tgz#85b6f33c3ca53c65087b34663d4118927e728db8"
+  integrity sha512-rC1U9N4SYSFEiHJP3H0ZSbVAARwnjzBOFoluuFYePATsOJaX7PMMNiM9svS4WTgSNCIIVT3RWlWy+Y4W3zLsjg==
   dependencies:
     expect "^26.6.2"
+    jest-diff "^27.2.5"
     jest-get-type "^27.0.6"
     jest-matcher-utils "^27.2.4"
 

@@ -1,8 +1,11 @@
 ## Version Increase cds
 
-The `cds` dependency works together with certain version of `cds-dk`.
+The `cds` dependency works together with the `cds-dk`.
 The latter dependency is used for the `yarn deploy` to the local sql DB.
-For testing if the two version of  works do the following in the e2e folder:
+We found that certain versions of `cds-dk` do not work together with versions of `cds`
+Hence, we fix the `cds-dk` version and let dependabot increase the `cds`. 
+
+For testing if two versions works together do the following in the e2e folder:
 
 ```bash
 rm -r node_modules/ && yarn install --ignore-engines       //contains state of pm2

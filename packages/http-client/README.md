@@ -7,6 +7,8 @@
 
 This package contains the generic http-client functionality of the SAP Cloud SDK as well as the Cloud Platform abstractions.
 
+The generic http-client adds SAP infrastructure specific functionality on top of a standard HTTP Client. The client handles connectivity related issues such as destination lookup, connections to SAP S/4HANA On-premise and web proxies.
+
 ## Installation
 
 ```
@@ -15,11 +17,11 @@ $ npm install @sap-cloud-sdk/http-client
 
 ## Usage
 
-Adds SAP infrastructure specific functionality on top of a standard HTTP Client. All OData services use the same generic HTTP client, so it contains no service-specific information. The client handles connectivity related issues such as:
+To make a request, use the executeHttpRequest function.
 
-- Destination lookup
-- Connections to SAP S/4HANA On-premise via the connectivity service
-- Web proxies.
+```
+executeHttpRequest(destination, requestConfig, httpRequestOptions);
+```
 
 For more detailed overview visit our [Generic HTTP Client documentation](https://sap.github.io/cloud-sdk/docs/js/features/connectivity/generic-http-client).
 

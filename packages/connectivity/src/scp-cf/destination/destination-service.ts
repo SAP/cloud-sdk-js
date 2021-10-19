@@ -12,21 +12,22 @@ import {
 } from '../resilience-options';
 import { CachingOptions } from '../cache';
 import { urlAndAgent } from '../../http-agent/http-agent';
-import { parseDestination } from './destination';
+import {DestinationConfiguration, DestinationJson, parseDestination} from './destination';
 import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
+import {HttpDataResponseType} from "../../index";
 
 const logger = createLogger({
   package: 'core',
   messageContext: 'destination-service'
 });
 
-type DestinationCircuitBreaker = CircuitBreaker<
+type DestinationCircuitBreaker<ResponseType> = CircuitBreaker<
   [requestConfig: AxiosRequestConfig],
-  AxiosResponse
+  AxiosResponse<ResponseType>
 >;
 
-let circuitBreaker: DestinationCircuitBreaker;
+let circuitBreaker: DestinationCircuitBreaker<DestinationJson | DestinationConfiguration>;
 
 /**
  * Fetches all instance destinations from the given URI.
@@ -93,7 +94,7 @@ async function fetchDestinations(
     }
   }
 
-  const headers = wrapJwtInHeader(jwt).headers;
+  const headers = wrapJwtInHeader(jwt).headers || {};
 
   return callDestinationService(targetUri, headers, options)
     .then(response => {
@@ -181,7 +182,7 @@ async function fetchDestinationByTokens(
       return destinationsFromCache[0];
     }
   }
-  let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
+  let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers || {};
   authHeader = tokens.exchangeHeaderJwt
     ? { ...authHeader, 'X-user-token': tokens.exchangeHeaderJwt }
     : authHeader;
@@ -211,7 +212,7 @@ async function fetchDestinationByTokens(
     });
 }
 
-function errorMessageFromResponse(error: AxiosError): string {
+function errorMessageFromResponse(error: AxiosError<HttpDataResponseType>): string {
   return propertyExists(error, 'response', 'data', 'ErrorMessage')
     ? ` ${error.response!.data.ErrorMessage}`
     : '';
@@ -221,7 +222,7 @@ function callDestinationService(
   uri: string,
   headers: Record<string, any>,
   options: ResilienceOptions = { enableCircuitBreaker: true }
-): Promise<AxiosResponse> {
+): Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> {
   const config: AxiosRequestConfig = {
     ...urlAndAgent(uri),
     proxy: false,
@@ -230,16 +231,18 @@ function callDestinationService(
   };
 
   if (options.enableCircuitBreaker) {
+    const typeVar:DestinationJson | DestinationConfiguration={}as any
     return getCircuitBreaker().fire(config);
   }
 
   return axios.request(config);
 }
 
-function getCircuitBreaker(): DestinationCircuitBreaker {
+function getCircuitBreaker(): DestinationCircuitBreaker<DestinationJson | DestinationConfiguration> {
+  const typed: (config: AxiosRequestConfig)=>Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> = axios.request
   if (!circuitBreaker) {
     circuitBreaker = new CircuitBreaker(
-      axios.request,
+        typed,
       circuitBreakerDefaultOptions
     );
   }

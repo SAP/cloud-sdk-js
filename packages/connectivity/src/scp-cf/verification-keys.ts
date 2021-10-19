@@ -2,6 +2,7 @@ import { renameKeys, ErrorWithCause, createLogger } from '@sap-cloud-sdk/util';
 import axios, { AxiosRequestConfig } from 'axios';
 import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { TokenKey } from './xsuaa-service-types';
+import {HttpDataResponseType} from "../index";
 
 const logger = createLogger({
   package: 'core',
@@ -77,7 +78,7 @@ function executeFetchVerificationKeys(url: string): Promise<TokenKey[]> {
   };
 
   return axios
-    .request(config)
+    .request<HttpDataResponseType>(config)
     .then(resp => resp.data.keys.map(k => renameKeys(tokenKeyKeyMapping, k)))
     .catch(error => {
       throw new ErrorWithCause(

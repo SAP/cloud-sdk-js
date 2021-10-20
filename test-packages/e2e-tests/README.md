@@ -1,4 +1,4 @@
-## Version Increase cds
+## Version Increase CDS
 
 The `cds` dependency works together with the `cds-dk`.
 The latter dependency is used for the `yarn deploy` to the local sql DB.

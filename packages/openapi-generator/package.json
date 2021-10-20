@@ -34,7 +34,7 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@apidevtools/swagger-parser": "^10.0.2",
+    "@apidevtools/swagger-parser": "^10.0.3",
     "@sap-cloud-sdk/generator-common": "^1.54.0",
     "@sap-cloud-sdk/util": "^1.54.0",
     "glob": "^7.1.6",
@@ -48,6 +48,6 @@
     "@types/yargs": "^17.0.2",
     "mock-fs": "^5.0.0",
     "nock": "^13.0.11",
-    "typescript": "~4.3.4"
+    "typescript": "~4.4.4"
   }
 }

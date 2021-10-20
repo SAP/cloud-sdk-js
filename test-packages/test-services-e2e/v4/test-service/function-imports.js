@@ -37,8 +37,8 @@ function concatStrings(parameters) {
     '/odata/test-service',
     'concatStrings',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
-        return core_1.edmToTsV4(val.value, 'Edm.String');
+      return (0, core_1.transformReturnValueForEdmTypeV4)(data, function (val) {
+        return (0, core_1.edmToTsV4)(val.value, 'Edm.String');
       });
     },
     params
@@ -56,7 +56,7 @@ function getAll(parameters) {
     '/odata/test-service',
     'getAll',
     function (data) {
-      return core_1.transformReturnValueForEntityListV4(
+      return (0, core_1.transformReturnValueForEntityListV4)(
         data,
         TestEntity_1.TestEntity
       );
@@ -82,7 +82,7 @@ function getByKey(parameters) {
     '/odata/test-service',
     'getByKey',
     function (data) {
-      return core_1.transformReturnValueForEntityV4(
+      return (0, core_1.transformReturnValueForEntityV4)(
         data,
         TestEntity_1.TestEntity
       );
@@ -108,9 +108,12 @@ function returnCollection(parameters) {
     '/odata/test-service',
     'returnCollection',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeListV4(data, function (val) {
-        return core_1.edmToTsV4(val, 'Edm.Int32');
-      });
+      return (0, core_1.transformReturnValueForEdmTypeListV4)(
+        data,
+        function (val) {
+          return (0, core_1.edmToTsV4)(val, 'Edm.Int32');
+        }
+      );
     },
     params
   );
@@ -133,8 +136,8 @@ function returnInt(parameters) {
     '/odata/test-service',
     'returnInt',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
-        return core_1.edmToTsV4(val.value, 'Edm.Int32');
+      return (0, core_1.transformReturnValueForEdmTypeV4)(data, function (val) {
+        return (0, core_1.edmToTsV4)(val.value, 'Edm.Int32');
       });
     },
     params
@@ -152,8 +155,8 @@ function returnSapCloudSdk(parameters) {
     '/odata/test-service',
     'returnSapCloudSdk',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
-        return core_1.edmToTsV4(val.value, 'Edm.String');
+      return (0, core_1.transformReturnValueForEdmTypeV4)(data, function (val) {
+        return (0, core_1.edmToTsV4)(val.value, 'Edm.String');
       });
     },
     params

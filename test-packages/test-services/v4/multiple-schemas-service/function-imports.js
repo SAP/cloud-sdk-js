@@ -23,7 +23,7 @@ function testFunctionImportEntityReturnType1(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType1',
     function (data) {
-      return core_1.transformReturnValueForEntityV4(
+      return (0, core_1.transformReturnValueForEntityV4)(
         data,
         TestEntity1_1.TestEntity1
       );
@@ -44,7 +44,7 @@ function testFunctionImportEntityReturnType2(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType2',
     function (data) {
-      return core_1.transformReturnValueForEntityV4(
+      return (0, core_1.transformReturnValueForEntityV4)(
         data,
         TestEntity2_1.TestEntity2
       );

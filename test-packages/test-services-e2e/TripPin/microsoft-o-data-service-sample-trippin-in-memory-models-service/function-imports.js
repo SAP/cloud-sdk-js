@@ -26,7 +26,10 @@ function getNearestAirport(parameters) {
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
     'GetNearestAirport',
     function (data) {
-      return core_1.transformReturnValueForEntityV4(data, Airports_1.Airports);
+      return (0, core_1.transformReturnValueForEntityV4)(
+        data,
+        Airports_1.Airports
+      );
     },
     params
   );

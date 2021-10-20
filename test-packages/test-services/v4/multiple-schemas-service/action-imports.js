@@ -24,12 +24,15 @@ function testActionImportNoParameterComplexReturnType1(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType1',
     function (data) {
-      return core_1.transformReturnValueForComplexTypeV4(data, function (data) {
-        return core_1.deserializeComplexTypeV4(
-          data,
-          TestComplexType1_1.TestComplexType1
-        );
-      });
+      return (0, core_1.transformReturnValueForComplexTypeV4)(
+        data,
+        function (data) {
+          return (0, core_1.deserializeComplexTypeV4)(
+            data,
+            TestComplexType1_1.TestComplexType1
+          );
+        }
+      );
     },
     params
   );
@@ -48,12 +51,15 @@ function testActionImportNoParameterComplexReturnType2(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType2',
     function (data) {
-      return core_1.transformReturnValueForComplexTypeV4(data, function (data) {
-        return core_1.deserializeComplexTypeV4(
-          data,
-          TestComplexType2_1.TestComplexType2
-        );
-      });
+      return (0, core_1.transformReturnValueForComplexTypeV4)(
+        data,
+        function (data) {
+          return (0, core_1.deserializeComplexTypeV4)(
+            data,
+            TestComplexType2_1.TestComplexType2
+          );
+        }
+      );
     },
     params
   );

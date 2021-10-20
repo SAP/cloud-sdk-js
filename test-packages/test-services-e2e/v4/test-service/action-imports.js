@@ -25,7 +25,7 @@ function createTestEntityById(parameters) {
     '/odata/test-service',
     'createTestEntityById',
     function (data) {
-      return core_1.transformReturnValueForEntityV4(
+      return (0, core_1.transformReturnValueForEntityV4)(
         data,
         TestEntity_1.TestEntity
       );
@@ -48,8 +48,8 @@ function createTestEntityByIdReturnId(parameters) {
     '/odata/test-service',
     'createTestEntityByIdReturnId',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
-        return core_1.edmToTsV4(val.value, 'Edm.Int32');
+      return (0, core_1.transformReturnValueForEdmTypeV4)(data, function (val) {
+        return (0, core_1.edmToTsV4)(val.value, 'Edm.Int32');
       });
     },
     params

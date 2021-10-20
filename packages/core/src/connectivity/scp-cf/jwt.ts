@@ -1,7 +1,6 @@
 import { IncomingMessage } from 'http';
 import * as url from 'url';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
-import { AxiosRequestConfig } from 'axios';
 import { decode, Jwt, JwtHeader, JwtPayload, verify } from 'jsonwebtoken';
 import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
@@ -333,7 +332,9 @@ function audiencesFromScope(decodedToken: JwtPayload): string[] {
  * @param token - Token to attach in request header
  * @returns The request header that holds the access token
  */
-export function wrapJwtInHeader(token: string): AxiosRequestConfig {
+export function wrapJwtInHeader(token: string): {
+  headers: { Authorization: string; [key: string]: any };
+} {
   return { headers: { Authorization: 'Bearer ' + token } };
 }
 

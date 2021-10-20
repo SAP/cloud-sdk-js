@@ -1,3 +1,4 @@
+import { isNullish } from './nullish';
 // eslint-disable-next-line valid-jsdoc
 /**
  * hidden
@@ -24,7 +25,8 @@ export function equal<T>(item1: T, item2: T): boolean {
   if (
     typeof item1 === 'object' &&
     typeof item2 === 'object' &&
-    !(item1 === null && item2 === null)
+    !isNullish(item1) &&
+    !isNullish(item2)
   ) {
     return equalObjects(item1, item2);
   }

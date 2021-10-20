@@ -18,6 +18,7 @@ export * from './nullish';
 export * from './object';
 export * from './pipe';
 export * from './promise';
+export * from './remove-slashes';
 export * from './string';
 export * from './string-formatter';
 export * from './types';

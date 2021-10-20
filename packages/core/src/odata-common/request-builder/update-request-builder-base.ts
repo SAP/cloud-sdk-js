@@ -1,11 +1,11 @@
 import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, Entity, EntityIdentifiable } from '../entity';
 import { ODataRequest, ODataUpdateRequestConfig } from '../request';
 import { ODataUri } from '../uri-conversion';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { Selectable } from '../selectable';
 import { EntitySerializer } from '../entity-serializer';
-import { HttpResponse } from '../../http-client';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**

@@ -1,4 +1,5 @@
 import nock from 'nock';
+import * as httpClient from '@sap-cloud-sdk/http-client';
 import { wrapJwtInHeader } from '../../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
@@ -28,7 +29,6 @@ import {
   providerXsuaaUrl,
   providerServiceToken
 } from '../../../test/test-util';
-import * as httpClient from '../../http-client/http-client';
 import { parseDestination } from '../../../../connectivity/src/scp-cf/destination/destination';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 

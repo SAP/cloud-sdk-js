@@ -3,11 +3,10 @@ import nock from 'nock';
 import { createLogger } from '@sap-cloud-sdk/util';
 import axios from 'axios';
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { Protocol } from '../../../connectivity/src/scp-cf/protocol';
+import { Protocol } from '../../connectivity/src/scp-cf/protocol';
 import * as csrfHeaders from './csrf-token-header';
 import {
   DestinationHttpRequestConfig,
-  HttpMethod,
   HttpRequest,
   HttpRequestConfig,
   HttpResponse
@@ -238,8 +237,8 @@ describe('generic http client', () => {
         })
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
-      const config = {
-        method: HttpMethod.GET,
+      const config: HttpRequestConfig = {
+        method: 'GET',
         url: '/api/entity',
         params: {
           a: 'a',
@@ -263,8 +262,8 @@ describe('generic http client', () => {
         .get('/api/entity')
         .reply(200, { res: 'ult' }, { sharp: 'header' });
 
-      const config = {
-        method: HttpMethod.GET,
+      const config: HttpRequestConfig = {
+        method: 'GET',
         url: '/api/entity'
       };
       const logger = createLogger({
@@ -299,7 +298,7 @@ sap-client:001`);
 
       const config: HttpRequest = {
         baseURL: 'https://custom.example.com',
-        method: HttpMethod.POST,
+        method: 'POST',
         url: '/api/entity',
         headers: {
           'content-type': 'application/json',
@@ -377,7 +376,7 @@ sap-client:001`);
 
       const config: HttpRequest = {
         baseURL: 'https://example.com',
-        method: HttpMethod.POST,
+        method: 'POST',
         url: '/api/entity',
         headers: {
           authorization: 'custom-auth-header',
@@ -424,7 +423,7 @@ sap-client:001`);
 
       const config: HttpRequest = {
         baseURL: 'https://example.com',
-        method: HttpMethod.POST,
+        method: 'POST',
         url: '/api/entity',
         headers: {
           authorization: 'custom-auth-header',
@@ -460,7 +459,7 @@ sap-client:001`);
 
       const config: HttpRequest = {
         baseURL: 'https://example.com',
-        method: HttpMethod.POST,
+        method: 'POST',
         url: '/api/entity',
         headers: {
           authorization: 'custom-auth-header',

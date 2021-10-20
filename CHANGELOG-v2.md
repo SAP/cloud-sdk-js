@@ -177,6 +177,7 @@
 ## New Functionality
 
 - [connectivity] Create a new package with minimal API.
+- [http-client] Create a new package with minimal API
 
 ## Improvements
 

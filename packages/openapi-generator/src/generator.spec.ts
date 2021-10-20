@@ -224,7 +224,7 @@ describe('generator', () => {
                   \\"packageName\\": \\"spec\\",
                   \\"directoryName\\": \\"spec\\",
                   \\"serviceName\\": \\"spec\\"
-                },
+                }
               }
               "
             `);

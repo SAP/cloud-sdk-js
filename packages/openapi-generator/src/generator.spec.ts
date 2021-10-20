@@ -154,7 +154,9 @@ describe('generator', () => {
           })
         },
         existingConfig:
-          '{ "inputDir/spec.json": {"directoryName": "customName" } }'
+          '{ "inputDir/spec.json": {"directoryName": "customName" } }',
+        anotherConfig:
+          '{ "inputDir/spec2.json": {"directoryName": "customName" } }'
       });
     });
 
@@ -171,16 +173,19 @@ describe('generator', () => {
 
       const actual = readFile('options.json', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatchInlineSnapshot(`
-              "{
-                \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"spec\\",
-                  \\"directoryName\\": \\"spec\\",
-                  \\"serviceName\\": \\"spec\\"
-                }
-              }
-              "
-            `);
+      await expect(actual).resolves.toMatch(
+        JSON.stringify(
+          {
+            'inputDir/spec.json': {
+              packageName: 'spec',
+              directoryName: 'spec',
+              serviceName: 'spec'
+            }
+          },
+          null,
+          2
+        )
+      );
     });
 
     it('overwrites writes options per service', async () => {
@@ -192,16 +197,46 @@ describe('generator', () => {
 
       const actual = readFile('existingConfig', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatchInlineSnapshot(`
-              "{
-                \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"customName\\",
-                  \\"directoryName\\": \\"customName\\",
-                  \\"serviceName\\": \\"customName\\"
-                }
-              }
-              "
-            `);
+      await expect(actual).resolves.toMatch(
+        JSON.stringify(
+          {
+            'inputDir/spec.json': {
+              packageName: 'customName',
+              directoryName: 'customName',
+              serviceName: 'customName'
+            }
+          },
+          null,
+          2
+        )
+      );
+    });
+
+    it('merges options per service', async () => {
+      await generate({
+        input: 'inputDir',
+        outputDir: 'out',
+        optionsPerService: 'anotherConfig'
+      });
+
+      const actual = readFile('anotherConfig', 'utf8');
+      await expect(actual).resolves.toMatch(endsWithNewLine);
+      await expect(actual).resolves.toMatch(
+        JSON.stringify(
+          {
+            'inputDir/spec2.json': {
+              directoryName: 'customName'
+            },
+            'inputDir/spec.json': {
+              packageName: 'spec',
+              directoryName: 'spec',
+              serviceName: 'spec'
+            }
+          },
+          null,
+          2
+        )
+      );
     });
   });
 
@@ -237,7 +272,7 @@ describe('generator', () => {
         })
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
               "Could not generate client. Errors: [
-              	ErrorWithCause: Could not write file. File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
+              	ErrorWithCause: Could not write file \\"test.ts\\". File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
               ]"
             `);
     });

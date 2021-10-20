@@ -50,7 +50,8 @@ describe('Failure cases', () => {
     await expect(
       getDestination(destinationName, {
         userJwt: subscriberServiceTokenWithVerificationURL,
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Unable to get access token for \\"destination\\" service. No service instance of type \\"destination\\" found."'
@@ -64,7 +65,8 @@ describe('Failure cases', () => {
     await expect(
       getDestination(destinationName, {
         userJwt: 'fails',
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"JwtError: The given jwt payload does not encode valid JSON."'
@@ -97,7 +99,8 @@ describe('Failure cases', () => {
       await getDestination(destinationName, {
         userJwt: subscriberServiceToken,
         enableCircuitBreaker: false,
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       });
       fail();
     } catch (error) {
@@ -136,7 +139,8 @@ describe('Failure cases', () => {
       await getDestination(destinationName, {
         userJwt: subscriberUserJwt,
         enableCircuitBreaker: false,
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       });
       fail();
     } catch (error) {
@@ -164,7 +168,8 @@ describe('Failure cases', () => {
     const expected = null;
     const actual = await getDestination(destinationName, {
       userJwt: subscriberUserJwt,
-      cacheVerificationKeys: false
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
     });
     expect(actual).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -189,7 +194,10 @@ describe('Failure cases', () => {
     );
 
     await expect(
-      getDestination(destinationName, { cacheVerificationKeys: false })
+      getDestination(destinationName, {
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
+      })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"No user token (JWT) has been provided. This is strictly necessary for principal propagation."'
     );

@@ -50,7 +50,8 @@ describe('proxy configuration', () => {
 
     const actual = await getDestination(destinationName, {
       userJwt: subscriberServiceToken,
-      cacheVerificationKeys: false
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
     });
     expect(actual?.proxyConfiguration).toEqual({
       host: 'some.proxy.com',
@@ -87,7 +88,8 @@ describe('proxy configuration', () => {
 
     const actual = await getDestination('OnPremise', {
       userJwt: subscriberServiceToken,
-      cacheVerificationKeys: false
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
     });
     expect(actual?.proxyConfiguration).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));

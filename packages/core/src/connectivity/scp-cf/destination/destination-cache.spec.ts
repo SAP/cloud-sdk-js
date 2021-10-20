@@ -144,7 +144,8 @@ describe('caching destination integration tests', () => {
       await getDestination('SubscriberDest', {
         userJwt: subscriberUserJwt,
         useCache: true,
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       });
 
       const c1 = getSubscriberCache(IsolationStrategy.Tenant);
@@ -165,7 +166,8 @@ describe('caching destination integration tests', () => {
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.No_Isolation,
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       });
 
       const c1 = getSubscriberCache(IsolationStrategy.No_Isolation);
@@ -187,7 +189,8 @@ describe('caching destination integration tests', () => {
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       });
 
       const c1 = getSubscriberCache(IsolationStrategy.Tenant);
@@ -203,7 +206,8 @@ describe('caching destination integration tests', () => {
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
         cacheVerificationKeys: false,
-        selectionStrategy: alwaysProvider
+        selectionStrategy: alwaysProvider,
+        iasToXsuaaTokenExchange: false
       });
 
       const c1 = getSubscriberCache(IsolationStrategy.Tenant);
@@ -220,7 +224,8 @@ describe('caching destination integration tests', () => {
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
         cacheVerificationKeys: false,
-        selectionStrategy: alwaysSubscriber
+        selectionStrategy: alwaysSubscriber,
+        iasToXsuaaTokenExchange: false
       });
 
       const c1 = getSubscriberCache(IsolationStrategy.Tenant);
@@ -237,7 +242,8 @@ describe('caching destination integration tests', () => {
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
         cacheVerificationKeys: false,
-        selectionStrategy: alwaysSubscriber
+        selectionStrategy: alwaysSubscriber,
+        iasToXsuaaTokenExchange: false
       });
 
       const c1 = getSubscriberCache(IsolationStrategy.Tenant);
@@ -254,7 +260,8 @@ describe('caching destination integration tests', () => {
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
         cacheVerificationKeys: false,
-        selectionStrategy: alwaysSubscriber
+        selectionStrategy: alwaysSubscriber,
+        iasToXsuaaTokenExchange: false
       });
 
       const c1 = getSubscriberCache(IsolationStrategy.Tenant, 'SubscriberDest');
@@ -299,11 +306,19 @@ describe('caching destination integration tests', () => {
 
       const destinationFromService = await getDestinationFromDestinationService(
         'ERNIE-UND-CERT',
-        { useCache: true, userJwt: providerUserJwt }
+        {
+          useCache: true,
+          userJwt: providerUserJwt,
+          iasToXsuaaTokenExchange: false
+        }
       );
       const destinationFromCache = await getDestinationFromDestinationService(
         'ERNIE-UND-CERT',
-        { useCache: true, userJwt: providerUserJwt }
+        {
+          useCache: true,
+          userJwt: providerUserJwt,
+          iasToXsuaaTokenExchange: false
+        }
       );
 
       expect(destinationFromService).toEqual(
@@ -340,7 +355,8 @@ describe('caching destination integration tests', () => {
       const expected = parseDestination(oauthSingleResponse);
       const destinationFromService = await getDestination(destinationName, {
         userJwt: providerUserJwt,
-        useCache: true
+        useCache: true,
+        iasToXsuaaTokenExchange: false
       });
       expect(destinationFromService).toMatchObject(expected);
 
@@ -351,7 +367,8 @@ describe('caching destination integration tests', () => {
 
       const destinationFromCache = await getDestination(destinationName, {
         userJwt: providerUserJwt,
-        useCache: true
+        useCache: true,
+        iasToXsuaaTokenExchange: false
       });
 
       expect(destinationFromService).toEqual(
@@ -386,11 +403,16 @@ describe('caching destination integration tests', () => {
       const destinationFromFirstCall =
         await getDestinationFromDestinationService('OnPremise', {
           useCache: true,
-          userJwt: providerUserJwt
+          userJwt: providerUserJwt,
+          iasToXsuaaTokenExchange: false
         });
       const destinationFromCache = await getDestinationFromDestinationService(
         'OnPremise',
-        { useCache: true, userJwt: providerUserJwt }
+        {
+          useCache: true,
+          userJwt: providerUserJwt,
+          iasToXsuaaTokenExchange: false
+        }
       );
 
       const expected = {
@@ -438,7 +460,8 @@ describe('caching destination integration tests', () => {
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.User,
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       });
 
       expect(actual).toEqual(parsedDestination);
@@ -468,7 +491,8 @@ describe('caching destination integration tests', () => {
         useCache: true,
         isolationStrategy: IsolationStrategy.User,
         selectionStrategy: alwaysProvider,
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       });
 
       expect(actual).toEqual(parsedDestination);
@@ -503,7 +527,8 @@ describe('caching destination integration tests', () => {
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
         selectionStrategy: subscriberFirst,
-        cacheVerificationKeys: false
+        cacheVerificationKeys: false,
+        iasToXsuaaTokenExchange: false
       });
 
       expect(actual).toEqual(parsedDestination);

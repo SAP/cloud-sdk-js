@@ -17,7 +17,7 @@ $ npm install @sap-cloud-sdk/http-client
 
 ## Usage
 
-To make a request using the Generic HTTP client use the executeHttpRequest function.
+To make a request, use the executeHttpRequest function.
 
 ```
 executeHttpRequest(destination, requestConfig, httpRequestOptions);

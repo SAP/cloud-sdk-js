@@ -7,9 +7,11 @@ import {
   userApprovedServiceToken,
   wrapJwtInHeader,
   jwtBearerToken,
-  getDestinationFromDestinationService, ClientCredentialsResponse, decodeJwt
+  getDestinationFromDestinationService,
+  decodeJwt
 } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
+import * as xssec from '@sap/xssec';
 import {
   loadLocalVcap,
   readSystems,
@@ -17,8 +19,6 @@ import {
   Systems,
   UserAccessTokens
 } from './auth-flow-util';
-import * as xssec from '@sap/xssec';
-import { exchangeToken } from '@sap-cloud-sdk/core/dist/connectivity/scp-cf/identity-service';
 
 /* Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests. */
 
@@ -272,22 +272,36 @@ describe('OAuth flows', () => {
 
   it('IAS: token exchange by making an xsuaa call', async () => {
     const iasToken = accessToken.iasProvider;
-    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0].credentials
-    const token = await new Promise((resolve: (value: string) => void, reject) => {
-      xssec.requests.requestUserToken(iasToken, xsuaaConfig, null, null, null, xsuaaConfig.subaccountid,
-      (err: Error, xsuaaToken) => (err ? reject(err) : resolve(xsuaaToken))
-      )
-    });
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
+      .credentials;
+    const token = await new Promise(
+      (resolve: (value: string) => void, reject) => {
+        xssec.requests.requestUserToken(
+          iasToken,
+          xsuaaConfig,
+          null,
+          null,
+          null,
+          xsuaaConfig.subaccountid,
+          (err: Error, xsuaaToken) => (err ? reject(err) : resolve(xsuaaToken))
+        );
+      }
+    );
     const decoded = decodeJwt(token);
     expect(decoded.scope.length).toBeGreaterThan(0);
   }, 60000);
 
   it('IAS: token exchange with xssec createSecurityContext', async () => {
     const iasToken = accessToken.iasProvider;
-    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0].credentials
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
+      .credentials;
     const token = await new Promise((resolve: (p: string) => void, reject) => {
-      xssec.createSecurityContext(iasToken, xsuaaConfig,
-        (err: Error, context, tokenInfo) => (err ? reject(err) : resolve(tokenInfo.getTokenValue())));
+      xssec.createSecurityContext(
+        iasToken,
+        xsuaaConfig,
+        (err: Error, context, tokenInfo) =>
+          err ? reject(err) : resolve(tokenInfo.getTokenValue())
+      );
     });
     const decoded = decodeJwt(token);
     expect(decoded.scope.length).toBeGreaterThan(0);
@@ -295,11 +309,18 @@ describe('OAuth flows', () => {
 
   it('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const iasToken = accessToken.iasProvider;
-    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0].credentials
-    const xsuaaToken = await new Promise((resolve: (p: string) => void, reject) => {
-      xssec.createSecurityContext(iasToken, xsuaaConfig,
-        (err: Error, context, tokenInfo) => (err ? reject(err) : resolve(tokenInfo.getTokenValue())));
-    });
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
+      .credentials;
+    const xsuaaToken = await new Promise(
+      (resolve: (p: string) => void, reject) => {
+        xssec.createSecurityContext(
+          iasToken,
+          xsuaaConfig,
+          (err: Error, context, tokenInfo) =>
+            err ? reject(err) : resolve(tokenInfo.getTokenValue())
+        );
+      }
+    );
 
     const clientGrant = await serviceToken('destination', {
       userJwt: xsuaaToken

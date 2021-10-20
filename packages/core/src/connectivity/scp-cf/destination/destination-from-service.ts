@@ -18,6 +18,7 @@ import {
   DestinationServiceCredentials,
   XsuaaServiceCredentials
 } from '../environment-accessor-types';
+import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -33,7 +34,6 @@ import {
 } from './destination-service';
 import { destinationCache } from './destination-cache';
 import type { DestinationOptions } from './destination-accessor';
-import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -83,7 +83,7 @@ class DestinationFromServiceRetriever {
     name: string,
     options: DestinationOptions
   ): Promise<Destination | null> {
-    if(isTokenExchangeEnabled(options)){
+    if (isTokenExchangeEnabled(options)) {
       options.userJwt = await exchangeToken(options);
     }
 

@@ -18,7 +18,7 @@
 
 ## New Functionality
 
--
+- [core] Enable IAS token to XSUAA token exchange by default, when getting destinations from the `destination service`.
 
 ## Improvements
 

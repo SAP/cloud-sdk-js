@@ -1,4 +1,4 @@
-import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
 /**
  * Representation of the 'ExtensionApi'.
  * This API is part of the 'test-service' service.

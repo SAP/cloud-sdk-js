@@ -6,7 +6,7 @@ exports.DefaultApi = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var openapi_1 = require('@sap-cloud-sdk/openapi');
 /**
  * Representation of the 'DefaultApi'.
  * This API is part of the 'swagger-yaml-service' service.
@@ -19,10 +19,14 @@ exports.DefaultApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   postEntity: function (pathParam, queryParameters) {
-    return new core_1.OpenApiRequestBuilder('post', '/entities/{pathParam}', {
-      pathParameters: { pathParam: pathParam },
-      queryParameters: queryParameters
-    });
+    return new openapi_1.OpenApiRequestBuilder(
+      'post',
+      '/entities/{pathParam}',
+      {
+        pathParameters: { pathParam: pathParam },
+        queryParameters: queryParameters
+      }
+    );
   },
   /**
    * Create a request builder for execution of patch requests to the '/entities/{pathParam}' endpoint.
@@ -31,10 +35,14 @@ exports.DefaultApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   patchEntity: function (pathParam, body) {
-    return new core_1.OpenApiRequestBuilder('patch', '/entities/{pathParam}', {
-      pathParameters: { pathParam: pathParam },
-      body: body
-    });
+    return new openapi_1.OpenApiRequestBuilder(
+      'patch',
+      '/entities/{pathParam}',
+      {
+        pathParameters: { pathParam: pathParam },
+        body: body
+      }
+    );
   }
 };
 //# sourceMappingURL=default-api.js.map

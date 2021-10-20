@@ -1,4 +1,4 @@
-import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
 /**
  * Representation of the 'DefaultApi'.
  * This API is part of the 'no-schema-service' service.

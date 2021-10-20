@@ -13,9 +13,9 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken
-} from '../../test/test-util';
-import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
-import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
+} from '@sap-cloud-sdk/core/test/test-util';
+import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt';
+import { parseDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf/destination/destination';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {

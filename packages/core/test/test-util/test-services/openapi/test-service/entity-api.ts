@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { OpenApiRequestBuilder } from '../../../../../src';
+import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
 import type { TestEntity } from './schema';
 /**
  * Representation of the 'EntityApi'.

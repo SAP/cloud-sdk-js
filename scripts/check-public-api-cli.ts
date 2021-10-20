@@ -7,6 +7,7 @@ For a deatailed explaination what is happening here have a look at `0007-public-
 async function checkApiPackages() {
   await checkApiOfPackage(resolve(__dirname, '../packages/connectivity'));
   await checkApiOfPackage(resolve(__dirname, '../packages/http-client'));
+  await checkApiOfPackage(resolve(__dirname, '../packages/openapi'));
 }
 
 checkApiPackages();

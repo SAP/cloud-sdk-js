@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "composite": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],
+  "files": [],
+  "references": [
+    { "path": "../util" },
+    { "path": "../analytics" },
+    { "path": "../connectivity" },
+    { "path": "../http-client" }
+  ]
+}

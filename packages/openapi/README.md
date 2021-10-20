@@ -3,27 +3,21 @@
 <a href="https://sap.com/s4sdk"><img src="https://help.sap.com/doc/2324e9c3b28748a4ae2ad08166d77675/1.0/en-US/logo-with-js.svg" alt="SAP Cloud SDK for JavaScript Logo" height="122.92" width="226.773"/></a>
 <!-- sap-cloud-sdk-logo-stop -->
 
-# @sap-cloud-sdk/http-client
+# @sap-cloud-sdk/openapi
 
-This package contains the generic http-client functionality of the SAP Cloud SDK as well as the Cloud Platform abstractions.
-
-The generic http-client adds SAP infrastructure specific functionality on top of a standard HTTP Client. The client handles connectivity related issues such as destination lookup, connections to SAP S/4HANA On-premise and web proxies.
-
+This package contains the OpenAPI request builder for different types of HTTP requests.
+.
 ## Installation
 
 ```
-$ npm install @sap-cloud-sdk/http-client
+$ npm install @sap-cloud-sdk/openapi
 ```
 
 ## Usage
 
-To make a request using the Generic HTTP client use the executeHttpRequest function.
+The openapi package is not intended for direct usage.
 
-```
-executeHttpRequest(destination, requestConfig, httpRequestOptions);
-```
-
-For more detailed overview visit our [Generic HTTP Client documentation](https://sap.github.io/cloud-sdk/docs/js/features/connectivity/generic-http-client).
+For more detailed overview visit our [Execute OpenAPI request documentation](https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request).
 
 <!-- sap-cloud-sdk-common-readme -->
 <!-- This block is inserted by scripts/replace-common-readme.ts. Do not adjust it manually. -->

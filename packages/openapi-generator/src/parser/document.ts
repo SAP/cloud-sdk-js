@@ -3,8 +3,9 @@ import { OpenApiDocument, OpenApiPersistedSchema } from '../openapi-types';
 import { ServiceOptions } from '../options';
 import { parseSchema, parseSchemaProperties } from './schema';
 import { parseApis } from './api';
-import { createRefs, OpenApiDocumentRefs, parseBound } from './refs';
+import { createRefs, OpenApiDocumentRefs } from './refs';
 import { ParserOptions } from './options';
+import { parseBound } from './swagger-parser-workaround';
 
 /**
  * Parse an OpenAPI document.

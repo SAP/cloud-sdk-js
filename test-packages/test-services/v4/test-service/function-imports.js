@@ -32,8 +32,8 @@ function testFunctionImportEdmReturnType(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnType',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
-        return core_1.edmToTsV4(val.value, 'Edm.Boolean');
+      return (0, core_1.transformReturnValueForEdmTypeV4)(data, function (val) {
+        return (0, core_1.edmToTsV4)(val.value, 'Edm.Boolean');
       });
     },
     params
@@ -51,9 +51,12 @@ function testFunctionImportEdmReturnTypeCollection(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnTypeCollection',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeListV4(data, function (val) {
-        return core_1.edmToTsV4(val, 'Edm.String');
-      });
+      return (0, core_1.transformReturnValueForEdmTypeListV4)(
+        data,
+        function (val) {
+          return (0, core_1.edmToTsV4)(val, 'Edm.String');
+        }
+      );
     },
     params
   );
@@ -87,9 +90,12 @@ function testFunctionImportNullableTest(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportNullableTest',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeListV4(data, function (val) {
-        return core_1.edmToTsV4(val, 'Edm.String');
-      });
+      return (0, core_1.transformReturnValueForEdmTypeListV4)(
+        data,
+        function (val) {
+          return (0, core_1.edmToTsV4)(val, 'Edm.String');
+        }
+      );
     },
     params
   );
@@ -106,7 +112,7 @@ function testFunctionImportEntityReturnType(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType',
     function (data) {
-      return core_1.transformReturnValueForEntityV4(
+      return (0, core_1.transformReturnValueForEntityV4)(
         data,
         TestEntity_1.TestEntity
       );
@@ -126,7 +132,7 @@ function testFunctionImportEntityReturnTypeCollection(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnTypeCollection',
     function (data) {
-      return core_1.transformReturnValueForEntityListV4(
+      return (0, core_1.transformReturnValueForEntityListV4)(
         data,
         TestEntity_1.TestEntity
       );
@@ -147,7 +153,7 @@ function testFunctionImportSharedEntityReturnType(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnType',
     function (data) {
-      return core_1.throwErrorWhenReturnTypeIsUnionType(
+      return (0, core_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnType'
       );
@@ -168,7 +174,7 @@ function testFunctionImportSharedEntityReturnTypeCollection(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnTypeCollection',
     function (data) {
-      return core_1.throwErrorWhenReturnTypeIsUnionType(
+      return (0, core_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnTypeCollection'
       );
@@ -189,12 +195,15 @@ function testFunctionImportComplexReturnType(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnType',
     function (data) {
-      return core_1.transformReturnValueForComplexTypeV4(data, function (data) {
-        return core_1.deserializeComplexTypeV4(
-          data,
-          TestComplexType_1.TestComplexType
-        );
-      });
+      return (0, core_1.transformReturnValueForComplexTypeV4)(
+        data,
+        function (data) {
+          return (0, core_1.deserializeComplexTypeV4)(
+            data,
+            TestComplexType_1.TestComplexType
+          );
+        }
+      );
     },
     params
   );
@@ -212,10 +221,10 @@ function testFunctionImportComplexReturnTypeCollection(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnTypeCollection',
     function (data) {
-      return core_1.transformReturnValueForComplexTypeListV4(
+      return (0, core_1.transformReturnValueForComplexTypeListV4)(
         data,
         function (data) {
-          return core_1.deserializeComplexTypeV4(
+          return (0, core_1.deserializeComplexTypeV4)(
             data,
             TestComplexType_1.TestComplexType
           );
@@ -259,8 +268,8 @@ function testFunctionImportMultipleParams(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportMultipleParams',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
-        return core_1.edmToTsV4(val.value, 'Edm.Boolean');
+      return (0, core_1.transformReturnValueForEdmTypeV4)(data, function (val) {
+        return (0, core_1.edmToTsV4)(val.value, 'Edm.Boolean');
       });
     },
     params
@@ -278,9 +287,12 @@ function testFunctionImportWithDifferentName(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportWithDifferentName',
     function (data) {
-      return core_1.transformReturnValueForUndefinedV4(data, function (val) {
-        return undefined;
-      });
+      return (0, core_1.transformReturnValueForUndefinedV4)(
+        data,
+        function (val) {
+          return undefined;
+        }
+      );
     },
     params
   );

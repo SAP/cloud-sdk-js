@@ -29,9 +29,12 @@ function testActionImportNoParameterNoReturnType(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterNoReturnType',
     function (data) {
-      return core_1.transformReturnValueForUndefinedV4(data, function (val) {
-        return undefined;
-      });
+      return (0, core_1.transformReturnValueForUndefinedV4)(
+        data,
+        function (val) {
+          return undefined;
+        }
+      );
     },
     params
   );
@@ -71,12 +74,15 @@ function testActionImportMultipleParameterComplexReturnType(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportMultipleParameterComplexReturnType',
     function (data) {
-      return core_1.transformReturnValueForComplexTypeV4(data, function (data) {
-        return core_1.deserializeComplexTypeV4(
-          data,
-          TestComplexType_1.TestComplexType
-        );
-      });
+      return (0, core_1.transformReturnValueForComplexTypeV4)(
+        data,
+        function (data) {
+          return (0, core_1.deserializeComplexTypeV4)(
+            data,
+            TestComplexType_1.TestComplexType
+          );
+        }
+      );
     },
     params
   );
@@ -101,8 +107,8 @@ function testActionImportUnsupportedEdmTypes(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportUnsupportedEdmTypes',
     function (data) {
-      return core_1.transformReturnValueForEdmTypeV4(data, function (val) {
-        return core_1.edmToTsV4(val.value, 'Edm.Any');
+      return (0, core_1.transformReturnValueForEdmTypeV4)(data, function (val) {
+        return (0, core_1.edmToTsV4)(val.value, 'Edm.Any');
       });
     },
     params
@@ -122,7 +128,7 @@ function testActionImportNoParameterEntityReturnType(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterEntityReturnType',
     function (data) {
-      return core_1.transformReturnValueForEntityV4(
+      return (0, core_1.transformReturnValueForEntityV4)(
         data,
         TestEntity_1.TestEntity
       );
@@ -144,7 +150,7 @@ function testActionImportSharedEntityReturnType(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportSharedEntityReturnType',
     function (data) {
-      return core_1.throwErrorWhenReturnTypeIsUnionType(
+      return (0, core_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestActionImportSharedEntityReturnType'
       );
@@ -166,7 +172,7 @@ function testActionImportSharedEntityReturnTypeCollection(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportSharedEntityReturnTypeCollection',
     function (data) {
-      return core_1.throwErrorWhenReturnTypeIsUnionType(
+      return (0, core_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestActionImportSharedEntityReturnTypeCollection'
       );
@@ -204,12 +210,15 @@ function testActionImportNullableTest(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNullableTest',
     function (data) {
-      return core_1.transformReturnValueForComplexTypeV4(data, function (data) {
-        return core_1.deserializeComplexTypeV4(
-          data,
-          TestComplexType_1.TestComplexType
-        );
-      });
+      return (0, core_1.transformReturnValueForComplexTypeV4)(
+        data,
+        function (data) {
+          return (0, core_1.deserializeComplexTypeV4)(
+            data,
+            TestComplexType_1.TestComplexType
+          );
+        }
+      );
     },
     params
   );

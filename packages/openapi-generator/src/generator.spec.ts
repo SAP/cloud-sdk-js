@@ -217,13 +217,13 @@ describe('generator', () => {
       await expect(actual).resolves.toMatch(endsWithNewLine);
       await expect(actual).resolves.toMatchInlineSnapshot(`
               "{
-                \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"customName\\",
-                  \\"directoryName\\": \\"customName\\",
-                  \\"serviceName\\": \\"customName\\"
-                },
                 \\"inputDir/spec2.json\\": {
                   \\"directoryName\\": \\"customName\\"
+                },
+                \\"inputDir/spec.json\\": {
+                  \\"packageName\\": \\"spec\\",
+                  \\"directoryName\\": \\"spec\\",
+                  \\"serviceName\\": \\"spec\\"
                 },
               }
               "

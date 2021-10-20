@@ -154,7 +154,9 @@ describe('generator', () => {
           })
         },
         existingConfig:
-          '{ "inputDir/spec.json": {"directoryName": "customName" } }'
+          '{ "inputDir/spec.json": {"directoryName": "customName" } }',
+        anotherConfig:
+          '{ "inputDir/spec2.json": {"directoryName": "customName" } }'
       });
     });
 
@@ -199,6 +201,30 @@ describe('generator', () => {
                   \\"directoryName\\": \\"customName\\",
                   \\"serviceName\\": \\"customName\\"
                 }
+              }
+              "
+            `);
+    });
+
+    it('merges options per service', async () => {
+      await generate({
+        input: 'inputDir',
+        outputDir: 'out',
+        optionsPerService: 'anotherConfig'
+      });
+
+      const actual = readFile('anotherConfig', 'utf8');
+      await expect(actual).resolves.toMatch(endsWithNewLine);
+      await expect(actual).resolves.toMatchInlineSnapshot(`
+              "{
+                \\"inputDir/spec.json\\": {
+                  \\"packageName\\": \\"customName\\",
+                  \\"directoryName\\": \\"customName\\",
+                  \\"serviceName\\": \\"customName\\"
+                },
+                \\"inputDir/spec2.json\\": {
+                  \\"directoryName\\": \\"customName\\"
+                },
               }
               "
             `);

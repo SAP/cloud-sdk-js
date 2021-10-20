@@ -48,7 +48,7 @@ import {
 } from './options';
 import { sdkMetadata } from './sdk-metadata';
 
-const { readdir, rmdir, mkdir, lstat, writeFile } = promisesFs;
+const { readdir, rmdir, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
 
 /**

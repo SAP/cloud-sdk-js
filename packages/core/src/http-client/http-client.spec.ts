@@ -271,7 +271,7 @@ describe('generic http client', () => {
         messageContext: 'http-client'
       });
       const debugSpy = jest.spyOn(logger, 'debug');
-      const response = await executeHttpRequest(httpsDestination, config);
+      await executeHttpRequest(httpsDestination, config);
       expect(debugSpy)
         .toHaveBeenCalledWith(`Execute 'GET' request with target: /api/entity.
 The headers of the request are:

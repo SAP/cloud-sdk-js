@@ -7,13 +7,14 @@ import * as api from './api';
 const options = { strictNaming: true };
 describe('parseOpenApiDocument', () => {
   it('does not modify input service specification', () => {
-    const input = {
+    const input: OpenAPIV3.Document = {
       ...emptyDocument,
       paths: {
         '/entity': {
           parameters: [{ name: 'param1', in: 'query' }],
           get: {
-            parameters: [{ name: 'param2', in: 'query' }]
+            parameters: [{ name: 'param2', in: 'query' }],
+            responses: { 200: { description: 'some response description' } }
           }
         }
       }
@@ -46,7 +47,7 @@ describe('parseOpenApiDocument', () => {
       }
     };
 
-    spyOn(api, 'parseApis');
+    jest.spyOn(api, 'parseApis').mockImplementation();
 
     const parsedDocument = await parseOpenApiDocument(
       input,
@@ -114,7 +115,7 @@ describe('parseOpenApiDocument', () => {
       }
     };
 
-    spyOn(api, 'parseApis');
+    jest.spyOn(api, 'parseApis').mockImplementation();
 
     const parsedDocument = await parseOpenApiDocument(
       input,

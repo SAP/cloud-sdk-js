@@ -8,7 +8,7 @@ import {
   getXsuaaServiceCredentials,
   resolveService
 } from './environment-accessor';
-import { Service } from './environment-accessor-types';
+import { Service, XsuaaServiceCredentials } from './environment-accessor-types';
 import { ResilienceOptions } from './resilience-options';
 import { replaceSubdomain } from './subdomain-replacer';
 import { refreshTokenGrant, userTokenGrant } from './legacy/xsuaa-service';
@@ -31,6 +31,8 @@ export async function serviceToken(
   options?: CachingOptions &
     ResilienceOptions & {
       userJwt?: string | JwtPayload;
+      // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here
+      xsuaaCredentials?: XsuaaServiceCredentials;
     }
 ): Promise<string> {
   const opts = {
@@ -41,7 +43,7 @@ export async function serviceToken(
 
   service = resolveService(service);
   const serviceCredentials = service.credentials;
-  const xsuaa = multiTenantXsuaaCredentials(opts.userJwt);
+  const xsuaa = multiTenantXsuaaCredentials(options);
 
   if (opts.useCache) {
     const cachedToken = clientCredentialsTokenCache.getGrantTokenFromCache(
@@ -102,7 +104,7 @@ export async function userApprovedServiceToken(
     ...options
   };
 
-  const xsuaa = multiTenantXsuaaCredentials(userJwt);
+  const xsuaa = multiTenantXsuaaCredentials({ userJwt });
   const serviceCreds = extractClientCredentials(resolvedService.credentials);
 
   return userTokenGrant(xsuaa, userJwt, serviceCreds.username, opts)
@@ -143,12 +145,21 @@ export async function jwtBearerToken(
   return getUserToken(resolvedService, userJwt, opts);
 }
 
-function multiTenantXsuaaCredentials(userJwt?: string | JwtPayload) {
-  const xsuaa = getXsuaaServiceCredentials(userJwt);
+function multiTenantXsuaaCredentials(
+  options: {
+    userJwt?: string | JwtPayload;
+    xsuaaCredentials?: XsuaaServiceCredentials;
+  } = {}
+): XsuaaServiceCredentials {
+  const xsuaa = options.xsuaaCredentials
+    ? { ...options.xsuaaCredentials }
+    : getXsuaaServiceCredentials(options.userJwt);
 
-  if (userJwt) {
+  if (options.userJwt) {
     const decodedJwt =
-      typeof userJwt === 'string' ? decodeJwt(userJwt) : userJwt;
+      typeof options.userJwt === 'string'
+        ? decodeJwt(options.userJwt)
+        : options.userJwt;
 
     if (!decodedJwt.iss) {
       throw Error('Property `iss` is missing in the provided user token.');

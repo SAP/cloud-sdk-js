@@ -427,7 +427,6 @@ function reqHeaders(authHeader: string) {
   return {
     authorization: authHeader,
     'content-type': 'application/x-www-form-urlencoded',
-    accept: 'application/json',
-    'user-agent': 'axios/0.21.1'
+    accept: 'application/json'
   };
 }

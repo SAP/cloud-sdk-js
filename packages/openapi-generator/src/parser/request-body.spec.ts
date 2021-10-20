@@ -6,7 +6,7 @@ const defaultOptions = { strictNaming: true };
 describe('getRequestBody', () => {
   it('returns undefined for undefined', async () => {
     const logger = createLogger('openapi-generator');
-    spyOn(logger, 'warn');
+    jest.spyOn(logger, 'warn');
     expect(
       parseRequestBody(undefined, await createTestRefs(), defaultOptions)
     ).toBeUndefined();

@@ -236,6 +236,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     });
 
     it('it warns if you use iss property and user jwt', async () => {
+      mockServiceBindings();
       const logger = createLogger({
         package: 'core',
         messageContext: 'destination-accessor-service'

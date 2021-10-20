@@ -351,21 +351,6 @@ export function readPropertyWithWarn(
 }
 
 /**
- * Fetches the URL from the JWT header which exposes the verification key for that JWT.
- * @param token - Encoded JWT as a string.
- * @returns The value of the `jku` property of the JWT header.
- */
-function getVerificationKeyUrl(token: string): string {
-  const decodedJwt = decodeJwtComplete(token);
-  if (!decodedJwt.header.jku || !decodedJwt.header.kid) {
-    throw new Error(
-      'JWT does not contain verification key URL (`jku`) and/or key ID (`kid`).'
-    );
-  }
-  return decodedJwt.header.jku;
-}
-
-/**
  * @deprecated Since v1.46.0. This interface will not be replaced. Use the higher level JWT types directly.
  * Interface to represent the registered claims of a JWT.
  */

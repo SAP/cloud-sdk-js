@@ -59,5 +59,5 @@ function getOrderByExpressionForOrder<OrderByEntityT extends Entity>(
   return [
     [...parentFieldNames, orderBy._fieldName].join('/'),
     orderBy.orderType
-  ].join(' ');
+  ].join(encodeURIComponent(' '));
 }

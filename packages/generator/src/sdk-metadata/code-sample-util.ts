@@ -1,4 +1,4 @@
-import levenstein from 'fast-levenshtein';
+import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common';
 import {
   VdmActionImport,
   VdmEntity,
@@ -6,31 +6,17 @@ import {
   VdmParameter
 } from '../vdm-types';
 
-const distanceThreshold = 5;
-
 export function getODataEntity(
   serviceName: string,
   vdmEntities: VdmEntity[]
 ): VdmEntity {
-  let closestEntity: VdmEntity | undefined;
-  let minDistance = distanceThreshold;
+  return (
+    getLevenshteinClosest(serviceName, vdmEntities, x => x.className) ||
+    getShortestNameEntity(vdmEntities)
+  );
+}
 
-  // remove special char from service name
-  const serviceNameFormatted = getWordWithoutSpecialChars(serviceName);
-  vdmEntities.forEach(entity => {
-    const distance = getLevensteinDistance(
-      serviceNameFormatted,
-      getWordWithoutSpecialChars(entity.className)
-    );
-    if (distance <= minDistance) {
-      minDistance = distance;
-      closestEntity = entity;
-    }
-  });
-
-  if (closestEntity) {
-    return closestEntity!;
-  }
+export function getShortestNameEntity(vdmEntities: VdmEntity[]): VdmEntity {
   // If no closest entity found, return the entity with shortest name
   return vdmEntities.sort((a, b) =>
     a.className.length < b.className.length ? -1 : 1
@@ -46,37 +32,10 @@ export function getActionFunctionImport(
   }
 
   return (
-    getLevensteinClosestFunction(serviceName, actionFunctionImports) ||
+    getLevenshteinClosest(serviceName, actionFunctionImports, x => x.name) ||
     getFunctionWithoutParameters(actionFunctionImports) ||
     getFunctionWithMinParameters(actionFunctionImports)
   );
-}
-
-/**
- * Gets function having minimum Levenstein distance with the service name. Returns undefined if distance is greater than threshhold.
- * @param serviceName - Name of service
- * @param actionFunctionImports - function or action imports array
- * @returns Import with least levenshtein dist or undefined if no matching import found
- * @hidden
- */
-export function getLevensteinClosestFunction(
-  serviceName: string,
-  actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
-): VdmFunctionImport | VdmActionImport | undefined {
-  let closestFunc: VdmFunctionImport | VdmActionImport | undefined;
-  let minDistance = distanceThreshold;
-  actionFunctionImports.forEach(func => {
-    const distance = getLevensteinDistance(
-      getWordWithoutSpecialChars(serviceName),
-      getWordWithoutSpecialChars(func.name)
-    );
-    if (distance <= minDistance) {
-      minDistance = distance;
-      closestFunc = func;
-    }
-  });
-
-  return closestFunc;
 }
 
 export function getFunctionWithoutParameters(
@@ -107,29 +66,14 @@ export function getFunctionWithMinParameters(
 }
 
 export function getActionFunctionParams(parameters: VdmParameter[]): string {
-  const paramString = Object.entries(parameters || [])
+  const paramString = parameters
     .slice(0, 2)
     .reduce(
       (cumulator, currentParam) =>
-        `${cumulator}, ${currentParam[1].parameterName}: '${currentParam[1].parameterName}'`,
+        `${cumulator}, ${currentParam.parameterName}: '${currentParam.parameterName}'`,
       ''
     );
   return `{${paramString.substring(1)}${
     parameters.length > 2 ? ', ...' : ''
   } }`;
-}
-
-/**
- * Calculate levenshtein distance of the two strings.
- * @param stringA - The first string.
- * @param stringB - The second string.
- * @returns The levenshtein distance (0 and above).
- * @hidden
- */
-function getLevensteinDistance(stringA: string, stringB: string): number {
-  return levenstein.get(stringA.toLowerCase(), stringB.toLowerCase());
-}
-
-function getWordWithoutSpecialChars(text: string): string {
-  return text.replace('_', '');
 }

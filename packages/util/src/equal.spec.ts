@@ -12,6 +12,7 @@ describe('equal', () => {
       expect(equal(1, 2)).toBe(false);
       expect(equal(undefined, null)).toBe(false);
       expect(equal(null, '')).toBe(false);
+      expect(equal(null, { a: 'a', b: 'b' })).toBe(false);
       expect(equal('1', 1 as any)).toBe(false);
     });
 

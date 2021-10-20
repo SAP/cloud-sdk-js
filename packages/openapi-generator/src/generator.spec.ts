@@ -173,16 +173,15 @@ describe('generator', () => {
 
       const actual = readFile('options.json', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatchInlineSnapshot(`
-              "{
-                \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"spec\\",
-                  \\"directoryName\\": \\"spec\\",
-                  \\"serviceName\\": \\"spec\\"
-                }
-              }
-              "
-            `);
+      await expect(actual).resolves.toMatch(
+        JSON.stringify({
+          'inputDir/spec.json': {
+            packageName: 'spec',
+            directoryName: 'spec',
+            serviceName: 'spec'
+          }
+        })
+      );
     });
 
     it('overwrites writes options per service', async () => {
@@ -194,16 +193,15 @@ describe('generator', () => {
 
       const actual = readFile('existingConfig', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatchInlineSnapshot(`
-              "{
-                \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"customName\\",
-                  \\"directoryName\\": \\"customName\\",
-                  \\"serviceName\\": \\"customName\\"
-                }
-              }
-              "
-            `);
+      await expect(actual).resolves.toMatch(
+        JSON.stringify({
+          'inputDir/spec.json': {
+            packageName: 'customName',
+            directoryName: 'customName',
+            serviceName: 'customName'
+          }
+        })
+      );
     });
 
     it('merges options per service', async () => {
@@ -215,19 +213,22 @@ describe('generator', () => {
 
       const actual = readFile('anotherConfig', 'utf8');
       await expect(actual).resolves.toMatch(endsWithNewLine);
-      await expect(actual).resolves.toMatchInlineSnapshot(`
-              "{
-                \\"inputDir/spec2.json\\": {
-                  \\"directoryName\\": \\"customName\\"
-                },
-                \\"inputDir/spec.json\\": {
-                  \\"packageName\\": \\"spec\\",
-                  \\"directoryName\\": \\"spec\\",
-                  \\"serviceName\\": \\"spec\\"
-                }
-              }
-              "
-            `);
+      await expect(actual).resolves.toMatch(
+        JSON.stringify(
+          {
+            'inputDir/spec2.json': {
+              directoryName: 'customName'
+            },
+            'inputDir/spec.json': {
+              packageName: 'spec',
+              directoryName: 'spec',
+              serviceName: 'spec'
+            }
+          },
+          null,
+          2
+        )
+      );
     });
   });
 

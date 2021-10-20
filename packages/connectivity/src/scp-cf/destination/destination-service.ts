@@ -247,12 +247,12 @@ function callDestinationService(
 function getCircuitBreaker(): DestinationCircuitBreaker<
   DestinationJson | DestinationConfiguration
 > {
-  const typed: (
+  const request: (
     config: AxiosRequestConfig
   ) => Promise<AxiosResponse<DestinationJson | DestinationConfiguration>> =
     axios.request;
   if (!circuitBreaker) {
-    circuitBreaker = new CircuitBreaker(typed, circuitBreakerDefaultOptions);
+    circuitBreaker = new CircuitBreaker(request, circuitBreakerDefaultOptions);
   }
   return circuitBreaker;
 }

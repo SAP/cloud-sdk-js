@@ -76,7 +76,7 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(subscriberJwtBearerToken).headers!
+          wrapJwtInHeader(subscriberJwtBearerToken).headers
         )
       ];
 
@@ -107,7 +107,7 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(providerJwtBearerToken).headers!
+          wrapJwtInHeader(providerJwtBearerToken).headers
         )
       ];
 
@@ -144,7 +144,7 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(providerServiceToken).headers!
+          wrapJwtInHeader(providerServiceToken).headers
         )
       ];
 
@@ -179,7 +179,7 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(subscriberServiceToken).headers!
+          wrapJwtInHeader(subscriberServiceToken).headers
         )
       ];
 
@@ -213,7 +213,7 @@ describe('authentication types', () => {
           oauthClientCredentialsSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(subscriberServiceToken).headers!
+          wrapJwtInHeader(subscriberServiceToken).headers
         )
       ];
 
@@ -244,7 +244,7 @@ describe('authentication types', () => {
           oauthClientCredentialsSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(providerServiceToken).headers!
+          wrapJwtInHeader(providerServiceToken).headers
         )
       ];
 
@@ -275,7 +275,7 @@ describe('authentication types', () => {
           oauthUserTokenExchangeSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(providerJwtBearerToken).headers!
+          wrapJwtInHeader(providerJwtBearerToken).headers
         )
       ];
 
@@ -307,7 +307,7 @@ describe('authentication types', () => {
           200,
           destinationName,
           {
-            ...wrapJwtInHeader(providerServiceToken).headers!,
+            ...wrapJwtInHeader(providerServiceToken).headers,
             'X-user-token': subscriberUserJwt
           }
         )
@@ -342,7 +342,7 @@ describe('authentication types', () => {
           200,
           destinationName,
           {
-            ...wrapJwtInHeader(subscriberServiceToken).headers!,
+            ...wrapJwtInHeader(subscriberServiceToken).headers,
             'X-user-token': subscriberUserJwt
           }
         )
@@ -378,7 +378,7 @@ describe('authentication types', () => {
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
-          wrapJwtInHeader(subscriberServiceToken).headers!
+          wrapJwtInHeader(subscriberServiceToken).headers
         )
       ];
 
@@ -411,7 +411,7 @@ describe('authentication types', () => {
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
-          wrapJwtInHeader(providerServiceToken).headers!
+          wrapJwtInHeader(providerServiceToken).headers
         )
       ];
 
@@ -447,7 +447,7 @@ describe('authentication types', () => {
         onPremiseBasicSingleResponse,
         200,
         destinationName,
-        wrapJwtInHeader(subscriberServiceToken).headers!
+        wrapJwtInHeader(subscriberServiceToken).headers
       );
 
       const actual = await getDestination('OnPremise', {
@@ -589,7 +589,7 @@ describe('authentication types', () => {
           oauthPasswordSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(providerServiceToken).headers!
+          wrapJwtInHeader(providerServiceToken).headers
         )
       ];
 

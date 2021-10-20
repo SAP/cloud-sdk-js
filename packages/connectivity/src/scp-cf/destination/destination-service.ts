@@ -99,7 +99,7 @@ async function fetchDestinations(
     }
   }
 
-  const headers = wrapJwtInHeader(jwt).headers || {};
+  const headers = wrapJwtInHeader(jwt).headers;
 
   return callDestinationService(targetUri, headers, options)
     .then(response => {
@@ -187,7 +187,7 @@ async function fetchDestinationByTokens(
       return destinationsFromCache[0];
     }
   }
-  let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers || {};
+  let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
   authHeader = tokens.exchangeHeaderJwt
     ? { ...authHeader, 'X-user-token': tokens.exchangeHeaderJwt }
     : authHeader;
@@ -238,7 +238,6 @@ function callDestinationService(
   };
 
   if (options.enableCircuitBreaker) {
-    const typeVar: DestinationJson | DestinationConfiguration = {} as any;
     return getCircuitBreaker().fire(config);
   }
 

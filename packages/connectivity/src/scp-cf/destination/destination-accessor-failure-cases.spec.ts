@@ -128,7 +128,7 @@ describe('Failure cases', () => {
         },
         401,
         destinationName,
-        wrapJwtInHeader(subscriberJwtBearerToken).headers!
+        wrapJwtInHeader(subscriberJwtBearerToken).headers
       )
     ];
 

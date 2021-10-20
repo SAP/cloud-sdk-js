@@ -288,7 +288,7 @@ describe('caching destination integration tests', () => {
           certificateSingleResponse,
           200,
           'ERNIE-UND-CERT',
-          wrapJwtInHeader(providerServiceToken).headers!
+          wrapJwtInHeader(providerServiceToken).headers
         )
       ];
 
@@ -333,7 +333,7 @@ describe('caching destination integration tests', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(providerJwtBearerToken).headers!
+          wrapJwtInHeader(providerJwtBearerToken).headers
         )
       ];
 

@@ -263,7 +263,7 @@ describe('generator', () => {
         })
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
               "Could not generate client. Errors: [
-              	ErrorWithCause: Could not write file. File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
+              	ErrorWithCause: Could not write file \\"test.ts\\". File already exists. If you want to allow overwriting files, enable the \`overwrite\` flag.
               ]"
             `);
     });

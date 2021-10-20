@@ -42,6 +42,7 @@ import {
   ServiceOptions,
   OptionsPerService,
   getOptionsPerService,
+  getOriginalOptionsPerService,
   ParsedGeneratorOptions,
   GeneratorOptions
 } from './options';
@@ -386,7 +387,10 @@ async function generateOptionsPerService(
   await createFile(
     dir,
     basename(filePath),
-    formatJson(optionsPerService),
+    formatJson({
+      ...(await getOriginalOptionsPerService(filePath)),
+      ...optionsPerService
+    }),
     true,
     false
   );

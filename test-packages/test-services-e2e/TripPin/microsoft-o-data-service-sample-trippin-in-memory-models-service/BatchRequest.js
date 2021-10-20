@@ -19,7 +19,7 @@ function batch(first) {
   }
   return new core_1.ODataBatchRequestBuilderV4(
     exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath,
-    util_1.variadicArgumentToArray(first, rest),
+    (0, util_1.variadicArgumentToArray)(first, rest),
     map
   );
 }
@@ -30,7 +30,7 @@ function changeset(first) {
     rest[_i - 1] = arguments[_i];
   }
   return new core_1.ODataBatchChangeSetV4(
-    util_1.variadicArgumentToArray(first, rest)
+    (0, util_1.variadicArgumentToArray)(first, rest)
   );
 }
 exports.changeset = changeset;

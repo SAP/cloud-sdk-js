@@ -19,9 +19,12 @@ function resetDataSource(parameters) {
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
     'ResetDataSource',
     function (data) {
-      return core_1.transformReturnValueForUndefinedV4(data, function (val) {
-        return undefined;
-      });
+      return (0, core_1.transformReturnValueForUndefinedV4)(
+        data,
+        function (val) {
+          return undefined;
+        }
+      );
     },
     params
   );

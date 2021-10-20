@@ -99,3 +99,5 @@ const providerJwtTokenPayload = {
 export const providerJwtBearerToken = signedJwt(providerJwtTokenPayload);
 
 export const subscriberJwtBearerToken = signedJwt(subscriberJwtTokenPayload);
+
+export const iasToken = signedJwt(providerJwtTokenPayload);

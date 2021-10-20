@@ -77,7 +77,7 @@ function executeFetchVerificationKeys(url: string): Promise<TokenKey[]> {
   };
 
   return axios
-    .request(config)
+    .request<{ keys: Record<string, any> }>(config)
     .then(resp => resp.data.keys.map(k => renameKeys(tokenKeyKeyMapping, k)))
     .catch(error => {
       throw new ErrorWithCause(

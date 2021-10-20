@@ -107,7 +107,7 @@ export async function generateWithParsedOptions(
 
     if (!options.packageJson) {
       logger.info(
-        "Finished generation. Don't forget to add @sap-cloud-sdk/core to your dependencies."
+        "Finished generation. Don't forget to add @sap-cloud-sdk/openapi to your dependencies."
       );
     }
   }

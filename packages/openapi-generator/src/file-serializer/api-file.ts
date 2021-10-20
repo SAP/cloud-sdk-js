@@ -63,7 +63,7 @@ function getImports(api: OpenApiApi): Import[] {
   };
   const coreImports = {
     names: ['OpenApiRequestBuilder'],
-    moduleIdentifier: '@sap-cloud-sdk/core'
+    moduleIdentifier: '@sap-cloud-sdk/openapi'
   };
 
   return [coreImports, refImports];

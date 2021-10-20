@@ -15,8 +15,9 @@
   "workspaces": [
     "packages/analytics",
     "packages/connectivity",
-    "packages/core",
     "packages/http-client",
+    "packages/openapi",
+    "packages/core",
     "packages/eslint-config",
     "packages/generator",
     "packages/test-util",

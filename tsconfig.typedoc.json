@@ -6,6 +6,7 @@
     "./packages/core/**/*",
     "./packages/connectivity/**/*",
     "./packages/http-client/**/*",
+    "./packages/openapi/**/*",
     "./packages/generator/**/*",
     "./packages/openapi-generator/**/*",
     "./packages/test-util/**/*"
@@ -28,6 +29,9 @@
       "path": "./packages/http-client"
     },
     {
+      "path": "./packages/openapi"
+    },
+    {
       "path": "./packages/generator"
     },
     {
@@ -45,6 +49,7 @@
       "packages/core/src/index.ts",
       "packages/connectivity/src/index.ts",
       "packages/http-client/src/index.ts",
+      "packages/openapi/src/index.ts",
       "packages/generator/src/index.ts",
       "packages/openapi-generator/src/index.ts",
       "packages/test-util/src/index.ts"

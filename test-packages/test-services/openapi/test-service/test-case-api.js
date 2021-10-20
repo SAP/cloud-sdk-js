@@ -6,7 +6,7 @@ exports.TestCaseApi = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var openapi_1 = require('@sap-cloud-sdk/openapi');
 /**
  * Representation of the 'TestCaseApi'.
  * This API is part of the 'test-service' service.
@@ -24,7 +24,7 @@ exports.TestCaseApi = {
     body,
     queryParameters
   ) {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'get',
       '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}',
       {
@@ -48,7 +48,7 @@ exports.TestCaseApi = {
     body,
     queryParameters
   ) {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'post',
       '/test-cases/parameters/required-parameters/{requiredPathItemPathParam}',
       {
@@ -67,7 +67,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   testCaseGetDuplicateParameters: function (duplicateParam, queryParameters) {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'get',
       '/test-cases/parameters/{duplicateParam}',
       {
@@ -81,7 +81,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId: function () {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'get',
       '/test-cases/duplicate-operation-ids'
     );
@@ -91,7 +91,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId1_1: function () {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'put',
       '/test-cases/duplicate-operation-ids'
     );
@@ -101,7 +101,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId_1: function () {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'post',
       '/test-cases/duplicate-operation-ids'
     );
@@ -111,7 +111,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   duplicateOperationId1: function () {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'patch',
       '/test-cases/duplicate-operation-ids'
     );
@@ -123,7 +123,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   export: function (const1, queryParameters) {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'get',
       '/test-cases/reserved-keywords/{const1}',
       {
@@ -138,7 +138,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   complexSchemas: function (body) {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'get',
       '/test-cases/complex-schemas',
       {
@@ -152,7 +152,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   useNameWithSymbols: function (body) {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'post',
       '/test-cases/complex-schemas',
       {
@@ -166,7 +166,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   schemaNameInteger: function (body) {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'get',
       '/test-cases/schema-name-integer',
       {
@@ -179,7 +179,7 @@ exports.TestCaseApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   getTestCasesNoOperationId: function () {
-    return new core_1.OpenApiRequestBuilder(
+    return new openapi_1.OpenApiRequestBuilder(
       'get',
       '/test-cases/no-operation-id'
     );

@@ -1,4 +1,4 @@
-import { OpenApiRequestBuilder } from '@sap-cloud-sdk/core';
+import { OpenApiRequestBuilder } from '@sap-cloud-sdk/openapi';
 import type { TestEntity } from './schema';
 /**
  * Representation of the 'DefaultApi'.

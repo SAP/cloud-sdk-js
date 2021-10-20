@@ -6,7 +6,7 @@ exports.DefaultApi = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var openapi_1 = require('@sap-cloud-sdk/openapi');
 /**
  * Representation of the 'DefaultApi'.
  * This API is part of the 'test-service' service.
@@ -17,14 +17,20 @@ exports.DefaultApi = {
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   noTag: function () {
-    return new core_1.OpenApiRequestBuilder('get', '/test-cases/default-tag');
+    return new openapi_1.OpenApiRequestBuilder(
+      'get',
+      '/test-cases/default-tag'
+    );
   },
   /**
    * Create a request builder for execution of post requests to the '/test-cases/default-tag' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
   defaultTag: function () {
-    return new core_1.OpenApiRequestBuilder('post', '/test-cases/default-tag');
+    return new openapi_1.OpenApiRequestBuilder(
+      'post',
+      '/test-cases/default-tag'
+    );
   }
 };
 //# sourceMappingURL=default-api.js.map

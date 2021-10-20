@@ -3,7 +3,6 @@ const cds = require('@sap/cds');
 
 module.exports = async srv => {
   const db = await cds.connect.to('db');
-
   const { TestEntity } = db.entities;
   // bound function
   srv.on('getStringProperty', 'TestEntity', async oRequest => {

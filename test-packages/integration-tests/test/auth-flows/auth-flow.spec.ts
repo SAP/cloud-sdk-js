@@ -139,7 +139,7 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
+  xit('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const clientGrant = await serviceToken('destination', {
       userJwt: accessToken.provider
     });
@@ -270,7 +270,7 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('IAS: token exchange by making an xsuaa call', async () => {
+  xit('IAS: token exchange by making an xsuaa call', async () => {
     const iasToken = accessToken.iasProvider;
     const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
       .credentials;
@@ -291,7 +291,7 @@ describe('OAuth flows', () => {
     expect(decoded.scope.length).toBeGreaterThan(0);
   }, 60000);
 
-  it('IAS: token exchange with xssec createSecurityContext', async () => {
+  xit('IAS: token exchange with xssec createSecurityContext', async () => {
     const iasToken = accessToken.iasProvider;
     const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
       .credentials;
@@ -307,7 +307,7 @@ describe('OAuth flows', () => {
     expect(decoded.scope.length).toBeGreaterThan(0);
   }, 60000);
 
-  it('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
+  xit('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const iasToken = accessToken.iasProvider;
     const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
       .credentials;

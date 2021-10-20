@@ -7,7 +7,7 @@ import {
   userApprovedServiceToken,
   wrapJwtInHeader,
   jwtBearerToken,
-  getDestinationFromDestinationService, ClientCredentialsResponse
+  getDestinationFromDestinationService, ClientCredentialsResponse, decodeJwt
 } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import {
@@ -269,34 +269,28 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  it('ias token to xsuaa token exchange', async () => {
+  it('IAS token exchange by making an xsuaa call', async () => {
     const iasToken = accessToken.iasProvider;
     const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0].credentials
-    const token = await new Promise((resolve, reject) => {
-      xssec.requests.requestUserToken(iasToken, xsuaaConfig, null, null, null, xsuaaConfig.subaccountid, function(err, xsuaaToken, json) {
-        if(err) {
-          console.log(err);
-        } else {
-          resolve(xsuaaToken);
-        }
-      })
+    const token = await new Promise((resolve: (value: string) => void, reject) => {
+      xssec.requests.requestUserToken(iasToken, xsuaaConfig, null, null, null, xsuaaConfig.subaccountid,
+      (err: Error, xsuaaToken) => (err ? reject(err) : resolve(xsuaaToken))
+      )
     });
     console.log(token);
+    const decoded = decodeJwt(token);
+    expect(decoded.scope.length).toBeGreaterThan(0);
   }, 60000);
 
-  it('xssec context', async () => {
+  it('IAS token exchange with xssec createSecurityContext', async () => {
     const iasToken = accessToken.iasProvider;
     const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0].credentials
-    const token = await new Promise((resolve: (p: any) => void, reject) => {
-      xssec.createSecurityContext(iasToken, xsuaaConfig, function(error, securityContext, tokenInfo) {
-        if (error) {
-          console.log('Security Context creation failed');
-          return;
-        }
-        console.log('Security Context created successfully');
-        resolve(tokenInfo.getTokenValue());
-      });
+    const token = await new Promise((resolve: (p: string) => void, reject) => {
+      xssec.createSecurityContext(iasToken, xsuaaConfig,
+        (err: Error, context, tokenInfo) => (err ? reject(err) : resolve(tokenInfo.getTokenValue())));
     });
     console.log(token);
+    const decoded = decodeJwt(token);
+    expect(decoded.scope.length).toBeGreaterThan(0);
   }, 60000);
 });

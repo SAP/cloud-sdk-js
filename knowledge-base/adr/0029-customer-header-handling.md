@@ -54,9 +54,9 @@ Both contain a single `header` property typed `Record<string,any>` or `Record<st
   If provided as string we set to highest prio origin.
 - **Option B**: Add a property `headerSDK` and `headerProperties` to hold different headers.
 
-## Non Breaking
+## Breaking Changes
 
-To do this non breaking restricts the things you can do:
+We investigate the risk of breaking changes:
 
 - Changing the type of the `header` property from `string|any` to something more structured i.e. `string|HeaderValueObject` is possible (Option A).
 - Extending the interface with new properties is possible - the custom ones remain where they are (Option B).

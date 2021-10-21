@@ -4,13 +4,13 @@ import {
   BooleanFilterFunction,
   NumberFilterFunction,
   StringFilterFunction
-} from '../odata-common/filter';
+} from '@sap-cloud-sdk/odata-common';
 import {
   FilterFunctionReturnType as FilterFunctionReturnTypeBase,
   createFilterFunction,
   numberReturnTypeMapping
-} from '../odata-common/filter/filter-function';
-import { CollectionFilterFunction } from '../odata-common/filter/collection-filter-function';
+} from '@sap-cloud-sdk/odata-common';
+import { CollectionFilterFunction } from '@sap-cloud-sdk/odata-common';
 import { Entity } from './entity';
 import { DateFilterFunction } from './filter/date-filter-function';
 

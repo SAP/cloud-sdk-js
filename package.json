@@ -18,6 +18,7 @@
     "packages/http-client",
     "packages/openapi",
     "packages/core",
+    "packages/odata-common",
     "packages/eslint-config",
     "packages/generator",
     "packages/test-util",

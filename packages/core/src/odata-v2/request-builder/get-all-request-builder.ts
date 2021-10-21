@@ -6,7 +6,7 @@ import {
   GetAllRequestBuilder as GetAllRequestBuilderBase,
   and,
   ODataGetAllRequestConfig
-} from '../../odata-common';
+} from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
 import { oDataUri } from '../uri-conversion';

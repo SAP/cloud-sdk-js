@@ -4,10 +4,10 @@ import {
   DestinationNameAndJwt,
   DestinationOptions
 } from '@sap-cloud-sdk/connectivity';
-import { BatchResponse } from '../odata-common';
-import { parseBatchResponse } from '../odata-common/request-builder/batch/batch-response-parser';
-import { BatchRequestBuilder } from '../odata-common/request-builder/batch/batch-request-builder';
-import { deserializeBatchResponse } from '../odata-common/request-builder/batch/batch-response-deserializer';
+import { BatchResponse } from '@sap-cloud-sdk/odata-common';
+import { parseBatchResponse } from '@sap-cloud-sdk/odata-common';
+import { BatchRequestBuilder } from '@sap-cloud-sdk/odata-common';
+import { deserializeBatchResponse } from '@sap-cloud-sdk/odata-common';
 import { responseDataAccessor } from './request-builder/response-data-accessor';
 import { entityDeserializer } from './entity-deserializer';
 

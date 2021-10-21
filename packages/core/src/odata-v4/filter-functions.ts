@@ -7,9 +7,9 @@ import {
   FilterFunctionPrimitiveParameterType,
   FieldType,
   CollectionField
-} from '../odata-common';
-import { CollectionFilterFunction } from '../odata-common/filter/collection-filter-function';
-import { filterFunctions as filterFunctionsCommon } from '../odata-common/filter/filter-functions';
+} from '@sap-cloud-sdk/odata-common';
+import { CollectionFilterFunction } from '@sap-cloud-sdk/odata-common';
+import { filterFunctions as filterFunctionsCommon } from '@sap-cloud-sdk/odata-common';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
 

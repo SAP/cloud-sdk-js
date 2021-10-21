@@ -1,5 +1,5 @@
 import { Entity } from '../entity';
-import { Selectable } from '../../odata-common';
+import { Selectable } from '@sap-cloud-sdk/odata-common';
 
 /**
  * Get an object containing the given Selectables as query parameter, or an empty object if none were given.

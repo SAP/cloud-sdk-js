@@ -3,7 +3,7 @@ import {
   Entity as EntityBase,
   FilterFunctionParameterType,
   OrderableFilterFunction
-} from '../../odata-common';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * Representation of a filter function, that returns a value of type date. This supports DateTimeOffset values.

@@ -1,4 +1,4 @@
-import { asc, desc } from '../../odata-common/order';
+import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import {
   TestEntity,
   TestEntitySingleLink

@@ -1,10 +1,12 @@
 import {
   entityDeserializer as entityDeserializerBase,
   EntityDeserializer
-} from '../odata-common/entity-deserializer';
-import { edmToTs } from './payload-value-converter';
+} from '@sap-cloud-sdk/odata-common';
+import {EdmToPrimitiveV2, edmToTs} from './payload-value-converter';
 import { extractODataEtag } from './extract-odata-etag';
 import { getLinkedCollectionResult } from './request-builder/response-data-accessor';
+import {EdmTypeShared} from "@sap-cloud-sdk/odata-common/dist";
+import {EdmTypeV2} from "./edm-types";
 
 /**
  * Entity deserializer instance for v2 entities.
@@ -24,3 +26,8 @@ export {
   deserializeComplexType as deserializeComplexTypeV2,
   entityDeserializer as entityDeserializerV2
 };
+
+type EdmToTsTypeV2<EdmT extends EdmTypeV2 = any> = (
+    value: any,
+    edmType: EdmTypeShared<'v2'>
+) => EdmToPrimitiveV2<EdmT>;

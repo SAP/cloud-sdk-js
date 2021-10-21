@@ -1,4 +1,4 @@
-import { ODataRequestConfig } from '../../odata-common';
+import { ODataRequestConfig } from '@sap-cloud-sdk/odata-common';
 import {
   ActionImportParameters,
   ActionImportParameter

@@ -1,4 +1,4 @@
-import { FunctionImportParameter } from '../../odata-common/request';
+import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common';
 import { oDataUri } from '../uri-conversion';
 import { ODataFunctionImportRequestConfig } from './odata-function-import-request-config';
 

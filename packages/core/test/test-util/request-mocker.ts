@@ -12,7 +12,7 @@ import {
   ODataGetAllRequestConfig,
   ODataRequest,
   ODataUpdateRequestConfig
-} from '../../src/odata-common';
+} from '@sap-cloud-sdk/odata-common';
 import { oDataUriV4 } from '../../src/odata-v4';
 import { basicHeader } from '../../../connectivity/src/scp-cf/authorization-header';
 import { TestEntity } from './test-services/v2/test-service/TestEntity';

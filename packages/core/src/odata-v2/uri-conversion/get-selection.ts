@@ -1,5 +1,5 @@
 import { Entity } from '../entity';
-import { Selectable } from '../../odata-common';
+import { Selectable } from '@sap-cloud-sdk/odata-common';
 import { getSelect } from './get-select';
 import { getExpand } from './get-expand';
 

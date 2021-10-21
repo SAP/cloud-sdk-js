@@ -2,7 +2,7 @@ import {
   Constructable,
   CreateRequestBuilder as CreateRequestBuilderBase,
   EntityIdentifiable
-} from '../../odata-common';
+} from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { oDataUri } from '../uri-conversion';
 import { entitySerializer } from '../entity-serializer';

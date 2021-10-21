@@ -1,5 +1,5 @@
 import { Entity } from '../entity';
-import { Constructable, Filterable } from '../../odata-common';
+import { Constructable, Filterable } from '@sap-cloud-sdk/odata-common';
 import { oDataUri } from './odata-uri';
 
 /**

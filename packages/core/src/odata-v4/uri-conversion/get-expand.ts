@@ -8,7 +8,7 @@ import {
   and,
   createGetFilter,
   getOrderBy
-} from '../../odata-common';
+} from '@sap-cloud-sdk/odata-common';
 import { getSelect } from './get-select';
 import { uriConverter } from './uri-value-converter';
 

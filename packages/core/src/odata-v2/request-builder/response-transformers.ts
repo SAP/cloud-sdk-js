@@ -1,6 +1,6 @@
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
-import { Constructable } from '../../odata-common';
+import { Constructable } from '@sap-cloud-sdk/odata-common';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
 
 /* eslint-disable valid-jsdoc */

@@ -1,7 +1,7 @@
 import {
   EntitySerializer,
   entitySerializer as entitySerializerBase
-} from '../odata-common/entity-serializer';
+} from '@sap-cloud-sdk/odata-common';
 import { tsToEdm } from './payload-value-converter';
 
 /**

@@ -1,8 +1,8 @@
 import {
   serializeChangeSet,
   serializeRequest
-} from '../odata-common/request-builder/batch/batch-request-serializer';
-import { BatchChangeSet } from '../odata-common/request-builder/batch/batch-change-set';
+} from '@sap-cloud-sdk/odata-common';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
 import { Entity } from './entity';
 import {
   CreateRequestBuilder,

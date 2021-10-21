@@ -9,7 +9,7 @@ import {
   deserializeBatchResponse,
   BatchResponse,
   parseBatchResponse
-} from '../../odata-common';
+} from '@sap-cloud-sdk/odata-common';
 import { entityDeserializer } from '../entity-deserializer';
 import { responseDataAccessor } from './response-data-accessor';
 

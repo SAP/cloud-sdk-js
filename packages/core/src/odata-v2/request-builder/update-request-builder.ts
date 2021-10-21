@@ -13,7 +13,7 @@ import {
   UpdateRequestBuilder as UpdateRequestBuilderBase,
   isNavigationProperty,
   removePropertyOnCondition
-} from '../../odata-common';
+} from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { oDataUri } from '../uri-conversion';

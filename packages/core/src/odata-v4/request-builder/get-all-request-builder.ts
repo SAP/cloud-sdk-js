@@ -10,7 +10,7 @@ import {
   Expandable,
   GetAllRequestBuilder as GetAllRequestBuilderBase,
   toFilterableList
-} from '../../odata-common';
+} from '@sap-cloud-sdk/odata-common';
 import { oDataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 export class GetAllRequestBuilder<EntityT extends Entity>

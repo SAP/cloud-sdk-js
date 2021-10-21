@@ -1,4 +1,4 @@
-import { ODataBatchRequestConfig } from '../../odata-common';
+import { ODataBatchRequestConfig } from '@sap-cloud-sdk/odata-common';
 
 export class ODataBatchConfig extends ODataBatchRequestConfig {
   /**

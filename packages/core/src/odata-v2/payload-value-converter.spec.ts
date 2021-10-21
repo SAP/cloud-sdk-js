@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { fromEdmToNumber, fromNumberToEdm } from '../odata-common';
+import { fromEdmToNumber, fromNumberToEdm } from '@sap-cloud-sdk/odata-common';
 import {
   edmDateTimeToMoment,
   edmToTs,

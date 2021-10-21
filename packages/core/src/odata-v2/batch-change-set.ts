@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { BatchChangeSet } from '../odata-common/request-builder/batch/batch-change-set';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
 import { Entity } from './entity';
 import {
   CreateRequestBuilder,

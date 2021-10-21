@@ -3,7 +3,7 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '../../test/test-util/test-services/v2/test-service';
-import { extractCustomFields } from '../odata-common';
+import { extractCustomFields } from '@sap-cloud-sdk/odata-common';
 import { deserializeEntity } from './entity-deserializer';
 
 describe('entity-deserializer', () => {

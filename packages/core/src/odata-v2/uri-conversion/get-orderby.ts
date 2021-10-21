@@ -1,4 +1,4 @@
-import { getOrderBy, Orderable } from '../../odata-common';
+import { getOrderBy, Orderable } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 
 /**

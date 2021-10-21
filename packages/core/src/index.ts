@@ -6,10 +6,10 @@
  */
 
 export * from './header-util';
-export * from './odata-common';
+export * from '../../odata-common/odata-common';
 export * from './odata-v2';
 // The explicit exports are needed to guarantee backwards compatibility, they override the named exports of the other odata modules.
-export { entityDeserializer, filterFunction } from './odata-common';
+export { entityDeserializer, filterFunction } from '../../odata-common/odata-common';
 export {
   CreateRequestBuilder,
   CustomField,

@@ -2,11 +2,11 @@
 
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { Time, EdmTypeShared } from '../odata-common';
+import { Time, EdmTypeShared } from '@sap-cloud-sdk/odata-common';
 import {
   deserializersCommon,
   serializersCommon
-} from '../odata-common/payload-value-converter';
+} from '@sap-cloud-sdk/odata-common';
 import { EdmType } from './edm-types';
 
 /**

@@ -1,5 +1,5 @@
 import { Entity } from '../entity';
-import { Selectable, Link } from '../../odata-common';
+import { Selectable, Link } from '@sap-cloud-sdk/odata-common';
 
 /**
  * Get an object containing the given expand as a query parameter, or an empty object if none was given.

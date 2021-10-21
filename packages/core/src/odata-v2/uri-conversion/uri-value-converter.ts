@@ -5,7 +5,7 @@ import {
   EdmTypeShared,
   UriConverter,
   uriConvertersCommon
-} from '../../odata-common';
+} from '@sap-cloud-sdk/odata-common';
 import { EdmType } from '../edm-types';
 
 type UriConverterMapping = { [key in EdmType]: (value: any) => string };

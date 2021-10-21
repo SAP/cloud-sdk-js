@@ -2,7 +2,7 @@ import { oDataUri } from '../uri-conversion';
 import {
   RequestMethodType,
   FunctionImportParameters
-} from '../../odata-common';
+} from '@sap-cloud-sdk/odata-common';
 import { ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase } from '../request';
 
 /**

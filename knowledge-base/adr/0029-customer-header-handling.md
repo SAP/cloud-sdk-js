@@ -26,7 +26,7 @@ A cleaner solution could be:
 
 - The `execute()` method of [odata-request.ts](../../packages/core/src/odata-common/request/odata-request.ts) and [openapi-request-builder.ts](../../packages/core/src/openapi/openapi-request-builder.ts) take the [HttpRequestConfig](../../packages/http-client/src/http-client-types.ts) as input.
   This object has a `headers` property in which all headers go.
-  This should be changed to make the custom and sdk header distinguishable (see section below for details).
+  This should be changed to make the custom and SDK headers distinguishable (see section below for details).
 - The two destination related headers are currently merged together by the `buildHttpRequest()` in the [http-client.ts](../../packages/http-client/src/http-client.ts).
   The resulting `DestinationHttpRequestConfig` should be adjusted to make property and service related header distinguishable (see section below for details).
 - The `HttpRequestConfig` and `DestinationHttpRequestConfig` go down to the final `execute()` in the [http-client.ts](../../packages/http-client/src/http-client.ts).

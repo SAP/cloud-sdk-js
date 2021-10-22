@@ -16,20 +16,26 @@ export const DefaultApi = {
    * @param queryParameters - Object containing the following keys: queryParam.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
-  postEntity: (pathParam: string, queryParameters?: { queryParam?: string }) =>
-    new OpenApiRequestBuilder<TestEntity[]>('post', '/entities/{pathParam}', {
-      pathParameters: { pathParam },
-      queryParameters
-    }),
+  postEntity: (pathParam: string, queryParameters?: {'queryParam'?: string}) => new OpenApiRequestBuilder<TestEntity[]>(
+    'post',
+    '/entities/{pathParam}',
+    {
+          pathParameters: { pathParam },
+          queryParameters
+        }
+  ),
   /**
    * Create a request builder for execution of patch requests to the '/entities/{pathParam}' endpoint.
    * @param pathParam - Path parameter.
    * @param body - Request body.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
-  patchEntity: (pathParam: string, body: TestEntity | undefined) =>
-    new OpenApiRequestBuilder<string>('patch', '/entities/{pathParam}', {
-      pathParameters: { pathParam },
-      body
-    })
+  patchEntity: (pathParam: string, body: TestEntity | undefined) => new OpenApiRequestBuilder<string>(
+    'patch',
+    '/entities/{pathParam}',
+    {
+          pathParameters: { pathParam },
+          body
+        }
+  )
 };

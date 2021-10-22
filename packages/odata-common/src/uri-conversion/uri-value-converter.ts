@@ -1,6 +1,7 @@
 /* eslint-disable valid-jsdoc */
 
-import { EdmTypeSameConvertersUri, EdmTypeShared } from '../index';
+
+import {EdmTypeSameConvertersUri} from "../edm-types";
 
 type UriConverterMapping = {
   [key in EdmTypeSameConvertersUri]: (value: any) => string;

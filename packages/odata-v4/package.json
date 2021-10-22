@@ -1,0 +1,42 @@
+{
+  "name": "@sap-cloud-sdk/odata-v4",
+  "version": "1.50.0",
+  "description": "SAP Cloud SDK for JavaScript common functions of OData client generator and OpenAPI clint generator.",
+  "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
+  "license": "Apache-2.0",
+  "keywords": [
+    "sap-cloud-sdk",
+    "cloud-sdk",
+    "sap-cloud-platform",
+    "odata-v4"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "internal.js"
+  ],
+  "repository": "github:SAP/cloud-sdk-js",
+  "scripts": {
+    "compile": "yarn tsc -b",
+    "prepare": "yarn compile",
+    "test": "yarn jest",
+    "coverage": "yarn jest --coverage",
+    "check:dependencies": "depcheck ."
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/http-client" : "^1.50.0",
+    "@sap-cloud-sdk/connectivity": "^1.50.0",
+    "@sap-cloud-sdk/core": "^1.50.0",
+    "typescript": "~4.4.4"
+  },
+  "devDependencies": {
+
+  }
+}

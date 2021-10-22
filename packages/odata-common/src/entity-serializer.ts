@@ -1,4 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { toStaticPropertyFormat } from './name-converter';
 import {
   Constructable,
   EdmTypeField,
@@ -14,7 +15,6 @@ import {
   PropertyMetadata,
   EnumField
 } from './index';
-import { toStaticPropertyFormat } from './name-converter';
 
 const logger = createLogger({
   package: 'core',

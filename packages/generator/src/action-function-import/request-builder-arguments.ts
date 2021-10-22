@@ -28,8 +28,7 @@ function getTransformer(
   }
   if (actionFunctionImport.returnType.builderFunction) {
     return `(data) => ${responseTransformerFunctionName(
-      actionFunctionImport.returnType,
-      service.oDataVersion
+      actionFunctionImport.returnType
     )}(data, ${actionFunctionImport.returnType.builderFunction})`;
   }
   throw Error(

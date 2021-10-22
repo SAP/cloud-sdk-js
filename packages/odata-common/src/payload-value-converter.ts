@@ -2,7 +2,7 @@
 
 import BigNumber from 'bignumber.js';
 import { identity } from '@sap-cloud-sdk/util';
-import { EdmTypeSameConverters } from './index';
+import { EdmTypeSameConverters } from './edm-types';
 
 type EdmTypeMapping = { [key in EdmTypeSameConverters]: (value: any) => any };
 

@@ -1,25 +1,20 @@
 import moment from 'moment';
 import { Constructable, Entity } from '../entity';
-import {
-  Filterable,
-  isFilterList,
-  isFilterLink,
-  isFilter,
-  FilterFunction,
-  FilterFunctionParameterType,
-  isBooleanFilterFunction,
-  isUnaryFilter,
-  UnaryFilter,
-  FilterLambdaExpression,
-  FilterList,
-  FilterLink,
-  Filter
-} from '../filter';
+
 import { EdmTypeShared } from '../edm-types';
-import { ComplexTypeField, FieldType, OneToManyLink } from '../selectable';
-import { UriConverter } from './index';
-import { isFilterLambdaExpression } from '../filter/filter-lambda-expression';
+import {FilterLambdaExpression, isFilterLambdaExpression} from '../filter/filter-lambda-expression';
 import { toStaticPropertyFormat } from '../name-converter';
+import {UriConverter} from "./uri-value-converter";
+import {Filterable} from "../filter/filterable";
+import {FilterList, isFilterList} from "../filter/filter-list";
+import {isBooleanFilterFunction} from "../filter/boolean-filter-function";
+import {FilterLink, isFilterLink} from "../filter/filter-link";
+import {isUnaryFilter, UnaryFilter} from "../filter/unary-filter";
+import {OneToManyLink} from "../selectable/one-to-many-link";
+import {ComplexTypeField} from "../selectable/complex-type-field";
+import {FilterFunction, FilterFunctionParameterType} from "../filter/filter-function-base";
+import {FieldType} from "../selectable/field";
+import {Filter} from "../filter/filter";
 
 type GetFilterType<EntityT extends Entity> = (
   filter: Filterable<EntityT>,

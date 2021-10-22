@@ -141,7 +141,8 @@ describe('generator', () => {
         './TestEnumType',
         './TestEnumTypeInt64',
         './TestEnumTypeWithOneMember',
-        '@sap-cloud-sdk/core',
+        '@sap-cloud-sdk/odata-v4',
+        '@sap-cloud-sdk/odata-common',
         './TestEntityMultiLink',
         './TestEntitySingleLink'
       ]);

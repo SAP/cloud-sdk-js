@@ -157,6 +157,8 @@
   - `sanitizeDestination`
   - `toDestinationNameUrl`
   - `useOrFetchDestination`
+- [core] Move the following functions to `util` package
+- 
 
 ### Signature changed
 

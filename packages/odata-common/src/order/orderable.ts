@@ -1,8 +1,9 @@
 import { Entity } from '../entity';
-import { Link, SimpleTypeFields } from '../selectable';
 import { ComplexTypePropertyFields } from '../selectable/complex-type-property-fields';
 import { Order } from './order';
 import { OrderLink } from './order-link';
+import {SimpleTypeFields} from "../selectable/simple-type-fields";
+import {Link} from "../selectable/link";
 
 /**
  * A union of all types that can be used for ordering.

@@ -3,15 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  CreateRequestBuilderV4,
-  DeleteRequestBuilderV4,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  ODataBatchChangeSetV4,
-  ODataBatchRequestBuilderV4,
-  UpdateRequestBuilderV4
-} from '../../../../../src';
+import { CreateRequestBuilder, DeleteRequestBuilder, GetAllRequestBuilder, GetByKeyRequestBuilder, ODataBatchChangeSet, ODataBatchRequestBuilder, UpdateRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { TestEntity1, TestEntity2, TestEntity3, TestEntity4 } from './index';
 
@@ -20,37 +12,10 @@ import { TestEntity1, TestEntity2, TestEntity3, TestEntity4 } from './index';
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(
-  ...requests: Array<
-    | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>
-  >
-): ODataBatchRequestBuilderV4;
-export function batch(
-  requests: Array<
-    | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>
-  >
-): ODataBatchRequestBuilderV4;
-export function batch(
-  first:
-    | undefined
-    | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>
-    | Array<
-        | ReadMultipleSchemasServiceRequestBuilder
-        | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>
-      >,
-  ...rest: Array<
-    | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>
-  >
-): ODataBatchRequestBuilderV4 {
-  return new ODataBatchRequestBuilderV4(
-    defaultMultipleSchemasServicePath,
-    variadicArgumentToArray(first, rest),
-    map
-  );
+export function batch(...requests: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilder;
+export function batch(requests: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilder;
+export function batch(first: undefined | ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder> | Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>>, ...rest: Array<ReadMultipleSchemasServiceRequestBuilder | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>>): ODataBatchRequestBuilder {
+  return new ODataBatchRequestBuilder(defaultMultipleSchemasServicePath, variadicArgumentToArray(first, rest), map);
 }
 
 /**
@@ -58,49 +23,13 @@ export function batch(
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(
-  ...requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>;
-export function changeset(
-  requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder>;
-export function changeset(
-  first:
-    | undefined
-    | WriteMultipleSchemasServiceRequestBuilder
-    | Array<WriteMultipleSchemasServiceRequestBuilder>,
-  ...rest: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMultipleSchemasServiceRequestBuilder> {
-  return new ODataBatchChangeSetV4(variadicArgumentToArray(first, rest));
+export function changeset(...requests: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
+export function changeset(requests: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
+export function changeset(first: undefined | WriteMultipleSchemasServiceRequestBuilder | Array<WriteMultipleSchemasServiceRequestBuilder>, ...rest: Array<WriteMultipleSchemasServiceRequestBuilder>): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder> {
+  return new ODataBatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
-export const defaultMultipleSchemasServicePath =
-  '/sap/opu/odata/sap/API_TEST_SRV';
-const map = {
-  A_TestEntity1: TestEntity1,
-  A_TestEntity2: TestEntity2,
-  A_TestEntity3: TestEntity3,
-  A_TestEntity4: TestEntity4
-};
-export type ReadMultipleSchemasServiceRequestBuilder =
-  | GetAllRequestBuilderV4<TestEntity1>
-  | GetAllRequestBuilderV4<TestEntity2>
-  | GetAllRequestBuilderV4<TestEntity3>
-  | GetAllRequestBuilderV4<TestEntity4>
-  | GetByKeyRequestBuilderV4<TestEntity1>
-  | GetByKeyRequestBuilderV4<TestEntity2>
-  | GetByKeyRequestBuilderV4<TestEntity3>
-  | GetByKeyRequestBuilderV4<TestEntity4>;
-export type WriteMultipleSchemasServiceRequestBuilder =
-  | CreateRequestBuilderV4<TestEntity1>
-  | UpdateRequestBuilderV4<TestEntity1>
-  | DeleteRequestBuilderV4<TestEntity1>
-  | CreateRequestBuilderV4<TestEntity2>
-  | UpdateRequestBuilderV4<TestEntity2>
-  | DeleteRequestBuilderV4<TestEntity2>
-  | CreateRequestBuilderV4<TestEntity3>
-  | UpdateRequestBuilderV4<TestEntity3>
-  | DeleteRequestBuilderV4<TestEntity3>
-  | CreateRequestBuilderV4<TestEntity4>
-  | UpdateRequestBuilderV4<TestEntity4>
-  | DeleteRequestBuilderV4<TestEntity4>;
+export const defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+const map = { 'A_TestEntity1': TestEntity1, 'A_TestEntity2': TestEntity2, 'A_TestEntity3': TestEntity3, 'A_TestEntity4': TestEntity4 };
+export type ReadMultipleSchemasServiceRequestBuilder = GetAllRequestBuilder<TestEntity1> | GetAllRequestBuilder<TestEntity2> | GetAllRequestBuilder<TestEntity3> | GetAllRequestBuilder<TestEntity4> | GetByKeyRequestBuilder<TestEntity1> | GetByKeyRequestBuilder<TestEntity2> | GetByKeyRequestBuilder<TestEntity3> | GetByKeyRequestBuilder<TestEntity4>;
+export type WriteMultipleSchemasServiceRequestBuilder = CreateRequestBuilder<TestEntity1> | UpdateRequestBuilder<TestEntity1> | DeleteRequestBuilder<TestEntity1> | CreateRequestBuilder<TestEntity2> | UpdateRequestBuilder<TestEntity2> | DeleteRequestBuilder<TestEntity2> | CreateRequestBuilder<TestEntity3> | UpdateRequestBuilder<TestEntity3> | DeleteRequestBuilder<TestEntity3> | CreateRequestBuilder<TestEntity4> | UpdateRequestBuilder<TestEntity4> | DeleteRequestBuilder<TestEntity4>;

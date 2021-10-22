@@ -37,6 +37,7 @@
   "dependencies": {
     "@sap-cloud-sdk/core": "^1.50.0",
     "@sap-cloud-sdk/generator-common": "^1.50.0",
+    "@sap-cloud-sdk/odata-common": "^1.50.0",
     "@sap-cloud-sdk/util": "^1.50.0",
     "@sap/edm-converters": "~1.0.21",
     "@types/fs-extra": "^9.0.1",
@@ -51,9 +52,10 @@
     "yargs": "^17.0.1"
   },
   "devDependencies": {
-    "@sap/cloud-sdk-vdm-business-partner-service": "^1.24.0",
+    "@sap-cloud-sdk/test-services": "^1.50.0",
     "@types/yargs": "^17.0.0",
     "mock-fs": "^5.0.0",
+    "jest-extended": "^1.0.0",
     "nock": "^13.0.11"
   }
 }

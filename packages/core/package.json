@@ -35,8 +35,6 @@
     "@sap-cloud-sdk/analytics": "^1.50.0",
     "@sap-cloud-sdk/util": "^1.50.0",
     "@sap-cloud-sdk/connectivity": "^1.50.0",
-    "@sap-cloud-sdk/http-client": "^1.50.0",
-    "@sap-cloud-sdk/openapi": "^1.50.0",
     "@types/jsonwebtoken": "^8.3.8",
     "axios": "^0.23.0",
     "bignumber.js": "^9.0.0",

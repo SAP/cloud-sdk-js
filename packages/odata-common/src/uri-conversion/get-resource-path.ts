@@ -1,8 +1,8 @@
 import { createLogger, isNullish } from '@sap-cloud-sdk/util';
 import { Entity, Constructable } from '../entity';
 import { FieldType, Field } from '../selectable';
-import { UriConverter } from './index';
 import { toStaticPropertyFormat } from '../name-converter';
+import { UriConverter } from './index';
 
 const logger = createLogger({
   package: 'core',

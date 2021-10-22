@@ -5,8 +5,8 @@ import {
   ODataCreateRequestConfig,
   ODataRequest
 } from '@sap-cloud-sdk/odata-common';
-import { oDataUri } from '../../src';
 import { TestEntity } from './test-services/v2/test-service';
+import {oDataUri} from "@sap-cloud-sdk/odata-v2";
 
 export function createUpdateRequest(
   dest: Destination

@@ -1,4 +1,4 @@
-import { caps, unixEOL } from '@sap-cloud-sdk/util';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmFunctionImport, VdmServiceMetadata } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
@@ -66,9 +66,7 @@ function getFunctionImportStatements(
     parameters = [`'${functionImport.httpMethod}'`, ...parameters];
   }
 
-  const returnStatement = `return new FunctionImportRequestBuilder${caps(
-    service.oDataVersion
-  )}(${parameters.join(', ')});`;
+  const returnStatement = `return new FunctionImportRequestBuilder(${parameters.join(', ')});`;
 
   return context + unixEOL + unixEOL + returnStatement;
 }

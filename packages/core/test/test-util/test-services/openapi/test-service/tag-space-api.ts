@@ -13,6 +13,8 @@ export const TagSpaceApi = {
    * Create a request builder for execution of post requests to the '/test-cases/special-tag' endpoint.
    * @returns The request builder, use the `execute()` method to trigger the request.
    */
-  tagWithSpace: () =>
-    new OpenApiRequestBuilder<any>('post', '/test-cases/special-tag')
+  tagWithSpace: () => new OpenApiRequestBuilder<any>(
+    'post',
+    '/test-cases/special-tag'
+  )
 };

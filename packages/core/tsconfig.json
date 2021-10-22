@@ -12,8 +12,6 @@
   "references": [
     { "path": "../util" },
     { "path": "../analytics" },
-    { "path": "../connectivity" },
-    { "path": "../odata-common" },
-    { "path": "../http-client" }
+    { "path": "../connectivity" }
   ]
 }

@@ -1,9 +1,9 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
+import { ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
-  coreImportDeclaration,
+  odataImportDeclaration,
   corePropertyTypeImportNames,
-  externalImportDeclarations
+  externalImportDeclarations, odataCommonImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmProperty } from '../vdm-types';
 
@@ -13,36 +13,33 @@ export function importDeclarations(
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(entity.keys),
-    coreImportDeclaration([
-      ...corePropertyTypeImportNames(entity.keys),
-      ...requestBuilderCoreImportDeclarations(entity, oDataVersion)
-    ]),
+      odataCommonImportDeclaration(['RequestBuilder',...corePropertyTypeImportNames(entity.keys)]),
+    odataImportDeclaration(
+      requestBuilderCoreImportDeclarations(entity)
+    ,oDataVersion),
     entityImportDeclaration(entity),
     ...entityKeyImportDeclaration(entity.keys)
   ];
 }
 
 function requestBuilderCoreImportDeclarations(
-  entity: VdmEntity,
-  oDataVersion: ODataVersion
+  entity: VdmEntity
 ) {
-  const versionInCap = caps(oDataVersion);
   const coreImports = [
-    'RequestBuilder',
-    `GetAllRequestBuilder${versionInCap}`,
-    `GetByKeyRequestBuilder${versionInCap}`
+    'GetAllRequestBuilder',
+    'GetByKeyRequestBuilder'
   ];
 
   if (entity.creatable) {
-    coreImports.push(`CreateRequestBuilder${versionInCap}`);
+    coreImports.push('CreateRequestBuilder');
   }
 
   if (entity.updatable) {
-    coreImports.push(`UpdateRequestBuilder${versionInCap}`);
+    coreImports.push('UpdateRequestBuilder');
   }
 
   if (entity.deletable) {
-    coreImports.push(`DeleteRequestBuilder${versionInCap}`);
+    coreImports.push('DeleteRequestBuilder');
   }
 
   return coreImports;

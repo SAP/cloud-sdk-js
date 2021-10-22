@@ -1,19 +1,15 @@
 import nock = require('nock');
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
-  Constructable,
-  GetAllRequestBuilderV2,
-  GetAllRequestBuilderV4,
-  oDataUri
-} from '../../src';
-import {
+  Constructable, GetAllRequestBuilder,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
   ODataGetAllRequestConfig,
   ODataRequest,
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common';
-import { oDataUriV4 } from '../../src/odata-v4';
+
+import { oDataUri } from '@sap-cloud-sdk/odata-v4';
 import { basicHeader } from '../../../connectivity/src/scp-cf/authorization-header';
 import { TestEntity } from './test-services/v2/test-service/TestEntity';
 import { TestEntity as TestEntityV4 } from './test-services/v4/test-service/TestEntity';
@@ -91,7 +87,7 @@ export function mockCreateRequestV4(
 ) {
   const requestConfig = new ODataCreateRequestConfig(
     entityConstructor,
-    oDataUriV4
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -151,8 +147,8 @@ export function mockCountRequest(
   destination: Destination,
   count: number,
   getAllRequest:
-    | GetAllRequestBuilderV2<any>
-    | GetAllRequestBuilderV4<any> = TestEntity.requestBuilder().getAll()
+    | GetAllRequestBuilder<any>
+    | GetAllRequestBuilder<any> = TestEntity.requestBuilder().getAll()
 ) {
   const servicePath = getAllRequest._entityConstructor._defaultServicePath;
   const entityName = getAllRequest._entityConstructor._entityName;

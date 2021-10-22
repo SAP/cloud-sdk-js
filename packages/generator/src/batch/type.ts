@@ -25,11 +25,10 @@ export function writeRequestType(
 }
 
 function getWriteRequestType(service: VdmServiceMetadata): string {
-  const versionInCaps = caps(service.oDataVersion);
   return service.entities
     .map(
       e =>
-        `CreateRequestBuilder${versionInCaps}<${e.className}> | UpdateRequestBuilder${versionInCaps}<${e.className}> | DeleteRequestBuilder${versionInCaps}<${e.className}>`
+        `CreateRequestBuilder<${e.className}> | UpdateRequestBuilder<${e.className}> | DeleteRequestBuilder<${e.className}>`
     )
     .join(' | ');
 }
@@ -39,10 +38,10 @@ function getReadRequestType(service: VdmServiceMetadata): string {
   return Array.prototype
     .concat(
       service.entities.map(
-        e => `GetAllRequestBuilder${versionInCaps}<${e.className}>`
+        e => `GetAllRequestBuilder<${e.className}>`
       ),
       service.entities.map(
-        e => `GetByKeyRequestBuilder${versionInCaps}<${e.className}>`
+        e => `GetByKeyRequestBuilder<${e.className}>`
       )
     )
     .join('|');

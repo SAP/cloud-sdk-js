@@ -38,12 +38,23 @@ export function externalImportDeclaration(
   };
 }
 
-export function coreImportDeclaration(
-  namedImports: string[]
+export function odataCommonImportDeclaration(
+    namedImports: string[]
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: '@sap-cloud-sdk/core',
+    moduleSpecifier: '@sap-cloud-sdk/odata-common',
+    namedImports: unique(namedImports)
+  };
+}
+
+export function odataImportDeclaration(
+  namedImports: string[],
+  odataVersion: ODataVersion
+): ImportDeclarationStructure {
+  return {
+    kind: StructureKind.ImportDeclaration,
+    moduleSpecifier: odataVersion === 'v2' ? '@sap-cloud-sdk/odata-v2' : '@sap-cloud-sdk/odata-v4',
     namedImports: unique(namedImports)
   };
 }

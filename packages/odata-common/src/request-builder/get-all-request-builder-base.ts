@@ -8,9 +8,9 @@ import { Constructable, Entity } from '../entity';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
-import { CountRequestBuilder } from './count-request-builder';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
+import { CountRequestBuilder } from './count-request-builder';
 import { GetRequestBuilder } from './get-request-builder-base';
 
 /**

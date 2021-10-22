@@ -1,24 +1,16 @@
 import { createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
-import {
-  isSelectedProperty,
-  Field,
-  Link,
-  EdmTypeField,
-  ComplexTypeField,
-  CollectionField,
-  OneToOneLink,
-  isExpandedProperty,
-  Entity,
-  Constructable,
-  ComplexTypeNamespace,
-  isComplexTypeNameSpace,
-  EdmTypeShared,
-  isEdmType,
-  PropertyMetadata,
-  EnumField
-} from './index';
-
 import { toPropertyFormat } from './name-converter';
+import { Constructable, Entity, isExpandedProperty, isSelectedProperty } from './entity';
+import {
+  CollectionField,
+  ComplexTypeField,
+  ComplexTypeNamespace,
+  EdmTypeField, EnumField,
+  Field, isComplexTypeNameSpace,
+  Link,
+  OneToOneLink, PropertyMetadata
+} from './selectable';
+import { EdmTypeShared, isEdmType } from './edm-types';
 
 const logger = createLogger({
   package: 'core',
@@ -52,7 +44,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * @returns a entity deserializer as defined by [[EntityDeserializer]]
  */
 export function entityDeserializer(
-  edmToTs: any, //TODO v 2.0 try to get commen typing for v2 and v4 in here
+  edmToTs: any, // TODO v 2.0 try to get commen typing for v2 and v4 in here
   extractODataETag: ExtractODataETagType,
   extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
 ): EntityDeserializer {

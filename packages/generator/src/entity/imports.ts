@@ -1,13 +1,13 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
-import { caps, ODataVersion } from '@sap-cloud-sdk/util';
+import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
-  complexTypeImportDeclarations,
-  coreImportDeclaration,
-  coreNavPropertyFieldTypeImportNames,
-  corePropertyFieldTypeImportNames,
-  corePropertyTypeImportNames,
-  enumTypeImportDeclarations,
-  externalImportDeclarations
+    complexTypeImportDeclarations,
+    odataImportDeclaration,
+    coreNavPropertyFieldTypeImportNames,
+    corePropertyFieldTypeImportNames,
+    corePropertyTypeImportNames,
+    enumTypeImportDeclarations,
+    externalImportDeclarations, odataCommonImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 
@@ -15,7 +15,6 @@ export function importDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
-  const versionInCap = caps(oDataVersion);
   return [
     {
       kind: StructureKind.ImportDeclaration,
@@ -25,18 +24,18 @@ export function importDeclarations(
     ...externalImportDeclarations(entity.properties),
     ...complexTypeImportDeclarations(entity.properties),
     ...enumTypeImportDeclarations(entity.properties),
-    coreImportDeclaration(
+    odataImportDeclaration([        'CustomField',
+        'Entity'],oDataVersion),
+      odataCommonImportDeclaration(
       [
         ...corePropertyTypeImportNames(entity.properties),
         ...corePropertyFieldTypeImportNames(entity.properties),
-        ...coreNavPropertyFieldTypeImportNames(
-          entity.navigationProperties,
-          oDataVersion
-        ),
+          ...coreNavPropertyFieldTypeImportNames(
+              entity.navigationProperties,
+              oDataVersion
+          ),
         'AllFields',
         'Constructable',
-        `CustomField${versionInCap}`,
-        `Entity${versionInCap}`,
         'EntityBuilderType',
         'FieldBuilder',
         'Field'

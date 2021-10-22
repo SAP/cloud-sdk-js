@@ -1,4 +1,4 @@
-import { unixEOL, caps, ODataVersion, unique } from '@sap-cloud-sdk/util';
+import { unixEOL, ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
   FunctionDeclarationStructure,
   ModuleDeclarationStructure,
@@ -32,7 +32,7 @@ function factoryFunction(
     name: 'build',
     returnType: complexType.typeName,
     parameters: [{ name: 'json', type: getJsonType(complexType) }],
-    statements: `return deserializeComplexType${caps(oDataVersion)}(json, ${
+    statements: `return deserializeComplexType(json, ${
       complexType.typeName
     });`,
     isExported: true,

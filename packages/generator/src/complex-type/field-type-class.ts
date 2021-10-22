@@ -1,4 +1,4 @@
-import { unixEOL, caps, ODataVersion } from '@sap-cloud-sdk/util';
+import { unixEOL, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   ClassDeclarationStructure,
   PropertyDeclarationStructure,
@@ -18,9 +18,7 @@ export function fieldTypeClass(
 ): ClassDeclarationStructure {
   return {
     kind: StructureKind.Class,
-    name: `${complexType.fieldType}<EntityT extends Entity${caps(
-      oDataVersion
-    )}, NullableT extends boolean = false, SelectableT extends boolean = false>`,
+    name: `${complexType.fieldType}<EntityT extends Entity, NullableT extends boolean = false, SelectableT extends boolean = false>`,
     extends: `ComplexTypeField<EntityT, ${complexType.typeName}, NullableT, SelectableT>`,
     isExported: true,
     properties: [

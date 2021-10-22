@@ -3,14 +3,12 @@ import {
   FunctionDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import { caps } from '@sap-cloud-sdk/util';
 import { addLeadingNewline, getFunctionDoc } from '../typedoc';
 import { VdmServiceMetadata } from '../vdm-types';
 
 export function batchFunction(
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const versionInCaps = caps(service.oDataVersion);
   const type = getBatchParameterType(service);
 
   const docs = [
@@ -26,7 +24,7 @@ export function batchFunction(
             }
           ],
           returns: {
-            type: `ODataBatchRequestBuilder${versionInCaps}`,
+            type: 'ODataBatchRequestBuilder ',
             description: 'A request builder for batch.'
           }
         }
@@ -38,13 +36,13 @@ export function batchFunction(
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: '...requests', type: asArray(type) }],
-      returnType: `ODataBatchRequestBuilder${versionInCaps}`,
+      returnType: 'ODataBatchRequestBuilder',
       docs
     },
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: 'requests', type: asArray(type) }],
-      returnType: `ODataBatchRequestBuilder${versionInCaps}`
+      returnType: 'ODataBatchRequestBuilder'
     }
   ];
 
@@ -56,8 +54,8 @@ export function batchFunction(
       { name: 'first', type: `undefined|${type}|${asArray(type)}` },
       { name: '...rest', type: asArray(type) }
     ],
-    returnType: `ODataBatchRequestBuilder${versionInCaps}`,
-    statements: `return new ODataBatchRequestBuilder${versionInCaps}(default${service.className}Path, variadicArgumentToArray(first,rest), map);`,
+    returnType: 'ODataBatchRequestBuilder',
+    statements: `return new ODataBatchRequestBuilder(default${service.className}Path, variadicArgumentToArray(first,rest), map);`,
     overloads
   };
 }
@@ -65,7 +63,6 @@ export function batchFunction(
 export function changesetFunction(
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const versionInCaps = caps(service.oDataVersion);
   const type = `Write${service.className}RequestBuilder`;
 
   const docs = [
@@ -81,7 +78,7 @@ export function changesetFunction(
             }
           ],
           returns: {
-            type: `ODataBatchChangeSet${versionInCaps}`,
+            type: 'ODataBatchChangeSet',
             description: 'A change set for batch.'
           }
         }
@@ -93,13 +90,13 @@ export function changesetFunction(
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: '...requests', type: asArray(type) }],
-      returnType: `ODataBatchChangeSet${versionInCaps}<Write${service.className}RequestBuilder>`,
+      returnType: `ODataBatchChangeSet<Write${service.className}RequestBuilder>`,
       docs
     },
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: 'requests', type: asArray(type) }],
-      returnType: `ODataBatchChangeSet${versionInCaps}<Write${service.className}RequestBuilder>`
+      returnType: `ODataBatchChangeSet<Write${service.className}RequestBuilder>`
     }
   ];
 
@@ -111,8 +108,8 @@ export function changesetFunction(
       { name: 'first', type: `undefined|${type}|${asArray(type)}` },
       { name: '...rest', type: asArray(type) }
     ],
-    returnType: `ODataBatchChangeSet${versionInCaps}<Write${service.className}RequestBuilder>`,
-    statements: `return new ODataBatchChangeSet${versionInCaps}(variadicArgumentToArray(first,rest));`,
+    returnType: `ODataBatchChangeSet<Write${service.className}RequestBuilder>`,
+    statements: 'return new ODataBatchChangeSet(variadicArgumentToArray(first,rest));',
     overloads
   };
 }
@@ -122,7 +119,5 @@ function asArray(type: string): string {
 }
 
 function getBatchParameterType(service: VdmServiceMetadata): string {
-  return `Read${service.className}RequestBuilder | ODataBatchChangeSet${caps(
-    service.oDataVersion
-  )}<Write${service.className}RequestBuilder>`;
+  return `Read${service.className}RequestBuilder | ODataBatchChangeSet<Write${service.className}RequestBuilder>`;
 }

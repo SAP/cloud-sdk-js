@@ -19,6 +19,8 @@
     "packages/openapi",
     "packages/core",
     "packages/odata-common",
+    "packages/odata-v2",
+    "packages/odata-v4",
     "packages/eslint-config",
     "packages/generator",
     "packages/test-util",

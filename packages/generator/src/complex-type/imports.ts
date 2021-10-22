@@ -1,12 +1,12 @@
 import { ImportDeclarationStructure } from 'ts-morph';
 import { caps, ODataVersion } from '@sap-cloud-sdk/util';
 import {
-  complexTypeImportDeclarations,
-  coreImportDeclaration,
-  corePropertyFieldTypeImportNames,
-  corePropertyTypeImportNames,
-  enumTypeImportDeclarations,
-  externalImportDeclarations
+    complexTypeImportDeclarations,
+    odataImportDeclaration,
+    corePropertyFieldTypeImportNames,
+    corePropertyTypeImportNames,
+    enumTypeImportDeclarations,
+    externalImportDeclarations, odataCommonImportDeclaration
 } from '../imports';
 import { VdmComplexType } from '../vdm-types';
 
@@ -19,14 +19,15 @@ export function importDeclarations(
     ...externalImportDeclarations(complexType.properties),
     ...complexTypeImportDeclarations(complexType.properties),
     ...enumTypeImportDeclarations(complexType.properties),
-    coreImportDeclaration(
+      odataImportDeclaration([ 'deserializeComplexType',
+          'Entity'],oDataVersion),
+    odataCommonImportDeclaration(
       [
         ...corePropertyTypeImportNames(complexType.properties),
         ...corePropertyFieldTypeImportNames(complexType.properties),
         'ComplexTypeField',
         'ConstructorOrField',
-        `deserializeComplexType${versionInCaps}`,
-        `Entity${versionInCaps}`,
+
         'FieldBuilder',
         'FieldType',
         'FieldOptions',

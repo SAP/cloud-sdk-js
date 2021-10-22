@@ -3,14 +3,8 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
+import { GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { Airports } from './Airports';
 
 /**
@@ -22,16 +16,16 @@ export class AirportsRequestBuilder extends RequestBuilder<Airports> {
    * @param icaoCode Key property. See [[Airports.icaoCode]].
    * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
    */
-  getByKey(icaoCode: string): GetByKeyRequestBuilderV4<Airports> {
-    return new GetByKeyRequestBuilderV4(Airports, { IcaoCode: icaoCode });
+  getByKey(icaoCode: string): GetByKeyRequestBuilder<Airports> {
+    return new GetByKeyRequestBuilder(Airports, { IcaoCode: icaoCode });
   }
 
   /**
    * Returns a request builder for querying all `Airports` entities.
    * @returns A request builder for creating requests to retrieve all `Airports` entities.
    */
-  getAll(): GetAllRequestBuilderV4<Airports> {
-    return new GetAllRequestBuilderV4(Airports);
+  getAll(): GetAllRequestBuilder<Airports> {
+    return new GetAllRequestBuilder(Airports);
   }
 
   /**
@@ -39,8 +33,8 @@ export class AirportsRequestBuilder extends RequestBuilder<Airports> {
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `Airports`.
    */
-  create(entity: Airports): CreateRequestBuilderV4<Airports> {
-    return new CreateRequestBuilderV4(Airports, entity);
+  create(entity: Airports): CreateRequestBuilder<Airports> {
+    return new CreateRequestBuilder(Airports, entity);
   }
 
   /**
@@ -48,8 +42,8 @@ export class AirportsRequestBuilder extends RequestBuilder<Airports> {
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `Airports`.
    */
-  update(entity: Airports): UpdateRequestBuilderV4<Airports> {
-    return new UpdateRequestBuilderV4(Airports, entity);
+  update(entity: Airports): UpdateRequestBuilder<Airports> {
+    return new UpdateRequestBuilder(Airports, entity);
   }
 
   /**
@@ -57,19 +51,14 @@ export class AirportsRequestBuilder extends RequestBuilder<Airports> {
    * @param icaoCode Key property. See [[Airports.icaoCode]].
    * @returns A request builder for creating requests that delete an entity of type `Airports`.
    */
-  delete(icaoCode: string): DeleteRequestBuilderV4<Airports>;
+  delete(icaoCode: string): DeleteRequestBuilder<Airports>;
   /**
    * Returns a request builder for deleting an entity of type `Airports`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `Airports` by taking the entity as a parameter.
    */
-  delete(entity: Airports): DeleteRequestBuilderV4<Airports>;
-  delete(icaoCodeOrEntity: any): DeleteRequestBuilderV4<Airports> {
-    return new DeleteRequestBuilderV4(
-      Airports,
-      icaoCodeOrEntity instanceof Airports
-        ? icaoCodeOrEntity
-        : { IcaoCode: icaoCodeOrEntity! }
-    );
+  delete(entity: Airports): DeleteRequestBuilder<Airports>;
+  delete(icaoCodeOrEntity: any): DeleteRequestBuilder<Airports> {
+    return new DeleteRequestBuilder(Airports, icaoCodeOrEntity instanceof Airports ? icaoCodeOrEntity : { IcaoCode: icaoCodeOrEntity! });
   }
 }

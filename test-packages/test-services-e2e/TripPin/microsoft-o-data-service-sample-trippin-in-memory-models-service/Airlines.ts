@@ -4,21 +4,13 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
-import {
-  AllFields,
-  Constructable,
-  CustomFieldV4,
-  EdmTypeField,
-  EntityBuilderType,
-  EntityV4,
-  Field,
-  FieldBuilder
-} from '@sap-cloud-sdk/core';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
+import { AllFields, Constructable, EdmTypeField, EntityBuilderType, Field, FieldBuilder } from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export class Airlines extends EntityV4 implements AirlinesType {
+export class Airlines extends Entity implements AirlinesType {
   /**
    * Technical entity name for Airlines.
    */
@@ -26,8 +18,7 @@ export class Airlines extends EntityV4 implements AirlinesType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath =
-    'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+  static _defaultServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   /**
    * Airline Code.
    */
@@ -42,7 +33,7 @@ export class Airlines extends EntityV4 implements AirlinesType {
    * @returns A builder that constructs instances of entity type `Airlines`.
    */
   static builder(): EntityBuilderType<Airlines, AirlinesType> {
-    return EntityV4.entityBuilder(Airlines);
+    return Entity.entityBuilder(Airlines);
   }
 
   /**
@@ -58,8 +49,8 @@ export class Airlines extends EntityV4 implements AirlinesType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Airlines`.
    */
-  static customField(fieldName: string): CustomFieldV4<Airlines> {
-    return EntityV4.customFieldSelector(fieldName, Airlines);
+  static customField(fieldName: string): CustomField<Airlines> {
+    return Entity.customFieldSelector(fieldName, Airlines);
   }
 
   /**
@@ -77,33 +68,24 @@ export interface AirlinesType {
 }
 
 export namespace Airlines {
-  const _fieldBuilder: FieldBuilder<Constructable<Airlines>> = new FieldBuilder(
-    Airlines
-  );
+  const _fieldBuilder: FieldBuilder<Constructable<Airlines>> = new FieldBuilder(Airlines);
   /**
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const AIRLINE_CODE = _fieldBuilder.buildEdmTypeField(
-    'AirlineCode',
-    'Edm.String',
-    false
-  );
+  export const AIRLINE_CODE = _fieldBuilder.buildEdmTypeField('AirlineCode', 'Edm.String', false);
   /**
    * Static representation of the [[name]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const NAME = _fieldBuilder.buildEdmTypeField(
-    'Name',
-    'Edm.String',
-    false
-  );
+  export const NAME = _fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * All fields of the Airlines entity.
    */
-  export const _allFields: Array<
-    EdmTypeField<Airlines, 'Edm.String', false, true>
-  > = [Airlines.AIRLINE_CODE, Airlines.NAME];
+  export const _allFields: Array<EdmTypeField<Airlines, 'Edm.String', false, true>> = [
+    Airlines.AIRLINE_CODE,
+    Airlines.NAME
+  ];
   /**
    * All fields selector.
    */
@@ -111,21 +93,12 @@ export namespace Airlines {
   /**
    * All key fields of the Airlines entity.
    */
-  export const _keyFields: Array<Field<Airlines, boolean, boolean>> = [
-    Airlines.AIRLINE_CODE
-  ];
+  export const _keyFields: Array<Field<Airlines, boolean, boolean>> = [Airlines.AIRLINE_CODE];
   /**
    * Mapping of all key field names to the respective static field property Airlines.
    */
-  export const _keys: { [keys: string]: Field<Airlines, boolean, boolean> } =
-    Airlines._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<Airlines, boolean, boolean> },
-        field: Field<Airlines, boolean, boolean>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: { [keys: string]: Field<Airlines, boolean, boolean> } = Airlines._keyFields.reduce((acc: { [keys: string]: Field<Airlines, boolean, boolean> }, field: Field<Airlines, boolean, boolean>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

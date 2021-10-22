@@ -10,27 +10,13 @@ import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
 import { TestEnumTypeInt64 } from './TestEnumTypeInt64';
 import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
-import {
-  AllFields,
-  CollectionField,
-  Constructable,
-  CustomFieldV4,
-  EdmTypeField,
-  EntityBuilderType,
-  EntityV4,
-  EnumField,
-  Field,
-  FieldBuilder,
-  OneToManyLink,
-  OneToOneLink,
-  OrderableEdmTypeField,
-  Time
-} from '@sap-cloud-sdk/core';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
+import { AllFields, CollectionField, Constructable, EdmTypeField, EntityBuilderType, EnumField, Field, FieldBuilder, OneToManyLink, OneToOneLink, OrderableEdmTypeField, Time } from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity extends EntityV4 implements TestEntityType {
+export class TestEntity extends Entity implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
@@ -192,7 +178,7 @@ export class TestEntity extends EntityV4 implements TestEntityType {
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
   static builder(): EntityBuilderType<TestEntity, TestEntityType> {
-    return EntityV4.entityBuilder(TestEntity);
+    return Entity.entityBuilder(TestEntity);
   }
 
   /**
@@ -208,8 +194,8 @@ export class TestEntity extends EntityV4 implements TestEntityType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntity> {
-    return EntityV4.customFieldSelector(fieldName, TestEntity);
+  static customField(fieldName: string): CustomField<TestEntity> {
+    return Entity.customFieldSelector(fieldName, TestEntity);
   }
 
   /**
@@ -221,14 +207,8 @@ export class TestEntity extends EntityV4 implements TestEntityType {
   }
 }
 
-import {
-  TestEntityMultiLink,
-  TestEntityMultiLinkType
-} from './TestEntityMultiLink';
-import {
-  TestEntitySingleLink,
-  TestEntitySingleLinkType
-} from './TestEntitySingleLink';
+import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
+import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
 
 export interface TestEntityType {
   keyPropertyGuid: string;
@@ -264,306 +244,161 @@ export interface TestEntityType {
 }
 
 export namespace TestEntity {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntity>> =
-    new FieldBuilder(TestEntity);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntity>> = new FieldBuilder(TestEntity);
   /**
    * Static representation of the [[keyPropertyGuid]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_GUID = _fieldBuilder.buildEdmTypeField(
-    'KeyPropertyGuid',
-    'Edm.Guid',
-    false
-  );
+  export const KEY_PROPERTY_GUID = _fieldBuilder.buildEdmTypeField('KeyPropertyGuid', 'Edm.Guid', false);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
-    'KeyPropertyString',
-    'Edm.String',
-    false
-  );
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'StringProperty',
-    'Edm.String',
-    true
-  );
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'BooleanProperty',
-    'Edm.Boolean',
-    true
-  );
+  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField('BooleanProperty', 'Edm.Boolean', true);
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'GuidProperty',
-    'Edm.Guid',
-    true
-  );
+  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true);
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'Int16Property',
-    'Edm.Int16',
-    true
-  );
+  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true);
   /**
    * Static representation of the [[int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_32_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'Int32Property',
-    'Edm.Int32',
-    true
-  );
+  export const INT_32_PROPERTY = _fieldBuilder.buildEdmTypeField('Int32Property', 'Edm.Int32', true);
   /**
    * Static representation of the [[int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_64_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'Int64Property',
-    'Edm.Int64',
-    true
-  );
+  export const INT_64_PROPERTY = _fieldBuilder.buildEdmTypeField('Int64Property', 'Edm.Int64', true);
   /**
    * Static representation of the [[decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DECIMAL_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'DecimalProperty',
-    'Edm.Decimal',
-    true
-  );
+  export const DECIMAL_PROPERTY = _fieldBuilder.buildEdmTypeField('DecimalProperty', 'Edm.Decimal', true);
   /**
    * Static representation of the [[singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SINGLE_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'SingleProperty',
-    'Edm.Single',
-    true
-  );
+  export const SINGLE_PROPERTY = _fieldBuilder.buildEdmTypeField('SingleProperty', 'Edm.Single', true);
   /**
    * Static representation of the [[doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DOUBLE_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'DoubleProperty',
-    'Edm.Double',
-    true
-  );
+  export const DOUBLE_PROPERTY = _fieldBuilder.buildEdmTypeField('DoubleProperty', 'Edm.Double', true);
   /**
    * Static representation of the [[floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const FLOAT_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'FloatProperty',
-    'Edm.Float',
-    true
-  );
+  export const FLOAT_PROPERTY = _fieldBuilder.buildEdmTypeField('FloatProperty', 'Edm.Float', true);
   /**
    * Static representation of the [[timeOfDayProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TIME_OF_DAY_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'TimeOfDayProperty',
-    'Edm.TimeOfDay',
-    true
-  );
+  export const TIME_OF_DAY_PROPERTY = _fieldBuilder.buildEdmTypeField('TimeOfDayProperty', 'Edm.TimeOfDay', true);
   /**
    * Static representation of the [[dateProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'DateProperty',
-    'Edm.Date',
-    true
-  );
+  export const DATE_PROPERTY = _fieldBuilder.buildEdmTypeField('DateProperty', 'Edm.Date', true);
   /**
    * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DATE_TIME_OFF_SET_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'DateTimeOffSetProperty',
-    'Edm.DateTimeOffset',
-    true
-  );
+  export const DATE_TIME_OFF_SET_PROPERTY = _fieldBuilder.buildEdmTypeField('DateTimeOffSetProperty', 'Edm.DateTimeOffset', true);
   /**
    * Static representation of the [[durationProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const DURATION_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'DurationProperty',
-    'Edm.Duration',
-    true
-  );
+  export const DURATION_PROPERTY = _fieldBuilder.buildEdmTypeField('DurationProperty', 'Edm.Duration', true);
   /**
    * Static representation of the [[byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BYTE_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'ByteProperty',
-    'Edm.Byte',
-    true
-  );
+  export const BYTE_PROPERTY = _fieldBuilder.buildEdmTypeField('ByteProperty', 'Edm.Byte', true);
   /**
    * Static representation of the [[sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const S_BYTE_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'SByteProperty',
-    'Edm.SByte',
-    true
-  );
+  export const S_BYTE_PROPERTY = _fieldBuilder.buildEdmTypeField('SByteProperty', 'Edm.SByte', true);
   /**
    * Static representation of the [[geographyPointProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GEOGRAPHY_POINT_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'GeographyPointProperty',
-    'Edm.Any',
-    true
-  );
+  export const GEOGRAPHY_POINT_PROPERTY = _fieldBuilder.buildEdmTypeField('GeographyPointProperty', 'Edm.Any', true);
   /**
    * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const SOMETHING_THE_SDK_DOES_NOT_SUPPORT =
-    _fieldBuilder.buildEdmTypeField(
-      'SomethingTheSDKDoesNotSupport',
-      'Edm.Any',
-      true
-    );
+  export const SOMETHING_THE_SDK_DOES_NOT_SUPPORT = _fieldBuilder.buildEdmTypeField('SomethingTheSDKDoesNotSupport', 'Edm.Any', true);
   /**
    * Static representation of the [[collectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField(
-    'CollectionProperty',
-    'Edm.String',
-    true
-  );
+  export const COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField('CollectionProperty', 'Edm.String', true);
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
-    'ComplexTypeProperty',
-    TestComplexTypeField,
-    true
-  );
+  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestComplexTypeField, true);
   /**
    * Static representation of the [[complexTypeCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_COLLECTION_PROPERTY =
-    _fieldBuilder.buildCollectionField(
-      'ComplexTypeCollectionProperty',
-      TestComplexType,
-      true
-    );
+  export const COMPLEX_TYPE_COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField('ComplexTypeCollectionProperty', TestComplexType, true);
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY = _fieldBuilder.buildEnumField(
-    'EnumProperty',
-    TestEnumType,
-    true
-  );
+  export const ENUM_PROPERTY = _fieldBuilder.buildEnumField('EnumProperty', TestEnumType, true);
   /**
    * Static representation of the [[enumPropertyInt64]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY_INT_64 = _fieldBuilder.buildEnumField(
-    'EnumPropertyInt64',
-    TestEnumTypeInt64,
-    true
-  );
+  export const ENUM_PROPERTY_INT_64 = _fieldBuilder.buildEnumField('EnumPropertyInt64', TestEnumTypeInt64, true);
   /**
    * Static representation of the [[enumPropertyWithOneMember]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY_WITH_ONE_MEMBER = _fieldBuilder.buildEnumField(
-    'EnumPropertyWithOneMember',
-    TestEnumTypeWithOneMember,
-    true
-  );
+  export const ENUM_PROPERTY_WITH_ONE_MEMBER = _fieldBuilder.buildEnumField('EnumPropertyWithOneMember', TestEnumTypeWithOneMember, true);
   /**
    * Static representation of the [[enumCollectionProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField(
-    'EnumCollectionProperty',
-    TestEnumType,
-    true
-  );
+  export const ENUM_COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField('EnumCollectionProperty', TestEnumType, true);
   /**
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_MULTI_LINK: OneToManyLink<TestEntity, TestEntityMultiLink> =
-    new OneToManyLink('to_MultiLink', TestEntity, TestEntityMultiLink);
+  export const TO_MULTI_LINK: OneToManyLink<TestEntity, TestEntityMultiLink> = new OneToManyLink('to_MultiLink', TestEntity, TestEntityMultiLink);
   /**
    * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_OTHER_MULTI_LINK: OneToManyLink<
-    TestEntity,
-    TestEntityMultiLink
-  > = new OneToManyLink('to_OtherMultiLink', TestEntity, TestEntityMultiLink);
+  export const TO_OTHER_MULTI_LINK: OneToManyLink<TestEntity, TestEntityMultiLink> = new OneToManyLink('to_OtherMultiLink', TestEntity, TestEntityMultiLink);
   /**
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const TO_SINGLE_LINK: OneToOneLink<TestEntity, TestEntitySingleLink> =
-    new OneToOneLink('to_SingleLink', TestEntity, TestEntitySingleLink);
+  export const TO_SINGLE_LINK: OneToOneLink<TestEntity, TestEntitySingleLink> = new OneToOneLink('to_SingleLink', TestEntity, TestEntitySingleLink);
   /**
    * All fields of the TestEntity entity.
    */
-  export const _allFields: Array<
-    | EdmTypeField<TestEntity, 'Edm.Guid', false, true>
-    | EdmTypeField<TestEntity, 'Edm.String', false, true>
-    | EdmTypeField<TestEntity, 'Edm.String', true, true>
-    | EdmTypeField<TestEntity, 'Edm.Boolean', true, true>
-    | EdmTypeField<TestEntity, 'Edm.Guid', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Int16', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Int32', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Int64', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Decimal', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Single', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Double', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Float', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.TimeOfDay', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Date', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.DateTimeOffset', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Duration', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.Byte', true, true>
-    | OrderableEdmTypeField<TestEntity, 'Edm.SByte', true, true>
-    | EdmTypeField<TestEntity, 'Edm.Any', true, true>
-    | CollectionField<TestEntity, 'Edm.String', true, true>
-    | TestComplexTypeField<TestEntity, true, true>
-    | CollectionField<TestEntity, TestComplexType, true, true>
-    | EnumField<TestEntity, TestEnumType, true, true>
-    | EnumField<TestEntity, TestEnumTypeInt64, true, true>
-    | EnumField<TestEntity, TestEnumTypeWithOneMember, true, true>
-    | CollectionField<TestEntity, typeof TestEnumType, true, true>
-    | OneToManyLink<TestEntity, TestEntityMultiLink>
-    | OneToOneLink<TestEntity, TestEntitySingleLink>
-  > = [
+  export const _allFields: Array<EdmTypeField<TestEntity, 'Edm.Guid', false, true> | EdmTypeField<TestEntity, 'Edm.String', false, true> | EdmTypeField<TestEntity, 'Edm.String', true, true> | EdmTypeField<TestEntity, 'Edm.Boolean', true, true> | EdmTypeField<TestEntity, 'Edm.Guid', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Int16', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Int32', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Int64', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Decimal', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Single', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Double', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Float', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.TimeOfDay', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Date', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.DateTimeOffset', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Duration', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.Byte', true, true> | OrderableEdmTypeField<TestEntity, 'Edm.SByte', true, true> | EdmTypeField<TestEntity, 'Edm.Any', true, true> | CollectionField<TestEntity, 'Edm.String', true, true> | TestComplexTypeField<TestEntity, true, true> | CollectionField<TestEntity, TestComplexType, true, true> | EnumField<TestEntity, TestEnumType, true, true> | EnumField<TestEntity, TestEnumTypeInt64, true, true> | EnumField<TestEntity, TestEnumTypeWithOneMember, true, true> | CollectionField<TestEntity, typeof TestEnumType, true, true> | OneToManyLink<TestEntity, TestEntityMultiLink> | OneToOneLink<TestEntity, TestEntitySingleLink>> = [
     TestEntity.KEY_PROPERTY_GUID,
     TestEntity.KEY_PROPERTY_STRING,
     TestEntity.STRING_PROPERTY,
@@ -598,29 +433,16 @@ export namespace TestEntity {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity> = new AllFields(
-    '*',
-    TestEntity
-  );
+  export const ALL_FIELDS: AllFields<TestEntity> = new AllFields('*', TestEntity);
   /**
    * All key fields of the TestEntity entity.
    */
-  export const _keyFields: Array<Field<TestEntity, boolean, boolean>> = [
-    TestEntity.KEY_PROPERTY_GUID,
-    TestEntity.KEY_PROPERTY_STRING
-  ];
+  export const _keyFields: Array<Field<TestEntity, boolean, boolean>> = [TestEntity.KEY_PROPERTY_GUID, TestEntity.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity.
    */
-  export const _keys: { [keys: string]: Field<TestEntity, boolean, boolean> } =
-    TestEntity._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<TestEntity, boolean, boolean> },
-        field: Field<TestEntity, boolean, boolean>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: { [keys: string]: Field<TestEntity, boolean, boolean> } = TestEntity._keyFields.reduce((acc: { [keys: string]: Field<TestEntity, boolean, boolean> }, field: Field<TestEntity, boolean, boolean>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

@@ -83,8 +83,7 @@ function parseReturnTypes(
     return getComplexReturnType(
       isCollection,
       isNullable,
-      complexType,
-      oDataVersion
+      complexType
     );
   }
 
@@ -196,15 +195,12 @@ function getEntityReturnType(
 function getComplexReturnType(
   isCollection: boolean,
   isNullable: boolean,
-  complexType: Omit<VdmComplexType, 'factoryName'>,
-  oDataVersion: ODataVersion
+  complexType: Omit<VdmComplexType, 'factoryName'>
 ): VdmFunctionImportReturnType {
   return {
     returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
-    builderFunction: `(data) => deserializeComplexType${caps(
-      oDataVersion
-    )}(data, ${complexType.typeName})`,
+    builderFunction: `(data) => deserializeComplexType(data, ${complexType.typeName})`,
     isMulti: isCollection,
     isNullable,
     isCollection

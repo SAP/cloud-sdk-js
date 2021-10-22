@@ -3,14 +3,8 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '../../../../../src';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
+import { GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -23,11 +17,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
-  getByKey(
-    keyPropertyGuid: string,
-    keyPropertyString: string
-  ): GetByKeyRequestBuilderV4<TestEntity> {
-    return new GetByKeyRequestBuilderV4(TestEntity, {
+  getByKey(keyPropertyGuid: string, keyPropertyString: string): GetByKeyRequestBuilder<TestEntity> {
+    return new GetByKeyRequestBuilder(TestEntity, {
       KeyPropertyGuid: keyPropertyGuid,
       KeyPropertyString: keyPropertyString
     });
@@ -37,8 +28,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * Returns a request builder for querying all `TestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
    */
-  getAll(): GetAllRequestBuilderV4<TestEntity> {
-    return new GetAllRequestBuilderV4(TestEntity);
+  getAll(): GetAllRequestBuilder<TestEntity> {
+    return new GetAllRequestBuilder(TestEntity);
   }
 
   /**
@@ -46,8 +37,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntity`.
    */
-  create(entity: TestEntity): CreateRequestBuilderV4<TestEntity> {
-    return new CreateRequestBuilderV4(TestEntity, entity);
+  create(entity: TestEntity): CreateRequestBuilder<TestEntity> {
+    return new CreateRequestBuilder(TestEntity, entity);
   }
 
   /**
@@ -55,8 +46,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntity`.
    */
-  update(entity: TestEntity): UpdateRequestBuilderV4<TestEntity> {
-    return new UpdateRequestBuilderV4(TestEntity, entity);
+  update(entity: TestEntity): UpdateRequestBuilder<TestEntity> {
+    return new UpdateRequestBuilder(TestEntity, entity);
   }
 
   /**
@@ -65,28 +56,17 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @param keyPropertyString Key property. See [[TestEntity.keyPropertyString]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntity`.
    */
-  delete(
-    keyPropertyGuid: string,
-    keyPropertyString: string
-  ): DeleteRequestBuilderV4<TestEntity>;
+  delete(keyPropertyGuid: string, keyPropertyString: string): DeleteRequestBuilder<TestEntity>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntity` by taking the entity as a parameter.
    */
-  delete(entity: TestEntity): DeleteRequestBuilderV4<TestEntity>;
-  delete(
-    keyPropertyGuidOrEntity: any,
-    keyPropertyString?: string
-  ): DeleteRequestBuilderV4<TestEntity> {
-    return new DeleteRequestBuilderV4(
-      TestEntity,
-      keyPropertyGuidOrEntity instanceof TestEntity
-        ? keyPropertyGuidOrEntity
-        : {
-            KeyPropertyGuid: keyPropertyGuidOrEntity!,
-            KeyPropertyString: keyPropertyString!
-          }
-    );
+  delete(entity: TestEntity): DeleteRequestBuilder<TestEntity>;
+  delete(keyPropertyGuidOrEntity: any, keyPropertyString?: string): DeleteRequestBuilder<TestEntity> {
+    return new DeleteRequestBuilder(TestEntity, keyPropertyGuidOrEntity instanceof TestEntity ? keyPropertyGuidOrEntity : {
+      KeyPropertyGuid: keyPropertyGuidOrEntity!,
+      KeyPropertyString: keyPropertyString!
+    });
   }
 }

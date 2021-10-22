@@ -4,21 +4,13 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { Casetest_1RequestBuilder } from './Casetest_1RequestBuilder';
-import {
-  AllFields,
-  Constructable,
-  CustomFieldV2,
-  EdmTypeField,
-  EntityBuilderType,
-  EntityV2,
-  Field,
-  FieldBuilder
-} from '../../../../../src';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
+import { AllFields, Constructable, EdmTypeField, EntityBuilderType, Field, FieldBuilder } from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_CASETEST" of service "API_TEST_SRV".
  */
-export class Casetest_1 extends EntityV2 implements Casetest_1Type {
+export class Casetest_1 extends Entity implements Casetest_1Type {
   /**
    * Technical entity name for Casetest_1.
    */
@@ -37,7 +29,7 @@ export class Casetest_1 extends EntityV2 implements Casetest_1Type {
    * @returns A builder that constructs instances of entity type `Casetest_1`.
    */
   static builder(): EntityBuilderType<Casetest_1, Casetest_1Type> {
-    return EntityV2.entityBuilder(Casetest_1);
+    return Entity.entityBuilder(Casetest_1);
   }
 
   /**
@@ -53,8 +45,8 @@ export class Casetest_1 extends EntityV2 implements Casetest_1Type {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Casetest_1`.
    */
-  static customField(fieldName: string): CustomFieldV2<Casetest_1> {
-    return EntityV2.customFieldSelector(fieldName, Casetest_1);
+  static customField(fieldName: string): CustomField<Casetest_1> {
+    return Entity.customFieldSelector(fieldName, Casetest_1);
   }
 
   /**
@@ -71,48 +63,31 @@ export interface Casetest_1Type {
 }
 
 export namespace Casetest_1 {
-  const _fieldBuilder: FieldBuilder<Constructable<Casetest_1>> =
-    new FieldBuilder(Casetest_1);
+  const _fieldBuilder: FieldBuilder<Constructable<Casetest_1>> = new FieldBuilder(Casetest_1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
-    'KeyPropertyString',
-    'Edm.String',
-    false
-  );
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false);
   /**
    * All fields of the Casetest_1 entity.
    */
-  export const _allFields: Array<
-    EdmTypeField<Casetest_1, 'Edm.String', false, true>
-  > = [Casetest_1.KEY_PROPERTY_STRING];
-  /**
-   * All fields selector.
-   */
-  export const ALL_FIELDS: AllFields<Casetest_1> = new AllFields(
-    '*',
-    Casetest_1
-  );
-  /**
-   * All key fields of the Casetest_1 entity.
-   */
-  export const _keyFields: Array<Field<Casetest_1, boolean, boolean>> = [
+  export const _allFields: Array<EdmTypeField<Casetest_1, 'Edm.String', false, true>> = [
     Casetest_1.KEY_PROPERTY_STRING
   ];
   /**
+   * All fields selector.
+   */
+  export const ALL_FIELDS: AllFields<Casetest_1> = new AllFields('*', Casetest_1);
+  /**
+   * All key fields of the Casetest_1 entity.
+   */
+  export const _keyFields: Array<Field<Casetest_1, boolean, boolean>> = [Casetest_1.KEY_PROPERTY_STRING];
+  /**
    * Mapping of all key field names to the respective static field property Casetest_1.
    */
-  export const _keys: { [keys: string]: Field<Casetest_1, boolean, boolean> } =
-    Casetest_1._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<Casetest_1, boolean, boolean> },
-        field: Field<Casetest_1, boolean, boolean>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: { [keys: string]: Field<Casetest_1, boolean, boolean> } = Casetest_1._keyFields.reduce((acc: { [keys: string]: Field<Casetest_1, boolean, boolean> }, field: Field<Casetest_1, boolean, boolean>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

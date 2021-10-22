@@ -12,7 +12,7 @@ describe('field-type-class', () => {
 
     expect(actual).toEqual({
       kind: StructureKind.Class,
-      name: 'ComplexMealField<EntityT extends EntityV2, NullableT extends boolean = false, SelectableT extends boolean = false>',
+      name: 'ComplexMealField<EntityT extends Entity, NullableT extends boolean = false, SelectableT extends boolean = false>',
       extends:
         'ComplexTypeField<EntityT, ComplexMealType, NullableT, SelectableT>',
       isExported: true,
@@ -80,7 +80,7 @@ describe('field-type-class', () => {
     const actual = fieldTypeClass(complexMealWithDesert, 'v4');
     expect(actual).toEqual({
       kind: StructureKind.Class,
-      name: 'ComplexMealWithDesertField<EntityT extends EntityV4, NullableT extends boolean = false, SelectableT extends boolean = false>',
+      name: 'ComplexMealWithDesertField<EntityT extends Entity, NullableT extends boolean = false, SelectableT extends boolean = false>',
       extends:
         'ComplexTypeField<EntityT, ComplexMealWithDesertType, NullableT, SelectableT>',
       isExported: true,

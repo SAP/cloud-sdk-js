@@ -1,4 +1,3 @@
-import { caps } from '@sap-cloud-sdk/util';
 import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 
@@ -55,6 +54,6 @@ export function functionImportReturnType(
 ): string {
   return actionFunctionImportReturnType(
     actionImport,
-    `FunctionImportRequestBuilder${caps(oDataVersion)}`
+    'FunctionImportRequestBuilder'
   );
 }

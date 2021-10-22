@@ -1,4 +1,4 @@
-import { EdmTypeShared } from '@sap-cloud-sdk/core';
+import { EdmTypeShared } from '@sap-cloud-sdk/odata-common';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmNavigationProperty,

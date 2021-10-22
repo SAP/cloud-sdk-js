@@ -139,7 +139,8 @@ export async function generateSourcesForService(
         service.npmPackageName,
         await getVersionForClient(options.versionInPackageJson),
         getServiceDescription(service, options),
-        options.sdkAfterVersionScript
+        options.sdkAfterVersionScript,
+          service.oDataVersion
       ),
       options.forceOverwrite
     );

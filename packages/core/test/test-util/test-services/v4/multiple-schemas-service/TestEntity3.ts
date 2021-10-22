@@ -6,22 +6,13 @@
 import { TestEntity3RequestBuilder } from './TestEntity3RequestBuilder';
 import { TestComplexType2, TestComplexType2Field } from './TestComplexType2';
 import { TestEnumType2 } from './TestEnumType2';
-import {
-  AllFields,
-  Constructable,
-  CustomFieldV4,
-  EdmTypeField,
-  EntityBuilderType,
-  EntityV4,
-  EnumField,
-  Field,
-  FieldBuilder
-} from '../../../../../src';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
+import { AllFields, Constructable, EdmTypeField, EntityBuilderType, EnumField, Field, FieldBuilder } from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class TestEntity3 extends EntityV4 implements TestEntity3Type {
+export class TestEntity3 extends Entity implements TestEntity3Type {
   /**
    * Technical entity name for TestEntity3.
    */
@@ -50,7 +41,7 @@ export class TestEntity3 extends EntityV4 implements TestEntity3Type {
    * @returns A builder that constructs instances of entity type `TestEntity3`.
    */
   static builder(): EntityBuilderType<TestEntity3, TestEntity3Type> {
-    return EntityV4.entityBuilder(TestEntity3);
+    return Entity.entityBuilder(TestEntity3);
   }
 
   /**
@@ -66,8 +57,8 @@ export class TestEntity3 extends EntityV4 implements TestEntity3Type {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity3`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntity3> {
-    return EntityV4.customFieldSelector(fieldName, TestEntity3);
+  static customField(fieldName: string): CustomField<TestEntity3> {
+    return Entity.customFieldSelector(fieldName, TestEntity3);
   }
 
   /**
@@ -86,43 +77,26 @@ export interface TestEntity3Type {
 }
 
 export namespace TestEntity3 {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntity3>> =
-    new FieldBuilder(TestEntity3);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntity3>> = new FieldBuilder(TestEntity3);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
-    'KeyPropertyString',
-    'Edm.String',
-    false
-  );
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false);
   /**
    * Static representation of the [[enumProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const ENUM_PROPERTY = _fieldBuilder.buildEnumField(
-    'EnumProperty',
-    TestEnumType2,
-    true
-  );
+  export const ENUM_PROPERTY = _fieldBuilder.buildEnumField('EnumProperty', TestEnumType2, true);
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
-    'ComplexTypeProperty',
-    TestComplexType2Field,
-    true
-  );
+  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestComplexType2Field, true);
   /**
    * All fields of the TestEntity3 entity.
    */
-  export const _allFields: Array<
-    | EdmTypeField<TestEntity3, 'Edm.String', false, true>
-    | EnumField<TestEntity3, TestEnumType2, true, true>
-    | TestComplexType2Field<TestEntity3, true, true>
-  > = [
+  export const _allFields: Array<EdmTypeField<TestEntity3, 'Edm.String', false, true> | EnumField<TestEntity3, TestEnumType2, true, true> | TestComplexType2Field<TestEntity3, true, true>> = [
     TestEntity3.KEY_PROPERTY_STRING,
     TestEntity3.ENUM_PROPERTY,
     TestEntity3.COMPLEX_TYPE_PROPERTY
@@ -130,28 +104,16 @@ export namespace TestEntity3 {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntity3> = new AllFields(
-    '*',
-    TestEntity3
-  );
+  export const ALL_FIELDS: AllFields<TestEntity3> = new AllFields('*', TestEntity3);
   /**
    * All key fields of the TestEntity3 entity.
    */
-  export const _keyFields: Array<Field<TestEntity3, boolean, boolean>> = [
-    TestEntity3.KEY_PROPERTY_STRING
-  ];
+  export const _keyFields: Array<Field<TestEntity3, boolean, boolean>> = [TestEntity3.KEY_PROPERTY_STRING];
   /**
    * Mapping of all key field names to the respective static field property TestEntity3.
    */
-  export const _keys: { [keys: string]: Field<TestEntity3, boolean, boolean> } =
-    TestEntity3._keyFields.reduce(
-      (
-        acc: { [keys: string]: Field<TestEntity3, boolean, boolean> },
-        field: Field<TestEntity3, boolean, boolean>
-      ) => {
-        acc[field._fieldName] = field;
-        return acc;
-      },
-      {}
-    );
+  export const _keys: { [keys: string]: Field<TestEntity3, boolean, boolean> } = TestEntity3._keyFields.reduce((acc: { [keys: string]: Field<TestEntity3, boolean, boolean> }, field: Field<TestEntity3, boolean, boolean>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

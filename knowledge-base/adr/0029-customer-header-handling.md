@@ -42,7 +42,8 @@ Merge the two in the following way shortly before the execution:
 - The priority for this flat merge of the rest is: HttpRequestConfig > DestinationHttpRequestConfig > getAxiosConfigWithDefaults()
 - Use the resulting request config to execute the request.
 
-Note: In the `execute()` method also the CSRF token header is filled. This header should consider as SdkHeader from a origin.
+Note: In the `execute()` method the CSRF token header is also filled.
+This header should consider as SdkHeader from an origin.
 
 ### How to make headers distinguishable
 

@@ -47,7 +47,7 @@ This header should consider as SdkHeader from an origin.
 
 ### How to make headers distinguishable
 
-We have twice the same problem in the `HttpRequestConfig` and `DestinationHttpRequestConfig`.
+We have the same problem in both the `HttpRequestConfig` and `DestinationHttpRequestConfig`.
 Both contain a single `header` property typed `Record<string,any>` or `Record<string,string>` which contains two sources of headers.
 
 - **Option A**: Keep the single property but use a `HeaderValueObject` containing the value but also information on the origin.

@@ -1611,21 +1611,21 @@
   dependencies:
     antlr4 "4.8.0"
 
-"@sap/cds-dk@4.4.2":
-  version "4.4.2"
-  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.4.2.tgz#0838440e470aa55722e02a4f4b145a77de7158f0"
-  integrity sha512-ckfyHfCWE17PO5q/WkxhOLo/M/IDjrIRWbknLnSs44WNmbwmraQO/lJ96soNGY/RgZ30JFHQMdxrKZV8co7/pw==
+"@sap/cds-dk@4.5.4":
+  version "4.5.4"
+  resolved "https://registry.npmjs.org/@sap/cds-dk/-/cds-dk-4.5.4.tgz#9f3e16c8caff522e5733c0ed3061a9f21cf9a07f"
+  integrity sha512-cP2FiQccTHCqdrltyJI4+SOZgSw2ZxuWmC8IxzV+b6qk9p5B2GIHNb8a++ukOKescVVKxCbIaMJeXNAdVJPd/Q==
   dependencies:
-    "@sap/cds" "^5.4.0"
+    "@sap/cds" "^5.5.0"
     "@sap/cds-foss" "^3"
-    "@sap/cds-sidecar-client" "^1.1.23"
-    "@sap/eslint-plugin-cds" "2.0.4"
-    axios "^0.21.0"
+    "@sap/eslint-plugin-cds" "^2.1.0"
+    axios "^0.21.4"
     connect-livereload "^0.6.1"
     eslint "^7.0.0"
     express "^4.17.1"
     htmlparser2 "5.0.1"
     livereload-js "^3.3.1"
+    md5 "^2.3.0"
     mustache "^4.0.1"
     node-watch "0.6.4"
     passport "^0.4.1"
@@ -1647,15 +1647,7 @@
     xmlbuilder "15.1.1"
     yaml "1.10.2"
 
-"@sap/cds-sidecar-client@^1.1.23":
-  version "1.1.23"
-  resolved "https://registry.npmjs.org/@sap/cds-sidecar-client/-/cds-sidecar-client-1.1.23.tgz#d928ce33809587724dc30da4b83ce99131eeda66"
-  integrity sha512-4IQStF2NJnqECLU0e7EohhkmCeSc2QjGJ/bcewegoJl+x4IBOu8LzkgJaSGirzT7INuy/Z4BOJVkVh1Ek+P5Qw==
-  dependencies:
-    axios "^0.21.1"
-    fs-extra "9.0.1"
-
-"@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.5.4":
+"@sap/cds@^5.0.0", "@sap/cds@^5.5.0", "@sap/cds@^5.5.4":
   version "5.5.5"
   resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.5.5.tgz#9c4b13041d9425ed1e38351272a6299554279490"
   integrity sha512-UwJSIbt5j0q6/qR3CfS7DAYR1tb32NK1CJ2pjk/3G002m6c/QStMIx1TS5uPFWJwKA9JxkNA85/UrMPdak4ufA==
@@ -1682,10 +1674,10 @@
     request "=2.88.0"
     xml-js "=1.6.8"
 
-"@sap/eslint-plugin-cds@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-2.0.4.tgz#f7adfad2e290e655a122b48d244d8d55cf3663d3"
-  integrity sha512-lKH5rXCogV4DDf9N+J5a6FUqB/YQRIzpRQcQCg7BvA+nTHXiOt2aBf4SYVunkic6d88j5uapHqIl0D6x0rHFsA==
+"@sap/eslint-plugin-cds@^2.1.0":
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/@sap/eslint-plugin-cds/-/eslint-plugin-cds-2.1.1.tgz#1e5aee2e5cd0e61c6740c96e5bbf1cdd9e88a12d"
+  integrity sha512-7VVJ1r2aexoU5aTzYFwfvP9GwPfdJpbO0tGcLVI19CmoAjbW8K12/4linev5enusPLM7yOLi8c2JjFWwGim/Dg==
   dependencies:
     "@sap/cds" "^5.0.0"
     semver "^7.3.4"
@@ -2867,6 +2859,11 @@ chardet@^0.7.0:
   resolved "https://registry.npmjs.org/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
+charenc@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
+  integrity sha1-wKHS86cJLgN3S/qD8UwPxXkKhmc=
+
 charm@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/charm/-/charm-1.0.2.tgz#8add367153a6d9a581331052c4090991da995e35"
@@ -3311,6 +3308,11 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+crypt@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
+  integrity sha1-iNf/fsDfuG9xPch7u0LQRNPmxBs=
 
 cssom@^0.4.4:
   version "0.4.4"
@@ -4568,16 +4570,6 @@ fs-extra@10.0.0, fs-extra@^10.0.0:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
-fs-extra@9.0.1:
-  version "9.0.1"
-  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.0.1.tgz#910da0062437ba4c39fedd863f1675ccfefcb9fc"
-  integrity sha512-h2iAoN838FqAFJY2/qVpzFXy+EBxfVE220PalAqQLDVsFOHLJrZvut5puAbCdNv6WJk+B8ihI+k0c7JK5erwqQ==
-  dependencies:
-    at-least-node "^1.0.0"
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^1.0.0"
-
 fs-extra@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-6.0.1.tgz#8abc128f7946e310135ddc93b98bddb410e7a34b"
@@ -5256,6 +5248,11 @@ is-boolean-object@^1.1.0:
   dependencies:
     call-bind "^1.0.2"
     has-tostringtag "^1.0.0"
+
+is-buffer@~1.1.6:
+  version "1.1.6"
+  resolved "https://registry.npmjs.org/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
+  integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
 
 is-callable@^1.1.4, is-callable@^1.2.4:
   version "1.2.4"
@@ -6690,6 +6687,15 @@ marked@^3.0.4:
   resolved "https://registry.npmjs.org/marked/-/marked-3.0.7.tgz#343aad9e91b96249b495c99c512ea09cfe06de1e"
   integrity sha512-ctKqbnLuNbsHbI26cfMyOlKgXGfl1orOv1AvWWDX7AkgfMOwCWvmuYc+mVLeWhQ9W6hdWVBynOs96VkcscKo0Q==
 
+md5@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/md5/-/md5-2.3.0.tgz#c3da9a6aae3a30b46b7b0c349b87b110dc3bda4f"
+  integrity sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==
+  dependencies:
+    charenc "0.0.2"
+    crypt "0.0.2"
+    is-buffer "~1.1.6"
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
@@ -8007,9 +8013,9 @@ postcss-values-parser@^5.0.0:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.1.7, postcss@^8.2.13:
-  version "8.3.10"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.3.10.tgz#4d614e108ccc69c65c2f6dc6cec23dd5c85b73af"
-  integrity sha512-YYfvfUdWx+ECpr5Hgc6XRfsaux8LksL5ey8qTtWiuRXOpOF1YYMwAySdh0nSmwhZAFvvJ6rgiIkKVShu4x2T1Q==
+  version "8.3.11"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.3.11.tgz#c3beca7ea811cd5e1c4a3ec6d2e7599ef1f8f858"
+  integrity sha512-hCmlUAIlUiav8Xdqw3Io4LcpA1DOt7h3LSTAC4G6JGHFFaWzI6qvFt9oilvl8BmkbBRX1IhM90ZAmpk68zccQA==
   dependencies:
     nanoid "^3.1.30"
     picocolors "^1.0.0"
@@ -9794,11 +9800,6 @@ universalify@^0.1.0, universalify@^0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
-
-universalify@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/universalify/-/universalify-1.0.0.tgz#b61a1da173e8435b2fe3c67d29b9adf8594bd16d"
-  integrity sha512-rb6X1W158d7pRQBg5gkR8uPaSfiids68LTJQYOtEUhoJUWBdaQHsuT/EUduxXYxcrt4r5PJ4fuHW1MHT6p0qug==
 
 universalify@^2.0.0:
   version "2.0.0"

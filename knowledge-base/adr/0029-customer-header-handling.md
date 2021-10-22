@@ -11,7 +11,7 @@ This ADR discusses possible solutions and if it should be implemented in version
 There are three sources of headers:
 
 1. Custom headers set by the `addCustomHeaders()` on the [odata-request-config.ts](../../packages/core/src/odata-common/request/odata-delete-request-config.ts) or [openapi-request-builder.ts](../../packages/core/src/openapi/openapi-request-builder.ts)
-2. Destination related header. These come in two flavors:
+2. Destination related headers. These come in two flavors:
    1. Auth tokens for the target system and proxy headers from the destination and connectivity service [buildAuthorizationHeaders](../../packages/connectivity/src/scp-cf/authorization-header.ts)
    2. Based on destination properties set by the user (see [getAdditionalHeadersAndQueryParameters](../../packages/connectivity/src/scp-cf/destination/destination.ts).
 3. SDK related headers like `eTag` (only OData) found in the `headers()` method in the [odata-request.ts](../../packages/core/src/odata-common/request/odata-request.ts).

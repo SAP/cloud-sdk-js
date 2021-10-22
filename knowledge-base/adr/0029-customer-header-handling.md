@@ -22,7 +22,7 @@ The problem is also present to a smaller extend for query parameters, which can 
 
 The root problem is that the header object is `Record<string,any>` and once we collect headers on the way it is not clear where they come from.
 We have to keep track on the header origin to enforce the right priority.
-A cleaner solution should look like:
+A cleaner solution could be:
 
 - The `execute()` method of [odata-request.ts](../../packages/core/src/odata-common/request/odata-request.ts) and [openapi-request-builder.ts](../../packages/core/src/openapi/openapi-request-builder.ts) take the [HttpRequestConfig](../../packages/http-client/src/http-client-types.ts) as input.
   This object has a `headers` property in which all headers go.

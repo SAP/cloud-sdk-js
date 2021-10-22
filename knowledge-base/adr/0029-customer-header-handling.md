@@ -38,7 +38,7 @@ Merge the two in the following way shortly before the execution:
 - Merge parameter with priority: CustomParameter > DestinationParameter.
 - Merge on structured object means: Ignore casing for the keys merging and keep the original casing from object with the highest priority.
   The `mergeLeftIgnoreCase()` method should do the trick.
-- Merge the remaining parts (not header, hot parameter) of `getAxiosConfigWithDefaults()`, `HttpRequestConfig` and `DestinationHttpRequestConfig`.
+- Merge the remaining parts (not header, not parameter) of `getAxiosConfigWithDefaults()`, `HttpRequestConfig` and `DestinationHttpRequestConfig`.
 - The priority for this flat merge of the rest is: HttpRequestConfig > DestinationHttpRequestConfig > getAxiosConfigWithDefaults()
 - Use the resulting request config to execute the request.
 

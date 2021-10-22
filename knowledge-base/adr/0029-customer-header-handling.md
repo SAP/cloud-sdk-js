@@ -28,7 +28,7 @@ A cleaner solution could be:
   This object has a `headers` property in which all headers go.
   This should be changed to make the custom and SDK headers distinguishable (see section below for details).
 - The two destination related headers are currently merged together by the `buildHttpRequest()` in the [http-client.ts](../../packages/http-client/src/http-client.ts).
-  The resulting `DestinationHttpRequestConfig` should be adjusted to make property and service related header distinguishable (see section below for details).
+  The resulting `DestinationHttpRequestConfig` should be adjusted to make property and service related headers distinguishable (see section below for details).
 - The `HttpRequestConfig` and `DestinationHttpRequestConfig` go down to the final `execute()` in the [http-client.ts](../../packages/http-client/src/http-client.ts).
 
 These two objects contain all the header and parameter and the rest of the http request config.

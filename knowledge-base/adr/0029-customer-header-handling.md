@@ -31,7 +31,7 @@ A cleaner solution could be:
   The resulting `DestinationHttpRequestConfig` should be adjusted to make property and service related headers distinguishable (see section below for details).
 - The `HttpRequestConfig` and `DestinationHttpRequestConfig` go down to the final `execute()` in the [http-client.ts](../../packages/http-client/src/http-client.ts).
 
-These two objects contain all the header and parameter and the rest of the http request config.
+These two objects contain all the headers and parameters and the rest of the http request config.
 Merge the two in the following way shortly before the execution:
 
 - Merge header with priority: CustomHeader > DestinationHeader (Properties) > DestinationHeader (Service) > SdkHeader.

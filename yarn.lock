@@ -1699,9 +1699,9 @@
     verror "1.10.0"
 
 "@sap/xssec@^3.2.7":
-  version "3.2.8"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.8.tgz#ffcd5bdc6522f83ec893039aa83ca985fdf5050f"
-  integrity sha512-0ZtPJQp5lwKaok5bFYHDtg/IrKRrj9gJQ0xu17GNNK9lJuKYbhTEPONrl4lRXGH50pQq4T5yUo3ogu152WCYSw==
+  version "3.2.9"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.9.tgz#753401e97b7826f4e5c4af99d5bf946a9710df48"
+  integrity sha512-u7WagIgcY8WhUDMw+wqlJMbJ1vh7qhZvp+zrbrLVSYAq/b9NnnW7XfJs5il4Xy0/ZMct1TWnquqQefucXmoaxw==
   dependencies:
     axios "^0.21.4"
     debug "4.3.2"
@@ -8007,9 +8007,9 @@ postcss-values-parser@^5.0.0:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.1.7, postcss@^8.2.13:
-  version "8.3.10"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.3.10.tgz#4d614e108ccc69c65c2f6dc6cec23dd5c85b73af"
-  integrity sha512-YYfvfUdWx+ECpr5Hgc6XRfsaux8LksL5ey8qTtWiuRXOpOF1YYMwAySdh0nSmwhZAFvvJ6rgiIkKVShu4x2T1Q==
+  version "8.3.11"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.3.11.tgz#c3beca7ea811cd5e1c4a3ec6d2e7599ef1f8f858"
+  integrity sha512-hCmlUAIlUiav8Xdqw3Io4LcpA1DOt7h3LSTAC4G6JGHFFaWzI6qvFt9oilvl8BmkbBRX1IhM90ZAmpk68zccQA==
   dependencies:
     nanoid "^3.1.30"
     picocolors "^1.0.0"

@@ -14,11 +14,30 @@
 
 ## Compatibility Notes
 
-- [core] Tighten the return type of the `getAuthHeaders()` and `buildAuthorizationHeaders()` functions.
+-
 
 ## New Functionality
 
 -
+
+## Improvements
+
+-
+
+## Fixed Issues
+
+-
+
+
+# 1.51.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.51.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [core] Tighten the return type of the `getAuthHeaders()` and `buildAuthorizationHeaders()` functions.
 
 ## Improvements
 

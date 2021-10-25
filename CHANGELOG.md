@@ -26,10 +26,10 @@
 
 ## Fixed Issues
 
-- [odata] Fix parsing of `Edm.Time` missing some parts of the time e.g. `PT1H21S`.
+- [odata] Fix parsing of `Edm.Time` when some parts of the time are missing, e.g. `PT1H21S`.
 - [util] `setGlobalLogLevel(level)` sets log levels of all existing loggers globally.
 - [util] Fix `equal(item1, item2)` method to return `false` when either object is `null` or `undefined`.
-- [openapi-generator] Existing service mapping is merged with new service mapping instead of overwriting.
+- [openapi-generator] Existing options per service (`--optionsPerService`) are merged with new options instead of overwriting.
 
 # 1.50.0
 

@@ -8,5 +8,3 @@ export function extractODataEtag(
 ): string | undefined {
   return json?.['@odata.etag'];
 }
-
-export { extractODataEtag as extractODataEtagV4 };

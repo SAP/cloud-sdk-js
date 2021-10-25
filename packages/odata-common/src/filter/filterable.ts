@@ -1,14 +1,13 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
-import { FieldType, OneToManyLink } from '../selectable';
-import {
-  FilterLambdaExpression,
-  BooleanFilterFunction,
-  Filter,
-  FilterLink,
-  FilterList,
-  UnaryFilter
-} from './index';
+import {BooleanFilterFunction} from "./boolean-filter-function";
+import {Filter} from "./filter";
+import {UnaryFilter} from "./unary-filter";
+import {OneToManyLink} from "../selectable/one-to-many-link";
+import {FilterList} from "./filter-list";
+import {FilterLambdaExpression} from "./filter-lambda-expression";
+import {FilterLink} from "./filter-link";
+import {FieldType} from "../selectable/field";
 
 /**
  * A union of all types that can be used for filtering.

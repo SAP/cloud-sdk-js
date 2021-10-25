@@ -1,8 +1,9 @@
 import { Entity, Constructable } from '../entity';
-import { FieldType } from '../selectable';
-import { ODataUri } from '../uri-conversion';
+
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
+import {ODataUri} from "../uri-conversion/odata-uri";
+import {FieldType} from "../selectable/field";
 
 /**
  * OData update request configuration for an entity type.

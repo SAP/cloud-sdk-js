@@ -22,4 +22,3 @@ export function getSelect<EntityT extends Entity>(
   return {};
 }
 
-export { getSelect as getSelectV4 };

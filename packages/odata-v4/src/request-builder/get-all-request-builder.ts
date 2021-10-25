@@ -11,8 +11,8 @@ import {
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
+import {oDataUri} from "../uri-conversion/odata-uri";
 export class GetAllRequestBuilder<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT>
@@ -54,4 +54,3 @@ export class GetAllRequestBuilder<EntityT extends Entity>
   }
 }
 
-export { GetAllRequestBuilder as GetAllRequestBuilderV4 };

@@ -11,8 +11,8 @@ import {
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
-import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
+import {oDataUri} from "../uri-conversion/odata-uri";
 
 export class UpdateRequestBuilder<
   EntityT extends Entity
@@ -73,4 +73,3 @@ export class UpdateRequestBuilder<
   }
 }
 
-export { UpdateRequestBuilder as UpdateRequestBuilderV4 };

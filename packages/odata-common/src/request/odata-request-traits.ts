@@ -1,7 +1,9 @@
 import { Entity } from '../entity';
-import { Filterable } from '../filter';
-import { Orderable } from '../order';
-import { FieldType, Selectable } from '../selectable';
+import {Selectable} from "../selectable/selectable";
+import {Filterable} from "../filter/filterable";
+import {Orderable} from "../order/orderable";
+import {FieldType} from "../selectable/field";
+
 
 /**
  * @hidden

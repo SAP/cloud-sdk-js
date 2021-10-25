@@ -29,7 +29,7 @@ export function changeset(first: undefined | WriteMicrosoftODataServiceSampleTri
   return new ODataBatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
-export const defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath = 'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
+/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 const map = { 'Photos': Photos, 'People': People, 'Airlines': Airlines, 'Airports': Airports };
 export type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder = GetAllRequestBuilder<Photos> | GetAllRequestBuilder<People> | GetAllRequestBuilder<Airlines> | GetAllRequestBuilder<Airports> | GetByKeyRequestBuilder<Photos> | GetByKeyRequestBuilder<People> | GetByKeyRequestBuilder<Airlines> | GetByKeyRequestBuilder<Airports>;
 export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder = CreateRequestBuilder<Photos> | UpdateRequestBuilder<Photos> | DeleteRequestBuilder<Photos> | CreateRequestBuilder<People> | UpdateRequestBuilder<People> | DeleteRequestBuilder<People> | CreateRequestBuilder<Airlines> | UpdateRequestBuilder<Airlines> | DeleteRequestBuilder<Airlines> | CreateRequestBuilder<Airports> | UpdateRequestBuilder<Airports> | DeleteRequestBuilder<Airports>;

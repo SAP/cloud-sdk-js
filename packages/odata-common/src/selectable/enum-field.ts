@@ -1,9 +1,9 @@
 import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
-import { Filter } from '../filter';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
+import {Filter} from "../filter/filter";
 
 /**
  * Represents a property with an enum value.

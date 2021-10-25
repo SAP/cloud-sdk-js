@@ -37,5 +37,3 @@ export const uriConverter: UriConverter = {
     return converted;
   }
 };
-
-export { uriConverters as uriConvertersV4, uriConverter as uriConverterV4 };

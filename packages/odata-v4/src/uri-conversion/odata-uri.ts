@@ -1,9 +1,9 @@
 import {
   createGetFilter,
   createGetResourcePathForKeys,
-  getEntityKeys,
   getOrderBy,
-  ODataUri
+  ODataUri,
+  getEntityKeys
 } from '@sap-cloud-sdk/odata-common';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
@@ -27,4 +27,4 @@ export const oDataUri: ODataUri = {
   convertToUriFormat
 };
 
-export { oDataUri as oDataUriV4 };
+

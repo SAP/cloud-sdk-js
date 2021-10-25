@@ -5,14 +5,14 @@ import {
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { ODataCreateRequestConfig } from '../request';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion/odata-uri';
 import type { Constructable, Entity, EntityIdentifiable } from '../entity';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
-import type { Link } from '../selectable';
 import { MethodRequestBuilder } from './request-builder-base';
+import {ODataCreateRequestConfig} from "../request/odata-create-request-config";
+import {Link} from "../selectable/link";
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.

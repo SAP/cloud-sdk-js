@@ -1,9 +1,11 @@
-import { Selectable, FieldType } from '../selectable';
 import { Expandable } from '../expandable';
 import { Entity, Constructable } from '../entity';
-import { Filterable } from '../filter';
-import { Orderable } from '../order';
+
 import { EdmTypeShared } from '../edm-types';
+import {Filterable} from "../filter/filterable";
+import {Selectable} from "../selectable/selectable";
+import {Orderable} from "../order/orderable";
+import {FieldType} from "../selectable/field";
 
 /**
  * Union of necessary methods for the OData URI conversion.

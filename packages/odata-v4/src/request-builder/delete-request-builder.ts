@@ -5,7 +5,7 @@ import {
   FieldType
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
-import { oDataUri } from '../uri-conversion';
+import {oDataUri} from "../uri-conversion/odata-uri";
 /**
  * Create OData query to delete an entity.
  * @typeparam EntityT - Type of the entity to be deleted
@@ -42,4 +42,3 @@ export class DeleteRequestBuilder<EntityT extends Entity>
   }
 }
 
-export { DeleteRequestBuilder as DeleteRequestBuilderV4 };

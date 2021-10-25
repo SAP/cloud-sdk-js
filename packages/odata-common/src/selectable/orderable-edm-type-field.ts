@@ -1,7 +1,7 @@
-import { Filter } from '../filter';
 import { Entity } from '../entity';
 import { EdmTypeShared } from '../edm-types';
 import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
+import {Filter} from "../filter/filter";
 
 /**
  * [[EdmTypeField]], that represents a property with an EDM type, that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.

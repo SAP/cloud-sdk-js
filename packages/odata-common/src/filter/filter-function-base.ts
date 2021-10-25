@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { Entity, ODataVersionOf } from '../entity';
-import { Field, FieldType } from '../selectable';
 import { Filter } from './filter';
+import {Field, FieldType} from "../selectable/field";
 
 /**
  * Data structure to represent OData filter functions.

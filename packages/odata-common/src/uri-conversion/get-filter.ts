@@ -14,7 +14,7 @@ import {OneToManyLink} from "../selectable/one-to-many-link";
 import {ComplexTypeField} from "../selectable/complex-type-field";
 import {FilterFunction, FilterFunctionParameterType} from "../filter/filter-function-base";
 import {FieldType} from "../selectable/field";
-import {Filter} from "../filter/filter";
+import {Filter, isFilter} from "../filter/filter";
 
 type GetFilterType<EntityT extends Entity> = (
   filter: Filterable<EntityT>,

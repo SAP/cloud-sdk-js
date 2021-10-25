@@ -1,7 +1,9 @@
 import { Entity } from '../entity';
-import { Filterable, FilterLink, toFilterableList } from '../filter';
-import { Orderable } from '../order';
+
 import { Link } from './link';
+import {FilterLink} from "../filter/filter-link";
+import {Orderable} from "../order/orderable";
+import {Filterable, toFilterableList} from "../filter/filterable";
 
 /**
  * Represents a one to many relation for OData v4 entities.

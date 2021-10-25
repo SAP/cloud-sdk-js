@@ -78,4 +78,3 @@ export const responseDataAccessor: ResponseDataAccessor = {
   isCollectionResult
 };
 
-export { responseDataAccessor as responseDataAccessorV4 };

@@ -46,4 +46,3 @@ export class ODataFunctionImportRequestConfig<
   }
 }
 
-export { ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigV4 };

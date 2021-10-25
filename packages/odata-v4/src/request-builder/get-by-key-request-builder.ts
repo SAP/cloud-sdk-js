@@ -6,10 +6,10 @@ import {
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 import {GetByKeyRequestBuilderBase} from "@sap-cloud-sdk/odata-common/dist/request-builder/get-by-key-request-builder";
 import {FieldType} from "@sap-cloud-sdk/odata-common/dist/selectable/field";
+import {oDataUri} from "../uri-conversion/odata-uri";
 /**
  * Create an OData request to get a single entity based on its key properties.
  * The properties available in the response can be restricted by creating a [[GetByKeyRequestBuilderV4.select selection]], where no selection is equal to selecting all fields of the entity.
@@ -51,5 +51,3 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
     return this;
   }
 }
-
-export { GetByKeyRequestBuilder as GetByKeyRequestBuilderV4 };

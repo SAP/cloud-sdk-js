@@ -1,5 +1,5 @@
 import { Entity as EntityBase, Constructable } from '@sap-cloud-sdk/odata-common';
-import { CustomField } from './selectable';
+import {CustomField} from "./selectable/custom-field";
 
 /**
  * Super class for all representations of OData v4 entity types.
@@ -18,5 +18,3 @@ export abstract class Entity extends EntityBase {
 
   readonly _oDataVersion: 'v4' = 'v4';
 }
-
-export { Entity as EntityV4 };

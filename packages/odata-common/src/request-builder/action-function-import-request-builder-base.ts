@@ -4,8 +4,8 @@ import {
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { ODataRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
+import {ODataRequestConfig} from "../request/odata-request-config";
 
 /**
  * Create OData request to execute a action or function import.

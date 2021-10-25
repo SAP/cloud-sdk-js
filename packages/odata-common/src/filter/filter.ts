@@ -5,9 +5,9 @@ import {
   EntityIdentifiable,
   ODataVersionOf
 } from '../entity';
-import { FieldType } from '../selectable';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
+import {FieldType} from "../selectable/field";
 
 type FilterOperatorString = 'eq' | 'ne';
 type FilterOperatorBoolean = 'eq' | 'ne';

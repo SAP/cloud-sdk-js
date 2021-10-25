@@ -1,8 +1,7 @@
 import { ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase } from '@sap-cloud-sdk/odata-common';
-import {
-  ActionImportParameters,
-  ODataActionImportRequestConfig
-} from '../request';
+import {ODataActionImportRequestConfig} from "../request/odata-action-import-request-config";
+import {ActionImportParameters} from "../request/action-import-parameter";
+
 
 /**
  * Create an OData request to execute an action import.

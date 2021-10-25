@@ -1,9 +1,10 @@
 import { Entity, Constructable } from '../entity';
-import { FieldType, Selectable } from '../selectable';
 import { Expandable } from '../expandable';
-import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithSelection } from './odata-request-traits';
+import {Selectable} from "../selectable/selectable";
+import {ODataUri} from "../uri-conversion/odata-uri";
+import {FieldType} from "../selectable/field";
 
 /**
  * OData getByKey request configuration for an entity type.

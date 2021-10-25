@@ -5,4 +5,3 @@ import { EdmTypeCommon, ExclusiveEdmTypeV4 } from '@sap-cloud-sdk/odata-common';
  */
 export type EdmType = EdmTypeCommon | ExclusiveEdmTypeV4;
 
-export { EdmType as EdmTypeV4 };

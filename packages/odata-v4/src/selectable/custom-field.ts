@@ -40,5 +40,3 @@ export class CustomField<
     );
   }
 }
-
-export { CustomField as CustomFieldV4 };

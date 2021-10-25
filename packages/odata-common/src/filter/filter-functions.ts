@@ -1,10 +1,10 @@
 import moment from 'moment';
 import { Entity } from '../entity';
-import { Field } from '../selectable';
 import { StringFilterFunction } from './string-filter-function';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { filterFunction } from './filter-function';
 import { NumberFilterFunction } from './number-filter-function';
+import {Field} from "../selectable/field";
 
 /* String Functions */
 /**

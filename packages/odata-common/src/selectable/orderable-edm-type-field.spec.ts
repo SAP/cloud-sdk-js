@@ -4,9 +4,9 @@ import {
   TestEntity
 } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
 import { Entity } from '../entity';
-import { Filter } from '../filter';
 import { FieldType } from './field';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
+import {Filter} from "../filter/filter";
 
 export function checkFilter<EntityT extends Entity, FieldT extends FieldType>(
   filter: Filter<EntityT, FieldT>,

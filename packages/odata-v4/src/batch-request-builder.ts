@@ -38,5 +38,3 @@ export class ODataBatchRequestBuilder extends BatchRequestBuilder {
       });
   }
 }
-
-export { ODataBatchRequestBuilder as ODataBatchRequestBuilderV4 };

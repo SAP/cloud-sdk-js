@@ -1,11 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common';
 import { Entity } from './entity';
-import {
-  CreateRequestBuilder,
-  DeleteRequestBuilder,
-  UpdateRequestBuilder
-} from './request-builder';
+import {CreateRequestBuilder} from "./request-builder/create-request-builder";
+import {UpdateRequestBuilder} from "./request-builder/update-request-builder";
+import {DeleteRequestBuilder} from "./request-builder/delete-request-builder";
+
 
 /**
  * @deprecated Since v1.30.0. Use [[BatchChangeSet]] directly
@@ -35,5 +34,3 @@ export class ODataBatchChangeSet<
     readonly boundary: string = `changeset_${uuid()}`
   ) {}
 }
-
-export { ODataBatchChangeSet as ODataBatchChangeSetV4 };

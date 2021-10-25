@@ -1,10 +1,10 @@
 import { Entity } from '../entity';
-import { FieldType } from '../selectable';
 import { EdmTypeShared } from '../edm-types';
 import {
   FilterFunction,
   FilterFunctionParameterType
 } from './filter-function-base';
+import {FieldType} from "../selectable/field";
 
 /**
  * Representation of a filter function, that returns a collection of values.

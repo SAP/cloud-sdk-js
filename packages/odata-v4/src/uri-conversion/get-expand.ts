@@ -75,5 +75,3 @@ function getExpandAsString<EntityT extends Entity>(
 
   return '';
 }
-
-export { getExpand as getExpandV4 };

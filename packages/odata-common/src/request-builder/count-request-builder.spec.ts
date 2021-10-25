@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/core/test/test-util/request-mocker';
 import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
 import { TestEntity as TestEntityV4 } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
-import { Filter } from '../filter';
+import {Filter} from "../filter/filter";
 
 describe('CountRequestBuilderV2', () => {
   const requestBuilders = [

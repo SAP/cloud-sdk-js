@@ -1,7 +1,8 @@
 import { Constructable, Entity } from '../entity';
-import { Link } from '../selectable';
-import { ODataUri } from '../uri-conversion';
+
 import { ODataRequestConfig } from './odata-request-config';
+import {ODataUri} from "../uri-conversion/odata-uri";
+import {Link} from "../selectable/link";
 
 /**
  * OData create request configuration for an entity type.

@@ -1,11 +1,12 @@
 import { Entity, Constructable } from '../entity';
-import { Filterable } from '../filter';
-import { Orderable } from '../order';
-import { Selectable } from '../selectable';
-import { Expandable } from '../expandable';
-import { ODataUri } from '../uri-conversion';
+
 import { ODataRequestConfig } from './odata-request-config';
 import { WithGetAllRestrictions } from './odata-request-traits';
+import {Selectable} from "../selectable/selectable";
+import {Filterable} from "../filter/filterable";
+import {Expandable} from "../expandable";
+import {Orderable} from "../order/orderable";
+import {ODataUri} from "../uri-conversion/odata-uri";
 
 /**
  * OData getAll request configuration for an entity type.

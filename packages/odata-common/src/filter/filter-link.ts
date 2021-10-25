@@ -1,6 +1,6 @@
 import { Constructable, Entity, EntityIdentifiable } from '../entity';
-import { Link } from '../selectable';
 import type { Filterable } from './filterable';
+import {Link} from "../selectable/link";
 
 /**
  * Data structure to represent filter on properties of a navigation property (link).

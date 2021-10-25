@@ -2,8 +2,9 @@ import {
   ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase,
   FunctionImportParameters
 } from '@sap-cloud-sdk/odata-common';
-import { oDataUri } from '../uri-conversion';
-import { ODataFunctionImportRequestConfig } from '../request';
+import {ODataFunctionImportRequestConfig} from "../request/odata-function-import-request-config";
+import {oDataUri} from "../uri-conversion/odata-uri";
+
 
 /**
  * Create OData request to execute a function import.
@@ -39,5 +40,3 @@ export class FunctionImportRequestBuilder<
     );
   }
 }
-
-export { FunctionImportRequestBuilder as FunctionImportRequestBuilderV4 };

@@ -2,9 +2,12 @@
 
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
-import { Link, Field, Selectable, CustomField } from './selectable';
-import { RequestBuilder } from './request-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
+import {Selectable} from "./selectable/selectable";
+import {Field} from "./selectable/field";
+import {Link} from "./selectable/link";
+import {RequestBuilder} from "./request-builder/request-builder";
+import {CustomField} from "./selectable/custom-field";
 
 export type ODataVersionOf<T extends Entity> = T['_oDataVersion'];
 

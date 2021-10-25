@@ -8,8 +8,8 @@ import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityIdentifiable, Entity } from '../entity';
 import { Selectable } from '../selectable/selectable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
-import { ODataGetByKeyRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
+import {ODataGetByKeyRequestConfig} from "../request/odata-get-by-key-request-config";
 
 export abstract class GetRequestBuilder<
     EntityT extends Entity,

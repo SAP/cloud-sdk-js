@@ -1,9 +1,9 @@
 import { fail } from 'assert';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { edmToTs as edmToTsV2 } from '@sap-cloud-sdk/core/dist/odata-v2';
 import { Time } from '../time';
 import { createComplexType } from './create-complex-type';
+import {edmToTsV2} from "@sap-cloud-sdk/odata-v2";
 
 const converter = {
   StringField: (controllingArea: string) => ({

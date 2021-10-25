@@ -5,12 +5,14 @@ import {
   DestinationOptions
 } from '@sap-cloud-sdk/connectivity';
 import { Constructable, Entity } from '../entity';
-import { ODataGetByKeyRequestConfig } from '../request';
-import { ODataUri } from '../uri-conversion';
-import { FieldType, Selectable } from '../selectable';
+
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { GetRequestBuilder } from './get-request-builder-base';
+import {ODataGetByKeyRequestConfig} from "../request/odata-get-by-key-request-config";
+import {FieldType} from "../selectable/field";
+import {ODataUri} from "../uri-conversion/odata-uri";
+import {Selectable} from "../selectable/selectable";
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  * @typeparam EntityT - Type of the entity to be requested

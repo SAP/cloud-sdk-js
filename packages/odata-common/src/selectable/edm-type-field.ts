@@ -2,11 +2,11 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { Entity } from '../entity';
-import { Filter } from '../filter';
 import { Time } from '../time';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldOptions, FieldType } from './field';
+import {Filter} from "../filter/filter";
 
 /**
  * Convenience type that maps the given [[FieldType]] to a new type that is either nullable or not, depending on the given `NullableT`.

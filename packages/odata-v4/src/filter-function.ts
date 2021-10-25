@@ -92,8 +92,6 @@ export function filterFunction<EntityT extends Entity>(
   return createFilterFunction(functionName, returnType, ...parameters);
 }
 
-export { filterFunction as filterFunctionV4 };
-
 function isCollectionReturnType(
   returnType: FilterFunctionReturnType
 ): returnType is CollectionReturnType {
@@ -119,5 +117,3 @@ const returnTypeMapping = {
   string: 'Edm.String',
   ...numberReturnTypeMapping
 };
-
-export { FilterFunctionReturnType as FilterFunctionReturnTypeV4 };

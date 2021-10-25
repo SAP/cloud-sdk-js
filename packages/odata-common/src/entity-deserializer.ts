@@ -1,16 +1,16 @@
 import { createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
 import { toPropertyFormat } from './name-converter';
 import { Constructable, Entity, isExpandedProperty, isSelectedProperty } from './entity';
-import {
-  CollectionField,
-  ComplexTypeField,
-  ComplexTypeNamespace,
-  EdmTypeField, EnumField,
-  Field, isComplexTypeNameSpace,
-  Link,
-  OneToOneLink, PropertyMetadata
-} from './selectable';
+
 import { EdmTypeShared, isEdmType } from './edm-types';
+import {ComplexTypeNamespace, isComplexTypeNameSpace, PropertyMetadata} from "./selectable/complex-type-namespace";
+import {Field} from "./selectable/field";
+import {Link} from "./selectable/link";
+import {EdmTypeField} from "./selectable/edm-type-field";
+import {EnumField} from "./selectable/enum-field";
+import {CollectionField} from "./selectable/collection-field";
+import {ComplexTypeField} from "./selectable/complex-type-field";
+import {OneToOneLink} from "./selectable/one-to-one-link";
 
 const logger = createLogger({
   package: 'core',

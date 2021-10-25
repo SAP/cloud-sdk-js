@@ -163,5 +163,3 @@ export const filterFunctions = {
   hasSubset,
   hasSubsequence
 };
-
-export { filterFunctions as filterFunctionsV4 };

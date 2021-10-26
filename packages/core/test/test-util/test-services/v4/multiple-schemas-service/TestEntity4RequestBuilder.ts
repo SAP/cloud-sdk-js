@@ -4,7 +4,13 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
-import { GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity4 } from './TestEntity4';
 
 /**
@@ -17,7 +23,9 @@ export class TestEntity4RequestBuilder extends RequestBuilder<TestEntity4> {
    * @returns A request builder for creating requests to retrieve one `TestEntity4` entity based on its keys.
    */
   getByKey(keyPropertyString: string): GetByKeyRequestBuilder<TestEntity4> {
-    return new GetByKeyRequestBuilder(TestEntity4, { KeyPropertyString: keyPropertyString });
+    return new GetByKeyRequestBuilder(TestEntity4, {
+      KeyPropertyString: keyPropertyString
+    });
   }
 
   /**
@@ -59,6 +67,11 @@ export class TestEntity4RequestBuilder extends RequestBuilder<TestEntity4> {
    */
   delete(entity: TestEntity4): DeleteRequestBuilder<TestEntity4>;
   delete(keyPropertyStringOrEntity: any): DeleteRequestBuilder<TestEntity4> {
-    return new DeleteRequestBuilder(TestEntity4, keyPropertyStringOrEntity instanceof TestEntity4 ? keyPropertyStringOrEntity : { KeyPropertyString: keyPropertyStringOrEntity! });
+    return new DeleteRequestBuilder(
+      TestEntity4,
+      keyPropertyStringOrEntity instanceof TestEntity4
+        ? keyPropertyStringOrEntity
+        : { KeyPropertyString: keyPropertyStringOrEntity! }
+    );
   }
 }

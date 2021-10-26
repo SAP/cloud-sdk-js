@@ -5,6 +5,6 @@ import { OrderableEdmTypeField } from './orderable-edm-type-field';
 /**
  * @internal
  */
-export type ComplexTypePropertyFields<EntityT extends EntityBase, ComplexT> =
+export type ComplexTypePropertyFields<EntityT extends EntityBase> =
   | EdmTypeField<EntityT, any, boolean, false>
   | OrderableEdmTypeField<EntityT, any, boolean, false>;

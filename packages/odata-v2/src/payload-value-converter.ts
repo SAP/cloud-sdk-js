@@ -10,9 +10,6 @@ import {
 } from '@sap-cloud-sdk/odata-common';
 import { EdmType } from './edm-types';
 
-/**
- * @internal
- */
 export function edmToTs<T extends EdmType>(
   value: any,
   edmType: EdmTypeShared<'v2'>

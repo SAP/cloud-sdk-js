@@ -21,9 +21,7 @@ export function getEntityKeys<EntityT extends EntityBase>(
   return (entityConstructor._keyFields as Field<EntityT>[]).reduce(
     (prev, curr) => ({
       ...prev,
-      [curr._fieldName]: encodeURIComponent(
-        entity[camelCase(curr._fieldName)]
-      )
+      [curr._fieldName]: encodeURIComponent(entity[camelCase(curr._fieldName)])
     }),
     {}
   );

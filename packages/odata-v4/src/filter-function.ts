@@ -40,6 +40,9 @@ export function filterFunction<EntityT extends Entity>(
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): StringFilterFunction<EntityT>;
 
+/**
+ * @internal
+ */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'datetimeoffset',

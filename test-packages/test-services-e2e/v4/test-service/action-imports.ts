@@ -5,7 +5,7 @@
  */
 import '@sap-cloud-sdk/odata-common';
 import {
-  edmToTsV4,
+  edmToTs,
   ActionImportRequestBuilder,
   ActionImportParameter,
   transformReturnValueForEntity,
@@ -72,7 +72,7 @@ export function createTestEntityByIdReturnId(
     'createTestEntityByIdReturnId',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTsV4(val.value, 'Edm.Int32')
+        edmToTs(val.value, 'Edm.Int32')
       ),
     params
   );

@@ -28,13 +28,19 @@
     "prepare": "yarn compile",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "depcheck . --ignores=@sap-cloud-sdk/odata-v2"
   },
   "dependencies": {
     "@sap-cloud-sdk/http-client": "^1.50.0",
     "@sap-cloud-sdk/connectivity": "^1.50.0",
-    "@sap-cloud-sdk/core": "^1.50.0",
+    "@sap-cloud-sdk/util": "^1.50.0",
+    "@sap-cloud-sdk/odata-common": "^1.50.0",
+    "bignumber.js": "^9.0.0",
+    "uuid": "^8.2.0",
+    "moment": "^2.29.0",
     "typescript": "~4.4.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nock": "^13.0.11"
+  }
 }

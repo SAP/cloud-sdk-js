@@ -21,7 +21,7 @@ export type Orderable<EntityT extends EntityBase> =
 export type OrderableInput<EntityT extends EntityBase> =
   | SimpleTypeFields<EntityT>
   | Link<EntityT, EntityBase>
-  | ComplexTypePropertyFields<EntityT, any>;
+  | ComplexTypePropertyFields<EntityT>;
 
 /**
  * Create new Order by `orderBy._fieldName` in ascending order.

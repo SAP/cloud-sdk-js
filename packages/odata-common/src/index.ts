@@ -51,7 +51,28 @@ export { StringFilterFunction } from './filter/string-filter-function';
 export { BooleanFilterFunction } from './filter/boolean-filter-function';
 
 export { filterFunction } from './filter/filter-function';
-export { filterFunctions,isOf,trim,concat,round,floor,ceiling,day,hour,minute,month,second,year,indexOf,substring,toLower,toUpper,endsWith,startsWith,length } from './filter/filter-functions';
+export {
+  filterFunctions,
+  isOf,
+  trim,
+  concat,
+  round,
+  floor,
+  ceiling,
+  day,
+  hour,
+  minute,
+  month,
+  second,
+  year,
+  indexOf,
+  substring,
+  toLower,
+  toUpper,
+  endsWith,
+  startsWith,
+  length
+} from './filter/filter-functions';
 export { BatchRequestBuilder } from './request-builder/batch/batch-request-builder';
 export {
   BatchResponseDeserializer,

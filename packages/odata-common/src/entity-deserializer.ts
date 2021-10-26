@@ -1,4 +1,8 @@
-import { camelCase, createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
+import {
+  camelCase,
+  createLogger,
+  pickValueIgnoreCase
+} from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityBase,

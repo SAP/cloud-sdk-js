@@ -27,7 +27,7 @@ export class BooleanFilterFunction<
 /**
  * Typeguard for the BooleanFilterFunction
  * @param filterable - Object to be checked.
- * @return boolean
+ * @returns boolean
  * @internal
  */
 export function isBooleanFilterFunction<EntityT extends EntityBase>(

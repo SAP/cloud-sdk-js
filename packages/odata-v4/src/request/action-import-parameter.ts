@@ -12,15 +12,16 @@ export class ActionImportParameter<ValueT> {
    * @param value - Value to be used as parameter.
    */
   constructor(
-      public originalName: string,
-      public edmType: EdmTypeShared<'any'>,
-      public value: ValueT
+    public originalName: string,
+    public edmType: EdmTypeShared<'any'>,
+    public value: ValueT
   ) {}
 }
 
 /**
  * Internal representation of all parameters of a function import as a map
  * @typeparam ParametersT - External representation of all parameters
+ * @internal
  */
 export type ActionImportParameters<ParametersT> = {
   [K in keyof ParametersT]: ActionImportParameter<ParametersT[K]>;

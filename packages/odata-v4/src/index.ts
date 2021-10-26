@@ -1,14 +1,25 @@
 export { uriConverter } from './uri-conversion/uri-value-converter';
 
 export { all, any } from './filter/filter-lambda-expression';
-export { filterFunctions,now,hasSubset,hasSubsequence,fractionalSeconds,totalOffsetMinutes,maxDateTime,minDateTime,matchesPattern,contains } from './filter-functions';
+export {
+  filterFunctions,
+  now,
+  hasSubset,
+  hasSubsequence,
+  fractionalSeconds,
+  totalOffsetMinutes,
+  maxDateTime,
+  minDateTime,
+  matchesPattern,
+  contains
+} from './filter-functions';
 
 export { ActionImportRequestBuilder } from './request-builder/action-import-request-builder';
 export { ActionImportParameter } from './request/action-import-parameter';
 export { ODataBatchRequestBuilder } from './batch-request-builder';
 
 export { CustomField } from './selectable/custom-field';
-export{ edmToTs } from './payload-value-converter';
+export { edmToTs } from './payload-value-converter';
 export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
 
 export {

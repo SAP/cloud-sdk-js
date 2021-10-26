@@ -1,8 +1,14 @@
-export { filterFunctions,replace,substring,substringOf,length } from './filter-functions';
+export {
+  filterFunctions,
+  replace,
+  substring,
+  substringOf,
+  length
+} from './filter-functions';
 
 export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
 
-export{ edmToTs } from './payload-value-converter';
+export { edmToTs } from './payload-value-converter';
 export {
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList,

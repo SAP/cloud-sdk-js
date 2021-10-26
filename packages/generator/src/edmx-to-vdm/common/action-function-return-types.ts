@@ -1,4 +1,4 @@
-import { first, last, ODataVersion } from '@sap-cloud-sdk/util';
+import { first, last } from '@sap-cloud-sdk/util';
 import {
   VdmActionImportReturnType,
   VdmComplexType,
@@ -19,8 +19,7 @@ export function parseFunctionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: ExtractResponse,
-  oDataVersion: ODataVersion
+  extractResponse: ExtractResponse
 ): VdmFunctionImportReturnType {
   return parseReturnTypes(
     returnType,
@@ -34,8 +33,7 @@ export function parseActionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: ExtractResponse,
-  oDataVersion: ODataVersion
+  extractResponse: ExtractResponse
 ): VdmActionImportReturnType {
   return parseReturnTypes(
     returnType,
@@ -61,12 +59,7 @@ function parseReturnTypes(
 
   const edmType = findEdmType(returnType.Type);
   if (edmType) {
-    return getEdmReturnType(
-      isCollection,
-      isNullable,
-      edmType,
-      extractResponse
-    );
+    return getEdmReturnType(isCollection, isNullable, edmType, extractResponse);
   }
 
   const filteredEntities = findEntityTypes(returnType.Type, entities);

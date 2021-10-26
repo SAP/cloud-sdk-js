@@ -52,7 +52,7 @@ function createTestEntityByIdReturnId(parameters) {
       return (0, odata_v4_1.transformReturnValueForEdmType)(
         data,
         function (val) {
-          return (0, odata_v4_1.edmToTsV4)(val.value, 'Edm.Int32');
+          return (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32');
         }
       );
     },

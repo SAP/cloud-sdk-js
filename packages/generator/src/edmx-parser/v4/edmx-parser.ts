@@ -11,7 +11,8 @@ import { stripNamespace } from '../../edmx-to-vdm/edmx-to-vdm-util';
 import {
   EdmxAction,
   EdmxActionImport,
-  EdmxComplexType, EdmxDerivedType,
+  EdmxComplexType,
+  EdmxDerivedType,
   EdmxEntitySet,
   EdmxEntityType,
   EdmxEnumType,
@@ -31,8 +32,8 @@ export function joinComplexTypes<T extends EdmxComplexType>(
 }
 
 export function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
-    types: T[],
-    joinTypes: (type: T, baseType: T) => T
+  types: T[],
+  joinTypes: (type: T, baseType: T) => T
 ): T[] {
   return types.map(type => joinTypeWithBaseType(type, types, joinTypes));
 }
@@ -45,16 +46,16 @@ export function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
  * @returns The enriched type (type + base type)
  */
 function joinTypeWithBaseType<T extends EdmxDerivedType>(
-    type: T,
-    types: T[],
-    joinTypes: (type: T, baseType: T) => T
+  type: T,
+  types: T[],
+  joinTypes: (type: T, baseType: T) => T
 ): T {
   if (type.BaseType) {
     const baseType = types.find(e => e.Name === stripNamespace(type.BaseType!));
 
     if (!baseType) {
       throw new Error(
-          `Type ${type.BaseType} not found, but defined as BaseType of Type ${type.Name}.`
+        `Type ${type.BaseType} not found, but defined as BaseType of Type ${type.Name}.`
       );
     }
 

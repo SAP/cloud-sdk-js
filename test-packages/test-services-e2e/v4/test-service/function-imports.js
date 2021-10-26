@@ -41,7 +41,7 @@ function concatStrings(parameters) {
       return (0, odata_v4_1.transformReturnValueForEdmType)(
         data,
         function (val) {
-          return (0, odata_v4_1.edmToTsV4)(val.value, 'Edm.String');
+          return (0, odata_v4_1.edmToTs)(val.value, 'Edm.String');
         }
       );
     },
@@ -115,7 +115,7 @@ function returnCollection(parameters) {
       return (0, odata_v4_1.transformReturnValueForEdmTypeList)(
         data,
         function (val) {
-          return (0, odata_v4_1.edmToTsV4)(val, 'Edm.Int32');
+          return (0, odata_v4_1.edmToTs)(val, 'Edm.Int32');
         }
       );
     },
@@ -143,7 +143,7 @@ function returnInt(parameters) {
       return (0, odata_v4_1.transformReturnValueForEdmType)(
         data,
         function (val) {
-          return (0, odata_v4_1.edmToTsV4)(val.value, 'Edm.Int32');
+          return (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32');
         }
       );
     },
@@ -165,7 +165,7 @@ function returnSapCloudSdk(parameters) {
       return (0, odata_v4_1.transformReturnValueForEdmType)(
         data,
         function (val) {
-          return (0, odata_v4_1.edmToTsV4)(val.value, 'Edm.String');
+          return (0, odata_v4_1.edmToTs)(val.value, 'Edm.String');
         }
       );
     },

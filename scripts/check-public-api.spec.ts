@@ -87,7 +87,7 @@ describe('check-public-api', () => {
 
   it('parses one .d.ts file', () => {
     const exportedType = parseTypeDefinitionFile(dummyTypeDefinition);
-    expect(exportedType.map(e=>e.name).sort()).toEqual([
+    expect(exportedType.map(e => e.name).sort()).toEqual([
       'CacheEntry',
       'IsolationStrategy',
       'parseTypeDefinitionFile',

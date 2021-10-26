@@ -99,6 +99,7 @@ function compareApisAndLog(
  * @param pathToPackage -  path to the package.
  */
 export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
+  logger.info(`Check package: ${pathToPackage}`)
   const { pathToSource, pathCompiled } = paths(pathToPackage);
   mockFileSystem(pathToPackage);
   await transpileDirectory(
@@ -171,19 +172,24 @@ export function parseTypeDefinitionFile(
   fileContent: string
 ): Omit<ExportedObject, 'path'>[] {
   const normalized = fileContent.replace(/\n+/g, '');
-  return ['function', 'const', 'enum', 'class','abstract class', 'type', 'interface'].reduce(
-    (allObjects, objectType) => {
-      const regex =
-        objectType === 'interface'
-          ? new RegExp(`export ${objectType} (\\w+)`, 'g')
-          : new RegExp(`export declare ${objectType} (\\w+)`, 'g');
-      const exported = captureGroupsFromGlobalRegex(regex, normalized).map(
-        element => ({ name: element, type: objectType })
-      );
-      return [...allObjects, ...exported];
-    },
-    []
-  );
+  return [
+    'function',
+    'const',
+    'enum',
+    'class',
+    'abstract class',
+    'type',
+    'interface'
+  ].reduce((allObjects, objectType) => {
+    const regex =
+      objectType === 'interface'
+        ? new RegExp(`export ${objectType} (\\w+)`, 'g')
+        : new RegExp(`export declare ${objectType} (\\w+)`, 'g');
+    const exported = captureGroupsFromGlobalRegex(regex, normalized).map(
+      element => ({ name: element, type: objectType })
+    );
+    return [...allObjects, ...exported];
+  }, []);
 }
 
 /**

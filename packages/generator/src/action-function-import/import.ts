@@ -70,9 +70,7 @@ function complexTypeRelatedImports(
     : [];
 }
 
-function edmRelatedImports(
-  returnTypes: VdmActionFunctionImportReturnType[]
-) {
+function edmRelatedImports(returnTypes: VdmActionFunctionImportReturnType[]) {
   return returnTypes.some(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.EDM_TYPE

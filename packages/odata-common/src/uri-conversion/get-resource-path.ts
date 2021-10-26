@@ -1,4 +1,8 @@
-import { createLogger, isNullish, upperCaseSnakeCase } from '@sap-cloud-sdk/util';
+import {
+  createLogger,
+  isNullish,
+  upperCaseSnakeCase
+} from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity-base';
 import { Field, FieldType } from '../selectable/field';
 import { UriConverter } from './uri-value-converter';

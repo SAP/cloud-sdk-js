@@ -4,7 +4,13 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
-import { GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v2';
+import {
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v2';
 import { TestEntityWithSharedEntityType2 } from './TestEntityWithSharedEntityType2';
 
 /**
@@ -16,8 +22,12 @@ export class TestEntityWithSharedEntityType2RequestBuilder extends RequestBuilde
    * @param keyProperty Key property. See [[TestEntityWithSharedEntityType2.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
    */
-  getByKey(keyProperty: string): GetByKeyRequestBuilder<TestEntityWithSharedEntityType2> {
-    return new GetByKeyRequestBuilder(TestEntityWithSharedEntityType2, { KeyProperty: keyProperty });
+  getByKey(
+    keyProperty: string
+  ): GetByKeyRequestBuilder<TestEntityWithSharedEntityType2> {
+    return new GetByKeyRequestBuilder(TestEntityWithSharedEntityType2, {
+      KeyProperty: keyProperty
+    });
   }
 
   /**
@@ -33,7 +43,9 @@ export class TestEntityWithSharedEntityType2RequestBuilder extends RequestBuilde
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityWithSharedEntityType2`.
    */
-  create(entity: TestEntityWithSharedEntityType2): CreateRequestBuilder<TestEntityWithSharedEntityType2> {
+  create(
+    entity: TestEntityWithSharedEntityType2
+  ): CreateRequestBuilder<TestEntityWithSharedEntityType2> {
     return new CreateRequestBuilder(TestEntityWithSharedEntityType2, entity);
   }
 
@@ -42,7 +54,9 @@ export class TestEntityWithSharedEntityType2RequestBuilder extends RequestBuilde
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityWithSharedEntityType2`.
    */
-  update(entity: TestEntityWithSharedEntityType2): UpdateRequestBuilder<TestEntityWithSharedEntityType2> {
+  update(
+    entity: TestEntityWithSharedEntityType2
+  ): UpdateRequestBuilder<TestEntityWithSharedEntityType2> {
     return new UpdateRequestBuilder(TestEntityWithSharedEntityType2, entity);
   }
 
@@ -51,14 +65,25 @@ export class TestEntityWithSharedEntityType2RequestBuilder extends RequestBuilde
    * @param keyProperty Key property. See [[TestEntityWithSharedEntityType2.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityWithSharedEntityType2`.
    */
-  delete(keyProperty: string): DeleteRequestBuilder<TestEntityWithSharedEntityType2>;
+  delete(
+    keyProperty: string
+  ): DeleteRequestBuilder<TestEntityWithSharedEntityType2>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityWithSharedEntityType2`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityWithSharedEntityType2` by taking the entity as a parameter.
    */
-  delete(entity: TestEntityWithSharedEntityType2): DeleteRequestBuilder<TestEntityWithSharedEntityType2>;
-  delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntityWithSharedEntityType2> {
-    return new DeleteRequestBuilder(TestEntityWithSharedEntityType2, keyPropertyOrEntity instanceof TestEntityWithSharedEntityType2 ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
+  delete(
+    entity: TestEntityWithSharedEntityType2
+  ): DeleteRequestBuilder<TestEntityWithSharedEntityType2>;
+  delete(
+    keyPropertyOrEntity: any
+  ): DeleteRequestBuilder<TestEntityWithSharedEntityType2> {
+    return new DeleteRequestBuilder(
+      TestEntityWithSharedEntityType2,
+      keyPropertyOrEntity instanceof TestEntityWithSharedEntityType2
+        ? keyPropertyOrEntity
+        : { KeyProperty: keyPropertyOrEntity! }
+    );
   }
 }

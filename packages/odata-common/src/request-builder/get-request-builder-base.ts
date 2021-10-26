@@ -64,4 +64,3 @@ export abstract class GetRequestBuilderBase<
     return this.build(destination, options).then(request => request.execute());
   }
 }
-

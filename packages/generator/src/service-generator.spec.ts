@@ -367,7 +367,7 @@ describe('service-generator', () => {
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
         expect(functionImport.returnType.builderFunction).toEqual(
-          "(val) => edmToTsV2(val.TestFunctionImportEdmReturnType, 'Edm.Boolean')"
+          "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.Boolean')"
         );
 
         const functionImportUnsupportedEdmTypes = service.functionImports.find(
@@ -377,7 +377,7 @@ describe('service-generator', () => {
         expect(
           functionImportUnsupportedEdmTypes.returnType.builderFunction
         ).toEqual(
-          "(val) => edmToTsV2(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any')"
+          "(val) => edmToTs(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any')"
         );
         expect(functionImportUnsupportedEdmTypes.parameters[0].edmType).toEqual(
           'Edm.Any'
@@ -487,7 +487,7 @@ describe('service-generator', () => {
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
         expect(functionImport.returnType.builderFunction).toEqual(
-          "(val) => edmToTsV4(val.value, 'Edm.Boolean')"
+          "(val) => edmToTs(val.value, 'Edm.Boolean')"
         );
       });
 
@@ -508,7 +508,7 @@ describe('service-generator', () => {
         );
         expect(
           actionWithUnsupportedEdmType?.returnType.builderFunction
-        ).toEqual("(val) => edmToTsV4(val.value, 'Edm.Any')");
+        ).toEqual("(val) => edmToTs(val.value, 'Edm.Any')");
         expect(actionWithUnsupportedEdmType?.parameters[0].edmType).toEqual(
           'Edm.Any'
         );

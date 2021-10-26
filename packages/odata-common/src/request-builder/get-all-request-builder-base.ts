@@ -114,4 +114,3 @@ export abstract class GetAllRequestBuilderBase<
     );
   }
 }
-

@@ -5,7 +5,7 @@
  */
 import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common';
 import {
-  edmToTsV4,
+  edmToTs,
   FunctionImportRequestBuilder,
   transformReturnValueForEdmType,
   transformReturnValueForEntityList,
@@ -46,7 +46,7 @@ export function concatStrings(
     'concatStrings',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTsV4(val.value, 'Edm.String')
+        edmToTs(val.value, 'Edm.String')
       ),
     params
   );
@@ -132,7 +132,7 @@ export function returnCollection(
     'returnCollection',
     data =>
       transformReturnValueForEdmTypeList(data, val =>
-        edmToTsV4(val, 'Edm.Int32')
+        edmToTs(val, 'Edm.Int32')
       ),
     params
   );
@@ -165,7 +165,7 @@ export function returnInt(
     'returnInt',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTsV4(val.value, 'Edm.Int32')
+        edmToTs(val.value, 'Edm.Int32')
       ),
     params
   );
@@ -191,7 +191,7 @@ export function returnSapCloudSdk(
     'returnSapCloudSdk',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTsV4(val.value, 'Edm.String')
+        edmToTs(val.value, 'Edm.String')
       ),
     params
   );

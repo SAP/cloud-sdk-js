@@ -46,8 +46,9 @@ export class FilterLink<
 }
 
 /**
- * Typeguard for the FilterLink
+ * Type guard for the FilterLink.
  * @param filterable - Object to be checked.
+ * @returns boolean
  * @internal
  */
 export function isFilterLink<

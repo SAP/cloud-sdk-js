@@ -316,7 +316,7 @@ function projectOptions(): ProjectOptions {
       quoteKind: QuoteKind.Single
     },
     compilerOptions: {
-      target: ScriptTarget.ES5,
+      target: ScriptTarget.ES2019,
       module: ModuleKind.CommonJS,
       declaration: true,
       declarationMap: true,

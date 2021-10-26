@@ -191,7 +191,8 @@ function parseScriptTarget(input: string): ScriptTarget {
     es2017: ScriptTarget.ES2017,
     es2018: ScriptTarget.ES2018,
     es2019: ScriptTarget.ES2019,
-    es2020: ScriptTarget.ES2020
+    es2020: ScriptTarget.ES2020,
+    es2021: ScriptTarget.ES2021
   };
   if (mapping[input.toLowerCase()]) {
     return mapping[input.toLowerCase()];

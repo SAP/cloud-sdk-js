@@ -6,14 +6,10 @@ exports.defaultTestServicePath = exports.changeset = exports.batch = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
-var util_1 = require('@sap-cloud-sdk/util');
-var index_1 = require('./index');
-function batch(first) {
-  var rest = [];
-  for (var _i = 1; _i < arguments.length; _i++) {
-    rest[_i - 1] = arguments[_i];
-  }
+const core_1 = require('@sap-cloud-sdk/core');
+const util_1 = require('@sap-cloud-sdk/util');
+const index_1 = require('./index');
+function batch(first, ...rest) {
   return new core_1.ODataBatchRequestBuilderV2(
     exports.defaultTestServicePath,
     (0, util_1.variadicArgumentToArray)(first, rest),
@@ -21,18 +17,14 @@ function batch(first) {
   );
 }
 exports.batch = batch;
-function changeset(first) {
-  var rest = [];
-  for (var _i = 1; _i < arguments.length; _i++) {
-    rest[_i - 1] = arguments[_i];
-  }
+function changeset(first, ...rest) {
   return new core_1.ODataBatchChangeSetV2(
     (0, util_1.variadicArgumentToArray)(first, rest)
   );
 }
 exports.changeset = changeset;
 exports.defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-var map = {
+const map = {
   A_TestEntity: index_1.TestEntity,
   A_TestEntityMultiLink: index_1.TestEntityMultiLink,
   A_TestEntityOtherMultiLink: index_1.TestEntityOtherMultiLink,

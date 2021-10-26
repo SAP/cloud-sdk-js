@@ -38,8 +38,10 @@ export interface WithETag {
 }
 
 /**
+ * Typeguard for the WithETag config.
+ * @param config - Config to be checked
+ * @returns boolean
  * @internal
- * @param config
  */
 export function isWithETag(config: any): config is WithETag {
   return 'eTag' in config || 'versionIdentifierIgnored' in config;

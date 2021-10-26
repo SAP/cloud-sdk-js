@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { upperCaseSnakeCase } from '@sap-cloud-sdk/util';
 import { Constructable, EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
 import {
@@ -19,7 +20,6 @@ import {
 import { FieldType } from '../selectable/field';
 import { Filter, isFilter } from '../filter/filter';
 import { UriConverter } from './uri-value-converter';
-import {upperCaseSnakeCase} from "@sap-cloud-sdk/util";
 
 type GetFilterType<EntityT extends EntityBase> = (
   filter: Filterable<EntityT>,

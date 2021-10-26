@@ -81,6 +81,9 @@ export class Filter<
 }
 
 /**
+ * Typeguard for the Filter class.
+ * @param filterable - Object to be checked
+ * @returns boolean
  * @internal
  */
 export function isFilter<T extends EntityBase, FieldT extends FieldType>(

@@ -1,9 +1,10 @@
-import {upperCaseSnakeCase} from "@sap-cloud-sdk/util";
+import { upperCaseSnakeCase } from '@sap-cloud-sdk/util';
 
 /**
+ * Make property non enumerable
+ * @param target - Object to be adjusted
+ * @param propertyKey - property key whichis adjusted.
  * @internal
- * @param target
- * @param propertyKey
  */
 export const nonEnumerable = (target: any, propertyKey: string): void => {
   const descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};

@@ -10,8 +10,10 @@ const toNumber = (value: any): number => Number(value);
 const toBigNumber = (value: any): BigNumber => new BigNumber(value);
 
 /**
+ * Check if string is guid format and throws exception if not.
+ * @param value - string to be checked
+ * @returns string
  * @internal
- * @param value
  */
 export const toGuid = (value: string): string => {
   const guids =

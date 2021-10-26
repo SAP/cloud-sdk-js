@@ -12,7 +12,7 @@ import {
   TestEntitySingleLink
 } from '../../../core/test/test-util/test-services/v2/test-service';
 import { testPostRequestOutcome } from '../../../core/test/test-util/testPostRequestOutcome';
-import { uriConverter } from '../uri-conversion';
+import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { CreateRequestBuilder } from './create-request-builder';
 
 describe('CreateRequestBuilder', () => {

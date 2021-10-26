@@ -10,7 +10,7 @@ import {
   TestEntity,
   TestEntityMultiLink
 } from '../../../core/test/test-util/test-services/v2/test-service';
-import { uriConverter } from '../uri-conversion';
+import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { UpdateRequestBuilder } from './update-request-builder';
 
 function createTestEntity() {

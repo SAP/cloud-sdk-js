@@ -1,9 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { v4 as uuid } from 'uuid';
+import { uriConverter } from '@sap-cloud-sdk/odata-v2/dist/uri-conversion/uri-value-converter';
+import { createGetResourcePathForKeys } from '@sap-cloud-sdk/odata-common';
 import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
 import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
-import { getResourcePathForKeys } from './get-resource-path';
-import { uriConverter } from './uri-value-converter';
+
+const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
 
 describe('get resource path', () => {
   it('adds keys to path', () => {
@@ -25,7 +27,7 @@ describe('get resource path', () => {
 
   it('throws error if no keys set', () => {
     expect(() =>
-      getResourcePathForKeys(undefined, TestEntity)
+      getResourcePathForKeys({}, TestEntity)
     ).toThrowErrorMatchingSnapshot();
   });
 

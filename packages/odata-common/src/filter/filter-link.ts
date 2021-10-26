@@ -46,8 +46,9 @@ export class FilterLink<
 }
 
 /**
+ * Typeguard for the FilterLink
+ * @param filterable - Object to be checked.
  * @internal
- * @param filterable
  */
 export function isFilterLink<
   EntityT extends EntityBase,

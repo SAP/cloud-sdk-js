@@ -11,7 +11,7 @@ import {
   testEntityResourcePath
 } from '../../../core/test/test-util/test-data';
 import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
-import { uriConverter } from '../uri-conversion';
+import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 describe('GetByKeyRequestBuilder', () => {

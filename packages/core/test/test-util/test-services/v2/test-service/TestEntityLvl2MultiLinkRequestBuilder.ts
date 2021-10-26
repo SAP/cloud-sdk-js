@@ -4,13 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
-import {
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder
-} from '@sap-cloud-sdk/odata-v2';
+import { GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v2';
 import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 
 /**
@@ -22,12 +16,8 @@ export class TestEntityLvl2MultiLinkRequestBuilder extends RequestBuilder<TestEn
    * @param keyProperty Key property. See [[TestEntityLvl2MultiLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityLvl2MultiLink` entity based on its keys.
    */
-  getByKey(
-    keyProperty: string
-  ): GetByKeyRequestBuilder<TestEntityLvl2MultiLink> {
-    return new GetByKeyRequestBuilder(TestEntityLvl2MultiLink, {
-      KeyProperty: keyProperty
-    });
+  getByKey(keyProperty: string): GetByKeyRequestBuilder<TestEntityLvl2MultiLink> {
+    return new GetByKeyRequestBuilder(TestEntityLvl2MultiLink, { KeyProperty: keyProperty });
   }
 
   /**
@@ -43,9 +33,7 @@ export class TestEntityLvl2MultiLinkRequestBuilder extends RequestBuilder<TestEn
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityLvl2MultiLink`.
    */
-  create(
-    entity: TestEntityLvl2MultiLink
-  ): CreateRequestBuilder<TestEntityLvl2MultiLink> {
+  create(entity: TestEntityLvl2MultiLink): CreateRequestBuilder<TestEntityLvl2MultiLink> {
     return new CreateRequestBuilder(TestEntityLvl2MultiLink, entity);
   }
 
@@ -54,9 +42,7 @@ export class TestEntityLvl2MultiLinkRequestBuilder extends RequestBuilder<TestEn
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityLvl2MultiLink`.
    */
-  update(
-    entity: TestEntityLvl2MultiLink
-  ): UpdateRequestBuilder<TestEntityLvl2MultiLink> {
+  update(entity: TestEntityLvl2MultiLink): UpdateRequestBuilder<TestEntityLvl2MultiLink> {
     return new UpdateRequestBuilder(TestEntityLvl2MultiLink, entity);
   }
 
@@ -71,17 +57,8 @@ export class TestEntityLvl2MultiLinkRequestBuilder extends RequestBuilder<TestEn
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntityLvl2MultiLink` by taking the entity as a parameter.
    */
-  delete(
-    entity: TestEntityLvl2MultiLink
-  ): DeleteRequestBuilder<TestEntityLvl2MultiLink>;
-  delete(
-    keyPropertyOrEntity: any
-  ): DeleteRequestBuilder<TestEntityLvl2MultiLink> {
-    return new DeleteRequestBuilder(
-      TestEntityLvl2MultiLink,
-      keyPropertyOrEntity instanceof TestEntityLvl2MultiLink
-        ? keyPropertyOrEntity
-        : { KeyProperty: keyPropertyOrEntity! }
-    );
+  delete(entity: TestEntityLvl2MultiLink): DeleteRequestBuilder<TestEntityLvl2MultiLink>;
+  delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntityLvl2MultiLink> {
+    return new DeleteRequestBuilder(TestEntityLvl2MultiLink, keyPropertyOrEntity instanceof TestEntityLvl2MultiLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
   }
 }

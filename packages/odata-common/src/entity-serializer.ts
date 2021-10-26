@@ -1,4 +1,4 @@
-import {createLogger, upperCaseSnakeCase} from '@sap-cloud-sdk/util';
+import { createLogger, upperCaseSnakeCase } from '@sap-cloud-sdk/util';
 import { Constructable, EntityBase } from './entity-base';
 import {
   ComplexTypeNamespace,

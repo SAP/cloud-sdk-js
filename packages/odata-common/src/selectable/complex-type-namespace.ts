@@ -15,8 +15,10 @@ export interface PropertyMetadata<ComplexT = any> {
 }
 
 /**
+ * Typeguard for the ComplexTypeNamespace
+  * @param val - value to be checked
+ * @returns boolean
  * @internal
- * @param val
  */
 export function isComplexTypeNameSpace(
   val: any

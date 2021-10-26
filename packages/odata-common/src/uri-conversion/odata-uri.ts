@@ -41,8 +41,10 @@ export interface ODataUri {
 }
 
 /**
- * @internal
- * @param param
+ * Add a dollar to a string
+ * @param param - String to be modified.
+ * @returns string containing the dollar
+ *  @internal
  */
 export function prependDollar(param: string): string {
   return `$${param}`;

@@ -73,8 +73,10 @@ export class FilterList<EntityT extends EntityBase>
 }
 
 /**
+ * Type guard for the FilterList.
+ * @param filterable - Variable to be checked.
+ * @returns boolean
  * @internal
- * @param filterable
  */
 export function isFilterList<T extends EntityBase>(
   filterable: Filterable<T>

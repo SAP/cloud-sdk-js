@@ -11,12 +11,10 @@ import {
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from './entity';
 import { DateFilterFunction } from './filter/date-filter-function';
+// eslint-disable valid-jsdoc
 
 /**
  * @internal
- * @param functionName
- * @param returnType
- * @param parameters
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
@@ -26,9 +24,6 @@ export function filterFunction<EntityT extends Entity>(
 
 /**
  * @internal
- * @param functionName
- * @param returnType
- * @param parameters
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
@@ -38,9 +33,6 @@ export function filterFunction<EntityT extends Entity>(
 
 /**
  * @internal
- * @param functionName
- * @param returnType
- * @param parameters
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
@@ -48,12 +40,6 @@ export function filterFunction<EntityT extends Entity>(
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): StringFilterFunction<EntityT>;
 
-/**
- * @internal
- * @param functionName
- * @param returnType
- * @param parameters
- */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'datetimeoffset',
@@ -62,9 +48,6 @@ export function filterFunction<EntityT extends Entity>(
 
 /**
  * @internal
- * @param functionName
- * @param returnType
- * @param parameters
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
@@ -74,9 +57,6 @@ export function filterFunction<EntityT extends Entity>(
 
 /**
  * @internal
- * @param functionName
- * @param returnType
- * @param parameters
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
@@ -86,9 +66,6 @@ export function filterFunction<EntityT extends Entity>(
 
 /**
  * @internal
- * @param functionName
- * @param returnType
- * @param parameters
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
@@ -98,9 +75,6 @@ export function filterFunction<EntityT extends Entity>(
 
 /**
  * @internal
- * @param functionName
- * @param returnType
- * @param parameters
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,

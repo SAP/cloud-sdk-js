@@ -1,4 +1,4 @@
-import { caps, first, last, ODataVersion } from '@sap-cloud-sdk/util';
+import { first, last, ODataVersion } from '@sap-cloud-sdk/util';
 import {
   VdmActionImportReturnType,
   VdmComplexType,
@@ -26,8 +26,7 @@ export function parseFunctionImportReturnTypes(
     returnType,
     entities,
     complexTypes,
-    extractResponse,
-    oDataVersion
+    extractResponse
   ) as VdmFunctionImportReturnType;
 }
 
@@ -42,8 +41,7 @@ export function parseActionImportReturnTypes(
     returnType,
     entities,
     complexTypes,
-    extractResponse,
-    oDataVersion
+    extractResponse
   ) as VdmActionImportReturnType;
 }
 
@@ -51,8 +49,7 @@ function parseReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: ExtractResponse,
-  oDataVersion: ODataVersion
+  extractResponse: ExtractResponse
 ): VdmFunctionImportReturnType | VdmActionImportReturnType {
   if (!returnType) {
     return getVoidReturnType();
@@ -68,8 +65,7 @@ function parseReturnTypes(
       isCollection,
       isNullable,
       edmType,
-      extractResponse,
-      oDataVersion
+      extractResponse
     );
   }
 
@@ -140,8 +136,7 @@ function getEdmReturnType(
   isCollection: boolean,
   isNullable: boolean,
   edmType: string,
-  extractResponse: ExtractResponse,
-  oDataVersion: ODataVersion
+  extractResponse: ExtractResponse
 ): VdmFunctionImportReturnType {
   const typeMapping = getTypeMappingActionFunction(edmType);
   const valueAlias = 'val';
@@ -149,9 +144,7 @@ function getEdmReturnType(
   return {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
     returnType: typeMapping.jsType,
-    builderFunction: `(${valueAlias}) => edmToTs${caps(
-      oDataVersion
-    )}(${extracted}, '${typeMapping.edmType}')`,
+    builderFunction: `(${valueAlias}) => edmToTs(${extracted}, '${typeMapping.edmType}')`,
     isMulti: isCollection,
     isNullable,
     isCollection

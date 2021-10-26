@@ -5,22 +5,12 @@
  */
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
 import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
-import {
-  AllFields,
-  Constructable,
-  EdmTypeField,
-  EntityBuilderType,
-  Field,
-  FieldBuilder
-} from '@sap-cloud-sdk/odata-common';
+import { AllFields, Constructable, EdmTypeField, EntityBuilderType, Field, FieldBuilder } from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class MultiSchemaTestEntity
-  extends Entity
-  implements MultiSchemaTestEntityType
-{
+export class MultiSchemaTestEntity extends Entity implements MultiSchemaTestEntityType {
   /**
    * Technical entity name for MultiSchemaTestEntity.
    */
@@ -38,10 +28,7 @@ export class MultiSchemaTestEntity
    * Returns an entity builder to construct instances of `MultiSchemaTestEntity`.
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
-  static builder(): EntityBuilderType<
-    MultiSchemaTestEntity,
-    MultiSchemaTestEntityType
-  > {
+  static builder(): EntityBuilderType<MultiSchemaTestEntity, MultiSchemaTestEntityType> {
     return Entity.entityBuilder(MultiSchemaTestEntity);
   }
 
@@ -76,49 +63,31 @@ export interface MultiSchemaTestEntityType {
 }
 
 export namespace MultiSchemaTestEntity {
-  const _fieldBuilder: FieldBuilder<Constructable<MultiSchemaTestEntity>> =
-    new FieldBuilder(MultiSchemaTestEntity);
+  const _fieldBuilder: FieldBuilder<Constructable<MultiSchemaTestEntity>> = new FieldBuilder(MultiSchemaTestEntity);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'KeyProperty',
-    'Edm.String',
-    false
-  );
+  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false);
   /**
    * All fields of the MultiSchemaTestEntity entity.
    */
-  export const _allFields: Array<
-    EdmTypeField<MultiSchemaTestEntity, 'Edm.String', false, true>
-  > = [MultiSchemaTestEntity.KEY_PROPERTY];
+  export const _allFields: Array<EdmTypeField<MultiSchemaTestEntity, 'Edm.String', false, true>> = [
+    MultiSchemaTestEntity.KEY_PROPERTY
+  ];
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<MultiSchemaTestEntity> = new AllFields(
-    '*',
-    MultiSchemaTestEntity
-  );
+  export const ALL_FIELDS: AllFields<MultiSchemaTestEntity> = new AllFields('*', MultiSchemaTestEntity);
   /**
    * All key fields of the MultiSchemaTestEntity entity.
    */
-  export const _keyFields: Array<
-    Field<MultiSchemaTestEntity, boolean, boolean>
-  > = [MultiSchemaTestEntity.KEY_PROPERTY];
+  export const _keyFields: Array<Field<MultiSchemaTestEntity, boolean, boolean>> = [MultiSchemaTestEntity.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
    */
-  export const _keys: {
-    [keys: string]: Field<MultiSchemaTestEntity, boolean, boolean>;
-  } = MultiSchemaTestEntity._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<MultiSchemaTestEntity, boolean, boolean> },
-      field: Field<MultiSchemaTestEntity, boolean, boolean>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+  export const _keys: { [keys: string]: Field<MultiSchemaTestEntity, boolean, boolean> } = MultiSchemaTestEntity._keyFields.reduce((acc: { [keys: string]: Field<MultiSchemaTestEntity, boolean, boolean> }, field: Field<MultiSchemaTestEntity, boolean, boolean>) => {
+    acc[field._fieldName] = field;
+    return acc;
+  }, {});
 }

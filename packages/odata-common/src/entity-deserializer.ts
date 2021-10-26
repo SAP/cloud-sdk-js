@@ -1,4 +1,4 @@
-import {camelCase, createLogger, pickValueIgnoreCase} from '@sap-cloud-sdk/util';
+import { camelCase, createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
 import {
   Constructable,
   EntityBase,
@@ -243,8 +243,10 @@ export function entityDeserializer(
 }
 
 /**
+ * Extract eTag from custom header ignoring case.
+ * @param headers - Headers from which the etag is extracted.
+ * @returns string | undefined
  * @internal
- * @param headers
  */
 export function extractEtagFromHeader(headers: any): string | undefined {
   return pickValueIgnoreCase(headers, 'etag');

@@ -9,7 +9,11 @@ import { ODataRequest } from './request/odata-request';
 import { ODataRequestConfig } from './request/odata-request-config';
 
 /**
+ * Create Headers from request object.
+ * @param request - Request from which header are build.
+ * @returns Headesrs
  * @internal
+ *
  */
 export async function buildHeaders<RequestT extends ODataRequestConfig>(
   request: ODataRequest<RequestT>

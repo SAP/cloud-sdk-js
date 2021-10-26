@@ -19,7 +19,7 @@ describe('function-import generation', () => {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v4',
         namedImports: [
-          'edmToTsV2',
+          'edmToTs',
           'FunctionImportRequestBuilder',
           'transformReturnValueForEdmType'
         ]

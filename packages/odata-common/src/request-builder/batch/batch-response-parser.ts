@@ -233,8 +233,10 @@ function isRetrieveOrErrorContentType(contentType: string): boolean {
 }
 
 /**
+ * Check if httpCode is in [200,300[ range.
+ * @param httpCode - Code to be checked
+ * @returns boolean
  * @internal
- * @param httpCode
  */
 export function isHttpSuccessCode(httpCode: number): boolean {
   return httpCode >= 200 && httpCode < 300;

@@ -11,7 +11,6 @@ export function transformReturnValueForUndefined<ReturnT>(
   return builderFn(data);
 }
 
-
 export function transformReturnValueForEntity<ReturnT extends Entity>(
   data: any,
   entityConstructor: Constructable<ReturnT>
@@ -21,7 +20,6 @@ export function transformReturnValueForEntity<ReturnT extends Entity>(
     entityConstructor
   ).setOrInitializeRemoteState() as ReturnT;
 }
-
 
 export function transformReturnValueForEntityList<ReturnT extends Entity>(
   data: any,
@@ -35,7 +33,6 @@ export function transformReturnValueForEntityList<ReturnT extends Entity>(
       ).setOrInitializeRemoteState() as ReturnT
   );
 }
-
 
 export function transformReturnValueForComplexType<ReturnT>(
   data: any,
@@ -57,7 +54,6 @@ export function transformReturnValueForEdmType<ReturnT>(
 ): ReturnT {
   return builderFn(getSingleResult(data));
 }
-
 
 export function transformReturnValueForEdmTypeList<ReturnT>(
   data: any,

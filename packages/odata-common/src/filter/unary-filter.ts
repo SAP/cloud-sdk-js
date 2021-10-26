@@ -14,6 +14,9 @@ export class UnaryFilter<EntityT extends EntityBase> {
 }
 
 /**
+ * Typeguard for the UnaryFilter object.
+ * @param filterable - Variable to be checked
+ * @returns boolean
  * @internal
  */
 export function isUnaryFilter<T extends EntityBase>(

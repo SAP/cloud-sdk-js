@@ -1,4 +1,4 @@
-import { caps, flat, ODataVersion } from '@sap-cloud-sdk/util';
+import { flat, ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import {
   VdmActionFunctionImportReturnType,
@@ -48,7 +48,7 @@ function actionFunctionImportDeclarations(
     ]),
     odataImportDeclaration(
       [
-        ...edmRelatedImports(returnTypes, oDataVersion),
+        ...edmRelatedImports(returnTypes),
         ...complexTypeRelatedImports(returnTypes),
         ...version,
         ...responseTransformerFunctionVersionDependent
@@ -71,14 +71,13 @@ function complexTypeRelatedImports(
 }
 
 function edmRelatedImports(
-  returnTypes: VdmActionFunctionImportReturnType[],
-  oDataVersion: ODataVersion
+  returnTypes: VdmActionFunctionImportReturnType[]
 ) {
   return returnTypes.some(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.EDM_TYPE
   )
-    ? [`edmToTs${caps(oDataVersion)}`]
+    ? ['edmToTs']
     : [];
 }
 

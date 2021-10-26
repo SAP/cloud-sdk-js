@@ -1,22 +1,27 @@
 import { EdmTypeShared } from '../edm-types';
 import {
   Constructable,
-  Entity,
+  EntityBase,
   EntityIdentifiable,
   ODataVersionOf
-} from '../entity';
+} from '../entity-base';
+import { FieldType } from '../selectable/field';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
-import {FieldType} from "../selectable/field";
 
 type FilterOperatorString = 'eq' | 'ne';
 type FilterOperatorBoolean = 'eq' | 'ne';
 type FilterOperatorNumber = 'eq' | 'ne' | 'lt' | 'le' | 'gt' | 'ge';
+/**
+ * @internal
+ */
 export type FilterOperator =
   | FilterOperatorString
   | FilterOperatorBoolean
   | FilterOperatorNumber;
-
+/**
+ * @internal
+ */
 export type FilterOperatorByType<FieldT extends FieldType> =
   FieldT extends string
     ? FilterOperatorString
@@ -36,7 +41,7 @@ export type FilterOperatorByType<FieldT extends FieldType> =
  */
 // TODO 2.0 rename to BinaryFilter
 export class Filter<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   FieldT extends FieldType | FieldType[]
 > implements EntityIdentifiable<EntityT>
 {
@@ -75,7 +80,10 @@ export class Filter<
   }
 }
 
-export function isFilter<T extends Entity, FieldT extends FieldType>(
+/**
+ * @internal
+ */
+export function isFilter<T extends EntityBase, FieldT extends FieldType>(
   filterable: Filterable<T>
 ): filterable is Filter<T, FieldT> {
   return (

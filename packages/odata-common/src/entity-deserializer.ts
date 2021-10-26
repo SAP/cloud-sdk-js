@@ -1,16 +1,23 @@
-import { createLogger, pickValueIgnoreCase } from '@sap-cloud-sdk/util';
-import { toPropertyFormat } from './name-converter';
-import { Constructable, Entity, isExpandedProperty, isSelectedProperty } from './entity';
-
+import {camelCase, createLogger, pickValueIgnoreCase} from '@sap-cloud-sdk/util';
+import {
+  Constructable,
+  EntityBase,
+  isExpandedProperty,
+  isSelectedProperty
+} from './entity-base';
 import { EdmTypeShared, isEdmType } from './edm-types';
-import {ComplexTypeNamespace, isComplexTypeNameSpace, PropertyMetadata} from "./selectable/complex-type-namespace";
-import {Field} from "./selectable/field";
-import {Link} from "./selectable/link";
-import {EdmTypeField} from "./selectable/edm-type-field";
-import {EnumField} from "./selectable/enum-field";
-import {CollectionField} from "./selectable/collection-field";
-import {ComplexTypeField} from "./selectable/complex-type-field";
-import {OneToOneLink} from "./selectable/one-to-one-link";
+import {
+  ComplexTypeNamespace,
+  isComplexTypeNameSpace,
+  PropertyMetadata
+} from './selectable/complex-type-namespace';
+import { Field } from './selectable/field';
+import { Link } from './selectable/link';
+import { EdmTypeField } from './selectable/edm-type-field';
+import { EnumField } from './selectable/enum-field';
+import { CollectionField } from './selectable/collection-field';
+import { ComplexTypeField } from './selectable/complex-type-field';
+import { OneToOneLink } from './selectable/one-to-one-link';
 
 const logger = createLogger({
   package: 'core',
@@ -20,7 +27,7 @@ const logger = createLogger({
 /**
  * Interface representing the return type of the builder function [[entityDeserializer]]
  */
-export interface EntityDeserializer<EntityT extends Entity = any> {
+export interface EntityDeserializer<EntityT extends EntityBase = any> {
   deserializeEntity: (
     json: any,
     entityConstructor: Constructable<EntityT>,
@@ -57,7 +64,7 @@ export function entityDeserializer(
    * @param requestHeader - Optional parameter which may be used to add a version identifier (ETag) to the entity
    * @returns An instance of the entity class.
    */
-  function deserializeEntity<EntityT extends Entity, JsonT>(
+  function deserializeEntity<EntityT extends EntityBase, JsonT>(
     json: Partial<JsonT>,
     entityConstructor: Constructable<EntityT>,
     requestHeader?: any
@@ -66,7 +73,7 @@ export function entityDeserializer(
     return (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
       .filter(field => isSelectedProperty(json, field))
       .reduce((entity, staticField) => {
-        entity[toPropertyFormat(staticField._fieldName)] = getFieldValue(
+        entity[camelCase(staticField._fieldName)] = getFieldValue(
           json,
           staticField
         );
@@ -77,7 +84,7 @@ export function entityDeserializer(
       .setOrInitializeRemoteState();
   }
 
-  function getFieldValue<EntityT extends Entity, JsonT>(
+  function getFieldValue<EntityT extends EntityBase, JsonT>(
     json: Partial<JsonT>,
     field: Field<EntityT> | Link<EntityT>
   ) {
@@ -107,8 +114,8 @@ export function entityDeserializer(
   }
 
   function getLinkFromJson<
-    EntityT extends Entity,
-    LinkedEntityT extends Entity,
+    EntityT extends EntityBase,
+    LinkedEntityT extends EntityBase,
     JsonT
   >(json: Partial<JsonT>, link: Link<EntityT, LinkedEntityT>) {
     return link instanceof OneToOneLink
@@ -119,8 +126,8 @@ export function entityDeserializer(
   // Be careful: if the return type is changed to `LinkedEntityT | undefined`, the test 'navigation properties should never be undefined' of the 'business-partner.spec.ts' will fail.
   // Not sure the purpose of the usage of null.
   function getSingleLinkFromJson<
-    EntityT extends Entity,
-    LinkedEntityT extends Entity,
+    EntityT extends EntityBase,
+    LinkedEntityT extends EntityBase,
     JsonT
   >(
     json: Partial<JsonT>,
@@ -133,8 +140,8 @@ export function entityDeserializer(
   }
 
   function getMultiLinkFromJson<
-    EntityT extends Entity,
-    LinkedEntityT extends Entity,
+    EntityT extends EntityBase,
+    LinkedEntityT extends EntityBase,
     JsonT
   >(
     json: Partial<JsonT>,
@@ -149,7 +156,7 @@ export function entityDeserializer(
   }
 
   // TODO: get rid of this function in v2.0
-  function deserializeComplexTypeLegacy<EntityT extends Entity>(
+  function deserializeComplexTypeLegacy<EntityT extends EntityBase>(
     json: Record<string, any>,
     complexTypeField: ComplexTypeField<EntityT>
   ): Record<string, any> | null {
@@ -169,7 +176,7 @@ export function entityDeserializer(
       .reduce(
         (complexTypeObject, [fieldName, field]) => ({
           ...complexTypeObject,
-          [toPropertyFormat(fieldName)]:
+          [camelCase(fieldName)]:
             field instanceof EdmTypeField
               ? edmToTs(json[field._fieldName], field.edmType)
               : deserializeComplexTypeLegacy(json[field._fieldName], field)
@@ -235,6 +242,10 @@ export function entityDeserializer(
   };
 }
 
+/**
+ * @internal
+ * @param headers
+ */
 export function extractEtagFromHeader(headers: any): string | undefined {
   return pickValueIgnoreCase(headers, 'etag');
 }
@@ -245,8 +256,9 @@ export function extractEtagFromHeader(headers: any): string | undefined {
  * @param json - The JSON payload.
  * @param entityConstructor - The constructor function of the entity class.
  * @returns An object containing the custom fields as key-value pairs.
+ * @internal
  */
-export function extractCustomFields<EntityT extends Entity, JsonT>(
+export function extractCustomFields<EntityT extends EntityBase, JsonT>(
   json: Partial<JsonT>,
   entityConstructor: Constructable<EntityT>
 ): Record<string, any> {

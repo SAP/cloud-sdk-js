@@ -6,8 +6,10 @@ import {
   NumberFilterFunction,
   FilterFunctionPrimitiveParameterType,
   FieldType,
-  CollectionField
-, CollectionFilterFunction , filterFunctions as filterFunctionsCommon } from '@sap-cloud-sdk/odata-common';
+  CollectionField,
+  CollectionFilterFunction,
+  filterFunctions as filterFunctionsCommon
+} from '@sap-cloud-sdk/odata-common';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
 

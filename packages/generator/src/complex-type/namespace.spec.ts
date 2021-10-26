@@ -7,7 +7,7 @@ import {
 import { complexTypeNamespace } from './namespace';
 describe('namespace', () => {
   it('complexTypeSourceFile', () => {
-    const actual = complexTypeNamespace(complexMeal, 'v2');
+    const actual = complexTypeNamespace(complexMeal);
     expect(actual).toEqual({
       kind: StructureKind.Module,
       name: 'ComplexMealType',
@@ -59,7 +59,7 @@ describe('namespace', () => {
   });
 
   it('should generate a builder when a complex type includes a complex type property', () => {
-    const actual = complexTypeNamespace(complexMealWithDesert, 'v4');
+    const actual = complexTypeNamespace(complexMealWithDesert);
     expect(actual).toEqual({
       kind: StructureKind.Module,
       name: 'ComplexMealWithDesertType',

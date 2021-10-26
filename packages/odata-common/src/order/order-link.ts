@@ -1,4 +1,4 @@
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
 import { Link } from '../selectable/link';
 import type { Orderable } from './orderable';
 
@@ -6,8 +6,12 @@ import type { Orderable } from './orderable';
  * Link to represent an order by on a linked entity.
  * @typeparam EntityT - Type of the entity to link from
  * @typeparam LinkedEntityT - Type of the entity to link to
+ * @internal
  */
-export class OrderLink<EntityT extends Entity, LinkedEntityT extends Entity> {
+export class OrderLink<
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
+> {
   readonly entityType: EntityT;
   readonly linkedEntityType: LinkedEntityT;
 

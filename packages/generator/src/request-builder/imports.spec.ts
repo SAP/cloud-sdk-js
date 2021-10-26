@@ -9,10 +9,7 @@ describe('imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-common',
-        namedImports: [
-          'RequestBuilder',
-          'Time'
-        ]
+        namedImports: ['RequestBuilder', 'Time']
       },
       {
         kind: StructureKind.ImportDeclaration,

@@ -1,11 +1,11 @@
-import { Entity, Constructable } from '../entity';
+import { EntityBase, Constructable } from '../entity-base';
 import { EdmTypeField } from './edm-type-field';
 import { Field } from './field';
 import { FieldBuilder } from './field-builder';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
 export class CustomField<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   NullableT extends boolean = false
 > extends Field<EntityT, NullableT> {
   protected fieldBuilder: FieldBuilder<Constructable<EntityT>>;

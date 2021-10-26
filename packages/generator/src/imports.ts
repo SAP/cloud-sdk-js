@@ -39,7 +39,7 @@ export function externalImportDeclaration(
 }
 
 export function odataCommonImportDeclaration(
-    namedImports: string[]
+  namedImports: string[]
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
@@ -54,7 +54,10 @@ export function odataImportDeclaration(
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: odataVersion === 'v2' ? '@sap-cloud-sdk/odata-v2' : '@sap-cloud-sdk/odata-v4',
+    moduleSpecifier:
+      odataVersion === 'v2'
+        ? '@sap-cloud-sdk/odata-v2'
+        : '@sap-cloud-sdk/odata-v4',
     namedImports: unique(namedImports)
   };
 }

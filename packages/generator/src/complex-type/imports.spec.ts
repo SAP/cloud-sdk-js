@@ -11,17 +11,14 @@ describe('complex type imports', () => {
     const actual = importDeclarations(complexMeal, 'v2');
     expect(actual).toEqual([
       {
-        'kind': StructureKind.ImportDeclaration,
-        'moduleSpecifier': '@sap-cloud-sdk/odata-v2',
-        'namedImports': [
-          'deserializeComplexType',
-          'Entity'
-        ]
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-v2',
+        namedImports: ['deserializeComplexType', 'Entity']
       },
       {
-        'kind': StructureKind.ImportDeclaration,
-        'moduleSpecifier': '@sap-cloud-sdk/odata-common',
-        'namedImports': [
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
           'EdmTypeField',
@@ -39,25 +36,19 @@ describe('complex type imports', () => {
     const actual = importDeclarations(complexMealWithDesert, 'v2');
     expect(actual).toEqual([
       {
-        'kind': StructureKind.ImportDeclaration,
-        'moduleSpecifier': './ComplexDesert',
-        'namedImports': [
-          'ComplexDesert',
-          'ComplexDesertField'
-        ]
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: './ComplexDesert',
+        namedImports: ['ComplexDesert', 'ComplexDesertField']
       },
       {
-        'kind': StructureKind.ImportDeclaration,
-        'moduleSpecifier': '@sap-cloud-sdk/odata-v2',
-        'namedImports': [
-          'deserializeComplexType',
-          'Entity'
-        ]
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-v2',
+        namedImports: ['deserializeComplexType', 'Entity']
       },
       {
-        'kind': StructureKind.ImportDeclaration,
-        'moduleSpecifier': '@sap-cloud-sdk/odata-common',
-        'namedImports': [
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
           'FieldBuilder',
@@ -83,25 +74,19 @@ describe('complex type imports', () => {
     );
     expect(actual).toEqual([
       {
-        'kind': StructureKind.ImportDeclaration,
-        'moduleSpecifier': './ComplexDesert',
-        'namedImports': [
-          'ComplexDesert',
-          'ComplexDesertField'
-        ]
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: './ComplexDesert',
+        namedImports: ['ComplexDesert', 'ComplexDesertField']
       },
       {
-        'kind': StructureKind.ImportDeclaration,
-        'moduleSpecifier': '@sap-cloud-sdk/odata-v2',
-        'namedImports': [
-          'deserializeComplexType',
-          'Entity'
-        ]
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-v2',
+        namedImports: ['deserializeComplexType', 'Entity']
       },
       {
-        'kind': StructureKind.ImportDeclaration,
-        'moduleSpecifier': '@sap-cloud-sdk/odata-common',
-        'namedImports': [
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
           'FieldBuilder',

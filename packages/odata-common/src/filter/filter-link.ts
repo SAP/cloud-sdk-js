@@ -1,6 +1,6 @@
-import { Constructable, Entity, EntityIdentifiable } from '../entity';
+import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
+import { Link } from '../selectable/link';
 import type { Filterable } from './filterable';
-import {Link} from "../selectable/link";
 
 /**
  * Data structure to represent filter on properties of a navigation property (link).
@@ -13,10 +13,11 @@ import {Link} from "../selectable/link";
  * In OData v4 filtering is also possible on one-to-many links. See [[OneToManyLink]].
  * @typeparam EntityT - Type of the entity to be filtered.
  * @typeparam LinkedEntityT - Type of the linked entity which is used in the filter.
+ * @internal
  */
 export class FilterLink<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity = any
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase = any
 > implements EntityIdentifiable<EntityT>
 {
   /**
@@ -44,9 +45,14 @@ export class FilterLink<
   ) {}
 }
 
-export function isFilterLink<EntityT extends Entity, LinkedT extends Entity>(
-  filterable: Filterable<EntityT>
-): filterable is FilterLink<EntityT, LinkedT> {
+/**
+ * @internal
+ * @param filterable
+ */
+export function isFilterLink<
+  EntityT extends EntityBase,
+  LinkedT extends EntityBase
+>(filterable: Filterable<EntityT>): filterable is FilterLink<EntityT, LinkedT> {
   return (
     typeof filterable['link'] !== 'undefined' &&
     typeof filterable['filters'] !== 'undefined'

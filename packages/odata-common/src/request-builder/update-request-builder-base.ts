@@ -1,19 +1,19 @@
 import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { Constructable, Entity, EntityIdentifiable } from '../entity';
+import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { EntitySerializer } from '../entity-serializer';
+import { ODataUpdateRequestConfig } from '../request/odata-update-request-config';
+import { ODataUri } from '../uri-conversion/odata-uri';
+import { Selectable } from '../selectable/selectable';
+import { ODataRequest } from '../request/odata-request';
 import { MethodRequestBuilder } from './request-builder-base';
-import {ODataUpdateRequestConfig} from "../request/odata-update-request-config";
-import {ODataUri} from "../uri-conversion/odata-uri";
-import {Selectable} from "../selectable/selectable";
-import {ODataRequest} from "../request/odata-request";
 
 /**
  * Abstract class to create OData query to update an entity containing methods shared for OData v2 and v4.
  * @typeparam EntityT - Type of the entity to be updated
  */
-export abstract class UpdateRequestBuilder<EntityT extends Entity>
+export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
   extends MethodRequestBuilder<ODataUpdateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT>
 {
@@ -284,10 +284,6 @@ export abstract class UpdateRequestBuilder<EntityT extends Entity>
   }
 }
 
-// eslint-disable-next-line valid-jsdoc
-/**
- * @hidden
- */
 export function removePropertyOnCondition(
   condition: (objectEntry: [string, any]) => boolean,
   body: Record<string, any>
@@ -300,4 +296,3 @@ export function removePropertyOnCondition(
   }, {});
 }
 
-export { UpdateRequestBuilder as UpdateRequestBuilderBase };

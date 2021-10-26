@@ -1,14 +1,11 @@
 /* eslint-disable valid-jsdoc */
 
-
-import {EdmTypeSameConvertersUri, EdmTypeShared} from "../edm-types";
+import { EdmTypeSameConvertersUri, EdmTypeShared } from '../edm-types';
 
 type UriConverterMapping = {
   [key in EdmTypeSameConvertersUri]: (value: any) => string;
 };
-/**
- * @hidden
- */
+
 export const uriConvertersCommon: UriConverterMapping = {
   'Edm.Binary': value => `X'${value}'`,
   'Edm.Boolean': value => String(value),
@@ -31,9 +28,6 @@ function isInfOrNan(value: string | number): boolean {
   return ['inf', '-inf', 'nan'].includes(value.toLowerCase());
 }
 
-/**
- * @hidden
- */
 export function convertToUriForEdmString(value: any): string {
   return `'${value.replace(/'/g, "''")}'`;
 }

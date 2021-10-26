@@ -10,9 +10,6 @@ const logger = createLogger({
   messageContext: 'odata-request-config'
 });
 
-/**
- * @hidden
- */
 export abstract class ODataRequestConfig {
   payload: Record<string, any> | string;
   customServicePath: string;
@@ -158,12 +155,12 @@ export abstract class ODataRequestConfig {
   }
 
   /**
-   * @hidden
+   * @internal
    */
   abstract resourcePath(): string;
 
   /**
-   * @hidden
+   * @internal
    */
   abstract queryParameters(): Record<string, any>;
 }

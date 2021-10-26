@@ -3,10 +3,10 @@ import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
   mockUpdateRequest
-} from '../../../test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../test/test-util/test-data';
-import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
-import { uriConverter } from '../uri-conversion';
+} from '../../../core/test/test-util/request-mocker';
+import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
+import { TestEntity } from '../../../core/test/test-util/test-services/v4/test-service';
+import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { UpdateRequestBuilder } from './update-request-builder';
 
 const { convertToUriFormat } = uriConverter;

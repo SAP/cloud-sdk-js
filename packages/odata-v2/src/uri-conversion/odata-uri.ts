@@ -25,4 +25,3 @@ export const oDataUri: ODataUriBase = {
   getSelect,
   convertToUriFormat
 };
-

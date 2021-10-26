@@ -10,16 +10,15 @@ describe('function-import generation', () => {
     };
 
     expect(importDeclarationsAction(service as VdmServiceMetadata)).toEqual([
-      { 'kind': StructureKind.ImportDeclaration,
-            'moduleSpecifier': '@sap-cloud-sdk/odata-common',
-            'namedImports': [
-          'FunctionImportParameter'
-        ]
+      {
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        namedImports: ['FunctionImportParameter']
       },
       {
-        'kind': StructureKind.ImportDeclaration,
-        'moduleSpecifier': '@sap-cloud-sdk/odata-v4',
-        'namedImports': [
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-v4',
+        namedImports: [
           'edmToTsV2',
           'FunctionImportRequestBuilder',
           'transformReturnValueForEdmType'

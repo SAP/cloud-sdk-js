@@ -7,12 +7,12 @@ import {
   buildTestEntity,
   createChangeSetWithFakeId
 } from '@sap-cloud-sdk/core/test/test-util/batch-test-util';
-import { ODataBatchRequestConfig } from '../../request';
 import {
+  ODataBatchRequestConfig,
   serializeBatchRequest,
   serializeChangeSet,
   serializeRequest
-} from './batch-request-serializer';
+} from '@sap-cloud-sdk/odata-common';
 
 describe('batch request serializer', () => {
   let testEntity: TestEntity;

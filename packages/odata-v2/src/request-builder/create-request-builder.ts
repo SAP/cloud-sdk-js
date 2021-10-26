@@ -1,12 +1,12 @@
 import {
   Constructable,
   EntityIdentifiable,
-  CreateRequestBuilder as CreateRequestBuilderBase
+  CreateRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
 import { entitySerializer } from '../entity-serializer';
-import { oDataUri } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion/odata-uri';
 import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
@@ -35,4 +35,3 @@ export class CreateRequestBuilder<EntityT extends Entity>
     );
   }
 }
-

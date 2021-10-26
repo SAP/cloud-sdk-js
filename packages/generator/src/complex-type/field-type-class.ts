@@ -1,4 +1,4 @@
-import { unixEOL, ODataVersion } from '@sap-cloud-sdk/util';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import {
   ClassDeclarationStructure,
   PropertyDeclarationStructure,
@@ -13,8 +13,7 @@ import {
 import { VdmComplexType, VdmProperty } from '../vdm-types';
 
 export function fieldTypeClass(
-  complexType: VdmComplexType,
-  oDataVersion: ODataVersion
+  complexType: VdmComplexType
 ): ClassDeclarationStructure {
   return {
     kind: StructureKind.Class,

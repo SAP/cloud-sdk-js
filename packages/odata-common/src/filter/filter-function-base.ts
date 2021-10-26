@@ -1,15 +1,16 @@
 import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
-import { Entity, ODataVersionOf } from '../entity';
+import { EntityBase, ODataVersionOf } from '../entity-base';
+import { Field, FieldType } from '../selectable/field';
 import { Filter } from './filter';
-import {Field, FieldType} from "../selectable/field";
 
 /**
  * Data structure to represent OData filter functions.
  * Use the factory function [[filterFunction]] to create instances of `FilterFunction`.
+ * @internal
  */
 export abstract class FilterFunction<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   ReturnT extends FieldType | FieldType[]
 > {
   /**
@@ -102,7 +103,7 @@ export type FilterFunctionPrimitiveParameterType =
 /**
  * Type of a parameter of a filter function. This can either be a primitive type, a reference to a field or another filter function.
  */
-export type FilterFunctionParameterType<EntityT extends Entity> =
+export type FilterFunctionParameterType<EntityT extends EntityBase> =
   | FilterFunctionPrimitiveParameterType
   | Field<EntityT, boolean, boolean>
   | FilterFunction<EntityT, FieldType | FieldType[]>

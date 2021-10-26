@@ -4,7 +4,13 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
-import { GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { Airlines } from './Airlines';
 
 /**
@@ -59,6 +65,11 @@ export class AirlinesRequestBuilder extends RequestBuilder<Airlines> {
    */
   delete(entity: Airlines): DeleteRequestBuilder<Airlines>;
   delete(airlineCodeOrEntity: any): DeleteRequestBuilder<Airlines> {
-    return new DeleteRequestBuilder(Airlines, airlineCodeOrEntity instanceof Airlines ? airlineCodeOrEntity : { AirlineCode: airlineCodeOrEntity! });
+    return new DeleteRequestBuilder(
+      Airlines,
+      airlineCodeOrEntity instanceof Airlines
+        ? airlineCodeOrEntity
+        : { AirlineCode: airlineCodeOrEntity! }
+    );
   }
 }

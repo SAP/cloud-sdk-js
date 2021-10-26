@@ -1,8 +1,9 @@
 import { v4 as uuid } from 'uuid';
 import { testEntityResourcePath } from '@sap-cloud-sdk/core/test/test-util/test-data';
-import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/core/dist/odata-v2/uri-conversion';
-import { ODataGetByKeyRequestConfig } from './odata-get-by-key-request-config';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2';
+import { ODataGetByKeyRequestConfig } from '@sap-cloud-sdk/odata-common';
+import { uriConverter } from '../../../odata-v2/src/uri-conversion/uri-value-converter';
 
 describe('ODataGetByKeyRequestConfig', () => {
   let config: ODataGetByKeyRequestConfig<TestEntity>;
@@ -22,7 +23,11 @@ describe('ODataGetByKeyRequestConfig', () => {
       KeyPropertyString: keyPropString
     };
     expect(config.resourcePath()).toEqual(
-      testEntityResourcePath(keyPropGuid, keyPropString)
+      testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        uriConverter.convertToUriFormat
+      )
     );
   });
 

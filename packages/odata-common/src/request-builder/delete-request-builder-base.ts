@@ -5,17 +5,16 @@ import {
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { Constructable, Entity, EntityIdentifiable } from '../entity';
-
+import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
+import { ODataUri } from '../uri-conversion/odata-uri';
+import { FieldType } from '../selectable/field';
+import { ODataDeleteRequestConfig } from '../request/odata-delete-request-config';
 import { MethodRequestBuilder } from './request-builder-base';
-import {ODataUri} from "../uri-conversion/odata-uri";
-import {FieldType} from "../selectable/field";
-import {ODataDeleteRequestConfig} from "../request/odata-delete-request-config";
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export abstract class DeleteRequestBuilder<EntityT extends Entity>
+export abstract class DeleteRequestBuilder<EntityT extends EntityBase>
   extends MethodRequestBuilder<ODataDeleteRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT>
 {
@@ -31,11 +30,11 @@ export abstract class DeleteRequestBuilder<EntityT extends Entity>
   constructor(
     entityConstructor: Constructable<EntityT>,
     oDataUri: ODataUri,
-    keysOrEntity: Record<string, FieldType> | Entity
+    keysOrEntity: Record<string, FieldType> | EntityBase
   ) {
     super(new ODataDeleteRequestConfig(entityConstructor, oDataUri));
     this._entityConstructor = entityConstructor;
-    if (keysOrEntity instanceof Entity) {
+    if (keysOrEntity instanceof EntityBase) {
       this.requestConfig.keys = oDataUri.getEntityKeys(
         keysOrEntity,
         entityConstructor

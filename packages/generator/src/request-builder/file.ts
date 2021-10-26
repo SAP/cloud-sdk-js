@@ -12,7 +12,7 @@ export function requestBuilderSourceFile(
     kind: StructureKind.SourceFile,
     statements: [
       ...importDeclarations(entity, oDataVersion),
-      requestBuilderClass(entity, oDataVersion)
+      requestBuilderClass(entity)
     ]
   };
 }

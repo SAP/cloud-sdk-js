@@ -1,18 +1,17 @@
-import { Entity, Constructable } from '../entity';
-
+import { EntityBase, Constructable } from '../entity-base';
+import { Selectable } from '../selectable/selectable';
+import { Filterable } from '../filter/filterable';
+import { Expandable } from '../expandable';
+import { Orderable } from '../order/orderable';
+import { ODataUri } from '../uri-conversion/odata-uri';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithGetAllRestrictions } from './odata-request-traits';
-import {Selectable} from "../selectable/selectable";
-import {Filterable} from "../filter/filterable";
-import {Expandable} from "../expandable";
-import {Orderable} from "../order/orderable";
-import {ODataUri} from "../uri-conversion/odata-uri";
 
 /**
  * OData getAll request configuration for an entity type.
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataGetAllRequestConfig<EntityT extends Entity>
+export class ODataGetAllRequestConfig<EntityT extends EntityBase>
   extends ODataRequestConfig
   implements WithGetAllRestrictions<EntityT>
 {

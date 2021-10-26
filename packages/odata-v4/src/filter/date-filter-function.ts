@@ -1,12 +1,13 @@
 import moment from 'moment';
 import {
-  Entity as EntityBase,
+  EntityBase,
   FilterFunctionParameterType,
   OrderableFilterFunction
 } from '@sap-cloud-sdk/odata-common';
 
 /**
  * Representation of a filter function, that returns a value of type date. This supports DateTimeOffset values.
+ * @internal
  */
 export class DateFilterFunction<
   EntityT extends EntityBase

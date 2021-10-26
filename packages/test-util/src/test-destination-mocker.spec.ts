@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import mock from 'mock-fs';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { credentials, systems } from '../test/test-util/test-destinations';
@@ -10,6 +11,8 @@ import {
 } from './test-destination-mocker';
 
 describe('setTestDestinationInEnv', () => {
+  const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
+
   let envDestination: Destination = {
     url: 'https://example.com',
     name: 'envDestination'
@@ -17,6 +20,7 @@ describe('setTestDestinationInEnv', () => {
 
   beforeAll(() => {
     mock({
+      [pathRootNodeModules]: mock.load(pathRootNodeModules),
       'systems.json': JSON.stringify(systems),
       'credentials.json': JSON.stringify(credentials)
     });

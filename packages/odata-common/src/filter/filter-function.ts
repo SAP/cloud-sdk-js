@@ -1,22 +1,22 @@
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { NumberFilterFunction } from './number-filter-function';
 import { StringFilterFunction } from './string-filter-function';
 import { FilterFunctionParameterType } from './filter-function-base';
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunction<EntityT extends EntityBase>(
   functionName: string,
   returnType: 'boolean',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunction<EntityT extends EntityBase>(
   functionName: string,
   returnType: 'int' | 'double' | 'decimal',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): NumberFilterFunction<EntityT>;
 
-export function filterFunction<EntityT extends Entity>(
+export function filterFunction<EntityT extends EntityBase>(
   functionName: string,
   returnType: 'string',
   ...parameters: FilterFunctionParameterType<EntityT>[]
@@ -29,7 +29,7 @@ export function filterFunction<EntityT extends Entity>(
  * @param parameters - the parameter(s) used in the function
  * @returns An instance of filter function suited for the given return type
  */
-export function filterFunction<EntityT extends Entity>(
+export function filterFunction<EntityT extends EntityBase>(
   functionName: string,
   returnType: FilterFunctionReturnType,
   ...parameters: FilterFunctionParameterType<EntityT>[]
@@ -40,11 +40,7 @@ export function filterFunction<EntityT extends Entity>(
   return createFilterFunction(functionName, returnType, ...parameters);
 }
 
-// eslint-disable-next-line valid-jsdoc
-/**
- * @hidden
- */
-export function createFilterFunction<EntityT extends Entity>(
+export function createFilterFunction<EntityT extends EntityBase>(
   functionName: string,
   returnType: FilterFunctionReturnType,
   ...parameters: FilterFunctionParameterType<EntityT>[]

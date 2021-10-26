@@ -1,4 +1,4 @@
-import {secondsToTime, timeToSeconds} from "./time";
+import { secondsToTime, timeToSeconds } from './time';
 
 describe('Time', () => {
   it('timeToSeconds throw error ', () => {

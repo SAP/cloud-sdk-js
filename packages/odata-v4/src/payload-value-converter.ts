@@ -3,14 +3,16 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { identity } from '@sap-cloud-sdk/util';
-import { Time, EdmTypeShared ,
+import {
+  Time,
+  EdmTypeShared,
   deserializersCommon,
   serializersCommon
 } from '@sap-cloud-sdk/odata-common';
 import { EdmType } from './edm-types';
 
 /**
- * @hidden
+ * @internal
  */
 export function edmToTs<T extends EdmType>(
   value: any,
@@ -26,7 +28,7 @@ export function edmToTs<T extends EdmType>(
 }
 
 /**
- * @hidden
+ * @internal
  */
 export function tsToEdm(value: any, edmType: EdmTypeShared<'v4'>): any {
   if (value === null) {
@@ -117,6 +119,10 @@ function padTimeComponent(timeComponent: number): string {
     ? [wholeNumber.padStart(2, '0'), fractionalNumber].join('.')
     : wholeNumber.padStart(2, '0');
 }
+
+/**
+ * @internal
+ */
 export type EdmToPrimitive<T extends EdmType> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'

@@ -1,14 +1,31 @@
-import { connectivityProxyConfigMock } from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
+import { Destination } from '@sap-cloud-sdk/connectivity';
+import { buildHeaders } from '@sap-cloud-sdk/odata-common/dist/header-builder';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import {
+  ODataGetAllRequestConfig,
+  ODataRequest,
+  ODataUpdateRequestConfig
+} from '@sap-cloud-sdk/odata-common';
+import { oDataUri } from '@sap-cloud-sdk/odata-v2';
 import {
   defaultDestination,
   mockHeaderRequest
-} from '@sap-cloud-sdk/core/test/test-util/request-mocker';
-import {
-  createGetAllRequest,
-  createUpdateRequest
-} from '@sap-cloud-sdk/core/test/test-util/create-requests';
-import { Destination } from '@sap-cloud-sdk/connectivity';
-import { buildHeaders } from './header-builder';
+} from '../../core/test/test-util/request-mocker';
+import { connectivityProxyConfigMock } from '../../core/test/test-util/environment-mocks';
+
+function createGetAllRequest(
+  dest: Destination
+): ODataRequest<ODataGetAllRequestConfig<TestEntity>> {
+  const requestConfig = new ODataGetAllRequestConfig(TestEntity, oDataUri);
+  return new ODataRequest(requestConfig, dest);
+}
+
+function createUpdateRequest(
+  dest: Destination
+): ODataRequest<ODataUpdateRequestConfig<TestEntity>> {
+  const requestConfig = new ODataUpdateRequestConfig(TestEntity, oDataUri);
+  return new ODataRequest(requestConfig, dest);
+}
 
 describe('Header-Builder', () => {
   it('customHeaders are not overwritten', async () => {
@@ -16,7 +33,7 @@ describe('Header-Builder', () => {
     const request = createGetAllRequest(defaultDestination);
     request.config.customHeaders = { authorization: authString };
 
-    const headers = await buildHeaders(request);
+    const headers = await buildHeaders(request as any);
     expect(headers.authorization).toBe(authString);
   });
 

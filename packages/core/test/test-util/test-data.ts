@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { uriConverter } from '@sap-cloud-sdk/odata-v4';
 import {
   TestEntity,
   TestEntityMultiLink,
@@ -11,7 +12,6 @@ import {
   TestEntityWithEnumKey
 } from './test-services/v4/test-service';
 import { TestEnumType } from './test-services/v4/test-service/TestEnumType';
-import {uriConverter} from "@sap-cloud-sdk/odata-v4";
 
 const { convertToUriFormat } = uriConverter;
 

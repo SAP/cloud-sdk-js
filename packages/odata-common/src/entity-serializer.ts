@@ -1,15 +1,17 @@
-import { createLogger } from '@sap-cloud-sdk/util';
-import { toStaticPropertyFormat } from './name-converter';
-import {Constructable, Entity} from "./entity";
-import {ComplexTypeNamespace, isComplexTypeNameSpace, PropertyMetadata} from "./selectable/complex-type-namespace";
-import {EdmTypeField} from "./selectable/edm-type-field";
-import {OneToOneLink} from "./selectable/one-to-one-link";
-import {Link} from "./selectable/link";
-import {ComplexTypeField} from "./selectable/complex-type-field";
-import {CollectionField} from "./selectable/collection-field";
-import {EnumField} from "./selectable/enum-field";
-import {EdmTypeShared, isEdmType} from "./edm-types";
-
+import {createLogger, upperCaseSnakeCase} from '@sap-cloud-sdk/util';
+import { Constructable, EntityBase } from './entity-base';
+import {
+  ComplexTypeNamespace,
+  isComplexTypeNameSpace,
+  PropertyMetadata
+} from './selectable/complex-type-namespace';
+import { EdmTypeField } from './selectable/edm-type-field';
+import { OneToOneLink } from './selectable/one-to-one-link';
+import { Link } from './selectable/link';
+import { ComplexTypeField } from './selectable/complex-type-field';
+import { CollectionField } from './selectable/collection-field';
+import { EnumField } from './selectable/enum-field';
+import { EdmTypeShared, isEdmType } from './edm-types';
 
 const logger = createLogger({
   package: 'core',
@@ -20,7 +22,7 @@ const logger = createLogger({
  * Interface representing the return type of the builder function [[entitySerializer]].
  */
 export interface EntitySerializer<
-  EntityT extends Entity = any,
+  EntityT extends EntityBase = any,
   ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
 > {
   serializeEntity: (
@@ -57,7 +59,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns JSON.
    */
-  function serializeEntity<EntityT extends Entity>(
+  function serializeEntity<EntityT extends EntityBase>(
     entity: EntityT,
     entityConstructor: Constructable<EntityT>,
     diff = false
@@ -104,13 +106,13 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns A JSON Representation of the non custom fields
    */
-  function serializeEntityNonCustomFields<EntityT extends Entity>(
+  function serializeEntityNonCustomFields<EntityT extends EntityBase>(
     entity: EntityT,
     entityConstructor: Constructable<EntityT>,
     diff = false
   ): Record<string, any> {
     return getFieldNames(entity, diff).reduce((serialized, key) => {
-      const field = entityConstructor[toStaticPropertyFormat(key)];
+      const field = entityConstructor[upperCaseSnakeCase(key)];
       const fieldValue = entity[key];
 
       const serializedValue = serializeField(field, fieldValue);
@@ -126,7 +128,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
     }, {});
   }
 
-  function getFieldNames<EntityT extends Entity>(
+  function getFieldNames<EntityT extends EntityBase>(
     entity: EntityT,
     diff = false
   ): string[] {
@@ -138,7 +140,7 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   }
 
   // TODO: get rid of this function in v2.0
-  function serializeComplexTypeFieldLegacy<EntityT extends Entity>(
+  function serializeComplexTypeFieldLegacy<EntityT extends EntityBase>(
     complexTypeField: ComplexTypeField<EntityT>,
     fieldValue: any
   ): any {

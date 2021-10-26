@@ -7,12 +7,12 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   Constructable,
-  UpdateRequestBuilder as UpdateRequestBuilderBase
+  UpdateRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { extractODataEtag } from '../extract-odata-etag';
-import {oDataUri} from "../uri-conversion/odata-uri";
+import { oDataUri } from '../uri-conversion/odata-uri';
 
 export class UpdateRequestBuilder<
   EntityT extends Entity
@@ -72,4 +72,3 @@ export class UpdateRequestBuilder<
     return super.executeRequestRaw(request);
   }
 }
-

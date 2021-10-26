@@ -3,7 +3,8 @@ import { ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
   odataImportDeclaration,
   corePropertyTypeImportNames,
-  externalImportDeclarations, odataCommonImportDeclaration
+  externalImportDeclarations,
+  odataCommonImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmProperty } from '../vdm-types';
 
@@ -13,22 +14,21 @@ export function importDeclarations(
 ): ImportDeclarationStructure[] {
   return [
     ...externalImportDeclarations(entity.keys),
-      odataCommonImportDeclaration(['RequestBuilder',...corePropertyTypeImportNames(entity.keys)]),
+    odataCommonImportDeclaration([
+      'RequestBuilder',
+      ...corePropertyTypeImportNames(entity.keys)
+    ]),
     odataImportDeclaration(
-      requestBuilderCoreImportDeclarations(entity)
-    ,oDataVersion),
+      requestBuilderCoreImportDeclarations(entity),
+      oDataVersion
+    ),
     entityImportDeclaration(entity),
     ...entityKeyImportDeclaration(entity.keys)
   ];
 }
 
-function requestBuilderCoreImportDeclarations(
-  entity: VdmEntity
-) {
-  const coreImports = [
-    'GetAllRequestBuilder',
-    'GetByKeyRequestBuilder'
-  ];
+function requestBuilderCoreImportDeclarations(entity: VdmEntity) {
+  const coreImports = ['GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
 
   if (entity.creatable) {
     coreImports.push('CreateRequestBuilder');

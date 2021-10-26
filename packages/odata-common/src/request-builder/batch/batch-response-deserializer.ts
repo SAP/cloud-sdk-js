@@ -5,7 +5,7 @@ import {
   WriteResponse,
   WriteResponses
 } from '../../batch-response';
-import { Constructable, Entity } from '../../entity';
+import { Constructable, EntityBase } from '../../entity-base';
 import { EntityDeserializer } from '../../entity-deserializer';
 import { ResponseDataAccessor } from '../../response-data-accessor';
 import { ResponseData, isHttpSuccessCode } from './batch-response-parser';
@@ -28,7 +28,7 @@ export class BatchResponseDeserializer {
   constructor(
     private readonly entityToConstructorMap: Record<
       string,
-      Constructable<Entity>
+      Constructable<EntityBase>
     >,
     private readonly responseDataAccessor: ResponseDataAccessor,
     private readonly deserializer: EntityDeserializer
@@ -101,7 +101,7 @@ export class BatchResponseDeserializer {
    */
   private getConstructor(
     responseBody: Record<string, any>
-  ): Constructable<Entity> | undefined {
+  ): Constructable<EntityBase> | undefined {
     const entityJson = this.responseDataAccessor.isCollectionResult(
       responseBody
     )
@@ -129,7 +129,7 @@ export class BatchResponseDeserializer {
  */
 export function deserializeBatchResponse(
   parsedBatchResponse: (ResponseData[] | ResponseData)[],
-  entityToConstructorMap: Record<string, Constructable<Entity>>,
+  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ): (ErrorResponse | ReadResponse | WriteResponses)[] {
@@ -152,7 +152,7 @@ function asReadResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <EntityT extends Entity>(
+  return <EntityT extends EntityBase>(
     constructor: Constructable<EntityT>
   ): EntityT[] => {
     if (body.error) {
@@ -184,7 +184,7 @@ function asWriteResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <EntityT extends Entity>(constructor: Constructable<EntityT>) =>
+  return <EntityT extends EntityBase>(constructor: Constructable<EntityT>) =>
     deserializer.deserializeEntity(
       responseDataAccessor.getSingleResult(body),
       constructor
@@ -195,6 +195,7 @@ function asWriteResponse(
  * Parse the entity name from the metadata uri. This should be the `__metadata` property of a single entity in the response.
  * @param uri - The URI to parse the entity name from
  * @returns The entity name.
+ *  @internal
  */
 export function parseEntityNameFromMetadataUri(uri: string): string {
   if (!uri) {

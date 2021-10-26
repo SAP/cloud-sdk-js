@@ -1,11 +1,12 @@
-import { Constructable, Entity, EntityIdentifiable } from '../entity';
+import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
 import type { Filterable } from './filterable';
 
 /**
  * Data structure to combine [[Filterable]]s conjunctively and / or disjunctively. A FilterList matches when all filterables within the `andFilters` match and when at least one filterable within the `orFilters` matches. Should not be used directly.
  * @typeparam EntityT -
+ * @internal
  */
-export class FilterList<EntityT extends Entity>
+export class FilterList<EntityT extends EntityBase>
   implements EntityIdentifiable<EntityT>
 {
   /**
@@ -71,7 +72,11 @@ export class FilterList<EntityT extends Entity>
   }
 }
 
-export function isFilterList<T extends Entity>(
+/**
+ * @internal
+ * @param filterable
+ */
+export function isFilterList<T extends EntityBase>(
   filterable: Filterable<T>
 ): filterable is FilterList<T> {
   return (

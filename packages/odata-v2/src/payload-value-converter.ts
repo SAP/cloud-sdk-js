@@ -2,14 +2,16 @@
 
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { Time, EdmTypeShared ,
+import {
+  Time,
+  EdmTypeShared,
   deserializersCommon,
   serializersCommon
 } from '@sap-cloud-sdk/odata-common';
 import { EdmType } from './edm-types';
 
 /**
- * @hidden
+ * @internal
  */
 export function edmToTs<T extends EdmType>(
   value: any,
@@ -25,7 +27,7 @@ export function edmToTs<T extends EdmType>(
 }
 
 /**
- * @hidden
+ * @internal
  */
 export function tsToEdm(value: any, edmType: EdmTypeShared<'v2'>): any {
   if (value === null) {
@@ -57,7 +59,7 @@ const toTime = (value: string): Time => {
 };
 
 /**
- * @hidden
+ * @internal
  * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
  */
 export function edmDateTimeToMoment(edmDateTime: string): moment.Moment {
@@ -81,7 +83,7 @@ export function edmDateTimeToMoment(edmDateTime: string): moment.Moment {
 }
 
 /**
- * @hidden
+ * @internal
  * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
  */
 export function momentToEdmDateTime(momentInstance: moment.Moment): string {
@@ -114,6 +116,9 @@ function leftpad(value: any, targetLength: number): string {
   return '0'.repeat(targetLength - str.length) + str;
 }
 
+/**
+ * @internal
+ */
 export type EdmToPrimitive<T extends EdmType> = T extends
   | 'Edm.Int16'
   | 'Edm.Int32'
@@ -147,10 +152,4 @@ const serializers: EdmTypeMapping = {
   'Edm.DateTime': momentToEdmDateTime,
   'Edm.DateTimeOffset': momentToEdmDateTime,
   'Edm.Time': fromTime
-};
-
-export {
-  EdmToPrimitive as EdmToPrimitiveV2,
-  edmToTs as edmToTsV2,
-  tsToEdm as tsToEdmV2
 };

@@ -171,7 +171,7 @@ export function parseTypeDefinitionFile(
   fileContent: string
 ): Omit<ExportedObject, 'path'>[] {
   const normalized = fileContent.replace(/\n+/g, '');
-  return ['function', 'const', 'enum', 'class', 'type', 'interface'].reduce(
+  return ['function', 'const', 'enum', 'class','abstract class', 'type', 'interface'].reduce(
     (allObjects, objectType) => {
       const regex =
         objectType === 'interface'

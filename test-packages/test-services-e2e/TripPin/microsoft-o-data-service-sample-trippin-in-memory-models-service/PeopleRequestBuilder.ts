@@ -4,7 +4,13 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
-import { GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { People } from './People';
 
 /**
@@ -59,6 +65,11 @@ export class PeopleRequestBuilder extends RequestBuilder<People> {
    */
   delete(entity: People): DeleteRequestBuilder<People>;
   delete(userNameOrEntity: any): DeleteRequestBuilder<People> {
-    return new DeleteRequestBuilder(People, userNameOrEntity instanceof People ? userNameOrEntity : { UserName: userNameOrEntity! });
+    return new DeleteRequestBuilder(
+      People,
+      userNameOrEntity instanceof People
+        ? userNameOrEntity
+        : { UserName: userNameOrEntity! }
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
 import { FilterFunctionParameterType } from './filter-function-base';
 import { OrderableFilterFunction } from './orderable-filter-function';
 
@@ -6,7 +6,7 @@ import { OrderableFilterFunction } from './orderable-filter-function';
  * Representation of a filter function, that returns a value of type number. This supports int, double and decimal values.
  */
 export class NumberFilterFunction<
-  EntityT extends Entity
+  EntityT extends EntityBase
 > extends OrderableFilterFunction<EntityT, number> {
   /**
    * Creates an instance of NumberFilterFunction.

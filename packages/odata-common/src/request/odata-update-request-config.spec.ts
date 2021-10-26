@@ -1,13 +1,14 @@
 import { v4 as uuid } from 'uuid';
 import { testEntityResourcePath } from '@sap-cloud-sdk/core/test/test-util/test-data';
 import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/core/dist/odata-v2/uri-conversion';
-import { ODataUpdateRequestConfig } from './odata-update-request-config';
+import { oDataUri } from '@sap-cloud-sdk/odata-v2';
+import { ODataUpdateRequestConfig } from '@sap-cloud-sdk/odata-common';
+import { uriConverter } from '../../../odata-v2/src/uri-conversion/uri-value-converter';
 
 describe('ODataUpdateRequestConfig', () => {
   let config: ODataUpdateRequestConfig<TestEntity>;
   beforeEach(() => {
-    config = new ODataUpdateRequestConfig(TestEntity, oDataUriV2);
+    config = new ODataUpdateRequestConfig(TestEntity, oDataUri);
   });
 
   it('method is patch as default', () => {
@@ -27,7 +28,11 @@ describe('ODataUpdateRequestConfig', () => {
       KeyPropertyString: keyPropString
     };
     expect(config.resourcePath()).toBe(
-      testEntityResourcePath(keyPropGuid, keyPropString)
+      testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        uriConverter.convertToUriFormat
+      )
     );
   });
 

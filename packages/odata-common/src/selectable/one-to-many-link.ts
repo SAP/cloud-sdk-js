@@ -1,9 +1,8 @@
-import { Entity } from '../entity';
-
+import { EntityBase } from '../entity-base';
+import { FilterLink } from '../filter/filter-link';
+import { Orderable } from '../order/orderable';
+import { Filterable, toFilterableList } from '../filter/filterable';
 import { Link } from './link';
-import {FilterLink} from "../filter/filter-link";
-import {Orderable} from "../order/orderable";
-import {Filterable, toFilterableList} from "../filter/filterable";
 
 /**
  * Represents a one to many relation for OData v4 entities.
@@ -11,8 +10,8 @@ import {Filterable, toFilterableList} from "../filter/filterable";
  * See [[Link]] for more information.
  */
 export class OneToManyLink<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 > extends Link<EntityT, LinkedEntityT> {
   _filters: FilterLink<EntityT, LinkedEntityT>;
   _orderBy: Orderable<LinkedEntityT>[] = [];

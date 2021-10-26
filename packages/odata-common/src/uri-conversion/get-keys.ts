@@ -1,6 +1,6 @@
-import { Entity, Constructable } from '../entity';
-import { toPropertyFormat } from '../name-converter';
-import {Field} from "../selectable/field";
+import { EntityBase, Constructable } from '../entity-base';
+import { Field } from '../selectable/field';
+import {camelCase} from "@sap-cloud-sdk/util";
 
 /**
  * Helper function that maps an entity to its keys map with their original names.
@@ -8,7 +8,7 @@ import {Field} from "../selectable/field";
  * @param entityConstructor - The constructor of the entity
  * @returns object that includes all keys that represent given entity
  */
-export function getEntityKeys<EntityT extends Entity>(
+export function getEntityKeys<EntityT extends EntityBase>(
   entity: EntityT,
   entityConstructor: Constructable<EntityT>
 ): Record<string, any> {
@@ -22,7 +22,7 @@ export function getEntityKeys<EntityT extends Entity>(
     (prev, curr) => ({
       ...prev,
       [curr._fieldName]: encodeURIComponent(
-        entity[toPropertyFormat(curr._fieldName)]
+        entity[camelCase(curr._fieldName)]
       )
     }),
     {}

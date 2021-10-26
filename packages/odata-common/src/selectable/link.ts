@@ -1,4 +1,4 @@
-import { Entity, EntityIdentifiable, Constructable } from '../entity';
+import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
 import type { Expandable } from '../expandable';
 import type { Selectable } from './selectable';
 
@@ -19,8 +19,10 @@ import type { Selectable } from './selectable';
  * @typeparam EntityT - Type of the entity to be linked from
  * @typeparam LinkedEntityT - Type of the entity to be linked to
  */
-export class Link<EntityT extends Entity, LinkedEntityT extends Entity = any>
-  implements EntityIdentifiable<EntityT>
+export class Link<
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase = any
+> implements EntityIdentifiable<EntityT>
 {
   /**
    * @deprecated Since v1.21.0. Use [[clone]] instead.
@@ -30,7 +32,7 @@ export class Link<EntityT extends Entity, LinkedEntityT extends Entity = any>
    * @param link - Link to be cloned
    * @returns Newly created link
    */
-  static clone<EntityT1 extends Entity, LinkedEntityT1 extends Entity>(
+  static clone<EntityT1 extends EntityBase, LinkedEntityT1 extends EntityBase>(
     link: Link<EntityT1, LinkedEntityT1>
   ): Link<EntityT1, LinkedEntityT1> {
     const clonedLink = new Link<EntityT1, LinkedEntityT1>(

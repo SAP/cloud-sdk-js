@@ -1,6 +1,8 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 export type EdmTypeCommon = EdmTypeSameConverters | EdmTypeDifferentConverters;
-
+/**
+ * @internal
+ */
 export type EdmTypeSameConverters =
   | 'Edm.String'
   | 'Edm.Boolean'
@@ -16,7 +18,9 @@ export type EdmTypeSameConverters =
   | 'Edm.Guid'
   | 'Edm.Byte'
   | 'Edm.Any'; // Represents currently unsupported EDM types like Edm.Geography.
-
+/**
+ * @internal
+ */
 export type EdmTypeDifferentConverters = 'Edm.DateTimeOffset';
 
 // Exclusive types for ODataVersions
@@ -34,7 +38,9 @@ export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =
   VersionT extends any
     ? EdmTypeCommon | ExclusiveEdmTypeV2 | ExclusiveEdmTypeV4
     : EdmTypeCommon | ExclusiveEdmTypeV2 | ExclusiveEdmTypeV4;
-
+/**
+ * @internal
+ */
 export type EdmTypeSameConvertersUri = Exclude<
   EdmTypeSameConverters,
   'Edm.Guid' | 'Edm.Decimal'
@@ -44,6 +50,7 @@ export type EdmTypeSameConvertersUri = Exclude<
  * Check whether a value is an EdmType. This will yield positive results for every string starting with `Edm.`.
  * @param val - Value to test.
  * @returns Whether the given value is of type [[EdmTypeShared]]
+ * @internal
  */
 export function isEdmType(val: any): val is EdmTypeShared<'any'> {
   return typeof val === 'string' && val.startsWith('Edm.');
@@ -51,6 +58,7 @@ export function isEdmType(val: any): val is EdmTypeShared<'any'> {
 
 /**
  * EDM types that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.
+ * @internal
  */
 export type OrderableEdmType =
   | 'Edm.Decimal'
@@ -73,6 +81,7 @@ export type OrderableEdmType =
  * Convenience function to check whether a given EDM type is of type [[OrderableEdmType]].
  * @param edmType - Literal EDM type string to check.
  * @returns Whether the given `edmType` is of type [[OrderableEdmType]].
+ * @internal
  */
 export function isOrderableEdmType(edmType: EdmTypeShared<'any'>): boolean {
   return [

@@ -1,6 +1,6 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { EdmTypeShared, isEdmType } from '../edm-types';
-import { Constructable, Entity } from '../entity';
+import { Constructable, EntityBase } from '../entity-base';
 import { Field, FieldOptions } from './field';
 import {
   isComplexTypeNameSpace,
@@ -25,13 +25,13 @@ import type { ConstructorOrField } from './constructor-or-field';
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export abstract class ComplexTypeField<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   ComplexT = any,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
   /**
-   * @hidden
+   * @internal
    * Note that this property is crucial, although not really used.
    * If it is removed this class becomes structural equivalent to e.g. ComplexTypeStringPropertyField which leads to unexpected behavior on the `selectable` list of objects.
    */
@@ -117,8 +117,9 @@ export abstract class ComplexTypeField<
  * Convenience method to get the entity constructor of the parent of a complex type.
  * @param fieldOf - Either an entity constructor or another complex type field.
  * @returns The constructor of the transitive parent entity;
+ * @internal
  */
-export function getEntityConstructor<EntityT extends Entity, ComplexT>(
+export function getEntityConstructor<EntityT extends EntityBase, ComplexT>(
   fieldOf: ConstructorOrField<EntityT, ComplexT>
 ): Constructable<EntityT> {
   return fieldOf instanceof ComplexTypeField
@@ -134,6 +135,7 @@ export function getEntityConstructor<EntityT extends Entity, ComplexT>(
  * @param complexTypeNameOrEdmType - Either the name of the complex type or the EDM type.
  * @param edmTypeOrUndefined - Either the EDM type or `undefined`.
  * @returns The EDM type resolved for the two arguments.
+ * @internal
  */
 export function getEdmType<VersionT extends ODataVersion | 'any'>(
   complexTypeNameOrEdmType: string | EdmTypeShared<VersionT>,

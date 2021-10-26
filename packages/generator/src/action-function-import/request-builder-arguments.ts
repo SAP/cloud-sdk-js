@@ -10,7 +10,7 @@ export function getRequestBuilderArgumentsBase(
   actionFunctionImport: VdmFunctionImport | VdmActionImport,
   service: VdmServiceMetadata
 ): string[] {
-  const transformer = getTransformer(actionFunctionImport, service);
+  const transformer = getTransformer(actionFunctionImport);
   return [
     `'${service.servicePath}'`,
     `'${actionFunctionImport.originalName}'`,
@@ -20,8 +20,7 @@ export function getRequestBuilderArgumentsBase(
 }
 
 function getTransformer(
-  actionFunctionImport: VdmFunctionImport | VdmActionImport,
-  service: VdmServiceMetadata
+  actionFunctionImport: VdmFunctionImport | VdmActionImport
 ): string {
   if (isEntityNotDeserializable(actionFunctionImport.returnType)) {
     return `(data) => throwErrorWhenReturnTypeIsUnionType(data, '${actionFunctionImport.originalName}')`;

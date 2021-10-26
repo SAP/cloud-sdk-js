@@ -80,11 +80,7 @@ function parseReturnTypes(
 
   const complexType = findComplexType(returnType.Type, complexTypes);
   if (complexType) {
-    return getComplexReturnType(
-      isCollection,
-      isNullable,
-      complexType
-    );
+    return getComplexReturnType(isCollection, isNullable, complexType);
   }
 
   throw Error(`Unable to find a return type for name ${returnType}.`);

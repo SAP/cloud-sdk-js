@@ -2,11 +2,11 @@ import {
   Constructable,
   EntityIdentifiable,
   FieldType,
-  GetByKeyRequestBuilder as GetByKeyRequestBuilderBase
+  GetByKeyRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion/odata-uri';
 import { responseDataAccessor } from './response-data-accessor';
 
 /**
@@ -39,4 +39,3 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
     );
   }
 }
-

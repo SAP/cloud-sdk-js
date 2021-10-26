@@ -1,7 +1,6 @@
-import { ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase } from '@sap-cloud-sdk/odata-common';
-import {ODataActionImportRequestConfig} from "../request/odata-action-import-request-config";
-import {ActionImportParameters} from "../request/action-import-parameter";
-
+import { ActionFunctionImportRequestBuilderBase } from '@sap-cloud-sdk/odata-common';
+import { ODataActionImportRequestConfig } from '../request/odata-action-import-request-config';
+import { ActionImportParameters } from '../request/action-import-parameter';
 
 /**
  * Create an OData request to execute an action import.
@@ -11,7 +10,10 @@ import {ActionImportParameters} from "../request/action-import-parameter";
 export class ActionImportRequestBuilder<
   ParametersT,
   ReturnT
-> extends ActionFunctionImportRequestBuilderBase<ParametersT, ReturnT,ODataActionImportRequestConfig<ParametersT>> {
+> extends ActionFunctionImportRequestBuilderBase<
+  ReturnT,
+  ODataActionImportRequestConfig<ParametersT>
+> {
   /**
    * Creates an instance of ActionImportRequestBuilder.
    * @param defaultServicePath - Default path for the service the action belongs to

@@ -1,21 +1,21 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { Entity } from '../entity';
-import {BooleanFilterFunction} from "./boolean-filter-function";
-import {Filter} from "./filter";
-import {UnaryFilter} from "./unary-filter";
-import {OneToManyLink} from "../selectable/one-to-many-link";
-import {FilterList} from "./filter-list";
-import {FilterLambdaExpression} from "./filter-lambda-expression";
-import {FilterLink} from "./filter-link";
-import {FieldType} from "../selectable/field";
+import { EntityBase } from '../entity-base';
+import { OneToManyLink } from '../selectable/one-to-many-link';
+import { FieldType } from '../selectable/field';
+import { BooleanFilterFunction } from './boolean-filter-function';
+import { Filter } from './filter';
+import { UnaryFilter } from './unary-filter';
+import { FilterList } from './filter-list';
+import { FilterLambdaExpression } from './filter-lambda-expression';
+import { FilterLink } from './filter-link';
 
 /**
  * A union of all types that can be used for filtering.
  * @typeparam EntityT - Type of the entity to be filtered on
  */
 export type Filterable<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity = any
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase = any
 > =
   | Filter<EntityT, FieldType | FieldType[]>
   | FilterLink<EntityT>
@@ -45,13 +45,13 @@ export type Filterable<
  * @param expressions - Filterables to be combined with logical `and`.
  * @returns The newly created FilterList.
  */
-export function and<EntityT extends Entity>(
+export function and<EntityT extends EntityBase>(
   expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
-export function and<EntityT extends Entity>(
+export function and<EntityT extends EntityBase>(
   ...expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
-export function and<EntityT extends Entity>(
+export function and<EntityT extends EntityBase>(
   first: undefined | Filterable<EntityT> | Filterable<EntityT>[],
   ...rest: Filterable<EntityT>[]
 ): FilterList<EntityT> {
@@ -71,13 +71,13 @@ export function and<EntityT extends Entity>(
  * @param expressions - Filterables to be combined with logical `or`
  * @returns The newly created FilterList
  */
-export function or<EntityT extends Entity>(
+export function or<EntityT extends EntityBase>(
   expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
-export function or<EntityT extends Entity>(
+export function or<EntityT extends EntityBase>(
   ...expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
-export function or<EntityT extends Entity>(
+export function or<EntityT extends EntityBase>(
   first: Filterable<EntityT> | Filterable<EntityT>[],
   ...rest: Filterable<EntityT>[]
 ): FilterList<EntityT> {
@@ -88,8 +88,8 @@ export function or<EntityT extends Entity>(
   hidden
  */
 export function toFilterableList<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 >(filters: Filterable<EntityT, LinkedEntityT>[]): Filterable<EntityT>[] {
   return filters.map(f => (f instanceof OneToManyLink ? f._filters : f));
 }
@@ -99,7 +99,7 @@ export function toFilterableList<
  * @param filter - The filter to negate.
  * @returns The negated filter.
  */
-export function not<EntityT extends Entity>(
+export function not<EntityT extends EntityBase>(
   filter: Filterable<EntityT>
 ): UnaryFilter<EntityT> {
   return new UnaryFilter(filter, 'not');

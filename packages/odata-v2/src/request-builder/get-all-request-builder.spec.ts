@@ -1,21 +1,21 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
-import { wrapJwtInHeader } from '../../../../connectivity/src/scp-cf/jwt';
+import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
   mockDestinationsEnv,
   mockGetRequest,
   unmockDestinationsEnv
-} from '../../../test/test-util/request-mocker';
+} from '../../../core/test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createTestEntity
-} from '../../../test/test-util/test-data';
+} from '../../../core/test/test-util/test-data';
 import {
   TestEntity,
   TestEntitySingleLink
-} from '../../../test/test-util/test-services/v2/test-service';
+} from '../../../core/test/test-util/test-services/v2/test-service';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,
@@ -28,8 +28,8 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken
-} from '../../../test/test-util';
-import { parseDestination } from '../../../../connectivity/src/scp-cf/destination/destination';
+} from '../../../core/test/test-util';
+import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {

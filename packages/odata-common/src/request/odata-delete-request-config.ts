@@ -1,15 +1,14 @@
-import { Constructable, Entity } from '../entity';
-
+import { Constructable, EntityBase } from '../entity-base';
+import { ODataUri } from '../uri-conversion/odata-uri';
+import { FieldType } from '../selectable/field';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
-import {ODataUri} from "../uri-conversion/odata-uri";
-import {FieldType} from "../selectable/field";
 
 /**
  * OData delete request configuration for an entity type.
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataDeleteRequestConfig<EntityT extends Entity>
+export class ODataDeleteRequestConfig<EntityT extends EntityBase>
   extends ODataRequestConfig
   implements WithKeys, WithETag
 {

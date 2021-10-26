@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { Entity, EntityIdentifiable, Constructable } from '../entity';
+import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
 import { Time } from '../time';
 
 /**
@@ -16,12 +16,6 @@ export type FieldType =
   | BigNumber
   | null
   | undefined;
-
-/**
- * @deprecated Since v1.18.0. Use [[FieldType]] instead.
- * Represents types of nested fields.
- */
-export type DeepFieldType = FieldType | { [keys: string]: DeepFieldType };
 
 /**
  * Optional settings for fields.
@@ -45,6 +39,7 @@ export interface FieldOptions<
  * The given options take precedence.
  * @param fieldOptions - Given options.
  * @returns Given options merged with default values.
+ *  @internal
  */
 export function getFieldOptions<
   NullableT extends boolean = false,
@@ -75,7 +70,7 @@ const defaultFieldOptions: Required<FieldOptions> = {
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class Field<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > implements EntityIdentifiable<EntityT>

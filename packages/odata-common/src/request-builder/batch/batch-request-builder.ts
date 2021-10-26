@@ -7,7 +7,7 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
-import { Constructable, Entity } from '../../entity';
+import { Constructable, EntityBase } from '../../entity-base';
 import { ODataRequest } from '../../request/odata-request';
 import { BatchChangeSet } from './batch-change-set';
 import { BatchSubRequestPathType } from './batch-request-options';
@@ -28,7 +28,7 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
   constructor(
     readonly defaultServicePath: string,
     readonly requests: (BatchChangeSet | MethodRequestBuilder)[],
-    readonly entityToConstructorMap: Record<string, Constructable<Entity>>
+    readonly entityToConstructorMap: Record<string, Constructable<EntityBase>>
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
   }

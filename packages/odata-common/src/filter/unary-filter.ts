@@ -1,16 +1,22 @@
-import { Entity } from '../entity';
-import {Filterable} from "./filterable";
+import { EntityBase } from '../entity-base';
+import { Filterable } from './filterable';
 
 type UnaryFilterOperator = 'not';
 
-export class UnaryFilter<EntityT extends Entity> {
+/**
+ * @internal
+ */
+export class UnaryFilter<EntityT extends EntityBase> {
   constructor(
     public singleOperand: Filterable<EntityT>,
     public operator: UnaryFilterOperator
   ) {}
 }
 
-export function isUnaryFilter<T extends Entity>(
+/**
+ * @internal
+ */
+export function isUnaryFilter<T extends EntityBase>(
   filterable: Filterable<T>
 ): filterable is UnaryFilter<T> {
   return (

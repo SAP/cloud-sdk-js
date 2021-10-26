@@ -17,6 +17,7 @@ const logger = createLogger({
  * Detects the system dependent line break in a string.
  * @param str - The string to check for line breaks. Should have at least two lines, otherwise an error will be thrown.
  * @returns The system dependent line break
+ * @internal
  */
 export function detectNewLineSymbol(str: string): string {
   if (str.includes(webEOL)) {
@@ -32,6 +33,7 @@ export function detectNewLineSymbol(str: string): string {
  * Get the response body from the string representation of a response.
  * @param response - String representation of a response.
  * @returns The response body as a one line string.
+ * @internal
  */
 export function getResponseBody(response: string): string {
   const newLineSymbol = detectNewLineSymbol(response);
@@ -83,6 +85,7 @@ function getBoundary(contentType: string | undefined): string {
  * Split a batch response into an array of sub responses for the retrieve requests and changesets.
  * @param response - The raw HTTP response.
  * @returns A list of sub responses represented as strings.
+ *  @internal
  */
 export function splitBatchResponse(response: HttpResponse): string[] {
   const body = response.data.trim();
@@ -104,6 +107,7 @@ export function splitBatchResponse(response: HttpResponse): string[] {
  * Split a changeset (sub) response into an array of sub responses.
  * @param changeSetResponse - The string representation of a change set response.
  * @returns A list of sub responses represented as strings.
+ *  @internal
  */
 export function splitChangeSetResponse(changeSetResponse: string): string[] {
   const headers = parseHeaders(changeSetResponse);
@@ -121,6 +125,7 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
  * @param response - The string representation of the response to split.
  * @param boundary - The boundary to split by.
  * @returns A list of sub responses represented as strings.
+ *  @internal
  */
 export function splitResponse(response: string, boundary: string): string[] {
   const newLineSymbol = detectNewLineSymbol(response);
@@ -144,6 +149,7 @@ export function splitResponse(response: string, boundary: string): string[] {
  * Parse the HTTP code of response.
  * @param response - String representation of the response.
  * @returns The HTTP code.
+ *  @internal
  */
 export function parseHttpCode(response: string): number {
   const group = response.match(/HTTP\/\d\.\d (\d{3}).*?/);
@@ -159,6 +165,7 @@ export function parseHttpCode(response: string): number {
  * Get the body from the given response and parse it to JSON.
  * @param response - The string representation of a single response.
  * @returns The parsed JSON representation of the response body.
+ *  @internal
  */
 function parseResponseBody(response: string): Record<string, any> {
   const responseBody = getResponseBody(response);
@@ -178,6 +185,7 @@ function parseResponseBody(response: string): Record<string, any> {
  * Parse the body and http code of a batch sub response.
  * @param response - A batch sub response.
  * @returns The parsed response.s
+ *  @internal
  */
 export function parseResponseData(response: string): ResponseData {
   return {
@@ -224,10 +232,17 @@ function isRetrieveOrErrorContentType(contentType: string): boolean {
   return contentType?.trim().startsWith('application/http');
 }
 
+/**
+ * @internal
+ * @param httpCode
+ */
 export function isHttpSuccessCode(httpCode: number): boolean {
   return httpCode >= 200 && httpCode < 300;
 }
 
+/**
+ * @internal
+ */
 export interface ResponseData {
   body: Record<string, any>;
   httpCode: number;

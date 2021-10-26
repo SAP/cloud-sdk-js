@@ -1,7 +1,7 @@
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
+import { Filter } from '../filter/filter';
 import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
-import {Filter} from "../filter/filter";
 
 /**
  * [[EdmTypeField]], that represents a property with an EDM type, that can be compared with `greaterThan`, `greaterOrEqual`, `lessThan` and `lessOrEqual`.
@@ -11,7 +11,7 @@ import {Filter} from "../filter/filter";
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class OrderableEdmTypeField<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean = false,
   SelectableT extends boolean = false

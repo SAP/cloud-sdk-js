@@ -1,9 +1,9 @@
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
+import { Filter } from '../filter/filter';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
-import {Filter} from "../filter/filter";
 
 /**
  * Represents a property with an enum value.
@@ -13,7 +13,7 @@ import {Filter} from "../filter/filter";
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class EnumField<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   EnumT extends string = string,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
@@ -72,5 +72,6 @@ export class EnumField<
  * Convenient type to reflect all the values of a string based enum as a union type.
  * @typeparam T - String based enum type
  * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#template-literal-types
+ * @internal
  */
 export type EnumType<T extends string> = `${T}`;

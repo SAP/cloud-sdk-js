@@ -12,7 +12,7 @@ import { EdmType } from '../edm-types';
 
 type UriConverterMapping = { [key in EdmType]: (value: any) => string };
 /**
- * @hidden
+ * @internal
  */
 export const uriConverters: UriConverterMapping = {
   ...uriConvertersCommon,
@@ -24,9 +24,7 @@ export const uriConverters: UriConverterMapping = {
   'Edm.Guid': identity,
   'Edm.Enum': value => convertToUriForEdmString(value)
 };
-/**
- * @hidden
- */
+
 export const uriConverter: UriConverter = {
   convertToUriFormat(value: any, edmType: EdmTypeShared<'v4'>): string {
     const converted = tsToEdm(value, edmType);

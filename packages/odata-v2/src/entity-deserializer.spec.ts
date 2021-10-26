@@ -1,9 +1,9 @@
-import { extractCustomFields } from '@sap-cloud-sdk/odata-common';
+import { extractCustomFields } from '@sap-cloud-sdk/odata-common/dist/entity-deserializer';
 import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../test/test-util/test-services/v2/test-service';
+} from '../../core/test/test-util/test-services/v2/test-service';
 import { deserializeEntity } from './entity-deserializer';
 
 describe('entity-deserializer', () => {

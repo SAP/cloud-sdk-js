@@ -3,7 +3,7 @@ import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../../test/test-util/test-services/v4/test-service';
+} from '../../../core/test/test-util/test-services/v4/test-service';
 import { getExpand } from './get-expand';
 
 describe('get expand', () => {

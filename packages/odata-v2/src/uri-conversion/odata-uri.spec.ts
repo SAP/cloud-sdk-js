@@ -8,8 +8,8 @@ import {
   testFilterSingleLink,
   testFilterString,
   testFilterStringEncoding
-} from '../../../test/test-util/filter-factory';
-import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
+} from '../../../core/test/test-util/filter-factory';
+import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
 import { filterFunctions } from '../filter-functions';
 import { oDataUri } from './odata-uri';
 

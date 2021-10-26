@@ -1,10 +1,10 @@
 import {
   FunctionImportParameters,
   RequestMethodType,
-  ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase
+  ActionFunctionImportRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common';
-import { oDataUri } from '../uri-conversion';
-import {ODataFunctionImportRequestConfig} from "../request/odata-function-import-request-config";
+import { oDataUri } from '../uri-conversion/odata-uri';
+import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
 
 /**
  * Create OData request to execute a function import.
@@ -15,7 +15,10 @@ export class FunctionImportRequestBuilder<
   // reuse
   ParametersT,
   ReturnT
-> extends ActionFunctionImportRequestBuilderBase<ParametersT, ReturnT,ODataFunctionImportRequestConfig<ParametersT>> {
+> extends ActionFunctionImportRequestBuilderBase<
+  ReturnT,
+  ODataFunctionImportRequestConfig<ParametersT>
+> {
   /**
    * Creates an instance of FunctionImportRequestBuilder.
    * @param method - HTTP method to be used for the request
@@ -43,4 +46,3 @@ export class FunctionImportRequestBuilder<
     );
   }
 }
-

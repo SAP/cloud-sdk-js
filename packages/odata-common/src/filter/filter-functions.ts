@@ -1,10 +1,10 @@
 import moment from 'moment';
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
+import { Field } from '../selectable/field';
 import { StringFilterFunction } from './string-filter-function';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { filterFunction } from './filter-function';
 import { NumberFilterFunction } from './number-filter-function';
-import {Field} from "../selectable/field";
 
 /* String Functions */
 /**
@@ -14,7 +14,7 @@ import {Field} from "../selectable/field";
  *
  * @returns The newly created filter function
  */
-export function endsWith<EntityT extends Entity>(
+export function endsWith<EntityT extends EntityBase>(
   str:
     | string
     | Field<EntityT, boolean, boolean>
@@ -34,7 +34,7 @@ export function endsWith<EntityT extends Entity>(
  *
  * @returns The newly created filter function
  */
-export function startsWith<EntityT extends Entity>(
+export function startsWith<EntityT extends EntityBase>(
   str:
     | string
     | Field<EntityT, boolean, boolean>
@@ -52,7 +52,7 @@ export function startsWith<EntityT extends Entity>(
  * @param str - The string to compute the length for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function length<EntityT extends Entity>(
+export function length<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('length', 'int', str);
@@ -65,7 +65,7 @@ export function length<EntityT extends Entity>(
  *
  * @returns The newly created filter function
  */
-export function indexOf<EntityT extends Entity>(
+export function indexOf<EntityT extends EntityBase>(
   str:
     | string
     | Field<EntityT, boolean, boolean>
@@ -85,7 +85,7 @@ export function indexOf<EntityT extends Entity>(
  * @param len - The length of the substring. This can be either a number, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function substring<EntityT extends Entity>(
+export function substring<EntityT extends EntityBase>(
   str:
     | string
     | Field<EntityT, boolean, boolean>
@@ -109,7 +109,7 @@ export function substring<EntityT extends Entity>(
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function toLower<EntityT extends Entity>(
+export function toLower<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('tolower', 'string', str);
@@ -120,7 +120,7 @@ export function toLower<EntityT extends Entity>(
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function toUpper<EntityT extends Entity>(
+export function toUpper<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('toupper', 'string', str);
@@ -131,7 +131,7 @@ export function toUpper<EntityT extends Entity>(
  * @param str - The string to trim whitespace from. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function trim<EntityT extends Entity>(
+export function trim<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
 ): StringFilterFunction<EntityT> {
   return filterFunction('trim', 'string', str);
@@ -143,7 +143,7 @@ export function trim<EntityT extends Entity>(
  * @param str2 - The second string to concatenate. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
  */
-export function concat<EntityT extends Entity>(
+export function concat<EntityT extends EntityBase>(
   str1:
     | string
     | Field<EntityT, boolean, boolean>
@@ -163,7 +163,7 @@ export function concat<EntityT extends Entity>(
  * @param returnType - The return type to use.
  * @returns The newly created filter function
  */
-export function round<EntityT extends Entity>(
+export function round<EntityT extends EntityBase>(
   num:
     | number
     | Field<EntityT, boolean, boolean>
@@ -179,7 +179,7 @@ export function round<EntityT extends Entity>(
  * @param returnType - The return type to use.
  * @returns The newly created filter function
  */
-export function floor<EntityT extends Entity>(
+export function floor<EntityT extends EntityBase>(
   num:
     | number
     | Field<EntityT, boolean, boolean>
@@ -195,7 +195,7 @@ export function floor<EntityT extends Entity>(
  * @param returnType - The return type to use.
  * @returns The newly created filter function
  */
-export function ceiling<EntityT extends Entity>(
+export function ceiling<EntityT extends EntityBase>(
   num:
     | number
     | Field<EntityT, boolean, boolean>
@@ -211,7 +211,7 @@ export function ceiling<EntityT extends Entity>(
  * @param date - The date to get the day for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function day<EntityT extends Entity>(
+export function day<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('day', 'int', date);
@@ -222,7 +222,7 @@ export function day<EntityT extends Entity>(
  * @param date - The date to get the hour for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function hour<EntityT extends Entity>(
+export function hour<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('hour', 'int', date);
@@ -233,7 +233,7 @@ export function hour<EntityT extends Entity>(
  * @param date - The date to get the minute for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function minute<EntityT extends Entity>(
+export function minute<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('minute', 'int', date);
@@ -244,7 +244,7 @@ export function minute<EntityT extends Entity>(
  * @param date - The date to get the month for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function month<EntityT extends Entity>(
+export function month<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('month', 'int', date);
@@ -255,7 +255,7 @@ export function month<EntityT extends Entity>(
  * @param date - The date to get the second for. This can either be a date (moment.Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function second<EntityT extends Entity>(
+export function second<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('second', 'int', date);
@@ -266,7 +266,7 @@ export function second<EntityT extends Entity>(
  * @param date - The date to get the year for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
  */
-export function year<EntityT extends Entity>(
+export function year<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
 ): NumberFilterFunction<EntityT> {
   return filterFunction('year', 'int', date);
@@ -279,7 +279,7 @@ export function year<EntityT extends Entity>(
  *
  * @returns The newly created filter function
  */
-export function isOf<EntityT extends Entity>(
+export function isOf<EntityT extends EntityBase>(
   type: string
 ): BooleanFilterFunction<EntityT>;
 /**
@@ -289,12 +289,12 @@ export function isOf<EntityT extends Entity>(
  *
  * @returns The newly created filter function
  */
-export function isOf<EntityT extends Entity>(
+export function isOf<EntityT extends EntityBase>(
   expression: Field<EntityT, boolean, boolean>,
   type: string
 ): BooleanFilterFunction<EntityT>;
 
-export function isOf<EntityT extends Entity>(
+export function isOf<EntityT extends EntityBase>(
   expressionOrType: Field<EntityT, boolean, boolean> | string,
   type?: string
 ): BooleanFilterFunction<EntityT> {

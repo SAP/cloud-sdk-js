@@ -3,12 +3,17 @@ import {
   TestComplexTypeField,
   TestEntity
 } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
-import { Entity } from '../entity';
-import { FieldType } from './field';
-import { OrderableEdmTypeField } from './orderable-edm-type-field';
-import {Filter} from "../filter/filter";
+import {
+  EntityBase,
+  FieldType,
+  Filter,
+  OrderableEdmTypeField
+} from '@sap-cloud-sdk/odata-common';
 
-export function checkFilter<EntityT extends Entity, FieldT extends FieldType>(
+export function checkFilter<
+  EntityT extends EntityBase,
+  FieldT extends FieldType
+>(
   filter: Filter<EntityT, FieldT>,
   fieldName: string,
   operator: string,

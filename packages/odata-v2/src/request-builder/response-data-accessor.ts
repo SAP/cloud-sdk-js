@@ -15,6 +15,7 @@ const logger = createLogger({
  * If the data does not contain a collection an empty array is returned.
  * @param data - Response of the OData v2 service
  * @returns any[] - Collection extracted from the response
+ *  @internal
  */
 export function getCollectionResult(data: any): any[] {
   validateCollectionResult(data);
@@ -25,6 +26,7 @@ export function getCollectionResult(data: any): any[] {
  * Checks if the data contains a collection result.
  * @param data - Response of the OData service.
  * @returns `true`, if the data is a collection result.
+ *  @internal
  */
 export function isCollectionResult(data: any): boolean {
   return Array.isArray(data?.d?.results);
@@ -43,6 +45,7 @@ function validateCollectionResult(data: any): void {
  * If the data does not contain a collection an empty array is returned.
  * @param data - Response of the one to many link
  * @returns any[] - Collection extracted from the response
+ *  @internal
  */
 export function getLinkedCollectionResult(data: any): any[] {
   if (Array.isArray(data?.results)) {
@@ -55,6 +58,7 @@ export function getLinkedCollectionResult(data: any): any[] {
  * Parses the data of a single result.
  * @param data - Response of the OData service.
  * @returns The single result object if existent, an empty object otherwise.
+ * @internal
  */
 export function getSingleResult(data: any): Record<string, any> {
   validateSingleResult(data);
@@ -79,10 +83,12 @@ function validateSingleResult(data: any): void {
   }
 }
 
+/**
+ * @internal
+ */
 export const responseDataAccessor: ResponseDataAccessor = {
   getCollectionResult,
   getLinkedCollectionResult,
   getSingleResult,
   isCollectionResult
 };
-

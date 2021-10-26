@@ -4,22 +4,21 @@ import {
   DestinationNameAndJwt,
   DestinationOptions
 } from '@sap-cloud-sdk/connectivity';
-import { Constructable, Entity } from '../entity';
-
+import { Constructable, EntityBase } from '../entity-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import { GetRequestBuilder } from './get-request-builder-base';
-import {ODataGetByKeyRequestConfig} from "../request/odata-get-by-key-request-config";
-import {FieldType} from "../selectable/field";
-import {ODataUri} from "../uri-conversion/odata-uri";
-import {Selectable} from "../selectable/selectable";
+import { ODataGetByKeyRequestConfig } from '../request/odata-get-by-key-request-config';
+import { FieldType } from '../selectable/field';
+import { ODataUri } from '../uri-conversion/odata-uri';
+import { Selectable } from '../selectable/selectable';
+import { GetRequestBuilderBase } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
  * @typeparam EntityT - Type of the entity to be requested
  */
-export abstract class GetByKeyRequestBuilder<
-  EntityT extends Entity
-> extends GetRequestBuilder<EntityT, ODataGetByKeyRequestConfig<EntityT>> {
+export abstract class GetByKeyRequestBuilderBase<
+  EntityT extends EntityBase
+> extends GetRequestBuilderBase<EntityT, ODataGetByKeyRequestConfig<EntityT>> {
   /**
    * Creates an instance of GetByKeyRequestBuilder.
    * @param entityConstructor - Constructor of the entity to create the request for
@@ -79,5 +78,3 @@ export abstract class GetByKeyRequestBuilder<
       });
   }
 }
-
-export { GetByKeyRequestBuilder as GetByKeyRequestBuilderBase };

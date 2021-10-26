@@ -1,6 +1,6 @@
 import {
   FilterLambdaExpression,
-  Entity as EntityBase,
+  EntityBase,
   and,
   Filterable,
   toFilterableList

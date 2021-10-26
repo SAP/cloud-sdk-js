@@ -10,13 +10,13 @@ import {
   EntityIdentifiable,
   ODataRequest,
   ODataUpdateRequestConfig,
-  UpdateRequestBuilder as UpdateRequestBuilderBase,
+  UpdateRequestBuilderBase,
   isNavigationProperty,
   removePropertyOnCondition
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
-import { oDataUri } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion/odata-uri';
 import { extractODataEtag } from '../extract-odata-etag';
 
 const logger = createLogger({
@@ -121,4 +121,3 @@ function removeNavPropsAndComplexTypes(
 ): Record<string, any> {
   return removePropertyOnCondition(([, val]) => typeof val === 'object', body);
 }
-

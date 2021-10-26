@@ -1,12 +1,12 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
 import { Time } from '../time';
+import { Filter } from '../filter/filter';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldOptions, FieldType } from './field';
-import {Filter} from "../filter/filter";
 
 /**
  * Convenience type that maps the given [[FieldType]] to a new type that is either nullable or not, depending on the given `NullableT`.
@@ -75,6 +75,7 @@ type NonNullableFieldTypeByEdmType<
  * Convenience type that maps the given EDM type to a [[FieldType]]. It also considers whether the field is nullable.
  * @typeparam EdmOrFieldT - EDM type of the field. Deprecated: Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
+ * @internal
  */
 export type FieldTypeByEdmType<
   EdmOrFieldT extends EdmTypeShared<'any'> | FieldType,
@@ -89,6 +90,7 @@ export type FieldTypeByEdmType<
 /**
  * Convenience type to support legacy `EdmTypeField` with field type as generic parameter.
  * This will become obsolete in the next major version update.
+ *  @internal
  */
 export type EdmTypeForEdmOrFieldType<
   EdmOrFieldT extends EdmTypeShared<'any'> | FieldType
@@ -112,7 +114,7 @@ export type EdmTypeForEdmOrFieldType<
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class EdmTypeField<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   EdmOrFieldT extends EdmTypeShared<'any'> | FieldType,
   NullableT extends boolean = false,
   SelectableT extends boolean = false

@@ -9,5 +9,8 @@
   },
   "include": ["src/**/*.ts"],
   "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],
-  "references": [{ "path": "../../packages/util" },{"path": "../../packages/odata-common" }]
+  "references": [
+    { "path": "../../packages/util" },
+    { "path": "../../packages/odata-common" }
+  ]
 }

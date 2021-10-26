@@ -1,8 +1,9 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { v4 as uuid } from 'uuid';
-import { testEntityResourcePath } from '../../../test/test-util/test-data';
-import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
+import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
+import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
 import { getResourcePathForKeys } from './get-resource-path';
+import { uriConverter } from './uri-value-converter';
 
 describe('get resource path', () => {
   it('adds keys to path', () => {
@@ -14,7 +15,11 @@ describe('get resource path', () => {
     };
 
     expect(getResourcePathForKeys(keys, TestEntity)).toEqual(
-      testEntityResourcePath(keyPropGuid, keyPropString)
+      testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        uriConverter.convertToUriFormat
+      )
     );
   });
 

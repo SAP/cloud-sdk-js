@@ -109,7 +109,8 @@ export function changesetFunction(
       { name: '...rest', type: asArray(type) }
     ],
     returnType: `ODataBatchChangeSet<Write${service.className}RequestBuilder>`,
-    statements: 'return new ODataBatchChangeSet(variadicArgumentToArray(first,rest));',
+    statements:
+      'return new ODataBatchChangeSet(variadicArgumentToArray(first,rest));',
     overloads
   };
 }

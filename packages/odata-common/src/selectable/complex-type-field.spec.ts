@@ -1,5 +1,6 @@
-import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
-import { getEdmType, getEntityConstructor } from './complex-type-field';
+import { getEntityConstructor } from '@sap-cloud-sdk/odata-common/dist/selectable/complex-type-field';
+import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
+import { getEdmType } from './complex-type-field';
 
 describe('complex-type-field', () => {
   describe('getEntityConstructor', () => {

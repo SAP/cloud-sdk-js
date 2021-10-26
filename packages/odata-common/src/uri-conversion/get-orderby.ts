@@ -1,7 +1,7 @@
-import { Entity } from '../entity';
-import {Orderable} from "../order/orderable";
-import {OrderLink} from "../order/order-link";
-import {Order} from "../order/order";
+import { EntityBase } from '../entity-base';
+import { Orderable } from '../order/orderable';
+import { OrderLink } from '../order/order-link';
+import { Order } from '../order/order';
 
 /**
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.
@@ -9,7 +9,7 @@ import {Order} from "../order/order";
  * @param orderBy - A list of orderables to get the query parameters for
  * @returns An object containing the query parameter or an empty object
  */
-export function getOrderBy<EntityT extends Entity>(
+export function getOrderBy<EntityT extends EntityBase>(
   orderBy: Orderable<EntityT>[]
 ): Partial<{ orderby: string }> {
   if (typeof orderBy !== 'undefined' && orderBy.length) {
@@ -20,7 +20,7 @@ export function getOrderBy<EntityT extends Entity>(
   return {};
 }
 
-function getODataOrderByExpressions<OrderByEntityT extends Entity>(
+function getODataOrderByExpressions<OrderByEntityT extends EntityBase>(
   orderBys: Orderable<OrderByEntityT>[],
   parentFieldNames: string[] = []
 ): string[] {
@@ -42,8 +42,8 @@ function getODataOrderByExpressions<OrderByEntityT extends Entity>(
 }
 
 function getOrderByExpressionForOrderLink<
-  OrderByEntityT extends Entity,
-  LinkedEntityT extends Entity
+  OrderByEntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 >(
   orderBy: OrderLink<OrderByEntityT, LinkedEntityT>,
   parentFieldNames: string[] = []
@@ -54,7 +54,7 @@ function getOrderByExpressionForOrderLink<
   ]).join(',');
 }
 
-function getOrderByExpressionForOrder<OrderByEntityT extends Entity>(
+function getOrderByExpressionForOrder<OrderByEntityT extends EntityBase>(
   orderBy: Order<OrderByEntityT>,
   parentFieldNames: string[] = []
 ): string {

@@ -1,19 +1,19 @@
 import {
   defaultDestination,
   mockGetRequest
-} from '../../../test/test-util/request-mocker';
+} from '../../../core/test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityWithEnumKeyData,
   createTestEntity,
   createTestEntityWithEnumKey,
   testEntityResourcePath
-} from '../../../test/test-util/test-data';
+} from '../../../core/test/test-util/test-data';
 import {
   TestEntity,
   TestEntityWithEnumKey
-} from '../../../test/test-util/test-services/v4/test-service';
-import { uriConverter } from '../uri-conversion';
+} from '../../../core/test/test-util/test-services/v4/test-service';
+import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 const { convertToUriFormat } = uriConverter;

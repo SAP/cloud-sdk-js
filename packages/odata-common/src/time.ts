@@ -8,6 +8,7 @@ export interface Time {
  * Converts the given time to seconds in positive numerical format.
  * @param time - Time to convert.
  * @returns number Time in seconds.
+ *  @internal
  */
 export function timeToSeconds(time: Time): number {
   if (time) {
@@ -20,6 +21,7 @@ export function timeToSeconds(time: Time): number {
  * Converts from seconds to time as [[Time]].
  * @param n - Number of seconds to convert (should be positive).
  * @returns Time The converted time from the given number of seconds
+ *  @internal
  */
 export function secondsToTime(n: number): Time {
   if (n <= 0) {

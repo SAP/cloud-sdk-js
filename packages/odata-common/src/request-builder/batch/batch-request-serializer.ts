@@ -131,15 +131,3 @@ export function serializeBatchRequest(
   // The batch standard expects CRLF line endings for batch requests
   return serializedBatchRequest.replace(/\n/g, '\r\n');
 }
-
-/**
- * @deprecated Since v1.30.0. This function won't be replaced.
- * Serialize a request to a one line string containing the HTTP method, URL and HTTP version.
- * For Example:
- * `GET /sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartnerAddress?$format=json&$top=1 HTTP/1.1`
- * @param request - One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
- * @returns The serialized request as `<HTTP method> <URL> <HTTP version>`.
- */
-export function getLine(request: MethodRequestBuilder): string {
-  return `${request.requestConfig.method.toUpperCase()} /${request.relativeUrl()} HTTP/1.1`;
-}

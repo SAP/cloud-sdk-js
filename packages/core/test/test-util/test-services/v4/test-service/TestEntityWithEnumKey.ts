@@ -6,12 +6,22 @@
 import { TestEntityWithEnumKeyRequestBuilder } from './TestEntityWithEnumKeyRequestBuilder';
 import { TestEnumType } from './TestEnumType';
 import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
-import { AllFields, Constructable, EntityBuilderType, EnumField, Field, FieldBuilder } from '@sap-cloud-sdk/odata-common';
+import {
+  AllFields,
+  Constructable,
+  EntityBuilderType,
+  EnumField,
+  Field,
+  FieldBuilder
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
  */
-export class TestEntityWithEnumKey extends Entity implements TestEntityWithEnumKeyType {
+export class TestEntityWithEnumKey
+  extends Entity
+  implements TestEntityWithEnumKeyType
+{
   /**
    * Technical entity name for TestEntityWithEnumKey.
    */
@@ -29,7 +39,10 @@ export class TestEntityWithEnumKey extends Entity implements TestEntityWithEnumK
    * Returns an entity builder to construct instances of `TestEntityWithEnumKey`.
    * @returns A builder that constructs instances of entity type `TestEntityWithEnumKey`.
    */
-  static builder(): EntityBuilderType<TestEntityWithEnumKey, TestEntityWithEnumKeyType> {
+  static builder(): EntityBuilderType<
+    TestEntityWithEnumKey,
+    TestEntityWithEnumKeyType
+  > {
     return Entity.entityBuilder(TestEntityWithEnumKey);
   }
 
@@ -64,31 +77,49 @@ export interface TestEntityWithEnumKeyType {
 }
 
 export namespace TestEntityWithEnumKey {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntityWithEnumKey>> = new FieldBuilder(TestEntityWithEnumKey);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntityWithEnumKey>> =
+    new FieldBuilder(TestEntityWithEnumKey);
   /**
    * Static representation of the [[keyPropertyEnum1]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_ENUM_1 = _fieldBuilder.buildEnumField('KeyPropertyEnum1', TestEnumType, false);
+  export const KEY_PROPERTY_ENUM_1 = _fieldBuilder.buildEnumField(
+    'KeyPropertyEnum1',
+    TestEnumType,
+    false
+  );
   /**
    * All fields of the TestEntityWithEnumKey entity.
    */
-  export const _allFields: Array<EnumField<TestEntityWithEnumKey, TestEnumType, false, true>> = [
-    TestEntityWithEnumKey.KEY_PROPERTY_ENUM_1
-  ];
+  export const _allFields: Array<
+    EnumField<TestEntityWithEnumKey, TestEnumType, false, true>
+  > = [TestEntityWithEnumKey.KEY_PROPERTY_ENUM_1];
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityWithEnumKey> = new AllFields('*', TestEntityWithEnumKey);
+  export const ALL_FIELDS: AllFields<TestEntityWithEnumKey> = new AllFields(
+    '*',
+    TestEntityWithEnumKey
+  );
   /**
    * All key fields of the TestEntityWithEnumKey entity.
    */
-  export const _keyFields: Array<Field<TestEntityWithEnumKey, boolean, boolean>> = [TestEntityWithEnumKey.KEY_PROPERTY_ENUM_1];
+  export const _keyFields: Array<
+    Field<TestEntityWithEnumKey, boolean, boolean>
+  > = [TestEntityWithEnumKey.KEY_PROPERTY_ENUM_1];
   /**
    * Mapping of all key field names to the respective static field property TestEntityWithEnumKey.
    */
-  export const _keys: { [keys: string]: Field<TestEntityWithEnumKey, boolean, boolean> } = TestEntityWithEnumKey._keyFields.reduce((acc: { [keys: string]: Field<TestEntityWithEnumKey, boolean, boolean> }, field: Field<TestEntityWithEnumKey, boolean, boolean>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntityWithEnumKey, boolean, boolean>;
+  } = TestEntityWithEnumKey._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntityWithEnumKey, boolean, boolean> },
+      field: Field<TestEntityWithEnumKey, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

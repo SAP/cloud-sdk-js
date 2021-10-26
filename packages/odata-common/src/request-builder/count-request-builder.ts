@@ -4,25 +4,26 @@ import {
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
 import { ODataCountRequestConfig } from '../request/odata-count-request-config';
 import { MethodRequestBuilder } from './request-builder-base';
-import type { GetAllRequestBuilder } from './get-all-request-builder-base';
+import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 
 /**
  * Create an OData request to count entities based on the configuration of the request.
  * A `CountRequestBuilder` allows only for execution of the request.
  * If you want to apply query parameters like filter, skip or top do it on the [[GetAllRequestBuilder]] the count is created from.
  * @typeparam EntityT - Type of the entity to be requested
+ * @internal
  */
 export class CountRequestBuilder<
-  EntityT extends Entity
+  EntityT extends EntityBase
 > extends MethodRequestBuilder<ODataCountRequestConfig<EntityT>> {
   /**
    * Creates an instance of CountRequestBuilder.
    * @param _entityConstructor - Constructor of the entity to create the request for
    */
-  constructor(readonly getAllRequest: GetAllRequestBuilder<EntityT>) {
+  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityT>) {
     super(new ODataCountRequestConfig(getAllRequest));
   }
   /**

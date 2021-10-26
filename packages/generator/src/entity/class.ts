@@ -4,7 +4,6 @@ import {
   PropertyDeclarationStructure,
   StructureKind
 } from 'ts-morph';
-import { ODataVersion } from '@sap-cloud-sdk/util';
 import { prependPrefix } from '../internal-prefix';
 import {
   getEntityDescription,
@@ -33,7 +32,7 @@ export function entityClass(
       ...properties(entity),
       ...navProperties(entity, service)
     ],
-    methods: methods(entity, service.oDataVersion),
+    methods: methods(entity),
     isExported: true,
     docs: [addLeadingNewline(getEntityDescription(entity, service))]
   };
@@ -117,10 +116,7 @@ function navProperty(
   };
 }
 
-function methods(
-  entity: VdmEntity,
-  oDataVersion: ODataVersion
-): MethodDeclarationStructure[] {
+function methods(entity: VdmEntity): MethodDeclarationStructure[] {
   return [
     builder(entity),
     requestBuilder(entity),
@@ -129,16 +125,12 @@ function methods(
   ];
 }
 
-function builder(
-  entity: VdmEntity
-): MethodDeclarationStructure {
+function builder(entity: VdmEntity): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     isStatic: true,
     name: 'builder',
-    statements: `return Entity.entityBuilder(${
-      entity.className
-    });`,
+    statements: `return Entity.entityBuilder(${entity.className});`,
     returnType: `EntityBuilderType<${entity.className}, ${entity.className}Type>`,
     docs: [
       addLeadingNewline(
@@ -179,9 +171,7 @@ function requestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   };
 }
 
-function customField(
-  entity: VdmEntity
-): MethodDeclarationStructure {
+function customField(entity: VdmEntity): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'customField',

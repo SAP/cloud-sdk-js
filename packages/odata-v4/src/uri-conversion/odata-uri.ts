@@ -15,6 +15,7 @@ const { convertToUriFormat } = uriConverter;
 
 /**
  * Instance of the [[ODataUri]] conversion interface for OData v4.
+ * @internal
  */
 export const oDataUri: ODataUri = {
   getExpand: (_, expands, entityConstructor) =>
@@ -26,5 +27,3 @@ export const oDataUri: ODataUri = {
   getSelect,
   convertToUriFormat
 };
-
-

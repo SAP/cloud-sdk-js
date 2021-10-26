@@ -4,12 +4,13 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   defaultDestination,
   mockUpdateRequest
-} from '../../../test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../test/test-util/test-data';
+} from '../../../core/test/test-util/request-mocker';
+import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
 import {
   TestEntity,
   TestEntityMultiLink
-} from '../../../test/test-util/test-services/v2/test-service';
+} from '../../../core/test/test-util/test-services/v2/test-service';
+import { uriConverter } from '../uri-conversion';
 import { UpdateRequestBuilder } from './update-request-builder';
 
 function createTestEntity() {
@@ -67,7 +68,8 @@ describe('UpdateRequestBuilder', () => {
       body: requestBody,
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       )
     });
 
@@ -91,7 +93,8 @@ describe('UpdateRequestBuilder', () => {
       body: requestBody,
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       )
     });
 
@@ -115,7 +118,8 @@ describe('UpdateRequestBuilder', () => {
       body: requestBody,
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       )
     });
 
@@ -140,7 +144,8 @@ describe('UpdateRequestBuilder', () => {
       body: putRequestBody,
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       ),
       method: 'put'
     });
@@ -160,7 +165,8 @@ describe('UpdateRequestBuilder', () => {
       body: requestBody,
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       )
     });
 
@@ -193,7 +199,8 @@ describe('UpdateRequestBuilder', () => {
       body: requestBody,
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       ),
       additionalHeaders: { 'if-match': 'not-a-star' }
     });
@@ -213,7 +220,8 @@ describe('UpdateRequestBuilder', () => {
       body: requestBody,
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       ),
       additionalHeaders: { 'if-match': customVersionIdentifier }
     });
@@ -234,7 +242,8 @@ describe('UpdateRequestBuilder', () => {
       body: requestBody,
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       ),
       additionalHeaders: { 'if-match': '*' }
     });
@@ -275,7 +284,8 @@ describe('UpdateRequestBuilder', () => {
       body: requestBody,
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       ),
       statusCode: 204,
       responseHeaders: { Etag: eTag }
@@ -300,7 +310,8 @@ describe('UpdateRequestBuilder', () => {
     mockUpdateRequest({
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
-        entity.keyPropertyString
+        entity.keyPropertyString,
+        uriConverter.convertToUriFormat
       ),
       statusCode: 201
     });
@@ -341,7 +352,8 @@ describe('UpdateRequestBuilder', () => {
         body: requestBody,
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
-          entity.keyPropertyString
+          entity.keyPropertyString,
+          uriConverter.convertToUriFormat
         ),
         responseBody: response
       });

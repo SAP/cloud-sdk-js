@@ -83,7 +83,10 @@ describe('generation-and-usage', () => {
   });
 
   it('creates compiling generic usage', async () => {
-    const codeSnippet = entityCodeSample('TestEntity','@sap-cloud-sdk/test-services/v2/test-service').instructions;
+    const codeSnippet = entityCodeSample(
+      'TestEntity',
+      '@sap-cloud-sdk/test-services/v2/test-service'
+    ).instructions;
     const tsFile = 'generic-get-all-code-sample.ts';
     const jsFile = tsFile.replace('.ts', '.js');
     await writeFile(resolve(__dirname, tsFile), codeSnippet);

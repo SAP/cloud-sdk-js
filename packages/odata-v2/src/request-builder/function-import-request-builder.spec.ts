@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
   defaultHost
-} from '../../../test/test-util/request-mocker';
+} from '../../../core/test/test-util/request-mocker';
 import {
   TestEntity,
   testFunctionImportComplexReturnType,
@@ -17,7 +17,7 @@ import {
   testFunctionImportPost,
   testFunctionImportUnsupportedEdmTypes,
   testFunctionImportSharedEntityReturnType
-} from '../../../test/test-util/test-services/v2/test-service';
+} from '../../../core/test/test-util/test-services/v2/test-service';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
 

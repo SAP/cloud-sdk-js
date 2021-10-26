@@ -2,12 +2,14 @@ import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/core/dist/odata-v2/uri-conversion';
-import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
-import { ODataUpdateRequestConfig } from './odata-update-request-config';
-import { ODataCreateRequestConfig } from './odata-create-request-config';
-import { ODataDeleteRequestConfig } from './odata-delete-request-config';
-import { ODataRequest } from './odata-request';
+import {
+  ODataCreateRequestConfig,
+  ODataDeleteRequestConfig,
+  ODataGetAllRequestConfig,
+  ODataRequest,
+  ODataUpdateRequestConfig
+} from '@sap-cloud-sdk/odata-common';
+import { oDataUri } from '@sap-cloud-sdk/odata-v2';
 
 describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;
@@ -250,7 +252,7 @@ function createRequest(
   requestConfigConstructor,
   destination: Destination = { url: '' }
 ) {
-  const config = new requestConfigConstructor(TestEntity, oDataUriV2);
+  const config = new requestConfigConstructor(TestEntity, oDataUri);
   config.keys = {
     KeyPropertyGuid: uuid(),
     KeyPropertyString: 'id'

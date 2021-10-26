@@ -8,7 +8,10 @@ export async function packageJson(
   sdkAfterVersionScript: boolean,
   oDataVersion: ODataVersion
 ): Promise<string> {
-    const oDataModule = oDataVersion === 'v2' ? '@sap-cloud-sdk/odata-v2' : '@sap-cloud-sdk/odata-v4';
+  const oDataModule =
+    oDataVersion === 'v2'
+      ? '@sap-cloud-sdk/odata-v2'
+      : '@sap-cloud-sdk/odata-v4';
   return (
     JSON.stringify(
       {
@@ -41,7 +44,7 @@ export async function packageJson(
         },
         dependencies: {
           '@sap-cloud-sdk/odata-common': `^${await getSdkVersion()}`,
-           [oDataModule] :`^${await getSdkVersion()}`
+          [oDataModule]: `^${await getSdkVersion()}`
         },
         peerDependencies: {
           '@sap-cloud-sdk/core': `^${await getSdkVersion()}`

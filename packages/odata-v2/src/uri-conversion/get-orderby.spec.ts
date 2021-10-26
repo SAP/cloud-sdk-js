@@ -2,7 +2,7 @@ import { asc, desc } from '@sap-cloud-sdk/odata-common';
 import {
   TestEntity,
   TestEntitySingleLink
-} from '../../../test/test-util/test-services/v2/test-service';
+} from '../../../core/test/test-util/test-services/v2/test-service';
 import { getQueryParametersForOrderBy } from './get-orderby';
 
 describe('get orderby', () => {

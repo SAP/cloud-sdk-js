@@ -26,27 +26,20 @@ describe('imports', () => {
 
 const expectedEntityImports = [
   {
-    'moduleSpecifier': './BreakfastRequestBuilder',
-    'namedImports': [
-      'BreakfastRequestBuilder'
-    ]
+    moduleSpecifier: './BreakfastRequestBuilder',
+    namedImports: ['BreakfastRequestBuilder']
   },
   {
-    'moduleSpecifier': 'bignumber.js',
-    'namedImports': [
-      'BigNumber'
-    ]
+    moduleSpecifier: 'bignumber.js',
+    namedImports: ['BigNumber']
   },
   {
-    'moduleSpecifier': '@sap-cloud-sdk/odata-v2',
-    'namedImports': [
-      'CustomField',
-      'Entity'
-    ]
+    moduleSpecifier: '@sap-cloud-sdk/odata-v2',
+    namedImports: ['CustomField', 'Entity']
   },
   {
-    'moduleSpecifier': '@sap-cloud-sdk/odata-common',
-    'namedImports': [
+    moduleSpecifier: '@sap-cloud-sdk/odata-common',
+    namedImports: [
       'AllFields',
       'Constructable',
       'EdmTypeField',

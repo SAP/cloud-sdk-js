@@ -1,5 +1,10 @@
-import { toStaticPropertyFormat } from './name-converter';
+import {upperCaseSnakeCase} from "@sap-cloud-sdk/util";
 
+/**
+ * @internal
+ * @param target
+ * @param propertyKey
+ */
 export const nonEnumerable = (target: any, propertyKey: string): void => {
   const descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
   if (descriptor.enumerable !== false) {
@@ -19,5 +24,5 @@ export function isNavigationProperty(
   key: string,
   entityConstructor: any
 ): boolean {
-  return '_linkedEntity' in entityConstructor[toStaticPropertyFormat(key)];
+  return '_linkedEntity' in entityConstructor[upperCaseSnakeCase(key)];
 }

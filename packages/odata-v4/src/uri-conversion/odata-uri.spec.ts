@@ -8,8 +8,8 @@ import {
   testFilterString,
   testFilterStringV4,
   testNestedFilterLambdaExpressionOnLink
-} from '../../../test/test-util/filter-factory';
-import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
+} from '../../../core/test/test-util/filter-factory';
+import { TestEntity } from '../../../core/test/test-util/test-services/v4/test-service';
 import { filterFunctions } from '../filter-functions';
 import { filterFunction } from '../filter-function';
 import { oDataUri } from './odata-uri';

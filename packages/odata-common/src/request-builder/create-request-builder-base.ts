@@ -7,18 +7,22 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion/odata-uri';
-import type { Constructable, Entity, EntityIdentifiable } from '../entity';
+import type {
+  Constructable,
+  EntityBase,
+  EntityIdentifiable
+} from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
+import { ODataCreateRequestConfig } from '../request/odata-create-request-config';
+import { Link } from '../selectable/link';
 import { MethodRequestBuilder } from './request-builder-base';
-import {ODataCreateRequestConfig} from "../request/odata-create-request-config";
-import {Link} from "../selectable/link";
 
 /**
  * Abstract create request class holding the parts shared in OData v2 and v4.
  * @typeparam EntityT - Type of the entity to be created
  */
-export abstract class CreateRequestBuilder<EntityT extends Entity>
+export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
   extends MethodRequestBuilder<ODataCreateRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT>
 {
@@ -64,7 +68,7 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
    * @param linkField - Static representation of the navigation property that navigates from the parent entity to the child entity
    * @returns The entity itself, to facilitate method chaining
    */
-  asChildOf<ParentEntityT extends Entity>(
+  asChildOf<ParentEntityT extends EntityBase>(
     parentEntity: ParentEntityT,
     linkField: Link<ParentEntityT, EntityT>
   ): this {
@@ -112,5 +116,3 @@ export abstract class CreateRequestBuilder<EntityT extends Entity>
     return this.build(destination, options).then(request => request.execute());
   }
 }
-
-export { CreateRequestBuilder as CreateRequestBuilderBase };

@@ -5,7 +5,13 @@
  */
 import { BigNumber } from 'bignumber.js';
 import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
-import { GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { Photos } from './Photos';
 
 /**
@@ -60,6 +66,9 @@ export class PhotosRequestBuilder extends RequestBuilder<Photos> {
    */
   delete(entity: Photos): DeleteRequestBuilder<Photos>;
   delete(idOrEntity: any): DeleteRequestBuilder<Photos> {
-    return new DeleteRequestBuilder(Photos, idOrEntity instanceof Photos ? idOrEntity : { Id: idOrEntity! });
+    return new DeleteRequestBuilder(
+      Photos,
+      idOrEntity instanceof Photos ? idOrEntity : { Id: idOrEntity! }
+    );
   }
 }

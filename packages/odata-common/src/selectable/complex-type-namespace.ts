@@ -1,5 +1,8 @@
 import { EdmTypeShared } from '../edm-types';
 
+/**
+ * @internal
+ */
 export interface ComplexTypeNamespace<ComplexT> {
   _propertyMetadata: PropertyMetadata<ComplexT>[];
 }
@@ -11,6 +14,10 @@ export interface PropertyMetadata<ComplexT = any> {
   isCollection?: boolean;
 }
 
+/**
+ * @internal
+ * @param val
+ */
 export function isComplexTypeNameSpace(
   val: any
 ): val is ComplexTypeNamespace<any> {

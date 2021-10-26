@@ -1,4 +1,4 @@
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
@@ -13,7 +13,7 @@ import { ComplexTypeNamespace } from './complex-type-namespace';
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class CollectionField<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any> = any,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
@@ -49,6 +49,7 @@ export class CollectionField<
  * Convenience type to reflect the type of the instances of a collection field.
  * The actual type of the elements for complex type collections is [[ComplexTypeNamespace]].
  * @typeparam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
+ * @internal
  */
 export type CollectionFieldType<
   CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any>

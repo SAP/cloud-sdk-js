@@ -51,13 +51,11 @@ export function replace<EntityT extends Entity>(
 }
 
 /**
- *  @hidden
  * Export length filter function for backwards compatibility.
  */
 export const length = filterFunctionsCommon.length;
 
 /**
- *  @hidden
  * Export substring filter function for backwards compatibility.
  */
 export const substring = filterFunctionsCommon.substring;
@@ -70,4 +68,3 @@ export const filterFunctions = {
   substringOf,
   replace
 };
-

@@ -1,6 +1,6 @@
+import { ODataUri } from '../uri-conversion/odata-uri';
 import { FunctionImportParameters } from './function-import-parameter';
 import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
-import {ODataUri} from "../uri-conversion/odata-uri";
 
 export abstract class ODataFunctionImportRequestConfig<
   ParametersT

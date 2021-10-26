@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
-
+import { all, any, filterFunctions } from '@sap-cloud-sdk/odata-v4';
+import { or } from '@sap-cloud-sdk/odata-common';
 import {
   TestEntity,
   TestEntitySingleLink
@@ -11,8 +12,6 @@ import {
   TestEntityMultiLink as TestEntityMultiLinkV4,
   TestEnumType
 } from './test-services/v4/test-service';
-import {all, any, filterFunctions} from "@sap-cloud-sdk/odata-v4";
-import {or} from "@sap-cloud-sdk/odata-common";
 
 export const testFilterString = {
   filter: TestEntity.STRING_PROPERTY.equals('test'),

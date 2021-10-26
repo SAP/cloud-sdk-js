@@ -13,6 +13,7 @@ import { ODataRequestConfig } from '../request/odata-request-config';
 /**
  * Base class for all request builders.
  * @typeparam EntityT - Type of the entity to create a request for.
+ * @internal
  */
 export abstract class MethodRequestBuilder<
   RequestConfigT extends ODataRequestConfig = any

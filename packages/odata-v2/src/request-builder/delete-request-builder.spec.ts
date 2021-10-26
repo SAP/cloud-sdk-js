@@ -3,9 +3,10 @@ import { v4 as uuid } from 'uuid';
 import {
   defaultDestination,
   mockDeleteRequest
-} from '../../../test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../test/test-util/test-data';
-import { TestEntity } from '../../../test/test-util/test-services/v2/test-service';
+} from '../../../core/test/test-util/request-mocker';
+import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
+import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
+import { uriConverter } from '../uri-conversion';
 import { DeleteRequestBuilder } from './delete-request-builder';
 
 describe('DeleteRequestBuilder', () => {
@@ -18,7 +19,11 @@ describe('DeleteRequestBuilder', () => {
 
   it('delete request with keys should resolve', async () => {
     mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString)
+      path: testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        uriConverter.convertToUriFormat
+      )
     });
 
     const deleteRequest = new DeleteRequestBuilder(TestEntity, {
@@ -38,7 +43,11 @@ describe('DeleteRequestBuilder', () => {
       .setVersionIdentifier(versionId);
 
     mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString),
+      path: testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        uriConverter.convertToUriFormat
+      ),
       additionalHeaders: {
         'if-match': versionId
       }
@@ -55,7 +64,11 @@ describe('DeleteRequestBuilder', () => {
     const versionId = 'not-a-star';
 
     mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString),
+      path: testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        uriConverter.convertToUriFormat
+      ),
       additionalHeaders: {
         'if-match': versionId
       }
@@ -73,7 +86,11 @@ describe('DeleteRequestBuilder', () => {
 
   it('delete requests does not use if-match header when the version identifier is an empty string', async () => {
     mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString)
+      path: testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        uriConverter.convertToUriFormat
+      )
     });
 
     const deleteRequest = new DeleteRequestBuilder(TestEntity, {
@@ -88,7 +105,11 @@ describe('DeleteRequestBuilder', () => {
 
   it('should ignore the version identifier on delete if set', async () => {
     mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString),
+      path: testEntityResourcePath(
+        keyPropGuid,
+        keyPropString,
+        uriConverter.convertToUriFormat
+      ),
       additionalHeaders: {
         'if-match': '*'
       }
@@ -120,7 +141,11 @@ describe('DeleteRequestBuilder', () => {
   describe('executeRaw', () => {
     it('returns request and raw response', async () => {
       mockDeleteRequest({
-        path: testEntityResourcePath(keyPropGuid, keyPropString)
+        path: testEntityResourcePath(
+          keyPropGuid,
+          keyPropString,
+          uriConverter.convertToUriFormat
+        )
       });
 
       const actual = await new DeleteRequestBuilder(TestEntity, {

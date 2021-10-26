@@ -4,6 +4,9 @@ import {
   ActionImportParameter
 } from './action-import-parameter';
 
+/**
+ * @internal
+ */
 export class ODataActionImportRequestConfig<
   ParametersT
 > extends ODataRequestConfig {

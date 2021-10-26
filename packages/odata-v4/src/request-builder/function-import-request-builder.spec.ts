@@ -1,5 +1,5 @@
-import { defaultDestination } from '../../../test/test-util/request-mocker';
-import { testFunctionImportMultipleParams } from '../../../test/test-util/test-services/v4/test-service';
+import { defaultDestination } from '../../../core/test/test-util/request-mocker';
+import { testFunctionImportMultipleParams } from '../../../core/test/test-util/test-services/v4/test-service';
 
 describe('FunctionImportRequestBuilder', () => {
   it('builds correct url for multiple parameters', async () => {

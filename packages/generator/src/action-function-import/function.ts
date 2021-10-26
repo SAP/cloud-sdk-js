@@ -11,10 +11,7 @@ export function functionImportFunction(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const returnType = functionImportReturnType(
-    functionImport,
-    service.oDataVersion
-  );
+  const returnType = functionImportReturnType(functionImport);
   return {
     kind: StructureKind.Function,
     name: functionImport.name,
@@ -66,7 +63,9 @@ function getFunctionImportStatements(
     parameters = [`'${functionImport.httpMethod}'`, ...parameters];
   }
 
-  const returnStatement = `return new FunctionImportRequestBuilder(${parameters.join(', ')});`;
+  const returnStatement = `return new FunctionImportRequestBuilder(${parameters.join(
+    ', '
+  )});`;
 
   return context + unixEOL + unixEOL + returnStatement;
 }

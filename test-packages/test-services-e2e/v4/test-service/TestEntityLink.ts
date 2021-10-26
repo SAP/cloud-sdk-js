@@ -5,7 +5,15 @@
  */
 import { TestEntityLinkRequestBuilder } from './TestEntityLinkRequestBuilder';
 import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
-import { AllFields, Constructable, EdmTypeField, EntityBuilderType, Field, FieldBuilder, OrderableEdmTypeField } from '@sap-cloud-sdk/odata-common';
+import {
+  AllFields,
+  Constructable,
+  EdmTypeField,
+  EntityBuilderType,
+  Field,
+  FieldBuilder,
+  OrderableEdmTypeField
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
@@ -75,26 +83,42 @@ export interface TestEntityLinkType {
 }
 
 export namespace TestEntityLink {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntityLink>> = new FieldBuilder(TestEntityLink);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntityLink>> =
+    new FieldBuilder(TestEntityLink);
   /**
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TEST_ENTITY_LINK = _fieldBuilder.buildEdmTypeField('KeyTestEntityLink', 'Edm.Int32', false);
+  export const KEY_TEST_ENTITY_LINK = _fieldBuilder.buildEdmTypeField(
+    'KeyTestEntityLink',
+    'Edm.Int32',
+    false
+  );
   /**
    * Static representation of the [[keyToTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_TO_TEST_ENTITY = _fieldBuilder.buildEdmTypeField('KeyToTestEntity', 'Edm.Int32', false);
+  export const KEY_TO_TEST_ENTITY = _fieldBuilder.buildEdmTypeField(
+    'KeyToTestEntity',
+    'Edm.Int32',
+    false
+  );
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    true
+  );
   /**
    * All fields of the TestEntityLink entity.
    */
-  export const _allFields: Array<OrderableEdmTypeField<TestEntityLink, 'Edm.Int32', false, true> | EdmTypeField<TestEntityLink, 'Edm.String', true, true>> = [
+  export const _allFields: Array<
+    | OrderableEdmTypeField<TestEntityLink, 'Edm.Int32', false, true>
+    | EdmTypeField<TestEntityLink, 'Edm.String', true, true>
+  > = [
     TestEntityLink.KEY_TEST_ENTITY_LINK,
     TestEntityLink.KEY_TO_TEST_ENTITY,
     TestEntityLink.STRING_PROPERTY
@@ -102,16 +126,30 @@ export namespace TestEntityLink {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityLink> = new AllFields('*', TestEntityLink);
+  export const ALL_FIELDS: AllFields<TestEntityLink> = new AllFields(
+    '*',
+    TestEntityLink
+  );
   /**
    * All key fields of the TestEntityLink entity.
    */
-  export const _keyFields: Array<Field<TestEntityLink, boolean, boolean>> = [TestEntityLink.KEY_TEST_ENTITY_LINK, TestEntityLink.KEY_TO_TEST_ENTITY];
+  export const _keyFields: Array<Field<TestEntityLink, boolean, boolean>> = [
+    TestEntityLink.KEY_TEST_ENTITY_LINK,
+    TestEntityLink.KEY_TO_TEST_ENTITY
+  ];
   /**
    * Mapping of all key field names to the respective static field property TestEntityLink.
    */
-  export const _keys: { [keys: string]: Field<TestEntityLink, boolean, boolean> } = TestEntityLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntityLink, boolean, boolean> }, field: Field<TestEntityLink, boolean, boolean>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntityLink, boolean, boolean>;
+  } = TestEntityLink._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<TestEntityLink, boolean, boolean> },
+      field: Field<TestEntityLink, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

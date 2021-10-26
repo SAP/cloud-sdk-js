@@ -5,14 +5,17 @@ import {
   DestinationOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { Constructable, EntityIdentifiable, Entity } from '../entity';
+import { Constructable, EntityIdentifiable, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable/selectable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
+import { ODataGetByKeyRequestConfig } from '../request/odata-get-by-key-request-config';
 import { MethodRequestBuilder } from './request-builder-base';
-import {ODataGetByKeyRequestConfig} from "../request/odata-get-by-key-request-config";
 
-export abstract class GetRequestBuilder<
-    EntityT extends Entity,
+/**
+ * @internal
+ */
+export abstract class GetRequestBuilderBase<
+    EntityT extends EntityBase,
     RequestConfigT extends
       | ODataGetAllRequestConfig<EntityT>
       | ODataGetByKeyRequestConfig<EntityT>
@@ -62,4 +65,3 @@ export abstract class GetRequestBuilder<
   }
 }
 
-export { GetRequestBuilder as GetRequestBuilderBase };

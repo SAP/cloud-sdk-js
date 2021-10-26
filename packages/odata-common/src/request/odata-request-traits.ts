@@ -1,28 +1,27 @@
-import { Entity } from '../entity';
-import {Selectable} from "../selectable/selectable";
-import {Filterable} from "../filter/filterable";
-import {Orderable} from "../order/orderable";
-import {FieldType} from "../selectable/field";
-
+import { EntityBase } from '../entity-base';
+import { Selectable } from '../selectable/selectable';
+import { Filterable } from '../filter/filterable';
+import { Orderable } from '../order/orderable';
+import { FieldType } from '../selectable/field';
 
 /**
- * @hidden
+ * @internal
  */
 export interface WithKeys {
   keys: Record<string, FieldType>;
 }
 
 /**
- * @hidden
+ * @internal
  */
-export interface WithSelection<EntityT extends Entity> {
+export interface WithSelection<EntityT extends EntityBase> {
   selects: Selectable<EntityT>[];
 }
 
 /**
- * @hidden
+ * @internal
  */
-export interface WithGetAllRestrictions<EntityT extends Entity>
+export interface WithGetAllRestrictions<EntityT extends EntityBase>
   extends WithSelection<EntityT> {
   top: number;
   skip: number;
@@ -31,13 +30,17 @@ export interface WithGetAllRestrictions<EntityT extends Entity>
 }
 
 /**
- * @hidden
+ * @internal
  */
 export interface WithETag {
   eTag: string;
   versionIdentifierIgnored: boolean;
 }
 
+/**
+ * @internal
+ * @param config
+ */
 export function isWithETag(config: any): config is WithETag {
   return 'eTag' in config || 'versionIdentifierIgnored' in config;
 }

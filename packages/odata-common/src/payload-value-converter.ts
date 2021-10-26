@@ -9,6 +9,10 @@ type EdmTypeMapping = { [key in EdmTypeSameConverters]: (value: any) => any };
 const toNumber = (value: any): number => Number(value);
 const toBigNumber = (value: any): BigNumber => new BigNumber(value);
 
+/**
+ * @internal
+ * @param value
+ */
 export const toGuid = (value: string): string => {
   const guids =
     /[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}/.exec(
@@ -25,7 +29,7 @@ const fromBigNumber = (value: BigNumber): string =>
   (value as BigNumber).toString();
 
 /**
- * @hidden
+ * @internal
  */
 export function fromEdmToNumber(value: string | number): number {
   if (typeof value === 'number') {
@@ -52,7 +56,7 @@ export function fromEdmToNumber(value: string | number): number {
 }
 
 /**
- * @hidden
+ * @internal
  */
 export function fromNumberToEdm(value: number): number | string {
   if (value === Number.POSITIVE_INFINITY) {
@@ -105,6 +109,3 @@ export const serializersCommon: EdmTypeMapping = {
   'Edm.String': identity,
   'Edm.Any': identity
 };
-
-/** @deprecated Since v1.27.0. Use [[serializersCommon]] instead. */
-export const serializersCommom = serializersCommon;

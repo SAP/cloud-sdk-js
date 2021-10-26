@@ -8,7 +8,7 @@ import { fieldTypeClass } from './field-type-class';
 
 describe('field-type-class', () => {
   it('fieldTypeClass', () => {
-    const actual = fieldTypeClass(complexMeal, 'v2');
+    const actual = fieldTypeClass(complexMeal);
 
     expect(actual).toEqual({
       kind: StructureKind.Class,
@@ -77,7 +77,7 @@ describe('field-type-class', () => {
   });
 
   it('fieldTypeClass with nested complex types', () => {
-    const actual = fieldTypeClass(complexMealWithDesert, 'v4');
+    const actual = fieldTypeClass(complexMealWithDesert);
     expect(actual).toEqual({
       kind: StructureKind.Class,
       name: 'ComplexMealWithDesertField<EntityT extends Entity, NullableT extends boolean = false, SelectableT extends boolean = false>',

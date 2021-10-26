@@ -4,7 +4,13 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import '@sap-cloud-sdk/odata-common';
-import { edmToTsV4, ActionImportRequestBuilder, ActionImportParameter, transformReturnValueForEntity, transformReturnValueForEdmType } from '@sap-cloud-sdk/odata-v4';
+import {
+  edmToTsV4,
+  ActionImportRequestBuilder,
+  ActionImportParameter,
+  transformReturnValueForEntity,
+  transformReturnValueForEdmType
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -18,17 +24,24 @@ export interface CreateTestEntityByIdParameters {
 }
 
 /**
- * Create Test Entity By Id. 
+ * Create Test Entity By Id.
  *
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function createTestEntityById(parameters: CreateTestEntityByIdParameters): ActionImportRequestBuilder<CreateTestEntityByIdParameters, TestEntity> {
+export function createTestEntityById(
+  parameters: CreateTestEntityByIdParameters
+): ActionImportRequestBuilder<CreateTestEntityByIdParameters, TestEntity> {
   const params = {
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
-  }
+  };
 
-  return new ActionImportRequestBuilder('/odata/test-service', 'createTestEntityById', (data) => transformReturnValueForEntity(data, TestEntity), params);
+  return new ActionImportRequestBuilder(
+    '/odata/test-service',
+    'createTestEntityById',
+    data => transformReturnValueForEntity(data, TestEntity),
+    params
+  );
 }
 
 /**
@@ -42,17 +55,27 @@ export interface CreateTestEntityByIdReturnIdParameters {
 }
 
 /**
- * Create Test Entity By Id Return Id. 
+ * Create Test Entity By Id Return Id.
  *
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function createTestEntityByIdReturnId(parameters: CreateTestEntityByIdReturnIdParameters): ActionImportRequestBuilder<CreateTestEntityByIdReturnIdParameters, number> {
+export function createTestEntityByIdReturnId(
+  parameters: CreateTestEntityByIdReturnIdParameters
+): ActionImportRequestBuilder<CreateTestEntityByIdReturnIdParameters, number> {
   const params = {
     id: new ActionImportParameter('id', 'Edm.Int32', parameters.id)
-  }
+  };
 
-  return new ActionImportRequestBuilder('/odata/test-service', 'createTestEntityByIdReturnId', (data) => transformReturnValueForEdmType(data, (val) => edmToTsV4(val.value, 'Edm.Int32')), params);
+  return new ActionImportRequestBuilder(
+    '/odata/test-service',
+    'createTestEntityByIdReturnId',
+    data =>
+      transformReturnValueForEdmType(data, val =>
+        edmToTsV4(val.value, 'Edm.Int32')
+      ),
+    params
+  );
 }
 
 export const actionImports = {

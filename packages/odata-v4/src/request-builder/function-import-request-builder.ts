@@ -1,10 +1,9 @@
 import {
-  ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase,
+  ActionFunctionImportRequestBuilderBase,
   FunctionImportParameters
 } from '@sap-cloud-sdk/odata-common';
-import {ODataFunctionImportRequestConfig} from "../request/odata-function-import-request-config";
-import {oDataUri} from "../uri-conversion/odata-uri";
-
+import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
+import { oDataUri } from '../uri-conversion/odata-uri';
 
 /**
  * Create OData request to execute a function import.
@@ -14,7 +13,10 @@ import {oDataUri} from "../uri-conversion/odata-uri";
 export class FunctionImportRequestBuilder<
   ParametersT,
   ReturnT
-> extends ActionFunctionImportRequestBuilderBase<ParametersT, ReturnT,ODataFunctionImportRequestConfig<ParametersT>> {
+> extends ActionFunctionImportRequestBuilderBase<
+  ReturnT,
+  ODataFunctionImportRequestConfig<ParametersT>
+> {
   /**
    * Creates an instance of FunctionImportRequestBuilder.
    * @param defaultServicePath - Default path for the service the function belongs to

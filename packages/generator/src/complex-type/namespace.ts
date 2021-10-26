@@ -1,4 +1,4 @@
-import { unixEOL, ODataVersion, unique } from '@sap-cloud-sdk/util';
+import { unixEOL, unique } from '@sap-cloud-sdk/util';
 import {
   FunctionDeclarationStructure,
   ModuleDeclarationStructure,
@@ -9,32 +9,25 @@ import {
 import { VdmComplexType } from '../vdm-types';
 
 export function complexTypeNamespace(
-  complexType: VdmComplexType,
-  oDataVersion: ODataVersion
+  complexType: VdmComplexType
 ): ModuleDeclarationStructure {
   return {
     kind: StructureKind.Module,
     name: complexType.typeName,
     isExported: true,
-    statements: [
-      propertyMetadata(complexType),
-      factoryFunction(complexType, oDataVersion)
-    ]
+    statements: [propertyMetadata(complexType), factoryFunction(complexType)]
   };
 }
 
 function factoryFunction(
-  complexType: VdmComplexType,
-  oDataVersion: ODataVersion
+  complexType: VdmComplexType
 ): FunctionDeclarationStructure {
   return {
     kind: StructureKind.Function,
     name: 'build',
     returnType: complexType.typeName,
     parameters: [{ name: 'json', type: getJsonType(complexType) }],
-    statements: `return deserializeComplexType(json, ${
-      complexType.typeName
-    });`,
+    statements: `return deserializeComplexType(json, ${complexType.typeName});`,
     isExported: true,
     docs: [
       `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexTypeV2\` or \`deserializeComplexTypeV4\` of the \`@sap-cloud-sdk/core\` package instead.`

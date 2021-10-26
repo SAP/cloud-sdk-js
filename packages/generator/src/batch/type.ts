@@ -1,5 +1,4 @@
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
-import { caps } from '@sap-cloud-sdk/util';
 import { VdmServiceMetadata } from '../vdm-types';
 
 export function readRequestType(
@@ -34,15 +33,10 @@ function getWriteRequestType(service: VdmServiceMetadata): string {
 }
 
 function getReadRequestType(service: VdmServiceMetadata): string {
-  const versionInCaps = caps(service.oDataVersion);
   return Array.prototype
     .concat(
-      service.entities.map(
-        e => `GetAllRequestBuilder<${e.className}>`
-      ),
-      service.entities.map(
-        e => `GetByKeyRequestBuilder<${e.className}>`
-      )
+      service.entities.map(e => `GetAllRequestBuilder<${e.className}>`),
+      service.entities.map(e => `GetByKeyRequestBuilder<${e.className}>`)
     )
     .join('|');
 }

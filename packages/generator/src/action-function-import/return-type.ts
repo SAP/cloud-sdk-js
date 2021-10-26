@@ -49,8 +49,7 @@ export function actionImportReturnType(actionImport: VdmActionImport): string {
 }
 
 export function functionImportReturnType(
-  actionImport: VdmActionImport,
-  oDataVersion: string
+  actionImport: VdmActionImport
 ): string {
   return actionFunctionImportReturnType(
     actionImport,

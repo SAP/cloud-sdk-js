@@ -6,6 +6,9 @@ import {
   ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase
 } from '@sap-cloud-sdk/odata-common';
 
+/**
+ * @internal
+ */
 export class ODataFunctionImportRequestConfig<
   ParametersT
 > extends ODataFunctionImportRequestConfigBase<ParametersT> {
@@ -58,4 +61,3 @@ export class ODataFunctionImportRequestConfig<
     };
   }
 }
-

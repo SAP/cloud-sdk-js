@@ -4,14 +4,15 @@ import {
   defaultDestination,
   defaultHost,
   mockCreateRequest
-} from '../../../test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../test/test-util/test-data';
+} from '../../../core/test/test-util/request-mocker';
+import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
 import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../../test/test-util/test-services/v2/test-service';
-import { testPostRequestOutcome } from '../../../test/test-util/testPostRequestOutcome';
+} from '../../../core/test/test-util/test-services/v2/test-service';
+import { testPostRequestOutcome } from '../../../core/test/test-util/testPostRequestOutcome';
+import { uriConverter } from '../uri-conversion';
 import { CreateRequestBuilder } from './create-request-builder';
 
 describe('CreateRequestBuilder', () => {
@@ -173,7 +174,8 @@ describe('CreateRequestBuilder', () => {
 
     const toChildPath = `${testEntityResourcePath(
       parentKeyGuid,
-      parentKeyString
+      parentKeyString,
+      uriConverter.convertToUriFormat
     )}/to_MultiLink`;
 
     mockCreateRequest({

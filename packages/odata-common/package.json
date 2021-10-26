@@ -31,12 +31,11 @@
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/http-client" : "^1.50.0",
+    "@sap-cloud-sdk/http-client": "^1.50.0",
     "@sap-cloud-sdk/connectivity": "^1.50.0",
     "@sap-cloud-sdk/core": "^1.50.0",
+    "@sap-cloud-sdk/util": "^1.50.0",
     "typescript": "~4.4.4"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }

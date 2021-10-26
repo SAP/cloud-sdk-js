@@ -1,16 +1,16 @@
-import { Entity, Constructable } from '../entity';
+import { EntityBase, Constructable } from '../entity-base';
 import { Expandable } from '../expandable';
-import { ODataRequestConfig } from './odata-request-config';
+import { Selectable } from '../selectable/selectable';
+import { ODataUri } from '../uri-conversion/odata-uri';
+import { FieldType } from '../selectable/field';
 import { WithKeys, WithSelection } from './odata-request-traits';
-import {Selectable} from "../selectable/selectable";
-import {ODataUri} from "../uri-conversion/odata-uri";
-import {FieldType} from "../selectable/field";
+import { ODataRequestConfig } from './odata-request-config';
 
 /**
  * OData getByKey request configuration for an entity type.
  * @typeparam EntityT - Type of the entity to setup a request for
  */
-export class ODataGetByKeyRequestConfig<EntityT extends Entity>
+export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
   extends ODataRequestConfig
   implements WithKeys, WithSelection<EntityT>
 {

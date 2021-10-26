@@ -1,17 +1,17 @@
-import { Entity, ODataVersionOf } from '../entity';
+import { EntityBase, ODataVersionOf } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
+import { FieldType } from '../selectable/field';
 import { Filter } from './filter';
 import {
   FilterFunction,
   FilterFunctionParameterType
 } from './filter-function-base';
-import {FieldType} from "../selectable/field";
 
 /**
  * Representation of a filter function, that returns a value of an orderable type. This supports int, double and decimal values.
  */
 export abstract class OrderableFilterFunction<
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   ReturnT extends FieldType
 > extends FilterFunction<EntityT, ReturnT> {
   /**

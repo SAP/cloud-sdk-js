@@ -4,7 +4,13 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
-import { GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -17,7 +23,9 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
   getByKey(keyTestEntity: number): GetByKeyRequestBuilder<TestEntity> {
-    return new GetByKeyRequestBuilder(TestEntity, { KeyTestEntity: keyTestEntity });
+    return new GetByKeyRequestBuilder(TestEntity, {
+      KeyTestEntity: keyTestEntity
+    });
   }
 
   /**
@@ -59,6 +67,11 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    */
   delete(entity: TestEntity): DeleteRequestBuilder<TestEntity>;
   delete(keyTestEntityOrEntity: any): DeleteRequestBuilder<TestEntity> {
-    return new DeleteRequestBuilder(TestEntity, keyTestEntityOrEntity instanceof TestEntity ? keyTestEntityOrEntity : { KeyTestEntity: keyTestEntityOrEntity! });
+    return new DeleteRequestBuilder(
+      TestEntity,
+      keyTestEntityOrEntity instanceof TestEntity
+        ? keyTestEntityOrEntity
+        : { KeyTestEntity: keyTestEntityOrEntity! }
+    );
   }
 }

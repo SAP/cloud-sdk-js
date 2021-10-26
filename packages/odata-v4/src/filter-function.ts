@@ -3,57 +3,105 @@ import {
   FilterFunctionParameterType,
   BooleanFilterFunction,
   NumberFilterFunction,
-  StringFilterFunction
-,
+  StringFilterFunction,
   FilterFunctionReturnType as FilterFunctionReturnTypeBase,
   createFilterFunction,
-  numberReturnTypeMapping
-, CollectionFilterFunction } from '@sap-cloud-sdk/odata-common';
+  numberReturnTypeMapping,
+  CollectionFilterFunction
+} from '@sap-cloud-sdk/odata-common';
 import { Entity } from './entity';
 import { DateFilterFunction } from './filter/date-filter-function';
 
+/**
+ * @internal
+ * @param functionName
+ * @param returnType
+ * @param parameters
+ */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 
+/**
+ * @internal
+ * @param functionName
+ * @param returnType
+ * @param parameters
+ */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'int' | 'double' | 'decimal',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): NumberFilterFunction<EntityT>;
 
+/**
+ * @internal
+ * @param functionName
+ * @param returnType
+ * @param parameters
+ */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'string',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): StringFilterFunction<EntityT>;
 
+/**
+ * @internal
+ * @param functionName
+ * @param returnType
+ * @param parameters
+ */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'datetimeoffset',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): DateFilterFunction<EntityT>;
 
+/**
+ * @internal
+ * @param functionName
+ * @param returnType
+ * @param parameters
+ */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, boolean>;
 
+/**
+ * @internal
+ * @param functionName
+ * @param returnType
+ * @param parameters
+ */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'string[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, string>;
 
+/**
+ * @internal
+ * @param functionName
+ * @param returnType
+ * @param parameters
+ */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'int[]' | 'double[]' | 'decimal[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, number>;
 
+/**
+ * @internal
+ * @param functionName
+ * @param returnType
+ * @param parameters
+ */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'datetimeoffset[]',
@@ -66,6 +114,7 @@ export function filterFunction<EntityT extends Entity>(
  * @param returnType - the return type of the filter function
  * @param parameters - the parameter(s) used in the function
  * @returns An instance of filter function suited for the given return type
+ * @internal
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,

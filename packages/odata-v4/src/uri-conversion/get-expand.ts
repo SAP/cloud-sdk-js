@@ -22,6 +22,7 @@ function prependDollar(param: string): string {
  * @param expands - The expands to transform to a query parameter
  * @param entityConstructor - Constructor type of the entity to expand on
  * @returns An object containing the query parameter or an empty object
+ * @internal
  */
 export function getExpand<EntityT extends Entity>(
   expands: Expandable<EntityT>[] = [],

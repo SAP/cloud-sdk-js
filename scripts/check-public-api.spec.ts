@@ -87,10 +87,11 @@ describe('check-public-api', () => {
 
   it('parses one .d.ts file', () => {
     const exportedType = parseTypeDefinitionFile(dummyTypeDefinition);
-    expect(exportedType).toEqual([
-      'IsolationStrategy',
-      'parseTypeDefinitionFile',
-      'CacheEntry'
+    expect(exportedType.map(e=>e.name).sort()).toEqual([
+      "CacheEntry",
+      "IsolationStrategy",
+      "parseTypeDefinitionFile",
+      "responseDataAccessor"
     ]);
   });
 
@@ -127,8 +128,11 @@ export declare enum IsolationStrategy {
     User = "User",
     Tenant_User = "TenantUser",
     No_Isolation = "NoIsolation"
+}
 
 export declare function parseTypeDefinitionFile(path: string): Promise<string[]>;
+export declare const responseDataAccessor: ResponseDataAccessor;
+
 `;
 
 const dummyIndexFile = `export { o1 } from './bla';

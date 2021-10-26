@@ -3,18 +3,21 @@
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
-import {Selectable} from "./selectable/selectable";
-import {Field} from "./selectable/field";
-import {Link} from "./selectable/link";
-import {RequestBuilder} from "./request-builder/request-builder";
-import {CustomField} from "./selectable/custom-field";
-
-export type ODataVersionOf<T extends Entity> = T['_oDataVersion'];
+import { Selectable } from './selectable/selectable';
+import { Field } from './selectable/field';
+import { Link } from './selectable/link';
+import { RequestBuilder } from './request-builder/request-builder';
+import { CustomField } from './selectable/custom-field';
 
 /**
- * @hidden
+ * @internal
  */
-export interface Constructable<EntityT extends Entity, EntityTypeT = unknown> {
+export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
+
+export interface Constructable<
+  EntityT extends EntityBase,
+  EntityTypeT = unknown
+> {
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
@@ -36,7 +39,7 @@ export interface Constructable<EntityT extends Entity, EntityTypeT = unknown> {
   ): CustomField<EntityT, boolean>;
 }
 
-export type EntityBuilderType<EntityT extends Entity, EntityTypeT> = {
+export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
   [property in keyof Required<EntityTypeT>]: (
     value: EntityTypeT[property]
   ) => EntityBuilderType<EntityT, EntityTypeT>;
@@ -45,12 +48,12 @@ export type EntityBuilderType<EntityT extends Entity, EntityTypeT> = {
 /**
  * Super class for all representations of OData entity types.
  */
-export abstract class Entity {
+export abstract class EntityBase {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
 
-  protected static entityBuilder<EntityT extends Entity, EntityTypeT>(
+  protected static entityBuilder<EntityT extends EntityBase, EntityTypeT>(
     entityConstructor: Constructable<EntityT, EntityTypeT>
   ): EntityBuilderType<EntityT, EntityTypeT> {
     const builder = new EntityBuilder<EntityT, EntityTypeT>(entityConstructor);
@@ -231,7 +234,7 @@ export abstract class Entity {
    * Returns all changed properties compared to the last known remote state.
    * The returned properties do not include custom fields.
    * Use [[getUpdatedCustomFields]], if you need custom fields.
-   * @returns Entity with all properties that changed
+   * @returns EntityBase with all properties that changed
    */
   public getUpdatedProperties(): Record<string, any> {
     const current = this.asObject();
@@ -245,7 +248,7 @@ export abstract class Entity {
    * Returns all changed property names compared to the last known remote state.
    * The returned properties names do not include custom fields.
    * Use [[getUpdatedCustomFields]], if you need custom fields.
-   * @returns Entity with all properties that changed
+   * @returns EntityBase with all properties that changed
    */
   public getUpdatedPropertyNames(): string[] {
     const currentState = this.asObject();
@@ -261,15 +264,15 @@ export abstract class Entity {
    * @deprecated Since v1.34.1. Use [[asObject]] instead.
    * Returns a map of all defined fields in entity to their current values.
    * @param visitedEntities - List of entities to check in case of circular dependencies.
-   * @returns Entity with all defined entity fields
+   * @returns EntityBase with all defined entity fields
    */
-  protected getCurrentMapKeys(visitedEntities: Entity[] = []): any {
+  protected getCurrentMapKeys(visitedEntities: EntityBase[] = []): any {
     return this.asObject(visitedEntities) as this;
   }
 
-  protected isVisitedEntity<EntityT extends Entity>(
+  protected isVisitedEntity<EntityT extends EntityBase>(
     entity: EntityT,
-    visitedEntities: Entity[] = []
+    visitedEntities: EntityBase[] = []
   ): boolean {
     return Array.isArray(entity)
       ? entity.some(multiLinkChild => visitedEntities.includes(multiLinkChild))
@@ -278,7 +281,7 @@ export abstract class Entity {
 
   protected getCurrentStateForKey(
     key: string,
-    visitedEntities: Entity[] = []
+    visitedEntities: EntityBase[] = []
   ): any {
     if (isNavigationProperty(key, this.constructor)) {
       if (isNullish(this[key])) {
@@ -307,9 +310,9 @@ export abstract class Entity {
   /**
    * Creates an object containing all defined properties, navigation properties and custom fields in the entity.
    * @param visitedEntities - List of entities to check in case of circular dependencies.
-   * @returns Entity as an object with all defined entity fields
+   * @returns EntityBase as an object with all defined entity fields
    */
-  protected asObject(visitedEntities: Entity[] = []): Record<string, any> {
+  protected asObject(visitedEntities: EntityBase[] = []): Record<string, any> {
     visitedEntities.push(this);
     return Object.keys(this)
       .filter(
@@ -328,10 +331,7 @@ export abstract class Entity {
   }
 }
 
-/**
- * @hidden
- */
-export interface EntityIdentifiable<T extends Entity> {
+export interface EntityIdentifiable<T extends EntityBase> {
   readonly _entityConstructor: Constructable<T>;
   readonly _entity: T;
 }
@@ -339,9 +339,9 @@ export interface EntityIdentifiable<T extends Entity> {
 /* eslint-disable valid-jsdoc */
 
 /**
- * @hidden
+ * @internal
  */
-export function isSelectedProperty<EntityT extends Entity>(
+export function isSelectedProperty<EntityT extends EntityBase>(
   json: any,
   field: Field<EntityT> | Link<EntityT>
 ): boolean {
@@ -349,26 +349,24 @@ export function isSelectedProperty<EntityT extends Entity>(
 }
 
 /**
- * @hidden
+ * @internal
  */
 export function isExistentProperty<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 >(json: any, link: Link<EntityT, LinkedEntityT>): boolean {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
 }
 
 /**
- * @hidden
+ * @internal
  */
 export function isExpandedProperty<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 >(json: any, link: Link<EntityT, LinkedEntityT>): boolean {
   return (
     isExistentProperty(json, link) &&
     !json[link._fieldName].hasOwnProperty('__deferred')
   );
 }
-
-export { Entity as EntityBase };

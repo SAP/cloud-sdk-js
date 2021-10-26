@@ -5,7 +5,7 @@ import { requestBuilderClass } from './class';
 
 describe('request builder class', () => {
   it('should generate request builder correctly', () => {
-    const requestBuilder = requestBuilderClass(breakfastEntity, 'v2');
+    const requestBuilder = requestBuilderClass(breakfastEntity);
     expect(requestBuilder.name).toBe('BreakfastRequestBuilder');
     expect(requestBuilder.extends).toBe('RequestBuilder<Breakfast>');
 
@@ -62,7 +62,7 @@ describe('request builder class', () => {
     };
     corruptedEntity.properties.push(accompaniment);
     corruptedEntity.keys.push(accompaniment);
-    const requestBuilder = requestBuilderClass(corruptedEntity, 'v4');
+    const requestBuilder = requestBuilderClass(corruptedEntity);
     const methods = requestBuilder
       .methods!.filter(
         method => method.name === 'getByKey' || method.name === 'delete'

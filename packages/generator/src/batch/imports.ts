@@ -6,15 +6,18 @@ export function importBatchDeclarations(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
   return [
-    odataImportDeclaration([
-      'CreateRequestBuilder',
-      'DeleteRequestBuilder',
-      'GetAllRequestBuilder',
-      'GetByKeyRequestBuilder',
-      'ODataBatchChangeSet',
-      'ODataBatchRequestBuilder',
-      'UpdateRequestBuilder'
-    ],service.oDataVersion),
+    odataImportDeclaration(
+      [
+        'CreateRequestBuilder',
+        'DeleteRequestBuilder',
+        'GetAllRequestBuilder',
+        'GetByKeyRequestBuilder',
+        'ODataBatchChangeSet',
+        'ODataBatchRequestBuilder',
+        'UpdateRequestBuilder'
+      ],
+      service.oDataVersion
+    ),
     {
       kind: StructureKind.ImportDeclaration,
       moduleSpecifier: '@sap-cloud-sdk/util',

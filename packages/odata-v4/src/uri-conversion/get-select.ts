@@ -7,6 +7,7 @@ import { Entity } from '../entity';
  * @typeparam EntityT - Type of the entity to get the selection for
  * @param selects - The list of selectables to be transformed to query parameters
  * @returns An object containing the query parameters or an empty object
+ * @internal
  */
 export function getSelect<EntityT extends Entity>(
   selects: Selectable<EntityT>[] = []
@@ -21,4 +22,3 @@ export function getSelect<EntityT extends Entity>(
 
   return {};
 }
-

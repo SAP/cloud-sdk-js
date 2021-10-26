@@ -4,7 +4,7 @@ import {
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
 import { isNavigationProperty } from './properties-util';
-import type { Constructable, Entity } from './entity';
+import type { Constructable, EntityBase } from './entity-base';
 
 const logger = createLogger({
   package: 'core',
@@ -30,10 +30,7 @@ type FromJsonType<JsonT> = {
       : JsonT[P]; // else
 };
 
-/**
- * @hidden
- */
-export class EntityBuilder<EntityT extends Entity, JsonT> {
+export class EntityBuilder<EntityT extends EntityBase, JsonT> {
   protected entity: EntityT;
 
   constructor(private _entityConstructor: Constructable<EntityT, JsonT>) {
@@ -68,7 +65,7 @@ export class EntityBuilder<EntityT extends Entity, JsonT> {
    * If you have obtained the JSON as a request payload use the [[deserializeEntity]] methods.
    * Note that fields not mappable to a field in the target entity are silently ignored.
    * @param json - Representation of the entity in JSON format.
-   * @returns Entity constructed from JSON representation.
+   * @returns EntityBase constructed from JSON representation.
    */
   public fromJson(json: FromJsonType<JsonT>): EntityT {
     const entityBuilder = this._entityConstructor.builder();
@@ -126,8 +123,8 @@ function toClassName(entityName: string) {
 }
 
 function buildNavigationPropertyFromJson<
-  EntityT extends Entity,
-  LinkedEntityT extends Entity
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
 >(
   key: string,
   value: FromJsonType<unknown>,
@@ -143,7 +140,7 @@ function buildNavigationPropertyFromJson<
     : buildSingleEntityFromJson(value, linkedEntityConstructor);
 }
 
-function buildSingleEntityFromJson<LinkedEntityT extends Entity>(
+function buildSingleEntityFromJson<LinkedEntityT extends EntityBase>(
   json: FromJsonType<unknown>,
   linkedEntityConstructor: Constructable<LinkedEntityT>
 ): LinkedEntityT {

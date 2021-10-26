@@ -10,7 +10,8 @@ import {
   odataImportDeclaration,
   corePropertyTypeImportNames,
   externalImportDeclarations,
-  mergeImportDeclarations, odataCommonImportDeclaration
+  mergeImportDeclarations,
+  odataCommonImportDeclaration
 } from '../imports';
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
@@ -18,26 +19,42 @@ import { responseTransformerFunctionName } from './response-transformer-function
 function actionFunctionImportDeclarations(
   returnTypes: VdmActionFunctionImportReturnType[],
   parameters: VdmParameter[],
-  additionalImports: {name: string;version: ODataVersion|'common'}[],
+  additionalImports: { name: string; version: ODataVersion | 'common' }[],
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
-  const responseTransformerFunctionCommon = returnTypes.find(returnType=>isEntityNotDeserializable(returnType)) ? ['throwErrorWhenReturnTypeIsUnionType']: [];
-  const resp0nseTransformerFunctionVersionDependent= returnTypes.filter(returnType=>!isEntityNotDeserializable(returnType)).map(returnType=>responseTransformerFunctionName(returnType));
-  const [version,common] = additionalImports.reduce(([version,common],current)=>{
-    if(current.version==='common'){
-      return [version,[...common,current.name]];
-    }
-    return [[...version,current.name],common];
-  },[[],[]]);
+  const responseTransformerFunctionCommon = returnTypes.find(returnType =>
+    isEntityNotDeserializable(returnType)
+  )
+    ? ['throwErrorWhenReturnTypeIsUnionType']
+    : [];
+  const responseTransformerFunctionVersionDependent = returnTypes
+    .filter(returnType => !isEntityNotDeserializable(returnType))
+    .map(returnType => responseTransformerFunctionName(returnType));
+  const [version, common] = additionalImports.reduce(
+    ([v, c], current) => {
+      if (current.version === 'common') {
+        return [v, [...c, current.name]];
+      }
+      return [[...v, current.name], c];
+    },
+    [[], []]
+  );
   return [
     ...externalImportDeclarations(parameters),
-      odataCommonImportDeclaration([...corePropertyTypeImportNames(parameters),...common, ...responseTransformerFunctionCommon]),
-    odataImportDeclaration([
-      ...edmRelatedImports(returnTypes, oDataVersion),
-      ...complexTypeRelatedImports(returnTypes,),
+    odataCommonImportDeclaration([
+      ...corePropertyTypeImportNames(parameters),
+      ...common,
+      ...responseTransformerFunctionCommon
+    ]),
+    odataImportDeclaration(
+      [
+        ...edmRelatedImports(returnTypes, oDataVersion),
+        ...complexTypeRelatedImports(returnTypes),
         ...version,
-        ...resp0nseTransformerFunctionVersionDependent
-    ],oDataVersion),
+        ...responseTransformerFunctionVersionDependent
+      ],
+      oDataVersion
+    ),
     ...returnTypeImports(returnTypes)
   ];
 }
@@ -106,7 +123,10 @@ export function importDeclarationsFunction(
   return actionFunctionImportDeclarations(
     returnTypes,
     actionImportPayloadElements,
-    [{ name:'ActionImportRequestBuilder',version:service.oDataVersion }, { name:'ActionImportParameter',version:service.oDataVersion }],
+    [
+      { name: 'ActionImportRequestBuilder', version: service.oDataVersion },
+      { name: 'ActionImportParameter', version: service.oDataVersion }
+    ],
     service.oDataVersion
   );
 }
@@ -123,7 +143,10 @@ export function importDeclarationsAction(
   return actionFunctionImportDeclarations(
     returnTypes,
     functionImportParameters,
-      [{ name:'FunctionImportRequestBuilder',version:service.oDataVersion }, { name:'FunctionImportParameter',version:'common' }],
+    [
+      { name: 'FunctionImportRequestBuilder', version: service.oDataVersion },
+      { name: 'FunctionImportParameter', version: 'common' }
+    ],
     service.oDataVersion
   );
 }

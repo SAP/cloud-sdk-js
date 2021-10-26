@@ -4,22 +4,17 @@ import {
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
+import { ODataRequestConfig } from '../request/odata-request-config';
 import { MethodRequestBuilder } from './request-builder-base';
-import {ODataRequestConfig} from "../request/odata-request-config";
 
 /**
  * Create OData request to execute a action or function import.
- * @typeparam ParametersT - Type of the function import parameters
  * @typeparam ReturnT - Type of the function import return value
  */
-export abstract class ActionFunctionImportRequestBuilder<
-  ParametersT,
+export abstract class ActionFunctionImportRequestBuilderBase<
   ReturnT,
   RequestConfigT extends ODataRequestConfig
-> extends MethodRequestBuilder<RequestConfigT
-  // | ODataFunctionImportRequestConfig<ParametersT>
-  // | ODataActionImportRequestConfig<ParametersT> use one more generic
-> {
+> extends MethodRequestBuilder<RequestConfigT> {
   /**
    * Base class for function  and actions imports
    * @param responseTransformer - Transformation function for the response.
@@ -28,8 +23,6 @@ export abstract class ActionFunctionImportRequestBuilder<
   protected constructor(
     readonly responseTransformer: (data: any) => ReturnT,
     requestConfig: RequestConfigT
-      // | ODataFunctionImportRequestConfig<ParametersT>
-      // | ODataActionImportRequestConfig<ParametersT>
   ) {
     super(requestConfig);
   }
@@ -62,5 +55,3 @@ export abstract class ActionFunctionImportRequestBuilder<
     return this.build(destination, options).then(request => request.execute());
   }
 }
-
-export { ActionFunctionImportRequestBuilder as ActionFunctionImportRequestBuilderBase };

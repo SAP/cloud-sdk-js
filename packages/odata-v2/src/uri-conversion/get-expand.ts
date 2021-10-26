@@ -8,6 +8,7 @@ import { Entity } from '../entity';
  * @param selects - The selects which are expanded if necessary
  * @param entityConstructor - Constructor type of the entity to expand on
  * @returns An object containing the query parameter or an empty object
+ *  @internal
  */
 export function getExpand<EntityT extends Entity>(
   selects: Selectable<EntityT>[] = []
@@ -43,4 +44,3 @@ function getPath(parent: string, fieldName: string): string {
   }
   return fieldName;
 }
-

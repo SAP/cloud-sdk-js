@@ -5,10 +5,10 @@ import {
   DestinationOptions
 } from '@sap-cloud-sdk/connectivity';
 import {
-  BatchRequestBuilder,
   deserializeBatchResponse,
   BatchResponse,
-  parseBatchResponse
+  parseBatchResponse,
+  BatchRequestBuilder
 } from '@sap-cloud-sdk/odata-common';
 import { entityDeserializer } from '../entity-deserializer';
 import { responseDataAccessor } from './response-data-accessor';
@@ -43,4 +43,3 @@ export class ODataBatchRequestBuilder extends BatchRequestBuilder {
       });
   }
 }
-

@@ -2,19 +2,19 @@ import {
   defaultDestination,
   mockGetRequest,
   unmockDestinationsEnv
-} from '../../../test/test-util/request-mocker';
+} from '../../../core/test/test-util/request-mocker';
 import {
   TestEntity,
   TestEntityLvl2MultiLink,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../../test/test-util/test-services/v4/test-service';
+} from '../../../core/test/test-util/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createOriginalTestEntityDataWithLinks,
   createTestEntityV4 as createTestEntity
-} from '../../../test/test-util/test-data';
+} from '../../../core/test/test-util/test-data';
 import { any } from '..';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 

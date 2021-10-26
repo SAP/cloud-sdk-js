@@ -3,13 +3,13 @@ import {
   Constructable,
   EntityIdentifiable,
   Filterable,
-  GetAllRequestBuilder as GetAllRequestBuilderBase,
+  GetAllRequestBuilderBase,
   and,
   ODataGetAllRequestConfig
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
+import { oDataUri } from '../uri-conversion/odata-uri';
 import { responseDataAccessor } from './response-data-accessor';
 export class GetAllRequestBuilder<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
@@ -43,4 +43,3 @@ export class GetAllRequestBuilder<EntityT extends Entity>
     return this;
   }
 }
-

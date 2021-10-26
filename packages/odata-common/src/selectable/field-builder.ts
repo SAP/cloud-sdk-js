@@ -5,7 +5,7 @@ import {
   isOrderableEdmType,
   OrderableEdmType
 } from '../edm-types';
-import { Constructable, Entity } from '../entity';
+import { Constructable, EntityBase } from '../entity-base';
 import { ComplexTypeField } from './complex-type-field';
 import { EdmTypeField, EdmTypeForEdmOrFieldType } from './edm-type-field';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
@@ -21,7 +21,7 @@ type ComplexTypeFieldConstructor<
     NullableT,
     SelectableT
   >,
-  EntityT extends Entity,
+  EntityT extends EntityBase,
   ComplexT,
   NullableT extends boolean,
   SelectableT extends boolean
@@ -34,12 +34,14 @@ type ComplexTypeFieldConstructor<
 /**
  * Convenience type to determine whether a field should be selectable. If the given `FieldOfT` is the type of an entity, it is selectable.
  * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
+ * @internal
  */
 export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
   FieldOfT extends Constructable<any> ? true : false;
 /**
  * Convenience type to determine whether a field should be orderable. If the given `EdmT` is of type `OrderableEdmTypes`, it is orderable.
  * @typeparam EdmT - EDM type of the field.
+ *  @internal
  */
 export type IsOrderableField<EdmT extends EdmTypeShared<'any'>> =
   EdmT extends OrderableEdmType ? true : false;

@@ -1,4 +1,4 @@
-import { Entity } from '../entity';
+import { EntityBase } from '../entity-base';
 import {
   FilterFunction,
   FilterFunctionParameterType
@@ -9,7 +9,7 @@ import { Filterable } from './filterable';
  * Representation of a filter function, that returns a value of type boolean.
  */
 export class BooleanFilterFunction<
-  EntityT extends Entity
+  EntityT extends EntityBase
 > extends FilterFunction<EntityT, boolean> {
   /**
    * Creates an instance of BooleanFilterFunction.
@@ -24,7 +24,11 @@ export class BooleanFilterFunction<
   }
 }
 
-export function isBooleanFilterFunction<EntityT extends Entity>(
+/**
+ * @internal
+ * @param filterable
+ */
+export function isBooleanFilterFunction<EntityT extends EntityBase>(
   filterable: Filterable<EntityT>
 ): filterable is BooleanFilterFunction<EntityT> {
   return (

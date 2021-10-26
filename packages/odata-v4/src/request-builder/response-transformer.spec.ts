@@ -1,8 +1,8 @@
-import { TestEntity } from '../../../test/test-util/test-services/v4/test-service';
+import { TestEntity } from '../../../core/test/test-util/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createTestEntity
-} from '../../../test/test-util/test-data';
+} from '../../../core/test/test-util/test-data';
 import { edmToTs } from '../payload-value-converter';
 import {
   transformReturnValueForEdmType,

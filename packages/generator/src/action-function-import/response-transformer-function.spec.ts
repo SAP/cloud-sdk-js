@@ -29,14 +29,14 @@ describe('response-transformer-function', () => {
   });
 
   it('responseTransformerFunctionName of complex type and list', () => {
-    expect(
-      responseTransformerFunctionName(returnTypeComplexType)
-    ).toEqual('transformReturnValueForComplexTypeList');
+    expect(responseTransformerFunctionName(returnTypeComplexType)).toEqual(
+      'transformReturnValueForComplexTypeList'
+    );
   });
 
   it('responseTransformerFunctionName of edmType', () => {
-    expect(
-      responseTransformerFunctionName(orderBreakfast.returnType)
-    ).toEqual('transformReturnValueForEdmType');
+    expect(responseTransformerFunctionName(orderBreakfast.returnType)).toEqual(
+      'transformReturnValueForEdmType'
+    );
   });
 });

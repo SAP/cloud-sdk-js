@@ -1,13 +1,12 @@
 import { testFilterString } from '@sap-cloud-sdk/core/test/test-util/filter-factory';
-import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/core/dist/odata-v2/uri-conversion';
-import { asc } from '../order';
-import { ODataGetAllRequestConfig } from './odata-get-all-request-config';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { oDataUri } from '@sap-cloud-sdk/odata-v2';
+import { asc, ODataGetAllRequestConfig } from '@sap-cloud-sdk/odata-common';
 
 describe('ODataGetAllRequestConfig', () => {
   let config: ODataGetAllRequestConfig<TestEntity>;
   beforeEach(() => {
-    config = new ODataGetAllRequestConfig(TestEntity, oDataUriV2);
+    config = new ODataGetAllRequestConfig(TestEntity, oDataUri);
   });
 
   it('method is get', () => {

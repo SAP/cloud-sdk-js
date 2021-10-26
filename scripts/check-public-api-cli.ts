@@ -8,6 +8,9 @@ async function checkApiPackages() {
   await checkApiOfPackage(resolve(__dirname, '../packages/connectivity'));
   await checkApiOfPackage(resolve(__dirname, '../packages/http-client'));
   await checkApiOfPackage(resolve(__dirname, '../packages/openapi'));
+  await checkApiOfPackage(resolve(__dirname, '../packages/odata-common'));
+  await checkApiOfPackage(resolve(__dirname, '../packages/odata-v2'));
+  await checkApiOfPackage(resolve(__dirname, '../packages/odata-v4'));
 }
 
 checkApiPackages();

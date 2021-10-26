@@ -4,22 +4,22 @@ import {
   Destination,
   DestinationNameAndJwt
 } from '@sap-cloud-sdk/connectivity';
-import { Constructable, Entity } from '../entity';
+import { Constructable, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
 import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { CountRequestBuilder } from './count-request-builder';
-import { GetRequestBuilder } from './get-request-builder-base';
+import { GetRequestBuilderBase } from './get-request-builder-base';
 
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
  * @typeparam EntityT - Type of the entity to be requested
  */
-export abstract class GetAllRequestBuilder<
-  EntityT extends Entity
-> extends GetRequestBuilder<EntityT, ODataGetAllRequestConfig<EntityT>> {
+export abstract class GetAllRequestBuilderBase<
+  EntityT extends EntityBase
+> extends GetRequestBuilderBase<EntityT, ODataGetAllRequestConfig<EntityT>> {
   /**
    * Creates an instance of GetAllRequestBuilder.
    * @param entityConstructor - Constructor of the entity to create the request for
@@ -115,4 +115,3 @@ export abstract class GetAllRequestBuilder<
   }
 }
 
-export { GetAllRequestBuilder as GetAllRequestBuilderBase };

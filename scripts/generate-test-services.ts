@@ -15,13 +15,6 @@ const openApiServiceSpecsDir = path.join(
   'openapi-service-specs'
 );
 const packageOutputDir = path.resolve('test-packages', 'test-services');
-const coreUnitTestOutputDir = path.resolve(
-  'packages',
-  'core',
-  'test',
-  'test-util',
-  'test-services'
-);
 
 const generatorConfigOData = {
   forceOverwrite: true,
@@ -123,12 +116,10 @@ async function generateAll(): Promise<void> {
   const arg = process.argv[2];
   if (arg === 'v2' || arg === 'odata' || arg === 'all') {
     await generateTestServicesPackage(packageOutputDir, 'v2');
-    await generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v2');
   }
 
   if (arg === 'v4' || arg === 'odata' || arg === 'all') {
     await generateTestServicesPackage(packageOutputDir, 'v4');
-    await generateTestServicesWithLocalCoreModules(coreUnitTestOutputDir, 'v4');
   }
 
   if (arg === 'e2e' || arg === 'all') {
@@ -156,10 +147,6 @@ async function generateAll(): Promise<void> {
       ...generatorConfigOpenApi,
       transpile: true
     });
-    await generateTestServicesWithLocalCoreModules(
-      coreUnitTestOutputDir,
-      'openapi'
-    );
   }
 }
 

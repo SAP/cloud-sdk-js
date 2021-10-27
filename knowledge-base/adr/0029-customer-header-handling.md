@@ -16,7 +16,7 @@ There are three sources of headers:
    2. Based on destination properties set by the user (see [getAdditionalHeadersAndQueryParameters](../../packages/connectivity/src/scp-cf/destination/destination.ts).
 3. SDK related headers like `eTag` (only OData) found in the `headers()` method in the [odata-request.ts](../../packages/core/src/odata-common/request/odata-request.ts).
 
-The problem is also present to a smaller extend for query parameters, which can come from a [custom setting](../../packages/core/src/odata-common/request/odata-request.ts) on request or from [destination properties](../../packages/connectivity/src/scp-cf/destination/destination.ts).
+The problem is also present to a smaller extent for query parameters, which can come from a [custom setting](../../packages/core/src/odata-common/request/odata-request.ts) on request or from [destination properties](../../packages/connectivity/src/scp-cf/destination/destination.ts).
 
 ## Solution Header and Parameter
 

@@ -51,10 +51,31 @@ We have the same problem in both the `HttpRequestConfig` and `DestinationHttpReq
 Both contain a single `header` property typed `Record<string,any>` or `Record<string,string>` which contains two sources of headers.
 
 - **Option A**: Keep the single property but use a `HeaderValueObject` containing the value but also information on the origin.
-  The header map should be `Record<string,string|HeaderValueObject>` so that direct consumers can still pass simple strings if you use the `executeHttpRequest()`.
-  If provided as string we set to highest prio origin.
 - **Option B**: Add a property `headerSDK` and `headerProperties` to hold different headers.
 
+We would like to keep the SDK internals in option A from the user:
+```ts
+interface HeaderValueObject {
+    value:string
+    origin:'Custom'|'DestinationProperty'|'Destination'|'SDK'
+}
+
+/**
+ * We use this method so the origin of headers is clear. Will be exported but not on root level.  
+ * @internal
+ */
+export function executeHttpRequestInternal(config:{headers:Record<string,HeaderValueObject}){
+    ...
+}
+
+/**
+ * This method is for direct customer use -> provided headers are custom and have high prio.
+ */
+export function executeHttpRequest(config:{headers:Record<string,string}){
+    const withObject = headerObjectWithOriginCustom(config) ///
+    executeHttpRequestInternal(withObject)
+}
+```
 ## Breaking Changes
 
 We investigate the risk of breaking changes:
@@ -66,8 +87,8 @@ We investigate the risk of breaking changes:
 
 ## Decision
 
-- Should we do it non breaking in v1 and v2?
-- What solution should we use: A or B.
+- We see this as a version 2 feature.
+- We implement **option A** with the public and private method. 
 
 ## Consequences
 

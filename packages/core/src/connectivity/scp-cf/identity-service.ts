@@ -27,5 +27,5 @@ export async function exchangeToken(
  * @returns A boolean value, that indicates whether the token exchange should be applied.
  */
 export function isTokenExchangeEnabled(options: DestinationOptions): boolean {
-  return options.iasToXsuaaTokenExchange !== false && !!options.userJwt;
+  return !options.iasToXsuaaTokenExchange && !!options.userJwt;
 }

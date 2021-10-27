@@ -1,4 +1,3 @@
-import { promises } from 'fs';
 import path from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';

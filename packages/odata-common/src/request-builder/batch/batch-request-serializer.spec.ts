@@ -8,7 +8,7 @@ import {
 import {
   batch,
   TestEntity
-} from '../../../../core/test/test-util/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   buildTestEntity,
   createChangeSetWithFakeId

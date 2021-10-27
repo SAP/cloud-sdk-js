@@ -8,7 +8,7 @@ import {
 import {
   TestComplexTypeField,
   TestEntity
-} from '../../../core/test/test-util/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 
 export function checkFilter<
   EntityT extends EntityBase,

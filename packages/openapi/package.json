@@ -39,7 +39,6 @@
     "axios": "^0.24.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/core": "^1.50.0",
     "nock": "^13.0.11"
   }
 }

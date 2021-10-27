@@ -1,11 +1,11 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   defaultDestination,
   mockDeleteRequest
 } from '../../../core/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
-import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
 import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { DeleteRequestBuilder } from './delete-request-builder';
 

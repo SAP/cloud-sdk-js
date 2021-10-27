@@ -1,4 +1,4 @@
-import { TestEntity } from '../../../core/test/test-util/test-services/v4/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createTestEntity

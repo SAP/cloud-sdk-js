@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@sap-cloud-sdk/test-services": "^1.50.0",
-    "@sap-cloud-sdk/odata-v2": "^1.50.0",
-    "@sap-cloud-sdk/core": "^1.50.0"
+    "nock": "^13.0.11",
+    "@sap-cloud-sdk/odata-v2": "^1.50.0"
   }
 }

@@ -4,8 +4,8 @@ import {
   testActionImportMultipleParameterComplexReturnType,
   testActionImportNoParameterNoReturnType,
   testActionImportUnsupportedEdmTypes
-} from '../../../core/test/test-util/test-services/v4/test-service/action-imports';
-import { TestComplexType } from '../../../core/test/test-util/test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services/v4/test-service/action-imports';
+import { TestComplexType } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { serializeComplexType } from '../entity-serializer';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';

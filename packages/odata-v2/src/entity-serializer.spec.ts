@@ -4,7 +4,7 @@ import {
   TestEntityLvl2SingleLink,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../core/test/test-util/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 import { serializeEntity } from './entity-serializer';
 import { tsToEdm } from './payload-value-converter';
 describe('entity-serializer', () => {

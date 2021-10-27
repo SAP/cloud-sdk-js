@@ -1,5 +1,6 @@
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   defaultDestination,
   mockGetRequest
@@ -10,7 +11,6 @@ import {
   createTestEntity,
   testEntityResourcePath
 } from '../../../core/test/test-util/test-data';
-import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
 import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 

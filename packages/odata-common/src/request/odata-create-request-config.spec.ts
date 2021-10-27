@@ -1,6 +1,6 @@
 import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2';
 import { ODataCreateRequestConfig } from '@sap-cloud-sdk/odata-common';
-import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 describe('ODataCreateRequestConfig', () => {
   let config: ODataCreateRequestConfig<TestEntity>;

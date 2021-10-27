@@ -7,7 +7,7 @@ import {
   TestEntityLvl2SingleLink,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../core/test/test-util/test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services/v4/test-service';
 
 describe('EntityBuilder', () => {
   it('should build an empty entity when no properties are defined', () => {

@@ -1,4 +1,8 @@
 import {
+  TestEntity,
+  TestEntityWithEnumKey
+} from '@sap-cloud-sdk/test-services/v4/test-service';
+import {
   defaultDestination,
   mockGetRequest
 } from '../../../core/test/test-util/request-mocker';
@@ -9,10 +13,6 @@ import {
   createTestEntityWithEnumKey,
   testEntityResourcePath
 } from '../../../core/test/test-util/test-data';
-import {
-  TestEntity,
-  TestEntityWithEnumKey
-} from '../../../core/test/test-util/test-services/v4/test-service';
 import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 

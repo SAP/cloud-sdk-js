@@ -1,10 +1,6 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import {
-  defaultDestination,
-  defaultHost
-} from '../../../core/test/test-util/request-mocker';
-import {
   TestEntity,
   testFunctionImportComplexReturnType,
   testFunctionImportEdmReturnType,
@@ -17,7 +13,11 @@ import {
   testFunctionImportPost,
   testFunctionImportUnsupportedEdmTypes,
   testFunctionImportSharedEntityReturnType
-} from '../../../core/test/test-util/test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
+import {
+  defaultDestination,
+  defaultHost
+} from '../../../core/test/test-util/request-mocker';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
 

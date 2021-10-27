@@ -4,14 +4,14 @@ import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from './test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
   TestEntityMultiLink as TestEntityMultiLinkV4,
   TestEntitySingleLink as TestEntitySingleLinkV4,
   TestEntityWithEnumKey
-} from './test-services/v4/test-service';
-import { TestEnumType } from './test-services/v4/test-service/TestEnumType';
+} from '@sap-cloud-sdk/test-services/v4/test-service';
+import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
 
 const { convertToUriFormat } = uriConverter;
 

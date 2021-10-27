@@ -4,14 +4,14 @@ import { or } from '@sap-cloud-sdk/odata-common';
 import {
   TestEntity,
   TestEntitySingleLink
-} from './test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
   TestEntityLvl2MultiLink,
   TestEntityLvl2SingleLink,
   TestEntityMultiLink as TestEntityMultiLinkV4,
   TestEnumType
-} from './test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services/v4/test-service';
 
 export const testFilterString = {
   filter: TestEntity.STRING_PROPERTY.equals('test'),

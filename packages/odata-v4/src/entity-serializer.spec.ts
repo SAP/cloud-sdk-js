@@ -2,8 +2,8 @@ import {
   TestComplexType,
   TestEntity,
   TestEntitySingleLink
-} from '../../core/test/test-util/test-services/v4/test-service';
-import { TestEnumType } from '../../core/test/test-util/test-services/v4/test-service/TestEnumType';
+} from '@sap-cloud-sdk/test-services/v4/test-service';
+import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
 import { serializeComplexType, serializeEntity } from './entity-serializer';
 
 describe('entity-serializer', () => {

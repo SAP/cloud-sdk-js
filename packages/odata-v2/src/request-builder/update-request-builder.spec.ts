@@ -2,14 +2,14 @@ import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import { createLogger } from '@sap-cloud-sdk/util';
 import {
+  TestEntity,
+  TestEntityMultiLink
+} from '@sap-cloud-sdk/test-services/v2/test-service';
+import {
   defaultDestination,
   mockUpdateRequest
 } from '../../../core/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
-import {
-  TestEntity,
-  TestEntityMultiLink
-} from '../../../core/test/test-util/test-services/v2/test-service';
 import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { UpdateRequestBuilder } from './update-request-builder';
 

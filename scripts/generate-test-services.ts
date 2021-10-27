@@ -88,18 +88,6 @@ async function generateTestServicesWithLocalCoreModules(
     });
   }
 
-  (await readServiceDirectories()).forEach(serviceDirectory =>
-    readServiceDirectory(serviceDirectory).then((dirents: Dirent[]) =>
-      dirents
-        .filter(dirent => dirent.isFile())
-        .forEach(dirent =>
-          readServiceFile(serviceDirectory, dirent.name).then(data => {
-            replaceWithLocalModules(serviceDirectory, dirent.name, data);
-          })
-        )
-    )
-  );
-
   async function readServiceDirectories() {
     try {
       return readdir(outputDir);
@@ -121,27 +109,6 @@ async function generateTestServicesWithLocalCoreModules(
       encoding: 'utf8'
     }).catch(fileReadErr => {
       throw Error(`Reading test service file '${file}' failed: ${fileReadErr}`);
-    });
-  }
-
-  async function replaceWithLocalModules(serviceDirectory, file, data) {
-    const replaced = data
-      .replace(
-        '@sap-cloud-sdk/odata-common',
-        '../../../../../../odata-common/src'
-      )
-      .replace('@sap-cloud-sdk/odata-v2', '../../../../../../odata-v2/src')
-      .replace('@sap-cloud-sdk/odata-v4', '../../../../../../odata-v4/src');
-    return writeFile(
-      path.resolve(outputDir, serviceDirectory, file),
-      replaced,
-      {
-        encoding: 'utf8'
-      }
-    ).catch(fileWriteErr => {
-      throw Error(
-        `Writing test service file' ${file}' failed: ${fileWriteErr}`
-      );
     });
   }
 }

@@ -1,16 +1,16 @@
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
 import {
+  TestEntity,
+  TestEntityMultiLink,
+  TestEntitySingleLink
+} from '@sap-cloud-sdk/test-services/v2/test-service';
+import {
   defaultDestination,
   defaultHost,
   mockCreateRequest
 } from '../../../core/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
-import {
-  TestEntity,
-  TestEntityMultiLink,
-  TestEntitySingleLink
-} from '../../../core/test/test-util/test-services/v2/test-service';
 import { testPostRequestOutcome } from '../../../core/test/test-util/testPostRequestOutcome';
 import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { CreateRequestBuilder } from './create-request-builder';

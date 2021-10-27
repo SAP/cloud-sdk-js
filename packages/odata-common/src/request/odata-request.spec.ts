@@ -9,7 +9,7 @@ import {
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common';
 import { oDataUri } from '@sap-cloud-sdk/odata-v2';
-import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;

@@ -1,5 +1,9 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
+import {
+  TestEntity,
+  TestEntitySingleLink
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
@@ -12,10 +16,6 @@ import {
   createOriginalTestEntityData2,
   createTestEntity
 } from '../../../core/test/test-util/test-data';
-import {
-  TestEntity,
-  TestEntitySingleLink
-} from '../../../core/test/test-util/test-services/v2/test-service';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,

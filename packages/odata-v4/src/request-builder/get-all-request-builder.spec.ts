@@ -1,14 +1,14 @@
 import {
-  defaultDestination,
-  mockGetRequest,
-  unmockDestinationsEnv
-} from '../../../core/test/test-util/request-mocker';
-import {
   TestEntity,
   TestEntityLvl2MultiLink,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '../../../core/test/test-util/test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services/v4/test-service';
+import {
+  defaultDestination,
+  mockGetRequest,
+  unmockDestinationsEnv
+} from '../../../core/test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,

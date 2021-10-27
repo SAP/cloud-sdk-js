@@ -1,11 +1,27 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { Filter } from '@sap-cloud-sdk/odata-common';
+import { Filter, GetAllRequestBuilderBase } from '@sap-cloud-sdk/odata-common';
+import { TestEntity as TestEntityV4 } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { Destination } from '@sap-cloud-sdk/connectivity';
+import nock from 'nock';
 import {
   defaultDestination,
-  mockCountRequest
+  defaultHost
 } from '../../../core/test/test-util/request-mocker';
-import { TestEntity as TestEntityV4 } from '../../../core/test/test-util/test-services/v4/test-service';
+
+export function mockCountRequest(
+  destination: Destination,
+  count: number,
+  getAllRequest:
+    | GetAllRequestBuilderBase<any>
+    | GetAllRequestBuilderBase<any> = TestEntityV2.requestBuilder().getAll()
+) {
+  const servicePath = getAllRequest._entityConstructor._defaultServicePath;
+  const entityName = getAllRequest._entityConstructor._entityName;
+  return nock(defaultHost)
+    .get(`${destination.url}${servicePath}/${entityName}/$count`)
+    .reply(200, count.toString());
+}
 
 describe('CountRequestBuilderV2', () => {
   const requestBuilders = [

@@ -1,5 +1,5 @@
 import type { EntityBase } from '../entity-base';
-import type { FilterLink } from '../filter/filter-link';
+import { FilterLink } from '../filter/filter-link';
 import { Orderable } from '../order/orderable';
 import type { Filterable } from '../filter/filterable';
 import { Link } from './link';

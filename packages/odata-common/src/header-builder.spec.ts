@@ -1,5 +1,5 @@
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { buildHeaders } from '@sap-cloud-sdk/odata-common/dist/header-builder';
+// import { buildHeaders } from '@sap-cloud-sdk/odata-common/dist/header-builder';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   ODataGetAllRequestConfig,
@@ -12,6 +12,7 @@ import {
   mockHeaderRequest
 } from '../../core/test/test-util/request-mocker';
 import { connectivityProxyConfigMock } from '../../core/test/test-util/environment-mocks';
+import {buildHeaders} from "./header-builder";
 
 function createGetAllRequest(
   dest: Destination
@@ -33,7 +34,7 @@ describe('Header-Builder', () => {
     const request = createGetAllRequest(defaultDestination);
     request.config.customHeaders = { authorization: authString };
 
-    const headers = await buildHeaders(request as any);
+    const headers = await buildHeaders(request);
     expect(headers.authorization).toBe(authString);
   });
 

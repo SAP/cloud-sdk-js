@@ -157,8 +157,10 @@
   - `sanitizeDestination`
   - `toDestinationNameUrl`
   - `useOrFetchDestination`
-- [core] Move the following functions to `util` package
--
+- [core] Move the following functions to `http-client` package
+- [core] Move the following functions to `odata-common` package
+- [core] Move the following functions to `odata-v2` package
+- - [core] Move the following functions to `odata-v4` package
 
 ### Signature changed
 

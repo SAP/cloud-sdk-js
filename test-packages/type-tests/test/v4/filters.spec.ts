@@ -3,8 +3,8 @@ import {
   TestEntityMultiLink,
   TestEnumType
 } from '@sap-cloud-sdk/test-services/v4/test-service';
-import {and} from "@sap-cloud-sdk/odata-common";
-import {any} from "@sap-cloud-sdk/odata-v4";
+import { and } from '@sap-cloud-sdk/odata-common';
+import { any } from '@sap-cloud-sdk/odata-v4';
 
 // $ExpectType FilterList<TestEntity>
 and(

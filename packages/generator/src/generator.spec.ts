@@ -55,7 +55,7 @@ describe('generator', () => {
           /test-resources\/odata-service-specs\/v2\/API_TEST_SRV\/sdk-metadata/
         );
       });
-    });
+    }, 10000);
   });
   describe('edmx-to-csn', () => {
     const testGeneratorOptions: GeneratorOptions = createOptions({

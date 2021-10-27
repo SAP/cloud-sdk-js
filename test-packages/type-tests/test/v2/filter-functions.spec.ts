@@ -2,8 +2,12 @@ import {
   TestEntity,
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
-import {filterFunctions,filterFunction, length, substring, substringOf} from "@sap-cloud-sdk/odata-v2";
-
+import {
+  filterFunctions,
+  length,
+  substring,
+  substringOf
+} from '@sap-cloud-sdk/odata-v2';
 
 /* Backwards compatibility */
 

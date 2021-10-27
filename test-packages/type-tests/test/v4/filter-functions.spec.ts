@@ -1,5 +1,5 @@
 import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
-import {filterFunction, filterFunctions} from "@sap-cloud-sdk/odata-v4";
+import { filterFunction, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 
 // $ExpectType Filter<TestEntity, string>
 filterFunctions

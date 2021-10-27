@@ -13,72 +13,55 @@ import { Entity } from './entity';
 import { DateFilterFunction } from './filter/date-filter-function';
 // eslint-disable valid-jsdoc
 
-/**
- * @internal
- */
+
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 
-/**
- * @internal
- */
+
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'int' | 'double' | 'decimal',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): NumberFilterFunction<EntityT>;
 
-/**
- * @internal
- */
+
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'string',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): StringFilterFunction<EntityT>;
 
-/**
- * @internal
- */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'datetimeoffset',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): DateFilterFunction<EntityT>;
 
-/**
- * @internal
- */
+
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, boolean>;
 
-/**
- * @internal
- */
+
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'string[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, string>;
 
-/**
- * @internal
- */
+
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'int[]' | 'double[]' | 'decimal[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, number>;
 
-/**
- * @internal
- */
+
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'datetimeoffset[]',
@@ -91,7 +74,6 @@ export function filterFunction<EntityT extends Entity>(
  * @param returnType - the return type of the filter function
  * @param parameters - the parameter(s) used in the function
  * @returns An instance of filter function suited for the given return type
- * @internal
  */
 export function filterFunction<EntityT extends Entity>(
   functionName: string,

@@ -1,7 +1,7 @@
 import { join, resolve } from 'path';
 import { promises, readFileSync } from 'fs';
 import { GlobSync } from 'glob';
-import { createLogger, flatten } from '@sap-cloud-sdk/util';
+import { createLogger, flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 import { CompilerOptions } from 'typescript';
 import {
@@ -61,11 +61,13 @@ For a detailed explanation what is happening here have a look at `0007-public-ap
 Here the two sets: exports from index and exports from .d.ts are compared and logs are created.
  @param allExportedIndex - names of the object imported by the index.ts
  @param allExportedTypes - exported object by the .d.ts files
-@returns boolean - true if the two sets export the same objects.
+@param verbose - do a lot of detailed output on the packages
+ @returns boolean - true if the two sets export the same objects.
  */
 function compareApisAndLog(
   allExportedIndex: string[],
-  allExportedTypes: ExportedObject[]
+  allExportedTypes: ExportedObject[],
+  verbose: boolean
 ): boolean {
   let setsAreEqual = true;
 
@@ -91,6 +93,10 @@ function compareApisAndLog(
     }
   });
   logger.info(`We have found ${allExportedIndex.length} exports.`);
+
+  if (verbose) {
+    logger.info(`Public api:${allExportedIndex.join(`,${unixEOL}`)}`);
+  }
   return setsAreEqual;
 }
 
@@ -115,7 +121,11 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     await readFile(indexFiles(pathToPackage)[0], 'utf8')
   );
 
-  const setsAreEqual = compareApisAndLog(allExportedIndex, allExportedTypes);
+  const setsAreEqual = compareApisAndLog(
+    allExportedIndex,
+    allExportedTypes,
+    true
+  );
   mock.restore();
   if (!setsAreEqual) {
     process.exit(1);

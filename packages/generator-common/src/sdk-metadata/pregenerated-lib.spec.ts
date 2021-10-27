@@ -44,7 +44,7 @@ describe('pregenerated-lib', () => {
     nock('http://registry.npmjs.org/')
       .get(/@sap-cloud-sdk\/core\/latest/)
       .reply(200, { version: '1.2.3' });
-    expect(await getLatestVersionOfNpmPackage('../../../../core')).toBe(
+    expect(await getLatestVersionOfNpmPackage('@sap-cloud-sdk/core')).toBe(
       '1.2.3'
     );
   });

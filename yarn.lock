@@ -1604,6 +1604,46 @@
   optionalDependencies:
     npmlog "2 || ^3.1.0 || ^4.0.0"
 
+"@sap-cloud-sdk/analytics@^1.51.0":
+  version "1.51.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/analytics/-/analytics-1.51.0.tgz#994867bc957b08b0f166c4e5ea68d1f0d954a435"
+  integrity sha512-jOyesPnqqNsCPe87VtWgbKm68XX/7VJoKvbKsFs+7KRH5mHbyzOXQLGK8pB+W7hiXg4RkcBEviz9EnHjr31YaQ==
+  dependencies:
+    "@sap-cloud-sdk/util" "^1.51.0"
+    axios "^0.21.1"
+
+"@sap-cloud-sdk/core@^1.41", "@sap-cloud-sdk/core@^1.47.1", "@sap-cloud-sdk/core@^1.50.0":
+  version "1.51.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.51.0.tgz#c1575ab35b41c5efdcf8d9a06e41e072c70dae67"
+  integrity sha512-yOfEoM/KlLHM+XYWlwVe3XNGVbnbqhRbAbvfLf2ed1LalaWGlY+uyFtRuHX4Wom0/1kt1NswIcZoPuCiPNnKMQ==
+  dependencies:
+    "@sap-cloud-sdk/analytics" "^1.51.0"
+    "@sap-cloud-sdk/util" "^1.51.0"
+    "@sap/xsenv" "^3.0.0"
+    "@sap/xssec" "^3.2.7"
+    "@types/jsonwebtoken" "^8.3.8"
+    axios "^0.21.1"
+    bignumber.js "^9.0.0"
+    http-proxy-agent "^5.0.0"
+    https-proxy-agent "^5.0.0"
+    jsonwebtoken "^8.5.1"
+    moment "^2.29.0"
+    opossum "^6.0.0"
+    uuid "^8.2.0"
+    voca "^1.4.0"
+
+"@sap-cloud-sdk/util@^1.51.0":
+  version "1.51.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.51.0.tgz#6406f51d695320d4c70924838f2acebf53b543ed"
+  integrity sha512-8enRas4XpEY0GNnKTiRk7D9RCEcS4IV6YbYJypKtF9dMtpFhTc2B45kcYGOcud4/t4v/5ZQNw8F3leRp6M3+pg==
+  dependencies:
+    axios "^0.21.1"
+    chalk "^4.1.0"
+    logform "^2.2.0"
+    promise.allsettled "^1.0.4"
+    voca "^1.4.0"
+    winston "^3.3.3"
+
 "@sap/cds-compiler@^2.4.4":
   version "2.7.0"
   resolved "https://registry.npmjs.org/@sap/cds-compiler/-/cds-compiler-2.7.0.tgz#f7d06c16746a21be37c9d0feab63d233b9d8c68e"

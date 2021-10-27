@@ -1,9 +1,9 @@
-import { and, or } from '@sap-cloud-sdk/core';
 import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
+import {and, or} from "@sap-cloud-sdk/odata-common";
 
 // $ExpectType Filter<TestEntity, string | null>
 const stringProp = TestEntity.STRING_PROPERTY.equals('test');

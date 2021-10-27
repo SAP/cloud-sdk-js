@@ -1,6 +1,8 @@
 import nock from 'nock';
 import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import * as httpClient from '@sap-cloud-sdk/http-client';
+import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt';
+import { parseDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf/destination/destination';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,
@@ -13,9 +15,7 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken
-} from '@sap-cloud-sdk/core/test/test-util';
-import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt';
-import { parseDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf/destination/destination';
+} from '../../core/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {

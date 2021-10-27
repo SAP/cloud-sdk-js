@@ -1,11 +1,11 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { Filter } from '@sap-cloud-sdk/odata-common';
 import {
   defaultDestination,
   mockCountRequest
-} from '@sap-cloud-sdk/core/test/test-util/request-mocker';
-import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { TestEntity as TestEntityV4 } from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
-import { Filter } from '@sap-cloud-sdk/odata-common';
+} from '../../../core/test/test-util/request-mocker';
+import { TestEntity as TestEntityV4 } from '../../../core/test/test-util/test-services/v4/test-service';
 
 describe('CountRequestBuilderV2', () => {
   const requestBuilders = [

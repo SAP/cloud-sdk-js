@@ -31,12 +31,11 @@
     "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck ."
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "nock": "^13.0.11",
     "@sap-cloud-sdk/odata-v2": "^1.50.0",
-    "@sap-cloud-sdk/odata-common":"^1.50.0",
+    "@sap-cloud-sdk/odata-common": "^1.50.0",
     "@sap-cloud-sdk/test-services": "^1.50.0",
     "@sap-cloud-sdk/odata-v4": "^1.50.0",
     "@sap-cloud-sdk/openapi": "^1.50.0",

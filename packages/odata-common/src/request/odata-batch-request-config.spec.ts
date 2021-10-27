@@ -1,4 +1,4 @@
-import { defaultTestServicePath } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
+import { defaultTestServicePath } from '../../../core/test/test-util/test-services/v2/test-service';
 import { ODataBatchRequestConfig } from './odata-batch-request-config';
 
 describe('ODataBatchConfig', () => {

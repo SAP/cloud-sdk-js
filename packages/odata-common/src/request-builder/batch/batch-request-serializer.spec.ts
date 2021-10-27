@@ -1,18 +1,18 @@
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
-  batch,
-  TestEntity
-} from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
-import {
-  buildTestEntity,
-  createChangeSetWithFakeId
-} from '@sap-cloud-sdk/core/test/test-util/batch-test-util';
-import {
   ODataBatchRequestConfig,
   serializeBatchRequest,
   serializeChangeSet,
   serializeRequest
 } from '@sap-cloud-sdk/odata-common';
+import {
+  batch,
+  TestEntity
+} from '../../../../core/test/test-util/test-services/v2/test-service';
+import {
+  buildTestEntity,
+  createChangeSetWithFakeId
+} from '../../../../core/test/test-util/batch-test-util';
 
 describe('batch request serializer', () => {
   let testEntity: TestEntity;

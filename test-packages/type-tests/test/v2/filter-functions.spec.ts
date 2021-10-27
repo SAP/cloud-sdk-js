@@ -1,23 +1,19 @@
 import {
-  substring,
-  length,
-  filterFunctions,
-  substringOf
-} from '@sap-cloud-sdk/core';
-import {
   TestEntity,
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
+import {filterFunctions,filterFunction, length, substring, substringOf} from "@sap-cloud-sdk/odata-v2";
+
 
 /* Backwards compatibility */
 
-// $ExpectType StringFilterFunction<Entity>
+// $ExpectType StringFilterFunction<EntityBase>
 substring('str', 1);
 
 // $ExpectType BooleanFilterFunction<Entity>
 substringOf('str', 'str');
 
-// $ExpectType NumberFilterFunction<Entity>
+// $ExpectType NumberFilterFunction<EntityBase>
 length('str');
 
 // $ExpectType Filter<TestEntity, string>

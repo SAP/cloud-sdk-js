@@ -1,22 +1,30 @@
-import { resolve } from 'path';
+import { resolve, join } from 'path';
+import { existsSync, promises } from 'fs';
 import execa from 'execa';
 import {
-  testDir,
   testOutputRootDir,
   testResourcesDir
 } from '../../../test-resources/generator';
 
+// TODO use fs-mock here
 describe('openapi negative tests', () => {
   const pathToGenerator = resolve(
     '../../node_modules/@sap-cloud-sdk/openapi-generator/dist/cli.js'
   );
 
+  const testDir = join(testOutputRootDir, 'openapi-negative');
+  beforeAll(async () => {
+    if (!existsSync(testOutputRootDir)) {
+      await promises.mkdir(testOutputRootDir);
+    }
+    await promises.rm(testDir, { recursive: true, force: true });
+    await promises.mkdir(testDir);
+  });
+
   it('should fail on generation for faulty spec file', async () => {
-    const output = resolve(
-      testOutputRootDir,
-      'openapi-negative',
-      'faulty-specification'
-    );
+    const output = join(testDir, 'faulty-specification');
+    await promises.mkdir(output);
+
     await expect(
       execa(
         'node',
@@ -37,18 +45,18 @@ describe('openapi negative tests', () => {
   }, 120000);
 
   it('should fail on transpilation on faulty tsconfig - this also checks that --tsConfig switches on transpile', async () => {
-    const output = resolve(
-      testOutputRootDir,
-      'openapi-negative',
-      'transpilation-failed-1'
-    );
+    const output = join(testDir, 'transpilation-failed-1');
+    await promises.mkdir(output);
     await expect(
       execa(
         'node',
         [
           pathToGenerator,
           '--input',
-          resolve(testDir, '../openapi-service-specs/test-service.json'),
+          resolve(
+            testOutputRootDir,
+            '../../openapi-service-specs/test-service.json'
+          ),
           '-o',
           output,
           '--skipValidation',
@@ -65,18 +73,18 @@ describe('openapi negative tests', () => {
   }, 120000);
 
   it('should fail on transpilation on faulty ts source file- this also checks that --include is done before transpile', async () => {
-    const output = resolve(
-      testOutputRootDir,
-      'openapi-negative',
-      'transpilation-failed-2'
-    );
+    const output = join(testDir, 'transpilation-failed-2');
+    await promises.mkdir(output);
     await expect(
       execa(
         'node',
         [
           pathToGenerator,
           '-i',
-          resolve(testDir, '../openapi-service-specs/test-service.json'),
+          resolve(
+            testResourcesDir,
+            '../../openapi-service-specs/test-service.json'
+          ),
           '-o',
           output,
           '--skipValidation',

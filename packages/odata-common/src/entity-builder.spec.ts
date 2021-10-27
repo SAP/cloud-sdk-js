@@ -1,13 +1,13 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
+import { EntityBuilder } from '@sap-cloud-sdk/odata-common';
 import {
   TestEntity,
   TestEntityLvl2SingleLink,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '@sap-cloud-sdk/core/test/test-util/test-services/v4/test-service';
-import { EntityBuilder } from '@sap-cloud-sdk/odata-common';
+} from '../../core/test/test-util/test-services/v4/test-service';
 
 describe('EntityBuilder', () => {
   it('should build an empty entity when no properties are defined', () => {

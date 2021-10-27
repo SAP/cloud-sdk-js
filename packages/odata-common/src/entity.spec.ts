@@ -2,7 +2,7 @@ import {
   TestEntity,
   TestEntityMultiLink,
   TestEntitySingleLink
-} from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
+} from '../../core/test/test-util/test-services/v2/test-service';
 
 describe('entity', () => {
   describe('remote state', () => {

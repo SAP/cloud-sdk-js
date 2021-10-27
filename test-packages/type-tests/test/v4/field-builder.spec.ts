@@ -1,9 +1,9 @@
-import { FieldBuilder } from '@sap-cloud-sdk/core';
 import {
   TestComplexType,
   TestComplexTypeField,
   TestEntity
 } from '@sap-cloud-sdk/test-services/v4/test-service';
+import {FieldBuilder} from "@sap-cloud-sdk/odata-common";
 
 // $ExpectType FieldBuilder<typeof TestEntity>
 const entityFieldBuilder = new FieldBuilder(TestEntity);

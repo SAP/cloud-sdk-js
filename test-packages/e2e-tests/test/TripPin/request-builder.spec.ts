@@ -1,7 +1,7 @@
-import { any, deserializeEntityV4 } from '@sap-cloud-sdk/core';
 import { resetDataSource } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/action-imports';
 import { PersonGender } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/PersonGender';
 import { People } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
+import { any, deserializeEntityV4 } from '../../../../core';
 
 const url = 'https://services.odata.org/';
 const destination = { url };

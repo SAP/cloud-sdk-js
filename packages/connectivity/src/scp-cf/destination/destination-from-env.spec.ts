@@ -4,7 +4,7 @@ import { JwtHeader, JwtPayload } from 'jsonwebtoken';
 import {
   mockDestinationsEnv,
   unmockDestinationsEnv
-} from '@sap-cloud-sdk/core/test/test-util/request-mocker';
+} from '../../../../core/test/test-util/request-mocker';
 import { Destination } from './destination-service-types';
 import {
   getDestinationFromEnvByName,

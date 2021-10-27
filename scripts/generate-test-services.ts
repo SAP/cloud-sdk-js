@@ -127,7 +127,7 @@ async function generateTestServicesWithLocalCoreModules(
   async function replaceWithLocalModules(serviceDirectory, file, data) {
     return writeFile(
       path.resolve(outputDir, serviceDirectory, file),
-      data.replace('@sap-cloud-sdk/core', '../../../../../src'),
+      data.replace('../../../../core', '../../../../../src'),
       {
         encoding: 'utf8'
       }

@@ -99,7 +99,7 @@ function compareApisAndLog(
  * @param pathToPackage -  path to the package.
  */
 export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
-  logger.info(`Check package: ${pathToPackage}`)
+  logger.info(`Check package: ${pathToPackage}`);
   const { pathToSource, pathCompiled } = paths(pathToPackage);
   mockFileSystem(pathToPackage);
   await transpileDirectory(

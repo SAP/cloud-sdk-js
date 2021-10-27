@@ -6,7 +6,7 @@ import {
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
 const logger = createLogger({
-  package: '@sap-cloud-sdk/core',
+  package: '../../../../core',
   messageContext: 'odata-request-config'
 });
 

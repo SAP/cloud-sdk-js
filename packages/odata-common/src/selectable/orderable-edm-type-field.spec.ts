@@ -1,14 +1,14 @@
 import moment from 'moment';
 import {
-  TestComplexTypeField,
-  TestEntity
-} from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
-import {
   EntityBase,
   FieldType,
   Filter,
   OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-common';
+import {
+  TestComplexTypeField,
+  TestEntity
+} from '../../../core/test/test-util/test-services/v2/test-service';
 
 export function checkFilter<
   EntityT extends EntityBase,

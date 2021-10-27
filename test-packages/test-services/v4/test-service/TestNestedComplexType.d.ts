@@ -74,7 +74,7 @@ export declare namespace TestNestedComplexType {
    */
   const _propertyMetadata: PropertyMetadata<TestNestedComplexType>[];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   function build(json: {
     [keys: string]: FieldType | TestLvl2NestedComplexType;

@@ -1,4 +1,4 @@
-import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
+import { TestEntity } from '../../core/test/test-util/test-services/v2/test-service';
 import { isNavigationProperty } from './properties-util';
 
 describe('properties-util', () => {

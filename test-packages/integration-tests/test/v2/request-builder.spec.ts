@@ -4,22 +4,22 @@ import {
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/authorization-header';
+import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall
-} from '@sap-cloud-sdk/core/test/test-util/destination-service-mocks';
+} from '../../../../packages/core/test/test-util/destination-service-mocks';
 import {
   destinationServiceUri,
   destinationBindingClientSecretMock,
   mockServiceBindings,
   providerXsuaaUrl
-} from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
-import { privateKey } from '@sap-cloud-sdk/core/test/test-util/keys';
-import { mockClientCredentialsGrantCall } from '@sap-cloud-sdk/core/test/test-util/xsuaa-service-mocks';
-import { destinationName } from '@sap-cloud-sdk/core/test/test-util/example-destination-service-responses';
-import { basicHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/authorization-header';
-import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
+} from '../../../../packages/core/test/test-util/environment-mocks';
+import { privateKey } from '../../../../packages/core/test/test-util/keys';
+import { mockClientCredentialsGrantCall } from '../../../../packages/core/test/test-util/xsuaa-service-mocks';
+import { destinationName } from '../../../../packages/core/test/test-util/example-destination-service-responses';
 import { singleTestEntityMultiLinkResponse } from '../test-data/single-test-entity-multi-link-response';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';

@@ -36,10 +36,10 @@ export function packageJson(
           doc: 'npx typedoc'
         },
         dependencies: {
-          '@sap-cloud-sdk/core': `^${sdkVersion}`
+          '../../../../core': `^${sdkVersion}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${sdkVersion}`
+          '../../../../core': `^${sdkVersion}`
         },
         devDependencies: {
           typedoc: '^0.20.36',

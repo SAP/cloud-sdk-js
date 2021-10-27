@@ -41,7 +41,7 @@ describe('package-json', () => {
       unixEOL +
       '  "peerDependencies": {' +
       unixEOL +
-      '    "@sap-cloud-sdk/core": "^1.17.4-alpha.8"' +
+      '    "../../../../core": "^1.17.4-alpha.8"' +
       unixEOL +
       '  }' +
       unixEOL +

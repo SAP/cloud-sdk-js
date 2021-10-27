@@ -1,7 +1,7 @@
-import { testFilterString } from '@sap-cloud-sdk/core/test/test-util/filter-factory';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { oDataUri } from '@sap-cloud-sdk/odata-v2';
 import { asc, ODataGetAllRequestConfig } from '@sap-cloud-sdk/odata-common';
+import { testFilterString } from '../../../core/test/test-util/filter-factory';
 
 describe('ODataGetAllRequestConfig', () => {
   let config: ODataGetAllRequestConfig<TestEntity>;

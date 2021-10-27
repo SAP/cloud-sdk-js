@@ -7,7 +7,7 @@ import {
   defaultHost,
   mockHeaderRequest,
   createCreateRequest
-} from '@sap-cloud-sdk/core/test/test-util';
+} from '../../core/test/test-util';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 
 const standardHeaders = {

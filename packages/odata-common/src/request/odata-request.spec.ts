@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { TestEntity } from '@sap-cloud-sdk/core/test/test-util/test-services/v2/test-service';
 import {
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
@@ -10,6 +9,7 @@ import {
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common';
 import { oDataUri } from '@sap-cloud-sdk/odata-v2';
+import { TestEntity } from '../../../core/test/test-util/test-services/v2/test-service';
 
 describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;

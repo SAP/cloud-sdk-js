@@ -1,3 +1,5 @@
+export {filterFunction} from "./filter-function";
+
 export { uriConverter } from './uri-conversion/uri-value-converter';
 
 export { all, any } from './filter/filter-lambda-expression';

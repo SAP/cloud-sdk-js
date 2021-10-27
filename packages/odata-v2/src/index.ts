@@ -1,3 +1,5 @@
+export {filterFunction} from "@sap-cloud-sdk/odata-common";
+
 export {
   filterFunctions,
   replace,

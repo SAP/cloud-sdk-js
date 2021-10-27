@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",
-    "@sap-cloud-sdk/core": "^1.50.0",
     "@sap-cloud-sdk/generator": "^1.50.0",
     "@sap-cloud-sdk/generator-common": "^1.50.0",
     "@sap-cloud-sdk/openapi-generator": "^1.50.0",

@@ -11,6 +11,8 @@
   "exclude": ["dist/**/*", "test/**/*", "**/*.spec.ts", "node_modules/**/*"],
   "references": [
     { "path": "../../packages/util" },
+    { "path": "../../packages/http-client" },
+    { "path": "../../packages/connectivity" },
     { "path": "../../packages/odata-common" }
   ]
 }

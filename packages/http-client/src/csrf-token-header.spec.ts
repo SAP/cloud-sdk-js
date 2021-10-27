@@ -1,8 +1,8 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import {  ODataCreateRequestConfig, ODataRequest } from '@sap-cloud-sdk/odata-common';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2';
+import { ODataCreateRequestConfig, ODataRequest} from '@sap-cloud-sdk/odata-common';
+import { oDataUri} from '@sap-cloud-sdk/odata-v2';
 import {
   defaultBasicCredentials,
   defaultDestination,
@@ -10,7 +10,7 @@ import {
   mockHeaderRequest
 } from '../../core/test/test-util';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
-import {TestEntity} from "@sap-cloud-sdk/test-services/v2/test-service";
+ import {TestEntity} from "@sap-cloud-sdk/test-services/v2/test-service";
 
 const standardHeaders = {
   accept: 'application/json',

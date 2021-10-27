@@ -17,7 +17,7 @@ describe('openapi negative tests', () => {
     if (!existsSync(testOutputRootDir)) {
       await promises.mkdir(testOutputRootDir);
     }
-    await promises.rm(testDir, { recursive: true, force: true });
+    await promises.rmdir(testDir, { recursive: true });
     await promises.mkdir(testDir);
   });
 

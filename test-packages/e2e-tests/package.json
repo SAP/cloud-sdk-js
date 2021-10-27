@@ -39,9 +39,7 @@
     "requires": {
       "db": {
         "kind": "sqlite",
-        "credentials": {
-          "database": "sqlite.db"
-        }
+        "model": "*"
       }
     }
   }

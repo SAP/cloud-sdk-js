@@ -37,7 +37,6 @@ export {
   serializeBatchRequest
 } from './request-builder/batch/batch-request-serializer';
 export { FilterLambdaExpression } from './filter/filter-lambda-expression';
-export { toFilterableList } from './filter/filterable';
 
 export { isNavigationProperty } from './properties-util';
 export { removePropertyOnCondition } from './request-builder/update-request-builder-base';
@@ -150,3 +149,4 @@ export {
   FilterFunctionParameterType,
   FilterFunctionPrimitiveParameterType
 } from './filter/filter-function-base';
+export { toFilterableList } from './selectable/one-to-many-link';

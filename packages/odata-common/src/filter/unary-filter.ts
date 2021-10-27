@@ -1,5 +1,5 @@
-import { EntityBase } from '../entity-base';
-import { Filterable } from './filterable';
+import type { EntityBase } from '../entity-base';
+import type { Filterable } from './filterable';
 
 type UnaryFilterOperator = 'not';
 

@@ -1,8 +1,15 @@
-import { EntityBase } from '../entity-base';
-import { FilterLink } from '../filter/filter-link';
+import type { EntityBase } from '../entity-base';
+import type { FilterLink } from '../filter/filter-link';
 import { Orderable } from '../order/orderable';
-import { Filterable, toFilterableList } from '../filter/filterable';
+import type { Filterable } from '../filter/filterable';
 import { Link } from './link';
+
+export function toFilterableList<
+  EntityT extends EntityBase,
+  LinkedEntityT extends EntityBase
+>(filters: Filterable<EntityT, LinkedEntityT>[]): Filterable<EntityT>[] {
+  return filters.map(f => (f instanceof OneToManyLink ? f._filters : f));
+}
 
 /**
  * Represents a one to many relation for OData v4 entities.

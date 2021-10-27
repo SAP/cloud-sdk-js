@@ -13,6 +13,11 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "workspaces": [
+    "test-packages/integration-tests",
+    "test-packages/e2e-tests",
+    "test-packages/test-services",
+    "test-packages/test-services-e2e",
+    "test-packages/type-tests",
     "packages/analytics",
     "packages/connectivity",
     "packages/http-client",
@@ -25,12 +30,7 @@
     "packages/test-util",
     "packages/util",
     "packages/openapi-generator",
-    "packages/generator-common",
-    "test-packages/integration-tests",
-    "test-packages/e2e-tests",
-    "test-packages/test-services",
-    "test-packages/test-services-e2e",
-    "test-packages/type-tests"
+    "packages/generator-common"
   ],
   "scripts": {
     "postinstall": "yarn compile && yarn run readme",

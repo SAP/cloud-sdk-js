@@ -13,20 +13,17 @@ import { Entity } from './entity';
 import { DateFilterFunction } from './filter/date-filter-function';
 // eslint-disable valid-jsdoc
 
-
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): BooleanFilterFunction<EntityT>;
 
-
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'int' | 'double' | 'decimal',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): NumberFilterFunction<EntityT>;
-
 
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
@@ -40,13 +37,11 @@ export function filterFunction<EntityT extends Entity>(
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): DateFilterFunction<EntityT>;
 
-
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'boolean[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, boolean>;
-
 
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
@@ -54,13 +49,11 @@ export function filterFunction<EntityT extends Entity>(
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, string>;
 
-
 export function filterFunction<EntityT extends Entity>(
   functionName: string,
   returnType: 'int[]' | 'double[]' | 'decimal[]',
   ...parameters: FilterFunctionParameterType<EntityT>[]
 ): CollectionFilterFunction<EntityT, number>;
-
 
 export function filterFunction<EntityT extends Entity>(
   functionName: string,

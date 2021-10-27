@@ -38,6 +38,7 @@ Blog: TBD<br>
 ## Compatibility Notes
 
 - [core] Tighten the return type of the `getAuthHeaders()` and `buildAuthorizationHeaders()` functions.
+- [openapi-generator] The binary of the `openapi-generator` now calls `./dist/cli.js` instead of `./bin/run`. This will be handled automatically if you install or update the CLI via `node` or run it with `npx`.
 
 ## Improvements
 

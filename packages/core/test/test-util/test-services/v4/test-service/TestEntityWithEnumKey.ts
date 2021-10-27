@@ -5,7 +5,7 @@
  */
 import { TestEntityWithEnumKeyRequestBuilder } from './TestEntityWithEnumKeyRequestBuilder';
 import { TestEnumType } from './TestEnumType';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
+import { CustomField, Entity } from '../../../../../../odata-v4/src';
 import {
   AllFields,
   Constructable,
@@ -13,7 +13,7 @@ import {
   EnumField,
   Field,
   FieldBuilder
-} from '@sap-cloud-sdk/odata-common';
+} from '../../../../../../odata-common/src';
 
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".

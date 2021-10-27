@@ -10,7 +10,7 @@ import {
   TestNestedComplexTypeField
 } from './TestNestedComplexType';
 import { TestEnumType } from './TestEnumType';
-import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
+import { deserializeComplexType, Entity } from '../../../../../../odata-v4/src';
 import {
   CollectionField,
   ComplexTypeField,
@@ -23,7 +23,7 @@ import {
   OrderableEdmTypeField,
   PropertyMetadata,
   Time
-} from '@sap-cloud-sdk/odata-common';
+} from '../../../../../../odata-common/src';
 
 /**
  * TestComplexType
@@ -525,7 +525,7 @@ export namespace TestComplexType {
   ];
 
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../../src` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   export function build(json: {
     [keys: string]: FieldType | TestNestedComplexType;

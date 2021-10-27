@@ -3,13 +3,13 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import '@sap-cloud-sdk/odata-common';
+import '../../../../../../odata-common/src';
 import {
   deserializeComplexType,
   ActionImportRequestBuilder,
   ActionImportParameter,
   transformReturnValueForComplexType
-} from '@sap-cloud-sdk/odata-v4';
+} from '../../../../../../odata-v4/src';
 import { TestComplexType1 } from './TestComplexType1';
 import { TestComplexType2 } from './TestComplexType2';
 

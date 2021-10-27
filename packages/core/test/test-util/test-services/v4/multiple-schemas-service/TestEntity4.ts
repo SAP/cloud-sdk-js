@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
+import { CustomField, Entity } from '../../../../../../odata-v4/src';
 import {
   AllFields,
   Constructable,
@@ -12,7 +12,7 @@ import {
   EntityBuilderType,
   Field,
   FieldBuilder
-} from '@sap-cloud-sdk/odata-common';
+} from '../../../../../../odata-common/src';
 
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".

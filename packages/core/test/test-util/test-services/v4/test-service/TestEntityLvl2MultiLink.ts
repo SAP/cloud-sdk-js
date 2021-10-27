@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
+import { CustomField, Entity } from '../../../../../../odata-v4/src';
 import {
   AllFields,
   Constructable,
@@ -14,7 +14,7 @@ import {
   FieldBuilder,
   OneToManyLink,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-common';
+} from '../../../../../../odata-common/src';
 
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".

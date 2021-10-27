@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { throwErrorWhenReturnTypeIsUnionType } from '@sap-cloud-sdk/odata-common';
+import { throwErrorWhenReturnTypeIsUnionType } from '../../../../../../odata-common/src';
 import {
   edmToTs,
   deserializeComplexType,
@@ -13,7 +13,7 @@ import {
   transformReturnValueForComplexType,
   transformReturnValueForEdmType,
   transformReturnValueForEntity
-} from '@sap-cloud-sdk/odata-v4';
+} from '../../../../../../odata-v4/src';
 import { TestComplexType } from './TestComplexType';
 import { TestEntity } from './TestEntity';
 

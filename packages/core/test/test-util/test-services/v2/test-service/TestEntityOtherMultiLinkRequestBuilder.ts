@@ -3,14 +3,14 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
+import { RequestBuilder } from '../../../../../../odata-common/src';
 import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   CreateRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder
-} from '@sap-cloud-sdk/odata-v2';
+} from '../../../../../../odata-v2/src';
 import { TestEntityOtherMultiLink } from './TestEntityOtherMultiLink';
 
 /**

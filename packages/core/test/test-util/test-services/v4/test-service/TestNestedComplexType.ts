@@ -7,7 +7,7 @@ import {
   TestLvl2NestedComplexType,
   TestLvl2NestedComplexTypeField
 } from './TestLvl2NestedComplexType';
-import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
+import { deserializeComplexType, Entity } from '../../../../../../odata-v4/src';
 import {
   ComplexTypeField,
   ConstructorOrField,
@@ -16,7 +16,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common';
+} from '../../../../../../odata-common/src';
 
 /**
  * TestNestedComplexType
@@ -107,7 +107,7 @@ export namespace TestNestedComplexType {
   ];
 
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../../src` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   export function build(json: {
     [keys: string]: FieldType | TestLvl2NestedComplexType;

@@ -10,7 +10,7 @@ import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
 import { TestEnumTypeInt64 } from './TestEnumTypeInt64';
 import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
+import { CustomField, Entity } from '../../../../../../odata-v4/src';
 import {
   AllFields,
   CollectionField,
@@ -24,7 +24,7 @@ import {
   OneToOneLink,
   OrderableEdmTypeField,
   Time
-} from '@sap-cloud-sdk/odata-common';
+} from '../../../../../../odata-common/src';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".

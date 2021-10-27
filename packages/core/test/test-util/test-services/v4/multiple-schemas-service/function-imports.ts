@@ -3,11 +3,11 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common';
+import { FunctionImportParameter } from '../../../../../../odata-common/src';
 import {
   FunctionImportRequestBuilder,
   transformReturnValueForEntity
-} from '@sap-cloud-sdk/odata-v4';
+} from '../../../../../../odata-v4/src';
 import { TestEntity1 } from './TestEntity1';
 import { TestEntity2 } from './TestEntity2';
 

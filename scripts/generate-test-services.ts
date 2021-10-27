@@ -125,9 +125,16 @@ async function generateTestServicesWithLocalCoreModules(
   }
 
   async function replaceWithLocalModules(serviceDirectory, file, data) {
+    const replaced = data
+      .replace(
+        '@sap-cloud-sdk/odata-common',
+        '../../../../../../odata-common/src'
+      )
+      .replace('@sap-cloud-sdk/odata-v2', '../../../../../../odata-v2/src')
+      .replace('@sap-cloud-sdk/odata-v4', '../../../../../../odata-v4/src');
     return writeFile(
       path.resolve(outputDir, serviceDirectory, file),
-      data.replace('../../../../core', '../../../../../src'),
+      replaced,
       {
         encoding: 'utf8'
       }

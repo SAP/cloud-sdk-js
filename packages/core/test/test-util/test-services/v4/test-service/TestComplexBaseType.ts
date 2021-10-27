@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
+import { deserializeComplexType, Entity } from '../../../../../../odata-v4/src';
 import {
   ComplexTypeField,
   ConstructorOrField,
@@ -12,7 +12,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common';
+} from '../../../../../../odata-common/src';
 
 /**
  * TestComplexBaseType
@@ -86,7 +86,7 @@ export namespace TestComplexBaseType {
   ];
 
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../../src` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   export function build(json: {
     [keys: string]: FieldType;

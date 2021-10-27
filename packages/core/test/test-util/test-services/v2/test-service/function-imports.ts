@@ -6,7 +6,7 @@
 import {
   FunctionImportParameter,
   throwErrorWhenReturnTypeIsUnionType
-} from '@sap-cloud-sdk/odata-common';
+} from '../../../../../../odata-common/src';
 import {
   edmToTs,
   deserializeComplexType,
@@ -18,7 +18,7 @@ import {
   transformReturnValueForEntityList,
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList
-} from '@sap-cloud-sdk/odata-v2';
+} from '../../../../../../odata-v2/src';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 

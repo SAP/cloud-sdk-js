@@ -11,7 +11,7 @@ import {
   ODataBatchChangeSet,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
-} from '@sap-cloud-sdk/odata-v4';
+} from '../../../../../../odata-v4/src';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   TestEntity,

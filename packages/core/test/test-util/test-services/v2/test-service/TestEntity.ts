@@ -7,7 +7,7 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
+import { CustomField, Entity } from '../../../../../../odata-v2/src';
 import {
   AllFields,
   Constructable,
@@ -19,7 +19,7 @@ import {
   OneToOneLink,
   OrderableEdmTypeField,
   Time
-} from '@sap-cloud-sdk/odata-common';
+} from '../../../../../../odata-common/src';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".

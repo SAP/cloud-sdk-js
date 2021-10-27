@@ -95,7 +95,8 @@ function compareApisAndLog(
   logger.info(`We have found ${allExportedIndex.length} exports.`);
 
   if (verbose) {
-    logger.info(`Public api:${allExportedIndex.join(`,${unixEOL}`)}`);
+    logger.info(`Public api:
+    ${allExportedIndex.sort().join(`,${unixEOL}`)}`);
   }
   return setsAreEqual;
 }

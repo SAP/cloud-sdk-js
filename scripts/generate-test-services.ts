@@ -1,4 +1,4 @@
-import { promises, Dirent } from 'fs';
+import { promises } from 'fs';
 import path from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
@@ -8,12 +8,7 @@ import {
 } from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
 
-const { readFile, readdir, writeFile } = promises;
 const odataServiceSpecsDir = path.join('test-resources', 'odata-service-specs');
-const openApiServiceSpecsDir = path.join(
-  'test-resources',
-  'openapi-service-specs'
-);
 const packageOutputDir = path.resolve('test-packages', 'test-services');
 
 const generatorConfigOData = {
@@ -56,54 +51,6 @@ function generateTestServicesPackage(
     outputDir: `${outputDir}/${version}`,
     generateJs: true
   });
-}
-
-async function generateTestServicesWithLocalCoreModules(
-  outputDirBase: string,
-  version: ODataVersion | 'openapi'
-): Promise<void> {
-  const outputDir = path.resolve(outputDirBase, version);
-  if (version !== 'openapi') {
-    await generateOdata({
-      ...generatorConfigOData,
-      inputDir: path.join(odataServiceSpecsDir, version),
-      outputDir
-    });
-  } else {
-    await generateOpenApi({
-      ...generatorConfigOpenApi,
-      input: openApiServiceSpecsDir,
-      outputDir,
-      packageJson: false,
-      transpile: false,
-      include: undefined,
-      readme: false
-    });
-  }
-
-  async function readServiceDirectories() {
-    try {
-      return readdir(outputDir);
-    } catch (dirErr) {
-      throw Error(`Reading output directory failed: ${dirErr}`);
-    }
-  }
-
-  async function readServiceDirectory(serviceDirectory): Promise<Dirent[]> {
-    return readdir(path.resolve(outputDir, serviceDirectory), {
-      withFileTypes: true
-    }).catch(serviceDirErr => {
-      throw Error(`Reading test service directory failed: ${serviceDirErr}`);
-    });
-  }
-
-  async function readServiceFile(serviceDirectory, file) {
-    return readFile(path.resolve(outputDir, serviceDirectory, file), {
-      encoding: 'utf8'
-    }).catch(fileReadErr => {
-      throw Error(`Reading test service file '${file}' failed: ${fileReadErr}`);
-    });
-  }
 }
 
 async function generateAll(): Promise<void> {

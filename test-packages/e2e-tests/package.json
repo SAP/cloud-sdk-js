@@ -19,6 +19,8 @@
     "@apidevtools/swagger-parser": "^10.0.2",
     "@sap-cloud-sdk/generator": "^1.50.0",
     "@sap-cloud-sdk/generator-common": "^1.50.0",
+    "@sap-cloud-sdk/odata-common": "^1.50.0",
+    "@sap-cloud-sdk/odata-v4": "^1.50.0",
     "@sap-cloud-sdk/openapi-generator": "^1.50.0",
     "@sap-cloud-sdk/test-services": "^1.50.0",
     "@sap-cloud-sdk/test-services-e2e": "^1.50.0",

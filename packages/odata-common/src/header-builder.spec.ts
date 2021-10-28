@@ -7,12 +7,12 @@ import {
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common';
 import { oDataUri } from '@sap-cloud-sdk/odata-v2';
+import { buildHeaders } from '@sap-cloud-sdk/odata-common/dist/header-builder';
 import {
   defaultDestination,
   mockHeaderRequest
 } from '../../core/test/test-util/request-mocker';
 import { connectivityProxyConfigMock } from '../../core/test/test-util/environment-mocks';
-import {buildHeaders} from "./header-builder";
 
 function createGetAllRequest(
   dest: Destination

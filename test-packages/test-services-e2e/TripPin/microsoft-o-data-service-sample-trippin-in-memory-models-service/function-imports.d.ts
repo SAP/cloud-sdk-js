@@ -1,4 +1,4 @@
-import { FunctionImportRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { Airports } from './Airports';
 /**
  * Type of the parameters to be passed to [[getNearestAirport]].
@@ -20,7 +20,7 @@ export interface GetNearestAirportParameters {
  */
 export declare function getNearestAirport(
   parameters: GetNearestAirportParameters
-): FunctionImportRequestBuilderV4<GetNearestAirportParameters, Airports>;
+): FunctionImportRequestBuilder<GetNearestAirportParameters, Airports>;
 export declare const functionImports: {
   getNearestAirport: typeof getNearestAirport;
 };

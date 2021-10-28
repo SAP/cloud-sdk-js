@@ -1,6 +1,6 @@
 import os from 'os';
 import nock from 'nock';
-import { expectAllMocksUsed } from '@sap-cloud-sdk/core/test/test-util';
+import { expectAllMocksUsed } from '../../core/test/test-util';
 import { UsageAnalyticsOptions } from './analytics-types';
 import { sendAnalyticsData } from './usage-analytics';
 import { getAnalyticsData } from './analytics-data';

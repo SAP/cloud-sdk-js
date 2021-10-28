@@ -37,7 +37,8 @@ exports.TestEntityCircularLinkChildRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 var TestEntityCircularLinkChild_1 = require('./TestEntityCircularLinkChild');
 /**
  * Request builder class for operations supported on the [[TestEntityCircularLinkChild]] entity.
@@ -57,7 +58,7 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (
   TestEntityCircularLinkChildRequestBuilder.prototype.getByKey = function (
     keyProperty
   ) {
-    return new core_1.GetByKeyRequestBuilderV2(
+    return new odata_v2_1.GetByKeyRequestBuilder(
       TestEntityCircularLinkChild_1.TestEntityCircularLinkChild,
       { KeyProperty: keyProperty }
     );
@@ -67,7 +68,7 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (
    * @returns A request builder for creating requests to retrieve all `TestEntityCircularLinkChild` entities.
    */
   TestEntityCircularLinkChildRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV2(
+    return new odata_v2_1.GetAllRequestBuilder(
       TestEntityCircularLinkChild_1.TestEntityCircularLinkChild
     );
   };
@@ -79,7 +80,7 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (
   TestEntityCircularLinkChildRequestBuilder.prototype.create = function (
     entity
   ) {
-    return new core_1.CreateRequestBuilderV2(
+    return new odata_v2_1.CreateRequestBuilder(
       TestEntityCircularLinkChild_1.TestEntityCircularLinkChild,
       entity
     );
@@ -92,7 +93,7 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (
   TestEntityCircularLinkChildRequestBuilder.prototype.update = function (
     entity
   ) {
-    return new core_1.UpdateRequestBuilderV2(
+    return new odata_v2_1.UpdateRequestBuilder(
       TestEntityCircularLinkChild_1.TestEntityCircularLinkChild,
       entity
     );
@@ -100,7 +101,7 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (
   TestEntityCircularLinkChildRequestBuilder.prototype.delete = function (
     keyPropertyOrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV2(
+    return new odata_v2_1.DeleteRequestBuilder(
       TestEntityCircularLinkChild_1.TestEntityCircularLinkChild,
       keyPropertyOrEntity instanceof
       TestEntityCircularLinkChild_1.TestEntityCircularLinkChild
@@ -109,7 +110,7 @@ var TestEntityCircularLinkChildRequestBuilder = /** @class */ (function (
     );
   };
   return TestEntityCircularLinkChildRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntityCircularLinkChildRequestBuilder =
   TestEntityCircularLinkChildRequestBuilder;
 //# sourceMappingURL=TestEntityCircularLinkChildRequestBuilder.js.map

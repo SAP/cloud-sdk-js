@@ -32,7 +32,8 @@ var __extends =
   })();
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.PhotosRequestBuilder = void 0;
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var Photos_1 = require('./Photos');
 /**
  * Request builder class for operations supported on the [[Photos]] entity.
@@ -48,14 +49,14 @@ var PhotosRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
    */
   PhotosRequestBuilder.prototype.getByKey = function (id) {
-    return new core_1.GetByKeyRequestBuilderV4(Photos_1.Photos, { Id: id });
+    return new odata_v4_1.GetByKeyRequestBuilder(Photos_1.Photos, { Id: id });
   };
   /**
    * Returns a request builder for querying all `Photos` entities.
    * @returns A request builder for creating requests to retrieve all `Photos` entities.
    */
   PhotosRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(Photos_1.Photos);
+    return new odata_v4_1.GetAllRequestBuilder(Photos_1.Photos);
   };
   /**
    * Returns a request builder for creating a `Photos` entity.
@@ -63,7 +64,7 @@ var PhotosRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `Photos`.
    */
   PhotosRequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV4(Photos_1.Photos, entity);
+    return new odata_v4_1.CreateRequestBuilder(Photos_1.Photos, entity);
   };
   /**
    * Returns a request builder for updating an entity of type `Photos`.
@@ -71,15 +72,15 @@ var PhotosRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `Photos`.
    */
   PhotosRequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV4(Photos_1.Photos, entity);
+    return new odata_v4_1.UpdateRequestBuilder(Photos_1.Photos, entity);
   };
   PhotosRequestBuilder.prototype.delete = function (idOrEntity) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       Photos_1.Photos,
       idOrEntity instanceof Photos_1.Photos ? idOrEntity : { Id: idOrEntity }
     );
   };
   return PhotosRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.PhotosRequestBuilder = PhotosRequestBuilder;
 //# sourceMappingURL=PhotosRequestBuilder.js.map

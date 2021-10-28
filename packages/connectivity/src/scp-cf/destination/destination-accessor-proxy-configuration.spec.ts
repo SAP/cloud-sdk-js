@@ -2,26 +2,26 @@ import nock from 'nock';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings
-} from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
+} from '../../../../core/test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '@sap-cloud-sdk/core/test/test-util/token-accessor-mocks';
+} from '../../../../core/test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '@sap-cloud-sdk/core/test/test-util/destination-service-mocks';
+} from '../../../../core/test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
   subscriberServiceToken
-} from '@sap-cloud-sdk/core/test/test-util/mocked-access-tokens';
+} from '../../../../core/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
   destinationName,
   onPremiseMultipleResponse,
   onPremisePrincipalPropagationMultipleResponse
-} from '@sap-cloud-sdk/core/test/test-util/example-destination-service-responses';
+} from '../../../../core/test/test-util/example-destination-service-responses';
 import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';

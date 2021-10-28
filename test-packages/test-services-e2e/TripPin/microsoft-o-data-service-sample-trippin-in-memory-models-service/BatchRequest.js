@@ -9,7 +9,7 @@ exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var util_1 = require('@sap-cloud-sdk/util');
 var index_1 = require('./index');
 function batch(first) {
@@ -17,7 +17,7 @@ function batch(first) {
   for (var _i = 1; _i < arguments.length; _i++) {
     rest[_i - 1] = arguments[_i];
   }
-  return new core_1.ODataBatchRequestBuilderV4(
+  return new odata_v4_1.ODataBatchRequestBuilder(
     exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath,
     (0, util_1.variadicArgumentToArray)(first, rest),
     map
@@ -29,7 +29,7 @@ function changeset(first) {
   for (var _i = 1; _i < arguments.length; _i++) {
     rest[_i - 1] = arguments[_i];
   }
-  return new core_1.ODataBatchChangeSetV4(
+  return new odata_v4_1.ODataBatchChangeSet(
     (0, util_1.variadicArgumentToArray)(first, rest)
   );
 }

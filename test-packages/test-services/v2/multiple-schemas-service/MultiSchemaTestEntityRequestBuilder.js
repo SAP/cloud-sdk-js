@@ -37,7 +37,8 @@ exports.MultiSchemaTestEntityRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 var MultiSchemaTestEntity_1 = require('./MultiSchemaTestEntity');
 /**
  * Request builder class for operations supported on the [[MultiSchemaTestEntity]] entity.
@@ -55,7 +56,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
   MultiSchemaTestEntityRequestBuilder.prototype.getByKey = function (
     keyProperty
   ) {
-    return new core_1.GetByKeyRequestBuilderV2(
+    return new odata_v2_1.GetByKeyRequestBuilder(
       MultiSchemaTestEntity_1.MultiSchemaTestEntity,
       { KeyProperty: keyProperty }
     );
@@ -65,7 +66,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `MultiSchemaTestEntity` entities.
    */
   MultiSchemaTestEntityRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV2(
+    return new odata_v2_1.GetAllRequestBuilder(
       MultiSchemaTestEntity_1.MultiSchemaTestEntity
     );
   };
@@ -75,7 +76,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `MultiSchemaTestEntity`.
    */
   MultiSchemaTestEntityRequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV2(
+    return new odata_v2_1.CreateRequestBuilder(
       MultiSchemaTestEntity_1.MultiSchemaTestEntity,
       entity
     );
@@ -86,7 +87,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `MultiSchemaTestEntity`.
    */
   MultiSchemaTestEntityRequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV2(
+    return new odata_v2_1.UpdateRequestBuilder(
       MultiSchemaTestEntity_1.MultiSchemaTestEntity,
       entity
     );
@@ -94,7 +95,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
   MultiSchemaTestEntityRequestBuilder.prototype.delete = function (
     keyPropertyOrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV2(
+    return new odata_v2_1.DeleteRequestBuilder(
       MultiSchemaTestEntity_1.MultiSchemaTestEntity,
       keyPropertyOrEntity instanceof
       MultiSchemaTestEntity_1.MultiSchemaTestEntity
@@ -103,7 +104,7 @@ var MultiSchemaTestEntityRequestBuilder = /** @class */ (function (_super) {
     );
   };
   return MultiSchemaTestEntityRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.MultiSchemaTestEntityRequestBuilder =
   MultiSchemaTestEntityRequestBuilder;
 //# sourceMappingURL=MultiSchemaTestEntityRequestBuilder.js.map

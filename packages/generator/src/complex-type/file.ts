@@ -17,8 +17,8 @@ export function complexTypeSourceFile(
       ...importDeclarations(complexType, oDataVersion),
       complexTypeInterface(complexType),
       builderFunction(complexType),
-      fieldTypeClass(complexType, oDataVersion),
-      complexTypeNamespace(complexType, oDataVersion)
+      fieldTypeClass(complexType),
+      complexTypeNamespace(complexType)
     ]
   };
 }

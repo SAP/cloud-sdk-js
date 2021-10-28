@@ -1,7 +1,7 @@
 import {
   defaultBasicCredentials,
   defaultDestination
-} from '@sap-cloud-sdk/core/test/test-util/request-mocker';
+} from '../../../core/test/test-util/request-mocker';
 import { getAuthHeaders } from './authorization-header';
 import { Destination } from './destination/destination-service-types';
 

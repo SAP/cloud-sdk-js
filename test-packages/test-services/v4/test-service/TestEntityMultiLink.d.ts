@@ -1,20 +1,19 @@
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   Field,
   OneToManyLink,
   OneToOneLink,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
  */
 export declare class TestEntityMultiLink
-  extends EntityV4
+  extends Entity
   implements TestEntityMultiLinkType
 {
   /**
@@ -77,7 +76,7 @@ export declare class TestEntityMultiLink
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntityMultiLink>;
+  static customField(fieldName: string): CustomField<TestEntityMultiLink>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

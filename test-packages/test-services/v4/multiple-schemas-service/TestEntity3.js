@@ -55,7 +55,8 @@ exports.TestEntity3 = void 0;
 var TestEntity3RequestBuilder_1 = require('./TestEntity3RequestBuilder');
 var TestComplexType2_1 = require('./TestComplexType2');
 var TestEnumType2_1 = require('./TestEnumType2');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
@@ -69,7 +70,7 @@ var TestEntity3 = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntity3`.
    */
   TestEntity3.builder = function () {
-    return core_1.EntityV4.entityBuilder(TestEntity3);
+    return odata_v4_1.Entity.entityBuilder(TestEntity3);
   };
   /**
    * Returns a request builder to construct requests for operations on the `TestEntity3` entity type.
@@ -84,7 +85,7 @@ var TestEntity3 = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntity3`.
    */
   TestEntity3.customField = function (fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, TestEntity3);
+    return odata_v4_1.Entity.customFieldSelector(fieldName, TestEntity3);
   };
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -102,10 +103,10 @@ var TestEntity3 = /** @class */ (function (_super) {
    */
   TestEntity3._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   return TestEntity3;
-})(core_1.EntityV4);
+})(odata_v4_1.Entity);
 exports.TestEntity3 = TestEntity3;
 (function (TestEntity3) {
-  var _fieldBuilder = new core_1.FieldBuilder(TestEntity3);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(TestEntity3);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -144,7 +145,7 @@ exports.TestEntity3 = TestEntity3;
   /**
    * All fields selector.
    */
-  TestEntity3.ALL_FIELDS = new core_1.AllFields('*', TestEntity3);
+  TestEntity3.ALL_FIELDS = new odata_common_1.AllFields('*', TestEntity3);
   /**
    * All key fields of the TestEntity3 entity.
    */

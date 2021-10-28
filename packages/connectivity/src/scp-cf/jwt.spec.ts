@@ -6,7 +6,7 @@ import {
   publicKey,
   signedJwtForVerification,
   xsuaaBindingMock
-} from '@sap-cloud-sdk/core/test/test-util';
+} from '../../../core/test/test-util';
 import { audiences, retrieveJwt, verificationKeyCache, verifyJwt } from './jwt';
 
 const jwtPayload = {

@@ -37,7 +37,8 @@ exports.AirlinesRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var Airlines_1 = require('./Airlines');
 /**
  * Request builder class for operations supported on the [[Airlines]] entity.
@@ -53,7 +54,7 @@ var AirlinesRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
    */
   AirlinesRequestBuilder.prototype.getByKey = function (airlineCode) {
-    return new core_1.GetByKeyRequestBuilderV4(Airlines_1.Airlines, {
+    return new odata_v4_1.GetByKeyRequestBuilder(Airlines_1.Airlines, {
       AirlineCode: airlineCode
     });
   };
@@ -62,7 +63,7 @@ var AirlinesRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `Airlines` entities.
    */
   AirlinesRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(Airlines_1.Airlines);
+    return new odata_v4_1.GetAllRequestBuilder(Airlines_1.Airlines);
   };
   /**
    * Returns a request builder for creating a `Airlines` entity.
@@ -70,7 +71,7 @@ var AirlinesRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `Airlines`.
    */
   AirlinesRequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV4(Airlines_1.Airlines, entity);
+    return new odata_v4_1.CreateRequestBuilder(Airlines_1.Airlines, entity);
   };
   /**
    * Returns a request builder for updating an entity of type `Airlines`.
@@ -78,10 +79,10 @@ var AirlinesRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `Airlines`.
    */
   AirlinesRequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV4(Airlines_1.Airlines, entity);
+    return new odata_v4_1.UpdateRequestBuilder(Airlines_1.Airlines, entity);
   };
   AirlinesRequestBuilder.prototype.delete = function (airlineCodeOrEntity) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       Airlines_1.Airlines,
       airlineCodeOrEntity instanceof Airlines_1.Airlines
         ? airlineCodeOrEntity
@@ -89,6 +90,6 @@ var AirlinesRequestBuilder = /** @class */ (function (_super) {
     );
   };
   return AirlinesRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.AirlinesRequestBuilder = AirlinesRequestBuilder;
 //# sourceMappingURL=AirlinesRequestBuilder.js.map

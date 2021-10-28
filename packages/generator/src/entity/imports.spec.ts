@@ -34,14 +34,16 @@ const expectedEntityImports = [
     namedImports: ['BigNumber']
   },
   {
-    moduleSpecifier: '@sap-cloud-sdk/core',
+    moduleSpecifier: '@sap-cloud-sdk/odata-v2',
+    namedImports: ['CustomField', 'Entity']
+  },
+  {
+    moduleSpecifier: '@sap-cloud-sdk/odata-common',
     namedImports: [
       'AllFields',
       'Constructable',
-      'CustomFieldV2',
       'EdmTypeField',
       'EntityBuilderType',
-      'EntityV2',
       'Field',
       'FieldBuilder',
       'OneToOneLink',

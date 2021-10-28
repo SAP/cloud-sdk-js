@@ -12,18 +12,21 @@ describe('complex type imports', () => {
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/core',
+        moduleSpecifier: '@sap-cloud-sdk/odata-v2',
+        namedImports: ['deserializeComplexType', 'Entity']
+      },
+      {
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-common',
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
           'EdmTypeField',
-          'EntityV2',
           'FieldBuilder',
           'FieldOptions',
           'FieldType',
           'OrderableEdmTypeField',
-          'PropertyMetadata',
-          'deserializeComplexTypeV2'
+          'PropertyMetadata'
         ]
       }
     ]);
@@ -39,17 +42,20 @@ describe('complex type imports', () => {
       },
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/core',
+        moduleSpecifier: '@sap-cloud-sdk/odata-v2',
+        namedImports: ['deserializeComplexType', 'Entity']
+      },
+      {
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-common',
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
-          'EntityV2',
           'FieldBuilder',
           'FieldOptions',
           'FieldType',
           'OrderableEdmTypeField',
-          'PropertyMetadata',
-          'deserializeComplexTypeV2'
+          'PropertyMetadata'
         ]
       }
     ]);
@@ -74,16 +80,19 @@ describe('complex type imports', () => {
       },
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/core',
+        moduleSpecifier: '@sap-cloud-sdk/odata-v2',
+        namedImports: ['deserializeComplexType', 'Entity']
+      },
+      {
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-common',
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
-          'EntityV2',
           'FieldBuilder',
           'FieldOptions',
           'FieldType',
-          'PropertyMetadata',
-          'deserializeComplexTypeV2'
+          'PropertyMetadata'
         ]
       }
     ]);

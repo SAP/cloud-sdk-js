@@ -53,7 +53,8 @@ exports.TestEntityLvl2SingleLink = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityLvl2SingleLinkRequestBuilder_1 = require('./TestEntityLvl2SingleLinkRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
  */
@@ -67,7 +68,7 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
    */
   TestEntityLvl2SingleLink.builder = function () {
-    return core_1.EntityV2.entityBuilder(TestEntityLvl2SingleLink);
+    return odata_v2_1.Entity.entityBuilder(TestEntityLvl2SingleLink);
   };
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityLvl2SingleLink` entity type.
@@ -82,7 +83,7 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
    */
   TestEntityLvl2SingleLink.customField = function (fieldName) {
-    return core_1.EntityV2.customFieldSelector(
+    return odata_v2_1.Entity.customFieldSelector(
       fieldName,
       TestEntityLvl2SingleLink
     );
@@ -104,10 +105,10 @@ var TestEntityLvl2SingleLink = /** @class */ (function (_super) {
   TestEntityLvl2SingleLink._defaultServicePath =
     '/sap/opu/odata/sap/API_TEST_SRV';
   return TestEntityLvl2SingleLink;
-})(core_1.EntityV2);
+})(odata_v2_1.Entity);
 exports.TestEntityLvl2SingleLink = TestEntityLvl2SingleLink;
 (function (TestEntityLvl2SingleLink) {
-  var _fieldBuilder = new core_1.FieldBuilder(TestEntityLvl2SingleLink);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityLvl2SingleLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -166,7 +167,7 @@ exports.TestEntityLvl2SingleLink = TestEntityLvl2SingleLink;
   /**
    * All fields selector.
    */
-  TestEntityLvl2SingleLink.ALL_FIELDS = new core_1.AllFields(
+  TestEntityLvl2SingleLink.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityLvl2SingleLink
   );

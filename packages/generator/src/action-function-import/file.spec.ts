@@ -10,7 +10,10 @@ describe('file', () => {
       element => element.kind === StructureKind.ImportDeclaration
     );
 
-    expect(imports.length).toBe(1);
+    expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
+      '@sap-cloud-sdk/odata-v2',
+      '@sap-cloud-sdk/odata-common'
+    ]);
 
     const variables = (actual.statements as any).filter(
       element => element.kind === StructureKind.VariableStatement

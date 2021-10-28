@@ -1,4 +1,4 @@
-import { FunctionImportRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 /**
@@ -12,7 +12,7 @@ export interface TestFunctionImportEdmReturnTypeParameters {}
  */
 export declare function testFunctionImportEdmReturnType(
   parameters: TestFunctionImportEdmReturnTypeParameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportEdmReturnTypeParameters,
   boolean
 >;
@@ -27,7 +27,7 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters {}
  */
 export declare function testFunctionImportEdmReturnTypeCollection(
   parameters: TestFunctionImportEdmReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportEdmReturnTypeCollectionParameters,
   string[]
 >;
@@ -55,7 +55,7 @@ export interface TestFunctionImportNullableTestParameters {
  */
 export declare function testFunctionImportNullableTest(
   parameters: TestFunctionImportNullableTestParameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportNullableTestParameters,
   string[] | null
 >;
@@ -70,7 +70,7 @@ export interface TestFunctionImportEntityReturnTypeParameters {}
  */
 export declare function testFunctionImportEntityReturnType(
   parameters: TestFunctionImportEntityReturnTypeParameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnTypeParameters,
   TestEntity
 >;
@@ -85,7 +85,7 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters {}
  */
 export declare function testFunctionImportEntityReturnTypeCollection(
   parameters: TestFunctionImportEntityReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnTypeCollectionParameters,
   TestEntity[]
 >;
@@ -101,7 +101,7 @@ export interface TestFunctionImportSharedEntityReturnTypeParameters {}
 export declare function testFunctionImportSharedEntityReturnType(
   parameters: TestFunctionImportSharedEntityReturnTypeParameters
 ): Omit<
-  FunctionImportRequestBuilderV4<
+  FunctionImportRequestBuilder<
     TestFunctionImportSharedEntityReturnTypeParameters,
     never
   >,
@@ -119,7 +119,7 @@ export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {}
 export declare function testFunctionImportSharedEntityReturnTypeCollection(
   parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters
 ): Omit<
-  FunctionImportRequestBuilderV4<
+  FunctionImportRequestBuilder<
     TestFunctionImportSharedEntityReturnTypeCollectionParameters,
     never
   >,
@@ -136,7 +136,7 @@ export interface TestFunctionImportComplexReturnTypeParameters {}
  */
 export declare function testFunctionImportComplexReturnType(
   parameters: TestFunctionImportComplexReturnTypeParameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportComplexReturnTypeParameters,
   TestComplexType
 >;
@@ -151,7 +151,7 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters {}
  */
 export declare function testFunctionImportComplexReturnTypeCollection(
   parameters: TestFunctionImportComplexReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestComplexType[]
 >;
@@ -183,7 +183,7 @@ export interface TestFunctionImportMultipleParamsParameters {
  */
 export declare function testFunctionImportMultipleParams(
   parameters: TestFunctionImportMultipleParamsParameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportMultipleParamsParameters,
   boolean | null
 >;
@@ -198,7 +198,7 @@ export interface TestFunctionImportWithDifferentNameParameters {}
  */
 export declare function testFunctionImportWithDifferentName(
   parameters: TestFunctionImportWithDifferentNameParameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportWithDifferentNameParameters,
   undefined
 >;

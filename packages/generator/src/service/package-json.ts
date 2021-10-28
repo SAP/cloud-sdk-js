@@ -1,12 +1,17 @@
-import { unixEOL } from '@sap-cloud-sdk/util';
+import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
 import { getSdkVersion } from '@sap-cloud-sdk/generator-common';
 
 export async function packageJson(
   npmPackageName: string,
   version: string,
   description: string,
-  sdkAfterVersionScript: boolean
+  sdkAfterVersionScript: boolean,
+  oDataVersion: ODataVersion
 ): Promise<string> {
+  const oDataModule =
+    oDataVersion === 'v2'
+      ? '@sap-cloud-sdk/odata-v2'
+      : '@sap-cloud-sdk/odata-v4';
   return (
     JSON.stringify(
       {
@@ -38,10 +43,11 @@ export async function packageJson(
             : {})
         },
         dependencies: {
-          '@sap-cloud-sdk/core': `^${await getSdkVersion()}`
+          '@sap-cloud-sdk/odata-common': `^${await getSdkVersion()}`,
+          [oDataModule]: `^${await getSdkVersion()}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${await getSdkVersion()}`
+          '../../../../core': `^${await getSdkVersion()}`
         },
         devDependencies: {
           typedoc: '^0.20.36',

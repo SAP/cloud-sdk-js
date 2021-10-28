@@ -53,7 +53,8 @@ exports.TestEntityMultiLink = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityMultiLinkRequestBuilder_1 = require('./TestEntityMultiLinkRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
  */
@@ -67,7 +68,7 @@ var TestEntityMultiLink = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
    */
   TestEntityMultiLink.builder = function () {
-    return core_1.EntityV2.entityBuilder(TestEntityMultiLink);
+    return odata_v2_1.Entity.entityBuilder(TestEntityMultiLink);
   };
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityMultiLink` entity type.
@@ -82,7 +83,10 @@ var TestEntityMultiLink = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
    */
   TestEntityMultiLink.customField = function (fieldName) {
-    return core_1.EntityV2.customFieldSelector(fieldName, TestEntityMultiLink);
+    return odata_v2_1.Entity.customFieldSelector(
+      fieldName,
+      TestEntityMultiLink
+    );
   };
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -100,12 +104,12 @@ var TestEntityMultiLink = /** @class */ (function (_super) {
    */
   TestEntityMultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   return TestEntityMultiLink;
-})(core_1.EntityV2);
+})(odata_v2_1.Entity);
 exports.TestEntityMultiLink = TestEntityMultiLink;
 var TestEntityLvl2MultiLink_1 = require('./TestEntityLvl2MultiLink');
 var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
 (function (TestEntityMultiLink) {
-  var _fieldBuilder = new core_1.FieldBuilder(TestEntityMultiLink);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityMultiLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -155,7 +159,7 @@ var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityMultiLink.TO_MULTI_LINK = new core_1.Link(
+  TestEntityMultiLink.TO_MULTI_LINK = new odata_common_1.Link(
     'to_MultiLink',
     TestEntityMultiLink,
     TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink
@@ -164,7 +168,7 @@ var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityMultiLink.TO_SINGLE_LINK = new core_1.OneToOneLink(
+  TestEntityMultiLink.TO_SINGLE_LINK = new odata_common_1.OneToOneLink(
     'to_SingleLink',
     TestEntityMultiLink,
     TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink
@@ -184,7 +188,7 @@ var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
   /**
    * All fields selector.
    */
-  TestEntityMultiLink.ALL_FIELDS = new core_1.AllFields(
+  TestEntityMultiLink.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityMultiLink
   );

@@ -37,7 +37,8 @@ exports.Casetest_1RequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 var Casetest_1_1 = require('./Casetest_1');
 /**
  * Request builder class for operations supported on the [[Casetest_1]] entity.
@@ -53,7 +54,7 @@ var Casetest_1RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
    */
   Casetest_1RequestBuilder.prototype.getByKey = function (keyPropertyString) {
-    return new core_1.GetByKeyRequestBuilderV2(Casetest_1_1.Casetest_1, {
+    return new odata_v2_1.GetByKeyRequestBuilder(Casetest_1_1.Casetest_1, {
       KeyPropertyString: keyPropertyString
     });
   };
@@ -62,7 +63,7 @@ var Casetest_1RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `Casetest_1` entities.
    */
   Casetest_1RequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV2(Casetest_1_1.Casetest_1);
+    return new odata_v2_1.GetAllRequestBuilder(Casetest_1_1.Casetest_1);
   };
   /**
    * Returns a request builder for creating a `Casetest_1` entity.
@@ -70,7 +71,7 @@ var Casetest_1RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `Casetest_1`.
    */
   Casetest_1RequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV2(Casetest_1_1.Casetest_1, entity);
+    return new odata_v2_1.CreateRequestBuilder(Casetest_1_1.Casetest_1, entity);
   };
   /**
    * Returns a request builder for updating an entity of type `Casetest_1`.
@@ -78,12 +79,12 @@ var Casetest_1RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `Casetest_1`.
    */
   Casetest_1RequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV2(Casetest_1_1.Casetest_1, entity);
+    return new odata_v2_1.UpdateRequestBuilder(Casetest_1_1.Casetest_1, entity);
   };
   Casetest_1RequestBuilder.prototype.delete = function (
     keyPropertyStringOrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV2(
+    return new odata_v2_1.DeleteRequestBuilder(
       Casetest_1_1.Casetest_1,
       keyPropertyStringOrEntity instanceof Casetest_1_1.Casetest_1
         ? keyPropertyStringOrEntity
@@ -91,6 +92,6 @@ var Casetest_1RequestBuilder = /** @class */ (function (_super) {
     );
   };
   return Casetest_1RequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.Casetest_1RequestBuilder = Casetest_1RequestBuilder;
 //# sourceMappingURL=Casetest_1RequestBuilder.js.map

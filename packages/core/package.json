@@ -27,25 +27,25 @@
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
     "postinstall": "node usage-analytics.js",
-    "test": "yarn jest",
+    "test": "echo Nothing to test here.",
     "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck ."
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "nock": "^13.0.11",
+    "@sap-cloud-sdk/odata-v2": "^1.50.0",
+    "@sap-cloud-sdk/odata-common": "^1.50.0",
+    "@sap-cloud-sdk/test-services": "^1.50.0",
+    "@sap-cloud-sdk/odata-v4": "^1.50.0",
+    "@sap-cloud-sdk/openapi": "^1.50.0",
     "@sap-cloud-sdk/analytics": "^1.50.0",
     "@sap-cloud-sdk/util": "^1.50.0",
     "@sap-cloud-sdk/connectivity": "^1.50.0",
-    "@sap-cloud-sdk/http-client": "^1.50.0",
-    "@sap-cloud-sdk/openapi": "^1.50.0",
     "@types/jsonwebtoken": "^8.3.8",
-    "axios": "^0.24.0",
     "bignumber.js": "^9.0.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.0",
-    "uuid": "^8.2.0",
-    "voca": "^1.4.0"
-  },
-  "devDependencies": {
-    "nock": "^13.0.11"
+    "uuid": "^8.2.0"
   }
 }

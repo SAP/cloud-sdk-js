@@ -53,7 +53,8 @@ exports.Photos = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var PhotosRequestBuilder_1 = require('./PhotosRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
@@ -67,7 +68,7 @@ var Photos = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `Photos`.
    */
   Photos.builder = function () {
-    return core_1.EntityV4.entityBuilder(Photos);
+    return odata_v4_1.Entity.entityBuilder(Photos);
   };
   /**
    * Returns a request builder to construct requests for operations on the `Photos` entity type.
@@ -82,7 +83,7 @@ var Photos = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `Photos`.
    */
   Photos.customField = function (fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, Photos);
+    return odata_v4_1.Entity.customFieldSelector(fieldName, Photos);
   };
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -101,10 +102,10 @@ var Photos = /** @class */ (function (_super) {
   Photos._defaultServicePath =
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   return Photos;
-})(core_1.EntityV4);
+})(odata_v4_1.Entity);
 exports.Photos = Photos;
 (function (Photos) {
-  var _fieldBuilder = new core_1.FieldBuilder(Photos);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(Photos);
   /**
    * Static representation of the [[id]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -122,7 +123,7 @@ exports.Photos = Photos;
   /**
    * All fields selector.
    */
-  Photos.ALL_FIELDS = new core_1.AllFields('*', Photos);
+  Photos.ALL_FIELDS = new odata_common_1.AllFields('*', Photos);
   /**
    * All key fields of the Photos entity.
    */

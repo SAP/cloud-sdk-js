@@ -6,22 +6,21 @@
 import { TestEntity3RequestBuilder } from './TestEntity3RequestBuilder';
 import { TestComplexType2, TestComplexType2Field } from './TestComplexType2';
 import { TestEnumType2 } from './TestEnumType2';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
   Constructable,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   EnumField,
   Field,
   FieldBuilder
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class TestEntity3 extends EntityV4 implements TestEntity3Type {
+export class TestEntity3 extends Entity implements TestEntity3Type {
   /**
    * Technical entity name for TestEntity3.
    */
@@ -50,7 +49,7 @@ export class TestEntity3 extends EntityV4 implements TestEntity3Type {
    * @returns A builder that constructs instances of entity type `TestEntity3`.
    */
   static builder(): EntityBuilderType<TestEntity3, TestEntity3Type> {
-    return EntityV4.entityBuilder(TestEntity3);
+    return Entity.entityBuilder(TestEntity3);
   }
 
   /**
@@ -66,8 +65,8 @@ export class TestEntity3 extends EntityV4 implements TestEntity3Type {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity3`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntity3> {
-    return EntityV4.customFieldSelector(fieldName, TestEntity3);
+  static customField(fieldName: string): CustomField<TestEntity3> {
+    return Entity.customFieldSelector(fieldName, TestEntity3);
   }
 
   /**

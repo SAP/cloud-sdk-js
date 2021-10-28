@@ -53,7 +53,8 @@ exports.TestEntityLink = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityLinkRequestBuilder_1 = require('./TestEntityLinkRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
@@ -67,7 +68,7 @@ var TestEntityLink = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityLink`.
    */
   TestEntityLink.builder = function () {
-    return core_1.EntityV4.entityBuilder(TestEntityLink);
+    return odata_v4_1.Entity.entityBuilder(TestEntityLink);
   };
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityLink` entity type.
@@ -82,7 +83,7 @@ var TestEntityLink = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityLink`.
    */
   TestEntityLink.customField = function (fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, TestEntityLink);
+    return odata_v4_1.Entity.customFieldSelector(fieldName, TestEntityLink);
   };
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -100,10 +101,10 @@ var TestEntityLink = /** @class */ (function (_super) {
    */
   TestEntityLink._defaultServicePath = '/odata/test-service';
   return TestEntityLink;
-})(core_1.EntityV4);
+})(odata_v4_1.Entity);
 exports.TestEntityLink = TestEntityLink;
 (function (TestEntityLink) {
-  var _fieldBuilder = new core_1.FieldBuilder(TestEntityLink);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityLink);
   /**
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -142,7 +143,7 @@ exports.TestEntityLink = TestEntityLink;
   /**
    * All fields selector.
    */
-  TestEntityLink.ALL_FIELDS = new core_1.AllFields('*', TestEntityLink);
+  TestEntityLink.ALL_FIELDS = new odata_common_1.AllFields('*', TestEntityLink);
   /**
    * All key fields of the TestEntityLink entity.
    */

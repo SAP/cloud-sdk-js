@@ -53,7 +53,8 @@ exports.MultiSchemaTestEntity = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var MultiSchemaTestEntityRequestBuilder_1 = require('./MultiSchemaTestEntityRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
@@ -67,7 +68,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
   MultiSchemaTestEntity.builder = function () {
-    return core_1.EntityV2.entityBuilder(MultiSchemaTestEntity);
+    return odata_v2_1.Entity.entityBuilder(MultiSchemaTestEntity);
   };
   /**
    * Returns a request builder to construct requests for operations on the `MultiSchemaTestEntity` entity type.
@@ -82,7 +83,7 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
   MultiSchemaTestEntity.customField = function (fieldName) {
-    return core_1.EntityV2.customFieldSelector(
+    return odata_v2_1.Entity.customFieldSelector(
       fieldName,
       MultiSchemaTestEntity
     );
@@ -103,10 +104,10 @@ var MultiSchemaTestEntity = /** @class */ (function (_super) {
    */
   MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
   return MultiSchemaTestEntity;
-})(core_1.EntityV2);
+})(odata_v2_1.Entity);
 exports.MultiSchemaTestEntity = MultiSchemaTestEntity;
 (function (MultiSchemaTestEntity) {
-  var _fieldBuilder = new core_1.FieldBuilder(MultiSchemaTestEntity);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(MultiSchemaTestEntity);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -123,7 +124,7 @@ exports.MultiSchemaTestEntity = MultiSchemaTestEntity;
   /**
    * All fields selector.
    */
-  MultiSchemaTestEntity.ALL_FIELDS = new core_1.AllFields(
+  MultiSchemaTestEntity.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     MultiSchemaTestEntity
   );

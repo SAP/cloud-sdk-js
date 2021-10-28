@@ -53,7 +53,8 @@ exports.TestEntityCircularLinkChild = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityCircularLinkChildRequestBuilder_1 = require('./TestEntityCircularLinkChildRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
  */
@@ -67,7 +68,7 @@ var TestEntityCircularLinkChild = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
    */
   TestEntityCircularLinkChild.builder = function () {
-    return core_1.EntityV4.entityBuilder(TestEntityCircularLinkChild);
+    return odata_v4_1.Entity.entityBuilder(TestEntityCircularLinkChild);
   };
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityCircularLinkChild` entity type.
@@ -82,7 +83,7 @@ var TestEntityCircularLinkChild = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
    */
   TestEntityCircularLinkChild.customField = function (fieldName) {
-    return core_1.EntityV4.customFieldSelector(
+    return odata_v4_1.Entity.customFieldSelector(
       fieldName,
       TestEntityCircularLinkChild
     );
@@ -104,11 +105,13 @@ var TestEntityCircularLinkChild = /** @class */ (function (_super) {
   TestEntityCircularLinkChild._defaultServicePath =
     '/sap/opu/odata/sap/API_TEST_SRV';
   return TestEntityCircularLinkChild;
-})(core_1.EntityV4);
+})(odata_v4_1.Entity);
 exports.TestEntityCircularLinkChild = TestEntityCircularLinkChild;
 var TestEntityCircularLinkParent_1 = require('./TestEntityCircularLinkParent');
 (function (TestEntityCircularLinkChild) {
-  var _fieldBuilder = new core_1.FieldBuilder(TestEntityCircularLinkChild);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(
+    TestEntityCircularLinkChild
+  );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -122,7 +125,7 @@ var TestEntityCircularLinkParent_1 = require('./TestEntityCircularLinkParent');
    * Static representation of the one-to-one navigation property [[toParent]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityCircularLinkChild.TO_PARENT = new core_1.OneToOneLink(
+  TestEntityCircularLinkChild.TO_PARENT = new odata_common_1.OneToOneLink(
     'to_Parent',
     TestEntityCircularLinkChild,
     TestEntityCircularLinkParent_1.TestEntityCircularLinkParent
@@ -137,7 +140,7 @@ var TestEntityCircularLinkParent_1 = require('./TestEntityCircularLinkParent');
   /**
    * All fields selector.
    */
-  TestEntityCircularLinkChild.ALL_FIELDS = new core_1.AllFields(
+  TestEntityCircularLinkChild.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityCircularLinkChild
   );

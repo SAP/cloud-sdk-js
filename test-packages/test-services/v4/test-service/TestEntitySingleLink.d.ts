@@ -1,20 +1,19 @@
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   Field,
   OneToManyLink,
   OneToOneLink,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
  */
 export declare class TestEntitySingleLink
-  extends EntityV4
+  extends Entity
   implements TestEntitySingleLinkType
 {
   /**
@@ -77,7 +76,7 @@ export declare class TestEntitySingleLink
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntitySingleLink>;
+  static customField(fieldName: string): CustomField<TestEntitySingleLink>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

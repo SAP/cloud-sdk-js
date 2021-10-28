@@ -55,7 +55,8 @@ exports.People = void 0;
 var PeopleRequestBuilder_1 = require('./PeopleRequestBuilder');
 var Location_1 = require('./Location');
 var PersonGender_1 = require('./PersonGender');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
@@ -69,7 +70,7 @@ var People = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `People`.
    */
   People.builder = function () {
-    return core_1.EntityV4.entityBuilder(People);
+    return odata_v4_1.Entity.entityBuilder(People);
   };
   /**
    * Returns a request builder to construct requests for operations on the `People` entity type.
@@ -84,7 +85,7 @@ var People = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `People`.
    */
   People.customField = function (fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, People);
+    return odata_v4_1.Entity.customFieldSelector(fieldName, People);
   };
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -103,11 +104,11 @@ var People = /** @class */ (function (_super) {
   People._defaultServicePath =
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
   return People;
-})(core_1.EntityV4);
+})(odata_v4_1.Entity);
 exports.People = People;
 var Photos_1 = require('./Photos');
 (function (People) {
-  var _fieldBuilder = new core_1.FieldBuilder(People);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(People);
   /**
    * Static representation of the [[userName]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -175,12 +176,16 @@ var Photos_1 = require('./Photos');
    * Static representation of the one-to-many navigation property [[friends]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.FRIENDS = new core_1.OneToManyLink('Friends', People, People);
+  People.FRIENDS = new odata_common_1.OneToManyLink('Friends', People, People);
   /**
    * Static representation of the one-to-one navigation property [[photo]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  People.PHOTO = new core_1.OneToOneLink('Photo', People, Photos_1.Photos);
+  People.PHOTO = new odata_common_1.OneToOneLink(
+    'Photo',
+    People,
+    Photos_1.Photos
+  );
   /**
    * All fields of the People entity.
    */
@@ -198,7 +203,7 @@ var Photos_1 = require('./Photos');
   /**
    * All fields selector.
    */
-  People.ALL_FIELDS = new core_1.AllFields('*', People);
+  People.ALL_FIELDS = new odata_common_1.AllFields('*', People);
   /**
    * All key fields of the People entity.
    */

@@ -37,7 +37,8 @@ exports.City = exports.CityField = exports.createCity = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * @deprecated Since v1.6.0. Use [[City.build]] instead.
  */
@@ -59,7 +60,7 @@ var CityField = /** @class */ (function (_super) {
   function CityField(fieldName, fieldOf, fieldOptions) {
     var _this =
       _super.call(this, fieldName, fieldOf, City, fieldOptions) || this;
-    _this._fieldBuilder = new core_1.FieldBuilder(_this);
+    _this._fieldBuilder = new odata_common_1.FieldBuilder(_this);
     /**
      * Representation of the [[City.countryRegion]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -90,7 +91,7 @@ var CityField = /** @class */ (function (_super) {
     return _this;
   }
   return CityField;
-})(core_1.ComplexTypeField);
+})(odata_common_1.ComplexTypeField);
 exports.CityField = CityField;
 var City;
 (function (City) {
@@ -118,10 +119,10 @@ var City;
     }
   ];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   function build(json) {
-    return (0, core_1.deserializeComplexTypeV4)(json, City);
+    return (0, odata_v4_1.deserializeComplexType)(json, City);
   }
   City.build = build;
 })((City = exports.City || (exports.City = {})));

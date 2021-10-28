@@ -1,15 +1,25 @@
-import { resolve } from 'path';
+import { resolve, join } from 'path';
+import { existsSync, promises } from 'fs';
 import execa from 'execa';
 import {
-  testDir,
   testOutputRootDir,
   testResourcesDir
 } from '../../../test-resources/generator';
 
+// TODO use fs-mock
 describe('odata negative tests', () => {
   const pathToGenerator = resolve(
     '../../node_modules/@sap-cloud-sdk/generator/dist/generator-cli.js'
   );
+  const testDir = join(testOutputRootDir, 'odata-negative');
+
+  beforeAll(async () => {
+    if (!existsSync(testOutputRootDir)) {
+      await promises.mkdir(testOutputRootDir);
+    }
+    await promises.rmdir(testDir, { recursive: true });
+    await promises.mkdir(testDir);
+  });
 
   it('should fail on faulty edmx', async () => {
     await expect(
@@ -20,7 +30,7 @@ describe('odata negative tests', () => {
           '-i',
           resolve(testResourcesDir, 'faulty-edmx'),
           '-o',
-          resolve(testOutputRootDir, 'odata-negative', 'faulty-edmx')
+          join(testDir, 'faulty-edmx')
         ],
         { cwd: __dirname }
       )
@@ -36,9 +46,12 @@ describe('odata negative tests', () => {
         [
           pathToGenerator,
           '-i',
-          resolve(testDir, '../odata-service-specs/v2/API_TEST_SRV'),
+          resolve(
+            testResourcesDir,
+            '../../odata-service-specs/v2/API_TEST_SRV'
+          ),
           '-o',
-          resolve(testOutputRootDir, 'odata-negative', 'faulty-typescript'),
+          join(testDir, 'faulty-typescript'),
           '--additionalFiles',
           resolve(
             testResourcesDir,
@@ -50,5 +63,5 @@ describe('odata negative tests', () => {
         { cwd: __dirname }
       )
     ).rejects.toThrowError("Cannot assign to 'foo' because it is a constant.");
-  }, 15000);
+  }, 150000);
 });

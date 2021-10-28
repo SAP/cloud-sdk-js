@@ -5,21 +5,21 @@ import {
   providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
-} from '@sap-cloud-sdk/core/test/test-util/mocked-access-tokens';
+} from '../../../../core/test/test-util/mocked-access-tokens';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings
-} from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
+} from '../../../../core/test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '@sap-cloud-sdk/core/test/test-util/token-accessor-mocks';
+} from '../../../../core/test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '@sap-cloud-sdk/core/test/test-util/destination-service-mocks';
+} from '../../../../core/test/test-util/destination-service-mocks';
 import {
   certificateMultipleResponse,
   certificateSingleResponse,
@@ -27,7 +27,7 @@ import {
   oauthMultipleResponse,
   oauthSingleResponse,
   onPremisePrincipalPropagationMultipleResponse
-} from '@sap-cloud-sdk/core/test/test-util/example-destination-service-responses';
+} from '../../../../core/test/test-util/example-destination-service-responses';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { IsolationStrategy } from '../cache';
 import { destinationServiceCache } from './destination-service-cache';

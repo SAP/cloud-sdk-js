@@ -53,7 +53,8 @@ exports.TestEntityLvl3MultiLink = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityLvl3MultiLinkRequestBuilder_1 = require('./TestEntityLvl3MultiLinkRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityLvl3MultiLink" of service "API_TEST_SRV".
  */
@@ -67,7 +68,7 @@ var TestEntityLvl3MultiLink = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityLvl3MultiLink`.
    */
   TestEntityLvl3MultiLink.builder = function () {
-    return core_1.EntityV4.entityBuilder(TestEntityLvl3MultiLink);
+    return odata_v4_1.Entity.entityBuilder(TestEntityLvl3MultiLink);
   };
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityLvl3MultiLink` entity type.
@@ -82,7 +83,7 @@ var TestEntityLvl3MultiLink = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityLvl3MultiLink`.
    */
   TestEntityLvl3MultiLink.customField = function (fieldName) {
-    return core_1.EntityV4.customFieldSelector(
+    return odata_v4_1.Entity.customFieldSelector(
       fieldName,
       TestEntityLvl3MultiLink
     );
@@ -104,10 +105,10 @@ var TestEntityLvl3MultiLink = /** @class */ (function (_super) {
   TestEntityLvl3MultiLink._defaultServicePath =
     '/sap/opu/odata/sap/API_TEST_SRV';
   return TestEntityLvl3MultiLink;
-})(core_1.EntityV4);
+})(odata_v4_1.Entity);
 exports.TestEntityLvl3MultiLink = TestEntityLvl3MultiLink;
 (function (TestEntityLvl3MultiLink) {
-  var _fieldBuilder = new core_1.FieldBuilder(TestEntityLvl3MultiLink);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityLvl3MultiLink);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -146,7 +147,7 @@ exports.TestEntityLvl3MultiLink = TestEntityLvl3MultiLink;
   /**
    * All fields selector.
    */
-  TestEntityLvl3MultiLink.ALL_FIELDS = new core_1.AllFields(
+  TestEntityLvl3MultiLink.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityLvl3MultiLink
   );

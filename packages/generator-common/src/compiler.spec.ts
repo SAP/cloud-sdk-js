@@ -16,8 +16,10 @@ import {
 } from './compiler';
 
 describe('compiler options', () => {
+  const pathRootNodeModules = resolve(__dirname, '../../../node_modules');
   beforeAll(() => {
     mock({
+      [pathRootNodeModules]: mock.load(pathRootNodeModules),
       'config1/tsconfig.json': JSON.stringify({
         compilerOptions: { moduleResolution: 'node' }
       }),

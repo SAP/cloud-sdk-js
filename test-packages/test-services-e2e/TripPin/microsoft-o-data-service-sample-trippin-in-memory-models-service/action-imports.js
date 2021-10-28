@@ -6,7 +6,8 @@ exports.actionImports = exports.resetDataSource = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 /**
  * Reset Data Source.
  *
@@ -15,11 +16,11 @@ var core_1 = require('@sap-cloud-sdk/core');
  */
 function resetDataSource(parameters) {
   var params = {};
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
     'ResetDataSource',
     function (data) {
-      return (0, core_1.transformReturnValueForUndefinedV4)(
+      return (0, odata_v4_1.transformReturnValueForUndefined)(
         data,
         function (val) {
           return undefined;

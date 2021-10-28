@@ -53,7 +53,8 @@ exports.TestEntity = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityRequestBuilder_1 = require('./TestEntityRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "TestEntity" of service "TestService".
  */
@@ -67,7 +68,7 @@ var TestEntity = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
   TestEntity.builder = function () {
-    return core_1.EntityV4.entityBuilder(TestEntity);
+    return odata_v4_1.Entity.entityBuilder(TestEntity);
   };
   /**
    * Returns a request builder to construct requests for operations on the `TestEntity` entity type.
@@ -82,7 +83,7 @@ var TestEntity = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
   TestEntity.customField = function (fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, TestEntity);
+    return odata_v4_1.Entity.customFieldSelector(fieldName, TestEntity);
   };
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -100,11 +101,11 @@ var TestEntity = /** @class */ (function (_super) {
    */
   TestEntity._defaultServicePath = '/odata/test-service';
   return TestEntity;
-})(core_1.EntityV4);
+})(odata_v4_1.Entity);
 exports.TestEntity = TestEntity;
 var TestEntityLink_1 = require('./TestEntityLink');
 (function (TestEntity) {
-  var _fieldBuilder = new core_1.FieldBuilder(TestEntity);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(TestEntity);
   /**
    * Static representation of the [[keyTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -210,7 +211,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.TO_MULTI_LINK = new core_1.OneToManyLink(
+  TestEntity.TO_MULTI_LINK = new odata_common_1.OneToManyLink(
     'ToMultiLink',
     TestEntity,
     TestEntityLink_1.TestEntityLink
@@ -235,7 +236,7 @@ var TestEntityLink_1 = require('./TestEntityLink');
   /**
    * All fields selector.
    */
-  TestEntity.ALL_FIELDS = new core_1.AllFields('*', TestEntity);
+  TestEntity.ALL_FIELDS = new odata_common_1.AllFields('*', TestEntity);
   /**
    * All key fields of the TestEntity entity.
    */

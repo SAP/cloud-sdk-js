@@ -4,21 +4,20 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
   Constructable,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   Field,
   FieldBuilder
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export class Airlines extends EntityV4 implements AirlinesType {
+export class Airlines extends Entity implements AirlinesType {
   /**
    * Technical entity name for Airlines.
    */
@@ -42,7 +41,7 @@ export class Airlines extends EntityV4 implements AirlinesType {
    * @returns A builder that constructs instances of entity type `Airlines`.
    */
   static builder(): EntityBuilderType<Airlines, AirlinesType> {
-    return EntityV4.entityBuilder(Airlines);
+    return Entity.entityBuilder(Airlines);
   }
 
   /**
@@ -58,8 +57,8 @@ export class Airlines extends EntityV4 implements AirlinesType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Airlines`.
    */
-  static customField(fieldName: string): CustomFieldV4<Airlines> {
-    return EntityV4.customFieldSelector(fieldName, Airlines);
+  static customField(fieldName: string): CustomField<Airlines> {
+    return Entity.customFieldSelector(fieldName, Airlines);
   }
 
   /**

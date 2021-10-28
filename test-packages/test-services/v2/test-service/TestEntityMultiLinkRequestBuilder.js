@@ -37,7 +37,8 @@ exports.TestEntityMultiLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 var TestEntityMultiLink_1 = require('./TestEntityMultiLink');
 /**
  * Request builder class for operations supported on the [[TestEntityMultiLink]] entity.
@@ -55,7 +56,7 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
   TestEntityMultiLinkRequestBuilder.prototype.getByKey = function (
     keyProperty
   ) {
-    return new core_1.GetByKeyRequestBuilderV2(
+    return new odata_v2_1.GetByKeyRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink,
       { KeyProperty: keyProperty }
     );
@@ -65,7 +66,7 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `TestEntityMultiLink` entities.
    */
   TestEntityMultiLinkRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV2(
+    return new odata_v2_1.GetAllRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink
     );
   };
@@ -75,7 +76,7 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `TestEntityMultiLink`.
    */
   TestEntityMultiLinkRequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV2(
+    return new odata_v2_1.CreateRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink,
       entity
     );
@@ -86,7 +87,7 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `TestEntityMultiLink`.
    */
   TestEntityMultiLinkRequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV2(
+    return new odata_v2_1.UpdateRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink,
       entity
     );
@@ -94,7 +95,7 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
   TestEntityMultiLinkRequestBuilder.prototype.delete = function (
     keyPropertyOrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV2(
+    return new odata_v2_1.DeleteRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink,
       keyPropertyOrEntity instanceof TestEntityMultiLink_1.TestEntityMultiLink
         ? keyPropertyOrEntity
@@ -102,6 +103,6 @@ var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
     );
   };
   return TestEntityMultiLinkRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntityMultiLinkRequestBuilder = TestEntityMultiLinkRequestBuilder;
 //# sourceMappingURL=TestEntityMultiLinkRequestBuilder.js.map

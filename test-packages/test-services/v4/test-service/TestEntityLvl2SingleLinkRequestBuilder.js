@@ -37,7 +37,8 @@ exports.TestEntityLvl2SingleLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
 /**
  * Request builder class for operations supported on the [[TestEntityLvl2SingleLink]] entity.
@@ -55,7 +56,7 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
   TestEntityLvl2SingleLinkRequestBuilder.prototype.getByKey = function (
     keyProperty
   ) {
-    return new core_1.GetByKeyRequestBuilderV4(
+    return new odata_v4_1.GetByKeyRequestBuilder(
       TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink,
       { KeyProperty: keyProperty }
     );
@@ -65,7 +66,7 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `TestEntityLvl2SingleLink` entities.
    */
   TestEntityLvl2SingleLinkRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(
+    return new odata_v4_1.GetAllRequestBuilder(
       TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink
     );
   };
@@ -75,7 +76,7 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `TestEntityLvl2SingleLink`.
    */
   TestEntityLvl2SingleLinkRequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV4(
+    return new odata_v4_1.CreateRequestBuilder(
       TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink,
       entity
     );
@@ -86,7 +87,7 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `TestEntityLvl2SingleLink`.
    */
   TestEntityLvl2SingleLinkRequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV4(
+    return new odata_v4_1.UpdateRequestBuilder(
       TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink,
       entity
     );
@@ -94,7 +95,7 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
   TestEntityLvl2SingleLinkRequestBuilder.prototype.delete = function (
     keyPropertyOrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink,
       keyPropertyOrEntity instanceof
       TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink
@@ -103,7 +104,7 @@ var TestEntityLvl2SingleLinkRequestBuilder = /** @class */ (function (_super) {
     );
   };
   return TestEntityLvl2SingleLinkRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntityLvl2SingleLinkRequestBuilder =
   TestEntityLvl2SingleLinkRequestBuilder;
 //# sourceMappingURL=TestEntityLvl2SingleLinkRequestBuilder.js.map

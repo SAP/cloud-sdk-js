@@ -2,21 +2,16 @@ import nock = require('nock');
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
   Constructable,
-  GetAllRequestBuilderV2,
-  GetAllRequestBuilderV4,
-  oDataUri
-} from '../../src';
-import {
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
   ODataGetAllRequestConfig,
   ODataRequest,
   ODataUpdateRequestConfig
-} from '../../src/odata-common';
-import { oDataUriV4 } from '../../src/odata-v4';
+} from '@sap-cloud-sdk/odata-common';
+import { oDataUri } from '@sap-cloud-sdk/odata-v2/dist/uri-conversion/odata-uri';
+import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { TestEntity as TestEntityV4 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { basicHeader } from '../../../connectivity/src/scp-cf/authorization-header';
-import { TestEntity } from './test-services/v2/test-service/TestEntity';
-import { TestEntity as TestEntityV4 } from './test-services/v4/test-service/TestEntity';
 
 export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';
@@ -71,7 +66,7 @@ interface MockRequestParams {
 
 export function mockCreateRequest(
   params: MockRequestParams,
-  entityConstructor = TestEntity
+  entityConstructor = TestEntityV2
 ) {
   const requestConfig = new ODataCreateRequestConfig(
     entityConstructor,
@@ -91,7 +86,7 @@ export function mockCreateRequestV4(
 ) {
   const requestConfig = new ODataCreateRequestConfig(
     entityConstructor,
-    oDataUriV4
+    oDataUri
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -103,7 +98,7 @@ export function mockCreateRequestV4(
 
 export function mockDeleteRequest(
   params: MockRequestParams,
-  entityConstructor = TestEntity
+  entityConstructor = TestEntityV2
 ) {
   const requestConfig = new ODataDeleteRequestConfig(
     entityConstructor,
@@ -118,7 +113,7 @@ export function mockDeleteRequest(
 
 export function mockUpdateRequest(
   params: MockRequestParams,
-  entityConstructor: Constructable<any> = TestEntity
+  entityConstructor: Constructable<any> = TestEntityV2
 ) {
   const requestConfig = new ODataUpdateRequestConfig(
     entityConstructor,
@@ -133,7 +128,7 @@ export function mockUpdateRequest(
 
 export function mockGetRequest(
   params: MockRequestParams,
-  entityConstructor: Constructable<any> = TestEntity
+  entityConstructor: Constructable<any> = TestEntityV2
 ) {
   const requestConfig = new ODataGetAllRequestConfig(
     entityConstructor,
@@ -145,20 +140,6 @@ export function mockGetRequest(
     method: params.method || 'get',
     query: { $format: 'json', ...params.query }
   });
-}
-
-export function mockCountRequest(
-  destination: Destination,
-  count: number,
-  getAllRequest:
-    | GetAllRequestBuilderV2<any>
-    | GetAllRequestBuilderV4<any> = TestEntity.requestBuilder().getAll()
-) {
-  const servicePath = getAllRequest._entityConstructor._defaultServicePath;
-  const entityName = getAllRequest._entityConstructor._entityName;
-  return nock(defaultHost)
-    .get(`${destination.url}${servicePath}/${entityName}/$count`)
-    .reply(200, count.toString());
 }
 
 interface MockHeaderRequestParams {

@@ -1,6 +1,6 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { providerXsuaaUrl } from '@sap-cloud-sdk/core/test/test-util';
+import { providerXsuaaUrl } from '../../../core/test/test-util';
 import { fetchVerificationKeys } from './verification-keys';
 import { TokenKey } from './xsuaa-service-types';
 

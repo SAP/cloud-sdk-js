@@ -37,7 +37,8 @@ exports.TestEntityLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var TestEntityLink_1 = require('./TestEntityLink');
 /**
  * Request builder class for operations supported on the [[TestEntityLink]] entity.
@@ -57,7 +58,7 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
     keyTestEntityLink,
     keyToTestEntity
   ) {
-    return new core_1.GetByKeyRequestBuilderV4(
+    return new odata_v4_1.GetByKeyRequestBuilder(
       TestEntityLink_1.TestEntityLink,
       {
         KeyTestEntityLink: keyTestEntityLink,
@@ -70,7 +71,7 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `TestEntityLink` entities.
    */
   TestEntityLinkRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(TestEntityLink_1.TestEntityLink);
+    return new odata_v4_1.GetAllRequestBuilder(TestEntityLink_1.TestEntityLink);
   };
   /**
    * Returns a request builder for creating a `TestEntityLink` entity.
@@ -78,7 +79,7 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `TestEntityLink`.
    */
   TestEntityLinkRequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV4(
+    return new odata_v4_1.CreateRequestBuilder(
       TestEntityLink_1.TestEntityLink,
       entity
     );
@@ -89,7 +90,7 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `TestEntityLink`.
    */
   TestEntityLinkRequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV4(
+    return new odata_v4_1.UpdateRequestBuilder(
       TestEntityLink_1.TestEntityLink,
       entity
     );
@@ -98,7 +99,7 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
     keyTestEntityLinkOrEntity,
     keyToTestEntity
   ) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntityLink_1.TestEntityLink,
       keyTestEntityLinkOrEntity instanceof TestEntityLink_1.TestEntityLink
         ? keyTestEntityLinkOrEntity
@@ -109,6 +110,6 @@ var TestEntityLinkRequestBuilder = /** @class */ (function (_super) {
     );
   };
   return TestEntityLinkRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntityLinkRequestBuilder = TestEntityLinkRequestBuilder;
 //# sourceMappingURL=TestEntityLinkRequestBuilder.js.map

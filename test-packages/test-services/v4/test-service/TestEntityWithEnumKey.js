@@ -54,7 +54,8 @@ exports.TestEntityWithEnumKey = void 0;
  */
 var TestEntityWithEnumKeyRequestBuilder_1 = require('./TestEntityWithEnumKeyRequestBuilder');
 var TestEnumType_1 = require('./TestEnumType');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
  */
@@ -68,7 +69,7 @@ var TestEntityWithEnumKey = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityWithEnumKey`.
    */
   TestEntityWithEnumKey.builder = function () {
-    return core_1.EntityV4.entityBuilder(TestEntityWithEnumKey);
+    return odata_v4_1.Entity.entityBuilder(TestEntityWithEnumKey);
   };
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityWithEnumKey` entity type.
@@ -83,7 +84,7 @@ var TestEntityWithEnumKey = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityWithEnumKey`.
    */
   TestEntityWithEnumKey.customField = function (fieldName) {
-    return core_1.EntityV4.customFieldSelector(
+    return odata_v4_1.Entity.customFieldSelector(
       fieldName,
       TestEntityWithEnumKey
     );
@@ -104,10 +105,10 @@ var TestEntityWithEnumKey = /** @class */ (function (_super) {
    */
   TestEntityWithEnumKey._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   return TestEntityWithEnumKey;
-})(core_1.EntityV4);
+})(odata_v4_1.Entity);
 exports.TestEntityWithEnumKey = TestEntityWithEnumKey;
 (function (TestEntityWithEnumKey) {
-  var _fieldBuilder = new core_1.FieldBuilder(TestEntityWithEnumKey);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityWithEnumKey);
   /**
    * Static representation of the [[keyPropertyEnum1]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -126,7 +127,7 @@ exports.TestEntityWithEnumKey = TestEntityWithEnumKey;
   /**
    * All fields selector.
    */
-  TestEntityWithEnumKey.ALL_FIELDS = new core_1.AllFields(
+  TestEntityWithEnumKey.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityWithEnumKey
   );

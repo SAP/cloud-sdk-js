@@ -4,22 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
   Constructable,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   Field,
   FieldBuilder
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
 export class TestEntityEndsWithSomethingElse
-  extends EntityV4
+  extends Entity
   implements TestEntityEndsWithSomethingElseType
 {
   /**
@@ -44,7 +43,7 @@ export class TestEntityEndsWithSomethingElse
     TestEntityEndsWithSomethingElse,
     TestEntityEndsWithSomethingElseType
   > {
-    return EntityV4.entityBuilder(TestEntityEndsWithSomethingElse);
+    return Entity.entityBuilder(TestEntityEndsWithSomethingElse);
   }
 
   /**
@@ -62,8 +61,8 @@ export class TestEntityEndsWithSomethingElse
    */
   static customField(
     fieldName: string
-  ): CustomFieldV4<TestEntityEndsWithSomethingElse> {
-    return EntityV4.customFieldSelector(
+  ): CustomField<TestEntityEndsWithSomethingElse> {
+    return Entity.customFieldSelector(
       fieldName,
       TestEntityEndsWithSomethingElse
     );

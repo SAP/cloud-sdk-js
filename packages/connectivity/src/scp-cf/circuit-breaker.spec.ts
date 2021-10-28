@@ -4,8 +4,8 @@ import {
   destinationServiceUri,
   providerXsuaaUrl,
   xsuaaBindingMock
-} from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
-import { privateKey } from '@sap-cloud-sdk/core/test/test-util/keys';
+} from '../../../core/test/test-util/environment-mocks';
+import { privateKey } from '../../../core/test/test-util/keys';
 import { circuitBreakerDefaultOptions } from './resilience-options';
 import { getClientCredentialsToken } from './xsuaa-service';
 import { fetchDestination } from './destination/destination-service';

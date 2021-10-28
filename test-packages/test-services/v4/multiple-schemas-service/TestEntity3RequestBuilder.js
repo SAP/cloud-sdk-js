@@ -37,7 +37,8 @@ exports.TestEntity3RequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var TestEntity3_1 = require('./TestEntity3');
 /**
  * Request builder class for operations supported on the [[TestEntity3]] entity.
@@ -53,7 +54,7 @@ var TestEntity3RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve one `TestEntity3` entity based on its keys.
    */
   TestEntity3RequestBuilder.prototype.getByKey = function (keyPropertyString) {
-    return new core_1.GetByKeyRequestBuilderV4(TestEntity3_1.TestEntity3, {
+    return new odata_v4_1.GetByKeyRequestBuilder(TestEntity3_1.TestEntity3, {
       KeyPropertyString: keyPropertyString
     });
   };
@@ -62,7 +63,7 @@ var TestEntity3RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `TestEntity3` entities.
    */
   TestEntity3RequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(TestEntity3_1.TestEntity3);
+    return new odata_v4_1.GetAllRequestBuilder(TestEntity3_1.TestEntity3);
   };
   /**
    * Returns a request builder for creating a `TestEntity3` entity.
@@ -70,7 +71,10 @@ var TestEntity3RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `TestEntity3`.
    */
   TestEntity3RequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV4(TestEntity3_1.TestEntity3, entity);
+    return new odata_v4_1.CreateRequestBuilder(
+      TestEntity3_1.TestEntity3,
+      entity
+    );
   };
   /**
    * Returns a request builder for updating an entity of type `TestEntity3`.
@@ -78,12 +82,15 @@ var TestEntity3RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `TestEntity3`.
    */
   TestEntity3RequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV4(TestEntity3_1.TestEntity3, entity);
+    return new odata_v4_1.UpdateRequestBuilder(
+      TestEntity3_1.TestEntity3,
+      entity
+    );
   };
   TestEntity3RequestBuilder.prototype.delete = function (
     keyPropertyStringOrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntity3_1.TestEntity3,
       keyPropertyStringOrEntity instanceof TestEntity3_1.TestEntity3
         ? keyPropertyStringOrEntity
@@ -91,6 +98,6 @@ var TestEntity3RequestBuilder = /** @class */ (function (_super) {
     );
   };
   return TestEntity3RequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntity3RequestBuilder = TestEntity3RequestBuilder;
 //# sourceMappingURL=TestEntity3RequestBuilder.js.map

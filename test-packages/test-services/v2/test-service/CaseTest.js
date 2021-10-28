@@ -53,7 +53,8 @@ exports.CaseTest = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var CaseTestRequestBuilder_1 = require('./CaseTestRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_CaseTest" of service "API_TEST_SRV".
  */
@@ -67,7 +68,7 @@ var CaseTest = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `CaseTest`.
    */
   CaseTest.builder = function () {
-    return core_1.EntityV2.entityBuilder(CaseTest);
+    return odata_v2_1.Entity.entityBuilder(CaseTest);
   };
   /**
    * Returns a request builder to construct requests for operations on the `CaseTest` entity type.
@@ -82,7 +83,7 @@ var CaseTest = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `CaseTest`.
    */
   CaseTest.customField = function (fieldName) {
-    return core_1.EntityV2.customFieldSelector(fieldName, CaseTest);
+    return odata_v2_1.Entity.customFieldSelector(fieldName, CaseTest);
   };
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -100,10 +101,10 @@ var CaseTest = /** @class */ (function (_super) {
    */
   CaseTest._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   return CaseTest;
-})(core_1.EntityV2);
+})(odata_v2_1.Entity);
 exports.CaseTest = CaseTest;
 (function (CaseTest) {
-  var _fieldBuilder = new core_1.FieldBuilder(CaseTest);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(CaseTest);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -120,7 +121,7 @@ exports.CaseTest = CaseTest;
   /**
    * All fields selector.
    */
-  CaseTest.ALL_FIELDS = new core_1.AllFields('*', CaseTest);
+  CaseTest.ALL_FIELDS = new odata_common_1.AllFields('*', CaseTest);
   /**
    * All key fields of the CaseTest entity.
    */

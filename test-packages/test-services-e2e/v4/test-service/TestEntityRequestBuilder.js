@@ -37,7 +37,8 @@ exports.TestEntityRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var TestEntity_1 = require('./TestEntity');
 /**
  * Request builder class for operations supported on the [[TestEntity]] entity.
@@ -53,7 +54,7 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
   TestEntityRequestBuilder.prototype.getByKey = function (keyTestEntity) {
-    return new core_1.GetByKeyRequestBuilderV4(TestEntity_1.TestEntity, {
+    return new odata_v4_1.GetByKeyRequestBuilder(TestEntity_1.TestEntity, {
       KeyTestEntity: keyTestEntity
     });
   };
@@ -62,7 +63,7 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
    */
   TestEntityRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(TestEntity_1.TestEntity);
+    return new odata_v4_1.GetAllRequestBuilder(TestEntity_1.TestEntity);
   };
   /**
    * Returns a request builder for creating a `TestEntity` entity.
@@ -70,7 +71,7 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `TestEntity`.
    */
   TestEntityRequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV4(TestEntity_1.TestEntity, entity);
+    return new odata_v4_1.CreateRequestBuilder(TestEntity_1.TestEntity, entity);
   };
   /**
    * Returns a request builder for updating an entity of type `TestEntity`.
@@ -78,10 +79,10 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `TestEntity`.
    */
   TestEntityRequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV4(TestEntity_1.TestEntity, entity);
+    return new odata_v4_1.UpdateRequestBuilder(TestEntity_1.TestEntity, entity);
   };
   TestEntityRequestBuilder.prototype.delete = function (keyTestEntityOrEntity) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntity_1.TestEntity,
       keyTestEntityOrEntity instanceof TestEntity_1.TestEntity
         ? keyTestEntityOrEntity
@@ -89,6 +90,6 @@ var TestEntityRequestBuilder = /** @class */ (function (_super) {
     );
   };
   return TestEntityRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntityRequestBuilder = TestEntityRequestBuilder;
 //# sourceMappingURL=TestEntityRequestBuilder.js.map

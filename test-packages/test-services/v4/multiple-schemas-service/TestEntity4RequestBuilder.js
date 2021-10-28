@@ -37,7 +37,8 @@ exports.TestEntity4RequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var TestEntity4_1 = require('./TestEntity4');
 /**
  * Request builder class for operations supported on the [[TestEntity4]] entity.
@@ -53,7 +54,7 @@ var TestEntity4RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve one `TestEntity4` entity based on its keys.
    */
   TestEntity4RequestBuilder.prototype.getByKey = function (keyPropertyString) {
-    return new core_1.GetByKeyRequestBuilderV4(TestEntity4_1.TestEntity4, {
+    return new odata_v4_1.GetByKeyRequestBuilder(TestEntity4_1.TestEntity4, {
       KeyPropertyString: keyPropertyString
     });
   };
@@ -62,7 +63,7 @@ var TestEntity4RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `TestEntity4` entities.
    */
   TestEntity4RequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(TestEntity4_1.TestEntity4);
+    return new odata_v4_1.GetAllRequestBuilder(TestEntity4_1.TestEntity4);
   };
   /**
    * Returns a request builder for creating a `TestEntity4` entity.
@@ -70,7 +71,10 @@ var TestEntity4RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `TestEntity4`.
    */
   TestEntity4RequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV4(TestEntity4_1.TestEntity4, entity);
+    return new odata_v4_1.CreateRequestBuilder(
+      TestEntity4_1.TestEntity4,
+      entity
+    );
   };
   /**
    * Returns a request builder for updating an entity of type `TestEntity4`.
@@ -78,12 +82,15 @@ var TestEntity4RequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `TestEntity4`.
    */
   TestEntity4RequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV4(TestEntity4_1.TestEntity4, entity);
+    return new odata_v4_1.UpdateRequestBuilder(
+      TestEntity4_1.TestEntity4,
+      entity
+    );
   };
   TestEntity4RequestBuilder.prototype.delete = function (
     keyPropertyStringOrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntity4_1.TestEntity4,
       keyPropertyStringOrEntity instanceof TestEntity4_1.TestEntity4
         ? keyPropertyStringOrEntity
@@ -91,6 +98,6 @@ var TestEntity4RequestBuilder = /** @class */ (function (_super) {
     );
   };
   return TestEntity4RequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntity4RequestBuilder = TestEntity4RequestBuilder;
 //# sourceMappingURL=TestEntity4RequestBuilder.js.map

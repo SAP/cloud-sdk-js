@@ -2,23 +2,22 @@ import { PeopleRequestBuilder } from './PeopleRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import { Location } from './Location';
 import { PersonGender } from './PersonGender';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
   CollectionField,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   EnumField,
   Field,
   OneToManyLink,
   OneToOneLink,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export declare class People extends EntityV4 implements PeopleType {
+export declare class People extends Entity implements PeopleType {
   /**
    * Technical entity name for People.
    */
@@ -81,7 +80,7 @@ export declare class People extends EntityV4 implements PeopleType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `People`.
    */
-  static customField(fieldName: string): CustomFieldV4<People>;
+  static customField(fieldName: string): CustomField<People>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

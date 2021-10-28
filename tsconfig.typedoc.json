@@ -3,7 +3,9 @@
   "include": [
     "./packages/util/**/*",
     "./packages/analytics/**/*",
-    "./packages/core/**/*",
+    "./packages/odata-common/**/*",
+    "./packages/odata-v2/**/*",
+    "./packages/odata-v4/**/*",
     "./packages/connectivity/**/*",
     "./packages/http-client/**/*",
     "./packages/openapi/**/*",
@@ -20,7 +22,13 @@
       "path": "./packages/analytics"
     },
     {
-      "path": "./packages/core"
+      "path": "./packages/odata-common"
+    },
+    {
+      "path": "./packages/odata-v2"
+    },
+    {
+      "path": "./packages/odata-v4"
     },
     {
       "path": "./packages/connectivity"

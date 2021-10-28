@@ -1,11 +1,11 @@
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntityWithSharedEntityType2 } from './TestEntityWithSharedEntityType2';
 /**
  * Request builder class for operations supported on the [[TestEntityWithSharedEntityType2]] entity.
@@ -18,12 +18,12 @@ export declare class TestEntityWithSharedEntityType2RequestBuilder extends Reque
    */
   getByKey(
     keyProperty: string
-  ): GetByKeyRequestBuilderV4<TestEntityWithSharedEntityType2>;
+  ): GetByKeyRequestBuilder<TestEntityWithSharedEntityType2>;
   /**
    * Returns a request builder for querying all `TestEntityWithSharedEntityType2` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithSharedEntityType2` entities.
    */
-  getAll(): GetAllRequestBuilderV4<TestEntityWithSharedEntityType2>;
+  getAll(): GetAllRequestBuilder<TestEntityWithSharedEntityType2>;
   /**
    * Returns a request builder for creating a `TestEntityWithSharedEntityType2` entity.
    * @param entity The entity to be created
@@ -31,7 +31,7 @@ export declare class TestEntityWithSharedEntityType2RequestBuilder extends Reque
    */
   create(
     entity: TestEntityWithSharedEntityType2
-  ): CreateRequestBuilderV4<TestEntityWithSharedEntityType2>;
+  ): CreateRequestBuilder<TestEntityWithSharedEntityType2>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityWithSharedEntityType2`.
    * @param entity The entity to be updated
@@ -39,7 +39,7 @@ export declare class TestEntityWithSharedEntityType2RequestBuilder extends Reque
    */
   update(
     entity: TestEntityWithSharedEntityType2
-  ): UpdateRequestBuilderV4<TestEntityWithSharedEntityType2>;
+  ): UpdateRequestBuilder<TestEntityWithSharedEntityType2>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityWithSharedEntityType2`.
    * @param keyProperty Key property. See [[TestEntityWithSharedEntityType2.keyProperty]].
@@ -47,7 +47,7 @@ export declare class TestEntityWithSharedEntityType2RequestBuilder extends Reque
    */
   delete(
     keyProperty: string
-  ): DeleteRequestBuilderV4<TestEntityWithSharedEntityType2>;
+  ): DeleteRequestBuilder<TestEntityWithSharedEntityType2>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityWithSharedEntityType2`.
    * @param entity Pass the entity to be deleted.
@@ -55,6 +55,6 @@ export declare class TestEntityWithSharedEntityType2RequestBuilder extends Reque
    */
   delete(
     entity: TestEntityWithSharedEntityType2
-  ): DeleteRequestBuilderV4<TestEntityWithSharedEntityType2>;
+  ): DeleteRequestBuilder<TestEntityWithSharedEntityType2>;
 }
 //# sourceMappingURL=TestEntityWithSharedEntityType2RequestBuilder.d.ts.map

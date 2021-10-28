@@ -1,21 +1,20 @@
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { Moment } from 'moment';
 import { BigNumber } from 'bignumber.js';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   Field,
   OneToManyLink,
   OrderableEdmTypeField,
   Time
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "TestEntity" of service "TestService".
  */
-export declare class TestEntity extends EntityV4 implements TestEntityType {
+export declare class TestEntity extends Entity implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
@@ -98,7 +97,7 @@ export declare class TestEntity extends EntityV4 implements TestEntityType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntity>;
+  static customField(fieldName: string): CustomField<TestEntity>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

@@ -3,17 +3,17 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { throwErrorWhenReturnTypeIsUnionType } from '@sap-cloud-sdk/odata-common';
 import {
-  transformReturnValueForUndefinedV4,
-  transformReturnValueForComplexTypeV4,
-  transformReturnValueForEdmTypeV4,
-  transformReturnValueForEntityV4,
-  throwErrorWhenReturnTypeIsUnionType,
-  edmToTsV4,
-  deserializeComplexTypeV4,
+  edmToTs,
+  deserializeComplexType,
   ActionImportRequestBuilder,
-  ActionImportParameter
-} from '@sap-cloud-sdk/core';
+  ActionImportParameter,
+  transformReturnValueForUndefined,
+  transformReturnValueForComplexType,
+  transformReturnValueForEdmType,
+  transformReturnValueForEntity
+} from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType } from './TestComplexType';
 import { TestEntity } from './TestEntity';
 
@@ -39,7 +39,7 @@ export function testActionImportNoParameterNoReturnType(
   return new ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterNoReturnType',
-    data => transformReturnValueForUndefinedV4(data, val => undefined),
+    data => transformReturnValueForUndefined(data, val => undefined),
     params
   );
 }
@@ -105,8 +105,8 @@ export function testActionImportMultipleParameterComplexReturnType(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportMultipleParameterComplexReturnType',
     data =>
-      transformReturnValueForComplexTypeV4(data, data =>
-        deserializeComplexTypeV4(data, TestComplexType)
+      transformReturnValueForComplexType(data, data =>
+        deserializeComplexType(data, TestComplexType)
       ),
     params
   );
@@ -146,8 +146,8 @@ export function testActionImportUnsupportedEdmTypes(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportUnsupportedEdmTypes',
     data =>
-      transformReturnValueForEdmTypeV4(data, val =>
-        edmToTsV4(val.value, 'Edm.Any')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.value, 'Edm.Any')
       ),
     params
   );
@@ -175,7 +175,7 @@ export function testActionImportNoParameterEntityReturnType(
   return new ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterEntityReturnType',
-    data => transformReturnValueForEntityV4(data, TestEntity),
+    data => transformReturnValueForEntity(data, TestEntity),
     params
   );
 }
@@ -300,8 +300,8 @@ export function testActionImportNullableTest(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNullableTest',
     data =>
-      transformReturnValueForComplexTypeV4(data, data =>
-        deserializeComplexTypeV4(data, TestComplexType)
+      transformReturnValueForComplexType(data, data =>
+        deserializeComplexType(data, TestComplexType)
       ),
     params
   );

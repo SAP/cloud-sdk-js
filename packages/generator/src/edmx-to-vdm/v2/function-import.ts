@@ -44,8 +44,7 @@ export function generateFunctionImportsV2(
               : undefined,
             entities,
             complexTypes,
-            extractResponse(f.Name),
-            serviceMetadata.edmx.oDataVersion
+            extractResponse(f.Name)
           )
         };
       })

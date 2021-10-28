@@ -3,17 +3,16 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   ComplexTypeField,
   ConstructorOrField,
   EdmTypeField,
-  EntityV2,
   FieldBuilder,
   FieldOptions,
   FieldType,
-  PropertyMetadata,
-  deserializeComplexTypeV2
-} from '@sap-cloud-sdk/core';
+  PropertyMetadata
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * TestLvl2NestedComplexType
@@ -40,7 +39,7 @@ export function createTestLvl2NestedComplexType(
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class TestLvl2NestedComplexTypeField<
-  EntityT extends EntityV2,
+  EntityT extends Entity,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
@@ -86,11 +85,11 @@ export namespace TestLvl2NestedComplexType {
     ];
 
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   export function build(json: {
     [keys: string]: FieldType;
   }): TestLvl2NestedComplexType {
-    return deserializeComplexTypeV2(json, TestLvl2NestedComplexType);
+    return deserializeComplexType(json, TestLvl2NestedComplexType);
   }
 }

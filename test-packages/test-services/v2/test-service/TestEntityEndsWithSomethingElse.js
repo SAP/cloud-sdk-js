@@ -53,7 +53,8 @@ exports.TestEntityEndsWithSomethingElse = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var TestEntityEndsWithSomethingElseRequestBuilder_1 = require('./TestEntityEndsWithSomethingElseRequestBuilder');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
@@ -67,7 +68,7 @@ var TestEntityEndsWithSomethingElse = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
   TestEntityEndsWithSomethingElse.builder = function () {
-    return core_1.EntityV2.entityBuilder(TestEntityEndsWithSomethingElse);
+    return odata_v2_1.Entity.entityBuilder(TestEntityEndsWithSomethingElse);
   };
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityEndsWithSomethingElse` entity type.
@@ -82,7 +83,7 @@ var TestEntityEndsWithSomethingElse = /** @class */ (function (_super) {
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
   TestEntityEndsWithSomethingElse.customField = function (fieldName) {
-    return core_1.EntityV2.customFieldSelector(
+    return odata_v2_1.Entity.customFieldSelector(
       fieldName,
       TestEntityEndsWithSomethingElse
     );
@@ -105,10 +106,12 @@ var TestEntityEndsWithSomethingElse = /** @class */ (function (_super) {
   TestEntityEndsWithSomethingElse._defaultServicePath =
     '/sap/opu/odata/sap/API_TEST_SRV';
   return TestEntityEndsWithSomethingElse;
-})(core_1.EntityV2);
+})(odata_v2_1.Entity);
 exports.TestEntityEndsWithSomethingElse = TestEntityEndsWithSomethingElse;
 (function (TestEntityEndsWithSomethingElse) {
-  var _fieldBuilder = new core_1.FieldBuilder(TestEntityEndsWithSomethingElse);
+  var _fieldBuilder = new odata_common_1.FieldBuilder(
+    TestEntityEndsWithSomethingElse
+  );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -124,7 +127,7 @@ exports.TestEntityEndsWithSomethingElse = TestEntityEndsWithSomethingElse;
   /**
    * All fields selector.
    */
-  TestEntityEndsWithSomethingElse.ALL_FIELDS = new core_1.AllFields(
+  TestEntityEndsWithSomethingElse.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityEndsWithSomethingElse
   );

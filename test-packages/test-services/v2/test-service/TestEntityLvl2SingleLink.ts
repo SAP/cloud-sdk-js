@@ -4,23 +4,22 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
   Constructable,
-  CustomFieldV2,
   EdmTypeField,
   EntityBuilderType,
-  EntityV2,
   Field,
   FieldBuilder,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
  */
 export class TestEntityLvl2SingleLink
-  extends EntityV2
+  extends Entity
   implements TestEntityLvl2SingleLinkType
 {
   /**
@@ -66,7 +65,7 @@ export class TestEntityLvl2SingleLink
     TestEntityLvl2SingleLink,
     TestEntityLvl2SingleLinkType
   > {
-    return EntityV2.entityBuilder(TestEntityLvl2SingleLink);
+    return Entity.entityBuilder(TestEntityLvl2SingleLink);
   }
 
   /**
@@ -82,10 +81,8 @@ export class TestEntityLvl2SingleLink
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
    */
-  static customField(
-    fieldName: string
-  ): CustomFieldV2<TestEntityLvl2SingleLink> {
-    return EntityV2.customFieldSelector(fieldName, TestEntityLvl2SingleLink);
+  static customField(fieldName: string): CustomField<TestEntityLvl2SingleLink> {
+    return Entity.customFieldSelector(fieldName, TestEntityLvl2SingleLink);
   }
 
   /**

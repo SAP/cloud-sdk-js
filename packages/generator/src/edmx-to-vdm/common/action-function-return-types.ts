@@ -1,4 +1,4 @@
-import { caps, first, last, ODataVersion } from '@sap-cloud-sdk/util';
+import { first, last } from '@sap-cloud-sdk/util';
 import {
   VdmActionImportReturnType,
   VdmComplexType,
@@ -19,15 +19,13 @@ export function parseFunctionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: ExtractResponse,
-  oDataVersion: ODataVersion
+  extractResponse: ExtractResponse
 ): VdmFunctionImportReturnType {
   return parseReturnTypes(
     returnType,
     entities,
     complexTypes,
-    extractResponse,
-    oDataVersion
+    extractResponse
   ) as VdmFunctionImportReturnType;
 }
 
@@ -35,15 +33,13 @@ export function parseActionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: ExtractResponse,
-  oDataVersion: ODataVersion
+  extractResponse: ExtractResponse
 ): VdmActionImportReturnType {
   return parseReturnTypes(
     returnType,
     entities,
     complexTypes,
-    extractResponse,
-    oDataVersion
+    extractResponse
   ) as VdmActionImportReturnType;
 }
 
@@ -51,8 +47,7 @@ function parseReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: ExtractResponse,
-  oDataVersion: ODataVersion
+  extractResponse: ExtractResponse
 ): VdmFunctionImportReturnType | VdmActionImportReturnType {
   if (!returnType) {
     return getVoidReturnType();
@@ -64,13 +59,7 @@ function parseReturnTypes(
 
   const edmType = findEdmType(returnType.Type);
   if (edmType) {
-    return getEdmReturnType(
-      isCollection,
-      isNullable,
-      edmType,
-      extractResponse,
-      oDataVersion
-    );
+    return getEdmReturnType(isCollection, isNullable, edmType, extractResponse);
   }
 
   const filteredEntities = findEntityTypes(returnType.Type, entities);
@@ -80,12 +69,7 @@ function parseReturnTypes(
 
   const complexType = findComplexType(returnType.Type, complexTypes);
   if (complexType) {
-    return getComplexReturnType(
-      isCollection,
-      isNullable,
-      complexType,
-      oDataVersion
-    );
+    return getComplexReturnType(isCollection, isNullable, complexType);
   }
 
   throw Error(`Unable to find a return type for name ${returnType}.`);
@@ -145,8 +129,7 @@ function getEdmReturnType(
   isCollection: boolean,
   isNullable: boolean,
   edmType: string,
-  extractResponse: ExtractResponse,
-  oDataVersion: ODataVersion
+  extractResponse: ExtractResponse
 ): VdmFunctionImportReturnType {
   const typeMapping = getTypeMappingActionFunction(edmType);
   const valueAlias = 'val';
@@ -154,9 +137,7 @@ function getEdmReturnType(
   return {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
     returnType: typeMapping.jsType,
-    builderFunction: `(${valueAlias}) => edmToTs${caps(
-      oDataVersion
-    )}(${extracted}, '${typeMapping.edmType}')`,
+    builderFunction: `(${valueAlias}) => edmToTs(${extracted}, '${typeMapping.edmType}')`,
     isMulti: isCollection,
     isNullable,
     isCollection
@@ -196,15 +177,12 @@ function getEntityReturnType(
 function getComplexReturnType(
   isCollection: boolean,
   isNullable: boolean,
-  complexType: Omit<VdmComplexType, 'factoryName'>,
-  oDataVersion: ODataVersion
+  complexType: Omit<VdmComplexType, 'factoryName'>
 ): VdmFunctionImportReturnType {
   return {
     returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
-    builderFunction: `(data) => deserializeComplexType${caps(
-      oDataVersion
-    )}(data, ${complexType.typeName})`,
+    builderFunction: `(data) => deserializeComplexType(data, ${complexType.typeName})`,
     isMulti: isCollection,
     isNullable,
     isCollection

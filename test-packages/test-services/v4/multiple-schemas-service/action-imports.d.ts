@@ -1,4 +1,5 @@
-import { ActionImportRequestBuilder } from '@sap-cloud-sdk/core';
+import '@sap-cloud-sdk/odata-common';
+import { ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType1 } from './TestComplexType1';
 import { TestComplexType2 } from './TestComplexType2';
 /**

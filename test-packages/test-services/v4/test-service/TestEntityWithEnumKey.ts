@@ -5,22 +5,21 @@
  */
 import { TestEntityWithEnumKeyRequestBuilder } from './TestEntityWithEnumKeyRequestBuilder';
 import { TestEnumType } from './TestEnumType';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
   Constructable,
-  CustomFieldV4,
   EntityBuilderType,
-  EntityV4,
   EnumField,
   Field,
   FieldBuilder
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
  */
 export class TestEntityWithEnumKey
-  extends EntityV4
+  extends Entity
   implements TestEntityWithEnumKeyType
 {
   /**
@@ -44,7 +43,7 @@ export class TestEntityWithEnumKey
     TestEntityWithEnumKey,
     TestEntityWithEnumKeyType
   > {
-    return EntityV4.entityBuilder(TestEntityWithEnumKey);
+    return Entity.entityBuilder(TestEntityWithEnumKey);
   }
 
   /**
@@ -60,8 +59,8 @@ export class TestEntityWithEnumKey
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityWithEnumKey`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntityWithEnumKey> {
-    return EntityV4.customFieldSelector(fieldName, TestEntityWithEnumKey);
+  static customField(fieldName: string): CustomField<TestEntityWithEnumKey> {
+    return Entity.customFieldSelector(fieldName, TestEntityWithEnumKey);
   }
 
   /**

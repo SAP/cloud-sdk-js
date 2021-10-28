@@ -3,7 +3,8 @@ import {
   TestEntityLink
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import moment from 'moment';
-import { and, deserializeEntityV4 } from '@sap-cloud-sdk/core';
+import { and } from '@sap-cloud-sdk/odata-common';
+import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/dist/entity-deserializer';
 import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';
 import { destination } from './test-util';
 
@@ -72,7 +73,7 @@ describe('Request builder', () => {
         .executeRaw(destination)
     ).data.value as any[];
     const actual = multiLinks.map(multiLink =>
-      deserializeEntityV4(multiLink, TestEntityLink)
+      deserializeEntity(multiLink, TestEntityLink)
     );
 
     expect(actual).toEqual(

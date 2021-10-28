@@ -38,7 +38,8 @@ exports.Location = exports.LocationField = exports.createLocation = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 var City_1 = require('./City');
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * @deprecated Since v1.6.0. Use [[Location.build]] instead.
  */
@@ -60,7 +61,7 @@ var LocationField = /** @class */ (function (_super) {
   function LocationField(fieldName, fieldOf, fieldOptions) {
     var _this =
       _super.call(this, fieldName, fieldOf, Location, fieldOptions) || this;
-    _this._fieldBuilder = new core_1.FieldBuilder(_this);
+    _this._fieldBuilder = new odata_common_1.FieldBuilder(_this);
     /**
      * Representation of the [[Location.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -82,7 +83,7 @@ var LocationField = /** @class */ (function (_super) {
     return _this;
   }
   return LocationField;
-})(core_1.ComplexTypeField);
+})(odata_common_1.ComplexTypeField);
 exports.LocationField = LocationField;
 var Location;
 (function (Location) {
@@ -104,10 +105,10 @@ var Location;
     }
   ];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   function build(json) {
-    return (0, core_1.deserializeComplexTypeV4)(json, Location);
+    return (0, odata_v4_1.deserializeComplexType)(json, Location);
   }
   Location.build = build;
 })((Location = exports.Location || (exports.Location = {})));

@@ -37,7 +37,8 @@ exports.TestEntityWithEnumKeyRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var TestEntityWithEnumKey_1 = require('./TestEntityWithEnumKey');
 /**
  * Request builder class for operations supported on the [[TestEntityWithEnumKey]] entity.
@@ -55,7 +56,7 @@ var TestEntityWithEnumKeyRequestBuilder = /** @class */ (function (_super) {
   TestEntityWithEnumKeyRequestBuilder.prototype.getByKey = function (
     keyPropertyEnum1
   ) {
-    return new core_1.GetByKeyRequestBuilderV4(
+    return new odata_v4_1.GetByKeyRequestBuilder(
       TestEntityWithEnumKey_1.TestEntityWithEnumKey,
       { KeyPropertyEnum1: keyPropertyEnum1 }
     );
@@ -65,7 +66,7 @@ var TestEntityWithEnumKeyRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `TestEntityWithEnumKey` entities.
    */
   TestEntityWithEnumKeyRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(
+    return new odata_v4_1.GetAllRequestBuilder(
       TestEntityWithEnumKey_1.TestEntityWithEnumKey
     );
   };
@@ -75,7 +76,7 @@ var TestEntityWithEnumKeyRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `TestEntityWithEnumKey`.
    */
   TestEntityWithEnumKeyRequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV4(
+    return new odata_v4_1.CreateRequestBuilder(
       TestEntityWithEnumKey_1.TestEntityWithEnumKey,
       entity
     );
@@ -86,7 +87,7 @@ var TestEntityWithEnumKeyRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `TestEntityWithEnumKey`.
    */
   TestEntityWithEnumKeyRequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV4(
+    return new odata_v4_1.UpdateRequestBuilder(
       TestEntityWithEnumKey_1.TestEntityWithEnumKey,
       entity
     );
@@ -94,7 +95,7 @@ var TestEntityWithEnumKeyRequestBuilder = /** @class */ (function (_super) {
   TestEntityWithEnumKeyRequestBuilder.prototype.delete = function (
     keyPropertyEnum1OrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntityWithEnumKey_1.TestEntityWithEnumKey,
       keyPropertyEnum1OrEntity instanceof
       TestEntityWithEnumKey_1.TestEntityWithEnumKey
@@ -103,7 +104,7 @@ var TestEntityWithEnumKeyRequestBuilder = /** @class */ (function (_super) {
     );
   };
   return TestEntityWithEnumKeyRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntityWithEnumKeyRequestBuilder =
   TestEntityWithEnumKeyRequestBuilder;
 //# sourceMappingURL=TestEntityWithEnumKeyRequestBuilder.js.map

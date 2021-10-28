@@ -1,18 +1,17 @@
 import { TestEntityWithEnumKeyRequestBuilder } from './TestEntityWithEnumKeyRequestBuilder';
 import { TestEnumType } from './TestEnumType';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
-  CustomFieldV4,
   EntityBuilderType,
-  EntityV4,
   EnumField,
   Field
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
  */
 export declare class TestEntityWithEnumKey
-  extends EntityV4
+  extends Entity
   implements TestEntityWithEnumKeyType
 {
   /**
@@ -45,7 +44,7 @@ export declare class TestEntityWithEnumKey
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityWithEnumKey`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntityWithEnumKey>;
+  static customField(fieldName: string): CustomField<TestEntityWithEnumKey>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

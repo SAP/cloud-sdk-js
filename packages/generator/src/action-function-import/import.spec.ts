@@ -12,12 +12,16 @@ describe('function-import generation', () => {
     expect(importDeclarationsAction(service as VdmServiceMetadata)).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/core',
+        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        namedImports: ['FunctionImportParameter']
+      },
+      {
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-v4',
         namedImports: [
-          'transformReturnValueForEdmTypeV2',
-          'edmToTsV2',
-          'FunctionImportRequestBuilderV2',
-          'FunctionImportParameter'
+          'edmToTs',
+          'FunctionImportRequestBuilder',
+          'transformReturnValueForEdmType'
         ]
       }
     ]);

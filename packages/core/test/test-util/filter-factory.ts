@@ -1,21 +1,17 @@
 import { v4 as uuid } from 'uuid';
-import { or } from '../../src';
-import {
-  all,
-  any,
-  filterFunctions as filterFunctionsV4
-} from '../../src/odata-v4';
+import { all, any, filterFunctions } from '@sap-cloud-sdk/odata-v4';
+import { or } from '@sap-cloud-sdk/odata-common';
 import {
   TestEntity,
   TestEntitySingleLink
-} from './test-services/v2/test-service';
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
   TestEntityLvl2MultiLink,
   TestEntityLvl2SingleLink,
   TestEntityMultiLink as TestEntityMultiLinkV4,
   TestEnumType
-} from './test-services/v4/test-service';
+} from '@sap-cloud-sdk/test-services/v4/test-service';
 
 export const testFilterString = {
   filter: TestEntity.STRING_PROPERTY.equals('test'),
@@ -118,7 +114,7 @@ export const testNestedFilterLambdaExpressionOnLink = {
 export const testFilterLambdaExpressionFilterFunctionOnLink = {
   filter: TestEntityV4.TO_MULTI_LINK.filter(
     any(
-      filterFunctionsV4
+      filterFunctions
         .substring(TestEntityMultiLinkV4.STRING_PROPERTY, 1)
         .equals('test')
     )

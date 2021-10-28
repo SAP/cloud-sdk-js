@@ -37,7 +37,8 @@ exports.TestEntityEndsWithSomethingElseRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var TestEntityEndsWithSomethingElse_1 = require('./TestEntityEndsWithSomethingElse');
 /**
  * Request builder class for operations supported on the [[TestEntityEndsWithSomethingElse]] entity.
@@ -57,7 +58,7 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (
   TestEntityEndsWithSomethingElseRequestBuilder.prototype.getByKey = function (
     keyProperty
   ) {
-    return new core_1.GetByKeyRequestBuilderV4(
+    return new odata_v4_1.GetByKeyRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
       { KeyProperty: keyProperty }
     );
@@ -67,7 +68,7 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (
    * @returns A request builder for creating requests to retrieve all `TestEntityEndsWithSomethingElse` entities.
    */
   TestEntityEndsWithSomethingElseRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(
+    return new odata_v4_1.GetAllRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse
     );
   };
@@ -79,7 +80,7 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (
   TestEntityEndsWithSomethingElseRequestBuilder.prototype.create = function (
     entity
   ) {
-    return new core_1.CreateRequestBuilderV4(
+    return new odata_v4_1.CreateRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
       entity
     );
@@ -92,7 +93,7 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (
   TestEntityEndsWithSomethingElseRequestBuilder.prototype.update = function (
     entity
   ) {
-    return new core_1.UpdateRequestBuilderV4(
+    return new odata_v4_1.UpdateRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
       entity
     );
@@ -100,7 +101,7 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (
   TestEntityEndsWithSomethingElseRequestBuilder.prototype.delete = function (
     keyPropertyOrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
       keyPropertyOrEntity instanceof
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse
@@ -109,7 +110,7 @@ var TestEntityEndsWithSomethingElseRequestBuilder = /** @class */ (function (
     );
   };
   return TestEntityEndsWithSomethingElseRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntityEndsWithSomethingElseRequestBuilder =
   TestEntityEndsWithSomethingElseRequestBuilder;
 //# sourceMappingURL=TestEntityEndsWithSomethingElseRequestBuilder.js.map

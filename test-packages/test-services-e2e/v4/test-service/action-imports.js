@@ -9,7 +9,8 @@ exports.actionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var TestEntity_1 = require('./TestEntity');
 /**
  * Create Test Entity By Id.
@@ -19,13 +20,13 @@ var TestEntity_1 = require('./TestEntity');
  */
 function createTestEntityById(parameters) {
   var params = {
-    id: new core_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
+    id: new odata_v4_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/odata/test-service',
     'createTestEntityById',
     function (data) {
-      return (0, core_1.transformReturnValueForEntityV4)(
+      return (0, odata_v4_1.transformReturnValueForEntity)(
         data,
         TestEntity_1.TestEntity
       );
@@ -42,15 +43,18 @@ exports.createTestEntityById = createTestEntityById;
  */
 function createTestEntityByIdReturnId(parameters) {
   var params = {
-    id: new core_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
+    id: new odata_v4_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/odata/test-service',
     'createTestEntityByIdReturnId',
     function (data) {
-      return (0, core_1.transformReturnValueForEdmTypeV4)(data, function (val) {
-        return (0, core_1.edmToTsV4)(val.value, 'Edm.Int32');
-      });
+      return (0, odata_v4_1.transformReturnValueForEdmType)(
+        data,
+        function (val) {
+          return (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32');
+        }
+      );
     },
     params
   );

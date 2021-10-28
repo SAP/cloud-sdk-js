@@ -3,14 +3,14 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV2,
-  GetByKeyRequestBuilderV2,
-  CreateRequestBuilderV2,
-  UpdateRequestBuilderV2,
-  DeleteRequestBuilderV2
-} from '@sap-cloud-sdk/core';
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v2';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -26,8 +26,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
   getByKey(
     keyPropertyGuid: string,
     keyPropertyString: string
-  ): GetByKeyRequestBuilderV2<TestEntity> {
-    return new GetByKeyRequestBuilderV2(TestEntity, {
+  ): GetByKeyRequestBuilder<TestEntity> {
+    return new GetByKeyRequestBuilder(TestEntity, {
       KeyPropertyGuid: keyPropertyGuid,
       KeyPropertyString: keyPropertyString
     });
@@ -37,8 +37,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * Returns a request builder for querying all `TestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
    */
-  getAll(): GetAllRequestBuilderV2<TestEntity> {
-    return new GetAllRequestBuilderV2(TestEntity);
+  getAll(): GetAllRequestBuilder<TestEntity> {
+    return new GetAllRequestBuilder(TestEntity);
   }
 
   /**
@@ -46,8 +46,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntity`.
    */
-  create(entity: TestEntity): CreateRequestBuilderV2<TestEntity> {
-    return new CreateRequestBuilderV2(TestEntity, entity);
+  create(entity: TestEntity): CreateRequestBuilder<TestEntity> {
+    return new CreateRequestBuilder(TestEntity, entity);
   }
 
   /**
@@ -55,8 +55,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntity`.
    */
-  update(entity: TestEntity): UpdateRequestBuilderV2<TestEntity> {
-    return new UpdateRequestBuilderV2(TestEntity, entity);
+  update(entity: TestEntity): UpdateRequestBuilder<TestEntity> {
+    return new UpdateRequestBuilder(TestEntity, entity);
   }
 
   /**
@@ -68,18 +68,18 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
   delete(
     keyPropertyGuid: string,
     keyPropertyString: string
-  ): DeleteRequestBuilderV2<TestEntity>;
+  ): DeleteRequestBuilder<TestEntity>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntity` by taking the entity as a parameter.
    */
-  delete(entity: TestEntity): DeleteRequestBuilderV2<TestEntity>;
+  delete(entity: TestEntity): DeleteRequestBuilder<TestEntity>;
   delete(
     keyPropertyGuidOrEntity: any,
     keyPropertyString?: string
-  ): DeleteRequestBuilderV2<TestEntity> {
-    return new DeleteRequestBuilderV2(
+  ): DeleteRequestBuilder<TestEntity> {
+    return new DeleteRequestBuilder(
       TestEntity,
       keyPropertyGuidOrEntity instanceof TestEntity
         ? keyPropertyGuidOrEntity

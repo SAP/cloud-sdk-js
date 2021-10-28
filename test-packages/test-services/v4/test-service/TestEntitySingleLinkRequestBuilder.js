@@ -37,7 +37,8 @@ exports.TestEntitySingleLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 var TestEntitySingleLink_1 = require('./TestEntitySingleLink');
 /**
  * Request builder class for operations supported on the [[TestEntitySingleLink]] entity.
@@ -55,7 +56,7 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
   TestEntitySingleLinkRequestBuilder.prototype.getByKey = function (
     keyProperty
   ) {
-    return new core_1.GetByKeyRequestBuilderV4(
+    return new odata_v4_1.GetByKeyRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink,
       { KeyProperty: keyProperty }
     );
@@ -65,7 +66,7 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests to retrieve all `TestEntitySingleLink` entities.
    */
   TestEntitySingleLinkRequestBuilder.prototype.getAll = function () {
-    return new core_1.GetAllRequestBuilderV4(
+    return new odata_v4_1.GetAllRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink
     );
   };
@@ -75,7 +76,7 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that create an entity of type `TestEntitySingleLink`.
    */
   TestEntitySingleLinkRequestBuilder.prototype.create = function (entity) {
-    return new core_1.CreateRequestBuilderV4(
+    return new odata_v4_1.CreateRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink,
       entity
     );
@@ -86,7 +87,7 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
    * @returns A request builder for creating requests that update an entity of type `TestEntitySingleLink`.
    */
   TestEntitySingleLinkRequestBuilder.prototype.update = function (entity) {
-    return new core_1.UpdateRequestBuilderV4(
+    return new odata_v4_1.UpdateRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink,
       entity
     );
@@ -94,7 +95,7 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
   TestEntitySingleLinkRequestBuilder.prototype.delete = function (
     keyPropertyOrEntity
   ) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink,
       keyPropertyOrEntity instanceof TestEntitySingleLink_1.TestEntitySingleLink
         ? keyPropertyOrEntity
@@ -102,6 +103,6 @@ var TestEntitySingleLinkRequestBuilder = /** @class */ (function (_super) {
     );
   };
   return TestEntitySingleLinkRequestBuilder;
-})(core_1.RequestBuilder);
+})(odata_common_1.RequestBuilder);
 exports.TestEntitySingleLinkRequestBuilder = TestEntitySingleLinkRequestBuilder;
 //# sourceMappingURL=TestEntitySingleLinkRequestBuilder.js.map

@@ -43,7 +43,7 @@ import { VdmServiceMetadata } from './vdm-types';
 import {
   actionImportSourceFile,
   functionImportSourceFile
-} from './action-function-import';
+} from './action-function-import/file';
 import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata, getServiceDescription } from './sdk-metadata';
 
@@ -139,7 +139,8 @@ export async function generateSourcesForService(
         service.npmPackageName,
         await getVersionForClient(options.versionInPackageJson),
         getServiceDescription(service, options),
-        options.sdkAfterVersionScript
+        options.sdkAfterVersionScript,
+        service.oDataVersion
       ),
       options.forceOverwrite
     );

@@ -40,7 +40,8 @@ exports.TestComplexBaseType =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var core_1 = require('@sap-cloud-sdk/core');
+var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+var odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexBaseType.build]] instead.
  */
@@ -68,7 +69,7 @@ var TestComplexBaseTypeField = /** @class */ (function (_super) {
         TestComplexBaseType,
         fieldOptions
       ) || this;
-    _this._fieldBuilder = new core_1.FieldBuilder(_this);
+    _this._fieldBuilder = new odata_common_1.FieldBuilder(_this);
     /**
      * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -81,7 +82,7 @@ var TestComplexBaseTypeField = /** @class */ (function (_super) {
     return _this;
   }
   return TestComplexBaseTypeField;
-})(core_1.ComplexTypeField);
+})(odata_common_1.ComplexTypeField);
 exports.TestComplexBaseTypeField = TestComplexBaseTypeField;
 var TestComplexBaseType;
 (function (TestComplexBaseType) {
@@ -97,10 +98,10 @@ var TestComplexBaseType;
     }
   ];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   function build(json) {
-    return (0, core_1.deserializeComplexTypeV4)(json, TestComplexBaseType);
+    return (0, odata_v4_1.deserializeComplexType)(json, TestComplexBaseType);
   }
   TestComplexBaseType.build = build;
 })(

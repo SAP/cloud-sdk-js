@@ -179,5 +179,3 @@ export abstract class MethodRequestBuilder<
     return new ODataRequest(this.requestConfig);
   }
 }
-
-export { MethodRequestBuilder as MethodRequestBuilderBase };

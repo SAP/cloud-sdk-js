@@ -14,7 +14,7 @@ import { MethodRequestBuilder } from './request-builder-base';
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export abstract class DeleteRequestBuilder<EntityT extends EntityBase>
+export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
   extends MethodRequestBuilder<ODataDeleteRequestConfig<EntityT>>
   implements EntityIdentifiable<EntityT>
 {
@@ -89,5 +89,3 @@ export abstract class DeleteRequestBuilder<EntityT extends EntityBase>
 
   abstract setVersionIdentifier(eTag: string): this;
 }
-
-export { DeleteRequestBuilder as DeleteRequestBuilderBase };

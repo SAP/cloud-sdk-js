@@ -1,6 +1,6 @@
 import {
   Constructable,
-  DeleteRequestBuilder as DeleteRequestBuilderBase,
+  DeleteRequestBuilderBase,
   FieldType
 } from '@sap-cloud-sdk/odata-common';
 import { Entity } from '../entity';

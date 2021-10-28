@@ -6,7 +6,7 @@ accepted
 
 ## Context
 
-Currently, the header handling is scattered and leads [functional](https://github.com/SAP/cloud-sdk-backlog/issues/404) or [logging](https://github.com/SAP/cloud-sdk-backlog/issues/74) issues.
+Currently, the header/parameter handling is scattered and leads [functional](https://github.com/SAP/cloud-sdk-backlog/issues/404) or [logging](https://github.com/SAP/cloud-sdk-backlog/issues/74) or [encoding](https://github.com/SAP/cloud-sdk-js/issues/1737) issues.
 This ADR discusses possible solutions and if it should be implemented in version 1.0 and/or 2.0.
 There are three sources of headers:
 
@@ -16,7 +16,11 @@ There are three sources of headers:
    2. Based on destination properties set by the user (see [getAdditionalHeadersAndQueryParameters](../../packages/connectivity/src/scp-cf/destination/destination.ts).
 3. SDK related headers like `eTag` (only OData) found in the `headers()` method in the [odata-request.ts](../../packages/core/src/odata-common/request/odata-request.ts).
 
-The problem is also present to a smaller extent for query parameters, which can come from a [custom setting](../../packages/core/src/odata-common/request/odata-request.ts) on request or from [destination properties](../../packages/connectivity/src/scp-cf/destination/destination.ts).
+The problem is also present to a smaller extent for query parameters, which can come from:
+
+1. A [custom setting](../../packages/core/src/odata-common/request/odata-request.ts) on request
+2. [Sestination properties](../../packages/connectivity/src/scp-cf/destination/destination.ts)
+3. Queries like get byt key i.e the SDK.
 
 ## Solution Header and Parameter
 
@@ -34,10 +38,12 @@ A cleaner solution could be:
 These two objects contain all the headers and parameters and the rest of the http request config.
 Merge the two in the following way shortly before the execution:
 
-- Merge header with priority: CustomHeader > DestinationHeader (Properties) > DestinationHeader (Service) > SdkHeader.
-- Merge parameter with priority: CustomParameter > DestinationParameter.
-- Merge on structured object means: Ignore casing for the keys merging and keep the original casing from object with the highest priority.
+- Merge header with priority:
+  `CustomHeader > DestinationHeader (Properties) > DestinationHeader (Service) > SdkHeader.`
+- Merge parameter with priority: `CustomParameter > DestinationParameter > SdkParameter.`
+- Merge on structured object means: Ignore casing for the keys and keep the original casing from object with the highest priority.
   The `mergeLeftIgnoreCase()` method should do the trick.
+- For the parameters do encoding, only on the SDK headers, the others are controlled by the user.
 - Merge the remaining parts (not header, not parameter) of `getAxiosConfigWithDefaults()`, `HttpRequestConfig` and `DestinationHttpRequestConfig`.
 - The priority for this flat merge of the rest is: HttpRequestConfig > DestinationHttpRequestConfig > getAxiosConfigWithDefaults()
 - Use the resulting request config to execute the request.
@@ -54,28 +60,49 @@ Both contain a single `header` property typed `Record<string,any>` or `Record<st
 - **Option B**: Add a property `headerSDK` and `headerProperties` to hold different headers.
 
 We would like to keep the SDK internals in option A from the user:
+
 ```ts
 interface HeaderValueObject {
     value:string
     origin:'Custom'|'DestinationProperty'|'Destination'|'SDK'
 }
 
+//Parameters are handled analogously and are skipped in the methods to be shorted.
+interface ParameterValueObject {
+    value:string
+    origin:'Custom'|'DestinationProperty'|'SDK'
+}
+
+interface ConfigPublic{
+    headers:Record<string,string>
+    parameters:Record<string,string>
+}
+
 /**
- * We use this method so the origin of headers is clear. Will be exported but not on root level.  
  * @internal
  */
-export function executeHttpRequestInternal(config:{headers:Record<string,HeaderValueObject}){
+interface ConfigInternal{
+    headers:Record<string,HeaderValueObject>
+    parameters:Record<string,ParameterValueObject>
+}
+
+/**
+ * We use this method so the origin of headers is clear. Will be exported but not on root level.
+ * @internal
+ */
+export function executeHttpRequestInternal(config:ConfigInternal){
     ...
 }
 
 /**
  * This method is for direct customer use -> provided headers are custom and have high prio.
  */
-export function executeHttpRequest(config:{headers:Record<string,string}){
+export function executeHttpRequest(config:ConfigPublic){
     const withObject = headerObjectWithOriginCustom(config) ///
     executeHttpRequestInternal(withObject)
 }
 ```
+
 ## Breaking Changes
 
 We investigate the risk of breaking changes:
@@ -88,7 +115,7 @@ We investigate the risk of breaking changes:
 ## Decision
 
 - We see this as a version 2 feature.
-- We implement **option A** with the public and private method. 
+- We implement **option A** with the public and private method.
 
 ## Consequences
 

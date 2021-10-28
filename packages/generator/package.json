@@ -32,7 +32,7 @@
     "prepare": "yarn compile",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck . --ignores='@sap/cloud-sdk-vdm-business-partner-service'"
+    "check:dependencies": "depcheck "
   },
   "dependencies": {
     "@sap-cloud-sdk/generator-common": "^1.50.0",

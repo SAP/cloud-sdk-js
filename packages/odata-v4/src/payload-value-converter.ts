@@ -158,9 +158,3 @@ const serializers: EdmTypeMapping = {
   'Edm.TimeOfDay': timeToEdmTimeOfDay,
   'Edm.Enum': identity
 };
-
-export {
-  edmToTs as edmToTsV4,
-  tsToEdm as tsToEdmV4,
-  EdmToPrimitive as EdmToPrimitiveV4
-};

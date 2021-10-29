@@ -23,10 +23,10 @@
     "doc": "npx typedoc"
   },
   "dependencies": {
-    "../../../../core": "^1.50.0"
+    "@sap-cloud-sdk/openapi": "^1.50.0"
   },
   "peerDependencies": {
-    "../../../../core": "^1.50.0"
+    "@sap-cloud-sdk/openapi": "^1.50.0"
   },
   "devDependencies": {
     "typedoc": "^0.20.36",

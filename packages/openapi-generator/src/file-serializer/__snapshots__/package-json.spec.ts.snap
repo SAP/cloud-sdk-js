@@ -26,10 +26,10 @@ exports[`packageJson returns the package.json content 1`] = `
     \\"doc\\": \\"npx typedoc\\"
   },
   \\"dependencies\\": {
-    \\"../../../../core\\": \\"^1.35.0\\"
+    \\"@sap-cloud-sdk/openapi\\": \\"^1.35.0\\"
   },
   \\"peerDependencies\\": {
-    \\"../../../../core\\": \\"^1.35.0\\"
+    \\"@sap-cloud-sdk/openapi\\": \\"^1.35.0\\"
   },
   \\"devDependencies\\": {
     \\"typedoc\\": \\"^0.20.36\\",

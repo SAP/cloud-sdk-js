@@ -59,15 +59,6 @@ export function getDestinationServiceCredentialsList(): DestinationServiceCreden
 }
 
 /**
- * First 'xsuaa' credentials getter.
- *
- * @returns The 'xsuaa' credentials object or `null`, if it does not exist.
- */
-export function getRawXsuaaServiceCredentials(): any {
-  return first(getServiceCredentialsList('xsuaa'));
-}
-
-/**
  * Credentials list getter for a given service.
  * @param service - Service name
  * @returns Fetched credentials objects of existing service in 'VCAP_SERVICES'.

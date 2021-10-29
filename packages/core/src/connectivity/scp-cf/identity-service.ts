@@ -1,6 +1,7 @@
 import * as xssec from '@sap/xssec';
 import { DestinationOptions } from './destination';
-import { getRawXsuaaServiceCredentials } from './environment-accessor';
+import { getServiceCredentialsList } from './environment-accessor';
+import { first } from '@sap-cloud-sdk/util';
 
 /**
  * Make a token exchange from IAS token to XSUAA token.
@@ -10,7 +11,7 @@ import { getRawXsuaaServiceCredentials } from './environment-accessor';
 export async function exchangeToken(
   options: DestinationOptions
 ): Promise<string> {
-  const xsuaaServiceCredentials = getRawXsuaaServiceCredentials();
+  const xsuaaServiceCredentials = first(getServiceCredentialsList('xsuaa'));
   return new Promise((resolve: (p: string) => void, reject) => {
     xssec.createSecurityContext(
       options.userJwt,

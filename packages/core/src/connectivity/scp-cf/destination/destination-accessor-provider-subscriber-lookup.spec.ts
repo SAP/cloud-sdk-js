@@ -91,7 +91,8 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
   ): Promise<Destination | null> {
     let options: DestinationOptions = {
       selectionStrategy,
-      cacheVerificationKeys: false
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
     };
     options = userJwt ? { ...options, userJwt } : options;
     return getDestination(destName, options);
@@ -245,7 +246,8 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       await expect(
         getDestinationFromDestinationService('someDest', {
           userJwt: 'someJwt',
-          iss: 'someIss'
+          iss: 'someIss',
+          iasToXsuaaTokenExchange: false
         })
       ).rejects.toThrowError(
         'The given jwt payload does not encode valid JSON.'

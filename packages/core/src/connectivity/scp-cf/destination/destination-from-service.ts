@@ -18,6 +18,7 @@ import {
   DestinationServiceCredentials,
   XsuaaServiceCredentials
 } from '../environment-accessor-types';
+import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -82,6 +83,10 @@ class DestinationFromServiceRetriever {
     name: string,
     options: DestinationOptions
   ): Promise<Destination | null> {
+    if (isTokenExchangeEnabled(options)) {
+      options.userJwt = await exchangeToken(options);
+    }
+
     const subscriberToken =
       await DestinationFromServiceRetriever.getSubscriberToken(options);
 

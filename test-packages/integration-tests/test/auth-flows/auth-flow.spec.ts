@@ -7,9 +7,11 @@ import {
   userApprovedServiceToken,
   wrapJwtInHeader,
   jwtBearerToken,
-  getDestinationFromDestinationService
+  getDestinationFromDestinationService,
+  decodeJwt
 } from '@sap-cloud-sdk/core';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
+import * as xssec from '@sap/xssec';
 import {
   loadLocalVcap,
   readSystems,
@@ -266,5 +268,74 @@ describe('OAuth flows', () => {
       .top(1)
       .execute(destination);
     expect(result.length).toBe(1);
+  }, 60000);
+
+  xit('IAS: token exchange by making an xsuaa call', async () => {
+    const iasToken = accessToken.iasProvider;
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
+      .credentials;
+    const token = await new Promise(
+      (resolve: (value: string) => void, reject) => {
+        xssec.requests.requestUserToken(
+          iasToken,
+          xsuaaConfig,
+          null,
+          null,
+          null,
+          xsuaaConfig.subaccountid,
+          (err: Error, xsuaaToken) => (err ? reject(err) : resolve(xsuaaToken))
+        );
+      }
+    );
+    const decoded = decodeJwt(token);
+    expect(decoded.scope.length).toBeGreaterThan(0);
+  }, 60000);
+
+  xit('IAS: token exchange with xssec createSecurityContext', async () => {
+    const iasToken = accessToken.iasProvider;
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
+      .credentials;
+    const token = await new Promise((resolve: (p: string) => void, reject) => {
+      xssec.createSecurityContext(
+        iasToken,
+        xsuaaConfig,
+        (err: Error, context, tokenInfo) =>
+          err ? reject(err) : resolve(tokenInfo.getTokenValue())
+      );
+    });
+    const decoded = decodeJwt(token);
+    expect(decoded.scope.length).toBeGreaterThan(0);
+  }, 60000);
+
+  xit('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
+    const iasToken = accessToken.iasProvider;
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
+      .credentials;
+    const xsuaaToken = await new Promise(
+      (resolve: (p: string) => void, reject) => {
+        xssec.createSecurityContext(
+          iasToken,
+          xsuaaConfig,
+          (err: Error, context, tokenInfo) =>
+            err ? reject(err) : resolve(tokenInfo.getTokenValue())
+        );
+      }
+    );
+
+    const clientGrant = await serviceToken('destination', {
+      userJwt: xsuaaToken
+    });
+
+    const destination = await fetchDestination(
+      destinationService!.credentials.uri,
+      clientGrant,
+      systems.workflow.providerOAuth2ClientCredentials
+    );
+    expect(destination.authTokens![0].error).toBeNull();
+
+    destination.url = destination.url + '/v1/workflow-definitions';
+    const response = await executeHttpRequest(destination, { method: 'get' });
+
+    expect(response.status).toBe(200);
   }, 60000);
 });

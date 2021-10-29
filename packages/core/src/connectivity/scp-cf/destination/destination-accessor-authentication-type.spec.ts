@@ -15,6 +15,7 @@ import {
   mockVerifyJwt
 } from '../../../../test/test-util/destination-service-mocks';
 import {
+  iasToken,
   onlyIssuerServiceToken,
   providerJwtBearerToken,
   providerServiceToken,
@@ -42,6 +43,7 @@ import {
 } from '../../../../test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { wrapJwtInHeader } from '../jwt';
+import * as identityService from '../identity-service';
 import { parseDestination } from './destination';
 import { getDestination } from './destination-accessor';
 import { destinationCache } from './destination-cache';
@@ -63,6 +65,10 @@ describe('authentication types', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
+
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
         mockSubaccountDestinationsCall(
@@ -82,7 +88,7 @@ describe('authentication types', () => {
 
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination(destinationName, {
-        userJwt: subscriberUserJwt
+        userJwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -93,6 +99,10 @@ describe('authentication types', () => {
       mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
+
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(providerUserJwt));
 
       const httpMocks = [
         mockInstanceDestinationsCall(
@@ -113,7 +123,7 @@ describe('authentication types', () => {
 
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination(destinationName, {
-        userJwt: providerUserJwt,
+        userJwt: iasToken,
         cacheVerificationKeys: false
       });
 
@@ -161,6 +171,10 @@ describe('authentication types', () => {
       mockVerifyJwt();
       mockServiceToken();
 
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
+
       const samlDestinationsWithSystemUser = { ...oauthMultipleResponse[0] };
       // Insert SystemUser in the retrieved OAuth2SAMLBearer destination to trigger principle propagation workflow
       samlDestinationsWithSystemUser['SystemUser'] = 'defined';
@@ -186,7 +200,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination(destinationName, {
         cacheVerificationKeys: false,
-        userJwt: subscriberUserJwt
+        userJwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -199,6 +213,10 @@ describe('authentication types', () => {
       mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
+
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
@@ -219,7 +237,7 @@ describe('authentication types', () => {
 
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
       const actual = await getDestination(destinationName, {
-        userJwt: subscriberUserJwt
+        userJwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -262,6 +280,10 @@ describe('authentication types', () => {
       mockServiceToken();
       mockJwtBearerToken();
 
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(providerUserJwt));
+
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
         mockSubaccountDestinationsCall(
@@ -281,7 +303,7 @@ describe('authentication types', () => {
 
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
       const actual = await getDestination(destinationName, {
-        userJwt: providerUserJwt
+        userJwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -292,6 +314,10 @@ describe('authentication types', () => {
       mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
+
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
@@ -316,7 +342,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
       const actual = await getDestination(destinationName, {
         selectionStrategy: alwaysProvider,
-        userJwt: subscriberUserJwt
+        userJwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -327,6 +353,10 @@ describe('authentication types', () => {
       mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
+
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
@@ -351,7 +381,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
       const actual = await getDestination(destinationName, {
         selectionStrategy: alwaysSubscriber,
-        userJwt: subscriberUserJwt
+        userJwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -364,6 +394,10 @@ describe('authentication types', () => {
       mockVerifyJwt();
       mockServiceToken();
       mockJwtBearerToken();
+
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
 
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
@@ -383,7 +417,7 @@ describe('authentication types', () => {
       ];
 
       const actual = await getDestination('ERNIE-UND-CERT', {
-        userJwt: subscriberUserJwt,
+        userJwt: iasToken,
         cacheVerificationKeys: false
       });
       expect(actual!.certificates!.length).toBe(1);
@@ -435,6 +469,10 @@ describe('authentication types', () => {
       mockVerifyJwt();
       mockServiceToken();
 
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
+
       mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken);
       mockSubaccountDestinationsCall(
         nock,
@@ -451,7 +489,7 @@ describe('authentication types', () => {
       );
 
       const actual = await getDestination('OnPremise', {
-        userJwt: subscriberServiceToken,
+        userJwt: iasToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });
@@ -468,6 +506,10 @@ describe('authentication types', () => {
       mockVerifyJwt();
       const serviceTokenSpy = mockServiceToken();
 
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
+
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
         mockSubaccountDestinationsCall(
@@ -480,7 +522,7 @@ describe('authentication types', () => {
 
       const expected = parseDestination(basicMultipleResponse[0]);
       const actual = await getDestination(destinationName, {
-        userJwt: subscriberServiceToken,
+        userJwt: iasToken,
         cacheVerificationKeys: false
       });
       expect(actual).toMatchObject(expected);
@@ -495,6 +537,10 @@ describe('authentication types', () => {
       mockVerifyJwt();
       mockServiceToken();
 
+      jest
+        .spyOn(identityService, 'exchangeToken')
+        .mockImplementationOnce(() => Promise.resolve(subscriberUserJwt));
+
       const httpMocks = [
         mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
         mockSubaccountDestinationsCall(
@@ -506,7 +552,7 @@ describe('authentication types', () => {
       ];
 
       const actual = await getDestination('OnPremise', {
-        userJwt: subscriberServiceToken,
+        userJwt: iasToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });

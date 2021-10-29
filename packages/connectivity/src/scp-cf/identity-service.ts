@@ -4,6 +4,7 @@ import { getServiceCredentialsList } from './environment-accessor';
 import { DestinationOptions } from './destination/destination-accessor';
 
 /**
+ * @internal
  * Make a token exchange from IAS token to XSUAA token.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns Exchanged token.
@@ -23,6 +24,7 @@ export async function exchangeToken(
 }
 
 /**
+ * @internal
  * Checks whether the IAS token to XSUAA token exchange should be applied.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A boolean value, that indicates whether the token exchange should be applied.

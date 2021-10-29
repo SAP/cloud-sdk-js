@@ -1,7 +1,7 @@
 import * as xssec from '@sap/xssec';
+import { first } from '@sap-cloud-sdk/util';
 import { DestinationOptions } from './destination';
 import { getServiceCredentialsList } from './environment-accessor';
-import { first } from '@sap-cloud-sdk/util';
 
 /**
  * Make a token exchange from IAS token to XSUAA token.
@@ -28,5 +28,6 @@ export async function exchangeToken(
  * @returns A boolean value, that indicates whether the token exchange should be applied.
  */
 export function isTokenExchangeEnabled(options: DestinationOptions): boolean {
-  return !options.iasToXsuaaTokenExchange && !!options.userJwt;
+  // note: the option is optional and by default we enable the token exchange.
+  return options.iasToXsuaaTokenExchange !== false && !!options.userJwt;
 }

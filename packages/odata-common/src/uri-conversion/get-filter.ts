@@ -19,7 +19,7 @@ import {
 } from '../filter/filter-function-base';
 import { FieldType } from '../selectable/field';
 import { Filter, isFilter } from '../filter/filter';
-import { UriConverter } from './uri-value-converter';
+import { UriConverter } from '../de-serializers/uri-value-converter';
 
 type GetFilterType<EntityT extends EntityBase> = (
   filter: Filterable<EntityT>,

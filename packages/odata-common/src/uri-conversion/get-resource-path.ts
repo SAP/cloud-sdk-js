@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity-base';
 import { Field, FieldType } from '../selectable/field';
-import { UriConverter } from './uri-value-converter';
+import { UriConverter } from '../de-serializers/uri-value-converter';
 
 const logger = createLogger({
   package: 'core',

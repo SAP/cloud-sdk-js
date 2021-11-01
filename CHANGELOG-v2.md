@@ -70,6 +70,7 @@
   - `customAttributes`
   - `decodeJwt`
   - `decodeJwtComplete`
+  - `deserializersCommon`
   - `destinationCache`
   - `destinationForServiceBinding`
   - `destinationServiceCache`
@@ -126,11 +127,13 @@
   - `retrieveJwt`
   - `searchEnvVariablesForDestination`
   - `searchServiceBindingForDestination`
+  - `serializersCommon`
   - `serviceToken`
   - `subscriberFirst`
   - `tenantFromJwt`
   - `tenantId`
   - `tenantName`
+  - `uriConvertersCommon`
   - `urlAndAgent`
   - `userEmail`
   - `userFamilyName`
@@ -262,7 +265,6 @@
   - day,
   - desc,
   - deserializeBatchResponse,
-  - deserializersCommon,
   - endsWith,
   - entityDeserializer,
   - entitySerializer,
@@ -288,7 +290,6 @@
   - serializeBatchRequest,
   - serializeChangeSet,
   - serializeRequest,
-  - serializersCommon,
   - startsWith,
   - substring,
   - throwErrorWhenReturnTypeIsUnionType,
@@ -296,7 +297,6 @@
   - toLower,
   - toUpper,
   - trim,
-  - uriConvertersCommon,
   - year
 - [core] Move the following functions to `odata-v2` package
   - CreateRequestBuilder,

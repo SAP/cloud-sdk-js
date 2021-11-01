@@ -1,5 +1,7 @@
 ### oData-Common Package Public API
 
+Public API is empty => this should get reimported on odata-v2 and odata-v4
+
 - function and(),or(),not()
   - Filterable
   - FilterList

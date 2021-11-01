@@ -30,5 +30,3 @@ Public API is empty => this should get reimported on odata-v2 and odata-v4
     - ODataGetAllRequestConfig
     - ODataGetByKeyRequestConfig
     - ODataUpdateRequestConfig
-
-

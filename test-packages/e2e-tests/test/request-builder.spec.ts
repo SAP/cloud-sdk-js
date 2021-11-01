@@ -4,7 +4,7 @@ import {
   TestEntityLink
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service/';
 import moment from 'moment';
-import {and, filterFunction, filterFunctions,endsWith,startsWith} from '@sap-cloud-sdk/odata-common';
+import { and } from '@sap-cloud-sdk/odata-common';
 import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/dist/entity-deserializer';
 import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';
 import { destination } from './test-util';
@@ -12,9 +12,11 @@ import { destination } from './test-util';
 const entityKey = 123;
 const entityLinkKey = 987;
 
-const foo2  = actionImports.createTestEntityById({}as any).build()
-const foo = TestEntity.requestBuilder().getAll().select(TestEntity.KEY_TEST_ENTITY).orderBy(TestEntity.STRING_PROPERTY.asc())
-
+const foo2 = actionImports.createTestEntityById({} as any).build();
+const foo = TestEntity.requestBuilder()
+  .getAll()
+  .select(TestEntity.KEY_TEST_ENTITY)
+  .orderBy(TestEntity.STRING_PROPERTY.asc());
 
 async function createEntity(key: number): Promise<TestEntity> {
   const dataForCreation = TestEntity.builder()

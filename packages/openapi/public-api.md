@@ -1,3 +1,3 @@
 ### openApi Package Public API
 
-- 
+-

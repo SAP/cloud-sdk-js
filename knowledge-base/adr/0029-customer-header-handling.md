@@ -114,8 +114,9 @@ We investigate the risk of breaking changes:
 
 ## Decision
 
-- We see this as a version 2 feature.
-- We implement **option A** with the public and private method.
+- We see this as a version 2 feature or even technincal debt after version 2.0 release. 
+- If [bug reporter](https://answers.sap.com/questions/13500887/on-premise-connectivity-to-rest-service-with-api-k.html) response we can do a small hotfix if needed.
+- We decide to implement the option **B** including a public and internal function.
 
 ## Consequences
 

@@ -47,7 +47,8 @@ export async function packageJson(
           [oDataModule]: `^${await getSdkVersion()}`
         },
         peerDependencies: {
-          '../../../../core': `^${await getSdkVersion()}`
+          '@sap-cloud-sdk/odata-common': `^${await getSdkVersion()}`,
+          [oDataModule]: `^${await getSdkVersion()}`
         },
         devDependencies: {
           typedoc: '^0.20.36',

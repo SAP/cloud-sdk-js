@@ -73,5 +73,6 @@ __exportStar(require('./TestEnumType'), exports);
 __exportStar(require('./TestEnumTypeInt64'), exports);
 __exportStar(require('./TestEnumTypeWithOneMember'), exports);
 __exportStar(require('./function-imports'), exports);
+__exportStar(require('./action-imports'), exports);
 __exportStar(require('./BatchRequest'), exports);
 //# sourceMappingURL=index.js.map

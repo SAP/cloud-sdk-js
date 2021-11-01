@@ -13,7 +13,10 @@ function printUpgradeAnnouncement() {
       'The SAP Cloud SDK will release new major versions regularly starting in 2022.'
     );
     console.log(
-      'We will ensure that upgrading takes less than one person day of effort.'
+      'A beta version for version 2 is expected to be released in November 2021.'
+    );
+    console.log(
+      'We will ensure that upgrading takes less than one day of effort when using our upgrade guide.'
     );
     console.log(
       'Read more in our announcement post: https://sap.github.io/cloud-sdk/docs/js/announcing-version-2'

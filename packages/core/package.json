@@ -20,13 +20,14 @@
     "dist/**/*.js.map",
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map",
+    "postinstall.js",
     "usage-analytics.js"
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
-    "postinstall": "node usage-analytics.js",
+    "postinstall": "node postinstall.js",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck ."

@@ -173,7 +173,8 @@ describe('parseGeneratorOptions', () => {
     });
     const parsed = await parseOptionsFromConfig(parameters.config);
     expect(parsed.input).toContain(config.input);
-    expect(parsed.include).toEqual(['/path/config.json', '/path/README.md']);
+    // RegEx to match paths for both *nix and Windows
+    expect(parsed.include).toMatchObject([expect.stringMatching('.*path.*config.json.*'), expect.stringMatching('.*path.*README.md.*')]);
   });
 
   it('logs a warning if wrong configuration keys were used', async () => {

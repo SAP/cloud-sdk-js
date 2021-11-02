@@ -1,30 +1,61 @@
 import { Destination } from '@sap-cloud-sdk/connectivity';
-// import { buildHeaders } from '@sap-cloud-sdk/odata-common/dist/header-builder';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-import {
-  ODataGetAllRequestConfig,
-  ODataRequest,
-  ODataUpdateRequestConfig
-} from '@sap-cloud-sdk/odata-common';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2';
-import { buildHeaders } from '@sap-cloud-sdk/odata-common/dist/header-builder';
+
 import {
   defaultDestination,
   mockHeaderRequest
 } from '../../core/test/test-util/request-mocker';
 import { connectivityProxyConfigMock } from '../../core/test/test-util/environment-mocks';
+import {DummyEntity} from "./dummy-entity.spec";
+import {ODataGetAllRequestConfig} from "./request/odata-get-all-request-config";
+import {ODataRequest} from "./request/odata-request";
+import {ODataUpdateRequestConfig} from "./request/odata-update-request-config";
+import {buildHeaders} from "./header-builder";
+import {ODataGetByKeyRequestConfig} from "./request/odata-get-by-key-request-config";
+import {ODataDeleteRequestConfig} from "./request/odata-delete-request-config";
+import {ODataCreateRequestConfig} from "./request/odata-create-request-config";
+import {ODataBatchRequestConfig} from "./request/odata-batch-request-config";
 
-function createGetAllRequest(
-  dest: Destination
-): ODataRequest<ODataGetAllRequestConfig<TestEntity>> {
-  const requestConfig = new ODataGetAllRequestConfig(TestEntity, oDataUri);
+export function createGetAllRequest(
+    dest: Destination=defaultDestination
+): ODataRequest<ODataGetAllRequestConfig<DummyEntity>> {
+  const requestConfig = new ODataGetAllRequestConfig(DummyEntity, {} as any);
+  requestConfig.method = 'get';
+  const outer =  new ODataRequest(requestConfig, dest);
+  return outer
+}
+
+export function createByKeyRequest(
+    dest: Destination=defaultDestination
+): ODataRequest<ODataGetByKeyRequestConfig<DummyEntity>> {
+  const requestConfig = new ODataGetByKeyRequestConfig(DummyEntity, {} as any);
   return new ODataRequest(requestConfig, dest);
 }
 
-function createUpdateRequest(
+export function createUpdateRequest(
   dest: Destination
-): ODataRequest<ODataUpdateRequestConfig<TestEntity>> {
-  const requestConfig = new ODataUpdateRequestConfig(TestEntity, oDataUri);
+): ODataRequest<ODataUpdateRequestConfig<DummyEntity>> {
+  const requestConfig = new ODataUpdateRequestConfig(DummyEntity, {} as any);
+  return new ODataRequest(requestConfig, dest);
+}
+
+export function createDeleteRequest(
+    dest: Destination=defaultDestination
+): ODataRequest<ODataDeleteRequestConfig<DummyEntity>> {
+  const requestConfig = new ODataDeleteRequestConfig(DummyEntity, {} as any);
+  return new ODataRequest(requestConfig, dest);
+}
+
+export function createCreateRequest(
+    dest: Destination=defaultDestination
+): ODataRequest<ODataCreateRequestConfig<DummyEntity>> {
+  const requestConfig = new ODataCreateRequestConfig(DummyEntity, {} as any);
+  return new ODataRequest(requestConfig, dest);
+}
+
+export function createBatchRequest(
+    dest: Destination=defaultDestination
+): ODataRequest<ODataBatchRequestConfig> {
+  const requestConfig = new ODataBatchRequestConfig( "");
   return new ODataRequest(requestConfig, dest);
 }
 

@@ -28,7 +28,7 @@ This was convenient for us, but we had no distinction between:
 Our new strategy should provide the following options:
 
 - `Exported Public API`: This is a cautious decision and consumer can rely on stable contract for minor versions.
-  It contains only object where we see (re)use potential for customers.
+  It contains only objects where we see (re)use potential for customers.
   This API is reachable via the root level import e.g. `@sap-cloud-sdk/odata-v2`.
 - `Exported Internal API`: Exported for technical reasons but not meant to be used by consumer.
   We keep this API stable for path versions.

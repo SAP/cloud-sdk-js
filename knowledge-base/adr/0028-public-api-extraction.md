@@ -53,7 +53,7 @@ Hence, we propose the following approach:
 
 - You go over the code and manually maintain the API:
   1. Use `@internal` annotation and `stripInternal` compiler option for parts the internal API.
-     This removes the internal API form the `d.ts` files.
+     This removes the internal API from the `d.ts` files.
   2. Maintain minimal named exports in the root `index.ts` pointing to the objects of the public API.
      This creates also minimal module exports in the JavaScript usecase.
   3. We create a `internal` export as we did for the [v4 case](https://github.com/SAP/cloud-sdk-js/tree/v1.28.0/packages/core) which can be imported via `@sap-cloud-sdk/odata-v2/internal`.

@@ -3,11 +3,9 @@ import { AxiosResponse } from 'axios';
 import { isNullish } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  DestinationNameAndJwt,
-  DestinationOptions,
   noDestinationErrorMessage,
   useOrFetchDestination
-} from '@sap-cloud-sdk/connectivity';
+, DestinationFetchOptions } from '@sap-cloud-sdk/connectivity';
 import {
   executeHttpRequest,
   filterCustomRequestConfig,
@@ -85,8 +83,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns A promise resolving to an HttpResponse.
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    destinationOptions?: DestinationOptions
+    destination: Destination | DestinationFetchOptions,
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
@@ -94,7 +91,6 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
     const resolvedDestination = await useOrFetchDestination(
       destination,
-      destinationOptions
     );
     if (isNullish(destination)) {
       throw Error(noDestinationErrorMessage(destination));
@@ -121,10 +117,9 @@ export class OpenApiRequestBuilder<ResponseT = any> {
    * @returns A promise resolving to the requested return type.
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    destinationOptions?: DestinationOptions
+    destination: Destination | DestinationFetchOptions,
   ): Promise<ResponseT> {
-    const response = await this.executeRaw(destination, destinationOptions);
+    const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {
       return response.data;
     }

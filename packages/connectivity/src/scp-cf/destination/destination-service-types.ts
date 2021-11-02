@@ -1,6 +1,7 @@
 import { CachingOptions } from '../cache';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { ResilienceOptions } from '../resilience-options';
+import { DestinationOptions } from './destination-accessor';
 
 /**
  * A resolved destination containing information needed to execute requests, such as the system URL.
@@ -204,6 +205,18 @@ export interface DestinationNameAndJwt {
   /**
    * An access token for the XSUAA service on SAP Business Technology Platform, provided as a JSON Web Token, only mandatory when destination shall be retrieved from destination service on SAP Business Technology Platform.
    */
+  jwt?: string;
+}
+
+export interface DestinationFetchOptions extends DestinationOptions {
+  /**
+  * Name of the destination to retrieve, mandatory.
+  */
+  destinationName: string;
+
+  /**
+  * An access token for the XSUAA service on SAP Business Technology Platform, provided as a JSON Web Token, only mandatory when destination shall be retrieved from destination service on SAP Business Technology Platform.
+  */
   jwt?: string;
 }
 

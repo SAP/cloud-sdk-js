@@ -1,7 +1,8 @@
 export {
   Destination,
   DestinationNameAndJwt,
-  DestinationRetrievalOptions
+  DestinationRetrievalOptions,
+  DestinationFetchOptions
 } from './scp-cf/destination/destination-service-types';
 
 export { buildHeadersForDestination } from './scp-cf/header-builder-for-destination';

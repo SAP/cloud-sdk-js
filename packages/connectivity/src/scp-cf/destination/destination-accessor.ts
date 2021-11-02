@@ -2,7 +2,7 @@ import { VerifyJwtOptions } from '../jwt';
 import { sanitizeDestination } from './destination';
 import {
   Destination,
-  DestinationNameAndJwt,
+  DestinationFetchOptions,
   DestinationRetrievalOptions,
   isDestinationNameAndJwt
 } from './destination-service-types';
@@ -25,13 +25,12 @@ import type { DestinationAccessorOptions } from './destination-accessor-types';
  * @returns A promise resolving to the requested destination on success.
  */
 export async function useOrFetchDestination(
-  destination: Destination | DestinationNameAndJwt,
-  options: DestinationOptions = {}
+  destination: Destination | DestinationFetchOptions,
 ): Promise<Destination | null> {
   return isDestinationNameAndJwt(destination)
     ? getDestination(
         destination.destinationName,
-        destination.jwt ? { userJwt: destination.jwt, ...options } : options
+        destination.jwt ? { userJwt: destination.jwt, ...destination } : destination
       )
     : sanitizeDestination(destination);
 }

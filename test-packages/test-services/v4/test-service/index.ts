@@ -39,4 +39,5 @@ export * from './TestEnumType';
 export * from './TestEnumTypeInt64';
 export * from './TestEnumTypeWithOneMember';
 export * from './function-imports';
+export * from './action-imports';
 export * from './BatchRequest';

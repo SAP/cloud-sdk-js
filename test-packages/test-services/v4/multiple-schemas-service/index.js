@@ -41,5 +41,6 @@ __exportStar(require('./TestComplexType2'), exports);
 __exportStar(require('./TestEnumType1'), exports);
 __exportStar(require('./TestEnumType2'), exports);
 __exportStar(require('./function-imports'), exports);
+__exportStar(require('./action-imports'), exports);
 __exportStar(require('./BatchRequest'), exports);
 //# sourceMappingURL=index.js.map

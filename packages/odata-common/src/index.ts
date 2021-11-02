@@ -89,7 +89,7 @@ export { GetAllRequestBuilderBase } from './request-builder/get-all-request-buil
 export { ODataGetAllRequestConfig } from './request/odata-get-all-request-config';
 
 export { CreateRequestBuilderBase } from './request-builder/create-request-builder-base';
-export { DeleteRequestBuilder } from './request-builder/delete-request-builder-base';
+export { DeleteRequestBuilderBase } from './request-builder/delete-request-builder-base';
 export { FunctionImportParameter } from './request/function-import-parameter';
 export { ODataRequest } from './request/odata-request';
 export { RequestMethodType } from './request/odata-request-config';

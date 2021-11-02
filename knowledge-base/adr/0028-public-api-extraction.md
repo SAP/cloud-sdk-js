@@ -57,7 +57,7 @@ Hence, we propose the following approach:
   2. Maintain minimal named exports in the root `index.ts` pointing to the objects of the public API.
      This creates also minimal module exports in the JavaScript usecase.
   3. We create a `internal` export as we did for the [v4 case](https://github.com/SAP/cloud-sdk-js/tree/v1.28.0/packages/core) which can be imported via `@sap-cloud-sdk/odata-v2/internal`.
-     This internal package contains all exports.
+     This internal folder contains all exports.
 
 This is a large manual effort initially and seems to be redundant because the minimal `index.ts` alone would already do the trick.
 However, the double maintenance makes better check rules possible.

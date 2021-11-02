@@ -1,6 +1,5 @@
 export {
   Destination,
-  DestinationNameAndJwt,
   DestinationRetrievalOptions,
   DestinationFetchOptions
 } from './scp-cf/destination/destination-service-types';

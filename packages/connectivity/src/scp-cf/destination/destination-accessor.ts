@@ -4,7 +4,7 @@ import {
   Destination,
   DestinationFetchOptions,
   DestinationRetrievalOptions,
-  isDestinationNameAndJwt
+  isDestinationFetchOptions
 } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import { searchServiceBindingForDestination } from './destination-from-vcap';
@@ -27,7 +27,7 @@ import type { DestinationAccessorOptions } from './destination-accessor-types';
 export async function useOrFetchDestination(
   destination: Destination | DestinationFetchOptions,
 ): Promise<Destination | null> {
-  return isDestinationNameAndJwt(destination)
+  return isDestinationFetchOptions(destination)
     ? getDestination(
         destination.destinationName,
         destination.jwt ? { userJwt: destination.jwt, ...destination } : destination

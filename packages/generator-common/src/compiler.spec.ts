@@ -177,7 +177,7 @@ describe('compilation', () => {
     await expect(
       transpileDirectory('broken-src', compilerConfig('broken-dist'))
     ).rejects.toThrowError(
-      "broken-src/file.ts:3:4 - error TS2588: Cannot assign to 'foo' because it is a constant"
+      "error TS2588: Cannot assign to 'foo' because it is a constant"
     );
   });
 

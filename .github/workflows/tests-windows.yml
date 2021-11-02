@@ -2,7 +2,7 @@ name: windows-tests
 
 on:
   push:
-    branches: [main]
+    branches: [2.0]
     paths-ignore:
       - 'docs/**'
 

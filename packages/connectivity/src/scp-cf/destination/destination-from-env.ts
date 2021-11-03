@@ -5,10 +5,10 @@ import {
   isDestinationConfiguration,
   parseDestination
 } from './destination';
+import { DestinationOptions } from './destination-accessor-types';
 import type {
   Destination,
-  DestinationAuthToken,
-  DestinationOptions
+  DestinationAuthToken
 } from './destination-service-types';
 import {
   addProxyConfigurationInternet,

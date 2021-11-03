@@ -14,13 +14,16 @@ import {
   XsuaaServiceCredentials
 } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
-import { Destination, DestinationOptions } from './destination-service-types';
+import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import { DestinationsByType } from './destination-accessor-types';
+import {
+  DestinationOptions,
+  DestinationsByType
+} from './destination-accessor-types';
 import {
   AuthAndExchangeTokens,
   fetchDestination,

@@ -1,13 +1,24 @@
 import { sanitizeDestination } from './destination';
-import {
-  Destination,
-  DestinationOptions,
-  DestinationFetchOptions,
-  isDestinationFetchOptions
-} from './destination-service-types';
+import { Destination } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import { searchServiceBindingForDestination } from './destination-from-vcap';
 import { getDestinationFromDestinationService } from './destination-from-service';
+import {
+  DestinationFetchOptions,
+  DestinationOptions
+} from './destination-accessor-types';
+
+/**
+ * Typeguard to find if object is DestinationNameAndJwt.
+ * @param destination - Destination to be checked
+ * @returns boolean
+ * @internal
+ */
+export function isDestinationFetchOptions(
+  destination: any
+): destination is DestinationFetchOptions {
+  return destination.destinationName !== undefined;
+}
 
 /**
  * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination

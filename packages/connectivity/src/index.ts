@@ -1,9 +1,12 @@
 export {
   Destination,
-  DestinationOptions,
-  DestinationFetchOptions,
   DestinationRetrievalOptions
 } from './scp-cf/destination/destination-service-types';
+
+export {
+  DestinationOptions,
+  DestinationFetchOptions
+} from './scp-cf/destination/destination-accessor-types';
 
 export { buildHeadersForDestination } from './scp-cf/header-builder-for-destination';
 

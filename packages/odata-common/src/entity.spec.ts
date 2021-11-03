@@ -33,7 +33,7 @@ describe('entity', () => {
 
       expect(entity.getUpdatedProperties()).toEqual({
         stringProperty: 'new',
-        int16Property: 123,
+        int16Property: 123
       });
     });
 

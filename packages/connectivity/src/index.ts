@@ -13,8 +13,6 @@ export {
   sanitizeDestination
 } from './scp-cf/destination/destination';
 
-export {
-  useOrFetchDestination,
-} from './scp-cf/destination/destination-accessor';
+export { useOrFetchDestination } from './scp-cf/destination/destination-accessor';
 
 export { getAgentConfig } from './http-agent/http-agent';

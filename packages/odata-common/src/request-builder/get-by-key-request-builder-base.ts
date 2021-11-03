@@ -60,7 +60,7 @@ export abstract class GetByKeyRequestBuilderBase<
    * @returns A promise resolving to the requested entity
    */
   async execute(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<EntityT> {
     return this.executeRaw(destination)
       .then(response =>

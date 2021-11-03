@@ -23,7 +23,7 @@ export class ODataBatchRequestBuilder extends BatchRequestBuilder {
    * @returns Promise resolving to the requested data.
    */
   async execute(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<BatchResponse[]> {
     return this.executeRaw(destination)
       .then(response => parseBatchResponse(response))

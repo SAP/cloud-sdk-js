@@ -25,12 +25,14 @@ import type { DestinationAccessorOptions } from './destination-accessor-types';
  * @returns A promise resolving to the requested destination on success.
  */
 export async function useOrFetchDestination(
-  destination: Destination | DestinationFetchOptions,
+  destination: Destination | DestinationFetchOptions
 ): Promise<Destination | null> {
   return isDestinationFetchOptions(destination)
     ? getDestination(
         destination.destinationName,
-        destination.jwt ? { userJwt: destination.jwt, ...destination } : destination
+        destination.jwt
+          ? { userJwt: destination.jwt, ...destination }
+          : destination
       )
     : sanitizeDestination(destination);
 }

@@ -59,7 +59,7 @@ export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
    * @returns A promise resolving once the entity was deleted
    */
   async execute(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<void> {
     return (
       this.executeRaw(destination)
@@ -77,7 +77,7 @@ export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

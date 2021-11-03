@@ -32,7 +32,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * @returns A promise resolving to the requested return type
    */
   async execute(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<ReturnT> {
     return this.executeRaw(destination).then(response =>
       this.responseTransformer(response.data)
@@ -45,7 +45,7 @@ export abstract class ActionFunctionImportRequestBuilderBase<
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

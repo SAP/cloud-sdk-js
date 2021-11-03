@@ -56,7 +56,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
    * @returns A promise resolving to the entity once it was updated
    */
   async execute(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
@@ -75,7 +75,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
    * @returns A promise resolving to an [[HttpResponse]] when the request is executed or `undefined` otherwise.
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse | undefined> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       logger.info(

@@ -85,7 +85,7 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
    * @returns A promise resolving to the created entity
    */
   async execute(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<EntityT> {
     return this.executeRaw(destination)
       .then(response =>
@@ -106,7 +106,7 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

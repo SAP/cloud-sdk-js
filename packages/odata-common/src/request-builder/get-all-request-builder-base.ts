@@ -97,7 +97,7 @@ export abstract class GetAllRequestBuilderBase<
    * @returns A promise resolving to the requested entities
    */
   async execute(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<EntityT[]> {
     return this.executeRaw(destination).then(response =>
       this.dataAccessor

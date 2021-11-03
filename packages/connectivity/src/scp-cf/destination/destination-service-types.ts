@@ -199,13 +199,13 @@ export interface DestinationCertificate {
  */
 export interface DestinationFetchOptions extends DestinationOptions {
   /**
-  * Name of the destination to retrieve, mandatory.
-  */
+   * Name of the destination to retrieve, mandatory.
+   */
   destinationName: string;
 
   /**
-  * An access token for the XSUAA service on SAP Business Technology Platform, provided as a JSON Web Token, only mandatory when destination shall be retrieved from destination service on SAP Business Technology Platform.
-  */
+   * An access token for the XSUAA service on SAP Business Technology Platform, provided as a JSON Web Token, only mandatory when destination shall be retrieved from destination service on SAP Business Technology Platform.
+   */
   jwt?: string;
 }
 

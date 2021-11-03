@@ -38,17 +38,15 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
 
   build(): ODataRequest<ODataBatchRequestConfig>;
   build(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<ODataRequest<ODataBatchRequestConfig>>;
   build(
-    destination?: Destination | DestinationFetchOptions,
+    destination?: Destination | DestinationFetchOptions
   ):
     | ODataRequest<ODataBatchRequestConfig>
     | Promise<ODataRequest<ODataBatchRequestConfig>> {
     return destination
-      ? super
-          .build(destination!)
-          .then(request => this.setPayload(request))
+      ? super.build(destination!).then(request => this.setPayload(request))
       : this.setPayload(super.build());
   }
 
@@ -58,7 +56,7 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationFetchOptions,
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
   }

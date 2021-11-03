@@ -33,9 +33,10 @@ import {
   DestinationSelectionStrategy,
   subscriberFirst
 } from './destination-selection-strategies';
-import { Destination, DestinationOptions } from './destination-service-types';
+import { Destination } from './destination-service-types';
 import { getDestination } from './destination-accessor';
 import { getDestinationFromDestinationService } from './destination-from-service';
+import { DestinationOptions } from './destination-accessor-types';
 
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
   afterEach(() => {

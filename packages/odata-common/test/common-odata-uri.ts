@@ -31,13 +31,13 @@ export const commonOdataUri: ODataUri = {
       throw new Error('Select is version specific not testable here.');
     }
     return;
-  }, // versionspecific
+  },
   getExpand: expand => {
     if (expand && expand.length > 0) {
       throw new Error('Expand is version specific not testable here.');
     }
     return;
-  }, // versionSpecific
+  },
   getOrderBy: () => getOrderBy,
   getFilter: filter => {
     if (filter) {

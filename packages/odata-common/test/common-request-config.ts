@@ -19,11 +19,11 @@ import {
 } from '../src';
 import { CommonEntity } from './common-entity';
 import { commonOdataUri } from './common-odata-uri';
+import { commonEntitySerializer } from './common-serializer';
 import {
   commonEntityDeserializer,
-  commonEntitySerializer,
   commonExtractODataEtag
-} from './common-serializer';
+} from './common-deserializer';
 
 interface Options {
   filter?: Filterable<CommonEntity, any>;
@@ -91,6 +91,7 @@ class CommonCreateRequestBuilder extends CreateRequestBuilderBase<CommonEntity> 
 class CommonDeleteRequestBuilder extends DeleteRequestBuilderBase<CommonEntity> {
   setVersionIdentifier(eTag: string): this {
     if (eTag) {
+      //In principle this is v2/v4 specific, but the method is called in the request config so we provide some dummy implementation.
       this.addCustomHeaders({ 'some-implementation-for-test': eTag });
     }
     return this;

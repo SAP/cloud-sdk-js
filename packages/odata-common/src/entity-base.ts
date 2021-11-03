@@ -261,6 +261,14 @@ export abstract class EntityBase {
   }
 
   /**
+   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
+   * @returns An object containing all instance variables + custom fields.
+   */
+  toJSON(): { [key: string]: any } {
+    return { ...this, ...this._customFields };
+  }
+
+  /**
    * @deprecated Since v1.34.1. Use [[asObject]] instead.
    * Returns a map of all defined fields in entity to their current values.
    * @param visitedEntities - List of entities to check in case of circular dependencies.

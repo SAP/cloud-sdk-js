@@ -33,7 +33,7 @@ describe('entity', () => {
 
       expect(entity.getUpdatedProperties()).toEqual({
         stringProperty: 'new',
-        doubleProperty: 0.0
+        int16Property: 123,
       });
     });
 
@@ -119,6 +119,7 @@ describe('entity', () => {
         .stringProperty('test')
         .withCustomFields({ custom: 'custom' })
         .build();
+
       const expected = {
         stringProperty: 'test',
         custom: 'custom'
@@ -135,7 +136,7 @@ describe('entity', () => {
         .build();
 
       expect(entity['isConflictingCustomField']('StringProperty')).toBe(true);
-      expect(entity['isConflictingCustomField']('BooleanProperty')).toBe(true);
+      expect(entity['isConflictingCustomField']('Int16Property')).toBe(true);
       expect(entity['isConflictingCustomField']('custom')).toBe(false);
     });
   });

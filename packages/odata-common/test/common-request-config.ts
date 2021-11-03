@@ -91,7 +91,7 @@ class CommonCreateRequestBuilder extends CreateRequestBuilderBase<CommonEntity> 
 class CommonDeleteRequestBuilder extends DeleteRequestBuilderBase<CommonEntity> {
   setVersionIdentifier(eTag: string): this {
     if (eTag) {
-      //In principle this is v2/v4 specific, but the method is called in the request config so we provide some dummy implementation.
+      // In principle this is v2/v4 specific, but the method is called in the request config so we provide some dummy implementation.
       this.addCustomHeaders({ 'some-implementation-for-test': eTag });
     }
     return this;

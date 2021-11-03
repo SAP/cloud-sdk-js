@@ -50,7 +50,6 @@ describe('batch request serializer', () => {
           getAllRequestBuilder({
             filter: CommonEntity.STRING_PROPERTY.equals('with EmptySpace')
           })
-          // .filter(TestEntity.STRING_PROPERTY.equals('with EmptySpace'))
         )
       ).toMatch(/filter=\(StringProperty%20eq%20'with%20EmptySpace'\)/);
     });
@@ -119,9 +118,6 @@ describe('batch request serializer', () => {
     });
 
     it('serializes delete request with eTag', () => {
-      // const deleteRequest = TestEntity.requestBuilder().delete(
-      //   testEntity.setVersionIdentifier('eTag')
-      // );
       const withEtag = commonEntity().setVersionIdentifier('eTag');
       expect(
         serializeRequest(deleteRequestBuilder({ payload: withEtag }))
@@ -131,11 +127,8 @@ describe('batch request serializer', () => {
 
   describe('serializeChangeSet', () => {
     it('serializes change set with one operation', () => {
-      // const createRequest = TestEntity.requestBuilder().create(testEntity);
       const createRequest = createRequestBuilder({ payload: commonEntity() });
-      expect(
-        serializeChangeSet(createChangeSetWithFakeId(createRequest))
-      ).toMatchSnapshot();
+      expect(serializeChangeSet(changeSet([createRequest]))).toMatchSnapshot();
     });
 
     it('serializes change set with multiple operations', () => {
@@ -152,13 +145,12 @@ describe('batch request serializer', () => {
     });
 
     it('returns undefined for empty change set', () => {
-      expect(serializeChangeSet(createChangeSetWithFakeId())).toBeUndefined();
+      expect(serializeChangeSet(changeSet([]))).toBeUndefined();
     });
   });
 
   describe('serializeBatchRequest', () => {
     it('serializes payload for batch subequests', () => {
-      // tslint:disable-next-line:member-access
       const requests = [
         changeSet([createRequestBuilder({ payload: commonEntity() })]),
         getAllRequestBuilder(),
@@ -176,7 +168,7 @@ describe('batch request serializer', () => {
     it("throws an error if the request option 'absolute' is with a destination without url.", () => {
       const request = batchRequestBuilder([]).withSubRequestPathType(
         'absolute'
-      ); // batch().withSubRequestPathType('absolute');
+      );
       expect(() =>
         serializeBatchRequest(request, {
           subRequestPathType: request.requestConfig.subRequestPathType,

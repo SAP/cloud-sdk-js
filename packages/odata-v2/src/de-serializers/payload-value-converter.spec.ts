@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import {
-  fromEdmToNumber,
-  fromNumberToEdm
+  deserializeToNumber,
+  serializeFromNumber
 } from '@sap-cloud-sdk/odata-common/dist/payload-value-converter';
 import { EdmType } from '../edm-types';
 import { edmToTs, tsToEdm } from './payload-value-converter';
@@ -356,34 +356,36 @@ describe('EDM to ts to EDM does not lead to information loss', () => {
 
 describe('toNumber from EDM type input', () => {
   it('parses a number from string or returns the corresponding Number construct for INF, -INF and NaN', () => {
-    expect(fromEdmToNumber('INF')).toEqual(Number.POSITIVE_INFINITY);
-    expect(fromEdmToNumber('-INF')).toEqual(Number.NEGATIVE_INFINITY);
-    expect(Number.isNaN(fromEdmToNumber('NaN'))).toBeTruthy();
-    expect(fromEdmToNumber('32')).toBe(32);
+    expect(deserializeToNumber('INF')).toEqual(Number.POSITIVE_INFINITY);
+    expect(deserializeToNumber('-INF')).toEqual(Number.NEGATIVE_INFINITY);
+    expect(Number.isNaN(deserializeToNumber('NaN'))).toBeTruthy();
+    expect(deserializeToNumber('32')).toBe(32);
   });
 
   it('can handle input in arbitrary cases', () => {
-    expect(fromEdmToNumber('InF')).toEqual(Number.POSITIVE_INFINITY);
-    expect(fromEdmToNumber('inf')).toEqual(Number.POSITIVE_INFINITY);
-    expect(fromEdmToNumber('iNF')).toEqual(Number.POSITIVE_INFINITY);
+    expect(deserializeToNumber('InF')).toEqual(Number.POSITIVE_INFINITY);
+    expect(deserializeToNumber('inf')).toEqual(Number.POSITIVE_INFINITY);
+    expect(deserializeToNumber('iNF')).toEqual(Number.POSITIVE_INFINITY);
   });
 
   it('throws an error for non-numbers', () => {
-    expect(() => fromEdmToNumber('something something danger zone')).toThrow();
+    expect(() =>
+      deserializeToNumber('something something danger zone')
+    ).toThrow();
   });
 });
 
 describe('toNumber from ts type input', () => {
   it('parses a number from string or returns the corresponding Number construct for INF, -INF and NaN', () => {
-    expect(fromNumberToEdm(Number.POSITIVE_INFINITY)).toEqual('INF');
-    expect(fromNumberToEdm(Number.NEGATIVE_INFINITY)).toEqual('-INF');
-    expect(fromNumberToEdm(Number.NaN)).toEqual('NaN');
-    expect(fromNumberToEdm(32)).toBe(32);
+    expect(serializeFromNumber(Number.POSITIVE_INFINITY)).toEqual('INF');
+    expect(serializeFromNumber(Number.NEGATIVE_INFINITY)).toEqual('-INF');
+    expect(serializeFromNumber(Number.NaN)).toEqual('NaN');
+    expect(serializeFromNumber(32)).toBe(32);
   });
 
   it('throws an error for non-numbers', () => {
     expect(() =>
-      fromNumberToEdm('something something danger zone' as any)
+      serializeFromNumber('something something danger zone' as any)
     ).toThrow();
   });
 });

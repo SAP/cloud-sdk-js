@@ -75,3 +75,15 @@ export interface DestinationFetchOptions extends DestinationOptions {
    */
   jwt?: string;
 }
+
+/**
+ * Typeguard to find if object is DestinationNameAndJwt.
+ * @param destination - Destination to be checked
+ * @returns boolean
+ * @internal
+ */
+ export function isDestinationFetchOptions(
+  destination: any
+): destination is DestinationFetchOptions {
+  return destination.destinationName !== undefined;
+}

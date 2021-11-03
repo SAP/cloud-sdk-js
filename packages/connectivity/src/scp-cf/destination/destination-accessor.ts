@@ -1,15 +1,13 @@
-import { VerifyJwtOptions } from '../jwt';
 import { sanitizeDestination } from './destination';
 import {
   Destination,
+  DestinationOptions,
   DestinationFetchOptions,
-  DestinationRetrievalOptions,
   isDestinationFetchOptions
 } from './destination-service-types';
 import { searchEnvVariablesForDestination } from './destination-from-env';
 import { searchServiceBindingForDestination } from './destination-from-vcap';
 import { getDestinationFromDestinationService } from './destination-from-service';
-import type { DestinationAccessorOptions } from './destination-accessor-types';
 
 /**
  * Returns the parameter if it is a destination, calls [[getDestination]] otherwise (which will try to fetch the destination
@@ -36,10 +34,6 @@ export async function useOrFetchDestination(
       )
     : sanitizeDestination(destination);
 }
-
-export type DestinationOptions = DestinationAccessorOptions &
-  DestinationRetrievalOptions &
-  VerifyJwtOptions;
 
 /**
  * Builds a destination from one of three sources (in the given order):

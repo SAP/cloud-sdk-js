@@ -1,7 +1,8 @@
 import { CachingOptions } from '../cache';
 import { ProxyConfiguration } from '../connectivity-service-types';
+import { VerifyJwtOptions } from '../jwt';
 import { ResilienceOptions } from '../resilience-options';
-import { DestinationOptions } from './destination-accessor';
+import { DestinationAccessorOptions } from './destination-accessor-types';
 
 /**
  * A resolved destination containing information needed to execute requests, such as the system URL.
@@ -187,6 +188,10 @@ export interface DestinationCertificate {
    */
   type: string;
 }
+
+export type DestinationOptions = DestinationAccessorOptions &
+  DestinationRetrievalOptions &
+  VerifyJwtOptions;
 
 /**
  * Declaration of a destination to be retrieved from an environment variable or from the destination service on SAP Business Technology Platform, including all DestinationOptions.

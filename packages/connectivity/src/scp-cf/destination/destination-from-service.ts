@@ -14,7 +14,7 @@ import {
   XsuaaServiceCredentials
 } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
-import { Destination } from './destination-service-types';
+import { Destination, DestinationOptions } from './destination-service-types';
 import {
   alwaysProvider,
   alwaysSubscriber,
@@ -28,7 +28,6 @@ import {
   fetchSubaccountDestinations
 } from './destination-service';
 import { destinationCache } from './destination-cache';
-import type { DestinationOptions } from './destination-accessor';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,

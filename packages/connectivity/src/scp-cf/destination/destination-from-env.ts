@@ -7,9 +7,9 @@ import {
 } from './destination';
 import type {
   Destination,
-  DestinationAuthToken
+  DestinationAuthToken,
+  DestinationOptions
 } from './destination-service-types';
-import type { DestinationOptions } from './destination-accessor';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,

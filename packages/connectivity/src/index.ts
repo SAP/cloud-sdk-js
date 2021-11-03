@@ -1,5 +1,6 @@
 export {
   Destination,
+  DestinationOptions,
   DestinationFetchOptions,
   DestinationRetrievalOptions
 } from './scp-cf/destination/destination-service-types';
@@ -14,7 +15,6 @@ export {
 
 export {
   useOrFetchDestination,
-  DestinationOptions
 } from './scp-cf/destination/destination-accessor';
 
 export { getAgentConfig } from './http-agent/http-agent';

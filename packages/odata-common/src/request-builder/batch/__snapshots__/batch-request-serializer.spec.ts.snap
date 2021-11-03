@@ -61,67 +61,6 @@ Accept: application/json
 "
 `;
 
-exports[`batch request serializer serializeBatchRequest serializes payload for batch subrequests 1`] = `
-"--batch_boundary
-Content-Type: multipart/mixed; boundary=changeSet_boundary
-
---changeSet_boundary
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-
-POST /sap/opu/odata/sap/API_COMMON_ENTITY_SRV/A_CommonEntity HTTP/1.1
-Content-Type: application/json
-Accept: application/json
-
-{\\"KeyPropertyGuid\\":\\"guidId\\",\\"KeyPropertyString\\":\\"strId\\",\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
-
---changeSet_boundary--
---batch_boundary
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-
-GET /sap/opu/odata/sap/API_COMMON_ENTITY_SRV/A_CommonEntity?$format=json HTTP/1.1
-Content-Type: application/json
-Accept: application/json
-
-
---batch_boundary
-Content-Type: multipart/mixed; boundary=changeSet_boundary
-
---changeSet_boundary
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-
-PATCH /sap/opu/odata/sap/API_COMMON_ENTITY_SRV/A_CommonEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Content-Type: application/json
-Accept: application/json
-
-{\\"Int16Property\\":12,\\"DoubleProperty\\":14.5}
-
---changeSet_boundary
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-
-DELETE /sap/opu/odata/sap/API_COMMON_ENTITY_SRV/A_CommonEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId') HTTP/1.1
-Content-Type: application/json
-Accept: application/json
-
-
-
---changeSet_boundary--
---batch_boundary
-Content-Type: application/http
-Content-Transfer-Encoding: binary
-
-GET /sap/opu/odata/sap/API_COMMON_ENTITY_SRV/A_CommonEntity(KeyPropertyGuid=guid'guidId',KeyPropertyString='strId')?$format=json HTTP/1.1
-Content-Type: application/json
-Accept: application/json
-
-
---batch_boundary--
-"
-`;
-
 exports[`batch request serializer serializeChangeSet serializes change set with multiple operations 1`] = `
 "Content-Type: multipart/mixed; boundary=changeSet_boundary
 

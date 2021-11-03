@@ -1,5 +1,8 @@
 import { assoc } from '@sap-cloud-sdk/util';
-import { DestinationFetchOptions, isDestinationFetchOptions } from './destination-accessor-types';
+import {
+  DestinationFetchOptions,
+  isDestinationFetchOptions
+} from './destination-accessor-types';
 import {
   AuthenticationType,
   Destination,

@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [core] Fix parsing of batch response with HTTP 200 status code and containing empty body.
 
 
 # 1.51.0

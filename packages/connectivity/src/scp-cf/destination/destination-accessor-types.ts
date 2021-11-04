@@ -63,6 +63,7 @@ export type DestinationOptions = DestinationAccessorOptions &
  * 1. If a destination of this [[DestinationFetchOptions.destinationName]] is defined in the environment variable `destinations` (if available), it will be converted into a [[Destination]] and used for the request.
  * 2. Otherwise, the destination service on SAP Business Technology Platform is queried for a destination with the given [[DestinationFetchOptions.destinationName]], using the access token provided as value of property [[jwt]].
  * Additionally, you can set [[DestinationOptions]] for objects of this interface.
+ * For more information check out our documentation: https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination
  */
 export interface DestinationFetchOptions extends DestinationOptions {
   /**
@@ -77,7 +78,7 @@ export interface DestinationFetchOptions extends DestinationOptions {
 }
 
 /**
- * Typeguard to find if object is DestinationNameAndJwt.
+ * Typeguard to find if object is DestinationFetchOptions.
  * @param destination - Destination to be checked
  * @returns boolean
  * @internal

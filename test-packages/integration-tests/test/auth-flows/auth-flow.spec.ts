@@ -198,7 +198,9 @@ describe('OAuth flows', () => {
   }, 60000);
 
   xit('ClientCertificate: Fetches the certificate and uses it', async () => {
-    const destination = await getDestination('CC8-HTTP-CERT');
+    const destination = await getDestination({
+      destinationName: 'CC8-HTTP-CERT'
+    });
     expect(destination!.certificates!.length).toBe(1);
     const bps = await BusinessPartner.requestBuilder()
       .getAll()
@@ -214,7 +216,9 @@ describe('OAuth flows', () => {
     process.env.NO_PROXY =
       'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token,https://my300470-api.s4hana.ondemand.com';
 
-    const destination = await getDestination('CC8-HTTP-CERT');
+    const destination = await getDestination({
+      destinationName: 'CC8-HTTP-CERT'
+    });
     expect(destination!.certificates!.length).toBe(1);
     const bps = await BusinessPartner.requestBuilder()
       .getAll()

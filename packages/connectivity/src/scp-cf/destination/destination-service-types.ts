@@ -5,7 +5,7 @@ import { ResilienceOptions } from '../resilience-options';
 /**
  * A resolved destination containing information needed to execute requests, such as the system URL.
  *
- * You can create a destination as a local object when supplying all necessary information, or it could be retrieved from the destination service on SAP Business Technology Platform (via [[DestinationNameAndJwt]]).
+ * You can create a destination as a local object when supplying all necessary information, or it could be retrieved from the destination service on SAP Business Technology Platform (via [[DestinationFetchOptions]]).
  * When creating a local object representing a destination, you need to supply at least the [[url]] and, if required by the target system, valid credentials with [[username]] and [[password]].
  */
 export interface Destination {
@@ -193,7 +193,7 @@ export interface DestinationCertificate {
 export type DestinationRetrievalOptions = CachingOptions & ResilienceOptions;
 
 /**
- * Typeguard to find if object is DestinationNameAndJwt.
+ * Typeguard to find if object is DestinationFetchOptions.
  * @param destination - Destination to be checked
  * @returns boolean
  * @internal

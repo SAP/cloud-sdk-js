@@ -48,7 +48,8 @@ describe('proxy configuration', () => {
     ];
     process.env['https_proxy'] = 'some.proxy.com:1234';
 
-    const actual = await getDestination(destinationName, {
+    const actual = await getDestination({
+      destinationName,
       userJwt: subscriberServiceToken,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
@@ -86,7 +87,8 @@ describe('proxy configuration', () => {
       }
     };
 
-    const actual = await getDestination('OnPremise', {
+    const actual = await getDestination({
+      destinationName: 'OnPremise',
       userJwt: subscriberServiceToken,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
@@ -124,7 +126,7 @@ describe('proxy configuration', () => {
         }
       }
     };
-    const actual = await getDestination('OnPremise');
+    const actual = await getDestination({ destinationName: 'OnPremise' });
     expect(actual).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });

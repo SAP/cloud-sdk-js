@@ -141,7 +141,8 @@ describe('caching destination integration tests', () => {
     });
 
     it('retrieved subscriber destinations are cached with tenant id using "Tenant" isolation type by default ', async () => {
-      await getDestination('SubscriberDest', {
+      await getDestination({
+        destinationName: 'SubscriberDest',
         userJwt: subscriberUserJwt,
         useCache: true,
         cacheVerificationKeys: false,
@@ -162,7 +163,8 @@ describe('caching destination integration tests', () => {
     });
 
     it('retrieved  provider destinations are cached using only destination name in "NoIsolation" type', async () => {
-      await getDestination('ProviderDest', {
+      await getDestination({
+        destinationName: 'ProviderDest',
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.No_Isolation,
@@ -185,7 +187,8 @@ describe('caching destination integration tests', () => {
 
     it('caches only subscriber if the destination names are the same and subscriber first', async () => {
       mockDestinationsWithSameName();
-      await getDestination('SubscriberDest', {
+      await getDestination({
+        destinationName: 'SubscriberDest',
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
@@ -201,7 +204,8 @@ describe('caching destination integration tests', () => {
     });
 
     it('caches only provider if selection strategy always provider', async () => {
-      await getDestination('ProviderDest', {
+      await getDestination({
+        destinationName: 'ProviderDest',
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
@@ -219,7 +223,8 @@ describe('caching destination integration tests', () => {
 
     it('caches only subscriber if selection strategy always subscriber', async () => {
       mockVerifyJwt();
-      await getDestination('SubscriberDest', {
+      await getDestination({
+        destinationName: 'SubscriberDest',
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
@@ -237,7 +242,8 @@ describe('caching destination integration tests', () => {
 
     it('caches nothing if the destination is not found', async () => {
       mockVerifyJwt();
-      await getDestination('ANY', {
+      await getDestination({
+        destinationName: 'ANY',
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
@@ -255,7 +261,8 @@ describe('caching destination integration tests', () => {
 
     it('caches only the found destination not other ones received from the service', async () => {
       mockVerifyJwt();
-      await getDestination('SubscriberDest2', {
+      await getDestination({
+        destinationName: 'SubscriberDest2',
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,
@@ -353,7 +360,8 @@ describe('caching destination integration tests', () => {
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const destinationFromService = await getDestination(destinationName, {
+      const destinationFromService = await getDestination({
+        destinationName,
         userJwt: providerUserJwt,
         useCache: true,
         iasToXsuaaTokenExchange: false
@@ -365,7 +373,8 @@ describe('caching destination integration tests', () => {
         'retrieveDestinationFromCache'
       );
 
-      const destinationFromCache = await getDestination(destinationName, {
+      const destinationFromCache = await getDestination({
+        destinationName,
         userJwt: providerUserJwt,
         useCache: true,
         iasToXsuaaTokenExchange: false
@@ -456,7 +465,8 @@ describe('caching destination integration tests', () => {
         IsolationStrategy.User
       );
 
-      const actual = await getDestination('SubscriberDest', {
+      const actual = await getDestination({
+        destinationName: 'SubscriberDest',
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.User,
@@ -486,7 +496,8 @@ describe('caching destination integration tests', () => {
         IsolationStrategy.User
       );
 
-      const actual = await getDestination('ProviderDest', {
+      const actual = await getDestination({
+        destinationName: 'ProviderDest',
         userJwt: providerUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.User,
@@ -522,7 +533,8 @@ describe('caching destination integration tests', () => {
         mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken)
       ];
 
-      const actual = await getDestination('ProviderDest', {
+      const actual = await getDestination({
+        destinationName: 'ProviderDest',
         userJwt: subscriberUserJwt,
         useCache: true,
         isolationStrategy: IsolationStrategy.Tenant,

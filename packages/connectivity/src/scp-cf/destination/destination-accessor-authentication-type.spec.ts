@@ -87,7 +87,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         userJwt: iasToken
       });
       expect(actual).toMatchObject(expected);
@@ -122,7 +123,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         userJwt: iasToken,
         cacheVerificationKeys: false
       });
@@ -159,7 +161,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         cacheVerificationKeys: false
       });
       expect(actual).toMatchObject(expected);
@@ -198,7 +201,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         cacheVerificationKeys: false,
         userJwt: iasToken
       });
@@ -236,7 +240,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         userJwt: iasToken
       });
       expect(actual).toMatchObject(expected);
@@ -267,7 +272,7 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
-      const actual = await getDestination(destinationName);
+      const actual = await getDestination({ destinationName });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
     });
@@ -302,7 +307,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         userJwt: iasToken
       });
       expect(actual).toMatchObject(expected);
@@ -340,7 +346,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         selectionStrategy: alwaysProvider,
         userJwt: iasToken
       });
@@ -379,7 +386,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         selectionStrategy: alwaysSubscriber,
         userJwt: iasToken
       });
@@ -416,7 +424,8 @@ describe('authentication types', () => {
         )
       ];
 
-      const actual = await getDestination('ERNIE-UND-CERT', {
+      const actual = await getDestination({
+        destinationName: 'ERNIE-UND-CERT',
         userJwt: iasToken,
         cacheVerificationKeys: false
       });
@@ -449,7 +458,8 @@ describe('authentication types', () => {
         )
       ];
 
-      const actual = await getDestination('ERNIE-UND-CERT', {
+      const actual = await getDestination({
+        destinationName: 'ERNIE-UND-CERT',
         cacheVerificationKeys: false
       });
       expect(actual!.certificates!.length).toBe(1);
@@ -488,7 +498,8 @@ describe('authentication types', () => {
         wrapJwtInHeader(subscriberServiceToken).headers
       );
 
-      const actual = await getDestination('OnPremise', {
+      const actual = await getDestination({
+        destinationName: 'OnPremise',
         userJwt: iasToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
@@ -521,7 +532,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(basicMultipleResponse[0]);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         userJwt: iasToken,
         cacheVerificationKeys: false
       });
@@ -551,7 +563,8 @@ describe('authentication types', () => {
         )
       ];
 
-      const actual = await getDestination('OnPremise', {
+      const actual = await getDestination({
+        destinationName: 'OnPremise',
         userJwt: iasToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
@@ -583,9 +596,9 @@ describe('authentication types', () => {
         )
       ];
 
-      await expect(getDestination('OnPremise')).rejects.toThrowError(
-        'For principal propagation a user JWT is needed.'
-      );
+      await expect(
+        getDestination({ destinationName: 'OnPremise' })
+      ).rejects.toThrowError('For principal propagation a user JWT is needed.');
       expectAllMocksUsed(httpMocks);
     });
 
@@ -605,7 +618,10 @@ describe('authentication types', () => {
       ];
 
       await expect(
-        getDestination('OnPremise', { iss: onlyIssuerXsuaaUrl })
+        getDestination({
+          destinationName: 'OnPremise',
+          iss: onlyIssuerXsuaaUrl
+        })
       ).rejects.toThrowError('For principal propagation a user JWT is needed.');
       expectAllMocksUsed(httpMocks);
     });
@@ -640,7 +656,7 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthPasswordSingleResponse);
-      const actual = await getDestination(destinationName, {});
+      const actual = await getDestination({ destinationName });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
     });

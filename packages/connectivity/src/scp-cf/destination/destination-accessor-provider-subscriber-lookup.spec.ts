@@ -96,7 +96,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       iasToXsuaaTokenExchange: false
     };
     options = userJwt ? { ...options, userJwt } : options;
-    return getDestination(destName, options);
+    return getDestination({ destinationName: destName, ...options });
   }
 
   function mockThingsForCombinations(
@@ -230,7 +230,8 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         providerServiceToken
       );
 
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         cacheVerificationKeys: false
       });
       const expected = parseDestination(basicMultipleResponse[0]);

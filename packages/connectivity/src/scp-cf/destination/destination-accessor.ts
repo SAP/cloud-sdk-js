@@ -5,7 +5,6 @@ import { searchServiceBindingForDestination } from './destination-from-vcap';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import {
   DestinationFetchOptions,
-  DestinationOptions,
   isDestinationFetchOptions
 } from './destination-accessor-types';
 
@@ -26,12 +25,7 @@ export async function useOrFetchDestination(
   destination: Destination | DestinationFetchOptions
 ): Promise<Destination | null> {
   return isDestinationFetchOptions(destination)
-    ? getDestination(
-        destination.destinationName,
-        destination.jwt
-          ? { userJwt: destination.jwt, ...destination }
-          : destination
-      )
+    ? getDestination(destination)
     : sanitizeDestination(destination);
 }
 
@@ -43,18 +37,27 @@ export async function useOrFetchDestination(
  *
  * If you want to get a destination only from a specific source, use the corresponding function directly
  *  (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
- * @param name - The name of the destination to be retrieved.
- * @param options - Configuration for how to retrieve destinations from the destination service.
+ * @param destinationFetchOptions - The DestinationFetchOptions to retrieve the destination.
  * @returns A promise returning the requested destination on success.
  * @internal
  */
 export async function getDestination(
-  name: string,
-  options: DestinationOptions = {}
+  destinationFetchOptions: DestinationFetchOptions = { destinationName: 'test' }
 ): Promise<Destination | null> {
+  destinationFetchOptions = destinationFetchOptions.jwt
+    ? { userJwt: destinationFetchOptions.jwt, ...destinationFetchOptions }
+    : destinationFetchOptions;
   return (
-    searchEnvVariablesForDestination(name, options) ||
-    searchServiceBindingForDestination(name) ||
-    getDestinationFromDestinationService(name, options)
+    searchEnvVariablesForDestination(
+      destinationFetchOptions.destinationName,
+      destinationFetchOptions
+    ) ||
+    searchServiceBindingForDestination(
+      destinationFetchOptions.destinationName
+    ) ||
+    getDestinationFromDestinationService(
+      destinationFetchOptions.destinationName,
+      destinationFetchOptions
+    )
   );
 }

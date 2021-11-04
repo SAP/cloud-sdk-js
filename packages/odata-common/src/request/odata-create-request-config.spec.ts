@@ -2,7 +2,9 @@ import { CommonEntity } from '../../test/common-entity';
 import { createRequestConfig } from '../../test/common-request-config';
 
 describe('ODataCreateRequestConfig', () => {
-  let config = createRequestConfig({ payload: CommonEntity.builder().build() });
+  const config = createRequestConfig({
+    payload: CommonEntity.builder().build()
+  });
 
   it('method is post', () => {
     expect(config.method).toBe('post');

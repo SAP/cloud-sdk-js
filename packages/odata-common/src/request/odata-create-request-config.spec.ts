@@ -1,19 +1,15 @@
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2';
-import { ODataCreateRequestConfig } from '@sap-cloud-sdk/odata-common';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { CommonEntity } from '../../test/common-entity';
+import { createRequestConfig } from '../../test/common-request-config';
 
 describe('ODataCreateRequestConfig', () => {
-  let config: ODataCreateRequestConfig<TestEntity>;
-  beforeEach(() => {
-    config = new ODataCreateRequestConfig(TestEntity, oDataUriV2);
-  });
+  let config = createRequestConfig({ payload: CommonEntity.builder().build() });
 
   it('method is post', () => {
     expect(config.method).toBe('post');
   });
 
   it('has resourcePath without keys', () => {
-    expect(config.resourcePath()).toBe(TestEntity._entityName);
+    expect(config.resourcePath()).toBe(CommonEntity._entityName);
   });
 
   it('has no format', () => {

@@ -41,7 +41,7 @@ export async function useOrFetchDestination(
  * @internal
  */
 export async function getDestination(
-  destinationFetchOptions: DestinationFetchOptions = { destinationName: 'test' }
+  destinationFetchOptions: DestinationFetchOptions
 ): Promise<Destination | null> {
   destinationFetchOptions = destinationFetchOptions.jwt
     ? { userJwt: destinationFetchOptions.jwt, ...destinationFetchOptions }

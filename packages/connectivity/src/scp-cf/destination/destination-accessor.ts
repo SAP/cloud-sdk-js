@@ -18,7 +18,6 @@ import {
  *
  * If either of the prerequisites is not met or one of the services returns an error, this function will either throw an error or return a promise that rejects.
  * @param destination - A destination or the necessary parameters to fetch one.
- * @param options - Caching options by fetching destination.
  * @returns A promise resolving to the requested destination on success.
  */
 export async function useOrFetchDestination(

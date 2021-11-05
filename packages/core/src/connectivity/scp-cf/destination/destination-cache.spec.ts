@@ -485,13 +485,13 @@ describe('caching destination integration tests', () => {
       destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         parsedDestination,
-        IsolationStrategy.User
+        IsolationStrategy.Tenant
       );
 
       const actual = await getDestination('ProviderDest', {
         userJwt: providerUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.User,
+        isolationStrategy: IsolationStrategy.Tenant,
         selectionStrategy: alwaysProvider,
         cacheVerificationKeys: false
       });

@@ -3,6 +3,12 @@ import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { Destination } from './destination-service-types';
 import { DestinationsByType } from './destination-accessor-types';
+import { createLogger } from '@sap-cloud-sdk/util';
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'destination-cache'
+});
 
 const DestinationCache = (cache: Cache<Destination>) => ({
   retrieveDestinationFromCache: (
@@ -10,7 +16,7 @@ const DestinationCache = (cache: Cache<Destination>) => ({
     name: string,
     isolation: IsolationStrategy
   ): Destination | undefined =>
-    cache.get(getDestinationCacheKey(decodedJwt, name, isolation)),
+    cache.get(getDestinationCacheKeyStrict(decodedJwt, name, isolation)),
   cacheRetrievedDestination: (
     decodedJwt: Record<string, any>,
     destination: Destination,
@@ -37,6 +43,51 @@ const DestinationCache = (cache: Cache<Destination>) => ({
 });
 
 /**
+ * Calculates a cache key based on the jwt and destination name for the given isolation strategy.
+ * Cache keys for strategies are non-overlapping, i.e. using a cache key for strategy [[IsolationStrategy.Tenant]]
+ * will not result in a cache hit for a destination that has been cached with strategy [[IsolationStrategy.Tenant_User]].
+ * @param decodedJwt - The decoded JWT of the current request.
+ * @param destinationName - The name of the destination.
+ * @param isolationStrategy - The strategy used to isolate cache entries.
+ * @returns The cache key.
+ * @hidden
+ */
+export function getDestinationCacheKeyStrict(
+  decodedJwt: Record<string, any>,
+  destinationName: string,
+  isolationStrategy = IsolationStrategy.Tenant_User,
+): string | undefined {
+  const tenant = tenantId(decodedJwt);
+  const user = userId(decodedJwt);
+  switch (isolationStrategy) {
+    case IsolationStrategy.No_Isolation:
+      return `::${destinationName}`;
+    case IsolationStrategy.Tenant:
+      if(tenant){
+        return `${tenant}::${destinationName}`;
+      }
+      logger.warn(`Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id is undefined.`);
+      return;
+    case IsolationStrategy.User:
+      if(user){
+        return `:${user}:${destinationName}`;
+      }
+      logger.warn(`Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but user id is undefined.`);
+      return;
+    case IsolationStrategy.Tenant_User:
+      if(tenant && user){
+        return `${user}:${tenant}:${destinationName}`;
+      }
+      logger.warn(`Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id or user id is undefined.`);
+      return;
+    default:
+      logger.warn(`Cannot get cache key. Isolation strategy ${isolationStrategy} is not supported.`);
+      return;
+  }
+}
+
+/**
+ * @deprecated Since v1.52.0. Use [[getDestinationCacheKeyStrict]] instead.
  * Calculates a cache key based on the jwt and destination name for the given isolation strategy.
  * Cache keys for strategies are non-overlapping, i.e. using a cache key for strategy [[IsolationStrategy.Tenant]]
  * will not result in a cache hit for a destination that has been cached with strategy [[IsolationStrategy.Tenant_User]].
@@ -73,7 +124,7 @@ function cacheRetrievedDestination(
     throw new Error('The destination name is undefined.');
   }
 
-  const key = getDestinationCacheKey(decodedJwt, destination.name, isolation);
+  const key = getDestinationCacheKeyStrict(decodedJwt, destination.name, isolation);
   cache.set(key, destination);
 }
 

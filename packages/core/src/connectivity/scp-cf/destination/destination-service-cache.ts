@@ -1,7 +1,7 @@
 import { JwtPayload } from 'jsonwebtoken';
 import { Cache, IsolationStrategy } from '../cache';
 import { Destination } from './destination-service-types';
-import { getDestinationCacheKey } from './destination-cache';
+import { getDestinationCacheKey, getDestinationCacheKeyStrict } from './destination-cache';
 
 const DestinationServiceCache = (cache: Cache<Destination[]>) => ({
   retrieveDestinationsFromCache: (
@@ -37,14 +37,14 @@ function getDestinationCacheKeyService(
   destinationServiceUri: string,
   decodedJwt: JwtPayload,
   isolationStrategy?: IsolationStrategy
-): string {
+): string | undefined {
   const usedIsolationStrategy =
     isolationStrategy === IsolationStrategy.Tenant ||
     isolationStrategy === IsolationStrategy.Tenant_User
       ? isolationStrategy
       : IsolationStrategy.Tenant;
 
-  return getDestinationCacheKey(
+  return getDestinationCacheKeyStrict(
     decodedJwt,
     destinationServiceUri,
     usedIsolationStrategy

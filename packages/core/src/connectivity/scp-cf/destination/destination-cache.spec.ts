@@ -37,10 +37,11 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import { destinationCache } from './destination-cache';
+import { destinationCache, getDestinationCacheKeyStrict } from './destination-cache';
 import { AuthenticationType, Destination } from './destination-service-types';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { parseDestination } from './destination';
+import { createLogger } from '@sap-cloud-sdk/util';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',
@@ -548,6 +549,72 @@ describe('caching destination unit tests', () => {
     expect([actual1, actual2, actual3, actual4]).toEqual(expected);
   });
 
+  it('should not hit cache when Tenant_User is chosen but user id is missing', () => {
+    const dummyJwt = { zid: 'tenant' };
+    destinationCache.cacheRetrievedDestination(
+      dummyJwt,
+      destinationOne,
+      IsolationStrategy.Tenant_User
+    );
+    const actual1 = destinationCache.retrieveDestinationFromCache(
+      dummyJwt,
+      'destToCache1',
+      IsolationStrategy.User
+    );
+    const actual2 = destinationCache.retrieveDestinationFromCache(
+      dummyJwt,
+      'destToCache1',
+      IsolationStrategy.Tenant
+    );
+    const actual3 = destinationCache.retrieveDestinationFromCache(
+      dummyJwt,
+      'destToCache1',
+      IsolationStrategy.Tenant_User
+    );
+    const actual4 = destinationCache.retrieveDestinationFromCache(
+      dummyJwt,
+      'destToCache1',
+      IsolationStrategy.No_Isolation
+    );
+
+    const expected = [undefined, undefined, undefined, undefined];
+
+    expect([actual1, actual2, actual3, actual4]).toEqual(expected);
+  });
+
+  it('should not hit cache when Tenant is chosen but tenant id is missing', () => {
+    const dummyJwt = { user_id: 'user' };
+    destinationCache.cacheRetrievedDestination(
+      dummyJwt,
+      destinationOne,
+      IsolationStrategy.Tenant
+    );
+    const actual1 = destinationCache.retrieveDestinationFromCache(
+      dummyJwt,
+      'destToCache1',
+      IsolationStrategy.User
+    );
+    const actual2 = destinationCache.retrieveDestinationFromCache(
+      dummyJwt,
+      'destToCache1',
+      IsolationStrategy.Tenant
+    );
+    const actual3 = destinationCache.retrieveDestinationFromCache(
+      dummyJwt,
+      'destToCache1',
+      IsolationStrategy.Tenant_User
+    );
+    const actual4 = destinationCache.retrieveDestinationFromCache(
+      dummyJwt,
+      'destToCache1',
+      IsolationStrategy.No_Isolation
+    );
+
+    const expected = [undefined, undefined, undefined, undefined];
+
+    expect([actual1, actual2, actual3, actual4]).toEqual(expected);
+  });
+
   it('should return undefined when the destination is not valid', () => {
     jest.useFakeTimers('modern');
     const dummyJwt = { user_id: 'user', zid: 'tenant' };
@@ -568,3 +635,14 @@ describe('caching destination unit tests', () => {
     expect(actual).toBeUndefined();
   });
 });
+
+
+describe('get destination cache key', () => {
+  it('should shown warning, when Tenant_User is chosen, but user id is missing', () => {
+    const logger = createLogger('destination-cache');
+    const warn = jest.spyOn(logger, 'warn');
+
+    getDestinationCacheKeyStrict({ zid: 'tenant' },'dest');
+    expect(warn).toBeCalledWith('Cannot get cache key. Isolation strategy TenantUser is used, but tenant id or user id is undefined.');
+  });
+})

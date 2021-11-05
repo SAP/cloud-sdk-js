@@ -155,7 +155,7 @@ describe('caching destination integration tests', () => {
         (destinationCache.getCacheInstance() as any).cache
       );
       expect(cacheKeys[0]).toBe(
-        getDestinationCacheKey(
+        getDestinationCacheKeyStrict(
           providerUserPayload,
           'ProviderDest',
           IsolationStrategy.Tenant_User

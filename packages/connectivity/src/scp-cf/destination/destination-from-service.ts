@@ -579,10 +579,6 @@ class DestinationFromServiceRetriever {
       return false;
     }
 
-    if (this.isProviderAndSubscriberSameTenant()) {
-      return false;
-    }
-
     return true;
   }
 

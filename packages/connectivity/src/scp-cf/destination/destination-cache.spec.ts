@@ -3,6 +3,7 @@ import {
   providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
+  providerUserPayload,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../core/test/test-util/mocked-access-tokens';
@@ -37,7 +38,7 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import { destinationCache } from './destination-cache';
+import { destinationCache, getDestinationCacheKey } from './destination-cache';
 import { AuthenticationType, Destination } from './destination-service-types';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { parseDestination } from './destination';
@@ -140,7 +141,26 @@ describe('caching destination integration tests', () => {
       );
     });
 
-    it('retrieved subscriber destinations are cached with tenant id using "Tenant" isolation type by default ', async () => {
+    it('cache key contains user also for provider tokens', async () => {
+      await getDestination('ProviderDest', {
+        userJwt: providerUserJwt,
+        useCache: true,
+        isolationStrategy: IsolationStrategy.Tenant_User,
+        iasToXsuaaTokenExchange: false
+      });
+      const cacheKeys = Object.keys(
+        (destinationCache.getCacheInstance() as any).cache
+      );
+      expect(cacheKeys[0]).toBe(
+        getDestinationCacheKey(
+          providerUserPayload,
+          'ProviderDest',
+          IsolationStrategy.Tenant_User
+        )
+      );
+    });
+
+    it('retrieved subscriber destinations are cached with tenant id using "Tenant_User" isolation type by default ', async () => {
       await getDestination('SubscriberDest', {
         userJwt: subscriberUserJwt,
         useCache: true,

@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [core] Switch the default isolation strategy from `IsolationStrategy.Tenant` to `IsolationStrategy.Tenant_User`, when setting `useCache` to true for destination lookup functions like `getDestination`.
 
 ## New Functionality
 
@@ -26,8 +26,30 @@
 
 ## Fixed Issues
 
--
+- [core] Disable destination cache, when the JWT does not contain necessary information. For example, when using `IsolationStrategy.Tenant_User`, the JWT has to contain both tenant id and user id.
 
+
+# 1.51.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.51.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [core] Tighten the return type of the `getAuthHeaders()` and `buildAuthorizationHeaders()` functions.
+- [openapi-generator] The binary of the `openapi-generator` now calls `./dist/cli.js` instead of `./bin/run`. This will be handled automatically if you install or update the CLI via `node` or run it with `npx`.
+
+## Improvements
+
+- [openapi-generator] Replace `oclif` library with `yargs`. This is a refactoring without functional changes.
+
+## Fixed Issues
+
+- [odata] Fix parsing of `Edm.Time` when some parts of the time are missing, e.g. `PT1H21S`.
+- [util] `setGlobalLogLevel(level)` sets log levels of all existing loggers globally.
+- [util] Fix `equal(item1, item2)` method to return `false` when either object is `null` or `undefined`.
+- [openapi-generator] Existing options per service (`--optionsPerService`) are merged with new options instead of overwriting.
 
 # 1.50.0
 
@@ -46,6 +68,8 @@ Blog: TBD<br>
 ## Fixed Issues
 
 - [core] Fix a type error, when `moment()` is used in filtering an OData field of type `Edm.DateTimeOffset`
+- [core] Fix missing `Proxy-Authorization` header if custom authorization headers are set.
+- [core] Remove wrongly given warning that custom headers are given and will overwrite destination headers.
 
 # 1.49.0
 

@@ -83,14 +83,14 @@ describe('generic http client', () => {
         package: 'core',
         messageContext: 'http-client'
       });
-      const warnSpy = jest.spyOn(logger, 'warn');
+      const infoSpy = jest.spyOn(logger, 'info');
 
       await buildHttpRequest(httpsDestination, {
         authorization: 'abc',
         'sap-client': '001',
         'SAP-Connectivity-SCC-Location_ID': 'efg'
       });
-      expect(warnSpy).toBeCalledWith(
+      expect(infoSpy).toBeCalledWith(
         `The following custom headers will overwrite headers created by the SDK:
   - "authorization"
   - "sap-client"
@@ -250,6 +250,33 @@ describe('generic http client', () => {
       expect(response.data.res).toBe('ult');
       expect(response.status).toBe(200);
       expect(response.headers).toMatchObject({ sharp: 'header' });
+    });
+
+    it('logs request information', async () => {
+      nock('https://example.com', {
+        reqheaders: {
+          authorization: 'Basic VVNFUk5BTUU6UEFTU1dPUkQ=',
+          'sap-client': '001'
+        }
+      })
+        .get('/api/entity')
+        .reply(200, { res: 'ult' }, { sharp: 'header' });
+
+      const config = {
+        method: HttpMethod.GET,
+        url: '/api/entity'
+      };
+      const logger = createLogger({
+        package: 'core',
+        messageContext: 'http-client'
+      });
+      const debugSpy = jest.spyOn(logger, 'debug');
+      await executeHttpRequest(httpsDestination, config);
+      expect(debugSpy)
+        .toHaveBeenCalledWith(`Execute 'GET' request with target: /api/entity.
+The headers of the request are:
+authorization:*******
+sap-client:001`);
     });
 
     it('also works also in more complex cases in more complex cases', async () => {

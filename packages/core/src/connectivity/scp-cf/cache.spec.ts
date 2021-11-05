@@ -86,4 +86,10 @@ describe('Cache', () => {
     expect(cacheTwo.get('expiredToken')).toBeUndefined();
     expect(cacheTwo.get('validToken')).toBe(dummyToken);
   });
+
+  it('should not hit cache for undefined key', () => {
+    cacheOne.set(undefined, {} as Destination);
+    const actual = cacheOne.get(undefined);
+    expect(actual).toBeUndefined();
+  });
 });

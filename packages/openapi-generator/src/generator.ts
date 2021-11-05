@@ -16,7 +16,6 @@ import {
   setLogLevel,
   formatJson
 } from '@sap-cloud-sdk/util';
-import { GlobSync } from 'glob';
 import {
   getSdkMetadataFileNames,
   getSdkVersion,
@@ -39,14 +38,15 @@ import { convertOpenApiSpec } from './document-converter';
 import { createFile, copyFile } from './file-writer';
 import {
   parseGeneratorOptions,
-  ParsedGeneratorOptions,
   tsconfigJson,
   ServiceOptions,
   OptionsPerService,
-  getOptionsPerService
+  getOptionsPerService,
+  getOriginalOptionsPerService,
+  ParsedGeneratorOptions,
+  GeneratorOptions
 } from './options';
 import { sdkMetadata } from './sdk-metadata';
-import { GeneratorOptions } from '.';
 
 const { readdir, rmdir, mkdir, lstat } = promisesFs;
 const logger = createLogger('openapi-generator');
@@ -168,32 +168,32 @@ async function generateSources(
 async function generateMandatorySources(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
-) {
+  { overwrite }: ParsedGeneratorOptions
+): Promise<void> {
   if (openApiDocument.schemas.length) {
     const schemaDir = resolve(serviceDir, 'schema');
-    await createSchemaFiles(schemaDir, openApiDocument, options);
+    await createSchemaFiles(schemaDir, openApiDocument, overwrite);
     await createFile(
       schemaDir,
       'index.ts',
       schemaIndexFile(openApiDocument),
-      options.overwrite
+      overwrite
     );
   }
 
-  await createApis(serviceDir, openApiDocument, options);
+  await createApis(serviceDir, openApiDocument, overwrite);
   await createFile(
     serviceDir,
     'index.ts',
     apiIndexFile(openApiDocument),
-    options.overwrite
+    overwrite
   );
 }
 
 async function createApis(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
+  overwrite: boolean
 ): Promise<void> {
   await Promise.all(
     openApiDocument.apis.map(api =>
@@ -201,7 +201,7 @@ async function createApis(
         serviceDir,
         `${kebabCase(api.name)}.ts`,
         apiFile(api, openApiDocument.serviceName),
-        options.overwrite
+        overwrite
       )
     )
   );
@@ -210,17 +210,12 @@ async function createApis(
 async function createSchemaFiles(
   dir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
+  overwrite: boolean
 ): Promise<void> {
   await mkdir(dir, { recursive: true });
   await Promise.all(
     openApiDocument.schemas.map(schema =>
-      createFile(
-        dir,
-        `${schema.fileName}.ts`,
-        schemaFile(schema),
-        options.overwrite
-      )
+      createFile(dir, `${schema.fileName}.ts`, schemaFile(schema), overwrite)
     )
   );
 }
@@ -291,7 +286,7 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
 // TODO 1728 move to a new package to reduce code duplication.
 async function copyAdditionalFiles(
   serviceDir: string,
-  additionalFiles: string,
+  additionalFiles: string[],
   overwrite: boolean
 ): Promise<void[]> {
   logger.verbose(
@@ -299,7 +294,7 @@ async function copyAdditionalFiles(
   );
 
   return Promise.all(
-    new GlobSync(additionalFiles!).found.map(filePath =>
+    additionalFiles.map(filePath =>
       copyFile(
         resolve(filePath),
         join(serviceDir, basename(filePath)),
@@ -312,7 +307,7 @@ async function copyAdditionalFiles(
 function generateReadme(
   serviceDir: string,
   openApiDocument: OpenApiDocument,
-  options: ParsedGeneratorOptions
+  { overwrite }: ParsedGeneratorOptions
 ): Promise<void> {
   logger.verbose(`Generating readme in ${serviceDir}.`);
 
@@ -320,7 +315,7 @@ function generateReadme(
     serviceDir,
     'README.md',
     readme(openApiDocument),
-    options.overwrite,
+    overwrite,
     false
   );
 }
@@ -328,7 +323,7 @@ function generateReadme(
 async function generateMetadata(
   openApiDocument: OpenApiDocument,
   inputFilePath: string,
-  options: ParsedGeneratorOptions
+  { packageVersion, overwrite }: ParsedGeneratorOptions
 ) {
   const { name: inputFileName, dir: inputDirPath } = parse(inputFilePath);
   const { clientFileName, headerFileName } =
@@ -341,11 +336,11 @@ async function generateMetadata(
     metadataDir,
     headerFileName,
     JSON.stringify(
-      await sdkMetadataHeader('rest', inputFileName, options.packageVersion),
+      await sdkMetadataHeader('rest', inputFileName, packageVersion),
       null,
       2
     ),
-    options.overwrite,
+    overwrite,
     false
   );
 
@@ -354,7 +349,7 @@ async function generateMetadata(
     metadataDir,
     clientFileName,
     JSON.stringify(await sdkMetadata(openApiDocument), null, 2),
-    options.overwrite,
+    overwrite,
     false
   );
   return Promise.all([headerFile, clientFile]);
@@ -363,7 +358,7 @@ async function generateMetadata(
 async function generatePackageJson(
   serviceDir: string,
   { packageName, directoryName }: ServiceOptions,
-  options: ParsedGeneratorOptions
+  { packageVersion, overwrite }: ParsedGeneratorOptions
 ) {
   logger.verbose(`Generating package.json in ${serviceDir}.`);
 
@@ -374,9 +369,9 @@ async function generatePackageJson(
       packageName,
       genericDescription(directoryName),
       await getSdkVersion(),
-      options.packageVersion
+      packageVersion
     ),
-    options.overwrite,
+    overwrite,
     false
   );
 }
@@ -392,7 +387,10 @@ async function generateOptionsPerService(
   await createFile(
     dir,
     basename(filePath),
-    formatJson(optionsPerService),
+    formatJson({
+      ...(await getOriginalOptionsPerService(filePath)),
+      ...optionsPerService
+    }),
     true,
     false
   );

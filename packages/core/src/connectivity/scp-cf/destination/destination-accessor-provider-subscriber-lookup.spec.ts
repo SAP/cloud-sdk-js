@@ -9,7 +9,6 @@ import {
 import {
   onlyIssuerServiceToken,
   providerServiceToken,
-  providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
@@ -25,7 +24,6 @@ import {
   destinationName
 } from '../../../../test/test-util/example-destination-service-responses';
 import { wrapJwtInHeader } from '../jwt';
-import * as destinationService from './destination-service';
 import { DestinationConfiguration, parseDestination } from './destination';
 import {
   alwaysProvider,
@@ -132,7 +130,10 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     it('alwaysSubscriber does not call provider', async () => {
       const mocks = mockThingsForCombinations();
 
-      const destination = await fetchDestination(subscriberUserJwt, alwaysSubscriber);
+      const destination = await fetchDestination(
+        subscriberUserJwt,
+        alwaysSubscriber
+      );
 
       mocks.subscriberMocks.forEach(mock => expect(mock.isDone()).toBe(true));
       mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(false));
@@ -142,7 +143,10 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     it('alwaysPovider does not call subscriber', async () => {
       const mocks = mockThingsForCombinations();
 
-      const destination = await fetchDestination(subscriberUserJwt, alwaysProvider);
+      const destination = await fetchDestination(
+        subscriberUserJwt,
+        alwaysProvider
+      );
 
       mocks.subscriberMocks.forEach(mock => expect(mock.isDone()).toBe(false));
       mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -152,7 +156,10 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     it('subscriberFirst does not call provider if subscriber is found', async () => {
       const mocks = mockThingsForCombinations();
 
-      const destination = await fetchDestination(subscriberUserJwt, subscriberFirst);
+      const destination = await fetchDestination(
+        subscriberUserJwt,
+        subscriberFirst
+      );
 
       mocks.subscriberMocks.forEach(mock => expect(mock.isDone()).toBe(true));
       mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(false));

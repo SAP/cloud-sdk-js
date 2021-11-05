@@ -4,13 +4,14 @@ import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
   providerJwtBearerToken,
   providerServiceToken,
-  providerUserJwt, providerUserPayload,
+  providerUserJwt,
+  providerUserPayload,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
 import {
   connectivityProxyConfigMock,
-  mockServiceBindings, subscriberXsuaaUrl, TestTenants
+  mockServiceBindings
 } from '../../../../test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
@@ -37,11 +38,10 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import {destinationCache, getDestinationCacheKey} from './destination-cache';
+import { destinationCache, getDestinationCacheKey } from './destination-cache';
 import { AuthenticationType, Destination } from './destination-service-types';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { parseDestination } from './destination';
-import {signedJwt} from "../../../../test/test-util";
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',
@@ -142,14 +142,22 @@ describe('caching destination integration tests', () => {
       );
     });
 
-    it('cache key contains user also for provider tokens', async ()=> {
+    it('cache key contains user also for provider tokens', async () => {
       await getDestination('ProviderDest', {
         userJwt: providerUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.Tenant_User,
+        isolationStrategy: IsolationStrategy.Tenant_User
       });
-      const cacheKeys = Object.keys((destinationCache.getCacheInstance() as any).cache)
-      expect(cacheKeys[0]).toBe(getDestinationCacheKey(providerUserPayload,'ProviderDest',IsolationStrategy.Tenant_User))
+      const cacheKeys = Object.keys(
+        (destinationCache.getCacheInstance() as any).cache
+      );
+      expect(cacheKeys[0]).toBe(
+        getDestinationCacheKey(
+          providerUserPayload,
+          'ProviderDest',
+          IsolationStrategy.Tenant_User
+        )
+      );
     });
 
     it('retrieved subscriber destinations are cached with tenant id using "Tenant" isolation type by default ', async () => {

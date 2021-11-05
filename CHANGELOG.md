@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
-- [core] Switch the default isolation strategy from `IsolationStrategy.Tenant` to `IsolationStrategy.Tenant_User`, when setting `useCache` to true for destination lookup functions like `getDestination`.
+-
 
 ## New Functionality
 
@@ -26,10 +26,24 @@
 
 ## Fixed Issues
 
+-
+
+
+# 1.52.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.52.0<br>
+Blog: TBD<br>
+
+## Compatibility Notes
+
+- [core] Switch the default isolation strategy from `IsolationStrategy.Tenant` to `IsolationStrategy.Tenant_User`, when setting `useCache` to true for destination lookup functions like `getDestination`.
+
+## Fixed Issues
+
 - [core] Disable destination cache, when the JWT does not contain necessary information. For example, when using `IsolationStrategy.Tenant_User`, the JWT has to contain both tenant id and user id.
 - [core] Use provider token to retrieve destinations from cache.
 - [core] Overwrite default expiration time of the destination cache with the expiration time of its auth tokens, if available.
-
 
 # 1.51.0
 

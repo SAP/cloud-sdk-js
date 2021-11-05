@@ -152,12 +152,14 @@ describe('caching destination integration tests', () => {
       const c3 = getSubscriberCache(IsolationStrategy.User);
       const c4 = getProviderCache(IsolationStrategy.No_Isolation);
       const c5 = getSubscriberCache(IsolationStrategy.Tenant_User);
+      const c6 = getProviderCache(IsolationStrategy.Tenant_User);
 
-      expect(c1!.url).toBe('https://subscriber.example');
+      expect(c1).toBeUndefined();
       expect(c2).toBeUndefined();
       expect(c3).toBeUndefined();
       expect(c4).toBeUndefined();
-      expect(c5).toBeUndefined();
+      expect(c5!.url).toBe('https://subscriber.example');
+      expect(c6).toBeUndefined();
     });
 
     it('retrieved  provider destinations are cached using only destination name in "NoIsolation" type', async () => {

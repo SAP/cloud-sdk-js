@@ -519,6 +519,10 @@ describe('caching destination integration tests', () => {
 });
 
 describe('caching destination unit tests', () => {
+  beforeEach(() => {
+    destinationCache.clear();
+  });
+
   it('should cache the destination correctly', () => {
     const dummyJwt = { user_id: 'user', zid: 'tenant' };
     destinationCache.cacheRetrievedDestination(

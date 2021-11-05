@@ -139,7 +139,9 @@ function cacheRetrievedDestination(
     isolation
   );
   const expiresIn = first(destination.authTokens || [])?.expiresIn;
-  const expirationTime = expiresIn ? moment().add(expiresIn, 'second').unix() * 1000 : undefined;
+  const expirationTime = expiresIn
+    ? moment().add(expiresIn, 'second').unix() * 1000
+    : undefined;
   cache.set(key, destination, expirationTime);
 }
 

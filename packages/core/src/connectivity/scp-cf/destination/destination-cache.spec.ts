@@ -1,4 +1,5 @@
 import nock from 'nock';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { IsolationStrategy } from '../cache';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {
@@ -37,11 +38,13 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import { destinationCache, getDestinationCacheKeyStrict } from './destination-cache';
+import {
+  destinationCache,
+  getDestinationCacheKeyStrict
+} from './destination-cache';
 import { AuthenticationType, Destination } from './destination-service-types';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { parseDestination } from './destination';
-import { createLogger } from '@sap-cloud-sdk/util';
 
 const destinationOne: Destination = {
   url: 'https://destination1.example',
@@ -636,13 +639,14 @@ describe('caching destination unit tests', () => {
   });
 });
 
-
 describe('get destination cache key', () => {
   it('should shown warning, when Tenant_User is chosen, but user id is missing', () => {
     const logger = createLogger('destination-cache');
     const warn = jest.spyOn(logger, 'warn');
 
-    getDestinationCacheKeyStrict({ zid: 'tenant' },'dest');
-    expect(warn).toBeCalledWith('Cannot get cache key. Isolation strategy TenantUser is used, but tenant id or user id is undefined.');
+    getDestinationCacheKeyStrict({ zid: 'tenant' }, 'dest');
+    expect(warn).toBeCalledWith(
+      'Cannot get cache key. Isolation strategy TenantUser is used, but tenant id or user id is undefined.'
+    );
   });
-})
+});

@@ -92,7 +92,7 @@ export class Cache<T> implements CacheInterface<T> {
    * @param expirationTime - The time expressed in UTC in which the given entry expires
    */
   set(key: string | undefined, entry: T, expirationTime?: number): void {
-    if(key) {
+    if (key) {
       const expires = expirationTime
         ? moment(expirationTime)
         : inferExpirationTime(this.defaultValidityTime);

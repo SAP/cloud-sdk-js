@@ -1,9 +1,9 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Cache, IsolationStrategy } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { Destination } from './destination-service-types';
 import { DestinationsByType } from './destination-accessor-types';
-import { createLogger } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
   package: 'core',
@@ -55,7 +55,7 @@ const DestinationCache = (cache: Cache<Destination>) => ({
 export function getDestinationCacheKeyStrict(
   decodedJwt: Record<string, any>,
   destinationName: string,
-  isolationStrategy = IsolationStrategy.Tenant_User,
+  isolationStrategy = IsolationStrategy.Tenant_User
 ): string | undefined {
   const tenant = tenantId(decodedJwt);
   const user = userId(decodedJwt);
@@ -63,25 +63,33 @@ export function getDestinationCacheKeyStrict(
     case IsolationStrategy.No_Isolation:
       return `::${destinationName}`;
     case IsolationStrategy.Tenant:
-      if(tenant){
+      if (tenant) {
         return `${tenant}::${destinationName}`;
       }
-      logger.warn(`Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id is undefined.`);
+      logger.warn(
+        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id is undefined.`
+      );
       return;
     case IsolationStrategy.User:
-      if(user){
+      if (user) {
         return `:${user}:${destinationName}`;
       }
-      logger.warn(`Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but user id is undefined.`);
+      logger.warn(
+        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but user id is undefined.`
+      );
       return;
     case IsolationStrategy.Tenant_User:
-      if(tenant && user){
+      if (tenant && user) {
         return `${user}:${tenant}:${destinationName}`;
       }
-      logger.warn(`Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id or user id is undefined.`);
+      logger.warn(
+        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id or user id is undefined.`
+      );
       return;
     default:
-      logger.warn(`Cannot get cache key. Isolation strategy ${isolationStrategy} is not supported.`);
+      logger.warn(
+        `Cannot get cache key. Isolation strategy ${isolationStrategy} is not supported.`
+      );
       return;
   }
 }
@@ -124,7 +132,11 @@ function cacheRetrievedDestination(
     throw new Error('The destination name is undefined.');
   }
 
-  const key = getDestinationCacheKeyStrict(decodedJwt, destination.name, isolation);
+  const key = getDestinationCacheKeyStrict(
+    decodedJwt,
+    destination.name,
+    isolation
+  );
   cache.set(key, destination);
 }
 

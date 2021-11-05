@@ -88,7 +88,7 @@ describe('Cache', () => {
   });
 
   it('should not hit cache for undefined key', () => {
-    cacheOne.set(undefined, {} as Destination)
+    cacheOne.set(undefined, {} as Destination);
     const actual = cacheOne.get(undefined);
     expect(actual).toBeUndefined();
   });

@@ -11,8 +11,7 @@ const iat = Math.floor(Date.now() / 1000);
 const providerServiceTokenPayload = {
   iat,
   iss: providerXsuaaUrl,
-  zid: TestTenants.PROVIDER,
-  user_id: 'service-prov'
+  zid: TestTenants.PROVIDER
 };
 
 export const providerServiceToken = signedJwt(providerServiceTokenPayload);
@@ -20,8 +19,7 @@ export const providerServiceToken = signedJwt(providerServiceTokenPayload);
 const subscriberServiceTokenPayload = {
   iat,
   iss: subscriberXsuaaUrl,
-  zid: TestTenants.SUBSCRIBER,
-  user_id: 'service-sub'
+  zid: TestTenants.SUBSCRIBER
 };
 
 export const subscriberServiceToken = signedJwt(subscriberServiceTokenPayload);
@@ -64,7 +62,7 @@ export const userApprovedSubscriberServiceToken = signedJwt(
   userApprovedSubscriberTokenPayload
 );
 
-const providerUserPayload = {
+export const providerUserPayload = {
   iat,
   iss: providerXsuaaUrl,
   zid: TestTenants.PROVIDER,

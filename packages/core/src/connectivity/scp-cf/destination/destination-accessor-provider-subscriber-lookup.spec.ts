@@ -128,90 +128,35 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     expect(destination).toBe(null);
   }
 
-  describe('Combinations: subscriberUserToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
-    it('subscriberUserToken && alwaysSubscriberToken: should not send a request to retrieve remote provider destination and return subscriber destination.', async () => {
+  describe('userToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
+    it('alwaysSubscriber does not call provider', async () => {
       const mocks = mockThingsForCombinations();
 
-      const actual = await fetchDestination(
-        subscriberUserJwt,
-        alwaysSubscriber
-      );
-      expect(actual!.url).toBe(subscriberDestination.URL);
+      const destination = await fetchDestination(subscriberUserJwt, alwaysSubscriber);
 
       mocks.subscriberMocks.forEach(mock => expect(mock.isDone()).toBe(true));
       mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(false));
+      expect(destination!.url).toBe(subscriberDestination.URL);
     });
 
-    it('subscriberUserToken && alwaysProvider: should not sed a request to retrieve remote subscriber destination and return provider destination', async () => {
+    it('alwaysPovider does not call subscriber', async () => {
       const mocks = mockThingsForCombinations();
 
-      const actual = await fetchDestination(subscriberUserJwt, alwaysProvider);
-      assertSubscriberNotCalledAndProviderFound(mocks, actual!);
+      const destination = await fetchDestination(subscriberUserJwt, alwaysProvider);
+
+      mocks.subscriberMocks.forEach(mock => expect(mock.isDone()).toBe(false));
+      mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      expect(destination!.url).toBe(providerDestination.URL);
     });
 
-    it('subscriberUserToken && subscriberFirst: should try subscriber first (found something), provider not called and return subscriber destination', async () => {
-      mockThingsForCombinations();
-
-      const requestSpy = jest.spyOn(
-        destinationService,
-        'fetchSubaccountDestinations'
-      );
-      const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
-      expect(requestSpy).toHaveBeenCalledTimes(1);
-      expect(requestSpy).toHaveBeenNthCalledWith(
-        1,
-        'https://destination.example.com',
-        subscriberServiceToken,
-        expect.anything()
-      );
-      expect(actual!.url).toBe(subscriberDestination.URL);
-    });
-
-    it('subscriberUserToken && subscriberFirst: should try subscriber first (found nothing), provider called and return provider destination', async () => {
-      mockThingsForCombinations(true, false);
-
-      const requestSpy = jest.spyOn(
-        destinationService,
-        'fetchSubaccountDestinations'
-      );
-      const actual = await fetchDestination(subscriberUserJwt, subscriberFirst);
-      expect(requestSpy).toHaveBeenCalledTimes(2);
-      expect(requestSpy).toHaveBeenNthCalledWith(
-        1,
-        'https://destination.example.com',
-        subscriberServiceToken,
-        expect.anything()
-      );
-      expect(requestSpy).toHaveBeenNthCalledWith(
-        2,
-        'https://destination.example.com',
-        providerServiceToken,
-        expect.anything()
-      );
-      expect(actual!.url).toBe(providerDestination.URL);
-    });
-  });
-
-  describe('providerUserToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
-    it('providerUserToken && alwaysSubscriber: should return null since the token does not match subscriber', async () => {
+    it('subscriberFirst does not call provider if subscriber is found', async () => {
       const mocks = mockThingsForCombinations();
 
-      const actual = await fetchDestination(providerUserJwt, alwaysSubscriber);
-      assertNothingCalledAndNullFound(mocks, actual);
-    });
+      const destination = await fetchDestination(subscriberUserJwt, subscriberFirst);
 
-    it('providerUserToken && alwaysProvider: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
-      const mocks = mockThingsForCombinations();
-
-      const actual = await fetchDestination(providerUserJwt, alwaysProvider);
-      assertSubscriberNotCalledAndProviderFound(mocks, actual!);
-    });
-
-    it('providerUserToken && subscriberFirst: should not sed a request to retrieve remote subscriber destination and return provider destination.', async () => {
-      const mocks = mockThingsForCombinations();
-
-      const actual = await fetchDestination(providerUserJwt, subscriberFirst);
-      assertSubscriberNotCalledAndProviderFound(mocks, actual!);
+      mocks.subscriberMocks.forEach(mock => expect(mock.isDone()).toBe(true));
+      mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(false));
+      expect(destination!.url).toBe(subscriberDestination.URL);
     });
   });
 

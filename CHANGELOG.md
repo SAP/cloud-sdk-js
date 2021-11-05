@@ -14,7 +14,7 @@
 
 ## Compatibility Notes
 
--
+- [core] Switch the default isolation strategy from `IsolationStrategy.Tenant` to `IsolationStrategy.Tenant_User`, when setting `useCache` to true for destination lookup functions like `getDestination`.
 
 ## New Functionality
 
@@ -26,7 +26,7 @@
 
 ## Fixed Issues
 
--
+- [core] Disable destination cache, when the JWT does not contain necessary information. For example, when using `IsolationStrategy.Tenant_User`, the JWT has to contain both tenant id and user id.
 
 
 # 1.51.0

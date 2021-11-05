@@ -27,7 +27,8 @@
 ## Fixed Issues
 
 - [core] Disable destination cache, when the JWT does not contain necessary information. For example, when using `IsolationStrategy.Tenant_User`, the JWT has to contain both tenant id and user id.
-- [core] Provider token used in retrieving destination from cache.
+- [core] Use provider token to retrieve destinations from cache.
+- [core] Overwrite default expiration time of the destination cache with the expiration time of its auth tokens, if available.
 
 
 # 1.51.0

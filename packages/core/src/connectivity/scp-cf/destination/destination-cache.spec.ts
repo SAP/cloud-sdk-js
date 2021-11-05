@@ -6,6 +6,7 @@ import {
   providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
+  providerUserPayload,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
@@ -141,6 +142,24 @@ describe('caching destination integration tests', () => {
         [providerDest],
         200,
         providerServiceToken
+      );
+    });
+
+    it('cache key contains user also for provider tokens', async () => {
+      await getDestination('ProviderDest', {
+        userJwt: providerUserJwt,
+        useCache: true,
+        isolationStrategy: IsolationStrategy.Tenant_User
+      });
+      const cacheKeys = Object.keys(
+        (destinationCache.getCacheInstance() as any).cache
+      );
+      expect(cacheKeys[0]).toBe(
+        getDestinationCacheKeyStrict(
+          providerUserPayload,
+          'ProviderDest',
+          IsolationStrategy.Tenant_User
+        )
       );
     });
 
@@ -466,13 +485,13 @@ describe('caching destination integration tests', () => {
       destinationCache.cacheRetrievedDestination(
         decodeJwt(providerServiceToken),
         parsedDestination,
-        IsolationStrategy.User
+        IsolationStrategy.Tenant
       );
 
       const actual = await getDestination('ProviderDest', {
         userJwt: providerUserJwt,
         useCache: true,
-        isolationStrategy: IsolationStrategy.User,
+        isolationStrategy: IsolationStrategy.Tenant,
         selectionStrategy: alwaysProvider,
         cacheVerificationKeys: false
       });

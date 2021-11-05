@@ -1,4 +1,5 @@
-import { createLogger } from '@sap-cloud-sdk/util';
+import { createLogger, first } from '@sap-cloud-sdk/util';
+import moment from 'moment';
 import { Cache, IsolationStrategy } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
@@ -137,7 +138,11 @@ function cacheRetrievedDestination(
     destination.name,
     isolation
   );
-  cache.set(key, destination);
+  const expiresIn = first(destination.authTokens || [])?.expiresIn;
+  const expirationTime = expiresIn
+    ? moment().add(expiresIn, 'second').unix() * 1000
+    : undefined;
+  cache.set(key, destination, expirationTime);
 }
 
 export const destinationCache = DestinationCache(

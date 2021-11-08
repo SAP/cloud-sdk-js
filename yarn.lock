@@ -1604,21 +1604,21 @@
   optionalDependencies:
     npmlog "2 || ^3.1.0 || ^4.0.0"
 
-"@sap-cloud-sdk/analytics@^1.51.0":
-  version "1.51.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/analytics/-/analytics-1.51.0.tgz#994867bc957b08b0f166c4e5ea68d1f0d954a435"
-  integrity sha512-jOyesPnqqNsCPe87VtWgbKm68XX/7VJoKvbKsFs+7KRH5mHbyzOXQLGK8pB+W7hiXg4RkcBEviz9EnHjr31YaQ==
+"@sap-cloud-sdk/analytics@^1.52.0":
+  version "1.52.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/analytics/-/analytics-1.52.0.tgz#c18d68637f5e20c2a21f7fb1f4c96d93f86e17d2"
+  integrity sha512-NwiK22SqutPDQtXtVgWLRdlXDIcvW95RjyJi6ZiiGKPNsVW3oPLpfa29pQ7pDXpn1ID2VNDEe3fu4WKrt5TMsQ==
   dependencies:
-    "@sap-cloud-sdk/util" "^1.51.0"
+    "@sap-cloud-sdk/util" "^1.52.0"
     axios "^0.21.1"
 
 "@sap-cloud-sdk/core@^1.41", "@sap-cloud-sdk/core@^1.47.1", "@sap-cloud-sdk/core@^1.50.0":
-  version "1.51.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.51.0.tgz#c1575ab35b41c5efdcf8d9a06e41e072c70dae67"
-  integrity sha512-yOfEoM/KlLHM+XYWlwVe3XNGVbnbqhRbAbvfLf2ed1LalaWGlY+uyFtRuHX4Wom0/1kt1NswIcZoPuCiPNnKMQ==
+  version "1.52.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.52.0.tgz#e1886e7d043fb2127b74a180f76ed33c0ac6fa8f"
+  integrity sha512-6ISoOUJOOQ9nasghbQLHP3QWzKbNKba4GRWyi3ocs05/QVB7bueN8FoyKIbGIbZXaXeqZf2cgyyoxMlQk7yOkQ==
   dependencies:
-    "@sap-cloud-sdk/analytics" "^1.51.0"
-    "@sap-cloud-sdk/util" "^1.51.0"
+    "@sap-cloud-sdk/analytics" "^1.52.0"
+    "@sap-cloud-sdk/util" "^1.52.0"
     "@sap/xsenv" "^3.0.0"
     "@sap/xssec" "^3.2.7"
     "@types/jsonwebtoken" "^8.3.8"
@@ -1632,10 +1632,10 @@
     uuid "^8.2.0"
     voca "^1.4.0"
 
-"@sap-cloud-sdk/util@^1.51.0":
-  version "1.51.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.51.0.tgz#6406f51d695320d4c70924838f2acebf53b543ed"
-  integrity sha512-8enRas4XpEY0GNnKTiRk7D9RCEcS4IV6YbYJypKtF9dMtpFhTc2B45kcYGOcud4/t4v/5ZQNw8F3leRp6M3+pg==
+"@sap-cloud-sdk/util@^1.52.0":
+  version "1.52.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.52.0.tgz#d4f094000046d2617d840e45412695dc2d9551c0"
+  integrity sha512-B5tiLwO7BtZlGH3Qsg7yFv9RZgSiFcBhj3acAretWr0nF9/emZGiwX38TQuNEfdX0oaNddGiKmZgKI47pA6eBA==
   dependencies:
     axios "^0.21.1"
     chalk "^4.1.0"

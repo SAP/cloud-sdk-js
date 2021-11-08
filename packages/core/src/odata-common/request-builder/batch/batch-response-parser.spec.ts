@@ -272,8 +272,8 @@ describe('batch response parser', () => {
         'Content-Length: 71,',
         'content-transfer-encoding: binary',
         '',
-        'HTTP/1.1 200 Success',
-        'Content-Length: 0',
+        'HTTP/1.1 200 OK',
+        'Content-Length: 10',
         'dataserviceversion: 2.0',
         '',
         '{"valid": "json"}',
@@ -306,6 +306,41 @@ describe('batch response parser', () => {
         headers: {
           'content-type':
             'multipart/mixed; boundary=3B17E95920A7FAF8BCB7495D043515000'
+        }
+      } as HttpResponse;
+      const logger = createLogger({
+        messageContext: 'batch-response-parser'
+      });
+      const errorSpy = jest.spyOn(logger, 'error');
+      parseBatchResponse(batchResponse);
+      expect(errorSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it('parses a batch response with HTTP 200 and empty body', () => {
+      const data = [
+        '--batch_89b52e20-aee8-46c8-8fda-a74b4684191b',
+        'Content-Type: multipart/mixed; boundary=changeset_3ff17c33-5fcf-4b0a-ab17-84917374e43e',
+        '',
+        '--changeset_3ff17c33-5fcf-4b0a-ab17-84917374e43e',
+        'Content-Type: application/http',
+        'Content-Transfer-Encoding: binary',
+        '',
+        'HTTP/1.1 200 OK',
+        'DataServiceVersion: 1.0',
+        'Content-Length: 0',
+        '',
+        '',
+        '',
+        '--changeset_3ff17c33-5fcf-4b0a-ab17-84917374e43e--',
+        '',
+        '--batch_89b52e20-aee8-46c8-8fda-a74b4684191b--'
+      ].join(unixEOL);
+      const batchResponse = {
+        data,
+        status: 200,
+        headers: {
+          'content-type':
+            'multipart/mixed; boundary=batch_89b52e20-aee8-46c8-8fda-a74b4684191b'
         }
       } as HttpResponse;
       const logger = createLogger({

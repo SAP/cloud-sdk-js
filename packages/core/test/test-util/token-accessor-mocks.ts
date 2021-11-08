@@ -20,13 +20,11 @@ export function mockServiceToken() {
   return jest
     .spyOn(tokenAccessor, 'serviceToken')
     .mockImplementation((service, options) => {
-      if (!options || typeof options.userJwt === 'undefined') {
+      if (!options || typeof options.jwt === 'undefined') {
         return Promise.resolve(providerServiceToken);
       }
       const userJwt =
-        typeof options.userJwt === 'string'
-          ? decodeJwt(options.userJwt)
-          : options.userJwt;
+        typeof options.jwt === 'string' ? decodeJwt(options.jwt) : options.jwt;
 
       if (userJwt.iss === onlyIssuerXsuaaUrl) {
         return Promise.resolve(onlyIssuerServiceToken);

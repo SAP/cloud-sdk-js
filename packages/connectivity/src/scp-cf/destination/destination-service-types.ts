@@ -5,7 +5,7 @@ import { ResilienceOptions } from '../resilience-options';
 /**
  * A resolved destination containing information needed to execute requests, such as the system URL.
  *
- * You can create a destination as a local object when supplying all necessary information, or it could be retrieved from the destination service on SAP Business Technology Platform (via [[DestinationNameAndJwt]]).
+ * You can create a destination as a local object when supplying all necessary information, or it could be retrieved from the destination service on SAP Business Technology Platform (via [[DestinationFetchOptions]]).
  * When creating a local object representing a destination, you need to supply at least the [[url]] and, if required by the target system, valid credentials with [[username]] and [[password]].
  */
 export interface Destination {
@@ -188,44 +188,12 @@ export interface DestinationCertificate {
 }
 
 /**
- * Declaration of a destination to be retrieved from an environment variable or from the destination service on SAP Business Technology Platform.
- *
- * Use an object of this interface to specify which destination shall be used when executing a request.
- * The destination will be retrieved via its [[DestinationNameAndJwt.destinationName]] according to the following algorithm:
- * 1. If a destination of this [[DestinationNameAndJwt.destinationName]] is defined in the environment variable `destinations` (if available), it will be converted into a [[Destination]] and used for the request.
- * 2. Otherwise, the destination service on SAP Business Technology Platform is queried for a destination with the given [[DestinationNameAndJwt.destinationName]], using the access token provided as value of property [[jwt]].
- */
-export interface DestinationNameAndJwt {
-  /**
-   * Name of the destination to retrieve, mandatory.
-   */
-  destinationName: string;
-
-  /**
-   * An access token for the XSUAA service on SAP Business Technology Platform, provided as a JSON Web Token, only mandatory when destination shall be retrieved from destination service on SAP Business Technology Platform.
-   */
-  jwt?: string;
-}
-
-/**
  * Options to use while fetching destinations. Encompasses both [[DestinationCachingOptions]] and [[ResilienceOptions]] interfaces.
  */
 export type DestinationRetrievalOptions = CachingOptions & ResilienceOptions;
 
 /**
- * Typeguard to find if object is DestinationNameAndJwt.
- * @param destination - Destination to be checked
- * @returns boolean
- * @internal
- */
-export function isDestinationNameAndJwt(
-  destination: any
-): destination is DestinationNameAndJwt {
-  return destination.destinationName !== undefined;
-}
-
-/**
- * Typeguard to find if object is DestinationNameAndJwt.
+ * Typeguard to find if object is DestinationFetchOptions.
  * @param destination - Destination to be checked
  * @returns boolean
  * @internal

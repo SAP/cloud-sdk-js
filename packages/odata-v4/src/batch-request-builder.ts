@@ -1,8 +1,7 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  DestinationNameAndJwt,
-  DestinationOptions
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import {
   BatchResponse,
@@ -20,15 +19,13 @@ import { entityDeserializer } from './entity-deserializer';
 export class ODataBatchRequestBuilder extends BatchRequestBuilder {
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
-   * @param destination - Targeted destination on which the request is performed.
-   * @param options - Options to employ when fetching destinations.
+   * @param destination - Targeted destination or DestinationFetchOptions on which the request is performed.
    * @returns Promise resolving to the requested data.
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<BatchResponse[]> {
-    return this.executeRaw(destination, options)
+    return this.executeRaw(destination)
       .then(response => parseBatchResponse(response))
       .then(parsedResponse =>
         deserializeBatchResponse(

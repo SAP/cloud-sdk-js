@@ -23,10 +23,10 @@ describe('destination loading precedence', () => {
     mockEnvDestinations();
 
     const expected = sanitizeDestination(environmentDestinations[0]);
-    const actual = await useOrFetchDestination(
-      { destinationName: 'TESTINATION' },
-      { cacheVerificationKeys: false }
-    );
+    const actual = await useOrFetchDestination({
+      destinationName: 'TESTINATION',
+      cacheVerificationKeys: false
+    });
     expect(actual).toMatchObject(expected);
   });
 
@@ -71,10 +71,10 @@ describe('destination loading precedence', () => {
 
   it('tries to fetch destinations normally when neither the destinations env variables is there nor a service binding exists for a given name', async () => {
     await expect(
-      useOrFetchDestination(
-        { destinationName: 'non-existent' },
-        { cacheVerificationKeys: false }
-      )
+      useOrFetchDestination({
+        destinationName: 'non-existent',
+        cacheVerificationKeys: false
+      })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"No binding to an XSUAA service instance found. Please make sure to bind an instance of the XSUAA service to your application."'
     );

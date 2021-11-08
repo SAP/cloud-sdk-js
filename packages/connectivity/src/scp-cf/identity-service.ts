@@ -1,7 +1,7 @@
 import * as xssec from '@sap/xssec';
 import { first } from '@sap-cloud-sdk/util';
+import { DestinationFetchOptions, DestinationOptions } from '..';
 import { getServiceCredentialsList } from './environment-accessor';
-import type { DestinationOptions } from './destination/destination-accessor';
 
 /**
  * @internal
@@ -10,12 +10,12 @@ import type { DestinationOptions } from './destination/destination-accessor';
  * @returns Exchanged token.
  */
 export async function exchangeToken(
-  options: DestinationOptions
+  options: DestinationFetchOptions
 ): Promise<string> {
   const xsuaaServiceCredentials = first(getServiceCredentialsList('xsuaa'));
   return new Promise((resolve: (p: string) => void, reject) => {
     xssec.createSecurityContext(
-      options.userJwt,
+      options.jwt,
       xsuaaServiceCredentials,
       (err: Error, context, tokenInfo) =>
         err ? reject(err) : resolve(tokenInfo.getTokenValue())
@@ -31,5 +31,5 @@ export async function exchangeToken(
  */
 export function isTokenExchangeEnabled(options: DestinationOptions): boolean {
   // note: the option is optional and by default we enable the token exchange.
-  return options.iasToXsuaaTokenExchange !== false && !!options.userJwt;
+  return options.iasToXsuaaTokenExchange !== false && !!options.jwt;
 }

@@ -1604,21 +1604,21 @@
   optionalDependencies:
     npmlog "2 || ^3.1.0 || ^4.0.0"
 
-"@sap-cloud-sdk/analytics@^1.51.0":
-  version "1.51.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/analytics/-/analytics-1.51.0.tgz#994867bc957b08b0f166c4e5ea68d1f0d954a435"
-  integrity sha512-jOyesPnqqNsCPe87VtWgbKm68XX/7VJoKvbKsFs+7KRH5mHbyzOXQLGK8pB+W7hiXg4RkcBEviz9EnHjr31YaQ==
+"@sap-cloud-sdk/analytics@^1.52.0":
+  version "1.52.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/analytics/-/analytics-1.52.0.tgz#c18d68637f5e20c2a21f7fb1f4c96d93f86e17d2"
+  integrity sha512-NwiK22SqutPDQtXtVgWLRdlXDIcvW95RjyJi6ZiiGKPNsVW3oPLpfa29pQ7pDXpn1ID2VNDEe3fu4WKrt5TMsQ==
   dependencies:
-    "@sap-cloud-sdk/util" "^1.51.0"
+    "@sap-cloud-sdk/util" "^1.52.0"
     axios "^0.21.1"
 
 "@sap-cloud-sdk/core@^1.41", "@sap-cloud-sdk/core@^1.47.1", "@sap-cloud-sdk/core@^1.50.0":
-  version "1.51.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.51.0.tgz#c1575ab35b41c5efdcf8d9a06e41e072c70dae67"
-  integrity sha512-yOfEoM/KlLHM+XYWlwVe3XNGVbnbqhRbAbvfLf2ed1LalaWGlY+uyFtRuHX4Wom0/1kt1NswIcZoPuCiPNnKMQ==
+  version "1.52.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.52.0.tgz#e1886e7d043fb2127b74a180f76ed33c0ac6fa8f"
+  integrity sha512-6ISoOUJOOQ9nasghbQLHP3QWzKbNKba4GRWyi3ocs05/QVB7bueN8FoyKIbGIbZXaXeqZf2cgyyoxMlQk7yOkQ==
   dependencies:
-    "@sap-cloud-sdk/analytics" "^1.51.0"
-    "@sap-cloud-sdk/util" "^1.51.0"
+    "@sap-cloud-sdk/analytics" "^1.52.0"
+    "@sap-cloud-sdk/util" "^1.52.0"
     "@sap/xsenv" "^3.0.0"
     "@sap/xssec" "^3.2.7"
     "@types/jsonwebtoken" "^8.3.8"
@@ -1632,10 +1632,10 @@
     uuid "^8.2.0"
     voca "^1.4.0"
 
-"@sap-cloud-sdk/util@^1.51.0":
-  version "1.51.0"
-  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.51.0.tgz#6406f51d695320d4c70924838f2acebf53b543ed"
-  integrity sha512-8enRas4XpEY0GNnKTiRk7D9RCEcS4IV6YbYJypKtF9dMtpFhTc2B45kcYGOcud4/t4v/5ZQNw8F3leRp6M3+pg==
+"@sap-cloud-sdk/util@^1.52.0":
+  version "1.52.0"
+  resolved "https://registry.npmjs.org/@sap-cloud-sdk/util/-/util-1.52.0.tgz#d4f094000046d2617d840e45412695dc2d9551c0"
+  integrity sha512-B5tiLwO7BtZlGH3Qsg7yFv9RZgSiFcBhj3acAretWr0nF9/emZGiwX38TQuNEfdX0oaNddGiKmZgKI47pA6eBA==
   dependencies:
     axios "^0.21.1"
     chalk "^4.1.0"
@@ -1696,9 +1696,9 @@
     fs-extra "9.0.1"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.5.4":
-  version "5.5.5"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.5.5.tgz#9c4b13041d9425ed1e38351272a6299554279490"
-  integrity sha512-UwJSIbt5j0q6/qR3CfS7DAYR1tb32NK1CJ2pjk/3G002m6c/QStMIx1TS5uPFWJwKA9JxkNA85/UrMPdak4ufA==
+  version "5.6.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.6.1.tgz#8847463a741e878e3333063d835382a098704160"
+  integrity sha512-l2XMsEu5B+2Bcc+kJ0JUE6ehu0pFYL8wDIE0n1BLbqRih330qWjjquWnzZtPO26JioZy4upbOCO3TGXWf6zzZQ==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
@@ -2280,7 +2280,7 @@ ajv@^6.10.0, ajv@^6.12.3, ajv@^6.12.4, ajv@~6.12.6:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ajv@^8.0.0, ajv@^8.0.1, ajv@^8.1.0, ajv@^8.5.0:
+ajv@^8.0.0, ajv@^8.0.1, ajv@^8.1.0, ajv@^8.6.2:
   version "8.6.3"
   resolved "https://registry.npmjs.org/ajv/-/ajv-8.6.3.tgz#11a66527761dc3e9a3845ea775d2d3c0414e8764"
   integrity sha512-SMJOdDP6LqTkD0Uq8qLi+gMwSt0imXLSV080qFVwJCpH9U6Mb+SUGHAXM0KNbcBPguytWyvFxcHgMLe2D2XSpw==
@@ -3155,10 +3155,10 @@ compare-func@^2.0.0:
     array-ify "^1.0.0"
     dot-prop "^5.1.0"
 
-compare-versions@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.npmjs.org/compare-versions/-/compare-versions-3.6.0.tgz#1a5689913685e5a87637b8d3ffca75514ec41d62"
-  integrity sha512-W6Af2Iw1z4CB7q4uU4hv646dW9GQuBM+YpC0UvUCWSD8w90SJjp+ujJuXaEMtAXBtSqGfMPuFOVn4/+FlaqfBA==
+compare-versions@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/compare-versions/-/compare-versions-4.0.1.tgz#be467c86e6514f5b08f63207a75ce844553dc84b"
+  integrity sha512-CWRFliMK+3xX42rdenZuutpAA02Egtxb5HbSSb5WJRHhkdGC6VAHigssQ7DoyNq7g+6VamJhCQ5wpoApZkFxGw==
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -4092,9 +4092,9 @@ eslint-plugin-import@^2.20.2:
     tsconfig-paths "^3.11.0"
 
 eslint-plugin-jest@^25.0.1:
-  version "25.2.2"
-  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-25.2.2.tgz#aada85113268e79d4e7423f8ad4e1b740f112e71"
-  integrity sha512-frn5yhOF60U4kcqozO3zKTNZQUk+mfx037XOy2iiYL8FhorEkuCuL3/flzKcY1ECDP2WYT9ydmvlO3fRW9o4mg==
+  version "25.2.3"
+  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-25.2.3.tgz#7a841eca91b4e21f31fe0a5403f55bc7779dd7b3"
+  integrity sha512-Yoa0at3euTjERDvPGPWiItY1uuqKYQ5Ov2SmkSLmKRq9OFiVdEehw0rWuK4PA538k7CNqnvmkztjAB9l+HJ7kQ==
   dependencies:
     "@typescript-eslint/experimental-utils" "^5.0.0"
 
@@ -7017,9 +7017,9 @@ neo-async@^2.6.0:
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
 nock@^13.0.11:
-  version "13.1.4"
-  resolved "https://registry.npmjs.org/nock/-/nock-13.1.4.tgz#367c917d4c532a889404b85ade92762c29e80262"
-  integrity sha512-hr5+mknLpIbTOXifB13lx9mAKF1zQPUCMh53Galx79ic5opvNOd55jiB0iGCp2xqh+hwnFbNE/ddBKHsJNQrbw==
+  version "13.2.0"
+  resolved "https://registry.npmjs.org/nock/-/nock-13.2.0.tgz#1da976e809cb082e3acb65de9ea7839cdd115d3e"
+  integrity sha512-j7xjoMU9ZnvkTeoLnD2gIXNlwmLb+GNCPbnqtx7IwlNvdBBqU5aaQPK4Nw6lNmqIJkBubyka6rvrZuDNz1L7Ew==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
@@ -7473,13 +7473,13 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-openapi-backend@^4.1.0:
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-4.2.0.tgz#f201c1ef79acf9ad590f324c19d8e61452616d72"
-  integrity sha512-eqdgJAjDbVZ7zhiIF68mlItFxqE48OPAM9nHHYx6BJMoGK2xInSBc2Oqp4dzsrsLIzoY8nVzK/vUtYktyXGb9Q==
+openapi-backend@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.0.0.tgz#fb509a5afbce909c676caa89a55550b1d597a385"
+  integrity sha512-ppOFSLEXIgmRGcbd9kfPzXmUFHhlBux69rlu7dot5XZ6BH7ycXEvFjRdFLXZ76GdO++i3epDZkxkRBHqPNoz/Q==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.7"
-    ajv "^8.5.0"
+    ajv "^8.6.2"
     bath-es5 "^3.0.3"
     cookie "^0.4.0"
     lodash "^4.17.15"
@@ -9537,9 +9537,9 @@ ts-jest@^27.0.5:
     yargs-parser "20.x"
 
 ts-morph@^12.0.0:
-  version "12.1.0"
-  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-12.1.0.tgz#80a80703b30f94354e7bb0c490344be1031125a7"
-  integrity sha512-xsJt70NePtztxDZ99bXkOwoi3p82JDUiPa0pSgfvxDj87mb4zUwzv1LHOue3Lq7iJlh5fLzvWshOMDEUfKTVtg==
+  version "12.2.0"
+  resolved "https://registry.npmjs.org/ts-morph/-/ts-morph-12.2.0.tgz#3332319cecd44aff0b7b410f1fe39637499b1a1b"
+  integrity sha512-WHXLtFDcIRwoqaiu0elAoZ/AmI+SwwDafnPKjgJmdwJ2gRVO0jMKBt88rV2liT/c6MTsXyuWbGFiHe9MRddWJw==
   dependencies:
     "@ts-morph/common" "~0.11.1"
     code-block-writer "^10.1.1"
@@ -9714,9 +9714,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typedoc@^0.22.3:
-  version "0.22.7"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.22.7.tgz#e5e095ab14676296f4b12ac3355321eae650e447"
-  integrity sha512-ndxxp+tU1Wczvdxp4u2/PvT1qjD6hdFdSdehpORHjE+JXmMkl2bftXCR0upHmsnesBG7VCcr8vfgloGHIH8glQ==
+  version "0.22.8"
+  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.22.8.tgz#cd488290bd31d2cd4099004e1104807895d4eb17"
+  integrity sha512-92S+YzyhospdXN5rnkYUTgirdTYqNWY7NP9vco+IqQQoiSXzVSUsawVro+tMyEEsWUS7EMaJ2YOjB9uE0CBi6A==
   dependencies:
     glob "^7.2.0"
     lunr "^2.3.9"
@@ -9882,9 +9882,9 @@ validate-npm-package-name@^3.0.0:
     builtins "^1.0.3"
 
 validator@^13.6.0:
-  version "13.6.0"
-  resolved "https://registry.npmjs.org/validator/-/validator-13.6.0.tgz#1e71899c14cdc7b2068463cb24c1cc16f6ec7059"
-  integrity sha512-gVgKbdbHgtxpRyR8K0O6oFZPhhB5tT1jeEHZR0Znr9Svg03U0+r9DXWMrnRAB+HtCStDQKlaIZm42tVsVjqtjg==
+  version "13.7.0"
+  resolved "https://registry.npmjs.org/validator/-/validator-13.7.0.tgz#4f9658ba13ba8f3d82ee881d3516489ea85c0857"
+  integrity sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==
 
 vary@~1.1.2:
   version "1.1.2"

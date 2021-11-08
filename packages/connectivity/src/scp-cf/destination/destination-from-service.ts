@@ -213,7 +213,7 @@ class DestinationFromServiceRetriever {
     readonly providerClientCredentialsToken: JwtPair
   ) {
     const defaultOptions = {
-      isolationStrategy: IsolationStrategy.Tenant,
+      isolationStrategy: IsolationStrategy.Tenant_User,
       selectionStrategy: subscriberFirst,
       useCache: false,
       ...options
@@ -575,10 +575,6 @@ class DestinationFromServiceRetriever {
     }
 
     if (this.options.selectionStrategy === alwaysProvider) {
-      return false;
-    }
-
-    if (this.isProviderAndSubscriberSameTenant()) {
       return false;
     }
 

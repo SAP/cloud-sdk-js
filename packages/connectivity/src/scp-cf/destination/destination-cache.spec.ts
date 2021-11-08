@@ -142,7 +142,6 @@ describe('caching destination integration tests', () => {
       );
     });
 
-
     it('cache key contains user also for provider tokens', async () => {
       await getDestination({
         destinationName: 'ProviderDest',

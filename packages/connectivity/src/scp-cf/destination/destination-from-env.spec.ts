@@ -74,7 +74,7 @@ describe('env-destination-accessor', () => {
       )}.${encodeBase64(JSON.stringify(jwtPayload))}.SomeHash`;
       const actual = await getDestination({
         destinationName: 'FORWARD-TOKEN-DESTINATION',
-        userJwt: fullToken
+        jwt: fullToken
       });
       expect(actual?.authTokens![0].expiresIn).toEqual('1234');
       expect(actual?.authTokens![0].value).toEqual(fullToken);

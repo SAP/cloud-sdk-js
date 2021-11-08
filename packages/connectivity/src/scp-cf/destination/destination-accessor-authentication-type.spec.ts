@@ -89,7 +89,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination({
         destinationName,
-        userJwt: iasToken
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -125,7 +125,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthSingleResponse);
       const actual = await getDestination({
         destinationName,
-        userJwt: iasToken,
+        jwt: iasToken,
         cacheVerificationKeys: false
       });
 
@@ -204,7 +204,7 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         cacheVerificationKeys: false,
-        userJwt: iasToken
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -242,7 +242,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
       const actual = await getDestination({
         destinationName,
-        userJwt: iasToken
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -309,7 +309,7 @@ describe('authentication types', () => {
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
       const actual = await getDestination({
         destinationName,
-        userJwt: iasToken
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -349,7 +349,7 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         selectionStrategy: alwaysProvider,
-        userJwt: iasToken
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -389,7 +389,7 @@ describe('authentication types', () => {
       const actual = await getDestination({
         destinationName,
         selectionStrategy: alwaysSubscriber,
-        userJwt: iasToken
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -426,7 +426,7 @@ describe('authentication types', () => {
 
       const actual = await getDestination({
         destinationName: 'ERNIE-UND-CERT',
-        userJwt: iasToken,
+        jwt: iasToken,
         cacheVerificationKeys: false
       });
       expect(actual!.certificates!.length).toBe(1);
@@ -500,7 +500,7 @@ describe('authentication types', () => {
 
       const actual = await getDestination({
         destinationName: 'OnPremise',
-        userJwt: iasToken,
+        jwt: iasToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });
@@ -534,7 +534,7 @@ describe('authentication types', () => {
       const expected = parseDestination(basicMultipleResponse[0]);
       const actual = await getDestination({
         destinationName,
-        userJwt: iasToken,
+        jwt: iasToken,
         cacheVerificationKeys: false
       });
       expect(actual).toMatchObject(expected);
@@ -565,7 +565,7 @@ describe('authentication types', () => {
 
       const actual = await getDestination({
         destinationName: 'OnPremise',
-        userJwt: iasToken,
+        jwt: iasToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });

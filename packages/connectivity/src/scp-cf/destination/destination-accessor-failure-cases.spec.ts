@@ -50,7 +50,7 @@ describe('Failure cases', () => {
     await expect(
       getDestination({
         destinationName,
-        userJwt: subscriberServiceTokenWithVerificationURL,
+        jwt: subscriberServiceTokenWithVerificationURL,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       })
@@ -66,7 +66,7 @@ describe('Failure cases', () => {
     await expect(
       getDestination({
         destinationName,
-        userJwt: 'fails',
+        jwt: 'fails',
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       })
@@ -100,7 +100,7 @@ describe('Failure cases', () => {
     try {
       await getDestination({
         destinationName,
-        userJwt: subscriberServiceToken,
+        jwt: subscriberServiceToken,
         enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
@@ -141,7 +141,7 @@ describe('Failure cases', () => {
     try {
       await getDestination({
         destinationName,
-        userJwt: subscriberUserJwt,
+        jwt: subscriberUserJwt,
         enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
@@ -172,7 +172,7 @@ describe('Failure cases', () => {
     const expected = null;
     const actual = await getDestination({
       destinationName,
-      userJwt: subscriberUserJwt,
+      jwt: subscriberUserJwt,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });

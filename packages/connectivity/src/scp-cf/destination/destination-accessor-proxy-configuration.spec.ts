@@ -50,7 +50,7 @@ describe('proxy configuration', () => {
 
     const actual = await getDestination({
       destinationName,
-      userJwt: subscriberServiceToken,
+      jwt: subscriberServiceToken,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });
@@ -89,7 +89,7 @@ describe('proxy configuration', () => {
 
     const actual = await getDestination({
       destinationName: 'OnPremise',
-      userJwt: subscriberServiceToken,
+      jwt: subscriberServiceToken,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });

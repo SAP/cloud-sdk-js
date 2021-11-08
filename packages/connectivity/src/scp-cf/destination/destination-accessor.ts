@@ -36,27 +36,22 @@ export async function useOrFetchDestination(
  *
  * If you want to get a destination only from a specific source, use the corresponding function directly
  *  (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
- * @param destinationFetchOptions - The DestinationFetchOptions to retrieve the destination.
+ * @param options - The options to retrieve the destination.
  * @returns A promise returning the requested destination on success.
  * @internal
  */
 export async function getDestination(
-  destinationFetchOptions: DestinationFetchOptions
+  options: DestinationFetchOptions
 ): Promise<Destination | null> {
-  destinationFetchOptions = destinationFetchOptions.jwt
-    ? { userJwt: destinationFetchOptions.jwt, ...destinationFetchOptions }
-    : destinationFetchOptions;
   return (
     searchEnvVariablesForDestination(
-      destinationFetchOptions.destinationName,
-      destinationFetchOptions
+      options
     ) ||
     searchServiceBindingForDestination(
-      destinationFetchOptions.destinationName
+      options.destinationName
     ) ||
     getDestinationFromDestinationService(
-      destinationFetchOptions.destinationName,
-      destinationFetchOptions
+      options
     )
   );
 }

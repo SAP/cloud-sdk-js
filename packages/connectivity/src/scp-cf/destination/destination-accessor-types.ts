@@ -33,7 +33,7 @@ export interface DestinationAccessorOptions {
   /**
    * The user token of the current request.
    */
-  userJwt?: string;
+  jwt?: string;
 
   /**
    * Option to enable/disable the IAS token to XSUAA token exchange.
@@ -70,11 +70,6 @@ export interface DestinationFetchOptions extends DestinationOptions {
    * Name of the destination to retrieve, mandatory.
    */
   destinationName: string;
-
-  /**
-   * An access token for the XSUAA service on SAP Business Technology Platform, provided as a JSON Web Token, only mandatory when destination shall be retrieved from destination service on SAP Business Technology Platform.
-   */
-  jwt?: string;
 }
 
 /**

@@ -312,19 +312,19 @@ describe('caching destination integration tests', () => {
       );
 
       const destinationFromService = await getDestinationFromDestinationService(
-        { destinationName: 'ERNIE-UND-CERT',
+        {
+          destinationName: 'ERNIE-UND-CERT',
           useCache: true,
           jwt: providerUserJwt,
           iasToXsuaaTokenExchange: false
         }
       );
-      const destinationFromCache = await getDestinationFromDestinationService(
-        { destinationName: 'ERNIE-UND-CERT',
-          useCache: true,
-          jwt: providerUserJwt,
-          iasToXsuaaTokenExchange: false
-        }
-      );
+      const destinationFromCache = await getDestinationFromDestinationService({
+        destinationName: 'ERNIE-UND-CERT',
+        useCache: true,
+        jwt: providerUserJwt,
+        iasToXsuaaTokenExchange: false
+      });
 
       expect(destinationFromService).toEqual(
         parseDestination(certificateSingleResponse)
@@ -408,18 +408,18 @@ describe('caching destination integration tests', () => {
       );
 
       const destinationFromFirstCall =
-        await getDestinationFromDestinationService({ destinationName: 'OnPremise',
+        await getDestinationFromDestinationService({
+          destinationName: 'OnPremise',
           useCache: true,
           jwt: providerUserJwt,
           iasToXsuaaTokenExchange: false
         });
-      const destinationFromCache = await getDestinationFromDestinationService(
-        { destinationName: 'OnPremise',
-          useCache: true,
-          jwt: providerUserJwt,
-          iasToXsuaaTokenExchange: false
-        }
-      );
+      const destinationFromCache = await getDestinationFromDestinationService({
+        destinationName: 'OnPremise',
+        useCache: true,
+        jwt: providerUserJwt,
+        iasToXsuaaTokenExchange: false
+      });
 
       const expected = {
         ...parseDestination({

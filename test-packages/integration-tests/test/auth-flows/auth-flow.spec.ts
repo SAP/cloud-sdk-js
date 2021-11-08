@@ -57,7 +57,7 @@ describe('OAuth flows', () => {
 
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -71,7 +71,7 @@ describe('OAuth flows', () => {
 
   xit('BasicAuth: Provider Destination & Provider Token + GET request', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -88,10 +88,9 @@ describe('OAuth flows', () => {
   }, 60000);
 
   xit('BasicAuth onPrem  Basic Authentication', async () => {
-    const destination = await getDestinationFromDestinationService(
-      systems.s4onPrem.providerBasic,
-      {}
-    );
+    const destination = await getDestinationFromDestinationService({
+      destinationName: systems.s4onPrem.providerBasic
+    });
 
     expect(destination!.proxyConfiguration).toMatchObject({
       headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) },
@@ -103,7 +102,7 @@ describe('OAuth flows', () => {
 
   xit('BasicAuth: Provider Destination & Provider Token + PUT request (csrf token)', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -124,7 +123,7 @@ describe('OAuth flows', () => {
 
   xit('BasicAuth: Subscriber Destination & Subscriber Token', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.subscriber
+      jwt: accessToken.subscriber
     });
 
     const destination = await fetchDestination(
@@ -142,7 +141,7 @@ describe('OAuth flows', () => {
 
   xit('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -180,7 +179,7 @@ describe('OAuth flows', () => {
 
   xit('OAuth2JWTBearer: Provider Destination & Provider Token', async () => {
     const token = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -229,7 +228,7 @@ describe('OAuth flows', () => {
 
   xit('OAuth2UserTokenExchange: Subscriber destination and Subscriber Jwt', async () => {
     const subscriberDestToken = await serviceToken('destination', {
-      userJwt: accessToken.subscriber
+      jwt: accessToken.subscriber
     });
 
     const destination = await fetchDestination(
@@ -328,7 +327,7 @@ describe('OAuth flows', () => {
     );
 
     const clientGrant = await serviceToken('destination', {
-      userJwt: xsuaaToken
+      jwt: xsuaaToken
     });
 
     const destination = await fetchDestination(

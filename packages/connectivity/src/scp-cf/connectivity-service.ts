@@ -93,11 +93,11 @@ async function proxyHeaders(
 }
 
 async function proxyAuthorizationHeader(
-  userJwt?
+  jwt?
 ): Promise<{ 'Proxy-Authorization': string }> {
   try {
     const connServiceBinding = readConnectivityServiceBinding();
-    const token = await serviceToken(connServiceBinding, { userJwt });
+    const token = await serviceToken(connServiceBinding, { jwt });
     return { 'Proxy-Authorization': `Bearer ${token}` };
   } catch (error) {
     throw new ErrorWithCause(

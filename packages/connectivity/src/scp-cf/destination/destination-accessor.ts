@@ -44,14 +44,8 @@ export async function getDestination(
   options: DestinationFetchOptions
 ): Promise<Destination | null> {
   return (
-    searchEnvVariablesForDestination(
-      options
-    ) ||
-    searchServiceBindingForDestination(
-      options.destinationName
-    ) ||
-    getDestinationFromDestinationService(
-      options
-    )
+    searchEnvVariablesForDestination(options) ||
+    searchServiceBindingForDestination(options.destinationName) ||
+    getDestinationFromDestinationService(options)
   );
 }

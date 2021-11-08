@@ -368,7 +368,7 @@ class DestinationFromServiceRetriever {
    */
   private async fetchDestinationByClientCrendentialsGrant(): Promise<Destination> {
     const clientGrant = await serviceToken('destination', {
-      userJwt:
+      jwt:
         this?.subscriberToken?.decoded ||
         this.providerClientCredentialsToken.decoded
     });
@@ -420,7 +420,7 @@ class DestinationFromServiceRetriever {
   ): Promise<Destination> {
     const accessToken = await serviceToken('destination', {
       ...this.options,
-      userJwt:
+      jwt:
         origin === 'subscriber'
           ? this.subscriberToken!.decoded
           : this.providerClientCredentialsToken.decoded
@@ -512,7 +512,7 @@ class DestinationFromServiceRetriever {
 
     const accessToken = await serviceToken('destination', {
       ...this.options,
-      userJwt: this.subscriberToken.decoded
+      jwt: this.subscriberToken.decoded
     });
     const subscriber = await this.getInstanceAndSubaccountDestinations(
       accessToken

@@ -40,7 +40,11 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import { destinationCache, getDestinationCacheKey } from './destination-cache';
-import { AuthenticationType, Destination, DestinationAuthToken } from './destination-service-types';
+import {
+  AuthenticationType,
+  Destination,
+  DestinationAuthToken
+} from './destination-service-types';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { parseDestination } from './destination';
 

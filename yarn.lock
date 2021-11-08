@@ -2280,7 +2280,7 @@ ajv@^6.10.0, ajv@^6.12.3, ajv@^6.12.4, ajv@~6.12.6:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ajv@^8.0.0, ajv@^8.0.1, ajv@^8.1.0, ajv@^8.5.0:
+ajv@^8.0.0, ajv@^8.0.1, ajv@^8.1.0, ajv@^8.6.2:
   version "8.6.3"
   resolved "https://registry.npmjs.org/ajv/-/ajv-8.6.3.tgz#11a66527761dc3e9a3845ea775d2d3c0414e8764"
   integrity sha512-SMJOdDP6LqTkD0Uq8qLi+gMwSt0imXLSV080qFVwJCpH9U6Mb+SUGHAXM0KNbcBPguytWyvFxcHgMLe2D2XSpw==
@@ -7473,13 +7473,13 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-openapi-backend@^4.1.0:
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-4.2.0.tgz#f201c1ef79acf9ad590f324c19d8e61452616d72"
-  integrity sha512-eqdgJAjDbVZ7zhiIF68mlItFxqE48OPAM9nHHYx6BJMoGK2xInSBc2Oqp4dzsrsLIzoY8nVzK/vUtYktyXGb9Q==
+openapi-backend@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.0.0.tgz#fb509a5afbce909c676caa89a55550b1d597a385"
+  integrity sha512-ppOFSLEXIgmRGcbd9kfPzXmUFHhlBux69rlu7dot5XZ6BH7ycXEvFjRdFLXZ76GdO++i3epDZkxkRBHqPNoz/Q==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.7"
-    ajv "^8.5.0"
+    ajv "^8.6.2"
     bath-es5 "^3.0.3"
     cookie "^0.4.0"
     lodash "^4.17.15"

@@ -58,7 +58,7 @@ function getExpandAsString<EntityT extends Entity>(
       params = {
         ...params,
         ...createGetFilter(uriConverter).getFilter(
-          and(...expand._filters?.filters),
+          and(expand._filters?.filters || []),
           entityConstructor
         ),
         ...(expand._skip && { skip: expand._skip }),

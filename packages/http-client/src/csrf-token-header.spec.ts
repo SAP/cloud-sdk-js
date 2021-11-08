@@ -12,7 +12,7 @@ import {
   defaultDestination,
   defaultHost,
   mockHeaderRequest
-} from '../../core/test/test-util';
+} from '../../../test-resources/test/test-util';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 
 const standardHeaders = {

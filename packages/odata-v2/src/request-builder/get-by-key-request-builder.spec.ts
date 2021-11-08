@@ -4,13 +4,13 @@ import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   defaultDestination,
   mockGetRequest
-} from '../../../core/test/test-util/request-mocker';
+} from '../../../../test-resources/test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityDataWithLinks,
   createTestEntity,
   testEntityResourcePath
-} from '../../../core/test/test-util/test-data';
+} from '../../../../test-resources/test/test-util/test-data';
 import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 

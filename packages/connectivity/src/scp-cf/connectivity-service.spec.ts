@@ -2,13 +2,13 @@ import {
   connectivityBindingMock,
   connectivityProxyConfigMock,
   mockServiceBindings
-} from '../../../core/test/test-util/environment-mocks';
+} from '../../../../test-resources/test/test-util/environment-mocks';
 import {
   providerServiceToken,
   providerUserJwt
-} from '../../../core/test/test-util/mocked-access-tokens';
-import { mockServiceToken } from '../../../core/test/test-util/token-accessor-mocks';
-import { mockClientCredentialsGrantCall } from '../../../core/test/test-util/xsuaa-service-mocks';
+} from '../../../../test-resources/test/test-util/mocked-access-tokens';
+import { mockServiceToken } from '../../../../test-resources/test/test-util/token-accessor-mocks';
+import { mockClientCredentialsGrantCall } from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import {
   addProxyConfigurationOnPrem,
   proxyHostAndPort

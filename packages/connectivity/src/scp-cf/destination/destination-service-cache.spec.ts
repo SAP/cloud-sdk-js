@@ -1,15 +1,15 @@
 import nock from 'nock';
-import { mockServiceBindings } from '../../../../core/test/test-util/environment-mocks';
-import { mockServiceToken } from '../../../../core/test/test-util/token-accessor-mocks';
+import { mockServiceBindings } from '../../../../../test-resources/test/test-util/environment-mocks';
+import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   providerServiceToken,
   subscriberServiceToken
-} from '../../../../core/test/test-util/mocked-access-tokens';
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../../../../core/test/test-util/destination-service-mocks';
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import { IsolationStrategy } from '../cache';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import {

@@ -9,7 +9,7 @@ import {
   testFilterString,
   testFilterStringV4,
   testNestedFilterLambdaExpressionOnLink
-} from '../../../core/test/test-util/filter-factory';
+} from '../../../../test-resources/test/test-util/filter-factory';
 import { filterFunctions } from '../filter-functions';
 import { filterFunction } from '../filter-function';
 import { oDataUri } from './odata-uri';

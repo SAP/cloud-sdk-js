@@ -9,9 +9,9 @@ import {
   defaultDestination,
   defaultHost,
   mockCreateRequest
-} from '../../../core/test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
-import { testPostRequestOutcome } from '../../../core/test/test-util/testPostRequestOutcome';
+} from '../../../../test-resources/test/test-util/request-mocker';
+import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
+import { testPostRequestOutcome } from '../../../../test-resources/test/test-util/testPostRequestOutcome';
 import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { CreateRequestBuilder } from './create-request-builder';
 

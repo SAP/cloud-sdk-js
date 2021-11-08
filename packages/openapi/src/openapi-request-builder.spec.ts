@@ -15,7 +15,7 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken
-} from '../../core/test/test-util';
+} from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {

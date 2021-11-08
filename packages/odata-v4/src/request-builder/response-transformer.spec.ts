@@ -2,7 +2,7 @@ import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createTestEntity
-} from '../../../core/test/test-util/test-data';
+} from '../../../../test-resources/test/test-util/test-data';
 import { edmToTs } from '../payload-value-converter';
 import {
   transformReturnValueForEdmType,

@@ -11,8 +11,8 @@ import { buildHeaders } from '@sap-cloud-sdk/odata-common/dist/header-builder';
 import {
   defaultDestination,
   mockHeaderRequest
-} from '../../core/test/test-util/request-mocker';
-import { connectivityProxyConfigMock } from '../../core/test/test-util/environment-mocks';
+} from '../../../test-resources/test/test-util/request-mocker';
+import { connectivityProxyConfigMock } from '../../../test-resources/test/test-util/environment-mocks';
 
 function createGetAllRequest(
   dest: Destination

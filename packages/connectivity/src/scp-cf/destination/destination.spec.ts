@@ -2,7 +2,7 @@ import {
   basicMultipleResponse,
   certificateMultipleResponse,
   certificateSingleResponse
-} from '../../../../core/test/test-util/example-destination-service-responses';
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import {
   DestinationConfiguration,
   parseDestination,

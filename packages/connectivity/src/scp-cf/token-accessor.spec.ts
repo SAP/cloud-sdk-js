@@ -6,18 +6,18 @@ import {
   providerXsuaaCertUrl,
   providerXsuaaUrl,
   subscriberXsuaaUrl
-} from '../../../core/test/test-util/environment-mocks';
-import { signedJwt } from '../../../core/test/test-util/keys';
+} from '../../../../test-resources/test/test-util/environment-mocks';
+import { signedJwt } from '../../../../test-resources/test/test-util/keys';
 import {
   providerServiceToken,
   providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
-} from '../../../core/test/test-util/mocked-access-tokens';
+} from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockClientCredentialsGrantCall,
   mockClientCredentialsGrantWithCertCall
-} from '../../../core/test/test-util/xsuaa-service-mocks';
+} from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { serviceToken } from './token-accessor';
 

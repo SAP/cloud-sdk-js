@@ -5,14 +5,14 @@ import {
 import {
   defaultDestination,
   mockGetRequest
-} from '../../../core/test/test-util/request-mocker';
+} from '../../../../test-resources/test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityWithEnumKeyData,
   createTestEntity,
   createTestEntityWithEnumKey,
   testEntityResourcePath
-} from '../../../core/test/test-util/test-data';
+} from '../../../../test-resources/test/test-util/test-data';
 import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 

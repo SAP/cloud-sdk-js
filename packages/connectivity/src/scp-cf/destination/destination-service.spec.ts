@@ -2,8 +2,8 @@ import nock from 'nock';
 import * as jwt123 from 'jsonwebtoken';
 import axios, { AxiosRequestConfig } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { destinationServiceUri } from '../../../../core/test/test-util/environment-mocks';
-import { privateKey } from '../../../../core/test/test-util/keys';
+import { destinationServiceUri } from '../../../../../test-resources/test/test-util/environment-mocks';
+import { privateKey } from '../../../../../test-resources/test/test-util/keys';
 import { Destination } from './destination-service-types';
 import {
   fetchDestination,

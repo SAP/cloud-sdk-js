@@ -6,19 +6,20 @@ exports.TestEntityWithSharedEntityType1RequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityWithSharedEntityType1_1 = require('./TestEntityWithSharedEntityType1');
 /**
  * Request builder class for operations supported on the [[TestEntityWithSharedEntityType1]] entity.
  */
-class TestEntityWithSharedEntityType1RequestBuilder extends core_1.RequestBuilder {
+class TestEntityWithSharedEntityType1RequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityWithSharedEntityType1` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityWithSharedEntityType1.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType1` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new core_1.GetByKeyRequestBuilderV4(
+    return new odata_v4_1.GetByKeyRequestBuilder(
       TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1,
       { KeyProperty: keyProperty }
     );
@@ -28,7 +29,7 @@ class TestEntityWithSharedEntityType1RequestBuilder extends core_1.RequestBuilde
    * @returns A request builder for creating requests to retrieve all `TestEntityWithSharedEntityType1` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV4(
+    return new odata_v4_1.GetAllRequestBuilder(
       TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1
     );
   }
@@ -38,7 +39,7 @@ class TestEntityWithSharedEntityType1RequestBuilder extends core_1.RequestBuilde
    * @returns A request builder for creating requests that create an entity of type `TestEntityWithSharedEntityType1`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV4(
+    return new odata_v4_1.CreateRequestBuilder(
       TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1,
       entity
     );
@@ -49,13 +50,13 @@ class TestEntityWithSharedEntityType1RequestBuilder extends core_1.RequestBuilde
    * @returns A request builder for creating requests that update an entity of type `TestEntityWithSharedEntityType1`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV4(
+    return new odata_v4_1.UpdateRequestBuilder(
       TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1,
       entity
     );
   }
   delete(keyPropertyOrEntity) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1,
       keyPropertyOrEntity instanceof
       TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1

@@ -1,4 +1,4 @@
-import { FunctionImportRequestBuilderV2 } from '@sap-cloud-sdk/core';
+import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v2';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 /**
@@ -12,7 +12,7 @@ export interface TestFunctionImportNoReturnTypeParameters {}
  */
 export declare function testFunctionImportNoReturnType(
   parameters: TestFunctionImportNoReturnTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportNoReturnTypeParameters,
   undefined
 >;
@@ -27,7 +27,7 @@ export interface TestFunctionImportEdmReturnTypeParameters {}
  */
 export declare function testFunctionImportEdmReturnType(
   parameters: TestFunctionImportEdmReturnTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportEdmReturnTypeParameters,
   boolean
 >;
@@ -42,7 +42,7 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters {}
  */
 export declare function testFunctionImportEdmReturnTypeCollection(
   parameters: TestFunctionImportEdmReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportEdmReturnTypeCollectionParameters,
   string[]
 >;
@@ -57,7 +57,7 @@ export interface TestFunctionImportEntityReturnTypeParameters {}
  */
 export declare function testFunctionImportEntityReturnType(
   parameters: TestFunctionImportEntityReturnTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnTypeParameters,
   TestEntity
 >;
@@ -72,7 +72,7 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters {}
  */
 export declare function testFunctionImportEntityReturnTypeCollection(
   parameters: TestFunctionImportEntityReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnTypeCollectionParameters,
   TestEntity[]
 >;
@@ -88,7 +88,7 @@ export interface TestFunctionImportSharedEntityReturnTypeParameters {}
 export declare function testFunctionImportSharedEntityReturnType(
   parameters: TestFunctionImportSharedEntityReturnTypeParameters
 ): Omit<
-  FunctionImportRequestBuilderV2<
+  FunctionImportRequestBuilder<
     TestFunctionImportSharedEntityReturnTypeParameters,
     never
   >,
@@ -106,7 +106,7 @@ export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {}
 export declare function testFunctionImportSharedEntityReturnTypeCollection(
   parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters
 ): Omit<
-  FunctionImportRequestBuilderV2<
+  FunctionImportRequestBuilder<
     TestFunctionImportSharedEntityReturnTypeCollectionParameters,
     never
   >,
@@ -123,7 +123,7 @@ export interface TestFunctionImportComplexReturnTypeParameters {}
  */
 export declare function testFunctionImportComplexReturnType(
   parameters: TestFunctionImportComplexReturnTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportComplexReturnTypeParameters,
   TestComplexType
 >;
@@ -143,7 +143,7 @@ export interface TestFunctionImportUnsupportedEdmTypesParameters {
  */
 export declare function testFunctionImportUnsupportedEdmTypes(
   parameters: TestFunctionImportUnsupportedEdmTypesParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportUnsupportedEdmTypesParameters,
   any
 >;
@@ -158,7 +158,7 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters {}
  */
 export declare function testFunctionImportComplexReturnTypeCollection(
   parameters: TestFunctionImportComplexReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestComplexType[]
 >;
@@ -178,7 +178,7 @@ export interface TestFunctionImportGetParameters {
  */
 export declare function testFunctionImportGet(
   parameters: TestFunctionImportGetParameters
-): FunctionImportRequestBuilderV2<TestFunctionImportGetParameters, boolean>;
+): FunctionImportRequestBuilder<TestFunctionImportGetParameters, boolean>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportPost]].
  */
@@ -195,7 +195,7 @@ export interface TestFunctionImportPostParameters {
  */
 export declare function testFunctionImportPost(
   parameters: TestFunctionImportPostParameters
-): FunctionImportRequestBuilderV2<TestFunctionImportPostParameters, boolean>;
+): FunctionImportRequestBuilder<TestFunctionImportPostParameters, boolean>;
 /**
  * Type of the parameters to be passed to [[testFunctionImportMultipleParams]].
  */
@@ -216,7 +216,7 @@ export interface TestFunctionImportMultipleParamsParameters {
  */
 export declare function testFunctionImportMultipleParams(
   parameters: TestFunctionImportMultipleParamsParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportMultipleParamsParameters,
   boolean
 >;
@@ -231,7 +231,7 @@ export interface CreateTestComplexTypeParameters {}
  */
 export declare function createTestComplexType(
   parameters: CreateTestComplexTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   CreateTestComplexTypeParameters,
   TestComplexType
 >;
@@ -246,7 +246,7 @@ export interface FContinueParameters {}
  */
 export declare function fContinue(
   parameters: FContinueParameters
-): FunctionImportRequestBuilderV2<FContinueParameters, boolean>;
+): FunctionImportRequestBuilder<FContinueParameters, boolean>;
 export declare const functionImports: {
   testFunctionImportNoReturnType: typeof testFunctionImportNoReturnType;
   testFunctionImportEdmReturnType: typeof testFunctionImportEdmReturnType;

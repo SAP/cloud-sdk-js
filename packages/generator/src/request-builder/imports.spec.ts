@@ -8,14 +8,17 @@ describe('imports', () => {
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/core',
+        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        namedImports: ['RequestBuilder', 'Time']
+      },
+      {
+        kind: StructureKind.ImportDeclaration,
+        moduleSpecifier: '@sap-cloud-sdk/odata-v2',
         namedImports: [
-          'Time',
-          'RequestBuilder',
-          'GetAllRequestBuilderV2',
-          'GetByKeyRequestBuilderV2',
-          'CreateRequestBuilderV2',
-          'UpdateRequestBuilderV2'
+          'GetAllRequestBuilder',
+          'GetByKeyRequestBuilder',
+          'CreateRequestBuilder',
+          'UpdateRequestBuilder'
         ]
       },
       {

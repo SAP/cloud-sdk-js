@@ -5,7 +5,7 @@ import { requestBuilderClass } from './class';
 
 describe('request builder class', () => {
   it('should generate request builder correctly', () => {
-    const requestBuilder = requestBuilderClass(breakfastEntity, 'v2');
+    const requestBuilder = requestBuilderClass(breakfastEntity);
     expect(requestBuilder.name).toBe('BreakfastRequestBuilder');
     expect(requestBuilder.extends).toBe('RequestBuilder<Breakfast>');
 
@@ -17,8 +17,8 @@ describe('request builder class', () => {
     }));
     const getByKey = {
       name: 'getByKey',
-      returnType: 'GetByKeyRequestBuilderV2<Breakfast>',
-      statements: `return new GetByKeyRequestBuilderV2(Breakfast, {EntityName: entityName,${unixEOL}BreakfastTime: breakfastTime});`,
+      returnType: 'GetByKeyRequestBuilder<Breakfast>',
+      statements: `return new GetByKeyRequestBuilder(Breakfast, {EntityName: entityName,${unixEOL}BreakfastTime: breakfastTime});`,
       parameters: [
         { name: 'entityName', type: 'string' },
         { name: 'breakfastTime', type: 'Time' }
@@ -26,20 +26,20 @@ describe('request builder class', () => {
     };
     const getAll = {
       name: 'getAll',
-      returnType: 'GetAllRequestBuilderV2<Breakfast>',
-      statements: 'return new GetAllRequestBuilderV2(Breakfast);',
+      returnType: 'GetAllRequestBuilder<Breakfast>',
+      statements: 'return new GetAllRequestBuilder(Breakfast);',
       parameters: undefined
     };
     const create = {
       name: 'create',
-      returnType: 'CreateRequestBuilderV2<Breakfast>',
-      statements: 'return new CreateRequestBuilderV2(Breakfast, entity);',
+      returnType: 'CreateRequestBuilder<Breakfast>',
+      statements: 'return new CreateRequestBuilder(Breakfast, entity);',
       parameters: [{ name: 'entity', type: 'Breakfast' }]
     };
     const update = {
       name: 'update',
-      returnType: 'UpdateRequestBuilderV2<Breakfast>',
-      statements: 'return new UpdateRequestBuilderV2(Breakfast, entity);',
+      returnType: 'UpdateRequestBuilder<Breakfast>',
+      statements: 'return new UpdateRequestBuilder(Breakfast, entity);',
       parameters: [{ name: 'entity', type: 'Breakfast' }]
     };
     expect(methods).toEqual([getByKey, getAll, create, update]);
@@ -62,7 +62,7 @@ describe('request builder class', () => {
     };
     corruptedEntity.properties.push(accompaniment);
     corruptedEntity.keys.push(accompaniment);
-    const requestBuilder = requestBuilderClass(corruptedEntity, 'v4');
+    const requestBuilder = requestBuilderClass(corruptedEntity);
     const methods = requestBuilder
       .methods!.filter(
         method => method.name === 'getByKey' || method.name === 'delete'
@@ -80,8 +80,8 @@ describe('request builder class', () => {
     ];
     const getByKeyRequestBuilder = {
       name: 'getByKey',
-      returnType: 'GetByKeyRequestBuilderV4<Breakfast>',
-      statements: `return new GetByKeyRequestBuilderV4(Breakfast, {EntityName: entityName,${unixEOL}BreakfastTime: breakfastTime,${unixEOL}With: pWith});`,
+      returnType: 'GetByKeyRequestBuilder<Breakfast>',
+      statements: `return new GetByKeyRequestBuilder(Breakfast, {EntityName: entityName,${unixEOL}BreakfastTime: breakfastTime,${unixEOL}With: pWith});`,
       parameters: params
     };
 
@@ -92,8 +92,8 @@ describe('request builder class', () => {
     ];
     const deleteRequestBuilder = {
       name: 'delete',
-      returnType: 'DeleteRequestBuilderV4<Breakfast>',
-      statements: `return new DeleteRequestBuilderV4(Breakfast, entityNameOrEntity instanceof Breakfast ? entityNameOrEntity : {EntityName: entityNameOrEntity!,${unixEOL}BreakfastTime: breakfastTime!,${unixEOL}With: pWith!});`,
+      returnType: 'DeleteRequestBuilder<Breakfast>',
+      statements: `return new DeleteRequestBuilder(Breakfast, entityNameOrEntity instanceof Breakfast ? entityNameOrEntity : {EntityName: entityNameOrEntity!,${unixEOL}BreakfastTime: breakfastTime!,${unixEOL}With: pWith!});`,
       parameters: deleteParams
     };
     expect(methods).toEqual([getByKeyRequestBuilder, deleteRequestBuilder]);

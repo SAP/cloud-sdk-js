@@ -4,23 +4,22 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularLinkChildRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
   Constructable,
-  CustomFieldV2,
   EdmTypeField,
   EntityBuilderType,
-  EntityV2,
   Field,
   FieldBuilder,
   Link
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
  */
 export class TestEntityCircularLinkChild
-  extends EntityV2
+  extends Entity
   implements TestEntityCircularLinkChildType
 {
   /**
@@ -48,7 +47,7 @@ export class TestEntityCircularLinkChild
     TestEntityCircularLinkChild,
     TestEntityCircularLinkChildType
   > {
-    return EntityV2.entityBuilder(TestEntityCircularLinkChild);
+    return Entity.entityBuilder(TestEntityCircularLinkChild);
   }
 
   /**
@@ -66,8 +65,8 @@ export class TestEntityCircularLinkChild
    */
   static customField(
     fieldName: string
-  ): CustomFieldV2<TestEntityCircularLinkChild> {
-    return EntityV2.customFieldSelector(fieldName, TestEntityCircularLinkChild);
+  ): CustomField<TestEntityCircularLinkChild> {
+    return Entity.customFieldSelector(fieldName, TestEntityCircularLinkChild);
   }
 
   /**

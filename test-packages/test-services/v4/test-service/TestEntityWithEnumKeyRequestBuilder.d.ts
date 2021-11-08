@@ -1,11 +1,11 @@
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntityWithEnumKey } from './TestEntityWithEnumKey';
 import { TestEnumType } from './TestEnumType';
 /**
@@ -19,12 +19,12 @@ export declare class TestEntityWithEnumKeyRequestBuilder extends RequestBuilder<
    */
   getByKey(
     keyPropertyEnum1: TestEnumType
-  ): GetByKeyRequestBuilderV4<TestEntityWithEnumKey>;
+  ): GetByKeyRequestBuilder<TestEntityWithEnumKey>;
   /**
    * Returns a request builder for querying all `TestEntityWithEnumKey` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithEnumKey` entities.
    */
-  getAll(): GetAllRequestBuilderV4<TestEntityWithEnumKey>;
+  getAll(): GetAllRequestBuilder<TestEntityWithEnumKey>;
   /**
    * Returns a request builder for creating a `TestEntityWithEnumKey` entity.
    * @param entity The entity to be created
@@ -32,7 +32,7 @@ export declare class TestEntityWithEnumKeyRequestBuilder extends RequestBuilder<
    */
   create(
     entity: TestEntityWithEnumKey
-  ): CreateRequestBuilderV4<TestEntityWithEnumKey>;
+  ): CreateRequestBuilder<TestEntityWithEnumKey>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityWithEnumKey`.
    * @param entity The entity to be updated
@@ -40,7 +40,7 @@ export declare class TestEntityWithEnumKeyRequestBuilder extends RequestBuilder<
    */
   update(
     entity: TestEntityWithEnumKey
-  ): UpdateRequestBuilderV4<TestEntityWithEnumKey>;
+  ): UpdateRequestBuilder<TestEntityWithEnumKey>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityWithEnumKey`.
    * @param keyPropertyEnum1 Key property. See [[TestEntityWithEnumKey.keyPropertyEnum1]].
@@ -48,7 +48,7 @@ export declare class TestEntityWithEnumKeyRequestBuilder extends RequestBuilder<
    */
   delete(
     keyPropertyEnum1: TestEnumType
-  ): DeleteRequestBuilderV4<TestEntityWithEnumKey>;
+  ): DeleteRequestBuilder<TestEntityWithEnumKey>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityWithEnumKey`.
    * @param entity Pass the entity to be deleted.
@@ -56,6 +56,6 @@ export declare class TestEntityWithEnumKeyRequestBuilder extends RequestBuilder<
    */
   delete(
     entity: TestEntityWithEnumKey
-  ): DeleteRequestBuilderV4<TestEntityWithEnumKey>;
+  ): DeleteRequestBuilder<TestEntityWithEnumKey>;
 }
 //# sourceMappingURL=TestEntityWithEnumKeyRequestBuilder.d.ts.map

@@ -7,17 +7,18 @@ exports.Airlines = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const AirlinesRequestBuilder_1 = require('./AirlinesRequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-class Airlines extends core_1.EntityV4 {
+class Airlines extends odata_v4_1.Entity {
   /**
    * Returns an entity builder to construct instances of `Airlines`.
    * @returns A builder that constructs instances of entity type `Airlines`.
    */
   static builder() {
-    return core_1.EntityV4.entityBuilder(Airlines);
+    return odata_v4_1.Entity.entityBuilder(Airlines);
   }
   /**
    * Returns a request builder to construct requests for operations on the `Airlines` entity type.
@@ -32,7 +33,7 @@ class Airlines extends core_1.EntityV4 {
    * @returns A builder that constructs instances of entity type `Airlines`.
    */
   static customField(fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, Airlines);
+    return odata_v4_1.Entity.customFieldSelector(fieldName, Airlines);
   }
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -53,7 +54,7 @@ Airlines._entityName = 'Airlines';
 Airlines._defaultServicePath =
   'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 (function (Airlines) {
-  const _fieldBuilder = new core_1.FieldBuilder(Airlines);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(Airlines);
   /**
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -75,7 +76,7 @@ Airlines._defaultServicePath =
   /**
    * All fields selector.
    */
-  Airlines.ALL_FIELDS = new core_1.AllFields('*', Airlines);
+  Airlines.ALL_FIELDS = new odata_common_1.AllFields('*', Airlines);
   /**
    * All key fields of the Airlines entity.
    */

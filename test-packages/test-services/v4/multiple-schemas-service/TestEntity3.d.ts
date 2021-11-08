@@ -1,19 +1,18 @@
 import { TestEntity3RequestBuilder } from './TestEntity3RequestBuilder';
 import { TestComplexType2, TestComplexType2Field } from './TestComplexType2';
 import { TestEnumType2 } from './TestEnumType2';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   EnumField,
   Field
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "A_TestEntity3" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export declare class TestEntity3 extends EntityV4 implements TestEntity3Type {
+export declare class TestEntity3 extends Entity implements TestEntity3Type {
   /**
    * Technical entity name for TestEntity3.
    */
@@ -51,7 +50,7 @@ export declare class TestEntity3 extends EntityV4 implements TestEntity3Type {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity3`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntity3>;
+  static customField(fieldName: string): CustomField<TestEntity3>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

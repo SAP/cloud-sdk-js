@@ -4,23 +4,22 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityLvl2MultiLinkRequestBuilder } from './TestEntityLvl2MultiLinkRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
   Constructable,
-  CustomFieldV2,
   EdmTypeField,
   EntityBuilderType,
-  EntityV2,
   Field,
   FieldBuilder,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
  */
 export class TestEntityLvl2MultiLink
-  extends EntityV2
+  extends Entity
   implements TestEntityLvl2MultiLinkType
 {
   /**
@@ -66,7 +65,7 @@ export class TestEntityLvl2MultiLink
     TestEntityLvl2MultiLink,
     TestEntityLvl2MultiLinkType
   > {
-    return EntityV2.entityBuilder(TestEntityLvl2MultiLink);
+    return Entity.entityBuilder(TestEntityLvl2MultiLink);
   }
 
   /**
@@ -82,10 +81,8 @@ export class TestEntityLvl2MultiLink
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
    */
-  static customField(
-    fieldName: string
-  ): CustomFieldV2<TestEntityLvl2MultiLink> {
-    return EntityV2.customFieldSelector(fieldName, TestEntityLvl2MultiLink);
+  static customField(fieldName: string): CustomField<TestEntityLvl2MultiLink> {
+    return Entity.customFieldSelector(fieldName, TestEntityLvl2MultiLink);
   }
 
   /**

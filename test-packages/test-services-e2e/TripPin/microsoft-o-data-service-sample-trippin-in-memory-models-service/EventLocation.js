@@ -10,7 +10,8 @@ exports.EventLocation =
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const City_1 = require('./City');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * @deprecated Since v1.6.0. Use [[EventLocation.build]] instead.
  */
@@ -22,7 +23,7 @@ exports.createEventLocation = createEventLocation;
  * EventLocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class EventLocationField extends core_1.ComplexTypeField {
+class EventLocationField extends odata_common_1.ComplexTypeField {
   /**
    * Creates an instance of EventLocationField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -30,7 +31,7 @@ class EventLocationField extends core_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, fieldOptions) {
     super(fieldName, fieldOf, EventLocation, fieldOptions);
-    this._fieldBuilder = new core_1.FieldBuilder(this);
+    this._fieldBuilder = new odata_common_1.FieldBuilder(this);
     /**
      * Representation of the [[EventLocation.buildingInfo]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -87,10 +88,10 @@ var EventLocation;
     }
   ];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   function build(json) {
-    return (0, core_1.deserializeComplexTypeV4)(json, EventLocation);
+    return (0, odata_v4_1.deserializeComplexType)(json, EventLocation);
   }
   EventLocation.build = build;
 })((EventLocation = exports.EventLocation || (exports.EventLocation = {})));

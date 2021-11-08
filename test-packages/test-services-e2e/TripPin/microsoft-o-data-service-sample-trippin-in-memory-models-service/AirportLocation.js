@@ -10,7 +10,8 @@ exports.AirportLocation =
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const City_1 = require('./City');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * @deprecated Since v1.6.0. Use [[AirportLocation.build]] instead.
  */
@@ -22,7 +23,7 @@ exports.createAirportLocation = createAirportLocation;
  * AirportLocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class AirportLocationField extends core_1.ComplexTypeField {
+class AirportLocationField extends odata_common_1.ComplexTypeField {
   /**
    * Creates an instance of AirportLocationField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -30,7 +31,7 @@ class AirportLocationField extends core_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, fieldOptions) {
     super(fieldName, fieldOf, AirportLocation, fieldOptions);
-    this._fieldBuilder = new core_1.FieldBuilder(this);
+    this._fieldBuilder = new odata_common_1.FieldBuilder(this);
     /**
      * Representation of the [[AirportLocation.loc]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -83,10 +84,10 @@ var AirportLocation;
     }
   ];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   function build(json) {
-    return (0, core_1.deserializeComplexTypeV4)(json, AirportLocation);
+    return (0, odata_v4_1.deserializeComplexType)(json, AirportLocation);
   }
   AirportLocation.build = build;
 })(

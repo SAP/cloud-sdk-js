@@ -14,7 +14,8 @@ exports.actionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestComplexType_1 = require('./TestComplexType');
 const TestEntity_1 = require('./TestEntity');
 /**
@@ -25,11 +26,11 @@ const TestEntity_1 = require('./TestEntity');
  */
 function testActionImportNoParameterNoReturnType(parameters) {
   const params = {};
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterNoReturnType',
     data =>
-      (0, core_1.transformReturnValueForUndefinedV4)(data, val => undefined),
+      (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined),
     params
   );
 }
@@ -43,33 +44,33 @@ exports.testActionImportNoParameterNoReturnType =
  */
 function testActionImportMultipleParameterComplexReturnType(parameters) {
   const params = {
-    stringParam: new core_1.ActionImportParameter(
+    stringParam: new odata_v4_1.ActionImportParameter(
       'StringParam',
       'Edm.String',
       parameters.stringParam
     ),
-    nonNullableStringParam: new core_1.ActionImportParameter(
+    nonNullableStringParam: new odata_v4_1.ActionImportParameter(
       'NonNullableStringParam',
       'Edm.String',
       parameters.nonNullableStringParam
     ),
-    nullableBooleanParam: new core_1.ActionImportParameter(
+    nullableBooleanParam: new odata_v4_1.ActionImportParameter(
       'NullableBooleanParam',
       'Edm.Boolean',
       parameters.nullableBooleanParam
     ),
-    nullableGeographyPointParam: new core_1.ActionImportParameter(
+    nullableGeographyPointParam: new odata_v4_1.ActionImportParameter(
       'NullableGeographyPointParam',
       'Edm.Any',
       parameters.nullableGeographyPointParam
     )
   };
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportMultipleParameterComplexReturnType',
     data =>
-      (0, core_1.transformReturnValueForComplexTypeV4)(data, data =>
-        (0, core_1.deserializeComplexTypeV4)(
+      (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
+        (0, odata_v4_1.deserializeComplexType)(
           data,
           TestComplexType_1.TestComplexType
         )
@@ -87,18 +88,18 @@ exports.testActionImportMultipleParameterComplexReturnType =
  */
 function testActionImportUnsupportedEdmTypes(parameters) {
   const params = {
-    simpleParam: new core_1.ActionImportParameter(
+    simpleParam: new odata_v4_1.ActionImportParameter(
       'SimpleParam',
       'Edm.Any',
       parameters.simpleParam
     )
   };
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportUnsupportedEdmTypes',
     data =>
-      (0, core_1.transformReturnValueForEdmTypeV4)(data, val =>
-        (0, core_1.edmToTsV4)(val.value, 'Edm.Any')
+      (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Any')
       ),
     params
   );
@@ -113,11 +114,11 @@ exports.testActionImportUnsupportedEdmTypes =
  */
 function testActionImportNoParameterEntityReturnType(parameters) {
   const params = {};
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterEntityReturnType',
     data =>
-      (0, core_1.transformReturnValueForEntityV4)(
+      (0, odata_v4_1.transformReturnValueForEntity)(
         data,
         TestEntity_1.TestEntity
       ),
@@ -134,11 +135,11 @@ exports.testActionImportNoParameterEntityReturnType =
  */
 function testActionImportSharedEntityReturnType(parameters) {
   const params = {};
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportSharedEntityReturnType',
     data =>
-      (0, core_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestActionImportSharedEntityReturnType'
       ),
@@ -155,11 +156,11 @@ exports.testActionImportSharedEntityReturnType =
  */
 function testActionImportSharedEntityReturnTypeCollection(parameters) {
   const params = {};
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportSharedEntityReturnTypeCollection',
     data =>
-      (0, core_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestActionImportSharedEntityReturnTypeCollection'
       ),
@@ -176,28 +177,28 @@ exports.testActionImportSharedEntityReturnTypeCollection =
  */
 function testActionImportNullableTest(parameters) {
   const params = {
-    nullablePerDefault: new core_1.ActionImportParameter(
+    nullablePerDefault: new odata_v4_1.ActionImportParameter(
       'NullablePerDefault',
       'Edm.String',
       parameters.nullablePerDefault
     ),
-    nullableExplicit: new core_1.ActionImportParameter(
+    nullableExplicit: new odata_v4_1.ActionImportParameter(
       'NullableExplicit',
       'Edm.String',
       parameters.nullableExplicit
     ),
-    nonNullable: new core_1.ActionImportParameter(
+    nonNullable: new odata_v4_1.ActionImportParameter(
       'NonNullable',
       'Edm.String',
       parameters.nonNullable
     )
   };
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNullableTest',
     data =>
-      (0, core_1.transformReturnValueForComplexTypeV4)(data, data =>
-        (0, core_1.deserializeComplexTypeV4)(
+      (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
+        (0, odata_v4_1.deserializeComplexType)(
           data,
           TestComplexType_1.TestComplexType
         )

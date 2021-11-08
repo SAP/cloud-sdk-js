@@ -4,14 +4,14 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  CreateRequestBuilderV4,
-  DeleteRequestBuilderV4,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  ODataBatchChangeSetV4,
-  ODataBatchRequestBuilderV4,
-  UpdateRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  ODataBatchChangeSet,
+  ODataBatchRequestBuilder,
+  UpdateRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Photos, People, Airlines, Airports } from './index';
 
@@ -23,30 +23,30 @@ import { Photos, People, Airlines, Airports } from './index';
 export function batch(
   ...requests: Array<
     | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV4;
+): ODataBatchRequestBuilder;
 export function batch(
   requests: Array<
     | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV4;
+): ODataBatchRequestBuilder;
 export function batch(
   first:
     | undefined
     | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
     | Array<
         | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-        | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+        | ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
       >,
   ...rest: Array<
     | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV4 {
-  return new ODataBatchRequestBuilderV4(
+): ODataBatchRequestBuilder {
+  return new ODataBatchRequestBuilder(
     defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath,
     variadicArgumentToArray(first, rest),
     map
@@ -60,18 +60,18 @@ export function batch(
  */
 export function changeset(
   ...requests: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
 export function changeset(
   requests: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
 export function changeset(
   first:
     | undefined
     | WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
     | Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>,
   ...rest: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder> {
-  return new ODataBatchChangeSetV4(variadicArgumentToArray(first, rest));
+): ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder> {
+  return new ODataBatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath =
@@ -84,25 +84,25 @@ const map = {
 };
 export type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder =
 
-    | GetAllRequestBuilderV4<Photos>
-    | GetAllRequestBuilderV4<People>
-    | GetAllRequestBuilderV4<Airlines>
-    | GetAllRequestBuilderV4<Airports>
-    | GetByKeyRequestBuilderV4<Photos>
-    | GetByKeyRequestBuilderV4<People>
-    | GetByKeyRequestBuilderV4<Airlines>
-    | GetByKeyRequestBuilderV4<Airports>;
+    | GetAllRequestBuilder<Photos>
+    | GetAllRequestBuilder<People>
+    | GetAllRequestBuilder<Airlines>
+    | GetAllRequestBuilder<Airports>
+    | GetByKeyRequestBuilder<Photos>
+    | GetByKeyRequestBuilder<People>
+    | GetByKeyRequestBuilder<Airlines>
+    | GetByKeyRequestBuilder<Airports>;
 export type WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder =
 
-    | CreateRequestBuilderV4<Photos>
-    | UpdateRequestBuilderV4<Photos>
-    | DeleteRequestBuilderV4<Photos>
-    | CreateRequestBuilderV4<People>
-    | UpdateRequestBuilderV4<People>
-    | DeleteRequestBuilderV4<People>
-    | CreateRequestBuilderV4<Airlines>
-    | UpdateRequestBuilderV4<Airlines>
-    | DeleteRequestBuilderV4<Airlines>
-    | CreateRequestBuilderV4<Airports>
-    | UpdateRequestBuilderV4<Airports>
-    | DeleteRequestBuilderV4<Airports>;
+    | CreateRequestBuilder<Photos>
+    | UpdateRequestBuilder<Photos>
+    | DeleteRequestBuilder<Photos>
+    | CreateRequestBuilder<People>
+    | UpdateRequestBuilder<People>
+    | DeleteRequestBuilder<People>
+    | CreateRequestBuilder<Airlines>
+    | UpdateRequestBuilder<Airlines>
+    | DeleteRequestBuilder<Airlines>
+    | CreateRequestBuilder<Airports>
+    | UpdateRequestBuilder<Airports>
+    | DeleteRequestBuilder<Airports>;

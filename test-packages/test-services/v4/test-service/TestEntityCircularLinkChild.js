@@ -7,17 +7,18 @@ exports.TestEntityCircularLinkChild = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntityCircularLinkChildRequestBuilder_1 = require('./TestEntityCircularLinkChildRequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
  */
-class TestEntityCircularLinkChild extends core_1.EntityV4 {
+class TestEntityCircularLinkChild extends odata_v4_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntityCircularLinkChild`.
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
    */
   static builder() {
-    return core_1.EntityV4.entityBuilder(TestEntityCircularLinkChild);
+    return odata_v4_1.Entity.entityBuilder(TestEntityCircularLinkChild);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityCircularLinkChild` entity type.
@@ -32,7 +33,7 @@ class TestEntityCircularLinkChild extends core_1.EntityV4 {
    * @returns A builder that constructs instances of entity type `TestEntityCircularLinkChild`.
    */
   static customField(fieldName) {
-    return core_1.EntityV4.customFieldSelector(
+    return odata_v4_1.Entity.customFieldSelector(
       fieldName,
       TestEntityCircularLinkChild
     );
@@ -57,7 +58,9 @@ TestEntityCircularLinkChild._defaultServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 const TestEntityCircularLinkParent_1 = require('./TestEntityCircularLinkParent');
 (function (TestEntityCircularLinkChild) {
-  const _fieldBuilder = new core_1.FieldBuilder(TestEntityCircularLinkChild);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(
+    TestEntityCircularLinkChild
+  );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -71,7 +74,7 @@ const TestEntityCircularLinkParent_1 = require('./TestEntityCircularLinkParent')
    * Static representation of the one-to-one navigation property [[toParent]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityCircularLinkChild.TO_PARENT = new core_1.OneToOneLink(
+  TestEntityCircularLinkChild.TO_PARENT = new odata_common_1.OneToOneLink(
     'to_Parent',
     TestEntityCircularLinkChild,
     TestEntityCircularLinkParent_1.TestEntityCircularLinkParent
@@ -86,7 +89,7 @@ const TestEntityCircularLinkParent_1 = require('./TestEntityCircularLinkParent')
   /**
    * All fields selector.
    */
-  TestEntityCircularLinkChild.ALL_FIELDS = new core_1.AllFields(
+  TestEntityCircularLinkChild.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityCircularLinkChild
   );

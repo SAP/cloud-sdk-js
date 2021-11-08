@@ -6,11 +6,11 @@ exports.defaultTestServicePath = exports.changeset = exports.batch = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const util_1 = require('@sap-cloud-sdk/util');
 const index_1 = require('./index');
 function batch(first, ...rest) {
-  return new core_1.ODataBatchRequestBuilderV4(
+  return new odata_v4_1.ODataBatchRequestBuilder(
     exports.defaultTestServicePath,
     (0, util_1.variadicArgumentToArray)(first, rest),
     map
@@ -18,7 +18,7 @@ function batch(first, ...rest) {
 }
 exports.batch = batch;
 function changeset(first, ...rest) {
-  return new core_1.ODataBatchChangeSetV4(
+  return new odata_v4_1.ODataBatchChangeSet(
     (0, util_1.variadicArgumentToArray)(first, rest)
   );
 }

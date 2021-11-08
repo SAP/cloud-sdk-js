@@ -2,13 +2,13 @@ import {
   connectivityBindingMock,
   connectivityProxyConfigMock,
   mockServiceBindings
-} from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
+} from '../../../core/test/test-util/environment-mocks';
 import {
   providerServiceToken,
   providerUserJwt
-} from '@sap-cloud-sdk/core/test/test-util/mocked-access-tokens';
-import { mockServiceToken } from '@sap-cloud-sdk/core/test/test-util/token-accessor-mocks';
-import { mockClientCredentialsGrantCall } from '@sap-cloud-sdk/core/test/test-util/xsuaa-service-mocks';
+} from '../../../core/test/test-util/mocked-access-tokens';
+import { mockServiceToken } from '../../../core/test/test-util/token-accessor-mocks';
+import { mockClientCredentialsGrantCall } from '../../../core/test/test-util/xsuaa-service-mocks';
 import {
   addProxyConfigurationOnPrem,
   proxyHostAndPort

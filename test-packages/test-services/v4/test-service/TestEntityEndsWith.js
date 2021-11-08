@@ -7,17 +7,18 @@ exports.TestEntityEndsWith = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntityEndsWithRequestBuilder_1 = require('./TestEntityEndsWithRequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */
-class TestEntityEndsWith extends core_1.EntityV4 {
+class TestEntityEndsWith extends odata_v4_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntityEndsWith`.
    * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
    */
   static builder() {
-    return core_1.EntityV4.entityBuilder(TestEntityEndsWith);
+    return odata_v4_1.Entity.entityBuilder(TestEntityEndsWith);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityEndsWith` entity type.
@@ -32,7 +33,7 @@ class TestEntityEndsWith extends core_1.EntityV4 {
    * @returns A builder that constructs instances of entity type `TestEntityEndsWith`.
    */
   static customField(fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, TestEntityEndsWith);
+    return odata_v4_1.Entity.customFieldSelector(fieldName, TestEntityEndsWith);
   }
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -52,7 +53,7 @@ TestEntityEndsWith._entityName = 'A_TestEntityEndsWithCollection';
  */
 TestEntityEndsWith._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityEndsWith) {
-  const _fieldBuilder = new core_1.FieldBuilder(TestEntityEndsWith);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityEndsWith);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -69,7 +70,10 @@ TestEntityEndsWith._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All fields selector.
    */
-  TestEntityEndsWith.ALL_FIELDS = new core_1.AllFields('*', TestEntityEndsWith);
+  TestEntityEndsWith.ALL_FIELDS = new odata_common_1.AllFields(
+    '*',
+    TestEntityEndsWith
+  );
   /**
    * All key fields of the TestEntityEndsWith entity.
    */

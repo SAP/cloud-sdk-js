@@ -4,21 +4,20 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { CaseTestRequestBuilder } from './CaseTestRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
   Constructable,
-  CustomFieldV2,
   EdmTypeField,
   EntityBuilderType,
-  EntityV2,
   Field,
   FieldBuilder
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_CaseTest" of service "API_TEST_SRV".
  */
-export class CaseTest extends EntityV2 implements CaseTestType {
+export class CaseTest extends Entity implements CaseTestType {
   /**
    * Technical entity name for CaseTest.
    */
@@ -37,7 +36,7 @@ export class CaseTest extends EntityV2 implements CaseTestType {
    * @returns A builder that constructs instances of entity type `CaseTest`.
    */
   static builder(): EntityBuilderType<CaseTest, CaseTestType> {
-    return EntityV2.entityBuilder(CaseTest);
+    return Entity.entityBuilder(CaseTest);
   }
 
   /**
@@ -53,8 +52,8 @@ export class CaseTest extends EntityV2 implements CaseTestType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `CaseTest`.
    */
-  static customField(fieldName: string): CustomFieldV2<CaseTest> {
-    return EntityV2.customFieldSelector(fieldName, CaseTest);
+  static customField(fieldName: string): CustomField<CaseTest> {
+    return Entity.customFieldSelector(fieldName, CaseTest);
   }
 
   /**

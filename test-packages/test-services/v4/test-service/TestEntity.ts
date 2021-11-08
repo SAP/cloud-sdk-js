@@ -10,14 +10,13 @@ import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
 import { TestEnumTypeInt64 } from './TestEnumTypeInt64';
 import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
   CollectionField,
   Constructable,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   EnumField,
   Field,
   FieldBuilder,
@@ -25,12 +24,12 @@ import {
   OneToOneLink,
   OrderableEdmTypeField,
   Time
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity extends EntityV4 implements TestEntityType {
+export class TestEntity extends Entity implements TestEntityType {
   /**
    * Technical entity name for TestEntity.
    */
@@ -192,7 +191,7 @@ export class TestEntity extends EntityV4 implements TestEntityType {
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
   static builder(): EntityBuilderType<TestEntity, TestEntityType> {
-    return EntityV4.entityBuilder(TestEntity);
+    return Entity.entityBuilder(TestEntity);
   }
 
   /**
@@ -208,8 +207,8 @@ export class TestEntity extends EntityV4 implements TestEntityType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntity> {
-    return EntityV4.customFieldSelector(fieldName, TestEntity);
+  static customField(fieldName: string): CustomField<TestEntity> {
+    return Entity.customFieldSelector(fieldName, TestEntity);
   }
 
   /**

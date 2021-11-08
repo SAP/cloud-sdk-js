@@ -3,12 +3,13 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import '@sap-cloud-sdk/odata-common';
 import {
-  transformReturnValueForComplexTypeV4,
-  deserializeComplexTypeV4,
+  deserializeComplexType,
   ActionImportRequestBuilder,
-  ActionImportParameter
-} from '@sap-cloud-sdk/core';
+  ActionImportParameter,
+  transformReturnValueForComplexType
+} from '@sap-cloud-sdk/odata-v4';
 import { TestComplexType1 } from './TestComplexType1';
 import { TestComplexType2 } from './TestComplexType2';
 
@@ -35,8 +36,8 @@ export function testActionImportNoParameterComplexReturnType1(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType1',
     data =>
-      transformReturnValueForComplexTypeV4(data, data =>
-        deserializeComplexTypeV4(data, TestComplexType1)
+      transformReturnValueForComplexType(data, data =>
+        deserializeComplexType(data, TestComplexType1)
       ),
     params
   );
@@ -65,8 +66,8 @@ export function testActionImportNoParameterComplexReturnType2(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType2',
     data =>
-      transformReturnValueForComplexTypeV4(data, data =>
-        deserializeComplexTypeV4(data, TestComplexType2)
+      transformReturnValueForComplexType(data, data =>
+        deserializeComplexType(data, TestComplexType2)
       ),
     params
   );

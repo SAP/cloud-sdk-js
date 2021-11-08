@@ -1,4 +1,4 @@
-import { FunctionImportRequestBuilderV4 } from '@sap-cloud-sdk/core';
+import { FunctionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity1 } from './TestEntity1';
 import { TestEntity2 } from './TestEntity2';
 /**
@@ -12,7 +12,7 @@ export interface TestFunctionImportEntityReturnType1Parameters {}
  */
 export declare function testFunctionImportEntityReturnType1(
   parameters: TestFunctionImportEntityReturnType1Parameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnType1Parameters,
   TestEntity1
 >;
@@ -27,7 +27,7 @@ export interface TestFunctionImportEntityReturnType2Parameters {}
  */
 export declare function testFunctionImportEntityReturnType2(
   parameters: TestFunctionImportEntityReturnType2Parameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnType2Parameters,
   TestEntity2
 >;

@@ -8,17 +8,18 @@ exports.TestEntityWithEnumKey = void 0;
  */
 const TestEntityWithEnumKeyRequestBuilder_1 = require('./TestEntityWithEnumKeyRequestBuilder');
 const TestEnumType_1 = require('./TestEnumType');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
  */
-class TestEntityWithEnumKey extends core_1.EntityV4 {
+class TestEntityWithEnumKey extends odata_v4_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntityWithEnumKey`.
    * @returns A builder that constructs instances of entity type `TestEntityWithEnumKey`.
    */
   static builder() {
-    return core_1.EntityV4.entityBuilder(TestEntityWithEnumKey);
+    return odata_v4_1.Entity.entityBuilder(TestEntityWithEnumKey);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityWithEnumKey` entity type.
@@ -33,7 +34,7 @@ class TestEntityWithEnumKey extends core_1.EntityV4 {
    * @returns A builder that constructs instances of entity type `TestEntityWithEnumKey`.
    */
   static customField(fieldName) {
-    return core_1.EntityV4.customFieldSelector(
+    return odata_v4_1.Entity.customFieldSelector(
       fieldName,
       TestEntityWithEnumKey
     );
@@ -56,7 +57,7 @@ TestEntityWithEnumKey._entityName = 'A_TestEntityWithEnumKey';
  */
 TestEntityWithEnumKey._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityWithEnumKey) {
-  const _fieldBuilder = new core_1.FieldBuilder(TestEntityWithEnumKey);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityWithEnumKey);
   /**
    * Static representation of the [[keyPropertyEnum1]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -75,7 +76,7 @@ TestEntityWithEnumKey._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All fields selector.
    */
-  TestEntityWithEnumKey.ALL_FIELDS = new core_1.AllFields(
+  TestEntityWithEnumKey.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityWithEnumKey
   );

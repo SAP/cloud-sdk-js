@@ -1,14 +1,18 @@
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import { getService } from '@sap-cloud-sdk/connectivity/dist/scp-cf/environment-accessor';
+import { fetchDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-service';
+import { getDestinationFromDestinationService } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-from-service';
+import { getDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-accessor';
+import {
+  decodeJwt,
+  wrapJwtInHeader
+} from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
+import * as xssec from '@sap/xssec';
 import {
   jwtBearerToken,
   serviceToken
 } from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
-import { fetchDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-service';
-import { getDestinationFromDestinationService } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-from-service';
-import { getDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-accessor';
-import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
 import {
   loadLocalVcap,
   readSystems,
@@ -53,7 +57,7 @@ describe('OAuth flows', () => {
 
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -67,7 +71,7 @@ describe('OAuth flows', () => {
 
   xit('BasicAuth: Provider Destination & Provider Token + GET request', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -84,10 +88,9 @@ describe('OAuth flows', () => {
   }, 60000);
 
   xit('BasicAuth onPrem  Basic Authentication', async () => {
-    const destination = await getDestinationFromDestinationService(
-      systems.s4onPrem.providerBasic,
-      {}
-    );
+    const destination = await getDestinationFromDestinationService({
+      destinationName: systems.s4onPrem.providerBasic
+    });
 
     expect(destination!.proxyConfiguration).toMatchObject({
       headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) },
@@ -99,7 +102,7 @@ describe('OAuth flows', () => {
 
   xit('BasicAuth: Provider Destination & Provider Token + PUT request (csrf token)', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -120,7 +123,7 @@ describe('OAuth flows', () => {
 
   xit('BasicAuth: Subscriber Destination & Subscriber Token', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.subscriber
+      jwt: accessToken.subscriber
     });
 
     const destination = await fetchDestination(
@@ -138,7 +141,7 @@ describe('OAuth flows', () => {
 
   xit('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
     const clientGrant = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -176,7 +179,7 @@ describe('OAuth flows', () => {
 
   xit('OAuth2JWTBearer: Provider Destination & Provider Token', async () => {
     const token = await serviceToken('destination', {
-      userJwt: accessToken.provider
+      jwt: accessToken.provider
     });
 
     const destination = await fetchDestination(
@@ -194,7 +197,9 @@ describe('OAuth flows', () => {
   }, 60000);
 
   xit('ClientCertificate: Fetches the certificate and uses it', async () => {
-    const destination = await getDestination('CC8-HTTP-CERT');
+    const destination = await getDestination({
+      destinationName: 'CC8-HTTP-CERT'
+    });
     expect(destination!.certificates!.length).toBe(1);
     const bps = await BusinessPartner.requestBuilder()
       .getAll()
@@ -210,7 +215,9 @@ describe('OAuth flows', () => {
     process.env.NO_PROXY =
       'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token,https://my300470-api.s4hana.ondemand.com';
 
-    const destination = await getDestination('CC8-HTTP-CERT');
+    const destination = await getDestination({
+      destinationName: 'CC8-HTTP-CERT'
+    });
     expect(destination!.certificates!.length).toBe(1);
     const bps = await BusinessPartner.requestBuilder()
       .getAll()
@@ -221,7 +228,7 @@ describe('OAuth flows', () => {
 
   xit('OAuth2UserTokenExchange: Subscriber destination and Subscriber Jwt', async () => {
     const subscriberDestToken = await serviceToken('destination', {
-      userJwt: accessToken.subscriber
+      jwt: accessToken.subscriber
     });
 
     const destination = await fetchDestination(
@@ -265,5 +272,74 @@ describe('OAuth flows', () => {
       .top(1)
       .execute(destination);
     expect(result.length).toBe(1);
+  }, 60000);
+
+  xit('IAS: token exchange by making an xsuaa call', async () => {
+    const iasToken = accessToken.iasProvider;
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
+      .credentials;
+    const token = await new Promise(
+      (resolve: (value: string) => void, reject) => {
+        xssec.requests.requestUserToken(
+          iasToken,
+          xsuaaConfig,
+          null,
+          null,
+          null,
+          xsuaaConfig.subaccountid,
+          (err: Error, xsuaaToken) => (err ? reject(err) : resolve(xsuaaToken))
+        );
+      }
+    );
+    const decoded = decodeJwt(token);
+    expect(decoded.scope.length).toBeGreaterThan(0);
+  }, 60000);
+
+  xit('IAS: token exchange with xssec createSecurityContext', async () => {
+    const iasToken = accessToken.iasProvider;
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
+      .credentials;
+    const token = await new Promise((resolve: (p: string) => void, reject) => {
+      xssec.createSecurityContext(
+        iasToken,
+        xsuaaConfig,
+        (err: Error, context, tokenInfo) =>
+          err ? reject(err) : resolve(tokenInfo.getTokenValue())
+      );
+    });
+    const decoded = decodeJwt(token);
+    expect(decoded.scope.length).toBeGreaterThan(0);
+  }, 60000);
+
+  xit('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
+    const iasToken = accessToken.iasProvider;
+    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
+      .credentials;
+    const xsuaaToken = await new Promise(
+      (resolve: (p: string) => void, reject) => {
+        xssec.createSecurityContext(
+          iasToken,
+          xsuaaConfig,
+          (err: Error, context, tokenInfo) =>
+            err ? reject(err) : resolve(tokenInfo.getTokenValue())
+        );
+      }
+    );
+
+    const clientGrant = await serviceToken('destination', {
+      jwt: xsuaaToken
+    });
+
+    const destination = await fetchDestination(
+      destinationService!.credentials.uri,
+      clientGrant,
+      systems.workflow.providerOAuth2ClientCredentials
+    );
+    expect(destination.authTokens![0].error).toBeNull();
+
+    destination.url = destination.url + '/v1/workflow-definitions';
+    const response = await executeHttpRequest(destination, { method: 'get' });
+
+    expect(response.status).toBe(200);
   }, 60000);
 });

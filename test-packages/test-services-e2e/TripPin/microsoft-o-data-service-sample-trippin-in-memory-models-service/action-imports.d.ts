@@ -1,4 +1,5 @@
-import { ActionImportRequestBuilder } from '@sap-cloud-sdk/core';
+import '@sap-cloud-sdk/odata-common';
+import { ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 /**
  * Type of the parameters to be passed to [[resetDataSource]].
  */

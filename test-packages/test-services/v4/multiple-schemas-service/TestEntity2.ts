@@ -4,22 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntity2RequestBuilder } from './TestEntity2RequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
   Constructable,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   Field,
   FieldBuilder,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntity2" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export class TestEntity2 extends EntityV4 implements TestEntity2Type {
+export class TestEntity2 extends Entity implements TestEntity2Type {
   /**
    * Technical entity name for TestEntity2.
    */
@@ -43,7 +42,7 @@ export class TestEntity2 extends EntityV4 implements TestEntity2Type {
    * @returns A builder that constructs instances of entity type `TestEntity2`.
    */
   static builder(): EntityBuilderType<TestEntity2, TestEntity2Type> {
-    return EntityV4.entityBuilder(TestEntity2);
+    return Entity.entityBuilder(TestEntity2);
   }
 
   /**
@@ -59,8 +58,8 @@ export class TestEntity2 extends EntityV4 implements TestEntity2Type {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntity2`.
    */
-  static customField(fieldName: string): CustomFieldV4<TestEntity2> {
-    return EntityV4.customFieldSelector(fieldName, TestEntity2);
+  static customField(fieldName: string): CustomField<TestEntity2> {
+    return Entity.customFieldSelector(fieldName, TestEntity2);
   }
 
   /**

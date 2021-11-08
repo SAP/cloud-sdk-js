@@ -1,18 +1,17 @@
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
-  CustomFieldV2,
   EdmTypeField,
   EntityBuilderType,
-  EntityV2,
   Field,
   Link
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
  */
 export declare class TestEntityCircularLinkParent
-  extends EntityV2
+  extends Entity
   implements TestEntityCircularLinkParentType
 {
   /**
@@ -51,7 +50,7 @@ export declare class TestEntityCircularLinkParent
    */
   static customField(
     fieldName: string
-  ): CustomFieldV2<TestEntityCircularLinkParent>;
+  ): CustomField<TestEntityCircularLinkParent>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

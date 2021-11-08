@@ -1,8 +1,12 @@
 export {
   Destination,
-  DestinationNameAndJwt,
   DestinationRetrievalOptions
 } from './scp-cf/destination/destination-service-types';
+
+export {
+  DestinationOptions,
+  DestinationFetchOptions
+} from './scp-cf/destination/destination-accessor-types';
 
 export { buildHeadersForDestination } from './scp-cf/header-builder-for-destination';
 
@@ -12,9 +16,6 @@ export {
   sanitizeDestination
 } from './scp-cf/destination/destination';
 
-export {
-  useOrFetchDestination,
-  DestinationOptions
-} from './scp-cf/destination/destination-accessor';
+export { useOrFetchDestination } from './scp-cf/destination/destination-accessor';
 
 export { getAgentConfig } from './http-agent/http-agent';

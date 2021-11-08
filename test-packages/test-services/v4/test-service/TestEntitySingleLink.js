@@ -7,17 +7,18 @@ exports.TestEntitySingleLink = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntitySingleLinkRequestBuilder_1 = require('./TestEntitySingleLinkRequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
  */
-class TestEntitySingleLink extends core_1.EntityV4 {
+class TestEntitySingleLink extends odata_v4_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntitySingleLink`.
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
   static builder() {
-    return core_1.EntityV4.entityBuilder(TestEntitySingleLink);
+    return odata_v4_1.Entity.entityBuilder(TestEntitySingleLink);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntitySingleLink` entity type.
@@ -32,7 +33,10 @@ class TestEntitySingleLink extends core_1.EntityV4 {
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
   static customField(fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, TestEntitySingleLink);
+    return odata_v4_1.Entity.customFieldSelector(
+      fieldName,
+      TestEntitySingleLink
+    );
   }
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -54,7 +58,7 @@ TestEntitySingleLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const TestEntityLvl2MultiLink_1 = require('./TestEntityLvl2MultiLink');
 const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
 (function (TestEntitySingleLink) {
-  const _fieldBuilder = new core_1.FieldBuilder(TestEntitySingleLink);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntitySingleLink);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -104,7 +108,7 @@ const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.TO_MULTI_LINK = new core_1.OneToManyLink(
+  TestEntitySingleLink.TO_MULTI_LINK = new odata_common_1.OneToManyLink(
     'to_MultiLink',
     TestEntitySingleLink,
     TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink
@@ -113,7 +117,7 @@ const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntitySingleLink.TO_SINGLE_LINK = new core_1.OneToOneLink(
+  TestEntitySingleLink.TO_SINGLE_LINK = new odata_common_1.OneToOneLink(
     'to_SingleLink',
     TestEntitySingleLink,
     TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink
@@ -133,7 +137,7 @@ const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
   /**
    * All fields selector.
    */
-  TestEntitySingleLink.ALL_FIELDS = new core_1.AllFields(
+  TestEntitySingleLink.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntitySingleLink
   );

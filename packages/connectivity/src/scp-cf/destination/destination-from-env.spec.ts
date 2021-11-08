@@ -4,7 +4,7 @@ import { JwtHeader, JwtPayload } from 'jsonwebtoken';
 import {
   mockDestinationsEnv,
   unmockDestinationsEnv
-} from '@sap-cloud-sdk/core/test/test-util/request-mocker';
+} from '../../../../core/test/test-util/request-mocker';
 import { Destination } from './destination-service-types';
 import {
   getDestinationFromEnvByName,
@@ -72,8 +72,9 @@ describe('env-destination-accessor', () => {
       const fullToken = `${encodeBase64(
         JSON.stringify(jwtHeader)
       )}.${encodeBase64(JSON.stringify(jwtPayload))}.SomeHash`;
-      const actual = await getDestination('FORWARD-TOKEN-DESTINATION', {
-        userJwt: fullToken
+      const actual = await getDestination({
+        destinationName: 'FORWARD-TOKEN-DESTINATION',
+        jwt: fullToken
       });
       expect(actual?.authTokens![0].expiresIn).toEqual('1234');
       expect(actual?.authTokens![0].value).toEqual(fullToken);
@@ -87,7 +88,7 @@ describe('env-destination-accessor', () => {
 
       const logger = createLogger('env-destination-accessor');
       const warnSpy = jest.spyOn(logger, 'warn');
-      await getDestination('FORWARD-TOKEN-DESTINATION');
+      await getDestination({ destinationName: 'FORWARD-TOKEN-DESTINATION' });
       expect(warnSpy).toHaveBeenCalledWith(
         expect.stringMatching(
           /Option 'forwardAuthToken' was set on destination but no token was provided to forward./
@@ -100,7 +101,7 @@ describe('env-destination-accessor', () => {
 
       const logger = createLogger('env-destination-accessor');
       const warnSpy = jest.spyOn(logger, 'warn');
-      await getDestination('FINAL-DESTINATION');
+      await getDestination({ destinationName: 'FINAL-DESTINATION' });
       expect(warnSpy).toHaveBeenCalledWith(
         expect.stringMatching(
           /from environment variable.This is discouraged for productive applications./

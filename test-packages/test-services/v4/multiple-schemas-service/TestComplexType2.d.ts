@@ -1,12 +1,12 @@
+import { Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   ComplexTypeField,
   ConstructorOrField,
   EdmTypeField,
-  EntityV4,
   FieldOptions,
   FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * TestComplexType2
  */
@@ -25,7 +25,7 @@ export declare function createTestComplexType2(json: any): TestComplexType2;
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export declare class TestComplexType2Field<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, TestComplexType2, NullableT, SelectableT> {
@@ -52,7 +52,7 @@ export declare namespace TestComplexType2 {
    */
   const _propertyMetadata: PropertyMetadata<TestComplexType2>[];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   function build(json: { [keys: string]: FieldType }): TestComplexType2;
 }

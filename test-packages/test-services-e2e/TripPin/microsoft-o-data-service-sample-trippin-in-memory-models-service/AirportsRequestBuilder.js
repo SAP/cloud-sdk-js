@@ -6,19 +6,20 @@ exports.AirportsRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const Airports_1 = require('./Airports');
 /**
  * Request builder class for operations supported on the [[Airports]] entity.
  */
-class AirportsRequestBuilder extends core_1.RequestBuilder {
+class AirportsRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `Airports` entity based on its keys.
    * @param icaoCode Key property. See [[Airports.icaoCode]].
    * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
    */
   getByKey(icaoCode) {
-    return new core_1.GetByKeyRequestBuilderV4(Airports_1.Airports, {
+    return new odata_v4_1.GetByKeyRequestBuilder(Airports_1.Airports, {
       IcaoCode: icaoCode
     });
   }
@@ -27,7 +28,7 @@ class AirportsRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `Airports` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV4(Airports_1.Airports);
+    return new odata_v4_1.GetAllRequestBuilder(Airports_1.Airports);
   }
   /**
    * Returns a request builder for creating a `Airports` entity.
@@ -35,7 +36,7 @@ class AirportsRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `Airports`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV4(Airports_1.Airports, entity);
+    return new odata_v4_1.CreateRequestBuilder(Airports_1.Airports, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `Airports`.
@@ -43,10 +44,10 @@ class AirportsRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `Airports`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV4(Airports_1.Airports, entity);
+    return new odata_v4_1.UpdateRequestBuilder(Airports_1.Airports, entity);
   }
   delete(icaoCodeOrEntity) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       Airports_1.Airports,
       icaoCodeOrEntity instanceof Airports_1.Airports
         ? icaoCodeOrEntity

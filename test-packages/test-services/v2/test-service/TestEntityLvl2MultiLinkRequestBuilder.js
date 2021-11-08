@@ -6,19 +6,20 @@ exports.TestEntityLvl2MultiLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const TestEntityLvl2MultiLink_1 = require('./TestEntityLvl2MultiLink');
 /**
  * Request builder class for operations supported on the [[TestEntityLvl2MultiLink]] entity.
  */
-class TestEntityLvl2MultiLinkRequestBuilder extends core_1.RequestBuilder {
+class TestEntityLvl2MultiLinkRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityLvl2MultiLink` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityLvl2MultiLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityLvl2MultiLink` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new core_1.GetByKeyRequestBuilderV2(
+    return new odata_v2_1.GetByKeyRequestBuilder(
       TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink,
       { KeyProperty: keyProperty }
     );
@@ -28,7 +29,7 @@ class TestEntityLvl2MultiLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `TestEntityLvl2MultiLink` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV2(
+    return new odata_v2_1.GetAllRequestBuilder(
       TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink
     );
   }
@@ -38,7 +39,7 @@ class TestEntityLvl2MultiLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntityLvl2MultiLink`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV2(
+    return new odata_v2_1.CreateRequestBuilder(
       TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink,
       entity
     );
@@ -49,13 +50,13 @@ class TestEntityLvl2MultiLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntityLvl2MultiLink`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV2(
+    return new odata_v2_1.UpdateRequestBuilder(
       TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink,
       entity
     );
   }
   delete(keyPropertyOrEntity) {
-    return new core_1.DeleteRequestBuilderV2(
+    return new odata_v2_1.DeleteRequestBuilder(
       TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink,
       keyPropertyOrEntity instanceof
       TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink

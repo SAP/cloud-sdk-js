@@ -4,17 +4,16 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
+import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   ComplexTypeField,
   ConstructorOrField,
   EdmTypeField,
-  EntityV4,
   FieldBuilder,
   FieldOptions,
   FieldType,
-  PropertyMetadata,
-  deserializeComplexTypeV4
-} from '@sap-cloud-sdk/core';
+  PropertyMetadata
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * Location
@@ -42,7 +41,7 @@ export function createLocation(json: any): Location {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class LocationField<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, Location, NullableT, SelectableT> {
@@ -94,9 +93,9 @@ export namespace Location {
   ];
 
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   export function build(json: { [keys: string]: FieldType | City }): Location {
-    return deserializeComplexTypeV4(json, Location);
+    return deserializeComplexType(json, Location);
   }
 }

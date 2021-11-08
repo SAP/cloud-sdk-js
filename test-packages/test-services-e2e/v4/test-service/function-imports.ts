@@ -3,15 +3,15 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common';
 import {
-  transformReturnValueForEdmTypeV4,
-  transformReturnValueForEntityListV4,
-  transformReturnValueForEntityV4,
-  transformReturnValueForEdmTypeListV4,
-  edmToTsV4,
-  FunctionImportRequestBuilderV4,
-  FunctionImportParameter
-} from '@sap-cloud-sdk/core';
+  edmToTs,
+  FunctionImportRequestBuilder,
+  transformReturnValueForEdmType,
+  transformReturnValueForEntityList,
+  transformReturnValueForEntity,
+  transformReturnValueForEdmTypeList
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -35,18 +35,18 @@ export interface ConcatStringsParameters {
  */
 export function concatStrings(
   parameters: ConcatStringsParameters
-): FunctionImportRequestBuilderV4<ConcatStringsParameters, string> {
+): FunctionImportRequestBuilder<ConcatStringsParameters, string> {
   const params = {
     str1: new FunctionImportParameter('Str1', 'Edm.String', parameters.str1),
     str2: new FunctionImportParameter('Str2', 'Edm.String', parameters.str2)
   };
 
-  return new FunctionImportRequestBuilderV4(
+  return new FunctionImportRequestBuilder(
     '/odata/test-service',
     'concatStrings',
     data =>
-      transformReturnValueForEdmTypeV4(data, val =>
-        edmToTsV4(val.value, 'Edm.String')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.value, 'Edm.String')
       ),
     params
   );
@@ -64,13 +64,13 @@ export interface GetAllParameters {}
  */
 export function getAll(
   parameters: GetAllParameters
-): FunctionImportRequestBuilderV4<GetAllParameters, TestEntity[]> {
+): FunctionImportRequestBuilder<GetAllParameters, TestEntity[]> {
   const params = {};
 
-  return new FunctionImportRequestBuilderV4(
+  return new FunctionImportRequestBuilder(
     '/odata/test-service',
     'getAll',
-    data => transformReturnValueForEntityListV4(data, TestEntity),
+    data => transformReturnValueForEntityList(data, TestEntity),
     params
   );
 }
@@ -92,15 +92,15 @@ export interface GetByKeyParameters {
  */
 export function getByKey(
   parameters: GetByKeyParameters
-): FunctionImportRequestBuilderV4<GetByKeyParameters, TestEntity> {
+): FunctionImportRequestBuilder<GetByKeyParameters, TestEntity> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   };
 
-  return new FunctionImportRequestBuilderV4(
+  return new FunctionImportRequestBuilder(
     '/odata/test-service',
     'getByKey',
-    data => transformReturnValueForEntityV4(data, TestEntity),
+    data => transformReturnValueForEntity(data, TestEntity),
     params
   );
 }
@@ -122,17 +122,17 @@ export interface ReturnCollectionParameters {
  */
 export function returnCollection(
   parameters: ReturnCollectionParameters
-): FunctionImportRequestBuilderV4<ReturnCollectionParameters, number[]> {
+): FunctionImportRequestBuilder<ReturnCollectionParameters, number[]> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   };
 
-  return new FunctionImportRequestBuilderV4(
+  return new FunctionImportRequestBuilder(
     '/odata/test-service',
     'returnCollection',
     data =>
-      transformReturnValueForEdmTypeListV4(data, val =>
-        edmToTsV4(val, 'Edm.Int32')
+      transformReturnValueForEdmTypeList(data, val =>
+        edmToTs(val, 'Edm.Int32')
       ),
     params
   );
@@ -155,17 +155,17 @@ export interface ReturnIntParameters {
  */
 export function returnInt(
   parameters: ReturnIntParameters
-): FunctionImportRequestBuilderV4<ReturnIntParameters, number> {
+): FunctionImportRequestBuilder<ReturnIntParameters, number> {
   const params = {
     param: new FunctionImportParameter('param', 'Edm.Int32', parameters.param)
   };
 
-  return new FunctionImportRequestBuilderV4(
+  return new FunctionImportRequestBuilder(
     '/odata/test-service',
     'returnInt',
     data =>
-      transformReturnValueForEdmTypeV4(data, val =>
-        edmToTsV4(val.value, 'Edm.Int32')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.value, 'Edm.Int32')
       ),
     params
   );
@@ -183,15 +183,15 @@ export interface ReturnSapCloudSdkParameters {}
  */
 export function returnSapCloudSdk(
   parameters: ReturnSapCloudSdkParameters
-): FunctionImportRequestBuilderV4<ReturnSapCloudSdkParameters, string> {
+): FunctionImportRequestBuilder<ReturnSapCloudSdkParameters, string> {
   const params = {};
 
-  return new FunctionImportRequestBuilderV4(
+  return new FunctionImportRequestBuilder(
     '/odata/test-service',
     'returnSapCloudSdk',
     data =>
-      transformReturnValueForEdmTypeV4(data, val =>
-        edmToTsV4(val.value, 'Edm.String')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.value, 'Edm.String')
       ),
     params
   );

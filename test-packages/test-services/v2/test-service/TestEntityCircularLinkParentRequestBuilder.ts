@@ -3,14 +3,14 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV2,
-  GetByKeyRequestBuilderV2,
-  CreateRequestBuilderV2,
-  UpdateRequestBuilderV2,
-  DeleteRequestBuilderV2
-} from '@sap-cloud-sdk/core';
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v2';
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 
 /**
@@ -24,8 +24,8 @@ export class TestEntityCircularLinkParentRequestBuilder extends RequestBuilder<T
    */
   getByKey(
     keyProperty: string
-  ): GetByKeyRequestBuilderV2<TestEntityCircularLinkParent> {
-    return new GetByKeyRequestBuilderV2(TestEntityCircularLinkParent, {
+  ): GetByKeyRequestBuilder<TestEntityCircularLinkParent> {
+    return new GetByKeyRequestBuilder(TestEntityCircularLinkParent, {
       KeyProperty: keyProperty
     });
   }
@@ -34,8 +34,8 @@ export class TestEntityCircularLinkParentRequestBuilder extends RequestBuilder<T
    * Returns a request builder for querying all `TestEntityCircularLinkParent` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityCircularLinkParent` entities.
    */
-  getAll(): GetAllRequestBuilderV2<TestEntityCircularLinkParent> {
-    return new GetAllRequestBuilderV2(TestEntityCircularLinkParent);
+  getAll(): GetAllRequestBuilder<TestEntityCircularLinkParent> {
+    return new GetAllRequestBuilder(TestEntityCircularLinkParent);
   }
 
   /**
@@ -45,8 +45,8 @@ export class TestEntityCircularLinkParentRequestBuilder extends RequestBuilder<T
    */
   create(
     entity: TestEntityCircularLinkParent
-  ): CreateRequestBuilderV2<TestEntityCircularLinkParent> {
-    return new CreateRequestBuilderV2(TestEntityCircularLinkParent, entity);
+  ): CreateRequestBuilder<TestEntityCircularLinkParent> {
+    return new CreateRequestBuilder(TestEntityCircularLinkParent, entity);
   }
 
   /**
@@ -56,8 +56,8 @@ export class TestEntityCircularLinkParentRequestBuilder extends RequestBuilder<T
    */
   update(
     entity: TestEntityCircularLinkParent
-  ): UpdateRequestBuilderV2<TestEntityCircularLinkParent> {
-    return new UpdateRequestBuilderV2(TestEntityCircularLinkParent, entity);
+  ): UpdateRequestBuilder<TestEntityCircularLinkParent> {
+    return new UpdateRequestBuilder(TestEntityCircularLinkParent, entity);
   }
 
   /**
@@ -67,7 +67,7 @@ export class TestEntityCircularLinkParentRequestBuilder extends RequestBuilder<T
    */
   delete(
     keyProperty: string
-  ): DeleteRequestBuilderV2<TestEntityCircularLinkParent>;
+  ): DeleteRequestBuilder<TestEntityCircularLinkParent>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityCircularLinkParent`.
    * @param entity Pass the entity to be deleted.
@@ -75,11 +75,11 @@ export class TestEntityCircularLinkParentRequestBuilder extends RequestBuilder<T
    */
   delete(
     entity: TestEntityCircularLinkParent
-  ): DeleteRequestBuilderV2<TestEntityCircularLinkParent>;
+  ): DeleteRequestBuilder<TestEntityCircularLinkParent>;
   delete(
     keyPropertyOrEntity: any
-  ): DeleteRequestBuilderV2<TestEntityCircularLinkParent> {
-    return new DeleteRequestBuilderV2(
+  ): DeleteRequestBuilder<TestEntityCircularLinkParent> {
+    return new DeleteRequestBuilder(
       TestEntityCircularLinkParent,
       keyPropertyOrEntity instanceof TestEntityCircularLinkParent
         ? keyPropertyOrEntity

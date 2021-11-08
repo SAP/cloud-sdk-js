@@ -3,14 +3,14 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntityWithSharedEntityType1 } from './TestEntityWithSharedEntityType1';
 
 /**
@@ -24,8 +24,8 @@ export class TestEntityWithSharedEntityType1RequestBuilder extends RequestBuilde
    */
   getByKey(
     keyProperty: string
-  ): GetByKeyRequestBuilderV4<TestEntityWithSharedEntityType1> {
-    return new GetByKeyRequestBuilderV4(TestEntityWithSharedEntityType1, {
+  ): GetByKeyRequestBuilder<TestEntityWithSharedEntityType1> {
+    return new GetByKeyRequestBuilder(TestEntityWithSharedEntityType1, {
       KeyProperty: keyProperty
     });
   }
@@ -34,8 +34,8 @@ export class TestEntityWithSharedEntityType1RequestBuilder extends RequestBuilde
    * Returns a request builder for querying all `TestEntityWithSharedEntityType1` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithSharedEntityType1` entities.
    */
-  getAll(): GetAllRequestBuilderV4<TestEntityWithSharedEntityType1> {
-    return new GetAllRequestBuilderV4(TestEntityWithSharedEntityType1);
+  getAll(): GetAllRequestBuilder<TestEntityWithSharedEntityType1> {
+    return new GetAllRequestBuilder(TestEntityWithSharedEntityType1);
   }
 
   /**
@@ -45,8 +45,8 @@ export class TestEntityWithSharedEntityType1RequestBuilder extends RequestBuilde
    */
   create(
     entity: TestEntityWithSharedEntityType1
-  ): CreateRequestBuilderV4<TestEntityWithSharedEntityType1> {
-    return new CreateRequestBuilderV4(TestEntityWithSharedEntityType1, entity);
+  ): CreateRequestBuilder<TestEntityWithSharedEntityType1> {
+    return new CreateRequestBuilder(TestEntityWithSharedEntityType1, entity);
   }
 
   /**
@@ -56,8 +56,8 @@ export class TestEntityWithSharedEntityType1RequestBuilder extends RequestBuilde
    */
   update(
     entity: TestEntityWithSharedEntityType1
-  ): UpdateRequestBuilderV4<TestEntityWithSharedEntityType1> {
-    return new UpdateRequestBuilderV4(TestEntityWithSharedEntityType1, entity);
+  ): UpdateRequestBuilder<TestEntityWithSharedEntityType1> {
+    return new UpdateRequestBuilder(TestEntityWithSharedEntityType1, entity);
   }
 
   /**
@@ -67,7 +67,7 @@ export class TestEntityWithSharedEntityType1RequestBuilder extends RequestBuilde
    */
   delete(
     keyProperty: string
-  ): DeleteRequestBuilderV4<TestEntityWithSharedEntityType1>;
+  ): DeleteRequestBuilder<TestEntityWithSharedEntityType1>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityWithSharedEntityType1`.
    * @param entity Pass the entity to be deleted.
@@ -75,11 +75,11 @@ export class TestEntityWithSharedEntityType1RequestBuilder extends RequestBuilde
    */
   delete(
     entity: TestEntityWithSharedEntityType1
-  ): DeleteRequestBuilderV4<TestEntityWithSharedEntityType1>;
+  ): DeleteRequestBuilder<TestEntityWithSharedEntityType1>;
   delete(
     keyPropertyOrEntity: any
-  ): DeleteRequestBuilderV4<TestEntityWithSharedEntityType1> {
-    return new DeleteRequestBuilderV4(
+  ): DeleteRequestBuilder<TestEntityWithSharedEntityType1> {
+    return new DeleteRequestBuilder(
       TestEntityWithSharedEntityType1,
       keyPropertyOrEntity instanceof TestEntityWithSharedEntityType1
         ? keyPropertyOrEntity

@@ -38,7 +38,7 @@ describe('createFile', () => {
     await expect(() =>
       createFile('directory', 'existingFile', 'content', false)
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Could not write file. File already exists. If you want to allow overwriting files, enable the `overwrite` flag."'
+      '"Could not write file \\"existingFile\\". File already exists. If you want to allow overwriting files, enable the `overwrite` flag."'
     );
   });
 });

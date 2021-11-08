@@ -6,19 +6,20 @@ exports.TestEntityEndsWithSomethingElseRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const TestEntityEndsWithSomethingElse_1 = require('./TestEntityEndsWithSomethingElse');
 /**
  * Request builder class for operations supported on the [[TestEntityEndsWithSomethingElse]] entity.
  */
-class TestEntityEndsWithSomethingElseRequestBuilder extends core_1.RequestBuilder {
+class TestEntityEndsWithSomethingElseRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityEndsWithSomethingElse` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityEndsWithSomethingElse.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityEndsWithSomethingElse` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new core_1.GetByKeyRequestBuilderV2(
+    return new odata_v2_1.GetByKeyRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
       { KeyProperty: keyProperty }
     );
@@ -28,7 +29,7 @@ class TestEntityEndsWithSomethingElseRequestBuilder extends core_1.RequestBuilde
    * @returns A request builder for creating requests to retrieve all `TestEntityEndsWithSomethingElse` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV2(
+    return new odata_v2_1.GetAllRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse
     );
   }
@@ -38,7 +39,7 @@ class TestEntityEndsWithSomethingElseRequestBuilder extends core_1.RequestBuilde
    * @returns A request builder for creating requests that create an entity of type `TestEntityEndsWithSomethingElse`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV2(
+    return new odata_v2_1.CreateRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
       entity
     );
@@ -49,13 +50,13 @@ class TestEntityEndsWithSomethingElseRequestBuilder extends core_1.RequestBuilde
    * @returns A request builder for creating requests that update an entity of type `TestEntityEndsWithSomethingElse`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV2(
+    return new odata_v2_1.UpdateRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
       entity
     );
   }
   delete(keyPropertyOrEntity) {
-    return new core_1.DeleteRequestBuilderV2(
+    return new odata_v2_1.DeleteRequestBuilder(
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
       keyPropertyOrEntity instanceof
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse

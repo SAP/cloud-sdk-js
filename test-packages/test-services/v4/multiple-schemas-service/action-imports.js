@@ -9,7 +9,8 @@ exports.actionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestComplexType1_1 = require('./TestComplexType1');
 const TestComplexType2_1 = require('./TestComplexType2');
 /**
@@ -20,12 +21,12 @@ const TestComplexType2_1 = require('./TestComplexType2');
  */
 function testActionImportNoParameterComplexReturnType1(parameters) {
   const params = {};
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType1',
     data =>
-      (0, core_1.transformReturnValueForComplexTypeV4)(data, data =>
-        (0, core_1.deserializeComplexTypeV4)(
+      (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
+        (0, odata_v4_1.deserializeComplexType)(
           data,
           TestComplexType1_1.TestComplexType1
         )
@@ -43,12 +44,12 @@ exports.testActionImportNoParameterComplexReturnType1 =
  */
 function testActionImportNoParameterComplexReturnType2(parameters) {
   const params = {};
-  return new core_1.ActionImportRequestBuilder(
+  return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType2',
     data =>
-      (0, core_1.transformReturnValueForComplexTypeV4)(data, data =>
-        (0, core_1.deserializeComplexTypeV4)(
+      (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
+        (0, odata_v4_1.deserializeComplexType)(
           data,
           TestComplexType2_1.TestComplexType2
         )

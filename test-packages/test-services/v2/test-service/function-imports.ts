@@ -4,19 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  transformReturnValueForUndefinedV2,
-  transformReturnValueForEdmTypeV2,
-  transformReturnValueForEdmTypeListV2,
-  transformReturnValueForEntityV2,
-  transformReturnValueForEntityListV2,
-  throwErrorWhenReturnTypeIsUnionType,
-  transformReturnValueForComplexTypeV2,
-  transformReturnValueForComplexTypeListV2,
-  edmToTsV2,
-  deserializeComplexTypeV2,
-  FunctionImportRequestBuilderV2,
-  FunctionImportParameter
-} from '@sap-cloud-sdk/core';
+  FunctionImportParameter,
+  throwErrorWhenReturnTypeIsUnionType
+} from '@sap-cloud-sdk/odata-common';
+import {
+  edmToTs,
+  deserializeComplexType,
+  FunctionImportRequestBuilder,
+  transformReturnValueForUndefined,
+  transformReturnValueForEdmType,
+  transformReturnValueForEdmTypeList,
+  transformReturnValueForEntity,
+  transformReturnValueForEntityList,
+  transformReturnValueForComplexType,
+  transformReturnValueForComplexTypeList
+} from '@sap-cloud-sdk/odata-v2';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 
@@ -32,17 +34,17 @@ export interface TestFunctionImportNoReturnTypeParameters {}
  */
 export function testFunctionImportNoReturnType(
   parameters: TestFunctionImportNoReturnTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportNoReturnTypeParameters,
   undefined
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'post',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportNoReturnType',
-    data => transformReturnValueForUndefinedV2(data, val => undefined),
+    data => transformReturnValueForUndefined(data, val => undefined),
     params
   );
 }
@@ -59,19 +61,19 @@ export interface TestFunctionImportEdmReturnTypeParameters {}
  */
 export function testFunctionImportEdmReturnType(
   parameters: TestFunctionImportEdmReturnTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportEdmReturnTypeParameters,
   boolean
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnType',
     data =>
-      transformReturnValueForEdmTypeV2(data, val =>
-        edmToTsV2(val.TestFunctionImportEdmReturnType, 'Edm.Boolean')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.Boolean')
       ),
     params
   );
@@ -89,19 +91,19 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters {}
  */
 export function testFunctionImportEdmReturnTypeCollection(
   parameters: TestFunctionImportEdmReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportEdmReturnTypeCollectionParameters,
   string[]
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnTypeCollection',
     data =>
-      transformReturnValueForEdmTypeListV2(data, val =>
-        edmToTsV2(val, 'Edm.String')
+      transformReturnValueForEdmTypeList(data, val =>
+        edmToTs(val, 'Edm.String')
       ),
     params
   );
@@ -119,17 +121,17 @@ export interface TestFunctionImportEntityReturnTypeParameters {}
  */
 export function testFunctionImportEntityReturnType(
   parameters: TestFunctionImportEntityReturnTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnTypeParameters,
   TestEntity
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType',
-    data => transformReturnValueForEntityV2(data, TestEntity),
+    data => transformReturnValueForEntity(data, TestEntity),
     params
   );
 }
@@ -146,17 +148,17 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters {}
  */
 export function testFunctionImportEntityReturnTypeCollection(
   parameters: TestFunctionImportEntityReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnTypeCollectionParameters,
   TestEntity[]
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnTypeCollection',
-    data => transformReturnValueForEntityListV2(data, TestEntity),
+    data => transformReturnValueForEntityList(data, TestEntity),
     params
   );
 }
@@ -174,7 +176,7 @@ export interface TestFunctionImportSharedEntityReturnTypeParameters {}
 export function testFunctionImportSharedEntityReturnType(
   parameters: TestFunctionImportSharedEntityReturnTypeParameters
 ): Omit<
-  FunctionImportRequestBuilderV2<
+  FunctionImportRequestBuilder<
     TestFunctionImportSharedEntityReturnTypeParameters,
     never
   >,
@@ -182,7 +184,7 @@ export function testFunctionImportSharedEntityReturnType(
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnType',
@@ -208,7 +210,7 @@ export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {}
 export function testFunctionImportSharedEntityReturnTypeCollection(
   parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters
 ): Omit<
-  FunctionImportRequestBuilderV2<
+  FunctionImportRequestBuilder<
     TestFunctionImportSharedEntityReturnTypeCollectionParameters,
     never
   >,
@@ -216,7 +218,7 @@ export function testFunctionImportSharedEntityReturnTypeCollection(
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnTypeCollection',
@@ -241,19 +243,19 @@ export interface TestFunctionImportComplexReturnTypeParameters {}
  */
 export function testFunctionImportComplexReturnType(
   parameters: TestFunctionImportComplexReturnTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportComplexReturnTypeParameters,
   TestComplexType
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnType',
     data =>
-      transformReturnValueForComplexTypeV2(data, data =>
-        deserializeComplexTypeV2(data, TestComplexType)
+      transformReturnValueForComplexType(data, data =>
+        deserializeComplexType(data, TestComplexType)
       ),
     params
   );
@@ -276,7 +278,7 @@ export interface TestFunctionImportUnsupportedEdmTypesParameters {
  */
 export function testFunctionImportUnsupportedEdmTypes(
   parameters: TestFunctionImportUnsupportedEdmTypesParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportUnsupportedEdmTypesParameters,
   any
 > {
@@ -288,13 +290,13 @@ export function testFunctionImportUnsupportedEdmTypes(
     )
   };
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportUnsupportedEdmTypes',
     data =>
-      transformReturnValueForEdmTypeV2(data, val =>
-        edmToTsV2(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any')
       ),
     params
   );
@@ -312,19 +314,19 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters {}
  */
 export function testFunctionImportComplexReturnTypeCollection(
   parameters: TestFunctionImportComplexReturnTypeCollectionParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportComplexReturnTypeCollectionParameters,
   TestComplexType[]
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnTypeCollection',
     data =>
-      transformReturnValueForComplexTypeListV2(data, data =>
-        deserializeComplexTypeV2(data, TestComplexType)
+      transformReturnValueForComplexTypeList(data, data =>
+        deserializeComplexType(data, TestComplexType)
       ),
     params
   );
@@ -347,7 +349,7 @@ export interface TestFunctionImportGetParameters {
  */
 export function testFunctionImportGet(
   parameters: TestFunctionImportGetParameters
-): FunctionImportRequestBuilderV2<TestFunctionImportGetParameters, boolean> {
+): FunctionImportRequestBuilder<TestFunctionImportGetParameters, boolean> {
   const params = {
     simpleParam: new FunctionImportParameter(
       'SimpleParam',
@@ -356,13 +358,13 @@ export function testFunctionImportGet(
     )
   };
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportGET',
     data =>
-      transformReturnValueForEdmTypeV2(data, val =>
-        edmToTsV2(val.TestFunctionImportGET, 'Edm.Boolean')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.TestFunctionImportGET, 'Edm.Boolean')
       ),
     params
   );
@@ -385,7 +387,7 @@ export interface TestFunctionImportPostParameters {
  */
 export function testFunctionImportPost(
   parameters: TestFunctionImportPostParameters
-): FunctionImportRequestBuilderV2<TestFunctionImportPostParameters, boolean> {
+): FunctionImportRequestBuilder<TestFunctionImportPostParameters, boolean> {
   const params = {
     simpleParam: new FunctionImportParameter(
       'SimpleParam',
@@ -394,13 +396,13 @@ export function testFunctionImportPost(
     )
   };
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'post',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportPOST',
     data =>
-      transformReturnValueForEdmTypeV2(data, val =>
-        edmToTsV2(val.TestFunctionImportPOST, 'Edm.Boolean')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.TestFunctionImportPOST, 'Edm.Boolean')
       ),
     params
   );
@@ -427,7 +429,7 @@ export interface TestFunctionImportMultipleParamsParameters {
  */
 export function testFunctionImportMultipleParams(
   parameters: TestFunctionImportMultipleParamsParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   TestFunctionImportMultipleParamsParameters,
   boolean
 > {
@@ -444,13 +446,13 @@ export function testFunctionImportMultipleParams(
     )
   };
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportMultipleParams',
     data =>
-      transformReturnValueForEdmTypeV2(data, val =>
-        edmToTsV2(val.TestFunctionImportMultipleParams, 'Edm.Boolean')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.TestFunctionImportMultipleParams, 'Edm.Boolean')
       ),
     params
   );
@@ -468,19 +470,19 @@ export interface CreateTestComplexTypeParameters {}
  */
 export function createTestComplexType(
   parameters: CreateTestComplexTypeParameters
-): FunctionImportRequestBuilderV2<
+): FunctionImportRequestBuilder<
   CreateTestComplexTypeParameters,
   TestComplexType
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'CreateTestComplexType',
     data =>
-      transformReturnValueForComplexTypeV2(data, data =>
-        deserializeComplexTypeV2(data, TestComplexType)
+      transformReturnValueForComplexType(data, data =>
+        deserializeComplexType(data, TestComplexType)
       ),
     params
   );
@@ -498,16 +500,16 @@ export interface FContinueParameters {}
  */
 export function fContinue(
   parameters: FContinueParameters
-): FunctionImportRequestBuilderV2<FContinueParameters, boolean> {
+): FunctionImportRequestBuilder<FContinueParameters, boolean> {
   const params = {};
 
-  return new FunctionImportRequestBuilderV2(
+  return new FunctionImportRequestBuilder(
     'get',
     '/sap/opu/odata/sap/API_TEST_SRV',
     'Continue',
     data =>
-      transformReturnValueForEdmTypeV2(data, val =>
-        edmToTsV2(val.Continue, 'Edm.Boolean')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.Continue, 'Edm.Boolean')
       ),
     params
   );

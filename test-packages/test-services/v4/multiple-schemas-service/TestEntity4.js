@@ -7,17 +7,18 @@ exports.TestEntity4 = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntity4RequestBuilder_1 = require('./TestEntity4RequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-class TestEntity4 extends core_1.EntityV4 {
+class TestEntity4 extends odata_v4_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntity4`.
    * @returns A builder that constructs instances of entity type `TestEntity4`.
    */
   static builder() {
-    return core_1.EntityV4.entityBuilder(TestEntity4);
+    return odata_v4_1.Entity.entityBuilder(TestEntity4);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntity4` entity type.
@@ -32,7 +33,7 @@ class TestEntity4 extends core_1.EntityV4 {
    * @returns A builder that constructs instances of entity type `TestEntity4`.
    */
   static customField(fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, TestEntity4);
+    return odata_v4_1.Entity.customFieldSelector(fieldName, TestEntity4);
   }
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -52,7 +53,7 @@ TestEntity4._entityName = 'A_TestEntity4';
  */
 TestEntity4._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntity4) {
-  const _fieldBuilder = new core_1.FieldBuilder(TestEntity4);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntity4);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -81,7 +82,7 @@ TestEntity4._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All fields selector.
    */
-  TestEntity4.ALL_FIELDS = new core_1.AllFields('*', TestEntity4);
+  TestEntity4.ALL_FIELDS = new odata_common_1.AllFields('*', TestEntity4);
   /**
    * All key fields of the TestEntity4 entity.
    */

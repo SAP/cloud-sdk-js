@@ -4,22 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityWithSharedEntityType2RequestBuilder } from './TestEntityWithSharedEntityType2RequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
   Constructable,
-  CustomFieldV2,
   EdmTypeField,
   EntityBuilderType,
-  EntityV2,
   Field,
   FieldBuilder
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType2" of service "API_TEST_SRV".
  */
 export class TestEntityWithSharedEntityType2
-  extends EntityV2
+  extends Entity
   implements TestEntityWithSharedEntityType2Type
 {
   /**
@@ -44,7 +43,7 @@ export class TestEntityWithSharedEntityType2
     TestEntityWithSharedEntityType2,
     TestEntityWithSharedEntityType2Type
   > {
-    return EntityV2.entityBuilder(TestEntityWithSharedEntityType2);
+    return Entity.entityBuilder(TestEntityWithSharedEntityType2);
   }
 
   /**
@@ -62,8 +61,8 @@ export class TestEntityWithSharedEntityType2
    */
   static customField(
     fieldName: string
-  ): CustomFieldV2<TestEntityWithSharedEntityType2> {
-    return EntityV2.customFieldSelector(
+  ): CustomField<TestEntityWithSharedEntityType2> {
+    return Entity.customFieldSelector(
       fieldName,
       TestEntityWithSharedEntityType2
     );

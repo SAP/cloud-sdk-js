@@ -105,8 +105,7 @@ export function generateActionImportsV4(
             edmxAction.ReturnType,
             entities,
             complexTypes,
-            extractResponse,
-            serviceMetadata.edmx.oDataVersion
+            extractResponse
           )
         };
       })

@@ -7,17 +7,18 @@ exports.TestEntityEndsWithSomethingElse = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntityEndsWithSomethingElseRequestBuilder_1 = require('./TestEntityEndsWithSomethingElseRequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
-class TestEntityEndsWithSomethingElse extends core_1.EntityV4 {
+class TestEntityEndsWithSomethingElse extends odata_v4_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntityEndsWithSomethingElse`.
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
   static builder() {
-    return core_1.EntityV4.entityBuilder(TestEntityEndsWithSomethingElse);
+    return odata_v4_1.Entity.entityBuilder(TestEntityEndsWithSomethingElse);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityEndsWithSomethingElse` entity type.
@@ -32,7 +33,7 @@ class TestEntityEndsWithSomethingElse extends core_1.EntityV4 {
    * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
    */
   static customField(fieldName) {
-    return core_1.EntityV4.customFieldSelector(
+    return odata_v4_1.Entity.customFieldSelector(
       fieldName,
       TestEntityEndsWithSomethingElse
     );
@@ -57,7 +58,7 @@ TestEntityEndsWithSomethingElse._entityName =
 TestEntityEndsWithSomethingElse._defaultServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityEndsWithSomethingElse) {
-  const _fieldBuilder = new core_1.FieldBuilder(
+  const _fieldBuilder = new odata_common_1.FieldBuilder(
     TestEntityEndsWithSomethingElse
   );
   /**
@@ -75,7 +76,7 @@ TestEntityEndsWithSomethingElse._defaultServicePath =
   /**
    * All fields selector.
    */
-  TestEntityEndsWithSomethingElse.ALL_FIELDS = new core_1.AllFields(
+  TestEntityEndsWithSomethingElse.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityEndsWithSomethingElse
   );

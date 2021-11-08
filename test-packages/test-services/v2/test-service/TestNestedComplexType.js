@@ -10,7 +10,8 @@ exports.TestNestedComplexType =
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestLvl2NestedComplexType_1 = require('./TestLvl2NestedComplexType');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * @deprecated Since v1.6.0. Use [[TestNestedComplexType.build]] instead.
  */
@@ -22,7 +23,7 @@ exports.createTestNestedComplexType = createTestNestedComplexType;
  * TestNestedComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class TestNestedComplexTypeField extends core_1.ComplexTypeField {
+class TestNestedComplexTypeField extends odata_common_1.ComplexTypeField {
   /**
    * Creates an instance of TestNestedComplexTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -30,7 +31,7 @@ class TestNestedComplexTypeField extends core_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, fieldOptions) {
     super(fieldName, fieldOf, TestNestedComplexType, fieldOptions);
-    this._fieldBuilder = new core_1.FieldBuilder(this);
+    this._fieldBuilder = new odata_common_1.FieldBuilder(this);
     /**
      * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -72,10 +73,10 @@ var TestNestedComplexType;
     }
   ];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   function build(json) {
-    return (0, core_1.deserializeComplexTypeV2)(json, TestNestedComplexType);
+    return (0, odata_v2_1.deserializeComplexType)(json, TestNestedComplexType);
   }
   TestNestedComplexType.build = build;
 })(

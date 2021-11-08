@@ -6,12 +6,13 @@ exports.TestEntityRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntity_1 = require('./TestEntity');
 /**
  * Request builder class for operations supported on the [[TestEntity]] entity.
  */
-class TestEntityRequestBuilder extends core_1.RequestBuilder {
+class TestEntityRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
    * @param keyPropertyGuid Key property. See [[TestEntity.keyPropertyGuid]].
@@ -19,7 +20,7 @@ class TestEntityRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
   getByKey(keyPropertyGuid, keyPropertyString) {
-    return new core_1.GetByKeyRequestBuilderV4(TestEntity_1.TestEntity, {
+    return new odata_v4_1.GetByKeyRequestBuilder(TestEntity_1.TestEntity, {
       KeyPropertyGuid: keyPropertyGuid,
       KeyPropertyString: keyPropertyString
     });
@@ -29,7 +30,7 @@ class TestEntityRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV4(TestEntity_1.TestEntity);
+    return new odata_v4_1.GetAllRequestBuilder(TestEntity_1.TestEntity);
   }
   /**
    * Returns a request builder for creating a `TestEntity` entity.
@@ -37,7 +38,7 @@ class TestEntityRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntity`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV4(TestEntity_1.TestEntity, entity);
+    return new odata_v4_1.CreateRequestBuilder(TestEntity_1.TestEntity, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntity`.
@@ -45,10 +46,10 @@ class TestEntityRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntity`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV4(TestEntity_1.TestEntity, entity);
+    return new odata_v4_1.UpdateRequestBuilder(TestEntity_1.TestEntity, entity);
   }
   delete(keyPropertyGuidOrEntity, keyPropertyString) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntity_1.TestEntity,
       keyPropertyGuidOrEntity instanceof TestEntity_1.TestEntity
         ? keyPropertyGuidOrEntity

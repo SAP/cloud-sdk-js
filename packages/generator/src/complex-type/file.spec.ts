@@ -12,7 +12,10 @@ describe('file', () => {
       element => element.kind === StructureKind.ImportDeclaration
     );
 
-    expect(imports.length).toBe(1);
+    expect(imports.map(i => i.moduleSpecifier)).toEqual([
+      '@sap-cloud-sdk/odata-v2',
+      '@sap-cloud-sdk/odata-common'
+    ]);
 
     const entities = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.Class
@@ -39,7 +42,11 @@ describe('file', () => {
       element => element.kind === StructureKind.ImportDeclaration
     );
 
-    expect(imports.length).toBe(2); // The only deviation with the previous test
+    expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
+      '@sap-cloud-sdk/odata-v2',
+      '@sap-cloud-sdk/odata-common',
+      './ComplexDesert'
+    ]);
 
     const entities = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.Class

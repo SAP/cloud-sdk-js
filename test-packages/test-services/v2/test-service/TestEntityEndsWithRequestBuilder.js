@@ -6,19 +6,20 @@ exports.TestEntityEndsWithRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const TestEntityEndsWith_1 = require('./TestEntityEndsWith');
 /**
  * Request builder class for operations supported on the [[TestEntityEndsWith]] entity.
  */
-class TestEntityEndsWithRequestBuilder extends core_1.RequestBuilder {
+class TestEntityEndsWithRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityEndsWith` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityEndsWith.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new core_1.GetByKeyRequestBuilderV2(
+    return new odata_v2_1.GetByKeyRequestBuilder(
       TestEntityEndsWith_1.TestEntityEndsWith,
       { KeyProperty: keyProperty }
     );
@@ -28,7 +29,7 @@ class TestEntityEndsWithRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `TestEntityEndsWith` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV2(
+    return new odata_v2_1.GetAllRequestBuilder(
       TestEntityEndsWith_1.TestEntityEndsWith
     );
   }
@@ -38,7 +39,7 @@ class TestEntityEndsWithRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntityEndsWith`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV2(
+    return new odata_v2_1.CreateRequestBuilder(
       TestEntityEndsWith_1.TestEntityEndsWith,
       entity
     );
@@ -49,13 +50,13 @@ class TestEntityEndsWithRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntityEndsWith`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV2(
+    return new odata_v2_1.UpdateRequestBuilder(
       TestEntityEndsWith_1.TestEntityEndsWith,
       entity
     );
   }
   delete(keyPropertyOrEntity) {
-    return new core_1.DeleteRequestBuilderV2(
+    return new odata_v2_1.DeleteRequestBuilder(
       TestEntityEndsWith_1.TestEntityEndsWith,
       keyPropertyOrEntity instanceof TestEntityEndsWith_1.TestEntityEndsWith
         ? keyPropertyOrEntity

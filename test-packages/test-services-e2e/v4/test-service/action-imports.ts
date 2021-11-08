@@ -3,13 +3,14 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import '@sap-cloud-sdk/odata-common';
 import {
-  transformReturnValueForEntityV4,
-  transformReturnValueForEdmTypeV4,
-  edmToTsV4,
+  edmToTs,
   ActionImportRequestBuilder,
-  ActionImportParameter
-} from '@sap-cloud-sdk/core';
+  ActionImportParameter,
+  transformReturnValueForEntity,
+  transformReturnValueForEdmType
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 
 /**
@@ -38,7 +39,7 @@ export function createTestEntityById(
   return new ActionImportRequestBuilder(
     '/odata/test-service',
     'createTestEntityById',
-    data => transformReturnValueForEntityV4(data, TestEntity),
+    data => transformReturnValueForEntity(data, TestEntity),
     params
   );
 }
@@ -70,8 +71,8 @@ export function createTestEntityByIdReturnId(
     '/odata/test-service',
     'createTestEntityByIdReturnId',
     data =>
-      transformReturnValueForEdmTypeV4(data, val =>
-        edmToTsV4(val.value, 'Edm.Int32')
+      transformReturnValueForEdmType(data, val =>
+        edmToTs(val.value, 'Edm.Int32')
       ),
     params
   );

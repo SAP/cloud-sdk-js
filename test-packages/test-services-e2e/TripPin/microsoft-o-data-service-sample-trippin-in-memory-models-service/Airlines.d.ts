@@ -1,16 +1,15 @@
 import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   Field
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export declare class Airlines extends EntityV4 implements AirlinesType {
+export declare class Airlines extends Entity implements AirlinesType {
   /**
    * Technical entity name for Airlines.
    */
@@ -42,7 +41,7 @@ export declare class Airlines extends EntityV4 implements AirlinesType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Airlines`.
    */
-  static customField(fieldName: string): CustomFieldV4<Airlines>;
+  static customField(fieldName: string): CustomField<Airlines>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

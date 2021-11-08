@@ -3,17 +3,16 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   ComplexTypeField,
   ConstructorOrField,
   EdmTypeField,
-  EntityV4,
   FieldBuilder,
   FieldOptions,
   FieldType,
-  PropertyMetadata,
-  deserializeComplexTypeV4
-} from '@sap-cloud-sdk/core';
+  PropertyMetadata
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * TestComplexType2
@@ -37,7 +36,7 @@ export function createTestComplexType2(json: any): TestComplexType2 {
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
 export class TestComplexType2Field<
-  EntityT extends EntityV4,
+  EntityT extends Entity,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<EntityT, TestComplexType2, NullableT, SelectableT> {
@@ -77,9 +76,9 @@ export namespace TestComplexType2 {
   ];
 
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   export function build(json: { [keys: string]: FieldType }): TestComplexType2 {
-    return deserializeComplexTypeV4(json, TestComplexType2);
+    return deserializeComplexType(json, TestComplexType2);
   }
 }

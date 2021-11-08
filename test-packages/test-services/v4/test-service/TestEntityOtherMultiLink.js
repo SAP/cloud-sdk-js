@@ -7,17 +7,18 @@ exports.TestEntityOtherMultiLink = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntityOtherMultiLinkRequestBuilder_1 = require('./TestEntityOtherMultiLinkRequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityOtherMultiLink" of service "API_TEST_SRV".
  */
-class TestEntityOtherMultiLink extends core_1.EntityV4 {
+class TestEntityOtherMultiLink extends odata_v4_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntityOtherMultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
   static builder() {
-    return core_1.EntityV4.entityBuilder(TestEntityOtherMultiLink);
+    return odata_v4_1.Entity.entityBuilder(TestEntityOtherMultiLink);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityOtherMultiLink` entity type.
@@ -32,7 +33,7 @@ class TestEntityOtherMultiLink extends core_1.EntityV4 {
    * @returns A builder that constructs instances of entity type `TestEntityOtherMultiLink`.
    */
   static customField(fieldName) {
-    return core_1.EntityV4.customFieldSelector(
+    return odata_v4_1.Entity.customFieldSelector(
       fieldName,
       TestEntityOtherMultiLink
     );
@@ -56,7 +57,9 @@ TestEntityOtherMultiLink._entityName = 'A_TestEntityOtherMultiLink';
 TestEntityOtherMultiLink._defaultServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityOtherMultiLink) {
-  const _fieldBuilder = new core_1.FieldBuilder(TestEntityOtherMultiLink);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(
+    TestEntityOtherMultiLink
+  );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -73,7 +76,7 @@ TestEntityOtherMultiLink._defaultServicePath =
   /**
    * All fields selector.
    */
-  TestEntityOtherMultiLink.ALL_FIELDS = new core_1.AllFields(
+  TestEntityOtherMultiLink.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityOtherMultiLink
   );

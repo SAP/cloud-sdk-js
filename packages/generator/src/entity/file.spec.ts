@@ -10,7 +10,13 @@ describe('file', () => {
       element => element.kind === StructureKind.ImportDeclaration
     );
 
-    expect(imports.length).toBe(4);
+    expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
+      './BreakfastRequestBuilder',
+      'bignumber.js',
+      '@sap-cloud-sdk/odata-v2',
+      '@sap-cloud-sdk/odata-common',
+      './Brunch'
+    ]);
 
     const entities = (actual.statements as any[]).filter(
       element => element.kind === StructureKind.Class

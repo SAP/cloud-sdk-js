@@ -5,11 +5,11 @@ import {
   isDestinationConfiguration,
   parseDestination
 } from './destination';
+import { DestinationFetchOptions } from './destination-accessor-types';
 import type {
   Destination,
   DestinationAuthToken
 } from './destination-service-types';
-import type { DestinationOptions } from './destination-accessor';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -114,23 +114,22 @@ function validateDestinations(destinations: any[]) {
  * @internal
  */
 export function searchEnvVariablesForDestination(
-  name: string,
-  options: DestinationOptions = {}
+  options: DestinationFetchOptions
 ): Destination | undefined {
   logger.info('Attempting to retrieve destination from environment variable.');
 
   if (getDestinationsEnvVariable()) {
     try {
-      const destination = getDestinationFromEnvByName(name);
+      const destination = getDestinationFromEnvByName(options.destinationName);
       if (destination) {
         if (destination.forwardAuthToken) {
-          destination.authTokens = destinationAuthToken(options.userJwt);
+          destination.authTokens = destinationAuthToken(options.jwt);
           logger.info(
-            `Successfully retrieved destination '${name}' from environment variable.`
+            `Successfully retrieved destination '${options.destinationName}' from environment variable.`
           );
         } else {
           logger.warn(
-            `Successfully retrieved destination '${name}' from environment variable.` +
+            `Successfully retrieved destination '${options.destinationName}' from environment variable.` +
               'This is discouraged for productive applications. ' +
               'Unset the variable to read destinations from the destination service on SAP Business Technology Platform.'
           );

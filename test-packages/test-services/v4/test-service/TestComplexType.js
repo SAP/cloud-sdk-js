@@ -6,7 +6,8 @@ exports.TestComplexType =
     void 0;
 const TestNestedComplexType_1 = require('./TestNestedComplexType');
 const TestEnumType_1 = require('./TestEnumType');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
  */
@@ -18,7 +19,7 @@ exports.createTestComplexType = createTestComplexType;
  * TestComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class TestComplexTypeField extends core_1.ComplexTypeField {
+class TestComplexTypeField extends odata_common_1.ComplexTypeField {
   /**
    * Creates an instance of TestComplexTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -26,7 +27,7 @@ class TestComplexTypeField extends core_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, fieldOptions) {
     super(fieldName, fieldOf, TestComplexType, fieldOptions);
-    this._fieldBuilder = new core_1.FieldBuilder(this);
+    this._fieldBuilder = new odata_common_1.FieldBuilder(this);
     /**
      * Representation of the [[TestComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -384,10 +385,10 @@ var TestComplexType;
     }
   ];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `@sap-cloud-sdk/core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
    */
   function build(json) {
-    return (0, core_1.deserializeComplexTypeV4)(json, TestComplexType);
+    return (0, odata_v4_1.deserializeComplexType)(json, TestComplexType);
   }
   TestComplexType.build = build;
 })(

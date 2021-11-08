@@ -6,12 +6,13 @@ exports.TestEntityLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityLink_1 = require('./TestEntityLink');
 /**
  * Request builder class for operations supported on the [[TestEntityLink]] entity.
  */
-class TestEntityLinkRequestBuilder extends core_1.RequestBuilder {
+class TestEntityLinkRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityLink` entity based on its keys.
    * @param keyTestEntityLink Key property. See [[TestEntityLink.keyTestEntityLink]].
@@ -19,7 +20,7 @@ class TestEntityLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `TestEntityLink` entity based on its keys.
    */
   getByKey(keyTestEntityLink, keyToTestEntity) {
-    return new core_1.GetByKeyRequestBuilderV4(
+    return new odata_v4_1.GetByKeyRequestBuilder(
       TestEntityLink_1.TestEntityLink,
       {
         KeyTestEntityLink: keyTestEntityLink,
@@ -32,7 +33,7 @@ class TestEntityLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `TestEntityLink` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV4(TestEntityLink_1.TestEntityLink);
+    return new odata_v4_1.GetAllRequestBuilder(TestEntityLink_1.TestEntityLink);
   }
   /**
    * Returns a request builder for creating a `TestEntityLink` entity.
@@ -40,7 +41,7 @@ class TestEntityLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntityLink`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV4(
+    return new odata_v4_1.CreateRequestBuilder(
       TestEntityLink_1.TestEntityLink,
       entity
     );
@@ -51,13 +52,13 @@ class TestEntityLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntityLink`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV4(
+    return new odata_v4_1.UpdateRequestBuilder(
       TestEntityLink_1.TestEntityLink,
       entity
     );
   }
   delete(keyTestEntityLinkOrEntity, keyToTestEntity) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       TestEntityLink_1.TestEntityLink,
       keyTestEntityLinkOrEntity instanceof TestEntityLink_1.TestEntityLink
         ? keyTestEntityLinkOrEntity

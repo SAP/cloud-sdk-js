@@ -6,7 +6,7 @@ jest.mock('fs', () => {
   return {
     ...fs,
     readFileSync: jest.fn().mockReturnValue(`{
-        "name": "@sap-cloud-sdk/core",
+        "name": "../../../../core",
         "dependencies": {
           "axios": "0.19.0",
           "rambda": "1.2.3",
@@ -79,7 +79,7 @@ describe('analytics-data', () => {
   });
 
   const hashedProjectIdentifierWithSalt =
-    '638a8cd8f3522a69942b7c32be52af01a12223dd1a5aa9a5eed24e8de26550a3';
+    '0fb2c766d6da5ada59c6117da2c297dcac532257e9d4db03d49a9a66bcb33d84';
 
   it('getProjectIdentifier should throw an error if the salt is missing', async () => {
     expect(getAnalyticsData({ enabled: true })).rejects.toThrow();

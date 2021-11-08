@@ -1,12 +1,12 @@
 import {
-  CreateRequestBuilderV4,
-  DeleteRequestBuilderV4,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  ODataBatchChangeSetV4,
-  ODataBatchRequestBuilderV4,
-  UpdateRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  ODataBatchChangeSet,
+  ODataBatchRequestBuilder,
+  UpdateRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity, TestEntityLink } from './index';
 /**
  * Batch builder for operations supported on the Test Service.
@@ -16,15 +16,15 @@ import { TestEntity, TestEntityLink } from './index';
 export declare function batch(
   ...requests: Array<
     | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteTestServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV4;
+): ODataBatchRequestBuilder;
 export declare function batch(
   requests: Array<
     | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteTestServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV4;
+): ODataBatchRequestBuilder;
 /**
  * Change set constructor consists of write operations supported on the Test Service.
  * @param requests The requests of the change set
@@ -32,21 +32,21 @@ export declare function batch(
  */
 export declare function changeset(
   ...requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteTestServiceRequestBuilder>;
 export declare function changeset(
   requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteTestServiceRequestBuilder>;
 export declare const defaultTestServicePath = '/odata/test-service';
 export declare type ReadTestServiceRequestBuilder =
-  | GetAllRequestBuilderV4<TestEntity>
-  | GetAllRequestBuilderV4<TestEntityLink>
-  | GetByKeyRequestBuilderV4<TestEntity>
-  | GetByKeyRequestBuilderV4<TestEntityLink>;
+  | GetAllRequestBuilder<TestEntity>
+  | GetAllRequestBuilder<TestEntityLink>
+  | GetByKeyRequestBuilder<TestEntity>
+  | GetByKeyRequestBuilder<TestEntityLink>;
 export declare type WriteTestServiceRequestBuilder =
-  | CreateRequestBuilderV4<TestEntity>
-  | UpdateRequestBuilderV4<TestEntity>
-  | DeleteRequestBuilderV4<TestEntity>
-  | CreateRequestBuilderV4<TestEntityLink>
-  | UpdateRequestBuilderV4<TestEntityLink>
-  | DeleteRequestBuilderV4<TestEntityLink>;
+  | CreateRequestBuilder<TestEntity>
+  | UpdateRequestBuilder<TestEntity>
+  | DeleteRequestBuilder<TestEntity>
+  | CreateRequestBuilder<TestEntityLink>
+  | UpdateRequestBuilder<TestEntityLink>
+  | DeleteRequestBuilder<TestEntityLink>;
 //# sourceMappingURL=BatchRequest.d.ts.map

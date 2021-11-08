@@ -33,7 +33,10 @@ export async function createFile(
       err.code === 'EEXIST' && !overwrite
         ? ' File already exists. If you want to allow overwriting files, enable the `overwrite` flag.'
         : '';
-    throw new ErrorWithCause(`Could not write file.${recommendation}`, err);
+    throw new ErrorWithCause(
+      `Could not write file "${fileName}".${recommendation}`,
+      err
+    );
   }
 }
 

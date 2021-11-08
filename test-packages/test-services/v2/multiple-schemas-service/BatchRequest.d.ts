@@ -1,12 +1,12 @@
 import {
-  CreateRequestBuilderV2,
-  DeleteRequestBuilderV2,
-  GetAllRequestBuilderV2,
-  GetByKeyRequestBuilderV2,
-  ODataBatchChangeSetV2,
-  ODataBatchRequestBuilderV2,
-  UpdateRequestBuilderV2
-} from '@sap-cloud-sdk/core';
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  ODataBatchChangeSet,
+  ODataBatchRequestBuilder,
+  UpdateRequestBuilder
+} from '@sap-cloud-sdk/odata-v2';
 import { MultiSchemaTestEntity } from './index';
 /**
  * Batch builder for operations supported on the Multiple Schemas Service.
@@ -16,15 +16,15 @@ import { MultiSchemaTestEntity } from './index';
 export declare function batch(
   ...requests: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV2;
+): ODataBatchRequestBuilder;
 export declare function batch(
   requests: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV2;
+): ODataBatchRequestBuilder;
 /**
  * Change set constructor consists of write operations supported on the Multiple Schemas Service.
  * @param requests The requests of the change set
@@ -32,16 +32,16 @@ export declare function batch(
  */
 export declare function changeset(
   ...requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
 export declare function changeset(
   requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
 export declare const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 export declare type ReadMultipleSchemasServiceRequestBuilder =
-  | GetAllRequestBuilderV2<MultiSchemaTestEntity>
-  | GetByKeyRequestBuilderV2<MultiSchemaTestEntity>;
+  | GetAllRequestBuilder<MultiSchemaTestEntity>
+  | GetByKeyRequestBuilder<MultiSchemaTestEntity>;
 export declare type WriteMultipleSchemasServiceRequestBuilder =
-  | CreateRequestBuilderV2<MultiSchemaTestEntity>
-  | UpdateRequestBuilderV2<MultiSchemaTestEntity>
-  | DeleteRequestBuilderV2<MultiSchemaTestEntity>;
+  | CreateRequestBuilder<MultiSchemaTestEntity>
+  | UpdateRequestBuilder<MultiSchemaTestEntity>
+  | DeleteRequestBuilder<MultiSchemaTestEntity>;
 //# sourceMappingURL=BatchRequest.d.ts.map

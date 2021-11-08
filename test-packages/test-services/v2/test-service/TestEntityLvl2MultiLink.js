@@ -7,17 +7,18 @@ exports.TestEntityLvl2MultiLink = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntityLvl2MultiLinkRequestBuilder_1 = require('./TestEntityLvl2MultiLinkRequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityLvl2MultiLink" of service "API_TEST_SRV".
  */
-class TestEntityLvl2MultiLink extends core_1.EntityV2 {
+class TestEntityLvl2MultiLink extends odata_v2_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntityLvl2MultiLink`.
    * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
    */
   static builder() {
-    return core_1.EntityV2.entityBuilder(TestEntityLvl2MultiLink);
+    return odata_v2_1.Entity.entityBuilder(TestEntityLvl2MultiLink);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityLvl2MultiLink` entity type.
@@ -32,7 +33,7 @@ class TestEntityLvl2MultiLink extends core_1.EntityV2 {
    * @returns A builder that constructs instances of entity type `TestEntityLvl2MultiLink`.
    */
   static customField(fieldName) {
-    return core_1.EntityV2.customFieldSelector(
+    return odata_v2_1.Entity.customFieldSelector(
       fieldName,
       TestEntityLvl2MultiLink
     );
@@ -55,7 +56,9 @@ TestEntityLvl2MultiLink._entityName = 'A_TestEntityLvl2MultiLink';
  */
 TestEntityLvl2MultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityLvl2MultiLink) {
-  const _fieldBuilder = new core_1.FieldBuilder(TestEntityLvl2MultiLink);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(
+    TestEntityLvl2MultiLink
+  );
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -114,7 +117,7 @@ TestEntityLvl2MultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All fields selector.
    */
-  TestEntityLvl2MultiLink.ALL_FIELDS = new core_1.AllFields(
+  TestEntityLvl2MultiLink.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityLvl2MultiLink
   );

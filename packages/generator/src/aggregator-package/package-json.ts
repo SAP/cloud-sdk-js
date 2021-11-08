@@ -23,7 +23,7 @@ export function packageJson(
           return deps;
         }, {}),
         peerDependencies: {
-          '@sap-cloud-sdk/core': `^${generatorVersion}`
+          '../../../../core': `^${generatorVersion}`
         }
       },
       null,

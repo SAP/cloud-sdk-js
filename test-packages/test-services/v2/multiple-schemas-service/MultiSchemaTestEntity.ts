@@ -4,22 +4,21 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
   Constructable,
-  CustomFieldV2,
   EdmTypeField,
   EntityBuilderType,
-  EntityV2,
   Field,
   FieldBuilder
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
 export class MultiSchemaTestEntity
-  extends EntityV2
+  extends Entity
   implements MultiSchemaTestEntityType
 {
   /**
@@ -43,7 +42,7 @@ export class MultiSchemaTestEntity
     MultiSchemaTestEntity,
     MultiSchemaTestEntityType
   > {
-    return EntityV2.entityBuilder(MultiSchemaTestEntity);
+    return Entity.entityBuilder(MultiSchemaTestEntity);
   }
 
   /**
@@ -59,8 +58,8 @@ export class MultiSchemaTestEntity
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
-  static customField(fieldName: string): CustomFieldV2<MultiSchemaTestEntity> {
-    return EntityV2.customFieldSelector(fieldName, MultiSchemaTestEntity);
+  static customField(fieldName: string): CustomField<MultiSchemaTestEntity> {
+    return Entity.customFieldSelector(fieldName, MultiSchemaTestEntity);
   }
 
   /**

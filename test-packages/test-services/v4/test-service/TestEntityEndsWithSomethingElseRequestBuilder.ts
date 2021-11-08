@@ -3,14 +3,14 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntityEndsWithSomethingElse } from './TestEntityEndsWithSomethingElse';
 
 /**
@@ -24,8 +24,8 @@ export class TestEntityEndsWithSomethingElseRequestBuilder extends RequestBuilde
    */
   getByKey(
     keyProperty: string
-  ): GetByKeyRequestBuilderV4<TestEntityEndsWithSomethingElse> {
-    return new GetByKeyRequestBuilderV4(TestEntityEndsWithSomethingElse, {
+  ): GetByKeyRequestBuilder<TestEntityEndsWithSomethingElse> {
+    return new GetByKeyRequestBuilder(TestEntityEndsWithSomethingElse, {
       KeyProperty: keyProperty
     });
   }
@@ -34,8 +34,8 @@ export class TestEntityEndsWithSomethingElseRequestBuilder extends RequestBuilde
    * Returns a request builder for querying all `TestEntityEndsWithSomethingElse` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityEndsWithSomethingElse` entities.
    */
-  getAll(): GetAllRequestBuilderV4<TestEntityEndsWithSomethingElse> {
-    return new GetAllRequestBuilderV4(TestEntityEndsWithSomethingElse);
+  getAll(): GetAllRequestBuilder<TestEntityEndsWithSomethingElse> {
+    return new GetAllRequestBuilder(TestEntityEndsWithSomethingElse);
   }
 
   /**
@@ -45,8 +45,8 @@ export class TestEntityEndsWithSomethingElseRequestBuilder extends RequestBuilde
    */
   create(
     entity: TestEntityEndsWithSomethingElse
-  ): CreateRequestBuilderV4<TestEntityEndsWithSomethingElse> {
-    return new CreateRequestBuilderV4(TestEntityEndsWithSomethingElse, entity);
+  ): CreateRequestBuilder<TestEntityEndsWithSomethingElse> {
+    return new CreateRequestBuilder(TestEntityEndsWithSomethingElse, entity);
   }
 
   /**
@@ -56,8 +56,8 @@ export class TestEntityEndsWithSomethingElseRequestBuilder extends RequestBuilde
    */
   update(
     entity: TestEntityEndsWithSomethingElse
-  ): UpdateRequestBuilderV4<TestEntityEndsWithSomethingElse> {
-    return new UpdateRequestBuilderV4(TestEntityEndsWithSomethingElse, entity);
+  ): UpdateRequestBuilder<TestEntityEndsWithSomethingElse> {
+    return new UpdateRequestBuilder(TestEntityEndsWithSomethingElse, entity);
   }
 
   /**
@@ -67,7 +67,7 @@ export class TestEntityEndsWithSomethingElseRequestBuilder extends RequestBuilde
    */
   delete(
     keyProperty: string
-  ): DeleteRequestBuilderV4<TestEntityEndsWithSomethingElse>;
+  ): DeleteRequestBuilder<TestEntityEndsWithSomethingElse>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityEndsWithSomethingElse`.
    * @param entity Pass the entity to be deleted.
@@ -75,11 +75,11 @@ export class TestEntityEndsWithSomethingElseRequestBuilder extends RequestBuilde
    */
   delete(
     entity: TestEntityEndsWithSomethingElse
-  ): DeleteRequestBuilderV4<TestEntityEndsWithSomethingElse>;
+  ): DeleteRequestBuilder<TestEntityEndsWithSomethingElse>;
   delete(
     keyPropertyOrEntity: any
-  ): DeleteRequestBuilderV4<TestEntityEndsWithSomethingElse> {
-    return new DeleteRequestBuilderV4(
+  ): DeleteRequestBuilder<TestEntityEndsWithSomethingElse> {
+    return new DeleteRequestBuilder(
       TestEntityEndsWithSomethingElse,
       keyPropertyOrEntity instanceof TestEntityEndsWithSomethingElse
         ? keyPropertyOrEntity

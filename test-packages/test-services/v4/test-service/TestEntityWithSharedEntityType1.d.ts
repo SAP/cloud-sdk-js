@@ -1,17 +1,16 @@
 import { TestEntityWithSharedEntityType1RequestBuilder } from './TestEntityWithSharedEntityType1RequestBuilder';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   Field
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType1" of service "API_TEST_SRV".
  */
 export declare class TestEntityWithSharedEntityType1
-  extends EntityV4
+  extends Entity
   implements TestEntityWithSharedEntityType1Type
 {
   /**
@@ -47,7 +46,7 @@ export declare class TestEntityWithSharedEntityType1
    */
   static customField(
     fieldName: string
-  ): CustomFieldV4<TestEntityWithSharedEntityType1>;
+  ): CustomField<TestEntityWithSharedEntityType1>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

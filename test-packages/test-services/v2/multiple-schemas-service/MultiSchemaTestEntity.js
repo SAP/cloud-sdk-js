@@ -7,17 +7,18 @@ exports.MultiSchemaTestEntity = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const MultiSchemaTestEntityRequestBuilder_1 = require('./MultiSchemaTestEntityRequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-class MultiSchemaTestEntity extends core_1.EntityV2 {
+class MultiSchemaTestEntity extends odata_v2_1.Entity {
   /**
    * Returns an entity builder to construct instances of `MultiSchemaTestEntity`.
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
   static builder() {
-    return core_1.EntityV2.entityBuilder(MultiSchemaTestEntity);
+    return odata_v2_1.Entity.entityBuilder(MultiSchemaTestEntity);
   }
   /**
    * Returns a request builder to construct requests for operations on the `MultiSchemaTestEntity` entity type.
@@ -32,7 +33,7 @@ class MultiSchemaTestEntity extends core_1.EntityV2 {
    * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
    */
   static customField(fieldName) {
-    return core_1.EntityV2.customFieldSelector(
+    return odata_v2_1.Entity.customFieldSelector(
       fieldName,
       MultiSchemaTestEntity
     );
@@ -55,7 +56,7 @@ MultiSchemaTestEntity._entityName = 'MultiSchemaTestEntity';
  */
 MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
 (function (MultiSchemaTestEntity) {
-  const _fieldBuilder = new core_1.FieldBuilder(MultiSchemaTestEntity);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(MultiSchemaTestEntity);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -72,7 +73,7 @@ MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
   /**
    * All fields selector.
    */
-  MultiSchemaTestEntity.ALL_FIELDS = new core_1.AllFields(
+  MultiSchemaTestEntity.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     MultiSchemaTestEntity
   );

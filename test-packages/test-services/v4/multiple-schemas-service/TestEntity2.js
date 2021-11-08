@@ -7,17 +7,18 @@ exports.TestEntity2 = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntity2RequestBuilder_1 = require('./TestEntity2RequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntity2" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-class TestEntity2 extends core_1.EntityV4 {
+class TestEntity2 extends odata_v4_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntity2`.
    * @returns A builder that constructs instances of entity type `TestEntity2`.
    */
   static builder() {
-    return core_1.EntityV4.entityBuilder(TestEntity2);
+    return odata_v4_1.Entity.entityBuilder(TestEntity2);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntity2` entity type.
@@ -32,7 +33,7 @@ class TestEntity2 extends core_1.EntityV4 {
    * @returns A builder that constructs instances of entity type `TestEntity2`.
    */
   static customField(fieldName) {
-    return core_1.EntityV4.customFieldSelector(fieldName, TestEntity2);
+    return odata_v4_1.Entity.customFieldSelector(fieldName, TestEntity2);
   }
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -52,7 +53,7 @@ TestEntity2._entityName = 'A_TestEntity2';
  */
 TestEntity2._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntity2) {
-  const _fieldBuilder = new core_1.FieldBuilder(TestEntity2);
+  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntity2);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -81,7 +82,7 @@ TestEntity2._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All fields selector.
    */
-  TestEntity2.ALL_FIELDS = new core_1.AllFields('*', TestEntity2);
+  TestEntity2.ALL_FIELDS = new odata_common_1.AllFields('*', TestEntity2);
   /**
    * All key fields of the TestEntity2 entity.
    */

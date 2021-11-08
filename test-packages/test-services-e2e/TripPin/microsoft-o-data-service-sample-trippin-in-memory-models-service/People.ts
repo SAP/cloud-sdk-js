@@ -7,26 +7,25 @@ import { PeopleRequestBuilder } from './PeopleRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import { Location } from './Location';
 import { PersonGender } from './PersonGender';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
   CollectionField,
   Constructable,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   EnumField,
   Field,
   FieldBuilder,
   OneToManyLink,
   OneToOneLink,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export class People extends EntityV4 implements PeopleType {
+export class People extends Entity implements PeopleType {
   /**
    * Technical entity name for People.
    */
@@ -81,7 +80,7 @@ export class People extends EntityV4 implements PeopleType {
    * @returns A builder that constructs instances of entity type `People`.
    */
   static builder(): EntityBuilderType<People, PeopleType> {
-    return EntityV4.entityBuilder(People);
+    return Entity.entityBuilder(People);
   }
 
   /**
@@ -97,8 +96,8 @@ export class People extends EntityV4 implements PeopleType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `People`.
    */
-  static customField(fieldName: string): CustomFieldV4<People> {
-    return EntityV4.customFieldSelector(fieldName, People);
+  static customField(fieldName: string): CustomField<People> {
+    return Entity.customFieldSelector(fieldName, People);
   }
 
   /**

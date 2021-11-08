@@ -17,9 +17,10 @@
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^10.0.2",
-    "@sap-cloud-sdk/core": "^1.50.0",
     "@sap-cloud-sdk/generator": "^1.50.0",
     "@sap-cloud-sdk/generator-common": "^1.50.0",
+    "@sap-cloud-sdk/odata-common": "^1.50.0",
+    "@sap-cloud-sdk/odata-v4": "^1.50.0",
     "@sap-cloud-sdk/openapi-generator": "^1.50.0",
     "@sap-cloud-sdk/test-services": "^1.50.0",
     "@sap-cloud-sdk/test-services-e2e": "^1.50.0",
@@ -29,7 +30,7 @@
     "express": "^4.17.1",
     "json-schema-faker": "^0.5.0-rcv.30",
     "moment": "^2.29.0",
-    "openapi-backend": "^4.1.0",
+    "openapi-backend": "^5.0.0",
     "pm2": "^5.1.2",
     "sqlite3": "^5.0.2"
   },
@@ -40,9 +41,7 @@
     "requires": {
       "db": {
         "kind": "sqlite",
-        "credentials": {
-          "database": "sqlite.db"
-        }
+        "model": "*"
       }
     }
   }

@@ -55,7 +55,7 @@ describe('generator', () => {
           /test-resources\/odata-service-specs\/v2\/API_TEST_SRV\/sdk-metadata/
         );
       });
-    });
+    }, 10000);
   });
   describe('edmx-to-csn', () => {
     const testGeneratorOptions: GeneratorOptions = createOptions({
@@ -141,7 +141,8 @@ describe('generator', () => {
         './TestEnumType',
         './TestEnumTypeInt64',
         './TestEnumTypeWithOneMember',
-        '@sap-cloud-sdk/core',
+        '@sap-cloud-sdk/odata-v4',
+        '@sap-cloud-sdk/odata-common',
         './TestEntityMultiLink',
         './TestEntitySingleLink'
       ]);

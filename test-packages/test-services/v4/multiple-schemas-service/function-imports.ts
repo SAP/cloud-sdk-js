@@ -3,11 +3,11 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
+import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common';
 import {
-  transformReturnValueForEntityV4,
-  FunctionImportRequestBuilderV4,
-  FunctionImportParameter
-} from '@sap-cloud-sdk/core';
+  FunctionImportRequestBuilder,
+  transformReturnValueForEntity
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntity1 } from './TestEntity1';
 import { TestEntity2 } from './TestEntity2';
 
@@ -23,16 +23,16 @@ export interface TestFunctionImportEntityReturnType1Parameters {}
  */
 export function testFunctionImportEntityReturnType1(
   parameters: TestFunctionImportEntityReturnType1Parameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnType1Parameters,
   TestEntity1
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV4(
+  return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType1',
-    data => transformReturnValueForEntityV4(data, TestEntity1),
+    data => transformReturnValueForEntity(data, TestEntity1),
     params
   );
 }
@@ -49,16 +49,16 @@ export interface TestFunctionImportEntityReturnType2Parameters {}
  */
 export function testFunctionImportEntityReturnType2(
   parameters: TestFunctionImportEntityReturnType2Parameters
-): FunctionImportRequestBuilderV4<
+): FunctionImportRequestBuilder<
   TestFunctionImportEntityReturnType2Parameters,
   TestEntity2
 > {
   const params = {};
 
-  return new FunctionImportRequestBuilderV4(
+  return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType2',
-    data => transformReturnValueForEntityV4(data, TestEntity2),
+    data => transformReturnValueForEntity(data, TestEntity2),
     params
   );
 }

@@ -6,19 +6,20 @@ exports.TestEntitySingleLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const TestEntitySingleLink_1 = require('./TestEntitySingleLink');
 /**
  * Request builder class for operations supported on the [[TestEntitySingleLink]] entity.
  */
-class TestEntitySingleLinkRequestBuilder extends core_1.RequestBuilder {
+class TestEntitySingleLinkRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntitySingleLink` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntitySingleLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new core_1.GetByKeyRequestBuilderV2(
+    return new odata_v2_1.GetByKeyRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink,
       { KeyProperty: keyProperty }
     );
@@ -28,7 +29,7 @@ class TestEntitySingleLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `TestEntitySingleLink` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV2(
+    return new odata_v2_1.GetAllRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink
     );
   }
@@ -38,7 +39,7 @@ class TestEntitySingleLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntitySingleLink`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV2(
+    return new odata_v2_1.CreateRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink,
       entity
     );
@@ -49,13 +50,13 @@ class TestEntitySingleLinkRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntitySingleLink`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV2(
+    return new odata_v2_1.UpdateRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink,
       entity
     );
   }
   delete(keyPropertyOrEntity) {
-    return new core_1.DeleteRequestBuilderV2(
+    return new odata_v2_1.DeleteRequestBuilder(
       TestEntitySingleLink_1.TestEntitySingleLink,
       keyPropertyOrEntity instanceof TestEntitySingleLink_1.TestEntitySingleLink
         ? keyPropertyOrEntity

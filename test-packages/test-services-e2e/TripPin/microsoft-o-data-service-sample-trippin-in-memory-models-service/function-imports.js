@@ -6,7 +6,8 @@ exports.functionImports = exports.getNearestAirport = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const Airports_1 = require('./Airports');
 /**
  * Get Nearest Airport.
@@ -15,18 +16,22 @@ const Airports_1 = require('./Airports');
  */
 function getNearestAirport(parameters) {
   const params = {
-    lat: new core_1.FunctionImportParameter(
+    lat: new odata_common_1.FunctionImportParameter(
       'lat',
       'Edm.Double',
       parameters.lat
     ),
-    lon: new core_1.FunctionImportParameter('lon', 'Edm.Double', parameters.lon)
+    lon: new odata_common_1.FunctionImportParameter(
+      'lon',
+      'Edm.Double',
+      parameters.lon
+    )
   };
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
     'GetNearestAirport',
     data =>
-      (0, core_1.transformReturnValueForEntityV4)(data, Airports_1.Airports),
+      (0, odata_v4_1.transformReturnValueForEntity)(data, Airports_1.Airports),
     params
   );
 }

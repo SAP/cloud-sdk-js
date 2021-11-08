@@ -1,12 +1,12 @@
 import {
-  CreateRequestBuilderV4,
-  DeleteRequestBuilderV4,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  ODataBatchChangeSetV4,
-  ODataBatchRequestBuilderV4,
-  UpdateRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  ODataBatchChangeSet,
+  ODataBatchRequestBuilder,
+  UpdateRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import {
   TestEntity,
   TestEntityWithEnumKey,
@@ -31,15 +31,15 @@ import {
 export declare function batch(
   ...requests: Array<
     | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteTestServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV4;
+): ODataBatchRequestBuilder;
 export declare function batch(
   requests: Array<
     | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteTestServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV4;
+): ODataBatchRequestBuilder;
 /**
  * Change set constructor consists of write operations supported on the Test Service.
  * @param requests The requests of the change set
@@ -47,81 +47,81 @@ export declare function batch(
  */
 export declare function changeset(
   ...requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteTestServiceRequestBuilder>;
 export declare function changeset(
   requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSetV4<WriteTestServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteTestServiceRequestBuilder>;
 export declare const defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 export declare type ReadTestServiceRequestBuilder =
-  | GetAllRequestBuilderV4<TestEntity>
-  | GetAllRequestBuilderV4<TestEntityWithEnumKey>
-  | GetAllRequestBuilderV4<TestEntityWithSharedEntityType1>
-  | GetAllRequestBuilderV4<TestEntityWithSharedEntityType2>
-  | GetAllRequestBuilderV4<TestEntityMultiLink>
-  | GetAllRequestBuilderV4<TestEntityOtherMultiLink>
-  | GetAllRequestBuilderV4<TestEntityLvl2MultiLink>
-  | GetAllRequestBuilderV4<TestEntityLvl3MultiLink>
-  | GetAllRequestBuilderV4<TestEntitySingleLink>
-  | GetAllRequestBuilderV4<TestEntityLvl2SingleLink>
-  | GetAllRequestBuilderV4<TestEntityCircularLinkParent>
-  | GetAllRequestBuilderV4<TestEntityCircularLinkChild>
-  | GetAllRequestBuilderV4<TestEntityEndsWith>
-  | GetAllRequestBuilderV4<TestEntityEndsWithSomethingElse>
-  | GetByKeyRequestBuilderV4<TestEntity>
-  | GetByKeyRequestBuilderV4<TestEntityWithEnumKey>
-  | GetByKeyRequestBuilderV4<TestEntityWithSharedEntityType1>
-  | GetByKeyRequestBuilderV4<TestEntityWithSharedEntityType2>
-  | GetByKeyRequestBuilderV4<TestEntityMultiLink>
-  | GetByKeyRequestBuilderV4<TestEntityOtherMultiLink>
-  | GetByKeyRequestBuilderV4<TestEntityLvl2MultiLink>
-  | GetByKeyRequestBuilderV4<TestEntityLvl3MultiLink>
-  | GetByKeyRequestBuilderV4<TestEntitySingleLink>
-  | GetByKeyRequestBuilderV4<TestEntityLvl2SingleLink>
-  | GetByKeyRequestBuilderV4<TestEntityCircularLinkParent>
-  | GetByKeyRequestBuilderV4<TestEntityCircularLinkChild>
-  | GetByKeyRequestBuilderV4<TestEntityEndsWith>
-  | GetByKeyRequestBuilderV4<TestEntityEndsWithSomethingElse>;
+  | GetAllRequestBuilder<TestEntity>
+  | GetAllRequestBuilder<TestEntityWithEnumKey>
+  | GetAllRequestBuilder<TestEntityWithSharedEntityType1>
+  | GetAllRequestBuilder<TestEntityWithSharedEntityType2>
+  | GetAllRequestBuilder<TestEntityMultiLink>
+  | GetAllRequestBuilder<TestEntityOtherMultiLink>
+  | GetAllRequestBuilder<TestEntityLvl2MultiLink>
+  | GetAllRequestBuilder<TestEntityLvl3MultiLink>
+  | GetAllRequestBuilder<TestEntitySingleLink>
+  | GetAllRequestBuilder<TestEntityLvl2SingleLink>
+  | GetAllRequestBuilder<TestEntityCircularLinkParent>
+  | GetAllRequestBuilder<TestEntityCircularLinkChild>
+  | GetAllRequestBuilder<TestEntityEndsWith>
+  | GetAllRequestBuilder<TestEntityEndsWithSomethingElse>
+  | GetByKeyRequestBuilder<TestEntity>
+  | GetByKeyRequestBuilder<TestEntityWithEnumKey>
+  | GetByKeyRequestBuilder<TestEntityWithSharedEntityType1>
+  | GetByKeyRequestBuilder<TestEntityWithSharedEntityType2>
+  | GetByKeyRequestBuilder<TestEntityMultiLink>
+  | GetByKeyRequestBuilder<TestEntityOtherMultiLink>
+  | GetByKeyRequestBuilder<TestEntityLvl2MultiLink>
+  | GetByKeyRequestBuilder<TestEntityLvl3MultiLink>
+  | GetByKeyRequestBuilder<TestEntitySingleLink>
+  | GetByKeyRequestBuilder<TestEntityLvl2SingleLink>
+  | GetByKeyRequestBuilder<TestEntityCircularLinkParent>
+  | GetByKeyRequestBuilder<TestEntityCircularLinkChild>
+  | GetByKeyRequestBuilder<TestEntityEndsWith>
+  | GetByKeyRequestBuilder<TestEntityEndsWithSomethingElse>;
 export declare type WriteTestServiceRequestBuilder =
-  | CreateRequestBuilderV4<TestEntity>
-  | UpdateRequestBuilderV4<TestEntity>
-  | DeleteRequestBuilderV4<TestEntity>
-  | CreateRequestBuilderV4<TestEntityWithEnumKey>
-  | UpdateRequestBuilderV4<TestEntityWithEnumKey>
-  | DeleteRequestBuilderV4<TestEntityWithEnumKey>
-  | CreateRequestBuilderV4<TestEntityWithSharedEntityType1>
-  | UpdateRequestBuilderV4<TestEntityWithSharedEntityType1>
-  | DeleteRequestBuilderV4<TestEntityWithSharedEntityType1>
-  | CreateRequestBuilderV4<TestEntityWithSharedEntityType2>
-  | UpdateRequestBuilderV4<TestEntityWithSharedEntityType2>
-  | DeleteRequestBuilderV4<TestEntityWithSharedEntityType2>
-  | CreateRequestBuilderV4<TestEntityMultiLink>
-  | UpdateRequestBuilderV4<TestEntityMultiLink>
-  | DeleteRequestBuilderV4<TestEntityMultiLink>
-  | CreateRequestBuilderV4<TestEntityOtherMultiLink>
-  | UpdateRequestBuilderV4<TestEntityOtherMultiLink>
-  | DeleteRequestBuilderV4<TestEntityOtherMultiLink>
-  | CreateRequestBuilderV4<TestEntityLvl2MultiLink>
-  | UpdateRequestBuilderV4<TestEntityLvl2MultiLink>
-  | DeleteRequestBuilderV4<TestEntityLvl2MultiLink>
-  | CreateRequestBuilderV4<TestEntityLvl3MultiLink>
-  | UpdateRequestBuilderV4<TestEntityLvl3MultiLink>
-  | DeleteRequestBuilderV4<TestEntityLvl3MultiLink>
-  | CreateRequestBuilderV4<TestEntitySingleLink>
-  | UpdateRequestBuilderV4<TestEntitySingleLink>
-  | DeleteRequestBuilderV4<TestEntitySingleLink>
-  | CreateRequestBuilderV4<TestEntityLvl2SingleLink>
-  | UpdateRequestBuilderV4<TestEntityLvl2SingleLink>
-  | DeleteRequestBuilderV4<TestEntityLvl2SingleLink>
-  | CreateRequestBuilderV4<TestEntityCircularLinkParent>
-  | UpdateRequestBuilderV4<TestEntityCircularLinkParent>
-  | DeleteRequestBuilderV4<TestEntityCircularLinkParent>
-  | CreateRequestBuilderV4<TestEntityCircularLinkChild>
-  | UpdateRequestBuilderV4<TestEntityCircularLinkChild>
-  | DeleteRequestBuilderV4<TestEntityCircularLinkChild>
-  | CreateRequestBuilderV4<TestEntityEndsWith>
-  | UpdateRequestBuilderV4<TestEntityEndsWith>
-  | DeleteRequestBuilderV4<TestEntityEndsWith>
-  | CreateRequestBuilderV4<TestEntityEndsWithSomethingElse>
-  | UpdateRequestBuilderV4<TestEntityEndsWithSomethingElse>
-  | DeleteRequestBuilderV4<TestEntityEndsWithSomethingElse>;
+  | CreateRequestBuilder<TestEntity>
+  | UpdateRequestBuilder<TestEntity>
+  | DeleteRequestBuilder<TestEntity>
+  | CreateRequestBuilder<TestEntityWithEnumKey>
+  | UpdateRequestBuilder<TestEntityWithEnumKey>
+  | DeleteRequestBuilder<TestEntityWithEnumKey>
+  | CreateRequestBuilder<TestEntityWithSharedEntityType1>
+  | UpdateRequestBuilder<TestEntityWithSharedEntityType1>
+  | DeleteRequestBuilder<TestEntityWithSharedEntityType1>
+  | CreateRequestBuilder<TestEntityWithSharedEntityType2>
+  | UpdateRequestBuilder<TestEntityWithSharedEntityType2>
+  | DeleteRequestBuilder<TestEntityWithSharedEntityType2>
+  | CreateRequestBuilder<TestEntityMultiLink>
+  | UpdateRequestBuilder<TestEntityMultiLink>
+  | DeleteRequestBuilder<TestEntityMultiLink>
+  | CreateRequestBuilder<TestEntityOtherMultiLink>
+  | UpdateRequestBuilder<TestEntityOtherMultiLink>
+  | DeleteRequestBuilder<TestEntityOtherMultiLink>
+  | CreateRequestBuilder<TestEntityLvl2MultiLink>
+  | UpdateRequestBuilder<TestEntityLvl2MultiLink>
+  | DeleteRequestBuilder<TestEntityLvl2MultiLink>
+  | CreateRequestBuilder<TestEntityLvl3MultiLink>
+  | UpdateRequestBuilder<TestEntityLvl3MultiLink>
+  | DeleteRequestBuilder<TestEntityLvl3MultiLink>
+  | CreateRequestBuilder<TestEntitySingleLink>
+  | UpdateRequestBuilder<TestEntitySingleLink>
+  | DeleteRequestBuilder<TestEntitySingleLink>
+  | CreateRequestBuilder<TestEntityLvl2SingleLink>
+  | UpdateRequestBuilder<TestEntityLvl2SingleLink>
+  | DeleteRequestBuilder<TestEntityLvl2SingleLink>
+  | CreateRequestBuilder<TestEntityCircularLinkParent>
+  | UpdateRequestBuilder<TestEntityCircularLinkParent>
+  | DeleteRequestBuilder<TestEntityCircularLinkParent>
+  | CreateRequestBuilder<TestEntityCircularLinkChild>
+  | UpdateRequestBuilder<TestEntityCircularLinkChild>
+  | DeleteRequestBuilder<TestEntityCircularLinkChild>
+  | CreateRequestBuilder<TestEntityEndsWith>
+  | UpdateRequestBuilder<TestEntityEndsWith>
+  | DeleteRequestBuilder<TestEntityEndsWith>
+  | CreateRequestBuilder<TestEntityEndsWithSomethingElse>
+  | UpdateRequestBuilder<TestEntityEndsWithSomethingElse>
+  | DeleteRequestBuilder<TestEntityEndsWithSomethingElse>;
 //# sourceMappingURL=BatchRequest.d.ts.map

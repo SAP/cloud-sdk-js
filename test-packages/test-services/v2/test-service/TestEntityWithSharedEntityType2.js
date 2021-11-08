@@ -7,17 +7,18 @@ exports.TestEntityWithSharedEntityType2 = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const TestEntityWithSharedEntityType2RequestBuilder_1 = require('./TestEntityWithSharedEntityType2RequestBuilder');
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType2" of service "API_TEST_SRV".
  */
-class TestEntityWithSharedEntityType2 extends core_1.EntityV2 {
+class TestEntityWithSharedEntityType2 extends odata_v2_1.Entity {
   /**
    * Returns an entity builder to construct instances of `TestEntityWithSharedEntityType2`.
    * @returns A builder that constructs instances of entity type `TestEntityWithSharedEntityType2`.
    */
   static builder() {
-    return core_1.EntityV2.entityBuilder(TestEntityWithSharedEntityType2);
+    return odata_v2_1.Entity.entityBuilder(TestEntityWithSharedEntityType2);
   }
   /**
    * Returns a request builder to construct requests for operations on the `TestEntityWithSharedEntityType2` entity type.
@@ -32,7 +33,7 @@ class TestEntityWithSharedEntityType2 extends core_1.EntityV2 {
    * @returns A builder that constructs instances of entity type `TestEntityWithSharedEntityType2`.
    */
   static customField(fieldName) {
-    return core_1.EntityV2.customFieldSelector(
+    return odata_v2_1.Entity.customFieldSelector(
       fieldName,
       TestEntityWithSharedEntityType2
     );
@@ -57,7 +58,7 @@ TestEntityWithSharedEntityType2._entityName =
 TestEntityWithSharedEntityType2._defaultServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityWithSharedEntityType2) {
-  const _fieldBuilder = new core_1.FieldBuilder(
+  const _fieldBuilder = new odata_common_1.FieldBuilder(
     TestEntityWithSharedEntityType2
   );
   /**
@@ -75,7 +76,7 @@ TestEntityWithSharedEntityType2._defaultServicePath =
   /**
    * All fields selector.
    */
-  TestEntityWithSharedEntityType2.ALL_FIELDS = new core_1.AllFields(
+  TestEntityWithSharedEntityType2.ALL_FIELDS = new odata_common_1.AllFields(
     '*',
     TestEntityWithSharedEntityType2
   );

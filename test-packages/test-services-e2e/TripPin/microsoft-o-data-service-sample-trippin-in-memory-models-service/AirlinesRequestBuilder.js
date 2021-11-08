@@ -6,19 +6,20 @@ exports.AirlinesRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const Airlines_1 = require('./Airlines');
 /**
  * Request builder class for operations supported on the [[Airlines]] entity.
  */
-class AirlinesRequestBuilder extends core_1.RequestBuilder {
+class AirlinesRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `Airlines` entity based on its keys.
    * @param airlineCode Key property. See [[Airlines.airlineCode]].
    * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
    */
   getByKey(airlineCode) {
-    return new core_1.GetByKeyRequestBuilderV4(Airlines_1.Airlines, {
+    return new odata_v4_1.GetByKeyRequestBuilder(Airlines_1.Airlines, {
       AirlineCode: airlineCode
     });
   }
@@ -27,7 +28,7 @@ class AirlinesRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `Airlines` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV4(Airlines_1.Airlines);
+    return new odata_v4_1.GetAllRequestBuilder(Airlines_1.Airlines);
   }
   /**
    * Returns a request builder for creating a `Airlines` entity.
@@ -35,7 +36,7 @@ class AirlinesRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `Airlines`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV4(Airlines_1.Airlines, entity);
+    return new odata_v4_1.CreateRequestBuilder(Airlines_1.Airlines, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `Airlines`.
@@ -43,10 +44,10 @@ class AirlinesRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `Airlines`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV4(Airlines_1.Airlines, entity);
+    return new odata_v4_1.UpdateRequestBuilder(Airlines_1.Airlines, entity);
   }
   delete(airlineCodeOrEntity) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       Airlines_1.Airlines,
       airlineCodeOrEntity instanceof Airlines_1.Airlines
         ? airlineCodeOrEntity

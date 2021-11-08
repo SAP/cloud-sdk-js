@@ -2,26 +2,26 @@ import nock from 'nock';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings
-} from '@sap-cloud-sdk/core/test/test-util/environment-mocks';
+} from '../../../../core/test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '@sap-cloud-sdk/core/test/test-util/token-accessor-mocks';
+} from '../../../../core/test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '@sap-cloud-sdk/core/test/test-util/destination-service-mocks';
+} from '../../../../core/test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
   subscriberServiceToken
-} from '@sap-cloud-sdk/core/test/test-util/mocked-access-tokens';
+} from '../../../../core/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
   destinationName,
   onPremiseMultipleResponse,
   onPremisePrincipalPropagationMultipleResponse
-} from '@sap-cloud-sdk/core/test/test-util/example-destination-service-responses';
+} from '../../../../core/test/test-util/example-destination-service-responses';
 import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';
@@ -48,9 +48,11 @@ describe('proxy configuration', () => {
     ];
     process.env['https_proxy'] = 'some.proxy.com:1234';
 
-    const actual = await getDestination(destinationName, {
-      userJwt: subscriberServiceToken,
-      cacheVerificationKeys: false
+    const actual = await getDestination({
+      destinationName,
+      jwt: subscriberServiceToken,
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
     });
     expect(actual?.proxyConfiguration).toEqual({
       host: 'some.proxy.com',
@@ -85,9 +87,11 @@ describe('proxy configuration', () => {
       }
     };
 
-    const actual = await getDestination('OnPremise', {
-      userJwt: subscriberServiceToken,
-      cacheVerificationKeys: false
+    const actual = await getDestination({
+      destinationName: 'OnPremise',
+      jwt: subscriberServiceToken,
+      cacheVerificationKeys: false,
+      iasToXsuaaTokenExchange: false
     });
     expect(actual?.proxyConfiguration).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
@@ -122,7 +126,7 @@ describe('proxy configuration', () => {
         }
       }
     };
-    const actual = await getDestination('OnPremise');
+    const actual = await getDestination({ destinationName: 'OnPremise' });
     expect(actual).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });

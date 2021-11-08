@@ -6,19 +6,20 @@ exports.PeopleRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const People_1 = require('./People');
 /**
  * Request builder class for operations supported on the [[People]] entity.
  */
-class PeopleRequestBuilder extends core_1.RequestBuilder {
+class PeopleRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `People` entity based on its keys.
    * @param userName Key property. See [[People.userName]].
    * @returns A request builder for creating requests to retrieve one `People` entity based on its keys.
    */
   getByKey(userName) {
-    return new core_1.GetByKeyRequestBuilderV4(People_1.People, {
+    return new odata_v4_1.GetByKeyRequestBuilder(People_1.People, {
       UserName: userName
     });
   }
@@ -27,7 +28,7 @@ class PeopleRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `People` entities.
    */
   getAll() {
-    return new core_1.GetAllRequestBuilderV4(People_1.People);
+    return new odata_v4_1.GetAllRequestBuilder(People_1.People);
   }
   /**
    * Returns a request builder for creating a `People` entity.
@@ -35,7 +36,7 @@ class PeopleRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `People`.
    */
   create(entity) {
-    return new core_1.CreateRequestBuilderV4(People_1.People, entity);
+    return new odata_v4_1.CreateRequestBuilder(People_1.People, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `People`.
@@ -43,10 +44,10 @@ class PeopleRequestBuilder extends core_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `People`.
    */
   update(entity) {
-    return new core_1.UpdateRequestBuilderV4(People_1.People, entity);
+    return new odata_v4_1.UpdateRequestBuilder(People_1.People, entity);
   }
   delete(userNameOrEntity) {
-    return new core_1.DeleteRequestBuilderV4(
+    return new odata_v4_1.DeleteRequestBuilder(
       People_1.People,
       userNameOrEntity instanceof People_1.People
         ? userNameOrEntity

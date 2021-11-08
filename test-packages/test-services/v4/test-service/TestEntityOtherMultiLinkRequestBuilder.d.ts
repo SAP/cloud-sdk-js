@@ -1,11 +1,11 @@
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
 import {
-  RequestBuilder,
-  GetAllRequestBuilderV4,
-  GetByKeyRequestBuilderV4,
-  CreateRequestBuilderV4,
-  UpdateRequestBuilderV4,
-  DeleteRequestBuilderV4
-} from '@sap-cloud-sdk/core';
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { TestEntityOtherMultiLink } from './TestEntityOtherMultiLink';
 /**
  * Request builder class for operations supported on the [[TestEntityOtherMultiLink]] entity.
@@ -18,12 +18,12 @@ export declare class TestEntityOtherMultiLinkRequestBuilder extends RequestBuild
    */
   getByKey(
     keyProperty: string
-  ): GetByKeyRequestBuilderV4<TestEntityOtherMultiLink>;
+  ): GetByKeyRequestBuilder<TestEntityOtherMultiLink>;
   /**
    * Returns a request builder for querying all `TestEntityOtherMultiLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityOtherMultiLink` entities.
    */
-  getAll(): GetAllRequestBuilderV4<TestEntityOtherMultiLink>;
+  getAll(): GetAllRequestBuilder<TestEntityOtherMultiLink>;
   /**
    * Returns a request builder for creating a `TestEntityOtherMultiLink` entity.
    * @param entity The entity to be created
@@ -31,7 +31,7 @@ export declare class TestEntityOtherMultiLinkRequestBuilder extends RequestBuild
    */
   create(
     entity: TestEntityOtherMultiLink
-  ): CreateRequestBuilderV4<TestEntityOtherMultiLink>;
+  ): CreateRequestBuilder<TestEntityOtherMultiLink>;
   /**
    * Returns a request builder for updating an entity of type `TestEntityOtherMultiLink`.
    * @param entity The entity to be updated
@@ -39,13 +39,13 @@ export declare class TestEntityOtherMultiLinkRequestBuilder extends RequestBuild
    */
   update(
     entity: TestEntityOtherMultiLink
-  ): UpdateRequestBuilderV4<TestEntityOtherMultiLink>;
+  ): UpdateRequestBuilder<TestEntityOtherMultiLink>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityOtherMultiLink`.
    * @param keyProperty Key property. See [[TestEntityOtherMultiLink.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntityOtherMultiLink`.
    */
-  delete(keyProperty: string): DeleteRequestBuilderV4<TestEntityOtherMultiLink>;
+  delete(keyProperty: string): DeleteRequestBuilder<TestEntityOtherMultiLink>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntityOtherMultiLink`.
    * @param entity Pass the entity to be deleted.
@@ -53,6 +53,6 @@ export declare class TestEntityOtherMultiLinkRequestBuilder extends RequestBuild
    */
   delete(
     entity: TestEntityOtherMultiLink
-  ): DeleteRequestBuilderV4<TestEntityOtherMultiLink>;
+  ): DeleteRequestBuilder<TestEntityOtherMultiLink>;
 }
 //# sourceMappingURL=TestEntityOtherMultiLinkRequestBuilder.d.ts.map

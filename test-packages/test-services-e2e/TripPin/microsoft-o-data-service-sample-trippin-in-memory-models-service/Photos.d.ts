@@ -1,18 +1,17 @@
 import { PhotosRequestBuilder } from './PhotosRequestBuilder';
 import { BigNumber } from 'bignumber.js';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
-  CustomFieldV4,
   EdmTypeField,
   EntityBuilderType,
-  EntityV4,
   Field,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/core';
+} from '@sap-cloud-sdk/odata-common';
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export declare class Photos extends EntityV4 implements PhotosType {
+export declare class Photos extends Entity implements PhotosType {
   /**
    * Technical entity name for Photos.
    */
@@ -45,7 +44,7 @@ export declare class Photos extends EntityV4 implements PhotosType {
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Photos`.
    */
-  static customField(fieldName: string): CustomFieldV4<Photos>;
+  static customField(fieldName: string): CustomField<Photos>;
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.

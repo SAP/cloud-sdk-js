@@ -4,14 +4,14 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  CreateRequestBuilderV2,
-  DeleteRequestBuilderV2,
-  GetAllRequestBuilderV2,
-  GetByKeyRequestBuilderV2,
-  ODataBatchChangeSetV2,
-  ODataBatchRequestBuilderV2,
-  UpdateRequestBuilderV2
-} from '@sap-cloud-sdk/core';
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  ODataBatchChangeSet,
+  ODataBatchRequestBuilder,
+  UpdateRequestBuilder
+} from '@sap-cloud-sdk/odata-v2';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { MultiSchemaTestEntity } from './index';
 
@@ -23,30 +23,30 @@ import { MultiSchemaTestEntity } from './index';
 export function batch(
   ...requests: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV2;
+): ODataBatchRequestBuilder;
 export function batch(
   requests: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV2;
+): ODataBatchRequestBuilder;
 export function batch(
   first:
     | undefined
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
     | Array<
         | ReadMultipleSchemasServiceRequestBuilder
-        | ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>
+        | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
       >,
   ...rest: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>
+    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
-): ODataBatchRequestBuilderV2 {
-  return new ODataBatchRequestBuilderV2(
+): ODataBatchRequestBuilder {
+  return new ODataBatchRequestBuilder(
     defaultMultipleSchemasServicePath,
     variadicArgumentToArray(first, rest),
     map
@@ -60,26 +60,26 @@ export function batch(
  */
 export function changeset(
   ...requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
 export function changeset(
   requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder>;
+): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
 export function changeset(
   first:
     | undefined
     | WriteMultipleSchemasServiceRequestBuilder
     | Array<WriteMultipleSchemasServiceRequestBuilder>,
   ...rest: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSetV2<WriteMultipleSchemasServiceRequestBuilder> {
-  return new ODataBatchChangeSetV2(variadicArgumentToArray(first, rest));
+): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder> {
+  return new ODataBatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';
 const map = { MultiSchemaTestEntity: MultiSchemaTestEntity };
 export type ReadMultipleSchemasServiceRequestBuilder =
-  | GetAllRequestBuilderV2<MultiSchemaTestEntity>
-  | GetByKeyRequestBuilderV2<MultiSchemaTestEntity>;
+  | GetAllRequestBuilder<MultiSchemaTestEntity>
+  | GetByKeyRequestBuilder<MultiSchemaTestEntity>;
 export type WriteMultipleSchemasServiceRequestBuilder =
-  | CreateRequestBuilderV2<MultiSchemaTestEntity>
-  | UpdateRequestBuilderV2<MultiSchemaTestEntity>
-  | DeleteRequestBuilderV2<MultiSchemaTestEntity>;
+  | CreateRequestBuilder<MultiSchemaTestEntity>
+  | UpdateRequestBuilder<MultiSchemaTestEntity>
+  | DeleteRequestBuilder<MultiSchemaTestEntity>;

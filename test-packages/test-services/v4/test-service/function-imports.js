@@ -18,7 +18,8 @@ exports.functionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntity_1 = require('./TestEntity');
 const TestComplexType_1 = require('./TestComplexType');
 /**
@@ -28,12 +29,12 @@ const TestComplexType_1 = require('./TestComplexType');
  */
 function testFunctionImportEdmReturnType(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnType',
     data =>
-      (0, core_1.transformReturnValueForEdmTypeV4)(data, val =>
-        (0, core_1.edmToTsV4)(val.value, 'Edm.Boolean')
+      (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Boolean')
       ),
     params
   );
@@ -46,12 +47,12 @@ exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
  */
 function testFunctionImportEdmReturnTypeCollection(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnTypeCollection',
     data =>
-      (0, core_1.transformReturnValueForEdmTypeListV4)(data, val =>
-        (0, core_1.edmToTsV4)(val, 'Edm.String')
+      (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val =>
+        (0, odata_v4_1.edmToTs)(val, 'Edm.String')
       ),
     params
   );
@@ -65,28 +66,28 @@ exports.testFunctionImportEdmReturnTypeCollection =
  */
 function testFunctionImportNullableTest(parameters) {
   const params = {
-    nullablePerDefault: new core_1.FunctionImportParameter(
+    nullablePerDefault: new odata_common_1.FunctionImportParameter(
       'NullablePerDefault',
       'Edm.String',
       parameters.nullablePerDefault
     ),
-    nullableExplicit: new core_1.FunctionImportParameter(
+    nullableExplicit: new odata_common_1.FunctionImportParameter(
       'NullableExplicit',
       'Edm.String',
       parameters.nullableExplicit
     ),
-    nonNullable: new core_1.FunctionImportParameter(
+    nonNullable: new odata_common_1.FunctionImportParameter(
       'NonNullable',
       'Edm.String',
       parameters.nonNullable
     )
   };
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportNullableTest',
     data =>
-      (0, core_1.transformReturnValueForEdmTypeListV4)(data, val =>
-        (0, core_1.edmToTsV4)(val, 'Edm.String')
+      (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val =>
+        (0, odata_v4_1.edmToTs)(val, 'Edm.String')
       ),
     params
   );
@@ -99,11 +100,11 @@ exports.testFunctionImportNullableTest = testFunctionImportNullableTest;
  */
 function testFunctionImportEntityReturnType(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType',
     data =>
-      (0, core_1.transformReturnValueForEntityV4)(
+      (0, odata_v4_1.transformReturnValueForEntity)(
         data,
         TestEntity_1.TestEntity
       ),
@@ -118,11 +119,11 @@ exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
  */
 function testFunctionImportEntityReturnTypeCollection(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnTypeCollection',
     data =>
-      (0, core_1.transformReturnValueForEntityListV4)(
+      (0, odata_v4_1.transformReturnValueForEntityList)(
         data,
         TestEntity_1.TestEntity
       ),
@@ -138,11 +139,11 @@ exports.testFunctionImportEntityReturnTypeCollection =
  */
 function testFunctionImportSharedEntityReturnType(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnType',
     data =>
-      (0, core_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnType'
       ),
@@ -158,11 +159,11 @@ exports.testFunctionImportSharedEntityReturnType =
  */
 function testFunctionImportSharedEntityReturnTypeCollection(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnTypeCollection',
     data =>
-      (0, core_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnTypeCollection'
       ),
@@ -178,12 +179,12 @@ exports.testFunctionImportSharedEntityReturnTypeCollection =
  */
 function testFunctionImportComplexReturnType(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnType',
     data =>
-      (0, core_1.transformReturnValueForComplexTypeV4)(data, data =>
-        (0, core_1.deserializeComplexTypeV4)(
+      (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
+        (0, odata_v4_1.deserializeComplexType)(
           data,
           TestComplexType_1.TestComplexType
         )
@@ -200,12 +201,12 @@ exports.testFunctionImportComplexReturnType =
  */
 function testFunctionImportComplexReturnTypeCollection(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnTypeCollection',
     data =>
-      (0, core_1.transformReturnValueForComplexTypeListV4)(data, data =>
-        (0, core_1.deserializeComplexTypeV4)(
+      (0, odata_v4_1.transformReturnValueForComplexTypeList)(data, data =>
+        (0, odata_v4_1.deserializeComplexType)(
           data,
           TestComplexType_1.TestComplexType
         )
@@ -222,33 +223,33 @@ exports.testFunctionImportComplexReturnTypeCollection =
  */
 function testFunctionImportMultipleParams(parameters) {
   const params = {
-    stringParam: new core_1.FunctionImportParameter(
+    stringParam: new odata_common_1.FunctionImportParameter(
       'StringParam',
       'Edm.String',
       parameters.stringParam
     ),
-    nonNullableStringParam: new core_1.FunctionImportParameter(
+    nonNullableStringParam: new odata_common_1.FunctionImportParameter(
       'NonNullableStringParam',
       'Edm.String',
       parameters.nonNullableStringParam
     ),
-    nullableBooleanParam: new core_1.FunctionImportParameter(
+    nullableBooleanParam: new odata_common_1.FunctionImportParameter(
       'NullableBooleanParam',
       'Edm.Boolean',
       parameters.nullableBooleanParam
     ),
-    nullableGeographyPointParam: new core_1.FunctionImportParameter(
+    nullableGeographyPointParam: new odata_common_1.FunctionImportParameter(
       'NullableGeographyPointParam',
       'Edm.Any',
       parameters.nullableGeographyPointParam
     )
   };
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportMultipleParams',
     data =>
-      (0, core_1.transformReturnValueForEdmTypeV4)(data, val =>
-        (0, core_1.edmToTsV4)(val.value, 'Edm.Boolean')
+      (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Boolean')
       ),
     params
   );
@@ -261,11 +262,11 @@ exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
  */
 function testFunctionImportWithDifferentName(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportWithDifferentName',
     data =>
-      (0, core_1.transformReturnValueForUndefinedV4)(data, val => undefined),
+      (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined),
     params
   );
 }

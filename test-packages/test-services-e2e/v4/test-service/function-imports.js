@@ -13,7 +13,8 @@ exports.functionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const core_1 = require('@sap-cloud-sdk/core');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntity_1 = require('./TestEntity');
 /**
  * Concat Strings.
@@ -22,23 +23,23 @@ const TestEntity_1 = require('./TestEntity');
  */
 function concatStrings(parameters) {
   const params = {
-    str1: new core_1.FunctionImportParameter(
+    str1: new odata_common_1.FunctionImportParameter(
       'Str1',
       'Edm.String',
       parameters.str1
     ),
-    str2: new core_1.FunctionImportParameter(
+    str2: new odata_common_1.FunctionImportParameter(
       'Str2',
       'Edm.String',
       parameters.str2
     )
   };
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/odata/test-service',
     'concatStrings',
     data =>
-      (0, core_1.transformReturnValueForEdmTypeV4)(data, val =>
-        (0, core_1.edmToTsV4)(val.value, 'Edm.String')
+      (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.String')
       ),
     params
   );
@@ -51,11 +52,11 @@ exports.concatStrings = concatStrings;
  */
 function getAll(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/odata/test-service',
     'getAll',
     data =>
-      (0, core_1.transformReturnValueForEntityListV4)(
+      (0, odata_v4_1.transformReturnValueForEntityList)(
         data,
         TestEntity_1.TestEntity
       ),
@@ -70,17 +71,17 @@ exports.getAll = getAll;
  */
 function getByKey(parameters) {
   const params = {
-    param: new core_1.FunctionImportParameter(
+    param: new odata_common_1.FunctionImportParameter(
       'param',
       'Edm.Int32',
       parameters.param
     )
   };
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/odata/test-service',
     'getByKey',
     data =>
-      (0, core_1.transformReturnValueForEntityV4)(
+      (0, odata_v4_1.transformReturnValueForEntity)(
         data,
         TestEntity_1.TestEntity
       ),
@@ -95,18 +96,18 @@ exports.getByKey = getByKey;
  */
 function returnCollection(parameters) {
   const params = {
-    param: new core_1.FunctionImportParameter(
+    param: new odata_common_1.FunctionImportParameter(
       'param',
       'Edm.Int32',
       parameters.param
     )
   };
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/odata/test-service',
     'returnCollection',
     data =>
-      (0, core_1.transformReturnValueForEdmTypeListV4)(data, val =>
-        (0, core_1.edmToTsV4)(val, 'Edm.Int32')
+      (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val =>
+        (0, odata_v4_1.edmToTs)(val, 'Edm.Int32')
       ),
     params
   );
@@ -119,18 +120,18 @@ exports.returnCollection = returnCollection;
  */
 function returnInt(parameters) {
   const params = {
-    param: new core_1.FunctionImportParameter(
+    param: new odata_common_1.FunctionImportParameter(
       'param',
       'Edm.Int32',
       parameters.param
     )
   };
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/odata/test-service',
     'returnInt',
     data =>
-      (0, core_1.transformReturnValueForEdmTypeV4)(data, val =>
-        (0, core_1.edmToTsV4)(val.value, 'Edm.Int32')
+      (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32')
       ),
     params
   );
@@ -143,12 +144,12 @@ exports.returnInt = returnInt;
  */
 function returnSapCloudSdk(parameters) {
   const params = {};
-  return new core_1.FunctionImportRequestBuilderV4(
+  return new odata_v4_1.FunctionImportRequestBuilder(
     '/odata/test-service',
     'returnSapCloudSdk',
     data =>
-      (0, core_1.transformReturnValueForEdmTypeV4)(data, val =>
-        (0, core_1.edmToTsV4)(val.value, 'Edm.String')
+      (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.String')
       ),
     params
   );

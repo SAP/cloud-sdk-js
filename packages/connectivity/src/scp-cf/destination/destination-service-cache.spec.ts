@@ -3,7 +3,8 @@ import { mockServiceBindings } from '../../../../../test-resources/test/test-uti
 import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   providerServiceToken,
-  subscriberServiceToken
+  subscriberServiceToken,
+  subscriberUserJwt
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockSingleDestinationCall,
@@ -61,6 +62,13 @@ describe('DestinationServiceCache', () => {
     );
     mockSubaccountDestinationsCall(
       nock,
+      [subscriberDest, subscriberDest2],
+      200,
+      subscriberUserJwt,
+      destinationServiceUrl
+    );
+    mockSubaccountDestinationsCall(
+      nock,
       [providerDest],
       200,
       providerServiceToken,
@@ -72,6 +80,14 @@ describe('DestinationServiceCache', () => {
       200,
       singleDest.Name,
       wrapJwtInHeader(subscriberServiceToken).headers,
+      destinationServiceUrl
+    );
+    mockSingleDestinationCall(
+      nock,
+      singleDest,
+      200,
+      singleDest.Name,
+      wrapJwtInHeader(subscriberUserJwt).headers,
       destinationServiceUrl
     );
   });
@@ -104,7 +120,7 @@ describe('DestinationServiceCache', () => {
     );
     expect(cache).toEqual(directCall);
     const cacheUndefined = getDestinationFromCache(
-      subscriberServiceToken,
+      subscriberUserJwt,
       singleDest.Name,
       IsolationStrategy.Tenant_User
     );
@@ -114,13 +130,13 @@ describe('DestinationServiceCache', () => {
   it('should cache single destination with tenant_user isolation.', async () => {
     const directCall = await fetchDestination(
       destinationServiceUrl,
-      subscriberServiceToken,
+      subscriberUserJwt,
       singleDest.Name,
       { useCache: true, isolationStrategy: IsolationStrategy.Tenant_User }
     );
 
     const cache = getDestinationFromCache(
-      subscriberServiceToken,
+      subscriberUserJwt,
       singleDest.Name,
       IsolationStrategy.Tenant_User
     );
@@ -162,12 +178,12 @@ describe('DestinationServiceCache', () => {
   it('should cache multiple destinations with tenant_user isolation.', async () => {
     const directCall = await fetchSubaccountDestinations(
       destinationServiceUrl,
-      subscriberServiceToken,
+      subscriberUserJwt,
       { useCache: true, isolationStrategy: IsolationStrategy.Tenant_User }
     );
 
     const cache = getDestinationsFromCache(
-      subscriberServiceToken,
+      subscriberUserJwt,
       IsolationStrategy.Tenant_User
     );
     expect(cache).toEqual(directCall);

@@ -131,10 +131,10 @@ describe('openapi-request-builder', () => {
         limit: 100
       }
     });
-    const response = await requestBuilder.executeRaw(
-      { destinationName: 'ERNIE-UND-CERT' },
-      { iss: onlyIssuerXsuaaUrl }
-    );
+    const response = await requestBuilder.executeRaw({
+      destinationName: 'ERNIE-UND-CERT',
+      iss: onlyIssuerXsuaaUrl
+    });
     expectAllMocksUsed(nocks);
     expect(httpSpy).toHaveBeenLastCalledWith(
       sanitizeDestination(parseDestination(certificateSingleResponse)),

@@ -1,8 +1,6 @@
 import {
   Destination,
-  DestinationNameAndJwt,
-  DestinationOptions,
-  DestinationRetrievalOptions
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder-base';
@@ -40,33 +38,27 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
 
   build(): ODataRequest<ODataBatchRequestConfig>;
   build(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationRetrievalOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<ODataRequest<ODataBatchRequestConfig>>;
   build(
-    destination?: Destination | DestinationNameAndJwt,
-    options?: DestinationRetrievalOptions
+    destination?: Destination | DestinationFetchOptions
   ):
     | ODataRequest<ODataBatchRequestConfig>
     | Promise<ODataRequest<ODataBatchRequestConfig>> {
     return destination
-      ? super
-          .build(destination!, options)
-          .then(request => this.setPayload(request))
+      ? super.build(destination!).then(request => this.setPayload(request))
       : this.setPayload(super.build());
   }
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
-    return this.build(destination, options).then(request => request.execute());
+    return this.build(destination).then(request => request.execute());
   }
 
   private setPayload(

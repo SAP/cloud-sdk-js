@@ -196,10 +196,10 @@ describe('GetAllRequestBuilder', () => {
           .reply(200, 'iss token used on the way')
       ];
       const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      const response = await requestBuilder.executeRaw(
-        { destinationName: 'ERNIE-UND-CERT' },
-        { iss: onlyIssuerXsuaaUrl }
-      );
+      const response = await requestBuilder.executeRaw({
+        destinationName: 'ERNIE-UND-CERT',
+        iss: onlyIssuerXsuaaUrl
+      });
       expectAllMocksUsed(nocks);
       expect(spy).toHaveBeenCalledWith(
         parseDestination(certificateSingleResponse),

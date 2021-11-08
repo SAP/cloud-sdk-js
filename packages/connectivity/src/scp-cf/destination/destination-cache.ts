@@ -1,8 +1,14 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import { Cache, IsolationStrategy } from '../cache';
 import { tenantId } from '../tenant';
 import { userId } from '../user';
 import { Destination } from './destination-service-types';
 import { DestinationsByType } from './destination-accessor-types';
+
+const logger = createLogger({
+  package: 'core',
+  messageContext: 'destination-cache'
+});
 
 const DestinationCache = (cache: Cache<Destination>) => ({
   retrieveDestinationFromCache: (
@@ -49,17 +55,42 @@ const DestinationCache = (cache: Cache<Destination>) => ({
 export function getDestinationCacheKey(
   decodedJwt: Record<string, any>,
   destinationName: string,
-  isolationStrategy: IsolationStrategy
-): string {
+  isolationStrategy = IsolationStrategy.Tenant_User
+): string | undefined {
+  const tenant = tenantId(decodedJwt);
+  const user = userId(decodedJwt);
   switch (isolationStrategy) {
     case IsolationStrategy.No_Isolation:
       return `::${destinationName}`;
-    case IsolationStrategy.Tenant_User:
-      return `${tenantId(decodedJwt)}:${userId(decodedJwt)}:${destinationName}`;
+    case IsolationStrategy.Tenant:
+      if (tenant) {
+        return `${tenant}::${destinationName}`;
+      }
+      logger.warn(
+        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id is undefined.`
+      );
+      return;
     case IsolationStrategy.User:
-      return `:${userId(decodedJwt)}:${destinationName}`;
+      if (user) {
+        return `:${user}:${destinationName}`;
+      }
+      logger.warn(
+        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but user id is undefined.`
+      );
+      return;
+    case IsolationStrategy.Tenant_User:
+      if (tenant && user) {
+        return `${user}:${tenant}:${destinationName}`;
+      }
+      logger.warn(
+        `Cannot get cache key. Isolation strategy ${isolationStrategy} is used, but tenant id or user id is undefined.`
+      );
+      return;
     default:
-      return `${tenantId(decodedJwt)}::${destinationName}`;
+      logger.warn(
+        `Cannot get cache key. Isolation strategy ${isolationStrategy} is not supported.`
+      );
+      return;
   }
 }
 

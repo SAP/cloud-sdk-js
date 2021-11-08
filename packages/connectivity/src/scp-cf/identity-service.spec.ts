@@ -2,7 +2,7 @@ import { isTokenExchangeEnabled } from './identity-service';
 
 describe('identity service', () => {
   it('it should make token exchange when jwt is provided', async () => {
-    const actual = isTokenExchangeEnabled({ userJwt: 'jwt' });
+    const actual = isTokenExchangeEnabled({ jwt: 'jwt' });
     expect(actual).toBeTruthy();
   });
 
@@ -14,7 +14,7 @@ describe('identity service', () => {
   it('it should not make token exchange when the option is set to false', async () => {
     const actual = isTokenExchangeEnabled({
       iasToXsuaaTokenExchange: false,
-      userJwt: 'jwt'
+      jwt: 'jwt'
     });
     expect(actual).toBeFalsy();
   });

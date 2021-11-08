@@ -1,8 +1,7 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
-  DestinationOptions,
   Destination,
-  DestinationNameAndJwt
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
@@ -56,16 +55,14 @@ export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
 
   /**
    * Execute query.
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving once the entity was deleted
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<void> {
     return (
-      this.executeRaw(destination, options)
+      this.executeRaw(destination)
         // Transform response to void
         .then(() => Promise.resolve())
         .catch(error => {
@@ -76,15 +73,13 @@ export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
-    return this.build(destination, options).then(request => request.execute());
+    return this.build(destination).then(request => request.execute());
   }
 
   abstract setVersionIdentifier(eTag: string): this;

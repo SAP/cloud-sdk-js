@@ -1,7 +1,6 @@
 import {
-  DestinationOptions,
   Destination,
-  DestinationNameAndJwt
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase } from '../entity-base';
@@ -28,15 +27,13 @@ export class CountRequestBuilder<
   }
   /**
    * Execute request.
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to the number of entities
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<number> {
-    return this.executeRaw(destination, options).then(response => {
+    return this.executeRaw(destination).then(response => {
       if (typeof response.data !== 'number') {
         throw new Error('Count request did not return a bare number.');
       }
@@ -46,14 +43,12 @@ export class CountRequestBuilder<
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
-    return this.build(destination, options).then(request => request.execute());
+    return this.build(destination).then(request => request.execute());
   }
 }

@@ -1,8 +1,7 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
-  DestinationOptions,
   Destination,
-  DestinationNameAndJwt
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { Constructable, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable/selectable';
@@ -93,15 +92,14 @@ export abstract class GetAllRequestBuilderBase<
 
   /**
    * Execute request.
-   * @param destination - Destination to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the requested entities
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<EntityT[]> {
-    return this.executeRaw(destination, options).then(response =>
+    return this.executeRaw(destination).then(response =>
       this.dataAccessor
         .getCollectionResult(response.data)
         .map(json =>

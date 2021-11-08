@@ -48,8 +48,9 @@ describe('Failure cases', () => {
       );
 
     await expect(
-      getDestination(destinationName, {
-        userJwt: subscriberServiceTokenWithVerificationURL,
+      getDestination({
+        destinationName,
+        jwt: subscriberServiceTokenWithVerificationURL,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       })
@@ -63,8 +64,9 @@ describe('Failure cases', () => {
     mockVerifyJwt();
 
     await expect(
-      getDestination(destinationName, {
-        userJwt: 'fails',
+      getDestination({
+        destinationName,
+        jwt: 'fails',
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       })
@@ -96,8 +98,9 @@ describe('Failure cases', () => {
     ];
 
     try {
-      await getDestination(destinationName, {
-        userJwt: subscriberServiceToken,
+      await getDestination({
+        destinationName,
+        jwt: subscriberServiceToken,
         enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
@@ -136,8 +139,9 @@ describe('Failure cases', () => {
     ];
 
     try {
-      await getDestination(destinationName, {
-        userJwt: subscriberUserJwt,
+      await getDestination({
+        destinationName,
+        jwt: subscriberUserJwt,
         enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
@@ -166,8 +170,9 @@ describe('Failure cases', () => {
     ];
 
     const expected = null;
-    const actual = await getDestination(destinationName, {
-      userJwt: subscriberUserJwt,
+    const actual = await getDestination({
+      destinationName,
+      jwt: subscriberUserJwt,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });
@@ -194,7 +199,8 @@ describe('Failure cases', () => {
     );
 
     await expect(
-      getDestination(destinationName, {
+      getDestination({
+        destinationName,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       })

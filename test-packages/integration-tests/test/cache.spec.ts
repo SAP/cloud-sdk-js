@@ -61,12 +61,14 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   });
 
   it('getting the same destination twice should produce a cache hit', async () => {
-    await getDestination('FINAL-DESTINATION', {
+    await getDestination({
+      destinationName: 'FINAL-DESTINATION',
       useCache: true,
       selectionStrategy: alwaysProvider,
       isolationStrategy: IsolationStrategy.Tenant
     });
-    await getDestination('FINAL-DESTINATION', {
+    await getDestination({
+      destinationName: 'FINAL-DESTINATION',
       useCache: true,
       selectionStrategy: alwaysProvider,
       isolationStrategy: IsolationStrategy.Tenant
@@ -76,11 +78,13 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   it('changing the isolation should produce a cache miss', async () => {
     // The destination-service has an own cahce where only isolation strategy Tenant and Tenant_User are used.
     // In order to also miss the cache there the two allowed strategies must be used.
-    await getDestination('FINAL-DESTINATION', {
+    await getDestination({
+      destinationName: 'FINAL-DESTINATION',
       useCache: true,
       isolationStrategy: IsolationStrategy.Tenant
     });
-    const destinationRequest = getDestination('FINAL-DESTINATION', {
+    const destinationRequest = getDestination({
+      destinationName: 'FINAL-DESTINATION',
       useCache: true,
       isolationStrategy: IsolationStrategy.Tenant_User
     });

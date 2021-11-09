@@ -12,7 +12,7 @@ import {
 import {
   buildTestEntity,
   createChangeSetWithFakeId
-} from '../../../../core/test/test-util/batch-test-util';
+} from '../../../../../test-resources/test/test-util/batch-test-util';
 
 describe('batch request serializer', () => {
   let testEntity: TestEntity;

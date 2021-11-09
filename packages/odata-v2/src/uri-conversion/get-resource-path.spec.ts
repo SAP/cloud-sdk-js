@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { uriConverter } from '@sap-cloud-sdk/odata-v2/dist/uri-conversion/uri-value-converter';
 import { createGetResourcePathForKeys } from '@sap-cloud-sdk/odata-common';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
+import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 
 const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
 

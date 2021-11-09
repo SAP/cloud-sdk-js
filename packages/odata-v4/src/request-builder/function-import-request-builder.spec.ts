@@ -1,5 +1,5 @@
 import { testFunctionImportMultipleParams } from '@sap-cloud-sdk/test-services/v4/test-service';
-import { defaultDestination } from '../../../core/test/test-util/request-mocker';
+import { defaultDestination } from '../../../../test-resources/test/test-util/request-mocker';
 
 describe('FunctionImportRequestBuilder', () => {
   it('builds correct url for multiple parameters', async () => {

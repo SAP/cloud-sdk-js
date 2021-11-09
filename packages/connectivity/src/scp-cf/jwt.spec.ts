@@ -6,7 +6,7 @@ import {
   publicKey,
   signedJwtForVerification,
   xsuaaBindingMock
-} from '../../../core/test/test-util';
+} from '../../../../test-resources/test/test-util';
 import { audiences, retrieveJwt, verificationKeyCache, verifyJwt } from './jwt';
 
 const jwtPayload = {

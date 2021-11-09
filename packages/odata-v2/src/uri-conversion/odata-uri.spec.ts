@@ -9,7 +9,7 @@ import {
   testFilterSingleLink,
   testFilterString,
   testFilterStringEncoding
-} from '../../../core/test/test-util/filter-factory';
+} from '../../../../test-resources/test/test-util/filter-factory';
 import { filterFunctions } from '../filter-functions';
 import { oDataUri } from './odata-uri';
 

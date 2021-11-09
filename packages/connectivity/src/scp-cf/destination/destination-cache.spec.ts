@@ -7,21 +7,21 @@ import {
   providerUserPayload,
   subscriberServiceToken,
   subscriberUserJwt
-} from '../../../../core/test/test-util/mocked-access-tokens';
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings
-} from '../../../../core/test/test-util/environment-mocks';
+} from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '../../../../core/test/test-util/token-accessor-mocks';
+} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../../../../core/test/test-util/destination-service-mocks';
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   certificateMultipleResponse,
   certificateSingleResponse,
@@ -29,7 +29,7 @@ import {
   oauthMultipleResponse,
   oauthSingleResponse,
   onPremisePrincipalPropagationMultipleResponse
-} from '../../../../core/test/test-util/example-destination-service-responses';
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { decodeJwt, wrapJwtInHeader } from '../jwt';
 import { IsolationStrategy } from '../cache';
 import { destinationServiceCache } from './destination-service-cache';

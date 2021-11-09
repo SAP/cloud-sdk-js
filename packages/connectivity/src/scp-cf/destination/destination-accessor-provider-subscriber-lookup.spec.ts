@@ -5,24 +5,24 @@ import {
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../../../../core/test/test-util/destination-service-mocks';
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   onlyIssuerServiceToken,
   providerServiceToken,
   subscriberServiceToken,
   subscriberUserJwt
-} from '../../../../core/test/test-util/mocked-access-tokens';
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl
-} from '../../../../core/test/test-util/environment-mocks';
-import { mockServiceToken } from '../../../../core/test/test-util/token-accessor-mocks';
+} from '../../../../../test-resources/test/test-util/environment-mocks';
+import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   basicMultipleResponse,
   certificateMultipleResponse,
   certificateSingleResponse,
   destinationName
-} from '../../../../core/test/test-util/example-destination-service-responses';
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { wrapJwtInHeader } from '../jwt';
 import * as destinationService from './destination-service';
 import { DestinationConfiguration, parseDestination } from './destination';

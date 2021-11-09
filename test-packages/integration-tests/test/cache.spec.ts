@@ -6,17 +6,17 @@ import { destinationServiceCache } from '@sap-cloud-sdk/connectivity/dist/scp-cf
 import { clientCredentialsTokenCache } from '@sap-cloud-sdk/connectivity/dist/scp-cf/client-credentials-token-cache';
 import { getDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-accessor';
 import { IsolationStrategy } from '@sap-cloud-sdk/connectivity/dist/scp-cf/cache';
-import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
-import { privateKey } from '../../../packages/core/test/test-util/keys';
+import { mockClientCredentialsGrantCall } from '../../../test-resources/test/test-util/xsuaa-service-mocks';
+import { privateKey } from '../../../test-resources/test/test-util/keys';
 import {
   destinationBindingClientSecretMock,
   mockServiceBindings,
   providerXsuaaUrl
-} from '../../../packages/core/test/test-util/environment-mocks';
+} from '../../../test-resources/test/test-util/environment-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall
-} from '../../../packages/core/test/test-util/destination-service-mocks';
+} from '../../../test-resources/test/test-util/destination-service-mocks';
 
 describe('CacheDestination & CacheClientCredentialToken', () => {
   beforeEach(() => {

@@ -131,7 +131,9 @@ export function splitResponse(response: string, boundary: string): string[] {
   const newLineSymbol = detectNewLineSymbol(response);
   const parts = response.split(`--${boundary}`).map(part => {
     const trimmedPart = part.trim();
-    return trimmedPart.includes('204 No Content')
+    return trimmedPart.includes('204 No Content') ||
+      (trimmedPart.includes('200 OK') &&
+        trimmedPart.includes('Content-Length: 0'))
       ? `${trimmedPart}${newLineSymbol}`
       : trimmedPart;
   });

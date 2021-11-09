@@ -7,7 +7,7 @@ import {
 } from '../edm-types';
 import { Constructable, EntityBase } from '../entity-base';
 import { ComplexTypeField } from './complex-type-field';
-import { EdmTypeField, EdmTypeForEdmOrFieldType } from './edm-type-field';
+import { EdmTypeField } from './edm-type-field';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
 import { CollectionField, CollectionFieldType } from './collection-field';
 import { ConstructorOrField } from './constructor-or-field';
@@ -121,15 +121,10 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
       isOrderableEdmType(edmType) ? OrderableEdmTypeField : EdmTypeField
     ) as typeof EdmTypeField;
 
-    return new ctor(
-      fieldName,
-      this.fieldOf,
-      edmType as EdmTypeForEdmOrFieldType<EdmT>,
-      {
-        isNullable,
-        isSelectable
-      }
-    );
+    return new ctor(fieldName, this.fieldOf, edmType, {
+      isNullable,
+      isSelectable
+    });
   }
 
   /**

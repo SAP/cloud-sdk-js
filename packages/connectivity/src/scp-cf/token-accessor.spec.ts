@@ -49,7 +49,7 @@ describe('token accessor', () => {
 
     it("uses the JWT's issuer as tenant", async () => {
       const expected = signedJwt({ dummy: 'content' });
-      const userJwt = signedJwt({
+      const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
       });
 
@@ -60,7 +60,7 @@ describe('token accessor', () => {
         destinationBindingClientSecretMock.credentials
       );
 
-      const actual = await serviceToken('destination', { userJwt });
+      const actual = await serviceToken('destination', { jwt });
       expect(actual).toBe(expected);
     });
 
@@ -146,10 +146,10 @@ describe('token accessor', () => {
       );
 
       const providerToken = await serviceToken('destination', {
-        userJwt: providerUserJwt
+        jwt: providerUserJwt
       });
       const subscriberToken = await serviceToken('destination', {
-        userJwt: subscriberUserJwt
+        jwt: subscriberUserJwt
       });
 
       const providerTokenFromCache =
@@ -273,10 +273,10 @@ describe('token accessor', () => {
     });
 
     it('throws an error if the issuer is missing in the JWT', async () => {
-      const userJwt = signedJwt({ NOiss: 'https://testeroni.example.com' });
+      const jwt = signedJwt({ NOiss: 'https://testeroni.example.com' });
 
       await expect(
-        serviceToken('destination', { userJwt })
+        serviceToken('destination', { jwt })
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Property `iss` is missing in the provided user token."'
       );

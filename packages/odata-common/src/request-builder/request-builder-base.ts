@@ -1,9 +1,7 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  DestinationNameAndJwt,
-  DestinationOptions,
-  DestinationRetrievalOptions,
+  DestinationFetchOptions,
   noDestinationErrorMessage,
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
@@ -26,15 +24,13 @@ export abstract class MethodRequestBuilder<
 
   /**
    * Create the URL based on configuration of the given builder.
-   * @param destination - Destination to execute the request against.
-   * @param options - Options to employ when fetching destinations.
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns Promise resolving to the URL for the request
    */
   async url(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationRetrievalOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<string> {
-    const request = await this.build(destination, options);
+    const request = await this.build(destination);
     return request.url();
   }
 
@@ -147,22 +143,19 @@ export abstract class MethodRequestBuilder<
 
   build(): ODataRequest<RequestConfigT>;
   build(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<ODataRequest<RequestConfigT>>;
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
    * @deprecated Since v1.30.0. This method will be protected and should not be used externally.
-   * @param destination - Targeted destination on which the request is performed.
-   * @param options - Options to employ when fetching destinations.
+   * @param destination - Targeted destination or DestionationFetchOptions on which the request is performed.
    * @returns The OData request executor including the destination configuration, if one was given.
    */
   build(
-    destination?: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination?: Destination | DestinationFetchOptions
   ): ODataRequest<RequestConfigT> | Promise<ODataRequest<RequestConfigT>> {
     if (destination) {
-      return useOrFetchDestination(destination, options)
+      return useOrFetchDestination(destination)
         .then(dest => {
           if (!dest) {
             throw Error(noDestinationErrorMessage(destination));

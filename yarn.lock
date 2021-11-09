@@ -1696,9 +1696,9 @@
     fs-extra "9.0.1"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.5.4":
-  version "5.6.1"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.6.1.tgz#8847463a741e878e3333063d835382a098704160"
-  integrity sha512-l2XMsEu5B+2Bcc+kJ0JUE6ehu0pFYL8wDIE0n1BLbqRih330qWjjquWnzZtPO26JioZy4upbOCO3TGXWf6zzZQ==
+  version "5.6.2"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.6.2.tgz#2f685d854c4111576887d55be0c0ded9ec510619"
+  integrity sha512-Y4i0vdyJ5klpksIAN+9gZ3yDHskHbhSWPMAuRA6vMP2zZSniDLyKBOiZsgLT3DpMF8ly186P14iN18ztBMp7+g==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
@@ -4092,9 +4092,9 @@ eslint-plugin-import@^2.20.2:
     tsconfig-paths "^3.11.0"
 
 eslint-plugin-jest@^25.0.1:
-  version "25.2.3"
-  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-25.2.3.tgz#7a841eca91b4e21f31fe0a5403f55bc7779dd7b3"
-  integrity sha512-Yoa0at3euTjERDvPGPWiItY1uuqKYQ5Ov2SmkSLmKRq9OFiVdEehw0rWuK4PA538k7CNqnvmkztjAB9l+HJ7kQ==
+  version "25.2.4"
+  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-25.2.4.tgz#bb9f6a0bd1fd524ffb0b8b7a159cd70a58a1a793"
+  integrity sha512-HRyinpgmEdkVr7pNPaYPHCoGqEzpgk79X8pg/xCeoAdurbyQjntJQ4pTzHl7BiVEBlam/F1Qsn+Dk0HtJO7Aaw==
   dependencies:
     "@typescript-eslint/experimental-utils" "^5.0.0"
 
@@ -6875,9 +6875,9 @@ mkdirp@1.0.4, mkdirp@^1.0.3, mkdirp@^1.0.4:
     minimist "^1.2.5"
 
 mock-fs@^5.0.0:
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/mock-fs/-/mock-fs-5.1.1.tgz#d4c95e916abf400664197079d7e399d133bb6048"
-  integrity sha512-p/8oZ3qvfKGPw+4wdVCyjDxa6wn2tP0TCf3WXC1UyUBAevezPn1TtOoxtMYVbZu/S/iExg+Ghed1busItj2CEw==
+  version "5.1.2"
+  resolved "https://registry.npmjs.org/mock-fs/-/mock-fs-5.1.2.tgz#6fa486e06d00f8793a8d2228de980eff93ce6db7"
+  integrity sha512-YkjQkdLulFrz0vD4BfNQdQRVmgycXTV7ykuHMlyv+C8WCHazpkiQRDthwa02kSyo8wKnY9wRptHfQLgmf0eR+A==
 
 mock-json-schema@^1.0.7:
   version "1.1.1"

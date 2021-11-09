@@ -37,7 +37,7 @@ function getDestinationCacheKeyService(
   destinationServiceUri: string,
   decodedJwt: JwtPayload,
   isolationStrategy?: IsolationStrategy
-): string {
+): string | undefined {
   const usedIsolationStrategy =
     isolationStrategy === IsolationStrategy.Tenant ||
     isolationStrategy === IsolationStrategy.Tenant_User

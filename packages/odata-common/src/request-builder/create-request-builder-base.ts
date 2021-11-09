@@ -1,8 +1,7 @@
 import { ErrorWithCause } from '@sap-cloud-sdk/util';
 import {
-  DestinationOptions,
   Destination,
-  DestinationNameAndJwt
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { EntitySerializer } from '../entity-serializer';
@@ -82,15 +81,13 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
 
   /**
    * Execute query.
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to the created entity
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<EntityT> {
-    return this.executeRaw(destination, options)
+    return this.executeRaw(destination)
       .then(response =>
         this.deserializer.deserializeEntity(
           this.responseDataAccessor.getSingleResult(response.data),
@@ -105,14 +102,12 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
-    return this.build(destination, options).then(request => request.execute());
+    return this.build(destination).then(request => request.execute());
   }
 }

@@ -1,4 +1,8 @@
-import { Destination } from './destination-service-types';
+import { VerifyJwtOptions } from '../jwt';
+import {
+  Destination,
+  DestinationRetrievalOptions
+} from './destination-service-types';
 import { DestinationSelectionStrategy } from './destination-selection-strategies';
 
 /**
@@ -29,7 +33,7 @@ export interface DestinationAccessorOptions {
   /**
    * The user token of the current request.
    */
-  userJwt?: string;
+  jwt?: string;
 
   /**
    * Option to enable/disable the IAS token to XSUAA token exchange.
@@ -45,4 +49,37 @@ export interface DestinationAccessorOptions {
    * So be careful that the used value is not manipulated and breaks the tenant isolation of your application.
    */
   iss?: string;
+}
+
+export type DestinationOptions = DestinationAccessorOptions &
+  DestinationRetrievalOptions &
+  VerifyJwtOptions;
+
+/**
+ * Declaration of a destination to be retrieved from an environment variable or from the destination service on SAP Business Technology Platform, including all DestinationOptions.
+ *
+ * Use an object of this interface to specify which destination shall be used when executing a request.
+ * The destination will be retrieved via its [[DestinationFetchOptions.destinationName]] according to the following algorithm:
+ * 1. If a destination of this [[DestinationFetchOptions.destinationName]] is defined in the environment variable `destinations` (if available), it will be converted into a [[Destination]] and used for the request.
+ * 2. Otherwise, the destination service on SAP Business Technology Platform is queried for a destination with the given [[DestinationFetchOptions.destinationName]], using the access token provided as value of property [[jwt]].
+ * Additionally, you can set [[DestinationOptions]] for objects of this interface.
+ * For more information check out our documentation: https://sap.github.io/cloud-sdk/docs/js/features/connectivity/destination
+ */
+export interface DestinationFetchOptions extends DestinationOptions {
+  /**
+   * Name of the destination to retrieve, mandatory.
+   */
+  destinationName: string;
+}
+
+/**
+ * Typeguard to find if object is DestinationFetchOptions.
+ * @param destination - Destination to be checked
+ * @returns boolean
+ * @internal
+ */
+export function isDestinationFetchOptions(
+  destination: any
+): destination is DestinationFetchOptions {
+  return destination.destinationName !== undefined;
 }

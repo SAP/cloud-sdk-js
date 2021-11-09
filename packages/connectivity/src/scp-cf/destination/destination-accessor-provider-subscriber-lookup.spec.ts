@@ -33,8 +33,9 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import { Destination } from './destination-service-types';
-import { DestinationOptions, getDestination } from './destination-accessor';
+import { getDestination } from './destination-accessor';
 import { getDestinationFromDestinationService } from './destination-from-service';
+import { DestinationFetchOptions } from './destination-accessor-types';
 
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
   afterEach(() => {
@@ -85,16 +86,17 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
   }
 
   async function fetchDestination(
-    userJwt: string | undefined,
+    jwt: string | undefined,
     selectionStrategy: DestinationSelectionStrategy
   ): Promise<Destination | null> {
-    let options: DestinationOptions = {
+    const options: DestinationFetchOptions = {
+      destinationName: destName,
       selectionStrategy,
       cacheVerificationKeys: false,
-      iasToXsuaaTokenExchange: false
+      iasToXsuaaTokenExchange: false,
+      jwt
     };
-    options = userJwt ? { ...options, userJwt } : options;
-    return getDestination(destName, options);
+    return getDestination(options);
   }
 
   function mockThingsForCombinations(
@@ -205,7 +207,8 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         providerServiceToken
       );
 
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         cacheVerificationKeys: false
       });
       const expected = parseDestination(basicMultipleResponse[0]);
@@ -220,8 +223,9 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       });
       const warnSpy = jest.spyOn(logger, 'warn');
       await expect(
-        getDestinationFromDestinationService('someDest', {
-          userJwt: 'someJwt',
+        getDestinationFromDestinationService({
+          destinationName: 'someDest',
+          jwt: 'someJwt',
           iss: 'someIss',
           iasToXsuaaTokenExchange: false
         })
@@ -259,13 +263,11 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       });
       const infoSpy = jest.spyOn(logger, 'info');
       const expected = parseDestination(certificateSingleResponse);
-      const actual = await getDestinationFromDestinationService(
-        'ERNIE-UND-CERT',
-        {
-          iss: onlyIssuerXsuaaUrl,
-          cacheVerificationKeys: false
-        }
-      );
+      const actual = await getDestinationFromDestinationService({
+        destinationName: 'ERNIE-UND-CERT',
+        iss: onlyIssuerXsuaaUrl,
+        cacheVerificationKeys: false
+      });
       expect(actual).toMatchObject(expected);
       expect(infoSpy).toHaveBeenCalledWith(
         'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'

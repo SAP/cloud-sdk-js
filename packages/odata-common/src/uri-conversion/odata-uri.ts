@@ -45,16 +45,6 @@ export interface ODataUri {
   ): string;
 }
 
-type GetExpandType<EntityT extends EntityBase> = (
-  selects: Selectable<EntityT>[],
-  expands: Expandable<EntityT>[],
-  entityConstructor: Constructable<EntityT>
-) => Partial<{ expand: string }>;
-
-type GetSelectType<EntityT extends EntityBase> = (
-  selects: Selectable<EntityT>[]
-) => Partial<{ select: string }>;
-
 /**
  * Add a dollar to a string
  * @param param - String to be modified.

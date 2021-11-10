@@ -74,7 +74,7 @@ We plan to implement the following checks:
   The [eslint-plugin-tsdoc](https://github.com/microsoft/tsdoc/issues/209) does not have a `require` rule.
   The [eslint-plugin-jsdoc](https://github.com/gajus/eslint-plugin-jsdoc) does have it but does not recognize many TypeScript object as `interface`.
 
-## Details on Package
+## Internal Packages
 
 The packages:
 

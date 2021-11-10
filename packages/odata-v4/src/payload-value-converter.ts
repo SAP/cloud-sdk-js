@@ -124,6 +124,10 @@ const deserializers: EdmTypeMapping = {
   'Edm.Enum': identity
 };
 
+
+/**
+ * @internal
+ */
 export const edmToTs = createEdmToTs(deserializers);
 
 export const serializers: EdmTypeMapping = {
@@ -135,4 +139,8 @@ export const serializers: EdmTypeMapping = {
   'Edm.Enum': identity
 };
 
+
+/**
+ * @internal
+ */
 export const tsToEdm = createEdmToTs(serializers);

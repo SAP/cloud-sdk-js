@@ -118,6 +118,9 @@ const deserializers: EdmTypeMapping = {
   'Edm.Time': toTime
 };
 
+/**
+ * @internal
+ */
 export const edmToTs = createEdmToTs(deserializers);
 
 export const serializers: EdmTypeMapping = {
@@ -127,4 +130,7 @@ export const serializers: EdmTypeMapping = {
   'Edm.Time': fromTime
 };
 
+/**
+ * @internal
+ */
 export const tsToEdm = createEdmToTs(serializers);

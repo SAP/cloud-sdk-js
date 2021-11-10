@@ -60,7 +60,7 @@ export declare namespace TestLvl2NestedComplexType {
    */
   const _propertyMetadata: PropertyMetadata<TestLvl2NestedComplexType>[];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2 or @sap-cloud-sdk/odata-v4` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
    */
   function build(json: {
     [keys: string]: FieldType;

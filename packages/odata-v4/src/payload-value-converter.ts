@@ -124,7 +124,6 @@ const deserializers: EdmTypeMapping = {
   'Edm.Enum': identity
 };
 
-
 /**
  * @internal
  */
@@ -138,7 +137,6 @@ export const serializers: EdmTypeMapping = {
   'Edm.TimeOfDay': timeToEdmTimeOfDay,
   'Edm.Enum': identity
 };
-
 
 /**
  * @internal

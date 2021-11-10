@@ -1612,7 +1612,7 @@
     "@sap-cloud-sdk/util" "^1.52.0"
     axios "^0.21.1"
 
-"@sap-cloud-sdk/core@^1.41", "@sap-cloud-sdk/core@^1.47.1", "@sap-cloud-sdk/core@^1.50.0":
+"@sap-cloud-sdk/core@^1.41", "@sap-cloud-sdk/core@^1.47.1":
   version "1.52.0"
   resolved "https://registry.npmjs.org/@sap-cloud-sdk/core/-/core-1.52.0.tgz#e1886e7d043fb2127b74a180f76ed33c0ac6fa8f"
   integrity sha512-6ISoOUJOOQ9nasghbQLHP3QWzKbNKba4GRWyi3ocs05/QVB7bueN8FoyKIbGIbZXaXeqZf2cgyyoxMlQk7yOkQ==

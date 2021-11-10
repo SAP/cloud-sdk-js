@@ -369,15 +369,15 @@
 
 ### Implementation changed
 
-- [openapi] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [openapi] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
 - [odata-common] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions..
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [odata-v2] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [odata-v2] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [odata-v4] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [odata-v4] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [connectivity] `getDestination` changed to use DestinationFetchOptions as single parameter.
+- [connectivity] `getDestination` changed to use DestinationFetchOptions as single parameter.
   - `serviceToken` uses jwt instead of userJwt now.
   - `jwtBearerToken` uses jwt instead of userJwt now.
 

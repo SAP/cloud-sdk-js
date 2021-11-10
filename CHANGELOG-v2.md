@@ -36,6 +36,7 @@
   - `DestinationServiceCredentials`
   - `DestinationType`
   - `DestinationsByType`
+  - `EdmTypeForEdmOrFieldType`
   - `HttpAgentConfig`
   - `HttpsAgentConfig`
   - `IsolationStrategy`
@@ -364,7 +365,7 @@
 
 ### Signature changed
 
--
+- [core] `EdmTypeField` only support EDM types, no field types in generics
 
 ### Implementation changed
 

@@ -21,7 +21,7 @@ export { ActionImportParameter } from './request/action-import-parameter';
 export { ODataBatchRequestBuilder } from './batch-request-builder';
 
 export { CustomField } from './selectable/custom-field';
-export { edmToTs } from './payload-value-converter';
+export { edmToTs } from './de-serializers/payload-value-converter';
 export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
 
 export {

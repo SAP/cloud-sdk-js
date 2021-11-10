@@ -118,15 +118,11 @@ export {
   EntityBuilderType
 } from './entity-base';
 export { Time } from './time';
+
 export {
-  deserializersCommon,
-  serializersCommon
-} from './payload-value-converter';
-export {
-  uriConvertersCommon,
   UriConverter,
   convertToUriForEdmString
-} from './uri-conversion/uri-value-converter';
+} from './de-serializers/uri-value-converter';
 export { createGetResourcePathForKeys } from './uri-conversion/get-resource-path';
 export { ODataUri } from './uri-conversion/odata-uri';
 export { Expandable } from './expandable';
@@ -150,3 +146,12 @@ export {
   FilterFunctionPrimitiveParameterType
 } from './filter/filter-function-base';
 export { toFilterableList } from './selectable/one-to-many-link';
+
+export {
+  wrapDeserialization,
+  wrapSerialization,
+  DeSerializationMiddleware,
+  DeSerializer,
+  identityDeSerializerRaw
+} from './de-serializers/de-serialization-middleware';
+export { defaultDeSerializersRaw } from './de-serializers/default-de-serializers';

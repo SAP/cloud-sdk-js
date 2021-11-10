@@ -8,7 +8,7 @@ export {
 
 export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
 
-export { edmToTs } from './payload-value-converter';
+export { edmToTs } from './de-serializers/payload-value-converter';
 export {
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList,

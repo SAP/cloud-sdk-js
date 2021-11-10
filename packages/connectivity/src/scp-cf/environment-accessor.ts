@@ -16,7 +16,7 @@ import {
 import { ClientCredentials } from './xsuaa-service-types';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'environment-accessor'
 });
 

@@ -9,7 +9,7 @@ import { Cache } from './cache';
 import { fetchVerificationKeys } from './verification-keys';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'jwt'
 });
 

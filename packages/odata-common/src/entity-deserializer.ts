@@ -24,7 +24,7 @@ import { ComplexTypeField } from './selectable/complex-type-field';
 import { OneToOneLink } from './selectable/one-to-one-link';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'entity-deserializer'
 });
 

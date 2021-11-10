@@ -19,7 +19,7 @@ import { oDataUri } from '../uri-conversion/odata-uri';
 import { extractODataEtag } from '../extract-odata-etag';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-v2',
   messageContext: 'update-request-builder-v2'
 });
 /**

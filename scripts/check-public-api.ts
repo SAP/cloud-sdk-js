@@ -119,7 +119,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
   const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
 
   const allExportedIndex = parseIndexFile(
-    await readFile(indexFiles(pathToPackage)[0], 'utf8')
+    await readFile(indexFiles(pathToSource, 'index.ts')[0], 'utf8')
   );
 
   const setsAreEqual = compareApisAndLog(
@@ -204,12 +204,13 @@ export function parseTypeDefinitionFile(
 }
 
 /**
- * Get all index files in the cwd
+ * Get index files in the cwd based on pattern
  * @param cwd - Directory scanned for `index.ts` files.
+ * @param pattern - Pattern for search.
  * @returns List of index files found in the cwd.
  */
-export function indexFiles(cwd: string): string[] {
-  const files = new GlobSync('**/index.ts', { cwd }).found;
+export function indexFiles(cwd: string, pattern: string): string[] {
+  const files = new GlobSync(pattern, { cwd }).found;
   return files.map(file => join(cwd, file));
 }
 
@@ -220,7 +221,7 @@ export function indexFiles(cwd: string): string[] {
 
  */
 export function checkSingleIndexFile(cwd: string): void {
-  const files = indexFiles(cwd);
+  const files = indexFiles(cwd, 'index.ts');
   if (files.length > 1) {
     throw Error(`Too many index files found: ${files.join(',')}`);
   }

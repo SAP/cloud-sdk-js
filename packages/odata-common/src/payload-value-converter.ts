@@ -2,7 +2,7 @@
 
 import BigNumber from 'bignumber.js';
 import { identity } from '@sap-cloud-sdk/util';
-import { EdmTypeSameConverters } from './edm-types';
+import { EdmTypeCommon, EdmTypeSameConverters } from './edm-types';
 
 type EdmTypeMapping = { [key in EdmTypeSameConverters]: (value: any) => any };
 
@@ -111,3 +111,35 @@ export const serializersCommon: EdmTypeMapping = {
   'Edm.String': identity,
   'Edm.Any': identity
 };
+
+/**
+ * @hidden
+ */
+export function createEdmToTs<V extends EdmTypeCommon>(deserializers: {
+  [key in V]: (value: any) => V;
+}): (value, edmType: V) => V {
+  return function (value: any, edmType: V): V {
+    if (value === null || typeof value === 'undefined') {
+      return value;
+    }
+
+    if (deserializers[edmType]) {
+      return deserializers[edmType](value);
+    }
+    return value;
+  };
+}
+// (value: any, edmType: EdmTypeShared<'v2'>): any
+export function createTsToEdm<T extends EdmTypeCommon>(serializers: {
+  [key in T]: (value: any) => any;
+}): (value, edmType: T) => any {
+  return function (value: any, edmType: T) {
+    if (value === null) {
+      return 'null';
+    }
+    if (serializers[edmType]) {
+      return serializers[edmType](value);
+    }
+    return value;
+  };
+}

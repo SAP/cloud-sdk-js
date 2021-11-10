@@ -3,11 +3,11 @@
 import { identity } from '@sap-cloud-sdk/util';
 import {
   uriConvertersCommon,
-  EdmTypeShared,
   UriConverter,
-  convertToUriForEdmString
+  convertToUriForEdmString,
+  createUriConverter
 } from '@sap-cloud-sdk/odata-common';
-import { tsToEdm } from '../payload-value-converter';
+import { serializers } from '../payload-value-converter';
 import { EdmType } from '../edm-types';
 
 type UriConverterMapping = { [key in EdmType]: (value: any) => string };
@@ -25,13 +25,7 @@ export const uriConverters: UriConverterMapping = {
   'Edm.Enum': value => convertToUriForEdmString(value)
 };
 
-export const uriConverter: UriConverter = {
-  convertToUriFormat(value: any, edmType: EdmTypeShared<'v4'>): string {
-    const converted = tsToEdm(value, edmType);
-    const uriConverterFunc = uriConverters[edmType];
-    if (uriConverterFunc) {
-      return uriConverterFunc(converted);
-    }
-    return converted;
-  }
-};
+export const uriConverter: UriConverter = createUriConverter(
+  serializers,
+  uriConverters
+);

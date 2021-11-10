@@ -1,11 +1,11 @@
 /* eslint-disable valid-jsdoc */
 
 import {
-  EdmTypeShared,
   UriConverter,
-  uriConvertersCommon
+  uriConvertersCommon,
+  createUriConverter
 } from '@sap-cloud-sdk/odata-common';
-import { edmToTs, tsToEdm } from '../payload-value-converter';
+import { edmToTs, serializers } from '../payload-value-converter';
 import { EdmType } from '../edm-types';
 
 type UriConverterMapping = { [key in EdmType]: (value: any) => string };
@@ -27,13 +27,7 @@ export const uriConverters: UriConverterMapping = {
 /**
  * @internal
  */
-export const uriConverter: UriConverter = {
-  convertToUriFormat(value: any, edmType: EdmTypeShared<'v2'>): string {
-    const converted = tsToEdm(value, edmType);
-    const uriConverterFunc = uriConverters[edmType];
-    if (uriConverterFunc) {
-      return uriConverterFunc(converted);
-    }
-    return converted;
-  }
-};
+export const uriConverter: UriConverter = createUriConverter(
+  serializers,
+  uriConverters
+);

@@ -1,6 +1,11 @@
 /* eslint-disable valid-jsdoc */
 
-import { EdmTypeSameConvertersUri, EdmTypeShared } from '../edm-types';
+import {
+  EdmTypeSameConverters,
+  EdmTypeSameConvertersUri,
+  EdmTypeShared
+} from '../edm-types';
+import { createTsToEdm } from '../payload-value-converter';
 
 type UriConverterMapping = {
   [key in EdmTypeSameConvertersUri]: (value: any) => string;
@@ -41,4 +46,23 @@ export interface UriConverter {
     value: any,
     edmType: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>
   ): string;
+}
+
+export function createUriConverter<V extends EdmTypeSameConverters>(
+  serializers: { [keys in V]: (value: any) => any },
+  uriConverters: { [key in V]: (value: any) => string }
+): UriConverter {
+  const tsToEdm = createTsToEdm(serializers);
+
+  const convertToUriFormat = function (value: any, edmType: V): string {
+    const converted = tsToEdm(value, edmType);
+    const uriConverterFunc = uriConverters[edmType];
+    if (uriConverterFunc) {
+      return uriConverterFunc(converted);
+    }
+    return converted;
+  };
+  return {
+    convertToUriFormat
+  };
 }

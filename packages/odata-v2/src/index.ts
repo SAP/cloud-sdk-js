@@ -1,3 +1,5 @@
+export { uriConverter } from './uri-conversion/uri-value-converter';
+
 export {
   filterFunctions,
   replace,

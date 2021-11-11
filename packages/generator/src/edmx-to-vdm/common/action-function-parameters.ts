@@ -10,7 +10,11 @@ import {
   EdmxFunctionImport as EdmxFunctionImportV4
 } from '../../edmx-parser/v4';
 import { getTypeMappingActionFunction } from '../edmx-to-vdm-util';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function getActionImportParameters(
   edmxActionImport: EdmxActionImport,
   edmxParameters: EdmxParameter[],
@@ -24,7 +28,9 @@ export function getActionImportParameters(
     formatter
   );
 }
-
+/**
+ * @internal
+ */
 export function getFunctionImportParameters(
   edmxFunctionImport: EdmxFunctionImportV2 | EdmxFunctionImportV4,
   edmxParameters: EdmxParameter[],

@@ -4,7 +4,11 @@ import { entityClass } from './class';
 import { importDeclarations, otherEntityImports } from './imports';
 import { entityTypeInterface } from './interface';
 import { entityNamespace } from './namespace';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function entitySourceFile(
   entity: VdmEntity,
   service: VdmServiceMetadata

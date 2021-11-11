@@ -7,7 +7,11 @@ import { VdmServiceMetadata } from '../vdm-types';
 import { GeneratorOptions } from '../generator-options';
 import { getGenerationAndUsage } from './generation-and-usage';
 import { getServiceDescription } from './pregenerated-lib';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export async function sdkMetadata(
   service: VdmServiceMetadata,
   options: GeneratorOptions

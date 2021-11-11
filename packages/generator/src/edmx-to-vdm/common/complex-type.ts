@@ -23,6 +23,11 @@ import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
 import { enumTypeForName } from './entity';
 
 // TODO: this should be removed once the deprecated complex type factory is removed
+/* eslint-disable valid-jsdoc */
+
+/**
+ * @internal
+ */
 export function includeFactoryName(
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
@@ -32,7 +37,9 @@ export function includeFactoryName(
     factoryName: formatter.typeNameToFactoryName(c.typeName)
   }));
 }
-
+/**
+ * @internal
+ */
 export function transformComplexTypesBase(
   complexTypes: EdmxComplexTypeBase[],
   enumTypes: VdmEnumType[],
@@ -94,7 +101,9 @@ export function transformComplexTypesBase(
     };
   });
 }
-
+/**
+ * @internal
+ */
 export function getTypeMappingComplexProperties(
   typeName: string,
   enumTypes: VdmEnumType[],

@@ -7,7 +7,11 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'enum-type'
 });
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function transformEnumTypesBase(
   enumTypes: EdmxEnumType[],
   formatter: ServiceNameFormatter

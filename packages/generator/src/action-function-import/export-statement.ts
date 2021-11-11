@@ -5,7 +5,11 @@ import {
   VariableStatementStructure
 } from 'ts-morph';
 import { VdmFunctionImport, VdmActionImport } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function exportStatement(
   actionFunctionImports: VdmFunctionImport[] | VdmActionImport[],
   name: 'functionImports' | 'actionImports'

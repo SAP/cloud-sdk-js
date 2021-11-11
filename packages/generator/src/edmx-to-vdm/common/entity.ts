@@ -44,7 +44,11 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'entity'
 });
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function transformEntityBase(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>,
   classNames: Record<string, any>,
@@ -129,7 +133,9 @@ function properties(
     };
   });
 }
-
+/**
+ * @internal
+ */
 export function joinEntityMetadata<
   EntitySetT extends EdmxEntitySetBase,
   EntityTypeT extends EdmxEntityTypeBase<any>
@@ -172,7 +178,9 @@ export function joinEntityMetadata<
     return joined;
   });
 }
-
+/**
+ * @internal
+ */
 export function navigationPropertyBase(
   navPropName: string,
   entitySetName: string,
@@ -199,7 +207,9 @@ export function navigationPropertyBase(
     propertyNameAsParam: applyPrefixOnJsConflictParam(instancePropertyName)
   };
 }
-
+/**
+ * @internal
+ */
 export function createEntityClassNames(
   entityMetadata: JoinedEntityMetadata<EdmxEntitySetBase, any>[],
   formatter: ServiceNameFormatter
@@ -263,19 +273,25 @@ function complexTypeFieldForName(
 }
 
 const getPostfix = (type: string) => last(type.split('.'));
-
+/**
+ * @internal
+ */
 export const findComplexType = (
   name: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
 ): Omit<VdmComplexType, 'factoryName'> | undefined =>
   complexTypes.find(c => c.originalName === getPostfix(name));
-
+/**
+ * @internal
+ */
 export const findEnumType = (
   name: string,
   enumTypes: VdmEnumType[]
 ): VdmEnumType | undefined =>
   enumTypes.find(e => e.originalName === getPostfix(name));
-
+/**
+ * @internal
+ */
 export function complexTypeForName(
   name: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
@@ -289,7 +305,9 @@ export function complexTypeForName(
   );
   return 'any';
 }
-
+/**
+ * @internal
+ */
 export function enumTypeForName(
   name: string,
   enumTypes: VdmEnumType[]

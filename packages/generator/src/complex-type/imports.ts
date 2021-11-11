@@ -10,7 +10,11 @@ import {
   odataCommonImportDeclaration
 } from '../imports';
 import { VdmComplexType } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function importDeclarations(
   complexType: VdmComplexType,
   oDataVersion: ODataVersion

@@ -9,7 +9,11 @@ import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 
 const extractResponse = (functionName: string) => (response: string) =>
   `${response}.${functionName}`;
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function generateFunctionImportsV2(
   serviceMetadata: ServiceMetadata,
   entities: VdmEntity[],

@@ -11,7 +11,11 @@ import {
   odataCommonImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function importDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
@@ -43,7 +47,9 @@ export function importDeclarations(
     )
   ];
 }
-
+/**
+ * @internal
+ */
 export function otherEntityImports(
   entity: VdmEntity,
   service: VdmServiceMetadata

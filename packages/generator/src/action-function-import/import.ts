@@ -103,7 +103,11 @@ function returnTypeImport(
     moduleSpecifier: `./${returnType.returnType}`
   };
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function importDeclarationsFunction(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
@@ -127,7 +131,11 @@ export function importDeclarationsFunction(
     service.oDataVersion
   );
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function importDeclarationsAction(
   service: VdmServiceMetadata
 ): ImportDeclarationStructure[] {

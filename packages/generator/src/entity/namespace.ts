@@ -20,7 +20,11 @@ import {
   VdmProperty,
   VdmServiceMetadata
 } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function entityNamespace(
   entity: VdmEntity,
   service: VdmServiceMetadata

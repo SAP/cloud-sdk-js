@@ -3,7 +3,11 @@ import { VdmServiceMetadata } from '../vdm-types';
 import { batchFunction, changesetFunction } from './function';
 import { importBatchDeclarations } from './imports';
 import { readRequestType, writeRequestType } from './type';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function batchSourceFile(
   service: VdmServiceMetadata
 ): SourceFileStructure {

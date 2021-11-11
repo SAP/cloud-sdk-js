@@ -27,7 +27,11 @@ import {
 } from '../../edmx-parser/v2';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { stripNamespace } from '../edmx-to-vdm-util';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function generateEntitiesV2(
   serviceMetadata: ServiceMetadata,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
@@ -107,7 +111,9 @@ function navigationProperties(
     };
   });
 }
-
+/**
+ * @internal
+ */
 export function joinAssociationMetadata(
   associationSets: EdmxAssociationSet[],
   associations: EdmxAssociation[]

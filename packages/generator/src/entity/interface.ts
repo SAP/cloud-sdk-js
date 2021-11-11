@@ -9,7 +9,11 @@ import {
   VdmProperty,
   VdmServiceMetadata
 } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function entityTypeInterface(
   entity: VdmEntity,
   service: VdmServiceMetadata

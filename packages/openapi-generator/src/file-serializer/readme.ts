@@ -5,6 +5,7 @@ import { getApiSpecificUsage } from '../sdk-metadata/generation-and-usage';
  * Generate the readme for an openapi client.
  * @param openApiDocument - Parsed service.
  * @returns The readme contents.
+ * @internal
  */
 export function readme(openApiDocument: OpenApiDocument): string {
   return `# ${openApiDocument.serviceOptions.packageName}
@@ -22,6 +23,7 @@ ${helpfulLinksSection().join(unixEOL)}
 /**
  * Build the helpful links section of the readme file.
  * @returns The content of the section.
+ * @internal
  */
 export function helpfulLinksSection(): string[] {
   return [

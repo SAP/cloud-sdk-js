@@ -19,6 +19,7 @@ import { SchemaRefMapping } from './parser/parsing-info';
  * Collect all unique reference schemas within the given schemas.
  * @param schemas - Parsed schemas to retrieve all references for.
  * @returns Returns a list of unique reference schemas within the given schemas.
+ * @internal
  */
 export function collectRefs(
   ...schemas: (OpenApiSchema | undefined)[]
@@ -50,6 +51,7 @@ function collectAllRefs(
  * Reduce a list of reference schemas to a list of unique reference schemas, based on $ref.
  * @param refs - List of reference schemas.
  * @returns List of unique reference schemas.
+ * @internal
  */
 export function getUniqueRefs(
   refs: OpenApiReferenceSchema[]
@@ -66,6 +68,7 @@ export function getUniqueRefs(
  * Type guard to check whether an object is of type `OpenAPIV3.ReferenceObject`.
  * @param obj - Object to check.
  * @returns `true` if the object is a reference object, `false` otherwise.
+ * @internal
  */
 export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
   return !!obj?.$ref;
@@ -75,6 +78,7 @@ export function isReferenceObject(obj: any): obj is OpenAPIV3.ReferenceObject {
  * Type guard to check whether an object is of type `OpenApiArraySchema`.
  * @param obj - Object to check.
  * @returns `true` if the object is an array schema, `false` otherwise.
+ * @internal
  */
 export function isArraySchema(obj: any): obj is OpenApiArraySchema {
   return obj?.items;
@@ -84,6 +88,7 @@ export function isArraySchema(obj: any): obj is OpenApiArraySchema {
  * Type guard to check whether an object is of type `OpenApiObjectSchema`.
  * @param obj - Object to check.
  * @returns `true` if the object is an object schema, `false` otherwise.
+ * @internal
  */
 export function isObjectSchema(obj: any): obj is OpenApiObjectSchema {
   return obj?.properties;
@@ -93,6 +98,7 @@ export function isObjectSchema(obj: any): obj is OpenApiObjectSchema {
  * Type guard to check whether an object is of type `OpenApiEnumSchema`.
  * @param obj - Object to check.
  * @returns `true` if the object is an enum schema, `false` otherwise.
+ * @internal
  */
 export function isEnumSchema(obj: any): obj is OpenApiEnumSchema {
   return obj?.enum;
@@ -102,6 +108,7 @@ export function isEnumSchema(obj: any): obj is OpenApiEnumSchema {
  * Type guard to check whether an object is of type `OpenApiOneOfSchema`.
  * @param obj - Object to check.
  * @returns `true` if the object is an oneOf schema, `false` otherwise.
+ * @internal
  */
 export function isOneOfSchema(obj: any): obj is OpenApiOneOfSchema {
   return obj?.oneOf;
@@ -111,6 +118,7 @@ export function isOneOfSchema(obj: any): obj is OpenApiOneOfSchema {
  * Type guard to check whether an object is of type `OpenApiAllOfSchema`.
  * @param obj - Object to check.
  * @returns `true` if the object is an allOf schema, `false` otherwise.
+ * @internal
  */
 export function isAllOfSchema(obj: any): obj is OpenApiAllOfSchema {
   return obj?.allOf;
@@ -120,6 +128,7 @@ export function isAllOfSchema(obj: any): obj is OpenApiAllOfSchema {
  * Type guard to check whether an object is of type `OpenApiAnyOfSchema`.
  * @param obj - Object to check.
  * @returns `true` if the object is an anyOf schema, `false` otherwise.
+ * @internal
  */
 export function isAnyOfSchema(obj: any): obj is OpenApiAnyOfSchema {
   return obj?.anyOf;
@@ -129,6 +138,7 @@ export function isAnyOfSchema(obj: any): obj is OpenApiAnyOfSchema {
  * Type guard to check whether an object is of type `OpenApiNotSchema`.
  * @param obj - Object to check.
  * @returns `true` if the object is a not schema, `false` otherwise.
+ * @internal
  */
 export function isNotSchema(obj: any): obj is OpenApiNotSchema {
   return obj?.not;
@@ -139,6 +149,7 @@ export function isNotSchema(obj: any): obj is OpenApiNotSchema {
  * @param obj - Reference object to get the type name from.
  * @param schemaRefMapping - Mapping between reference paths and schema names.
  * @returns Parsed type name.
+ * @internal
  */
 export function getSchemaNamingFromRef(
   obj: OpenAPIV3.ReferenceObject | string,
@@ -153,7 +164,11 @@ export function getSchemaNamingFromRef(
   }
   return schemaNaming;
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function getSchemaPropertiesDocumentation(
   schemaProperties: OpenApiSchemaProperties
 ): string[] {

@@ -73,7 +73,11 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     );
   }
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export async function transpileDirectories(
   directories: Directory[]
 ): Promise<void[]> {
@@ -84,7 +88,9 @@ export async function transpileDirectories(
     })
   );
 }
-
+/**
+ * @internal
+ */
 export async function generateProject(
   options: GeneratorOptions
 ): Promise<Project | undefined> {
@@ -119,7 +125,9 @@ export async function generateProject(
 
   return project;
 }
-
+/**
+ * @internal
+ */
 export async function generateSourcesForService(
   service: VdmServiceMetadata,
   project: Project,

@@ -11,7 +11,11 @@ import {
   getComplexTypePropertyDescription
 } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function fieldTypeClass(
   complexType: VdmComplexType
 ): ClassDeclarationStructure {
@@ -79,7 +83,9 @@ function property(
     docs: [getComplexTypePropertyDescription(prop, complexType.typeName)]
   };
 }
-
+/**
+ * @internal
+ */
 export function createPropertyFieldInitializer(prop: VdmProperty): string {
   if (prop.isCollection) {
     if (prop.isEnum) {

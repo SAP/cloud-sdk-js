@@ -19,7 +19,11 @@ import {
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { isCollectionType } from '../edmx-to-vdm-util';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function joinEntityTypes<T extends EdmxEntityType>(
   entityType: T,
   baseType: T
@@ -37,7 +41,9 @@ export function joinEntityTypes<T extends EdmxEntityType>(
     ]
   };
 }
-
+/**
+ * @internal
+ */
 export function generateEntitiesV4(
   serviceMetadata: ServiceMetadata,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],

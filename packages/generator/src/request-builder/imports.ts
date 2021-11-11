@@ -7,7 +7,11 @@ import {
   odataCommonImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmProperty } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function importDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion

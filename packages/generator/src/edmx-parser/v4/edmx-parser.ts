@@ -20,7 +20,11 @@ import {
   EdmxFunctionImport,
   EdmxNavigationPropertyBinding
 } from './edm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function joinComplexTypes<T extends EdmxComplexType>(
   complexType: T,
   baseType: T
@@ -30,7 +34,9 @@ export function joinComplexTypes<T extends EdmxComplexType>(
     Property: [...complexType.Property, ...baseType.Property]
   };
 }
-
+/**
+ * @internal
+ */
 export function joinTypesWithBaseTypes<T extends EdmxDerivedType>(
   types: T[],
   joinTypes: (type: T, baseType: T) => T
@@ -63,11 +69,15 @@ function joinTypeWithBaseType<T extends EdmxDerivedType>(
   }
   return type;
 }
-
+/**
+ * @internal
+ */
 export function parseComplexTypes(root: any): EdmxComplexType[] {
   return joinTypesWithBaseTypes(parseComplexTypesBase(root), joinComplexTypes);
 }
-
+/**
+ * @internal
+ */
 export function parseEnumTypes(root: any): EdmxEnumType[] {
   return getMergedPropertyWithNamespace(root, 'EnumType').map(edmxEnumType => ({
     Name: edmxEnumType.Name,
@@ -76,12 +86,16 @@ export function parseEnumTypes(root: any): EdmxEnumType[] {
     Namespace: edmxEnumType.Namespace
   }));
 }
-
+/**
+ * @internal
+ */
 export function parseEntityType(root: any): EdmxEntityType[] {
   const entityTypes = parseEntityTypesBase(root);
   return joinTypesWithBaseTypes(entityTypes, joinEntityTypes);
 }
-
+/**
+ * @internal
+ */
 export function parseEntitySets(root: any): EdmxEntitySet[] {
   return parseEntitySetsBase(root).map(entitySet => ({
     ...entitySet,
@@ -94,11 +108,15 @@ function parseNavigationPropertyBinding(
 ): EdmxNavigationPropertyBinding[] {
   return forceArray(entitySet.NavigationPropertyBinding);
 }
-
+/**
+ * @internal
+ */
 export function parseFunctionImports(root: any): EdmxFunctionImport[] {
   return getPropertyFromEntityContainer(root, 'FunctionImport');
 }
-
+/**
+ * @internal
+ */
 export function parseActionImport(root: any): EdmxActionImport[] {
   return getPropertyFromEntityContainer(root, 'ActionImport');
 }
@@ -115,11 +133,15 @@ function parseActionsFunctions(
     })
   );
 }
-
+/**
+ * @internal
+ */
 export function parseFunctions(root: any): EdmxFunction[] {
   return parseActionsFunctions(root, 'Function');
 }
-
+/**
+ * @internal
+ */
 export function parseActions(root: any): EdmxAction[] {
   return parseActionsFunctions(root, 'Action');
 }

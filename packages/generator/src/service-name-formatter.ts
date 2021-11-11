@@ -10,7 +10,11 @@ import {
   defaultReservedWords,
   reservedServiceKeywords
 } from './reserved-words';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export class ServiceNameFormatter {
   static originalToServiceName(name: string): string {
     let formattedName = name.replace(/\.|\//g, '_');
@@ -217,7 +221,9 @@ function stripUnderscoreSrv(name: string) {
 function stripAPIUnderscore(name: string) {
   return name.startsWith('API_') ? name.substring(4, name.length) : name;
 }
-
+/**
+ * @internal
+ */
 export function stripCollection(name: string): string {
   return name.endsWith('Collection')
     ? name.substring(0, name.length - 10)

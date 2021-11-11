@@ -1,4 +1,7 @@
 // TODO 1728: The following is duplicate in the OpenAPI generator
+/**
+ * @internal
+ */
 export const reservedJsKeywords: readonly string[] = [
   'break',
   'case',
@@ -42,7 +45,9 @@ export const reservedJsKeywords: readonly string[] = [
   'with',
   'yield'
 ] as const;
-
+/**
+ * @internal
+ */
 export const reservedServiceKeywords = [
   'BinaryField',
   'NumberField',
@@ -63,13 +68,17 @@ export const reservedServiceKeywords = [
   'Time',
   'TimeField'
 ] as const;
-
+/**
+ * @internal
+ */
 export const reservedVdmKeywords = [
   'builder',
   'entityBuilder',
   'requestBuilder'
 ] as const;
-
+/**
+ * @internal
+ */
 export const defaultReservedWords = [
   ...Object.getOwnPropertyNames(Object.prototype),
   ...reservedVdmKeywords

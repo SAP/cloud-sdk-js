@@ -5,7 +5,9 @@ import { ODataVersion, removeFileExtension } from '@sap-cloud-sdk/util';
 import { forceArray } from '../generator-utils';
 import { SwaggerMetadata } from '../swagger-parser/swagger-types';
 import { getMergedPropertyWithNamespace } from './common';
-
+/**
+ * @internal
+ */
 export interface EdmxMetadata {
   path: PathLike;
   oDataVersion: ODataVersion;
@@ -29,7 +31,11 @@ function parseMetadata(
     root
   };
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function readEdmxFile(edmxPath: PathLike): EdmxMetadata {
   const edmxFile = readFileSync(path.resolve(edmxPath.toString()), {
     encoding: 'utf-8'
@@ -62,7 +68,9 @@ function parseLink(root): string | undefined {
     return selfLink.href;
   }
 }
-
+/**
+ * @internal
+ */
 export interface ServiceMetadata {
   edmx: EdmxMetadata;
   swagger?: SwaggerMetadata;

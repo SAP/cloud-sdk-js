@@ -1,5 +1,6 @@
 /**
  * Options that influence parsing.
+ * @internal
  */
 export interface ParserOptions {
   /**

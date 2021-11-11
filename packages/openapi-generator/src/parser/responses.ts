@@ -3,7 +3,10 @@ import { OpenApiSchema } from '../openapi-types';
 import { OpenApiDocumentRefs } from './refs';
 import { parseMediaType } from './media-type';
 import { ParserOptions } from './options';
-
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function parseResponses(
   responses: OpenAPIV3.ResponsesObject | undefined,
   refs: OpenApiDocumentRefs,

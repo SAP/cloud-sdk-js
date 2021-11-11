@@ -13,6 +13,7 @@ import { parseBound } from './swagger-parser-workaround';
  * @param serviceOptions - Service options as defined in the options per service.
  * @param options - Parser options.
  * @returns The parsed OpenAPI document representation
+ * @internal
  */
 export async function parseOpenApiDocument(
   fileContent: OpenAPIV3.Document,
@@ -31,7 +32,11 @@ export async function parseOpenApiDocument(
     schemas: parseSchemas(document, refs, options)
   };
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function parseSchemas(
   document: OpenAPIV3.Document,
   refs: OpenApiDocumentRefs,

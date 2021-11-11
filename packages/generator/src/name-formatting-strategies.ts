@@ -26,23 +26,32 @@ const applyPrefixOnJSReservedWords =
 
 /**
  * @deprecated Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameGenerator]] instead.
+ * @internal
  */
 export const applySuffixOnConflictUnderscore = applySuffixOnConflict('_');
 
 /**
  * @deprecated  Since v1.22.0. This method changes the 'previouslyGeneratedNames' passed to it. Use [[UniqueNameGenerator]] instead.
+ * @internal
  */
 export const applySuffixOnConflictDash = applySuffixOnConflict('-');
-
+/**
+ * @internal
+ */
 export const applyPrefixOnJsConflictParam = applyPrefixOnJSReservedWords('p');
 /**
  * @deprecated  Since v1.25.0. Use [[applyPrefixOnJsConflictParam]] instead.
+ * @internal
  */
 export const applyPrefixOnJsConfictParam = applyPrefixOnJsConflictParam;
+/**
+ * @internal
+ */
 export const applyPrefixOnJsConflictFunctionImports =
   applyPrefixOnJSReservedWords('f');
 /**
  * @deprecated  Since v1.25.0. Use [[applyPrefixOnJsConflictFunctionImports]] instead.
+ * @internal
  */
 export const applyPrefixOnJsConfictFunctionImports =
   applyPrefixOnJsConflictFunctionImports;

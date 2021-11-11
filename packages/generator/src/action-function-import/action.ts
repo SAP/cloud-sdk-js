@@ -7,7 +7,11 @@ import { additionalDocForEntityNotDeserializable } from './function';
 import { actionImportReturnType } from './return-type';
 
 const parameterName = 'parameters';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function actionImportFunction(
   actionImport: VdmActionImport,
   service: VdmServiceMetadata

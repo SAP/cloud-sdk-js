@@ -115,6 +115,7 @@ class ServiceGenerator {
 /**
  * @param options - Generator options
  * @returns the parsed services
+ * @internal
  */
 export function parseAllServices(
   options: GeneratorOptions
@@ -128,6 +129,7 @@ export function parseAllServices(
  * @param mappings - mappings for VDM service names to desired name
  * @param globalNameFormatter - Instance of global name formatter to be used for the parsing process
  * @returns the parsed service
+ * @internal
  */
 export function parseService(
   serviceDefinitionPaths: ServiceDefinitionPaths,
@@ -140,7 +142,11 @@ export function parseService(
     .withGlobalNameFormatter(globalNameFormatter)
     .generateService(serviceDefinitionPaths);
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function getServiceName(service: VdmServiceMetadata): string {
   return service.namespaces.length === 1
     ? service.namespaces[0]

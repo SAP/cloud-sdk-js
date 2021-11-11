@@ -5,7 +5,11 @@ import { includeFactoryName } from '../common';
 import { generateFunctionImportsV2 } from './function-import';
 import { generateComplexTypesV2 } from './complex-type';
 import { generateEntitiesV2 } from './entity';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function getServiceEntitiesV2(
   serviceMetadata: ServiceMetadata
 ): VdmServiceEntities {

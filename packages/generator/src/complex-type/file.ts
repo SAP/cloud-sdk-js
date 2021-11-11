@@ -6,7 +6,11 @@ import { fieldTypeClass } from './field-type-class';
 import { importDeclarations } from './imports';
 import { complexTypeInterface } from './interface';
 import { complexTypeNamespace } from './namespace';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function complexTypeSourceFile(
   complexType: VdmComplexType,
   oDataVersion: ODataVersion

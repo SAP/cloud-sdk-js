@@ -14,7 +14,11 @@ import {
 } from '../edmx-to-vdm-util';
 import { EdmxReturnType } from '../../edmx-parser/v4';
 import { isNullableProperty } from '../../generator-utils';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function parseFunctionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
@@ -28,7 +32,9 @@ export function parseFunctionImportReturnTypes(
     extractResponse
   ) as VdmFunctionImportReturnType;
 }
-
+/**
+ * @internal
+ */
 export function parseActionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
@@ -188,7 +194,9 @@ function getComplexReturnType(
     isCollection
   };
 }
-
+/**
+ * @internal
+ */
 export function isEntityNotDeserializable(
   returnType: VdmFunctionImportReturnType
 ): boolean {
@@ -198,5 +206,7 @@ export function isEntityNotDeserializable(
       VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
   );
 }
-
+/**
+ * @internal
+ */
 export type ExtractResponse = (string) => string;

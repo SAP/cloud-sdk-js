@@ -10,6 +10,7 @@ import { serializeSchema } from './schema';
  * Serialize an operation to a string.
  * @param operation - Operation to serialize.
  * @returns The operation as a string.
+ * @internal
  */
 export function serializeOperation(operation: OpenApiOperation): string {
   const requestBuilderParams = [
@@ -105,7 +106,11 @@ function serializeParamsForRequestBuilder(
     }`;
   }
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function operationDocumentation(operation: OpenApiOperation): string {
   const signature: string[] = [];
   if (operation.pathParameters.length) {

@@ -13,7 +13,11 @@ import {
   getRequestBuilderDescription
 } from '../typedoc';
 import { VdmEntity } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function requestBuilderClass(
   entity: VdmEntity
 ): ClassDeclarationStructure {

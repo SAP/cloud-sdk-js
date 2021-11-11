@@ -7,7 +7,11 @@ import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';
 import { generateActionImportsV4 } from './action-import';
 import { generateEnumTypesV4 } from './enum-type';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function getServiceEntitiesV4(
   serviceMetadata: ServiceMetadata
 ): VdmServiceEntities {

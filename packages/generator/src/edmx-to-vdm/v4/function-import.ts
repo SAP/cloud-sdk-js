@@ -68,7 +68,11 @@ function joinFunctionImportData(
   }
   return joinedFunctionImportData;
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function generateFunctionImportsV4(
   serviceMetadata: ServiceMetadata,
   entities: VdmEntity[],

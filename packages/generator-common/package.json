@@ -20,7 +20,8 @@
     "dist/**/*.js.map",
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map",
-    "internal.js"
+    "internal.js",
+    "internal.d.ts"
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
@@ -28,7 +29,8 @@
     "prepare": "yarn compile",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck ."
+    "check:dependencies": "depcheck .",
+    "generate-barrel": "barrelsby -c barrel.config.json"
   },
   "dependencies": {
     "@sap-cloud-sdk/util": "^1.50.0",

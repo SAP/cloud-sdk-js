@@ -1,9 +1,11 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
+/* eslint-disable import/no-internal-modules */
 import {
   InstructionWithText,
   InstructionWithTextAndHeader,
   usageHeaderText
-} from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
+/* eslint-enable import/no-internal-modules */
 import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
 import { getActionFunctionParams } from './code-sample-util';
 

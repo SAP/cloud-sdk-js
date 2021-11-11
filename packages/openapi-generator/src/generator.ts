@@ -16,13 +16,15 @@ import {
   setLogLevel,
   formatJson
 } from '@sap-cloud-sdk/util';
+/* eslint-disable import/no-internal-modules */
 import {
   getSdkMetadataFileNames,
   getSdkVersion,
   readCompilerOptions,
   sdkMetadataHeader,
   transpileDirectory
-} from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
+/* eslint-enable import/no-internal-modules */
 import {
   apiFile,
   packageJson,

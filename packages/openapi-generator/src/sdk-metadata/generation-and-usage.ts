@@ -1,3 +1,4 @@
+/* eslint-disable import/no-internal-modules */
 import {
   GenerationAndUsage,
   getLinks,
@@ -6,7 +7,8 @@ import {
   Links,
   InstructionWithTextAndHeader,
   usageHeaderText
-} from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
+/* eslint-enable import/no-internal-modules */
 import { OpenApiDocument } from '../openapi-types';
 import { apiSpecificCodeSample, genericCodeSample } from './code-sample';
 import { getMainApi, getMainOperation } from './code-sample-util';

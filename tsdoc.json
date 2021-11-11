@@ -8,6 +8,10 @@
     {
       "tagName": "@module",
       "syntaxKind": "block"
+    },
+    {
+      "tagName": "@file",
+      "syntaxKind": "modifier"
     }
   ]
 }

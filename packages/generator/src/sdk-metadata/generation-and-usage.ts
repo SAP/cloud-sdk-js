@@ -1,3 +1,4 @@
+/* eslint-disable import/no-internal-modules */
 import {
   getSdkVersion,
   getLinks,
@@ -5,8 +6,9 @@ import {
   Links,
   InstructionWithTextAndHeader,
   usageHeaderText
-} from '@sap-cloud-sdk/generator-common';
-import type { GenerationAndUsage } from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
+import type { GenerationAndUsage } from '@sap-cloud-sdk/generator-common/internal';
+/* eslint-enable import/no-internal-modules */
 import { VdmServiceMetadata } from '../vdm-types';
 import {
   actionImportCodeSample,

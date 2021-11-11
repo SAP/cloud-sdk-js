@@ -1,6 +1,6 @@
 import { VdmServiceMetadata } from '@sap-cloud-sdk/generator/dist/vdm-types';
 import { checkUrlExists } from '@sap-cloud-sdk/util';
-import { getGenerationSteps } from '@sap-cloud-sdk/generator-common';
+import { getGenerationSteps } from '@sap-cloud-sdk/generator-common/internal';
 import {
   getGenerationAndUsage,
   linkGenerationDocumentation,

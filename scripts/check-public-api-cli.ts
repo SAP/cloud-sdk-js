@@ -11,6 +11,7 @@ async function checkApiPackages() {
   await checkApiOfPackage(resolve(__dirname, '../packages/odata-common'));
   await checkApiOfPackage(resolve(__dirname, '../packages/odata-v2'));
   await checkApiOfPackage(resolve(__dirname, '../packages/odata-v4'));
+  await checkApiOfPackage(resolve(__dirname, '../packages/generator-common'));
 }
 
 checkApiPackages();

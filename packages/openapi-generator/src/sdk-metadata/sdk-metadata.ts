@@ -1,8 +1,10 @@
+/* eslint-disable import/no-internal-modules */
 import {
   getPregeneratedLibrary,
   getSdkMetadataClient
-} from '@sap-cloud-sdk/generator-common';
-import type { Client } from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
+import type { Client } from '@sap-cloud-sdk/generator-common/internal';
+/* eslint-enable import/no-internal-modules */
 import { OpenApiDocument } from '../openapi-types';
 import { packageDescription } from './package-description';
 import { getGenerationAndUsage } from './generation-and-usage';

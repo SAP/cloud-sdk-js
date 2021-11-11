@@ -1,8 +1,10 @@
+/* eslint-disable import/no-internal-modules */
 import {
   getSdkMetadataClient,
   getPregeneratedLibrary
-} from '@sap-cloud-sdk/generator-common';
-import type { Client } from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
+import type { Client } from '@sap-cloud-sdk/generator-common/internal';
+/* eslint-enable import/no-internal-modules */
 import { VdmServiceMetadata } from '../vdm-types';
 import { GeneratorOptions } from '../generator-options';
 import { getGenerationAndUsage } from './generation-and-usage';

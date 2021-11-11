@@ -1,4 +1,5 @@
-import { getSdkVersion } from '@sap-cloud-sdk/generator-common';
+// eslint-disable-next-line import/no-internal-modules
+import { getSdkVersion } from '@sap-cloud-sdk/generator-common/internal';
 import { dummyOpenApiDocument } from '../../test/test-util';
 import { getGenerationAndUsage } from './generation-and-usage';
 

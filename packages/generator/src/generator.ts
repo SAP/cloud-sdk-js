@@ -13,13 +13,15 @@ import {
 } from 'ts-morph';
 import { ModuleKind } from 'typescript';
 import { GlobSync } from 'glob';
+/* eslint-disable import/no-internal-modules */
 import {
   getSdkMetadataFileNames,
   getVersionForClient,
   sdkMetadataHeader,
   transpileDirectory,
   readCompilerOptions
-} from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
+/* eslint-enable import/no-internal-modules */
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';

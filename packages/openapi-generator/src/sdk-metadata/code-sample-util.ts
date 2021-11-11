@@ -1,4 +1,5 @@
-import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common';
+// eslint-disable-next-line import/no-internal-modules
+import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
 import { codeBlock, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenApiApi, OpenApiOperation } from '../openapi-types';
 

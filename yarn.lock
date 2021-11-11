@@ -1994,7 +1994,7 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@types/yargs@^17.0.0", "@types/yargs@^17.0.2":
+"@types/yargs@^17.0.0", "@types/yargs@^17.0.2", "@types/yargs@^17.0.3":
   version "17.0.5"
   resolved "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.5.tgz#1e7e59a88420872875842352b73618f5e77e835f"
   integrity sha512-4HNq144yhaVjJs+ON6A07NEoi9Hh0Rhl/jI9Nt/l/YRjt+T6St/QK3meFARWZ8IgkzoD1LC0PdTdJenlQQi2WQ==
@@ -2636,6 +2636,14 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
+
+barrelsby@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/barrelsby/-/barrelsby-2.3.0.tgz#636333194e9ac7ca75c3057f356ebf14785b2c17"
+  integrity sha512-yZcISH1uDcWhZz5EbP7JaHTP1Mo+3oq5IkkdyXGuSTd7I1o1i+H5/h1I1LnI/HXhgoW+YL9U0pSw1nOxlze1QQ==
+  dependencies:
+    "@types/yargs" "^17.0.3"
+    yargs "^15.0.1"
 
 base64-js@^1.3.1:
   version "1.5.1"
@@ -10252,7 +10260,7 @@ yargs-parser@^18.1.2:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
-yargs@^15.1.0, yargs@^15.3.1:
+yargs@^15.0.1, yargs@^15.1.0, yargs@^15.3.1:
   version "15.4.1"
   resolved "https://registry.npmjs.org/yargs/-/yargs-15.4.1.tgz#0d87a16de01aee9d8bec2bfbf74f67851730f4f8"
   integrity sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==

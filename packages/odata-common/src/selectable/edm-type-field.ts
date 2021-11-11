@@ -1,12 +1,12 @@
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { EdmTypeShared } from '../edm-types';
 import { EntityBase } from '../entity-base';
 import { Time } from '../time';
 import { Filter } from '../filter/filter';
+import { EdmTypeShared } from '../edm-types';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
-import { Field, FieldOptions, FieldType } from './field';
+import { Field, FieldOptions } from './field';
 
 /**
  * Convenience type that maps the given [[FieldType]] to a new type that is either nullable or not, depending on the given `NullableT`.
@@ -14,89 +14,75 @@ import { Field, FieldOptions, FieldType } from './field';
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  */
 type NullableFieldType<
-  FieldT extends FieldType,
+  FieldT,
   NullableT extends boolean
 > = NullableT extends true ? FieldT | null : FieldT;
 
 /**
  * Convenience type that maps the given EDM type to a [[FieldType]] without considering whether it is nullable.
- * @typeparam EdmOrFieldT - EDM type of the field. Deprecated: Field type of the field.
+ * @typeparam EdmT - EDM type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  */
-type NonNullableFieldTypeByEdmType<
-  EdmOrFieldT extends EdmTypeShared<'any'> | FieldType
-> = EdmOrFieldT extends 'Edm.String'
-  ? string
-  : EdmOrFieldT extends 'Edm.Boolean'
-  ? boolean
-  : EdmOrFieldT extends 'Edm.Decimal'
-  ? BigNumber
-  : EdmOrFieldT extends 'Edm.Double'
-  ? number
-  : EdmOrFieldT extends 'Edm.Single'
-  ? number
-  : EdmOrFieldT extends 'Edm.Float'
-  ? number
-  : EdmOrFieldT extends 'Edm.Int16'
-  ? number
-  : EdmOrFieldT extends 'Edm.Int32'
-  ? number
-  : EdmOrFieldT extends 'Edm.Int64'
-  ? BigNumber
-  : EdmOrFieldT extends 'Edm.SByte'
-  ? number
-  : EdmOrFieldT extends 'Edm.Binary'
-  ? string
-  : EdmOrFieldT extends 'Edm.Guid'
-  ? string
-  : EdmOrFieldT extends 'Edm.Byte'
-  ? number
-  : EdmOrFieldT extends 'Edm.DateTime'
-  ? moment.Moment
-  : EdmOrFieldT extends 'Edm.DateTimeOffset'
-  ? moment.Moment
-  : EdmOrFieldT extends 'Edm.Time'
-  ? Time
-  : EdmOrFieldT extends 'Edm.Date'
-  ? moment.Moment
-  : EdmOrFieldT extends 'Edm.Duration'
-  ? moment.Duration
-  : EdmOrFieldT extends 'Edm.TimeOfDay'
-  ? Time
-  : EdmOrFieldT extends 'Edm.Enum'
-  ? string
-  : EdmOrFieldT extends 'Edm.Any'
-  ? any
-  : EdmOrFieldT extends FieldType
-  ? EdmOrFieldT
-  : never;
+type NonNullableFieldTypeByEdmType<EdmT extends EdmTypeShared<'any'>> =
+  EdmT extends 'Edm.String'
+    ? string
+    : EdmT extends 'Edm.Boolean'
+    ? boolean
+    : EdmT extends 'Edm.Decimal'
+    ? BigNumber
+    : EdmT extends 'Edm.Double'
+    ? number
+    : EdmT extends 'Edm.Single'
+    ? number
+    : EdmT extends 'Edm.Float'
+    ? number
+    : EdmT extends 'Edm.Int16'
+    ? number
+    : EdmT extends 'Edm.Int32'
+    ? number
+    : EdmT extends 'Edm.Int64'
+    ? BigNumber
+    : EdmT extends 'Edm.SByte'
+    ? number
+    : EdmT extends 'Edm.Binary'
+    ? string
+    : EdmT extends 'Edm.Guid'
+    ? string
+    : EdmT extends 'Edm.Byte'
+    ? number
+    : EdmT extends 'Edm.DateTime'
+    ? moment.Moment
+    : EdmT extends 'Edm.DateTimeOffset'
+    ? moment.Moment
+    : EdmT extends 'Edm.Time'
+    ? Time
+    : EdmT extends 'Edm.Date'
+    ? moment.Moment
+    : EdmT extends 'Edm.Duration'
+    ? moment.Duration
+    : EdmT extends 'Edm.TimeOfDay'
+    ? Time
+    : EdmT extends 'Edm.Enum'
+    ? string
+    : EdmT extends 'Edm.Any'
+    ? any
+    : never;
 
 /**
  * Convenience type that maps the given EDM type to a [[FieldType]]. It also considers whether the field is nullable.
- * @typeparam EdmOrFieldT - EDM type of the field. Deprecated: Field type of the field.
+ * @typeparam EdmT - EDM type of the field. Deprecated: Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @internal
  */
 export type FieldTypeByEdmType<
-  EdmOrFieldT extends EdmTypeShared<'any'> | FieldType,
+  EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean
 > = NullableFieldType<
-  EdmOrFieldT extends EdmTypeShared<'any'>
-    ? NonNullableFieldTypeByEdmType<EdmOrFieldT>
-    : EdmOrFieldT,
+  EdmT extends EdmTypeShared<'any'>
+    ? NonNullableFieldTypeByEdmType<EdmT>
+    : EdmT,
   NullableT
 >;
-
-/**
- * Convenience type to support legacy `EdmTypeField` with field type as generic parameter.
- * This will become obsolete in the next major version update.
- *  @internal
- */
-export type EdmTypeForEdmOrFieldType<
-  EdmOrFieldT extends EdmTypeShared<'any'> | FieldType
-> = EdmOrFieldT extends EdmTypeShared<'any'>
-  ? EdmOrFieldT
-  : EdmTypeShared<'any'>;
 
 /**
  * Represents a property of an OData entity with an EDM type.
@@ -109,13 +95,13 @@ export type EdmTypeForEdmOrFieldType<
  *
  * See also: [[Selectable]]
  * @typeparam EntityT - Type of the entity the field belongs to
- * @typeparam EdmOrFieldT - EDM type of the field. Deprecated: Field type of the field.
+ * @typeparam EdmT - EDM type of the field. Deprecated: Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  */
 export class EdmTypeField<
   EntityT extends EntityBase,
-  EdmOrFieldT extends EdmTypeShared<'any'> | FieldType,
+  EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
@@ -129,7 +115,7 @@ export class EdmTypeField<
   constructor(
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
-    readonly edmType: EdmTypeForEdmOrFieldType<EdmOrFieldT>,
+    readonly edmType: EdmT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
@@ -141,8 +127,8 @@ export class EdmTypeField<
    * @returns The resulting filter
    */
   equals(
-    value: FieldTypeByEdmType<EdmOrFieldT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>> {
+    value: FieldTypeByEdmType<EdmT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
     return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 
@@ -152,8 +138,8 @@ export class EdmTypeField<
    * @returns The resulting filter
    */
   notEquals(
-    value: FieldTypeByEdmType<EdmOrFieldT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmOrFieldT, NullableT>> {
+    value: FieldTypeByEdmType<EdmT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
     return new Filter(this.fieldPath(), 'ne', value, this.edmType);
   }
 

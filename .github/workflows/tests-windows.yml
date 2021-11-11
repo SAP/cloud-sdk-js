@@ -20,13 +20,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ matrix.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit -- -- --no-bail -- -- -- --json --outputFile=unit-test-output.json
       - run: yarn test:integration --json --outputFile=int-test-output.json

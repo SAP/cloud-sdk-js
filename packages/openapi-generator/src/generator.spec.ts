@@ -5,8 +5,8 @@ import { readJSON } from '@sap-cloud-sdk/util';
 import { emptyDocument } from '../test/test-util';
 import { generate, getInputFilePaths } from './generator';
 
-jest.mock('../../generator-common', () => {
-  const actual = jest.requireActual('../../generator-common');
+jest.mock('../../generator-common/internal', () => {
+  const actual = jest.requireActual('../../generator-common/internal');
   return { ...actual, getSdkVersion: async () => '1.2.3' };
 });
 
@@ -14,27 +14,6 @@ const { readFile } = promises;
 
 describe('generator', () => {
   afterAll(() => {
-    mock.restore();
-  });
-
-  it('getInputFilePaths returns an array of all file paths, including subdirectories', async () => {
-    mock({
-      '/path/to/test/dir': {
-        'test-service.txt': 'file content here',
-        'empty-dir': {},
-        'sub-dir': {
-          'test-service.txt': 'another fake service',
-          'sub-directory-service.txt': 'just to add some more'
-        }
-      }
-    });
-
-    expect(await getInputFilePaths('/path/to/test/dir')).toEqual([
-      resolve('/path/to/test/dir/sub-dir/sub-directory-service.txt'),
-      resolve('/path/to/test/dir/sub-dir/test-service.txt'),
-      resolve('/path/to/test/dir/test-service.txt')
-    ]);
-
     mock.restore();
   });
 

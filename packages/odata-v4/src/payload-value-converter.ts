@@ -124,11 +124,11 @@ const deserializers: EdmTypeMapping = {
   'Edm.Enum': identity
 };
 
+export const edmToTs = createEdmToTs(deserializers);
+
 /**
  * @internal
  */
-export const edmToTs = createEdmToTs(deserializers);
-
 export const serializers: EdmTypeMapping = {
   ...serializersCommon,
   'Edm.Date': momentToEdmDate,

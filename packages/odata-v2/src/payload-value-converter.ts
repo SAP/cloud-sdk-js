@@ -118,11 +118,11 @@ const deserializers: EdmTypeMapping = {
   'Edm.Time': toTime
 };
 
+export const edmToTs = createEdmToTs(deserializers);
+
 /**
  * @internal
  */
-export const edmToTs = createEdmToTs(deserializers);
-
 export const serializers: EdmTypeMapping = {
   ...serializersCommon,
   'Edm.DateTime': momentToEdmDateTime,

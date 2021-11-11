@@ -24,9 +24,7 @@ export const uriConverters: UriConverterMapping = {
   'Edm.Time': value => `time'${value}'`,
   'Edm.Guid': value => `guid'${value}'`
 };
-/**
- * @internal
- */
+
 export const uriConverter: UriConverter = createUriConverter(
   serializers,
   uriConverters

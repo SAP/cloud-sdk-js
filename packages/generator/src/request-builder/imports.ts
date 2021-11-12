@@ -23,7 +23,7 @@ export function requestBuilderImportDeclarations(
       ...propertyTypeImportNames(entity.keys)
     ]),
     odataImportDeclaration(
-      requestBuilderImportDeclarations(entity),
+      requestBuilderImports(entity),
       oDataVersion
     ),
     entityImportDeclaration(entity),
@@ -31,7 +31,7 @@ export function requestBuilderImportDeclarations(
   ];
 }
 
-function requestBuilderImportDeclarations(entity: VdmEntity) {
+function requestBuilderImports(entity: VdmEntity) {
   const imports = ['GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
 
   if (entity.creatable) {

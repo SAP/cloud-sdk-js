@@ -1,0 +1,39 @@
+### Connectivity Package Public API
+
+- function parseDestination()
+  - interface Destination
+- function useOrFetchDestination()
+- type DestinationOptions
+  - DestinationAccessorOptions
+  - DestinationRetrievalOptions
+    - CachingOptions
+      - enum IsolationStrategy
+    - ResilienceOptions
+  - VerifyJwtOptions;
+- function getDestination()
+  - interface Destination
+- function getDestinationFromDestinationService()
+  - interface Destination
+- function alwaysProvider //only handler needed
+- function alwaysSubscriber //only handler needed
+- function subscriberFirst //only handler needed
+- function parseProxyEnv()
+  - interface ProxyConfiguration
+    - enum Protocol
+  - interface ProxyConfigurationHeaders
+- function decodeJwt()
+- function retrieveJwt()
+- function serviceToken()
+  - interface CachingOptions
+  - interface ResilienceOptions
+  - interface Service //also string containing service name for lookup
+    - interface ServiceCredentials
+- function jwtBearerToken() //here we allow for JWT only as string
+  - interface Service
+  - interface ResilienceOptions
+- function getClientCredentialsToken() //here we allow for JWT as string and JWT Payload
+  - interface Service
+  - interface ResilienceOptions
+- function getUserToken()
+  - interface Service
+  - interface ResilienceOptions

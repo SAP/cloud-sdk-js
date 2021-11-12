@@ -5,4 +5,3 @@ Consider exposing this via the generator packages.
 
 - function transpileDirectory()
 - function readCompilerOptions()
-

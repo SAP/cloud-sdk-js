@@ -11,7 +11,6 @@ export * from './sdk-metadata';
 export * from './service';
 export * from './swagger-parser';
 export * from './file-generator';
-export * from './generator-cli';
 export * from './generator-options';
 export * from './generator-utils';
 export * from './generator';

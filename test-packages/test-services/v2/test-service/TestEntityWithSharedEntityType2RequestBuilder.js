@@ -1,35 +1,4 @@
 'use strict';
-var __extends =
-  (this && this.__extends) ||
-  (function () {
-    var extendStatics = function (d, b) {
-      extendStatics =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          function (d, b) {
-            d.__proto__ = b;
-          }) ||
-        function (d, b) {
-          for (var p in b)
-            if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-        };
-      return extendStatics(d, b);
-    };
-    return function (d, b) {
-      if (typeof b !== 'function' && b !== null)
-        throw new TypeError(
-          'Class extends value ' + String(b) + ' is not a constructor or null'
-        );
-      extendStatics(d, b);
-      function __() {
-        this.constructor = d;
-      }
-      d.prototype =
-        b === null
-          ? Object.create(b)
-          : ((__.prototype = b.prototype), new __());
-    };
-  })();
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestEntityWithSharedEntityType2RequestBuilder = void 0;
 /*
@@ -37,70 +6,56 @@ exports.TestEntityWithSharedEntityType2RequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var odata_common_1 = require('@sap-cloud-sdk/odata-common');
-var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-var TestEntityWithSharedEntityType2_1 = require('./TestEntityWithSharedEntityType2');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const TestEntityWithSharedEntityType2_1 = require('./TestEntityWithSharedEntityType2');
 /**
  * Request builder class for operations supported on the [[TestEntityWithSharedEntityType2]] entity.
  */
-var TestEntityWithSharedEntityType2RequestBuilder = /** @class */ (function (
-  _super
-) {
-  __extends(TestEntityWithSharedEntityType2RequestBuilder, _super);
-  function TestEntityWithSharedEntityType2RequestBuilder() {
-    return (_super !== null && _super.apply(this, arguments)) || this;
-  }
+class TestEntityWithSharedEntityType2RequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityWithSharedEntityType2` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityWithSharedEntityType2.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType2` entity based on its keys.
    */
-  TestEntityWithSharedEntityType2RequestBuilder.prototype.getByKey = function (
-    keyProperty
-  ) {
+  getByKey(keyProperty) {
     return new odata_v2_1.GetByKeyRequestBuilder(
       TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2,
       { KeyProperty: keyProperty }
     );
-  };
+  }
   /**
    * Returns a request builder for querying all `TestEntityWithSharedEntityType2` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithSharedEntityType2` entities.
    */
-  TestEntityWithSharedEntityType2RequestBuilder.prototype.getAll = function () {
+  getAll() {
     return new odata_v2_1.GetAllRequestBuilder(
       TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2
     );
-  };
+  }
   /**
    * Returns a request builder for creating a `TestEntityWithSharedEntityType2` entity.
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityWithSharedEntityType2`.
    */
-  TestEntityWithSharedEntityType2RequestBuilder.prototype.create = function (
-    entity
-  ) {
+  create(entity) {
     return new odata_v2_1.CreateRequestBuilder(
       TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2,
       entity
     );
-  };
+  }
   /**
    * Returns a request builder for updating an entity of type `TestEntityWithSharedEntityType2`.
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityWithSharedEntityType2`.
    */
-  TestEntityWithSharedEntityType2RequestBuilder.prototype.update = function (
-    entity
-  ) {
+  update(entity) {
     return new odata_v2_1.UpdateRequestBuilder(
       TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2,
       entity
     );
-  };
-  TestEntityWithSharedEntityType2RequestBuilder.prototype.delete = function (
-    keyPropertyOrEntity
-  ) {
+  }
+  delete(keyPropertyOrEntity) {
     return new odata_v2_1.DeleteRequestBuilder(
       TestEntityWithSharedEntityType2_1.TestEntityWithSharedEntityType2,
       keyPropertyOrEntity instanceof
@@ -108,9 +63,8 @@ var TestEntityWithSharedEntityType2RequestBuilder = /** @class */ (function (
         ? keyPropertyOrEntity
         : { KeyProperty: keyPropertyOrEntity }
     );
-  };
-  return TestEntityWithSharedEntityType2RequestBuilder;
-})(odata_common_1.RequestBuilder);
+  }
+}
 exports.TestEntityWithSharedEntityType2RequestBuilder =
   TestEntityWithSharedEntityType2RequestBuilder;
 //# sourceMappingURL=TestEntityWithSharedEntityType2RequestBuilder.js.map

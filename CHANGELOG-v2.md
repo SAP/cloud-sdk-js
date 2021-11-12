@@ -387,7 +387,7 @@
 
 ## Compatibility Notes
 
--
+- Upgrade the ES version to `es2019`.
 
 ## New Functionality
 

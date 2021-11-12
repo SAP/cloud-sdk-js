@@ -30,7 +30,7 @@ describe('compiler options', () => {
         compilerOptions: { lib: ['es5'] }
       }),
       'config4/tsconfig.json': JSON.stringify({
-        compilerOptions: { target: 'es2016' }
+        compilerOptions: { target: 'es2019' }
       }),
       'config5/tsconfig.json': JSON.stringify({
         compilerOptions: { module: 'AMD' }
@@ -85,7 +85,7 @@ describe('compiler options', () => {
 
   it('parses the module script target', async () => {
     await expect(readCompilerOptions('config4')).resolves.toEqual({
-      target: ScriptTarget.ES2016
+      target: ScriptTarget.ES2019
     });
   });
 
@@ -120,7 +120,7 @@ describe('compilation', () => {
   function compilerConfig(outFolder): CompilerOptions {
     return {
       outDir: outFolder,
-      target: ScriptTarget.ES5,
+      target: ScriptTarget.ES2019,
       declaration: true,
       declarationMap: true,
       sourceMap: true,

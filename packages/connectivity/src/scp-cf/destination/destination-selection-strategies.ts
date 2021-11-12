@@ -6,7 +6,7 @@ import type {
 import type { Destination } from './destination-service-types';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'destination-selection-strategies'
 });
 

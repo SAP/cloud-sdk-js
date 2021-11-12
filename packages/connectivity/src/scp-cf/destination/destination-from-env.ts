@@ -17,7 +17,7 @@ import {
 } from './proxy-util';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'env-destination-accessor'
 });
 

@@ -14,7 +14,7 @@ import { getProtocolOrDefault } from '../get-protocol';
 import { Destination } from './destination-service-types';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'proxy-util'
 });
 

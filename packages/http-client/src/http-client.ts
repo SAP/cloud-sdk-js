@@ -26,7 +26,7 @@ import {
 import { buildCsrfHeaders } from '.';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'http-client',
   messageContext: 'http-client'
 });
 

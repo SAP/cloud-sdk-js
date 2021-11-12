@@ -54,7 +54,6 @@
     "entryPoints": [
       "packages/util/src/index.ts",
       "packages/analytics/src/index.ts",
-      "packages/core/src/index.ts",
       "packages/connectivity/src/index.ts",
       "packages/http-client/src/index.ts",
       "packages/openapi/src/index.ts",

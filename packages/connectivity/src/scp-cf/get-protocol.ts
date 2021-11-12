@@ -3,7 +3,7 @@ import { Destination } from './destination/destination-service-types';
 import { Protocol } from './protocol';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'get-protocol'
 });
 

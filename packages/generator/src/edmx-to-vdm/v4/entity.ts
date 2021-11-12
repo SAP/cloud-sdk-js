@@ -13,8 +13,8 @@ import {
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
   EdmxEntitySet,
-  EdmxEntityType,
-  parseEntitySets,
+  EdmxEntityTypeV4,
+  parseEntitySetsV4,
   parseEntityType
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
@@ -24,7 +24,7 @@ import { isCollectionType } from '../edmx-to-vdm-util';
 /**
  * @internal
  */
-export function joinEntityTypes<T extends EdmxEntityType>(
+export function joinEntityTypes<T extends EdmxEntityTypeV4>(
   entityType: T,
   baseType: T
 ): T {
@@ -50,7 +50,7 @@ export function generateEntitiesV4(
   enumTypes: VdmEnumType[],
   formatter: ServiceNameFormatter
 ): VdmEntity[] {
-  const entitySets = parseEntitySets(serviceMetadata.edmx.root);
+  const entitySets = parseEntitySetsV4(serviceMetadata.edmx.root);
   const entityTypes = parseEntityType(serviceMetadata.edmx.root);
 
   const entitiesMetadata = joinEntityMetadata(
@@ -78,7 +78,7 @@ export function generateEntitiesV4(
 }
 
 function navigationProperties(
-  entityType: EdmxEntityType,
+  entityType: EdmxEntityTypeV4,
   entitySet: EdmxEntitySet,
   classNames: { [originalName: string]: string },
   formatter: ServiceNameFormatter

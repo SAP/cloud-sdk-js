@@ -29,7 +29,7 @@ import {
   GeneratorOptions
 } from './generator-options';
 import { hasEntities } from './generator-utils';
-import { parseAllServices } from './edmx-to-vdm';
+import { parseAllServices } from './service-generator';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';

@@ -6,7 +6,7 @@ import { VdmServiceMetadata } from '../vdm-types';
 /**
  * @internal
  */
-export function readme(
+export function aggregatorReadme(
   services: VdmServiceMetadata[],
   npmPackageName: string
 ): string {

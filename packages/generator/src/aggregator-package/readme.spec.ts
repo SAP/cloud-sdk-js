@@ -1,11 +1,11 @@
 import { getExpectedHelpfulLinks } from '../../test/test-util/readme-util';
 import { VdmServiceMetadata } from '../vdm-types';
-import { readme } from './readme';
+import { aggregatorReadme } from './readme';
 
 describe('aggregator package readme', () => {
   it("returns the content of the package's README.md file", () => {
     expect(
-      readme(
+      aggregatorReadme(
         [
           {
             npmPackageName: 'test'

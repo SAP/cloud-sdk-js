@@ -9,7 +9,7 @@ import {
 /**
  * @internal
  */
-export interface EdmxNavigationProperty extends EdmxNamed {
+export interface EdmxNavigationPropertyV4 extends EdmxNamed {
   Type: string;
 }
 /**
@@ -22,7 +22,7 @@ export interface EdmxNavigationPropertyBinding {
 /**
  * @internal
  */
-export type EdmxEntityType = EdmxEntityTypeBase<EdmxNavigationProperty> &
+export type EdmxEntityTypeV4 = EdmxEntityTypeBase<EdmxNavigationPropertyV4> &
   EdmxDerivedType &
   EdmxNamespaced;
 /**
@@ -47,7 +47,7 @@ export interface EdmxEnumType extends EdmxNamed, EdmxNamespaced {
 /**
  * @internal
  */
-export interface EdmxFunctionImport extends EdmxNamed, EdmxNamespaced {
+export interface EdmxFunctionImportV4 extends EdmxNamed, EdmxNamespaced {
   EntitySet?: string;
   Function: string;
 }

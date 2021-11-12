@@ -4,7 +4,7 @@ import { unixEOL } from '@sap-cloud-sdk/util';
 /**
  * @internal
  */
-export function packageJson(
+export function aggregatorPackageJson(
   npmPackageName: string,
   dependencies: string[],
   versionInPackageJson: string | undefined,

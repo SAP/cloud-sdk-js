@@ -8,7 +8,7 @@ import {
 } from '../generator-utils';
 import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
 import { EdmxAction, EdmxFunction } from '../edmx-parser/v4';
-import { EdmxFunctionImport } from '../edmx-parser/v2';
+import { EdmxFunctionImportV2 } from '../edmx-parser/v2';
 import {
   complexTypeForName,
   enumTypeForName,
@@ -196,7 +196,7 @@ export const propertyJsType = (type: string): string | undefined =>
  * @internal
  */
 export function hasUnsupportedParameterTypes(
-  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImport
+  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImportV2
 ): boolean {
   const unsupportedParameters = functionOrAction.Parameter.filter(
     p => !isEdmType(p.Type)

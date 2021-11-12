@@ -7,7 +7,7 @@ import {
 /**
  * @internal
  */
-export interface EdmxNavigationProperty extends EdmxNamed {
+export interface EdmxNavigationPropertyV2 extends EdmxNamed {
   FromRole: string;
   Relationship: string;
   ToRole: string;
@@ -56,7 +56,7 @@ export interface JoinedAssociationMetadata extends EdmxNamed {
 /**
  * @internal
  */
-export type EdmxEntityType = EdmxEntityTypeBase<EdmxNavigationProperty> &
+export type EdmxEntityTypeV2 = EdmxEntityTypeBase<EdmxNavigationPropertyV2> &
   EdmxNamespaced;
 /**
  * @internal
@@ -70,7 +70,7 @@ export interface End {
 /**
  * @internal
  */
-export interface EdmxFunctionImport extends EdmxNamed, EdmxNamespaced {
+export interface EdmxFunctionImportV2 extends EdmxNamed, EdmxNamespaced {
   EntitySet?: string;
   ReturnType?: string;
   'sap:action-for': string;

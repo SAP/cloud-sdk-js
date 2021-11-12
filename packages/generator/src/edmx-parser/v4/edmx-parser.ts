@@ -14,10 +14,10 @@ import {
   EdmxComplexType,
   EdmxDerivedType,
   EdmxEntitySet,
-  EdmxEntityType,
+  EdmxEntityTypeV4,
   EdmxEnumType,
   EdmxFunction,
-  EdmxFunctionImport,
+  EdmxFunctionImportV4,
   EdmxNavigationPropertyBinding
 } from './edm-types';
 /* eslint-disable valid-jsdoc */
@@ -72,7 +72,7 @@ function joinTypeWithBaseType<T extends EdmxDerivedType>(
 /**
  * @internal
  */
-export function parseComplexTypes(root: any): EdmxComplexType[] {
+export function parseComplexTypesV4(root: any): EdmxComplexType[] {
   return joinTypesWithBaseTypes(parseComplexTypesBase(root), joinComplexTypes);
 }
 /**
@@ -89,14 +89,14 @@ export function parseEnumTypes(root: any): EdmxEnumType[] {
 /**
  * @internal
  */
-export function parseEntityType(root: any): EdmxEntityType[] {
+export function parseEntityType(root: any): EdmxEntityTypeV4[] {
   const entityTypes = parseEntityTypesBase(root);
   return joinTypesWithBaseTypes(entityTypes, joinEntityTypes);
 }
 /**
  * @internal
  */
-export function parseEntitySets(root: any): EdmxEntitySet[] {
+export function parseEntitySetsV4(root: any): EdmxEntitySet[] {
   return parseEntitySetsBase(root).map(entitySet => ({
     ...entitySet,
     NavigationPropertyBinding: parseNavigationPropertyBinding(entitySet)
@@ -111,7 +111,7 @@ function parseNavigationPropertyBinding(
 /**
  * @internal
  */
-export function parseFunctionImports(root: any): EdmxFunctionImport[] {
+export function parseFunctionImportsV4(root: any): EdmxFunctionImportV4[] {
   return getPropertyFromEntityContainer(root, 'FunctionImport');
 }
 /**

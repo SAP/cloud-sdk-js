@@ -12,7 +12,7 @@ import { VdmEntity, VdmProperty } from '../vdm-types';
 /**
  * @internal
  */
-export function importDeclarations(
+export function requestBuilderImportDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {

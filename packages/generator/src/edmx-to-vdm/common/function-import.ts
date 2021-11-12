@@ -4,8 +4,8 @@ import { VdmFunctionImportBase } from '../../vdm-types';
 import { SwaggerPath } from '../../swagger-parser/swagger-types';
 import { functionImportDescription } from '../description-util';
 import { EdmxParameter } from '../../edmx-parser/common';
-import { EdmxFunctionImport as EdmxFunctionImportV2 } from '../../edmx-parser/v2';
-import { EdmxFunctionImport as EdmxFunctionImportV4 } from '../../edmx-parser/v4';
+import { EdmxFunctionImportV2 as EdmxFunctionImportV2 } from '../../edmx-parser/v2';
+import { EdmxFunctionImportV4 as EdmxFunctionImportV4 } from '../../edmx-parser/v4';
 import { getFunctionImportParameters } from './action-function-parameters';
 /* eslint-disable valid-jsdoc */
 

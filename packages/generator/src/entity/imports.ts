@@ -16,7 +16,7 @@ import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
 /**
  * @internal
  */
-export function importDeclarations(
+export function entityImportDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {

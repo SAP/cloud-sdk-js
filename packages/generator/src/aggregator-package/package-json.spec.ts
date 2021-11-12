@@ -1,9 +1,9 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { packageJson } from './package-json';
+import { aggregatorPackageJson } from './package-json';
 
 describe('package-json', () => {
   it('creates package.json contents from module name and dependencies', () => {
-    const actual = packageJson(
+    const actual = aggregatorPackageJson(
       '@sap/cloud-sdk-vdm',
       [
         '@sap/cloud-sdk-vdm-business-area-service',

@@ -8,7 +8,7 @@ import {
   ODataRequest,
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';;
+import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 describe('OData Request', () => {

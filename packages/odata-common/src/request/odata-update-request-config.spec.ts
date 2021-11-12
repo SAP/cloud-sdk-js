@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';;
+import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
 import { ODataUpdateRequestConfig } from '@sap-cloud-sdk/odata-common';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';

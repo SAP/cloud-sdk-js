@@ -12,9 +12,6 @@ import { entityDeserializer } from '../entity-deserializer';
 import { oDataUri } from '../uri-conversion/odata-uri';
 import { responseDataAccessor } from './response-data-accessor';
 
-/**
- * @internal
- */
 export class GetAllRequestBuilder<EntityT extends Entity>
   extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT>

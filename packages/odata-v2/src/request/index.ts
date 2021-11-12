@@ -1,1 +1,1 @@
-export * from './odata-function-import-request-config'
+export * from './odata-function-import-request-config';

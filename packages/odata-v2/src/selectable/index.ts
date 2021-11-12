@@ -1,1 +1,1 @@
-export * from './custom-field'
+export * from './custom-field';

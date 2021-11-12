@@ -6,7 +6,6 @@ import { UpdateRequestBuilder } from './request-builder/update-request-builder';
 import { DeleteRequestBuilder } from './request-builder/delete-request-builder';
 
 /**
- * @internal
  * @deprecated Since v1.30.0. Use [[BatchChangeSet]] directly
  * Representation of a batch change set, which holds a collection of write operations.
  */

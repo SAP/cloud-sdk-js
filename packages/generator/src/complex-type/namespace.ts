@@ -34,7 +34,7 @@ function factoryFunction(
     statements: `return deserializeComplexType(json, ${complexType.typeName});`,
     isExported: true,
     docs: [
-      `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexTypeV2\` or \`deserializeComplexTypeV4\` of the \`../../../../core\` package instead.`
+      `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexType\` of the \`@sap-cloud-sdk/odata-v2\` or \`@sap-cloud-sdk/odata-v4\` package instead.`
     ]
   };
 }

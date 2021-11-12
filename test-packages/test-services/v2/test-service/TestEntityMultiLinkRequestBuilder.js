@@ -1,35 +1,4 @@
 'use strict';
-var __extends =
-  (this && this.__extends) ||
-  (function () {
-    var extendStatics = function (d, b) {
-      extendStatics =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          function (d, b) {
-            d.__proto__ = b;
-          }) ||
-        function (d, b) {
-          for (var p in b)
-            if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-        };
-      return extendStatics(d, b);
-    };
-    return function (d, b) {
-      if (typeof b !== 'function' && b !== null)
-        throw new TypeError(
-          'Class extends value ' + String(b) + ' is not a constructor or null'
-        );
-      extendStatics(d, b);
-      function __() {
-        this.constructor = d;
-      }
-      d.prototype =
-        b === null
-          ? Object.create(b)
-          : ((__.prototype = b.prototype), new __());
-    };
-  })();
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestEntityMultiLinkRequestBuilder = void 0;
 /*
@@ -37,72 +6,63 @@ exports.TestEntityMultiLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var odata_common_1 = require('@sap-cloud-sdk/odata-common');
-var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-var TestEntityMultiLink_1 = require('./TestEntityMultiLink');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const TestEntityMultiLink_1 = require('./TestEntityMultiLink');
 /**
  * Request builder class for operations supported on the [[TestEntityMultiLink]] entity.
  */
-var TestEntityMultiLinkRequestBuilder = /** @class */ (function (_super) {
-  __extends(TestEntityMultiLinkRequestBuilder, _super);
-  function TestEntityMultiLinkRequestBuilder() {
-    return (_super !== null && _super.apply(this, arguments)) || this;
-  }
+class TestEntityMultiLinkRequestBuilder extends odata_common_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityMultiLink` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityMultiLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntityMultiLink` entity based on its keys.
    */
-  TestEntityMultiLinkRequestBuilder.prototype.getByKey = function (
-    keyProperty
-  ) {
+  getByKey(keyProperty) {
     return new odata_v2_1.GetByKeyRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink,
       { KeyProperty: keyProperty }
     );
-  };
+  }
   /**
    * Returns a request builder for querying all `TestEntityMultiLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityMultiLink` entities.
    */
-  TestEntityMultiLinkRequestBuilder.prototype.getAll = function () {
+  getAll() {
     return new odata_v2_1.GetAllRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink
     );
-  };
+  }
   /**
    * Returns a request builder for creating a `TestEntityMultiLink` entity.
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntityMultiLink`.
    */
-  TestEntityMultiLinkRequestBuilder.prototype.create = function (entity) {
+  create(entity) {
     return new odata_v2_1.CreateRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink,
       entity
     );
-  };
+  }
   /**
    * Returns a request builder for updating an entity of type `TestEntityMultiLink`.
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntityMultiLink`.
    */
-  TestEntityMultiLinkRequestBuilder.prototype.update = function (entity) {
+  update(entity) {
     return new odata_v2_1.UpdateRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink,
       entity
     );
-  };
-  TestEntityMultiLinkRequestBuilder.prototype.delete = function (
-    keyPropertyOrEntity
-  ) {
+  }
+  delete(keyPropertyOrEntity) {
     return new odata_v2_1.DeleteRequestBuilder(
       TestEntityMultiLink_1.TestEntityMultiLink,
       keyPropertyOrEntity instanceof TestEntityMultiLink_1.TestEntityMultiLink
         ? keyPropertyOrEntity
         : { KeyProperty: keyPropertyOrEntity }
     );
-  };
-  return TestEntityMultiLinkRequestBuilder;
-})(odata_common_1.RequestBuilder);
+  }
+}
 exports.TestEntityMultiLinkRequestBuilder = TestEntityMultiLinkRequestBuilder;
 //# sourceMappingURL=TestEntityMultiLinkRequestBuilder.js.map

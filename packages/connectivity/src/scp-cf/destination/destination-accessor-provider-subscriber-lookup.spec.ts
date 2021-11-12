@@ -218,7 +218,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     it('it warns if you use iss property and user jwt', async () => {
       mockServiceBindings();
       const logger = createLogger({
-        package: 'core',
+        package: 'connectivity',
         messageContext: 'destination-accessor-service'
       });
       const warnSpy = jest.spyOn(logger, 'warn');
@@ -258,7 +258,7 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       );
 
       const logger = createLogger({
-        package: 'core',
+        package: 'connectivity',
         messageContext: 'destination-accessor-service'
       });
       const infoSpy = jest.spyOn(logger, 'info');

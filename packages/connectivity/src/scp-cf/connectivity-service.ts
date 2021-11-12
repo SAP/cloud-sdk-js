@@ -14,7 +14,7 @@ import { serviceToken } from './token-accessor';
 import { isUserToken, JwtPair } from './jwt';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'connectivity-service'
 });
 

@@ -13,7 +13,7 @@ import {
 import { sanitizeDestination } from './destination/destination';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'authorization-header'
 });
 

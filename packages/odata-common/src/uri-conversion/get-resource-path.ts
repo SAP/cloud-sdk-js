@@ -8,7 +8,7 @@ import { Field, FieldType } from '../selectable/field';
 import { UriConverter } from './uri-value-converter';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'get-resource-path'
 });
 

@@ -3,7 +3,7 @@
 - all filterFunctions new to v4 (contains,matchesPattern,fractionalSeconds,totalOffsetMinutes,maxDateTime,minDateTime,now,hasSubset,hasSubsequence)
 - function any(),all()
   - Class FilterLambdaExpression
-    -build() (on function imports)
+    - build() (on function imports)
   - Class ODataActionImportRequestConfig
   - Class ODataFunctionImportRequestConfig
 - Class CreateRequestBuilder

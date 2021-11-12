@@ -1739,9 +1739,9 @@
     verror "1.10.0"
 
 "@sap/xssec@^3.2.5", "@sap/xssec@^3.2.7":
-  version "3.2.9"
-  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.9.tgz#753401e97b7826f4e5c4af99d5bf946a9710df48"
-  integrity sha512-u7WagIgcY8WhUDMw+wqlJMbJ1vh7qhZvp+zrbrLVSYAq/b9NnnW7XfJs5il4Xy0/ZMct1TWnquqQefucXmoaxw==
+  version "3.2.10"
+  resolved "https://registry.npmjs.org/@sap/xssec/-/xssec-3.2.10.tgz#968a6dd342439ddeb17ca46f4754ec3c13ca35cb"
+  integrity sha512-gY7aRfPip1XW1e1F49k8q+alikFbgFXaQ3xpPzMwtmkWGEnEwFrTaVtOpkaGSiwG4CSWfh3sjDNyLLyr7X9uug==
   dependencies:
     axios "^0.21.4"
     debug "4.3.2"

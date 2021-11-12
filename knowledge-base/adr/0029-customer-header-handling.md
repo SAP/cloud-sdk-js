@@ -20,7 +20,7 @@ The problem is also present to a smaller extent for query parameters, which can 
 
 1. A [custom setting](../../packages/core/src/odata-common/request/odata-request.ts) on request
 2. [Destination properties](../../packages/connectivity/src/scp-cf/destination/destination.ts)
-3. Queries like get byt key i.e the SDK.
+3. Queries like get by key i.e the SDK.
 
 ## Solution Header and Parameter
 

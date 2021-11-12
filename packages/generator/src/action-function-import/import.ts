@@ -8,7 +8,7 @@ import {
 } from '../vdm-types';
 import {
   odataImportDeclaration,
-  corePropertyTypeImportNames,
+  propertyTypeImportNames,
   externalImportDeclarations,
   mergeImportDeclarations,
   odataCommonImportDeclaration
@@ -42,7 +42,7 @@ function actionFunctionImportDeclarations(
   return [
     ...externalImportDeclarations(parameters),
     odataCommonImportDeclaration([
-      ...corePropertyTypeImportNames(parameters),
+      ...propertyTypeImportNames(parameters),
       ...common,
       ...responseTransformerFunctionCommon
     ]),

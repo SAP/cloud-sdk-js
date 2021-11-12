@@ -61,12 +61,12 @@ function getImports(api: OpenApiApi): Import[] {
     moduleIdentifier: './schema',
     typeOnly: true
   };
-  const coreImports = {
+  const openApiImports = {
     names: ['OpenApiRequestBuilder'],
     moduleIdentifier: '@sap-cloud-sdk/openapi'
   };
 
-  return [coreImports, refImports];
+  return [openApiImports, refImports];
 }
 
 export function apiDocumentation(api: OpenApiApi, serviceName: string): string {

@@ -1,3 +1,9 @@
+export { createODataUri } from './uri-conversion/odata-uri';
+
+export { createUriConverter } from './uri-conversion/uri-value-converter';
+
+export { createEdmToTs, createTsToEdm } from './payload-value-converter';
+
 export { ODataBatchRequestConfig } from './request/odata-batch-request-config';
 
 export { Filter } from './filter/filter';

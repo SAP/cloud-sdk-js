@@ -5,37 +5,11 @@ import moment from 'moment';
 import { identity } from '@sap-cloud-sdk/util';
 import {
   Time,
-  EdmTypeShared,
   deserializersCommon,
-  serializersCommon
+  serializersCommon,
+  createEdmToTs
 } from '@sap-cloud-sdk/odata-common';
 import { EdmType } from './edm-types';
-
-export function edmToTs<T extends EdmType>(
-  value: any,
-  edmType: EdmTypeShared<'v4'>
-): EdmToPrimitive<T> {
-  if (value === null || typeof value === 'undefined') {
-    return value;
-  }
-  if (deserializers[edmType]) {
-    return deserializers[edmType](value);
-  }
-  return value;
-}
-
-/**
- * @internal
- */
-export function tsToEdm(value: any, edmType: EdmTypeShared<'v4'>): any {
-  if (value === null) {
-    return 'null';
-  }
-  if (serializers[edmType]) {
-    return serializers[edmType](value);
-  }
-  return value;
-}
 
 type EdmTypeMapping = {
   [key in EdmType]: (value: any) => any;
@@ -150,7 +124,12 @@ const deserializers: EdmTypeMapping = {
   'Edm.Enum': identity
 };
 
-const serializers: EdmTypeMapping = {
+export const edmToTs = createEdmToTs(deserializers);
+
+/**
+ * @internal
+ */
+export const serializers: EdmTypeMapping = {
   ...serializersCommon,
   'Edm.Date': momentToEdmDate,
   'Edm.DateTimeOffset': momentToEdmDateTimeOffsetToMoment,
@@ -158,3 +137,8 @@ const serializers: EdmTypeMapping = {
   'Edm.TimeOfDay': timeToEdmTimeOfDay,
   'Edm.Enum': identity
 };
+
+/**
+ * @internal
+ */
+export const tsToEdm = createEdmToTs(serializers);

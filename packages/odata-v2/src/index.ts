@@ -24,6 +24,6 @@ export { GetAllRequestBuilder } from './request-builder/get-all-request-builder'
 export { GetByKeyRequestBuilder } from './request-builder/get-by-key-request-builder';
 export { ODataBatchRequestBuilder } from './request-builder/batch-request-builder';
 export { UpdateRequestBuilder } from './request-builder/update-request-builder';
-export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder'
+export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
 
 export { Entity } from './entity';

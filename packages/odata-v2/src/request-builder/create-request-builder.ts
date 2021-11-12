@@ -10,6 +10,7 @@ import { oDataUri } from '../uri-conversion/odata-uri';
 import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
+ * @internal
  * @typeparam EntityT - Type of the entity to be created
  */
 export class CreateRequestBuilder<EntityT extends Entity>

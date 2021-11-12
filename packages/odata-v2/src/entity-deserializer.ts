@@ -23,8 +23,15 @@ export const entityDeserializer: EntityDeserializer = entityDeserializerBase(
  * @internal
  */
 export const deserializeEntity = entityDeserializer.deserializeEntity;
+
+/**
+ * @internal
+ */
 export const deserializeComplexType = entityDeserializer.deserializeComplexType;
 
+/**
+ * @internal
+ */
 export {
   deserializeEntity as deserializeEntityV2,
   deserializeComplexType as deserializeComplexTypeV2,

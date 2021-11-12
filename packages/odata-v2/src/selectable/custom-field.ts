@@ -4,6 +4,9 @@ import {
 } from '@sap-cloud-sdk/odata-common';
 import type { Entity } from '../entity';
 
+/**
+ * @internal
+ */
 export class CustomField<
   EntityT extends Entity,
   NullableT extends boolean = false

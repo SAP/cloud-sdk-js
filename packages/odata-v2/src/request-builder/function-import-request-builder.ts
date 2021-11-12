@@ -8,6 +8,7 @@ import { ODataFunctionImportRequestConfig } from '../request/odata-function-impo
 
 /**
  * Create OData request to execute a function import.
+ * @internal
  * @typeparam ParametersT - Type of the function import parameters
  * @typeparam ReturnT - Type of the function import return value
  */

@@ -1,7 +1,0 @@
-{
-  "directory": ["./src/sdk-metadata"],
-  "exclude": [".spec.ts$"],
-  "location": "top",
-  "delete": true,
-  "singleQuotes": true
-}

@@ -5,9 +5,9 @@ import {
   getGenerationSteps,
   Links,
   InstructionWithTextAndHeader,
-  usageHeaderText
+  usageHeaderText,
+  GenerationAndUsage
 } from '@sap-cloud-sdk/generator-common/internal';
-import type { GenerationAndUsage } from '@sap-cloud-sdk/generator-common/internal';
 /* eslint-enable import/no-internal-modules */
 import { VdmServiceMetadata } from '../vdm-types';
 import {

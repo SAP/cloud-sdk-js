@@ -2,7 +2,7 @@ import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
   odataImportDeclaration,
-  corePropertyTypeImportNames,
+  propertyTypeImportNames,
   externalImportDeclarations,
   odataCommonImportDeclaration
 } from '../imports';
@@ -20,10 +20,10 @@ export function requestBuilderImportDeclarations(
     ...externalImportDeclarations(entity.keys),
     odataCommonImportDeclaration([
       'RequestBuilder',
-      ...corePropertyTypeImportNames(entity.keys)
+      ...propertyTypeImportNames(entity.keys)
     ]),
     odataImportDeclaration(
-      requestBuilderCoreImportDeclarations(entity),
+      requestBuilderImportDeclarations(entity),
       oDataVersion
     ),
     entityImportDeclaration(entity),
@@ -31,22 +31,22 @@ export function requestBuilderImportDeclarations(
   ];
 }
 
-function requestBuilderCoreImportDeclarations(entity: VdmEntity) {
-  const coreImports = ['GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
+function requestBuilderImportDeclarations(entity: VdmEntity) {
+  const imports = ['GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
 
   if (entity.creatable) {
-    coreImports.push('CreateRequestBuilder');
+    imports.push('CreateRequestBuilder');
   }
 
   if (entity.updatable) {
-    coreImports.push('UpdateRequestBuilder');
+    imports.push('UpdateRequestBuilder');
   }
 
   if (entity.deletable) {
-    coreImports.push('DeleteRequestBuilder');
+    imports.push('DeleteRequestBuilder');
   }
 
-  return coreImports;
+  return imports;
 }
 
 function entityImportDeclaration(

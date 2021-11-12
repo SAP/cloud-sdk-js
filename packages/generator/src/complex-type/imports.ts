@@ -3,8 +3,8 @@ import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   odataImportDeclaration,
-  corePropertyFieldTypeImportNames,
-  corePropertyTypeImportNames,
+  propertyFieldTypeImportNames,
+  propertyTypeImportNames,
   enumTypeImportDeclarations,
   externalImportDeclarations,
   odataCommonImportDeclaration
@@ -26,8 +26,8 @@ export function importDeclarations(
     odataImportDeclaration(['deserializeComplexType', 'Entity'], oDataVersion),
     odataCommonImportDeclaration(
       [
-        ...corePropertyTypeImportNames(complexType.properties),
-        ...corePropertyFieldTypeImportNames(complexType.properties),
+        ...propertyTypeImportNames(complexType.properties),
+        ...propertyFieldTypeImportNames(complexType.properties),
         'ComplexTypeField',
         'ConstructorOrField',
 

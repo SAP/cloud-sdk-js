@@ -1,27 +1,17 @@
-import {
-  getEntityKeys,
-  getOrderBy,
-  ODataUri as ODataUriBase,
-  createGetResourcePathForKeys,
-  createGetFilter
-} from '@sap-cloud-sdk/odata-common';
+import { createODataUri } from '@sap-cloud-sdk/odata-common';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
 import { uriConverter } from './uri-value-converter';
 
-const { getFilter } = createGetFilter(uriConverter);
-const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
-const { convertToUriFormat } = uriConverter;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getExpandWrapped = (selects, expands, entityConstructor) =>
+  getExpand(selects);
 
 /**
  * Instance of the [[ODataUri]] conversion interface for OData v2.
  */
-export const oDataUri: ODataUriBase = {
-  getExpand,
-  getFilter,
-  getEntityKeys,
-  getOrderBy,
-  getResourcePathForKeys,
-  getSelect,
-  convertToUriFormat
-};
+export const oDataUri = createODataUri(
+  uriConverter,
+  getExpandWrapped,
+  getSelect
+);

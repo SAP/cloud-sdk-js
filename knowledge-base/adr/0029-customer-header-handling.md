@@ -98,7 +98,7 @@ export function executeHttpRequestInternal(config:ConfigInternal){
  * This method is for direct customer use -> provided headers are custom and have high prio.
  */
 export function executeHttpRequest(config:ConfigPublic){
-    const withObject = headerObjectWithOriginCustom(config) ///
+    const withObject = headerObjectWithOriginCustom(config)
     executeHttpRequestInternal(withObject)
 }
 ```

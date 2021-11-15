@@ -8,7 +8,7 @@ import {
   ODataRequest,
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2/dist/uri-conversion/odata-uri';
+import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
 import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { TestEntity as TestEntityV4 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/src/scp-cf/authorization-header';

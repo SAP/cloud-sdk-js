@@ -1,5 +1,6 @@
 import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
+// eslint-disable-next-line import/no-internal-modules
+import { HttpResponse } from '@sap-cloud-sdk/http-client/internal';
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { EntitySerializer } from '../entity-serializer';

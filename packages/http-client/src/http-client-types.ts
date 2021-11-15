@@ -1,5 +1,7 @@
 import * as http from 'http';
-
+/**
+ * @internal
+ */
 export interface DestinationHttpRequestConfig {
   baseURL: string;
   headers: Record<string, string>;
@@ -10,6 +12,7 @@ export interface DestinationHttpRequestConfig {
 
 /**
  * HTTP Methods supported by the http-client.
+ * @internal
  */
 export type Method =
   | 'get'
@@ -44,8 +47,13 @@ export interface HttpRequestConfig {
   httpsAgent?: any;
 }
 
+/**
+ * @internal
+ */
 export type HttpRequest = DestinationHttpRequestConfig & HttpRequestConfig;
-
+/**
+ * @internal
+ */
 export type ExecuteHttpRequestFn<ReturnT> = (
   request: HttpRequest
 ) => Promise<ReturnT>;
@@ -56,11 +64,15 @@ interface KnownHttpResponseFields {
   headers: any;
   request: any;
 }
-
+/**
+ * @internal
+ */
 export interface HttpResponse extends KnownHttpResponseFields {
   [otherKey: string]: any;
 }
-
+/**
+ * @internal
+ */
 export interface HttpRequestOptions {
   // TODO: 2.0 update docs when default value is changed to true.
   /**

@@ -7,12 +7,14 @@ import {
   useOrFetchDestination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
+import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
+/* eslint-disable import/no-internal-modules */
 import {
-  executeHttpRequest,
   filterCustomRequestConfig,
-  HttpResponse,
-  Method
-} from '@sap-cloud-sdk/http-client';
+  Method,
+  HttpResponse
+} from '@sap-cloud-sdk/http-client/internal';
+/* eslint-enable import/no-internal-modules */
 
 /**
  * Request builder for OpenAPI requests.

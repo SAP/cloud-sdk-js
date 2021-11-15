@@ -23,7 +23,7 @@ import {
   HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
-import { buildCsrfHeaders } from '.';
+import { buildCsrfHeaders } from './csrf-token-header';
 
 const logger = createLogger({
   package: 'http-client',
@@ -36,6 +36,7 @@ const logger = createLogger({
  * @param destination - A destination or a destination name and a JWT.
  * @param customHeaders - Custom default headers for the resulting HTTP request.
  * @returns A [[DestinationHttpRequestConfig]].
+ * @internal
  */
 export async function buildHttpRequest(
   destination: Destination | DestinationFetchOptions,
@@ -70,6 +71,7 @@ export async function buildHttpRequest(
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
  * @returns The given request config merged with the config built for the given destination.
+ * @internal
  */
 export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
   destination: Destination | DestinationFetchOptions,
@@ -88,6 +90,7 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
  * NOTE: If you simply want to execute a request without passing your own execute function, use [[executeHttpRequest]] instead.
  * @param executeFn - A function that can execute an [[HttpRequestConfig]].
  * @returns A function expecting destination and a request.
+ * @internal
  */
 export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   return async function <T extends HttpRequestConfig>(
@@ -125,8 +128,8 @@ function logRequestInformation(request: HttpRequestConfig) {
  * @experimental This API is experimental and might change in newer versions. Use with caution.
  * @param destination - A destination or a destination name and a JWT.
  * @param requestConfig - Any object representing an HTTP request.
+ * @internal
  */
-
 export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
   destination: Destination | DestinationFetchOptions,
   requestConfig?: Partial<T>
@@ -220,6 +223,7 @@ function executeWithAxios(request: HttpRequest): Promise<HttpResponse> {
 /**
  * Builds an Axios config with default configuration i.e. no_proxy, default http and https agent and GET as request method.
  * @returns AxiosRequestConfig with default parameters
+ * @internal
  */
 export function getAxiosConfigWithDefaults(): HttpRequestConfig {
   return {
@@ -227,7 +231,10 @@ export function getAxiosConfigWithDefaults(): HttpRequestConfig {
     method: 'get'
   };
 }
-
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function getAxiosConfigWithDefaultsWithoutMethod(): Omit<
   HttpRequestConfig,
   'method'
@@ -261,6 +268,10 @@ function buildHttpRequestOptions(
     : getDefaultHttpRequestOptions();
 }
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function shouldHandleCsrfToken(
   requestConfig: HttpRequestConfig,
   options: HttpRequestOptions

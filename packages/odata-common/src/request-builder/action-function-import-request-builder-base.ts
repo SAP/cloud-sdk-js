@@ -2,7 +2,8 @@ import {
   Destination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import { HttpResponse } from '@sap-cloud-sdk/http-client';
+// eslint-disable-next-line import/no-internal-modules
+import { HttpResponse } from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequestConfig } from '../request/odata-request-config';
 import { MethodRequestBuilder } from './request-builder-base';
 

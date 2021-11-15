@@ -5,5 +5,5 @@ export * from './function-import-request-builder';
 export * from './get-all-request-builder';
 export * from './get-by-key-request-builder';
 export * from './response-transformers';
-export * from './response-transformers';
+export * from './response-data-accessor';
 export * from './update-request-builder';

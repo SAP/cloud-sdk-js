@@ -40,7 +40,7 @@ describe('destination-selection-strategies', () => {
 
   it('warns if there are multiple matches in instance and subaccount', () => {
     const logger = createLogger({
-      package: 'core',
+      package: 'connectivity',
       messageContext: 'destination-selection-strategies'
     });
     const warnSpy = jest.spyOn(logger, 'warn');

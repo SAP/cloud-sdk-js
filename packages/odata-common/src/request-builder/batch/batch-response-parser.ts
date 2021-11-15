@@ -9,7 +9,7 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'batch-response-parser'
 });
 

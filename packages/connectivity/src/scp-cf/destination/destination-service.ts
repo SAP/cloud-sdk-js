@@ -21,7 +21,7 @@ import { Destination, DestinationType } from './destination-service-types';
 import { destinationServiceCache } from './destination-service-cache';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'destination-service'
 });
 

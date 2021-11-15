@@ -62,13 +62,13 @@ export function odataImportDeclaration(
   };
 }
 
-export function corePropertyTypeImportNames(
+export function propertyTypeImportNames(
   properties: VdmMappedEdmType[]
 ): string[] {
   return properties.map(prop => prop.jsType).includes('Time') ? ['Time'] : [];
 }
 
-export function corePropertyFieldTypeImportNames(
+export function propertyFieldTypeImportNames(
   properties: VdmProperty[]
 ): string[] {
   return unique(
@@ -78,7 +78,7 @@ export function corePropertyFieldTypeImportNames(
   );
 }
 
-export function coreNavPropertyFieldTypeImportNames(
+export function navPropertyFieldTypeImportNames(
   navProperties: VdmNavigationProperty[],
   oDataVersion: ODataVersion
 ): string[] {

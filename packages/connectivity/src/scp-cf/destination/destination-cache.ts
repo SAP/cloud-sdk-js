@@ -6,7 +6,7 @@ import { Destination } from './destination-service-types';
 import { DestinationsByType } from './destination-accessor-types';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'destination-cache'
 });
 

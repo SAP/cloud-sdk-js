@@ -1,7 +1,7 @@
 import { createLogger, exclude } from '@sap-cloud-sdk/util';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'http-client',
   messageContext: 'http-request-config'
 });
 

@@ -52,7 +52,7 @@ export declare namespace TestComplexType1 {
    */
   const _propertyMetadata: PropertyMetadata<TestComplexType1>[];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
    */
   function build(json: { [keys: string]: FieldType }): TestComplexType1;
 }

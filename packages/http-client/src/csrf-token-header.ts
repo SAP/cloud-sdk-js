@@ -15,7 +15,7 @@ import { HttpRequestConfig } from './http-client-types';
 import { executeHttpRequest } from '.';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'http-client',
   messageContext: 'csrf-token-header'
 });
 

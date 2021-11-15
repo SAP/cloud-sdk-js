@@ -1,3 +1,5 @@
+export { oDataUri } from './uri-conversion/odata-uri';
+
 export { filterFunction } from './filter-function';
 
 export { uriConverter } from './uri-conversion/uri-value-converter';

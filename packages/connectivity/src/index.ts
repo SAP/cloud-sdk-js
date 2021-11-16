@@ -1,4 +1,9 @@
-export { parseDestination } from './scp-cf/destination/destination';
+export {
+  parseDestination,
+  noDestinationErrorMessage,
+  toDestinationNameUrl,
+  sanitizeDestination
+} from './scp-cf/destination/destination';
 export {
   Destination,
   DestinationRetrievalOptions
@@ -39,10 +44,4 @@ export {
   getClientCredentialsToken,
   getUserToken
 } from './scp-cf/xsuaa-service';
-export {
-  noDestinationErrorMessage,
-  toDestinationNameUrl,
-  sanitizeDestination
-} from './scp-cf/destination/destination';
-
 export { getAgentConfig } from './http-agent/http-agent';

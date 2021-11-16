@@ -1,13 +1,11 @@
 /* eslint-disable  import/export */
-
-/**
- * @internal
- */
 export enum Protocol {
   HTTP = 'http',
   HTTPS = 'https'
 }
-
+/**
+ * @internal
+ */
 export namespace Protocol {
   /**
    * Get [[Protocol]] from its string representation.

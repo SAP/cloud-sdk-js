@@ -8,9 +8,6 @@ export enum Protocol {
   HTTPS = 'https'
 }
 
-/**
- * @internal
- */
 export namespace Protocol {
   /**
    * Get [[Protocol]] from its string representation.

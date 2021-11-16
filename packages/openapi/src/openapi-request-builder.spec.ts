@@ -1,8 +1,11 @@
 import nock from 'nock';
-import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import * as httpClient from '@sap-cloud-sdk/http-client';
-import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt';
-import { parseDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf/destination/destination';
+import {
+  parseDestination,
+  sanitizeDestination
+} from '@sap-cloud-sdk/connectivity';
+// eslint-disable-next-line import/no-internal-modules
+import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,

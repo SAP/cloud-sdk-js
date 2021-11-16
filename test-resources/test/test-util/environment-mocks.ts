@@ -1,9 +1,9 @@
+import { XsuaaServiceCredentials } from '@sap-cloud-sdk/connectivity/internal';
 import {
-  Service,
-  XsuaaServiceCredentials
-} from '@sap-cloud-sdk/connectivity/src/scp-cf/environment-accessor-types';
-import { Protocol } from '@sap-cloud-sdk/connectivity/src/scp-cf/protocol';
-import { ProxyConfiguration } from '@sap-cloud-sdk/connectivity/src/scp-cf/connectivity-service-types';
+  Protocol,
+  ProxyConfiguration,
+  Service
+} from '@sap-cloud-sdk/connectivity';
 import { publicKey } from './keys';
 
 export enum TestTenants {

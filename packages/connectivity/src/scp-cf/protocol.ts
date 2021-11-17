@@ -1,13 +1,8 @@
 /* eslint-disable  import/export */
-
-/**
- * @internal
- */
 export enum Protocol {
   HTTP = 'http',
   HTTPS = 'https'
 }
-
 /**
  * @internal
  */

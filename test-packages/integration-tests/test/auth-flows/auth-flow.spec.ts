@@ -1,18 +1,18 @@
 import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
-import { getService } from '@sap-cloud-sdk/connectivity/dist/scp-cf/environment-accessor';
-import { fetchDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-service';
-import { getDestinationFromDestinationService } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-from-service';
-import { getDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-accessor';
+import {
+  getService,
+  fetchDestination,
+  wrapJwtInHeader
+} from '@sap-cloud-sdk/connectivity/internal';
 import {
   decodeJwt,
-  wrapJwtInHeader
-} from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
-import * as xssec from '@sap/xssec';
-import {
   jwtBearerToken,
+  getDestination,
+  getDestinationFromDestinationService,
   serviceToken
-} from '@sap-cloud-sdk/connectivity/dist/scp-cf/token-accessor';
+} from '@sap-cloud-sdk/connectivity';
+import * as xssec from '@sap/xssec';
 import {
   loadLocalVcap,
   readSystems,

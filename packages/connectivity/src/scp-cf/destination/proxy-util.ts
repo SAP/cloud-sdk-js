@@ -135,7 +135,6 @@ function validateUrl(url: URL): void {
  * Special characters in the user and password need to be percent encoded.
  * @param proxyEnvValue - Environment variable which is parsed.
  * @returns Configuration with default values or `undefined` if the parsing failed.
- * @internal
  */
 export function parseProxyEnv(
   proxyEnvValue: string

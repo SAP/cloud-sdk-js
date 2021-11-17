@@ -10,7 +10,6 @@ import { Protocol } from './protocol';
  * For user and password non alphanumeric characters need to be percent-encoded.
  * Note: The [no_proxy] environment variables contains a list of URLs for which no proxy will be used even if [http_proxy, https_proxy] are set.
  * Wildcards like *.some.domain.com are not supported while checking the no_proxy env.
- * @internal
  */
 export interface ProxyConfiguration {
   /**
@@ -38,9 +37,6 @@ export interface ProxyConfiguration {
   headers?: ProxyConfigurationHeaders;
 }
 
-/**
- * @internal
- */
 export interface ProxyConfigurationHeaders {
   [header: string]: string | undefined;
   'Proxy-Authorization': string;

@@ -38,7 +38,6 @@ export async function useOrFetchDestination(
  *  (`getDestinationFromEnvByName`, `destinationForServiceBinding`, `getDestinationFromDestinationService`).
  * @param options - The options to retrieve the destination.
  * @returns A promise returning the requested destination on success.
- * @internal
  */
 export async function getDestination(
   options: DestinationFetchOptions

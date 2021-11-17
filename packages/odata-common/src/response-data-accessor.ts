@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export interface ResponseDataAccessor {
   getCollectionResult: (data) => any[];
   isCollectionResult: (data) => boolean;

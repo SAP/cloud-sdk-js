@@ -13,7 +13,6 @@ import { ODataRequestConfig } from './request/odata-request-config';
  * @param request - Request from which header are build.
  * @returns Headesrs
  * @internal
- *
  */
 export async function buildHeaders<RequestT extends ODataRequestConfig>(
   request: ODataRequest<RequestT>

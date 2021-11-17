@@ -9,6 +9,7 @@ import {
 
 /**
  * Representation of a filter function, that returns a value of an orderable type. This supports int, double and decimal values.
+ * @internal
  */
 export abstract class OrderableFilterFunction<
   EntityT extends EntityBase,

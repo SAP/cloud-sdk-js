@@ -6,6 +6,7 @@ import { ODataRequestConfig } from './odata-request-config';
 /**
  * OData create request configuration for an entity type.
  * @typeparam EntityT - Type of the entity to setup a request for
+ * @internal
  */
 export class ODataCreateRequestConfig<
   EntityT extends EntityBase

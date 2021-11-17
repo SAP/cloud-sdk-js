@@ -50,6 +50,7 @@ type TsToEdmType = (
  * The concrete serializers are created in odata/v2/entity-serializer.ts and odata/v4/entity-serializer.ts
  * @param tsToEdm - Converters ts input to EDM values
  * @returns a entity serializer as defined by [[EntitySerializer]]
+ * @internal
  */
 export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   /**

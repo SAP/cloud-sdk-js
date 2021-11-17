@@ -12,6 +12,7 @@ import { FilterLink } from './filter-link';
 /**
  * A union of all types that can be used for filtering.
  * @typeparam EntityT - Type of the entity to be filtered on
+ * @internal
  */
 export type Filterable<
   EntityT extends EntityBase,
@@ -44,13 +45,25 @@ export type Filterable<
  * @typeparam EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `and`.
  * @returns The newly created FilterList.
+ * @internal
  */
 export function and<EntityT extends EntityBase>(
   expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
+
+/**
+ * @internal
+ */
 export function and<EntityT extends EntityBase>(
   ...expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
+
+/**
+ * @param first - first
+ * @param rest - rest
+ * @returns A FilterList
+ * @internal
+ */
 export function and<EntityT extends EntityBase>(
   first: undefined | Filterable<EntityT> | Filterable<EntityT>[],
   ...rest: Filterable<EntityT>[]
@@ -70,13 +83,25 @@ export function and<EntityT extends EntityBase>(
  * @typeparam EntityT - Type of the entity filter on.
  * @param expressions - Filterables to be combined with logical `or`
  * @returns The newly created FilterList
+ * @internal
  */
 export function or<EntityT extends EntityBase>(
   expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
+
+/**
+ * @internal
+ */
 export function or<EntityT extends EntityBase>(
   ...expressions: Filterable<EntityT>[]
 ): FilterList<EntityT>;
+
+/**
+ * @param first - first
+ * @param rest - rest
+ * @returns A FilterList
+ * @internal
+ */
 export function or<EntityT extends EntityBase>(
   first: Filterable<EntityT> | Filterable<EntityT>[],
   ...rest: Filterable<EntityT>[]
@@ -88,6 +113,7 @@ export function or<EntityT extends EntityBase>(
  * Negate a filter.
  * @param filter - The filter to negate.
  * @returns The negated filter.
+ * @internal
  */
 export function not<EntityT extends EntityBase>(
   filter: Filterable<EntityT>

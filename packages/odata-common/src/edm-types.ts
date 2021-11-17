@@ -18,13 +18,21 @@ export type EdmTypeSameConverters =
   | 'Edm.Guid'
   | 'Edm.Byte'
   | 'Edm.Any'; // Represents currently unsupported EDM types like Edm.Geography.
+
 /**
  * @internal
  */
 export type EdmTypeDifferentConverters = 'Edm.DateTimeOffset';
 
 // Exclusive types for ODataVersions
+/**
+ * @internal
+ */
 export type ExclusiveEdmTypeV2 = 'Edm.DateTime' | 'Edm.Time';
+
+/**
+ * @internal
+ */
 export type ExclusiveEdmTypeV4 =
   | 'Edm.Date'
   | 'Edm.Duration'
@@ -33,6 +41,9 @@ export type ExclusiveEdmTypeV4 =
 
 // The generic parameter is currently unused. We still have to revise whether we can use it in a later version of typescript.
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+/**
+ * @internal
+ */
 export type EdmTypeShared<VersionT extends ODataVersion | 'any'> =
   // Pretend to use parameter to avoid TS bug in versions > 4.2 (https://github.com/microsoft/TypeScript/issues/44727)
   VersionT extends any

@@ -7,7 +7,7 @@ import nock from 'nock';
 import {
   defaultDestination,
   defaultHost
-} from '../../../core/test/test-util/request-mocker';
+} from '../../../../test-resources/test/test-util/request-mocker';
 
 export function mockCountRequest(
   destination: Destination,

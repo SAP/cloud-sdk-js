@@ -26,7 +26,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
   constructor(entityConstructor: Constructable<EntityT>) {
     super(
       entityConstructor,
-      new ODataGetAllRequestConfig(entityConstructor, oDataUri),
+      new ODataGetAllRequestConfig<EntityT>(entityConstructor, oDataUri),
       entityDeserializer,
       responseDataAccessor
     );

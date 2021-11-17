@@ -16,7 +16,6 @@ export interface CacheEntry<T> {
 
 /**
  * Enumerator that selects the isolation type of destination in cache.
- * @internal
  */
 export enum IsolationStrategy {
   Tenant = 'Tenant',
@@ -25,9 +24,6 @@ export enum IsolationStrategy {
   No_Isolation = 'NoIsolation'
 }
 
-/**
- * @internal
- */
 export interface CachingOptions {
   /**
    * A boolean value that indicates whether to read destinations from cache.
@@ -84,8 +80,8 @@ export class Cache<T> implements CacheInterface<T> {
    * @param key - The key of the entry to retrieve.
    * @returns The corresponding entry to the provided key if it is still valid, returns `undefined` otherwise.
    */
-  get(key: string): T | undefined {
-    return this.hasKey(key) && !isExpired(this.cache[key])
+  get(key: string | undefined): T | undefined {
+    return key && this.hasKey(key) && !isExpired(this.cache[key])
       ? this.cache[key].entry
       : undefined;
   }
@@ -96,11 +92,13 @@ export class Cache<T> implements CacheInterface<T> {
    * @param entry - The entry to cache
    * @param expirationTime - The time expressed in UTC in which the given entry expires
    */
-  set(key: string, entry: T, expirationTime?: number): void {
-    const expires = expirationTime
-      ? moment(expirationTime)
-      : inferExpirationTime(this.defaultValidityTime);
-    this.cache[key] = { entry, expires };
+  set(key: string | undefined, entry: T, expirationTime?: number): void {
+    if (key) {
+      const expires = expirationTime
+        ? moment(expirationTime)
+        : inferExpirationTime(this.defaultValidityTime);
+      this.cache[key] = { entry, expires };
+    }
   }
 }
 

@@ -10,12 +10,12 @@ import {
   mockDestinationsEnv,
   mockGetRequest,
   unmockDestinationsEnv
-} from '../../../core/test/test-util/request-mocker';
+} from '../../../../test-resources/test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createTestEntity
-} from '../../../core/test/test-util/test-data';
+} from '../../../../test-resources/test/test-util/test-data';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,
@@ -28,7 +28,7 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken
-} from '../../../core/test/test-util';
+} from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
@@ -196,10 +196,10 @@ describe('GetAllRequestBuilder', () => {
           .reply(200, 'iss token used on the way')
       ];
       const spy = jest.spyOn(httpClient, 'executeHttpRequest');
-      const response = await requestBuilder.executeRaw(
-        { destinationName: 'ERNIE-UND-CERT' },
-        { iss: onlyIssuerXsuaaUrl }
-      );
+      const response = await requestBuilder.executeRaw({
+        destinationName: 'ERNIE-UND-CERT',
+        iss: onlyIssuerXsuaaUrl
+      });
       expectAllMocksUsed(nocks);
       expect(spy).toHaveBeenCalledWith(
         parseDestination(certificateSingleResponse),

@@ -2,8 +2,8 @@ import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
   defaultDestination,
   mockHeaderRequest
-} from '../../core/test/test-util/request-mocker';
-import { connectivityProxyConfigMock } from '../../core/test/test-util/environment-mocks';
+} from '../../../test-resources/test-util/request-mocker';
+import { connectivityProxyConfigMock } from '../../../test-resources/test-util/test-util/environment-mocks';
 import { CommonEntity } from '../test/common-entity';
 import {
   getAllRequestConfig,
@@ -49,8 +49,8 @@ describe('Header-Builder', () => {
   describe('update request header with ETag', () => {
     it('if-match should not be set when no ETag is specified', async () => {
       const request = new ODataRequest(
-        updateRequestConfig({ payload: commonEntity }),
-        defaultDestination
+          updateRequestConfig({ payload: commonEntity }),
+          defaultDestination
       );
 
       mockHeaderRequest({ request });
@@ -61,8 +61,8 @@ describe('Header-Builder', () => {
 
     it('if-match should be set when ETag is specified in header-builder', async () => {
       const request = new ODataRequest(
-        updateRequestConfig({ payload: commonEntity }),
-        defaultDestination
+          updateRequestConfig({ payload: commonEntity }),
+          defaultDestination
       );
       request.config.eTag = 'W//';
 
@@ -74,8 +74,8 @@ describe('Header-Builder', () => {
 
     it('if-match should be set to * when version identifier is ignored', async () => {
       const request = new ODataRequest(
-        updateRequestConfig({ payload: commonEntity }),
-        defaultDestination
+          updateRequestConfig({ payload: commonEntity }),
+          defaultDestination
       );
       request.config.eTag = 'W//';
       // Set by ignoreVersionIdentifier()

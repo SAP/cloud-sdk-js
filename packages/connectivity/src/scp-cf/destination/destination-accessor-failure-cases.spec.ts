@@ -2,29 +2,29 @@ import nock from 'nock';
 import {
   mockServiceBindings,
   xsuaaBindingMock
-} from '../../../../core/test/test-util/environment-mocks';
+} from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   providerServiceToken,
   subscriberJwtBearerToken,
   subscriberServiceToken,
   subscriberServiceTokenWithVerificationURL,
   subscriberUserJwt
-} from '../../../../core/test/test-util/mocked-access-tokens';
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '../../../../core/test/test-util/token-accessor-mocks';
+} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../../../../core/test/test-util/destination-service-mocks';
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   basicMultipleResponse,
   destinationName,
   oauthMultipleResponse
-} from '../../../../core/test/test-util/example-destination-service-responses';
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import * as jwt from '../jwt';
 import { getDestination } from './destination-accessor';
@@ -48,8 +48,9 @@ describe('Failure cases', () => {
       );
 
     await expect(
-      getDestination(destinationName, {
-        userJwt: subscriberServiceTokenWithVerificationURL,
+      getDestination({
+        destinationName,
+        jwt: subscriberServiceTokenWithVerificationURL,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       })
@@ -63,8 +64,9 @@ describe('Failure cases', () => {
     mockVerifyJwt();
 
     await expect(
-      getDestination(destinationName, {
-        userJwt: 'fails',
+      getDestination({
+        destinationName,
+        jwt: 'fails',
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       })
@@ -96,8 +98,9 @@ describe('Failure cases', () => {
     ];
 
     try {
-      await getDestination(destinationName, {
-        userJwt: subscriberServiceToken,
+      await getDestination({
+        destinationName,
+        jwt: subscriberServiceToken,
         enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
@@ -136,8 +139,9 @@ describe('Failure cases', () => {
     ];
 
     try {
-      await getDestination(destinationName, {
-        userJwt: subscriberUserJwt,
+      await getDestination({
+        destinationName,
+        jwt: subscriberUserJwt,
         enableCircuitBreaker: false,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
@@ -166,8 +170,9 @@ describe('Failure cases', () => {
     ];
 
     const expected = null;
-    const actual = await getDestination(destinationName, {
-      userJwt: subscriberUserJwt,
+    const actual = await getDestination({
+      destinationName,
+      jwt: subscriberUserJwt,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });
@@ -194,7 +199,8 @@ describe('Failure cases', () => {
     );
 
     await expect(
-      getDestination(destinationName, {
+      getDestination({
+        destinationName,
         cacheVerificationKeys: false,
         iasToXsuaaTokenExchange: false
       })

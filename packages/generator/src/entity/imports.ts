@@ -3,9 +3,9 @@ import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   odataImportDeclaration,
-  coreNavPropertyFieldTypeImportNames,
-  corePropertyFieldTypeImportNames,
-  corePropertyTypeImportNames,
+  navPropertyFieldTypeImportNames,
+  propertyFieldTypeImportNames,
+  propertyTypeImportNames,
   enumTypeImportDeclarations,
   externalImportDeclarations,
   odataCommonImportDeclaration
@@ -28,9 +28,9 @@ export function importDeclarations(
     odataImportDeclaration(['CustomField', 'Entity'], oDataVersion),
     odataCommonImportDeclaration(
       [
-        ...corePropertyTypeImportNames(entity.properties),
-        ...corePropertyFieldTypeImportNames(entity.properties),
-        ...coreNavPropertyFieldTypeImportNames(
+        ...propertyTypeImportNames(entity.properties),
+        ...propertyFieldTypeImportNames(entity.properties),
+        ...navPropertyFieldTypeImportNames(
           entity.navigationProperties,
           oDataVersion
         ),

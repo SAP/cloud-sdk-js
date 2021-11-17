@@ -4,8 +4,8 @@ import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
 import {
   defaultDestination,
   mockUpdateRequest
-} from '../../../core/test/test-util/request-mocker';
-import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
+} from '../../../../test-resources/test/test-util/request-mocker';
+import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { uriConverter } from '../uri-conversion/uri-value-converter';
 import { UpdateRequestBuilder } from './update-request-builder';
 

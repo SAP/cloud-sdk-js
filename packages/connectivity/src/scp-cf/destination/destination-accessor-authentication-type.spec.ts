@@ -2,18 +2,18 @@ import nock from 'nock';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl
-} from '../../../../core/test/test-util/environment-mocks';
+} from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   expectAllMocksUsed,
   mockJwtBearerToken,
   mockServiceToken
-} from '../../../../core/test/test-util/token-accessor-mocks';
+} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../../../../core/test/test-util/destination-service-mocks';
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   iasToken,
   onlyIssuerServiceToken,
@@ -23,7 +23,7 @@ import {
   subscriberJwtBearerToken,
   subscriberServiceToken,
   subscriberUserJwt
-} from '../../../../core/test/test-util/mocked-access-tokens';
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
   certificateMultipleResponse,
@@ -40,7 +40,7 @@ import {
   onPremiseBasicMultipleResponse,
   onPremiseBasicSingleResponse,
   onPremisePrincipalPropagationMultipleResponse
-} from '../../../../core/test/test-util/example-destination-service-responses';
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { clientCredentialsTokenCache } from '../client-credentials-token-cache';
 import { wrapJwtInHeader } from '../jwt';
 import * as identityService from '../identity-service';
@@ -87,8 +87,9 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, {
-        userJwt: iasToken
+      const actual = await getDestination({
+        destinationName,
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -122,8 +123,9 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, {
-        userJwt: iasToken,
+      const actual = await getDestination({
+        destinationName,
+        jwt: iasToken,
         cacheVerificationKeys: false
       });
 
@@ -159,7 +161,8 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         cacheVerificationKeys: false
       });
       expect(actual).toMatchObject(expected);
@@ -198,9 +201,10 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         cacheVerificationKeys: false,
-        userJwt: iasToken
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -236,8 +240,9 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
-      const actual = await getDestination(destinationName, {
-        userJwt: iasToken
+      const actual = await getDestination({
+        destinationName,
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -267,7 +272,7 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
-      const actual = await getDestination(destinationName);
+      const actual = await getDestination({ destinationName });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
     });
@@ -302,8 +307,9 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
-      const actual = await getDestination(destinationName, {
-        userJwt: iasToken
+      const actual = await getDestination({
+        destinationName,
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -340,9 +346,10 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         selectionStrategy: alwaysProvider,
-        userJwt: iasToken
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -379,9 +386,10 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthUserTokenExchangeSingleResponse);
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         selectionStrategy: alwaysSubscriber,
-        userJwt: iasToken
+        jwt: iasToken
       });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
@@ -416,8 +424,9 @@ describe('authentication types', () => {
         )
       ];
 
-      const actual = await getDestination('ERNIE-UND-CERT', {
-        userJwt: iasToken,
+      const actual = await getDestination({
+        destinationName: 'ERNIE-UND-CERT',
+        jwt: iasToken,
         cacheVerificationKeys: false
       });
       expect(actual!.certificates!.length).toBe(1);
@@ -449,7 +458,8 @@ describe('authentication types', () => {
         )
       ];
 
-      const actual = await getDestination('ERNIE-UND-CERT', {
+      const actual = await getDestination({
+        destinationName: 'ERNIE-UND-CERT',
         cacheVerificationKeys: false
       });
       expect(actual!.certificates!.length).toBe(1);
@@ -488,8 +498,9 @@ describe('authentication types', () => {
         wrapJwtInHeader(subscriberServiceToken).headers
       );
 
-      const actual = await getDestination('OnPremise', {
-        userJwt: iasToken,
+      const actual = await getDestination({
+        destinationName: 'OnPremise',
+        jwt: iasToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });
@@ -521,8 +532,9 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(basicMultipleResponse[0]);
-      const actual = await getDestination(destinationName, {
-        userJwt: iasToken,
+      const actual = await getDestination({
+        destinationName,
+        jwt: iasToken,
         cacheVerificationKeys: false
       });
       expect(actual).toMatchObject(expected);
@@ -551,8 +563,9 @@ describe('authentication types', () => {
         )
       ];
 
-      const actual = await getDestination('OnPremise', {
-        userJwt: iasToken,
+      const actual = await getDestination({
+        destinationName: 'OnPremise',
+        jwt: iasToken,
         cacheVerificationKeys: false,
         selectionStrategy: alwaysSubscriber
       });
@@ -583,9 +596,9 @@ describe('authentication types', () => {
         )
       ];
 
-      await expect(getDestination('OnPremise')).rejects.toThrowError(
-        'For principal propagation a user JWT is needed.'
-      );
+      await expect(
+        getDestination({ destinationName: 'OnPremise' })
+      ).rejects.toThrowError('For principal propagation a user JWT is needed.');
       expectAllMocksUsed(httpMocks);
     });
 
@@ -605,7 +618,10 @@ describe('authentication types', () => {
       ];
 
       await expect(
-        getDestination('OnPremise', { iss: onlyIssuerXsuaaUrl })
+        getDestination({
+          destinationName: 'OnPremise',
+          iss: onlyIssuerXsuaaUrl
+        })
       ).rejects.toThrowError('For principal propagation a user JWT is needed.');
       expectAllMocksUsed(httpMocks);
     });
@@ -640,7 +656,7 @@ describe('authentication types', () => {
       ];
 
       const expected = parseDestination(oauthPasswordSingleResponse);
-      const actual = await getDestination(destinationName, {});
+      const actual = await getDestination({ destinationName });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
     });

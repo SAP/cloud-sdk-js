@@ -5,6 +5,11 @@ import { Filterable } from '../filter/filterable';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
 import { FieldType } from '../selectable/field';
+import { getEntityKeys } from './get-keys';
+import { getOrderBy } from './get-orderby';
+import { UriConverter } from './uri-value-converter';
+import { createGetFilter } from './get-filter';
+import { createGetResourcePathForKeys } from './get-resource-path';
 
 /**
  * Union of necessary methods for the OData URI conversion.
@@ -48,4 +53,31 @@ export interface ODataUri {
  */
 export function prependDollar(param: string): string {
   return `$${param}`;
+}
+
+export function createODataUri(
+  uriConverter: UriConverter,
+  getExpand: <EntityT extends EntityBase>(
+    selects: Selectable<EntityT>[],
+    expands: Expandable<EntityT>[],
+    entityConstructor: Constructable<EntityT>
+  ) => Partial<{ expand: string }>,
+
+  getSelect: <EntityT extends EntityBase>(
+    selects: Selectable<EntityT>[]
+  ) => Partial<{ select: string }>
+): ODataUri {
+  const { getFilter } = createGetFilter(uriConverter);
+  const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
+  const { convertToUriFormat } = uriConverter;
+
+  return {
+    getExpand,
+    getFilter,
+    getEntityKeys,
+    getOrderBy,
+    getResourcePathForKeys,
+    getSelect,
+    convertToUriFormat
+  };
 }

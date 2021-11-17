@@ -1,6 +1,6 @@
 import nock from 'nock';
-import * as tokenAccessor from '../../../connectivity/src/scp-cf/token-accessor';
-import { decodeJwt } from '../../../connectivity/src/scp-cf/jwt';
+import * as tokenAccessor from '@sap-cloud-sdk/connectivity/src/scp-cf/token-accessor';
+import { decodeJwt } from '@sap-cloud-sdk/connectivity';
 import { onlyIssuerXsuaaUrl, TestTenants } from './environment-mocks';
 import {
   onlyIssuerServiceToken,
@@ -20,13 +20,11 @@ export function mockServiceToken() {
   return jest
     .spyOn(tokenAccessor, 'serviceToken')
     .mockImplementation((service, options) => {
-      if (!options || typeof options.userJwt === 'undefined') {
+      if (!options || typeof options.jwt === 'undefined') {
         return Promise.resolve(providerServiceToken);
       }
       const userJwt =
-        typeof options.userJwt === 'string'
-          ? decodeJwt(options.userJwt)
-          : options.userJwt;
+        typeof options.jwt === 'string' ? decodeJwt(options.jwt) : options.jwt;
 
       if (userJwt.iss === onlyIssuerXsuaaUrl) {
         return Promise.resolve(onlyIssuerServiceToken);

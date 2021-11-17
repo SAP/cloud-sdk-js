@@ -1,8 +1,7 @@
 import { identity } from '@sap-cloud-sdk/util';
 import {
-  DestinationOptions,
   Destination,
-  DestinationNameAndJwt
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
@@ -38,37 +37,34 @@ export class UpdateRequestBuilder<
 
   /**
    * Executes the query.
-   * @param destination - Destination to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the entity once it was updated
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
     }
 
-    const request = await this.build(destination, options);
+    const request = await this.build(destination);
     return super.executeRequest(request);
   }
 
   /**
    * Execute request and return an [[HttpResponse]].
-   * @param destination - Destination to execute the request against
-   * @param options - Options to employ when fetching destinations
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @returns A promise resolving to an [[HttpResponse]].
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       throw new Error('Cannot execute an update request with empty payload.');
     }
 
-    const request = await this.build(destination, options);
+    const request = await this.build(destination);
     return super.executeRequestRaw(request);
   }
 }

@@ -15,6 +15,7 @@
 ### Function removed
 
 - [generator] Remove the option: `aggregatorDirectoryName` and `aggregatorNpmPackageName`
+- [generator] Remove `packageJson` function from aggregator-package
 - [core] Remove the following functions:
   - `AllDestinations`
   - `AuthAndExchangeTokens`
@@ -36,6 +37,7 @@
   - `DestinationServiceCredentials`
   - `DestinationType`
   - `DestinationsByType`
+  - `EdmTypeForEdmOrFieldType`
   - `HttpAgentConfig`
   - `HttpsAgentConfig`
   - `IsolationStrategy`
@@ -364,11 +366,21 @@
 
 ### Signature changed
 
--
+- [core] `EdmTypeField` only support EDM types, no field types in generics
 
 ### Implementation changed
 
--
+- [openapi] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+  - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [odata-common] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions..
+  - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [odata-v2] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+  - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [odata-v4] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+  - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [connectivity] `getDestination` changed to use DestinationFetchOptions as single parameter.
+  - `serviceToken` uses jwt instead of userJwt now.
+  - `jwtBearerToken` uses jwt instead of userJwt now.
 
 ## Known Issues
 
@@ -376,7 +388,7 @@
 
 ## Compatibility Notes
 
--
+- Upgrade the ES version to `es2019`.
 
 ## New Functionality
 

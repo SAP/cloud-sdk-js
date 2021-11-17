@@ -2,26 +2,26 @@ import nock from 'nock';
 import {
   connectivityProxyConfigMock,
   mockServiceBindings
-} from '../../../../core/test/test-util/environment-mocks';
+} from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   mockJwtBearerToken,
   mockServiceToken
-} from '../../../../core/test/test-util/token-accessor-mocks';
+} from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../../../../core/test/test-util/destination-service-mocks';
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   providerServiceToken,
   subscriberServiceToken
-} from '../../../../core/test/test-util/mocked-access-tokens';
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   basicMultipleResponse,
   destinationName,
   onPremiseMultipleResponse,
   onPremisePrincipalPropagationMultipleResponse
-} from '../../../../core/test/test-util/example-destination-service-responses';
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { Protocol } from '../protocol';
 import { getDestination } from './destination-accessor';
 import { parseDestination } from './destination';
@@ -48,8 +48,9 @@ describe('proxy configuration', () => {
     ];
     process.env['https_proxy'] = 'some.proxy.com:1234';
 
-    const actual = await getDestination(destinationName, {
-      userJwt: subscriberServiceToken,
+    const actual = await getDestination({
+      destinationName,
+      jwt: subscriberServiceToken,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });
@@ -86,8 +87,9 @@ describe('proxy configuration', () => {
       }
     };
 
-    const actual = await getDestination('OnPremise', {
-      userJwt: subscriberServiceToken,
+    const actual = await getDestination({
+      destinationName: 'OnPremise',
+      jwt: subscriberServiceToken,
       cacheVerificationKeys: false,
       iasToXsuaaTokenExchange: false
     });
@@ -124,7 +126,7 @@ describe('proxy configuration', () => {
         }
       }
     };
-    const actual = await getDestination('OnPremise');
+    const actual = await getDestination({ destinationName: 'OnPremise' });
     expect(actual).toEqual(expected);
     httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
   });

@@ -8,13 +8,13 @@ import {
   defaultDestination,
   mockGetRequest,
   unmockDestinationsEnv
-} from '../../../core/test/test-util/request-mocker';
+} from '../../../../test-resources/test/test-util/request-mocker';
 import {
   createOriginalTestEntityData1,
   createOriginalTestEntityData2,
   createOriginalTestEntityDataWithLinks,
   createTestEntityV4 as createTestEntity
-} from '../../../core/test/test-util/test-data';
+} from '../../../../test-resources/test/test-util/test-data';
 import { any } from '..';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 

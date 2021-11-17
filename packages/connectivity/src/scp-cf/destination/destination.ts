@@ -1,11 +1,13 @@
 import { assoc } from '@sap-cloud-sdk/util';
 import {
+  DestinationFetchOptions,
+  isDestinationFetchOptions
+} from './destination-accessor-types';
+import {
   AuthenticationType,
   Destination,
   DestinationAuthToken,
-  DestinationCertificate,
-  DestinationNameAndJwt,
-  isDestinationNameAndJwt
+  DestinationCertificate
 } from './destination-service-types';
 
 /**
@@ -32,7 +34,6 @@ export function sanitizeDestination(
  * This function only accepts destination configurations of type 'HTTP' and will error if no 'URL' is given.
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
- * @internal
  */
 export function parseDestination(
   destinationJson: DestinationJson | DestinationConfiguration
@@ -163,9 +164,9 @@ function isHttpDestination(destinationInput: Record<string, any>): boolean {
  * @returns string containing information on the destination
  */
 export function toDestinationNameUrl(
-  destination: Destination | DestinationNameAndJwt
+  destination: Destination | DestinationFetchOptions
 ): string {
-  return isDestinationNameAndJwt(destination)
+  return isDestinationFetchOptions(destination)
     ? `name: ${destination.destinationName}`
     : `name: ${destination.name}, url: ${destination.url}`;
 }
@@ -322,9 +323,9 @@ const configMapping: Record<string, keyof Destination> = {
 };
 
 export function noDestinationErrorMessage(
-  destination: Destination | DestinationNameAndJwt
+  destination: Destination | DestinationFetchOptions
 ): string {
-  return isDestinationNameAndJwt(destination)
+  return isDestinationFetchOptions(destination)
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
 }

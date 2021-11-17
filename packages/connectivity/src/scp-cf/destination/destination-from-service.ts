@@ -20,7 +20,11 @@ import {
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import { DestinationsByType } from './destination-accessor-types';
+import {
+  DestinationFetchOptions,
+  DestinationOptions,
+  DestinationsByType
+} from './destination-accessor-types';
 import {
   AuthAndExchangeTokens,
   fetchDestination,
@@ -28,7 +32,6 @@ import {
   fetchSubaccountDestinations
 } from './destination-service';
 import { destinationCache } from './destination-cache';
-import type { DestinationOptions } from './destination-accessor';
 import {
   addProxyConfigurationInternet,
   ProxyStrategy,
@@ -41,7 +44,7 @@ type RequiredProperties<T, P extends keyof T> = Required<Pick<T, P>> &
   Omit<T, P>;
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'destination-accessor-service'
 });
 
@@ -63,18 +66,14 @@ const emptyDestinationByType: DestinationsByType = {
  * By default, selects subscriber over provider and instance over subaccount destinations.
  *
  * If the destinations are read from the environment, the jwt will be ignored.
- * @param name - The name of the destination to be retrieved.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
- * @internal
  */
 export async function getDestinationFromDestinationService(
-  name: string,
-  options: DestinationOptions
+  options: DestinationFetchOptions
 ): Promise<Destination | null> {
   logger.info('Attempting to retrieve destination from destination service.');
   return DestinationFromServiceRetriever.getDestinationFromDestinationService(
-    name,
     options
   );
 }
@@ -84,24 +83,23 @@ export async function getDestinationFromDestinationService(
  */
 class DestinationFromServiceRetriever {
   public static async getDestinationFromDestinationService(
-    name: string,
-    options: DestinationOptions
+    options: DestinationFetchOptions
   ): Promise<Destination | null> {
     if (isTokenExchangeEnabled(options)) {
-      options.userJwt = await exchangeToken(options);
+      options.jwt = await exchangeToken(options);
     }
 
     const subscriberToken =
       await DestinationFromServiceRetriever.getSubscriberToken(options);
 
-    const xsuaaCredentials = getXsuaaServiceCredentials(options.userJwt);
+    const xsuaaCredentials = getXsuaaServiceCredentials(options.jwt);
     const providerToken =
       await DestinationFromServiceRetriever.getProviderClientCredentialsToken(
         xsuaaCredentials,
         options
       );
     const da = new DestinationFromServiceRetriever(
-      name,
+      options.destinationName,
       { ...options, xsuaaCredentials },
       subscriberToken,
       providerToken
@@ -152,17 +150,17 @@ class DestinationFromServiceRetriever {
   }
 
   private static async getSubscriberToken(
-    options: DestinationOptions
+    options: DestinationFetchOptions
   ): Promise<JwtPair | undefined> {
-    if (options.userJwt) {
+    if (options.jwt) {
       if (options.iss) {
         logger.warn(
           'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
         );
       }
       return {
-        decoded: await verifyJwt(options.userJwt, options),
-        encoded: options.userJwt
+        decoded: await verifyJwt(options.jwt, options),
+        encoded: options.jwt
       };
     }
 
@@ -180,10 +178,10 @@ class DestinationFromServiceRetriever {
 
   private static async getProviderClientCredentialsToken(
     xsuaaCredentials: XsuaaServiceCredentials,
-    options: DestinationOptions
+    options: DestinationFetchOptions
   ): Promise<JwtPair> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { userJwt, ...optionsWithoutJwt } = options;
+    const { jwt, ...optionsWithoutJwt } = options;
     const encoded = await serviceToken('destination', {
       ...optionsWithoutJwt,
       xsuaaCredentials
@@ -194,7 +192,7 @@ class DestinationFromServiceRetriever {
   private static async getSubscriberClientCredentialsToken(
     options: DestinationOptions
   ): Promise<string> {
-    if (!options.userJwt) {
+    if (!options.jwt) {
       throw new Error(
         'User JWT is needed to obtain a client credentials token for the subscriber account.'
       );
@@ -214,7 +212,7 @@ class DestinationFromServiceRetriever {
     readonly providerClientCredentialsToken: JwtPair
   ) {
     const defaultOptions = {
-      isolationStrategy: IsolationStrategy.Tenant,
+      isolationStrategy: IsolationStrategy.Tenant_User,
       selectionStrategy: subscriberFirst,
       useCache: false,
       ...options
@@ -369,7 +367,7 @@ class DestinationFromServiceRetriever {
    */
   private async fetchDestinationByClientCrendentialsGrant(): Promise<Destination> {
     const clientGrant = await serviceToken('destination', {
-      userJwt:
+      jwt:
         this?.subscriberToken?.decoded ||
         this.providerClientCredentialsToken.decoded
     });
@@ -421,7 +419,7 @@ class DestinationFromServiceRetriever {
   ): Promise<Destination> {
     const accessToken = await serviceToken('destination', {
       ...this.options,
-      userJwt:
+      jwt:
         origin === 'subscriber'
           ? this.subscriberToken!.decoded
           : this.providerClientCredentialsToken.decoded
@@ -513,7 +511,7 @@ class DestinationFromServiceRetriever {
 
     const accessToken = await serviceToken('destination', {
       ...this.options,
-      userJwt: this.subscriberToken.decoded
+      jwt: this.subscriberToken.decoded
     });
     const subscriber = await this.getInstanceAndSubaccountDestinations(
       accessToken
@@ -576,10 +574,6 @@ class DestinationFromServiceRetriever {
     }
 
     if (this.options.selectionStrategy === alwaysProvider) {
-      return false;
-    }
-
-    if (this.isProviderAndSubscriberSameTenant()) {
       return false;
     }
 

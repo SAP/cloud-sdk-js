@@ -3,10 +3,9 @@ import { AxiosResponse } from 'axios';
 import { isNullish } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  DestinationNameAndJwt,
-  DestinationOptions,
   noDestinationErrorMessage,
-  useOrFetchDestination
+  useOrFetchDestination,
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import {
   executeHttpRequest,
@@ -80,22 +79,17 @@ export class OpenApiRequestBuilder<ResponseT = any> {
   /**
    * Execute request and get a raw HttpResponse, including all information about the HTTP response.
    * This especially comes in handy, when you need to access the headers or status code of the response.
-   * @param destination - Destination to execute the request against.
-   * @param destinationOptions - Options to employ when fetching destinations.
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to an HttpResponse.
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    destinationOptions?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
     const fetchCsrfToken =
       this._fetchCsrfToken &&
       ['post', 'put', 'patch', 'delete'].includes(this.method.toLowerCase());
 
-    const resolvedDestination = await useOrFetchDestination(
-      destination,
-      destinationOptions
-    );
+    const resolvedDestination = await useOrFetchDestination(destination);
     if (isNullish(destination)) {
       throw Error(noDestinationErrorMessage(destination));
     }
@@ -116,15 +110,13 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 
   /**
    * Execute request and get the response data. Use this to conveniently access the data of a service without technical information about the response.
-   * @param destination - Destination to execute the request against.
-   * @param destinationOptions - Options to employ when fetching destinations.
+   * @param destination - Destination or DestinationFetchOptions to execute the request against.
    * @returns A promise resolving to the requested return type.
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    destinationOptions?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<ResponseT> {
-    const response = await this.executeRaw(destination, destinationOptions);
+    const response = await this.executeRaw(destination);
     if (isAxiosResponse(response)) {
       return response.data;
     }
@@ -156,7 +148,7 @@ export class OpenApiRequestBuilder<ResponseT = any> {
 }
 
 // TODO: Tighten types
-interface OpenApiRequestParameters {
+export interface OpenApiRequestParameters {
   pathParameters?: Record<string, any>;
   queryParameters?: Record<string, any>;
   body?: any;

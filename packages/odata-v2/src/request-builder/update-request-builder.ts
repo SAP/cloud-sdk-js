@@ -1,8 +1,7 @@
 import { createLogger, isNullish } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  DestinationNameAndJwt,
-  DestinationOptions
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
@@ -20,7 +19,7 @@ import { oDataUri } from '../uri-conversion/odata-uri';
 import { extractODataEtag } from '../extract-odata-etag';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-v2',
   messageContext: 'update-request-builder-v2'
 });
 /**
@@ -52,19 +51,18 @@ export class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Executes the query.
-   * @param destination - Destination to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to the entity once it was updated
    */
   async execute(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<EntityT> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       return this._entity;
     }
 
-    const request = await this.build(destination, options);
+    const request = await this.build(destination);
     warnIfNavigation(request, this._entity, this._entityConstructor);
 
     return super.executeRequest(request);
@@ -72,13 +70,12 @@ export class UpdateRequestBuilder<EntityT extends Entity>
 
   /**
    * Execute request and return an [[HttpResponse]]. The request is only executed if some properties of the entity are modified.
-   * @param destination - Destination to execute the request against
+   * @param destination - Destination or DestinationFetchOptions to execute the request against
    * @param options - Options to employ when fetching destinations
    * @returns A promise resolving to an [[HttpResponse]] when the request is executed or `undefined` otherwise.
    */
   async executeRaw(
-    destination: Destination | DestinationNameAndJwt,
-    options?: DestinationOptions
+    destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse | undefined> {
     if (this.isEmptyObject(this.requestConfig.payload)) {
       logger.info(
@@ -87,7 +84,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
       return;
     }
 
-    const request = await this.build(destination, options);
+    const request = await this.build(destination);
     warnIfNavigation(request, this._entity, this._entityConstructor);
 
     return super.executeRequestRaw(request);

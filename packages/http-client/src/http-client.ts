@@ -10,7 +10,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import {
   buildHeadersForDestination,
   Destination,
-  DestinationNameAndJwt,
+  DestinationFetchOptions,
   toDestinationNameUrl,
   useOrFetchDestination,
   getAgentConfig
@@ -26,7 +26,7 @@ import {
 import { buildCsrfHeaders } from '.';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'http-client',
   messageContext: 'http-client'
 });
 
@@ -38,7 +38,7 @@ const logger = createLogger({
  * @returns A [[DestinationHttpRequestConfig]].
  */
 export async function buildHttpRequest(
-  destination: Destination | DestinationNameAndJwt,
+  destination: Destination | DestinationFetchOptions,
   customHeaders?: Record<string, any>
 ): Promise<DestinationHttpRequestConfig> {
   if (customHeaders) {
@@ -72,7 +72,7 @@ export async function buildHttpRequest(
  * @returns The given request config merged with the config built for the given destination.
  */
 export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
-  destination: Destination | DestinationNameAndJwt,
+  destination: Destination | DestinationFetchOptions,
   requestConfig: T
 ): Promise<T & DestinationHttpRequestConfig> {
   return buildHttpRequest(destination).then(destinationConfig =>
@@ -91,7 +91,7 @@ export function addDestinationToRequestConfig<T extends HttpRequestConfig>(
  */
 export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
   return async function <T extends HttpRequestConfig>(
-    destination: Destination | DestinationNameAndJwt,
+    destination: Destination | DestinationFetchOptions,
     requestConfig: T,
     options?: HttpRequestOptions
   ): Promise<ReturnT> {
@@ -128,7 +128,7 @@ function logRequestInformation(request: HttpRequestConfig) {
  */
 
 export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
-  destination: Destination | DestinationNameAndJwt,
+  destination: Destination | DestinationFetchOptions,
   requestConfig?: Partial<T>
 ): Promise<AxiosRequestConfig> {
   const destinationRequestConfig = await buildHttpRequest(
@@ -150,7 +150,7 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
  * @returns A promise resolving to an [[HttpResponse]].
  */
 export function executeHttpRequest<T extends HttpRequestConfig>(
-  destination: Destination | DestinationNameAndJwt,
+  destination: Destination | DestinationFetchOptions,
   requestConfig: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
@@ -179,7 +179,7 @@ function buildHeaders(
 }
 
 function resolveDestination(
-  destination: Destination | DestinationNameAndJwt
+  destination: Destination | DestinationFetchOptions
 ): Promise<Destination | null> {
   return useOrFetchDestination(destination).catch(error => {
     throw new ErrorWithCause('Failed to load destination.', error);
@@ -273,7 +273,7 @@ export function shouldHandleCsrfToken(
 }
 
 async function getCsrfHeaders(
-  destination: Destination | DestinationNameAndJwt,
+  destination: Destination | DestinationFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig
 ): Promise<Record<string, any>> {
   const csrfHeaders = pickIgnoreCase(request.headers, 'x-csrf-token');
@@ -290,7 +290,7 @@ async function getCsrfHeaders(
 }
 
 async function addCsrfTokenToHeader(
-  destination: Destination | DestinationNameAndJwt,
+  destination: Destination | DestinationFetchOptions,
   request: HttpRequestConfig & DestinationHttpRequestConfig,
   httpRequestOptions?: HttpRequestOptions
 ): Promise<Record<string, string>> {

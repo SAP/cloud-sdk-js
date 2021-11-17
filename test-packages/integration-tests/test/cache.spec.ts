@@ -1,22 +1,26 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { alwaysProvider } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-selection-strategies';
-import { destinationCache } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-cache';
-import { destinationServiceCache } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-service-cache';
-import { clientCredentialsTokenCache } from '@sap-cloud-sdk/connectivity/dist/scp-cf/client-credentials-token-cache';
-import { getDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-accessor';
-import { IsolationStrategy } from '@sap-cloud-sdk/connectivity/dist/scp-cf/cache';
-import { mockClientCredentialsGrantCall } from '../../../packages/core/test/test-util/xsuaa-service-mocks';
-import { privateKey } from '../../../packages/core/test/test-util/keys';
+import {
+  alwaysProvider,
+  getDestination,
+  IsolationStrategy
+} from '@sap-cloud-sdk/connectivity';
+import {
+  destinationCache,
+  destinationServiceCache,
+  clientCredentialsTokenCache
+} from '@sap-cloud-sdk/connectivity/internal';
+import { mockClientCredentialsGrantCall } from '../../../test-resources/test/test-util/xsuaa-service-mocks';
+import { privateKey } from '../../../test-resources/test/test-util/keys';
 import {
   destinationBindingClientSecretMock,
   mockServiceBindings,
   providerXsuaaUrl
-} from '../../../packages/core/test/test-util/environment-mocks';
+} from '../../../test-resources/test/test-util/environment-mocks';
 import {
   mockInstanceDestinationsCall,
   mockSubaccountDestinationsCall
-} from '../../../packages/core/test/test-util/destination-service-mocks';
+} from '../../../test-resources/test/test-util/destination-service-mocks';
 
 describe('CacheDestination & CacheClientCredentialToken', () => {
   beforeEach(() => {
@@ -61,12 +65,14 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   });
 
   it('getting the same destination twice should produce a cache hit', async () => {
-    await getDestination('FINAL-DESTINATION', {
+    await getDestination({
+      destinationName: 'FINAL-DESTINATION',
       useCache: true,
       selectionStrategy: alwaysProvider,
       isolationStrategy: IsolationStrategy.Tenant
     });
-    await getDestination('FINAL-DESTINATION', {
+    await getDestination({
+      destinationName: 'FINAL-DESTINATION',
       useCache: true,
       selectionStrategy: alwaysProvider,
       isolationStrategy: IsolationStrategy.Tenant
@@ -76,11 +82,13 @@ describe('CacheDestination & CacheClientCredentialToken', () => {
   it('changing the isolation should produce a cache miss', async () => {
     // The destination-service has an own cahce where only isolation strategy Tenant and Tenant_User are used.
     // In order to also miss the cache there the two allowed strategies must be used.
-    await getDestination('FINAL-DESTINATION', {
+    await getDestination({
+      destinationName: 'FINAL-DESTINATION',
       useCache: true,
       isolationStrategy: IsolationStrategy.Tenant
     });
-    const destinationRequest = getDestination('FINAL-DESTINATION', {
+    const destinationRequest = getDestination({
+      destinationName: 'FINAL-DESTINATION',
       useCache: true,
       isolationStrategy: IsolationStrategy.Tenant_User
     });

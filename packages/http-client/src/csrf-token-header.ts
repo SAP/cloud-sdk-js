@@ -9,13 +9,13 @@ import {
 } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  DestinationNameAndJwt
+  DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpRequestConfig } from './http-client-types';
 import { executeHttpRequest } from '.';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'http-client',
   messageContext: 'csrf-token-header'
 });
 
@@ -27,7 +27,7 @@ const logger = createLogger({
  * @returns A promise to an object containing the CSRF related headers
  */
 export async function buildCsrfHeaders<T extends HttpRequestConfig>(
-  destination: Destination | DestinationNameAndJwt,
+  destination: Destination | DestinationFetchOptions,
   requestConfig: Partial<T>
 ): Promise<Record<string, any>> {
   const csrfHeaders = await makeCsrfRequest(destination, requestConfig);
@@ -62,7 +62,7 @@ export function buildCsrfFetchHeaders(headers: any): Record<string, any> {
 }
 
 function makeCsrfRequest<T extends HttpRequestConfig>(
-  destination: Destination | DestinationNameAndJwt,
+  destination: Destination | DestinationFetchOptions,
   requestConfig: Partial<T>
 ): Promise<Record<string, any>> {
   const axiosConfig: HttpRequestConfig = {

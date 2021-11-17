@@ -1,35 +1,4 @@
 'use strict';
-var __extends =
-  (this && this.__extends) ||
-  (function () {
-    var extendStatics = function (d, b) {
-      extendStatics =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          function (d, b) {
-            d.__proto__ = b;
-          }) ||
-        function (d, b) {
-          for (var p in b)
-            if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-        };
-      return extendStatics(d, b);
-    };
-    return function (d, b) {
-      if (typeof b !== 'function' && b !== null)
-        throw new TypeError(
-          'Class extends value ' + String(b) + ' is not a constructor or null'
-        );
-      extendStatics(d, b);
-      function __() {
-        this.constructor = d;
-      }
-      d.prototype =
-        b === null
-          ? Object.create(b)
-          : ((__.prototype = b.prototype), new __());
-    };
-  })();
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestComplexBaseType =
   exports.TestComplexBaseTypeField =
@@ -40,8 +9,8 @@ exports.TestComplexBaseType =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexBaseType.build]] instead.
  */
@@ -53,36 +22,26 @@ exports.createTestComplexBaseType = createTestComplexBaseType;
  * TestComplexBaseTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-var TestComplexBaseTypeField = /** @class */ (function (_super) {
-  __extends(TestComplexBaseTypeField, _super);
+class TestComplexBaseTypeField extends odata_common_1.ComplexTypeField {
   /**
    * Creates an instance of TestComplexBaseTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  function TestComplexBaseTypeField(fieldName, fieldOf, fieldOptions) {
-    var _this =
-      _super.call(
-        this,
-        fieldName,
-        fieldOf,
-        TestComplexBaseType,
-        fieldOptions
-      ) || this;
-    _this._fieldBuilder = new odata_common_1.FieldBuilder(_this);
+  constructor(fieldName, fieldOf, fieldOptions) {
+    super(fieldName, fieldOf, TestComplexBaseType, fieldOptions);
+    this._fieldBuilder = new odata_common_1.FieldBuilder(this);
     /**
      * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.
      */
-    _this.baseStringProperty = _this._fieldBuilder.buildEdmTypeField(
+    this.baseStringProperty = this._fieldBuilder.buildEdmTypeField(
       'BaseStringProperty',
       'Edm.String',
       true
     );
-    return _this;
   }
-  return TestComplexBaseTypeField;
-})(odata_common_1.ComplexTypeField);
+}
 exports.TestComplexBaseTypeField = TestComplexBaseTypeField;
 var TestComplexBaseType;
 (function (TestComplexBaseType) {
@@ -98,7 +57,7 @@ var TestComplexBaseType;
     }
   ];
   /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexTypeV2` or `deserializeComplexTypeV4` of the `../../../../core` package instead.
+   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
    */
   function build(json) {
     return (0, odata_v4_1.deserializeComplexType)(json, TestComplexBaseType);

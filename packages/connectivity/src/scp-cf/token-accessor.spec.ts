@@ -6,18 +6,18 @@ import {
   providerXsuaaCertUrl,
   providerXsuaaUrl,
   subscriberXsuaaUrl
-} from '../../../core/test/test-util/environment-mocks';
-import { signedJwt } from '../../../core/test/test-util/keys';
+} from '../../../../test-resources/test/test-util/environment-mocks';
+import { signedJwt } from '../../../../test-resources/test/test-util/keys';
 import {
   providerServiceToken,
   providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
-} from '../../../core/test/test-util/mocked-access-tokens';
+} from '../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockClientCredentialsGrantCall,
   mockClientCredentialsGrantWithCertCall
-} from '../../../core/test/test-util/xsuaa-service-mocks';
+} from '../../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { clientCredentialsTokenCache } from './client-credentials-token-cache';
 import { serviceToken } from './token-accessor';
 
@@ -49,7 +49,7 @@ describe('token accessor', () => {
 
     it("uses the JWT's issuer as tenant", async () => {
       const expected = signedJwt({ dummy: 'content' });
-      const userJwt = signedJwt({
+      const jwt = signedJwt({
         iss: 'https://testeroni.example.com'
       });
 
@@ -60,7 +60,7 @@ describe('token accessor', () => {
         destinationBindingClientSecretMock.credentials
       );
 
-      const actual = await serviceToken('destination', { userJwt });
+      const actual = await serviceToken('destination', { jwt });
       expect(actual).toBe(expected);
     });
 
@@ -146,10 +146,10 @@ describe('token accessor', () => {
       );
 
       const providerToken = await serviceToken('destination', {
-        userJwt: providerUserJwt
+        jwt: providerUserJwt
       });
       const subscriberToken = await serviceToken('destination', {
-        userJwt: subscriberUserJwt
+        jwt: subscriberUserJwt
       });
 
       const providerTokenFromCache =
@@ -273,10 +273,10 @@ describe('token accessor', () => {
     });
 
     it('throws an error if the issuer is missing in the JWT', async () => {
-      const userJwt = signedJwt({ NOiss: 'https://testeroni.example.com' });
+      const jwt = signedJwt({ NOiss: 'https://testeroni.example.com' });
 
       await expect(
-        serviceToken('destination', { userJwt })
+        serviceToken('destination', { jwt })
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Property `iss` is missing in the provided user token."'
       );

@@ -1,8 +1,8 @@
 import {
+  AuthenticationType,
   DestinationConfiguration,
   DestinationJson
-} from '../../../connectivity/src/scp-cf/destination/destination';
-import { AuthenticationType } from '../../../connectivity/src/scp-cf/destination/destination-service-types';
+} from '@sap-cloud-sdk/connectivity/internal';
 
 export const destinationName = 'FINAL-DESTINATION';
 export const certificateMultipleResponse: DestinationConfiguration[] = [

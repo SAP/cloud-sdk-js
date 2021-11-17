@@ -14,7 +14,7 @@ import { EnumField } from './selectable/enum-field';
 import { EdmTypeShared, isEdmType } from './edm-types';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'entity-serializer'
 });
 

@@ -11,7 +11,7 @@ import { ResponseDataAccessor } from '../../response-data-accessor';
 import { ResponseData, isHttpSuccessCode } from './batch-response-parser';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'batch-response-transformer'
 });
 

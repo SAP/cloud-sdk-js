@@ -1,8 +1,10 @@
 import nock from 'nock';
-import { sanitizeDestination } from '@sap-cloud-sdk/connectivity';
 import * as httpClient from '@sap-cloud-sdk/http-client';
-import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/src/scp-cf/jwt';
-import { parseDestination } from '@sap-cloud-sdk/connectivity/src/scp-cf/destination/destination';
+import {
+  parseDestination,
+  sanitizeDestination
+} from '@sap-cloud-sdk/connectivity';
+import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import {
   expectAllMocksUsed,
   certificateMultipleResponse,
@@ -15,7 +17,7 @@ import {
   onlyIssuerXsuaaUrl,
   providerXsuaaUrl,
   providerServiceToken
-} from '../../core/test/test-util';
+} from '../../../test-resources/test/test-util';
 import { OpenApiRequestBuilder } from './openapi-request-builder';
 
 const destination = {
@@ -131,10 +133,10 @@ describe('openapi-request-builder', () => {
         limit: 100
       }
     });
-    const response = await requestBuilder.executeRaw(
-      { destinationName: 'ERNIE-UND-CERT' },
-      { iss: onlyIssuerXsuaaUrl }
-    );
+    const response = await requestBuilder.executeRaw({
+      destinationName: 'ERNIE-UND-CERT',
+      iss: onlyIssuerXsuaaUrl
+    });
     expectAllMocksUsed(nocks);
     expect(httpSpy).toHaveBeenLastCalledWith(
       sanitizeDestination(parseDestination(certificateSingleResponse)),

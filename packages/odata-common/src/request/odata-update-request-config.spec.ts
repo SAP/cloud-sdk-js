@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2';
+import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
 import { ODataUpdateRequestConfig } from '@sap-cloud-sdk/odata-common';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { testEntityResourcePath } from '../../../core/test/test-util/test-data';
+import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { uriConverter } from '../../../odata-v2/src/uri-conversion/uri-value-converter';
 
 describe('ODataUpdateRequestConfig', () => {

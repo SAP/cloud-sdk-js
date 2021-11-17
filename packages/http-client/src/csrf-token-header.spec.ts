@@ -5,14 +5,14 @@ import {
   ODataCreateRequestConfig,
   ODataRequest
 } from '@sap-cloud-sdk/odata-common';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2';
+import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   defaultBasicCredentials,
   defaultDestination,
   defaultHost,
   mockHeaderRequest
-} from '../../core/test/test-util';
+} from '../../../test-resources/test/test-util';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 
 const standardHeaders = {

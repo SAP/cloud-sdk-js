@@ -22,13 +22,12 @@ import { getClientCredentialsToken, getUserToken } from './xsuaa-service';
  * @param service - The type of the service or an instance of [[Service]].
  * @param options - Options to influence caching and resilience behavior (see [[CachingOptions]] and [[ResilienceOptions]], respectively) and a JWT. By default, caching and usage of a circuit breaker are enabled.
  * @returns Access token.
- * @internal
  */
 export async function serviceToken(
   service: string | Service,
   options?: CachingOptions &
     ResilienceOptions & {
-      userJwt?: string | JwtPayload;
+      jwt?: string | JwtPayload;
       // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here
       xsuaaCredentials?: XsuaaServiceCredentials;
     }
@@ -56,7 +55,7 @@ export async function serviceToken(
   try {
     const token = await getClientCredentialsToken(
       service,
-      options?.userJwt,
+      options?.jwt,
       options
     );
 
@@ -82,14 +81,13 @@ export async function serviceToken(
  * The token is fetched via a JWT bearer token grant using the user token + client credentials.
  *
  * Throws an error if there is no instance of the given service type or the XSUAA service, or if the request to the XSUAA service fails.
- * @param userJwt - The JWT of the user for whom the access token should be fetched
+ * @param jwt - The JWT of the user for whom the access token should be fetched
  * @param service - The type of the service or an instance of [[Service]].
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns A jwt bearer token.
- * @internal
  */
 export async function jwtBearerToken(
-  userJwt: string,
+  jwt: string,
   service: string | Service,
   options?: ResilienceOptions
 ): Promise<string> {
@@ -100,24 +98,22 @@ export async function jwtBearerToken(
     ...options
   };
 
-  return getUserToken(resolvedService, userJwt, opts);
+  return getUserToken(resolvedService, jwt, opts);
 }
 
 function multiTenantXsuaaCredentials(
   options: {
-    userJwt?: string | JwtPayload;
+    jwt?: string | JwtPayload;
     xsuaaCredentials?: XsuaaServiceCredentials;
   } = {}
 ): XsuaaServiceCredentials {
   const xsuaa = options.xsuaaCredentials
     ? { ...options.xsuaaCredentials }
-    : getXsuaaServiceCredentials(options.userJwt);
+    : getXsuaaServiceCredentials(options.jwt);
 
-  if (options.userJwt) {
+  if (options.jwt) {
     const decodedJwt =
-      typeof options.userJwt === 'string'
-        ? decodeJwt(options.userJwt)
-        : options.userJwt;
+      typeof options.jwt === 'string' ? decodeJwt(options.jwt) : options.jwt;
 
     if (!decodedJwt.iss) {
       throw Error('Property `iss` is missing in the provided user token.');

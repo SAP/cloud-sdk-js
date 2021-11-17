@@ -5,25 +5,24 @@ import {
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   mockVerifyJwt
-} from '../../../../core/test/test-util/destination-service-mocks';
+} from '../../../../../test-resources/test/test-util/destination-service-mocks';
 import {
   onlyIssuerServiceToken,
   providerServiceToken,
-  providerUserJwt,
   subscriberServiceToken,
   subscriberUserJwt
-} from '../../../../core/test/test-util/mocked-access-tokens';
+} from '../../../../../test-resources/test/test-util/mocked-access-tokens';
 import {
   mockServiceBindings,
   onlyIssuerXsuaaUrl
-} from '../../../../core/test/test-util/environment-mocks';
-import { mockServiceToken } from '../../../../core/test/test-util/token-accessor-mocks';
+} from '../../../../../test-resources/test/test-util/environment-mocks';
+import { mockServiceToken } from '../../../../../test-resources/test/test-util/token-accessor-mocks';
 import {
   basicMultipleResponse,
   certificateMultipleResponse,
   certificateSingleResponse,
   destinationName
-} from '../../../../core/test/test-util/example-destination-service-responses';
+} from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import { wrapJwtInHeader } from '../jwt';
 import * as destinationService from './destination-service';
 import { DestinationConfiguration, parseDestination } from './destination';
@@ -34,8 +33,9 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import { Destination } from './destination-service-types';
-import { DestinationOptions, getDestination } from './destination-accessor';
+import { getDestination } from './destination-accessor';
 import { getDestinationFromDestinationService } from './destination-from-service';
+import { DestinationFetchOptions } from './destination-accessor-types';
 
 describe('jwtType x selection strategy combinations. Possible values are {subscriberUserToken,providerUserToken,noUser} and {alwaysSubscriber, alwaysProvider, subscriberFirst}', () => {
   afterEach(() => {
@@ -86,16 +86,17 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
   }
 
   async function fetchDestination(
-    userJwt: string | undefined,
+    jwt: string | undefined,
     selectionStrategy: DestinationSelectionStrategy
   ): Promise<Destination | null> {
-    let options: DestinationOptions = {
+    const options: DestinationFetchOptions = {
+      destinationName: destName,
       selectionStrategy,
       cacheVerificationKeys: false,
-      iasToXsuaaTokenExchange: false
+      iasToXsuaaTokenExchange: false,
+      jwt
     };
-    options = userJwt ? { ...options, userJwt } : options;
-    return getDestination(destName, options);
+    return getDestination(options);
   }
 
   function mockThingsForCombinations(
@@ -129,8 +130,8 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     expect(destination).toBe(null);
   }
 
-  describe('Combinations: subscriberUserToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
-    it('subscriberUserToken && alwaysSubscriberToken: should not send a request to retrieve remote provider destination and return subscriber destination.', async () => {
+  describe('userToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
+    it('alwaysSubscriberToken: should not send a request to retrieve remote provider destination and return subscriber destination.', async () => {
       const mocks = mockThingsForCombinations();
 
       const actual = await fetchDestination(
@@ -143,14 +144,14 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       mocks.providerMocks.forEach(mock => expect(mock.isDone()).toBe(false));
     });
 
-    it('subscriberUserToken && alwaysProvider: should not sed a request to retrieve remote subscriber destination and return provider destination', async () => {
+    it('alwaysProvider: should not sed a request to retrieve remote subscriber destination and return provider destination', async () => {
       const mocks = mockThingsForCombinations();
 
       const actual = await fetchDestination(subscriberUserJwt, alwaysProvider);
       assertSubscriberNotCalledAndProviderFound(mocks, actual!);
     });
 
-    it('subscriberUserToken && subscriberFirst: should try subscriber first (found something), provider not called and return subscriber destination', async () => {
+    it('subscriberFirst: should try subscriber first (found something), provider not called and return subscriber destination', async () => {
       mockThingsForCombinations();
 
       const requestSpy = jest.spyOn(
@@ -193,29 +194,6 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     });
   });
 
-  describe('providerUserToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
-    it('providerUserToken && alwaysSubscriber: should return null since the token does not match subscriber', async () => {
-      const mocks = mockThingsForCombinations();
-
-      const actual = await fetchDestination(providerUserJwt, alwaysSubscriber);
-      assertNothingCalledAndNullFound(mocks, actual);
-    });
-
-    it('providerUserToken && alwaysProvider: should not send a request to retrieve remote subscriber destination and return provider destination.', async () => {
-      const mocks = mockThingsForCombinations();
-
-      const actual = await fetchDestination(providerUserJwt, alwaysProvider);
-      assertSubscriberNotCalledAndProviderFound(mocks, actual!);
-    });
-
-    it('providerUserToken && subscriberFirst: should not sed a request to retrieve remote subscriber destination and return provider destination.', async () => {
-      const mocks = mockThingsForCombinations();
-
-      const actual = await fetchDestination(providerUserJwt, subscriberFirst);
-      assertSubscriberNotCalledAndProviderFound(mocks, actual!);
-    });
-  });
-
   describe('no UserToken x {alwaysSubscriber,alwaysProvider,subscriberFirst}', () => {
     it('retrieves destination without specifying userJwt', async () => {
       mockServiceBindings();
@@ -229,7 +207,8 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
         providerServiceToken
       );
 
-      const actual = await getDestination(destinationName, {
+      const actual = await getDestination({
+        destinationName,
         cacheVerificationKeys: false
       });
       const expected = parseDestination(basicMultipleResponse[0]);
@@ -239,13 +218,14 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
     it('it warns if you use iss property and user jwt', async () => {
       mockServiceBindings();
       const logger = createLogger({
-        package: 'core',
+        package: 'connectivity',
         messageContext: 'destination-accessor-service'
       });
       const warnSpy = jest.spyOn(logger, 'warn');
       await expect(
-        getDestinationFromDestinationService('someDest', {
-          userJwt: 'someJwt',
+        getDestinationFromDestinationService({
+          destinationName: 'someDest',
+          jwt: 'someJwt',
           iss: 'someIss',
           iasToXsuaaTokenExchange: false
         })
@@ -278,18 +258,16 @@ describe('jwtType x selection strategy combinations. Possible values are {subscr
       );
 
       const logger = createLogger({
-        package: 'core',
+        package: 'connectivity',
         messageContext: 'destination-accessor-service'
       });
       const infoSpy = jest.spyOn(logger, 'info');
       const expected = parseDestination(certificateSingleResponse);
-      const actual = await getDestinationFromDestinationService(
-        'ERNIE-UND-CERT',
-        {
-          iss: onlyIssuerXsuaaUrl,
-          cacheVerificationKeys: false
-        }
-      );
+      const actual = await getDestinationFromDestinationService({
+        destinationName: 'ERNIE-UND-CERT',
+        iss: onlyIssuerXsuaaUrl,
+        cacheVerificationKeys: false
+      });
       expect(actual).toMatchObject(expected);
       expect(infoSpy).toHaveBeenCalledWith(
         'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'

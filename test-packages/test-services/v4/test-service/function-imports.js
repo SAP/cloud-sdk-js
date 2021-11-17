@@ -18,28 +18,24 @@ exports.functionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var odata_common_1 = require('@sap-cloud-sdk/odata-common');
-var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-var TestEntity_1 = require('./TestEntity');
-var TestComplexType_1 = require('./TestComplexType');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const TestEntity_1 = require('./TestEntity');
+const TestComplexType_1 = require('./TestComplexType');
 /**
  * Test Function Import Edm Return Type.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEdmReturnType(parameters) {
-  var params = {};
+  const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnType',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForEdmType)(
-        data,
-        function (val) {
-          return (0, odata_v4_1.edmToTs)(val.value, 'Edm.Boolean');
-        }
-      );
-    },
+    data =>
+      (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Boolean')
+      ),
     params
   );
 }
@@ -50,18 +46,14 @@ exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEdmReturnTypeCollection(parameters) {
-  var params = {};
+  const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEdmReturnTypeCollection',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForEdmTypeList)(
-        data,
-        function (val) {
-          return (0, odata_v4_1.edmToTs)(val, 'Edm.String');
-        }
-      );
-    },
+    data =>
+      (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val =>
+        (0, odata_v4_1.edmToTs)(val, 'Edm.String')
+      ),
     params
   );
 }
@@ -73,7 +65,7 @@ exports.testFunctionImportEdmReturnTypeCollection =
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportNullableTest(parameters) {
-  var params = {
+  const params = {
     nullablePerDefault: new odata_common_1.FunctionImportParameter(
       'NullablePerDefault',
       'Edm.String',
@@ -93,14 +85,10 @@ function testFunctionImportNullableTest(parameters) {
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportNullableTest',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForEdmTypeList)(
-        data,
-        function (val) {
-          return (0, odata_v4_1.edmToTs)(val, 'Edm.String');
-        }
-      );
-    },
+    data =>
+      (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val =>
+        (0, odata_v4_1.edmToTs)(val, 'Edm.String')
+      ),
     params
   );
 }
@@ -111,16 +99,15 @@ exports.testFunctionImportNullableTest = testFunctionImportNullableTest;
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEntityReturnType(parameters) {
-  var params = {};
+  const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForEntity)(
+    data =>
+      (0, odata_v4_1.transformReturnValueForEntity)(
         data,
         TestEntity_1.TestEntity
-      );
-    },
+      ),
     params
   );
 }
@@ -131,16 +118,15 @@ exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportEntityReturnTypeCollection(parameters) {
-  var params = {};
+  const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnTypeCollection',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForEntityList)(
+    data =>
+      (0, odata_v4_1.transformReturnValueForEntityList)(
         data,
         TestEntity_1.TestEntity
-      );
-    },
+      ),
     params
   );
 }
@@ -152,16 +138,15 @@ exports.testFunctionImportEntityReturnTypeCollection =
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportSharedEntityReturnType(parameters) {
-  var params = {};
+  const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnType',
-    function (data) {
-      return (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
+    data =>
+      (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnType'
-      );
-    },
+      ),
     params
   );
 }
@@ -173,16 +158,15 @@ exports.testFunctionImportSharedEntityReturnType =
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportSharedEntityReturnTypeCollection(parameters) {
-  var params = {};
+  const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnTypeCollection',
-    function (data) {
-      return (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
+    data =>
+      (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnTypeCollection'
-      );
-    },
+      ),
     params
   );
 }
@@ -194,21 +178,17 @@ exports.testFunctionImportSharedEntityReturnTypeCollection =
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportComplexReturnType(parameters) {
-  var params = {};
+  const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnType',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForComplexType)(
-        data,
-        function (data) {
-          return (0, odata_v4_1.deserializeComplexType)(
-            data,
-            TestComplexType_1.TestComplexType
-          );
-        }
-      );
-    },
+    data =>
+      (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
+        (0, odata_v4_1.deserializeComplexType)(
+          data,
+          TestComplexType_1.TestComplexType
+        )
+      ),
     params
   );
 }
@@ -220,21 +200,17 @@ exports.testFunctionImportComplexReturnType =
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportComplexReturnTypeCollection(parameters) {
-  var params = {};
+  const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportComplexReturnTypeCollection',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForComplexTypeList)(
-        data,
-        function (data) {
-          return (0, odata_v4_1.deserializeComplexType)(
-            data,
-            TestComplexType_1.TestComplexType
-          );
-        }
-      );
-    },
+    data =>
+      (0, odata_v4_1.transformReturnValueForComplexTypeList)(data, data =>
+        (0, odata_v4_1.deserializeComplexType)(
+          data,
+          TestComplexType_1.TestComplexType
+        )
+      ),
     params
   );
 }
@@ -246,7 +222,7 @@ exports.testFunctionImportComplexReturnTypeCollection =
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportMultipleParams(parameters) {
-  var params = {
+  const params = {
     stringParam: new odata_common_1.FunctionImportParameter(
       'StringParam',
       'Edm.String',
@@ -271,14 +247,10 @@ function testFunctionImportMultipleParams(parameters) {
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportMultipleParams',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForEdmType)(
-        data,
-        function (val) {
-          return (0, odata_v4_1.edmToTs)(val.value, 'Edm.Boolean');
-        }
-      );
-    },
+    data =>
+      (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Boolean')
+      ),
     params
   );
 }
@@ -289,39 +261,28 @@ exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function testFunctionImportWithDifferentName(parameters) {
-  var params = {};
+  const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportWithDifferentName',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForUndefined)(
-        data,
-        function (val) {
-          return undefined;
-        }
-      );
-    },
+    data =>
+      (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined),
     params
   );
 }
 exports.testFunctionImportWithDifferentName =
   testFunctionImportWithDifferentName;
 exports.functionImports = {
-  testFunctionImportEdmReturnType: testFunctionImportEdmReturnType,
-  testFunctionImportEdmReturnTypeCollection:
-    testFunctionImportEdmReturnTypeCollection,
-  testFunctionImportNullableTest: testFunctionImportNullableTest,
-  testFunctionImportEntityReturnType: testFunctionImportEntityReturnType,
-  testFunctionImportEntityReturnTypeCollection:
-    testFunctionImportEntityReturnTypeCollection,
-  testFunctionImportSharedEntityReturnType:
-    testFunctionImportSharedEntityReturnType,
-  testFunctionImportSharedEntityReturnTypeCollection:
-    testFunctionImportSharedEntityReturnTypeCollection,
-  testFunctionImportComplexReturnType: testFunctionImportComplexReturnType,
-  testFunctionImportComplexReturnTypeCollection:
-    testFunctionImportComplexReturnTypeCollection,
-  testFunctionImportMultipleParams: testFunctionImportMultipleParams,
-  testFunctionImportWithDifferentName: testFunctionImportWithDifferentName
+  testFunctionImportEdmReturnType,
+  testFunctionImportEdmReturnTypeCollection,
+  testFunctionImportNullableTest,
+  testFunctionImportEntityReturnType,
+  testFunctionImportEntityReturnTypeCollection,
+  testFunctionImportSharedEntityReturnType,
+  testFunctionImportSharedEntityReturnTypeCollection,
+  testFunctionImportComplexReturnType,
+  testFunctionImportComplexReturnTypeCollection,
+  testFunctionImportMultipleParams,
+  testFunctionImportWithDifferentName
 };
 //# sourceMappingURL=function-imports.js.map

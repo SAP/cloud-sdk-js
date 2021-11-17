@@ -1,1 +1,4 @@
-export { OpenApiRequestBuilder } from './openapi-request-builder';
+export {
+  OpenApiRequestBuilder,
+  OpenApiRequestParameters
+} from './openapi-request-builder';

@@ -5,7 +5,8 @@ import {
   ODataGetAllRequestConfig,
   ODataRequest,
   ODataUpdateRequestConfig,
-  buildHeaders } from '@sap-cloud-sdk/odata-common/internal';
+  buildHeaders
+} from '@sap-cloud-sdk/odata-common/internal';
 import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
 import {
   defaultDestination,

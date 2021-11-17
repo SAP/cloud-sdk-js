@@ -156,3 +156,7 @@ export {
   FilterFunctionPrimitiveParameterType
 } from './filter/filter-function-base';
 export { toFilterableList } from './selectable/one-to-many-link';
+export { fromEdmToNumber, fromNumberToEdm } from './payload-value-converter';
+export { extractCustomFields } from './entity-deserializer';
+export { buildHeaders } from './header-builder';
+export { getEntityConstructor } from './selectable/complex-type-field';

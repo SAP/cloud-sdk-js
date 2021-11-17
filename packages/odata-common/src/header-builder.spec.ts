@@ -4,10 +4,9 @@ import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   ODataGetAllRequestConfig,
   ODataRequest,
-  ODataUpdateRequestConfig
-} from '@sap-cloud-sdk/odata-common/internal';
+  ODataUpdateRequestConfig,
+  buildHeaders } from '@sap-cloud-sdk/odata-common/internal';
 import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
-import { buildHeaders } from '@sap-cloud-sdk/odata-common/internal/dist/header-builder';
 import {
   defaultDestination,
   mockHeaderRequest

@@ -8,7 +8,7 @@ import {
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common';
 import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
-import { oDataUri as oDataUriV4 } from '@sap-cloud-sdk/odata-v4';
+import { oDataUri as oDataUriV4 } from '@sap-cloud-sdk/odata-v4/internal';
 import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { TestEntity as TestEntityV4 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { Destination } from '@sap-cloud-sdk/connectivity';

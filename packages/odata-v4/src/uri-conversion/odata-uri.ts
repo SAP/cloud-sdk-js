@@ -9,6 +9,7 @@ const getExpandWrapped = (selects, expands, entityConstructor) =>
 
 /**
  * Instance of the [[ODataUri]] conversion interface for OData v2.
+ * @internal
  */
 export const oDataUri = createODataUri(
   uriConverter,

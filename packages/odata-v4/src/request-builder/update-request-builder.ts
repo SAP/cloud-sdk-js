@@ -3,8 +3,7 @@ import {
   Destination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-// eslint-disable-next-line import/no-internal-modules
-import { HttpResponse } from '@sap-cloud-sdk/http-client/internal';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   Constructable,
   UpdateRequestBuilderBase

@@ -12,7 +12,6 @@ export interface DestinationHttpRequestConfig {
 
 /**
  * HTTP Methods supported by the http-client.
- * @internal
  */
 export type Method =
   | 'get'
@@ -64,15 +63,11 @@ interface KnownHttpResponseFields {
   headers: any;
   request: any;
 }
-/**
- * @internal
- */
+
 export interface HttpResponse extends KnownHttpResponseFields {
   [otherKey: string]: any;
 }
-/**
- * @internal
- */
+
 export interface HttpRequestOptions {
   // TODO: 2.0 update docs when default value is changed to true.
   /**

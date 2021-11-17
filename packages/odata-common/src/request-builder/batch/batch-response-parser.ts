@@ -6,8 +6,7 @@ import {
   webEOL,
   unixEOL
 } from '@sap-cloud-sdk/util';
-// eslint-disable-next-line import/no-internal-modules
-import { HttpResponse } from '@sap-cloud-sdk/http-client/internal';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 
 const logger = createLogger({
   package: 'odata-common',

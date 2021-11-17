@@ -2,8 +2,7 @@ import {
   Destination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-// eslint-disable-next-line import/no-internal-modules
-import { HttpResponse } from '@sap-cloud-sdk/http-client/internal';
+import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
 import { Constructable, EntityBase } from '../../entity-base';

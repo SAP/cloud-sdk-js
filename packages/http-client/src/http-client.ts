@@ -36,7 +36,6 @@ const logger = createLogger({
  * @param destination - A destination or a destination name and a JWT.
  * @param customHeaders - Custom default headers for the resulting HTTP request.
  * @returns A [[DestinationHttpRequestConfig]].
- * @internal
  */
 export async function buildHttpRequest(
   destination: Destination | DestinationFetchOptions,

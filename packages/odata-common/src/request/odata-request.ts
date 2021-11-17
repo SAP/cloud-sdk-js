@@ -14,13 +14,9 @@ import {
   Destination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
-import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
-/* eslint-disable import/no-internal-modules */
-import {
-  filterCustomRequestConfig,
-  HttpResponse
-} from '@sap-cloud-sdk/http-client/internal';
-/* eslint-enable import/no-internal-modules */
+import { executeHttpRequest,
+  HttpResponse } from '@sap-cloud-sdk/http-client';
+import { filterCustomRequestConfig } from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 /**

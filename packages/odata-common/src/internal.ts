@@ -160,3 +160,4 @@ export { fromEdmToNumber, fromNumberToEdm } from './payload-value-converter';
 export { extractCustomFields } from './entity-deserializer';
 export { buildHeaders } from './header-builder';
 export { getEntityConstructor } from './selectable/complex-type-field';
+export { ErrorResponse } from './batch-response';

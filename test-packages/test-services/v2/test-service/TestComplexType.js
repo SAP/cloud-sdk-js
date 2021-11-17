@@ -6,7 +6,7 @@ exports.TestComplexType =
     void 0;
 const TestNestedComplexType_1 = require('./TestNestedComplexType');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
  */

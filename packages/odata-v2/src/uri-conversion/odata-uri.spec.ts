@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
-import { and, filterFunction, not, or } from '@sap-cloud-sdk/odata-common';
+import { and, filterFunction, not, or } from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   testFilterBoolean,

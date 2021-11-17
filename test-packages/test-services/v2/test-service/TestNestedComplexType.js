@@ -11,7 +11,7 @@ exports.TestNestedComplexType =
  */
 const TestLvl2NestedComplexType_1 = require('./TestLvl2NestedComplexType');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * @deprecated Since v1.6.0. Use [[TestNestedComplexType.build]] instead.
  */

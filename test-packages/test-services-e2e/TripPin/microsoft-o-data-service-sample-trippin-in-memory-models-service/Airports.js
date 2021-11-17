@@ -9,7 +9,7 @@ exports.Airports = void 0;
 const AirportsRequestBuilder_1 = require('./AirportsRequestBuilder');
 const AirportLocation_1 = require('./AirportLocation');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
  */

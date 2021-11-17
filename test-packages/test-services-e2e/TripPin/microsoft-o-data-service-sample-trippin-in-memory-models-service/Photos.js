@@ -8,7 +8,7 @@ exports.Photos = void 0;
  */
 const PhotosRequestBuilder_1 = require('./PhotosRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */

@@ -8,7 +8,7 @@ exports.TestEntityWithSharedEntityType1 = void 0;
  */
 const TestEntityWithSharedEntityType1RequestBuilder_1 = require('./TestEntityWithSharedEntityType1RequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType1" of service "API_TEST_SRV".
  */

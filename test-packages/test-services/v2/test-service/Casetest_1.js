@@ -8,7 +8,7 @@ exports.Casetest_1 = void 0;
  */
 const Casetest_1RequestBuilder_1 = require('./Casetest_1RequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_CASETEST" of service "API_TEST_SRV".
  */

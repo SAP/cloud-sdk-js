@@ -10,7 +10,7 @@ const TestEntity1RequestBuilder_1 = require('./TestEntity1RequestBuilder');
 const TestComplexType1_1 = require('./TestComplexType1');
 const TestEnumType1_1 = require('./TestEnumType1');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntity1" of service "API_MULTIPLE_SCHEMAS_SRV".
  */

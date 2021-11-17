@@ -8,7 +8,7 @@ describe('imports', () => {
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
         namedImports: ['RequestBuilder', 'Time']
       },
       {

@@ -10,7 +10,7 @@ const PeopleRequestBuilder_1 = require('./PeopleRequestBuilder');
 const Location_1 = require('./Location');
 const PersonGender_1 = require('./PersonGender');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
  */

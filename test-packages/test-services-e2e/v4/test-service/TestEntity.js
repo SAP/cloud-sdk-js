@@ -8,7 +8,7 @@ exports.TestEntity = void 0;
  */
 const TestEntityRequestBuilder_1 = require('./TestEntityRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "TestEntity" of service "TestService".
  */

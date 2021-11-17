@@ -10,7 +10,7 @@ exports.TestLvl2NestedComplexType =
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * @deprecated Since v1.6.0. Use [[TestLvl2NestedComplexType.build]] instead.
  */

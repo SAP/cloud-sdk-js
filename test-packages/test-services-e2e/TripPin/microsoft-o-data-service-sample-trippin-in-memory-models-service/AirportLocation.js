@@ -11,7 +11,7 @@ exports.AirportLocation =
  */
 const City_1 = require('./City');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * @deprecated Since v1.6.0. Use [[AirportLocation.build]] instead.
  */

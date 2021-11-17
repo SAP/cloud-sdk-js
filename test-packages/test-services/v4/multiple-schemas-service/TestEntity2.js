@@ -8,7 +8,7 @@ exports.TestEntity2 = void 0;
  */
 const TestEntity2RequestBuilder_1 = require('./TestEntity2RequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntity2" of service "API_MULTIPLE_SCHEMAS_SRV".
  */

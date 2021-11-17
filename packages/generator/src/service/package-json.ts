@@ -43,11 +43,11 @@ export async function packageJson(
             : {})
         },
         dependencies: {
-          '@sap-cloud-sdk/odata-common': `^${await getSdkVersion()}`,
+          '@sap-cloud-sdk/odata-common/internal': `^${await getSdkVersion()}`,
           [oDataModule]: `^${await getSdkVersion()}`
         },
         peerDependencies: {
-          '@sap-cloud-sdk/odata-common': `^${await getSdkVersion()}`,
+          '@sap-cloud-sdk/odata-common/internal': `^${await getSdkVersion()}`,
           [oDataModule]: `^${await getSdkVersion()}`
         },
         devDependencies: {

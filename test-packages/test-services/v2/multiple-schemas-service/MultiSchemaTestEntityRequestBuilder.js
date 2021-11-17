@@ -6,7 +6,7 @@ exports.MultiSchemaTestEntityRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const MultiSchemaTestEntity_1 = require('./MultiSchemaTestEntity');
 /**

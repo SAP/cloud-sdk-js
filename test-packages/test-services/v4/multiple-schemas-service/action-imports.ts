@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import '@sap-cloud-sdk/odata-common';
+import '@sap-cloud-sdk/odata-common/internal';
 import {
   deserializeComplexType,
   ActionImportRequestBuilder,

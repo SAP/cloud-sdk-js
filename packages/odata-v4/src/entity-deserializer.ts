@@ -1,8 +1,9 @@
+/* eslint-disable import/no-internal-modules */
 import {
   EdmTypeShared,
   entityDeserializer as entityDeserializerBase,
   EntityDeserializer
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { EdmToPrimitive, edmToTs } from './payload-value-converter';
 import { extractODataEtag } from './extract-odata-etag';
 import { getLinkedCollectionResult } from './request-builder/response-data-accessor';

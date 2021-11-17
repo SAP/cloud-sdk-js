@@ -12,7 +12,7 @@ const TestEnumType_1 = require('./TestEnumType');
 const TestEnumTypeInt64_1 = require('./TestEnumTypeInt64');
 const TestEnumTypeWithOneMember_1 = require('./TestEnumTypeWithOneMember');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */

@@ -1,6 +1,6 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { Filter, GetAllRequestBuilderBase } from '@sap-cloud-sdk/odata-common';
+import { Filter, GetAllRequestBuilderBase } from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntity as TestEntityV4 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import nock from 'nock';

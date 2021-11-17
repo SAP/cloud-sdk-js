@@ -8,7 +8,7 @@ exports.TestEntityLink = void 0;
  */
 const TestEntityLinkRequestBuilder_1 = require('./TestEntityLinkRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
  */

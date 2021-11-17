@@ -8,7 +8,7 @@ exports.TestEntityEndsWith = void 0;
  */
 const TestEntityEndsWithRequestBuilder_1 = require('./TestEntityEndsWithRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityEndsWithCollection" of service "API_TEST_SRV".
  */

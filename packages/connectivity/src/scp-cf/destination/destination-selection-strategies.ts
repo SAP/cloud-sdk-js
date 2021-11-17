@@ -23,7 +23,6 @@ export type DestinationSelectionStrategy = (
  * @param allDestinations - Retrieved destinations.
  * @param destinationName - Name of the destination to retrieve.
  * @returns the destination to retrieve, returns `null`, if no matched provider destination is found.
- * @internal
  */
 export function alwaysProvider(
   allDestinations: AllDestinations,
@@ -37,7 +36,6 @@ export function alwaysProvider(
  * @param allDestinations - Retrieved destinations.
  * @param destinationName - Name of the destination to retrieve.
  * @returns the destination to retrieve, returns `null`, if no matched subscriber destination is found.
- * @internal
  */
 export function alwaysSubscriber(
   allDestinations: AllDestinations,
@@ -51,7 +49,6 @@ export function alwaysSubscriber(
  * @param allDestinations - Retrieved destinations.
  * @param destinationName - Name of the destination to retrieve.
  * @returns the destination to retrieve, returns `null` if no matched destination is found.
- * @internal
  */
 export function subscriberFirst(
   allDestinations: AllDestinations,

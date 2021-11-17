@@ -1,5 +1,4 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
-// eslint-disable-next-line import/no-internal-modules
 import { InstructionWithText } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiOperation } from '../openapi-types';
 import { getOperationParamCode } from './code-sample-util';

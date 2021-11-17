@@ -1,5 +1,4 @@
 import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
-// eslint-disable-next-line import/no-internal-modules
 import { getSdkVersion } from '@sap-cloud-sdk/generator-common/internal';
 
 export async function packageJson(

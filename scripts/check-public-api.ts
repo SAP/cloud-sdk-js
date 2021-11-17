@@ -4,12 +4,10 @@ import { GlobSync } from 'glob';
 import { createLogger, flatten, unixEOL } from '@sap-cloud-sdk/util';
 import mock from 'mock-fs';
 import { CompilerOptions } from 'typescript';
-/* eslint-disable import/no-internal-modules */
 import {
   readCompilerOptions,
   transpileDirectory
 } from '@sap-cloud-sdk/generator-common/internal';
-/* eslint-enable import/no-internal-modules */
 const { readFile } = promises;
 const logger = createLogger('check-public-api');
 const pathToTsConfigRoot = join(__dirname, '../tsconfig.json');

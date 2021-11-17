@@ -1,11 +1,15 @@
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { alwaysProvider } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-selection-strategies';
-import { destinationCache } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-cache';
-import { destinationServiceCache } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-service-cache';
-import { clientCredentialsTokenCache } from '@sap-cloud-sdk/connectivity/dist/scp-cf/client-credentials-token-cache';
-import { getDestination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination/destination-accessor';
-import { IsolationStrategy } from '@sap-cloud-sdk/connectivity/dist/scp-cf/cache';
+import {
+  alwaysProvider,
+  getDestination,
+  IsolationStrategy
+} from '@sap-cloud-sdk/connectivity';
+import {
+  destinationCache,
+  destinationServiceCache,
+  clientCredentialsTokenCache
+} from '@sap-cloud-sdk/connectivity/internal';
 import { mockClientCredentialsGrantCall } from '../../../test-resources/test/test-util/xsuaa-service-mocks';
 import { privateKey } from '../../../test-resources/test/test-util/keys';
 import {

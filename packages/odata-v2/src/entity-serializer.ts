@@ -20,12 +20,16 @@ export const serializeEntity = entitySerializer.serializeEntity;
  * @internal
  */
 export const serializeComplexType = entitySerializer.serializeComplexType;
+
 /**
  * @internal
  */
 export const serializeEntityNonCustomFields =
   entitySerializer.serializeEntityNonCustomFields;
 
+/**
+ * @internal
+ */
 export {
   entitySerializer as entitySerializerV2,
   serializeEntity as serializeEntityV2,

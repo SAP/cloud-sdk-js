@@ -34,7 +34,6 @@ export function sanitizeDestination(
  * This function only accepts destination configurations of type 'HTTP' and will error if no 'URL' is given.
  * @param destinationJson - A JSON object returned by the destination service.
  * @returns An SDK compatible destination object.
- * @internal
  */
 export function parseDestination(
   destinationJson: DestinationJson | DestinationConfiguration

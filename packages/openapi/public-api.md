@@ -2,4 +2,3 @@
 
 - OpenApiRequestBuilder
   - OpenApiRequestParameters
-  - Method

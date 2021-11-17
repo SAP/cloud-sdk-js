@@ -1,5 +1,4 @@
 import nock = require('nock');
-import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
   Constructable,
   ODataCreateRequestConfig,
@@ -8,11 +7,12 @@ import {
   ODataRequest,
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common';
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2';
+import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
 import { oDataUri as oDataUriV4 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { TestEntity as TestEntityV4 } from '@sap-cloud-sdk/test-services/v4/test-service';
-import { basicHeader } from '@sap-cloud-sdk/connectivity/src/scp-cf/authorization-header';
+import { Destination } from '@sap-cloud-sdk/connectivity';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 
 export const defaultHost = 'http://localhost';
 const defaultCsrfToken = 'mocked-x-csrf-token';

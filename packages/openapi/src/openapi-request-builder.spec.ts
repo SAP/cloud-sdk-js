@@ -4,7 +4,6 @@ import {
   parseDestination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
-// eslint-disable-next-line import/no-internal-modules
 import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/internal';
 import {
   expectAllMocksUsed,

@@ -1,7 +1,6 @@
 import {
   EdmTypeCommon,
   ExclusiveEdmTypeV2
-  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**

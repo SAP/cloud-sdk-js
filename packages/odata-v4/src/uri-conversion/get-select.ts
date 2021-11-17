@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-internal-modules
 import { Selectable } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 

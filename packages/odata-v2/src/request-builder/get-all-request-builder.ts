@@ -6,7 +6,6 @@ import {
   GetAllRequestBuilderBase,
   and,
   ODataGetAllRequestConfig
-  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';

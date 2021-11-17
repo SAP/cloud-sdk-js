@@ -8,7 +8,6 @@ import {
   BatchResponse,
   parseBatchResponse,
   BatchRequestBuilder
-  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 import { entityDeserializer } from '../entity-deserializer';
 import { responseDataAccessor } from './response-data-accessor';

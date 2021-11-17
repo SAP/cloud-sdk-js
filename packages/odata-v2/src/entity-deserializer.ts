@@ -2,7 +2,6 @@ import {
   entityDeserializer as entityDeserializerBase,
   EntityDeserializer,
   EdmTypeShared
-  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 import { EdmToPrimitive, edmToTs } from './payload-value-converter';
 import { extractODataEtag } from './extract-odata-etag';

@@ -8,7 +8,6 @@ import {
   createFilterFunction,
   numberReturnTypeMapping,
   CollectionFilterFunction
-  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from './entity';
 import { DateFilterFunction } from './filter/date-filter-function';

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-internal-modules
 import { EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
 import { createLogger, ODataVersion } from '@sap-cloud-sdk/util';
 import {

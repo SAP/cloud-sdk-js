@@ -4,7 +4,6 @@ import {
   UriConverter,
   uriConvertersCommon,
   createUriConverter
-  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 import { edmToTs, serializers } from '../payload-value-converter';
 import { EdmType } from '../edm-types';

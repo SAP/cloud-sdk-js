@@ -2,7 +2,6 @@ import {
   FunctionImportParameters,
   RequestMethodType,
   ActionFunctionImportRequestBuilderBase
-  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 import { oDataUri } from '../uri-conversion/odata-uri';
 import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';

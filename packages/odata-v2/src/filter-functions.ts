@@ -4,7 +4,6 @@ import {
   BooleanFilterFunction,
   filterFunction,
   filterFunctions as filterFunctionsCommon
-  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from './entity';
 

@@ -6,13 +6,13 @@ exports.MultiSchemaTestEntityRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const MultiSchemaTestEntity_1 = require('./MultiSchemaTestEntity');
 /**
  * Request builder class for operations supported on the [[MultiSchemaTestEntity]] entity.
  */
-class MultiSchemaTestEntityRequestBuilder extends odata_common_1.RequestBuilder {
+class MultiSchemaTestEntityRequestBuilder extends internal_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `MultiSchemaTestEntity` entity based on its keys.
    * @param keyProperty Key property. See [[MultiSchemaTestEntity.keyProperty]].

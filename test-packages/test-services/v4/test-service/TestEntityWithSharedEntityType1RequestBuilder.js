@@ -6,13 +6,13 @@ exports.TestEntityWithSharedEntityType1RequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityWithSharedEntityType1_1 = require('./TestEntityWithSharedEntityType1');
 /**
  * Request builder class for operations supported on the [[TestEntityWithSharedEntityType1]] entity.
  */
-class TestEntityWithSharedEntityType1RequestBuilder extends odata_common_1.RequestBuilder {
+class TestEntityWithSharedEntityType1RequestBuilder extends internal_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityWithSharedEntityType1` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityWithSharedEntityType1.keyProperty]].

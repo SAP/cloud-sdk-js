@@ -8,7 +8,7 @@ exports.TestEntityLvl3MultiLink = void 0;
  */
 const TestEntityLvl3MultiLinkRequestBuilder_1 = require('./TestEntityLvl3MultiLinkRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityLvl3MultiLink" of service "API_TEST_SRV".
  */
@@ -56,9 +56,7 @@ TestEntityLvl3MultiLink._entityName = 'A_TestEntityLvl3MultiLink';
  */
 TestEntityLvl3MultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityLvl3MultiLink) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(
-    TestEntityLvl3MultiLink
-  );
+  const _fieldBuilder = new internal_1.FieldBuilder(TestEntityLvl3MultiLink);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -97,7 +95,7 @@ TestEntityLvl3MultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All fields selector.
    */
-  TestEntityLvl3MultiLink.ALL_FIELDS = new odata_common_1.AllFields(
+  TestEntityLvl3MultiLink.ALL_FIELDS = new internal_1.AllFields(
     '*',
     TestEntityLvl3MultiLink
   );

@@ -10,7 +10,7 @@ const TestEntity1RequestBuilder_1 = require('./TestEntity1RequestBuilder');
 const TestComplexType1_1 = require('./TestComplexType1');
 const TestEnumType1_1 = require('./TestEnumType1');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntity1" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
@@ -55,7 +55,7 @@ TestEntity1._entityName = 'A_TestEntity1';
  */
 TestEntity1._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntity1) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntity1);
+  const _fieldBuilder = new internal_1.FieldBuilder(TestEntity1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -104,7 +104,7 @@ TestEntity1._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All fields selector.
    */
-  TestEntity1.ALL_FIELDS = new odata_common_1.AllFields('*', TestEntity1);
+  TestEntity1.ALL_FIELDS = new internal_1.AllFields('*', TestEntity1);
   /**
    * All key fields of the TestEntity1 entity.
    */

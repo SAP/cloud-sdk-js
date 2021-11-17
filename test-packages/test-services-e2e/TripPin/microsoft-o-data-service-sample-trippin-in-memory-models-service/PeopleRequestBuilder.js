@@ -6,13 +6,13 @@ exports.PeopleRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const People_1 = require('./People');
 /**
  * Request builder class for operations supported on the [[People]] entity.
  */
-class PeopleRequestBuilder extends odata_common_1.RequestBuilder {
+class PeopleRequestBuilder extends internal_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `People` entity based on its keys.
    * @param userName Key property. See [[People.userName]].

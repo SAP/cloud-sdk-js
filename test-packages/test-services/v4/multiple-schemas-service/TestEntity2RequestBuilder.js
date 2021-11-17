@@ -6,13 +6,13 @@ exports.TestEntity2RequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntity2_1 = require('./TestEntity2');
 /**
  * Request builder class for operations supported on the [[TestEntity2]] entity.
  */
-class TestEntity2RequestBuilder extends odata_common_1.RequestBuilder {
+class TestEntity2RequestBuilder extends internal_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntity2` entity based on its keys.
    * @param keyPropertyString Key property. See [[TestEntity2.keyPropertyString]].

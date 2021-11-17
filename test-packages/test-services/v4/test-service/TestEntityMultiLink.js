@@ -8,7 +8,7 @@ exports.TestEntityMultiLink = void 0;
  */
 const TestEntityMultiLinkRequestBuilder_1 = require('./TestEntityMultiLinkRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
  */
@@ -58,7 +58,7 @@ TestEntityMultiLink._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const TestEntityLvl2MultiLink_1 = require('./TestEntityLvl2MultiLink');
 const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
 (function (TestEntityMultiLink) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityMultiLink);
+  const _fieldBuilder = new internal_1.FieldBuilder(TestEntityMultiLink);
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -108,7 +108,7 @@ const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the one-to-many navigation property [[toMultiLink1]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityMultiLink.TO_MULTI_LINK_1 = new odata_common_1.OneToManyLink(
+  TestEntityMultiLink.TO_MULTI_LINK_1 = new internal_1.OneToManyLink(
     'to_MultiLink1',
     TestEntityMultiLink,
     TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink
@@ -117,7 +117,7 @@ const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityMultiLink.TO_SINGLE_LINK = new odata_common_1.OneToOneLink(
+  TestEntityMultiLink.TO_SINGLE_LINK = new internal_1.OneToOneLink(
     'to_SingleLink',
     TestEntityMultiLink,
     TestEntityLvl2SingleLink_1.TestEntityLvl2SingleLink
@@ -137,7 +137,7 @@ const TestEntityLvl2SingleLink_1 = require('./TestEntityLvl2SingleLink');
   /**
    * All fields selector.
    */
-  TestEntityMultiLink.ALL_FIELDS = new odata_common_1.AllFields(
+  TestEntityMultiLink.ALL_FIELDS = new internal_1.AllFields(
     '*',
     TestEntityMultiLink
   );

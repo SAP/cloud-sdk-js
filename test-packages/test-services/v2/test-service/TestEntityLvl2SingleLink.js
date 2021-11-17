@@ -8,7 +8,7 @@ exports.TestEntityLvl2SingleLink = void 0;
  */
 const TestEntityLvl2SingleLinkRequestBuilder_1 = require('./TestEntityLvl2SingleLinkRequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
  */
@@ -57,9 +57,7 @@ TestEntityLvl2SingleLink._entityName = 'A_TestEntityLvl2SingleLink';
 TestEntityLvl2SingleLink._defaultServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityLvl2SingleLink) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(
-    TestEntityLvl2SingleLink
-  );
+  const _fieldBuilder = new internal_1.FieldBuilder(TestEntityLvl2SingleLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -118,7 +116,7 @@ TestEntityLvl2SingleLink._defaultServicePath =
   /**
    * All fields selector.
    */
-  TestEntityLvl2SingleLink.ALL_FIELDS = new odata_common_1.AllFields(
+  TestEntityLvl2SingleLink.ALL_FIELDS = new internal_1.AllFields(
     '*',
     TestEntityLvl2SingleLink
   );

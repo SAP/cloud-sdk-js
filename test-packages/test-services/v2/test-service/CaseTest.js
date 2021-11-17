@@ -8,7 +8,7 @@ exports.CaseTest = void 0;
  */
 const CaseTestRequestBuilder_1 = require('./CaseTestRequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_CaseTest" of service "API_TEST_SRV".
  */
@@ -53,7 +53,7 @@ CaseTest._entityName = 'A_CaseTest';
  */
 CaseTest._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (CaseTest) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(CaseTest);
+  const _fieldBuilder = new internal_1.FieldBuilder(CaseTest);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -70,7 +70,7 @@ CaseTest._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All fields selector.
    */
-  CaseTest.ALL_FIELDS = new odata_common_1.AllFields('*', CaseTest);
+  CaseTest.ALL_FIELDS = new internal_1.AllFields('*', CaseTest);
   /**
    * All key fields of the CaseTest entity.
    */

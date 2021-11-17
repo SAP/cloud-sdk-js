@@ -13,7 +13,7 @@ exports.functionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntity_1 = require('./TestEntity');
 /**
@@ -23,12 +23,12 @@ const TestEntity_1 = require('./TestEntity');
  */
 function concatStrings(parameters) {
   const params = {
-    str1: new odata_common_1.FunctionImportParameter(
+    str1: new internal_1.FunctionImportParameter(
       'Str1',
       'Edm.String',
       parameters.str1
     ),
-    str2: new odata_common_1.FunctionImportParameter(
+    str2: new internal_1.FunctionImportParameter(
       'Str2',
       'Edm.String',
       parameters.str2
@@ -71,7 +71,7 @@ exports.getAll = getAll;
  */
 function getByKey(parameters) {
   const params = {
-    param: new odata_common_1.FunctionImportParameter(
+    param: new internal_1.FunctionImportParameter(
       'param',
       'Edm.Int32',
       parameters.param
@@ -96,7 +96,7 @@ exports.getByKey = getByKey;
  */
 function returnCollection(parameters) {
   const params = {
-    param: new odata_common_1.FunctionImportParameter(
+    param: new internal_1.FunctionImportParameter(
       'param',
       'Edm.Int32',
       parameters.param
@@ -120,7 +120,7 @@ exports.returnCollection = returnCollection;
  */
 function returnInt(parameters) {
   const params = {
-    param: new odata_common_1.FunctionImportParameter(
+    param: new internal_1.FunctionImportParameter(
       'param',
       'Edm.Int32',
       parameters.param

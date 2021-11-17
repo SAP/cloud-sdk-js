@@ -9,7 +9,7 @@ exports.Airports = void 0;
 const AirportsRequestBuilder_1 = require('./AirportsRequestBuilder');
 const AirportLocation_1 = require('./AirportLocation');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
@@ -55,7 +55,7 @@ Airports._entityName = 'Airports';
 Airports._defaultServicePath =
   'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 (function (Airports) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(Airports);
+  const _fieldBuilder = new internal_1.FieldBuilder(Airports);
   /**
    * Static representation of the [[icaoCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -100,7 +100,7 @@ Airports._defaultServicePath =
   /**
    * All fields selector.
    */
-  Airports.ALL_FIELDS = new odata_common_1.AllFields('*', Airports);
+  Airports.ALL_FIELDS = new internal_1.AllFields('*', Airports);
   /**
    * All key fields of the Airports entity.
    */

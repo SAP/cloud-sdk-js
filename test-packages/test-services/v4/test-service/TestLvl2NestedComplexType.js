@@ -10,7 +10,7 @@ exports.TestLvl2NestedComplexType =
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * @deprecated Since v1.6.0. Use [[TestLvl2NestedComplexType.build]] instead.
  */
@@ -22,7 +22,7 @@ exports.createTestLvl2NestedComplexType = createTestLvl2NestedComplexType;
  * TestLvl2NestedComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class TestLvl2NestedComplexTypeField extends odata_common_1.ComplexTypeField {
+class TestLvl2NestedComplexTypeField extends internal_1.ComplexTypeField {
   /**
    * Creates an instance of TestLvl2NestedComplexTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -30,7 +30,7 @@ class TestLvl2NestedComplexTypeField extends odata_common_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, fieldOptions) {
     super(fieldName, fieldOf, TestLvl2NestedComplexType, fieldOptions);
-    this._fieldBuilder = new odata_common_1.FieldBuilder(this);
+    this._fieldBuilder = new internal_1.FieldBuilder(this);
     /**
      * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

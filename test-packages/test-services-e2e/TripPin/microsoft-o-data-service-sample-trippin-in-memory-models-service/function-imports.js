@@ -6,7 +6,7 @@ exports.functionImports = exports.getNearestAirport = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const Airports_1 = require('./Airports');
 /**
@@ -16,12 +16,12 @@ const Airports_1 = require('./Airports');
  */
 function getNearestAirport(parameters) {
   const params = {
-    lat: new odata_common_1.FunctionImportParameter(
+    lat: new internal_1.FunctionImportParameter(
       'lat',
       'Edm.Double',
       parameters.lat
     ),
-    lon: new odata_common_1.FunctionImportParameter(
+    lon: new internal_1.FunctionImportParameter(
       'lon',
       'Edm.Double',
       parameters.lon

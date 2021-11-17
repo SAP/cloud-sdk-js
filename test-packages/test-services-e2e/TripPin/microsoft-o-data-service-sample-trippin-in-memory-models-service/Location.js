@@ -8,7 +8,7 @@ exports.Location = exports.LocationField = exports.createLocation = void 0;
  */
 const City_1 = require('./City');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * @deprecated Since v1.6.0. Use [[Location.build]] instead.
  */
@@ -20,7 +20,7 @@ exports.createLocation = createLocation;
  * LocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class LocationField extends odata_common_1.ComplexTypeField {
+class LocationField extends internal_1.ComplexTypeField {
   /**
    * Creates an instance of LocationField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -28,7 +28,7 @@ class LocationField extends odata_common_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, fieldOptions) {
     super(fieldName, fieldOf, Location, fieldOptions);
-    this._fieldBuilder = new odata_common_1.FieldBuilder(this);
+    this._fieldBuilder = new internal_1.FieldBuilder(this);
     /**
      * Representation of the [[Location.address]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

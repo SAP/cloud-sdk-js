@@ -22,7 +22,7 @@ exports.functionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const TestEntity_1 = require('./TestEntity');
 const TestComplexType_1 = require('./TestComplexType');
@@ -138,7 +138,7 @@ function testFunctionImportSharedEntityReturnType(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnType',
     data =>
-      (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, internal_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnType'
       ),
@@ -159,7 +159,7 @@ function testFunctionImportSharedEntityReturnTypeCollection(parameters) {
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportSharedEntityReturnTypeCollection',
     data =>
-      (0, odata_common_1.throwErrorWhenReturnTypeIsUnionType)(
+      (0, internal_1.throwErrorWhenReturnTypeIsUnionType)(
         data,
         'TestFunctionImportSharedEntityReturnTypeCollection'
       ),
@@ -198,7 +198,7 @@ exports.testFunctionImportComplexReturnType =
  */
 function testFunctionImportUnsupportedEdmTypes(parameters) {
   const params = {
-    simpleParam: new odata_common_1.FunctionImportParameter(
+    simpleParam: new internal_1.FunctionImportParameter(
       'SimpleParam',
       'Edm.Any',
       parameters.simpleParam
@@ -250,7 +250,7 @@ exports.testFunctionImportComplexReturnTypeCollection =
  */
 function testFunctionImportGet(parameters) {
   const params = {
-    simpleParam: new odata_common_1.FunctionImportParameter(
+    simpleParam: new internal_1.FunctionImportParameter(
       'SimpleParam',
       'Edm.String',
       parameters.simpleParam
@@ -275,7 +275,7 @@ exports.testFunctionImportGet = testFunctionImportGet;
  */
 function testFunctionImportPost(parameters) {
   const params = {
-    simpleParam: new odata_common_1.FunctionImportParameter(
+    simpleParam: new internal_1.FunctionImportParameter(
       'SimpleParam',
       'Edm.String',
       parameters.simpleParam
@@ -300,12 +300,12 @@ exports.testFunctionImportPost = testFunctionImportPost;
  */
 function testFunctionImportMultipleParams(parameters) {
   const params = {
-    stringParam: new odata_common_1.FunctionImportParameter(
+    stringParam: new internal_1.FunctionImportParameter(
       'StringParam',
       'Edm.String',
       parameters.stringParam
     ),
-    booleanParam: new odata_common_1.FunctionImportParameter(
+    booleanParam: new internal_1.FunctionImportParameter(
       'BooleanParam',
       'Edm.Boolean',
       parameters.booleanParam

@@ -7,7 +7,7 @@ exports.City = exports.CityField = exports.createCity = void 0;
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * @deprecated Since v1.6.0. Use [[City.build]] instead.
  */
@@ -19,7 +19,7 @@ exports.createCity = createCity;
  * CityField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class CityField extends odata_common_1.ComplexTypeField {
+class CityField extends internal_1.ComplexTypeField {
   /**
    * Creates an instance of CityField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -27,7 +27,7 @@ class CityField extends odata_common_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, fieldOptions) {
     super(fieldName, fieldOf, City, fieldOptions);
-    this._fieldBuilder = new odata_common_1.FieldBuilder(this);
+    this._fieldBuilder = new internal_1.FieldBuilder(this);
     /**
      * Representation of the [[City.countryRegion]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

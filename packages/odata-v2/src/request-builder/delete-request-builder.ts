@@ -2,6 +2,7 @@ import {
   Constructable,
   DeleteRequestBuilderBase,
   FieldType
+  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { oDataUri } from '../uri-conversion/odata-uri';

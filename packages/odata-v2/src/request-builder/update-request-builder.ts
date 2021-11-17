@@ -12,6 +12,7 @@ import {
   UpdateRequestBuilderBase,
   isNavigationProperty,
   removePropertyOnCondition
+  // eslint-disable-next-line import/no-internal-modules
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';

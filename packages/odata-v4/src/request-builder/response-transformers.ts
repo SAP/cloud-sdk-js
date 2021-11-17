@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-internal-modules
 import { Constructable } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';

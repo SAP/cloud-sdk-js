@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-internal-modules
 import { createODataUri } from '@sap-cloud-sdk/odata-common/internal';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';

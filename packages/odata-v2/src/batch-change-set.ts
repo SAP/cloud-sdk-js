@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+// eslint-disable-next-line import/no-internal-modules
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from './entity';
 import { CreateRequestBuilder } from './request-builder/create-request-builder';

@@ -1,4 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
+// eslint-disable-next-line import/no-internal-modules
 import { ResponseDataAccessor } from '@sap-cloud-sdk/odata-common/internal';
 
 const logger = createLogger({

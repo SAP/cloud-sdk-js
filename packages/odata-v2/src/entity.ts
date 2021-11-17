@@ -1,4 +1,8 @@
-import { EntityBase, Constructable } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  EntityBase,
+  Constructable
+  // eslint-disable-next-line import/no-internal-modules
+} from '@sap-cloud-sdk/odata-common/internal';
 import { CustomField } from './selectable/custom-field';
 
 /**

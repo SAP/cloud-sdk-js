@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-internal-modules
 import { ActionFunctionImportRequestBuilderBase } from '@sap-cloud-sdk/odata-common/internal';
 import { ODataActionImportRequestConfig } from '../request/odata-action-import-request-config';
 import { ActionImportParameters } from '../request/action-import-parameter';

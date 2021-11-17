@@ -2,6 +2,7 @@
  * Internal representation of function import parameters. It adds metadata to the value.
  * @typeparam ValueT - Type of the value
  */
+// eslint-disable-next-line import/no-internal-modules
 import { EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
 
 export class ActionImportParameter<ValueT> {

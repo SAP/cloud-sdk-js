@@ -1,4 +1,8 @@
-import { EdmTypeCommon, ExclusiveEdmTypeV2 } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  EdmTypeCommon,
+  ExclusiveEdmTypeV2
+  // eslint-disable-next-line import/no-internal-modules
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Allowed Edm types for OData v2.

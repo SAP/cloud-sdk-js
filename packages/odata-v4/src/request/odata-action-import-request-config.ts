@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-internal-modules
 import { ODataRequestConfig } from '@sap-cloud-sdk/odata-common/internal';
 import {
   ActionImportParameters,

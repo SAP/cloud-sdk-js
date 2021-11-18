@@ -5,8 +5,8 @@ import {
   VariableStatementStructure
 } from 'ts-morph';
 import { VdmFunctionImport, VdmActionImport } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

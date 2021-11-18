@@ -31,8 +31,8 @@ function getImports(namedSchema: OpenApiPersistedSchema): Import[] {
       moduleIdentifier: `./${ref.fileName}`
     }));
 }
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

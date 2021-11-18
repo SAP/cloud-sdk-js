@@ -7,8 +7,8 @@ import { EdmxParameter } from '../../edmx-parser/common';
 import { EdmxFunctionImportV2 as EdmxFunctionImportV2 } from '../../edmx-parser/v2';
 import { EdmxFunctionImportV4 as EdmxFunctionImportV4 } from '../../edmx-parser/v4';
 import { getFunctionImportParameters } from './action-function-parameters';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

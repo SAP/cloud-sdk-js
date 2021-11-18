@@ -5,8 +5,8 @@ import {
 } from 'ts-morph';
 import { getPropertyDescription, addLeadingNewline } from '../typedoc';
 import { VdmComplexType, VdmProperty } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

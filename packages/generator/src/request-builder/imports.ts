@@ -7,8 +7,8 @@ import {
   odataCommonImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmProperty } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

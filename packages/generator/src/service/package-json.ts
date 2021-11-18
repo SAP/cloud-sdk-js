@@ -1,7 +1,7 @@
 import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
 import { getSdkVersion } from '@sap-cloud-sdk/generator-common';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

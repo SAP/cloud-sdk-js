@@ -16,6 +16,7 @@ import {
 import { isEntityNotDeserializable } from '../edmx-to-vdm/common';
 import { responseTransformerFunctionName } from './response-transformer-function';
 
+/* eslint-disable valid-jsdoc */
 function actionFunctionImportDeclarations(
   returnTypes: VdmActionFunctionImportReturnType[],
   parameters: VdmParameter[],
@@ -103,7 +104,6 @@ function returnTypeImport(
     moduleSpecifier: `./${returnType.returnType}`
   };
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal
@@ -131,7 +131,6 @@ export function importDeclarationsFunction(
     service.oDataVersion
   );
 }
-/* eslint-disable valid-jsdoc */
 
 /**
  * @internal

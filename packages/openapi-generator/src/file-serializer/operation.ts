@@ -106,8 +106,8 @@ function serializeParamsForRequestBuilder(
     }`;
   }
 }
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

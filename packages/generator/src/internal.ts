@@ -13,7 +13,6 @@ export * from './swagger-parser';
 export * from './file-generator';
 export * from './generator-options';
 export * from './generator-utils';
-export * from './generator-cli';
 export * from './generator';
 export * from './global-name-formatter';
 export * from './imports';

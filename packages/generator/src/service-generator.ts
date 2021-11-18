@@ -142,8 +142,8 @@ export function parseService(
     .withGlobalNameFormatter(globalNameFormatter)
     .generateService(serviceDefinitionPaths);
 }
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

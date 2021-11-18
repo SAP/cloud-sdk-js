@@ -13,8 +13,8 @@ import {
   getRequestBuilderDescription
 } from '../typedoc';
 import { VdmEntity } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

@@ -1,8 +1,8 @@
 import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmComplexType } from '../vdm-types';
 import { addLeadingNewline } from '../typedoc';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

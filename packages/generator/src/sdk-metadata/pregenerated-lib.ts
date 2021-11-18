@@ -4,8 +4,8 @@ import {
   genericDescription,
   s4hanaCloudDescription
 } from '../package-description';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

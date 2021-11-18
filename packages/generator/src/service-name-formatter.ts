@@ -10,8 +10,8 @@ import {
   defaultReservedWords,
   reservedServiceKeywords
 } from './reserved-words';
-/* eslint-disable valid-jsdoc */
 
+/* eslint-disable valid-jsdoc */
 /**
  * @internal
  */

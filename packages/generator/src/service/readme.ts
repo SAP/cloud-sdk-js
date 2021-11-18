@@ -53,8 +53,8 @@ export function helpfulLinksSection(): string[] {
     '- [SAP API Business Hub](https://api.sap.com/)'
   ];
 }
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

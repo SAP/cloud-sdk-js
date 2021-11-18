@@ -7,8 +7,8 @@ import { VdmServiceMetadata } from '../vdm-types';
 import { GeneratorOptions } from '../generator-options';
 import { getGenerationAndUsage } from './generation-and-usage';
 import { getServiceDescription } from './pregenerated-lib';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

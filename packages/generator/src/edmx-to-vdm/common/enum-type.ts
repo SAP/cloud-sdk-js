@@ -7,8 +7,8 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'enum-type'
 });
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

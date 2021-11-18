@@ -7,8 +7,8 @@ import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';
 import { generateActionImportsV4 } from './action-import';
 import { generateEnumTypesV4 } from './enum-type';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

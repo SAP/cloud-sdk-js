@@ -6,8 +6,8 @@ import type { Client } from '@sap-cloud-sdk/generator-common';
 import { OpenApiDocument } from '../openapi-types';
 import { packageDescription } from './package-description';
 import { getGenerationAndUsage } from './generation-and-usage';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

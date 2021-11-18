@@ -3,8 +3,8 @@ import { ODataVersion } from '@sap-cloud-sdk/util';
 import { VdmEntity } from '../vdm-types';
 import { requestBuilderClass } from './class';
 import { requestBuilderImportDeclarations } from './imports';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

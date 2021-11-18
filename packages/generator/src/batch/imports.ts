@@ -1,8 +1,8 @@
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { odataImportDeclaration } from '../imports';
 import { VdmServiceMetadata } from '../vdm-types';
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

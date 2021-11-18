@@ -20,8 +20,8 @@ generate(parseCmdArgs())
     logger.error(new ErrorWithCause('Generation of services failed.', err));
     process.exit(1);
   });
-/* eslint-disable valid-jsdoc */
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * @internal
  */

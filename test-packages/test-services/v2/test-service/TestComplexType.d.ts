@@ -14,7 +14,7 @@ import {
   OrderableEdmTypeField,
   PropertyMetadata,
   Time
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 /**
  * TestComplexType
  */

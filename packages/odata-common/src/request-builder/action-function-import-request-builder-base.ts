@@ -9,6 +9,7 @@ import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Create OData request to execute a action or function import.
  * @typeparam ReturnT - Type of the function import return value
+ * @internal
  */
 export abstract class ActionFunctionImportRequestBuilderBase<
   ReturnT,

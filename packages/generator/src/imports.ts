@@ -51,7 +51,7 @@ export function odataCommonImportDeclaration(
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: '@sap-cloud-sdk/odata-common',
+    moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
     namedImports: unique(namedImports)
   };
 }

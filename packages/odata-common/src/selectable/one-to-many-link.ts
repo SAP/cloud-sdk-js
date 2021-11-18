@@ -4,6 +4,11 @@ import { Orderable } from '../order/orderable';
 import type { Filterable } from '../filter/filterable';
 import { Link } from './link';
 
+/**
+ * @param filters - filters
+ * @returns filtered list
+ * @internal
+ */
 export function toFilterableList<
   EntityT extends EntityBase,
   LinkedEntityT extends EntityBase
@@ -15,6 +20,7 @@ export function toFilterableList<
  * Represents a one to many relation for OData v4 entities.
  * For OData v2 entities the [[Link]] is used to represent one to many relation.
  * See [[Link]] for more information.
+ * @internal
  */
 export class OneToManyLink<
   EntityT extends EntityBase,

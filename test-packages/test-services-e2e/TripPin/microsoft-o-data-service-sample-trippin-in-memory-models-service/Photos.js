@@ -8,7 +8,7 @@ exports.Photos = void 0;
  */
 const PhotosRequestBuilder_1 = require('./PhotosRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
@@ -54,7 +54,7 @@ Photos._entityName = 'Photos';
 Photos._defaultServicePath =
   'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 (function (Photos) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(Photos);
+  const _fieldBuilder = new internal_1.FieldBuilder(Photos);
   /**
    * Static representation of the [[id]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -72,7 +72,7 @@ Photos._defaultServicePath =
   /**
    * All fields selector.
    */
-  Photos.ALL_FIELDS = new odata_common_1.AllFields('*', Photos);
+  Photos.ALL_FIELDS = new internal_1.AllFields('*', Photos);
   /**
    * All key fields of the Photos entity.
    */

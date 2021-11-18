@@ -4,6 +4,9 @@ import { Field } from './field';
 import { FieldBuilder } from './field-builder';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
 
+/**
+ * @internal
+ */
 export class CustomField<
   EntityT extends EntityBase,
   NullableT extends boolean = false

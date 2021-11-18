@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { all, any, filterFunctions } from '@sap-cloud-sdk/odata-v4';
-import { or } from '@sap-cloud-sdk/odata-common';
+import { or } from '@sap-cloud-sdk/odata-common/internal';
 import {
   TestEntity,
   TestEntitySingleLink

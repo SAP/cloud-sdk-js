@@ -6,7 +6,7 @@ import {
   UriConverter,
   convertToUriForEdmString,
   createUriConverter
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { serializers } from '../payload-value-converter';
 import { EdmType } from '../edm-types';
 

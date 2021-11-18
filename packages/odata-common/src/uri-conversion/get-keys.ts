@@ -7,6 +7,7 @@ import { Field } from '../selectable/field';
  * @param entity - Entity to map
  * @param entityConstructor - The constructor of the entity
  * @returns object that includes all keys that represent given entity
+ * @internal
  */
 export function getEntityKeys<EntityT extends EntityBase>(
   entity: EntityT,

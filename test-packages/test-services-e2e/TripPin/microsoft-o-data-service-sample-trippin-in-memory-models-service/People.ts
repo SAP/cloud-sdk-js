@@ -20,7 +20,7 @@ import {
   OneToManyLink,
   OneToOneLink,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".

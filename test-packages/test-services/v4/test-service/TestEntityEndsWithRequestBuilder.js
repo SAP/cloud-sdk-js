@@ -6,13 +6,13 @@ exports.TestEntityEndsWithRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityEndsWith_1 = require('./TestEntityEndsWith');
 /**
  * Request builder class for operations supported on the [[TestEntityEndsWith]] entity.
  */
-class TestEntityEndsWithRequestBuilder extends odata_common_1.RequestBuilder {
+class TestEntityEndsWithRequestBuilder extends internal_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityEndsWith` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityEndsWith.keyProperty]].

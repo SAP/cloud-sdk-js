@@ -78,6 +78,9 @@ export function fromNumberToEdm(value: number): number | string {
   throw new Error(`TS->EDM: Cannot create number from input "${value}"`);
 }
 
+/**
+ * @internal
+ */
 export const deserializersCommon: EdmTypeMapping = {
   'Edm.Binary': identity,
   'Edm.Boolean': identity,
@@ -95,6 +98,9 @@ export const deserializersCommon: EdmTypeMapping = {
   'Edm.Any': identity
 };
 
+/**
+ * @internal
+ */
 export const serializersCommon: EdmTypeMapping = {
   'Edm.Binary': identity,
   'Edm.Boolean': identity,
@@ -114,6 +120,7 @@ export const serializersCommon: EdmTypeMapping = {
 
 /**
  * @hidden
+ * @internal
  */
 export function createEdmToTs<V extends EdmTypeCommon>(deserializers: {
   [key in V]: (value: any) => V;
@@ -130,6 +137,9 @@ export function createEdmToTs<V extends EdmTypeCommon>(deserializers: {
   };
 }
 // (value: any, edmType: EdmTypeShared<'v2'>): any
+/**
+ * @internal
+ */
 export function createTsToEdm<T extends EdmTypeCommon>(serializers: {
   [key in T]: (value: any) => any;
 }): (value, edmType: T) => any {

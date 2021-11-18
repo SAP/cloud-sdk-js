@@ -4,10 +4,10 @@ import { readEdmxFile } from './edmx-file-reader';
 import {
   parseActionImport,
   parseActions,
-  parseEntitySets,
+  parseEntitySetsV4,
   parseEntityType,
   parseEnumTypes,
-  parseFunctionImports,
+  parseFunctionImportsV4,
   parseFunctions
 } from './v4';
 import { parseComplexTypesBase } from './common';
@@ -36,9 +36,9 @@ describe('edmx-file-reader', () => {
       )
     );
 
-    expect(parseEntitySets(metadataEdmx.root).length).toBe(4);
+    expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(4);
     expect(parseEntityType(metadataEdmx.root).length).toBe(4);
-    expect(parseFunctionImports(metadataEdmx.root).length).toBe(2);
+    expect(parseFunctionImportsV4(metadataEdmx.root).length).toBe(2);
     expect(parseFunctions(metadataEdmx.root).length).toBe(2);
     expect(parseActionImport(metadataEdmx.root).length).toBe(2);
     expect(parseActions(metadataEdmx.root).length).toBe(2);

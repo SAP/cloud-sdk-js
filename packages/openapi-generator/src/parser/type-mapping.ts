@@ -41,6 +41,7 @@ const typeMapping = {
  * Get the mapped TypeScript type for the given original OpenAPI type.
  * @param originalType - Original OpenAPI type, to get a mapping for.
  * @returns The mapped TypeScript type.
+ * @internal
  */
 export function getType(originalType: string | undefined): string {
   const type = originalType ? typeMapping[originalType] : 'any';

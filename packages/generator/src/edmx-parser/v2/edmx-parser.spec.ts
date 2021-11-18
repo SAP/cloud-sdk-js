@@ -4,9 +4,9 @@ import { parseComplexTypesBase } from '../../../src/edmx-parser/common/edmx-pars
 import {
   parseAssociation,
   parseAssociationSets,
-  parseEntitySets as parseEntitySetsV2,
+  parseEntitySetsV2,
   parseEntityTypes as parseEntityTypesV2,
-  parseFunctionImports as parseFunctionImportsV2
+  parseFunctionImportsV2
 } from '../../../src/edmx-parser/v2';
 import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 

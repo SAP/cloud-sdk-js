@@ -14,6 +14,7 @@ import { resolveBound } from './swagger-parser-workaround';
  * @param document - The original OpenAPI document.
  * @param options - Parser options.
  * @returns A promise to the reference representation.
+ * @internal
  */
 export async function createRefs(
   document: OpenAPIV3.Document,
@@ -25,6 +26,7 @@ export async function createRefs(
 /**
  * Representation of cross references within a document.
  * Useful when resolving references or getting schema names for referenced schemas.
+ * @internal
  */
 export class OpenApiDocumentRefs {
   /**

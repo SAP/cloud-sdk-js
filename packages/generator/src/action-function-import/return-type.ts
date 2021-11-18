@@ -40,14 +40,20 @@ function wrapRequestBuilderAroundType(
 ) {
   return `${requestBuilderName}<${parameterName}, ${type}>`;
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function actionImportReturnType(actionImport: VdmActionImport): string {
   return actionFunctionImportReturnType(
     actionImport,
     'ActionImportRequestBuilder'
   );
 }
-
+/**
+ * @internal
+ */
 export function functionImportReturnType(
   actionImport: VdmActionImport
 ): string {

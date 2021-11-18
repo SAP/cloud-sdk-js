@@ -14,6 +14,10 @@ import {
 } from '../typedoc';
 import { VdmEntity } from '../vdm-types';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function requestBuilderClass(
   entity: VdmEntity
 ): ClassDeclarationStructure {

@@ -2,7 +2,11 @@ import { lstatSync, PathLike, readdirSync, existsSync } from 'fs';
 import { join, extname, parse } from 'path';
 
 const validFileExtensions = ['.edmx', '.xml'];
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function edmxPaths(input: PathLike): PathLike[] {
   if (lstatSync(input).isDirectory()) {
     return readdirSync(input)
@@ -14,7 +18,9 @@ export function edmxPaths(input: PathLike): PathLike[] {
   }
   return hasEdmxFileExtension(input.toString()) ? [input] : [];
 }
-
+/**
+ * @internal
+ */
 export function inputPaths(
   input: PathLike,
   useSwagger: boolean
@@ -29,7 +35,9 @@ export function inputPaths(
     return { edmxPath };
   });
 }
-
+/**
+ * @internal
+ */
 export function swaggerPathForEdmx(edmxPath: PathLike): PathLike | undefined {
   const { dir, name } = parse(edmxPath.toString());
   const validSwaggerExtensions = ['.json', '.JSON'];
@@ -41,7 +49,9 @@ export function swaggerPathForEdmx(edmxPath: PathLike): PathLike | undefined {
 function hasEdmxFileExtension(fileName: string): boolean {
   return validFileExtensions.includes(extname(fileName.toLowerCase()));
 }
-
+/**
+ * @internal
+ */
 export interface ServiceDefinitionPaths {
   edmxPath: PathLike;
   swaggerPath?: PathLike;

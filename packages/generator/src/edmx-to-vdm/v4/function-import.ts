@@ -4,8 +4,8 @@ import { transformFunctionImportBase } from '../common';
 import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
 import {
   EdmxFunction,
-  EdmxFunctionImport,
-  parseFunctionImports,
+  EdmxFunctionImportV4,
+  parseFunctionImportsV4,
   parseFunctions
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
@@ -20,7 +20,7 @@ const logger = createLogger({
 
 function findFunctionForFunctionImport(
   functions: EdmxFunction[],
-  functionImport: EdmxFunctionImport
+  functionImport: EdmxFunctionImportV4
 ): EdmxFunction | undefined {
   return findActionFunctionByImportName(functions, functionImport.Function);
 }
@@ -28,15 +28,15 @@ function findFunctionForFunctionImport(
 const extractResponse = (response: string) => `${response}.value`;
 
 interface JoinedFunctionImportData {
-  functionImport: EdmxFunctionImport;
+  functionImport: EdmxFunctionImportV4;
   function: EdmxFunction;
 }
 
 function joinFunctionImportData(
-  functionImports: EdmxFunctionImport[],
+  functionImports: EdmxFunctionImportV4[],
   functions: EdmxFunction[]
 ): JoinedFunctionImportData[] {
-  const functionImportsWithoutFunctions: EdmxFunctionImport[] = [];
+  const functionImportsWithoutFunctions: EdmxFunctionImportV4[] = [];
   const joinedFunctionImportData = functionImports.reduce(
     (joined, functionImport) => {
       const edmxFunction = findFunctionForFunctionImport(
@@ -69,6 +69,10 @@ function joinFunctionImportData(
   return joinedFunctionImportData;
 }
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function generateFunctionImportsV4(
   serviceMetadata: ServiceMetadata,
   entities: VdmEntity[],
@@ -76,7 +80,7 @@ export function generateFunctionImportsV4(
   formatter: ServiceNameFormatter
 ): VdmFunctionImport[] {
   const functions = parseFunctions(serviceMetadata.edmx.root);
-  const functionImports = parseFunctionImports(serviceMetadata.edmx.root);
+  const functionImports = parseFunctionImportsV4(serviceMetadata.edmx.root);
   const joinedFunctionData = joinFunctionImportData(functionImports, functions);
 
   return (

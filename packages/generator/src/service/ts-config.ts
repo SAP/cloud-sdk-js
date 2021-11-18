@@ -1,5 +1,9 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function tsConfig(): string {
   return (
     JSON.stringify(

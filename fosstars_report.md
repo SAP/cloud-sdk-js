@@ -1,6 +1,6 @@
 **Rating**: **GOOD**
 
-**Score**: **6.58**, max score value is 10.0
+**Score**: **6.33**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -26,7 +26,7 @@ It used the following sub-scores:
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 1.  **[Security awareness](#security-awareness)**: **3.5** (weight is 0.9)
-1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **10.0** (weight is 0.6)
+1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **8.0** (weight is 0.6)
     1.  **[Security testing](#security-testing)**: **7.73** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
@@ -123,7 +123,7 @@ This sub-score is based on 17 features:
 
 ### Vulnerability discovery and security testing
 
-Score: **10.0**, confidence is 10.0 (max), weight is 0.6 (medium)
+Score: **8.0**, confidence is 10.0 (max), weight is 0.6 (medium)
 
 The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
 
@@ -145,7 +145,7 @@ This sub-score is based on the following sub-score:
 
 This sub-score is based on 1 feature:
 
-1.  Info about vulnerabilities: **Not found**
+1.  Info about vulnerabilities: **1 vulnerability, [details below](#known-vulnerabilities)**
 
 ### Unpatched vulnerabilities
 
@@ -157,7 +157,7 @@ No unpatched vulnerabilities found which is good
 
 This sub-score is based on 1 feature:
 
-1.  Info about vulnerabilities: **Not found**
+1.  Info about vulnerabilities: **1 vulnerability, [details below](#known-vulnerabilities)**
 
 ### Community commitment
 
@@ -179,12 +179,12 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-216 commits in the last 3 months results to 10.00 points
+215 commits in the last 3 months results to 10.00 points
 4 contributors increase the score value from 10.00 to 11.00
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **216**
+1.  Number of commits in the last three months: **215**
 1.  Number of contributors in the last three months: **4**
 
 ### Project popularity
@@ -360,4 +360,5 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-No vulnerabilities found
+1.  [CVE-2021-41251](https://nvd.nist.gov/vuln/detail/CVE-2021-41251): Optional[@sap-cloud-sdk/core contains the core functionality of the SAP Cloud SDK as well as the SAP Business Technology Platform abstractions. This affects applications on SAP Business Technology Platform that use the SAP Cloud SDK and enabled caching of destinations. In affected versions and in some cases, when user information was missing, destinations were cached without user information, allowing other users to retrieve the same destination with its permissions. By default, destination caching is disabled. The security for caching has been increased. The changes are released in version 1.52.0. Users unable to upgrade are advised to disable destination caching (it is disabled by default).]
+

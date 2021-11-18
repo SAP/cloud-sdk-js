@@ -3,7 +3,7 @@ import {
   EdmxActionImport,
   EdmxComplexType,
   EdmxEntitySet,
-  EdmxEntityType
+  EdmxEntityTypeV4
 } from '../../edmx-parser/v4';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { EdmxProperty } from '../../edmx-parser/common';
@@ -231,7 +231,7 @@ function createImportsForActions(actions: EdmxAction[]): EdmxActionImport[] {
 }
 
 function createTestServiceData(
-  entityTypes: EdmxEntityType[],
+  entityTypes: EdmxEntityTypeV4[],
   entitySets: EdmxEntitySet[],
   complexType: EdmxComplexType[] = [getComplexType()],
   actions: EdmxAction[] = [],
@@ -266,7 +266,7 @@ export function createEntityType(
   properties: [string, string, boolean][],
   navigationProperties: [string, string][] = [],
   namespace: string = defaultNamespace
-): EdmxEntityType {
+): EdmxEntityTypeV4 {
   return {
     'sap:content-version': '',
     Key: {

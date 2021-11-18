@@ -3,7 +3,11 @@ import {
   VdmFunctionImportReturnType,
   VdmReturnTypeCategory
 } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function responseTransformerFunctionName(
   returnType: VdmActionFunctionImportReturnType
 ): string {

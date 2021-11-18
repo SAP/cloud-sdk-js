@@ -1,16 +1,16 @@
-import { VdmServiceMetadata } from '@sap-cloud-sdk/generator/dist/vdm-types';
 import { checkUrlExists } from '@sap-cloud-sdk/util';
 import { getGenerationSteps } from '@sap-cloud-sdk/generator-common';
 import {
+  VdmServiceMetadata,
   getGenerationAndUsage,
   linkGenerationDocumentation,
   getODataLinks
 } from '@sap-cloud-sdk/generator/internal';
 import {
   getOpenApiLinks,
-  getGenerationAndUsage as getGenerationAndUsageOpenApi
+  getGenerationAndUsage as getGenerationAndUsageOpenApi,
+  OpenApiDocument
 } from '@sap-cloud-sdk/openapi-generator/internal';
-import { OpenApiDocument } from '@sap-cloud-sdk/openapi-generator/dist/openapi-types';
 
 const service = {
   npmPackageName: '@sap/dummy-package',

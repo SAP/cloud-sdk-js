@@ -22,6 +22,7 @@ const logger = createLogger('openapi-generator');
  * @param refs - Object representing cross references throughout the document.
  * @param options - Options that were set for service generation.
  * @returns The parsed schema.
+ * @internal
  */
 export function parseSchema(
   schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject | undefined,
@@ -229,6 +230,7 @@ function parseXOfSchema(
  * Parse schema properties e.g. 'maxLength', 'minimum', etc.
  * @param schema - Original schema representing a ref or schema object.
  * @returns The parsed schema properties object.
+ * @internal
  */
 export function parseSchemaProperties(
   schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject

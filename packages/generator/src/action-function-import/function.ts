@@ -6,7 +6,11 @@ import { getRequestBuilderArgumentsBase } from './request-builder-arguments';
 import { functionImportReturnType } from './return-type';
 
 const parameterName = 'parameters';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function functionImportFunction(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
@@ -33,6 +37,9 @@ export function functionImportFunction(
     ]
   };
 }
+/**
+ * @internal
+ */
 export const additionalDocForEntityNotDeserializable =
   "The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.";
 

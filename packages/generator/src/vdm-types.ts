@@ -1,6 +1,8 @@
 import { PathLike } from 'fs';
 import { ODataVersion } from '@sap-cloud-sdk/util';
-
+/**
+ * @internal
+ */
 export interface VdmServicePackageMetaData {
   oDataVersion: ODataVersion;
   namespaces: string[];
@@ -13,7 +15,9 @@ export interface VdmServicePackageMetaData {
   className: string;
   edmxPath: PathLike;
 }
-
+/**
+ * @internal
+ */
 export interface VdmServiceEntities {
   entities: VdmEntity[];
   complexTypes: VdmComplexType[];
@@ -21,10 +25,15 @@ export interface VdmServiceEntities {
   functionImports: VdmFunctionImport[];
   actionsImports?: VdmActionImport[];
 }
-
+/**
+ * @internal
+ */
 export type VdmServiceMetadata = VdmServicePackageMetaData & VdmServiceEntities;
 
-// Entity
+/**
+ * Entity
+ * @internal
+ */
 export interface VdmEntity {
   entitySetName: string;
   entityTypeName: string;
@@ -39,7 +48,10 @@ export interface VdmEntity {
   entityTypeNamespace: string;
 }
 
-// Properties
+/**
+ * Properties
+ * @internal
+ */
 export interface VdmPropertyDescriptor {
   originalName: string;
   instancePropertyName: string;
@@ -49,12 +61,16 @@ export interface VdmPropertyDescriptor {
   isEnum?: boolean;
   isCollection: boolean;
 }
-
+/**
+ * @internal
+ */
 export interface VdmPropertyValueConstraints {
   maxLength?: string;
   nullable: boolean;
 }
-
+/**
+ * @internal
+ */
 export interface VdmProperty
   extends VdmPropertyDescriptor,
     VdmPropertyValueConstraints,
@@ -62,7 +78,10 @@ export interface VdmProperty
   description: string;
 }
 
-// Navigation Properties
+/**
+ * Navigation Properties
+ * @internal
+ */
 export interface VdmNavigationProperty extends VdmPropertyDescriptor {
   from: string;
   to: string;
@@ -76,12 +95,16 @@ export interface VdmNavigationProperty extends VdmPropertyDescriptor {
    */
   isMultiLink?: boolean;
 }
-
+/**
+ * @internal
+ */
 export interface VdmEnumMemberType {
   name: string;
   originalValue: string;
 }
-
+/**
+ * @internal
+ */
 export interface VdmEnumType {
   originalName: string;
   typeName: string;
@@ -89,7 +112,10 @@ export interface VdmEnumType {
   members: VdmEnumMemberType[];
 }
 
-// Complex types and function imports
+/**
+ * Complex types and function imports
+ * @internal
+ */
 export interface VdmComplexType {
   originalName: string;
   properties: VdmProperty[];
@@ -98,7 +124,9 @@ export interface VdmComplexType {
   fieldType: string;
   namespace: string;
 }
-
+/**
+ * @internal
+ */
 export interface VdmFunctionImportBase {
   originalName: string;
   parameters: VdmParameter[];
@@ -106,22 +134,34 @@ export interface VdmFunctionImportBase {
   name: string;
   description: string;
 }
-
+/**
+ * @internal
+ */
 export type VdmActionImportBase = VdmFunctionImportBase;
-
+/**
+ * @internal
+ */
 export interface VdmFunctionImport extends VdmFunctionImportBase {
   httpMethod: string;
   returnType: VdmFunctionImportReturnType;
 }
-
+/**
+ * @internal
+ */
 export type VdmActionImport = VdmFunctionImport;
-
+/**
+ * @internal
+ */
 export type VdmActionImportReturnType = VdmFunctionImportReturnType;
-
+/**
+ * @internal
+ */
 export type VdmActionFunctionImportReturnType =
   | VdmActionImportReturnType
   | VdmFunctionImportReturnType;
-
+/**
+ * @internal
+ */
 export interface VdmFunctionImportReturnType {
   builderFunction?: string;
   returnType: string;
@@ -134,7 +174,9 @@ export interface VdmFunctionImportReturnType {
   returnTypeCategory: VdmReturnTypeCategory;
   unsupportedReason?: VdmUnsupportedReason;
 }
-
+/**
+ * @internal
+ */
 export enum VdmReturnTypeCategory {
   ENTITY,
   COMPLEX_TYPE,
@@ -142,24 +184,32 @@ export enum VdmReturnTypeCategory {
   VOID,
   NEVER
 }
-
+/**
+ * @internal
+ */
 export enum VdmUnsupportedReason {
   ENTITY_NOT_DESERIALIZABLE
 }
-
+/**
+ * @internal
+ */
 export interface VdmParameter extends VdmMappedEdmType {
   originalName: string;
   parameterName: string;
   nullable: boolean;
   description: string;
 }
-
+/**
+ * @internal
+ */
 export interface VdmMappedEdmType {
   edmType: string;
   jsType: string;
   fieldType: string;
 }
-
+/**
+ * @internal
+ */
 export interface ApiBusinessHubMetadata {
   url: string;
   communicationScenario: string | null;

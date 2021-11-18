@@ -9,6 +9,7 @@ import { OperationInfo } from './parsing-info';
  * Operations that don't have a name thereafter, will be named based on their method and path pattern.
  * @param operations - Original information on the operations, that are relevant for parsing.
  * @returns Operation information, where every operation has an operationId.
+ * @internal
  */
 export function nameOperations(operations: OperationInfo[]): OperationInfo[] {
   const [operationsWithExtensions, operationsWithoutExtensions] = partition(
@@ -73,7 +74,11 @@ function renameOperations(
     return operationInfo;
   });
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function getOperationNameFromPatternAndMethod(
   pattern: string,
   method: Method

@@ -4,11 +4,11 @@ import { parseComplexTypesBase } from '../common/edmx-parser';
 import {
   parseActionImport,
   parseActions,
-  parseComplexTypes,
-  parseEntitySets,
+  parseComplexTypesV4,
+  parseEntitySetsV4,
   parseEntityType,
   parseEnumTypes,
-  parseFunctionImports,
+  parseFunctionImportsV4,
   parseFunctions
 } from '../../../src/edmx-parser/v4';
 import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
@@ -19,16 +19,16 @@ describe('edmx-edmx-parser', () => {
       resolve(oDataServiceSpecs, 'v4', 'API_TEST_SRV', 'API_TEST_SRV.edmx')
     );
 
-    expect(parseEntitySets(metadataEdmx.root).length).toBe(14);
+    expect(parseEntitySetsV4(metadataEdmx.root).length).toBe(14);
     expect(parseEntityType(metadataEdmx.root).length).toBe(14);
-    expect(parseFunctionImports(metadataEdmx.root).length).toBe(11);
+    expect(parseFunctionImportsV4(metadataEdmx.root).length).toBe(11);
     expect(parseFunctions(metadataEdmx.root).length).toBe(11);
     expect(parseActionImport(metadataEdmx.root).length).toBe(9);
     expect(parseActions(metadataEdmx.root).length).toBe(8);
     expect(parseComplexTypesBase(metadataEdmx.root).length).toBe(4);
     expect(parseEnumTypes(metadataEdmx.root).length).toBe(3);
 
-    parseEntitySets(metadataEdmx.root).forEach(e => {
+    parseEntitySetsV4(metadataEdmx.root).forEach(e => {
       expect(e.NavigationPropertyBinding).toBeInstanceOf(Array);
     });
 
@@ -55,7 +55,7 @@ describe('edmx-edmx-parser', () => {
     const baseComplexType = parseComplexTypesBase(metadataEdmx.root).find(
       c => (c.Name = 'A_TestComplexBaseType')
     );
-    const complexTypeWithBaseType = parseComplexTypes(metadataEdmx.root).find(
+    const complexTypeWithBaseType = parseComplexTypesV4(metadataEdmx.root).find(
       c => c.BaseType && c.BaseType.endsWith(baseComplexType!.Name)
     );
 
@@ -67,7 +67,7 @@ describe('edmx-edmx-parser', () => {
       expect(f.Parameter).toBeInstanceOf(Array);
     });
 
-    parseComplexTypes(metadataEdmx.root).forEach(c => {
+    parseComplexTypesV4(metadataEdmx.root).forEach(c => {
       expect(c.Property).toBeInstanceOf(Array);
     });
   });

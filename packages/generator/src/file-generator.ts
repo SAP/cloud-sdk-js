@@ -7,7 +7,11 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'file-generator'
 });
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function sourceFile(
   directory: Directory,
   relativePath: string,
@@ -25,7 +29,9 @@ export function sourceFile(
   file.formatText({ insertSpaceAfterCommaDelimiter: true });
   return file;
 }
-
+/**
+ * @internal
+ */
 export function otherFile(
   directory: Directory,
   relativePath: string,
@@ -36,7 +42,9 @@ export function otherFile(
     overwrite
   });
 }
-
+/**
+ * @internal
+ */
 export function copyFile(
   fromPath: string,
   toRelativePath: string,

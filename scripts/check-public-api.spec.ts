@@ -3,8 +3,9 @@ import mock from 'mock-fs';
 import {
   checkSingleIndexFile,
   indexFiles,
-  parseIndexFile,
+  parseBarrelFile,
   parseTypeDefinitionFile,
+  regexExportedIndex,
   typeDescriptorPaths
 } from './check-public-api';
 
@@ -22,25 +23,10 @@ describe('check-public-api', () => {
         }
       }
     });
-    expect(indexFiles('root', 'index.ts')).toEqual([
+    expect(indexFiles('root', '**/index.ts')).toEqual([
       'root/folder1/folder2/index.ts',
       'root/index.ts'
     ]);
-    mock.restore();
-  });
-
-  it('fails for too many index files', () => {
-    mock({
-      root: {
-        'index.ts': '',
-        folder1: {
-          'index.ts': ''
-        }
-      }
-    });
-    expect(() => checkSingleIndexFile('root')).toThrowError(
-      'Too many index files found: root/folder1/index.ts,root/index.ts'
-    );
     mock.restore();
   });
 
@@ -53,17 +39,18 @@ describe('check-public-api', () => {
       }
     });
     expect(() => checkSingleIndexFile('root')).toThrowError(
-      'Index file is not in root foldes root/folder1/index.ts'
+      'No index.ts file found in root'
     );
     mock.restore();
   });
 
-  it('passes if one index file is present in root', () => {
+  it('passes if index file is present in root', () => {
     mock({
       root: {
         'index.ts': '',
         folder1: {
           otherFile: '',
+          'index.ts': '',
           folder2: {
             otherFile: ''
           }
@@ -101,12 +88,12 @@ describe('check-public-api', () => {
   });
 
   it('parses one index.ts file', () => {
-    const exportedObjects = parseIndexFile(dummyIndexFile);
+    const exportedObjects = parseBarrelFile(dummyIndexFile, regexExportedIndex);
     expect(exportedObjects).toEqual(['o1', 'o2', 'o3', 'o4', 'o5', 'o6', 'o7']);
   });
 
   it('parses one index.ts file witout matching', () => {
-    const exportedObjects = parseIndexFile('some non matching');
+    const exportedObjects = parseBarrelFile('some non matching', regexExportedIndex);
     expect(exportedObjects).toEqual([]);
   });
 });

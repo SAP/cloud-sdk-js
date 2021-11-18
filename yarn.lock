@@ -1706,9 +1706,9 @@
     "@sap/cds-foss" "^3"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0":
-  version "1.28.0"
-  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.28.0.tgz#f7304ef51eef9a9f338cd4934622c1046cdc16e5"
-  integrity sha512-OGAe2tAbUOIcyHqgM8Cjy4QbVVfIPjd1MK70Fy9zoZ9AwlyQ8C5JK6HIi5/CPLffTPr1ePyqy2BKUJJkddggyg==
+  version "1.28.2"
+  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.28.2.tgz#400a6364073ef113099cc2607370e10278a8a5fa"
+  integrity sha512-rHMqsVY884KSjcv/nJh77bcRtlImXD3R3Rqdhh9z88P20th8cKoQjrhquqdJ3Bm37Y83+7nF/j2D/R+StNlRdA==
   dependencies:
     "@sap-cloud-sdk/core" "^1.51.0"
 

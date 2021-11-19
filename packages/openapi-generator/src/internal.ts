@@ -8,3 +8,4 @@ export * from './extensions';
 export * from './generator';
 export * from './openapi-types';
 export * from './schema-util';
+export { default as parseCmdArgs } from './cli';

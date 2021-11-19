@@ -236,7 +236,8 @@ export function checkSingleIndexFile(cwd: string): void {
 /**
  * Parse a barrel file for the exported objects.
  * It selects all string in \{\} e.g. export \{a,b,c\} from './xyz' will result in [a,b,c]
- * @param fileContent - content of the index file to be parsed
+ * @param fileContent - content of the index file to be parsed.
+ * @param regex - regular expression used for matching exports.
  * @returns List of objects exported by the given index file.
  */
  export function parseBarrelFile(fileContent: string, regex: RegExp): string[] {
@@ -252,12 +253,12 @@ function captureGroupsFromGlobalRegex(regex: RegExp, str: string): string[] {
 }
 
 async function checkBarrelRecursive(cwd: string) {
-  readdirSync(cwd, { withFileTypes: true})
+  readdirSync(cwd, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
-    .forEach(subDir => 
-    { 
+    .forEach(subDir =>
+    {
       if(subDir.name !== '__snapshots__') {
-        checkBarrelRecursive(join(cwd,subDir.name)); 
+        checkBarrelRecursive(join(cwd,subDir.name));
       }
     });
   await exportAllInBarrel(cwd, parse(cwd).name === 'src' ? 'internal.ts':'index.ts');
@@ -274,9 +275,9 @@ async function exportAllInBarrel(cwd: string, barrelFileName: string) {
         'index.ts',
         '**/*.md'
       ],
-      cwd 
+      cwd
     }).found
-    .map(name => { return basename(name, '.ts') }); 
+    .map(name => basename(name, '.ts'));
     const exportedFiles = parseBarrelFile(await readFile(barrelFilePath, 'utf8'), regexExportedInternal);
     if(!compareBarrels(dirContents, exportedFiles, barrelFilePath)) {
         process.exit(1);

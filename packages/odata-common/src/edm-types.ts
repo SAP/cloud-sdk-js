@@ -1,4 +1,7 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
+/**
+ * @internal
+ */
 export type EdmTypeCommon = EdmTypeSameConverters | EdmTypeDifferentConverters;
 /**
  * @internal

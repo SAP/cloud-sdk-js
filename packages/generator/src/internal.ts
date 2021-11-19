@@ -26,3 +26,4 @@ export * from './service-mapping';
 export * from './service-name-formatter';
 export * from './typedoc';
 export * from './vdm-types';
+export { parseCmdArgs } from './generator-cli';

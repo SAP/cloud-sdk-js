@@ -7,7 +7,7 @@ import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
   Constructable,
   UpdateRequestBuilderBase
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { extractODataEtag } from '../extract-odata-etag';

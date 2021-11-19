@@ -5,6 +5,10 @@ import {
   s4hanaCloudDescription
 } from '../package-description';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function getServiceDescription(
   service: VdmServiceMetadata,
   options: GeneratorOptions

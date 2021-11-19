@@ -38,6 +38,7 @@ export type FilterOperatorByType<FieldT extends FieldType> =
  * See also: [[Filterable]]
  * @typeparam EntityT - Type of the entity to be filtered on
  * @typeparam FieldT - Type of the field to be filtered by, see also: [[FieldType]]
+ * @internal
  */
 // TODO 2.0 rename to BinaryFilter
 export class Filter<

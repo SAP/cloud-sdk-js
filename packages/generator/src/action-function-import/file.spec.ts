@@ -12,7 +12,7 @@ describe('file', () => {
 
     expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
       '@sap-cloud-sdk/odata-v2',
-      '@sap-cloud-sdk/odata-common'
+      '@sap-cloud-sdk/odata-common/internal'
     ]);
 
     const variables = (actual.statements as any).filter(

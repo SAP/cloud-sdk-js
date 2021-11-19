@@ -20,19 +20,18 @@
     "dist/**/*.js.map",
     "dist/**/*.d.ts",
     "dist/**/*.d.ts.map",
-    "usage-analytics.js"
+    "internal.js",
+    "internal.d.ts"
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
     "compile": "yarn tsc -b",
     "prepare": "yarn compile",
-    "postinstall": "node usage-analytics.js",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck ."
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.50.0",
     "@sap-cloud-sdk/util": "^1.50.0",
     "@sap/xsenv": "^3.0.0",
     "@sap/xssec": "^3.2.7",

@@ -41,7 +41,7 @@ export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
 /**
  * Convenience type to determine whether a field should be orderable. If the given `EdmT` is of type `OrderableEdmTypes`, it is orderable.
  * @typeparam EdmT - EDM type of the field.
- *  @internal
+ * @internal
  */
 export type IsOrderableField<EdmT extends EdmTypeShared<'any'>> =
   EdmT extends OrderableEdmType ? true : false;
@@ -52,6 +52,7 @@ type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
 /**
  * Field builder to orchestrate the creation of the different kinds of fields.
  * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
+ * @internal
  */
 export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
   /**

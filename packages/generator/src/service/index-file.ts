@@ -5,7 +5,11 @@ import {
 } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
 import { hasEntities } from '../generator-utils';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
   return {
     kind: StructureKind.SourceFile,

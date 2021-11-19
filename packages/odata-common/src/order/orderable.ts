@@ -8,6 +8,7 @@ import { OrderLink } from './order-link';
 /**
  * A union of all types that can be used for ordering.
  * @typeparam EntityT - Type of the entity to be ordered
+ * @internal
  */
 export type Orderable<EntityT extends EntityBase> =
   | Order<EntityT>
@@ -16,7 +17,7 @@ export type Orderable<EntityT extends EntityBase> =
 /**
  * A union of all types that can be used as input for ordering.
  * @typeparam EntityT - Type of the entity to be ordered
- *  @internal
+ * @internal
  */
 export type OrderableInput<EntityT extends EntityBase> =
   | SimpleTypeFields<EntityT>
@@ -28,6 +29,7 @@ export type OrderableInput<EntityT extends EntityBase> =
  * @typeparam EntityT - Type of the entity to be ordered
  * @param orderBy - Field or link to be ordered by
  * @returns New order
+ * @internal
  */
 export function asc<EntityT extends EntityBase>(
   orderBy: OrderableInput<EntityT>
@@ -43,6 +45,7 @@ export function asc<EntityT extends EntityBase>(
  * @typeparam EntityT - Type of the entity to be ordered
  * @param orderBy - Field or link to be ordered by
  * @returns New order
+ * @internal
  */
 export function desc<EntityT extends EntityBase>(
   orderBy: OrderableInput<EntityT>

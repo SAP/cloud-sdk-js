@@ -14,6 +14,7 @@ import { serializeBatchRequest } from './batch-request-serializer';
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
  * The retrieve and change sets will be executed in order, while the order within a change set can vary.
+ * @internal
  */
 export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestConfig> {
   // FIXME: MethodRequestBuilder is too broad here. Should be getAll and getByKey

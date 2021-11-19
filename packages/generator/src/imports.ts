@@ -11,7 +11,11 @@ const potentialExternalImportDeclarations = [
   ['moment', 'Moment', 'Duration'],
   ['bignumber.js', 'BigNumber']
 ];
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function externalImportDeclarations(
   properties: VdmMappedEdmType[]
 ): ImportDeclarationStructure[] {
@@ -23,7 +27,9 @@ export function externalImportDeclarations(
       declaration => declaration.namedImports && declaration.namedImports.length
     );
 }
-
+/**
+ * @internal
+ */
 export function externalImportDeclaration(
   properties: VdmMappedEdmType[],
   moduleSpecifier: string,
@@ -37,17 +43,21 @@ export function externalImportDeclaration(
     )
   };
 }
-
+/**
+ * @internal
+ */
 export function odataCommonImportDeclaration(
   namedImports: string[]
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
-    moduleSpecifier: '@sap-cloud-sdk/odata-common',
+    moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
     namedImports: unique(namedImports)
   };
 }
-
+/**
+ * @internal
+ */
 export function odataImportDeclaration(
   namedImports: string[],
   odataVersion: ODataVersion
@@ -61,13 +71,17 @@ export function odataImportDeclaration(
     namedImports: unique(namedImports)
   };
 }
-
+/**
+ * @internal
+ */
 export function propertyTypeImportNames(
   properties: VdmMappedEdmType[]
 ): string[] {
   return properties.map(prop => prop.jsType).includes('Time') ? ['Time'] : [];
 }
-
+/**
+ * @internal
+ */
 export function propertyFieldTypeImportNames(
   properties: VdmProperty[]
 ): string[] {
@@ -77,14 +91,18 @@ export function propertyFieldTypeImportNames(
       .map(prop => prop.fieldType)
   );
 }
-
+/**
+ * @internal
+ */
 export function navPropertyFieldTypeImportNames(
   navProperties: VdmNavigationProperty[],
   oDataVersion: ODataVersion
 ): string[] {
   return unique(navProperties.map(navProp => linkClass(navProp, oDataVersion)));
 }
-
+/**
+ * @internal
+ */
 export function complexTypeImportDeclarations(
   properties: VdmProperty[]
 ): ImportDeclarationStructure[] {
@@ -94,7 +112,9 @@ export function complexTypeImportDeclarations(
       .map(prop => complexTypeImportDeclaration(prop))
   );
 }
-
+/**
+ * @internal
+ */
 export function enumTypeImportDeclarations(
   properties: VdmProperty[]
 ): ImportDeclarationStructure[] {
@@ -106,6 +126,9 @@ export function enumTypeImportDeclarations(
 }
 
 // Only supports named imports
+/**
+ * @internal
+ */
 export function mergeImportDeclarations(
   importDeclarations: ImportDeclarationStructure[]
 ): ImportDeclarationStructure[] {

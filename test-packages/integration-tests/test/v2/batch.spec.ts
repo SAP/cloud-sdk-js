@@ -1,8 +1,8 @@
 import { batch, changeset } from '@sap-cloud-sdk/test-services/v2/test-service';
 import nock from 'nock';
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { basicHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/authorization-header';
-import { ErrorResponse } from '@sap-cloud-sdk/odata-common/dist/batch-response';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
+import { ErrorResponse } from '@sap-cloud-sdk/odata-common/internal';
 import {
   createAsChildOfRequest,
   createRequest,

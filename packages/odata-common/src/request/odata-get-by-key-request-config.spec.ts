@@ -1,7 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { ODataGetByKeyRequestConfig } from '@sap-cloud-sdk/odata-common';
-import { uriConverter, oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2/';
+import { ODataGetByKeyRequestConfig } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  uriConverter,
+  oDataUri as oDataUriV2
+} from '@sap-cloud-sdk/odata-v2/internal';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util';
 
 describe('ODataGetByKeyRequestConfig', () => {

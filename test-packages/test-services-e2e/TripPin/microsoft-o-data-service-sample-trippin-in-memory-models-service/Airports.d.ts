@@ -6,7 +6,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   Field
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "Airports" of service "Microsoft.OData.SampleService.Models.TripPin".
  */

@@ -1,4 +1,4 @@
-import '@sap-cloud-sdk/odata-common';
+import '@sap-cloud-sdk/odata-common/internal';
 import { ActionImportRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity } from './TestEntity';
 /**

@@ -10,7 +10,7 @@ exports.TestComplexBaseType =
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * @deprecated Since v1.6.0. Use [[TestComplexBaseType.build]] instead.
  */
@@ -22,7 +22,7 @@ exports.createTestComplexBaseType = createTestComplexBaseType;
  * TestComplexBaseTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
-class TestComplexBaseTypeField extends odata_common_1.ComplexTypeField {
+class TestComplexBaseTypeField extends internal_1.ComplexTypeField {
   /**
    * Creates an instance of TestComplexBaseTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -30,7 +30,7 @@ class TestComplexBaseTypeField extends odata_common_1.ComplexTypeField {
    */
   constructor(fieldName, fieldOf, fieldOptions) {
     super(fieldName, fieldOf, TestComplexBaseType, fieldOptions);
-    this._fieldBuilder = new odata_common_1.FieldBuilder(this);
+    this._fieldBuilder = new internal_1.FieldBuilder(this);
     /**
      * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

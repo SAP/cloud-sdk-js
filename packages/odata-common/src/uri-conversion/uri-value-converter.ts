@@ -11,6 +11,9 @@ type UriConverterMapping = {
   [key in EdmTypeSameConvertersUri]: (value: any) => string;
 };
 
+/**
+ * @internal
+ */
 export const uriConvertersCommon: UriConverterMapping = {
   'Edm.Binary': value => `X'${value}'`,
   'Edm.Boolean': value => String(value),
@@ -33,6 +36,9 @@ function isInfOrNan(value: string | number): boolean {
   return ['inf', '-inf', 'nan'].includes(value.toLowerCase());
 }
 
+/**
+ * @internal
+ */
 export function convertToUriForEdmString(value: any): string {
   return `'${value.replace(/'/g, "''")}'`;
 }
@@ -40,6 +46,7 @@ export function convertToUriForEdmString(value: any): string {
 /**
  * Interface defining the methods of the URI converter.
  * The concrete implementations are created in odata/v2/uri-conversion/uri-value-converter.ts and odata/v4/uri-conversion/uri-value-converter.ts
+ * @internal
  */
 export interface UriConverter {
   convertToUriFormat(
@@ -48,6 +55,9 @@ export interface UriConverter {
   ): string;
 }
 
+/**
+ * @internal
+ */
 export function createUriConverter<V extends EdmTypeSameConverters>(
   serializers: { [keys in V]: (value: any) => any },
   uriConverters: { [key in V]: (value: any) => string }

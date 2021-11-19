@@ -8,6 +8,7 @@ import { Order } from '../order/order';
  * @typeparam EntityT - Type of the entity to order
  * @param orderBy - A list of orderables to get the query parameters for
  * @returns An object containing the query parameter or an empty object
+ * @internal
  */
 export function getOrderBy<EntityT extends EntityBase>(
   orderBy: Orderable<EntityT>[]

@@ -6,13 +6,13 @@ exports.TestEntityWithEnumKeyRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityWithEnumKey_1 = require('./TestEntityWithEnumKey');
 /**
  * Request builder class for operations supported on the [[TestEntityWithEnumKey]] entity.
  */
-class TestEntityWithEnumKeyRequestBuilder extends odata_common_1.RequestBuilder {
+class TestEntityWithEnumKeyRequestBuilder extends internal_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityWithEnumKey` entity based on its keys.
    * @param keyPropertyEnum1 Key property. See [[TestEntityWithEnumKey.keyPropertyEnum1]].

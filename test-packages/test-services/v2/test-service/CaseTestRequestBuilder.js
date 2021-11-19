@@ -6,13 +6,13 @@ exports.CaseTestRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const CaseTest_1 = require('./CaseTest');
 /**
  * Request builder class for operations supported on the [[CaseTest]] entity.
  */
-class CaseTestRequestBuilder extends odata_common_1.RequestBuilder {
+class CaseTestRequestBuilder extends internal_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `CaseTest` entity based on its keys.
    * @param keyPropertyString Key property. See [[CaseTest.keyPropertyString]].

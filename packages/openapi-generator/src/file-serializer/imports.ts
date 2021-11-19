@@ -4,6 +4,7 @@ import { codeBlock } from '@sap-cloud-sdk/util';
  * Serialize a list of imports.
  * @param imports - The imports to serialize.
  * @returns The serialized imports as a multiline string.
+ * @internal
  */
 export function serializeImports(imports: Import[]): string {
   const relevantImports = imports.filter(({ names }) => names.length);
@@ -19,6 +20,7 @@ export function serializeImports(imports: Import[]): string {
 
 /**
  * Representation of module imports.
+ * @internal
  */
 export interface Import {
   /**

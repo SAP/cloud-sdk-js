@@ -16,6 +16,7 @@ import { ParserOptions } from './options';
  * @param refs - Object representing cross references throughout the document.
  * @param options - Parser options.
  * @returns A flat list of parsed operations.
+ * @internal
  */
 export function parseOperation(
   { operation, pathPattern, method, pathItemParameters }: OperationInfo,
@@ -53,7 +54,11 @@ export function parseOperation(
     tags: operation.tags!
   };
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function getRelevantParameters(
   parameters: (OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject)[],
   refs: OpenApiDocumentRefs
@@ -120,7 +125,9 @@ function sortPathParameters(
     return pathParameter;
   });
 }
-
+/**
+ * @internal
+ */
 export function parsePathPattern(
   pathPattern: string,
   pathParameters: OpenApiParameter[]
@@ -142,7 +149,9 @@ export function parsePathPattern(
     })
     .join('/');
 }
-
+/**
+ * @internal
+ */
 export function parsePathParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
   pathPattern: string,
@@ -165,7 +174,9 @@ export function parsePathParameters(
     return param;
   });
 }
-
+/**
+ * @internal
+ */
 export function parseParameters(
   pathParameters: OpenAPIV3.ParameterObject[],
   refs: OpenApiDocumentRefs,

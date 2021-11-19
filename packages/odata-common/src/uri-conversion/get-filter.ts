@@ -28,7 +28,7 @@ type GetFilterType<EntityT extends EntityBase> = (
 
 /**
  * Interface representing the return of the getFilter creator [[createGetFilter]].
- *  @internal
+ * @internal
  */
 export interface GetFilter<EntityT extends EntityBase = any> {
   getFilter: GetFilterType<EntityT>;
@@ -39,6 +39,7 @@ export interface GetFilter<EntityT extends EntityBase = any> {
  * The concrete filter getters are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
  * @param uriConverter - Uri converter for v2 or v4.
  * @returns The filter getter. See interface [[GetFilter]]
+ * @internal
  */
 export function createGetFilter(uriConverter: UriConverter): GetFilter {
   /**

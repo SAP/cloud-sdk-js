@@ -14,6 +14,7 @@ import { ParserOptions } from './options';
  * @param options.reservedWords - Reserved words that should be handled as duplicates.
  * @param options.separator - Character between index and original name.
  * @returns Unique names in the given order.
+ * @internal
  */
 export function ensureUniqueNames(
   names: string[],
@@ -45,6 +46,7 @@ export function ensureUniqueNames(
  * @param names - List of names to ensure uniqueness for.
  * @param formattedNames - Original transformed names.
  * @param reservedWords - Reserved words that should be handled as duplicates.
+ * @internal
  */
 export function validateUniqueness(
   names: string[],
@@ -71,6 +73,7 @@ export function validateUniqueness(
  * @param namingOptions.format Function to format the name.
  * @param namingOptions.reservedWords Reserved words that should be handled as duplicates.
  * @returns Unique names in the given order.
+ * @internal
  */
 export function deduplicateNames(
   names: string[],

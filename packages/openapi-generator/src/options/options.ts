@@ -2,12 +2,9 @@ import { resolve, extname } from 'path';
 import { existsSync, lstatSync } from 'fs';
 import { GlobSync } from 'glob';
 import yargs from 'yargs';
+// eslint-disable-next-line import/no-internal-modules
 import { hideBin } from 'yargs/helpers';
 
-/* eslint-disable valid-jsdoc */
-/**
- * @internal
- */
 // eslint-disable-next-line
 export function cli(argv: string[]) {
   return (
@@ -23,9 +20,6 @@ export function cli(argv: string[]) {
   );
 }
 
-/**
- * @internal
- */
 export const generatorOptions = {
   input: {
     string: true,

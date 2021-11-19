@@ -7,7 +7,8 @@ import {
   deleteRequestBuilder,
   getAllRequestBuilder,
   getByKeyRequestBuilder,
-  updateRequestBuilder, WriteBuilder
+  updateRequestBuilder,
+  WriteBuilder
 } from '../../../test/common-request-config';
 import {
   serializeBatchRequest,
@@ -17,10 +18,10 @@ import { BatchChangeSet } from './batch-change-set';
 
 function commonEntity(): CommonEntity {
   return CommonEntity.builder()
-      .keyPropertyGuid('guidId')
-      .keyPropertyString('strId')
-      .stringProperty('value')
-      .build();
+    .keyPropertyGuid('guidId')
+    .keyPropertyString('strId')
+    .stringProperty('value')
+    .build();
 }
 const entityKeys = {
   KeyPropertyGuid: 'testId',
@@ -28,7 +29,7 @@ const entityKeys = {
 };
 
 export function changeSet(
-    requests: WriteBuilder[]
+  requests: WriteBuilder[]
 ): BatchChangeSet<WriteBuilder> {
   return new BatchChangeSet<any>(requests, 'changeSet_boundary');
 }
@@ -41,65 +42,65 @@ describe('batch request serializer', () => {
 
     it('serializes getAll request with filter', () => {
       expect(
-          serializeRequest(
-              getAllRequestBuilder({
-                filter: CommonEntity.STRING_PROPERTY.equals('test')
-              })
-          )
+        serializeRequest(
+          getAllRequestBuilder({
+            filter: CommonEntity.STRING_PROPERTY.equals('test')
+          })
+        )
       ).toMatchSnapshot();
     });
 
     it('encodes user provided filter parameters only once', () => {
       expect(
-          serializeRequest(
-              getAllRequestBuilder({
-                filter: CommonEntity.STRING_PROPERTY.equals('with EmptySpace')
-              })
-          )
+        serializeRequest(
+          getAllRequestBuilder({
+            filter: CommonEntity.STRING_PROPERTY.equals('with EmptySpace')
+          })
+        )
       ).toMatch(/filter=\(StringProperty%20eq%20'with%20EmptySpace'\)/);
     });
 
     it('serializes getAll request with custom headers', () => {
       expect(
-          serializeRequest(
-              getAllRequestBuilder({ headers: { 'Custom-Header': 'custom' } })
-          )
+        serializeRequest(
+          getAllRequestBuilder({ headers: { 'Custom-Header': 'custom' } })
+        )
       ).toMatchSnapshot();
     });
 
     it('serializes getAll request with absolute sub request path', () => {
       expect(
-          serializeRequest(getAllRequestBuilder(), {
-            subRequestPathType: 'absolute',
-            destination: { url: 'http://example.com' }
-          })
+        serializeRequest(getAllRequestBuilder(), {
+          subRequestPathType: 'absolute',
+          destination: { url: 'http://example.com' }
+        })
       ).toMatchSnapshot();
     });
 
     it('serializes getAll request with entity relative sub request path', () => {
       expect(
-          serializeRequest(getAllRequestBuilder(), {
-            subRequestPathType: 'relativeToEntity',
-            destination: { url: 'http://example.com' }
-          })
+        serializeRequest(getAllRequestBuilder(), {
+          subRequestPathType: 'relativeToEntity',
+          destination: { url: 'http://example.com' }
+        })
       ).toMatchSnapshot();
     });
 
     it('serializes getByKey request', () => {
       expect(
-          serializeRequest(getByKeyRequestBuilder({ keys: entityKeys }))
+        serializeRequest(getByKeyRequestBuilder({ keys: entityKeys }))
       ).toMatchSnapshot();
     });
 
     it('serializes create request', () => {
       expect(
-          serializeRequest(createRequestBuilder({ payload: commonEntity() }))
+        serializeRequest(createRequestBuilder({ payload: commonEntity() }))
       ).toMatchSnapshot();
     });
 
     it('serializes update request', () => {
       expect(
-          serializeRequest(updateRequestBuilder({ payload: commonEntity() }))
+        serializeRequest(updateRequestBuilder({ payload: commonEntity() }))
       ).toMatchSnapshot();
     });
 
@@ -112,20 +113,20 @@ describe('batch request serializer', () => {
 
     it('serializes delete request with entity', () => {
       expect(
-          serializeRequest(deleteRequestBuilder({ payload: commonEntity() }))
+        serializeRequest(deleteRequestBuilder({ payload: commonEntity() }))
       ).toMatchSnapshot();
     });
 
     it('serializes delete request with id', () => {
       expect(
-          serializeRequest(deleteRequestBuilder({ keys: entityKeys }))
+        serializeRequest(deleteRequestBuilder({ keys: entityKeys }))
       ).toMatchSnapshot();
     });
 
     it('serializes delete request with eTag', () => {
       const withEtag = commonEntity().setVersionIdentifier('eTag');
       expect(
-          serializeRequest(deleteRequestBuilder({ payload: withEtag }))
+        serializeRequest(deleteRequestBuilder({ payload: withEtag }))
       ).toMatchSnapshot();
     });
   });
@@ -140,12 +141,12 @@ describe('batch request serializer', () => {
       const updateRequest = updateRequestBuilder({ payload: commonEntity() });
       const createRequest = createRequestBuilder({ payload: commonEntity() });
       expect(
-          serializeChangeSet(
-              new BatchChangeSet<any>(
-                  [updateRequest, createRequest],
-                  'changeSet_boundary'
-              )
+        serializeChangeSet(
+          new BatchChangeSet<any>(
+            [updateRequest, createRequest],
+            'changeSet_boundary'
           )
+        )
       ).toMatchSnapshot();
     });
 
@@ -166,21 +167,21 @@ describe('batch request serializer', () => {
         getByKeyRequestBuilder({ keys: entityKeys })
       ];
       expect(
-          serializeBatchRequest(batchRequestBuilder(requests))
+        serializeBatchRequest(batchRequestBuilder(requests))
       ).toMatchSnapshot();
     });
 
     it("throws an error if the request option 'absolute' is with a destination without url.", () => {
       const request = batchRequestBuilder([]).withSubRequestPathType(
-          'absolute'
+        'absolute'
       );
       expect(() =>
-          serializeBatchRequest(request, {
-            subRequestPathType: request.requestConfig.subRequestPathType,
-            destination: {} as Destination
-          })
+        serializeBatchRequest(request, {
+          subRequestPathType: request.requestConfig.subRequestPathType,
+          destination: {} as Destination
+        })
       ).toThrowErrorMatchingInlineSnapshot(
-          '"Cannot serialize batch request. Invalid destination provided for sub request path type \'absolute\'"'
+        '"Cannot serialize batch request. Invalid destination provided for sub request path type \'absolute\'"'
       );
     });
   });

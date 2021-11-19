@@ -2,16 +2,17 @@
 import {
   Constructable,
   EntityBase,
-  EntityBuilderType
-} from '../src/entity-base';
-import { CustomField } from '../src/selectable/custom-field';
-import { FieldBuilder } from '../src/selectable/field-builder';
-import { Field, FieldOptions } from '../src/selectable/field';
-import { EdmTypeField } from '../src/selectable/edm-type-field';
-import { ComplexTypeField } from '../src/selectable/complex-type-field';
-import { ConstructorOrField } from '../src/selectable/constructor-or-field';
-import { PropertyMetadata } from '../src/selectable/complex-type-namespace';
-import { AllFields } from '../src/selectable/all-fields';
+  EntityBuilderType,
+  CustomField,
+  FieldBuilder,
+  Field,
+  FieldOptions,
+  EdmTypeField,
+  ComplexTypeField,
+  ConstructorOrField,
+  PropertyMetadata,
+  AllFields
+} from '../src/internal';
 
 export interface CommonEntityComplexType {
   stringProperty: string;

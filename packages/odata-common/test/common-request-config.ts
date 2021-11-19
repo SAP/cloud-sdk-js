@@ -16,17 +16,34 @@ import {
   ODataGetAllRequestConfig,
   GetByKeyRequestBuilderBase,
   deserializersCommon,
-  entityDeserializer  as entityDeserializerBase,
-  entitySerializer as entitySerializerBase
-} from '../src';
-import { createUriConverter,serializersCommon,uriConvertersCommon,createODataUri,createEdmToTs } from '../src';
+  entityDeserializer as entityDeserializerBase,
+  entitySerializer as entitySerializerBase,
+  createUriConverter,
+  serializersCommon,
+  uriConvertersCommon,
+  createODataUri,
+  createEdmToTs
+} from '../src/internal';
 import { CommonEntity } from './common-entity';
 
-const commonUriConverter = createUriConverter(serializersCommon,uriConvertersCommon as any);
-const commonOdataUri = createODataUri(commonUriConverter,()=>undefined as any,()=>undefined as any);
-const commonEntitySerializer = entitySerializerBase(createEdmToTs(serializersCommon));
-const commonExtractODataEtag = ()=>undefined;
-const commonEntityDeserializer= entityDeserializerBase(createEdmToTs(deserializersCommon),commonExtractODataEtag,()=>undefined as any);
+const commonUriConverter = createUriConverter(
+  serializersCommon,
+  uriConvertersCommon as any
+);
+const commonOdataUri = createODataUri(
+  commonUriConverter,
+  () => undefined as any,
+  () => undefined as any
+);
+const commonEntitySerializer = entitySerializerBase(
+  createEdmToTs(serializersCommon)
+);
+const commonExtractODataEtag = () => undefined;
+const commonEntityDeserializer = entityDeserializerBase(
+  createEdmToTs(deserializersCommon),
+  commonExtractODataEtag,
+  () => undefined as any
+);
 
 interface Options {
   filter?: Filterable<CommonEntity, any>;
@@ -110,37 +127,37 @@ export function getByKeyRequestBuilder(
 export function createRequestBuilder(
   options?: Options
 ): CreateRequestBuilderBase<CommonEntity> {
-  if(options?.payload) {
+  if (options?.payload) {
     return new CommonCreateRequestBuilder(
-        CommonEntity,
-        options.payload! as CommonEntity,
-        commonOdataUri,
-        commonEntitySerializer,
-        commonEntityDeserializer,
-        responseDataAccessor
+      CommonEntity,
+      options.payload! as CommonEntity,
+      commonOdataUri,
+      commonEntitySerializer,
+      commonEntityDeserializer,
+      responseDataAccessor
     );
   }
 
   throw new Error(
-      'You need to specify the payload in the options for a create request builder.'
+    'You need to specify the payload in the options for a create request builder.'
   );
 }
 
 export function updateRequestBuilder(
   options?: Options
 ): UpdateRequestBuilderBase<CommonEntity> {
-  if(options?.payload) {
+  if (options?.payload) {
     return new CommonUpdateRequestBuilder(
-        CommonEntity,
-        options.payload! as CommonEntity,
-        commonOdataUri,
-        commonEntitySerializer,
-        commonExtractODataEtag,
-        body => body
+      CommonEntity,
+      options.payload! as CommonEntity,
+      commonOdataUri,
+      commonEntitySerializer,
+      commonExtractODataEtag,
+      body => body
     );
   }
   throw new Error(
-      'You need to specify the payload in the options for update request builder.'
+    'You need to specify the payload in the options for update request builder.'
   );
 }
 
@@ -167,12 +184,12 @@ export function deleteRequestBuilder(
 }
 
 export function batchRequestBuilder(
-    requests: (ReadBuilders | BatchChangeSet<WriteBuilder>)[]
+  requests: (ReadBuilders | BatchChangeSet<WriteBuilder>)[]
 ): BatchRequestBuilder {
   const builder = new CommonBacthRequestBuilder(
-      CommonEntity._defaultServicePath,
-      requests,
-      { A_CommonEntity: CommonEntity }
+    CommonEntity._defaultServicePath,
+    requests,
+    { A_CommonEntity: CommonEntity }
   );
   Object.assign(builder.requestConfig, {
     boundary: 'batch_fixed_boundary_for_testing'

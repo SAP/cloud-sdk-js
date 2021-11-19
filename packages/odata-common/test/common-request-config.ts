@@ -15,33 +15,24 @@ import {
   ODataGetByKeyRequestConfig,
   ODataGetAllRequestConfig,
   GetByKeyRequestBuilderBase,
-  ODataRequestConfig
+  deserializersCommon,
+  entityDeserializer  as entityDeserializerBase,
+  entitySerializer as entitySerializerBase
 } from '../src';
+import { createUriConverter,serializersCommon,uriConvertersCommon,createODataUri,createEdmToTs } from '../src';
 import { CommonEntity } from './common-entity';
-import { commonOdataUri } from './common-odata-uri';
-import { commonEntitySerializer } from './common-serializer';
-import {
-  commonEntityDeserializer,
-  commonExtractODataEtag
-} from './common-deserializer';
+
+const commonUriConverter = createUriConverter(serializersCommon,uriConvertersCommon as any);
+const commonOdataUri = createODataUri(commonUriConverter,()=>undefined as any,()=>undefined as any);
+const commonEntitySerializer = entitySerializerBase(createEdmToTs(serializersCommon));
+const commonExtractODataEtag = ()=>undefined;
+const commonEntityDeserializer= entityDeserializerBase(createEdmToTs(deserializersCommon),commonExtractODataEtag,()=>undefined as any);
 
 interface Options {
   filter?: Filterable<CommonEntity, any>;
   headers?: Record<string, any>;
   keys?: Record<string, any>;
   payload?: EntityBase;
-}
-
-function addBaseOptions(requestConfig: ODataRequestConfig, options?: Options) {
-  if (options?.headers) {
-    requestConfig.addCustomHeaders(options.headers);
-  }
-  if (options?.payload) {
-    requestConfig.payload = commonEntitySerializer.serializeEntity(
-      options.payload,
-      CommonEntity
-    );
-  }
 }
 
 export function getAllRequestConfig(
@@ -54,7 +45,9 @@ export function getAllRequestConfig(
   if (options?.filter) {
     requestConfig.filter = and([options?.filter]);
   }
-  addBaseOptions(requestConfig);
+  if (options?.headers) {
+    requestConfig.addCustomHeaders(options.headers);
+  }
   return requestConfig;
 }
 
@@ -81,26 +74,6 @@ export function updateRequestConfig(
 ): ODataUpdateRequestConfig<CommonEntity> {
   return updateRequestBuilder(options).requestConfig;
 }
-
-class CommonGetAllRequestBuilder extends GetAllRequestBuilderBase<CommonEntity> {}
-
-class CommonUpdateRequestBuilder extends UpdateRequestBuilderBase<CommonEntity> {}
-
-class CommonCreateRequestBuilder extends CreateRequestBuilderBase<CommonEntity> {}
-
-class CommonDeleteRequestBuilder extends DeleteRequestBuilderBase<CommonEntity> {
-  setVersionIdentifier(eTag: string): this {
-    if (eTag) {
-      // In principle this is v2/v4 specific, but the method is called in the request config so we provide some dummy implementation.
-      this.addCustomHeaders({ 'some-implementation-for-test': eTag });
-    }
-    return this;
-  }
-}
-
-class CommonByKeyRequestBuilder extends GetByKeyRequestBuilderBase<CommonEntity> {}
-
-class CommonBacthRequestBuilder extends BatchRequestBuilder {}
 
 export function getAllRequestBuilder(
   options?: Options
@@ -137,26 +110,37 @@ export function getByKeyRequestBuilder(
 export function createRequestBuilder(
   options?: Options
 ): CreateRequestBuilderBase<CommonEntity> {
-  return new CommonCreateRequestBuilder(
-    CommonEntity,
-    options!.payload! as CommonEntity,
-    commonOdataUri,
-    commonEntitySerializer,
-    commonEntityDeserializer,
-    responseDataAccessor
+  if(options?.payload) {
+    return new CommonCreateRequestBuilder(
+        CommonEntity,
+        options.payload! as CommonEntity,
+        commonOdataUri,
+        commonEntitySerializer,
+        commonEntityDeserializer,
+        responseDataAccessor
+    );
+  }
+
+  throw new Error(
+      'You need to specify the payload in the options for a create request builder.'
   );
 }
 
 export function updateRequestBuilder(
   options?: Options
 ): UpdateRequestBuilderBase<CommonEntity> {
-  return new CommonUpdateRequestBuilder(
-    CommonEntity,
-    options!.payload! as CommonEntity,
-    commonOdataUri,
-    commonEntitySerializer,
-    commonExtractODataEtag,
-    body => body
+  if(options?.payload) {
+    return new CommonUpdateRequestBuilder(
+        CommonEntity,
+        options.payload! as CommonEntity,
+        commonOdataUri,
+        commonEntitySerializer,
+        commonExtractODataEtag,
+        body => body
+    );
+  }
+  throw new Error(
+      'You need to specify the payload in the options for update request builder.'
   );
 }
 
@@ -182,31 +166,45 @@ export function deleteRequestBuilder(
   );
 }
 
-export function changeSet(
-  requests: WriteBuilder[]
-): BatchChangeSet<WriteBuilder> {
-  return new BatchChangeSet<any>(requests, 'changeSet_boundary');
-}
-
-type ReadBuilders = CommonByKeyRequestBuilder | CommonGetAllRequestBuilder;
-type WriteBuilder =
-  | CommonDeleteRequestBuilder
-  | CommonCreateRequestBuilder
-  | CommonUpdateRequestBuilder;
-
 export function batchRequestBuilder(
-  requests: (ReadBuilders | BatchChangeSet<WriteBuilder>)[]
+    requests: (ReadBuilders | BatchChangeSet<WriteBuilder>)[]
 ): BatchRequestBuilder {
   const builder = new CommonBacthRequestBuilder(
-    CommonEntity._defaultServicePath,
-    requests,
-    { A_CommonEntity: CommonEntity }
+      CommonEntity._defaultServicePath,
+      requests,
+      { A_CommonEntity: CommonEntity }
   );
   Object.assign(builder.requestConfig, {
     boundary: 'batch_fixed_boundary_for_testing'
   });
   return builder;
 }
+
+class CommonGetAllRequestBuilder extends GetAllRequestBuilderBase<CommonEntity> {}
+
+class CommonUpdateRequestBuilder extends UpdateRequestBuilderBase<CommonEntity> {}
+
+class CommonCreateRequestBuilder extends CreateRequestBuilderBase<CommonEntity> {}
+
+class CommonDeleteRequestBuilder extends DeleteRequestBuilderBase<CommonEntity> {
+  setVersionIdentifier(eTag: string): this {
+    if (eTag) {
+      // In principle this is v2/v4 specific, but the method is called in the request config so we provide some dummy implementation.
+      this.addCustomHeaders({ 'some-implementation-for-test': eTag });
+    }
+    return this;
+  }
+}
+
+class CommonByKeyRequestBuilder extends GetByKeyRequestBuilderBase<CommonEntity> {}
+
+class CommonBacthRequestBuilder extends BatchRequestBuilder {}
+
+type ReadBuilders = CommonByKeyRequestBuilder | CommonGetAllRequestBuilder;
+export type WriteBuilder =
+  | CommonDeleteRequestBuilder
+  | CommonCreateRequestBuilder
+  | CommonUpdateRequestBuilder;
 
 const responseDataAccessor: any = () => {
   throw new Error('Response data accesor not implemented for test.');

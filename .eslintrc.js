@@ -33,13 +33,18 @@ module.exports = {
     {
       files: ['**/test/**/*'],
       rules: {
-        'import/no-internal-modules': 'off',
         'no-unused-expressions': 'off'
       }
     }
   ],
   rules: {
     radix: 'off',
-    'tsdoc/syntax': 'error'
+    'tsdoc/syntax': 'error',
+    'import/no-internal-modules': [
+      'error',
+      {
+        allow: ['@sap-cloud-sdk/**/*']
+      }
+    ]
   }
 };

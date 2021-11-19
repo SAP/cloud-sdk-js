@@ -1,6 +1,3 @@
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
-import { ODataCreateRequestConfig } from '@sap-cloud-sdk/odata-common';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { CommonEntity } from '../../test/common-entity';
 import { createRequestConfig } from '../../test/common-request-config';
 

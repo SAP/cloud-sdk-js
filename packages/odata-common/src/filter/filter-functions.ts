@@ -3,8 +3,12 @@ import BigNumber from 'bignumber.js';
 import { EntityBase } from '../entity-base';
 import { Field } from '../selectable/field';
 import { NewField } from '../selectable/field-new';
-import { defaultDeSerializersRaw } from '../de-serializers/default-de-serializers';
-import { DeSerializationMiddleware, DeSerializationMiddlewareBASE, DeserializedType } from '../de-serializers/de-serialization-middleware';
+import {
+  CustomDeSerializer,
+  DeSerializationMiddleware,
+  DeSerializationMiddlewareBASE,
+  DeserializedType
+} from '../de-serializers/de-serialization-middleware';
 import { StringFilterFunction } from './string-filter-function';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { filterFunction } from './filter-function';
@@ -33,11 +37,16 @@ export function endsWith<EntityT extends EntityBase>(
   return filterFunction('endswith', 'boolean', str, suffix);
 }
 
-export function newEndsWith<EntityT extends EntityBase, T extends DeSerializationMiddlewareBASE>(
+export function newEndsWith<
+  EntityT extends EntityBase,
+  T extends DeSerializationMiddlewareBASE
+>(
   deSerializers: T,
-  str: DeserializedType<T,'Edm.String'> | NewField<EntityT, boolean, boolean>,
+  str: DeserializedType<T, 'Edm.String'> | NewField<EntityT, boolean, boolean>,
   // | StringFilterFunction<EntityT>,
-  suffix: DeserializedType<T,'Edm.String'> | NewField<EntityT, boolean, boolean>
+  suffix:
+    | DeserializedType<T, 'Edm.String'>
+    | NewField<EntityT, boolean, boolean>
   // | StringFilterFunction<EntityT>
 ): NewBooleanFilterFunction<EntityT> {
   return newFilterFunction('endswith', 'boolean', str, suffix);
@@ -342,28 +351,40 @@ export function filterFunctions<
   StringT = string,
   AnyT = any
 >(
-  deSerializers: Partial<
-    DeSerializationMiddleware<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT
-    >
-  > = defaultDeSerializersRaw as any
+  deSerializers: DeSerializationMiddleware<
+    BinaryT,
+    BooleanT,
+    ByteT,
+    DecimalT,
+    DoubleT,
+    FloatT,
+    Int16T,
+    Int32T,
+    Int64T,
+    GuidT,
+    SByteT,
+    SingleT,
+    StringT,
+    AnyT
+  >
 ): Record<string, any> {
   return {
     endsWith,
-    newEndsWith: () => newEndsWith(),
+    newEndsWith: <EntityT extends EntityBase>(
+      str:
+        | DeserializedType<
+            CustomDeSerializer<typeof deSerializers>,
+            'Edm.String'
+          >
+        | NewField<EntityT, boolean, boolean>,
+      suffix:
+        | DeserializedType<
+            CustomDeSerializer<typeof deSerializers>,
+            'Edm.String'
+          >
+        | NewField<EntityT, boolean, boolean>
+    ): NewBooleanFilterFunction<EntityT> =>
+      newEndsWith(deSerializers, str, suffix),
     startsWith,
     length,
     indexOf,

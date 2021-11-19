@@ -774,7 +774,7 @@ const a = testEntityApi.schema().STRING_PROPERTY.equals(4);
 
 // const f = new NewFilter('test', 'eq', '2');
 // const wf = new WrappedFilter(TestEntity, defaultDeSerializers, f);
-const ff = filterFunctions.newEndsWith(
+const ff = filterFunctions(c).newEndsWith(
   testEntityApi.schema().STRING_PROPERTY,
   58349
 );
@@ -783,7 +783,10 @@ testEntityApi
   .requestBuilder()
   .getAll()
   .filter(
-    filterFunctions.newEndsWith(testEntityApi.schema().STRING_PROPERTY, 'test')
+    filterFunctions(c).newEndsWith(
+      testEntityApi.schema().STRING_PROPERTY,
+      'test'
+    )
   );
 
 const enityt = testEntityApi

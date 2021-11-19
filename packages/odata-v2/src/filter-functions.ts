@@ -9,6 +9,7 @@ import {
 import BigNumber from 'bignumber.js';
 import { DeSerializationMiddleware } from './de-serializers/de-serialization-middleware';
 import { defaultDeSerializers } from './de-serializers/default-de-serializers';
+import { getDeSerializers } from './de-serializers/get-de-serializers';
 import { Entity } from './entity';
 
 /* String Functions */
@@ -57,12 +58,12 @@ export function replace<EntityT extends Entity>(
 /**
  * Export length filter function for backwards compatibility.
  */
-export const length = filterFunctionsCommon.length;
+export const length = filterFunctionsCommon(defaultDeSerializers).length;
 
 /**
  * Export substring filter function for backwards compatibility.
  */
-export const substring = filterFunctionsCommon.substring;
+export const substring = filterFunctionsCommon(defaultDeSerializers).substring;
 
 /**
  * OData v2 specific filter functions
@@ -108,9 +109,8 @@ export function filterFunctions<
     >
   > = defaultDeSerializers as any
 ): Record<string, any> {
-  console.log(deSerializers);
   return {
-    ...filterFunctionsCommon,
+    ...filterFunctionsCommon(getDeSerializers(deSerializers)),
     substringOf,
     replace
   };

@@ -6,10 +6,10 @@ import {
 import { isNavigationProperty } from './properties-util';
 import type { Constructable, EntityBase } from './entity-base';
 import { DeSerializationMiddlewareBASE } from './de-serializers/de-serialization-middleware';
-import { defaultDeSerializersRaw } from '.';
+import { defaultDeSerializersRaw } from './de-serializers/default-de-serializers';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'entity-builder'
 });
 
@@ -32,6 +32,9 @@ type FromJsonType<JsonT> = {
       : JsonT[P]; // else
 };
 
+/**
+ * @internal
+ */
 export class EntityBuilder<EntityT extends EntityBase, JsonT> {
   protected entity: EntityT;
 

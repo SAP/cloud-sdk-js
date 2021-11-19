@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '@sap-cloud-sdk/odata-common';
+import { EntityBase, Constructable } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializationMiddlewareV2BASE } from './de-serializers/de-serialization-middleware';
 import { CustomField } from './selectable/custom-field';
 

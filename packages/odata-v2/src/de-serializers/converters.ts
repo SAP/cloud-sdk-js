@@ -1,7 +1,7 @@
 /* eslint-disable valid-jsdoc */
 
 import moment from 'moment';
-import { Time } from '@sap-cloud-sdk/odata-common';
+import { Time } from '@sap-cloud-sdk/odata-common/internal';
 
 export function deserializeToTime(value: string): Time {
   const regexResult =

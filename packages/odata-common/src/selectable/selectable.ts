@@ -6,6 +6,9 @@ import type { CustomField } from './custom-field';
 import type { Link } from './link';
 import type { SimpleTypeFields } from './simple-type-fields';
 
+/**
+ * @internal
+ */
 export type Selectable<EntityT extends EntityBase> =
   ODataVersionOf<EntityT> extends 'v2'
     ?

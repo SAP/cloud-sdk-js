@@ -31,6 +31,7 @@ export interface GeneratorOptions {
 
 /**
  * Parsed options with default values.
+ * @internal
  */
 export interface ParsedGeneratorOptions {
   input: string;
@@ -57,6 +58,7 @@ export interface ParsedGeneratorOptions {
  * The parsing is done through the `parse` function and `default` value on the `OpenApiGenerator` command's flags.
  * @param options - Options that match the CLI options.
  * @returns Parsed options with default values.
+ * @internal
  */
 export function parseGeneratorOptions(
   options: GeneratorOptions
@@ -79,6 +81,7 @@ export function parseGeneratorOptions(
  * Parses a given path to a config file or directory and returns its content
  * @param configPath - path to a config file or a directory containing a config.json
  * @returns Options to configure generation
+ * @internal
  */
 export async function parseOptionsFromConfig(
   configPath: string
@@ -109,6 +112,7 @@ export async function parseOptionsFromConfig(
  * @param options - parsed generator options
  * @param rawInputFlags - the raw input keys
  * @returns generator options that were used in the raw input
+ * @internal
  */
 export function getSpecifiedFlags(
   options: ParsedGeneratorOptions,

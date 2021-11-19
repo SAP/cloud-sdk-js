@@ -22,7 +22,7 @@ describe('check-public-api', () => {
         }
       }
     });
-    expect(indexFiles('root')).toEqual([
+    expect(indexFiles('root', 'index.ts')).toEqual([
       'root/folder1/folder2/index.ts',
       'root/index.ts'
     ]);

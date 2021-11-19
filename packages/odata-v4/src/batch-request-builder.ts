@@ -8,7 +8,7 @@ import {
   parseBatchResponse,
   BatchRequestBuilder,
   deserializeBatchResponse
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { responseDataAccessor } from './request-builder/response-data-accessor';
 import { entityDeserializer } from './entity-deserializer';
 

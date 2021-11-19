@@ -7,30 +7,18 @@ import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import {
-  CustomField,
   Entity,
   DeSerializationMiddleware,
   defaultDeSerializers,
   filterFunctions
 } from '@sap-cloud-sdk/odata-v2';
 import {
-  AllFields,
-  Constructable,
-  defaultDeSerializersRaw,
-  EdmTypeField,
   EntityBuilderType,
-  Field,
-  FieldBuilder,
   Link,
-  OneToOneLink,
-  OrderableEdmTypeField,
   Time
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 
-import {
-  CustomDeSerializer,
-  getDeSerializers
-} from '@sap-cloud-sdk/odata-v2/dist/de-serializers/get-de-serializers';
+import { getDeSerializers } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/get-de-serializers';
 
 import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/field-builder-new';
 
@@ -185,20 +173,9 @@ import {
   TestEntitySingleLinkType
 } from './TestEntitySingleLink';
 import { DeSerializationMiddlewareV2BASE } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
-import {
-  DeSerializationMiddlewareBASE,
-  DeserializedType,
-  DeSerializer
-} from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
-import { RequestBuilder } from '@sap-cloud-sdk/odata-v2/dist/request-builder/request-builder';
-import { isNumberTypeAnnotation, metaProperty } from '@babel/types';
-import { http_version } from '@sap-cloud-sdk/core';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
+
 import { ConstructableBASE } from '@sap-cloud-sdk/odata-common/dist/entity-base';
-import { NewEdmTypeField } from '@sap-cloud-sdk/odata-common/dist/selectable/edm-type-field-new';
-import {
-  NewFilter,
-  WrappedFilter
-} from '@sap-cloud-sdk/odata-common/dist/filter/filter-new';
 
 export interface TestEntityType<
   T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware

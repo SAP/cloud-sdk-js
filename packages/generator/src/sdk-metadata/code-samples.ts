@@ -3,13 +3,17 @@ import {
   InstructionWithText,
   InstructionWithTextAndHeader,
   usageHeaderText
-} from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
 import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
 import { getActionFunctionParams } from './code-sample-util';
 
 const instructionsText =
   'To consume the service via the pregenerated typed client library run the code snippet below. For more details about OData client libraries chose "OData Consumption Manual" from the "Helpful Links" menu.';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function entityCodeSample(
   entityName: string,
   packageName: string
@@ -24,7 +28,9 @@ const resultPromise = ${entityName}.requestBuilder().getAll().top(5).execute({ d
 `
   };
 }
-
+/**
+ * @internal
+ */
 export function genericEntityCodeSample(): InstructionWithTextAndHeader {
   return {
     ...entityCodeSample(
@@ -34,14 +40,18 @@ export function genericEntityCodeSample(): InstructionWithTextAndHeader {
     header: usageHeaderText
   };
 }
-
+/**
+ * @internal
+ */
 export function functionImportCodeSample(
   functionImport: VdmFunctionImport,
   packageName: string
 ): InstructionWithText {
   return importsCodeSample(functionImport, packageName);
 }
-
+/**
+ * @internal
+ */
 export function actionImportCodeSample(
   actionImport: VdmActionImport,
   packageName: string

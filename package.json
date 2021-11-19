@@ -58,7 +58,6 @@
     "check:test-service": "yarn generate:test-services && yarn ts-node scripts/check-test-service-for-changes.ts",
     "check:public-api": "ts-node scripts/check-public-api-cli.ts",
     "analytics": "yarn workspace @sap-cloud-sdk/analytics",
-    "core": "yarn workspace @sap-cloud-sdk/core",
     "generator": "yarn workspace @sap-cloud-sdk/generator",
     "generator-common": "yarn workspace @sap-cloud-sdk/generator-common",
     "openapi-generator": "yarn workspace @sap-cloud-sdk/openapi-generator",

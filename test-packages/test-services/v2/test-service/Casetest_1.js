@@ -1,50 +1,4 @@
 'use strict';
-var __extends =
-  (this && this.__extends) ||
-  (function () {
-    var extendStatics = function (d, b) {
-      extendStatics =
-        Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &&
-          function (d, b) {
-            d.__proto__ = b;
-          }) ||
-        function (d, b) {
-          for (var p in b)
-            if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-        };
-      return extendStatics(d, b);
-    };
-    return function (d, b) {
-      if (typeof b !== 'function' && b !== null)
-        throw new TypeError(
-          'Class extends value ' + String(b) + ' is not a constructor or null'
-        );
-      extendStatics(d, b);
-      function __() {
-        this.constructor = d;
-      }
-      d.prototype =
-        b === null
-          ? Object.create(b)
-          : ((__.prototype = b.prototype), new __());
-    };
-  })();
-var __assign =
-  (this && this.__assign) ||
-  function () {
-    __assign =
-      Object.assign ||
-      function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s)
-            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-      };
-    return __assign.apply(this, arguments);
-  };
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.Casetest_1 = void 0;
 /*
@@ -52,59 +6,54 @@ exports.Casetest_1 = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-var Casetest_1RequestBuilder_1 = require('./Casetest_1RequestBuilder');
-var odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-var odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const Casetest_1RequestBuilder_1 = require('./Casetest_1RequestBuilder');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_CASETEST" of service "API_TEST_SRV".
  */
-var Casetest_1 = /** @class */ (function (_super) {
-  __extends(Casetest_1, _super);
-  function Casetest_1() {
-    return (_super !== null && _super.apply(this, arguments)) || this;
-  }
+class Casetest_1 extends odata_v2_1.Entity {
   /**
    * Returns an entity builder to construct instances of `Casetest_1`.
    * @returns A builder that constructs instances of entity type `Casetest_1`.
    */
-  Casetest_1.builder = function () {
+  static builder() {
     return odata_v2_1.Entity.entityBuilder(Casetest_1);
-  };
+  }
   /**
    * Returns a request builder to construct requests for operations on the `Casetest_1` entity type.
    * @returns A `Casetest_1` request builder.
    */
-  Casetest_1.requestBuilder = function () {
+  static requestBuilder() {
     return new Casetest_1RequestBuilder_1.Casetest_1RequestBuilder();
-  };
+  }
   /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `Casetest_1`.
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `Casetest_1`.
    */
-  Casetest_1.customField = function (fieldName) {
+  static customField(fieldName) {
     return odata_v2_1.Entity.customFieldSelector(fieldName, Casetest_1);
-  };
+  }
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
    * @returns An object containing all instance variables + custom fields.
    */
-  Casetest_1.prototype.toJSON = function () {
-    return __assign(__assign({}, this), this._customFields);
-  };
-  /**
-   * Technical entity name for Casetest_1.
-   */
-  Casetest_1._entityName = 'A_CASETEST';
-  /**
-   * Default url path for the according service.
-   */
-  Casetest_1._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-  return Casetest_1;
-})(odata_v2_1.Entity);
+  toJSON() {
+    return { ...this, ...this._customFields };
+  }
+}
 exports.Casetest_1 = Casetest_1;
+/**
+ * Technical entity name for Casetest_1.
+ */
+Casetest_1._entityName = 'A_CASETEST';
+/**
+ * Default url path for the according service.
+ */
+Casetest_1._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (Casetest_1) {
-  var _fieldBuilder = new odata_common_1.FieldBuilder(Casetest_1);
+  const _fieldBuilder = new internal_1.FieldBuilder(Casetest_1);
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -121,7 +70,7 @@ exports.Casetest_1 = Casetest_1;
   /**
    * All fields selector.
    */
-  Casetest_1.ALL_FIELDS = new odata_common_1.AllFields('*', Casetest_1);
+  Casetest_1.ALL_FIELDS = new internal_1.AllFields('*', Casetest_1);
   /**
    * All key fields of the Casetest_1 entity.
    */
@@ -129,10 +78,9 @@ exports.Casetest_1 = Casetest_1;
   /**
    * Mapping of all key field names to the respective static field property Casetest_1.
    */
-  Casetest_1._keys = Casetest_1._keyFields.reduce(function (acc, field) {
+  Casetest_1._keys = Casetest_1._keyFields.reduce((acc, field) => {
     acc[field._fieldName] = field;
     return acc;
   }, {});
 })((Casetest_1 = exports.Casetest_1 || (exports.Casetest_1 = {})));
-exports.Casetest_1 = Casetest_1;
 //# sourceMappingURL=Casetest_1.js.map

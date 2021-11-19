@@ -7,6 +7,10 @@ import { EdmxParameter } from '../../edmx-parser/common';
 import { EdmxActionImport } from '../../edmx-parser/v4';
 import { getActionImportParameters } from './action-function-parameters';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function transformActionImportBase(
   edmxActionImport: EdmxActionImport,
   edmxParameters: EdmxParameter[],

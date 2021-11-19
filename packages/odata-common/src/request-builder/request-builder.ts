@@ -1,5 +1,8 @@
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
 
+/**
+ * @internal
+ */
 export abstract class RequestBuilder<EntityT extends EntityBase>
   implements EntityIdentifiable<EntityT>
 {

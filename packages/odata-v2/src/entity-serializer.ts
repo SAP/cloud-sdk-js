@@ -1,7 +1,7 @@
 import {
   EntitySerializer,
   entitySerializer as entitySerializerBase
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { tsToEdm } from './de-serializers/payload-value-converter';
 
 /**
@@ -20,12 +20,16 @@ export const serializeEntity = entitySerializer.serializeEntity;
  * @internal
  */
 export const serializeComplexType = entitySerializer.serializeComplexType;
+
 /**
  * @internal
  */
 export const serializeEntityNonCustomFields =
   entitySerializer.serializeEntityNonCustomFields;
 
+/**
+ * @internal
+ */
 export {
   entitySerializer as entitySerializerV2,
   serializeEntity as serializeEntityV2,

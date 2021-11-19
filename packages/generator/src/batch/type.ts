@@ -1,6 +1,10 @@
 import { StructureKind, TypeAliasDeclarationStructure } from 'ts-morph';
 import { VdmServiceMetadata } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function readRequestType(
   service: VdmServiceMetadata
 ): TypeAliasDeclarationStructure {
@@ -11,7 +15,9 @@ export function readRequestType(
     type: getReadRequestType(service)
   };
 }
-
+/**
+ * @internal
+ */
 export function writeRequestType(
   service: VdmServiceMetadata
 ): TypeAliasDeclarationStructure {

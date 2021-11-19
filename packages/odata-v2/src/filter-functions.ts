@@ -5,7 +5,7 @@ import {
   filterFunction,
   filterFunctions as filterFunctionsCommon,
   Time
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
 import { DeSerializationMiddleware } from './de-serializers/de-serialization-middleware';
 import { defaultDeSerializers } from './de-serializers/default-de-serializers';

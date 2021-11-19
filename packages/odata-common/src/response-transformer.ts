@@ -1,3 +1,8 @@
+/**
+ * @internal
+ * @param data - data
+ * @param functionActionName - functionActionName
+ */
 export function throwErrorWhenReturnTypeIsUnionType(
   data: any,
   functionActionName: string

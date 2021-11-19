@@ -21,6 +21,10 @@ generate(parseCmdArgs())
     process.exit(1);
   });
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function parseCmdArgs(): GeneratorOptions {
   const command = yargs.command(
     '$0',

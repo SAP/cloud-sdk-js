@@ -1,11 +1,13 @@
-import BigNumber from 'bignumber.js';
 import {
-  DeSerializationMiddleware as DeSerializationMiddlewareBase,
-  DeSerializer,
   EdmTypeCommon,
   ExclusiveEdmTypeV2,
   Time
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
+import {
+  DeSerializer,
+  DeSerializationMiddleware as DeSerializationMiddlewareBase
+} from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
+import BigNumber from 'bignumber.js';
 import moment from 'moment';
 
 export interface DeSerializationMiddleware<

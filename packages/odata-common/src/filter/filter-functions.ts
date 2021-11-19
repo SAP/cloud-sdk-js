@@ -21,8 +21,8 @@ import { NewBooleanFilterFunction } from './boolean-filter-function-new';
  * Build a filter function to test whether a string ends with another. Evaluates to boolean.
  * @param str - The string to test. This can either be a string, a reference to a field or another filter function.
  * @param suffix - The suffix to test for. This can either be a string, a reference to a field or another filter function.
- *
  * @returns The newly created filter function
+ * @internal
  */
 export function endsWith<EntityT extends EntityBase>(
   str:
@@ -56,8 +56,8 @@ export function newEndsWith<
  * Build a filter function to test whether a string starts with another. Evaluates to boolean.
  * @param str - The string to test. This can either be a string, a reference to a field or another filter function.
  * @param prefix - The prefix to test for. This can either be a string, a reference to a field or another filter function.
- *
  * @returns The newly created filter function
+ * @internal
  */
 export function startsWith<EntityT extends EntityBase>(
   str:
@@ -76,6 +76,7 @@ export function startsWith<EntityT extends EntityBase>(
  * Build a filter function to get the length of a string. Evaluates to int.
  * @param str - The string to compute the length for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
+ * @internal
  */
 export function length<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -87,8 +88,8 @@ export function length<EntityT extends EntityBase>(
  * Build a filter function to get the start index of a substring. Evaluates to int.
  * @param str - The string to get the index from. This can either be a string, a reference to a field or another filter function.
  * @param substr - The substring to get the index for. This can either be a string, a reference to a field or another filter function.
- *
  * @returns The newly created filter function
+ * @internal
  */
 export function indexOf<EntityT extends EntityBase>(
   str:
@@ -109,6 +110,7 @@ export function indexOf<EntityT extends EntityBase>(
  * @param pos - The starting position of the substring. This can be either a number, a reference to a field or another filter function.
  * @param len - The length of the substring. This can be either a number, a reference to a field or another filter function.
  * @returns The newly created filter function
+ * @internal
  */
 export function substring<EntityT extends EntityBase>(
   str:
@@ -133,6 +135,7 @@ export function substring<EntityT extends EntityBase>(
  * Build a filter function to transform a string to lower case. Evaluates to string.
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
+ * @internal
  */
 export function toLower<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -144,6 +147,7 @@ export function toLower<EntityT extends EntityBase>(
  * Build a filter function to transform a string to upper case. Evaluates to string.
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
+ * @internal
  */
 export function toUpper<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -155,6 +159,7 @@ export function toUpper<EntityT extends EntityBase>(
  * Build a filter function to trim whitespace from a string. Evaluates to string.
  * @param str - The string to trim whitespace from. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
+ * @internal
  */
 export function trim<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -167,6 +172,7 @@ export function trim<EntityT extends EntityBase>(
  * @param str1 - The first string to concatenate. This can either be a string, a reference to a field or another filter function.
  * @param str2 - The second string to concatenate. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
+ * @internal
  */
 export function concat<EntityT extends EntityBase>(
   str1:
@@ -187,6 +193,7 @@ export function concat<EntityT extends EntityBase>(
  * @param num - The number to round. This can either be a number, a reference to a field or another filter function.
  * @param returnType - The return type to use.
  * @returns The newly created filter function
+ * @internal
  */
 export function round<EntityT extends EntityBase>(
   num:
@@ -203,6 +210,7 @@ export function round<EntityT extends EntityBase>(
  * @param num - The number to floor. This can either be a number, a reference to a field or another filter function.
  * @param returnType - The return type to use.
  * @returns The newly created filter function
+ * @internal
  */
 export function floor<EntityT extends EntityBase>(
   num:
@@ -219,6 +227,7 @@ export function floor<EntityT extends EntityBase>(
  * @param num - The number to ceil. This can either be a number, a reference to a field or another filter function.
  * @param returnType - The return type to use.
  * @returns The newly created filter function
+ * @internal
  */
 export function ceiling<EntityT extends EntityBase>(
   num:
@@ -235,6 +244,7 @@ export function ceiling<EntityT extends EntityBase>(
  * Build a filter function to get the day of a date. Evaluates to int.
  * @param date - The date to get the day for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
+ * @internal
  */
 export function day<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
@@ -246,6 +256,7 @@ export function day<EntityT extends EntityBase>(
  * Build a filter function to get the hour of a date. Evaluates to int.
  * @param date - The date to get the hour for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
+ * @internal
  */
 export function hour<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
@@ -257,6 +268,7 @@ export function hour<EntityT extends EntityBase>(
  * Build a filter function to get the minute of a date. Evaluates to int.
  * @param date - The date to get the minute for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
+ * @internal
  */
 export function minute<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
@@ -268,6 +280,7 @@ export function minute<EntityT extends EntityBase>(
  * Build a filter function to get the month of a date. Evaluates to int.
  * @param date - The date to get the month for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
+ * @internal
  */
 export function month<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
@@ -279,6 +292,7 @@ export function month<EntityT extends EntityBase>(
  * Build a filter function to get the second of a date. Evaluates to int.
  * @param date - The date to get the second for. This can either be a date (moment.Moment) or a reference to a field.
  * @returns The newly created filter function
+ * @internal
  */
 export function second<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
@@ -290,6 +304,7 @@ export function second<EntityT extends EntityBase>(
  * Build a filter function to get the year of a date. Evaluates to int.
  * @param date - The date to get the year for. This can either be a date (Moment) or a reference to a field.
  * @returns The newly created filter function
+ * @internal
  */
 export function year<EntityT extends EntityBase>(
   date: moment.Moment | Field<EntityT, boolean, boolean>
@@ -301,8 +316,8 @@ export function year<EntityT extends EntityBase>(
 /**
  * Build a filter function to test whether a selection is of a given type. Evaluates to boolean.
  * @param type - The type to test for, e. g. `API_BUSINESS_PARTNER.A_BusinessPartner`.
- *
  * @returns The newly created filter function
+ * @internal
  */
 export function isOf<EntityT extends EntityBase>(
   type: string
@@ -311,14 +326,20 @@ export function isOf<EntityT extends EntityBase>(
  * Build a filter function to test whether a field is of a given type. Evaluates to boolean.
  * @param expression - A reference to a field to test for type.
  * @param type - The type to test for, e. g. `API_BUSINESS_PARTNER.A_BusinessPartner`.
- *
  * @returns The newly created filter function
+ * @internal
  */
 export function isOf<EntityT extends EntityBase>(
   expression: Field<EntityT, boolean, boolean>,
   type: string
 ): BooleanFilterFunction<EntityT>;
 
+/**
+ * @param expressionOrType - expressionOrTpye
+ * @param type - type
+ * @returns returns if the type matches
+ * @internal
+ */
 export function isOf<EntityT extends EntityBase>(
   expressionOrType: Field<EntityT, boolean, boolean> | string,
   type?: string
@@ -334,6 +355,7 @@ export function isOf<EntityT extends EntityBase>(
  * ```
  *  .filter(startsWith(BusinessPartner.FIRST_NAME, 'A').equals(true))
  * ```
+ * @internal
  */
 export function filterFunctions<
   BinaryT = string,

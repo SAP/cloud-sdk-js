@@ -5,7 +5,7 @@ import {
   ODataGetAllRequestConfig,
   entityDeserializer,
   Filterable
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
 import { Entity } from '../entity';
 import { edmToTs } from '../de-serializers/payload-value-converter';

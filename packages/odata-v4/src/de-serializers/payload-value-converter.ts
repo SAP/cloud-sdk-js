@@ -2,7 +2,7 @@
 
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { Time, EdmTypeShared } from '@sap-cloud-sdk/odata-common';
+import { Time, EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
 import { EdmType } from '../edm-types';
 import { defaultDeSerializers } from './default-de-serializers';
 import { DeSerializationMiddleware } from './de-serialization-middleware';

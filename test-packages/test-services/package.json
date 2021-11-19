@@ -19,8 +19,6 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@sap-cloud-sdk/odata-v2": "^1.50.0",
-    "@sap-cloud-sdk/odata-v4": "^1.50.0",
     "bignumber.js": "^9.0.1",
     "moment": "^2.29.0"
   }

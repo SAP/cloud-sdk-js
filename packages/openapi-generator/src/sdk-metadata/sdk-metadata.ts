@@ -1,12 +1,16 @@
 import {
   getPregeneratedLibrary,
-  getSdkMetadataClient
-} from '@sap-cloud-sdk/generator-common';
-import type { Client } from '@sap-cloud-sdk/generator-common';
+  getSdkMetadataClient,
+  Client
+} from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiDocument } from '../openapi-types';
 import { packageDescription } from './package-description';
 import { getGenerationAndUsage } from './generation-and-usage';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export async function sdkMetadata(
   openApiDocument: OpenApiDocument
 ): Promise<Client> {

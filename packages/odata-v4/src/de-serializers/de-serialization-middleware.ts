@@ -1,10 +1,10 @@
 import BigNumber from 'bignumber.js';
-import {
-  DeSerializationMiddleware as DeSerializationMiddlewareBase,
-  DeSerializer,
-  Time
-} from '@sap-cloud-sdk/odata-common';
+import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import moment from 'moment';
+import {
+  DeSerializer,
+  DeSerializationMiddleware as DeSerializationMiddlewareBase
+} from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
 
 export interface DeSerializationMiddleware<
   BinaryT = string,

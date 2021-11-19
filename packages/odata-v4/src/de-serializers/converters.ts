@@ -1,4 +1,4 @@
-import { Time } from '@sap-cloud-sdk/odata-common';
+import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import moment from 'moment';
 
 export function deserializeDateToMoment(date: string): moment.Moment {

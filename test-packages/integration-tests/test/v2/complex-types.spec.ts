@@ -1,12 +1,12 @@
-import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
   TestComplexType,
   TestEntity
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import BigNumber from 'bignumber.js';
 import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/authorization-header';
-import { asc } from '@sap-cloud-sdk/odata-common';
+import { Destination } from '@sap-cloud-sdk/connectivity';
+import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
+import { asc } from '@sap-cloud-sdk/odata-common/internal';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';

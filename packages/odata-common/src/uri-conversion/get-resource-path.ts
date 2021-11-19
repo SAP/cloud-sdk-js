@@ -7,7 +7,7 @@ import { EntityBase, Constructable } from '../entity-base';
 import { UriConverter } from '../de-serializers/uri-value-converter';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'get-resource-path'
 });
 
@@ -25,6 +25,7 @@ interface GetResourcePathForKeys<EntityT extends EntityBase = any> {
  * The concrete instances for v2 or v4 are initiated in odata/v2/uri-conversion/odata-uri.ts and odata/v4/uri-conversion/odata-uri.ts.
  * @param uriConverter - Uri converter for v2 or v4.
  * @returns The filter getter. See [[GetFilter]]
+ * @internal
  */
 export function createGetResourcePathForKeys(
   uriConverter: UriConverter

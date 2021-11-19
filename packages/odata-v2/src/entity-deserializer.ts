@@ -2,7 +2,7 @@ import {
   entityDeserializer as entityDeserializerBase,
   EntityDeserializer,
   EdmTypeShared
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import {
   EdmToPrimitive,
   edmToTs
@@ -31,6 +31,9 @@ export const entityDeserializer: EntityDeserializer = entityDeserializerBase(
 export const deserializeEntity = entityDeserializer.deserializeEntity;
 export const deserializeComplexType = entityDeserializer.deserializeComplexType;
 
+/**
+ * @internal
+ */
 /**
  * @internal
  */

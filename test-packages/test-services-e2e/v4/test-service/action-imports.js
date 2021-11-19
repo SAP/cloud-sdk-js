@@ -9,9 +9,9 @@ exports.actionImports =
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-require('@sap-cloud-sdk/odata-common');
-var odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-var TestEntity_1 = require('./TestEntity');
+require('@sap-cloud-sdk/odata-common/internal');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const TestEntity_1 = require('./TestEntity');
 /**
  * Create Test Entity By Id.
  *
@@ -19,18 +19,17 @@ var TestEntity_1 = require('./TestEntity');
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function createTestEntityById(parameters) {
-  var params = {
+  const params = {
     id: new odata_v4_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
   return new odata_v4_1.ActionImportRequestBuilder(
     '/odata/test-service',
     'createTestEntityById',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForEntity)(
+    data =>
+      (0, odata_v4_1.transformReturnValueForEntity)(
         data,
         TestEntity_1.TestEntity
-      );
-    },
+      ),
     params
   );
 }
@@ -42,26 +41,22 @@ exports.createTestEntityById = createTestEntityById;
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 function createTestEntityByIdReturnId(parameters) {
-  var params = {
+  const params = {
     id: new odata_v4_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
   return new odata_v4_1.ActionImportRequestBuilder(
     '/odata/test-service',
     'createTestEntityByIdReturnId',
-    function (data) {
-      return (0, odata_v4_1.transformReturnValueForEdmType)(
-        data,
-        function (val) {
-          return (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32');
-        }
-      );
-    },
+    data =>
+      (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32')
+      ),
     params
   );
 }
 exports.createTestEntityByIdReturnId = createTestEntityByIdReturnId;
 exports.actionImports = {
-  createTestEntityById: createTestEntityById,
-  createTestEntityByIdReturnId: createTestEntityByIdReturnId
+  createTestEntityById,
+  createTestEntityByIdReturnId
 };
 //# sourceMappingURL=action-imports.js.map

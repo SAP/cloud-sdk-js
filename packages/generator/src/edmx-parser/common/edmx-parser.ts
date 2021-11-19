@@ -5,7 +5,11 @@ import {
   EdmxEntitySetBase,
   EdmxEntityTypeBase
 } from './edmx-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function parseComplexTypesBase(root: any): EdmxComplexTypeBase[] {
   return getMergedPropertyWithNamespace(root, 'ComplexType').map(c => ({
     ...c,
@@ -13,7 +17,9 @@ export function parseComplexTypesBase(root: any): EdmxComplexTypeBase[] {
     Namespace: c.Namespace
   }));
 }
-
+/**
+ * @internal
+ */
 export function parseEntityTypesBase(root: any): EdmxEntityTypeBase<any>[] {
   return getMergedPropertyWithNamespace(root, 'EntityType').map(e => ({
     ...e,
@@ -25,11 +31,15 @@ export function parseEntityTypesBase(root: any): EdmxEntityTypeBase<any>[] {
     Namespace: e.Namespace
   }));
 }
-
+/**
+ * @internal
+ */
 export function parseEntitySetsBase(root: any): EdmxEntitySetBase[] {
   return getPropertyFromEntityContainer(root, 'EntitySet');
 }
-
+/**
+ * @internal
+ */
 export function getPropertyFromEntityContainer(
   schema: any,
   entityContainerProperty: string
@@ -54,6 +64,7 @@ function addNamespace<T>(obj: T, namespace: string): T & { Namespace: string } {
  * @param root - One or more schemas
  * @param property - The property that will be merged
  * @returns A collection containing the merged property
+ * @internal
  */
 export function getMergedPropertyWithNamespace(
   root: any,

@@ -4,6 +4,7 @@ import { OrderableFilterFunction } from './orderable-filter-function';
 
 /**
  * Representation of a filter function, that returns a value of type number. This supports int, double and decimal values.
+ * @internal
  */
 export class NumberFilterFunction<
   EntityT extends EntityBase

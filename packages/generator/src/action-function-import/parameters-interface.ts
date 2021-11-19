@@ -1,7 +1,11 @@
 import { InterfaceDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
 import { addLeadingNewline } from '../typedoc';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function parametersInterface(
   actionFunctionImport: VdmFunctionImport | VdmActionImport
 ): InterfaceDeclarationStructure {

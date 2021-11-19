@@ -11,6 +11,7 @@ import { ComplexTypeNamespace } from './complex-type-namespace';
  * @typeparam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
+ * @internal
  */
 export class CollectionField<
   EntityT extends EntityBase,

@@ -80,7 +80,7 @@ describe('generic http client', () => {
 
     it('warn when custom headers are used', async () => {
       const logger = createLogger({
-        package: 'core',
+        package: 'http-client',
         messageContext: 'http-client'
       });
       const infoSpy = jest.spyOn(logger, 'info');
@@ -267,7 +267,7 @@ describe('generic http client', () => {
         url: '/api/entity'
       };
       const logger = createLogger({
-        package: 'core',
+        package: 'http-client',
         messageContext: 'http-client'
       });
       const debugSpy = jest.spyOn(logger, 'debug');

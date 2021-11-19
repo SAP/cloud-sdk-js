@@ -16,7 +16,7 @@ import {
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'http-agent'
 });
 

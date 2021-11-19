@@ -1,10 +1,10 @@
 /* eslint-disable valid-jsdoc */
+import { convertToUriForEdmString } from '@sap-cloud-sdk/odata-common/internal';
 import {
   wrapDeserialization,
-  wrapSerialization,
-  defaultDeSerializersRaw as defaultDeSerializersCommon,
-  convertToUriForEdmString
-} from '@sap-cloud-sdk/odata-common';
+  wrapSerialization
+} from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
+import { defaultDeSerializersRaw as defaultDeSerializersCommon } from '@sap-cloud-sdk/odata-common/src/de-serializers/default-de-serializers';
 import { identity } from '@sap-cloud-sdk/util';
 import {
   serializeToDate,

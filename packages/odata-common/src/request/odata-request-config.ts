@@ -3,13 +3,20 @@ import {
   mergeIgnoreCase,
   VALUE_IS_UNDEFINED
 } from '@sap-cloud-sdk/util';
+
+/**
+ * @internal
+ */
 export type RequestMethodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
 const logger = createLogger({
-  package: '../../../../core',
+  package: 'odata-common',
   messageContext: 'odata-request-config'
 });
 
+/**
+ * @internal
+ */
 export abstract class ODataRequestConfig {
   payload: Record<string, any> | string;
   customServicePath: string;

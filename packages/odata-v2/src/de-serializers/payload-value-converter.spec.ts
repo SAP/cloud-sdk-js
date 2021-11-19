@@ -3,7 +3,7 @@ import moment from 'moment';
 import {
   deserializeToNumber,
   serializeFromNumber
-} from '@sap-cloud-sdk/odata-common/dist/payload-value-converter';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { EdmType } from '../edm-types';
 import { edmToTs, tsToEdm } from './payload-value-converter';
 

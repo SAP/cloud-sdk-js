@@ -7,7 +7,7 @@ import {
   and,
   createGetFilter,
   getOrderBy
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { getSelect } from './get-select';
 import { uriConverter } from './uri-value-converter';
@@ -58,7 +58,7 @@ function getExpandAsString<EntityT extends Entity>(
       params = {
         ...params,
         ...createGetFilter(uriConverter).getFilter(
-          and(...expand._filters?.filters),
+          and(expand._filters?.filters || []),
           entityConstructor
         ),
         ...(expand._skip && { skip: expand._skip }),

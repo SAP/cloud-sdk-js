@@ -4,7 +4,7 @@ import type { GetAllRequestBuilderBase } from '../request-builder/get-all-reques
 import { ODataRequestConfig } from './odata-request-config';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'count-request-config'
 });
 

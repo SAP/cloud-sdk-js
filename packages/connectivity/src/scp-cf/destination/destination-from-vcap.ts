@@ -8,7 +8,7 @@ import {
 } from './proxy-util';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'destination-accessor-vcap'
 });
 

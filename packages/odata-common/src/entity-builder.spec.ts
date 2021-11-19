@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import { EntityBuilder } from '@sap-cloud-sdk/odata-common';
+import { EntityBuilder } from '@sap-cloud-sdk/odata-common/internal';
 import {
   TestEntity,
   TestEntityLvl2SingleLink,

@@ -7,6 +7,7 @@ import { Filterable } from './filterable';
 
 /**
  * Representation of a filter function, that returns a value of type boolean.
+ * @internal
  */
 export class BooleanFilterFunction<
   EntityT extends EntityBase

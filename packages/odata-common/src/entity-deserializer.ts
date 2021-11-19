@@ -28,12 +28,13 @@ import {
 } from './de-serializers/de-serialization-middleware';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'entity-deserializer'
 });
 
 /**
  * Interface representing the return type of the builder function [[entityDeserializer]]
+ * @internal
  */
 // export interface EntityDeserializer<EntityT extends EntityBase = any> {
 //   deserializeEntity: (
@@ -74,6 +75,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
  * @param deSerializers - TODO
  * @returns an entity deserializer as defined by [[EntityDeserializer]]
+ * @internal
  */
 export function entityDeserializer(
   schema: Record<string, any>,

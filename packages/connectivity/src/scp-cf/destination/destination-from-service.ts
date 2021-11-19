@@ -44,7 +44,7 @@ type RequiredProperties<T, P extends keyof T> = Required<Pick<T, P>> &
   Omit<T, P>;
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'destination-accessor-service'
 });
 
@@ -68,7 +68,6 @@ const emptyDestinationByType: DestinationsByType = {
  * If the destinations are read from the environment, the jwt will be ignored.
  * @param options - Configuration for how to retrieve destinations from the destination service.
  * @returns A promise returning the requested destination on success.
- * @internal
  */
 export async function getDestinationFromDestinationService(
   options: DestinationFetchOptions

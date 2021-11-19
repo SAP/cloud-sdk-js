@@ -1,7 +1,7 @@
 import {
   Constructable,
   DeleteRequestBuilderBase
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
 import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
 import { CustomDeSerializer } from '../de-serializers/get-de-serializers';

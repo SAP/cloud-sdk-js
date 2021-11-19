@@ -1,5 +1,8 @@
-import { DeSerializer, Time } from '@sap-cloud-sdk/odata-common';
-import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
+import { Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  DeSerializationMiddlewareBASE,
+  DeSerializer
+} from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
 import BigNumber from 'bignumber.js';
 import { DeSerializationMiddleware } from './de-serialization-middleware';
 import { defaultDeSerializers } from './default-de-serializers';

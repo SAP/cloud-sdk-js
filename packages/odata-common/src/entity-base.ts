@@ -16,6 +16,9 @@ import {
  */
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 
+/**
+ * @internal
+ */
 export interface Constructable<EntityT extends EntityBase> {
   _serviceName: string;
   _entityName: string;
@@ -54,6 +57,9 @@ export interface ConstructableBASE<
   schema(): Record<string, any>;
 }
 
+/**
+ * @internal
+ */
 export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
   [property in keyof Required<EntityTypeT>]: (
     value: EntityTypeT[property]
@@ -62,6 +68,7 @@ export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
 
 /**
  * Super class for all representations of OData entity types.
+ * @internal
  */
 export abstract class EntityBase {
   static _serviceName: string;

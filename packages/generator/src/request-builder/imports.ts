@@ -2,13 +2,17 @@ import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
 import { ODataVersion, unique } from '@sap-cloud-sdk/util';
 import {
   odataImportDeclaration,
-  corePropertyTypeImportNames,
+  propertyTypeImportNames,
   externalImportDeclarations,
   odataCommonImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmProperty } from '../vdm-types';
 
-export function importDeclarations(
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
+export function requestBuilderImportDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
@@ -16,33 +20,30 @@ export function importDeclarations(
     ...externalImportDeclarations(entity.keys),
     odataCommonImportDeclaration([
       'RequestBuilder',
-      ...corePropertyTypeImportNames(entity.keys)
+      ...propertyTypeImportNames(entity.keys)
     ]),
-    odataImportDeclaration(
-      requestBuilderCoreImportDeclarations(entity),
-      oDataVersion
-    ),
+    odataImportDeclaration(requestBuilderImports(entity), oDataVersion),
     entityImportDeclaration(entity),
     ...entityKeyImportDeclaration(entity.keys)
   ];
 }
 
-function requestBuilderCoreImportDeclarations(entity: VdmEntity) {
-  const coreImports = ['GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
+function requestBuilderImports(entity: VdmEntity) {
+  const imports = ['GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
 
   if (entity.creatable) {
-    coreImports.push('CreateRequestBuilder');
+    imports.push('CreateRequestBuilder');
   }
 
   if (entity.updatable) {
-    coreImports.push('UpdateRequestBuilder');
+    imports.push('UpdateRequestBuilder');
   }
 
   if (entity.deletable) {
-    coreImports.push('DeleteRequestBuilder');
+    imports.push('DeleteRequestBuilder');
   }
 
-  return coreImports;
+  return imports;
 }
 
 function entityImportDeclaration(

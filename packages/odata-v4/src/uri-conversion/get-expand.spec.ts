@@ -1,4 +1,4 @@
-import { asc } from '@sap-cloud-sdk/odata-common';
+import { asc } from '@sap-cloud-sdk/odata-common/internal';
 import {
   TestEntity,
   TestEntityMultiLink,

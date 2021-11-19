@@ -1,9 +1,10 @@
 /* eslint-disable valid-jsdoc */
+
 import {
   wrapDeserialization,
-  wrapSerialization,
-  defaultDeSerializersRaw as defaultDeSerializersCommon
-} from '@sap-cloud-sdk/odata-common';
+  wrapSerialization
+} from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
+import { defaultDeSerializersRaw as defaultDeSerializersCommon } from '@sap-cloud-sdk/odata-common/src/de-serializers/default-de-serializers';
 import {
   deserializeToMoment,
   deserializeToTime,

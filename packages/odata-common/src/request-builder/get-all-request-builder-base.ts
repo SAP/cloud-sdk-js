@@ -15,6 +15,7 @@ import { GetRequestBuilderBase } from './get-request-builder-base';
 /**
  * Base class for the get all request builders [[GetAllRequestBuilderV2]] and [[GetAllRequestBuilderV4]]
  * @typeparam EntityT - Type of the entity to be requested
+ * @internal
  */
 export abstract class GetAllRequestBuilderBase<
   EntityT extends EntityBase

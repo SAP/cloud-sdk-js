@@ -1,14 +1,14 @@
 import { StructureKind } from 'ts-morph';
 import { breakfastEntity } from '../../test/test-util/data-model';
-import { importDeclarations } from './imports';
+import { requestBuilderImportDeclarations } from './imports';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(breakfastEntity, 'v2');
+    const actual = requestBuilderImportDeclarations(breakfastEntity, 'v2');
     expect(actual).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
         namedImports: ['RequestBuilder', 'Time']
       },
       {

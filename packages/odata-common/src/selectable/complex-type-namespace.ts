@@ -7,6 +7,9 @@ export interface ComplexTypeNamespace<ComplexT> {
   _propertyMetadata: PropertyMetadata<ComplexT>[];
 }
 
+/**
+ * @internal
+ */
 export interface PropertyMetadata<ComplexT = any> {
   name: keyof ComplexT;
   originalName: string;

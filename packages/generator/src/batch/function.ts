@@ -5,7 +5,11 @@ import {
 } from 'ts-morph';
 import { addLeadingNewline, getFunctionDoc } from '../typedoc';
 import { VdmServiceMetadata } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function batchFunction(
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
@@ -59,7 +63,9 @@ export function batchFunction(
     overloads
   };
 }
-
+/**
+ * @internal
+ */
 export function changesetFunction(
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {

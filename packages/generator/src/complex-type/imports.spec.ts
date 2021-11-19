@@ -17,7 +17,7 @@ describe('complex type imports', () => {
       },
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
@@ -47,7 +47,7 @@ describe('complex type imports', () => {
       },
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
@@ -85,7 +85,7 @@ describe('complex type imports', () => {
       },
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',

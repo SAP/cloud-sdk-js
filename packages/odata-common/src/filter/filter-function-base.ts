@@ -91,6 +91,7 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
 
 /**
  * Primitive type of a parameter of a filter function.
+ * @internal
  */
 export type FilterFunctionPrimitiveParameterType =
   | number
@@ -99,6 +100,7 @@ export type FilterFunctionPrimitiveParameterType =
 
 /**
  * Type of a parameter of a filter function. This can either be a primitive type, a reference to a field or another filter function.
+ * @internal
  */
 export type FilterFunctionParameterType<EntityT extends EntityBase> =
   | FilterFunctionPrimitiveParameterType

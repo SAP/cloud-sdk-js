@@ -12,7 +12,7 @@ import {
   UpdateRequestBuilderBase,
   isNavigationProperty,
   removePropertyOnCondition
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
@@ -22,7 +22,7 @@ import { createODataUri } from '../uri-conversion/odata-uri';
 import { CustomDeSerializer } from '../de-serializers/get-de-serializers';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-v2',
   messageContext: 'update-request-builder-v2'
 });
 /**

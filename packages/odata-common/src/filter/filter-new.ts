@@ -1,7 +1,6 @@
 /* eslint-disable max-classes-per-file */
-import { EntityBase } from '..';
 import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
-import { Constructable } from '../entity-base';
+import { Constructable, EntityBase } from '../entity-base';
 import { NewFilterFunction } from './filter-function-base-new';
 
 type FilterOperatorString = 'eq' | 'ne';

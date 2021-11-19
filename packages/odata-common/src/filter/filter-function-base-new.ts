@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { defaultDeSerializersRaw } from '..';
+import { defaultDeSerializersRaw } from '../de-serializers/default-de-serializers';
 import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf } from '../entity-base';

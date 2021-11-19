@@ -7,6 +7,7 @@ import {
 
 /**
  * Representation of a filter function, that returns a collection of values.
+ * @internal
  */
 export class CollectionFilterFunction<
   EntityT extends EntityBase,

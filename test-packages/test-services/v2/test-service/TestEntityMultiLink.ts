@@ -4,7 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DeSerializationMiddleware,
+  Entity
+} from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
   Constructable,
@@ -14,15 +19,22 @@ import {
   FieldBuilder,
   Link,
   OneToOneLink,
-  OrderableEdmTypeField
+  OrderableEdmTypeField,
+  Time
 } from '@sap-cloud-sdk/odata-common';
+import {
+  CustomDeSerializer,
+  getDeSerializers
+} from '@sap-cloud-sdk/odata-v2/dist/de-serializers/get-de-serializers';
 
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityMultiLink
+export class TestEntityMultiLink<
+    T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+  >
   extends Entity
-  implements TestEntityMultiLinkType
+  implements TestEntityMultiLinkType<T>
 {
   /**
    * Technical entity name for TestEntityMultiLink.
@@ -32,32 +44,34 @@ export class TestEntityMultiLink
    * Default url path for the according service.
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
+
+  static _keys = ['KeyProperty'];
   /**
    * Key Property.
    * Maximum length: 10.
    */
-  keyProperty!: string;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
   /**
    * String Property.
    * Maximum length: 10.
    * @nullable
    */
-  stringProperty?: string;
+  stringProperty?: DeserializedType<T, 'Edm.String'>;
   /**
    * Boolean Property.
    * @nullable
    */
-  booleanProperty?: boolean;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'>;
   /**
    * Guid Property.
    * @nullable
    */
-  guidProperty?: string;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'>;
   /**
    * Int 16 Property.
    * @nullable
    */
-  int16Property?: number;
+  int16Property?: DeserializedType<T, 'Edm.Int16'>;
   /**
    * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
    */
@@ -68,32 +82,13 @@ export class TestEntityMultiLink
   toSingleLink?: TestEntityLvl2SingleLink | null;
 
   /**
-   * Returns an entity builder to construct instances of `TestEntityMultiLink`.
-   * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
-   */
-  static builder(): EntityBuilderType<
-    TestEntityMultiLink,
-    TestEntityMultiLinkType
-  > {
-    return Entity.entityBuilder(TestEntityMultiLink);
-  }
-
-  /**
-   * Returns a request builder to construct requests for operations on the `TestEntityMultiLink` entity type.
-   * @returns A `TestEntityMultiLink` request builder.
-   */
-  static requestBuilder(): TestEntityMultiLinkRequestBuilder {
-    return new TestEntityMultiLinkRequestBuilder();
-  }
-
-  /**
    * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityMultiLink`.
    * @param fieldName Name of the custom field to select
    * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
    */
-  static customField(fieldName: string): CustomField<TestEntityMultiLink> {
-    return Entity.customFieldSelector(fieldName, TestEntityMultiLink);
-  }
+  // static customField(fieldName: string): CustomField<TestEntityMultiLink> {
+  //   return Entity.customFieldSelector(fieldName, TestEntityMultiLink);
+  // }
 
   /**
    * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
@@ -112,130 +107,224 @@ import {
   TestEntityLvl2SingleLink,
   TestEntityLvl2SingleLinkType
 } from './TestEntityLvl2SingleLink';
+import { DeSerializationMiddlewareV2BASE } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
+import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/field-builder-new';
+import { ConstructableBASE } from '@sap-cloud-sdk/odata-common/dist/entity-base';
+import BigNumber from 'bignumber.js';
 
-export interface TestEntityMultiLinkType {
-  keyProperty: string;
-  stringProperty?: string | null;
-  booleanProperty?: boolean | null;
-  guidProperty?: string | null;
-  int16Property?: number | null;
+export interface TestEntityMultiLinkType<
+  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+> {
+  keyProperty: DeserializedType<T, 'Edm.String'>;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   toMultiLink: TestEntityLvl2MultiLinkType[];
   toSingleLink?: TestEntityLvl2SingleLinkType | null;
 }
 
-export namespace TestEntityMultiLink {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntityMultiLink>> =
-    new FieldBuilder(TestEntityMultiLink);
-  /**
-   * Static representation of the [[keyProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'KeyProperty',
-    'Edm.String',
-    false
-  );
-  /**
-   * Static representation of the [[stringProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'StringProperty',
-    'Edm.String',
-    true
-  );
-  /**
-   * Static representation of the [[booleanProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'BooleanProperty',
-    'Edm.Boolean',
-    true
-  );
-  /**
-   * Static representation of the [[guidProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'GuidProperty',
-    'Edm.Guid',
-    true
-  );
-  /**
-   * Static representation of the [[int16Property]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'Int16Property',
-    'Edm.Int16',
-    true
-  );
-  /**
-   * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const TO_MULTI_LINK: Link<
-    TestEntityMultiLink,
-    TestEntityLvl2MultiLink
-  > = new Link('to_MultiLink', TestEntityMultiLink, TestEntityLvl2MultiLink);
-  /**
-   * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const TO_SINGLE_LINK: OneToOneLink<
-    TestEntityMultiLink,
-    TestEntityLvl2SingleLink
-  > = new OneToOneLink(
-    'to_SingleLink',
-    TestEntityMultiLink,
-    TestEntityLvl2SingleLink
-  );
-  /**
-   * All fields of the TestEntityMultiLink entity.
-   */
-  export const _allFields: Array<
-    | EdmTypeField<TestEntityMultiLink, 'Edm.String', false, true>
-    | EdmTypeField<TestEntityMultiLink, 'Edm.String', true, true>
-    | EdmTypeField<TestEntityMultiLink, 'Edm.Boolean', true, true>
-    | EdmTypeField<TestEntityMultiLink, 'Edm.Guid', true, true>
-    | OrderableEdmTypeField<TestEntityMultiLink, 'Edm.Int16', true, true>
-    | Link<TestEntityMultiLink, TestEntityLvl2MultiLink>
-    | OneToOneLink<TestEntityMultiLink, TestEntityLvl2SingleLink>
-  > = [
-    TestEntityMultiLink.KEY_PROPERTY,
-    TestEntityMultiLink.STRING_PROPERTY,
-    TestEntityMultiLink.BOOLEAN_PROPERTY,
-    TestEntityMultiLink.GUID_PROPERTY,
-    TestEntityMultiLink.INT_16_PROPERTY,
-    TestEntityMultiLink.TO_MULTI_LINK,
-    TestEntityMultiLink.TO_SINGLE_LINK
-  ];
-  /**
-   * All fields selector.
-   */
-  export const ALL_FIELDS: AllFields<TestEntityMultiLink> = new AllFields(
-    '*',
-    TestEntityMultiLink
-  );
-  /**
-   * All key fields of the TestEntityMultiLink entity.
-   */
-  export const _keyFields: Array<Field<TestEntityMultiLink, boolean, boolean>> =
-    [TestEntityMultiLink.KEY_PROPERTY];
-  /**
-   * Mapping of all key field names to the respective static field property TestEntityMultiLink.
-   */
-  export const _keys: {
-    [keys: string]: Field<TestEntityMultiLink, boolean, boolean>;
-  } = TestEntityMultiLink._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<TestEntityMultiLink, boolean, boolean> },
-      field: Field<TestEntityMultiLink, boolean, boolean>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+export class TestEntityMultiLinkApi<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any,
+  DateTimeT = moment.Moment,
+  DateTimeOffsetT = moment.Moment,
+  TimeT = Time
+> implements
+    ConstructableBASE<
+      TestEntityMultiLink<
+        DeSerializationMiddleware<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeT,
+          DateTimeOffsetT,
+          TimeT
+        >
+      >,
+      DeSerializationMiddleware<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >,
+      TestEntityMultiLinkType<
+        DeSerializationMiddleware<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeT,
+          DateTimeOffsetT,
+          TimeT
+        >
+      >
+    >
+{
+  public deSerializers: DeSerializationMiddleware<
+    BinaryT,
+    BooleanT,
+    ByteT,
+    DecimalT,
+    DoubleT,
+    FloatT,
+    Int16T,
+    Int32T,
+    Int64T,
+    GuidT,
+    SByteT,
+    SingleT,
+    StringT,
+    AnyT,
+    DateTimeT,
+    DateTimeOffsetT,
+    TimeT
+  >;
+  constructor(
+    deSerializers: Partial<
+      DeSerializationMiddleware<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >
+    > = defaultDeSerializers as any
+  ) {
+    this.deSerializers = getDeSerializers(deSerializers);
+  }
+
+  schema() {
+    const _fieldBuilder = new NewFieldBuilder(
+      TestEntityMultiLink,
+      this.deSerializers
+    );
+
+    return {
+      /**
+       * Static representation of the [[keyProperty]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      KEY_PROPERTY: _fieldBuilder.buildEdmTypeField(
+        'KeyProperty',
+        'Edm.String',
+        false
+      ),
+      /**
+       * Static representation of the [[stringProperty]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      STRING_PROPERTY: _fieldBuilder.buildEdmTypeField(
+        'StringProperty',
+        'Edm.String',
+        true
+      ),
+      /**
+       * Static representation of the [[booleanProperty]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      BOOLEAN_PROPERTY: _fieldBuilder.buildEdmTypeField(
+        'BooleanProperty',
+        'Edm.Boolean',
+        true
+      ),
+      /**
+       * Static representation of the [[guidProperty]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      GUID_PROPERTY: _fieldBuilder.buildEdmTypeField(
+        'GuidProperty',
+        'Edm.Guid',
+        true
+      ),
+      /**
+       * Static representation of the [[int16Property]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      INT_16_PROPERTY: _fieldBuilder.buildEdmTypeField(
+        'Int16Property',
+        'Edm.Int16',
+        true
+      )
+    };
+  }
+
+  requestBuilder(): TestEntityMultiLinkRequestBuilder<
+    typeof this.deSerializers
+  > {
+    return new TestEntityMultiLinkRequestBuilder(
+      this.deSerializers,
+      this.schema()
+    );
+  }
+
+  entityBuilder(): EntityBuilderType<
+    TestEntityMultiLink<typeof this.deSerializers>,
+    TestEntityMultiLinkType<typeof this.deSerializers>
+  > {
+    return Entity.entityBuilder(
+      TestEntityMultiLink as any,
+      this.deSerializers,
+      this.schema()
+    ) as any;
+  }
 }

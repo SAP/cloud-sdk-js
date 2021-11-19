@@ -3,8 +3,12 @@ import {
   StringFilterFunction,
   BooleanFilterFunction,
   filterFunction,
-  filterFunctions as filterFunctionsCommon
+  filterFunctions as filterFunctionsCommon,
+  Time
 } from '@sap-cloud-sdk/odata-common';
+import BigNumber from 'bignumber.js';
+import { DeSerializationMiddleware } from './de-serializers/de-serialization-middleware';
+import { defaultDeSerializers } from './de-serializers/default-de-serializers';
 import { Entity } from './entity';
 
 /* String Functions */
@@ -63,8 +67,51 @@ export const substring = filterFunctionsCommon.substring;
 /**
  * OData v2 specific filter functions
  */
-export const filterFunctions = {
-  ...filterFunctionsCommon,
-  substringOf,
-  replace
-};
+export function filterFunctions<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any,
+  DateTimeT = moment.Moment,
+  DateTimeOffsetT = moment.Moment,
+  TimeT = Time
+>(
+  deSerializers: Partial<
+    DeSerializationMiddleware<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+    >
+  > = defaultDeSerializers as any
+): Record<string, any> {
+  console.log(deSerializers);
+  return {
+    ...filterFunctionsCommon,
+    substringOf,
+    replace
+  };
+}

@@ -1,27 +1,34 @@
 import {
   getEntityKeys,
   getOrderBy,
-  ODataUri as ODataUriBase,
+  ODataUri,
   createGetResourcePathForKeys,
-  createGetFilter
+  createGetFilter,
+  UriConverter
 } from '@sap-cloud-sdk/odata-common';
+import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
-import { uriConverter } from './uri-value-converter';
-
-const { getFilter } = createGetFilter(uriConverter);
-const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
-const { convertToUriFormat } = uriConverter;
 
 /**
  * Instance of the [[ODataUri]] conversion interface for OData v2.
  */
-export const oDataUri: ODataUriBase = {
-  getExpand,
-  getFilter,
-  getEntityKeys,
-  getOrderBy,
-  getResourcePathForKeys,
-  getSelect,
-  convertToUriFormat
-};
+
+export function createODataUri(
+  deSerializers: DeSerializationMiddlewareBASE
+): ODataUri {
+  const uriConverter = new UriConverter(deSerializers);
+  const { getFilter } = createGetFilter(uriConverter);
+  const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
+  const { convertToUriFormat } = uriConverter;
+
+  return {
+    getExpand,
+    getFilter,
+    getEntityKeys,
+    getOrderBy,
+    getResourcePathForKeys,
+    getSelect,
+    convertToUriFormat
+  };
+}

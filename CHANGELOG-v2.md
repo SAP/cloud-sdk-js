@@ -82,6 +82,7 @@
   - `fetchVerificationKeys`
   - `fetchVerificationKeys`
   - `fetchVerificationKeys`
+  - `FieldType`
   - `getAuthHeaders`
   - `getClientCredentialsToken`
   - `getDestination`
@@ -116,6 +117,7 @@
   - `jwtBearerToken`
   - `mappingTenantFields`
   - `mappingUserFields`
+  - `oDataUri` => Use `createODataUri` instead
   - `parseDestination`
   - `parseProxyEnv`
   - `parseSubdomain`
@@ -126,6 +128,7 @@
   - `replaceSubdomain`
   - `resolveService`
   - `retrieveJwt`
+  - `RequestBuilder.forEntity(MyEntity)` => Use `MyEntity.requestBuilder` instead
   - `searchEnvVariablesForDestination`
   - `searchServiceBindingForDestination`
   - `serializersCommon`
@@ -134,6 +137,7 @@
   - `tenantFromJwt`
   - `tenantId`
   - `tenantName`
+  - `uriConverter`
   - `uriConvertersCommon`
   - `urlAndAgent`
   - `userEmail`
@@ -360,8 +364,6 @@
   - transformReturnValueForEntity,
   - transformReturnValueForEntityList,
   - transformReturnValueForUndefined,
-  - uriConverter
-  -
 
 ### Signature changed
 
@@ -382,7 +384,8 @@
 ## New Functionality
 
 - [connectivity] Create a new package with minimal API.
-- [http-client] Create a new package with minimal API
+- [http-client] Create a new package with minimal API.
+- [odata-common, odata-v2, odata-v4] DeSerializationMiddleware // TODO
 
 ## Improvements
 

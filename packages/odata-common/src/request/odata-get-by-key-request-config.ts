@@ -2,7 +2,6 @@ import { EntityBase, Constructable } from '../entity-base';
 import { Expandable } from '../expandable';
 import { Selectable } from '../selectable/selectable';
 import { ODataUri } from '../uri-conversion/odata-uri';
-import { FieldType } from '../selectable/field';
 import { WithKeys, WithSelection } from './odata-request-traits';
 import { ODataRequestConfig } from './odata-request-config';
 
@@ -14,7 +13,7 @@ export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
   extends ODataRequestConfig
   implements WithKeys, WithSelection<EntityT>
 {
-  keys: Record<string, FieldType>;
+  keys: Record<string, any>;
   selects: Selectable<EntityT>[] = [];
   expands: Expandable<EntityT>[];
 

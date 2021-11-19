@@ -4,7 +4,6 @@ import {
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity-base';
-import { Field, FieldType } from '../selectable/field';
 import { UriConverter } from '../de-serializers/uri-value-converter';
 
 const logger = createLogger({
@@ -13,7 +12,7 @@ const logger = createLogger({
 });
 
 type GetResourcePathForKeysType<EntityT extends EntityBase> = (
-  keys: Record<string, FieldType>,
+  keys: Record<string, any>,
   entityConstructor: Constructable<EntityT>
 ) => string;
 
@@ -39,7 +38,7 @@ export function createGetResourcePathForKeys(
    * @returns The path to the resource
    */
   function getResourcePathForKeys<EntityT extends EntityBase>(
-    keys: Record<string, FieldType> = {},
+    keys: Record<string, any> = {},
     entityConstructor: Constructable<EntityT>
   ): string {
     keys = filterNonKeyProperties(keys, entityConstructor);
@@ -56,36 +55,35 @@ export function createGetResourcePathForKeys(
   }
 
   function getMissingKeys<EntityT extends EntityBase>(
-    keys: Record<string, FieldType>,
+    keys: Record<string, any>,
     entityConstructor: Constructable<EntityT>
   ): string[] {
     const givenKeys = Object.keys(keys);
-    return (entityConstructor._keyFields as Field<EntityT>[]) // type assertion for backwards compatibility, TODO: remove in v2.0
-      .map(field => field._fieldName)
+    return entityConstructor._keys // type assertion for backwards compatibility, TODO: remove in v2.0
+      .map(key => key)
       .filter(fieldName => !givenKeys.includes(fieldName));
   }
 
   function getInvalidKeys<EntityT extends EntityBase>(
-    keys: Record<string, FieldType>,
+    keys: Record<string, any>,
     entityConstructor: Constructable<EntityT>
   ): string[] {
     // type assertion for backwards compatibility, TODO: remove in v2.0
-    const validKeys = (entityConstructor._keyFields as Field<EntityT>[]).map(
-      field => field._fieldName
+    return Object.keys(keys).filter(
+      key => !entityConstructor._keys.includes(key)
     );
-    return Object.keys(keys).filter(key => !validKeys.includes(key));
   }
 
-  function getNullishKeys(keys: Record<string, FieldType>): string[] {
+  function getNullishKeys(keys: Record<string, any>): string[] {
     return Object.entries(keys)
       .filter(([, value]) => isNullish(value))
       .map(([key]) => key);
   }
 
   function filterNonKeyProperties<EntityT extends EntityBase>(
-    keys: Record<string, FieldType>,
+    keys: Record<string, any>,
     entityConstructor: Constructable<EntityT>
-  ): Record<string, FieldType> {
+  ): Record<string, any> {
     const invalidKeys = getInvalidKeys(keys, entityConstructor);
     if (invalidKeys.length) {
       logger.warn(
@@ -114,7 +112,7 @@ export function createGetResourcePathForKeys(
   }
 
   function validateKeys<EntityT extends EntityBase>(
-    keys: Record<string, FieldType>,
+    keys: Record<string, any>,
     entityConstructor: Constructable<EntityT>
   ): void {
     const missingKeys = getMissingKeys(keys, entityConstructor);

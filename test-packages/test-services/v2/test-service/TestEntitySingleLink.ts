@@ -4,7 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DeSerializationMiddleware,
+  Entity
+} from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
   Constructable,
@@ -14,15 +19,18 @@ import {
   FieldBuilder,
   Link,
   OneToOneLink,
-  OrderableEdmTypeField
+  OrderableEdmTypeField,
+  Time
 } from '@sap-cloud-sdk/odata-common';
 
 /**
  * This class represents the entity "A_TestEntitySingleLink" of service "API_TEST_SRV".
  */
-export class TestEntitySingleLink
+export class TestEntitySingleLink<
+    T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+  >
   extends Entity
-  implements TestEntitySingleLinkType
+  implements TestEntitySingleLinkType<T>
 {
   /**
    * Technical entity name for TestEntitySingleLink.
@@ -36,28 +44,28 @@ export class TestEntitySingleLink
    * Key Property.
    * Maximum length: 10.
    */
-  keyProperty!: string;
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
   /**
    * String Property.
    * Maximum length: 10.
    * @nullable
    */
-  stringProperty?: string;
+  stringProperty?: DeserializedType<T, 'Edm.String'>;
   /**
    * Boolean Property.
    * @nullable
    */
-  booleanProperty?: boolean;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'>;
   /**
    * Guid Property.
    * @nullable
    */
-  guidProperty?: string;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'>;
   /**
    * Int 16 Property.
    * @nullable
    */
-  int16Property?: number;
+  int16Property?: DeserializedType<T, 'Edm.Int16'>;
   /**
    * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
    */
@@ -71,11 +79,54 @@ export class TestEntitySingleLink
    * Returns an entity builder to construct instances of `TestEntitySingleLink`.
    * @returns A builder that constructs instances of entity type `TestEntitySingleLink`.
    */
-  static builder(): EntityBuilderType<
-    TestEntitySingleLink,
-    TestEntitySingleLinkType
+  static builder<
+    BinaryT = string,
+    BooleanT = boolean,
+    ByteT = number,
+    DecimalT = BigNumber,
+    DoubleT = number,
+    FloatT = number,
+    Int16T = number,
+    Int32T = number,
+    Int64T = BigNumber,
+    GuidT = string,
+    SByteT = number,
+    SingleT = number,
+    StringT = string,
+    AnyT = any,
+    DateTimeT = moment.Moment,
+    DateTimeOffsetT = moment.Moment,
+    TimeT = Time
+  >(
+    deSerializers: Partial<
+      DeSerializationMiddleware<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >
+    > = defaultDeSerializers as any
+  ): EntityBuilderType<
+    TestEntitySingleLink<CustomDeSerializer<typeof deSerializers>>,
+    TestEntitySingleLinkType<CustomDeSerializer<typeof deSerializers>>
   > {
-    return Entity.entityBuilder(TestEntitySingleLink);
+    return Entity.entityBuilder(
+      TestEntitySingleLink as any,
+      getDeSerializers(deSerializers)
+    ) as any;
   }
 
   /**
@@ -112,13 +163,22 @@ import {
   TestEntityLvl2SingleLink,
   TestEntityLvl2SingleLinkType
 } from './TestEntityLvl2SingleLink';
+import { DeSerializationMiddlewareV2BASE } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
+import {
+  CustomDeSerializer,
+  getDeSerializers
+} from '@sap-cloud-sdk/odata-v2/dist/de-serializers/get-de-serializers';
+import BigNumber from 'bignumber.js';
 
-export interface TestEntitySingleLinkType {
-  keyProperty: string;
-  stringProperty?: string | null;
-  booleanProperty?: boolean | null;
-  guidProperty?: string | null;
-  int16Property?: number | null;
+export interface TestEntitySingleLinkType<
+  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+> {
+  keyProperty: DeserializedType<T, 'Edm.String'>;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   toMultiLink: TestEntityLvl2MultiLinkType[];
   toSingleLink?: TestEntityLvl2SingleLinkType | null;
 }

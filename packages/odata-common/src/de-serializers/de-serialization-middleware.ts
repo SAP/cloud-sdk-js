@@ -1,6 +1,6 @@
 import { identity, isNullish } from '@sap-cloud-sdk/util';
 import BigNumber from 'bignumber.js';
-
+import { EdmTypeSameConverters } from '../edm-types';
 export interface DeSerializationMiddleware<
   BinaryT = string,
   BooleanT = boolean,
@@ -32,6 +32,19 @@ export interface DeSerializationMiddleware<
   'Edm.String': DeSerializer<StringT>;
   'Edm.Any': DeSerializer<AnyT>;
 }
+
+export type DeSerializationMiddlewareBASE = {
+  [P in EdmTypeSameConverters]: DeSerializer<any>;
+};
+
+export type DeserializedType<
+  T extends DeSerializationMiddlewareBASE,
+  U // extends keyof T
+> = U extends keyof T
+  ? T[U] extends DeSerializer<infer V>
+    ? V
+    : never
+  : never;
 
 export interface DeSerializer<T> {
   deserialize: (val: any) => T;

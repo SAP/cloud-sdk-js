@@ -13,10 +13,13 @@ import {
   isNavigationProperty,
   removePropertyOnCondition
 } from '@sap-cloud-sdk/odata-common';
+import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
-import { oDataUri } from '../uri-conversion/odata-uri';
 import { extractODataEtag } from '../extract-odata-etag';
+import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
+import { createODataUri } from '../uri-conversion/odata-uri';
+import { CustomDeSerializer } from '../de-serializers/get-de-serializers';
 
 const logger = createLogger({
   package: 'core',
@@ -26,7 +29,10 @@ const logger = createLogger({
  * Create OData query to update an entity.
  * @typeparam EntityT - Type of the entity to be updated
  */
-export class UpdateRequestBuilder<EntityT extends Entity>
+export class UpdateRequestBuilder<
+    EntityT extends Entity,
+    T extends DeSerializationMiddlewareBASE = DeSerializationMiddleware
+  >
   extends UpdateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT>
 {
@@ -34,15 +40,17 @@ export class UpdateRequestBuilder<EntityT extends Entity>
    * Creates an instance of UpdateRequestBuilder.
    * @param _entityConstructor - Constructor type of the entity to be updated
    * @param _entity - Entity to be updated
+   * @param deSerializers - TODO
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    readonly _entity: EntityT
+    readonly _entity: EntityT,
+    deSerializers: CustomDeSerializer<T>
   ) {
     super(
       _entityConstructor,
       _entity,
-      oDataUri,
+      createODataUri(deSerializers),
       entitySerializer,
       extractODataEtag,
       removeNavPropsAndComplexTypes

@@ -5,6 +5,8 @@ import {
 } from '@sap-cloud-sdk/util';
 import { isNavigationProperty } from './properties-util';
 import type { Constructable, EntityBase } from './entity-base';
+import { DeSerializationMiddlewareBASE } from './de-serializers/de-serialization-middleware';
+import { defaultDeSerializersRaw } from '.';
 
 const logger = createLogger({
   package: 'core',
@@ -33,9 +35,12 @@ type FromJsonType<JsonT> = {
 export class EntityBuilder<EntityT extends EntityBase, JsonT> {
   protected entity: EntityT;
 
-  constructor(private _entityConstructor: Constructable<EntityT, JsonT>) {
+  constructor(
+    private _entityConstructor: Constructable<EntityT>,
+    private deSerializers: DeSerializationMiddlewareBASE
+  ) {
     if (!this.entity) {
-      this.entity = new this._entityConstructor();
+      this.entity = new this._entityConstructor(this.deSerializers);
     }
   }
 
@@ -56,7 +61,7 @@ export class EntityBuilder<EntityT extends EntityBase, JsonT> {
    */
   public build(): EntityT {
     const entity = this.entity;
-    this.entity = new this._entityConstructor();
+    this.entity = new this._entityConstructor(defaultDeSerializersRaw);
     return entity;
   }
 
@@ -68,7 +73,8 @@ export class EntityBuilder<EntityT extends EntityBase, JsonT> {
    * @returns EntityBase constructed from JSON representation.
    */
   public fromJson(json: FromJsonType<JsonT>): EntityT {
-    const entityBuilder = this._entityConstructor.builder();
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const entityBuilder = this; // ._entityConstructor.builder();
     const entityConstructor = this._entityConstructor;
 
     const [entityEntries, customEntries] = partition(
@@ -79,7 +85,12 @@ export class EntityBuilder<EntityT extends EntityBase, JsonT> {
     entityEntries.forEach(([key, value]) => {
       const propertyValue =
         isNavigationProperty(key, entityConstructor) && !!value
-          ? buildNavigationPropertyFromJson(key, value, entityConstructor)
+          ? buildNavigationPropertyFromJson(
+              key,
+              value,
+              entityConstructor,
+              this.deSerializers
+            )
           : value;
 
       entityBuilder[key](propertyValue);
@@ -128,23 +139,26 @@ function buildNavigationPropertyFromJson<
 >(
   key: string,
   value: FromJsonType<unknown>,
-  entityConstructor: Constructable<EntityT>
+  entityConstructor: Constructable<EntityT>,
+  deSerializers: DeSerializationMiddlewareBASE
 ): LinkedEntityT | LinkedEntityT[] {
   const field = entityConstructor[upperCaseSnakeCase(key)];
   const linkedEntityConstructor: Constructable<LinkedEntityT> =
     field._linkedEntity;
   return Array.isArray(value)
     ? value.map(item =>
-        buildSingleEntityFromJson(item, linkedEntityConstructor)
+        buildSingleEntityFromJson(item, linkedEntityConstructor, deSerializers)
       )
-    : buildSingleEntityFromJson(value, linkedEntityConstructor);
+    : buildSingleEntityFromJson(value, linkedEntityConstructor, deSerializers);
 }
 
 function buildSingleEntityFromJson<LinkedEntityT extends EntityBase>(
   json: FromJsonType<unknown>,
-  linkedEntityConstructor: Constructable<LinkedEntityT>
+  linkedEntityConstructor: Constructable<LinkedEntityT>,
+  deSerializers: DeSerializationMiddlewareBASE
 ): LinkedEntityT {
-  return json instanceof linkedEntityConstructor
-    ? json
-    : linkedEntityConstructor.builder().fromJson(json);
+  return {} as any;
+  // return json instanceof linkedEntityConstructor
+  //   ? json
+  //   : linkedEntityConstructor.builder(deSerializers).fromJson(json);
 }

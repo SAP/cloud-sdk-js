@@ -17,7 +17,6 @@ import {
   FilterFunction,
   FilterFunctionParameterType
 } from '../filter/filter-function-base';
-import { FieldType } from '../selectable/field';
 import { Filter, isFilter } from '../filter/filter';
 import { UriConverter } from '../de-serializers/uri-value-converter';
 
@@ -154,10 +153,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     return field || { edmType: filterEdmType };
   }
 
-  function filterFunctionToString<
-    EntityT extends EntityBase,
-    FieldT extends FieldType
-  >(
+  function filterFunctionToString<EntityT extends EntityBase, FieldT>(
     filterFunction: FilterFunction<EntityT, FieldT>,
     parentFieldNames: string[] = []
   ): string {
@@ -306,7 +302,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   }
 
   function getODataFilterExpressionForFilter<FilterEntityT extends EntityBase>(
-    filter: Filter<FilterEntityT, FieldType | FieldType[]>,
+    filter: Filter<FilterEntityT, any>,
     parentFieldNames: string[],
     targetEntityConstructor: Constructable<any>
   ): string {

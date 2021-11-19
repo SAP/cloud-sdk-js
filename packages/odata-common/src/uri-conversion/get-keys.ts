@@ -1,6 +1,5 @@
 import { camelCase } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity-base';
-import { Field } from '../selectable/field';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.
@@ -18,10 +17,10 @@ export function getEntityKeys<EntityT extends EntityBase>(
     );
   }
   // type assertion for backwards compatibility, TODO: remove in v2.0
-  return (entityConstructor._keyFields as Field<EntityT>[]).reduce(
+  return entityConstructor._keys.reduce(
     (prev, curr) => ({
       ...prev,
-      [curr._fieldName]: encodeURIComponent(entity[camelCase(curr._fieldName)])
+      [curr]: encodeURIComponent(entity[camelCase(curr)])
     }),
     {}
   );

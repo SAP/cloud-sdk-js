@@ -49,7 +49,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
    * @returns The request builder itself, to facilitate method chaining
    */
   filter(...expressions: Filterable<EntityT>[]): this {
-    this.requestConfig.filter = and(toFilterableList(expressions));
+    this.requestConfig.filter = and(toFilterableList(expressions)) as any;
     return this;
   }
 }

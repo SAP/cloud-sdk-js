@@ -7,8 +7,8 @@ import type { Entity } from '../entity';
 export class CustomField<
   EntityT extends Entity,
   NullableT extends boolean = false
-> extends CustomFieldBase<EntityT, NullableT> {
-  edmDate(): OrderableEdmTypeField<EntityT, 'Edm.Date', NullableT, true> {
+> extends CustomFieldBase<EntityT, any, NullableT> {
+  edmDate(): OrderableEdmTypeField<EntityT, 'Edm.Date', any, NullableT, true> {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Date',
@@ -18,6 +18,7 @@ export class CustomField<
   edmDuration(): OrderableEdmTypeField<
     EntityT,
     'Edm.Duration',
+    any,
     NullableT,
     true
   > {
@@ -30,6 +31,7 @@ export class CustomField<
   edmTimeOfDay(): OrderableEdmTypeField<
     EntityT,
     'Edm.TimeOfDay',
+    any,
     NullableT,
     true
   > {

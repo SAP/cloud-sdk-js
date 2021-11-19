@@ -9,6 +9,8 @@ export {
 export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
 
 export { edmToTs } from './de-serializers/payload-value-converter';
+export { DeSerializationMiddleware } from './de-serializers/de-serialization-middleware';
+export { defaultDeSerializers } from './de-serializers/default-de-serializers';
 export {
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList,
@@ -20,7 +22,6 @@ export {
 } from './request-builder/response-transformers';
 export { deserializeComplexType } from './entity-deserializer';
 
-export { oDataUri } from './uri-conversion/odata-uri';
 export { CreateRequestBuilder } from './request-builder/create-request-builder';
 export { DeleteRequestBuilder } from './request-builder/delete-request-builder';
 export { GetAllRequestBuilder } from './request-builder/get-all-request-builder';

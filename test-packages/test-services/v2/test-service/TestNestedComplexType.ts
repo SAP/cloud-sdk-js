@@ -7,7 +7,7 @@ import {
   TestLvl2NestedComplexType,
   TestLvl2NestedComplexTypeField
 } from './TestLvl2NestedComplexType';
-import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v2';
+import { defaultDeSerializers, DeSerializationMiddleware, deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   ComplexTypeField,
   ConstructorOrField,
@@ -55,12 +55,12 @@ export class TestNestedComplexTypeField<
   NullableT,
   SelectableT
 > {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this, DeSerializationMiddleware> = new FieldBuilder(this, defaultDeSerializers);
   /**
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
+  stringProperty: EdmTypeField<EntityT, 'Edm.String', DeSerializationMiddleware, true, false> =
     this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
   /**
    * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.

@@ -1,15 +1,17 @@
 import moment from 'moment';
+import { defaultDeSerializersRaw } from '..';
+import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf } from '../entity-base';
-import { Field } from '../selectable/field';
-import { Filter } from './filter';
+import { NewField } from '../selectable/field-new';
+import { NewFilter } from './filter-new';
 
 /**
  * Data structure to represent OData filter functions.
  * Use the factory function [[filterFunction]] to create instances of `FilterFunction`.
  * @internal
  */
-export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
+export abstract class NewFilterFunction<EntityT extends EntityBase, ReturnT> {
   /**
    * Creates an instance of FilterFunction.
    * @param functionName - Name of the function.
@@ -18,7 +20,7 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
    */
   constructor(
     readonly functionName: string,
-    readonly parameters: FilterFunctionParameterType<EntityT>[],
+    readonly parameters: NewFilterFunctionParameterType<EntityT>[],
     readonly edmType: EdmTypeShared<ODataVersionOf<EntityT>>
   ) {}
 
@@ -41,18 +43,10 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
    * @param edmType - EDM type of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter
    */
-  equals(value: ReturnT): Filter<EntityT, ReturnT> {
-    return new Filter(this, 'eq', value, this.edmType);
-  }
-
-  /**
-   * Creates an instance of Filter for this filter function and the given value using the operator 'ne', i.e. `!=`.
-   * @param value - Value to be used in the filter
-   * @param edmType - EDM type of the value, used when converting the value to URL. Use `Edm.String` as default value.
-   * @returns The resulting filter
-   */
-  notEquals(value: ReturnT): Filter<EntityT, ReturnT> {
-    return new Filter(this, 'ne', value, this.edmType);
+  equals(
+    value: ReturnT
+  ): NewFilter<EntityT, DeSerializationMiddleware, ReturnT> {
+    return new NewFilter(defaultDeSerializersRaw, this, 'eq', value);
   }
 
   /**
@@ -63,7 +57,7 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
    * @returns A function that convert the parameter to url pattern.
    */
   private transformParameter(
-    param: FilterFunctionParameterType<EntityT>,
+    param: NewFilterFunctionParameterType<EntityT>,
     parentFieldNames: string[]
   ): string {
     if (typeof param === 'number') {
@@ -77,7 +71,7 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
         'Date parameters are not supported in the deprecated `transformParameter` method. Use `get-filter` instead.'
       );
     }
-    if (param instanceof FilterFunction) {
+    if (param instanceof NewFilterFunction) {
       return param.toString(parentFieldNames);
     }
     if (Array.isArray(param)) {
@@ -93,6 +87,7 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
  * Primitive type of a parameter of a filter function.
  */
 export type FilterFunctionPrimitiveParameterType =
+  | any
   | number
   | string
   | moment.Moment;
@@ -100,8 +95,8 @@ export type FilterFunctionPrimitiveParameterType =
 /**
  * Type of a parameter of a filter function. This can either be a primitive type, a reference to a field or another filter function.
  */
-export type FilterFunctionParameterType<EntityT extends EntityBase> =
+export type NewFilterFunctionParameterType<EntityT extends EntityBase> =
   | FilterFunctionPrimitiveParameterType
-  | Field<EntityT, boolean, boolean>
-  | FilterFunction<EntityT, any>
+  | NewField<EntityT, boolean, boolean>
+  | NewFilterFunction<EntityT, any>
   | FilterFunctionPrimitiveParameterType[];

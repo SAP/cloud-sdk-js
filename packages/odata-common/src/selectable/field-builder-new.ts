@@ -1,34 +1,36 @@
 /* eslint-disable max-classes-per-file */
 
+import { EdmTypeShared, OrderableEdmType } from '../edm-types';
 import {
-  EdmTypeShared,
-  isOrderableEdmType,
-  OrderableEdmType
-} from '../edm-types';
-import { Constructable, EntityBase } from '../entity-base';
+  Constructable,
+  EntityBase,
+  NewEntityIdentifiable
+} from '../entity-base';
 import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
-import { ComplexTypeField } from './complex-type-field';
-import { EdmTypeField } from './edm-type-field';
-import { OrderableEdmTypeField } from './orderable-edm-type-field';
 import { CollectionField, CollectionFieldType } from './collection-field';
-import { ConstructorOrField } from './constructor-or-field';
 import { FieldOptions } from './field';
 import { EnumField } from './enum-field';
+import { NewEdmTypeField } from './edm-type-field-new';
+import { NewComplexTypeField } from './complex-type-field-new';
+import { NewConstructorOrField } from './constructor-or-field';
 
 type ComplexTypeFieldConstructor<
-  ComplexTypeFieldT extends ComplexTypeField<
+  ComplexTypeFieldT extends NewComplexTypeField<
     EntityT,
+    T,
     ComplexT,
     NullableT,
     SelectableT
   >,
   EntityT extends EntityBase,
+  T extends DeSerializationMiddlewareBASE,
   ComplexT,
   NullableT extends boolean,
   SelectableT extends boolean
 > = new (
   fieldName: string,
-  fieldOf: ConstructorOrField<EntityT>,
+  fieldOf: NewConstructorOrField<EntityT>,
+  deSerializers: T,
   fieldOptions?: FieldOptions<NullableT, SelectableT>
 ) => ComplexTypeFieldT;
 
@@ -37,7 +39,7 @@ type ComplexTypeFieldConstructor<
  * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
  * @internal
  */
-export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
+export type IsSelectableField<FieldOfT extends NewConstructorOrField<any>> =
   FieldOfT extends Constructable<any> ? true : false;
 /**
  * Convenience type to determine whether a field should be orderable. If the given `EdmT` is of type `OrderableEdmTypes`, it is orderable.
@@ -47,48 +49,52 @@ export type IsSelectableField<FieldOfT extends ConstructorOrField<any>> =
 export type IsOrderableField<EdmT extends EdmTypeShared<'any'>> =
   EdmT extends OrderableEdmType ? true : false;
 
-type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
-  FieldOfT extends ConstructorOrField<infer EntityT> ? EntityT : never;
+type EntityTypeFromFieldOf<FieldOfT extends NewConstructorOrField<any>> =
+  FieldOfT extends NewConstructorOrField<infer EntityT> ? EntityT : never;
 
 /**
  * Field builder to orchestrate the creation of the different kinds of fields.
  * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
  */
-export class FieldBuilder<
-  FieldOfT extends ConstructorOrField<any>,
+export class NewFieldBuilder<
+  FieldOfT extends NewConstructorOrField<any>,
   T extends DeSerializationMiddlewareBASE
-> {
+> implements NewEntityIdentifiable<FieldOfT, T>
+{
+  entity: FieldOfT;
   /**
    * Creates an instance of `FieldBuilder`.
    * @param fieldOf - Entity or complex type field, for which the field builder shall create fields.
    */
-  constructor(public fieldOf: FieldOfT, private deSerializers: T) {}
+  constructor(public fieldOf: FieldOfT, public deSerializers: T) {}
 
-  buildEdmTypeField<EdmT extends OrderableEdmType, NullableT extends boolean>(
-    fieldName: string,
-    edmType: EdmT,
-    isNullable: NullableT
-  ): OrderableEdmTypeField<
-    EntityTypeFromFieldOf<FieldOfT>,
-    EdmT,
-    T,
-    NullableT,
-    IsSelectableField<FieldOfT>
-  >;
-  buildEdmTypeField<
-    EdmT extends Exclude<EdmTypeShared<'any'>, OrderableEdmType>,
-    NullableT extends boolean
-  >(
-    fieldName: string,
-    edmType: EdmT,
-    isNullable: NullableT
-  ): EdmTypeField<
-    EntityTypeFromFieldOf<FieldOfT>,
-    EdmT,
-    T,
-    NullableT,
-    IsSelectableField<FieldOfT>
-  >;
+  // buildEdmTypeField<EdmT extends OrderableEdmType, NullableT extends boolean>(
+  //   fieldName: string,
+  //   edmType: EdmT,
+  //   isNullable: NullableT
+  // ): OrderableEdmTypeField<
+  //   EntityTypeFromFieldOf<FieldOfT>,
+  //   EdmT,
+  //   T,
+  //   NullableT,
+  //   true
+  //   // IsSelectableField<FieldOfT>
+  // >;
+  // buildEdmTypeField<
+  //   EdmT extends Exclude<EdmTypeShared<'any'>, OrderableEdmType>,
+  //   NullableT extends boolean
+  // >(
+  //   fieldName: string,
+  //   edmType: EdmT,
+  //   isNullable: NullableT
+  // ): NewEdmTypeField<
+  //   EntityTypeFromFieldOf<FieldOfT>,
+  //   EdmT,
+  //   T,
+  //   NullableT,
+  //   true
+  //   // IsSelectableField<FieldOfT>
+  // >;
   /**
    * Build a field for a property with an EDM type.
    * For `[[OrderableEdmType]]` fields, the returned fields are of type `OrderableEdmTypeField`.
@@ -106,30 +112,31 @@ export class FieldBuilder<
     fieldName: string,
     edmType: EdmT,
     isNullable: NullableT
-  ):
-    | OrderableEdmTypeField<
-        EntityTypeFromFieldOf<FieldOfT>,
-        EdmT,
-        T,
-        NullableT,
-        IsSelectableField<FieldOfT>
-      >
-    | EdmTypeField<
-        EntityTypeFromFieldOf<FieldOfT>,
-        EdmT,
-        T,
-        NullableT,
-        IsSelectableField<FieldOfT>
-      > {
+  ): // | OrderableEdmTypeField<
+  //     EntityTypeFromFieldOf<FieldOfT>,
+  //     EdmT,
+  //     T,
+  //     NullableT,
+  //     true
+  //     // IsSelectableField<FieldOfT>
+  //   >
+  NewEdmTypeField<
+    EntityTypeFromFieldOf<FieldOfT>,
+    EdmT,
+    T,
+    NullableT,
+    IsSelectableField<FieldOfT>
+  > {
     const isSelectable = (this.fieldOf instanceof
-      ComplexTypeField) as IsSelectableField<FieldOfT>;
+      NewComplexTypeField) as IsSelectableField<FieldOfT>;
 
     // The type assertion is necessary because the signatures of the two constructors differ (TS design limitation)
-    const ctor = (
-      isOrderableEdmType(edmType) ? OrderableEdmTypeField : EdmTypeField
-    ) as typeof EdmTypeField;
+    // const ctor = (
+    //   isOrderableEdmType(edmType) ? OrderableEdmTypeField : EdmTypeField
+    // ) as typeof EdmTypeField;
+    const ctor = NewEdmTypeField;
 
-    return new ctor(fieldName, this.fieldOf, edmType, this.deSerializers, {
+    return new ctor(fieldName, this.fieldOf, edmType, {
       isNullable,
       isSelectable
     });
@@ -144,8 +151,9 @@ export class FieldBuilder<
    * @returns A complex type field of the given type.
    */
   buildComplexTypeField<
-    ComplexTypeFieldT extends ComplexTypeField<
+    ComplexTypeFieldT extends NewComplexTypeField<
       EntityTypeFromFieldOf<FieldOfT>,
+      T,
       any,
       NullableT,
       IsSelectableField<FieldOfT>
@@ -157,6 +165,7 @@ export class FieldBuilder<
     complexTypeFieldCtor: ComplexTypeFieldConstructor<
       ComplexTypeFieldT,
       EntityTypeFromFieldOf<FieldOfT>,
+      T,
       ComplexT,
       NullableT,
       IsSelectableField<FieldOfT>
@@ -164,11 +173,16 @@ export class FieldBuilder<
     isNullable: NullableT
   ): ComplexTypeFieldT {
     const isSelectable = (this.fieldOf instanceof
-      ComplexTypeField) as IsSelectableField<FieldOfT>;
-    return new complexTypeFieldCtor(fieldName, this.fieldOf, {
-      isNullable,
-      isSelectable
-    });
+      NewComplexTypeField) as IsSelectableField<FieldOfT>;
+    return new complexTypeFieldCtor(
+      fieldName,
+      this.fieldOf as any,
+      this.deSerializers,
+      {
+        isNullable,
+        isSelectable
+      }
+    );
   }
 
   /**
@@ -191,14 +205,18 @@ export class FieldBuilder<
     EntityTypeFromFieldOf<FieldOfT>,
     CollectionFieldT,
     NullableT,
-    IsSelectableField<FieldOfT>
+    true // IsSelectableField<FieldOfT>
   > {
-    const isSelectable = (this.fieldOf instanceof
-      ComplexTypeField) as IsSelectableField<FieldOfT>;
-    return new CollectionField(fieldName, this.fieldOf, collectionFieldType, {
-      isNullable,
-      isSelectable
-    });
+    const isSelectable = (this.fieldOf instanceof NewComplexTypeField) as true; // IsSelectableField<FieldOfT>;
+    return new CollectionField(
+      fieldName,
+      this.fieldOf as any,
+      collectionFieldType,
+      {
+        isNullable,
+        isSelectable
+      }
+    );
   }
 
   /**
@@ -216,11 +234,10 @@ export class FieldBuilder<
     EntityTypeFromFieldOf<FieldOfT>,
     EnumT,
     NullableT,
-    IsSelectableField<FieldOfT>
+    true // IsSelectableField<FieldOfT>
   > {
-    const isSelectable = (this.fieldOf instanceof
-      ComplexTypeField) as IsSelectableField<FieldOfT>;
-    return new EnumField(fieldName, this.fieldOf, enumType, {
+    const isSelectable = (this.fieldOf instanceof NewComplexTypeField) as true; // IsSelectableField<FieldOfT>;
+    return new EnumField(fieldName, this.fieldOf as any, enumType, {
       isNullable,
       isSelectable
     });

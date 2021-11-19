@@ -2,6 +2,8 @@ import BigNumber from 'bignumber.js';
 import {
   DeSerializationMiddleware as DeSerializationMiddlewareBase,
   DeSerializer,
+  EdmTypeCommon,
+  ExclusiveEdmTypeV2,
   Time
 } from '@sap-cloud-sdk/odata-common';
 import moment from 'moment';
@@ -44,3 +46,7 @@ export interface DeSerializationMiddleware<
   'Edm.DateTimeOffset': DeSerializer<DateTimeOffsetT>;
   'Edm.Time': DeSerializer<TimeT>;
 }
+
+export type DeSerializationMiddlewareV2BASE = {
+  [P in EdmTypeCommon | ExclusiveEdmTypeV2]: DeSerializer<any>;
+};

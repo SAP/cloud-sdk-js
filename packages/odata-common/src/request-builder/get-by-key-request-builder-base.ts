@@ -7,7 +7,6 @@ import { Constructable, EntityBase } from '../entity-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataGetByKeyRequestConfig } from '../request/odata-get-by-key-request-config';
-import { FieldType } from '../selectable/field';
 import { ODataUri } from '../uri-conversion/odata-uri';
 import { Selectable } from '../selectable/selectable';
 import { GetRequestBuilderBase } from './get-request-builder-base';
@@ -27,7 +26,7 @@ export abstract class GetByKeyRequestBuilderBase<
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
-    keys: Record<string, FieldType>,
+    keys: Record<string, any>,
     oDataUri: ODataUri,
     readonly entityDeserializer: EntityDeserializer,
     readonly dataAccessor: ResponseDataAccessor

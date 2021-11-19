@@ -93,7 +93,10 @@ describe('check-public-api', () => {
   });
 
   it('parses one index.ts file witout matching', () => {
-    const exportedObjects = parseBarrelFile('some non matching', regexExportedIndex);
+    const exportedObjects = parseBarrelFile(
+      'some non matching',
+      regexExportedIndex
+    );
     expect(exportedObjects).toEqual([]);
   });
 });

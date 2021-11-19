@@ -240,7 +240,7 @@ export function checkSingleIndexFile(cwd: string): void {
  * @param regex - regular expression used for matching exports.
  * @returns List of objects exported by the given index file.
  */
- export function parseBarrelFile(fileContent: string, regex: RegExp): string[] {
+export function parseBarrelFile(fileContent: string, regex: RegExp): string[] {
   const normalized = fileContent.replace(/\s+/g, '');
   const groups = captureGroupsFromGlobalRegex(regex, normalized);
 
@@ -255,13 +255,15 @@ function captureGroupsFromGlobalRegex(regex: RegExp, str: string): string[] {
 async function checkBarrelRecursive(cwd: string) {
   readdirSync(cwd, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
-    .forEach(subDir =>
-    {
-      if(subDir.name !== '__snapshots__') {
-        checkBarrelRecursive(join(cwd,subDir.name));
+    .forEach(subDir => {
+      if (subDir.name !== '__snapshots__') {
+        checkBarrelRecursive(join(cwd, subDir.name));
       }
     });
-  await exportAllInBarrel(cwd, parse(cwd).name === 'src' ? 'internal.ts':'index.ts');
+  await exportAllInBarrel(
+    cwd,
+    parse(cwd).name === 'src' ? 'internal.ts' : 'index.ts'
+  );
 }
 
 async function exportAllInBarrel(cwd: string, barrelFileName: string) {
@@ -273,39 +275,40 @@ async function exportAllInBarrel(cwd: string, barrelFileName: string) {
         '__snapshots__',
         'internal.ts',
         'index.ts',
+        'cli.ts',
+        'generator-cli.ts',
         '**/*.md'
       ],
       cwd
-    }).found
-    .map(name => basename(name, '.ts'));
-    const exportedFiles = parseBarrelFile(await readFile(barrelFilePath, 'utf8'), regexExportedInternal);
-    if(!compareBarrels(dirContents, exportedFiles, barrelFilePath)) {
-        process.exit(1);
+    }).found.map(name => basename(name, '.ts'));
+    const exportedFiles = parseBarrelFile(
+      await readFile(barrelFilePath, 'utf8'),
+      regexExportedInternal
+    );
+    if (!compareBarrels(dirContents, exportedFiles, barrelFilePath)) {
+      process.exit(1);
     }
-  }
-  else {
+  } else {
     throw Error(`No ${barrelFileName} file found in ${cwd}`);
   }
 }
 
-function compareBarrels(dirContents: string[], exportedFiles: string[], barrelFilePath: string) {
+function compareBarrels(
+  dirContents: string[],
+  exportedFiles: string[],
+  barrelFilePath: string
+) {
   let setsAreEqual = true;
 
   dirContents.forEach(tsFiles => {
-    if (
-      !exportedFiles.find(nameInIndex => tsFiles === nameInIndex)
-    ) {
-      logger.error(
-        `${tsFiles} is not exported in ${barrelFilePath}`
-      );
+    if (!exportedFiles.find(nameInIndex => tsFiles === nameInIndex)) {
+      logger.error(`${tsFiles} is not exported in ${barrelFilePath}`);
       setsAreEqual = false;
     }
   });
 
   exportedFiles.forEach(nameInIndex => {
-    if (
-      !dirContents.find(exportedType => exportedType === nameInIndex)
-    ) {
+    if (!dirContents.find(exportedType => exportedType === nameInIndex)) {
       logger.error(
         `"${nameInIndex}" is exported from the ${barrelFilePath} but does not exist in this directory`
       );

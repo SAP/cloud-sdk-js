@@ -1,5 +1,5 @@
 import * as path from 'path';
-import execa = require('execa');
+import { execa } from 'execa';
 import * as fs from 'fs-extra';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
 

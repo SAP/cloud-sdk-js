@@ -1,5 +1,5 @@
 import { checkUrlExists } from '@sap-cloud-sdk/util';
-import { getGenerationSteps } from '@sap-cloud-sdk/generator-common';
+import { getGenerationSteps } from '@sap-cloud-sdk/generator-common/internal';
 import {
   VdmServiceMetadata,
   getGenerationAndUsage,

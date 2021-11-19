@@ -1,5 +1,5 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
-import { InstructionWithText } from '@sap-cloud-sdk/generator-common';
+import { InstructionWithText } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiOperation } from '../openapi-types';
 import { getOperationParamCode } from './code-sample-util';
 

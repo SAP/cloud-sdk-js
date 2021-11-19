@@ -10,6 +10,10 @@ import {
 } from './sdk-metadata-types';
 
 const distanceThreshold = 5;
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function getSdkMetadataFileNames(originalFileName: string): {
   clientFileName: string;
   headerFileName: string;
@@ -19,7 +23,9 @@ export function getSdkMetadataFileNames(originalFileName: string): {
     headerFileName: `${originalFileName}_HEADER.json`
   };
 }
-
+/**
+ * @internal
+ */
 export async function sdkMetadataHeader(
   type: 'odata' | 'rest' | 'soap',
   originalFileName: string,
@@ -33,13 +39,17 @@ export async function sdkMetadataHeader(
     introText: sdkMetadataHeaderIntroText
   };
 }
-
+/**
+ * @internal
+ */
 export async function getVersionForClient(
   versionInPackageJson?: string
 ): Promise<string> {
   return versionInPackageJson || getSdkVersion();
 }
-
+/**
+ * @internal
+ */
 export function getSdkMetadataClient(
   generationAndUsage: GenerationAndUsage,
   pregeneratedLibrary?: PregeneratedLibrary
@@ -60,6 +70,7 @@ export function getSdkMetadataClient(
  * @param objectsToCheck - List of objects, e.g. VdmEntity, FunctionImports, etc.
  * @param extractorFn - Function to get the object's property to match against name.
  * @returns - closest matched object or undefined if not found.
+ * @internal
  */
 export function getLevenshteinClosest<T>(
   name: string,
@@ -88,10 +99,14 @@ function getLevenshteinDistance(stringA: string, stringB: string): number {
 function getSanitizedString(text: string): string {
   return text.replace(/[^A-Za-z]/g, '').toLowerCase();
 }
-
+/**
+ * @internal
+ */
 export const sdkMetadataHeaderIntroText =
   'The SAP Cloud SDK is a versatile set of libraries and tools for developers to build cloud-native applications on the SAP Business Technology Platform. To simplify the consumption of multiple services published on the SAP API Business Hub, the SDK offers code generators for OData and OpenAPI together with pregenerated typed client libraries. These libraries are seamlessly integrated with connectivity, authentication, multi-tenancy, and other abstractions to speed up application development.';
-
+/**
+ * @internal
+ */
 export const ServiceStatusValues: Record<
   ServiceStatus['status'],
   ServiceStatus

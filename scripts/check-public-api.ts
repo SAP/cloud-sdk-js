@@ -7,8 +7,7 @@ import { CompilerOptions } from 'typescript';
 import {
   readCompilerOptions,
   transpileDirectory
-} from '@sap-cloud-sdk/generator-common';
-
+} from '@sap-cloud-sdk/generator-common/internal';
 const { readFile } = promises;
 const logger = createLogger('check-public-api');
 const pathToTsConfigRoot = join(__dirname, '../tsconfig.json');

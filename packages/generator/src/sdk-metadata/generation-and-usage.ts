@@ -4,9 +4,9 @@ import {
   getGenerationSteps,
   Links,
   InstructionWithTextAndHeader,
-  usageHeaderText
-} from '@sap-cloud-sdk/generator-common';
-import type { GenerationAndUsage } from '@sap-cloud-sdk/generator-common';
+  usageHeaderText,
+  GenerationAndUsage
+} from '@sap-cloud-sdk/generator-common/internal';
 import { VdmServiceMetadata } from '../vdm-types';
 import {
   actionImportCodeSample,

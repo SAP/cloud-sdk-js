@@ -1,5 +1,4 @@
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { serializeChangeSet } from '@sap-cloud-sdk/odata-common';
 import { CommonEntity } from '../../../test/common-entity';
 import {
   batchRequestBuilder,
@@ -12,7 +11,8 @@ import {
 } from '../../../test/common-request-config';
 import {
   serializeBatchRequest,
-  serializeRequest
+  serializeRequest,
+  serializeChangeSet
 } from './batch-request-serializer';
 import { BatchChangeSet } from './batch-change-set';
 

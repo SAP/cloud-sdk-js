@@ -51,7 +51,7 @@ describe('metadata', () => {
         apis: [] as any[]
       } as OpenApiDocument);
       await checkUrlExists(generationAndUsage.generatorRepositoryLink);
-    });
+    }, 10000);
 
     it('contains only existing links', async () => {
       const links = getOpenApiLinks();

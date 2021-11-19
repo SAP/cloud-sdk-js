@@ -7,19 +7,29 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'service-mapping'
 });
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export const VALUE_IS_UNDEFINED = 'VALUE_IS_UNDEFINED';
-
+/**
+ * @internal
+ */
 export interface VdmMapping {
   [fileName: string]: ServiceMapping;
 }
-
+/**
+ * @internal
+ */
 export interface ServiceMapping {
   directoryName: string;
   servicePath: string;
   npmPackageName: string;
 }
-
+/**
+ * @internal
+ */
 export function readServiceMapping(options: GeneratorOptions): VdmMapping {
   return (
     (options.serviceMapping &&
@@ -27,7 +37,9 @@ export function readServiceMapping(options: GeneratorOptions): VdmMapping {
     {}
   );
 }
-
+/**
+ * @internal
+ */
 export function serviceMapping(services: VdmServiceMetadata[]): VdmMapping {
   return services.reduce((vdmMapping, service) => {
     vdmMapping[service.originalFileName] = {
@@ -39,11 +51,15 @@ export function serviceMapping(services: VdmServiceMetadata[]): VdmMapping {
     return vdmMapping;
   }, {});
 }
-
+/**
+ * @internal
+ */
 export function serviceMappingFile(services: VdmServiceMetadata[]): string {
   return JSON.stringify(serviceMapping(services), null, 2) + unixEOL;
 }
-
+/**
+ * @internal
+ */
 export function getServicePath(
   metadata: ServiceMetadata,
   serviceMappingIn?: ServiceMapping

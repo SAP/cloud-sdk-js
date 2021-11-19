@@ -3,7 +3,7 @@ import {
   TestComplexTypeField,
   TestEntity
 } from '@sap-cloud-sdk/test-services/v4/test-service';
-import { FieldBuilder } from '@sap-cloud-sdk/odata-common';
+import { FieldBuilder } from '@sap-cloud-sdk/odata-common/internal';
 
 // $ExpectType FieldBuilder<typeof TestEntity>
 const entityFieldBuilder = new FieldBuilder(TestEntity);

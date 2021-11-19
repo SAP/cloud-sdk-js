@@ -9,7 +9,7 @@ exports.TestEntityWithEnumKey = void 0;
 const TestEntityWithEnumKeyRequestBuilder_1 = require('./TestEntityWithEnumKeyRequestBuilder');
 const TestEnumType_1 = require('./TestEnumType');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityWithEnumKey" of service "API_TEST_SRV".
  */
@@ -57,7 +57,7 @@ TestEntityWithEnumKey._entityName = 'A_TestEntityWithEnumKey';
  */
 TestEntityWithEnumKey._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityWithEnumKey) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityWithEnumKey);
+  const _fieldBuilder = new internal_1.FieldBuilder(TestEntityWithEnumKey);
   /**
    * Static representation of the [[keyPropertyEnum1]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -76,7 +76,7 @@ TestEntityWithEnumKey._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
    * All fields selector.
    */
-  TestEntityWithEnumKey.ALL_FIELDS = new odata_common_1.AllFields(
+  TestEntityWithEnumKey.ALL_FIELDS = new internal_1.AllFields(
     '*',
     TestEntityWithEnumKey
   );

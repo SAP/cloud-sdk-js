@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { BigNumber } from 'bignumber.js';
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
 import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,

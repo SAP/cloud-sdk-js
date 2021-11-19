@@ -30,6 +30,9 @@ type FromJsonType<JsonT> = {
       : JsonT[P]; // else
 };
 
+/**
+ * @internal
+ */
 export class EntityBuilder<EntityT extends EntityBase, JsonT> {
   protected entity: EntityT;
 

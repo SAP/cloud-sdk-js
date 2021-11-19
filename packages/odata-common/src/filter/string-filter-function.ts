@@ -6,6 +6,7 @@ import {
 
 /**
  * Representation of a filter function, that returns a value of type string.
+ * @internal
  */
 export class StringFilterFunction<
   EntityT extends EntityBase

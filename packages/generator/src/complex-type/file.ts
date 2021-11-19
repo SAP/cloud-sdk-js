@@ -7,6 +7,10 @@ import { importDeclarations } from './imports';
 import { complexTypeInterface } from './interface';
 import { complexTypeNamespace } from './namespace';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function complexTypeSourceFile(
   complexType: VdmComplexType,
   oDataVersion: ODataVersion

@@ -1,4 +1,4 @@
-import { Constructable } from '@sap-cloud-sdk/odata-common';
+import { Constructable } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';

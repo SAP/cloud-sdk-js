@@ -12,7 +12,7 @@ const TestEnumType_1 = require('./TestEnumType');
 const TestEnumTypeInt64_1 = require('./TestEnumTypeInt64');
 const TestEnumTypeWithOneMember_1 = require('./TestEnumTypeWithOneMember');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
@@ -59,7 +59,7 @@ TestEntity._defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const TestEntityMultiLink_1 = require('./TestEntityMultiLink');
 const TestEntitySingleLink_1 = require('./TestEntitySingleLink');
 (function (TestEntity) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntity);
+  const _fieldBuilder = new internal_1.FieldBuilder(TestEntity);
   /**
    * Static representation of the [[keyPropertyGuid]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -309,7 +309,7 @@ const TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.TO_MULTI_LINK = new odata_common_1.OneToManyLink(
+  TestEntity.TO_MULTI_LINK = new internal_1.OneToManyLink(
     'to_MultiLink',
     TestEntity,
     TestEntityMultiLink_1.TestEntityMultiLink
@@ -318,7 +318,7 @@ const TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.TO_OTHER_MULTI_LINK = new odata_common_1.OneToManyLink(
+  TestEntity.TO_OTHER_MULTI_LINK = new internal_1.OneToManyLink(
     'to_OtherMultiLink',
     TestEntity,
     TestEntityMultiLink_1.TestEntityMultiLink
@@ -327,7 +327,7 @@ const TestEntitySingleLink_1 = require('./TestEntitySingleLink');
    * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.TO_SINGLE_LINK = new odata_common_1.OneToOneLink(
+  TestEntity.TO_SINGLE_LINK = new internal_1.OneToOneLink(
     'to_SingleLink',
     TestEntity,
     TestEntitySingleLink_1.TestEntitySingleLink
@@ -370,7 +370,7 @@ const TestEntitySingleLink_1 = require('./TestEntitySingleLink');
   /**
    * All fields selector.
    */
-  TestEntity.ALL_FIELDS = new odata_common_1.AllFields('*', TestEntity);
+  TestEntity.ALL_FIELDS = new internal_1.AllFields('*', TestEntity);
   /**
    * All key fields of the TestEntity entity.
    */

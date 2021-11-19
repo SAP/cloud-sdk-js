@@ -1706,9 +1706,9 @@
     "@sap/cds-foss" "^3"
 
 "@sap/cloud-sdk-vdm-business-partner-service@^1.23.0":
-  version "1.28.0"
-  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.28.0.tgz#f7304ef51eef9a9f338cd4934622c1046cdc16e5"
-  integrity sha512-OGAe2tAbUOIcyHqgM8Cjy4QbVVfIPjd1MK70Fy9zoZ9AwlyQ8C5JK6HIi5/CPLffTPr1ePyqy2BKUJJkddggyg==
+  version "1.28.2"
+  resolved "https://registry.npmjs.org/@sap/cloud-sdk-vdm-business-partner-service/-/cloud-sdk-vdm-business-partner-service-1.28.2.tgz#400a6364073ef113099cc2607370e10278a8a5fa"
+  integrity sha512-rHMqsVY884KSjcv/nJh77bcRtlImXD3R3Rqdhh9z88P20th8cKoQjrhquqdJ3Bm37Y83+7nF/j2D/R+StNlRdA==
   dependencies:
     "@sap-cloud-sdk/core" "^1.51.0"
 
@@ -1879,9 +1879,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jest@^27.0.0":
-  version "27.0.2"
-  resolved "https://registry.npmjs.org/@types/jest/-/jest-27.0.2.tgz#ac383c4d4aaddd29bbf2b916d8d105c304a5fcd7"
-  integrity sha512-4dRxkS/AFX0c5XW6IPMNOydLn2tEhNhJV7DnYK+0bjoJZ+QTmfucBlihX7aoEsh/ocYtkLC73UbnBXBXIxsULA==
+  version "27.0.3"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-27.0.3.tgz#0cf9dfe9009e467f70a342f0f94ead19842a783a"
+  integrity sha512-cmmwv9t7gBYt7hNKH5Spu7Kuu/DotGa+Ff+JGRKZ4db5eh8PnKS4LuebJ3YLUoyOyIHraTGyULn23YtEAm0VSg==
   dependencies:
     jest-diff "^27.0.0"
     pretty-format "^27.0.0"
@@ -1973,9 +1973,9 @@
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
 "@types/uuid@^8.0.0":
-  version "8.3.1"
-  resolved "https://registry.npmjs.org/@types/uuid/-/uuid-8.3.1.tgz#1a32969cf8f0364b3d8c8af9cc3555b7805df14f"
-  integrity sha512-Y2mHTRAbqfFkpjldbkHGY8JIzRN6XqYRliG8/24FcHm2D2PwW24fl5xMRTVGdrb7iMrwCaIEbLWerGIkXuFWVg==
+  version "8.3.3"
+  resolved "https://registry.npmjs.org/@types/uuid/-/uuid-8.3.3.tgz#c6a60686d953dbd1b1d45e66f4ecdbd5d471b4d0"
+  integrity sha512-0LbEEx1zxrYB3pgpd1M5lEhLcXjKJnYghvhTRgaBeUivLHMDM1TzF3IJ6hXU2+8uA4Xz+5BA63mtZo5DjVT8iA==
 
 "@types/voca@^1.4.0":
   version "1.4.1"
@@ -1995,9 +1995,9 @@
     "@types/yargs-parser" "*"
 
 "@types/yargs@^17.0.0", "@types/yargs@^17.0.2":
-  version "17.0.5"
-  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.5.tgz#1e7e59a88420872875842352b73618f5e77e835f"
-  integrity sha512-4HNq144yhaVjJs+ON6A07NEoi9Hh0Rhl/jI9Nt/l/YRjt+T6St/QK3meFARWZ8IgkzoD1LC0PdTdJenlQQi2WQ==
+  version "17.0.7"
+  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.7.tgz#44a484c634761da4391477515a98772b82b5060f"
+  integrity sha512-OvLKmpKdea1aWtqHv9bxVVcMoT6syAeK+198dfETIFkAevYRGwqh4H+KFxfjUETZuUuE5sQCAFwdOdoHUdo8eg==
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -3809,9 +3809,9 @@ dts-critic@latest:
     yargs "^15.3.1"
 
 dtslint@^4.0.0:
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.2.0.tgz#0da05c700856f6bc6f68bb81c8905d3cbe7628d7"
-  integrity sha512-d9cAOe7pYpdAMO6XJUaL1to1ZEiRYP9dc873DLCDTckOzbc56+AvLJGT9jhg2EQxdrtcwn7nCWQpijipgrHUHg==
+  version "4.2.1"
+  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.2.1.tgz#c416db9bb7ce3face599b7097b9cd0e7f478fdf7"
+  integrity sha512-57mWY9osUEfS6k62ATS9RSgug1dZcuN4O31hO76u+iEexa6VUEbKoPGaA2mNtc0FQDcdTl0zEUtti79UQKSQyQ==
   dependencies:
     "@definitelytyped/header-parser" latest
     "@definitelytyped/typescript-versions" latest

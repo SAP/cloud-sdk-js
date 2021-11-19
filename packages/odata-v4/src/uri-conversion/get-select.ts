@@ -1,4 +1,4 @@
-import { Selectable } from '@sap-cloud-sdk/odata-common';
+import { Selectable } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 
 /**

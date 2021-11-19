@@ -38,6 +38,7 @@ function businessDocumentationLine(service: VdmServiceMetadata): string[] {
 /**
  * Build the helpful links section of the readme file.
  * @returns The content of the section.
+ * @internal
  */
 export function helpfulLinksSection(): string[] {
   return [
@@ -53,6 +54,10 @@ export function helpfulLinksSection(): string[] {
   ];
 }
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function readme(
   service: VdmServiceMetadata,
   s4hanaCloud = false

@@ -6,6 +6,7 @@ const { copyFile: fsCopyFile } = promises;
  * @param src - Path to the source file.
  * @param dest - Path to the destination file
  * @param overwrite - Whether or not existing files should be overwritten.
+ * @internal
  */
 export async function copyFile(
   src: string,

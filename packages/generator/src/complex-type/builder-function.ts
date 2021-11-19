@@ -2,6 +2,10 @@ import { FunctionDeclarationStructure, StructureKind } from 'ts-morph';
 import { VdmComplexType } from '../vdm-types';
 import { addLeadingNewline } from '../typedoc';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function builderFunction(
   complexType: VdmComplexType
 ): FunctionDeclarationStructure {

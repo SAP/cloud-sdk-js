@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import nock from 'nock';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { asc } from '@sap-cloud-sdk/odata-common';
+import { asc } from '@sap-cloud-sdk/odata-common/internal';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';

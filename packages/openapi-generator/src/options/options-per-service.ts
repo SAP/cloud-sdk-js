@@ -8,6 +8,7 @@ const { readFile } = promises;
 
 /**
  * Represents the service options for all services, mapped from the input file path to the service configuration.
+ * @internal
  */
 export type OptionsPerService = Record<string, ServiceOptions>;
 
@@ -19,6 +20,7 @@ type PartialOptionsPerService = Record<string, Partial<ServiceOptions>>;
 /**
  * Represents the options for one service.
  * This is usually specified as part of the options per service.
+ * @internal
  */
 export interface ServiceOptions {
   /**
@@ -39,6 +41,7 @@ export interface ServiceOptions {
  * Get the options per service from the given path or an empty object if no path was given.
  * @param configPath - Path to the given per service configuration or `undefined`, if no path was given.
  * @returns The parsed configuration for all services.
+ * @internal
  */
 export async function getOriginalOptionsPerService(
   configPath: string | undefined
@@ -55,6 +58,7 @@ export async function getOriginalOptionsPerService(
  * @param inputPaths - Service spec file paths.
  * @param options - Generator options.
  * @returns The parsed options per service.
+ * @internal
  */
 export async function getOptionsPerService(
   inputPaths: string[],
@@ -165,6 +169,7 @@ function parseDirectoryName(filePath: string): string {
  * @param directoryName - The directory name of the according service.
  * @param serviceOptions - The original options for this service as specified in the per service options.
  * @returns Service options.
+ * @internal
  */
 export function getServiceOptions(
   directoryName: string,

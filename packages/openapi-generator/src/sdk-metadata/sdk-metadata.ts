@@ -7,6 +7,10 @@ import { OpenApiDocument } from '../openapi-types';
 import { packageDescription } from './package-description';
 import { getGenerationAndUsage } from './generation-and-usage';
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export async function sdkMetadata(
   openApiDocument: OpenApiDocument
 ): Promise<Client> {

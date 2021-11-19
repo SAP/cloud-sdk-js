@@ -8,7 +8,7 @@ exports.TestEntityLink = void 0;
  */
 const TestEntityLinkRequestBuilder_1 = require('./TestEntityLinkRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
@@ -53,7 +53,7 @@ TestEntityLink._entityName = 'TestEntityLink';
  */
 TestEntityLink._defaultServicePath = '/odata/test-service';
 (function (TestEntityLink) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntityLink);
+  const _fieldBuilder = new internal_1.FieldBuilder(TestEntityLink);
   /**
    * Static representation of the [[keyTestEntityLink]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -92,7 +92,7 @@ TestEntityLink._defaultServicePath = '/odata/test-service';
   /**
    * All fields selector.
    */
-  TestEntityLink.ALL_FIELDS = new odata_common_1.AllFields('*', TestEntityLink);
+  TestEntityLink.ALL_FIELDS = new internal_1.AllFields('*', TestEntityLink);
   /**
    * All key fields of the TestEntityLink entity.
    */

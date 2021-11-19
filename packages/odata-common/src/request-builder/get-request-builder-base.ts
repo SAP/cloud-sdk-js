@@ -12,6 +12,7 @@ import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * @internal
+ * @internal
  */
 export abstract class GetRequestBuilderBase<
     EntityT extends EntityBase,

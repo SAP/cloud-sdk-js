@@ -8,7 +8,7 @@ exports.TestEntityCircularLinkParent = void 0;
  */
 const TestEntityCircularLinkParentRequestBuilder_1 = require('./TestEntityCircularLinkParentRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
  */
@@ -58,7 +58,7 @@ TestEntityCircularLinkParent._defaultServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 const TestEntityCircularLinkChild_1 = require('./TestEntityCircularLinkChild');
 (function (TestEntityCircularLinkParent) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(
+  const _fieldBuilder = new internal_1.FieldBuilder(
     TestEntityCircularLinkParent
   );
   /**
@@ -74,7 +74,7 @@ const TestEntityCircularLinkChild_1 = require('./TestEntityCircularLinkChild');
    * Static representation of the one-to-one navigation property [[toFirstChild]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityCircularLinkParent.TO_FIRST_CHILD = new odata_common_1.OneToOneLink(
+  TestEntityCircularLinkParent.TO_FIRST_CHILD = new internal_1.OneToOneLink(
     'to_FirstChild',
     TestEntityCircularLinkParent,
     TestEntityCircularLinkChild_1.TestEntityCircularLinkChild
@@ -83,7 +83,7 @@ const TestEntityCircularLinkChild_1 = require('./TestEntityCircularLinkChild');
    * Static representation of the one-to-many navigation property [[toChildren]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityCircularLinkParent.TO_CHILDREN = new odata_common_1.OneToManyLink(
+  TestEntityCircularLinkParent.TO_CHILDREN = new internal_1.OneToManyLink(
     'to_Children',
     TestEntityCircularLinkParent,
     TestEntityCircularLinkChild_1.TestEntityCircularLinkChild
@@ -99,7 +99,7 @@ const TestEntityCircularLinkChild_1 = require('./TestEntityCircularLinkChild');
   /**
    * All fields selector.
    */
-  TestEntityCircularLinkParent.ALL_FIELDS = new odata_common_1.AllFields(
+  TestEntityCircularLinkParent.ALL_FIELDS = new internal_1.AllFields(
     '*',
     TestEntityCircularLinkParent
   );

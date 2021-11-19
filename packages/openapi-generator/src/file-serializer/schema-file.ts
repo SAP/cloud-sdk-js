@@ -8,6 +8,7 @@ import { Import, serializeImports } from './imports';
  * Serialize a schema representation to a string representing the according schema file contents.
  * @param namedSchema - A named schema.
  * @returns The serialized schema file contents.
+ * @internal
  */
 export function schemaFile(namedSchema: OpenApiPersistedSchema): string {
   const imports = serializeImports(getImports(namedSchema));
@@ -31,6 +32,10 @@ function getImports(namedSchema: OpenApiPersistedSchema): Import[] {
     }));
 }
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function schemaDocumentation(schema: OpenApiPersistedSchema): string {
   const lines = [
     schema.description ||

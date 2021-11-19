@@ -3,7 +3,7 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common';
+import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * REQUEST BUILDER
  */

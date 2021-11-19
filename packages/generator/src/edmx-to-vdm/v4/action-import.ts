@@ -68,7 +68,11 @@ ${actionImportsWithoutActions
 
   return joinedActionImportData;
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function generateActionImportsV4(
   serviceMetadata: ServiceMetadata,
   entities: VdmEntity[],

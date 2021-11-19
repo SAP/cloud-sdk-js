@@ -9,6 +9,7 @@ import { ODataRequestConfig } from './odata-request-config';
 /**
  * OData getByKey request configuration for an entity type.
  * @typeparam EntityT - Type of the entity to setup a request for
+ * @internal
  */
 export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
   extends ODataRequestConfig

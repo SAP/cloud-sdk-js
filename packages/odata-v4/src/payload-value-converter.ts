@@ -8,7 +8,7 @@ import {
   deserializersCommon,
   serializersCommon,
   createEdmToTs
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { EdmType } from './edm-types';
 
 type EdmTypeMapping = {

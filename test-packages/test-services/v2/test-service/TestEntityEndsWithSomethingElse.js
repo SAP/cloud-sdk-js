@@ -8,7 +8,7 @@ exports.TestEntityEndsWithSomethingElse = void 0;
  */
 const TestEntityEndsWithSomethingElseRequestBuilder_1 = require('./TestEntityEndsWithSomethingElseRequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
@@ -58,7 +58,7 @@ TestEntityEndsWithSomethingElse._entityName =
 TestEntityEndsWithSomethingElse._defaultServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityEndsWithSomethingElse) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(
+  const _fieldBuilder = new internal_1.FieldBuilder(
     TestEntityEndsWithSomethingElse
   );
   /**
@@ -76,7 +76,7 @@ TestEntityEndsWithSomethingElse._defaultServicePath =
   /**
    * All fields selector.
    */
-  TestEntityEndsWithSomethingElse.ALL_FIELDS = new odata_common_1.AllFields(
+  TestEntityEndsWithSomethingElse.ALL_FIELDS = new internal_1.AllFields(
     '*',
     TestEntityEndsWithSomethingElse
   );

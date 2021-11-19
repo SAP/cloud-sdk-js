@@ -5,7 +5,7 @@ import {
   EdmTypeField,
   EntityBuilderType,
   Field
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType2" of service "API_TEST_SRV".
  */

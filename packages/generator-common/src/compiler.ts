@@ -23,6 +23,7 @@ const logger = createLogger('compiler');
  * @param path - Directory to be compiled.
  * @param compilerOptions - Compiler options to be used
  * @param includeExclude - Included and excluded files for compilation
+ * @internal
  */
 export async function transpileDirectory(
   path: string,
@@ -133,6 +134,7 @@ const defaultIncludeExclude: IncludeExclude = {
  * Reads the include and exclude property from the tsconfig.json using  ['**\/*.ts'] and ["dist/**\/*", "**\/*.spec.ts", "**\/*.d.ts", "node_modules/**\/*"] as default values.
  * @param pathToTsConfig - Folder containing or path to a tsconfig.json files
  * @returns IncludeExclude options for include and exclude files for compilation
+ * @internal
  */
 export async function readIncludeExcludeWithDefaults(
   pathToTsConfig: string
@@ -148,6 +150,7 @@ export async function readIncludeExcludeWithDefaults(
  * Reads and parses the compiler options a tsconfig.json.
  * @param pathToTsConfig - Folder containing or path to a tsconfig.json files
  * @returns Compiler options from the tsconfig.json
+ * @internal
  */
 export async function readCompilerOptions(
   pathToTsConfig: string

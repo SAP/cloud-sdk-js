@@ -14,6 +14,7 @@ import { createGetResourcePathForKeys } from './get-resource-path';
 /**
  * Union of necessary methods for the OData URI conversion.
  * In v2/uri-conversion/odata-uri.ts and v4/uri-conversion/odata-uri.ts the instance for v2 and v4 are created.
+ * @internal
  */
 export interface ODataUri {
   getExpand<EntityT extends EntityBase>(
@@ -49,12 +50,19 @@ export interface ODataUri {
  * Add a dollar to a string
  * @param param - String to be modified.
  * @returns string containing the dollar
- *  @internal
+ * @internal
  */
 export function prependDollar(param: string): string {
   return `$${param}`;
 }
 
+/**
+ * @param uriConverter - uriConverter
+ * @param getExpand - getExpand
+ * @param getSelect - getSelect
+ * @returns An ODataURI
+ * @internal
+ */
 export function createODataUri(
   uriConverter: UriConverter,
   getExpand: <EntityT extends EntityBase>(

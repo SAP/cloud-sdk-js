@@ -4,7 +4,7 @@ import {
   and,
   Filterable,
   toFilterableList
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Will return the entity if at least one element of the one-to-many link relation fulfills the condition.

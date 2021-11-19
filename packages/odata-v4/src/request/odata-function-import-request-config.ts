@@ -4,7 +4,7 @@ import {
   FunctionImportParameters,
   ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase,
   RequestMethodType
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * @internal

@@ -38,7 +38,7 @@ const expectedEntityImports = [
     namedImports: ['CustomField', 'Entity']
   },
   {
-    moduleSpecifier: '@sap-cloud-sdk/odata-common',
+    moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
     namedImports: [
       'AllFields',
       'Constructable',

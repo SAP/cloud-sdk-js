@@ -1879,9 +1879,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jest@^27.0.0":
-  version "27.0.2"
-  resolved "https://registry.npmjs.org/@types/jest/-/jest-27.0.2.tgz#ac383c4d4aaddd29bbf2b916d8d105c304a5fcd7"
-  integrity sha512-4dRxkS/AFX0c5XW6IPMNOydLn2tEhNhJV7DnYK+0bjoJZ+QTmfucBlihX7aoEsh/ocYtkLC73UbnBXBXIxsULA==
+  version "27.0.3"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-27.0.3.tgz#0cf9dfe9009e467f70a342f0f94ead19842a783a"
+  integrity sha512-cmmwv9t7gBYt7hNKH5Spu7Kuu/DotGa+Ff+JGRKZ4db5eh8PnKS4LuebJ3YLUoyOyIHraTGyULn23YtEAm0VSg==
   dependencies:
     jest-diff "^27.0.0"
     pretty-format "^27.0.0"
@@ -1995,9 +1995,9 @@
     "@types/yargs-parser" "*"
 
 "@types/yargs@^17.0.0", "@types/yargs@^17.0.2":
-  version "17.0.6"
-  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.6.tgz#675136e8ec0009f4f04aafc1273a9ca6d2a9e368"
-  integrity sha512-6jzGs5Kb3Rqe98q8CPKPABvzgnueEzGMLd8aT4FD3HrtO8Ju7Efnb8pyUSL22IoQ5WfUH7eMVQ2AwjO5EOIXFQ==
+  version "17.0.7"
+  resolved "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.7.tgz#44a484c634761da4391477515a98772b82b5060f"
+  integrity sha512-OvLKmpKdea1aWtqHv9bxVVcMoT6syAeK+198dfETIFkAevYRGwqh4H+KFxfjUETZuUuE5sQCAFwdOdoHUdo8eg==
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -3809,9 +3809,9 @@ dts-critic@latest:
     yargs "^15.3.1"
 
 dtslint@^4.0.0:
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.2.0.tgz#0da05c700856f6bc6f68bb81c8905d3cbe7628d7"
-  integrity sha512-d9cAOe7pYpdAMO6XJUaL1to1ZEiRYP9dc873DLCDTckOzbc56+AvLJGT9jhg2EQxdrtcwn7nCWQpijipgrHUHg==
+  version "4.2.1"
+  resolved "https://registry.npmjs.org/dtslint/-/dtslint-4.2.1.tgz#c416db9bb7ce3face599b7097b9cd0e7f478fdf7"
+  integrity sha512-57mWY9osUEfS6k62ATS9RSgug1dZcuN4O31hO76u+iEexa6VUEbKoPGaA2mNtc0FQDcdTl0zEUtti79UQKSQyQ==
   dependencies:
     "@definitelytyped/header-parser" latest
     "@definitelytyped/typescript-versions" latest

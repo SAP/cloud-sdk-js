@@ -5,6 +5,7 @@ import { Time } from '../time';
 
 /**
  * Union type to represent all possible types of a field.
+ * @internal
  */
 export type FieldType =
   | string
@@ -19,6 +20,7 @@ export type FieldType =
 
 /**
  * Optional settings for fields.
+ * @internal
  */
 export interface FieldOptions<
   NullableT extends boolean = false,
@@ -39,7 +41,7 @@ export interface FieldOptions<
  * The given options take precedence.
  * @param fieldOptions - Given options.
  * @returns Given options merged with default values.
- *  @internal
+ * @internal
  */
 export function getFieldOptions<
   NullableT extends boolean = false,
@@ -68,6 +70,7 @@ const defaultFieldOptions: Required<FieldOptions> = {
  * @typeparam EntityT - Type of the entity the field belongs to.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
+ * @internal
  */
 export class Field<
   EntityT extends EntityBase,

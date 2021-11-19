@@ -8,7 +8,7 @@ exports.TestEntityWithSharedEntityType2 = void 0;
  */
 const TestEntityWithSharedEntityType2RequestBuilder_1 = require('./TestEntityWithSharedEntityType2RequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityWithSharedEntityType2" of service "API_TEST_SRV".
  */
@@ -58,7 +58,7 @@ TestEntityWithSharedEntityType2._entityName =
 TestEntityWithSharedEntityType2._defaultServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityWithSharedEntityType2) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(
+  const _fieldBuilder = new internal_1.FieldBuilder(
     TestEntityWithSharedEntityType2
   );
   /**
@@ -76,7 +76,7 @@ TestEntityWithSharedEntityType2._defaultServicePath =
   /**
    * All fields selector.
    */
-  TestEntityWithSharedEntityType2.ALL_FIELDS = new odata_common_1.AllFields(
+  TestEntityWithSharedEntityType2.ALL_FIELDS = new internal_1.AllFields(
     '*',
     TestEntityWithSharedEntityType2
   );

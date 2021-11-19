@@ -4,7 +4,7 @@ import {
   serializeBatchRequest,
   serializeChangeSet,
   serializeRequest
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import {
   batch,
   TestEntity

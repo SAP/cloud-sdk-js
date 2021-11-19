@@ -2,6 +2,9 @@ import { v4 as uuid } from 'uuid';
 import { BatchSubRequestPathType } from '../request-builder/batch/batch-request-options';
 import { ODataRequestConfig } from './odata-request-config';
 
+/**
+ * @internal
+ */
 export class ODataBatchRequestConfig extends ODataRequestConfig {
   /**
    * @deprecated Since v1.30.0.

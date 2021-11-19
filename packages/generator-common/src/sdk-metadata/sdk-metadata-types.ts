@@ -1,5 +1,6 @@
 /**
  * Represents the language independent header data of the sdk metadata
+ * @internal
  */
 export interface SdkMetadataHeader {
   /**
@@ -16,6 +17,7 @@ export interface SdkMetadataHeader {
 
 /**
  * Represents the language specific data of the sdk metadata
+ * @internal
  */
 export interface Client {
   language: 'Java' | 'JavaScript';
@@ -36,6 +38,9 @@ export interface Client {
   generationAndUsage: GenerationAndUsage;
 }
 
+/**
+ * @internal
+ */
 export interface PregeneratedLibrary {
   /**
    * Version of the published client library e.g. "1.23.0". It uses the [[getVersionForClient]] function to get it.
@@ -56,6 +61,9 @@ export interface PregeneratedLibrary {
   dependencyName: string;
 }
 
+/**
+ * @internal
+ */
 export interface Links {
   gettingStarted: LinkWithName;
   sdkDocumentation: LinkWithName;
@@ -63,6 +71,10 @@ export interface Links {
   generationManual: LinkWithName;
   overviewDocumentation: LinkWithName;
 }
+
+/**
+ * @internal
+ */
 export interface GenerationAndUsage {
   generatorVersion: string;
   generatorRepositoryLink: UrlString;
@@ -73,17 +85,25 @@ export interface GenerationAndUsage {
   links: Links;
 }
 
+/**
+ * @internal
+ */
 export type UrlString = string;
 /**
  * Type representing a DateTimeString in unix timestamp format: "/Date(1612342001106)/"
+ * @internal
  */
 export type DateTimeString = string;
 
 /**
  * String fields containing a text formatted with multiple lines.
+ * @internal
  */
 export type MultiLineText = string;
 
+/**
+ * @internal
+ */
 export interface ServiceStatus {
   /**
    * Generation status of the service:
@@ -106,6 +126,7 @@ export interface ServiceStatus {
 
 /**
  * Representation of a link with a descriptive name.
+ * @internal
  */
 interface LinkWithName {
   url: UrlString;
@@ -114,6 +135,7 @@ interface LinkWithName {
 
 /**
  * This object will be filled at runtime on the sdk metadata server in case we have some code emergency which we want to inform the user base.
+ * @internal
  */
 export interface EmergencyObject {
   status: string;
@@ -122,6 +144,7 @@ export interface EmergencyObject {
 
 /**
  *  Represents a instruction block e.g. generation steps with some text above the code block
+ * @internal
  */
 export interface InstructionWithText {
   instructions: MultiLineText;
@@ -130,6 +153,7 @@ export interface InstructionWithText {
 
 /**
  *  Represents a instruction block e.g. generation steps with some text above the code block with a header
+ * @internal
  */
 export interface InstructionWithTextAndHeader extends InstructionWithText {
   header: string;

@@ -8,7 +8,7 @@ exports.TestEntityCircularLinkChild = void 0;
  */
 const TestEntityCircularLinkChildRequestBuilder_1 = require('./TestEntityCircularLinkChildRequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "A_TestEntityCircularLinkChild" of service "API_TEST_SRV".
  */
@@ -57,7 +57,7 @@ TestEntityCircularLinkChild._entityName = 'A_TestEntityCircularLinkChild';
 TestEntityCircularLinkChild._defaultServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 (function (TestEntityCircularLinkChild) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(
+  const _fieldBuilder = new internal_1.FieldBuilder(
     TestEntityCircularLinkChild
   );
   /**
@@ -73,7 +73,7 @@ TestEntityCircularLinkChild._defaultServicePath =
    * Static representation of the one-to-many navigation property [[toParent]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntityCircularLinkChild.TO_PARENT = new odata_common_1.Link(
+  TestEntityCircularLinkChild.TO_PARENT = new internal_1.Link(
     'to_Parent',
     TestEntityCircularLinkChild,
     TestEntityCircularLinkChild
@@ -88,7 +88,7 @@ TestEntityCircularLinkChild._defaultServicePath =
   /**
    * All fields selector.
    */
-  TestEntityCircularLinkChild.ALL_FIELDS = new odata_common_1.AllFields(
+  TestEntityCircularLinkChild.ALL_FIELDS = new internal_1.AllFields(
     '*',
     TestEntityCircularLinkChild
   );

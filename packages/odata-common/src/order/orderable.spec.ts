@@ -1,5 +1,5 @@
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { asc, desc } from '@sap-cloud-sdk/odata-common';
+import { asc, desc } from '@sap-cloud-sdk/odata-common/internal';
 
 describe('Orderable', () => {
   describe('order type', () => {

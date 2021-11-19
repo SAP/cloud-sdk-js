@@ -19,7 +19,7 @@ import {
   sdkMetadataHeader,
   transpileDirectory,
   readCompilerOptions
-} from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';

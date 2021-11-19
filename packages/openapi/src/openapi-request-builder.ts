@@ -7,9 +7,11 @@ import {
   useOrFetchDestination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import { executeHttpRequest,
+import {
+  executeHttpRequest,
   Method,
-  HttpResponse } from '@sap-cloud-sdk/http-client';
+  HttpResponse
+} from '@sap-cloud-sdk/http-client';
 import { filterCustomRequestConfig } from '@sap-cloud-sdk/http-client/internal';
 
 /**

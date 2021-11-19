@@ -1,9 +1,9 @@
 import { breakfastEntity, foodService } from '../../test/test-util/data-model';
-import { importDeclarations, otherEntityImports } from './imports';
+import { entityImportDeclarations, otherEntityImports } from './imports';
 
 describe('imports', () => {
   it('importDeclarations', () => {
-    const actual = importDeclarations(breakfastEntity, 'v2');
+    const actual = entityImportDeclarations(breakfastEntity, 'v2');
 
     expect(
       actual.map(imports => ({
@@ -38,7 +38,7 @@ const expectedEntityImports = [
     namedImports: ['CustomField', 'Entity']
   },
   {
-    moduleSpecifier: '@sap-cloud-sdk/odata-common',
+    moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
     namedImports: [
       'AllFields',
       'Constructable',

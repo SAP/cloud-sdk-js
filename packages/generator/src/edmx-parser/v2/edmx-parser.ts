@@ -10,31 +10,45 @@ import { forceArray } from '../../generator-utils';
 import {
   EdmxAssociation,
   EdmxAssociationSet,
-  EdmxEntityType,
-  EdmxFunctionImport
+  EdmxEntityTypeV2,
+  EdmxFunctionImportV2
 } from './edm-types';
+/* eslint-disable valid-jsdoc */
 
-export function parseComplexTypes(root: any): EdmxComplexTypeBase[] {
+/**
+ * @internal
+ */
+export function parseComplexTypesV2(root: any): EdmxComplexTypeBase[] {
   return parseComplexTypesBase(root);
 }
-
-export function parseEntitySets(root: any): EdmxEntitySetBase[] {
+/**
+ * @internal
+ */
+export function parseEntitySetsV2(root: any): EdmxEntitySetBase[] {
   return parseEntitySetsBase(root);
 }
-
-export function parseEntityTypes(root: any): EdmxEntityType[] {
+/**
+ * @internal
+ */
+export function parseEntityTypes(root: any): EdmxEntityTypeV2[] {
   return parseEntityTypesBase(root);
 }
-
+/**
+ * @internal
+ */
 export function parseAssociation(root: any): EdmxAssociation[] {
   return getMergedPropertyWithNamespace(root, 'Association');
 }
-
+/**
+ * @internal
+ */
 export function parseAssociationSets(root: any): EdmxAssociationSet[] {
   return getPropertyFromEntityContainer(root, 'AssociationSet');
 }
-
-export function parseFunctionImports(root: any): EdmxFunctionImport[] {
+/**
+ * @internal
+ */
+export function parseFunctionImportsV2(root: any): EdmxFunctionImportV2[] {
   return getPropertyFromEntityContainer(root, 'FunctionImport').map(f => ({
     ...f,
     Parameter: forceArray(f.Parameter)

@@ -4,6 +4,7 @@ import { MethodRequestBuilder } from '../request-builder-base';
 // FIXME: MethodRequestBuilder is too broad here. Should be create, update and delete
 /**
  * Representation of a batch change set, which holds a collection of write operations.
+ * @internal
  */
 export class BatchChangeSet<RequestT extends MethodRequestBuilder = any> {
   /**

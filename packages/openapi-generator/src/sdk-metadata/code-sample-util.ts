@@ -1,7 +1,10 @@
 import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
 import { codeBlock, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenApiApi, OpenApiOperation } from '../openapi-types';
-
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function getMainApi(
   serviceName: string,
   apis: OpenApiApi[]
@@ -11,7 +14,9 @@ export function getMainApi(
     getApiWithMaxOperations(apis)
   );
 }
-
+/**
+ * @internal
+ */
 export function getApiWithMaxOperations(apis: OpenApiApi[]): OpenApiApi {
   const sortedByOperationsLength = apis.sort((a, b) =>
     a.operations.length > b.operations.length ? -1 : 1
@@ -27,7 +32,9 @@ export function getApiWithMaxOperations(apis: OpenApiApi[]): OpenApiApi {
   // return the one with most methods
   return sortedByOperationsLength[0];
 }
-
+/**
+ * @internal
+ */
 export function getMainOperation(api: OpenApiApi): OpenApiOperation {
   if (api.operations.length === 1) {
     return api.operations[0];
@@ -40,7 +47,9 @@ export function getMainOperation(api: OpenApiApi): OpenApiOperation {
     api.operations[0]
   );
 }
-
+/**
+ * @internal
+ */
 export function getGetAllOperation(
   operations: OpenApiOperation[]
 ): OpenApiOperation | undefined {
@@ -48,7 +57,9 @@ export function getGetAllOperation(
     operation => operation.operationId.toLowerCase() === 'getall'
   );
 }
-
+/**
+ * @internal
+ */
 export function getGetOperation(
   operations: OpenApiOperation[]
 ): OpenApiOperation | undefined {
@@ -71,7 +82,9 @@ export function getGetOperation(
   }
   return undefined;
 }
-
+/**
+ * @internal
+ */
 export function getAnyOperationWithoutParams(
   operations: OpenApiOperation[]
 ): OpenApiOperation | undefined {
@@ -81,7 +94,9 @@ export function getAnyOperationWithoutParams(
       operation.queryParameters.length === 0
   );
 }
-
+/**
+ * @internal
+ */
 export function getOperationParamCode(operation: OpenApiOperation): string {
   const paramSignature: string[] = [];
   if (operation.pathParameters?.length) {

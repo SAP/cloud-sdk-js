@@ -2,9 +2,6 @@ import { PathLike } from 'fs';
 import { resolve } from 'path';
 import { Options } from 'yargs';
 
-/**
- * @hidden
- */
 export interface GeneratorOptions {
   inputDir: PathLike;
   outputDir: PathLike;
@@ -25,7 +22,9 @@ export interface GeneratorOptions {
   s4hanaCloud: boolean;
   generateCSN: boolean;
 }
-
+/**
+ * @internal
+ */
 export const defaultValueProcessesJsGeneration = 16;
 
 type KeysToOptions = {
@@ -37,7 +36,7 @@ function coercePathArg(arg?: string): string | undefined {
 }
 
 /**
- * @hidden
+ * @internal
  */
 export const generatorOptionsCli: KeysToOptions = {
   inputDir: {

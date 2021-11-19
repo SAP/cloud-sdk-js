@@ -7,7 +7,7 @@ import { isNavigationProperty } from './properties-util';
 import type { Constructable, EntityBase } from './entity-base';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'entity-builder'
 });
 
@@ -30,6 +30,9 @@ type FromJsonType<JsonT> = {
       : JsonT[P]; // else
 };
 
+/**
+ * @internal
+ */
 export class EntityBuilder<EntityT extends EntityBase, JsonT> {
   protected entity: EntityT;
 

@@ -14,6 +14,9 @@ import type { CustomField } from './selectable/custom-field';
  */
 export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 
+/**
+ * @internal
+ */
 export interface Constructable<
   EntityT extends EntityBase,
   EntityTypeT = unknown
@@ -39,6 +42,9 @@ export interface Constructable<
   ): CustomField<EntityT, boolean>;
 }
 
+/**
+ * @internal
+ */
 export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
   [property in keyof Required<EntityTypeT>]: (
     value: EntityTypeT[property]
@@ -47,6 +53,7 @@ export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
 
 /**
  * Super class for all representations of OData entity types.
+ * @internal
  */
 export abstract class EntityBase {
   static _serviceName: string;
@@ -72,7 +79,6 @@ export abstract class EntityBase {
    * Remote state refers to the last known state of the entity on the remote system from which it has been retrieved or to which it has been posted.
    * It is stored as map, where the keys are stored in the format of the original OData properties.
    */
-
   protected remoteState: { [keys: string]: any };
 
   /**

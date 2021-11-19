@@ -5,10 +5,16 @@ import { Filterable } from '../filter/filterable';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
 import { FieldType } from '../selectable/field';
+import { getEntityKeys } from './get-keys';
+import { getOrderBy } from './get-orderby';
+import { UriConverter } from './uri-value-converter';
+import { createGetFilter } from './get-filter';
+import { createGetResourcePathForKeys } from './get-resource-path';
 
 /**
  * Union of necessary methods for the OData URI conversion.
  * In v2/uri-conversion/odata-uri.ts and v4/uri-conversion/odata-uri.ts the instance for v2 and v4 are created.
+ * @internal
  */
 export interface ODataUri {
   getExpand<EntityT extends EntityBase>(
@@ -44,8 +50,42 @@ export interface ODataUri {
  * Add a dollar to a string
  * @param param - String to be modified.
  * @returns string containing the dollar
- *  @internal
+ * @internal
  */
 export function prependDollar(param: string): string {
   return `$${param}`;
+}
+
+/**
+ * @param uriConverter - uriConverter
+ * @param getExpand - getExpand
+ * @param getSelect - getSelect
+ * @returns An ODataURI
+ * @internal
+ */
+export function createODataUri(
+  uriConverter: UriConverter,
+  getExpand: <EntityT extends EntityBase>(
+    selects: Selectable<EntityT>[],
+    expands: Expandable<EntityT>[],
+    entityConstructor: Constructable<EntityT>
+  ) => Partial<{ expand: string }>,
+
+  getSelect: <EntityT extends EntityBase>(
+    selects: Selectable<EntityT>[]
+  ) => Partial<{ select: string }>
+): ODataUri {
+  const { getFilter } = createGetFilter(uriConverter);
+  const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
+  const { convertToUriFormat } = uriConverter;
+
+  return {
+    getExpand,
+    getFilter,
+    getEntityKeys,
+    getOrderBy,
+    getResourcePathForKeys,
+    getSelect,
+    convertToUriFormat
+  };
 }

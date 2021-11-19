@@ -10,6 +10,11 @@ import {
   VdmServiceMetadata
 } from './vdm-types';
 import { getServiceName } from './service-generator';
+/* eslint-disable valid-jsdoc */
+
+/**
+ * @internal
+ */
 export function getFunctionDoc(
   description: string,
   tags: Partial<{
@@ -38,13 +43,17 @@ export function getFunctionDoc(
   }
   return description;
 }
-
+/**
+ * @internal
+ */
 export function getComplexTypeFieldDescription(
   complexType: VdmComplexType
 ): string {
   return `${complexType.fieldType}${unixEOL}@typeparam EntityT - Type of the entity the complex type field belongs to.`;
 }
-
+/**
+ * @internal
+ */
 export function getPropertyDescription(
   property: VdmProperty,
   constraints: VdmPropertyValueConstraints = { nullable: false }
@@ -60,6 +69,7 @@ export function getPropertyDescription(
  * Adds a leading `\n` to a documentation string so that the ts-morph makes a block comment out of it.
  * @param documentation - Documentation text.
  * @returns Documentation text with leading `\n`.
+ * @internal
  */
 export function addLeadingNewline(documentation: string): string {
   if (!documentation.startsWith(unixEOL)) {
@@ -67,7 +77,9 @@ export function addLeadingNewline(documentation: string): string {
   }
   return documentation;
 }
-
+/**
+ * @internal
+ */
 export function getNavPropertyDescription(
   property: VdmNavigationProperty
 ): string {
@@ -77,18 +89,24 @@ export function getNavPropertyDescription(
     property.toEntityClassName
   }]] entity.`.trim();
 }
-
+/**
+ * @internal
+ */
 export function getComplexTypePropertyDescription(
   property: VdmProperty,
   complexTypeName: string
 ): string {
   return `Representation of the [[${complexTypeName}.${property.instancePropertyName}]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'filter' in the fluent request API.`;
 }
-
+/**
+ * @internal
+ */
 export function getStaticPropertyDescription(property: VdmProperty): string {
   return `Static representation of the [[${property.instancePropertyName}]] property for query construction.${unixEOL}Use to reference this property in query operations such as 'select' in the fluent request API.`;
 }
-
+/**
+ * @internal
+ */
 export function getStaticNavPropertyDescription(
   property: VdmNavigationProperty
 ): string {
@@ -98,7 +116,9 @@ export function getStaticNavPropertyDescription(
     property.instancePropertyName
   }]] for query construction.${unixEOL}Use to reference this property in query operations such as 'select' in the fluent request API.`;
 }
-
+/**
+ * @internal
+ */
 export function getEntityDescription(
   entity: VdmEntity,
   service: VdmServiceMetadata
@@ -131,10 +151,15 @@ const seeForMoreInformation = (url: string) =>
 
 const partOfCommunicationScenarios = (communicationScenarios: string) =>
   `This service is part of the following communication scenarios: ${communicationScenarios}.`;
+/**
+ * @internal
+ */
 export function getRequestBuilderDescription(entity: VdmEntity): string {
   return `Request builder class for operations supported on the [[${entity.className}]] entity.`;
 }
-
+/**
+ * @internal
+ */
 export function getLookupDescription(service: VdmServiceMetadata): string {
   return `Lookup class for finding the constructor for an entity of the [[${service.className}]] service.`;
 }
@@ -152,12 +177,16 @@ function addConstraints(
 
   return description;
 }
-
+/**
+ * @internal
+ */
 export interface DocType {
   type: string;
   description: string;
 }
-
+/**
+ * @internal
+ */
 export interface NamedDocType extends DocType {
   name: string;
 }
@@ -165,7 +194,9 @@ export interface NamedDocType extends DocType {
 function tagToText(tag: string, description = ''): string {
   return `${unixEOL}@${tag}` + (description ? ` ${description}` : '');
 }
-
+/**
+ * @internal
+ */
 export function enumDocs(enumType: VdmEnumType): string {
   return [
     `This enum represents the enum type "[[${enumType.originalName}]]".`,

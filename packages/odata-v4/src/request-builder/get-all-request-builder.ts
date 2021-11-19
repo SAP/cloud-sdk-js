@@ -8,7 +8,7 @@ import {
   Expandable,
   GetAllRequestBuilderBase,
   toFilterableList
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
 import { oDataUri } from '../uri-conversion/odata-uri';
@@ -26,7 +26,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
   constructor(entityConstructor: Constructable<EntityT>) {
     super(
       entityConstructor,
-      new ODataGetAllRequestConfig(entityConstructor, oDataUri),
+      new ODataGetAllRequestConfig<EntityT>(entityConstructor, oDataUri),
       entityDeserializer,
       responseDataAccessor
     );

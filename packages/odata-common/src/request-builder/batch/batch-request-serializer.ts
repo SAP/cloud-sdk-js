@@ -14,6 +14,7 @@ import type { BatchRequestBuilder } from './batch-request-builder';
  * @param changeSet - Change set containing a collection of write operations.
  * @param options - Request serialization options.
  * @returns The serialized string representation of a change set.
+ * @internal
  */
 export function serializeChangeSet(
   changeSet: BatchChangeSet,
@@ -37,6 +38,7 @@ export function serializeChangeSet(
  * @param request - One of [[GetAllRequestBuilder | getAll]], [[GetByKeyRequestBuilder | getByKey]], [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] request builder.
  * @param options - Request serialization options.
  * @returns The serialized string representation of a multipart request, including the multipart headers.
+ * @internal
  */
 export function serializeRequest(
   request: MethodRequestBuilder,
@@ -104,6 +106,7 @@ function validateOptions(options: BatchRequestSerializationOptions): void {
  * @param request - Batch request to serialize.
  * @param options - Request serialization options.
  * @returns String representation of the batch request.
+ * @internal
  */
 export function serializeBatchRequest(
   request: BatchRequestBuilder,

@@ -4,8 +4,10 @@ import {
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
-import { basicHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/authorization-header';
-import { wrapJwtInHeader } from '@sap-cloud-sdk/connectivity/dist/scp-cf/jwt';
+import {
+  basicHeader,
+  wrapJwtInHeader
+} from '@sap-cloud-sdk/connectivity/internal';
 import {
   mockInstanceDestinationsCall,
   mockSingleDestinationCall,

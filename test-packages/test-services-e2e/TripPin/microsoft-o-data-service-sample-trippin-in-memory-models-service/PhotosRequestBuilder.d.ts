@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
 import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,

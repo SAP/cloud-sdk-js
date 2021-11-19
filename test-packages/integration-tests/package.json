@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@sap-cloud-sdk/analytics": "^1.50.0",
-    "@sap-cloud-sdk/core": "^1.50.0",
     "@sap-cloud-sdk/connectivity": "^1.50.0",
     "@sap-cloud-sdk/http-client": "^1.50.0",
     "@sap-cloud-sdk/test-services": "^1.50.0",

@@ -121,7 +121,12 @@ module.exports = {
     'import/namespace': 'error',
     'import/no-absolute-path': 'error',
     'import/no-dynamic-require': 'error',
-    'import/no-internal-modules': 'error',
+    'import/no-internal-modules': [
+      'error',
+      {
+        allow: ['@sap-cloud-sdk/**/internal']
+      }
+    ],
     'import/no-self-import': 'error',
     'import/no-cycle': 'error',
     'import/no-useless-path-segments': 'error',

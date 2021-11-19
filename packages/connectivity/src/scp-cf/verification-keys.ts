@@ -4,7 +4,7 @@ import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { TokenKey } from './xsuaa-service-types';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'connectivity',
   messageContext: 'xsuaa-service'
 });
 

@@ -3,16 +3,20 @@ import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   odataImportDeclaration,
-  coreNavPropertyFieldTypeImportNames,
-  corePropertyFieldTypeImportNames,
-  corePropertyTypeImportNames,
+  navPropertyFieldTypeImportNames,
+  propertyFieldTypeImportNames,
+  propertyTypeImportNames,
   enumTypeImportDeclarations,
   externalImportDeclarations,
   odataCommonImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
-export function importDeclarations(
+/**
+ * @internal
+ */
+export function entityImportDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
@@ -28,9 +32,9 @@ export function importDeclarations(
     odataImportDeclaration(['CustomField', 'Entity'], oDataVersion),
     odataCommonImportDeclaration(
       [
-        ...corePropertyTypeImportNames(entity.properties),
-        ...corePropertyFieldTypeImportNames(entity.properties),
-        ...coreNavPropertyFieldTypeImportNames(
+        ...propertyTypeImportNames(entity.properties),
+        ...propertyFieldTypeImportNames(entity.properties),
+        ...navPropertyFieldTypeImportNames(
           entity.navigationProperties,
           oDataVersion
         ),
@@ -43,7 +47,9 @@ export function importDeclarations(
     )
   ];
 }
-
+/**
+ * @internal
+ */
 export function otherEntityImports(
   entity: VdmEntity,
   service: VdmServiceMetadata

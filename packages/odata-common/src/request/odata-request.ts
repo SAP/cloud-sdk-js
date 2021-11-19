@@ -24,6 +24,7 @@ import { isWithETag } from './odata-request-traits';
 /**
  * OData request configuration for an entity type.
  * @typeparam EntityT - Type of the entity to setup a request for
+ * @internal
  */
 export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   /**

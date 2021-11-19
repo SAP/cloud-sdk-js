@@ -15,6 +15,7 @@
 ### Function removed
 
 - [generator] Remove the option: `aggregatorDirectoryName` and `aggregatorNpmPackageName`
+- [generator] Remove `packageJson` function from aggregator-package
 - [core] Remove the following functions:
   - `AllDestinations`
   - `AuthAndExchangeTokens`
@@ -387,7 +388,7 @@
 
 ## Compatibility Notes
 
--
+- Upgrade the ES version to `es2019`.
 
 ## New Functionality
 

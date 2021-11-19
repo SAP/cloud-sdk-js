@@ -7,7 +7,7 @@ import {
   EntityBuilderType,
   Field,
   OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */

@@ -1,11 +1,19 @@
 /* eslint-disable valid-jsdoc */
 
-import { EdmTypeSameConvertersUri, EdmTypeShared } from '../edm-types';
+import {
+  EdmTypeSameConverters,
+  EdmTypeSameConvertersUri,
+  EdmTypeShared
+} from '../edm-types';
+import { createTsToEdm } from '../payload-value-converter';
 
 type UriConverterMapping = {
   [key in EdmTypeSameConvertersUri]: (value: any) => string;
 };
 
+/**
+ * @internal
+ */
 export const uriConvertersCommon: UriConverterMapping = {
   'Edm.Binary': value => `X'${value}'`,
   'Edm.Boolean': value => String(value),
@@ -28,6 +36,9 @@ function isInfOrNan(value: string | number): boolean {
   return ['inf', '-inf', 'nan'].includes(value.toLowerCase());
 }
 
+/**
+ * @internal
+ */
 export function convertToUriForEdmString(value: any): string {
   return `'${value.replace(/'/g, "''")}'`;
 }
@@ -35,10 +46,33 @@ export function convertToUriForEdmString(value: any): string {
 /**
  * Interface defining the methods of the URI converter.
  * The concrete implementations are created in odata/v2/uri-conversion/uri-value-converter.ts and odata/v4/uri-conversion/uri-value-converter.ts
+ * @internal
  */
 export interface UriConverter {
   convertToUriFormat(
     value: any,
     edmType: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>
   ): string;
+}
+
+/**
+ * @internal
+ */
+export function createUriConverter<V extends EdmTypeSameConverters>(
+  serializers: { [keys in V]: (value: any) => any },
+  uriConverters: { [key in V]: (value: any) => string }
+): UriConverter {
+  const tsToEdm = createTsToEdm(serializers);
+
+  const convertToUriFormat = function (value: any, edmType: V): string {
+    const converted = tsToEdm(value, edmType);
+    const uriConverterFunc = uriConverters[edmType];
+    if (uriConverterFunc) {
+      return uriConverterFunc(converted);
+    }
+    return converted;
+  };
+  return {
+    convertToUriFormat
+  };
 }

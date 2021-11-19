@@ -8,7 +8,7 @@ import {
 } from '../generator-utils';
 import { VdmComplexType, VdmEnumType, VdmMappedEdmType } from '../vdm-types';
 import { EdmxAction, EdmxFunction } from '../edmx-parser/v4';
-import { EdmxFunctionImport } from '../edmx-parser/v2';
+import { EdmxFunctionImportV2 } from '../edmx-parser/v2';
 import {
   complexTypeForName,
   enumTypeForName,
@@ -20,43 +20,60 @@ const logger = createLogger({
   package: 'generator',
   messageContext: 'edmx-to-vdm-util'
 });
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function stripNamespace(name: string): string {
   const nameParts = name.split('.');
   return nameParts[nameParts.length - 1];
 }
-
+/**
+ * @internal
+ */
 export function isCollectionType(typeName: string): boolean {
   return collectionRegExp.test(typeName);
 }
-
+/**
+ * @internal
+ */
 export function isEdmType(typeName: string): boolean {
   return typeName.startsWith('Edm');
 }
-
+/**
+ * @internal
+ */
 export function complexTypeName(type: string): string | undefined {
   return last(type.split('.'));
 }
-
+/**
+ * @internal
+ */
 export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
 
 /**
  * @deprecated since version 1.27.0. Use [[isEdmType]] and [[complexTypeName]] if you want to extract type names of non EDM types.
  * @param typeName - Name of the EDM type for example "Edm.String" or "Namespace.ComplexType"
  * @returns the typename input for Edm types e.g. "Edm.String" or the type without the namespace.
+ * @internal
  */
 export function parseType(typeName: string): string {
   return typeName.startsWith('Edm')
     ? typeName
     : typeName.split('.')[typeName.split('.').length - 1];
 }
-
+/**
+ * @internal
+ */
 export function parseTypeName(typeName: string): string {
   return isCollectionType(typeName)
     ? parseCollectionTypeName(typeName)
     : typeName;
 }
-
+/**
+ * @internal
+ */
 export function parseCollectionTypeName(typeName: string): string {
   const name = typeName.match(collectionRegExp)?.groups?.collectionType;
   if (!name) {
@@ -64,16 +81,22 @@ export function parseCollectionTypeName(typeName: string): string {
   }
   return name;
 }
-
+/**
+ * @internal
+ */
 export function isV2Metadata(metadata: EdmxMetadata): boolean {
   return metadata.oDataVersion === 'v2';
 }
-
+/**
+ * @internal
+ */
 export function isComplexTypeOrEnumType(typeName: string): boolean {
   const typeParts = typeName.split('.');
   return typeParts[0] !== 'Edm' && typeParts[1] !== undefined;
 }
-
+/**
+ * @internal
+ */
 export function isComplexType(
   name: string,
   complexTypes: Omit<VdmComplexType, 'factoryName'>[]
@@ -82,13 +105,17 @@ export function isComplexType(
     ? !!findComplexType(name, complexTypes)
     : false;
 }
-
+/**
+ * @internal
+ */
 export function isEnumType(name: string, enumTypes: VdmEnumType[]): boolean {
   return isComplexTypeOrEnumType(name)
     ? !!findEnumType(name, enumTypes)
     : false;
 }
-
+/**
+ * @internal
+ */
 export function checkCollectionKind(property: EdmxProperty): void {
   if (property.hasOwnProperty('CollectionKind')) {
     logger.warn(
@@ -96,11 +123,15 @@ export function checkCollectionKind(property: EdmxProperty): void {
     );
   }
 }
-
+/**
+ * @internal
+ */
 export function complexTypeFieldType(typeName: string): string {
   return typeName + 'Field';
 }
-
+/**
+ * @internal
+ */
 export function getTypeMappingActionFunction(
   typeName: string
 ): VdmMappedEdmType {
@@ -116,7 +147,9 @@ export function getTypeMappingActionFunction(
     `Could not get a action/function parameter. '${typeName}' is not an EDM type.`
   );
 }
-
+/**
+ * @internal
+ */
 export function typesForCollection(
   typeName: string,
   enumTypes: VdmEnumType[],
@@ -154,12 +187,16 @@ export function typesForCollection(
     'Types in inside a collection must be either have complex or EDM types.'
   );
 }
-
+/**
+ * @internal
+ */
 export const propertyJsType = (type: string): string | undefined =>
   type.startsWith('Edm.') ? edmToTsType(type) : undefined;
-
+/**
+ * @internal
+ */
 export function hasUnsupportedParameterTypes(
-  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImport
+  functionOrAction: EdmxAction | EdmxFunction | EdmxFunctionImportV2
 ): boolean {
   const unsupportedParameters = functionOrAction.Parameter.filter(
     p => !isEdmType(p.Type)

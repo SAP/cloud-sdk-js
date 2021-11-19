@@ -1,11 +1,15 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function tsConfig(): string {
   return (
     JSON.stringify(
       {
         compilerOptions: {
-          target: 'es5',
+          target: 'es2019',
           module: 'commonjs',
           lib: ['esnext'],
           declaration: true,

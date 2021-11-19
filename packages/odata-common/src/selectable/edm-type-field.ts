@@ -98,6 +98,7 @@ export type FieldTypeByEdmType<
  * @typeparam EdmT - EDM type of the field. Deprecated: Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
+ * @internal
  */
 export class EdmTypeField<
   EntityT extends EntityBase,

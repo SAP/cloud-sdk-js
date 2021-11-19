@@ -89,7 +89,6 @@ export function getSubdomainAndZoneId(
  * @param userJwt - User JWT.
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns Client credentials token.
- * @internal
  */
 export function getClientCredentialsToken(
   service: string | Service,
@@ -120,7 +119,6 @@ export function getClientCredentialsToken(
  * @param userJwt - User JWT.
  * @param options - Options to influence resilience behavior (see [[ResilienceOptions]]). By default, usage of a circuit breaker is enabled.
  * @returns User token.
- * @internal
  */
 export function getUserToken(
   service: Service,

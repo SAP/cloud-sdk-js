@@ -9,7 +9,7 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'batch-response-parser'
 });
 
@@ -85,7 +85,7 @@ function getBoundary(contentType: string | undefined): string {
  * Split a batch response into an array of sub responses for the retrieve requests and changesets.
  * @param response - The raw HTTP response.
  * @returns A list of sub responses represented as strings.
- *  @internal
+ * @internal
  */
 export function splitBatchResponse(response: HttpResponse): string[] {
   const body = response.data.trim();
@@ -107,7 +107,7 @@ export function splitBatchResponse(response: HttpResponse): string[] {
  * Split a changeset (sub) response into an array of sub responses.
  * @param changeSetResponse - The string representation of a change set response.
  * @returns A list of sub responses represented as strings.
- *  @internal
+ * @internal
  */
 export function splitChangeSetResponse(changeSetResponse: string): string[] {
   const headers = parseHeaders(changeSetResponse);
@@ -125,7 +125,7 @@ export function splitChangeSetResponse(changeSetResponse: string): string[] {
  * @param response - The string representation of the response to split.
  * @param boundary - The boundary to split by.
  * @returns A list of sub responses represented as strings.
- *  @internal
+ * @internal
  */
 export function splitResponse(response: string, boundary: string): string[] {
   const newLineSymbol = detectNewLineSymbol(response);
@@ -151,7 +151,7 @@ export function splitResponse(response: string, boundary: string): string[] {
  * Parse the HTTP code of response.
  * @param response - String representation of the response.
  * @returns The HTTP code.
- *  @internal
+ * @internal
  */
 export function parseHttpCode(response: string): number {
   const group = response.match(/HTTP\/\d\.\d (\d{3}).*?/);
@@ -167,7 +167,7 @@ export function parseHttpCode(response: string): number {
  * Get the body from the given response and parse it to JSON.
  * @param response - The string representation of a single response.
  * @returns The parsed JSON representation of the response body.
- *  @internal
+ * @internal
  */
 function parseResponseBody(response: string): Record<string, any> {
   const responseBody = getResponseBody(response);
@@ -187,7 +187,7 @@ function parseResponseBody(response: string): Record<string, any> {
  * Parse the body and http code of a batch sub response.
  * @param response - A batch sub response.
  * @returns The parsed response.s
- *  @internal
+ * @internal
  */
 export function parseResponseData(response: string): ResponseData {
   return {
@@ -200,6 +200,7 @@ export function parseResponseData(response: string): ResponseData {
  * Parse the complete batch HTTP response.
  * @param batchResponse - HTTP response of a batch request.
  * @returns An array of parsed sub responses of the batch response.
+ * @internal
  */
 export function parseBatchResponse(
   batchResponse: HttpResponse

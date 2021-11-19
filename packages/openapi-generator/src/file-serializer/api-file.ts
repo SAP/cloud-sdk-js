@@ -13,6 +13,7 @@ import { Import, serializeImports } from './imports';
  * @param api - Representation of an API.
  * @param serviceName - Service name for which the API is created.
  * @returns The serialized API file contents.
+ * @internal
  */
 export function apiFile(api: OpenApiApi, serviceName: string): string {
   const imports = serializeImports(getImports(api));
@@ -61,14 +62,18 @@ function getImports(api: OpenApiApi): Import[] {
     moduleIdentifier: './schema',
     typeOnly: true
   };
-  const coreImports = {
+  const openApiImports = {
     names: ['OpenApiRequestBuilder'],
     moduleIdentifier: '@sap-cloud-sdk/openapi'
   };
 
-  return [coreImports, refImports];
+  return [openApiImports, refImports];
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function apiDocumentation(api: OpenApiApi, serviceName: string): string {
   return documentationBlock`
   Representation of the '${api.name}'.

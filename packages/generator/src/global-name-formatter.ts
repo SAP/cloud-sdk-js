@@ -1,6 +1,8 @@
 import { propertyExists, UniqueNameGenerator } from '@sap-cloud-sdk/util';
 import { ServiceMapping, VdmMapping } from './service-mapping';
-
+/**
+ * @internal
+ */
 export class GlobalNameFormatter {
   private directoryNameGenerator = new UniqueNameGenerator('-');
   private npmPackageNameGenerator = new UniqueNameGenerator('-');

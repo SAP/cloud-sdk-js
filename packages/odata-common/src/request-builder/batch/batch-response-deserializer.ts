@@ -11,12 +11,13 @@ import { ResponseDataAccessor } from '../../response-data-accessor';
 import { ResponseData, isHttpSuccessCode } from './batch-response-parser';
 
 const logger = createLogger({
-  package: 'core',
+  package: 'odata-common',
   messageContext: 'batch-response-transformer'
 });
 
 /**
  * Represents the state needed to deserialize a parsed batch response using OData version specific deserialization data access.
+ * @internal
  */
 export class BatchResponseDeserializer {
   /**
@@ -126,6 +127,7 @@ export class BatchResponseDeserializer {
  * @param responseDataAccessor - Response data access module.
  * @param deserializer - Entity deserializer.
  * @returns An array of parsed sub responses of the batch response.
+ * @internal
  */
 export function deserializeBatchResponse(
   parsedBatchResponse: (ResponseData[] | ResponseData)[],
@@ -195,7 +197,7 @@ function asWriteResponse(
  * Parse the entity name from the metadata uri. This should be the `__metadata` property of a single entity in the response.
  * @param uri - The URI to parse the entity name from
  * @returns The entity name.
- *  @internal
+ * @internal
  */
 export function parseEntityNameFromMetadataUri(uri: string): string {
   if (!uri) {

@@ -1,13 +1,13 @@
 import { Destination } from '@sap-cloud-sdk/connectivity';
-// import { buildHeaders } from '@sap-cloud-sdk/odata-common/dist/header-builder';
+// import { buildHeaders } from '@sap-cloud-sdk/odata-common/internal/dist/header-builder';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   ODataGetAllRequestConfig,
   ODataRequest,
-  ODataUpdateRequestConfig
-} from '@sap-cloud-sdk/odata-common';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2';
-import { buildHeaders } from '@sap-cloud-sdk/odata-common/dist/header-builder';
+  ODataUpdateRequestConfig,
+  buildHeaders
+} from '@sap-cloud-sdk/odata-common/internal';
+import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
 import {
   defaultDestination,
   mockHeaderRequest

@@ -1,6 +1,10 @@
 import { ApiBusinessHubMetadata } from '../vdm-types';
 import { SwaggerMetadata } from './swagger-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function apiBusinessHubMetadata(
   swagger?: SwaggerMetadata
 ): ApiBusinessHubMetadata | undefined {
@@ -39,7 +43,9 @@ function apiHubServiceName(swagger: SwaggerMetadata): string {
   }
   return swagger.basePath.split('/').slice(-1)[0];
 }
-
+/**
+ * @internal
+ */
 export function servicePathFromSwagger(
   swagger?: SwaggerMetadata
 ): string | undefined {

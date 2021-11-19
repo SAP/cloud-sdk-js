@@ -29,7 +29,7 @@ import {
   GeneratorOptions
 } from './generator-options';
 import { hasEntities } from './generator-utils';
-import { parseAllServices } from './edmx-to-vdm';
+import { parseAllServices } from './service-generator';
 import { requestBuilderSourceFile } from './request-builder/file';
 import { serviceMappingFile } from './service-mapping';
 import { csn } from './service/csn';
@@ -73,7 +73,11 @@ export async function generate(options: GeneratorOptions): Promise<void> {
     );
   }
 }
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export async function transpileDirectories(
   directories: Directory[]
 ): Promise<void[]> {
@@ -84,7 +88,9 @@ export async function transpileDirectories(
     })
   );
 }
-
+/**
+ * @internal
+ */
 export async function generateProject(
   options: GeneratorOptions
 ): Promise<Project | undefined> {
@@ -119,7 +125,9 @@ export async function generateProject(
 
   return project;
 }
-
+/**
+ * @internal
+ */
 export async function generateSourcesForService(
   service: VdmServiceMetadata,
   project: Project,
@@ -317,7 +325,7 @@ function projectOptions(): ProjectOptions {
       quoteKind: QuoteKind.Single
     },
     compilerOptions: {
-      target: ScriptTarget.ES5,
+      target: ScriptTarget.ES2019,
       module: ModuleKind.CommonJS,
       declaration: true,
       declarationMap: true,

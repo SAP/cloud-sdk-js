@@ -27,49 +27,6 @@ export class FilterList<EntityT extends EntityBase>
     public andFilters: Filterable<EntityT>[] = [],
     public orFilters: Filterable<EntityT>[] = []
   ) {}
-
-  /**
-   * @deprecated Since v1.28.1. This function should not be used, since some OData Services might not support the flattened filter expression.
-   * Flattens `andFilters` and `orFilters` as far as possible while staying logically equivalent.
-   * @returns Flattened filter list.
-   */
-  flatten(): FilterList<EntityT> {
-    this._flatten('andFilters');
-    this._flatten('orFilters');
-    return this;
-  }
-
-  private canFlatten(property: 'andFilters' | 'orFilters'): boolean {
-    const otherProperty =
-      property === 'andFilters' ? 'orFilters' : 'andFilters';
-    return this[property].some(
-      filter =>
-        filter instanceof FilterList &&
-        (!filter.isEmpty(property) || filter.isEmpty(otherProperty))
-    );
-  }
-
-  private isEmpty(property: 'andFilters' | 'orFilters'): boolean {
-    return !this[property].length;
-  }
-
-  private _flatten(property: 'andFilters' | 'orFilters'): void {
-    const otherProperty =
-      property === 'andFilters' ? 'orFilters' : 'andFilters';
-    while (this.canFlatten(property)) {
-      this[property] = this[property].reduce((flatList, current) => {
-        if (current instanceof FilterList) {
-          const flattenedFilters = [...flatList, ...current[property]];
-          if (current[otherProperty].length) {
-            current[property] = [];
-            flattenedFilters.push(current.flatten());
-          }
-          return flattenedFilters;
-        }
-        return [...flatList, current];
-      }, []);
-    }
-  }
 }
 
 /**

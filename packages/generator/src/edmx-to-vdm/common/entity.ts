@@ -17,9 +17,7 @@ import {
   VdmEnumType
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import {
-  applyPrefixOnJsConflictParam
-} from '../../name-formatting-strategies';
+import { applyPrefixOnJsConflictParam } from '../../name-formatting-strategies';
 import { entityDescription, propertyDescription } from '../description-util';
 import {
   EdmxEntitySetBase,

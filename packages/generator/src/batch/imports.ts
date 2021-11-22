@@ -33,8 +33,8 @@ export function importBatchDeclarations(
     },
     {
       kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: '@sap-cloud-sdk/odata-common',
-      namedImports:['BatchChangeSet']
+      moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
+      namedImports: ['BatchChangeSet']
     }
   ];
 }

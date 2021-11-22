@@ -18,7 +18,6 @@ import {
 } from '../../vdm-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import {
-  applyPrefixOnJsConfictParam,
   applyPrefixOnJsConflictParam
 } from '../../name-formatting-strategies';
 import { entityDescription, propertyDescription } from '../description-util';
@@ -120,7 +119,7 @@ function properties(
         entity.entitySet.Name,
         p.Name
       ),
-      propertyNameAsParam: applyPrefixOnJsConfictParam(instancePropertyName),
+      propertyNameAsParam: applyPrefixOnJsConflictParam(instancePropertyName),
       edmType: typeMapping.edmType,
       jsType: typeMapping.jsType,
       fieldType: typeMapping.fieldType,

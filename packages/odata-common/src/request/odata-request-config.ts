@@ -33,13 +33,6 @@ export abstract class ODataRequestConfig {
   private _fetchCsrfToken = true;
 
   /**
-   * @deprecated Since v1.30.0. Use [[defaultHeaders]] instead.
-   */
-  get contentType(): any {
-    return this.defaultHeaders['content-type'];
-  }
-
-  /**
    * @deprecated Since v1.30.0.
    */
   constructor(

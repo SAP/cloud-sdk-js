@@ -169,16 +169,6 @@ export abstract class EntityBase {
   }
 
   /**
-   * @deprecated Since v1.34.1. Use [[setCustomFields]] instead.
-   * Sets all retrieved custom fields in entity.
-   * @param customFields - Extracted custom fields from a retrieved entity.
-   * @returns The entity itself, to facilitate method chaining.
-   */
-  initializeCustomFields(customFields: Record<string, any>): this {
-    return this.setCustomFields(customFields);
-  }
-
-  /**
    * Set the ETag version identifier of the retrieved entity.
    * @param etag - The returned ETag version of the entity.
    * @returns The entity itself, to facilitate method chaining.
@@ -264,16 +254,6 @@ export abstract class EntityBase {
     return !this.remoteState
       ? names
       : names.filter(key => !equal(this.remoteState[key], currentState[key]));
-  }
-
-  /**
-   * @deprecated Since v1.34.1. Use [[asObject]] instead.
-   * Returns a map of all defined fields in entity to their current values.
-   * @param visitedEntities - List of entities to check in case of circular dependencies.
-   * @returns EntityBase with all defined entity fields
-   */
-  protected getCurrentMapKeys(visitedEntities: EntityBase[] = []): any {
-    return this.asObject(visitedEntities) as this;
   }
 
   protected isVisitedEntity<EntityT extends EntityBase>(

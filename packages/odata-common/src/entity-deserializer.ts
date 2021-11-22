@@ -85,7 +85,7 @@ export function entityDeserializer(
         );
         return entity;
       }, new entityConstructor())
-      .initializeCustomFields(extractCustomFields(json, entityConstructor))
+      .setCustomFields(extractCustomFields(json, entityConstructor))
       .setVersionIdentifier(etag)
       .setOrInitializeRemoteState();
   }

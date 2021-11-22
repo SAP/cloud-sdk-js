@@ -1,5 +1,4 @@
 import { EntityBase } from '../entity-base';
-import { EdmTypeShared } from '../edm-types';
 import { Filter } from '../filter/filter';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
@@ -19,11 +18,6 @@ export class EnumField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
-  /**
-   * @deprecated Since v1.48.0. This property is not used anymore.
-   */
-  readonly edmType: EdmTypeShared<any> = 'Edm.Enum';
-
   /**
    * Creates an instance of EnumField.
    * @param fieldName - Actual name of the field used in the OData request.
@@ -56,7 +50,7 @@ export class EnumField<
    * @returns The resulting filter
    */
   equals(value: EnumType<EnumT>): Filter<EntityT, string> {
-    return new Filter(this.fieldPath(), 'eq', value, this.edmType);
+    return new Filter(this.fieldPath(), 'eq', value);
   }
 
   /**
@@ -65,7 +59,7 @@ export class EnumField<
    * @returns The resulting filter
    */
   notEquals(value: EnumType<EnumT>): Filter<EntityT, string> {
-    return new Filter(this.fieldPath(), 'eq', value, this.edmType);
+    return new Filter(this.fieldPath(), 'eq', value);
   }
 }
 

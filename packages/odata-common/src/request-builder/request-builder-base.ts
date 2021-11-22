@@ -43,17 +43,6 @@ export abstract class MethodRequestBuilder<
   }
 
   /**
-   * @deprecated Since version 1.34.0 Use [[addCustomHeaders]] instead.
-   * Add custom headers to the request.
-   * @param headers - Key-value pairs denoting additional custom headers.
-   * @returns The request builder itself, to facilitate method chaining.
-   */
-  withCustomHeaders(headers: Record<string, string>): this {
-    this.requestConfig.addCustomHeaders(headers);
-    return this;
-  }
-
-  /**
    * Add custom headers to the request. Existing headers will be overwritten.
    * @param headers - Key-value pairs denoting additional custom headers.
    * @returns The request builder itself, to facilitate method chaining.

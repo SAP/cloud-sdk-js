@@ -25,12 +25,6 @@ export class CommonEntityComplexTypeField<
   stringProperty: EdmTypeField<EntityT, 'Edm.String', false, false> =
     this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', false);
 
-  booleanProperty: EdmTypeField<EntityT, 'Edm.Boolean', true, false> =
-    this._fieldBuilder.buildEdmTypeField(
-      'BooleanProperty',
-      'Edm.Boolean',
-      true
-    );
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
@@ -46,12 +40,6 @@ export namespace CommonEntityComplexType {
         originalName: 'StringProperty',
         name: 'stringProperty',
         type: 'Edm.String',
-        isCollection: false
-      },
-      {
-        originalName: 'BooleanProperty',
-        name: 'booleanProperty',
-        type: 'Edm.Boolean',
         isCollection: false
       }
     ];

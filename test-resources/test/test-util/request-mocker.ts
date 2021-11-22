@@ -63,6 +63,7 @@ interface MockRequestParams {
   responseHeaders?: Record<string, any>;
   query?: Record<string, any>;
   method?: string;
+  headers?: Record<string, any>;
 }
 
 export function mockCreateRequest(
@@ -173,14 +174,15 @@ export function mockRequest(
     body,
     query = {},
     responseBody,
-    responseHeaders
+    responseHeaders,
+    headers
   }: MockRequestParams
 ) {
   const request = new ODataRequest(requestConfig, destination);
 
   mockHeaderRequest({ request, path });
 
-  return nock(host, getRequestHeaders(method, additionalHeaders))
+  return nock(host, getRequestHeaders(method, additionalHeaders, headers))
     [method](
       path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(),
       body
@@ -191,8 +193,13 @@ export function mockRequest(
 
 function getRequestHeaders(
   method: string,
-  additionalHeaders?: Record<string, any>
+  additionalHeaders?: Record<string, any>,
+  headers?: Record<string, any>
 ) {
+  if(headers){
+    return { reqheaders: headers };
+  }
+
   if (additionalHeaders) {
     const initialHeaders =
       method === 'get'

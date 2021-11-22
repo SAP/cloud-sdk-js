@@ -147,6 +147,22 @@ describe('GetAllRequestBuilder', () => {
 
       await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
     });
+
+    it('test', async () => {
+      const entityData = createOriginalTestEntityData1();
+      mockGetRequest({
+        headers: { 'Authorization': 'custom'},
+        responseBody: { d: { results: [entityData] } }
+      });
+
+      const destinationWithAuthHeader = { ...defaultDestination, 'Authorization': 'destination'}
+      const customHeader = {'Authorization': 'custom'};
+      const actual = await requestBuilder.addCustomHeaders(customHeader).execute(destinationWithAuthHeader);
+
+      expect(actual).toEqual([
+        createTestEntity(entityData)
+      ]);
+    });
   });
 
   describe('executeRaw', () => {

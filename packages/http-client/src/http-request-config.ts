@@ -39,3 +39,9 @@ const defaultDisallowedKeys = [
   'headers',
   'params'
 ];
+
+export type Origin = 'Custom' | 'DestinationProperty' | 'Destination' | 'SDK';
+
+type HeaderValueObject = {
+  [key in Origin]?: string;
+};

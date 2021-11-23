@@ -207,7 +207,7 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
 
 function getVerificationKey(header: JwtHeader): Promise<TokenKey> {
   if (typeof header.jku !== 'string') {
-    throw Error('The JwtHeader did not contain a XUSAA URL');
+    throw Error('The JWT Header did not contain a XSUAA URL');
   }
 
   return fetchVerificationKeys(header.jku).then(verificationKeys => {

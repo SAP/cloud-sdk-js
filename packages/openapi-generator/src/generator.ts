@@ -22,7 +22,7 @@ import {
   readCompilerOptions,
   sdkMetadataHeader,
   transpileDirectory
-} from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
 import {
   apiFile,
   packageJson,

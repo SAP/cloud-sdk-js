@@ -1,4 +1,4 @@
-import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common';
+import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
 import {
   OpenApiApi,
   OpenApiOperation,

@@ -1,5 +1,8 @@
 import { InstructionWithTextAndHeader } from './sdk-metadata-types';
-
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function getGenerationSteps(
   installCommand: string,
   generateCommand: string,
@@ -27,4 +30,7 @@ export function getGenerationSteps(
   };
 }
 
+/**
+ * @internal
+ */
 export const usageHeaderText = 'Usage Example';

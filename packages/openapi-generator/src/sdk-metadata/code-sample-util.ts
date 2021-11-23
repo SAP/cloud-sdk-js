@@ -1,4 +1,4 @@
-import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common';
+import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
 import { codeBlock, pascalCase } from '@sap-cloud-sdk/util';
 import { OpenApiApi, OpenApiOperation } from '../openapi-types';
 /* eslint-disable valid-jsdoc */

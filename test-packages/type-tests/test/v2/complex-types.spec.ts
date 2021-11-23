@@ -10,9 +10,6 @@ TestEntity.COMPLEX_TYPE_PROPERTY;
 // $ExpectType EdmTypeField<TestEntity, "Edm.String", false, false>
 TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty;
 
-// $ExpectType TestComplexType
-TestComplexType.build({ StringProperty: 'test-1', BooleanProperty: false });
-
 // $ExpectType GetAllRequestBuilder<TestEntity>
 const getAllTSE = TestEntity.requestBuilder().getAll();
 

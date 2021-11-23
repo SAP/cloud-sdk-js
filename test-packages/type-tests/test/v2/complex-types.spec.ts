@@ -1,7 +1,4 @@
-import {
-  TestComplexType,
-  TestEntity
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common/internal';
 
 // $ExpectType TestComplexTypeField<TestEntity, true, true>

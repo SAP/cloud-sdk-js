@@ -1,4 +1,4 @@
-import { unixEOL, unique } from '@sap-cloud-sdk/util';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import {
   ModuleDeclarationStructure,
   StructureKind,
@@ -20,19 +20,6 @@ export function complexTypeNamespace(
     isExported: true,
     statements: [propertyMetadata(complexType)]
   };
-}
-
-function getJsonType(complexType: VdmComplexType): string {
-  const unionOfAllTypes = [
-    'FieldType',
-    ...unique(
-      complexType.properties
-        .filter(prop => prop.isComplex)
-        .map(prop => prop.jsType)
-    ).sort()
-  ].join(' | ');
-
-  return `{ [keys: string]: ${unionOfAllTypes} }`;
 }
 
 function getPropertyMetadataInitializer(complexType: VdmComplexType): string {

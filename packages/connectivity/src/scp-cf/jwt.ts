@@ -180,7 +180,7 @@ async function fetchAndCacheKeyAndVerify(
   token: string,
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
-  const key = await getVerificationKey(creds, header).catch(error => {
+  const key = await getVerificationKey(header).catch(error => {
     throw new ErrorWithCause(
       'Failed to verify JWT. Could not retrieve verification key.',
       error
@@ -206,10 +206,13 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
 };
 
 function getVerificationKey(
-  xsuaaCredentials: XsuaaServiceCredentials,
   header: JwtHeader
 ): Promise<TokenKey> {
-  return fetchVerificationKeys(xsuaaCredentials, header.jku).then(
+  if(typeof header.jku !== 'string'){
+    throw Error('The JwtHeader did not contain a XUSAA URL');
+  }
+
+  return fetchVerificationKeys(header.jku).then(
     verificationKeys => {
       if (!verificationKeys.length) {
         throw Error(

@@ -65,9 +65,10 @@
   - `addProxyConfigurationOnPrem`
   - `alwaysProvider`
   - `alwaysSubscriber`
-  - `applySuffixOnConflictUnderscore`
+  - `applySuffixOnConflict`
   - `applySuffixOnConflictDash`
   - `applyPrefixOnJsConfictParam`
+  - `applySuffixOnConflictUnderscore`
   - `applyPrefixOnJsConfictFunctionImports`
   - `assocSome`
   - `asyncPipe`

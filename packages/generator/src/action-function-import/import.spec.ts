@@ -12,7 +12,7 @@ describe('function-import generation', () => {
     expect(importDeclarationsAction(service as VdmServiceMetadata)).toEqual([
       {
         kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-common',
+        moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
         namedImports: ['FunctionImportParameter']
       },
       {

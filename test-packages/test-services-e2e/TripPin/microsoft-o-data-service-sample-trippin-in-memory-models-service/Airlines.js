@@ -8,7 +8,7 @@ exports.Airlines = void 0;
  */
 const AirlinesRequestBuilder_1 = require('./AirlinesRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "Airlines" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
@@ -54,7 +54,7 @@ Airlines._entityName = 'Airlines';
 Airlines._defaultServicePath =
   'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 (function (Airlines) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(Airlines);
+  const _fieldBuilder = new internal_1.FieldBuilder(Airlines);
   /**
    * Static representation of the [[airlineCode]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -76,7 +76,7 @@ Airlines._defaultServicePath =
   /**
    * All fields selector.
    */
-  Airlines.ALL_FIELDS = new odata_common_1.AllFields('*', Airlines);
+  Airlines.ALL_FIELDS = new internal_1.AllFields('*', Airlines);
   /**
    * All key fields of the Airlines entity.
    */

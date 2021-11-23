@@ -10,11 +10,10 @@ import {
   ConstructorOrField,
   EdmTypeField,
   FieldOptions,
-  FieldType,
   OrderableEdmTypeField,
   PropertyMetadata,
   Time
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 /**
  * TestComplexType
  */
@@ -104,10 +103,6 @@ export interface TestComplexType {
    */
   complexTypeProperty?: TestNestedComplexType;
 }
-/**
- * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
- */
-export declare function createTestComplexType_1(json: any): TestComplexType;
 /**
  * TestComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
@@ -224,11 +219,5 @@ export declare namespace TestComplexType {
    * Metadata information on all properties of the `TestComplexType` complex type.
    */
   const _propertyMetadata: PropertyMetadata<TestComplexType>[];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  function build(json: {
-    [keys: string]: FieldType | TestNestedComplexType;
-  }): TestComplexType;
 }
 //# sourceMappingURL=TestComplexType.d.ts.map

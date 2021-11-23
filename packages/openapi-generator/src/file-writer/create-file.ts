@@ -11,6 +11,7 @@ const { writeFile } = promises;
  * @param content - Content to be written to the file. A copyright statement will be added to this.
  * @param overwrite - Whether or not existing files should be overwritten.
  * @param withCopyright - Whether the generated file contains the copyright information.
+ * @internal
  */
 export async function createFile(
   directoryPath: string,

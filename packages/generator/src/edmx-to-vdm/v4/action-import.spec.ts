@@ -5,7 +5,7 @@ import {
   EdmxActionImport,
   EdmxComplexType,
   EdmxEntitySet,
-  EdmxEntityType
+  EdmxEntityTypeV4
 } from '../../edmx-parser/v4';
 import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
 import { generateEntitiesV4 } from './entity';
@@ -211,7 +211,7 @@ function createTestProperty(name: string, type = 'Edm.String'): EdmxProperty {
 }
 
 function createTestServiceData(
-  entityTypes: EdmxEntityType[],
+  entityTypes: EdmxEntityTypeV4[],
   entitySets: EdmxEntitySet[],
   complexType: EdmxComplexType[] = [getComplexType()],
   actions: EdmxAction[] = [],

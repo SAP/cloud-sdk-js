@@ -16,7 +16,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * TestNestedComplexType
@@ -32,13 +32,6 @@ export interface TestNestedComplexType {
    * @nullable
    */
   complexTypeProperty?: TestLvl2NestedComplexType;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[TestNestedComplexType.build]] instead.
- */
-export function createTestNestedComplexType(json: any): TestNestedComplexType {
-  return TestNestedComplexType.build(json);
 }
 
 /**
@@ -105,13 +98,4 @@ export namespace TestNestedComplexType {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType | TestLvl2NestedComplexType;
-  }): TestNestedComplexType {
-    return deserializeComplexType(json, TestNestedComplexType);
-  }
 }

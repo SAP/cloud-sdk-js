@@ -4,7 +4,10 @@ import {
   InstructionWithTextAndHeader,
   PregeneratedLibrary
 } from './sdk-metadata-types';
-
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export async function isPublishedNpmPackage(
   npmPackageName: string
 ): Promise<boolean> {
@@ -16,6 +19,9 @@ export async function isPublishedNpmPackage(
   }
 }
 
+/**
+ * @internal
+ */
 export async function getLatestVersionOfNpmPackage(
   npmPackageName: string
 ): Promise<string> {
@@ -26,6 +32,9 @@ export async function getLatestVersionOfNpmPackage(
   return response.data.version;
 }
 
+/**
+ * @internal
+ */
 export function getInstallationSnippet(
   npmPackageName: string
 ): InstructionWithTextAndHeader {
@@ -36,14 +45,23 @@ export function getInstallationSnippet(
   };
 }
 
+/**
+ * @internal
+ */
 export function getRepositoryLink(npmPackageName: string): string {
   return `https://www.npmjs.com/package/${npmPackageName}`;
 }
 
+/**
+ * @internal
+ */
 export function getTimeStamp(): string {
   return `/Date(${Date.now()})/`;
 }
 
+/**
+ * @internal
+ */
 export async function getPregeneratedLibrary(
   description: string,
   npmPackageName: string

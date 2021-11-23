@@ -21,6 +21,7 @@ function makeSchemaNameValid(name: string): string {
  * @param names - List of names to be adjusted.
  * @param options - Parser options.
  * @returns A list of strings which are possible for schema names.
+ * @internal
  */
 export function ensureValidSchemaNames(
   names: string[],

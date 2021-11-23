@@ -11,7 +11,11 @@ import { exportStatement } from './export-statement';
 import { actionImportFunction } from './action';
 import { importDeclarationsAction, importDeclarationsFunction } from './import';
 import { functionImportFunction } from './function';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function actionImportSourceFile(
   service: VdmServiceMetadata
 ): SourceFileStructure {
@@ -43,7 +47,9 @@ function actionImportStatements(
     actionImportFunction(actionImport, service)
   ];
 }
-
+/**
+ * @internal
+ */
 export function functionImportSourceFile(
   service: VdmServiceMetadata
 ): SourceFileStructure {

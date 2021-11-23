@@ -1,5 +1,8 @@
 import { EntityBase, Constructable } from '../entity-base';
 
+/**
+ * @internal
+ */
 export class AllFields<EntityT extends EntityBase> {
   readonly selectable: true;
 

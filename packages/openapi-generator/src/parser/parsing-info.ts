@@ -15,6 +15,7 @@ import { Method, SchemaNaming } from '../openapi-types';
  * ```
  * Each path (pattern), e. g. "my/path-pattern", can define operations for multiple HTTP methods.
  * Each of those operations are then referenced by the same path and can have shared parameters defined on the path.
+ * @internal
  */
 export interface OperationInfo {
   /**
@@ -37,6 +38,7 @@ export interface OperationInfo {
 
 /**
  * Represents an object holding all relevant information for schema parsing.
+ * @internal
  */
 export interface SchemaInfo extends SchemaNaming {
   /**
@@ -55,5 +57,6 @@ export interface SchemaInfo extends SchemaNaming {
 
 /**
  * Type of an object representing a mapping between the reference path (key) and the unique parsed names for the schema.
+ * @internal
  */
 export type SchemaRefMapping = Record<string, SchemaNaming>;

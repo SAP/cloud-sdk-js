@@ -1,7 +1,11 @@
 import { PathLike, readFileSync } from 'fs';
 import path from 'path';
 import { SwaggerMetadata, SwaggerPath } from './swagger-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function readSwaggerFile(swaggerPath: PathLike): SwaggerMetadata {
   const swaggerFile = readFileSync(path.resolve(swaggerPath.toString()), {
     encoding: 'utf-8'
@@ -16,7 +20,9 @@ function parseSwaggerFile(swaggerFile: string): SwaggerMetadata {
     swaggerMetaData.definitions || swaggerMetaData?.components?.schemas;
   return swaggerMetaData;
 }
-
+/**
+ * @internal
+ */
 export function swaggerDefinitionForFunctionImport(
   originalName: string,
   httpMethod: string,

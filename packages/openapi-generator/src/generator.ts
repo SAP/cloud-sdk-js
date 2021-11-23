@@ -22,7 +22,7 @@ import {
   readCompilerOptions,
   sdkMetadataHeader,
   transpileDirectory
-} from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
 import {
   apiFile,
   packageJson,
@@ -64,6 +64,7 @@ export async function generate(options: GeneratorOptions): Promise<void> {
  * Main entry point for the OpenAPI client generation.
  * Generates models and API files.
  * @param options - Options to configure generation.
+ * @internal
  */
 export async function generateWithParsedOptions(
   options: ParsedGeneratorOptions
@@ -256,7 +257,7 @@ async function generateService(
  * Gives the relative path with respect to process.cwd() using posix file separator '/'.
  * @param absolutePath - The absolute path
  * @returns The relative path
- * @hidden
+ * @internal
  */
 export function getRelPathWithPosixSeparator(absolutePath: string): string {
   return relative(process.cwd(), absolutePath).split(sep).join(posix.sep);
@@ -266,6 +267,7 @@ export function getRelPathWithPosixSeparator(absolutePath: string): string {
  * Recursively searches through a given input path and returns all file paths as a string array.
  * @param input - the path to the input directory.
  * @returns all file paths as a string array.
+ * @internal
  */
 export async function getInputFilePaths(input: string): Promise<string[]> {
   if ((await lstat(input)).isFile()) {

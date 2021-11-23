@@ -4,9 +4,8 @@ import {
   ConstructorOrField,
   EdmTypeField,
   FieldOptions,
-  FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 /**
  * City
  */
@@ -24,10 +23,6 @@ export interface City {
    */
   region: string;
 }
-/**
- * @deprecated Since v1.6.0. Use [[City.build]] instead.
- */
-export declare function createCity(json: any): City;
 /**
  * CityField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
@@ -69,9 +64,5 @@ export declare namespace City {
    * Metadata information on all properties of the `City` complex type.
    */
   const _propertyMetadata: PropertyMetadata<City>[];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  function build(json: { [keys: string]: FieldType }): City;
 }
 //# sourceMappingURL=City.d.ts.map

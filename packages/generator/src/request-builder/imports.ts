@@ -8,7 +8,11 @@ import {
 } from '../imports';
 import { VdmEntity, VdmProperty } from '../vdm-types';
 
-export function importDeclarations(
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
+export function requestBuilderImportDeclarations(
   entity: VdmEntity,
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
@@ -18,16 +22,13 @@ export function importDeclarations(
       'RequestBuilder',
       ...propertyTypeImportNames(entity.keys)
     ]),
-    odataImportDeclaration(
-      requestBuilderImportDeclarations(entity),
-      oDataVersion
-    ),
+    odataImportDeclaration(requestBuilderImports(entity), oDataVersion),
     entityImportDeclaration(entity),
     ...entityKeyImportDeclaration(entity.keys)
   ];
 }
 
-function requestBuilderImportDeclarations(entity: VdmEntity) {
+function requestBuilderImports(entity: VdmEntity) {
   const imports = ['GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
 
   if (entity.creatable) {

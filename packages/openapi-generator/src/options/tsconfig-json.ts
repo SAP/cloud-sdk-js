@@ -3,7 +3,9 @@ import { resolve } from 'path';
 import { ErrorWithCause, formatJson } from '@sap-cloud-sdk/util';
 import { ParsedGeneratorOptions } from './generator-options';
 const { readFile, lstat } = promises;
-
+/**
+ * @internal
+ */
 export const defaultTsConfig = {
   compilerOptions: {
     target: 'es2019',
@@ -27,6 +29,7 @@ export const defaultTsConfig = {
  * If the given options include a tsConfig setting, this config is read and returned.
  * @param options - Options passed to the generator.
  * @returns The serialized tsconfig.json contents.
+ * @internal
  */
 export async function tsconfigJson({
   transpile,

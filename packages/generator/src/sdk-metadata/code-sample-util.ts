@@ -1,11 +1,15 @@
-import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common';
+import { getLevenshteinClosest } from '@sap-cloud-sdk/generator-common/internal';
 import {
   VdmActionImport,
   VdmEntity,
   VdmFunctionImport,
   VdmParameter
 } from '../vdm-types';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function getODataEntity(
   serviceName: string,
   vdmEntities: VdmEntity[]
@@ -15,14 +19,18 @@ export function getODataEntity(
     getShortestNameEntity(vdmEntities)
   );
 }
-
+/**
+ * @internal
+ */
 export function getShortestNameEntity(vdmEntities: VdmEntity[]): VdmEntity {
   // If no closest entity found, return the entity with shortest name
   return vdmEntities.sort((a, b) =>
     a.className.length < b.className.length ? -1 : 1
   )[0];
 }
-
+/**
+ * @internal
+ */
 export function getActionFunctionImport(
   serviceName: string,
   actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
@@ -37,7 +45,9 @@ export function getActionFunctionImport(
     getFunctionWithMinParameters(actionFunctionImports)
   );
 }
-
+/**
+ * @internal
+ */
 export function getFunctionWithoutParameters(
   actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
 ): VdmFunctionImport | VdmActionImport | undefined {
@@ -48,7 +58,7 @@ export function getFunctionWithoutParameters(
  * Sorts and gets a function import having minimum input parameters.
  * @param actionFunctionImports - function or action imports array
  * @returns Import containing minimum input paramters
- * @hidden
+ * @internal
  */
 export function getFunctionWithMinParameters(
   actionFunctionImports: VdmFunctionImport[] | VdmActionImport[]
@@ -64,7 +74,9 @@ export function getFunctionWithMinParameters(
   );
   return sortedfunctions[0];
 }
-
+/**
+ * @internal
+ */
 export function getActionFunctionParams(parameters: VdmParameter[]): string {
   const paramString = parameters
     .slice(0, 2)

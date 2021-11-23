@@ -8,7 +8,7 @@ exports.TestEntity = void 0;
  */
 const TestEntityRequestBuilder_1 = require('./TestEntityRequestBuilder');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "TestEntity" of service "TestService".
  */
@@ -54,7 +54,7 @@ TestEntity._entityName = 'TestEntity';
 TestEntity._defaultServicePath = '/odata/test-service';
 const TestEntityLink_1 = require('./TestEntityLink');
 (function (TestEntity) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(TestEntity);
+  const _fieldBuilder = new internal_1.FieldBuilder(TestEntity);
   /**
    * Static representation of the [[keyTestEntity]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -160,7 +160,7 @@ const TestEntityLink_1 = require('./TestEntityLink');
    * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  TestEntity.TO_MULTI_LINK = new odata_common_1.OneToManyLink(
+  TestEntity.TO_MULTI_LINK = new internal_1.OneToManyLink(
     'ToMultiLink',
     TestEntity,
     TestEntityLink_1.TestEntityLink
@@ -185,7 +185,7 @@ const TestEntityLink_1 = require('./TestEntityLink');
   /**
    * All fields selector.
    */
-  TestEntity.ALL_FIELDS = new odata_common_1.AllFields('*', TestEntity);
+  TestEntity.ALL_FIELDS = new internal_1.AllFields('*', TestEntity);
   /**
    * All key fields of the TestEntity entity.
    */

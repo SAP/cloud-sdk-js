@@ -15,6 +15,7 @@ import { ParserOptions } from './options';
  * @param refs - Object representing cross references throughout the document.
  * @param options - Parser options.
  * @returns A flat list of parsed APIs.
+ * @internal
  */
 export function parseApis(
   document: OpenAPIV3.Document,

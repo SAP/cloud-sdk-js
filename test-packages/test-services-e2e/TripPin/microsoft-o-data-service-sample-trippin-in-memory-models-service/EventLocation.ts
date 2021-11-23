@@ -13,7 +13,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * EventLocation
@@ -32,13 +32,6 @@ export interface EventLocation {
    * City.
    */
   city: City;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[EventLocation.build]] instead.
- */
-export function createEventLocation(json: any): EventLocation {
-  return EventLocation.build(json);
 }
 
 /**
@@ -108,13 +101,4 @@ export namespace EventLocation {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType | City;
-  }): EventLocation {
-    return deserializeComplexType(json, EventLocation);
-  }
 }

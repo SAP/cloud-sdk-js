@@ -6,11 +6,15 @@ import {
   Links,
   InstructionWithTextAndHeader,
   usageHeaderText
-} from '@sap-cloud-sdk/generator-common';
+} from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiDocument } from '../openapi-types';
 import { apiSpecificCodeSample, genericCodeSample } from './code-sample';
 import { getMainApi, getMainOperation } from './code-sample-util';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export async function getGenerationAndUsage(
   openApiDocument: OpenApiDocument
 ): Promise<GenerationAndUsage> {
@@ -19,11 +23,16 @@ export async function getGenerationAndUsage(
     apiSpecificUsage: getApiSpecificUsage(openApiDocument)
   };
 }
-
+/**
+ * @internal
+ */
 export const linkGenerationDocumentation =
   'https://sap.github.io/cloud-sdk/docs/js/features/openapi/generate-openapi-client';
 
-// will be used to generate metadata for failed and unknown case.
+/**
+ * Will be used to generate metadata for failed and unknown case.
+ * @internal
+ */
 export async function getGenericGenerationAndUsage(): Promise<GenerationAndUsage> {
   return {
     genericUsage: getGenericUsage(),
@@ -48,7 +57,9 @@ function getGenericUsage(): InstructionWithTextAndHeader {
     header: usageHeaderText
   };
 }
-
+/**
+ * @internal
+ */
 export function getApiSpecificUsage(
   openApiDocument: OpenApiDocument
 ): InstructionWithTextAndHeader {
@@ -76,7 +87,9 @@ export function getApiSpecificUsage(
     header: usageHeaderText
   };
 }
-
+/**
+ * @internal
+ */
 export function getOpenApiLinks(): Links {
   return getLinks(
     'https://sap.github.io/cloud-sdk/docs/js/features/openapi/execute-openapi-request',

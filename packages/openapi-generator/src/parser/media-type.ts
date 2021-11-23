@@ -12,6 +12,7 @@ const logger = createLogger('openapi-generator');
  * @param refs - Object representing cross references throughout the document.
  * @param options - Options that were set for service generation.
  * @returns The type name of the request body if there is one.
+ * @internal
  */
 export function parseApplicationJsonMediaType(
   bodyOrResponseObject:
@@ -33,6 +34,10 @@ export function parseApplicationJsonMediaType(
   }
 }
 
+/* eslint-disable valid-jsdoc */
+/**
+ * @internal
+ */
 export function parseMediaType(
   bodyOrResponseObject:
     | OpenAPIV3.RequestBodyObject
@@ -66,7 +71,9 @@ export function parseMediaType(
     };
   }
 }
-
+/**
+ * @internal
+ */
 export function getMediaTypes(
   bodyOrResponseObject:
     | OpenAPIV3.RequestBodyObject

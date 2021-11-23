@@ -8,6 +8,10 @@ const logger = createLogger({
   messageContext: 'enum-type'
 });
 
+// eslint-disable-next-line valid-jsdoc
+/**
+ * @internal
+ */
 export function transformEnumTypesBase(
   enumTypes: EdmxEnumType[],
   formatter: ServiceNameFormatter

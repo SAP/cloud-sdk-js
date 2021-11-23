@@ -20,7 +20,7 @@ import {
   OrderableEdmTypeField,
   PropertyMetadata,
   Time
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * TestComplexType
@@ -110,13 +110,6 @@ export interface TestComplexType {
    * @nullable
    */
   complexTypeProperty?: TestNestedComplexType;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[TestComplexType.build]] instead.
- */
-export function createTestComplexType_1(json: any): TestComplexType {
-  return TestComplexType.build(json);
 }
 
 /**
@@ -386,13 +379,4 @@ export namespace TestComplexType {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType | TestNestedComplexType;
-  }): TestComplexType {
-    return deserializeComplexType(json, TestComplexType);
-  }
 }

@@ -30,6 +30,7 @@ const logger = createLogger({
 
 /**
  * Interface representing the return type of the builder function [[entityDeserializer]]
+ * @internal
  */
 export interface EntityDeserializer<EntityT extends EntityBase = any> {
   deserializeEntity: (
@@ -53,6 +54,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * @param extractODataETag - Extractor for the ETag.
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
  * @returns a entity deserializer as defined by [[EntityDeserializer]]
+ * @internal
  */
 export function entityDeserializer(
   edmToTs: any, // TODO v 2.0 try to get commen typing for v2 and v4 in here

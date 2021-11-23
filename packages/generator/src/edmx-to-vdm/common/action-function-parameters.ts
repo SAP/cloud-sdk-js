@@ -4,13 +4,17 @@ import { parameterDescription } from '../description-util';
 import { EdmxNamed, EdmxParameter } from '../../edmx-parser/common';
 import { SwaggerPath } from '../../swagger-parser/swagger-types';
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { EdmxFunctionImport as EdmxFunctionImportV2 } from '../../edmx-parser/v2';
+import { EdmxFunctionImportV2 as EdmxFunctionImportV2 } from '../../edmx-parser/v2';
 import {
   EdmxActionImport,
-  EdmxFunctionImport as EdmxFunctionImportV4
+  EdmxFunctionImportV4 as EdmxFunctionImportV4
 } from '../../edmx-parser/v4';
 import { getTypeMappingActionFunction } from '../edmx-to-vdm-util';
+/* eslint-disable valid-jsdoc */
 
+/**
+ * @internal
+ */
 export function getActionImportParameters(
   edmxActionImport: EdmxActionImport,
   edmxParameters: EdmxParameter[],
@@ -24,7 +28,9 @@ export function getActionImportParameters(
     formatter
   );
 }
-
+/**
+ * @internal
+ */
 export function getFunctionImportParameters(
   edmxFunctionImport: EdmxFunctionImportV2 | EdmxFunctionImportV4,
   edmxParameters: EdmxParameter[],

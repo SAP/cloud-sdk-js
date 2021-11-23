@@ -12,7 +12,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * TestComplexType1
@@ -22,13 +22,6 @@ export interface TestComplexType1 {
    * String Property.
    */
   stringProperty: string;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[TestComplexType1.build]] instead.
- */
-export function createTestComplexType1(json: any): TestComplexType1 {
-  return TestComplexType1.build(json);
 }
 
 /**
@@ -74,11 +67,4 @@ export namespace TestComplexType1 {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  export function build(json: { [keys: string]: FieldType }): TestComplexType1 {
-    return deserializeComplexType(json, TestComplexType1);
-  }
 }

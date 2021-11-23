@@ -12,7 +12,7 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common';
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * City
@@ -30,13 +30,6 @@ export interface City {
    * Region.
    */
   region: string;
-}
-
-/**
- * @deprecated Since v1.6.0. Use [[City.build]] instead.
- */
-export function createCity(json: any): City {
-  return City.build(json);
 }
 
 /**
@@ -106,11 +99,4 @@ export namespace City {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  export function build(json: { [keys: string]: FieldType }): City {
-    return deserializeComplexType(json, City);
-  }
 }

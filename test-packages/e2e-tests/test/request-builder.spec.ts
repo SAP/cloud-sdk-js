@@ -3,7 +3,7 @@ import {
   TestEntityLink
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import moment from 'moment';
-import { and } from '@sap-cloud-sdk/odata-common';
+import { and } from '@sap-cloud-sdk/odata-common/internal';
 import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/dist/entity-deserializer';
 import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';
 import { destination } from './test-util';

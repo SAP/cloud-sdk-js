@@ -6,13 +6,13 @@ exports.TestEntityOtherMultiLinkRequestBuilder = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const TestEntityOtherMultiLink_1 = require('./TestEntityOtherMultiLink');
 /**
  * Request builder class for operations supported on the [[TestEntityOtherMultiLink]] entity.
  */
-class TestEntityOtherMultiLinkRequestBuilder extends odata_common_1.RequestBuilder {
+class TestEntityOtherMultiLinkRequestBuilder extends internal_1.RequestBuilder {
   /**
    * Returns a request builder for retrieving one `TestEntityOtherMultiLink` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityOtherMultiLink.keyProperty]].

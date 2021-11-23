@@ -8,7 +8,7 @@ exports.MultiSchemaTestEntity = void 0;
  */
 const MultiSchemaTestEntityRequestBuilder_1 = require('./MultiSchemaTestEntityRequestBuilder');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const odata_common_1 = require('@sap-cloud-sdk/odata-common');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
@@ -56,7 +56,7 @@ MultiSchemaTestEntity._entityName = 'MultiSchemaTestEntity';
  */
 MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
 (function (MultiSchemaTestEntity) {
-  const _fieldBuilder = new odata_common_1.FieldBuilder(MultiSchemaTestEntity);
+  const _fieldBuilder = new internal_1.FieldBuilder(MultiSchemaTestEntity);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -73,7 +73,7 @@ MultiSchemaTestEntity._defaultServicePath = 'VALUE_IS_UNDEFINED';
   /**
    * All fields selector.
    */
-  MultiSchemaTestEntity.ALL_FIELDS = new odata_common_1.AllFields(
+  MultiSchemaTestEntity.ALL_FIELDS = new internal_1.AllFields(
     '*',
     MultiSchemaTestEntity
   );

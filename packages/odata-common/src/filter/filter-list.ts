@@ -1,4 +1,5 @@
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
+import { OneToManyLink } from '../internal';
 import type { Filterable } from './filterable';
 
 /**
@@ -42,6 +43,9 @@ export function isFilterList<T extends EntityBase>(
     typeof filterable['field'] === 'undefined' &&
     typeof filterable['operator'] === 'undefined' &&
     typeof filterable['value'] === 'undefined' &&
-    typeof filterable['flatten'] === 'function'
+    typeof filterable['functionName'] === 'undefined' &&
+    typeof filterable['link'] === 'undefined' &&
+    typeof filterable['lambdaOperator'] === 'undefined' &&
+    !(filterable instanceof OneToManyLink)
   );
 }

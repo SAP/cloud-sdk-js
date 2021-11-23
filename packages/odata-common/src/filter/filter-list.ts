@@ -1,5 +1,5 @@
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
-import { OneToManyLink } from '../internal';
+import { OneToManyLink } from '../selectable';
 import type { Filterable } from './filterable';
 
 /**

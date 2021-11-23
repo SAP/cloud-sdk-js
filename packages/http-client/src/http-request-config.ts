@@ -63,8 +63,9 @@ export function buildHttpRequestConfig(
 }
 
 /**
- * Build an http request option from a given option with origin information. When reaching conflicts, values with higher priority are chosen.
- * @param headersOrParams
+ * Build http request options from given options with origin information. When reaching conflicts, values with higher priority are chosen.
+ * @param headersOrParams - The given options with origin information
+ * @returns The resulting options
  * @internal
  */
 export function getOptionWithPriority(
@@ -114,9 +115,14 @@ export function mergeOptionsWithOrigin(
     (prevOptionWithOrigin, currentOptionWithOrigin) => {
       if (currentOptionWithOrigin.option) {
         Object.entries(currentOptionWithOrigin.option).reduce(
-          (prev, [key, value]) => {
-            // todo fix merge
-            prev[key] = { [currentOptionWithOrigin.origin]: value };
+          (prev, [optionKey, optionValue]) => {
+            if (prev[optionKey]) {
+              prev[optionKey][currentOptionWithOrigin.origin] = optionValue;
+            } else {
+              prev[optionKey] = {
+                [currentOptionWithOrigin.origin]: optionValue
+              };
+            }
             return prev;
           },
           prevOptionWithOrigin

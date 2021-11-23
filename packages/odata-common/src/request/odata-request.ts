@@ -143,9 +143,9 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Query parameter string
    */
   query(): string {
-    const parameters = getOptionWithPriority(this.queryParameters())
+    const parameters = getOptionWithPriority(this.queryParameters());
     if (parameters) {
-      const query =  Object.entries(parameters)
+      const query = Object.entries(parameters)
         .map(([key, value]) => `${key}=${value}`)
         .join('&');
       return query.length ? `?${query}` : '';

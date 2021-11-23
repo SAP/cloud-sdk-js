@@ -7,6 +7,7 @@ import nock from 'nock';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { asc } from '@sap-cloud-sdk/odata-common/internal';
+import { deserializeComplexTypeV2 } from '@sap-cloud-sdk/odata-v2/internal';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
@@ -77,15 +78,18 @@ describe('Complex types', () => {
   });
 
   it('should be constructable by a builder', () => {
-    const actual = TestComplexType.build({
-      StringProperty: 'random value',
-      BooleanProperty: false,
-      GuidProperty: 'aaaabbbb-aaaa-bbbb-aaaa-bbbbaaaabbbb',
-      Int16Property: 4,
-      Int32Property: 6,
-      Int64Property: '54',
-      TimeProperty: 'PT11H43M43S'
-    });
+    const actual = deserializeComplexTypeV2(
+      {
+        StringProperty: 'random value',
+        BooleanProperty: false,
+        GuidProperty: 'aaaabbbb-aaaa-bbbb-aaaa-bbbbaaaabbbb',
+        Int16Property: 4,
+        Int32Property: 6,
+        Int64Property: '54',
+        TimeProperty: 'PT11H43M43S'
+      },
+      TestComplexType
+    );
 
     const expected = {
       stringProperty: 'random value',

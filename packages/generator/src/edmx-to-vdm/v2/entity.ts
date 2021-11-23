@@ -105,8 +105,6 @@ function navigationProperties(
       from: entity.entityType.Name,
       to: to.EntitySet,
       toEntityClassName: classNames[to.EntitySet],
-      multiplicity: from.Multiplicity + ' - ' + to.Multiplicity,
-      isMultiLink: to.Multiplicity.endsWith('*'),
       isCollection: to.Multiplicity.endsWith('*')
     };
   });

@@ -1,5 +1,6 @@
 import { EntityBase } from '../entity-base';
 import { Filter } from '../filter/filter';
+import { EdmTypeShared } from '../internal';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
@@ -18,6 +19,8 @@ export class EnumField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
+   readonly edmType: EdmTypeShared<any> = 'Edm.Enum';
+
   /**
    * Creates an instance of EnumField.
    * @param fieldName - Actual name of the field used in the OData request.

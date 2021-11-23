@@ -1,20 +1,7 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.City = exports.CityField = exports.createCity = void 0;
-/*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+exports.City = exports.CityField = void 0;
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
-/**
- * @deprecated Since v1.6.0. Use [[City.build]] instead.
- */
-function createCity(json) {
-  return City.build(json);
-}
-exports.createCity = createCity;
 /**
  * CityField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
@@ -83,12 +70,5 @@ var City;
       isCollection: false
     }
   ];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  function build(json) {
-    return (0, odata_v4_1.deserializeComplexType)(json, City);
-  }
-  City.build = build;
 })((City = exports.City || (exports.City = {})));
 //# sourceMappingURL=City.js.map

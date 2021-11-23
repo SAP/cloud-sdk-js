@@ -5,7 +5,6 @@ import {
   ConstructorOrField,
   EdmTypeField,
   FieldOptions,
-  FieldType,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-common/internal';
 /**
@@ -26,10 +25,6 @@ export interface EventLocation {
    */
   city: City;
 }
-/**
- * @deprecated Since v1.6.0. Use [[EventLocation.build]] instead.
- */
-export declare function createEventLocation(json: any): EventLocation;
 /**
  * EventLocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
@@ -71,9 +66,5 @@ export declare namespace EventLocation {
    * Metadata information on all properties of the `EventLocation` complex type.
    */
   const _propertyMetadata: PropertyMetadata<EventLocation>[];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  function build(json: { [keys: string]: FieldType | City }): EventLocation;
 }
 //# sourceMappingURL=EventLocation.d.ts.map

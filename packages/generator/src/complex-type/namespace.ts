@@ -1,6 +1,5 @@
-import { unixEOL, unique } from '@sap-cloud-sdk/util';
+import { unixEOL } from '@sap-cloud-sdk/util';
 import {
-  FunctionDeclarationStructure,
   ModuleDeclarationStructure,
   StructureKind,
   VariableDeclarationKind,
@@ -19,37 +18,8 @@ export function complexTypeNamespace(
     kind: StructureKind.Module,
     name: complexType.typeName,
     isExported: true,
-    statements: [propertyMetadata(complexType), factoryFunction(complexType)]
+    statements: [propertyMetadata(complexType)]
   };
-}
-
-function factoryFunction(
-  complexType: VdmComplexType
-): FunctionDeclarationStructure {
-  return {
-    kind: StructureKind.Function,
-    name: 'build',
-    returnType: complexType.typeName,
-    parameters: [{ name: 'json', type: getJsonType(complexType) }],
-    statements: `return deserializeComplexType(json, ${complexType.typeName});`,
-    isExported: true,
-    docs: [
-      `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexType\` of the \`@sap-cloud-sdk/odata-v2\` or \`@sap-cloud-sdk/odata-v4\` package instead.`
-    ]
-  };
-}
-
-function getJsonType(complexType: VdmComplexType): string {
-  const unionOfAllTypes = [
-    'FieldType',
-    ...unique(
-      complexType.properties
-        .filter(prop => prop.isComplex)
-        .map(prop => prop.jsType)
-    ).sort()
-  ].join(' | ');
-
-  return `{ [keys: string]: ${unionOfAllTypes} }`;
 }
 
 function getPropertyMetadataInitializer(complexType: VdmComplexType): string {

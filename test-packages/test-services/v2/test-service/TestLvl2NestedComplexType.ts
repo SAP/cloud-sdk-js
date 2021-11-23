@@ -26,15 +26,6 @@ export interface TestLvl2NestedComplexType {
 }
 
 /**
- * @deprecated Since v1.6.0. Use [[TestLvl2NestedComplexType.build]] instead.
- */
-export function createTestLvl2NestedComplexType(
-  json: any
-): TestLvl2NestedComplexType {
-  return TestLvl2NestedComplexType.build(json);
-}
-
-/**
  * TestLvl2NestedComplexTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
@@ -83,13 +74,4 @@ export namespace TestLvl2NestedComplexType {
         isCollection: false
       }
     ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType;
-  }): TestLvl2NestedComplexType {
-    return deserializeComplexType(json, TestLvl2NestedComplexType);
-  }
 }

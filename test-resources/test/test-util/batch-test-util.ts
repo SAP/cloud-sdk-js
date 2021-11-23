@@ -2,9 +2,7 @@
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 
-export function createChangeSetWithFakeId(
-  ...requests
-): BatchChangeSet<any> {
+export function createChangeSetWithFakeId(...requests): BatchChangeSet<any> {
   return new BatchChangeSet(requests, 'changeSet_boundary');
 }
 

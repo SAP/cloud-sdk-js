@@ -205,31 +205,25 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
   cacheVerificationKeys: true
 };
 
-function getVerificationKey(
-  header: JwtHeader
-): Promise<TokenKey> {
-  if(typeof header.jku !== 'string'){
+function getVerificationKey(header: JwtHeader): Promise<TokenKey> {
+  if (typeof header.jku !== 'string') {
     throw Error('The JwtHeader did not contain a XUSAA URL');
   }
 
-  return fetchVerificationKeys(header.jku).then(
-    verificationKeys => {
-      if (!verificationKeys.length) {
-        throw Error(
-          'No verification keys have been returned by the XSUAA service.'
-        );
-      }
-      const verificationKey = verificationKeys.find(
-        key => key.keyId === header.kid
+  return fetchVerificationKeys(header.jku).then(verificationKeys => {
+    if (!verificationKeys.length) {
+      throw Error(
+        'No verification keys have been returned by the XSUAA service.'
       );
-      if (!verificationKey) {
-        throw new Error(
-          'Could not find verification key for the given key ID.'
-        );
-      }
-      return verificationKey;
     }
-  );
+    const verificationKey = verificationKeys.find(
+      key => key.keyId === header.kid
+    );
+    if (!verificationKey) {
+      throw new Error('Could not find verification key for the given key ID.');
+    }
+    return verificationKey;
+  });
 }
 
 /**

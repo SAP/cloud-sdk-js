@@ -274,10 +274,8 @@ export abstract class EntityBase {
         return this[key];
       }
       return Array.isArray(this[key])
-        ? this[key].map(linkedEntity =>
-            linkedEntity.getCurrentMapKeys(visitedEntities)
-          )
-        : this[key].getCurrentMapKeys(visitedEntities);
+        ? this[key].map(linkedEntity => linkedEntity.asObject(visitedEntities))
+        : this[key].asObject(visitedEntities);
     }
     return Array.isArray(this[key]) ? [...this[key]] : this[key];
   }

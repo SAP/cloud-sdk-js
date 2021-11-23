@@ -8,8 +8,8 @@ import { TokenKey } from './xsuaa-service-types';
  * @returns An array of token keys.
  * @internal
  */
-export function fetchVerificationKeys(url: string): Promise<TokenKey[]>{
-  if (typeof url !== 'string'){
+export function fetchVerificationKeys(url: string): Promise<TokenKey[]> {
+  if (typeof url !== 'string') {
     throw Error('No URL of the XUSAA service instance was provided');
   }
 
@@ -27,7 +27,7 @@ export function fetchVerificationKeys(url: string): Promise<TokenKey[]>{
         error
       );
     });
-};
+}
 
 const tokenKeyKeyMapping: { [key: string]: keyof TokenKey } = {
   kty: 'keyType',

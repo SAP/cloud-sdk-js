@@ -4,6 +4,7 @@ export {
   execute,
   buildAxiosRequestConfig,
   executeHttpRequest,
+  executeHttpRequestWithOrigin,
   getAxiosConfigWithDefaults,
   getAxiosConfigWithDefaultsWithoutMethod,
   shouldHandleCsrfToken
@@ -15,7 +16,8 @@ export {
   HttpRequest,
   ExecuteHttpRequestFn,
   HttpResponse,
-  HttpRequestOptions
+  HttpRequestOptions,
+  Origin
 } from './http-client-types';
 export { filterCustomRequestConfig } from './http-request-config';
 export { buildCsrfHeaders } from './csrf-token-header';

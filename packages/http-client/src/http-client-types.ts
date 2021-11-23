@@ -30,15 +30,26 @@ export type Method =
 /**
  * This interface is compatible with AxiosRequestConfig.
  */
-export interface HttpRequestConfig {
+export type HttpRequestConfig = HttpRequestConfigBase & {
+  params?: Record<string, string>;
+  headers?: Record<string, string>;
+}
+
+/**
+ * @internal
+ */
+export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
+  params?: Record<string, ValueWithOrigin>;
+  headers?: Record<string, ValueWithOrigin>;
+};
+
+interface HttpRequestConfigBase {
   [key: string]: any;
   url?: string;
   method: Method;
   data?: any;
-  params?: Record<string, string>;
   timeout?: number;
   maxContentLength?: number;
-  headers?: any;
   proxy?: false;
   httpAgent?: any;
   httpsAgent?: any;
@@ -69,4 +80,21 @@ export interface HttpRequestOptions {
    * By default, the value is `false`.
    */
   fetchCsrfToken?: boolean;
+}
+
+export type Origin = 'Custom' | 'DestinationProperty' | 'Destination' | 'RequestConfig';
+
+/**
+ * @internal
+ */
+export type ValueWithOrigin = {
+  [key in Origin]?: string;
+};
+
+/**
+ * @internal
+ */
+export interface OptionWithOrigin {
+  option?: Record<string, string>;
+  origin: Origin;
 }

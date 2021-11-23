@@ -19,11 +19,12 @@ import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
   HttpRequest,
-  HttpRequestConfig,
+  HttpRequestConfig, HttpRequestConfigWithOrigin,
   HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
 import { buildCsrfHeaders } from '.';
+import { buildHttpRequestConfig } from './http-request-config';
 
 const logger = createLogger({
   package: 'http-client',
@@ -108,16 +109,18 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
 
 function logRequestInformation(request: HttpRequestConfig) {
   const basicRequestInfo = `Execute '${request.method}' request with target: ${request.url}.`;
-  const headerText = Object.keys(request.headers).reduce((previous, key) => {
-    if (
-      key.toLowerCase().includes('authentication') ||
-      key.toLowerCase().includes('authorization')
-    ) {
-      return `${previous}${unixEOL}${key}:*******`;
-    }
-    return `${previous}${unixEOL}${key}:${request.headers[key]}`;
-  }, 'The headers of the request are:');
-  logger.debug(`${basicRequestInfo}${unixEOL}${headerText}`);
+  if(request.headers) {
+    const headerText = Object.keys(request.headers).reduce((previous, key) => {
+      if (
+        key.toLowerCase().includes('authentication') ||
+        key.toLowerCase().includes('authorization')
+      ) {
+        return `${previous}${unixEOL}${key}:*******`;
+      }
+      return `${previous}${unixEOL}${key}:${request.headers![key]}`;
+    }, 'The headers of the request are:');
+    logger.debug(`${basicRequestInfo}${unixEOL}${headerText}`);
+  }
 }
 
 /**
@@ -155,6 +158,14 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
   return execute(executeWithAxios)(destination, requestConfig, options);
+}
+
+export function executeHttpRequestWithOrigin<T extends HttpRequestConfigWithOrigin>(
+  destination: Destination | DestinationFetchOptions,
+  requestConfig: T,
+  options?: HttpRequestOptions
+): Promise<HttpResponse> {
+  return execute(executeWithAxios)(destination, buildHttpRequestConfig(requestConfig), options);
 }
 
 function buildDestinationHttpRequestConfig(

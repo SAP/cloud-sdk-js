@@ -148,16 +148,16 @@ describe('GetAllRequestBuilder', () => {
       await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
     });
 
-    it('test', async () => {
+    it('sets custom headers instead of destination headers', async () => {
       const entityData = createOriginalTestEntityData1();
+      const customAuthHeader = { 'Authorization': 'custom'};
       mockGetRequest({
-        headers: { 'Authorization': 'custom'},
+        headers: customAuthHeader,
         responseBody: { d: { results: [entityData] } }
       });
 
       const destinationWithAuthHeader = { ...defaultDestination, 'Authorization': 'destination'}
-      const customHeader = {'Authorization': 'custom'};
-      const actual = await requestBuilder.addCustomHeaders(customHeader).execute(destinationWithAuthHeader);
+      const actual = await requestBuilder.addCustomHeaders(customAuthHeader).execute(destinationWithAuthHeader);
 
       expect(actual).toEqual([
         createTestEntity(entityData)

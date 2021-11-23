@@ -7,16 +7,17 @@
  */
 import { ODataRequest } from './request/odata-request';
 import { ODataRequestConfig } from './request/odata-request-config';
+import { ValueWithOrigin } from '@sap-cloud-sdk/http-client';
 
 /**
  * Create Headers from request object.
  * @param request - Request from which header are build.
- * @returns Headesrs
+ * @returns Headers
  * @internal
  */
 export async function buildHeaders<RequestT extends ODataRequestConfig>(
   request: ODataRequest<RequestT>
-): Promise<Record<string, string>> {
+): Promise<Record<string, ValueWithOrigin>> {
   if (!request.destination) {
     throw Error('The request destination is undefined.');
   }

@@ -16,9 +16,10 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import {
   HttpResponse,
-  executeHttpRequest,
+  executeHttpRequestWithOrigin,
   filterCustomRequestConfig
 } from '@sap-cloud-sdk/http-client';
+import { ValueWithOrigin, mergeOptionsWithOrigin } from '@sap-cloud-sdk/http-client/internal'
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 /**
@@ -148,7 +149,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * Create object containing all headers, including custom headers for the given request.
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
-  async headers(): Promise<Record<string, any>> {
+  async headers(): Promise<Record<string, ValueWithOrigin>> {
     try {
       if (!this.destination) {
         throw Error('The destination is undefined.');
@@ -159,12 +160,18 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         this.config.customHeaders
       );
 
-      return {
-        ...destinationRelatedHeaders,
-        ...this.defaultHeaders(),
-        ...this.eTagHeaders(),
-        ...this.customHeaders()
-      };
+      return mergeOptionsWithOrigin({
+          origin: 'Custom',
+          option: this.customHeaders()
+        }, {
+          origin: 'Destination',
+          option: destinationRelatedHeaders
+        },{
+          origin: 'RequestConfig',
+          option: {...this.defaultHeaders(),
+            ...this.eTagHeaders()}
+        }
+      );
     } catch (error) {
       throw new ErrorWithCause(
         'Constructing headers for OData request failed!',
@@ -224,7 +231,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequest(
+    return executeHttpRequestWithOrigin(
       destination,
       {
         ...filterCustomRequestConfig(this.config.customRequestConfiguration),
@@ -249,12 +256,18 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     return mergeIgnoreCase(destinationHeaders, customHeaders);
   }
 
-  private queryParameters(): Record<string, any> {
-    return {
-      ...this.config.queryParameters(),
-      ...this.destination?.queryParameters,
-      ...this.config.customQueryParameters
-    };
+  private queryParameters(): Record<string, ValueWithOrigin> {
+    return mergeOptionsWithOrigin({
+        origin: 'Custom',
+        option: this.config.customQueryParameters
+      }, {
+        origin: 'Destination',
+        option: this.destination?.queryParameters
+      },{
+        origin: 'RequestConfig',
+        option: this.config.queryParameters()
+      }
+    );
   }
 }
 

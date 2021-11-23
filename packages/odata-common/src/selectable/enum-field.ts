@@ -19,7 +19,7 @@ export class EnumField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
-   readonly edmType: EdmTypeShared<any> = 'Edm.Enum';
+  readonly edmType: EdmTypeShared<any> = 'Edm.Enum';
 
   /**
    * Creates an instance of EnumField.
@@ -53,7 +53,7 @@ export class EnumField<
    * @returns The resulting filter
    */
   equals(value: EnumType<EnumT>): Filter<EntityT, string> {
-    return new Filter(this.fieldPath(), 'eq', value);
+    return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 
   /**
@@ -62,7 +62,7 @@ export class EnumField<
    * @returns The resulting filter
    */
   notEquals(value: EnumType<EnumT>): Filter<EntityT, string> {
-    return new Filter(this.fieldPath(), 'eq', value);
+    return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 }
 

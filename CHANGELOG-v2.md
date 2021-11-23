@@ -44,7 +44,7 @@
   - `JwtKeyMapping`
   - `JwtPair`
   - `MapType`
-  - `ODataBatchChangeSet` 
+  - `ODataBatchChangeSet`
   - `Protocol`
   - `ProxyConfiguration`
   - `ProxyConfigurationHeaders`

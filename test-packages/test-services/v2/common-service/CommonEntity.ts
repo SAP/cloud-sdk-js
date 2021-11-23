@@ -3,17 +3,23 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-// import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
-// import { AllFields, Constructable, EdmTypeField, EntityBuilderType, Field, FieldBuilder, OrderableEdmTypeField } from '@sap-cloud-sdk/odata-common/internal';
-import { AllFields, Constructable, EdmTypeField, EntityBuilderType, Field, FieldBuilder, OrderableEdmTypeField,CustomField, EntityBase as Entity } from '../src/internal';
-import { TestComplexType, TestComplexTypeField } from './TestComplexType';
+import { CommonEntityRequestBuilder } from './CommonEntityRequestBuilder';
+import { CommonComplexType, CommonComplexTypeField } from './CommonComplexType';
+import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
+import {
+  AllFields,
+  Constructable,
+  EdmTypeField,
+  EntityBuilderType,
+  Field,
+  FieldBuilder,
+  OrderableEdmTypeField
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * This class represents the entity "A_CommonEntity" of service "API_COMMON_SRV".
  */
 export class CommonEntity extends Entity implements CommonEntityType {
-  //add any
-  _oDataVersion: any;
   /**
    * Technical entity name for CommonEntity.
    */
@@ -21,7 +27,7 @@ export class CommonEntity extends Entity implements CommonEntityType {
   /**
    * Default url path for the according service.
    */
-  static _defaultServicePath = 'VALUE_IS_UNDEFINED';
+  static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
   /**
    * Key Property Guid.
    */
@@ -31,11 +37,11 @@ export class CommonEntity extends Entity implements CommonEntityType {
    */
   keyPropertyString!: string;
   /**
-   * Strng Property.
+   * String Property.
    * Maximum length: 10.
    * @nullable
    */
-  strngProperty?: string;
+  stringProperty?: string;
   /**
    * Int 16 Property.
    * @nullable
@@ -45,7 +51,7 @@ export class CommonEntity extends Entity implements CommonEntityType {
    * Complex Type Property.
    * @nullable
    */
-  complexTypeProperty?: TestComplexType;
+  complexTypeProperty?: CommonComplexType;
 
   /**
    * Returns an entity builder to construct instances of `CommonEntity`.
@@ -59,8 +65,8 @@ export class CommonEntity extends Entity implements CommonEntityType {
    * Returns a request builder to construct requests for operations on the `CommonEntity` entity type.
    * @returns A `CommonEntity` request builder.
    */
-  static requestBuilder(): any {
-    throw new Error('not implemented');
+  static requestBuilder(): CommonEntityRequestBuilder {
+    return new CommonEntityRequestBuilder();
   }
 
   /**
@@ -69,7 +75,7 @@ export class CommonEntity extends Entity implements CommonEntityType {
    * @returns A builder that constructs instances of entity type `CommonEntity`.
    */
   static customField(fieldName: string): CustomField<CommonEntity> {
-    throw new Error('not implemented');
+    return Entity.customFieldSelector(fieldName, CommonEntity);
   }
 
   /**
@@ -84,61 +90,102 @@ export class CommonEntity extends Entity implements CommonEntityType {
 export interface CommonEntityType {
   keyPropertyGuid: string;
   keyPropertyString: string;
-  strngProperty?: string | null;
+  stringProperty?: string | null;
   int16Property?: number | null;
-  complexTypeProperty?: TestComplexType | null;
+  complexTypeProperty?: CommonComplexType | null;
 }
 
 export namespace CommonEntity {
-  const _fieldBuilder: FieldBuilder<Constructable<CommonEntity>> = new FieldBuilder(CommonEntity);
+  const _fieldBuilder: FieldBuilder<Constructable<CommonEntity>> =
+    new FieldBuilder(CommonEntity);
   /**
    * Static representation of the [[keyPropertyGuid]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_GUID = _fieldBuilder.buildEdmTypeField('KeyPropertyGuid', 'Edm.Guid', false);
+  export const KEY_PROPERTY_GUID = _fieldBuilder.buildEdmTypeField(
+    'KeyPropertyGuid',
+    'Edm.Guid',
+    false
+  );
   /**
    * Static representation of the [[keyPropertyString]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false);
+  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
+    'KeyPropertyString',
+    'Edm.String',
+    false
+  );
   /**
-   * Static representation of the [[strngProperty]] property for query construction.
+   * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRNG_PROPERTY = _fieldBuilder.buildEdmTypeField('StrngProperty', 'Edm.String', true);
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    true
+  );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true);
+  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'Int16Property',
+    'Edm.Int16',
+    true
+  );
   /**
    * Static representation of the [[complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestComplexTypeField, true);
+  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
+    'ComplexTypeProperty',
+    CommonComplexTypeField,
+    true
+  );
   /**
    * All fields of the CommonEntity entity.
    */
-  export const _allFields: (EdmTypeField<CommonEntity, 'Edm.Guid', false, true> | EdmTypeField<CommonEntity, 'Edm.String', false, true> | EdmTypeField<CommonEntity, 'Edm.String', true, true> | OrderableEdmTypeField<CommonEntity, 'Edm.Int16', true, true> | TestComplexTypeField<CommonEntity, true, true>)[] = [
+  export const _allFields: Array<
+    | EdmTypeField<CommonEntity, 'Edm.Guid', false, true>
+    | EdmTypeField<CommonEntity, 'Edm.String', false, true>
+    | EdmTypeField<CommonEntity, 'Edm.String', true, true>
+    | OrderableEdmTypeField<CommonEntity, 'Edm.Int16', true, true>
+    | CommonComplexTypeField<CommonEntity, true, true>
+  > = [
     CommonEntity.KEY_PROPERTY_GUID,
     CommonEntity.KEY_PROPERTY_STRING,
-    CommonEntity.STRNG_PROPERTY,
+    CommonEntity.STRING_PROPERTY,
     CommonEntity.INT_16_PROPERTY,
     CommonEntity.COMPLEX_TYPE_PROPERTY
   ];
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<CommonEntity> = new AllFields('*', CommonEntity);
+  export const ALL_FIELDS: AllFields<CommonEntity> = new AllFields(
+    '*',
+    CommonEntity
+  );
   /**
    * All key fields of the CommonEntity entity.
    */
-  export const _keyFields: Field<CommonEntity, boolean, boolean>[] = [CommonEntity.KEY_PROPERTY_GUID, CommonEntity.KEY_PROPERTY_STRING];
+  export const _keyFields: Array<Field<CommonEntity, boolean, boolean>> = [
+    CommonEntity.KEY_PROPERTY_GUID,
+    CommonEntity.KEY_PROPERTY_STRING
+  ];
   /**
    * Mapping of all key field names to the respective static field property CommonEntity.
    */
-  export const _keys: { [keys: string]: Field<CommonEntity, boolean, boolean> } = CommonEntity._keyFields.reduce((acc: { [keys: string]: Field<CommonEntity, boolean, boolean> }, field: Field<CommonEntity, boolean, boolean>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<CommonEntity, boolean, boolean>;
+  } = CommonEntity._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<CommonEntity, boolean, boolean> },
+      field: Field<CommonEntity, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

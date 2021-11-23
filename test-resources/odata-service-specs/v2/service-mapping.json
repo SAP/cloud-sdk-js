@@ -11,7 +11,7 @@
   },
   "COMMON_SRV": {
     "directoryName": "common-service",
-    "servicePath": "VALUE_IS_UNDEFINED",
+    "servicePath": "/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/",
     "npmPackageName": "common-service"
   }
 }

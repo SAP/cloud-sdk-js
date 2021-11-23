@@ -1,23 +1,7 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.TestComplexType1 =
-  exports.TestComplexType1Field =
-  exports.createTestComplexType1 =
-    void 0;
-/*
- * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
- *
- * This is a generated file powered by the SAP Cloud SDK for JavaScript.
- */
-const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+exports.TestComplexType1 = exports.TestComplexType1Field = void 0;
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
-/**
- * @deprecated Since v1.6.0. Use [[TestComplexType1.build]] instead.
- */
-function createTestComplexType1(json) {
-  return TestComplexType1.build(json);
-}
-exports.createTestComplexType1 = createTestComplexType1;
 /**
  * TestComplexType1Field
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
@@ -56,13 +40,6 @@ var TestComplexType1;
       isCollection: false
     }
   ];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  function build(json) {
-    return (0, odata_v4_1.deserializeComplexType)(json, TestComplexType1);
-  }
-  TestComplexType1.build = build;
 })(
   (TestComplexType1 =
     exports.TestComplexType1 || (exports.TestComplexType1 = {}))

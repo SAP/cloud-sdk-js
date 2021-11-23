@@ -25,13 +25,6 @@ export interface TestComplexType1 {
 }
 
 /**
- * @deprecated Since v1.6.0. Use [[TestComplexType1.build]] instead.
- */
-export function createTestComplexType1(json: any): TestComplexType1 {
-  return TestComplexType1.build(json);
-}
-
-/**
  * TestComplexType1Field
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
@@ -74,11 +67,4 @@ export namespace TestComplexType1 {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  export function build(json: { [keys: string]: FieldType }): TestComplexType1 {
-    return deserializeComplexType(json, TestComplexType1);
-  }
 }

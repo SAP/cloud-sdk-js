@@ -1,5 +1,7 @@
 import * as http from 'http';
-
+/**
+ * @internal
+ */
 export interface DestinationHttpRequestConfig {
   baseURL: string;
   headers: Record<string, string>;
@@ -55,8 +57,13 @@ interface HttpRequestConfigBase {
   httpsAgent?: any;
 }
 
+/**
+ * @internal
+ */
 export type HttpRequest = DestinationHttpRequestConfig & HttpRequestConfig;
-
+/**
+ * @internal
+ */
 export type ExecuteHttpRequestFn<ReturnT> = (
   request: HttpRequest
 ) => Promise<ReturnT>;

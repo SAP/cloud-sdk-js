@@ -26,13 +26,6 @@ export interface TestComplexBaseType {
 }
 
 /**
- * @deprecated Since v1.6.0. Use [[TestComplexBaseType.build]] instead.
- */
-export function createTestComplexBaseType(json: any): TestComplexBaseType {
-  return TestComplexBaseType.build(json);
-}
-
-/**
  * TestComplexBaseTypeField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
@@ -84,13 +77,4 @@ export namespace TestComplexBaseType {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  export function build(json: {
-    [keys: string]: FieldType;
-  }): TestComplexBaseType {
-    return deserializeComplexType(json, TestComplexBaseType);
-  }
 }

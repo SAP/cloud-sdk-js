@@ -19,7 +19,7 @@ import {
   executeHttpRequestWithOrigin,
   filterCustomRequestConfig
 } from '@sap-cloud-sdk/http-client';
-import { ValueWithOrigin, mergeOptionsWithOrigin } from '@sap-cloud-sdk/http-client/internal'
+import { filterCustomRequestConfig, ValueWithOrigin, mergeOptionsWithOrigin } from '@sap-cloud-sdk/http-client/internal'
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 /**

@@ -37,22 +37,6 @@ describe('namespace', () => {
             `${unixEOL}Metadata information on all properties of the \`ComplexMealType\` complex type.`
           ],
           isExported: true
-        },
-        {
-          kind: StructureKind.Function,
-          name: 'build',
-          returnType: 'ComplexMealType',
-          parameters: [
-            {
-              name: 'json',
-              type: '{ [keys: string]: FieldType }'
-            }
-          ],
-          statements: 'return deserializeComplexType(json, ComplexMealType);',
-          isExported: true,
-          docs: [
-            `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexType\` of the \`@sap-cloud-sdk/odata-v2\` or \`@sap-cloud-sdk/odata-v4\` package instead.`
-          ]
         }
       ]
     });
@@ -89,23 +73,6 @@ describe('namespace', () => {
             `${unixEOL}Metadata information on all properties of the \`ComplexMealWithDesertType\` complex type.`
           ],
           isExported: true
-        },
-        {
-          kind: StructureKind.Function,
-          name: 'build',
-          returnType: 'ComplexMealWithDesertType',
-          parameters: [
-            {
-              name: 'json',
-              type: '{ [keys: string]: FieldType | ComplexDesert }'
-            }
-          ],
-          statements:
-            'return deserializeComplexType(json, ComplexMealWithDesertType);',
-          isExported: true,
-          docs: [
-            `${unixEOL}@deprecated Since v1.25.0. Use \`deserializeComplexType\` of the \`@sap-cloud-sdk/odata-v2\` or \`@sap-cloud-sdk/odata-v4\` package instead.`
-          ]
         }
       ]
     });

@@ -9,10 +9,10 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import {
   executeHttpRequest,
-  filterCustomRequestConfig,
-  HttpResponse,
-  Method
+  Method,
+  HttpResponse
 } from '@sap-cloud-sdk/http-client';
+import { filterCustomRequestConfig } from '@sap-cloud-sdk/http-client/internal';
 
 /**
  * Request builder for OpenAPI requests.

@@ -25,6 +25,7 @@ const logger = createLogger({
  * @param destination - The destination to get the headers from
  * @param requestConfig - An http request configuration containing additional information about the request, like URL or headers
  * @returns A promise to an object containing the CSRF related headers
+ * @internal
  */
 export async function buildCsrfHeaders<T extends HttpRequestConfig>(
   destination: Destination | DestinationFetchOptions,

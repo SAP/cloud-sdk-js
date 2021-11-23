@@ -1,5 +1,5 @@
 import { checkUrlExists } from '@sap-cloud-sdk/util';
-import { getGenerationSteps } from '@sap-cloud-sdk/generator-common';
+import { getGenerationSteps } from '@sap-cloud-sdk/generator-common/internal';
 import {
   VdmServiceMetadata,
   getGenerationAndUsage,
@@ -51,7 +51,7 @@ describe('metadata', () => {
         apis: [] as any[]
       } as OpenApiDocument);
       await checkUrlExists(generationAndUsage.generatorRepositoryLink);
-    });
+    }, 10000);
 
     it('contains only existing links', async () => {
       const links = getOpenApiLinks();

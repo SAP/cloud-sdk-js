@@ -17,7 +17,6 @@ import {
 import {
   HttpResponse,
   executeHttpRequestWithOrigin,
-  filterCustomRequestConfig
 } from '@sap-cloud-sdk/http-client';
 import { filterCustomRequestConfig, ValueWithOrigin, mergeOptionsWithOrigin } from '@sap-cloud-sdk/http-client/internal'
 import { ODataRequestConfig } from './odata-request-config';

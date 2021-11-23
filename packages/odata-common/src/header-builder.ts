@@ -7,7 +7,7 @@
  */
 import { ODataRequest } from './request/odata-request';
 import { ODataRequestConfig } from './request/odata-request-config';
-import { ValueWithOrigin } from '@sap-cloud-sdk/http-client';
+import { ValueWithOrigin } from '@sap-cloud-sdk/http-client/internal';
 
 /**
  * Create Headers from request object.

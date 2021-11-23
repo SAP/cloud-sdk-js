@@ -252,7 +252,7 @@ function captureGroupsFromGlobalRegex(regex: RegExp, str: string): string[] {
   return groups.map(group => group[1]);
 }
 
-async function checkBarrelRecursive(cwd: string) {
+export async function checkBarrelRecursive(cwd: string): Promise<void> {
   readdirSync(cwd, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
     .forEach(subDir => {
@@ -266,7 +266,10 @@ async function checkBarrelRecursive(cwd: string) {
   );
 }
 
-async function exportAllInBarrel(cwd: string, barrelFileName: string) {
+export async function exportAllInBarrel(
+  cwd: string,
+  barrelFileName: string
+): Promise<void> {
   const barrelFilePath = join(cwd, barrelFileName);
   if (existsSync(barrelFilePath) && lstatSync(barrelFilePath).isFile()) {
     const dirContents = new GlobSync('*', {
@@ -286,7 +289,7 @@ async function exportAllInBarrel(cwd: string, barrelFileName: string) {
       regexExportedInternal
     );
     if (!compareBarrels(dirContents, exportedFiles, barrelFilePath)) {
-      process.exit(1);
+      throw Error(`${barrelFileName} is not in sync`);
     }
   } else {
     throw Error(`No ${barrelFileName} file found in ${cwd}`);

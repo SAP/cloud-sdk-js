@@ -1,7 +1,10 @@
 import { resolve } from 'path';
 import mock from 'mock-fs';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
+  checkBarrelRecursive,
   checkSingleIndexFile,
+  exportAllInBarrel,
   indexFiles,
   parseBarrelFile,
   parseTypeDefinitionFile,
@@ -58,6 +61,63 @@ describe('check-public-api', () => {
       }
     });
     checkSingleIndexFile('root');
+    mock.restore();
+  });
+
+  it('fails if internal.ts is not present in root', async () => {
+    mock({
+      src: {
+        file1: '',
+        folder2: {
+          file2: ''
+        }
+      }
+    });
+    await expect(() =>
+      exportAllInBarrel('src', 'internal.ts')
+    ).rejects.toThrowError('No internal.ts file found in src');
+    mock.restore();
+  });
+
+  it('fails if a file is not exported in barrel file', async () => {
+    const logger = createLogger('check-public-api');
+    const errorSpy = jest.spyOn(logger, 'error');
+    mock({
+      folder1: {
+        file1: '',
+        'index.ts': "export * from './file1';",
+        folder2: {
+          file2: '',
+          file3: '',
+          'index.ts': "export * from './file2';export * from './file3';"
+        }
+      }
+    });
+
+    await expect(() =>
+      exportAllInBarrel('folder1', 'index.ts')
+    ).rejects.toThrowError('index.ts is not in sync');
+
+    expect(errorSpy).toHaveBeenCalledWith(
+      'folder2 is not exported in folder1/index.ts'
+    );
+
+    mock.restore();
+  });
+
+  it('passes recursive check for barrel file exports', () => {
+    mock({
+      folder1: {
+        file1: '',
+        'index.ts': "export * from './file1'; export * from './folder2';",
+        folder2: {
+          file2: '',
+          file3: '',
+          'index.ts': "export * from './file2';export * from './file3';"
+        }
+      }
+    });
+    checkBarrelRecursive('folder1');
     mock.restore();
   });
 

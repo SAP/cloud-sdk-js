@@ -3,20 +3,24 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-v2/dist/request-builder/request-builder';
 import {
+  DeSerializationMiddleware,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   CreateRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
+import { DeSerializationMiddlewareV2BASE } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
 import { TestEntityMultiLink } from './TestEntityMultiLink';
 
 /**
  * Request builder class for operations supported on the [[TestEntityMultiLink]] entity.
  */
-export class TestEntityMultiLinkRequestBuilder extends RequestBuilder<TestEntityMultiLink> {
+export class TestEntityMultiLinkRequestBuilder<
+  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+> extends RequestBuilder<TestEntityMultiLink<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntityMultiLink` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntityMultiLink.keyProperty]].

@@ -15,14 +15,14 @@ export type Selectable<EntityT extends EntityBase> =
         | SimpleTypeFields<EntityT>
         | Link<EntityT>
         | ComplexTypeField<EntityT, any, boolean, boolean>
-        | CustomField<EntityT, boolean>
+        | CustomField<EntityT, any, boolean>
         | CollectionField<EntityT, any, boolean, boolean>
         | AllFields<EntityT>
     : ODataVersionOf<EntityT> extends 'v4'
     ?
         | SimpleTypeFields<EntityT>
         | ComplexTypeField<EntityT, any, boolean, boolean>
-        | CustomField<EntityT, boolean>
+        | CustomField<EntityT, any, boolean>
         | CollectionField<EntityT, any, boolean, boolean>
         | AllFields<EntityT>
     : never;

@@ -72,6 +72,7 @@
   - `customAttributes`
   - `decodeJwt`
   - `decodeJwtComplete`
+  - `deserializersCommon`
   - `destinationCache`
   - `destinationForServiceBinding`
   - `destinationServiceCache`
@@ -82,6 +83,7 @@
   - `fetchVerificationKeys`
   - `fetchVerificationKeys`
   - `fetchVerificationKeys`
+  - `FieldType`
   - `getAuthHeaders`
   - `getClientCredentialsToken`
   - `getDestination`
@@ -116,6 +118,7 @@
   - `jwtBearerToken`
   - `mappingTenantFields`
   - `mappingUserFields`
+  - `oDataUri` => Use `createODataUri` instead
   - `parseDestination`
   - `parseProxyEnv`
   - `parseSubdomain`
@@ -126,13 +129,17 @@
   - `replaceSubdomain`
   - `resolveService`
   - `retrieveJwt`
+  - `RequestBuilder.forEntity(MyEntity)` => Use `MyEntity.requestBuilder` instead
   - `searchEnvVariablesForDestination`
   - `searchServiceBindingForDestination`
+  - `serializersCommon`
   - `serviceToken`
   - `subscriberFirst`
   - `tenantFromJwt`
   - `tenantId`
   - `tenantName`
+  - `uriConverter`
+  - `uriConvertersCommon`
   - `urlAndAgent`
   - `userEmail`
   - `userFamilyName`
@@ -264,7 +271,6 @@
   - day,
   - desc,
   - deserializeBatchResponse,
-  - deserializersCommon,
   - endsWith,
   - entityDeserializer,
   - entitySerializer,
@@ -290,7 +296,6 @@
   - serializeBatchRequest,
   - serializeChangeSet,
   - serializeRequest,
-  - serializersCommon,
   - startsWith,
   - substring,
   - throwErrorWhenReturnTypeIsUnionType,
@@ -298,7 +303,6 @@
   - toLower,
   - toUpper,
   - trim,
-  - uriConvertersCommon,
   - year
 - [core] Move the following functions to `odata-v2` package
   - CreateRequestBuilder,
@@ -361,8 +365,6 @@
   - transformReturnValueForEntity,
   - transformReturnValueForEntityList,
   - transformReturnValueForUndefined,
-  - uriConverter
-  -
 
 ### Signature changed
 
@@ -393,7 +395,8 @@
 ## New Functionality
 
 - [connectivity] Create a new package with minimal API.
-- [http-client] Create a new package with minimal API
+- [http-client] Create a new package with minimal API.
+- [odata-common, odata-v2, odata-v4] DeSerializationMiddleware // TODO
 
 ## Improvements
 

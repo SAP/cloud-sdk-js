@@ -12,6 +12,11 @@ filterFunctions.contains(TestEntity.STRING_PROPERTY, 'test');
 // $ExpectType BooleanFilterFunction<TestEntity>
 filterFunctions.hasSubset(TestEntity.COLLECTION_PROPERTY, [1]);
 
+MyEntity.requestBuilder()
+  .getAll()
+  .filter(filterFunctions.hasSubset(MyEntity.COLLECTION_PROPERTY, [1]))
+  .filter(filterFunctions.length(MyEntity.COLLECTION_PROPERTY).equals(3));
+
 // $ExpectError
 filterFunctions.hasSubset(['1'], [1]);
 

@@ -5,7 +5,6 @@ import {
   EntityIdentifiable,
   ODataVersionOf
 } from '../entity-base';
-import { FieldType } from '../selectable/field';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 
@@ -22,12 +21,11 @@ export type FilterOperator =
 /**
  * @internal
  */
-export type FilterOperatorByType<FieldT extends FieldType> =
-  FieldT extends string
-    ? FilterOperatorString
-    : FieldT extends number
-    ? FilterOperatorNumber
-    : FilterOperatorBoolean;
+export type FilterOperatorByType<FieldT> = FieldT extends string
+  ? FilterOperatorString
+  : FieldT extends number
+  ? FilterOperatorNumber
+  : FilterOperatorBoolean;
 
 /**
  * Represents a filter expression to narrow the data on a [[GetAllRequestBuilder]] request for multiple entities that match the specified criteria.
@@ -41,10 +39,8 @@ export type FilterOperatorByType<FieldT extends FieldType> =
  * @internal
  */
 // TODO 2.0 rename to BinaryFilter
-export class Filter<
-  EntityT extends EntityBase,
-  FieldT extends FieldType | FieldType[]
-> implements EntityIdentifiable<EntityT>
+export class Filter<EntityT extends EntityBase, FieldT>
+  implements EntityIdentifiable<EntityT>
 {
   /**
    * Constructor type of the entity to be filtered.
@@ -87,7 +83,7 @@ export class Filter<
  * @returns boolean
  * @internal
  */
-export function isFilter<T extends EntityBase, FieldT extends FieldType>(
+export function isFilter<T extends EntityBase, FieldT>(
   filterable: Filterable<T>
 ): filterable is Filter<T, FieldT> {
   return (

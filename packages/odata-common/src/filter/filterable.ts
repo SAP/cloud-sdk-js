@@ -1,13 +1,14 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
 import type { OneToManyLink } from '../selectable/one-to-many-link';
-import type { FieldType } from '../selectable/field';
 import type { BooleanFilterFunction } from './boolean-filter-function';
 import type { Filter } from './filter';
 import { UnaryFilter } from './unary-filter';
 import { FilterList } from './filter-list';
 import { FilterLambdaExpression } from './filter-lambda-expression';
 import { FilterLink } from './filter-link';
+import { NewBooleanFilterFunction } from './boolean-filter-function-new';
+import { NewFilter } from './filter-new';
 
 /**
  * A union of all types that can be used for filtering.
@@ -18,12 +19,14 @@ export type Filterable<
   EntityT extends EntityBase,
   LinkedEntityT extends EntityBase = any
 > =
-  | Filter<EntityT, FieldType | FieldType[]>
+  | Filter<EntityT, any>
+  | NewFilter<EntityT, any, any>
   | FilterLink<EntityT>
   | FilterList<EntityT>
   | FilterLambdaExpression<EntityT>
   | UnaryFilter<EntityT>
   | BooleanFilterFunction<EntityT>
+  | NewBooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, LinkedEntityT>;
 
 /**

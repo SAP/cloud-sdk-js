@@ -3,11 +3,13 @@
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
-import type { Selectable } from './selectable/selectable';
 import type { Field } from './selectable/field';
 import type { Link } from './selectable/link';
 import type { RequestBuilder } from './request-builder/request-builder';
-import type { CustomField } from './selectable/custom-field';
+import {
+  DeSerializationMiddleware,
+  DeSerializationMiddlewareBASE
+} from './de-serializers/de-serialization-middleware';
 
 /**
  * @internal
@@ -17,29 +19,42 @@ export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 /**
  * @internal
  */
-export interface Constructable<
-  EntityT extends EntityBase,
-  EntityTypeT = unknown
-> {
+export interface Constructable<EntityT extends EntityBase> {
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
-  _allFields: (
-    | Selectable<EntityT>
-    | Field<EntityT, boolean, boolean>
-    | Link<EntityT>
-  )[]; // Selectable only here for backwards TODO: Remove in v2.0
-  _keyFields: (Selectable<EntityT> | Field<EntityT, boolean, boolean>)[]; // Selectable only here for backwards TODO: Remove in v2.0
-  _keys: {
-    [keys: string]: Selectable<EntityT> | Field<EntityT, boolean, boolean>;
-  }; // Selectable only here for backwards TODO: Remove in v2.0
+  // _allFields: (
+  //   | Selectable<EntityT>
+  //   | Field<EntityT, boolean, boolean>
+  //   | Link<EntityT>
+  //   | any
+  // )[]; // Selectable only here for backwards TODO: Remove in v2.0
+  // _keyFields: (Selectable<EntityT> | Field<EntityT, boolean, boolean> | any)[]; // Selectable only here for backwards TODO: Remove in v2.0
+  _keys: string[];
+  // | {
+  //     [keys: string]: Selectable<EntityT> | Field<EntityT, boolean, boolean>;
+  //   }
+  // | any; // Selectable only here for backwards TODO: Remove in v2.0
   new (...args: any[]): EntityT;
+  // requestBuilder(): RequestBuilder<EntityT>;
+  // builder(): EntityBuilderType<EntityT, any>;
+  // entityConstructor(deSerializers: T): EntityT;
+  // customField(
+  //   fieldName: string,
+  //   isNullable?: boolean
+  // ): CustomField<EntityT, any, boolean>;
+}
+
+export interface ConstructableBASE<
+  EntityT extends EntityBase,
+  T extends DeSerializationMiddlewareBASE = DeSerializationMiddleware,
+  JsonT = any
+> {
+  deSerializers: T;
   requestBuilder(): RequestBuilder<EntityT>;
-  builder(): EntityBuilderType<EntityT, EntityTypeT>;
-  customField(
-    fieldName: string,
-    isNullable?: boolean
-  ): CustomField<EntityT, boolean>;
+  entityBuilder(): EntityBuilderType<EntityT, JsonT>;
+  // entityConstructor(): EntityT;
+  schema(): Record<string, any>;
 }
 
 /**
@@ -60,11 +75,16 @@ export abstract class EntityBase {
   static _entityName: string;
   static _defaultServicePath: string;
 
-  protected static entityBuilder<EntityT extends EntityBase, EntityTypeT>(
-    entityConstructor: Constructable<EntityT, EntityTypeT>
+  public static entityBuilder<EntityT extends EntityBase, EntityTypeT>(
+    entityConstructor: Constructable<EntityT>,
+    deSerializers: DeSerializationMiddlewareBASE,
+    allFields: Record<string, any>
   ): EntityBuilderType<EntityT, EntityTypeT> {
-    const builder = new EntityBuilder<EntityT, EntityTypeT>(entityConstructor);
-    entityConstructor._allFields.forEach(field => {
+    const builder = new EntityBuilder<EntityT, EntityTypeT>(
+      entityConstructor,
+      deSerializers
+    );
+    allFields.forEach(field => {
       const fieldName = `${camelCase(field._fieldName)}`;
       builder[fieldName] = function (value) {
         this.entity[fieldName] = value;
@@ -97,7 +117,7 @@ export abstract class EntityBase {
 
   abstract readonly _oDataVersion: any;
 
-  constructor() {
+  constructor(private schema: Record<string, any>) {
     nonEnumerable(this, '_oDataVersion');
     nonEnumerable(this, '_customFields');
     this._customFields = {};
@@ -308,8 +328,8 @@ export abstract class EntityBase {
    * @returns Boolean value that describes whether a field name can be defined as custom field
    */
   protected isConflictingCustomField(customFieldName: string): boolean {
-    return (this.constructor as Constructable<this>)._allFields
-      .map(f => f._fieldName)
+    return Object.keys(this.schema)
+      .map((f: any) => f._fieldName)
       .includes(customFieldName);
   }
 
@@ -340,6 +360,11 @@ export abstract class EntityBase {
 export interface EntityIdentifiable<T extends EntityBase> {
   readonly _entityConstructor: Constructable<T>;
   readonly _entity: T;
+}
+
+export interface NewEntityIdentifiable<EntityT, DeSerializersT> {
+  readonly entity: EntityT;
+  readonly deSerializers: DeSerializersT;
 }
 
 /* eslint-disable valid-jsdoc */

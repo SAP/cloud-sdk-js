@@ -1,6 +1,5 @@
 import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
-import { FieldType } from '../selectable/field';
 import {
   FilterFunction,
   FilterFunctionParameterType
@@ -12,7 +11,7 @@ import {
  */
 export class CollectionFilterFunction<
   EntityT extends EntityBase,
-  FieldT extends FieldType
+  FieldT
 > extends FilterFunction<EntityT, FieldT[]> {
   /**
    * Creates an instance of CollectionFilterFunction.

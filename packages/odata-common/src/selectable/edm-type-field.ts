@@ -1,9 +1,10 @@
-import BigNumber from 'bignumber.js';
-import moment from 'moment';
 import { EntityBase } from '../entity-base';
-import { Time } from '../time';
 import { Filter } from '../filter/filter';
 import { EdmTypeShared } from '../edm-types';
+import {
+  DeSerializationMiddlewareBASE,
+  DeserializedType
+} from '../de-serializers/de-serialization-middleware';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldOptions } from './field';
@@ -19,70 +20,18 @@ type NullableFieldType<
 > = NullableT extends true ? FieldT | null : FieldT;
 
 /**
- * Convenience type that maps the given EDM type to a [[FieldType]] without considering whether it is nullable.
- * @typeparam EdmT - EDM type of the field.
- * @typeparam NullableT - Boolean type that represents whether the field is nullable.
- */
-type NonNullableFieldTypeByEdmType<EdmT extends EdmTypeShared<'any'>> =
-  EdmT extends 'Edm.String'
-    ? string
-    : EdmT extends 'Edm.Boolean'
-    ? boolean
-    : EdmT extends 'Edm.Decimal'
-    ? BigNumber
-    : EdmT extends 'Edm.Double'
-    ? number
-    : EdmT extends 'Edm.Single'
-    ? number
-    : EdmT extends 'Edm.Float'
-    ? number
-    : EdmT extends 'Edm.Int16'
-    ? number
-    : EdmT extends 'Edm.Int32'
-    ? number
-    : EdmT extends 'Edm.Int64'
-    ? BigNumber
-    : EdmT extends 'Edm.SByte'
-    ? number
-    : EdmT extends 'Edm.Binary'
-    ? string
-    : EdmT extends 'Edm.Guid'
-    ? string
-    : EdmT extends 'Edm.Byte'
-    ? number
-    : EdmT extends 'Edm.DateTime'
-    ? moment.Moment
-    : EdmT extends 'Edm.DateTimeOffset'
-    ? moment.Moment
-    : EdmT extends 'Edm.Time'
-    ? Time
-    : EdmT extends 'Edm.Date'
-    ? moment.Moment
-    : EdmT extends 'Edm.Duration'
-    ? moment.Duration
-    : EdmT extends 'Edm.TimeOfDay'
-    ? Time
-    : EdmT extends 'Edm.Enum'
-    ? string
-    : EdmT extends 'Edm.Any'
-    ? any
-    : never;
-
-/**
  * Convenience type that maps the given EDM type to a [[FieldType]]. It also considers whether the field is nullable.
  * @typeparam EdmT - EDM type of the field. Deprecated: Field type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @internal
  */
 export type FieldTypeByEdmType<
+  T extends DeSerializationMiddlewareBASE,
   EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean
-> = NullableFieldType<
-  EdmT extends EdmTypeShared<'any'>
-    ? NonNullableFieldTypeByEdmType<EdmT>
-    : EdmT,
-  NullableT
->;
+> = NullableFieldType<DeserializedType<T, EdmT>, NullableT>;
+
+// type GeneralFieldType<EntityT extends EntityBase>
 
 /**
  * Represents a property of an OData entity with an EDM type.
@@ -95,7 +44,7 @@ export type FieldTypeByEdmType<
  *
  * See also: [[Selectable]]
  * @typeparam EntityT - Type of the entity the field belongs to
- * @typeparam EdmT - EDM type of the field. Deprecated: Field type of the field.
+ * @typeparam EdmT - EDM type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  * @internal
@@ -103,6 +52,7 @@ export type FieldTypeByEdmType<
 export class EdmTypeField<
   EntityT extends EntityBase,
   EdmT extends EdmTypeShared<'any'>,
+  T extends DeSerializationMiddlewareBASE,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
@@ -111,12 +61,14 @@ export class EdmTypeField<
    * @param fieldName - Actual name of the field used in the OData request.
    * @param _fieldOf - Constructor type of the entity the field belongs to.
    * @param edmType - Type of the field according to the metadata description.
+   * @param deSerializers - TODO
    * @param fieldOptions - Optional settings for this field.
    */
   constructor(
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
     readonly edmType: EdmT,
+    public deSerializers: T,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
@@ -127,10 +79,8 @@ export class EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  equals(
-    value: FieldTypeByEdmType<EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
-    return new Filter(this.fieldPath(), 'eq', value, this.edmType);
+  equals(value: FieldTypeByEdmType<T, EdmT, NullableT>): Filter<EntityT, any> {
+    return new Filter(this.fieldPath(), 'eq', value as any, this.edmType);
   }
 
   /**
@@ -139,9 +89,9 @@ export class EdmTypeField<
    * @returns The resulting filter
    */
   notEquals(
-    value: FieldTypeByEdmType<EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
-    return new Filter(this.fieldPath(), 'ne', value, this.edmType);
+    value: FieldTypeByEdmType<T, EdmT, NullableT>
+  ): Filter<EntityT, any> {
+    return new Filter(this.fieldPath(), 'ne', value as any, this.edmType);
   }
 
   /**

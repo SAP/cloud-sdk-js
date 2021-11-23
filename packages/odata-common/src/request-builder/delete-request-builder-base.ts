@@ -6,7 +6,6 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
 import { ODataUri } from '../uri-conversion/odata-uri';
-import { FieldType } from '../selectable/field';
 import { ODataDeleteRequestConfig } from '../request/odata-delete-request-config';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
@@ -30,7 +29,7 @@ export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
   constructor(
     entityConstructor: Constructable<EntityT>,
     oDataUri: ODataUri,
-    keysOrEntity: Record<string, FieldType> | EntityBase
+    keysOrEntity: Record<string, any> | EntityBase
   ) {
     super(new ODataDeleteRequestConfig(entityConstructor, oDataUri));
     this._entityConstructor = entityConstructor;

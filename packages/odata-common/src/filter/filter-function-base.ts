@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf } from '../entity-base';
-import { Field, FieldType } from '../selectable/field';
+import { Field } from '../selectable/field';
 import { Filter } from './filter';
 
 /**
@@ -9,10 +9,7 @@ import { Filter } from './filter';
  * Use the factory function [[filterFunction]] to create instances of `FilterFunction`.
  * @internal
  */
-export abstract class FilterFunction<
-  EntityT extends EntityBase,
-  ReturnT extends FieldType | FieldType[]
-> {
+export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
   /**
    * Creates an instance of FilterFunction.
    * @param functionName - Name of the function.
@@ -108,5 +105,5 @@ export type FilterFunctionPrimitiveParameterType =
 export type FilterFunctionParameterType<EntityT extends EntityBase> =
   | FilterFunctionPrimitiveParameterType
   | Field<EntityT, boolean, boolean>
-  | FilterFunction<EntityT, FieldType | FieldType[]>
+  | FilterFunction<EntityT, any>
   | FilterFunctionPrimitiveParameterType[];

@@ -3,8 +3,13 @@ import {
   StringFilterFunction,
   BooleanFilterFunction,
   filterFunction,
-  filterFunctions as filterFunctionsCommon
+  filterFunctions as filterFunctionsCommon,
+  Time
 } from '@sap-cloud-sdk/odata-common/internal';
+import BigNumber from 'bignumber.js';
+import { DeSerializationMiddleware } from './de-serializers/de-serialization-middleware';
+import { defaultDeSerializers } from './de-serializers/default-de-serializers';
+import { getDeSerializers } from './de-serializers/get-de-serializers';
 import { Entity } from './entity';
 
 /* String Functions */
@@ -53,18 +58,60 @@ export function replace<EntityT extends Entity>(
 /**
  * Export length filter function for backwards compatibility.
  */
-export const length = filterFunctionsCommon.length;
+export const length = filterFunctionsCommon(defaultDeSerializers).length;
 
 /**
  * Export substring filter function for backwards compatibility.
  */
-export const substring = filterFunctionsCommon.substring;
+export const substring = filterFunctionsCommon(defaultDeSerializers).substring;
 
 /**
  * OData v2 specific filter functions
  */
-export const filterFunctions = {
-  ...filterFunctionsCommon,
-  substringOf,
-  replace
-};
+export function filterFunctions<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any,
+  DateTimeT = moment.Moment,
+  DateTimeOffsetT = moment.Moment,
+  TimeT = Time
+>(
+  deSerializers: Partial<
+    DeSerializationMiddleware<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+    >
+  > = defaultDeSerializers as any
+): Record<string, any> {
+  return {
+    ...filterFunctionsCommon(getDeSerializers(deSerializers)),
+    substringOf,
+    replace
+  };
+}

@@ -1,10 +1,10 @@
 import { Expandable } from '../expandable';
 import { EntityBase, Constructable } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
-import { Filterable } from '../filter/filterable';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
-import { FieldType } from '../selectable/field';
+import { Filterable } from '../filter';
+import { UriConverter } from '../de-serializers/uri-value-converter';
 import { getEntityKeys } from './get-keys';
 import { getOrderBy } from './get-orderby';
 import { UriConverter } from './uri-value-converter';
@@ -34,7 +34,7 @@ export interface ODataUri {
     orderBy: Orderable<EntityT>[]
   ): Partial<{ orderby: string }>;
   getResourcePathForKeys<EntityT extends EntityBase>(
-    keys: Record<string, FieldType>,
+    keys: Record<string, any>,
     entityConstructor: Constructable<EntityT>
   ): string;
   getSelect<EntityT extends EntityBase>(

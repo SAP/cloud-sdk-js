@@ -1,14 +1,13 @@
 import { EntityBase } from '../entity-base';
 import { Selectable } from '../selectable/selectable';
-import { Filterable } from '../filter/filterable';
 import { Orderable } from '../order/orderable';
-import { FieldType } from '../selectable/field';
+import { Filterable } from '../filter';
 
 /**
  * @internal
  */
 export interface WithKeys {
-  keys: Record<string, FieldType>;
+  keys: Record<string, any>;
 }
 
 /**

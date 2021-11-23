@@ -7,16 +7,24 @@ import {
   deserializeBatchResponse,
   BatchResponse,
   parseBatchResponse,
-  BatchRequestBuilder
+  BatchRequestBuilder,
+  entityDeserializer
 } from '@sap-cloud-sdk/odata-common/internal';
-import { entityDeserializer } from '../entity-deserializer';
-import { responseDataAccessor } from './response-data-accessor';
+import { edmToTs } from '../de-serializers/payload-value-converter';
+import { extractODataEtag } from '../extract-odata-etag';
+import { DeSerializationMiddlewareV2BASE } from '../de-serializers/de-serialization-middleware';
+import {
+  getLinkedCollectionResult,
+  responseDataAccessor
+} from './response-data-accessor';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
  * The retrieve and change sets will be executed in order, while the order within a change set can vary.
  */
-export class ODataBatchRequestBuilder extends BatchRequestBuilder {
+export class ODataBatchRequestBuilder<
+  T extends DeSerializationMiddlewareV2BASE
+> extends BatchRequestBuilder {
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
    * @param destination - Targeted destination or DestinationFetchOptions on which the request is performed.
@@ -24,7 +32,9 @@ export class ODataBatchRequestBuilder extends BatchRequestBuilder {
    * @returns Promise resolving to the requested data.
    */
   async execute(
-    destination: Destination | DestinationFetchOptions
+    destination: Destination | DestinationFetchOptions,
+    deSerializers: T,
+    schema: Record<string, any>
   ): Promise<BatchResponse[]> {
     return this.executeRaw(destination)
       .then(response => parseBatchResponse(response))
@@ -33,7 +43,13 @@ export class ODataBatchRequestBuilder extends BatchRequestBuilder {
           parsedResponse,
           this.entityToConstructorMap,
           responseDataAccessor,
-          entityDeserializer
+          entityDeserializer(
+            schema,
+            edmToTs,
+            extractODataEtag,
+            getLinkedCollectionResult,
+            deSerializers
+          )
         )
       )
       .catch(error => {

@@ -13,98 +13,107 @@ import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
   ComplexTypeField,
   ConstructorOrField,
-  EdmTypeField,
   FieldBuilder,
   FieldOptions,
   FieldType,
-  OrderableEdmTypeField,
   PropertyMetadata,
   Time
 } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  DeSerializationMiddleware,
+  DeSerializationMiddlewareV2BASE
+} from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
+import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/field-builder-new';
+import { NewEdmTypeField } from '@sap-cloud-sdk/odata-common/dist/selectable/edm-type-field-new';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
+import { NewComplexTypeField } from '@sap-cloud-sdk/odata-common/dist/selectable/complex-type-field-new';
+import { NewConstructorOrField } from '@sap-cloud-sdk/odata-common/dist/selectable/constructor-or-field';
 
 /**
  * TestComplexType
  */
-export interface TestComplexType {
+export interface TestComplexType<
+  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+> {
   /**
    * String Property.
    */
-  stringProperty: string;
+  stringProperty: DeserializedType<T, 'Edm.String'>;
   /**
    * Boolean Property.
    * @nullable
    */
-  booleanProperty?: boolean;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'>;
   /**
    * Guid Property.
    * @nullable
    */
-  guidProperty?: string;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'>;
   /**
    * Int 16 Property.
    * @nullable
    */
-  int16Property?: number;
+  int16Property?: DeserializedType<T, 'Edm.Int16'>;
   /**
    * Int 32 Property.
    * @nullable
    */
-  int32Property?: number;
+  int32Property?: DeserializedType<T, 'Edm.Int32'>;
   /**
    * Int 64 Property.
    * @nullable
    */
-  int64Property?: BigNumber;
+  int64Property?: DeserializedType<T, 'Edm.Int64'>;
   /**
    * Decimal Property.
    * @nullable
    */
-  decimalProperty?: BigNumber;
+  decimalProperty?: DeserializedType<T, 'Edm.Decimal'>;
   /**
    * Single Property.
    * @nullable
    */
-  singleProperty?: number;
+  singleProperty?: DeserializedType<T, 'Edm.Single'>;
   /**
    * Double Property.
    * @nullable
    */
-  doubleProperty?: number;
+  doubleProperty?: DeserializedType<T, 'Edm.Double'>;
   /**
    * Float Property.
    * @nullable
    */
-  floatProperty?: number;
+  floatProperty?: DeserializedType<T, 'Edm.Float'>;
   /**
    * Time Property.
    * @nullable
    */
-  timeProperty?: Time;
+  timeProperty?: DeserializedType<T, 'Edm.Time'>;
   /**
    * Date Time Property.
    * @nullable
    */
-  dateTimeProperty?: Moment;
+  dateTimeProperty?: DeserializedType<T, 'Edm.DateTime'>;
   /**
    * Date Time Off Set Property.
    * @nullable
    */
-  dateTimeOffSetProperty?: Moment;
+  dateTimeOffSetProperty?: DeserializedType<T, 'Edm.DateTimeOffset'>;
   /**
    * Byte Property.
    * @nullable
    */
-  byteProperty?: number;
+  byteProperty?: DeserializedType<T, 'Edm.Byte'>;
   /**
    * S Byte Property.
    * @nullable
    */
-  sByteProperty?: number;
+  sByteProperty?: DeserializedType<T, 'Edm.SByte'>;
   /**
    * Something The Sdk Does Not Support.
    * @nullable
    */
-  somethingTheSdkDoesNotSupport?: any;
+  somethingTheSdkDoesNotSupport?: DeserializedType<T, 'Edm.Any'>;
   /**
    * Complex Type Property.
    * @nullable
@@ -118,21 +127,31 @@ export interface TestComplexType {
  */
 export class TestComplexTypeField<
   EntityT extends Entity,
+  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, TestComplexType, NullableT, SelectableT> {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+> extends NewComplexTypeField<
+  EntityT,
+  T,
+  TestComplexType,
+  NullableT,
+  SelectableT
+> {
+  private _fieldBuilder: NewFieldBuilder<this, T> = new NewFieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[TestComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', false, false> =
+  stringProperty: NewEdmTypeField<EntityT, 'Edm.String', T, false, false> =
     this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', false);
   /**
    * Representation of the [[TestComplexType.booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  booleanProperty: EdmTypeField<EntityT, 'Edm.Boolean', true, false> =
+  booleanProperty: NewEdmTypeField<EntityT, 'Edm.Boolean', T, true, false> =
     this._fieldBuilder.buildEdmTypeField(
       'BooleanProperty',
       'Edm.Boolean',
@@ -142,31 +161,31 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: EdmTypeField<EntityT, 'Edm.Guid', true, false> =
+  guidProperty: NewEdmTypeField<EntityT, 'Edm.Guid', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true);
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int16Property: OrderableEdmTypeField<EntityT, 'Edm.Int16', true, false> =
+  int16Property: NewEdmTypeField<EntityT, 'Edm.Int16', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true);
   /**
    * Representation of the [[TestComplexType.int32Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int32Property: OrderableEdmTypeField<EntityT, 'Edm.Int32', true, false> =
+  int32Property: NewEdmTypeField<EntityT, 'Edm.Int32', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('Int32Property', 'Edm.Int32', true);
   /**
    * Representation of the [[TestComplexType.int64Property]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  int64Property: OrderableEdmTypeField<EntityT, 'Edm.Int64', true, false> =
+  int64Property: NewEdmTypeField<EntityT, 'Edm.Int64', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('Int64Property', 'Edm.Int64', true);
   /**
    * Representation of the [[TestComplexType.decimalProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  decimalProperty: OrderableEdmTypeField<EntityT, 'Edm.Decimal', true, false> =
+  decimalProperty: NewEdmTypeField<EntityT, 'Edm.Decimal', T, true, false> =
     this._fieldBuilder.buildEdmTypeField(
       'DecimalProperty',
       'Edm.Decimal',
@@ -176,47 +195,44 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.singleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  singleProperty: OrderableEdmTypeField<EntityT, 'Edm.Single', true, false> =
+  singleProperty: NewEdmTypeField<EntityT, 'Edm.Single', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('SingleProperty', 'Edm.Single', true);
   /**
    * Representation of the [[TestComplexType.doubleProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  doubleProperty: OrderableEdmTypeField<EntityT, 'Edm.Double', true, false> =
+  doubleProperty: NewEdmTypeField<EntityT, 'Edm.Double', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('DoubleProperty', 'Edm.Double', true);
   /**
    * Representation of the [[TestComplexType.floatProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  floatProperty: OrderableEdmTypeField<EntityT, 'Edm.Float', true, false> =
+  floatProperty: NewEdmTypeField<EntityT, 'Edm.Float', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('FloatProperty', 'Edm.Float', true);
   /**
    * Representation of the [[TestComplexType.timeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeProperty: OrderableEdmTypeField<EntityT, 'Edm.Time', true, false> =
+  timeProperty: NewEdmTypeField<EntityT, 'Edm.Time', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('TimeProperty', 'Edm.Time', true);
   /**
    * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeProperty: OrderableEdmTypeField<
-    EntityT,
-    'Edm.DateTime',
-    true,
-    false
-  > = this._fieldBuilder.buildEdmTypeField(
-    'DateTimeProperty',
-    'Edm.DateTime',
-    true
-  );
+  dateTimeProperty: NewEdmTypeField<EntityT, 'Edm.DateTime', T, true, false> =
+    this._fieldBuilder.buildEdmTypeField(
+      'DateTimeProperty',
+      'Edm.DateTime',
+      true
+    );
   /**
    * Representation of the [[TestComplexType.dateTimeOffSetProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  dateTimeOffSetProperty: OrderableEdmTypeField<
+  dateTimeOffSetProperty: NewEdmTypeField<
     EntityT,
     'Edm.DateTimeOffset',
+    T,
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField(
@@ -228,24 +244,29 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  byteProperty: OrderableEdmTypeField<EntityT, 'Edm.Byte', true, false> =
+  byteProperty: NewEdmTypeField<EntityT, 'Edm.Byte', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('ByteProperty', 'Edm.Byte', true);
   /**
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  sByteProperty: OrderableEdmTypeField<EntityT, 'Edm.SByte', true, false> =
+  sByteProperty: NewEdmTypeField<EntityT, 'Edm.SByte', T, true, false> =
     this._fieldBuilder.buildEdmTypeField('SByteProperty', 'Edm.SByte', true);
   /**
    * Representation of the [[TestComplexType.somethingTheSdkDoesNotSupport]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  somethingTheSdkDoesNotSupport: EdmTypeField<EntityT, 'Edm.Any', true, false> =
-    this._fieldBuilder.buildEdmTypeField(
-      'SomethingTheSDKDoesNotSupport',
-      'Edm.Any',
-      true
-    );
+  somethingTheSdkDoesNotSupport: NewEdmTypeField<
+    EntityT,
+    'Edm.Any',
+    T,
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'SomethingTheSDKDoesNotSupport',
+    'Edm.Any',
+    true
+  );
   /**
    * Representation of the [[TestComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
@@ -264,10 +285,11 @@ export class TestComplexTypeField<
    */
   constructor(
     fieldName: string,
-    fieldOf: ConstructorOrField<EntityT>,
+    fieldOf: NewConstructorOrField<EntityT>,
+    deSerializers: T,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, TestComplexType, fieldOptions);
+    super(fieldName, fieldOf, deSerializers, TestComplexType, fieldOptions);
   }
 }
 

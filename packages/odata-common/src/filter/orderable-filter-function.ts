@@ -1,6 +1,5 @@
 import { EntityBase, ODataVersionOf } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
-import { FieldType } from '../selectable/field';
 import { Filter } from './filter';
 import {
   FilterFunction,
@@ -13,7 +12,7 @@ import {
  */
 export abstract class OrderableFilterFunction<
   EntityT extends EntityBase,
-  ReturnT extends FieldType
+  ReturnT
 > extends FilterFunction<EntityT, ReturnT> {
   /**
    * Creates an instance of OrderableFilterFunction.

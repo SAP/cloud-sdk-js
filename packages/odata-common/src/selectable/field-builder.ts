@@ -6,6 +6,7 @@ import {
   OrderableEdmType
 } from '../edm-types';
 import { Constructable, EntityBase } from '../entity-base';
+import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
 import { ComplexTypeField } from './complex-type-field';
 import { EdmTypeField } from './edm-type-field';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
@@ -54,12 +55,15 @@ type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
  * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
  * @internal
  */
-export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
+export class FieldBuilder<
+  FieldOfT extends ConstructorOrField<any>,
+  T extends DeSerializationMiddlewareBASE
+> {
   /**
    * Creates an instance of `FieldBuilder`.
    * @param fieldOf - Entity or complex type field, for which the field builder shall create fields.
    */
-  constructor(public fieldOf: FieldOfT) {}
+  constructor(public fieldOf: FieldOfT, private deSerializers: T) {}
 
   buildEdmTypeField<EdmT extends OrderableEdmType, NullableT extends boolean>(
     fieldName: string,
@@ -68,6 +72,7 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
   ): OrderableEdmTypeField<
     EntityTypeFromFieldOf<FieldOfT>,
     EdmT,
+    T,
     NullableT,
     IsSelectableField<FieldOfT>
   >;
@@ -81,6 +86,7 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
   ): EdmTypeField<
     EntityTypeFromFieldOf<FieldOfT>,
     EdmT,
+    T,
     NullableT,
     IsSelectableField<FieldOfT>
   >;
@@ -105,12 +111,14 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
     | OrderableEdmTypeField<
         EntityTypeFromFieldOf<FieldOfT>,
         EdmT,
+        T,
         NullableT,
         IsSelectableField<FieldOfT>
       >
     | EdmTypeField<
         EntityTypeFromFieldOf<FieldOfT>,
         EdmT,
+        T,
         NullableT,
         IsSelectableField<FieldOfT>
       > {
@@ -122,7 +130,7 @@ export class FieldBuilder<FieldOfT extends ConstructorOrField<any>> {
       isOrderableEdmType(edmType) ? OrderableEdmTypeField : EdmTypeField
     ) as typeof EdmTypeField;
 
-    return new ctor(fieldName, this.fieldOf, edmType, {
+    return new ctor(fieldName, this.fieldOf, edmType, this.deSerializers, {
       isNullable,
       isSelectable
     });

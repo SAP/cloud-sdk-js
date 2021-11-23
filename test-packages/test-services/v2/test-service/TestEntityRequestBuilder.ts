@@ -3,20 +3,37 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  DeSerializationMiddleware as DeSerializationMiddlewareCommon,
+  defaultDeSerializersRaw as defaultDeSerializersRawCommon,
+  Time
+} from '@sap-cloud-sdk/odata-common';
+import {
+  DeSerializationMiddlewareBASE,
+  DeserializedType
+} from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
 import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   CreateRequestBuilder,
   UpdateRequestBuilder,
-  DeleteRequestBuilder
+  DeleteRequestBuilder,
+  DeSerializationMiddleware,
+  defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v2';
+import { DeSerializationMiddlewareV2BASE } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
+import { CustomDeSerializer } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/get-de-serializers';
+
+import { RequestBuilder } from '@sap-cloud-sdk/odata-v2/dist/request-builder/request-builder';
+
 import { TestEntity } from './TestEntity';
 
 /**
  * Request builder class for operations supported on the [[TestEntity]] entity.
  */
-export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
+export class TestEntityRequestBuilder<
+  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+> extends RequestBuilder<TestEntity<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
    * @param keyPropertyGuid Key property. See [[TestEntity.keyPropertyGuid]].
@@ -24,21 +41,29 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
   getByKey(
-    keyPropertyGuid: string,
-    keyPropertyString: string
-  ): GetByKeyRequestBuilder<TestEntity> {
-    return new GetByKeyRequestBuilder(TestEntity, {
-      KeyPropertyGuid: keyPropertyGuid,
-      KeyPropertyString: keyPropertyString
-    });
+    keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>,
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<TestEntity<T>> {
+    return new GetByKeyRequestBuilder(
+      TestEntity,
+      {
+        KeyPropertyGuid: keyPropertyGuid,
+        KeyPropertyString: keyPropertyString
+      },
+      this.deSerializers
+    );
   }
 
   /**
    * Returns a request builder for querying all `TestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
    */
-  getAll(): GetAllRequestBuilder<TestEntity> {
-    return new GetAllRequestBuilder(TestEntity);
+  getAll(): GetAllRequestBuilder<TestEntity<T>, T> {
+    return new GetAllRequestBuilder<TestEntity<T>, T>(
+      TestEntity,
+      this.deSerializers,
+      this.schema
+    );
   }
 
   /**
@@ -47,7 +72,7 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @returns A request builder for creating requests that create an entity of type `TestEntity`.
    */
   create(entity: TestEntity): CreateRequestBuilder<TestEntity> {
-    return new CreateRequestBuilder(TestEntity, entity);
+    return new CreateRequestBuilder(TestEntity, entity, this.deSerializers);
   }
 
   /**
@@ -56,7 +81,7 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @returns A request builder for creating requests that update an entity of type `TestEntity`.
    */
   update(entity: TestEntity): UpdateRequestBuilder<TestEntity> {
-    return new UpdateRequestBuilder(TestEntity, entity);
+    return new UpdateRequestBuilder(TestEntity, entity, this.deSerializers);
   }
 
   /**
@@ -86,7 +111,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
         : {
             KeyPropertyGuid: keyPropertyGuidOrEntity!,
             KeyPropertyString: keyPropertyString!
-          }
+          },
+      this.deSerializers
     );
   }
 }

@@ -4,7 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DeSerializationMiddleware,
+  Entity
+} from '@sap-cloud-sdk/odata-v2';
 import {
   AllFields,
   Constructable,
@@ -76,8 +81,10 @@ export interface TestEntityEndsWithType {
 }
 
 export namespace TestEntityEndsWith {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntityEndsWith>> =
-    new FieldBuilder(TestEntityEndsWith);
+  const _fieldBuilder: FieldBuilder<
+    Constructable<TestEntityEndsWith>,
+    DeSerializationMiddleware
+  > = new FieldBuilder(TestEntityEndsWith, defaultDeSerializers);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -121,3 +128,7 @@ export namespace TestEntityEndsWith {
     {}
   );
 }
+
+TestEntityEndsWith.requestBuilder()
+  .getAll()
+  .filter(TestEntityEndsWith.KEY_PROPERTY.equals(84));

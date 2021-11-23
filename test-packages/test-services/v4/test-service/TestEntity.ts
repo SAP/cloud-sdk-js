@@ -10,7 +10,7 @@ import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { TestEnumType } from './TestEnumType';
 import { TestEnumTypeInt64 } from './TestEnumTypeInt64';
 import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
+import { any, CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
   AllFields,
   CollectionField,
@@ -228,6 +228,8 @@ import {
   TestEntitySingleLink,
   TestEntitySingleLinkType
 } from './TestEntitySingleLink';
+import { filterFunction } from '@sap-cloud-sdk/core/dist/odata-v4';
+import { length } from '@sap-cloud-sdk/core';
 
 export interface TestEntityType {
   keyPropertyGuid: string;
@@ -623,3 +625,6 @@ export namespace TestEntity {
       {}
     );
 }
+
+// TestEntity.requestBuilder().getAll().filter(filterFunction('leng'))
+TestEntity.requestBuilder().getAll().filter(length(TestEntity.COLLECTION_PROPERTY))

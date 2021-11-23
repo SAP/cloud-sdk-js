@@ -1,13 +1,19 @@
 import {
   Constructable,
+  entityDeserializer,
   EntityIdentifiable,
-  FieldType,
   GetByKeyRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
+import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
 import { Entity } from '../entity';
-import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion/odata-uri';
-import { responseDataAccessor } from './response-data-accessor';
+import { createODataUri } from '../uri-conversion/odata-uri';
+import { edmToTs } from '../de-serializers/payload-value-converter';
+import { extractODataEtag } from '../extract-odata-etag';
+import {
+  responseDataAccessor,
+  getLinkedCollectionResult
+} from './response-data-accessor';
 
 /**
  * Create an OData request to get a single entity based on its key properties.
@@ -15,7 +21,10 @@ import { responseDataAccessor } from './response-data-accessor';
  * Note that navigational properties are automatically expanded if they included in a  select.
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilder<EntityT extends Entity>
+export class GetByKeyRequestBuilder<
+    EntityT extends Entity,
+    T extends DeSerializationMiddlewareBASE = DeSerializationMiddleware
+  >
   extends GetByKeyRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT>
 {
@@ -25,16 +34,26 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
    * Creates an instance of GetByKeyRequestBuilder.
    * @param _entityConstructor - Constructor of the entity to create the request for
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
+   * @param deSerializers - TODO
+   * @param schema - TODO
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    keys: Record<string, FieldType>
+    keys: Record<string, any>,
+    deSerializers: T,
+    schema: Record<string, any>
   ) {
     super(
       _entityConstructor,
       keys,
-      oDataUri,
-      entityDeserializer,
+      createODataUri(deSerializers),
+      entityDeserializer(
+        schema,
+        edmToTs,
+        extractODataEtag,
+        getLinkedCollectionResult,
+        deSerializers
+      ),
       responseDataAccessor
     );
   }

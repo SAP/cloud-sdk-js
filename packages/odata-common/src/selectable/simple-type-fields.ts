@@ -6,5 +6,5 @@ import { OrderableEdmTypeField } from './orderable-edm-type-field';
  * @internal
  */
 export type SimpleTypeFields<EntityT extends EntityBase> =
-  | EdmTypeField<EntityT, any, boolean, true>
-  | OrderableEdmTypeField<EntityT, any, boolean, true>;
+  | EdmTypeField<EntityT, any, any, boolean, true>
+  | OrderableEdmTypeField<EntityT, any, any, boolean, true>;

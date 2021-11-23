@@ -1,10 +1,20 @@
 import moment from 'moment';
+import BigNumber from 'bignumber.js';
 import { EntityBase } from '../entity-base';
 import { Field } from '../selectable/field';
+import { NewField } from '../selectable/field-new';
+import {
+  CustomDeSerializer,
+  DeSerializationMiddleware,
+  DeSerializationMiddlewareBASE,
+  DeserializedType
+} from '../de-serializers/de-serialization-middleware';
 import { StringFilterFunction } from './string-filter-function';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { filterFunction } from './filter-function';
 import { NumberFilterFunction } from './number-filter-function';
+import { newFilterFunction } from './filter-function-new';
+import { NewBooleanFilterFunction } from './boolean-filter-function-new';
 
 /* String Functions */
 /**
@@ -25,6 +35,21 @@ export function endsWith<EntityT extends EntityBase>(
     | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('endswith', 'boolean', str, suffix);
+}
+
+export function newEndsWith<
+  EntityT extends EntityBase,
+  T extends DeSerializationMiddlewareBASE
+>(
+  deSerializers: T,
+  str: DeserializedType<T, 'Edm.String'> | NewField<EntityT, boolean, boolean>,
+  // | StringFilterFunction<EntityT>,
+  suffix:
+    | DeserializedType<T, 'Edm.String'>
+    | NewField<EntityT, boolean, boolean>
+  // | StringFilterFunction<EntityT>
+): NewBooleanFilterFunction<EntityT> {
+  return newFilterFunction('endswith', 'boolean', str, suffix);
 }
 
 /**
@@ -332,24 +357,73 @@ export function isOf<EntityT extends EntityBase>(
  * ```
  * @internal
  */
-export const filterFunctions = {
-  endsWith,
-  startsWith,
-  length,
-  indexOf,
-  substring,
-  toLower,
-  toUpper,
-  trim,
-  concat,
-  round,
-  floor,
-  ceiling,
-  day,
-  hour,
-  minute,
-  month,
-  second,
-  year,
-  isOf
-};
+export function filterFunctions<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any
+>(
+  deSerializers: DeSerializationMiddleware<
+    BinaryT,
+    BooleanT,
+    ByteT,
+    DecimalT,
+    DoubleT,
+    FloatT,
+    Int16T,
+    Int32T,
+    Int64T,
+    GuidT,
+    SByteT,
+    SingleT,
+    StringT,
+    AnyT
+  >
+): Record<string, any> {
+  return {
+    endsWith,
+    newEndsWith: <EntityT extends EntityBase>(
+      str:
+        | DeserializedType<
+            CustomDeSerializer<typeof deSerializers>,
+            'Edm.String'
+          >
+        | NewField<EntityT, boolean, boolean>,
+      suffix:
+        | DeserializedType<
+            CustomDeSerializer<typeof deSerializers>,
+            'Edm.String'
+          >
+        | NewField<EntityT, boolean, boolean>
+    ): NewBooleanFilterFunction<EntityT> =>
+      newEndsWith(deSerializers, str, suffix),
+    startsWith,
+    length,
+    indexOf,
+    substring,
+    toLower,
+    toUpper,
+    trim,
+    concat,
+    round,
+    floor,
+    ceiling,
+    day,
+    hour,
+    minute,
+    month,
+    second,
+    year,
+    isOf
+  };
+}

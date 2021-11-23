@@ -1,6 +1,7 @@
 import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
 import { Filter } from '../filter/filter';
+import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
 import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
 
 /**
@@ -14,17 +15,18 @@ import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
 export class OrderableEdmTypeField<
   EntityT extends EntityBase,
   EdmT extends EdmTypeShared<'any'>,
+  T extends DeSerializationMiddlewareBASE,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends EdmTypeField<EntityT, EdmT, NullableT, SelectableT> {
+> extends EdmTypeField<EntityT, EdmT, T, NullableT, SelectableT> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   greaterThan(
-    value: FieldTypeByEdmType<EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
+    value: FieldTypeByEdmType<T, EdmT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<T, EdmT, NullableT>> {
     return new Filter(this.fieldPath(), 'gt', value, this.edmType);
   }
 
@@ -34,8 +36,8 @@ export class OrderableEdmTypeField<
    * @returns The resulting filter
    */
   greaterOrEqual(
-    value: FieldTypeByEdmType<EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
+    value: FieldTypeByEdmType<T, EdmT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<T, EdmT, NullableT>> {
     return new Filter(this.fieldPath(), 'ge', value, this.edmType);
   }
 
@@ -45,8 +47,8 @@ export class OrderableEdmTypeField<
    * @returns The resulting filter
    */
   lessThan(
-    value: FieldTypeByEdmType<EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
+    value: FieldTypeByEdmType<T, EdmT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<T, EdmT, NullableT>> {
     return new Filter(this.fieldPath(), 'lt', value, this.edmType);
   }
 
@@ -56,8 +58,8 @@ export class OrderableEdmTypeField<
    * @returns The resulting filter
    */
   lessOrEqual(
-    value: FieldTypeByEdmType<EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<EdmT, NullableT>> {
+    value: FieldTypeByEdmType<T, EdmT, NullableT>
+  ): Filter<EntityT, FieldTypeByEdmType<T, EdmT, NullableT>> {
     return new Filter(this.fieldPath(), 'le', value, this.edmType);
   }
 }

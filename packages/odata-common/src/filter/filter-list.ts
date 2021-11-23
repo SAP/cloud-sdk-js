@@ -45,7 +45,7 @@ export function isFilterList<T extends EntityBase>(
     typeof filterable['value'] === 'undefined' &&
     typeof filterable['functionName'] === 'undefined' &&
     typeof filterable['link'] === 'undefined' &&
-    typeof filterable['lambdaOperator'] === 'undefined' &&
+    !('lambdaOperator' in filterable) &&
     !(filterable instanceof OneToManyLink)
   );
 }

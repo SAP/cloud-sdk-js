@@ -40,7 +40,11 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import { destinationCache, getDestinationCacheKey } from './destination-cache';
-import { AuthenticationType, Destination } from './destination-service-types';
+import {
+  AuthenticationType,
+  Destination,
+  DestinationAuthToken
+} from './destination-service-types';
 import { getDestinationFromDestinationService } from './destination-from-service';
 import { parseDestination } from './destination';
 
@@ -95,13 +99,20 @@ function mockDestinationsWithSameName() {
   mockSubaccountDestinationsCall(nock, [dest], 200, providerServiceToken);
 }
 
-describe('caching destination integration tests', () => {
-  afterEach(() => {
+describe('destination cache', () => {
+  afterAll(() => {
     destinationCache.clear();
     destinationServiceCache.clear();
     nock.cleanAll();
   });
-  describe('test caching of retrieved entries', () => {
+
+  beforeEach(() => {
+    destinationCache.clear();
+    destinationServiceCache.clear();
+    nock.cleanAll();
+  });
+
+  describe('caching', () => {
     beforeEach(() => {
       mockVerifyJwt();
       mockServiceBindings();
@@ -307,7 +318,7 @@ describe('caching destination integration tests', () => {
   });
 
   describe('caching of destinations with special information (e.g. authTokens, certificates)', () => {
-    it('destinations with certificates are cached correctly', async () => {
+    it('destinations with certificates are cached ', async () => {
       mockServiceBindings();
       mockVerifyJwt();
       mockServiceToken();
@@ -568,9 +579,7 @@ describe('caching destination integration tests', () => {
       httpMocks.forEach(mock => expect(mock.isDone()).toBe(true));
     });
   });
-});
 
-describe('caching destination unit tests', () => {
   beforeEach(() => {
     destinationCache.clear();
   });
@@ -692,6 +701,33 @@ describe('caching destination unit tests', () => {
     );
 
     expect(actual).toBeUndefined();
+  });
+
+  it('should return undefined when the destination is not valid and has an auth token expiration time', () => {
+    jest.useFakeTimers('modern');
+    const dummyJwt = { user_id: 'user', zid: 'tenant' };
+    const destination = {
+      ...destinationOne,
+      authTokens: [{ expiresIn: '60' } as DestinationAuthToken]
+    };
+    destinationCache.cacheRetrievedDestination(
+      dummyJwt,
+      destination,
+      IsolationStrategy.User
+    );
+    const retrieveDestination = () =>
+      destinationCache.retrieveDestinationFromCache(
+        dummyJwt,
+        destination.name!,
+        IsolationStrategy.User
+      );
+
+    expect(retrieveDestination()).toEqual(destination);
+
+    const minutesToExpire = 2;
+    jest.advanceTimersByTime(60000 * minutesToExpire);
+
+    expect(retrieveDestination()).toBeUndefined();
   });
 });
 

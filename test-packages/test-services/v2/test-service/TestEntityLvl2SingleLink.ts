@@ -5,12 +5,23 @@
  */
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
 import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
-import { AllFields, Constructable, EdmTypeField, EntityBuilderType, Field, FieldBuilder, OrderableEdmTypeField } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  AllFields,
+  Constructable,
+  EdmTypeField,
+  EntityBuilderType,
+  Field,
+  FieldBuilder,
+  OrderableEdmTypeField
+} from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
  */
-export class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2SingleLinkType {
+export class TestEntityLvl2SingleLink
+  extends Entity
+  implements TestEntityLvl2SingleLinkType
+{
   /**
    * Technical entity name for TestEntityLvl2SingleLink.
    */
@@ -50,7 +61,10 @@ export class TestEntityLvl2SingleLink extends Entity implements TestEntityLvl2Si
    * Returns an entity builder to construct instances of `TestEntityLvl2SingleLink`.
    * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
    */
-  static builder(): EntityBuilderType<TestEntityLvl2SingleLink, TestEntityLvl2SingleLinkType> {
+  static builder(): EntityBuilderType<
+    TestEntityLvl2SingleLink,
+    TestEntityLvl2SingleLinkType
+  > {
     return Entity.entityBuilder(TestEntityLvl2SingleLink);
   }
 
@@ -89,36 +103,63 @@ export interface TestEntityLvl2SingleLinkType {
 }
 
 export namespace TestEntityLvl2SingleLink {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntityLvl2SingleLink>> = new FieldBuilder(TestEntityLvl2SingleLink);
+  const _fieldBuilder: FieldBuilder<Constructable<TestEntityLvl2SingleLink>> =
+    new FieldBuilder(TestEntityLvl2SingleLink);
   /**
    * Static representation of the [[keyProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false);
+  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
   /**
    * Static representation of the [[stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    true
+  );
   /**
    * Static representation of the [[booleanProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField('BooleanProperty', 'Edm.Boolean', true);
+  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'BooleanProperty',
+    'Edm.Boolean',
+    true
+  );
   /**
    * Static representation of the [[guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true);
+  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'GuidProperty',
+    'Edm.Guid',
+    true
+  );
   /**
    * Static representation of the [[int16Property]] property for query construction.
    * Use to reference this property in query operations such as 'select' in the fluent request API.
    */
-  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true);
+  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'Int16Property',
+    'Edm.Int16',
+    true
+  );
   /**
    * All fields of the TestEntityLvl2SingleLink entity.
    */
-  export const _allFields: Array<EdmTypeField<TestEntityLvl2SingleLink, 'Edm.String', false, true> | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.String', true, true> | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.Boolean', true, true> | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.Guid', true, true> | OrderableEdmTypeField<TestEntityLvl2SingleLink, 'Edm.Int16', true, true>> = [
+  export const _allFields: Array<
+    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.String', false, true>
+    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.String', true, true>
+    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.Boolean', true, true>
+    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.Guid', true, true>
+    | OrderableEdmTypeField<TestEntityLvl2SingleLink, 'Edm.Int16', true, true>
+  > = [
     TestEntityLvl2SingleLink.KEY_PROPERTY,
     TestEntityLvl2SingleLink.STRING_PROPERTY,
     TestEntityLvl2SingleLink.BOOLEAN_PROPERTY,
@@ -128,16 +169,31 @@ export namespace TestEntityLvl2SingleLink {
   /**
    * All fields selector.
    */
-  export const ALL_FIELDS: AllFields<TestEntityLvl2SingleLink> = new AllFields('*', TestEntityLvl2SingleLink);
+  export const ALL_FIELDS: AllFields<TestEntityLvl2SingleLink> = new AllFields(
+    '*',
+    TestEntityLvl2SingleLink
+  );
   /**
    * All key fields of the TestEntityLvl2SingleLink entity.
    */
-  export const _keyFields: Array<Field<TestEntityLvl2SingleLink, boolean, boolean>> = [TestEntityLvl2SingleLink.KEY_PROPERTY];
+  export const _keyFields: Array<
+    Field<TestEntityLvl2SingleLink, boolean, boolean>
+  > = [TestEntityLvl2SingleLink.KEY_PROPERTY];
   /**
    * Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink.
    */
-  export const _keys: { [keys: string]: Field<TestEntityLvl2SingleLink, boolean, boolean> } = TestEntityLvl2SingleLink._keyFields.reduce((acc: { [keys: string]: Field<TestEntityLvl2SingleLink, boolean, boolean> }, field: Field<TestEntityLvl2SingleLink, boolean, boolean>) => {
-    acc[field._fieldName] = field;
-    return acc;
-  }, {});
+  export const _keys: {
+    [keys: string]: Field<TestEntityLvl2SingleLink, boolean, boolean>;
+  } = TestEntityLvl2SingleLink._keyFields.reduce(
+    (
+      acc: {
+        [keys: string]: Field<TestEntityLvl2SingleLink, boolean, boolean>;
+      },
+      field: Field<TestEntityLvl2SingleLink, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }

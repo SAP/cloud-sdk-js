@@ -21,7 +21,8 @@ import {
 import {
   filterCustomRequestConfig,
   ValueWithOrigin,
-  mergeOptionsWithOrigin
+  mergeOptionsWithOrigin,
+  getOptionWithPriority
 } from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
@@ -142,10 +143,14 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Query parameter string
    */
   query(): string {
-    const query = Object.entries(this.queryParameters())
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&');
-    return query.length ? `?${query}` : '';
+    const parameters = getOptionWithPriority(this.queryParameters())
+    if (parameters) {
+      const query =  Object.entries(parameters)
+        .map(([key, value]) => `${key}=${value}`)
+        .join('&');
+      return query.length ? `?${query}` : '';
+    }
+    return '';
   }
 
   /**

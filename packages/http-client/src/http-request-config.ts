@@ -62,7 +62,12 @@ export function buildHttpRequestConfig(
   return requestConfig;
 }
 
-function getOptionWithPriority(
+/**
+ * Build an http request option from a given option with origin information. When reaching conflicts, values with higher priority are chosen.
+ * @param headersOrParams
+ * @internal
+ */
+export function getOptionWithPriority(
   headersOrParams?: Record<string, ValueWithOrigin>
 ): Record<string, string> | undefined {
   if (headersOrParams) {

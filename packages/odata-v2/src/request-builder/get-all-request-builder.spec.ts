@@ -214,7 +214,7 @@ describe('GetAllRequestBuilder', () => {
           .get(/.*/)
           .reply(200, 'iss token used on the way')
       ];
-      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
+      const spy = jest.spyOn(httpClient, 'executeHttpRequestWithOrigin');
       const response = await requestBuilder.executeRaw({
         destinationName: 'ERNIE-UND-CERT',
         iss: onlyIssuerXsuaaUrl

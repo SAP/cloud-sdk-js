@@ -1,4 +1,4 @@
-import { first } from '@sap-cloud-sdk/util';
+import {createLogger, first} from '@sap-cloud-sdk/util';
 import moment from 'moment';
 import { Cache, IsolationStrategy } from '../cache';
 import { tenantId } from '../tenant';

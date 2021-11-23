@@ -43,6 +43,8 @@
   - `IsolationStrategy`
   - `JwtKeyMapping`
   - `JwtPair`
+  - `MapType`
+  - `ODataBatchChangeSet` 
   - `Protocol`
   - `ProxyConfiguration`
   - `ProxyConfigurationHeaders`
@@ -63,6 +65,12 @@
   - `addProxyConfigurationOnPrem`
   - `alwaysProvider`
   - `alwaysSubscriber`
+  - `applySuffixOnConflictUnderscore`
+  - `applySuffixOnConflictDash`
+  - `applyPrefixOnJsConfictParam`
+  - `applyPrefixOnJsConfictFunctionImports`
+  - `assocSome`
+  - `asyncPipe`
   - `audiences`
   - `basicHeader`
   - `buildAuthorizationHeaders`
@@ -75,12 +83,11 @@
   - `destinationCache`
   - `destinationForServiceBinding`
   - `destinationServiceCache`
+  - `errorWithCause`
   - `extractClientCredentials`
   - `fetchDestination`
   - `fetchInstanceDestinations`
   - `fetchSubaccountDestinations`
-  - `fetchVerificationKeys`
-  - `fetchVerificationKeys`
   - `fetchVerificationKeys`
   - `getAuthHeaders`
   - `getClientCredentialsToken`
@@ -116,9 +123,11 @@
   - `jwtBearerToken`
   - `mappingTenantFields`
   - `mappingUserFields`
+  - `mergeSome`
   - `parseDestination`
   - `parseProxyEnv`
   - `parseSubdomain`
+  - `parseType`
   - `proxyAgent`
   - `proxyHostAndPort`
   - `proxyStrategy`
@@ -308,7 +317,6 @@
   - FunctionImportRequestBuilder,
   - GetAllRequestBuilder,
   - GetByKeyRequestBuilder,
-  - ODataBatchChangeSet,
   - ODataBatchRequestBuilder,
   - UpdateRequestBuilder,
   - deserializeComplexType,
@@ -336,7 +344,6 @@
   - FunctionImportRequestBuilder,
   - GetAllRequestBuilder,
   - GetByKeyRequestBuilder,
-  - ODataBatchChangeSet,
   - ODataBatchRequestBuilder,
   - UpdateRequestBuilder,
   - all,
@@ -370,17 +377,37 @@
 
 ### Implementation changed
 
-- [openapi] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [generator] changed the following implementations
+  - `VdmNavigationpropety` multiplicity, isMultiLink removed
+  - `VdmFunctionImportReturnType` isMulti removed
+- [openapi] changed the following implementations
+  - `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [odata-common] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions..
+- [odata-common] changed the following implementations
+  - `ComplexTypeField` deprecated constructors removed
+  - `CreateRequestBuilderBase` prepare removed
+  - `EntityBase` getCurrentMapKey, initializeCustomFields removed
+  - `EnumField` edmType removed
+  - `FilterFunction` toString, transformParameter removed
+  - `Link` clone, selects removed
+  - `MethodRequestBuilder` withCustomHeaders, withCustomQueryParameters, withCustomServicePath removed
+  - `ODataRequestConfig` contentType, deprecated constructor removed
+  - `ODataBatchRequestConfig` batchId, content_type_prefix removed
+  - `OneToOneLink` clone removed
+  - `UpdateRequestBuilderBase` prepare, requiredFields, ignoredFields, withCustomVersionIdentifier removed
+  - `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions..
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [odata-v2] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [odata-v2] changed the following implementations
+  - `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [odata-v4] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [odata-v4] changed the following implementations
+  - `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [connectivity] `getDestination` changed to use DestinationFetchOptions as single parameter.
+- [connectivity] changed the following implementations
+  - `getDestination` changed to use DestinationFetchOptions as single parameter.
   - `serviceToken` uses jwt instead of userJwt now.
   - `jwtBearerToken` uses jwt instead of userJwt now.
+  - `fetchVerificationKeys` merged with `executeFetchVerificationKeys`, now only accepts url as parameter
 
 ## Known Issues
 

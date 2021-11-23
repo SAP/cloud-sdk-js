@@ -5,8 +5,12 @@ import {
   getValueWithPriority,
   mergeOptionsWithOrigin
 } from './http-request-config';
-import { HttpRequestConfigWithOrigin, OptionWithOrigin, ValueWithOrigin } from './http-client-types';
-import { HttpRequestConfig } from '../dist';
+import {
+  HttpRequestConfig,
+  HttpRequestConfigWithOrigin,
+  OptionWithOrigin,
+  ValueWithOrigin
+} from './http-client-types';
 
 const logger = createLogger('http-request-config');
 
@@ -36,14 +40,19 @@ describe('buildHttpRequestConfig', () => {
   it('should pick headers and params with higher priorities', () => {
     const withOrigin: HttpRequestConfigWithOrigin = {
       method: 'get',
-      headers: {'Authorization': {'DestinationProperty': 'destProp', 'RequestConfig': 'reqConfig'} },
-      params: {'param': {'Custom': 'custom', 'RequestConfig': 'reqConfig'}}
+      headers: {
+        Authorization: {
+          DestinationProperty: 'destProp',
+          RequestConfig: 'reqConfig'
+        }
+      },
+      params: { param: { Custom: 'custom', RequestConfig: 'reqConfig' } }
     };
 
     const expected: HttpRequestConfig = {
       method: 'get',
-      headers: {'Authorization': 'destProp' },
-      params: {'param': 'custom'}
+      headers: { Authorization: 'destProp' },
+      params: { param: 'custom' }
     };
     expect(buildHttpRequestConfig(withOrigin)).toStrictEqual(expected);
   });
@@ -51,33 +60,53 @@ describe('buildHttpRequestConfig', () => {
 
 describe('getValueWithPriority', () => {
   it('should pick values from destination', () => {
-    const valueWithOrigin: ValueWithOrigin = {'Destination': 'dest', 'RequestConfig': 'reqConfig'};
+    const valueWithOrigin: ValueWithOrigin = {
+      Destination: 'dest',
+      RequestConfig: 'reqConfig'
+    };
     expect(getValueWithPriority(valueWithOrigin)).toBe('dest');
   });
 
   it('should pick values from destination property', () => {
-    const valueWithOrigin: ValueWithOrigin = {'DestinationProperty': 'destProp', 'Destination': 'dest'};
+    const valueWithOrigin: ValueWithOrigin = {
+      DestinationProperty: 'destProp',
+      Destination: 'dest'
+    };
     expect(getValueWithPriority(valueWithOrigin)).toBe('destProp');
   });
 
   it('should pick values from destination property', () => {
-    const valueWithOrigin: ValueWithOrigin = {'Custom': 'custom', 'DestinationProperty': 'destProp'};
+    const valueWithOrigin: ValueWithOrigin = {
+      Custom: 'custom',
+      DestinationProperty: 'destProp'
+    };
     expect(getValueWithPriority(valueWithOrigin)).toBe('custom');
   });
 });
 
 describe('mergeOptionsWithOrigin', () => {
   it('should merge options', () => {
-    const customOption: OptionWithOrigin = {origin: 'Custom', option: {'Authorization': 'customAuth'}};
-    const destOption: OptionWithOrigin = {origin: 'Destination', option: {'sap-client': '001'}};
-    const reqConfigOption: OptionWithOrigin = {origin: 'RequestConfig', option: {'Authorization': 'reqAuth', 'content-type': 'application/json'}};
+    const customOption: OptionWithOrigin = {
+      origin: 'Custom',
+      option: { Authorization: 'customAuth' }
+    };
+    const destOption: OptionWithOrigin = {
+      origin: 'Destination',
+      option: { 'sap-client': '001' }
+    };
+    const reqConfigOption: OptionWithOrigin = {
+      origin: 'RequestConfig',
+      option: { Authorization: 'reqAuth', 'content-type': 'application/json' }
+    };
 
     const expected: Record<string, ValueWithOrigin> = {
-      'Authorization': {'Custom': 'customAuth', 'RequestConfig': 'reqAuth'},
-      'sap-client': {'Destination': '001'},
-      'content-type': {'RequestConfig': 'application/json'}
-    }
+      Authorization: { Custom: 'customAuth', RequestConfig: 'reqAuth' },
+      'sap-client': { Destination: '001' },
+      'content-type': { RequestConfig: 'application/json' }
+    };
 
-    expect(mergeOptionsWithOrigin(customOption, destOption, reqConfigOption)).toStrictEqual(expected);
+    expect(
+      mergeOptionsWithOrigin(customOption, destOption, reqConfigOption)
+    ).toStrictEqual(expected);
   });
 });

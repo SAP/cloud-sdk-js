@@ -196,7 +196,7 @@ function getRequestHeaders(
   additionalHeaders?: Record<string, any>,
   headers?: Record<string, any>
 ) {
-  if(headers){
+  if (headers) {
     return { reqheaders: headers };
   }
 

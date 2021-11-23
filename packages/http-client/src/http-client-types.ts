@@ -35,7 +35,7 @@ export type Method =
 export type HttpRequestConfig = HttpRequestConfigBase & {
   params?: Record<string, string>;
   headers?: Record<string, string>;
-}
+};
 
 /**
  * @internal
@@ -89,7 +89,16 @@ export interface HttpRequestOptions {
   fetchCsrfToken?: boolean;
 }
 
-export type Origin = 'Custom' | 'DestinationProperty' | 'Destination' | 'RequestConfig';
+/**
+ * Origins of http request options. This indicates the priority of an http request option.
+ * Http request options with higher priorities will be used when reaching conflicts.
+ * The priority is "Custom" \> "DestinationProperty" \> "Destination" \> "RequestConfig"
+ */
+export type Origin =
+  | 'Custom'
+  | 'DestinationProperty'
+  | 'Destination'
+  | 'RequestConfig';
 
 /**
  * @internal
@@ -102,6 +111,6 @@ export type ValueWithOrigin = {
  * @internal
  */
 export interface OptionWithOrigin {
-  option?: Record<string, string>;
   origin: Origin;
+  option?: Record<string, string>;
 }

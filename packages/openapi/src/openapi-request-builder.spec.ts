@@ -24,7 +24,7 @@ const destination = {
   url: 'http://example.com'
 };
 
-const httpSpy = jest.spyOn(httpClient, 'executeHttpRequest');
+const httpSpy = jest.spyOn(httpClient, 'executeHttpRequestWithOrigin');
 const dummyResponse = 'dummy response';
 
 describe('openapi-request-builder', () => {
@@ -45,7 +45,7 @@ describe('openapi-request-builder', () => {
         method: 'get',
         url: '/test',
         headers: {},
-        params: undefined,
+        params: {},
         data: undefined
       },
       { fetchCsrfToken: false }
@@ -60,7 +60,7 @@ describe('openapi-request-builder', () => {
       }
     });
     const response = await requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+    expect(httpClient.executeHttpRequestWithOrigin).toHaveBeenCalledWith(
       sanitizeDestination(destination),
       {
         method: 'get',
@@ -83,13 +83,13 @@ describe('openapi-request-builder', () => {
       }
     });
     await requestBuilder.executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+    expect(httpClient.executeHttpRequestWithOrigin).toHaveBeenCalledWith(
       sanitizeDestination(destination),
       {
         method: 'post',
         url: '/test',
         headers: {},
-        params: undefined,
+        params: {},
         data: {
           limit: 100
         }
@@ -144,7 +144,7 @@ describe('openapi-request-builder', () => {
         method: 'get',
         url: '/test',
         headers: {},
-        params: undefined,
+        params: {},
         data: {
           limit: 100
         }
@@ -156,16 +156,20 @@ describe('openapi-request-builder', () => {
 
   it('addCustomHeaders', async () => {
     const requestBuilder = new OpenApiRequestBuilder('get', '/test');
+    const destinationWithAuth = {
+      ...destination,
+      headers: { authorization: 'destAuth' }
+    };
     const response = await requestBuilder
-      .addCustomHeaders({ myCustomHeader: 'custom-header' })
-      .executeRaw(destination);
+      .addCustomHeaders({ authorization: 'custom-header' })
+      .executeRaw(destinationWithAuth);
     expect(httpSpy).toHaveBeenCalledWith(
-      sanitizeDestination(destination),
+      sanitizeDestination(destinationWithAuth),
       {
         method: 'get',
         url: '/test',
-        headers: { mycustomheader: 'custom-header' },
-        params: undefined,
+        headers: { authorization: 'custom-header' },
+        params: {},
         data: undefined
       },
       { fetchCsrfToken: false }
@@ -196,7 +200,7 @@ describe('openapi-request-builder', () => {
         method: 'get',
         url: '/test/%23test',
         headers: {},
-        params: undefined,
+        params: {},
         data: undefined
       },
       { fetchCsrfToken: false }
@@ -209,13 +213,13 @@ describe('openapi-request-builder', () => {
     const response = await requestBuilder
       .addCustomRequestConfiguration({ responseType: 'arraybuffer' })
       .executeRaw(destination);
-    expect(httpClient.executeHttpRequest).toHaveBeenCalledWith(
+    expect(httpClient.executeHttpRequestWithOrigin).toHaveBeenCalledWith(
       sanitizeDestination(destination),
       {
         method: 'get',
         url: '/test',
         headers: {},
-        params: undefined,
+        params: {},
         data: undefined,
         responseType: 'arraybuffer'
       },
@@ -236,7 +240,7 @@ describe('openapi-request-builder', () => {
         method: 'post',
         url: '/test',
         headers: {},
-        params: undefined,
+        params: {},
         data: undefined
       },
       { fetchCsrfToken: false }

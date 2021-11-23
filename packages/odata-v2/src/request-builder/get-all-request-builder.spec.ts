@@ -150,18 +150,21 @@ describe('GetAllRequestBuilder', () => {
 
     it('sets custom headers instead of destination headers', async () => {
       const entityData = createOriginalTestEntityData1();
-      const customAuthHeader = { 'Authorization': 'custom'};
+      const customAuthHeader = { Authorization: 'custom' };
       mockGetRequest({
         headers: customAuthHeader,
         responseBody: { d: { results: [entityData] } }
       });
 
-      const destinationWithAuthHeader = { ...defaultDestination, 'Authorization': 'destination'}
-      const actual = await requestBuilder.addCustomHeaders(customAuthHeader).execute(destinationWithAuthHeader);
+      const destinationWithAuthHeader = {
+        ...defaultDestination,
+        Authorization: 'destination'
+      };
+      const actual = await requestBuilder
+        .addCustomHeaders(customAuthHeader)
+        .execute(destinationWithAuthHeader);
 
-      expect(actual).toEqual([
-        createTestEntity(entityData)
-      ]);
+      expect(actual).toEqual([createTestEntity(entityData)]);
     });
   });
 

@@ -1,4 +1,8 @@
-export { buildHttpRequest, executeHttpRequest, executeHttpRequestWithOrigin } from './http-client';
+export {
+  buildHttpRequest,
+  executeHttpRequest,
+  executeHttpRequestWithOrigin
+} from './http-client';
 export {
   HttpRequestConfig,
   HttpRequestOptions,

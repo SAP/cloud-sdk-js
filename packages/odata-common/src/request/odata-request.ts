@@ -16,9 +16,13 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import {
   HttpResponse,
-  executeHttpRequestWithOrigin,
+  executeHttpRequestWithOrigin
 } from '@sap-cloud-sdk/http-client';
-import { filterCustomRequestConfig, ValueWithOrigin, mergeOptionsWithOrigin } from '@sap-cloud-sdk/http-client/internal'
+import {
+  filterCustomRequestConfig,
+  ValueWithOrigin,
+  mergeOptionsWithOrigin
+} from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 /**
@@ -159,16 +163,18 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         this.config.customHeaders
       );
 
-      return mergeOptionsWithOrigin({
+      return mergeOptionsWithOrigin(
+        {
           origin: 'Custom',
           option: this.customHeaders()
-        }, {
+        },
+        {
           origin: 'Destination',
           option: destinationRelatedHeaders
-        },{
+        },
+        {
           origin: 'RequestConfig',
-          option: {...this.defaultHeaders(),
-            ...this.eTagHeaders()}
+          option: { ...this.defaultHeaders(), ...this.eTagHeaders() }
         }
       );
     } catch (error) {
@@ -256,13 +262,16 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
   }
 
   private queryParameters(): Record<string, ValueWithOrigin> {
-    return mergeOptionsWithOrigin({
+    return mergeOptionsWithOrigin(
+      {
         origin: 'Custom',
         option: this.config.customQueryParameters
-      }, {
+      },
+      {
         origin: 'Destination',
         option: this.destination?.queryParameters
-      },{
+      },
+      {
         origin: 'RequestConfig',
         option: this.config.queryParameters()
       }

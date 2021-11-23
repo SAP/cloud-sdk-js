@@ -19,7 +19,8 @@ import {
   DestinationHttpRequestConfig,
   ExecuteHttpRequestFn,
   HttpRequest,
-  HttpRequestConfig, HttpRequestConfigWithOrigin,
+  HttpRequestConfig,
+  HttpRequestConfigWithOrigin,
   HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
@@ -111,7 +112,7 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
 
 function logRequestInformation(request: HttpRequestConfig) {
   const basicRequestInfo = `Execute '${request.method}' request with target: ${request.url}.`;
-  if(request.headers) {
+  if (request.headers) {
     const headerText = Object.keys(request.headers).reduce((previous, key) => {
       if (
         key.toLowerCase().includes('authentication') ||
@@ -146,6 +147,7 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
   return { ...getAxiosConfigWithDefaultsWithoutMethod(), ...request };
 }
 
+// TODO: deprecate this and consider switching to executeHttpRequestWithOrigin
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
  * and executes it (using Axios).
@@ -162,12 +164,26 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   return execute(executeWithAxios)(destination, requestConfig, options);
 }
 
-export function executeHttpRequestWithOrigin<T extends HttpRequestConfigWithOrigin>(
+/**
+ * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
+ * and executes it (using Axios).
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
+ * @param options - An [[HttpRequestOptions]] of the http request for configuring e.g., csrf token delegation. By default, the SDK will not fetch the csrf token.
+ * @returns A promise resolving to an [[HttpResponse]].
+ */
+export function executeHttpRequestWithOrigin<
+  T extends HttpRequestConfigWithOrigin
+>(
   destination: Destination | DestinationFetchOptions,
   requestConfig: T,
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
-  return execute(executeWithAxios)(destination, buildHttpRequestConfig(requestConfig), options);
+  return execute(executeWithAxios)(
+    destination,
+    buildHttpRequestConfig(requestConfig),
+    options
+  );
 }
 
 function buildDestinationHttpRequestConfig(

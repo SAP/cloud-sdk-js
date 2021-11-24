@@ -1,5 +1,4 @@
 import { Destination } from '@sap-cloud-sdk/connectivity';
-// import { buildHeaders } from '@sap-cloud-sdk/odata-common/internal/dist/header-builder';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   ODataGetAllRequestConfig,
@@ -35,7 +34,7 @@ describe('Header-Builder', () => {
     request.config.customHeaders = { authorization: authString };
 
     const headers = await buildHeaders(request);
-    expect(headers.authorization).toBe(authString);
+    expect(headers.authorization.Custom).toBe(authString);
   });
 
   it('uses authTokens if present on a destination', async () => {
@@ -58,7 +57,7 @@ describe('Header-Builder', () => {
     const request = createGetAllRequest(destination);
     const headers = await buildHeaders(request);
 
-    expect(headers.authorization).toBe('Bearer some.token');
+    expect(headers.authorization.Destination).toBe('Bearer some.token');
   });
 
   describe('update request header with ETag', () => {
@@ -78,7 +77,7 @@ describe('Header-Builder', () => {
       mockHeaderRequest({ request });
 
       const actual = await buildHeaders(request);
-      expect(actual['if-match']).toBe('W//');
+      expect(actual['if-match'].RequestConfig).toBe('W//');
     });
 
     it('if-match should be set to * when version identifier is ignored', async () => {
@@ -90,7 +89,7 @@ describe('Header-Builder', () => {
       mockHeaderRequest({ request });
 
       const actual = await buildHeaders(request);
-      expect(actual['if-match']).toBe('*');
+      expect(actual['if-match'].RequestConfig).toBe('*');
     });
   });
 
@@ -112,8 +111,10 @@ describe('Header-Builder', () => {
     const request = createGetAllRequest(destination);
     const headers = await request.headers();
 
-    expect(headers['Proxy-Authorization']).toBe('Bearer jwt');
-    expect(headers['SAP-Connectivity-Authentication']).toBe('Bearer jwt');
+    expect(headers['Proxy-Authorization'].Destination).toBe('Bearer jwt');
+    expect(headers['SAP-Connectivity-Authentication'].Destination).toBe(
+      'Bearer jwt'
+    );
   });
 
   it('Adds location id headers to the headers if there is a cloudConnectorLocationId in the destination', async () => {
@@ -124,7 +125,9 @@ describe('Header-Builder', () => {
 
     const request = createGetAllRequest(destination);
     const headers = await request.headers();
-    expect(headers['SAP-Connectivity-SCC-Location_ID']).toBe('Potsdam');
+    expect(headers['SAP-Connectivity-SCC-Location_ID'].Destination).toBe(
+      'Potsdam'
+    );
   });
 
   it('Prioritizes custom Authorization headers (upper case A)', async () => {
@@ -134,7 +137,7 @@ describe('Header-Builder', () => {
     });
 
     const headers = await request.headers();
-    expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
+    expect(headers.authorization.Destination).toBe('Basic SOMETHINGSOMETHING');
   });
 
   it('Prioritizes custom Authorization headers (lower case A)', async () => {
@@ -144,6 +147,6 @@ describe('Header-Builder', () => {
     });
 
     const headers = await request.headers();
-    expect(headers.authorization).toBe('Basic SOMETHINGSOMETHING');
+    expect(headers.authorization.Destination).toBe('Basic SOMETHINGSOMETHING');
   });
 });

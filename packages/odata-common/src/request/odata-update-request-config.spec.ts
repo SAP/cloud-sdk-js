@@ -1,8 +1,11 @@
 import { v4 as uuid } from 'uuid';
-import { ODataUpdateRequestConfig } from './odata-update-request-config';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import {commonOdataUri, commonUriConverter} from "../../test/common-request-config";
-import {CommonEntity} from "../../test/common-entity";
+import {
+  commonOdataUri,
+  commonUriConverter
+} from '../../test/common-request-config';
+import { CommonEntity } from '../../test/common-entity';
+import { ODataUpdateRequestConfig } from './odata-update-request-config';
 
 describe('ODataUpdateRequestConfig', () => {
   let config: ODataUpdateRequestConfig<CommonEntity>;

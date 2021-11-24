@@ -113,7 +113,7 @@ export async function checkApiOfPackage(pathToPackage: string): Promise<void> {
     pathToSource,
     await getCompilerOptions(pathToPackage)
   );
-  await checkBarrelRecursive(pathToSource);
+  checkBarrelRecursive(pathToSource);
   checkSingleIndexFile(pathToSource);
 
   const allExportedTypes = await parseTypeDefinitionFiles(pathCompiled);
@@ -252,7 +252,7 @@ function captureGroupsFromGlobalRegex(regex: RegExp, str: string): string[] {
   return groups.map(group => group[1]);
 }
 
-export async function checkBarrelRecursive(cwd: string): Promise<void> {
+export function checkBarrelRecursive(cwd: string): void {
   readdirSync(cwd, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
     .forEach(subDir => {
@@ -260,16 +260,16 @@ export async function checkBarrelRecursive(cwd: string): Promise<void> {
         checkBarrelRecursive(join(cwd, subDir.name));
       }
     });
-  await exportAllInBarrel(
+  exportAllInBarrel(
     cwd,
     parse(cwd).name === 'src' ? 'internal.ts' : 'index.ts'
   );
 }
 
-export async function exportAllInBarrel(
+export function exportAllInBarrel(
   cwd: string,
   barrelFileName: string
-): Promise<void> {
+): void {
   const barrelFilePath = join(cwd, barrelFileName);
   if (existsSync(barrelFilePath) && lstatSync(barrelFilePath).isFile()) {
     const dirContents = new GlobSync('*', {
@@ -285,10 +285,10 @@ export async function exportAllInBarrel(
       cwd
     }).found.map(name => basename(name, '.ts'));
     const exportedFiles = parseBarrelFile(
-      await readFile(barrelFilePath, 'utf8'),
+      readFileSync(barrelFilePath, 'utf8'),
       regexExportedInternal
     );
-    if (!compareBarrels(dirContents, exportedFiles, barrelFilePath)) {
+    if (compareBarrels(dirContents, exportedFiles, barrelFilePath)) {
       throw Error(`${barrelFileName} is not in sync`);
     }
   } else {
@@ -301,23 +301,12 @@ function compareBarrels(
   exportedFiles: string[],
   barrelFilePath: string
 ) {
-  let setsAreEqual = true;
+  const missingBarrelExports = dirContents.filter(x => !exportedFiles.includes(x));
+  missingBarrelExports.forEach(tsFiles => logger.error(`${tsFiles} is not exported in ${barrelFilePath}`));
 
-  dirContents.forEach(tsFiles => {
-    if (!exportedFiles.find(nameInIndex => tsFiles === nameInIndex)) {
-      logger.error(`${tsFiles} is not exported in ${barrelFilePath}`);
-      setsAreEqual = false;
-    }
-  });
+  const extraBarrelExports = exportedFiles.filter(x => !dirContents.includes(x));
+  extraBarrelExports.forEach(exports => logger.error(`"${exports}" is exported from the ${barrelFilePath} but does not exist in this directory`
+  ));
 
-  exportedFiles.forEach(nameInIndex => {
-    if (!dirContents.find(exportedType => exportedType === nameInIndex)) {
-      logger.error(
-        `"${nameInIndex}" is exported from the ${barrelFilePath} but does not exist in this directory`
-      );
-      setsAreEqual = false;
-    }
-  });
-
-  return setsAreEqual;
+  return missingBarrelExports.length || extraBarrelExports.length;
 }

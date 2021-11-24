@@ -1,14 +1,13 @@
 import { v4 as uuid } from 'uuid';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
-import { ODataUpdateRequestConfig } from '@sap-cloud-sdk/odata-common/internal';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { ODataUpdateRequestConfig } from './odata-update-request-config';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { uriConverter } from '../../../odata-v2/src/uri-conversion/uri-value-converter';
+import {commonOdataUri, commonUriConverter} from "../../test/common-request-config";
+import {CommonEntity} from "../../test/common-entity";
 
 describe('ODataUpdateRequestConfig', () => {
-  let config: ODataUpdateRequestConfig<TestEntity>;
+  let config: ODataUpdateRequestConfig<CommonEntity>;
   beforeEach(() => {
-    config = new ODataUpdateRequestConfig(TestEntity, oDataUri);
+    config = new ODataUpdateRequestConfig(CommonEntity, commonOdataUri);
   });
 
   it('method is patch as default', () => {
@@ -31,7 +30,8 @@ describe('ODataUpdateRequestConfig', () => {
       testEntityResourcePath(
         keyPropGuid,
         keyPropString,
-        uriConverter.convertToUriFormat
+        commonUriConverter.convertToUriFormat,
+        'A_CommonEntity'
       )
     );
   });

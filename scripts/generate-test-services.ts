@@ -112,7 +112,7 @@ function adjustRequestBuilder(str: string): string {
 function adjustCustomField(str: string): string {
   return str.replace(
     'return Entity.customFieldSelector(fieldName, CommonEntity)',
-    "throw new Error('not implemented')"
+    'return new CustomField(fieldName,CommonEntity)'
   );
 }
 

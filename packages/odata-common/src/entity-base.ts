@@ -336,7 +336,9 @@ export abstract class EntityBase {
       );
   }
 }
-
+/**
+ * @internal
+ */
 export interface EntityIdentifiable<T extends EntityBase> {
   readonly _entityConstructor: Constructable<T>;
   readonly _entity: T;

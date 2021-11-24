@@ -26,14 +26,15 @@ import {
 } from '../src/internal';
 import { CommonEntity } from './common-entity';
 
-const commonUriConverter = createUriConverter(
+export const commonUriConverter = createUriConverter(
   serializersCommon,
   uriConvertersCommon as any
 );
-const commonOdataUri = createODataUri(
+export const commonOdataUri = createODataUri(
   commonUriConverter,
   () => undefined as any,
-  () => undefined as any
+  selects =>
+    selects?.length ? { select: selects.map(s => s._fieldName).join(',') } : {}
 );
 const commonEntitySerializer = entitySerializerBase(
   createEdmToTs(serializersCommon)

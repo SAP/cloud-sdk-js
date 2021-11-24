@@ -94,7 +94,7 @@ export class CommonEntity extends Entity implements CommonEntityType {
   }
 
   static customField(fieldName: string): CustomField<CommonEntity> {
-    throw new Error('not implemented');
+    return new CustomField(fieldName, CommonEntity);
   }
 
   toJSON(): { [key: string]: any } {

@@ -266,10 +266,7 @@ export function checkBarrelRecursive(cwd: string): void {
   );
 }
 
-export function exportAllInBarrel(
-  cwd: string,
-  barrelFileName: string
-): void {
+export function exportAllInBarrel(cwd: string, barrelFileName: string): void {
   const barrelFilePath = join(cwd, barrelFileName);
   if (existsSync(barrelFilePath) && lstatSync(barrelFilePath).isFile()) {
     const dirContents = new GlobSync('*', {
@@ -301,12 +298,21 @@ function compareBarrels(
   exportedFiles: string[],
   barrelFilePath: string
 ) {
-  const missingBarrelExports = dirContents.filter(x => !exportedFiles.includes(x));
-  missingBarrelExports.forEach(tsFiles => logger.error(`${tsFiles} is not exported in ${barrelFilePath}`));
+  const missingBarrelExports = dirContents.filter(
+    x => !exportedFiles.includes(x)
+  );
+  missingBarrelExports.forEach(tsFiles =>
+    logger.error(`${tsFiles} is not exported in ${barrelFilePath}`)
+  );
 
-  const extraBarrelExports = exportedFiles.filter(x => !dirContents.includes(x));
-  extraBarrelExports.forEach(exports => logger.error(`"${exports}" is exported from the ${barrelFilePath} but does not exist in this directory`
-  ));
+  const extraBarrelExports = exportedFiles.filter(
+    x => !dirContents.includes(x)
+  );
+  extraBarrelExports.forEach(exports =>
+    logger.error(
+      `"${exports}" is exported from the ${barrelFilePath} but does not exist in this directory`
+    )
+  );
 
   return missingBarrelExports.length || extraBarrelExports.length;
 }

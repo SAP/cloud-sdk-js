@@ -73,9 +73,9 @@ describe('check-public-api', () => {
         }
       }
     });
-    expect(() =>
-      exportAllInBarrel('src', 'internal.ts')
-    ).toThrowError('No internal.ts file found in src');
+    expect(() => exportAllInBarrel('src', 'internal.ts')).toThrowError(
+      'No internal.ts file found in src'
+    );
     mock.restore();
   });
 
@@ -94,9 +94,9 @@ describe('check-public-api', () => {
       }
     });
 
-    expect(() =>
-      exportAllInBarrel('folder1', 'index.ts')
-    ).toThrowError('index.ts is not in sync');
+    expect(() => exportAllInBarrel('folder1', 'index.ts')).toThrowError(
+      'index.ts is not in sync'
+    );
 
     expect(errorSpy).toHaveBeenCalledWith(
       'folder2 is not exported in folder1/index.ts'

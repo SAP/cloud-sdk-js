@@ -97,7 +97,7 @@ async function generateAll(): Promise<void> {
 generateAll();
 
 function removeImports(str: string): string {
-  return str.replaceAll(/import \{.*\}.*;/g, '');
+  return str.replace(/import \{.*\}.*;/g, '');
 }
 
 function adjustRequestBuilder(str: string): string {
@@ -125,7 +125,7 @@ function addODataVersion(str: string): string {
 }
 
 function removeJsDoc(str: string): string {
-  return str.replaceAll(/\/\*\*\n(?:\s+\*\s+.+\n)+\s+\*\/\n/g, '');
+  return str.replace(/\/\*\*\n(?:\s+\*\s+.+\n)+\s+\*\/\n/g, '');
 }
 
 async function generateCommonTestEntity() {

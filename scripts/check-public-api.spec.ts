@@ -1,10 +1,14 @@
 import { resolve } from 'path';
 import mock from 'mock-fs';
+import { createLogger } from '@sap-cloud-sdk/util';
 import {
+  checkBarrelRecursive,
   checkSingleIndexFile,
+  exportAllInBarrel,
   indexFiles,
-  parseIndexFile,
+  parseBarrelFile,
   parseTypeDefinitionFile,
+  regexExportedIndex,
   typeDescriptorPaths
 } from './check-public-api';
 
@@ -22,25 +26,10 @@ describe('check-public-api', () => {
         }
       }
     });
-    expect(indexFiles('root', 'index.ts')).toEqual([
+    expect(indexFiles('root', '**/index.ts')).toEqual([
       'root/folder1/folder2/index.ts',
       'root/index.ts'
     ]);
-    mock.restore();
-  });
-
-  it('fails for too many index files', () => {
-    mock({
-      root: {
-        'index.ts': '',
-        folder1: {
-          'index.ts': ''
-        }
-      }
-    });
-    expect(() => checkSingleIndexFile('root')).toThrowError(
-      'Too many index files found: root/folder1/index.ts,root/index.ts'
-    );
     mock.restore();
   });
 
@@ -53,17 +42,18 @@ describe('check-public-api', () => {
       }
     });
     expect(() => checkSingleIndexFile('root')).toThrowError(
-      'Index file is not in root foldes root/folder1/index.ts'
+      'No index.ts file found in root'
     );
     mock.restore();
   });
 
-  it('passes if one index file is present in root', () => {
+  it('passes if index file is present in root', () => {
     mock({
       root: {
         'index.ts': '',
         folder1: {
           otherFile: '',
+          'index.ts': '',
           folder2: {
             otherFile: ''
           }
@@ -71,6 +61,62 @@ describe('check-public-api', () => {
       }
     });
     checkSingleIndexFile('root');
+    mock.restore();
+  });
+
+  it('fails if internal.ts is not present in root', async () => {
+    mock({
+      src: {
+        file1: '',
+        folder2: {
+          file2: ''
+        }
+      }
+    });
+    expect(() => exportAllInBarrel('src', 'internal.ts')).toThrowError(
+      'No internal.ts file found in src'
+    );
+    mock.restore();
+  });
+
+  it('fails if a file is not exported in barrel file', async () => {
+    const logger = createLogger('check-public-api');
+    const errorSpy = jest.spyOn(logger, 'error');
+    mock({
+      folder1: {
+        file1: '',
+        'index.ts': "export * from './file1';",
+        folder2: {
+          file2: '',
+          file3: '',
+          'index.ts': "export * from './file2';export * from './file3';"
+        }
+      }
+    });
+
+    expect(() => exportAllInBarrel('folder1', 'index.ts')).toThrowError(
+      'index.ts is not in sync'
+    );
+
+    expect(errorSpy).toHaveBeenCalledWith(
+      'folder2 is not exported in folder1/index.ts'
+    );
+    mock.restore();
+  });
+
+  it('passes recursive check for barrel file exports', () => {
+    mock({
+      folder1: {
+        file1: '',
+        'index.ts': "export * from './file1'; export * from './folder2';",
+        folder2: {
+          file2: '',
+          file3: '',
+          'index.ts': "export * from './file2';export * from './file3';"
+        }
+      }
+    });
+    checkBarrelRecursive('folder1');
     mock.restore();
   });
 
@@ -101,12 +147,15 @@ describe('check-public-api', () => {
   });
 
   it('parses one index.ts file', () => {
-    const exportedObjects = parseIndexFile(dummyIndexFile);
+    const exportedObjects = parseBarrelFile(dummyIndexFile, regexExportedIndex);
     expect(exportedObjects).toEqual(['o1', 'o2', 'o3', 'o4', 'o5', 'o6', 'o7']);
   });
 
   it('parses one index.ts file witout matching', () => {
-    const exportedObjects = parseIndexFile('some non matching');
+    const exportedObjects = parseBarrelFile(
+      'some non matching',
+      regexExportedIndex
+    );
     expect(exportedObjects).toEqual([]);
   });
 });

@@ -103,8 +103,6 @@ function navigationProperties(
       from: entityType.Name,
       to: navBinding.Target,
       toEntityClassName: classNames[navBinding.Target],
-      multiplicity: isCollection ? '1 - *' : '1 - 1',
-      isMultiLink: isCollection,
       isCollection
     };
   });

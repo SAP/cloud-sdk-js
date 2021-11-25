@@ -145,7 +145,7 @@ describe('deep-update and change detection', () => {
 
     const request = TestEntity.requestBuilder()
       .update(testEntity)
-      .requiredFields(
+      .setRequiredFields(
         TestEntity.TO_SINGLE_LINK,
         TestEntity.COMPLEX_TYPE_PROPERTY
       )

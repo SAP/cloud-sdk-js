@@ -132,7 +132,7 @@ describe('Request Builder', () => {
 
     const request = TestEntity.requestBuilder()
       .getAll()
-      .withCustomHeaders({ authorization: 'customcustom' })
+      .addCustomHeaders({ authorization: 'customcustom' })
       .execute({
         destinationName: 'Testination'
       });
@@ -175,7 +175,7 @@ describe('Request Builder', () => {
 
     const request = TestEntity.requestBuilder()
       .getAll()
-      .withCustomHeaders({ authorization: 'customcustom' })
+      .addCustomHeaders({ authorization: 'customcustom' })
       .execute({
         destinationName: 'FINAL-DESTINATION'
       });
@@ -474,7 +474,7 @@ describe('Request Builder', () => {
 
     const request = TestEntity.requestBuilder()
       .getAll()
-      .withCustomHeaders({
+      .addCustomHeaders({
         authorization: 'customcustom'
       })
       .execute({

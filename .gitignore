@@ -6,6 +6,7 @@ dist
 .DS_Store
 coverage
 lerna-debug.log
+yarn-error.log
 *.tgz
 **credentials.json
 .idea

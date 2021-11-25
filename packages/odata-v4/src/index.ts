@@ -42,5 +42,3 @@ export { GetAllRequestBuilder } from './request-builder/get-all-request-builder'
 export { GetByKeyRequestBuilder } from './request-builder/get-by-key-request-builder';
 export { UpdateRequestBuilder } from './request-builder/update-request-builder';
 export { Entity } from './entity';
-
-export { ODataBatchChangeSet } from './batch-change-set';

@@ -103,7 +103,6 @@ describe('entity', () => {
       from: 'TestEntityType',
       to: 'TestEntity',
       toEntityClassName: 'TestEntity',
-      multiplicity: '1 - 1',
       isCollection: false
     });
   });
@@ -129,7 +128,6 @@ describe('entity', () => {
       from: 'TestEntityType',
       to: 'TestEntity',
       toEntityClassName: 'TestEntity',
-      multiplicity: '1 - *',
       isCollection: true
     });
   });

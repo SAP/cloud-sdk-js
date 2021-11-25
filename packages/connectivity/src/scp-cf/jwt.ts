@@ -180,7 +180,7 @@ async function fetchAndCacheKeyAndVerify(
   token: string,
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
-  const key = await getVerificationKey(creds, header).catch(error => {
+  const key = await getVerificationKey(header).catch(error => {
     throw new ErrorWithCause(
       'Failed to verify JWT. Could not retrieve verification key.',
       error
@@ -205,28 +205,25 @@ const defaultVerifyJwtOptions: VerifyJwtOptions = {
   cacheVerificationKeys: true
 };
 
-function getVerificationKey(
-  xsuaaCredentials: XsuaaServiceCredentials,
-  header: JwtHeader
-): Promise<TokenKey> {
-  return fetchVerificationKeys(xsuaaCredentials, header.jku).then(
-    verificationKeys => {
-      if (!verificationKeys.length) {
-        throw Error(
-          'No verification keys have been returned by the XSUAA service.'
-        );
-      }
-      const verificationKey = verificationKeys.find(
-        key => key.keyId === header.kid
+function getVerificationKey(header: JwtHeader): Promise<TokenKey> {
+  if (typeof header.jku !== 'string') {
+    throw Error('The JWT Header did not contain a XSUAA URL');
+  }
+
+  return fetchVerificationKeys(header.jku).then(verificationKeys => {
+    if (!verificationKeys.length) {
+      throw Error(
+        'No verification keys have been returned by the XSUAA service.'
       );
-      if (!verificationKey) {
-        throw new Error(
-          'Could not find verification key for the given key ID.'
-        );
-      }
-      return verificationKey;
     }
-  );
+    const verificationKey = verificationKeys.find(
+      key => key.keyId === header.kid
+    );
+    if (!verificationKey) {
+      throw new Error('Could not find verification key for the given key ID.');
+    }
+    return verificationKey;
+  });
 }
 
 /**

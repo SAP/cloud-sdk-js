@@ -1,5 +1,5 @@
 import {
-  wrapDeserialization,
+  wrapDefaultDeserialization,
   wrapDefaultSerialization,
   defaultDeSerializersRaw as defaultDeSerializersCommon,
   Time
@@ -77,7 +77,7 @@ export const defaultDeSerializers: DefaultDeSerializers = Object.entries(
   (entries, [edmType, { deserialize, serialize, serializeToUri }]) => ({
     ...entries,
     [edmType]: {
-      deserialize: wrapDeserialization(deserialize),
+      deserialize: wrapDefaultDeserialization(deserialize),
       serialize: wrapDefaultSerialization(serialize),
       serializeToUri
     }

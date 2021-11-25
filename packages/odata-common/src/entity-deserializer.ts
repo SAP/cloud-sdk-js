@@ -17,11 +17,13 @@ import {
 } from './selectable/complex-type-namespace';
 import { Field } from './selectable/field';
 import { Link } from './selectable/link';
-import { EdmTypeField } from './selectable/edm-type-field';
+import {
+  EdmTypeField,
+  CollectionField,
+  ComplexTypeField,
+  OneToOneLink
+} from './selectable';
 import { EnumField } from './selectable/enum-field';
-import { CollectionField } from './selectable/collection-field';
-import { ComplexTypeField } from './selectable/complex-type-field';
-import { OneToOneLink } from './selectable/one-to-one-link';
 
 const logger = createLogger({
   package: 'odata-common',

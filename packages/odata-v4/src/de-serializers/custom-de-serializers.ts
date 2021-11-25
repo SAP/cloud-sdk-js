@@ -3,6 +3,7 @@ import {
   CustomOrDefaultType as CustomOrDefaultTypeCommon
 } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
+import moment from 'moment';
 import { DeSerializers } from './de-serializers';
 import {
   DefaultDeSerializers,
@@ -30,9 +31,11 @@ export function mergeDefaultDeSerializersWith<
   SingleT = number,
   StringT = string,
   AnyT = any,
-  DateTimeT = moment.Moment,
+  DateT = moment.Moment,
   DateTimeOffsetT = moment.Moment,
-  TimeT = Time
+  DurationT = moment.Duration,
+  TimeOfDayT = Time,
+  EnumT = any
 >(
   customDeSerializers: Partial<
     DeSerializers<
@@ -50,9 +53,11 @@ export function mergeDefaultDeSerializersWith<
       SingleT,
       StringT,
       AnyT,
-      DateTimeT,
+      DateT,
       DateTimeOffsetT,
-      TimeT
+      DurationT,
+      TimeOfDayT,
+      EnumT
     >
   >
 ): CustomDeSerializer<typeof customDeSerializers> {

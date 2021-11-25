@@ -140,7 +140,7 @@ export function wrapDefaultSerialization<T>(
  * @param deserialize - Deserialization function to wrap.
  * @returns The wrapped deserialization function.
  */
-export function wrapDeserialization<T>(
+export function wrapDefaultDeserialization<T>(
   deserialize: DeSerializer<T>['deserialize']
 ): DeSerializer<T>['deserialize'] {
   return function (value) {

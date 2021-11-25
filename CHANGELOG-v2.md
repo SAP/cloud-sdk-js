@@ -370,7 +370,8 @@
   - transformReturnValueForEntityList,
   - transformReturnValueForUndefined,
   - uriConverter
-  -
+- [core] Move the following functions to `generator-common` package
+  - helpfulLinksSection
 
 ### Signature changed
 

@@ -57,7 +57,7 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
     serialize: serializeFromTime,
     serializeToUri: (value, serialize) => `time'${serialize(value)}'`
   },
-  /* DeSerializers without common URI serializer defaults. */
+  /* DeSerializers with v2 specific URI serializer defaults. */
   'Edm.Decimal': {
     ...defaultDeSerializersCommon['Edm.Decimal'],
     serializeToUri: (value, serialize) => `${serialize(value)}M`

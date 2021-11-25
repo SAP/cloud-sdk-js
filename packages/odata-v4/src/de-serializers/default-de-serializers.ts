@@ -76,7 +76,7 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
     serializeToUri: (value, serialize) =>
       convertToUriForEdmString(serialize(value))
   },
-  /* DeSerializers without common URI serializer defaults. */
+  /* DeSerializers with v4 specific URI serializer defaults. */
   'Edm.Decimal': {
     ...defaultDeSerializersCommon['Edm.Decimal'],
     serializeToUri: (value, serialize) => String(serialize(value))

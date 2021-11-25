@@ -1,4 +1,5 @@
 /* eslint-disable valid-jsdoc */
+/* Delete this file once the edmToTs and tsToEdm are obsolete. */
 
 import {
   EdmTypeShared,

@@ -105,7 +105,7 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
     serialize: identity,
     serializeToUri: (value, serialize) => String(serialize(value))
   },
-  /* DeSerializers without common URI serializer defaults. */
+  /* DeSerializers with v2 and v4 specific URI serializer defaults. */
   'Edm.Decimal': {
     deserialize: deserializeToBigNumber,
     serialize: serializeFromBigNumber

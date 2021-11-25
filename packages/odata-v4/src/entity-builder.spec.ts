@@ -1,4 +1,3 @@
-import { CommonEntity } from '@sap-cloud-sdk/odata-common/test/common-entity';
 import {
   TestEntity,
   TestEntityLvl2SingleLink,
@@ -113,7 +112,7 @@ describe('entity-builder', () => {
   });
 
   it('should build an entity from json with one-to-one navigation properties being null', () => {
-    const entity = CommonEntity.builder().fromJson({
+    const entity = TestEntity.builder().fromJson({
       toSingleLink: null
     });
     const expectedEntity = TestEntity.builder().toSingleLink(null).build();
@@ -121,7 +120,7 @@ describe('entity-builder', () => {
   });
 
   it('should build an entity from json with one-to-one navigation properties being undefined', () => {
-    const entity = CommonEntity.builder().fromJson({
+    const entity = TestEntity.builder().fromJson({
       toSingleLink: undefined
     });
     const expectedEntity = TestEntity.builder().toSingleLink(undefined).build();

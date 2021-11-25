@@ -6,6 +6,7 @@ import {
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import {
   defaultDestination,
+  mockCountRequest,
   mockGetRequest,
   unmockDestinationsEnv
 } from '../../../../test-resources/test/test-util/request-mocker';
@@ -154,6 +155,28 @@ describe('GetAllRequestBuilder', () => {
         )
         .execute(defaultDestination);
       expect(actual).toEqual([createTestEntity(testEntity)]);
+    });
+
+    it('parses the raw number of count response', async () => {
+      mockCountRequest(
+        defaultDestination,
+        4711,
+        TestEntity.requestBuilder().getAll()
+      );
+      const count = await requestBuilder.count().execute(defaultDestination);
+      expect(count).toBe(4711);
+    });
+  });
+
+  describe('execute raw', () => {
+    it('parses the raw number of count response', async () => {
+      mockCountRequest(
+        defaultDestination,
+        4711,
+        TestEntity.requestBuilder().getAll()
+      );
+      const count = await requestBuilder.count().execute(defaultDestination);
+      expect(count).toBe(4711);
     });
   });
 });

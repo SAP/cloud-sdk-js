@@ -8,5 +8,10 @@
     "directoryName": "test-service",
     "servicePath": "/sap/opu/odata/sap/API_TEST_SRV",
     "npmPackageName": "test-service"
+  },
+  "COMMON_SRV": {
+    "directoryName": "common-service",
+    "servicePath": "/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/",
+    "npmPackageName": "common-service"
   }
 }

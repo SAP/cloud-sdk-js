@@ -43,7 +43,5 @@
     "uuid": "^8.2.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/test-services": "^1.50.0",
-    "nock": "^13.0.11"
   }
 }

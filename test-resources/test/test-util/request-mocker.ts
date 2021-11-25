@@ -1,6 +1,7 @@
 import nock = require('nock');
 import {
   Constructable,
+  GetAllRequestBuilderBase,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
   ODataGetAllRequestConfig,
@@ -125,6 +126,20 @@ export function mockUpdateRequest(
     statusCode: params.statusCode || 204,
     method: params.method || 'patch'
   });
+}
+
+export function mockCountRequest(
+  destination: Destination,
+  count: number,
+  getAllRequest:
+    | GetAllRequestBuilderBase<any>
+    | GetAllRequestBuilderBase<any> = TestEntityV2.requestBuilder().getAll()
+) {
+  const servicePath = getAllRequest._entityConstructor._defaultServicePath;
+  const entityName = getAllRequest._entityConstructor._entityName;
+  return nock(defaultHost)
+    .get(`${destination.url}${servicePath}/${entityName}/$count`)
+    .reply(200, count.toString());
 }
 
 export function mockGetRequest(

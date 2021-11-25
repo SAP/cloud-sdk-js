@@ -63,7 +63,6 @@ async function generateAll(): Promise<void> {
   const arg = process.argv[2];
   if (arg === 'v2' || arg === 'odata' || arg === 'all') {
     await generateTestServicesPackage(packageOutputDir, 'v2');
-    await generateCommonTestEntity();
   }
 
   if (arg === 'v4' || arg === 'odata' || arg === 'all') {
@@ -84,6 +83,7 @@ async function generateAll(): Promise<void> {
       outputDir: resolve('test-packages', 'test-services-e2e', 'TripPin'),
       generateJs: true
     });
+    await generateCommonTestEntity();
   }
 
   if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
@@ -103,24 +103,28 @@ function removeImports(str: string): string {
 function adjustRequestBuilder(str: string): string {
   return str
     .replace(
-      'return new CommonEntityRequestBuilder()',
+      /return new .*RequestBuilder\(\)/,
       "throw new Error('not implemented')"
     )
-    .replace('CommonEntityRequestBuilder', 'any');
+    .replace(
+      /static requestBuilder\(\):.*RequestBuilder/,
+      'static requestBuilder(): any'
+    );
 }
 
 function adjustCustomField(str: string): string {
   return str.replace(
-    'return Entity.customFieldSelector(fieldName, CommonEntity)',
-    'return new CustomField(fieldName,CommonEntity)'
+    'return Entity.customFieldSelector',
+    'return new CustomField'
   );
 }
 
 function addODataVersion(str: string): string {
   const firstProperty = "static _entityName = 'A_CommonEntity';";
+  const nameString = str.match(/static _entityName =.*/)![0];
   return str.replace(
-    firstProperty,
-    [firstProperty, 'readonly _oDataVersion: any;'].join(unixEOL)
+    nameString,
+    [nameString, 'readonly _oDataVersion: any;'].join(unixEOL)
   );
 }
 
@@ -128,37 +132,42 @@ function removeJsDoc(str: string): string {
   return str.replace(/\/\*\*\n(?:\s+\*\s+.+\n)+\s+\*\/\n/g, '');
 }
 
-async function generateCommonTestEntity() {
-  const entity = await promises.readFile(
-    join(packageOutputDir, 'v2', 'common-service', 'CommonEntity.ts'),
-    'utf8'
+function readClasses(): Promise<string[]> {
+  const basePath = join(packageOutputDir, 'v4', 'common-service');
+  return Promise.all(
+    [
+      'CommonEntity.ts',
+      'CommonEntitySingleLink.ts',
+      'CommonComplexType.ts',
+      'NestedComplexType.ts'
+    ].map(name => promises.readFile(join(basePath, name), 'utf8'))
   );
-  const complexType = await promises.readFile(
-    join(packageOutputDir, 'v2', 'common-service', 'CommonComplexType.ts'),
-    'utf8'
-  );
+}
 
-  const adjustedEntity = [
-    removeImports,
-    removeJsDoc,
-    adjustRequestBuilder,
-    adjustCustomField,
-    addODataVersion
-  ].reduce((colllected, fn) => fn(colllected), entity);
-  const adjustedComplex = [removeImports, removeJsDoc].reduce(
-    (colllected, current) => current(colllected),
-    complexType
-  );
-  const adjusted = [
+async function generateCommonTestEntity() {
+  const files = await readClasses();
+
+  const [entity, entityLink, complexType, nestedComplex] = files
+    .map(str => removeImports(str))
+    .map(str => removeJsDoc(str));
+
+  const [adjustedEntity, adjustedEntityLink] = [entity, entityLink]
+    .map(str => adjustRequestBuilder(str))
+    .map(str => adjustCustomField(str))
+    .map(str => addODataVersion(str));
+
+  const allParts = [
     disableEslint,
     disclaimer,
     imports,
-    adjustedComplex,
+    complexType,
+    nestedComplex,
+    adjustedEntityLink,
     adjustedEntity
   ].join(unixEOL);
   await promises.writeFile(
     resolve(__dirname, '../packages/odata-common/test/common-entity.ts'),
-    adjusted,
+    allParts,
     'utf8'
   );
 }
@@ -166,5 +175,5 @@ async function generateCommonTestEntity() {
 const disclaimer = `/* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.
 The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/`;
 const imports =
-  "import { AllFields, Constructable,  EntityBuilderType, Field,  OrderableEdmTypeField,CustomField,ComplexTypeField, ConstructorOrField, EdmTypeField, FieldBuilder, FieldOptions, FieldType, PropertyMetadata, EntityBase as Entity } from '../src/internal';";
+  "import { AllFields, Constructable,  EntityBuilderType,OneToOneLink, Field,CollectionField,  OrderableEdmTypeField,CustomField,ComplexTypeField, ConstructorOrField, EdmTypeField, FieldBuilder, FieldOptions, PropertyMetadata, EntityBase as Entity } from '../src/internal';";
 const disableEslint = '/* eslint-disable */';

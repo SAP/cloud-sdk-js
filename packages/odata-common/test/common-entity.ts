@@ -5,7 +5,9 @@ import {
   AllFields,
   Constructable,
   EntityBuilderType,
+  OneToOneLink,
   Field,
+  CollectionField,
   OrderableEdmTypeField,
   CustomField,
   ComplexTypeField,
@@ -13,7 +15,6 @@ import {
   EdmTypeField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
   PropertyMetadata,
   EntityBase as Entity
 } from '../src/internal';
@@ -26,6 +27,7 @@ import {
 export interface CommonComplexType {
   stringProperty: string;
   booleanProperty?: boolean;
+  complexTypeProperty?: NestedComplexType;
 }
 
 export class CommonComplexTypeField<
@@ -40,6 +42,12 @@ export class CommonComplexTypeField<
     this._fieldBuilder.buildEdmTypeField(
       'BooleanProperty',
       'Edm.Boolean',
+      true
+    );
+  complexTypeProperty: NestedComplexTypeField<EntityT, true, false> =
+    this._fieldBuilder.buildComplexTypeField(
+      'ComplexTypeProperty',
+      NestedComplexTypeField,
       true
     );
 
@@ -65,8 +73,135 @@ export namespace CommonComplexType {
       name: 'booleanProperty',
       type: 'Edm.Boolean',
       isCollection: false
+    },
+    {
+      originalName: 'ComplexTypeProperty',
+      name: 'complexTypeProperty',
+      type: NestedComplexType,
+      isCollection: false
     }
   ];
+}
+
+/*
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
+
+export interface NestedComplexType {
+  stringProperty?: string;
+}
+
+export class NestedComplexTypeField<
+  EntityT extends Entity,
+  NullableT extends boolean = false,
+  SelectableT extends boolean = false
+> extends ComplexTypeField<EntityT, NestedComplexType, NullableT, SelectableT> {
+  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
+    this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
+
+  constructor(
+    fieldName: string,
+    fieldOf: ConstructorOrField<EntityT>,
+    fieldOptions?: FieldOptions<NullableT, SelectableT>
+  ) {
+    super(fieldName, fieldOf, NestedComplexType, fieldOptions);
+  }
+}
+
+export namespace NestedComplexType {
+  export const _propertyMetadata: PropertyMetadata<NestedComplexType>[] = [
+    {
+      originalName: 'StringProperty',
+      name: 'stringProperty',
+      type: 'Edm.String',
+      isCollection: false
+    }
+  ];
+}
+
+/*
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
+
+export class CommonEntitySingleLink
+  extends Entity
+  implements CommonEntitySingleLinkType
+{
+  static _entityName = 'A_CommonEntitySingleLink';
+  readonly _oDataVersion: any;
+  static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
+  keyProperty!: string;
+  stringProperty?: string;
+
+  static builder(): EntityBuilderType<
+    CommonEntitySingleLink,
+    CommonEntitySingleLinkType
+  > {
+    return Entity.entityBuilder(CommonEntitySingleLink);
+  }
+
+  static requestBuilder(): any {
+    throw new Error('not implemented');
+  }
+
+  static customField(fieldName: string): CustomField<CommonEntitySingleLink> {
+    return new CustomField(fieldName, CommonEntitySingleLink);
+  }
+
+  toJSON(): { [key: string]: any } {
+    return { ...this, ...this._customFields };
+  }
+}
+
+export interface CommonEntitySingleLinkType {
+  keyProperty: string;
+  stringProperty?: string | null;
+}
+
+export namespace CommonEntitySingleLink {
+  const _fieldBuilder: FieldBuilder<Constructable<CommonEntitySingleLink>> =
+    new FieldBuilder(CommonEntitySingleLink);
+  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'KeyProperty',
+    'Edm.String',
+    false
+  );
+  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    true
+  );
+  export const _allFields: Array<
+    | EdmTypeField<CommonEntitySingleLink, 'Edm.String', false, true>
+    | EdmTypeField<CommonEntitySingleLink, 'Edm.String', true, true>
+  > = [
+    CommonEntitySingleLink.KEY_PROPERTY,
+    CommonEntitySingleLink.STRING_PROPERTY
+  ];
+  export const ALL_FIELDS: AllFields<CommonEntitySingleLink> = new AllFields(
+    '*',
+    CommonEntitySingleLink
+  );
+  export const _keyFields: Array<
+    Field<CommonEntitySingleLink, boolean, boolean>
+  > = [CommonEntitySingleLink.KEY_PROPERTY];
+  export const _keys: {
+    [keys: string]: Field<CommonEntitySingleLink, boolean, boolean>;
+  } = CommonEntitySingleLink._keyFields.reduce(
+    (
+      acc: { [keys: string]: Field<CommonEntitySingleLink, boolean, boolean> },
+      field: Field<CommonEntitySingleLink, boolean, boolean>
+    ) => {
+      acc[field._fieldName] = field;
+      return acc;
+    },
+    {}
+  );
 }
 
 /*
@@ -83,7 +218,9 @@ export class CommonEntity extends Entity implements CommonEntityType {
   keyPropertyString!: string;
   stringProperty?: string;
   int16Property?: number;
+  collectionProperty?: string[];
   complexTypeProperty?: CommonComplexType;
+  toSingleLink?: CommonEntitySingleLink | null;
 
   static builder(): EntityBuilderType<CommonEntity, CommonEntityType> {
     return Entity.entityBuilder(CommonEntity);
@@ -107,7 +244,9 @@ export interface CommonEntityType {
   keyPropertyString: string;
   stringProperty?: string | null;
   int16Property?: number | null;
+  collectionProperty?: string[] | null;
   complexTypeProperty?: CommonComplexType | null;
+  toSingleLink?: CommonEntitySingleLinkType | null;
 }
 
 export namespace CommonEntity {
@@ -133,23 +272,36 @@ export namespace CommonEntity {
     'Edm.Int16',
     true
   );
+  export const COLLECTION_PROPERTY = _fieldBuilder.buildCollectionField(
+    'CollectionProperty',
+    'Edm.String',
+    true
+  );
   export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
     'ComplexTypeProperty',
     CommonComplexTypeField,
     true
   );
+  export const TO_SINGLE_LINK: OneToOneLink<
+    CommonEntity,
+    CommonEntitySingleLink
+  > = new OneToOneLink('to_SingleLink', CommonEntity, CommonEntitySingleLink);
   export const _allFields: Array<
     | EdmTypeField<CommonEntity, 'Edm.Guid', false, true>
     | EdmTypeField<CommonEntity, 'Edm.String', false, true>
     | EdmTypeField<CommonEntity, 'Edm.String', true, true>
     | OrderableEdmTypeField<CommonEntity, 'Edm.Int16', true, true>
+    | CollectionField<CommonEntity, 'Edm.String', true, true>
     | CommonComplexTypeField<CommonEntity, true, true>
+    | OneToOneLink<CommonEntity, CommonEntitySingleLink>
   > = [
     CommonEntity.KEY_PROPERTY_GUID,
     CommonEntity.KEY_PROPERTY_STRING,
     CommonEntity.STRING_PROPERTY,
     CommonEntity.INT_16_PROPERTY,
-    CommonEntity.COMPLEX_TYPE_PROPERTY
+    CommonEntity.COLLECTION_PROPERTY,
+    CommonEntity.COMPLEX_TYPE_PROPERTY,
+    CommonEntity.TO_SINGLE_LINK
   ];
   export const ALL_FIELDS: AllFields<CommonEntity> = new AllFields(
     '*',

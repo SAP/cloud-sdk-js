@@ -7,6 +7,7 @@ import {
 import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
+  mockCountRequest,
   mockDestinationsEnv,
   mockGetRequest,
   unmockDestinationsEnv
@@ -147,6 +148,16 @@ describe('GetAllRequestBuilder', () => {
 
       await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
     });
+
+    it('parses the raw number of count response', async () => {
+      mockCountRequest(
+        defaultDestination,
+        4711,
+        TestEntity.requestBuilder().getAll()
+      );
+      const count = await requestBuilder.count().execute(defaultDestination);
+      expect(count).toBe(4711);
+    });
   });
 
   describe('executeRaw', () => {
@@ -220,5 +231,18 @@ describe('GetAllRequestBuilder', () => {
       );
       expect(response.data).toBe('iss token used on the way');
     }, 60000);
+
+    it('returns request and raw response count', async () => {
+      mockCountRequest(
+        defaultDestination,
+        4711,
+        TestEntity.requestBuilder().getAll()
+      );
+      const actual = await requestBuilder
+        .count()
+        .executeRaw(defaultDestination);
+      expect(actual.data).toEqual(4711);
+      expect(actual.request.method).toBe('GET');
+    });
   });
 });

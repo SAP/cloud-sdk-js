@@ -8,12 +8,12 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  ODataBatchChangeSet,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { CommonEntity } from './index';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Batch builder for operations supported on the Common Service.
@@ -23,27 +23,27 @@ import { CommonEntity } from './index';
 export function batch(
   ...requests: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export function batch(
   requests: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export function batch(
   first:
     | undefined
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
     | Array<
         | ReadCommonServiceRequestBuilder
-        | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+        | BatchChangeSet<WriteCommonServiceRequestBuilder>
       >,
   ...rest: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder {
   return new ODataBatchRequestBuilder(
@@ -60,18 +60,18 @@ export function batch(
  */
 export function changeset(
   ...requests: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder>;
+): BatchChangeSet<WriteCommonServiceRequestBuilder>;
 export function changeset(
   requests: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder>;
+): BatchChangeSet<WriteCommonServiceRequestBuilder>;
 export function changeset(
   first:
     | undefined
     | WriteCommonServiceRequestBuilder
     | Array<WriteCommonServiceRequestBuilder>,
   ...rest: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder> {
-  return new ODataBatchChangeSet(variadicArgumentToArray(first, rest));
+): BatchChangeSet<WriteCommonServiceRequestBuilder> {
+  return new BatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultCommonServicePath =

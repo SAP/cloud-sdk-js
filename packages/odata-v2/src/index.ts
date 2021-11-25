@@ -29,5 +29,3 @@ export { UpdateRequestBuilder } from './request-builder/update-request-builder';
 export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
 export { CustomField } from './selectable/custom-field';
 export { Entity } from './entity';
-
-export { ODataBatchChangeSet } from './batch-change-set';

@@ -17,23 +17,6 @@ export class OneToOneLink<
   LinkedEntityT extends EntityBase
 > extends Link<EntityT, LinkedEntityT> {
   /**
-   * @deprecated Since v1.21.0. Use [[clone]] instead.
-   * Create a new one to one link based on a given link.
-   * @typeparam EntityT - Type of the entity to be linked from
-   * @typeparam LinkedEntityT - Type of the entity to be linked to
-   * @param link - Link to be cloned
-   * @returns Newly created link
-   */
-  static clone<EntityT1 extends EntityBase, LinkedEntityT1 extends EntityBase>(
-    link: OneToOneLink<EntityT1, LinkedEntityT1>
-  ): OneToOneLink<EntityT1, LinkedEntityT1> {
-    const clonedLink = link.clone() as OneToOneLink<EntityT1, LinkedEntityT1>;
-    clonedLink.orderBys = link.orderBys;
-    clonedLink.filters = link.filters;
-    return clonedLink;
-  }
-
-  /**
    * List of criteria of the linked entity to order the given entity by with descending priority.
    */
   orderBys: Order<LinkedEntityT>[] = [];

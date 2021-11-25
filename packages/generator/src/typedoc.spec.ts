@@ -45,8 +45,6 @@ describe('typedoc', () => {
       from: 'A_OneEntity',
       originalName: 'toOtherEntity',
       to: 'A_OtherEntity',
-      multiplicity: '1 - *',
-      isMultiLink: true,
       isCollection: true,
       instancePropertyName: 'toOtherEntity',
       staticPropertyName: 'TO_OTHER_ENTITY',

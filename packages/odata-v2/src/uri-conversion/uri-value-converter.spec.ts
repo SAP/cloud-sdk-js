@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import moment = require('moment');
-import { edmToTs } from '../payload-value-converter';
+import { edmToTs } from '../de-serializers';
 import { uriConverter } from './uri-value-converter';
 
 const { convertToUriFormat } = uriConverter;

@@ -1,18 +1,9 @@
 /* eslint-disable valid-jsdoc */
 
-import BigNumber from 'bignumber.js';
 import moment from 'moment';
-import {
-  Time,
-  deserializersCommon,
-  serializersCommon,
-  createEdmToTs
-} from '@sap-cloud-sdk/odata-common/internal';
-import { EdmType } from './edm-types';
+import { Time } from '@sap-cloud-sdk/odata-common/internal';
 
-type EdmTypeMapping = { [key in EdmType]: (value: any) => any };
-
-const toTime = (value: string): Time => {
+export function deserializeToTime(value: string): Time {
   const regexResult =
     /PT(?<hours>\d{1,2}H)?(?<minutes>\d{1,2}M)?(?<seconds>\d{1,2}S)?/.exec(
       value
@@ -27,13 +18,25 @@ const toTime = (value: string): Time => {
     minutes: minutes ? parseInt(minutes.replace('M', ''), 10) : 0,
     seconds: seconds ? parseInt(seconds.replace('S', ''), 10) : 0
   };
-};
+}
+
+export function serializeFromTime(value: Time): string {
+  return (
+    'PT' +
+    leftpad(value.hours, 2) +
+    'H' +
+    leftpad(value.minutes, 2) +
+    'M' +
+    leftpad(value.seconds, 2) +
+    'S'
+  );
+}
 
 /**
  * @internal
  * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
  */
-export function edmDateTimeToMoment(edmDateTime: string): moment.Moment {
+export function deserializeToMoment(edmDateTime: string): moment.Moment {
   const dateTimeOffsetComponents =
     /^\/Date\((?<ticks>\d+)((?<sign>[+-])(?<offset>\d{4}))?\)\/$/.exec(
       edmDateTime
@@ -57,7 +60,7 @@ export function edmDateTimeToMoment(edmDateTime: string): moment.Moment {
  * @internal
  * This function can be used for both Edm.DateTime and and Edm.DateTimeOffset.
  */
-export function momentToEdmDateTime(momentInstance: moment.Moment): string {
+export function serializeFromMoment(momentInstance: moment.Moment): string {
   const timestamp = momentInstance.unix() * 1000;
 
   // For some reason isUtc() returns wrong values here, so we use the internal flag directly
@@ -70,15 +73,6 @@ export function momentToEdmDateTime(momentInstance: moment.Moment): string {
   return `/Date(${timestamp})/`;
 }
 
-const fromTime = (value: Time): string =>
-  'PT' +
-  leftpad(value.hours, 2) +
-  'H' +
-  leftpad(value.minutes, 2) +
-  'M' +
-  leftpad(value.seconds, 2) +
-  'S';
-
 function leftpad(value: any, targetLength: number): string {
   const str = value.toString();
   if (str.length >= targetLength) {
@@ -86,51 +80,3 @@ function leftpad(value: any, targetLength: number): string {
   }
   return '0'.repeat(targetLength - str.length) + str;
 }
-
-/**
- * @internal
- */
-export type EdmToPrimitive<T extends EdmType> = T extends
-  | 'Edm.Int16'
-  | 'Edm.Int32'
-  | 'Edm.Single'
-  | 'Edm.Double'
-  | 'Edm.Float'
-  | 'Edm.Byte'
-  | 'Edm.SByte'
-  ? number
-  : T extends 'Edm.Decimal' | 'Edm.Int64'
-  ? BigNumber
-  : T extends 'Edm.DateTime' | 'Edm.DateTimeOffset'
-  ? moment.Moment
-  : T extends 'Edm.String' | 'Edm.Guid'
-  ? string
-  : T extends 'Edm.Boolean'
-  ? boolean
-  : T extends 'Edm.Time'
-  ? Time
-  : any;
-
-const deserializers: EdmTypeMapping = {
-  ...deserializersCommon,
-  'Edm.DateTime': edmDateTimeToMoment,
-  'Edm.DateTimeOffset': edmDateTimeToMoment,
-  'Edm.Time': toTime
-};
-
-export const edmToTs = createEdmToTs(deserializers);
-
-/**
- * @internal
- */
-export const serializers: EdmTypeMapping = {
-  ...serializersCommon,
-  'Edm.DateTime': momentToEdmDateTime,
-  'Edm.DateTimeOffset': momentToEdmDateTime,
-  'Edm.Time': fromTime
-};
-
-/**
- * @internal
- */
-export const tsToEdm = createEdmToTs(serializers);

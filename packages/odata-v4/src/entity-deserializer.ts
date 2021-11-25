@@ -3,9 +3,13 @@ import {
   entityDeserializer as entityDeserializerBase,
   EntityDeserializer
 } from '@sap-cloud-sdk/odata-common/internal';
-import { EdmToPrimitive, edmToTs } from './payload-value-converter';
+import {
+  EdmToPrimitive,
+  edmToTs,
+  defaultDeSerializers
+} from './de-serializers';
 import { extractODataEtag } from './extract-odata-etag';
-import { getLinkedCollectionResult } from './request-builder/response-data-accessor';
+import { getLinkedCollectionResult } from './request-builder';
 import { EdmType } from './edm-types';
 
 /**

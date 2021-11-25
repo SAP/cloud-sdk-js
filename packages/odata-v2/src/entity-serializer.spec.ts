@@ -6,7 +6,7 @@ import {
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { serializeEntity } from './entity-serializer';
-import { tsToEdm } from './payload-value-converter';
+import { tsToEdm } from './de-serializers';
 describe('entity-serializer', () => {
   it('should serialize simple entity', () => {
     const testEntity = TestEntity.builder()

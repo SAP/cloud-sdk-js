@@ -3,11 +3,8 @@
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
-import type { Selectable } from './selectable/selectable';
-import type { Field } from './selectable/field';
-import type { Link } from './selectable/link';
-import type { RequestBuilder } from './request-builder/request-builder';
-import type { CustomField } from './selectable/custom-field';
+import type { Selectable, Field, Link, CustomField } from './selectable';
+import type { RequestBuilder } from './request-builder';
 
 /**
  * @internal

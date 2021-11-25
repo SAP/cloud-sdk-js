@@ -1,5 +1,3 @@
-import { identity } from '@sap-cloud-sdk/util';
-
 /**
  * Represents a set of functions that determine (de-)serialization per EDM type.
  */
@@ -81,4 +79,3 @@ export type DeserializedType<
     ? DeserializedT
     : never
   : never;
-

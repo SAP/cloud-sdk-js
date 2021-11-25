@@ -33,13 +33,6 @@ export interface City {
 }
 
 /**
- * @deprecated Since v1.6.0. Use [[City.build]] instead.
- */
-export function createCity(json: any): City {
-  return City.build(json);
-}
-
-/**
  * CityField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
  */
@@ -106,11 +99,4 @@ export namespace City {
       isCollection: false
     }
   ];
-
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  export function build(json: { [keys: string]: FieldType }): City {
-    return deserializeComplexType(json, City);
-  }
 }

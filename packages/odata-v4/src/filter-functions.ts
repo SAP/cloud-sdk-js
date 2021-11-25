@@ -163,5 +163,5 @@ export const filterFunctions = {
   minDateTime,
   now,
   hasSubset,
-  hasSubsequence,
+  hasSubsequence
 };

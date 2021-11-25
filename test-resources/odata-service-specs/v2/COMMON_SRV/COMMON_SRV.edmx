@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="API_COMMON_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityType Name="A_CommonEntityType" sap:content-version="1">
+        <Key>
+          <PropertyRef Name="KeyPropertyGuid"/>
+          <PropertyRef Name="KeyPropertyString"/>
+        </Key>
+        <Property Name="KeyPropertyGuid" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="KeyPropertyString" Type="Edm.String" Nullable="false"/>
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase"/>
+        <Property Name="Int16Property" Type="Edm.Int16"/>
+
+        <Property Name="ComplexTypeProperty" Type="API_COMMON_SRV.A_CommonComplexType"/>
+
+      </EntityType>
+
+
+      <ComplexType Name="A_CommonComplexType">
+        <Property Name="StringProperty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" Nullable="false"/>
+        <Property Name="BooleanProperty" Type="Edm.Boolean" sap:display-format="UpperCase"/>
+      </ComplexType>
+
+
+      <EntityContainer Name="API_COMMON_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+        <EntitySet Name="A_CommonEntity" EntityType="API_COMMON_SRV.A_CommonEntityType" sap:content-version="1"/>
+        </EntitySet>
+
+      </EntityContainer>
+      <Annotations Target="API_COMMON_SRV.API_COMMON_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Aggregation.ApplySupported">
+          <Record>
+            <PropertyValue Property="Transformations">
+              <Collection>
+                <String>aggregate</String>
+                <String>groupby</String>
+                <String>filter</String>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="Rollup" EnumMember="None"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <atom:link rel="self" href="https://host:port/sap/opu/odata/sap/API_COMMON_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+      <atom:link rel="latest-version" href="https://host:port/sap/opu/odata/sap/API_COMMON_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

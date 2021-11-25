@@ -1,24 +1,13 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.AirportLocation =
-  exports.AirportLocationField =
-  exports.createAirportLocation =
-    void 0;
+exports.AirportLocation = exports.AirportLocationField = void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 const City_1 = require('./City');
-const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
-/**
- * @deprecated Since v1.6.0. Use [[AirportLocation.build]] instead.
- */
-function createAirportLocation(json) {
-  return AirportLocation.build(json);
-}
-exports.createAirportLocation = createAirportLocation;
 /**
  * AirportLocationField
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
@@ -83,13 +72,6 @@ var AirportLocation;
       isCollection: false
     }
   ];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  function build(json) {
-    return (0, odata_v4_1.deserializeComplexType)(json, AirportLocation);
-  }
-  AirportLocation.build = build;
 })(
   (AirportLocation = exports.AirportLocation || (exports.AirportLocation = {}))
 );

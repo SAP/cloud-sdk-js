@@ -161,7 +161,9 @@ function getProxyRelatedAuthHeaders(
     destination.proxyType === 'OnPremise' &&
     destination.authentication === 'NoAuthentication'
   ) {
-    throw Error('NoAuthentication is no longer supported for OnPremise connections');
+    throw Error(
+      'NoAuthentication is no longer supported for OnPremise connections'
+    );
   }
   // The connectivity service will raise an exception if it can not obtain the 'Proxy-Authorization' and the destination lookup will fail early
   return headerForProxy(destination);

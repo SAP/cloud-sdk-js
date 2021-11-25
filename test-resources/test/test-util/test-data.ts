@@ -99,9 +99,10 @@ export function createTestEntityV4(originalData): TestEntityV4 {
 export function testEntityResourcePath(
   guid,
   str,
-  toUriFormat = convertToUriFormat
+  toUriFormat = convertToUriFormat,
+  entityName = 'A_TestEntity'
 ): string {
-  return `A_TestEntity(KeyPropertyGuid=${toUriFormat(
+  return `${entityName}(KeyPropertyGuid=${toUriFormat(
     guid,
     'Edm.Guid'
   )},KeyPropertyString='${str}')`;

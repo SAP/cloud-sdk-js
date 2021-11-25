@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
+import { DeSerializers } from '../de-serializers';
 import { Constructable, EntityBase } from '../entity-base';
 import { NewFilterFunction } from './filter-function-base-new';
 
@@ -35,7 +35,7 @@ export type FilterOperatorByType<FieldT> = FieldT extends string
 // TODO 2.0 rename to BinaryFilter
 export class NewFilter<
   EntityT extends EntityBase,
-  T extends DeSerializationMiddlewareBASE,
+  T extends DeSerializers,
   FieldT
 > {
   entityConstructor: Constructable<EntityT>;

@@ -1,6 +1,8 @@
 import moment from 'moment';
-import { defaultDeSerializersRaw } from '../de-serializers/default-de-serializers';
-import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
+import {
+  DefaultDeSerializers,
+  defaultDeSerializersRaw
+} from '../de-serializers/default-de-serializers';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf } from '../entity-base';
 import { NewField } from '../selectable/field-new';
@@ -43,9 +45,7 @@ export abstract class NewFilterFunction<EntityT extends EntityBase, ReturnT> {
    * @param edmType - EDM type of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter
    */
-  equals(
-    value: ReturnT
-  ): NewFilter<EntityT, DeSerializationMiddleware, ReturnT> {
+  equals(value: ReturnT): NewFilter<EntityT, DefaultDeSerializers, ReturnT> {
     return new NewFilter(defaultDeSerializersRaw, this, 'eq', value);
   }
 

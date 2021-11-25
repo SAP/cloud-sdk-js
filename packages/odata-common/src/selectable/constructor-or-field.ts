@@ -1,4 +1,4 @@
-import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
+import { DeSerializers } from '../de-serializers';
 import { Constructable, EntityBase } from '../entity-base';
 import type { ComplexTypeField } from './complex-type-field';
 import { NewComplexTypeField } from './complex-type-field-new';
@@ -13,10 +13,4 @@ export type ConstructorOrField<EntityT extends EntityBase, ComplexT = any> =
 
 export type NewConstructorOrField<EntityT extends EntityBase, ComplexT = any> =
   | Constructable<EntityT>
-  | NewComplexTypeField<
-      EntityT,
-      DeSerializationMiddlewareBASE,
-      ComplexT,
-      boolean,
-      boolean
-    >;
+  | NewComplexTypeField<EntityT, DeSerializers, ComplexT, boolean, boolean>;

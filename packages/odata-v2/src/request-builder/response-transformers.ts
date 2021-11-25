@@ -2,7 +2,7 @@ import {
   Constructable,
   entityDeserializer
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializationMiddlewareV2BASE } from '../de-serializers/de-serialization-middleware';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { edmToTs } from '../de-serializers/payload-value-converter';
 import { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
@@ -23,7 +23,7 @@ export function transformReturnValueForUndefined<ReturnT>(
 
 export function transformReturnValueForEntity<
   ReturnT extends Entity,
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 >(
   deSerializers: T,
   data: any,
@@ -45,7 +45,7 @@ export function transformReturnValueForEntity<
 
 export function transformReturnValueForEntityList<
   ReturnT extends Entity,
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 >(
   deSerializers: T,
   data: any,
@@ -98,7 +98,7 @@ export function transformReturnValueForEdmTypeList<ReturnT>(
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function responseTransformers<T extends DeSerializationMiddlewareV2BASE>(
+export function responseTransformers<T extends DeSerializers>(
   deSerializers: T
 ) {
   return {

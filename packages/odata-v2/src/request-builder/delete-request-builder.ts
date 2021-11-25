@@ -2,9 +2,8 @@ import {
   Constructable,
   DeleteRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
-import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
-import { CustomDeSerializer } from '../de-serializers/get-de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { CustomDeSerializers } from '../de-serializers/custom-de-serializers';
 import { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion/odata-uri';
 /**
@@ -13,7 +12,7 @@ import { createODataUri } from '../uri-conversion/odata-uri';
  */
 export class DeleteRequestBuilder<
   EntityT extends Entity,
-  T extends DeSerializationMiddlewareBASE = DeSerializationMiddleware
+  T extends DeSerializers = DefaultDeSerializers
 > extends DeleteRequestBuilderBase<EntityT> {
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
@@ -24,7 +23,7 @@ export class DeleteRequestBuilder<
   constructor(
     entityConstructor: Constructable<EntityT>,
     keysOrEntity: Record<string, any> | Entity,
-    deSerializers: CustomDeSerializer<T>
+    deSerializers: CustomDeSerializers<T>
   ) {
     super(entityConstructor, createODataUri(deSerializers), keysOrEntity);
   }

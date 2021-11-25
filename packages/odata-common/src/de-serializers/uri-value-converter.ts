@@ -1,7 +1,7 @@
 /* eslint-disable valid-jsdoc */
 
 import { EdmTypeShared } from '../edm-types';
-import { DeSerializationMiddlewareBASE } from './de-serialization-middleware';
+import { DeSerializers } from './de-serializers';
 
 export function isInfOrNan(value: string | number): boolean {
   if (typeof value === 'number') {
@@ -19,7 +19,7 @@ export function convertToUriForEdmString(value: any): string {
  * The concrete implementations are created in odata/v2/uri-conversion/uri-value-converter.ts and odata/v4/uri-conversion/uri-value-converter.ts
  */
 export class UriConverter {
-  constructor(private deSerializers: DeSerializationMiddlewareBASE) {}
+  constructor(private deSerializers: DeSerializers) {}
 
   convertToUriFormat(value: any, edmType: EdmTypeShared<'any'>): string {
     const { serializeToUri, ...deSerializer } = this.deSerializers[edmType];

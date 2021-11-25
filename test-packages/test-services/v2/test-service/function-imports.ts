@@ -22,19 +22,19 @@ import {
 } from '@sap-cloud-sdk/odata-v2';
 import { TestEntity, TestEntityApi } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
-import { DeSerializationMiddlewareV2BASE } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
+import { DeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
 import {
   extractODataEtag,
   getLinkedCollectionResult
 } from '@sap-cloud-sdk/odata-v2/internal';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
-import { responseTransformers } from '@sap-cloud-sdk/odata-v2/dist/request-builder/response-transformers';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
+import { responseTransformers } from '@sap-cloud-sdk/odata-v2/internal';
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
  */
 export interface TestFunctionImportNoReturnTypeParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {}
 
 /**
@@ -42,9 +42,7 @@ export interface TestFunctionImportNoReturnTypeParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportNoReturnType<
-  T extends DeSerializationMiddlewareV2BASE
->(
+export function testFunctionImportNoReturnType<T extends DeSerializers>(
   deSerializers: T,
   parameters: TestFunctionImportNoReturnTypeParameters<T>
 ): FunctionImportRequestBuilder<
@@ -68,7 +66,7 @@ export function testFunctionImportNoReturnType<
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
  */
 export interface TestFunctionImportEdmReturnTypeParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {}
 
 /**
@@ -76,9 +74,7 @@ export interface TestFunctionImportEdmReturnTypeParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEdmReturnType<
-  T extends DeSerializationMiddlewareV2BASE
->(
+export function testFunctionImportEdmReturnType<T extends DeSerializers>(
   deSerializers: T,
   parameters: TestFunctionImportEdmReturnTypeParameters<T>
 ): FunctionImportRequestBuilder<
@@ -107,7 +103,7 @@ export function testFunctionImportEdmReturnType<
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnTypeCollection]].
  */
 export interface TestFunctionImportEdmReturnTypeCollectionParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {}
 
 /**
@@ -116,7 +112,7 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportEdmReturnTypeCollection<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 >(
   deSerializers: T,
   parameters: TestFunctionImportEdmReturnTypeCollectionParameters<T>
@@ -144,7 +140,7 @@ export function testFunctionImportEdmReturnTypeCollection<
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnType]].
  */
 export interface TestFunctionImportEntityReturnTypeParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {}
 
 /**
@@ -152,9 +148,7 @@ export interface TestFunctionImportEntityReturnTypeParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEntityReturnType<
-  T extends DeSerializationMiddlewareV2BASE
->(
+export function testFunctionImportEntityReturnType<T extends DeSerializers>(
   deSerializers: T,
   parameters: TestFunctionImportEntityReturnTypeParameters<T>
 ): FunctionImportRequestBuilder<
@@ -183,7 +177,7 @@ export function testFunctionImportEntityReturnType<
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]].
  */
 export interface TestFunctionImportEntityReturnTypeCollectionParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {}
 
 /**
@@ -192,7 +186,7 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportEntityReturnTypeCollection<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 >(
   deSerializers: T,
   parameters: TestFunctionImportEntityReturnTypeCollectionParameters<T>
@@ -222,7 +216,7 @@ export function testFunctionImportEntityReturnTypeCollection<
  * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnType]].
  */
 export interface TestFunctionImportSharedEntityReturnTypeParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {}
 
 /**
@@ -231,7 +225,7 @@ export interface TestFunctionImportSharedEntityReturnTypeParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportSharedEntityReturnType<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 >(
   deSerializers: T,
   parameters: TestFunctionImportSharedEntityReturnTypeParameters<T>
@@ -263,7 +257,7 @@ export function testFunctionImportSharedEntityReturnType<
  * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnTypeCollection]].
  */
 export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {}
 
 /**
@@ -272,7 +266,7 @@ export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportSharedEntityReturnTypeCollection<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 >(
   deSerializers: T,
   parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters<T>
@@ -304,7 +298,7 @@ export function testFunctionImportSharedEntityReturnTypeCollection<
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnType]].
  */
 export interface TestFunctionImportComplexReturnTypeParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {}
 
 /**
@@ -312,9 +306,7 @@ export interface TestFunctionImportComplexReturnTypeParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportComplexReturnType<
-  T extends DeSerializationMiddlewareV2BASE
->(
+export function testFunctionImportComplexReturnType<T extends DeSerializers>(
   deSerializers: T,
   parameters: TestFunctionImportComplexReturnTypeParameters<T>
 ): FunctionImportRequestBuilder<
@@ -349,7 +341,7 @@ export function testFunctionImportComplexReturnType<
  * Type of the parameters to be passed to [[testFunctionImportUnsupportedEdmTypes]].
  */
 export interface TestFunctionImportUnsupportedEdmTypesParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {
   /**
    * Simple Param.
@@ -362,9 +354,7 @@ export interface TestFunctionImportUnsupportedEdmTypesParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportUnsupportedEdmTypes<
-  T extends DeSerializationMiddlewareV2BASE
->(
+export function testFunctionImportUnsupportedEdmTypes<T extends DeSerializers>(
   deSerializers: T,
   parameters: TestFunctionImportUnsupportedEdmTypesParameters<T>
 ): FunctionImportRequestBuilder<
@@ -399,7 +389,7 @@ export function testFunctionImportUnsupportedEdmTypes<
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]].
  */
 export interface TestFunctionImportComplexReturnTypeCollectionParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {}
 
 /**
@@ -408,7 +398,7 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportComplexReturnTypeCollection<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 >(
   deSerializers: T,
   parameters: TestFunctionImportComplexReturnTypeCollectionParameters<T>
@@ -443,9 +433,7 @@ export function testFunctionImportComplexReturnTypeCollection<
 /**
  * Type of the parameters to be passed to [[testFunctionImportGet]].
  */
-export interface TestFunctionImportGetParameters<
-  T extends DeSerializationMiddlewareV2BASE
-> {
+export interface TestFunctionImportGetParameters<T extends DeSerializers> {
   /**
    * Simple Param.
    */
@@ -457,9 +445,7 @@ export interface TestFunctionImportGetParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportGet<
-  T extends DeSerializationMiddlewareV2BASE
->(
+export function testFunctionImportGet<T extends DeSerializers>(
   deSerializers: T,
   parameters: TestFunctionImportGetParameters<T>
 ): FunctionImportRequestBuilder<
@@ -491,9 +477,7 @@ export function testFunctionImportGet<
 /**
  * Type of the parameters to be passed to [[testFunctionImportPost]].
  */
-export interface TestFunctionImportPostParameters<
-  T extends DeSerializationMiddlewareV2BASE
-> {
+export interface TestFunctionImportPostParameters<T extends DeSerializers> {
   /**
    * Simple Param.
    */
@@ -505,9 +489,7 @@ export interface TestFunctionImportPostParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportPost<
-  T extends DeSerializationMiddlewareV2BASE
->(
+export function testFunctionImportPost<T extends DeSerializers>(
   deSerializers: T,
   parameters: TestFunctionImportPostParameters<T>
 ): FunctionImportRequestBuilder<
@@ -539,7 +521,7 @@ export function testFunctionImportPost<
  * Type of the parameters to be passed to [[testFunctionImportMultipleParams]].
  */
 export interface TestFunctionImportMultipleParamsParameters<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > {
   /**
    * String Param.
@@ -556,9 +538,7 @@ export interface TestFunctionImportMultipleParamsParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportMultipleParams<
-  T extends DeSerializationMiddlewareV2BASE
->(
+export function testFunctionImportMultipleParams<T extends DeSerializers>(
   deSerializers: T,
   parameters: TestFunctionImportMultipleParamsParameters<T>
 ): FunctionImportRequestBuilder<
@@ -597,18 +577,14 @@ export function testFunctionImportMultipleParams<
 /**
  * Type of the parameters to be passed to [[createTestComplexType]].
  */
-export interface CreateTestComplexTypeParameters<
-  T extends DeSerializationMiddlewareV2BASE
-> {}
+export interface CreateTestComplexTypeParameters<T extends DeSerializers> {}
 
 /**
  * Create Test Complex Type.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function createTestComplexType<
-  T extends DeSerializationMiddlewareV2BASE
->(
+export function createTestComplexType<T extends DeSerializers>(
   deSerializers: T,
   parameters: CreateTestComplexTypeParameters<T>
 ): FunctionImportRequestBuilder<
@@ -641,16 +617,14 @@ export function createTestComplexType<
 /**
  * Type of the parameters to be passed to [[fContinue]].
  */
-export interface FContinueParameters<
-  T extends DeSerializationMiddlewareV2BASE
-> {}
+export interface FContinueParameters<T extends DeSerializers> {}
 
 /**
  * Continue.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function fContinue<T extends DeSerializationMiddlewareV2BASE>(
+export function fContinue<T extends DeSerializers>(
   deSerializers: T,
   parameters: FContinueParameters<T>
 ): FunctionImportRequestBuilder<

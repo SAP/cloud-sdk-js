@@ -5,12 +5,12 @@ import moment from 'moment';
 import { Time, EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
 import { EdmType } from '../edm-types';
 import { defaultDeSerializers } from './default-de-serializers';
-import { DeSerializationMiddleware } from './de-serialization-middleware';
+import { DeSerializers } from './de-serializers';
 
 export function edmToTs<T extends EdmType>(
   value: any,
   edmType: EdmTypeShared<'v4'>,
-  deSerializers: DeSerializationMiddleware = defaultDeSerializers
+  deSerializers: DeSerializers = defaultDeSerializers
 ): EdmToPrimitive<T> {
   return deSerializers[edmType].deserialize(value);
 }
@@ -21,7 +21,7 @@ export function edmToTs<T extends EdmType>(
 export function tsToEdm(
   value: any,
   edmType: EdmTypeShared<'v4'>,
-  deSerializers: DeSerializationMiddleware = defaultDeSerializers
+  deSerializers: DeSerializers = defaultDeSerializers
 ): any {
   return deSerializers[edmType].serialize(value);
 }

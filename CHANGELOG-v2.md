@@ -396,7 +396,7 @@
 
 - [connectivity] Create a new package with minimal API.
 - [http-client] Create a new package with minimal API.
-- [odata-common, odata-v2, odata-v4] DeSerializationMiddleware // TODO
+- [odata-common, odata-v2, odata-v4] DeSerializers // TODO
 
 ## Improvements
 

@@ -4,27 +4,27 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DeSerializationMiddleware as DeSerializationMiddlewareCommon,
+  DefaultDeSerializationMiddleware as DeSerializationMiddlewareCommon,
   defaultDeSerializersRaw as defaultDeSerializersRawCommon,
   Time
 } from '@sap-cloud-sdk/odata-common';
 import {
   DeSerializationMiddlewareBASE,
   DeserializedType
-} from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
+} from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
 import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   CreateRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
-  DeSerializationMiddleware,
+  DefaultDeSerializationMiddleware,
   defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v2';
-import { DeSerializationMiddlewareV2BASE } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
-import { CustomDeSerializer } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/get-de-serializers';
+import { DeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
+import { CustomDeSerializer } from '@sap-cloud-sdk/odata-v2/internal';
 
-import { RequestBuilder } from '@sap-cloud-sdk/odata-v2/dist/request-builder/request-builder';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-v2/internal';
 
 import { TestEntity } from './TestEntity';
 
@@ -32,7 +32,7 @@ import { TestEntity } from './TestEntity';
  * Request builder class for operations supported on the [[TestEntity]] entity.
  */
 export class TestEntityRequestBuilder<
-  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+  T extends DeSerializers = DefaultDeSerializationMiddleware
 > extends RequestBuilder<TestEntity<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.

@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js';
-import moment from 'moment';
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
 import { Time } from '../time';
 

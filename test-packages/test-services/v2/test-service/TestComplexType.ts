@@ -3,7 +3,7 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Moment } from 'moment';
+import { Moment } from 'DeSerializers';
 import { BigNumber } from 'bignumber.js';
 import {
   TestNestedComplexType,
@@ -20,12 +20,12 @@ import {
   Time
 } from '@sap-cloud-sdk/odata-common/internal';
 import {
-  DeSerializationMiddleware,
-  DeSerializationMiddlewareV2BASE
-} from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
+  DefaultDeSerializationMiddleware,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v2/internal';
 import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/field-builder-new';
 import { NewEdmTypeField } from '@sap-cloud-sdk/odata-common/dist/selectable/edm-type-field-new';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
 import { NewComplexTypeField } from '@sap-cloud-sdk/odata-common/dist/selectable/complex-type-field-new';
 import { NewConstructorOrField } from '@sap-cloud-sdk/odata-common/dist/selectable/constructor-or-field';
 
@@ -33,7 +33,7 @@ import { NewConstructorOrField } from '@sap-cloud-sdk/odata-common/dist/selectab
  * TestComplexType
  */
 export interface TestComplexType<
-  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+  T extends DeSerializers = DefaultDeSerializationMiddleware
 > {
   /**
    * String Property.
@@ -127,7 +127,7 @@ export interface TestComplexType<
  */
 export class TestComplexTypeField<
   EntityT extends Entity,
-  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware,
+  T extends DeSerializers = DefaultDeSerializationMiddleware,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends NewComplexTypeField<

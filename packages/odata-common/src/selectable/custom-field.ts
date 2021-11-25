@@ -1,4 +1,4 @@
-import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
+import { DeSerializers } from '../de-serializers';
 import { EntityBase, Constructable } from '../entity-base';
 import { EdmTypeField } from './edm-type-field';
 import { Field } from './field';
@@ -10,7 +10,7 @@ import { OrderableEdmTypeField } from './orderable-edm-type-field';
  */
 export class CustomField<
   EntityT extends EntityBase,
-  T extends DeSerializationMiddlewareBASE,
+  T extends DeSerializers,
   NullableT extends boolean = false
 > extends Field<EntityT, NullableT> {
   protected fieldBuilder: FieldBuilder<Constructable<EntityT>, T>;

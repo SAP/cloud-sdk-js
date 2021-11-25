@@ -1,10 +1,7 @@
 import { EntityBase } from '../entity-base';
 import { Filter } from '../filter/filter';
 import { EdmTypeShared } from '../edm-types';
-import {
-  DeSerializationMiddlewareBASE,
-  DeserializedType
-} from '../de-serializers/de-serialization-middleware';
+import { DeSerializers, DeserializedType } from '../de-serializers';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';
 import { Field, FieldOptions } from './field';
@@ -26,7 +23,7 @@ type NullableFieldType<
  * @internal
  */
 export type FieldTypeByEdmType<
-  T extends DeSerializationMiddlewareBASE,
+  T extends DeSerializers,
   EdmT extends EdmTypeShared<'any'>,
   NullableT extends boolean
 > = NullableFieldType<DeserializedType<T, EdmT>, NullableT>;
@@ -52,7 +49,7 @@ export type FieldTypeByEdmType<
 export class EdmTypeField<
   EntityT extends EntityBase,
   EdmT extends EdmTypeShared<'any'>,
-  T extends DeSerializationMiddlewareBASE,
+  T extends DeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {

@@ -9,11 +9,8 @@ import {
 import { Entity } from '../entity';
 import { edmToTs } from '../de-serializers/payload-value-converter';
 import { extractODataEtag } from '../extract-odata-etag';
-import {
-  DeSerializationMiddleware,
-  DeSerializationMiddlewareV2BASE
-} from '../de-serializers/de-serialization-middleware';
-import { CustomDeSerializer } from '../de-serializers/get-de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { CustomDeSerializers } from '../de-serializers/custom-de-serializers';
 import { createODataUri } from '../uri-conversion/odata-uri';
 import {
   getLinkedCollectionResult,
@@ -21,7 +18,7 @@ import {
 } from './response-data-accessor';
 export class GetAllRequestBuilder<
     EntityT extends Entity,
-    T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+    T extends DeSerializers = DefaultDeSerializers
   >
   extends GetAllRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT>
@@ -34,7 +31,7 @@ export class GetAllRequestBuilder<
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
-    deSerializers: CustomDeSerializer<T>,
+    deSerializers: CustomDeSerializers<T>,
     schema: Record<string, any>
   ) {
     super(

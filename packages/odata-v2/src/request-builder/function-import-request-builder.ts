@@ -3,9 +3,8 @@ import {
   RequestMethodType,
   ActionFunctionImportRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
-import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
-import { CustomDeSerializer } from '../de-serializers/get-de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { CustomDeSerializers } from '../de-serializers/custom-de-serializers';
 import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
 import { createODataUri } from '../uri-conversion/odata-uri';
 
@@ -18,7 +17,7 @@ export class FunctionImportRequestBuilder<
   // reuse
   ParametersT,
   ReturnT,
-  T extends DeSerializationMiddlewareBASE = DeSerializationMiddleware
+  T extends DeSerializers = DefaultDeSerializers
 > extends ActionFunctionImportRequestBuilderBase<
   ReturnT,
   ODataFunctionImportRequestConfig<ParametersT>
@@ -38,7 +37,7 @@ export class FunctionImportRequestBuilder<
     functionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
     parameters: FunctionImportParameters<ParametersT>,
-    deSerializers: CustomDeSerializer<T>
+    deSerializers: CustomDeSerializers<T>
   ) {
     super(
       responseTransformer,

@@ -5,8 +5,8 @@ import {
 } from '@sap-cloud-sdk/util';
 import { isNavigationProperty } from './properties-util';
 import type { Constructable, EntityBase } from './entity-base';
-import { DeSerializationMiddlewareBASE } from './de-serializers/de-serialization-middleware';
 import { defaultDeSerializersRaw } from './de-serializers/default-de-serializers';
+import { DeSerializers } from './de-serializers';
 
 const logger = createLogger({
   package: 'odata-common',
@@ -40,7 +40,7 @@ export class EntityBuilder<EntityT extends EntityBase, JsonT> {
 
   constructor(
     private _entityConstructor: Constructable<EntityT>,
-    private deSerializers: DeSerializationMiddlewareBASE
+    private deSerializers: DeSerializers
   ) {
     if (!this.entity) {
       this.entity = new this._entityConstructor(this.deSerializers);
@@ -143,7 +143,7 @@ function buildNavigationPropertyFromJson<
   key: string,
   value: FromJsonType<unknown>,
   entityConstructor: Constructable<EntityT>,
-  deSerializers: DeSerializationMiddlewareBASE
+  deSerializers: DeSerializers
 ): LinkedEntityT | LinkedEntityT[] {
   const field = entityConstructor[upperCaseSnakeCase(key)];
   const linkedEntityConstructor: Constructable<LinkedEntityT> =
@@ -158,7 +158,7 @@ function buildNavigationPropertyFromJson<
 function buildSingleEntityFromJson<LinkedEntityT extends EntityBase>(
   json: FromJsonType<unknown>,
   linkedEntityConstructor: Constructable<LinkedEntityT>,
-  deSerializers: DeSerializationMiddlewareBASE
+  deSerializers: DeSerializers
 ): LinkedEntityT {
   return {} as any;
   // return json instanceof linkedEntityConstructor

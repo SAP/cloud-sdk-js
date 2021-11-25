@@ -6,10 +6,7 @@ import { isNavigationProperty, nonEnumerable } from './properties-util';
 import type { Field } from './selectable/field';
 import type { Link } from './selectable/link';
 import type { RequestBuilder } from './request-builder/request-builder';
-import {
-  DeSerializationMiddleware,
-  DeSerializationMiddlewareBASE
-} from './de-serializers/de-serialization-middleware';
+import { DefaultDeSerializers, DeSerializers } from './de-serializers';
 
 /**
  * @internal
@@ -47,7 +44,7 @@ export interface Constructable<EntityT extends EntityBase> {
 
 export interface ConstructableBASE<
   EntityT extends EntityBase,
-  T extends DeSerializationMiddlewareBASE = DeSerializationMiddleware,
+  T extends DeSerializers = DefaultDeSerializers,
   JsonT = any
 > {
   deSerializers: T;
@@ -77,7 +74,7 @@ export abstract class EntityBase {
 
   public static entityBuilder<EntityT extends EntityBase, EntityTypeT>(
     entityConstructor: Constructable<EntityT>,
-    deSerializers: DeSerializationMiddlewareBASE,
+    deSerializers: DeSerializers,
     allFields: Record<string, any>
   ): EntityBuilderType<EntityT, EntityTypeT> {
     const builder = new EntityBuilder<EntityT, EntityTypeT>(

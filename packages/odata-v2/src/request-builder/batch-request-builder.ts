@@ -12,7 +12,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { edmToTs } from '../de-serializers/payload-value-converter';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DeSerializationMiddlewareV2BASE } from '../de-serializers/de-serialization-middleware';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import {
   getLinkedCollectionResult,
   responseDataAccessor
@@ -23,7 +23,7 @@ import {
  * The retrieve and change sets will be executed in order, while the order within a change set can vary.
  */
 export class ODataBatchRequestBuilder<
-  T extends DeSerializationMiddlewareV2BASE
+  T extends DeSerializers
 > extends BatchRequestBuilder {
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.

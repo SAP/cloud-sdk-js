@@ -1,5 +1,5 @@
 import { EntityBase, Constructable } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializationMiddlewareV2BASE } from './de-serializers/de-serialization-middleware';
+import { DeSerializers } from './de-serializers/de-serializers';
 import { CustomField } from './selectable/custom-field';
 
 /**
@@ -8,7 +8,7 @@ import { CustomField } from './selectable/custom-field';
 export class Entity extends EntityBase {
   protected static customFieldSelector<
     EntityT extends Entity,
-    T extends DeSerializationMiddlewareV2BASE,
+    T extends DeSerializers,
     NullableT extends boolean = false
   >(
     fieldName: string,

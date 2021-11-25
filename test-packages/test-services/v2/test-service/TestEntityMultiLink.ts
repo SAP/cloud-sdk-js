@@ -7,7 +7,7 @@ import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestB
 import {
   CustomField,
   defaultDeSerializers,
-  DeSerializationMiddleware,
+  DefaultDeSerializationMiddleware,
   Entity
 } from '@sap-cloud-sdk/odata-v2';
 import {
@@ -25,13 +25,13 @@ import {
 import {
   CustomDeSerializer,
   getDeSerializers
-} from '@sap-cloud-sdk/odata-v2/dist/de-serializers/get-de-serializers';
+} from '@sap-cloud-sdk/odata-v2/internal';
 
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
  */
 export class TestEntityMultiLink<
-    T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+    T extends DeSerializers = DefaultDeSerializationMiddleware
   >
   extends Entity
   implements TestEntityMultiLinkType<T>
@@ -107,14 +107,14 @@ import {
   TestEntityLvl2SingleLink,
   TestEntityLvl2SingleLinkType
 } from './TestEntityLvl2SingleLink';
-import { DeSerializationMiddlewareV2BASE } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
+import { DeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
 import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/field-builder-new';
 import { ConstructableBASE } from '@sap-cloud-sdk/odata-common/dist/entity-base';
 import BigNumber from 'bignumber.js';
 
 export interface TestEntityMultiLinkType<
-  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+  T extends DeSerializers = DefaultDeSerializationMiddleware
 > {
   keyProperty: DeserializedType<T, 'Edm.String'>;
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
@@ -146,7 +146,7 @@ export class TestEntityMultiLinkApi<
 > implements
     ConstructableBASE<
       TestEntityMultiLink<
-        DeSerializationMiddleware<
+        DefaultDeSerializationMiddleware<
           BinaryT,
           BooleanT,
           ByteT,
@@ -166,7 +166,7 @@ export class TestEntityMultiLinkApi<
           TimeT
         >
       >,
-      DeSerializationMiddleware<
+      DefaultDeSerializationMiddleware<
         BinaryT,
         BooleanT,
         ByteT,
@@ -186,7 +186,7 @@ export class TestEntityMultiLinkApi<
         TimeT
       >,
       TestEntityMultiLinkType<
-        DeSerializationMiddleware<
+        DefaultDeSerializationMiddleware<
           BinaryT,
           BooleanT,
           ByteT,
@@ -208,7 +208,7 @@ export class TestEntityMultiLinkApi<
       >
     >
 {
-  public deSerializers: DeSerializationMiddleware<
+  public deSerializers: DefaultDeSerializationMiddleware<
     BinaryT,
     BooleanT,
     ByteT,
@@ -229,7 +229,7 @@ export class TestEntityMultiLinkApi<
   >;
   constructor(
     deSerializers: Partial<
-      DeSerializationMiddleware<
+      DefaultDeSerializationMiddleware<
         BinaryT,
         BooleanT,
         ByteT,

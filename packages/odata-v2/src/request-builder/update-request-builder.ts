@@ -13,13 +13,12 @@ import {
   isNavigationProperty,
   removePropertyOnCondition
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion/odata-uri';
-import { CustomDeSerializer } from '../de-serializers/get-de-serializers';
+import { CustomDeSerializers } from '../de-serializers/custom-de-serializers';
 
 const logger = createLogger({
   package: 'odata-v2',
@@ -31,7 +30,7 @@ const logger = createLogger({
  */
 export class UpdateRequestBuilder<
     EntityT extends Entity,
-    T extends DeSerializationMiddlewareBASE = DeSerializationMiddleware
+    T extends DeSerializers = DefaultDeSerializers
   >
   extends UpdateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT>
@@ -45,7 +44,7 @@ export class UpdateRequestBuilder<
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT,
-    deSerializers: CustomDeSerializer<T>
+    deSerializers: CustomDeSerializers<T>
   ) {
     super(
       _entityConstructor,

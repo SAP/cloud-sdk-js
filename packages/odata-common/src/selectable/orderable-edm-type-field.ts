@@ -1,7 +1,7 @@
 import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
 import { Filter } from '../filter/filter';
-import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
+import { DeSerializers } from '../de-serializers';
 import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
 
 /**
@@ -15,7 +15,7 @@ import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
 export class OrderableEdmTypeField<
   EntityT extends EntityBase,
   EdmT extends EdmTypeShared<'any'>,
-  T extends DeSerializationMiddlewareBASE,
+  T extends DeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends EdmTypeField<EntityT, EdmT, T, NullableT, SelectableT> {

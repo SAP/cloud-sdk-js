@@ -3,6 +3,7 @@ import {
   createLogger,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
+import { DeSerializers } from './de-serializers';
 import {
   Constructable,
   EntityBase,
@@ -22,8 +23,6 @@ import { EnumField } from './selectable/enum-field';
 import { CollectionField } from './selectable/collection-field';
 import { ComplexTypeField } from './selectable/complex-type-field';
 import { OneToOneLink } from './selectable/one-to-one-link';
-import { DeSerializationMiddlewareBASE } from './de-serializers/de-serialization-middleware';
-
 const logger = createLogger({
   package: 'odata-common',
   messageContext: 'entity-deserializer'
@@ -72,7 +71,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * @returns an entity deserializer as defined by [[EntityDeserializer]]
  * @internal
  */
-export function entityDeserializer<T extends DeSerializationMiddlewareBASE>(
+export function entityDeserializer<T extends DeSerializers>(
   schema: Record<string, any>,
   edmToTs: any, // TODO v 2.0 try to get common typing for v2 and v4 in here
   extractODataETag: ExtractODataETagType,

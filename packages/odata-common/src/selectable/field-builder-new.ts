@@ -6,7 +6,7 @@ import {
   EntityBase,
   NewEntityIdentifiable
 } from '../entity-base';
-import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
+import { DeSerializers } from '../de-serializers/de-serializers';
 import { CollectionField, CollectionFieldType } from './collection-field';
 import { FieldOptions } from './field';
 import { EnumField } from './enum-field';
@@ -23,7 +23,7 @@ type ComplexTypeFieldConstructor<
     SelectableT
   >,
   EntityT extends EntityBase,
-  T extends DeSerializationMiddlewareBASE,
+  T extends DeSerializers,
   ComplexT,
   NullableT extends boolean,
   SelectableT extends boolean
@@ -58,7 +58,7 @@ type EntityTypeFromFieldOf<FieldOfT extends NewConstructorOrField<any>> =
  */
 export class NewFieldBuilder<
   FieldOfT extends NewConstructorOrField<any>,
-  T extends DeSerializationMiddlewareBASE
+  T extends DeSerializers
 > implements NewEntityIdentifiable<FieldOfT, T>
 {
   entity: FieldOfT;

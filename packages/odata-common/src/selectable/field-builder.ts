@@ -6,7 +6,7 @@ import {
   OrderableEdmType
 } from '../edm-types';
 import { Constructable, EntityBase } from '../entity-base';
-import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
+import { DeSerializers } from '../de-serializers';
 import { ComplexTypeField } from './complex-type-field';
 import { EdmTypeField } from './edm-type-field';
 import { OrderableEdmTypeField } from './orderable-edm-type-field';
@@ -57,7 +57,7 @@ type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
  */
 export class FieldBuilder<
   FieldOfT extends ConstructorOrField<any>,
-  T extends DeSerializationMiddlewareBASE
+  T extends DeSerializers
 > {
   /**
    * Creates an instance of `FieldBuilder`.

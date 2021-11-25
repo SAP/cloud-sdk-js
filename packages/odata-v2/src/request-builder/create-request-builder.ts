@@ -4,9 +4,11 @@ import {
   CreateRequestBuilderBase,
   entityDeserializer
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializationMiddlewareBASE } from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
-import { DeSerializationMiddleware } from '../de-serializers/de-serialization-middleware';
-import { CustomDeSerializer } from '../de-serializers/get-de-serializers';
+import {
+  DeSerializers,
+  CustomDeSerializers,
+  DefaultDeSerializers
+} from '../de-serializers';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { createODataUri } from '../uri-conversion/odata-uri';
@@ -23,7 +25,7 @@ import {
  */
 export class CreateRequestBuilder<
     EntityT extends Entity,
-    T extends DeSerializationMiddlewareBASE = DeSerializationMiddleware
+    T extends DeSerializers = DefaultDeSerializers
   >
   extends CreateRequestBuilderBase<EntityT>
   implements EntityIdentifiable<EntityT>
@@ -37,7 +39,7 @@ export class CreateRequestBuilder<
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT,
-    deSerializers: CustomDeSerializer<T>,
+    deSerializers: CustomDeSerializers<T>,
     schema: Record<string, any>
   ) {
     super(

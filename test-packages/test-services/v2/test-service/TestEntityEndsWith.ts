@@ -7,7 +7,7 @@ import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBui
 import {
   CustomField,
   defaultDeSerializers,
-  DeSerializationMiddleware,
+  DefaultDeSerializationMiddleware,
   Entity
 } from '@sap-cloud-sdk/odata-v2';
 import {
@@ -83,7 +83,7 @@ export interface TestEntityEndsWithType {
 export namespace TestEntityEndsWith {
   const _fieldBuilder: FieldBuilder<
     Constructable<TestEntityEndsWith>,
-    DeSerializationMiddleware
+    DefaultDeSerializationMiddleware
   > = new FieldBuilder(TestEntityEndsWith, defaultDeSerializers);
   /**
    * Static representation of the [[keyProperty]] property for query construction.

@@ -4,7 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
-import { Moment } from 'moment';
+import { Moment } from 'DeSerializers';
 import { BigNumber } from 'bignumber.js';
 import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {

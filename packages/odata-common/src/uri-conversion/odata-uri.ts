@@ -7,7 +7,6 @@ import { Filterable } from '../filter';
 import { UriConverter } from '../de-serializers/uri-value-converter';
 import { getEntityKeys } from './get-keys';
 import { getOrderBy } from './get-orderby';
-import { UriConverter } from './uri-value-converter';
 import { createGetFilter } from './get-filter';
 import { createGetResourcePathForKeys } from './get-resource-path';
 

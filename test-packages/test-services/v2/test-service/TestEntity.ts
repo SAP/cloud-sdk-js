@@ -8,7 +8,7 @@ import { BigNumber } from 'bignumber.js';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import {
   Entity,
-  DeSerializationMiddleware,
+  DefaultDeSerializers,
   defaultDeSerializers,
   filterFunctions
 } from '@sap-cloud-sdk/odata-v2';
@@ -18,16 +18,14 @@ import {
   Time
 } from '@sap-cloud-sdk/odata-common/internal';
 
-import { getDeSerializers } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/get-de-serializers';
+import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2/internal';
 
 import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/field-builder-new';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity<
-    T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
-  >
+export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   extends Entity
   implements TestEntityType<T>
 {
@@ -175,13 +173,13 @@ import {
   TestEntitySingleLink,
   TestEntitySingleLinkType
 } from './TestEntitySingleLink';
-import { DeSerializationMiddlewareV2BASE } from '@sap-cloud-sdk/odata-v2/dist/de-serializers/de-serialization-middleware';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serialization-middleware';
+import { DeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
 
 import { ConstructableBASE } from '@sap-cloud-sdk/odata-common/dist/entity-base';
 
 export interface TestEntityType<
-  T extends DeSerializationMiddlewareV2BASE = DeSerializationMiddleware
+  T extends DeSerializers = DefaultDeSerializers
 > {
   keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>;
   keyPropertyString: DeserializedType<T, 'Edm.String'>;
@@ -228,7 +226,7 @@ export class TestEntityApi<
 > implements
     ConstructableBASE<
       TestEntity<
-        DeSerializationMiddleware<
+        DefaultDeSerializers<
           BinaryT,
           BooleanT,
           ByteT,
@@ -248,7 +246,7 @@ export class TestEntityApi<
           TimeT
         >
       >,
-      DeSerializationMiddleware<
+      DefaultDeSerializers<
         BinaryT,
         BooleanT,
         ByteT,
@@ -268,7 +266,7 @@ export class TestEntityApi<
         TimeT
       >,
       TestEntityType<
-        DeSerializationMiddleware<
+        DefaultDeSerializers<
           BinaryT,
           BooleanT,
           ByteT,
@@ -290,7 +288,7 @@ export class TestEntityApi<
       >
     >
 {
-  public deSerializers: DeSerializationMiddleware<
+  public deSerializers: DefaultDeSerializers<
     BinaryT,
     BooleanT,
     ByteT,
@@ -311,7 +309,7 @@ export class TestEntityApi<
   >;
   constructor(
     deSerializers: Partial<
-      DeSerializationMiddleware<
+      DefaultDeSerializers<
         BinaryT,
         BooleanT,
         ByteT,
@@ -332,7 +330,7 @@ export class TestEntityApi<
       >
     > = defaultDeSerializers as any
   ) {
-    this.deSerializers = getDeSerializers(deSerializers);
+    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
   }
 
   schema() {

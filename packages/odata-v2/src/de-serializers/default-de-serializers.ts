@@ -1,19 +1,45 @@
-/* eslint-disable valid-jsdoc */
-
 import {
   wrapDeserialization,
-  wrapSerialization
-} from '@sap-cloud-sdk/odata-common/src/de-serializers/de-serialization-middleware';
-import { defaultDeSerializersRaw as defaultDeSerializersCommon } from '@sap-cloud-sdk/odata-common/src/de-serializers/default-de-serializers';
+  wrapDefaultSerialization,
+  defaultDeSerializersRaw as defaultDeSerializersCommon,
+  Time
+} from '@sap-cloud-sdk/odata-common/internal';
+import BigNumber from 'bignumber.js';
 import {
   deserializeToMoment,
   deserializeToTime,
   serializeFromMoment,
   serializeFromTime
 } from './converters';
-import { DeSerializationMiddleware } from './de-serialization-middleware';
+import { DeSerializers } from './de-serializers';
 
-const defaultDeSerializersRaw: DeSerializationMiddleware = {
+/**
+ * Type of the default (de-)serializers.
+ */
+export type DefaultDeSerializers = DeSerializers<
+  string,
+  boolean,
+  number,
+  BigNumber,
+  number,
+  number,
+  number,
+  number,
+  BigNumber,
+  string,
+  number,
+  number,
+  string,
+  any,
+  moment.Moment,
+  moment.Moment,
+  Time
+>;
+
+/**
+ * Default (de-)serializers without `null` and `undefined` handling.
+ */
+const defaultDeSerializersRaw: DefaultDeSerializers = {
   ...defaultDeSerializersCommon,
   'Edm.DateTime': {
     deserialize: deserializeToMoment,
@@ -29,34 +55,32 @@ const defaultDeSerializersRaw: DeSerializationMiddleware = {
   'Edm.Time': {
     deserialize: deserializeToTime,
     serialize: serializeFromTime,
-    // serializeToUri: value => `time'${value}'`
-    // serializeToUri: value => `time'${value}'`
-    serializeToUri: (value, { serialize }) => `time'${serialize(value)}'`
+    serializeToUri: (value, serialize) => `time'${serialize(value)}'`
   },
   /* DeSerializers without common URI serializer defaults. */
   'Edm.Decimal': {
     ...defaultDeSerializersCommon['Edm.Decimal'],
-    serializeToUri: (value, { serialize }) => `${serialize(value)}M`
+    serializeToUri: (value, serialize) => `${serialize(value)}M`
   },
   'Edm.Guid': {
     ...defaultDeSerializersCommon['Edm.Guid'],
-    serializeToUri: (value, { serialize }) => `guid'${serialize(value)}'`
+    serializeToUri: (value, serialize) => `guid'${serialize(value)}'`
   }
 };
 
 /**
- * TODO
+ * The default (de-)serializers.
  */
-export const defaultDeSerializers: DeSerializationMiddleware = Object.entries(
+export const defaultDeSerializers: DefaultDeSerializers = Object.entries(
   defaultDeSerializersRaw
 ).reduce(
   (entries, [edmType, { deserialize, serialize, serializeToUri }]) => ({
     ...entries,
     [edmType]: {
       deserialize: wrapDeserialization(deserialize),
-      serialize: wrapSerialization(serialize),
+      serialize: wrapDefaultSerialization(serialize),
       serializeToUri
     }
   }),
   {}
-) as DeSerializationMiddleware;
+) as DefaultDeSerializers;

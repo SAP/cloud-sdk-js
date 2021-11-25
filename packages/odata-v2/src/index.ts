@@ -1,5 +1,3 @@
-export { uriConverter } from './uri-conversion/uri-value-converter';
-
 export {
   filterFunctions,
   replace,
@@ -8,7 +6,6 @@ export {
   length
 } from './filter-functions';
 
-export { edmToTs } from './payload-value-converter';
 export {
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList,
@@ -18,7 +15,6 @@ export {
   transformReturnValueForEntityList,
   transformReturnValueForUndefined
 } from './request-builder/response-transformers';
-export { deserializeComplexType } from './entity-deserializer';
 
 export { CreateRequestBuilder } from './request-builder/create-request-builder';
 export { DeleteRequestBuilder } from './request-builder/delete-request-builder';

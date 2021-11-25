@@ -5,7 +5,7 @@ import {
   EntityBase,
   NewEntityIdentifiable
 } from '../entity-base';
-import { DeSerializationMiddlewareBASE } from '../de-serializers/de-serialization-middleware';
+import { DeSerializers } from '../de-serializers';
 import { Field, FieldOptions } from './field';
 import type { NewConstructorOrField } from './constructor-or-field';
 import { ComplexTypeNamespace } from './complex-type-namespace';
@@ -28,7 +28,7 @@ import { ComplexTypeNamespace } from './complex-type-namespace';
  */
 export abstract class NewComplexTypeField<
     EntityT extends EntityBase,
-    T extends DeSerializationMiddlewareBASE,
+    T extends DeSerializers,
     ComplexT = any,
     NullableT extends boolean = false,
     SelectableT extends boolean = false

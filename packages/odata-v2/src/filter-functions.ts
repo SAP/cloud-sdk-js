@@ -7,9 +7,9 @@ import {
   Time
 } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
-import { DeSerializationMiddleware } from './de-serializers/de-serialization-middleware';
+import { DeSerializers } from './de-serializers/de-serializers';
 import { defaultDeSerializers } from './de-serializers/default-de-serializers';
-import { getDeSerializers } from './de-serializers/get-de-serializers';
+import { mergeDefaultDeSerializersWith } from './de-serializers/custom-de-serializers';
 import { Entity } from './entity';
 
 /* String Functions */
@@ -88,7 +88,7 @@ export function filterFunctions<
   TimeT = Time
 >(
   deSerializers: Partial<
-    DeSerializationMiddleware<
+    DeSerializers<
       BinaryT,
       BooleanT,
       ByteT,
@@ -110,7 +110,7 @@ export function filterFunctions<
   > = defaultDeSerializers as any
 ): Record<string, any> {
   return {
-    ...filterFunctionsCommon(getDeSerializers(deSerializers)),
+    ...filterFunctionsCommon(mergeDefaultDeSerializersWith(deSerializers)),
     substringOf,
     replace
   };

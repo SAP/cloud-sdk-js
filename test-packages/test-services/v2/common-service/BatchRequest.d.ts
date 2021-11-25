@@ -3,11 +3,11 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  ODataBatchChangeSet,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { CommonEntity } from './index';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Batch builder for operations supported on the Common Service.
  * @param requests The requests of the batch
@@ -16,13 +16,13 @@ import { CommonEntity } from './index';
 export declare function batch(
   ...requests: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export declare function batch(
   requests: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 /**
@@ -32,10 +32,10 @@ export declare function batch(
  */
 export declare function changeset(
   ...requests: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder>;
+): BatchChangeSet<WriteCommonServiceRequestBuilder>;
 export declare function changeset(
   requests: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder>;
+): BatchChangeSet<WriteCommonServiceRequestBuilder>;
 export declare const defaultCommonServicePath =
   '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
 export declare type ReadCommonServiceRequestBuilder =

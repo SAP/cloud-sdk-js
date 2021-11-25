@@ -256,6 +256,13 @@ export abstract class EntityBase {
       : names.filter(key => !equal(this.remoteState[key], currentState[key]));
   }
 
+  /**
+   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
+   * @returns An object containing all instance variables + custom fields.
+   */
+  toJSON(): { [key: string]: any } {
+    return { ...this, ...this._customFields };
+  }
   protected isVisitedEntity<EntityT extends EntityBase>(
     entity: EntityT,
     visitedEntities: EntityBase[] = []
@@ -314,7 +321,9 @@ export abstract class EntityBase {
       );
   }
 }
-
+/**
+ * @internal
+ */
 export interface EntityIdentifiable<T extends EntityBase> {
   readonly _entityConstructor: Constructable<T>;
   readonly _entity: T;

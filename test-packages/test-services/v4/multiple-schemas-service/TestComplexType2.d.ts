@@ -4,7 +4,6 @@ import {
   ConstructorOrField,
   EdmTypeField,
   FieldOptions,
-  FieldType,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-common/internal';
 /**
@@ -16,10 +15,6 @@ export interface TestComplexType2 {
    */
   stringProperty: string;
 }
-/**
- * @deprecated Since v1.6.0. Use [[TestComplexType2.build]] instead.
- */
-export declare function createTestComplexType2(json: any): TestComplexType2;
 /**
  * TestComplexType2Field
  * @typeparam EntityT - Type of the entity the complex type field belongs to.
@@ -51,9 +46,5 @@ export declare namespace TestComplexType2 {
    * Metadata information on all properties of the `TestComplexType2` complex type.
    */
   const _propertyMetadata: PropertyMetadata<TestComplexType2>[];
-  /**
-   * @deprecated Since v1.25.0. Use `deserializeComplexType` of the `@sap-cloud-sdk/odata-v2` or `@sap-cloud-sdk/odata-v4` package instead.
-   */
-  function build(json: { [keys: string]: FieldType }): TestComplexType2;
 }
 //# sourceMappingURL=TestComplexType2.d.ts.map

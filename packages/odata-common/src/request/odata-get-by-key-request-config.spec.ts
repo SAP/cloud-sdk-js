@@ -1,16 +1,16 @@
 import { v4 as uuid } from 'uuid';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { ODataGetByKeyRequestConfig } from '@sap-cloud-sdk/odata-common/internal';
+import { CommonEntity } from '../../test/common-entity';
 import {
-  uriConverter,
-  oDataUri as oDataUriV2
-} from '@sap-cloud-sdk/odata-v2/internal';
+  commonOdataUri,
+  commonUriConverter
+} from '../../test/common-request-config';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util';
+import { ODataGetByKeyRequestConfig } from './odata-get-by-key-request-config';
 
 describe('ODataGetByKeyRequestConfig', () => {
-  let config: ODataGetByKeyRequestConfig<TestEntity>;
+  let config: ODataGetByKeyRequestConfig<CommonEntity>;
   beforeEach(() => {
-    config = new ODataGetByKeyRequestConfig(TestEntity, oDataUriV2);
+    config = new ODataGetByKeyRequestConfig(CommonEntity, commonOdataUri);
   });
 
   it('method is get', () => {
@@ -28,7 +28,8 @@ describe('ODataGetByKeyRequestConfig', () => {
       testEntityResourcePath(
         keyPropGuid,
         keyPropString,
-        uriConverter.convertToUriFormat
+        commonUriConverter.convertToUriFormat,
+        'A_CommonEntity'
       )
     );
   });
@@ -38,12 +39,15 @@ describe('ODataGetByKeyRequestConfig', () => {
   });
 
   it('has selection', () => {
-    config.selects = [TestEntity.INT_32_PROPERTY, TestEntity.BOOLEAN_PROPERTY];
+    config.selects = [
+      CommonEntity.STRING_PROPERTY,
+      CommonEntity.INT_16_PROPERTY
+    ];
     expect(Object.keys(config.queryParameters())).toContain('$select');
   });
 
   it('has custom field selection', () => {
-    config.selects = [TestEntity.customField('SomeCustomField')];
+    config.selects = [CommonEntity.customField('SomeCustomField')];
     expect(config.queryParameters()['$select']).toBe('SomeCustomField');
   });
 });

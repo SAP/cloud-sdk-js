@@ -139,29 +139,6 @@ function headerForProxy(
   }
 }
 
-// TODO the proxy header are for OnPrem auth and are now handled correctly and should be removed here
-// However this would be a breaking change, since we recommended to use 'NoAuthentication' to achieve principal propagation as a workaround.
-// Remove this in v2
-function legacyNoAuthOnPremiseProxy(
-  destination: Destination
-): Record<string, any> {
-  logger.warn(
-    `You are using 'NoAuthentication' in destination: ${destination.name} which is an OnPremise destination. This is a deprecated configuration, most likely you wanted to set-up 'PrincipalPropagation' so please change the destination property to the desired authentication scheme.`
-  );
-
-  let principalPropagationHeader;
-  try {
-    principalPropagationHeader = headerForPrincipalPropagation(destination);
-  } catch (e) {
-    logger.warn('No principal propagation header found.');
-  }
-
-  return {
-    ...headerForProxy(destination),
-    ...principalPropagationHeader
-  };
-}
-
 interface AuthenticationHeaderCloud {
   authorization: string;
 }
@@ -180,13 +157,6 @@ interface AuthenticationHeaders {
 function getProxyRelatedAuthHeaders(
   destination: Destination
 ): AuthenticationHeaderProxy | undefined {
-  if (
-    destination.proxyType === 'OnPremise' &&
-    destination.authentication === 'NoAuthentication'
-  ) {
-    return legacyNoAuthOnPremiseProxy(destination) as any;
-  }
-
   // The connectivity service will raise an exception if it can not obtain the 'Proxy-Authorization' and the destination lookup will fail early
   return headerForProxy(destination);
 }

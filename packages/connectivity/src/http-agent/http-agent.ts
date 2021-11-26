@@ -5,12 +5,14 @@ import {
   Destination,
   DestinationCertificate,
   getProtocolOrDefault,
-  Protocol,
+  Protocol
+} from '../scp-cf';
+import {
   addProxyConfigurationInternet,
   proxyAgent,
   proxyStrategy,
   ProxyStrategy
-} from '../scp-cf';
+} from '../scp-cf/destination';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({

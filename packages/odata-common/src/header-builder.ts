@@ -5,13 +5,13 @@
  * @param request - OData request configuration to create headers for
  * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
  */
-import { ODataRequest } from './request/odata-request';
-import { ODataRequestConfig } from './request/odata-request-config';
+import { ODataRequest } from './request';
+import { ODataRequestConfig } from './request';
 
 /**
  * Create Headers from request object.
  * @param request - Request from which header are build.
- * @returns Headesrs
+ * @returns The headers.
  * @internal
  */
 export async function buildHeaders<RequestT extends ODataRequestConfig>(

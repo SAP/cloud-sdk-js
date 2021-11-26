@@ -2,8 +2,8 @@ import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2/internal'
 
 const customDeSerializers = {
   'Edm.String': {
-    serialize: (val: number) => '3',
-    deserialize: (val: any) => 3
+    serialize: (val: number) => (val === 3 ? '3' : 'not 3'),
+    deserialize: (val: any) => (val?.slice?.(0, 3) === 'not' ? 0 : 3)
   }
 };
 

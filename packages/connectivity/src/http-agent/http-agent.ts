@@ -3,16 +3,14 @@ import http from 'http';
 import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  DestinationCertificate
-} from '../scp-cf/destination/destination-service-types';
-import { getProtocolOrDefault } from '../scp-cf/get-protocol';
-import { Protocol } from '../scp-cf/protocol';
-import {
+  DestinationCertificate,
+  getProtocolOrDefault,
+  Protocol,
   addProxyConfigurationInternet,
   proxyAgent,
   proxyStrategy,
   ProxyStrategy
-} from '../scp-cf/destination/proxy-util';
+} from '../scp-cf';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({

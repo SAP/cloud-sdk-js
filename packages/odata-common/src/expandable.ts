@@ -1,5 +1,5 @@
 import { EntityBase, ODataVersionOf } from './entity-base';
-import { OneToManyLink , AllFields , OneToOneLink } from './selectable';
+import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
 
 /**
  * Represents everything that can be used in an `.expand` statement. Only relevant for OData v4 requests.

@@ -14,7 +14,7 @@ import {
   proxyHostAndPort
 } from './connectivity-service';
 import { Protocol } from './protocol';
-import { Destination } from './destination/destination-service-types';
+import { Destination } from './destination';
 
 describe('connectivity-service', () => {
   afterEach(() => {

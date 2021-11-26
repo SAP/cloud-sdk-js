@@ -1,6 +1,10 @@
+/* eslint-disable valid-jsdoc */
 import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import moment from 'moment';
 
+/**
+ * @internal
+ */
 export function deserializeDateToMoment(date: string): moment.Moment {
   const parsed = moment.utc(date, 'YYYY-MM-DD', true);
   if (!parsed.isValid()) {
@@ -11,10 +15,16 @@ export function deserializeDateToMoment(date: string): moment.Moment {
   return parsed;
 }
 
+/**
+ * @internal
+ */
 export function serializeToDate(value: moment.Moment): string {
   return value.format('YYYY-MM-DD');
 }
 
+/**
+ * @internal
+ */
 export function deserializeDateTimeOffsetToMoment(
   dateTime: string
 ): moment.Moment {
@@ -30,10 +40,16 @@ export function deserializeDateTimeOffsetToMoment(
   return parsed;
 }
 
+/**
+ * @internal
+ */
 export function serializeToDateTimeOffset(value: moment.Moment): string {
   return value.utc().format('YYYY-MM-DDTHH:mm:ss.SSS') + 'Z';
 }
 
+/**
+ * @internal
+ */
 export function deserializeDurationToMoment(value: string): moment.Duration {
   const durationPattern =
     /([+-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
@@ -46,10 +62,16 @@ export function deserializeDurationToMoment(value: string): moment.Duration {
   return moment.duration(value);
 }
 
+/**
+ * @internal
+ */
 export function serializeToDuration(value: moment.Duration): string {
   return value.toISOString();
 }
 
+/**
+ * @internal
+ */
 export function deserializeToTime(value: string): Time {
   const timeComponents = /(\d{2,2}):(\d{2,2}):(\d{2,2}(\.\d{1,12}){0,1})?/.exec(
     value
@@ -66,6 +88,9 @@ export function deserializeToTime(value: string): Time {
   };
 }
 
+/**
+ * @internal
+ */
 export function serializeToTime(value: Time): string {
   return [value.hours, value.minutes, value.seconds]
     .map(timeComponent => padTimeComponent(timeComponent))

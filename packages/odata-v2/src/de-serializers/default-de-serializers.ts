@@ -14,6 +14,7 @@ import {
 import { DeSerializers } from './de-serializers';
 
 /**
+ * @internal
  * Type of the default (de-)serializers.
  */
 export type DefaultDeSerializers = DeSerializers<
@@ -69,6 +70,7 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
 };
 
 /**
+ * @internal
  * The default (de-)serializers.
  */
 export const defaultDeSerializers: DefaultDeSerializers = Object.entries(

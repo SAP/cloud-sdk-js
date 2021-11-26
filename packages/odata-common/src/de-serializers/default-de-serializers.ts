@@ -12,6 +12,7 @@ import {
 import { convertToUriForEdmString, isInfOrNan } from './uri-value-converter';
 
 /**
+ * @internal
  * Type of the default (de-)serializers.
  */
 export type DefaultDeSerializers = DeSerializers<
@@ -32,6 +33,7 @@ export type DefaultDeSerializers = DeSerializers<
 >;
 
 /**
+ * @internal
  * Default (de-)serializers without `null` and `undefined` handling.
  */
 export const defaultDeSerializersRaw: DefaultDeSerializers = {
@@ -117,6 +119,7 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
 };
 
 /**
+ * @internal
  * Wraps the given default serialization function with a check for null values.
  * @param serialize - Serialization function to wrap.
  * @returns The wrapped serialization function.
@@ -136,6 +139,7 @@ export function wrapDefaultSerialization<T>(
 }
 
 /**
+ * @internal
  * Wraps the given default deserialization function with a check for null values.
  * @param deserialize - Deserialization function to wrap.
  * @returns The wrapped deserialization function.

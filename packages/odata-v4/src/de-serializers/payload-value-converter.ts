@@ -24,6 +24,7 @@ export function edmToTs<T extends EdmType>(
 }
 
 /**
+ * @internal
  * @deprecated - Remove this function before 2.0 beta.
  */
 export function tsToEdm(

@@ -3,6 +3,9 @@
 import moment from 'moment';
 import { Time } from '@sap-cloud-sdk/odata-common/internal';
 
+/**
+ * @internal
+ */
 export function deserializeToTime(value: string): Time {
   const regexResult =
     /PT(?<hours>\d{1,2}H)?(?<minutes>\d{1,2}M)?(?<seconds>\d{1,2}S)?/.exec(
@@ -20,6 +23,9 @@ export function deserializeToTime(value: string): Time {
   };
 }
 
+/**
+ * @internal
+ */
 export function serializeFromTime(value: Time): string {
   return (
     'PT' +

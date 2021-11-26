@@ -3,6 +3,9 @@
 import { EdmTypeShared } from '../edm-types';
 import { DeSerializers } from './de-serializers';
 
+/**
+ * @internal
+ */
 export function isInfOrNan(value: string | number): boolean {
   if (typeof value === 'number') {
     return false;
@@ -10,14 +13,23 @@ export function isInfOrNan(value: string | number): boolean {
   return ['inf', '-inf', 'nan'].includes(value.toLowerCase());
 }
 
+/**
+ * @internal
+ */
 export function convertToUriForEdmString(value: any): string {
   return `'${value.replace(/'/g, "''")}'`;
 }
 
+/**
+ * @internal
+ */
 export interface UriConverter {
   convertToUriFormat: (value: any, edmType: EdmTypeShared<'any'>) => string;
 }
 
+/**
+ * @internal
+ */
 export function createUriConverter(deSerializers: DeSerializers): UriConverter {
   return {
     convertToUriFormat: (value: any, edmType: EdmTypeShared<'any'>): string => {

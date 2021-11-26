@@ -5,6 +5,7 @@ import { Filterable } from '../filter/filterable';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
 import { FieldType } from '../selectable/field';
+import { UriConverter } from '../de-serializers';
 import { getEntityKeys } from './get-keys';
 import { getOrderBy } from './get-orderby';
 import { createGetFilter } from './get-filter';

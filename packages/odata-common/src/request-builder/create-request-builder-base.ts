@@ -13,7 +13,7 @@ import type {
 } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
-import { ODataCreateRequestConfig } from '../request/odata-create-request-config';
+import { ODataCreateRequestConfig } from '../request';
 import { Link } from '../selectable';
 import { MethodRequestBuilder } from './request-builder-base';
 

@@ -4,9 +4,9 @@ import {
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { Constructable, EntityBase } from '../entity-base';
-import { Selectable } from '../selectable/selectable';
-import { Orderable } from '../order/orderable';
-import { ODataGetAllRequestConfig } from '../request/odata-get-all-request-config';
+import { Selectable } from '../selectable';
+import { Orderable } from '../order';
+import { ODataGetAllRequestConfig } from '../request';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { CountRequestBuilder } from './count-request-builder';

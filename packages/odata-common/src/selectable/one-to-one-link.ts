@@ -1,9 +1,6 @@
 import { EntityBase } from '../entity-base';
-import { Order } from '../order/order';
-import { Filterable } from '../filter/filterable';
-import { Orderable } from '../order/orderable';
-import { OrderLink } from '../order/order-link';
-import { FilterLink } from '../filter/filter-link';
+import { Order, Orderable, OrderLink } from '../order';
+import { Filterable, FilterLink } from '../filter';
 import { Link } from './link';
 
 /**

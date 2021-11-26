@@ -125,7 +125,7 @@ class DestinationFromServiceRetriever {
     */
       destination =
         (await da.fetchDestinationBySystemUser(destinationResult)) ||
-        (await da.fetchDestinationByUserJwt());
+        (await da.fetchDestinationByUserJwt(destinationResult.origin));
     }
     if (destination.authentication === 'OAuth2UserTokenExchange') {
       destination = await da.fetchDestinationByUserTokenExchange(
@@ -142,7 +142,7 @@ class DestinationFromServiceRetriever {
       destination = await da.fetchDestinationByClientCrendentialsGrant();
     }
     if (destination.authentication === 'OAuth2JWTBearer') {
-      destination = await da.fetchDestinationByUserJwt();
+      destination = await da.fetchDestinationByUserJwt(destinationResult.origin);
     }
     if (destination.authentication === 'ClientCertificateAuthentication') {
       destination = await da.addClientCertAuth(destinationResult.origin);
@@ -436,23 +436,28 @@ class DestinationFromServiceRetriever {
     }
   }
 
-  private async fetchDestinationByUserJwt(): Promise<Destination> {
+  private async fetchDestinationByUserJwt(destinationOrigin: DestinationOrigin): Promise<Destination> {
     const destinationService = getDestinationService();
 
-    /* This covers the two business user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
-     The two cases are JWT issued from provider or JWT from subscriber - the two cases are handled automatically.
-     In the provider case the subdomain replacement in the xsuaa.url with the iss value does nothing but this does not hurt. */
-    if (!isUserToken(this.subscriberToken)) {
-      throw Error(
-        'No user token (JWT) has been provided. This is strictly necessary for principal propagation.'
-      );
-    }
-    const accessToken = await jwtBearerToken(
-      this.subscriberToken.encoded,
-      destinationService,
-      this.options
-    );
-    return this.fetchDestinationByToken(accessToken);
+      /* This covers the two business user propagation cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
+       The two cases are JWT issued from provider or JWT from subscriber - the two cases are handled automatically.
+       In the provider case the subdomain replacement in the xsuaa.url with the iss value does nothing but this does not hurt. */
+      if (!isUserToken(this.subscriberToken)) {
+        throw Error(
+            'No user token (JWT) has been provided. This is strictly necessary for principal propagation.'
+        );
+      }
+      //Take the subscriber/provider token for service acces and sets the x-user-token header for the user/tenat propagation https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+      const authHeaderJwt = await serviceToken('destination', {
+        jwt:
+            destinationOrigin === "subscriber" ? this?.subscriberToken?.decoded : this.providerClientCredentialsToken.decoded
+      });
+      const exchangeHeaderJwt = await jwtBearerToken(
+          this.subscriberToken.encoded,
+          destinationService,
+          this.options
+      )
+      return this.fetchDestinationByToken({authHeaderJwt,exchangeHeaderJwt});
   }
 
   private async addClientCertAuth(

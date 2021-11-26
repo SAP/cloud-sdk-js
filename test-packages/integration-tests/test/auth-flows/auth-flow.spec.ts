@@ -18,6 +18,7 @@ import {
   Systems,
   UserAccessTokens
 } from './auth-flow-util';
+import {subscriberServiceToken} from "../../../../test-resources/test/test-util";
 
 /* Consider the how-to-execute-auth-flow-tests.md to understand how to execute these tests. */
 
@@ -140,15 +141,14 @@ describe('OAuth flows', () => {
   it('OAuth2ClientCredentials: Provider Destination & Subscriber Jwt with common token service url', async () => {
     const destination = await getDestination({
       destinationName: 'DummyOAuth2ClientCredentialsCommonTokenURLDestination',
-      jwt: accessToken.provider
+      jwt: accessToken.subscriber
     });
     expect(destination!.authTokens![0]!.error).toBeUndefined();
   }, 60000);
 
   it('OAuth2ClientCredentials: Provider Destination & non user provider token with dedicated token service url', async () => {
     const destination = await getDestination({
-      destinationName: 'DummyOAuth2ClientCredentialsDestination',
-      jwt: accessToken.provider
+      destinationName: 'DummyOAuth2ClientCredentialsDestination'
     });
     expect(destination!.authTokens![0]!.error).toBeNull();
   }, 60000);
@@ -208,6 +208,12 @@ describe('OAuth flows', () => {
     const response = await executeHttpRequest(destination, { method: 'get' });
 
     expect(response.status).toBe(200);
+  }, 60000);
+
+  it('OAuth2JWTBearer: Provider Destination & Subscriber Token (common token service URL)', async () => {
+    const destination = await getDestination({destinationName:'DummyOAuth2JWTBearerDestinationCommonTokenURLDestination',jwt:accessToken.subscriber})
+
+    expect(destination!.authTokens![0]!.error).toBeNull();
   }, 60000);
 
   xit('ClientCertificate: Fetches the certificate and uses it', async () => {

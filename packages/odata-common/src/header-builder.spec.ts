@@ -9,7 +9,7 @@ import {
   getAllRequestConfig,
   updateRequestConfig
 } from '../test/common-request-config';
-import { ODataRequest } from './request/odata-request';
+import { ODataRequest } from './request';
 import { buildHeaders } from './header-builder';
 
 describe('Header-Builder', () => {

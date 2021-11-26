@@ -4,10 +4,9 @@ import {
   EntityIdentifiable,
   GetByKeyRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { DefaultDeSerializers, DeSerializers, edmToTs } from '../de-serializers';
 import { Entity } from '../entity';
-import { createODataUri } from '../uri-conversion/odata-uri';
-import { edmToTs } from '../de-serializers/payload-value-converter';
+import { createODataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
 import {
   responseDataAccessor,

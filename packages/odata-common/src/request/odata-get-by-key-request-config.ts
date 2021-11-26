@@ -1,7 +1,7 @@
 import { EntityBase, Constructable } from '../entity-base';
 import { Expandable } from '../expandable';
-import { Selectable } from '../selectable/selectable';
-import { ODataUri } from '../uri-conversion/odata-uri';
+import { Selectable } from '../selectable';
+import { ODataUri } from '../uri-conversion';
 import { WithKeys, WithSelection } from './odata-request-traits';
 import { ODataRequestConfig } from './odata-request-config';
 

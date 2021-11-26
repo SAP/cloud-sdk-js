@@ -16,14 +16,18 @@ import {
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
-import { createODataUri } from '../uri-conversion/odata-uri';
-import { CustomDeSerializers } from '../de-serializers/custom-de-serializers';
+import {
+  CustomDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers
+} from '../de-serializers';
+import { createODataUri } from '../uri-conversion';
 
 const logger = createLogger({
   package: 'odata-v2',
   messageContext: 'update-request-builder-v2'
 });
+
 /**
  * Create OData query to update an entity.
  * @typeparam EntityT - Type of the entity to be updated

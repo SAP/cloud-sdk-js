@@ -1,5 +1,5 @@
 import { EntityBase } from '../entity-base';
-import { Filter } from '../filter/filter';
+import { Filter } from '../filter';
 import { EdmTypeShared } from '../edm-types';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';

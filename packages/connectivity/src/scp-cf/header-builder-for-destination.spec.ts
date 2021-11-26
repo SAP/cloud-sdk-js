@@ -1,5 +1,5 @@
 import { buildHeadersForDestination } from './header-builder-for-destination';
-import { Destination } from './destination/destination-service-types';
+import { Destination } from './destination';
 
 describe('header builder for destination', () => {
   it('adds location id headers if there is a cloudConnectorLocationId in the destination', async () => {

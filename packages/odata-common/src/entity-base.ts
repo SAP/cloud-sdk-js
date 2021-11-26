@@ -3,9 +3,8 @@
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
-import type { Field } from './selectable/field';
-import type { Link } from './selectable/link';
-import type { RequestBuilder } from './request-builder/request-builder';
+import type { Field, Link } from './selectable';
+import type { RequestBuilder } from './request-builder';
 import { DefaultDeSerializers, DeSerializers } from './de-serializers';
 
 /**

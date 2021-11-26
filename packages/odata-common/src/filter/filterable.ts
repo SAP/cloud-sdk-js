@@ -1,6 +1,6 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
-import type { OneToManyLink } from '../selectable/one-to-many-link';
+import type { OneToManyLink } from '../selectable';
 import type { BooleanFilterFunction } from './boolean-filter-function';
 import type { Filter } from './filter';
 import { UnaryFilter } from './unary-filter';

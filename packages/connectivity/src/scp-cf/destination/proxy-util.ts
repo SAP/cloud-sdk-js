@@ -6,10 +6,7 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import { Protocol } from '../protocol';
 import { ProxyConfiguration } from '../connectivity-service-types';
 import { basicHeader } from '../authorization-header';
-import {
-  HttpAgentConfig,
-  HttpsAgentConfig
-} from '../../http-agent/agent-config';
+import { HttpAgentConfig, HttpsAgentConfig } from '../../http-agent';
 import { getProtocolOrDefault } from '../get-protocol';
 import { Destination } from './destination-service-types';
 

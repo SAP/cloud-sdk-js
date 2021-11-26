@@ -1,7 +1,5 @@
 import { EntityBase } from '../entity-base';
-import { Orderable } from '../order/orderable';
-import { OrderLink } from '../order/order-link';
-import { Order } from '../order/order';
+import { Orderable, OrderLink, Order } from '../order';
 
 /**
  * Get an object containing the given order bys as query parameter, or an empty object if none was given.

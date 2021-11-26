@@ -1,6 +1,6 @@
 import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
-import { Filter } from '../filter/filter';
+import { Filter } from '../filter';
 import { DeSerializers } from '../de-serializers';
 import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
 

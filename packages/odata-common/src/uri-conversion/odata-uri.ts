@@ -1,10 +1,10 @@
 import { Expandable } from '../expandable';
 import { EntityBase, Constructable } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
-import { Selectable } from '../selectable/selectable';
-import { Orderable } from '../order/orderable';
+import { Selectable } from '../selectable';
+import { Orderable } from '../order';
 import { Filterable } from '../filter';
-import { UriConverter } from '../de-serializers/uri-value-converter';
+import { UriConverter } from '../de-serializers';
 import { getEntityKeys } from './get-keys';
 import { getOrderBy } from './get-orderby';
 import { createGetFilter } from './get-filter';

@@ -1,9 +1,9 @@
 import { EntityBase, Constructable } from '../entity-base';
-import { Selectable } from '../selectable/selectable';
+import { Selectable } from '../selectable';
+import { Filterable } from '../filter';
 import { Expandable } from '../expandable';
-import { Orderable } from '../order/orderable';
-import { ODataUri } from '../uri-conversion/odata-uri';
-import { Filterable } from '../filter/filterable';
+import { Orderable } from '../order';
+import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithGetAllRestrictions } from './odata-request-traits';
 

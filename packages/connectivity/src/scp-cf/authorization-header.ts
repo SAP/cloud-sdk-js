@@ -8,9 +8,9 @@ import {
 import {
   AuthenticationType,
   Destination,
-  DestinationAuthToken
-} from './destination/destination-service-types';
-import { sanitizeDestination } from './destination/destination';
+  DestinationAuthToken,
+  sanitizeDestination
+} from './destination';
 
 const logger = createLogger({
   package: 'connectivity',

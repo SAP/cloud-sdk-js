@@ -1,6 +1,6 @@
 import { EntityBase } from '../entity-base';
-import { Selectable } from '../selectable/selectable';
-import { Orderable } from '../order/orderable';
+import { Selectable } from '../selectable';
+import { Orderable } from '../order';
 import { Filterable } from '../filter';
 
 /**

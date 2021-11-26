@@ -1,6 +1,6 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { helpfulLinksSection } from '@sap-cloud-sdk/generator-common/internal';
-import { getApiSpecificUsage } from '../sdk-metadata/generation-and-usage';
+import { getApiSpecificUsage } from '../sdk-metadata';
 import { VdmServiceMetadata } from '../vdm-types';
 
 function title(service: VdmServiceMetadata): string {

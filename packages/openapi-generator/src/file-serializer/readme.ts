@@ -1,7 +1,7 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { helpfulLinksSection } from '@sap-cloud-sdk/generator-common/internal';
 import { OpenApiDocument } from '../openapi-types';
-import { getApiSpecificUsage } from '../sdk-metadata/generation-and-usage';
+import { getApiSpecificUsage } from '../sdk-metadata';
 /**
  * Generate the readme for an openapi client.
  * @param openApiDocument - Parsed service.

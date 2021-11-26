@@ -1,7 +1,7 @@
 import { pascalCase } from '@sap-cloud-sdk/util';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmFunctionImportBase } from '../../vdm-types';
-import { SwaggerPath } from '../../swagger-parser/swagger-types';
+import { SwaggerPath } from '../../swagger-parser';
 import { functionImportDescription } from '../description-util';
 import { EdmxParameter } from '../../edmx-parser/common';
 import { EdmxFunctionImportV2 } from '../../edmx-parser/v2';

@@ -1,10 +1,12 @@
 import { ServiceNameFormatter } from '../../service-name-formatter';
-import { transformFunctionImportBase } from '../common';
+import {
+  transformFunctionImportBase,
+  parseFunctionImportReturnTypes
+} from '../common';
 import { VdmComplexType, VdmEntity, VdmFunctionImport } from '../../vdm-types';
-import { swaggerDefinitionForFunctionImport } from '../../swagger-parser/swagger-parser';
+import { swaggerDefinitionForFunctionImport } from '../../swagger-parser';
 import { parseFunctionImportsV2 } from '../../edmx-parser/v2';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
-import { parseFunctionImportReturnTypes } from '../common/action-function-return-types';
+import { ServiceMetadata } from '../../edmx-parser';
 import { hasUnsupportedParameterTypes } from '../edmx-to-vdm-util';
 
 const extractResponse = (functionName: string) => (response: string) =>

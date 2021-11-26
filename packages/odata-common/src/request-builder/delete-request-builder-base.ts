@@ -5,8 +5,8 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
-import { ODataUri } from '../uri-conversion/odata-uri';
-import { ODataDeleteRequestConfig } from '../request/odata-delete-request-config';
+import { ODataUri } from '../uri-conversion';
+import { ODataDeleteRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4

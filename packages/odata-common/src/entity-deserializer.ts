@@ -14,15 +14,16 @@ import { EdmTypeShared, isEdmType } from './edm-types';
 import {
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
-  PropertyMetadata
-} from './selectable/complex-type-namespace';
-import { Field } from './selectable/field';
-import { Link } from './selectable/link';
-import { EdmTypeField } from './selectable/edm-type-field';
-import { EnumField } from './selectable/enum-field';
-import { CollectionField } from './selectable/collection-field';
-import { ComplexTypeField } from './selectable/complex-type-field';
-import { OneToOneLink } from './selectable/one-to-one-link';
+  PropertyMetadata,
+  Field,
+  Link,
+  EdmTypeField,
+  EnumField,
+  CollectionField,
+  ComplexTypeField,
+  OneToOneLink
+} from './selectable';
+
 const logger = createLogger({
   package: 'odata-common',
   messageContext: 'entity-deserializer'

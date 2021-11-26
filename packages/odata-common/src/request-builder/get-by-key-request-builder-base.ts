@@ -6,9 +6,9 @@ import {
 import { Constructable, EntityBase } from '../entity-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
-import { ODataGetByKeyRequestConfig } from '../request/odata-get-by-key-request-config';
-import { ODataUri } from '../uri-conversion/odata-uri';
-import { Selectable } from '../selectable/selectable';
+import { ODataGetByKeyRequestConfig } from '../request';
+import { Selectable } from '../selectable';
+import { ODataUri } from '../uri-conversion';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.

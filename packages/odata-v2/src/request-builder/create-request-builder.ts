@@ -7,12 +7,12 @@ import {
 import {
   DeSerializers,
   CustomDeSerializers,
-  DefaultDeSerializers
+  DefaultDeSerializers,
+  edmToTs
 } from '../de-serializers';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
-import { createODataUri } from '../uri-conversion/odata-uri';
-import { edmToTs } from '../de-serializers/payload-value-converter';
+import { createODataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
 import {
   responseDataAccessor,

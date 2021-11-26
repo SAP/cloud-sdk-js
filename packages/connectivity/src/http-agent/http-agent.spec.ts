@@ -1,10 +1,12 @@
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { connectivityProxyConfigMock } from '../../../../test-resources/test/test-util/environment-mocks';
-import { proxyAgent } from '../scp-cf/destination/proxy-util';
-import { Protocol } from '../scp-cf/protocol';
-import { ProxyConfiguration } from '../scp-cf/connectivity-service-types';
-import { Destination } from '../scp-cf/destination/destination-service-types';
+import {
+  proxyAgent,
+  Protocol,
+  ProxyConfiguration,
+  Destination
+} from '../scp-cf';
 import { getAgentConfig } from './http-agent';
 
 describe('createAgent', () => {

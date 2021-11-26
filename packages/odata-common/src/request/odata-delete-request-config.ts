@@ -1,5 +1,5 @@
 import { Constructable, EntityBase } from '../entity-base';
-import { ODataUri } from '../uri-conversion/odata-uri';
+import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
 

@@ -1,6 +1,9 @@
-import { EntityBase, Constructable } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from './de-serializers/de-serializers';
-import { CustomField } from './selectable/custom-field';
+import {
+  EntityBase,
+  Constructable
+} from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from './de-serializers';
+import { CustomField } from './selectable';
 
 /**
  * Super class for all representations of OData v2 entity types.

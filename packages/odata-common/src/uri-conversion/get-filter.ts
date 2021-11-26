@@ -4,21 +4,21 @@ import { Constructable, EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
 import {
   FilterLambdaExpression,
-  isFilterLambdaExpression,
-  Filterable,
-  FilterList,
-  isFilterList,
-  isBooleanFilterFunction,
-  FilterLink,
-  isFilterLink,
-  isUnaryFilter,
-  UnaryFilter,
-  Filter,
-  isFilter,
+  isFilterLambdaExpression
+} from '../filter/filter-lambda-expression';
+import { Filterable } from '../filter/filterable';
+import { FilterList, isFilterList } from '../filter/filter-list';
+import { isBooleanFilterFunction } from '../filter/boolean-filter-function';
+import { FilterLink, isFilterLink } from '../filter/filter-link';
+import { isUnaryFilter, UnaryFilter } from '../filter/unary-filter';
+import { OneToManyLink } from '../selectable/one-to-many-link';
+import { ComplexTypeField } from '../selectable/complex-type-field';
+import {
   FilterFunction,
   FilterFunctionParameterType
-} from '../filter';
-import { OneToManyLink, ComplexTypeField, FieldType } from '../selectable';
+} from '../filter/filter-function-base';
+import { FieldType } from '../selectable/field';
+import { Filter, isFilter } from '../filter/filter';
 import { UriConverter } from '../de-serializers';
 
 type GetFilterType<EntityT extends EntityBase> = (

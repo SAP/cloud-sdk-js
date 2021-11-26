@@ -25,35 +25,7 @@ export class Link<
   LinkedEntityT extends EntityBase = any
 > implements EntityIdentifiable<EntityT>
 {
-  /**
-   * @deprecated Since v1.21.0. Use [[clone]] instead.
-   * Create a new link based on a given link.
-   * @typeparam EntityT - Type of the entity to be linked from
-   * @typeparam LinkedEntityT - Type of the entity to be linked to
-   * @param link - Link to be cloned
-   * @returns Newly created link
-   */
-  static clone<EntityT1 extends EntityBase, LinkedEntityT1 extends EntityBase>(
-    link: Link<EntityT1, LinkedEntityT1>
-  ): Link<EntityT1, LinkedEntityT1> {
-    const clonedLink = new Link<EntityT1, LinkedEntityT1>(
-      link._fieldName,
-      link._entityConstructor,
-      link._linkedEntity
-    );
-    clonedLink._selects = link._selects;
-    return clonedLink;
-  }
-
   readonly _entity: EntityT;
-
-  /**
-   * @deprecated Since v1.21.0. Use [[_selects]] directly.
-   * List of selectables on the linked entity.
-   */
-  get selects(): Selectable<LinkedEntityT>[] {
-    return this._selects;
-  }
 
   /**
    * List of selectables on the linked entity.

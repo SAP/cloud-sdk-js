@@ -53,17 +53,6 @@ export function complexTypeName(type: string): string | undefined {
 export const collectionRegExp = /Collection\((?<collectionType>.*)\)/;
 
 /**
- * @deprecated since version 1.27.0. Use [[isEdmType]] and [[complexTypeName]] if you want to extract type names of non EDM types.
- * @param typeName - Name of the EDM type for example "Edm.String" or "Namespace.ComplexType"
- * @returns the typename input for Edm types e.g. "Edm.String" or the type without the namespace.
- * @internal
- */
-export function parseType(typeName: string): string {
-  return typeName.startsWith('Edm')
-    ? typeName
-    : typeName.split('.')[typeName.split('.').length - 1];
-}
-/**
  * @internal
  */
 export function parseTypeName(typeName: string): string {

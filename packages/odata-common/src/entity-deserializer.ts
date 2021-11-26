@@ -102,7 +102,7 @@ export function entityDeserializer<T extends DeSerializers>(
         );
         return entity;
       }, new entityConstructor())
-      .initializeCustomFields(extractCustomFields(json, schema))
+      .setCustomFields(extractCustomFields(json, schema))
       .setVersionIdentifier(etag)
       .setOrInitializeRemoteState();
   }

@@ -2,7 +2,7 @@ import {
   EntitySerializer,
   entitySerializer as entitySerializerBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { tsToEdm } from './de-serializers/payload-value-converter';
+import { tsToEdm } from './de-serializers';
 
 /**
  * Entity serializer instance for v4 entities.

@@ -9,9 +9,8 @@ import {
 import { Entity } from '../entity';
 import { edmToTs } from '../de-serializers/payload-value-converter';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
-import { CustomDeSerializers } from '../de-serializers/custom-de-serializers';
-import { createODataUri } from '../uri-conversion/odata-uri';
+import { CustomDeSerializers, DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { createODataUri } from '../uri-conversion';
 import {
   getLinkedCollectionResult,
   responseDataAccessor

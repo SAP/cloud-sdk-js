@@ -8,12 +8,12 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  ODataBatchChangeSet,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { MultiSchemaTestEntity } from './index';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Batch builder for operations supported on the Multiple Schemas Service.
@@ -23,27 +23,27 @@ import { MultiSchemaTestEntity } from './index';
 export function batch(
   ...requests: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export function batch(
   requests: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export function batch(
   first:
     | undefined
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
     | Array<
         | ReadMultipleSchemasServiceRequestBuilder
-        | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+        | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
       >,
   ...rest: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder {
   return new ODataBatchRequestBuilder(
@@ -60,18 +60,18 @@ export function batch(
  */
 export function changeset(
   ...requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
+): BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
 export function changeset(
   requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
+): BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
 export function changeset(
   first:
     | undefined
     | WriteMultipleSchemasServiceRequestBuilder
     | Array<WriteMultipleSchemasServiceRequestBuilder>,
   ...rest: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder> {
-  return new ODataBatchChangeSet(variadicArgumentToArray(first, rest));
+): BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder> {
+  return new BatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultMultipleSchemasServicePath = 'VALUE_IS_UNDEFINED';

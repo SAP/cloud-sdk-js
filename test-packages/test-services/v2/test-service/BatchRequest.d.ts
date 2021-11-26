@@ -3,7 +3,6 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  ODataBatchChangeSet,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
@@ -23,6 +22,7 @@ import {
   CaseTest,
   Casetest_1
 } from './index';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Batch builder for operations supported on the Test Service.
  * @param requests The requests of the batch
@@ -31,13 +31,13 @@ import {
 export declare function batch(
   ...requests: Array<
     | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSet<WriteTestServiceRequestBuilder>
+    | BatchChangeSet<WriteTestServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export declare function batch(
   requests: Array<
     | ReadTestServiceRequestBuilder
-    | ODataBatchChangeSet<WriteTestServiceRequestBuilder>
+    | BatchChangeSet<WriteTestServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 /**
@@ -47,10 +47,10 @@ export declare function batch(
  */
 export declare function changeset(
   ...requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSet<WriteTestServiceRequestBuilder>;
+): BatchChangeSet<WriteTestServiceRequestBuilder>;
 export declare function changeset(
   requests: Array<WriteTestServiceRequestBuilder>
-): ODataBatchChangeSet<WriteTestServiceRequestBuilder>;
+): BatchChangeSet<WriteTestServiceRequestBuilder>;
 export declare const defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 export declare type ReadTestServiceRequestBuilder =
   | GetAllRequestBuilder<TestEntity>

@@ -3,7 +3,7 @@ import {
   createOriginalTestEntityData1,
   createTestEntity
 } from '../../../../test-resources/test/test-util/test-data';
-import { edmToTs } from '../de-serializers/payload-value-converter';
+import { edmToTs } from '../de-serializers';
 import {
   transformReturnValueForEdmType,
   transformReturnValueForEntity

@@ -18,7 +18,7 @@ import {
   FilterFunctionParameterType
 } from '../filter/filter-function-base';
 import { Filter, isFilter } from '../filter/filter';
-import { UriConverter } from '../de-serializers/uri-value-converter';
+import { UriConverter } from '../de-serializers';
 
 type GetFilterType<EntityT extends EntityBase> = (
   filter: Filterable<EntityT>,

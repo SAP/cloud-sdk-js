@@ -2,10 +2,10 @@ import { mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2/internal'
 
 const customDeSerializers = {
   'Edm.String': {
-    serialize: (val: number) => '3',
-    deserialize: (val: any) => 3
+    serialize: () => '3',
+    deserialize: () => 3
   }
 };
 
-// $ExpectType DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, number, any, moment.Moment, moment.Moment, Time>
+// $ExpectType CustomDeSerializers<Partial<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, number, any, Moment, Moment, Time>>>
 mergeDefaultDeSerializersWith(customDeSerializers);

@@ -1,5 +1,5 @@
 import {
-  wrapDeserialization,
+  wrapDefaultDeserialization,
   wrapDefaultSerialization,
   defaultDeSerializersRaw as defaultDeSerializersCommon,
   Time
@@ -14,6 +14,7 @@ import {
 import { DeSerializers } from './de-serializers';
 
 /**
+ * @internal
  * Type of the default (de-)serializers.
  */
 export type DefaultDeSerializers = DeSerializers<
@@ -57,7 +58,7 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
     serialize: serializeFromTime,
     serializeToUri: (value, serialize) => `time'${serialize(value)}'`
   },
-  /* DeSerializers without common URI serializer defaults. */
+  /* DeSerializers with v2 specific URI serializer defaults. */
   'Edm.Decimal': {
     ...defaultDeSerializersCommon['Edm.Decimal'],
     serializeToUri: (value, serialize) => `${serialize(value)}M`
@@ -69,6 +70,7 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
 };
 
 /**
+ * @internal
  * The default (de-)serializers.
  */
 export const defaultDeSerializers: DefaultDeSerializers = Object.entries(
@@ -77,7 +79,7 @@ export const defaultDeSerializers: DefaultDeSerializers = Object.entries(
   (entries, [edmType, { deserialize, serialize, serializeToUri }]) => ({
     ...entries,
     [edmType]: {
-      deserialize: wrapDeserialization(deserialize),
+      deserialize: wrapDefaultDeserialization(deserialize),
       serialize: wrapDefaultSerialization(serialize),
       serializeToUri
     }

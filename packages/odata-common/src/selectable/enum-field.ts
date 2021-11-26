@@ -1,6 +1,6 @@
 import { EntityBase } from '../entity-base';
-import { EdmTypeShared } from '../edm-types';
 import { Filter } from '../filter/filter';
+import { EdmTypeShared } from '../edm-types';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
@@ -19,9 +19,6 @@ export class EnumField<
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
-  /**
-   * @deprecated Since v1.48.0. This property is not used anymore.
-   */
   readonly edmType: EdmTypeShared<any> = 'Edm.Enum';
 
   /**

@@ -4,7 +4,7 @@ import {
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity-base';
-import { UriConverter } from '../de-serializers/uri-value-converter';
+import { UriConverter } from '../de-serializers';
 
 const logger = createLogger({
   package: 'odata-common',

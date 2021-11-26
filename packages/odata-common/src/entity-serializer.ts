@@ -20,6 +20,7 @@ const logger = createLogger({
 
 /**
  * Interface representing the return type of the builder function [[entitySerializer]].
+ * @internal
  */
 export interface EntitySerializer<
   EntityT extends EntityBase = any,

@@ -23,7 +23,9 @@ export { GetByKeyRequestBuilder } from './request-builder/get-by-key-request-bui
 export { ODataBatchRequestBuilder } from './request-builder/batch-request-builder';
 export { UpdateRequestBuilder } from './request-builder/update-request-builder';
 export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
-export { CustomField } from './selectable/custom-field';
-export { Entity } from './entity';
 
-export { ODataBatchChangeSet } from './batch-change-set';
+export { Entity } from './entity';
+export { CustomField } from './selectable';
+
+export { edmToTs, CustomDeSerializers, DeSerializers } from './de-serializers';
+export { deserializeComplexType } from './entity-deserializer';

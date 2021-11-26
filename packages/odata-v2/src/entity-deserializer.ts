@@ -1,5 +1,5 @@
 import { EdmTypeShared } from '@sap-cloud-sdk/odata-common/internal';
-import { EdmToPrimitive } from './de-serializers/payload-value-converter';
+import { EdmToPrimitive } from './de-serializers';
 import { EdmType } from './edm-types';
 
 /**
@@ -24,10 +24,3 @@ import { EdmType } from './edm-types';
 /**
  * @internal
  */
-/**
- * @internal
- */
-export type EdmToTsType<EdmT extends EdmType = any> = (
-  value: any,
-  edmType: EdmTypeShared<'v2'>
-) => EdmToPrimitive<EdmT>;

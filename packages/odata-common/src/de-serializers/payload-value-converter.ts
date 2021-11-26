@@ -3,6 +3,7 @@
 import BigNumber from 'bignumber.js';
 
 /**
+ * @internal
  * @deprecated I think this should be removed and replaced by the number functions below.
  */
 export function convertToNumber(value: any): number {
@@ -10,10 +11,10 @@ export function convertToNumber(value: any): number {
 }
 
 /**
+ * @internal
  * Check if string is guid format and throws exception if not.
  * @param value - string to be checked
  * @returns string
- * @internal
  */
 export function validateGuid(value: string): string {
   const guids =

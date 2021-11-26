@@ -3,6 +3,9 @@
 import { EdmTypeShared } from '../edm-types';
 import { DeSerializers } from './de-serializers';
 
+/**
+ * @internal
+ */
 export function isInfOrNan(value: string | number): boolean {
   if (typeof value === 'number') {
     return false;
@@ -10,22 +13,30 @@ export function isInfOrNan(value: string | number): boolean {
   return ['inf', '-inf', 'nan'].includes(value.toLowerCase());
 }
 
+/**
+ * @internal
+ */
 export function convertToUriForEdmString(value: any): string {
   return `'${value.replace(/'/g, "''")}'`;
 }
 
 /**
- * Interface defining the methods of the URI converter.
- * The concrete implementations are created in odata/v2/uri-conversion/uri-value-converter.ts and odata/v4/uri-conversion/uri-value-converter.ts
+ * @internal
  */
-export class UriConverter {
-  constructor(private deSerializers: DeSerializers) {}
+export interface UriConverter {
+  convertToUriFormat: (value: any, edmType: EdmTypeShared<'any'>) => string;
+}
 
-  convertToUriFormat(value: any, edmType: EdmTypeShared<'any'>): string {
-    const { serializeToUri, ...deSerializer } = this.deSerializers[edmType];
-    if (serializeToUri) {
-      return serializeToUri(value, deSerializer);
+/**
+ * @internal
+ */
+export function createUriConverter(deSerializers: DeSerializers): UriConverter {
+  return {
+    convertToUriFormat: (value: any, edmType: EdmTypeShared<'any'>): string => {
+      const { serializeToUri, serialize } = deSerializers[edmType];
+      return serializeToUri
+        ? serializeToUri(value, serialize)
+        : serialize(value);
     }
-    return this.deSerializers[edmType].serialize(value);
-  }
+  };
 }

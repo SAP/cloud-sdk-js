@@ -1,7 +1,7 @@
 /* eslint-disable valid-jsdoc */
 import {
   convertToUriForEdmString,
-  wrapDeserialization,
+  wrapDefaultDeserialization,
   wrapDefaultSerialization,
   defaultDeSerializersRaw as defaultDeSerializersCommon,
   Time
@@ -21,6 +21,7 @@ import {
 import { DeSerializers } from './de-serializers';
 
 /**
+ * @internal
  * Type of the default (de-)serializers.
  */
 export type DefaultDeSerializers = DeSerializers<
@@ -76,7 +77,7 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
     serializeToUri: (value, serialize) =>
       convertToUriForEdmString(serialize(value))
   },
-  /* DeSerializers without common URI serializer defaults. */
+  /* DeSerializers with v4 specific URI serializer defaults. */
   'Edm.Decimal': {
     ...defaultDeSerializersCommon['Edm.Decimal'],
     serializeToUri: (value, serialize) => String(serialize(value))
@@ -88,6 +89,7 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
 };
 
 /**
+ * @internal
  * The default (de-)serializers.
  */
 export const defaultDeSerializers: DefaultDeSerializers = Object.entries(
@@ -96,7 +98,7 @@ export const defaultDeSerializers: DefaultDeSerializers = Object.entries(
   (entries, [edmType, { deserialize, serialize, serializeToUri }]) => ({
     ...entries,
     [edmType]: {
-      deserialize: wrapDeserialization(deserialize),
+      deserialize: wrapDefaultDeserialization(deserialize),
       serialize: wrapDefaultSerialization(serialize),
       serializeToUri
     }

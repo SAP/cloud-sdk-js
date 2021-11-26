@@ -3,7 +3,6 @@ export * from './request';
 export * from './request-builder';
 export * from './selectable';
 export * from './uri-conversion';
-export * from './batch-change-set';
 export * from './edm-types';
 export * from './entity';
 export * from './entity-deserializer';

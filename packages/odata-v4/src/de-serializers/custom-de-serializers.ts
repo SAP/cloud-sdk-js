@@ -3,6 +3,7 @@ import {
   CustomOrDefaultType as CustomOrDefaultTypeCommon
 } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
+import moment from 'moment';
 import { DeSerializers } from './de-serializers';
 import {
   DefaultDeSerializers,
@@ -10,6 +11,7 @@ import {
 } from './default-de-serializers';
 
 /**
+ * @internal
  * Get a complete set of (de-)serializers, that consists of the given partial custom (de-)serializers and default (de-)serializers (aka. default (de-)serializers merged with custom (de-)serializers).
  * The custom (de-)serializers are merged with the default (de-)serializers, while custom (de-)serializers take precedence.
  * @param customDeSerializers - Custom (de-)serialization functions.
@@ -30,9 +32,11 @@ export function mergeDefaultDeSerializersWith<
   SingleT = number,
   StringT = string,
   AnyT = any,
-  DateTimeT = moment.Moment,
+  DateT = moment.Moment,
   DateTimeOffsetT = moment.Moment,
-  TimeT = Time
+  DurationT = moment.Duration,
+  TimeOfDayT = Time,
+  EnumT = any
 >(
   customDeSerializers: Partial<
     DeSerializers<
@@ -50,12 +54,14 @@ export function mergeDefaultDeSerializersWith<
       SingleT,
       StringT,
       AnyT,
-      DateTimeT,
+      DateT,
       DateTimeOffsetT,
-      TimeT
+      DurationT,
+      TimeOfDayT,
+      EnumT
     >
   >
-): CustomDeSerializer<typeof customDeSerializers> {
+): CustomDeSerializers<typeof customDeSerializers> {
   return {
     ...(defaultDeSerializers as any),
     ...(customDeSerializers || {})
@@ -71,7 +77,7 @@ type CustomOrDefaultType<CustomDeSerializerT, EdmT> = CustomOrDefaultTypeCommon<
 /**
  * Type of the full set of (de-)serialization functions, that include custom (de-)serializers (aka. default (de-)serializers type merged with custom (de-)serializers type).
  */
-export type CustomDeSerializer<T> = DeSerializers<
+export type CustomDeSerializers<T> = DeSerializers<
   CustomOrDefaultType<T, 'Edm.Binary'>,
   CustomOrDefaultType<T, 'Edm.Boolean'>,
   CustomOrDefaultType<T, 'Edm.Byte'>,

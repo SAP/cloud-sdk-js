@@ -6,19 +6,7 @@ import { ODataRequestConfig } from './odata-request-config';
  * @internal
  */
 export class ODataBatchRequestConfig extends ODataRequestConfig {
-  /**
-   * @deprecated Since v1.30.0.
-   */
-  static readonly content_type_prefix = 'multipart/mixed; boundary=batch_';
-
   subRequestPathType: BatchSubRequestPathType = 'relativeToService';
-
-  /**
-   * @deprecated Since v1.30.0. Use [[boundary]] instead.
-   */
-  get batchId(): string {
-    return this.boundary;
-  }
 
   /**
    * Creates an instance of ODataBatchRequestConfig.

@@ -2,6 +2,7 @@ import { DeserializedType, DeSerializer } from './de-serializers';
 import { DefaultDeSerializers } from './default-de-serializers';
 
 /**
+ * @internal
  * Infers the deserialized type for an EDM type, based on custom (de-)serializers.
  * If the custom (de-)serializers specify a type for the given EDM type, this type is inferred.
  * Otherwise the given DefaultType is used.

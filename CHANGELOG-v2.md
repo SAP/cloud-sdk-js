@@ -43,6 +43,8 @@
   - `IsolationStrategy`
   - `JwtKeyMapping`
   - `JwtPair`
+  - `MapType`
+  - `ODataBatchChangeSet`
   - `Protocol`
   - `ProxyConfiguration`
   - `ProxyConfigurationHeaders`
@@ -63,6 +65,13 @@
   - `addProxyConfigurationOnPrem`
   - `alwaysProvider`
   - `alwaysSubscriber`
+  - `applySuffixOnConflict`
+  - `applySuffixOnConflictDash`
+  - `applyPrefixOnJsConfictParam`
+  - `applySuffixOnConflictUnderscore`
+  - `applyPrefixOnJsConfictFunctionImports`
+  - `assocSome`
+  - `asyncPipe`
   - `audiences`
   - `basicHeader`
   - `buildAuthorizationHeaders`
@@ -72,18 +81,15 @@
   - `customAttributes`
   - `decodeJwt`
   - `decodeJwtComplete`
-  - `deserializersCommon`
   - `destinationCache`
   - `destinationForServiceBinding`
   - `destinationServiceCache`
+  - `errorWithCause`
   - `extractClientCredentials`
   - `fetchDestination`
   - `fetchInstanceDestinations`
   - `fetchSubaccountDestinations`
   - `fetchVerificationKeys`
-  - `fetchVerificationKeys`
-  - `fetchVerificationKeys`
-  - `FieldType`
   - `getAuthHeaders`
   - `getClientCredentialsToken`
   - `getDestination`
@@ -116,12 +122,14 @@
   - `isUserToken`
   - `issuerUrl`
   - `jwtBearerToken`
+  - `legacyNoAuthOnPremiseProxy`
   - `mappingTenantFields`
   - `mappingUserFields`
-  - `oDataUri` => Use `createODataUri` instead
+  - `mergeSome`
   - `parseDestination`
   - `parseProxyEnv`
   - `parseSubdomain`
+  - `parseType`
   - `proxyAgent`
   - `proxyHostAndPort`
   - `proxyStrategy`
@@ -129,17 +137,13 @@
   - `replaceSubdomain`
   - `resolveService`
   - `retrieveJwt`
-  - `RequestBuilder.forEntity(MyEntity)` => Use `MyEntity.requestBuilder` instead
   - `searchEnvVariablesForDestination`
   - `searchServiceBindingForDestination`
-  - `serializersCommon`
   - `serviceToken`
   - `subscriberFirst`
   - `tenantFromJwt`
   - `tenantId`
   - `tenantName`
-  - `uriConverter`
-  - `uriConvertersCommon`
   - `urlAndAgent`
   - `userEmail`
   - `userFamilyName`
@@ -271,6 +275,7 @@
   - day,
   - desc,
   - deserializeBatchResponse,
+  - deserializersCommon,
   - endsWith,
   - entityDeserializer,
   - entitySerializer,
@@ -296,6 +301,7 @@
   - serializeBatchRequest,
   - serializeChangeSet,
   - serializeRequest,
+  - serializersCommon,
   - startsWith,
   - substring,
   - throwErrorWhenReturnTypeIsUnionType,
@@ -303,6 +309,7 @@
   - toLower,
   - toUpper,
   - trim,
+  - uriConvertersCommon,
   - year
 - [core] Move the following functions to `odata-v2` package
   - CreateRequestBuilder,
@@ -312,7 +319,6 @@
   - FunctionImportRequestBuilder,
   - GetAllRequestBuilder,
   - GetByKeyRequestBuilder,
-  - ODataBatchChangeSet,
   - ODataBatchRequestBuilder,
   - UpdateRequestBuilder,
   - deserializeComplexType,
@@ -340,7 +346,6 @@
   - FunctionImportRequestBuilder,
   - GetAllRequestBuilder,
   - GetByKeyRequestBuilder,
-  - ODataBatchChangeSet,
   - ODataBatchRequestBuilder,
   - UpdateRequestBuilder,
   - all,
@@ -365,6 +370,9 @@
   - transformReturnValueForEntity,
   - transformReturnValueForEntityList,
   - transformReturnValueForUndefined,
+  - uriConverter
+- [core] Move the following functions to `generator-common` package
+  - helpfulLinksSection
 
 ### Signature changed
 
@@ -372,17 +380,39 @@
 
 ### Implementation changed
 
-- [openapi] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [generator] changed the following implementations
+  - `VdmNavigationpropety` multiplicity, isMultiLink removed
+  - `VdmFunctionImportReturnType` isMulti removed
+- [openapi] changed the following implementations
+  - `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [odata-common] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions..
+- [odata-common] changed the following implementations
+  - `ComplexTypeField` deprecated constructors removed
+  - `Constructable` Selectable removed
+  - `CreateRequestBuilderBase` prepare removed
+  - `EntityBase` getCurrentMapKey, initializeCustomFields removed
+  - `EnumField` edmType removed
+  - `FilterFunction` toString, transformParameter removed
+  - `Link` clone, selects removed
+  - `MethodRequestBuilder` withCustomHeaders, withCustomQueryParameters, withCustomServicePath removed
+  - `ODataRequestConfig` contentType, deprecated constructor removed
+  - `ODataBatchRequestConfig` batchId, content_type_prefix removed
+  - `OneToOneLink` clone removed
+  - `UpdateRequestBuilderBase` prepare, requiredFields, ignoredFields, withCustomVersionIdentifier removed
+  - `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions..
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [odata-v2] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [odata-v2] changed the following implementations
+  - `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [odata-v4] `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
+- [odata-v4] changed the following implementations
+  - `execute` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
-- [connectivity] `getDestination` changed to use DestinationFetchOptions as single parameter.
+- [connectivity] changed the following implementations
+  - `getDestination` changed to use DestinationFetchOptions as single parameter.
+  - `getProxyRelatedAuthHeaders` legacyNoAuthOnPremiseProxy case removed
   - `serviceToken` uses jwt instead of userJwt now.
   - `jwtBearerToken` uses jwt instead of userJwt now.
+  - `fetchVerificationKeys` merged with `executeFetchVerificationKeys`, now only accepts url as parameter
 
 ## Known Issues
 
@@ -395,8 +425,7 @@
 ## New Functionality
 
 - [connectivity] Create a new package with minimal API.
-- [http-client] Create a new package with minimal API.
-- [odata-common, odata-v2, odata-v4] DeSerializers // TODO
+- [http-client] Create a new package with minimal API
 
 ## Improvements
 

@@ -1,8 +1,7 @@
-/* eslint-disable valid-jsdoc */
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
+import { defaultDeSerializers } from '../de-serializers';
 
-import { UriConverter } from '@sap-cloud-sdk/odata-common/src/de-serializers/uri-value-converter';
-import { defaultDeSerializers } from '../de-serializers/default-de-serializers';
-
-export const uriConverter: UriConverter = new UriConverter(
-  defaultDeSerializers
-);
+/**
+ * internal
+ */
+export const uriConverter = createUriConverter(defaultDeSerializers);

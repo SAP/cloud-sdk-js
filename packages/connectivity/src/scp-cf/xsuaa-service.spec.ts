@@ -12,7 +12,7 @@ describe('getSubdomainAndZoneId', () => {
 
   it('returns null subdomain and zoneId for undefined jwt', () => {
     const actual = getSubdomainAndZoneId();
-    const expected = { subdomain: null, zoneId: null };
+    const expected = { subdomain: undefined, zoneId: undefined };
     expect(actual).toEqual(expected);
   });
 
@@ -31,7 +31,7 @@ describe('getSubdomainAndZoneId', () => {
     jest.spyOn(jwt, 'decodeJwt').mockImplementationOnce(() => ({ iss }));
 
     const actual = getSubdomainAndZoneId('nonNullJWT');
-    const expected = { subdomain: 'sub', zoneId: null };
+    const expected = { subdomain: 'sub', zoneId: undefined };
     expect(actual).toEqual(expected);
   });
 
@@ -40,7 +40,7 @@ describe('getSubdomainAndZoneId', () => {
     jest.spyOn(jwt, 'decodeJwt').mockImplementationOnce(() => ({ zid }));
 
     const actual = getSubdomainAndZoneId('nonNullJWT');
-    const expected = { subdomain: null, zoneId: zid };
+    const expected = { subdomain: undefined, zoneId: zid };
     expect(actual).toEqual(expected);
   });
 });

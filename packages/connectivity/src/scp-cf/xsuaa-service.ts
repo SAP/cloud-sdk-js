@@ -53,8 +53,8 @@ function wrapInCircuitBreaker<T extends (...args: any[]) => any>(
 
 // `@sap/xssec` sometimes checks `null` without considering `undefined`.
 interface SubdomainAndZoneId {
-  subdomain: string | null;
-  zoneId: string | null;
+  subdomain: string | undefined;
+  zoneId: string | undefined;
 }
 
 /**
@@ -66,8 +66,8 @@ interface SubdomainAndZoneId {
 export function getSubdomainAndZoneId(
   jwt?: string | JwtPayload
 ): SubdomainAndZoneId {
-  let subdomain: string | null = null;
-  let zoneId: string | null = null;
+  let subdomain: string | undefined;
+  let zoneId: string | undefined;
 
   if (jwt) {
     const jwtPayload = typeof jwt === 'string' ? decodeJwt(jwt) : jwt;

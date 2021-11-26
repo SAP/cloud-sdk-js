@@ -1,18 +1,16 @@
-import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
 import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
+import * as xssec from '@sap/xssec';
+import { executeHttpRequest } from '../../../../packages/http-client/src';
 import {
   getService,
   fetchDestination,
-  wrapJwtInHeader
-} from '@sap-cloud-sdk/connectivity/internal';
-import {
+  wrapJwtInHeader,
   decodeJwt,
   jwtBearerToken,
   getDestination,
   getDestinationFromDestinationService,
   serviceToken
-} from '@sap-cloud-sdk/connectivity';
-import * as xssec from '@sap/xssec';
+} from '../../../../packages/connectivity/src/internal';
 import {
   loadLocalVcap,
   readSystems,
@@ -137,6 +135,22 @@ describe('OAuth flows', () => {
       .top(1)
       .execute(destination);
     expect(result.length).toBe(1);
+  }, 60000);
+
+  it('OAuth2ClientCredentials: Provider Destination & Subscriber Jwt with common token service url', async () => {
+    const destination = await getDestination({
+      destinationName: 'DummyOAuth2ClientCredentialsCommonTokenURLDestination',
+      jwt: accessToken.provider
+    });
+    expect(destination!.authTokens![0]!.error).toBeUndefined();
+  }, 60000);
+
+  it('OAuth2ClientCredentials: Provider Destination & non user provider token with dedicated token service url', async () => {
+    const destination = await getDestination({
+      destinationName: 'DummyOAuth2ClientCredentialsDestination',
+      jwt: accessToken.provider
+    });
+    expect(destination!.authTokens![0]!.error).toBeNull();
   }, 60000);
 
   xit('OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {

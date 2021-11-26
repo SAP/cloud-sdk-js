@@ -14,6 +14,7 @@ import {
   XsuaaServiceCredentials
 } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
+import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -131,10 +132,13 @@ class DestinationFromServiceRetriever {
         destinationResult.origin
       );
     }
-    if (
-      destination.authentication === 'OAuth2ClientCredentials' ||
-      destination.authentication === 'OAuth2Password'
-    ) {
+    if (destination.authentication === 'OAuth2ClientCredentials') {
+      destination = await da.fetchDestinationByClientCredentialsExchange(
+        destinationResult
+      );
+    }
+
+    if (destination.authentication === 'OAuth2Password') {
       destination = await da.fetchDestinationByClientCrendentialsGrant();
     }
     if (destination.authentication === 'OAuth2JWTBearer') {
@@ -299,6 +303,33 @@ class DestinationFromServiceRetriever {
     );
   }
 
+  private getExchangeTenant(destination: Destination): string | undefined {
+    if (destination.originalProperties!['tokenServiceURLType'] !== 'Common') {
+      return undefined;
+    }
+    const subdomainSubscriber = getSubdomainAndZoneId(
+      this.subscriberToken?.encoded
+    ).subdomain;
+    const subdomainProvider = getSubdomainAndZoneId(
+      this.providerClientCredentialsToken?.encoded
+    ).subdomain;
+    return subdomainSubscriber || subdomainProvider;
+  }
+
+  private async getAuthTokenForOAuth2ClientCrendentials(
+    destinationResult: DestinationSearchResult
+  ): Promise<AuthAndExchangeTokens> {
+    const { destination, origin } = destinationResult;
+    const exchangeTenant = this.getExchangeTenant(destination);
+    const clientGrant = await serviceToken('destination', {
+      jwt:
+        origin === 'subscriber'
+          ? this.subscriberToken?.decoded
+          : this.providerClientCredentialsToken.decoded
+    });
+    return { authHeaderJwt: clientGrant, exchangeTenant };
+  }
+
   private async getAuthTokenForOAuth2UserTokenExchange(
     destinationOrigin: DestinationOrigin
   ): Promise<AuthAndExchangeTokens> {
@@ -356,6 +387,16 @@ class DestinationFromServiceRetriever {
     // This covers the three OAuth2UserTokenExchange cases https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html
     const token = await this.getAuthTokenForOAuth2UserTokenExchange(
       destinationOrigin
+    );
+    return this.fetchDestinationByToken(token);
+  }
+
+  private async fetchDestinationByClientCredentialsExchange(
+    destResult: DestinationSearchResult
+  ): Promise<Destination> {
+    // This covers the X-Tenant case https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
+    const token = await this.getAuthTokenForOAuth2ClientCrendentials(
+      destResult
     );
     return this.fetchDestinationByToken(token);
   }

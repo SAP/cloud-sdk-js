@@ -1,7 +1,8 @@
 import nock from 'nock';
 import {
   mockServiceBindings,
-  onlyIssuerXsuaaUrl
+  onlyIssuerXsuaaUrl,
+  TestTenants
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   expectAllMocksUsed,
@@ -270,9 +271,52 @@ describe('authentication types', () => {
           wrapJwtInHeader(providerServiceToken).headers
         )
       ];
-
       const expected = parseDestination(oauthClientCredentialsSingleResponse);
       const actual = await getDestination({ destinationName });
+      expect(actual).toMatchObject(expected);
+      expectAllMocksUsed(httpMocks);
+    });
+
+    it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, tokenServiceUrlType common and sets X-token header.', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockJwtBearerToken();
+
+      const withTokenServiceType = {
+        ...oauthClientCredentialsSingleResponse,
+        tokenServiceURLType: 'Common'
+      };
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          [withTokenServiceType],
+          200,
+          providerServiceToken
+        ),
+        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSingleDestinationCall(
+          nock,
+          withTokenServiceType,
+          200,
+          destinationName,
+          {
+            ...wrapJwtInHeader(providerServiceToken).headers,
+            'X-tenant': TestTenants.SUBSCRIBER
+          },
+          { badheaders: [] }
+        )
+      ];
+
+      const expected = parseDestination(oauthClientCredentialsSingleResponse);
+      const actual = await getDestination({
+        destinationName,
+        jwt: subscriberUserJwt,
+        iasToXsuaaTokenExchange: false
+      });
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
     });

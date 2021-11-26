@@ -3,7 +3,7 @@
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
-import type { Selectable, Field, Link, CustomField } from './selectable';
+import type { Field, Link, CustomField } from './selectable';
 import type { RequestBuilder } from './request-builder';
 
 /**
@@ -21,15 +21,11 @@ export interface Constructable<
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
-  _allFields: (
-    | Selectable<EntityT>
-    | Field<EntityT, boolean, boolean>
-    | Link<EntityT>
-  )[]; // Selectable only here for backwards TODO: Remove in v2.0
-  _keyFields: (Selectable<EntityT> | Field<EntityT, boolean, boolean>)[]; // Selectable only here for backwards TODO: Remove in v2.0
+  _allFields: (Field<EntityT, boolean, boolean> | Link<EntityT>)[];
+  _keyFields: Field<EntityT, boolean, boolean>[];
   _keys: {
-    [keys: string]: Selectable<EntityT> | Field<EntityT, boolean, boolean>;
-  }; // Selectable only here for backwards TODO: Remove in v2.0
+    [keys: string]: Field<EntityT, boolean, boolean>;
+  };
   new (...args: any[]): EntityT;
   requestBuilder(): RequestBuilder<EntityT>;
   builder(): EntityBuilderType<EntityT, EntityTypeT>;

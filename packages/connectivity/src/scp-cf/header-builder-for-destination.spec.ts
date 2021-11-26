@@ -1,25 +1,7 @@
 import { buildHeadersForDestination } from './header-builder-for-destination';
-import { checkHeaders } from './authorization-header.spec';
 import { Destination } from './destination/destination-service-types';
 
 describe('header builder for destination', () => {
-  it("should still add header if the old 'NoAuthorization' workaround is used", async () => {
-    const destination = {
-      url: '',
-      authentication: 'NoAuthentication',
-      proxyType: 'OnPremise',
-      proxyConfiguration: {
-        headers: {
-          'SAP-Connectivity-Authentication': 'someValueDestination',
-          'Proxy-Authorization': 'someProxyValue'
-        }
-      }
-    } as Destination;
-
-    const headers = await buildHeadersForDestination(destination);
-    checkHeaders(headers);
-  });
-
   it('adds location id headers if there is a cloudConnectorLocationId in the destination', async () => {
     const destination = {
       url: 'url',

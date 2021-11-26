@@ -122,6 +122,7 @@
   - `isUserToken`
   - `issuerUrl`
   - `jwtBearerToken`
+  - `legacyNoAuthOnPremiseProxy`
   - `mappingTenantFields`
   - `mappingUserFields`
   - `mergeSome`
@@ -370,7 +371,8 @@
   - transformReturnValueForEntityList,
   - transformReturnValueForUndefined,
   - uriConverter
-  -
+- [core] Move the following functions to `generator-common` package
+  - helpfulLinksSection
 
 ### Signature changed
 
@@ -386,6 +388,7 @@
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
 - [odata-common] changed the following implementations
   - `ComplexTypeField` deprecated constructors removed
+  - `Constructable` Selectable removed
   - `CreateRequestBuilderBase` prepare removed
   - `EntityBase` getCurrentMapKey, initializeCustomFields removed
   - `EnumField` edmType removed
@@ -406,6 +409,7 @@
   - `executeRaw` Request Builder APIs changed to use single parameter, either a Destination or DestinationFetchOptions.
 - [connectivity] changed the following implementations
   - `getDestination` changed to use DestinationFetchOptions as single parameter.
+  - `getProxyRelatedAuthHeaders` legacyNoAuthOnPremiseProxy case removed
   - `serviceToken` uses jwt instead of userJwt now.
   - `jwtBearerToken` uses jwt instead of userJwt now.
   - `fetchVerificationKeys` merged with `executeFetchVerificationKeys`, now only accepts url as parameter

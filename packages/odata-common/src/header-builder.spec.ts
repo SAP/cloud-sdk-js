@@ -100,7 +100,8 @@ describe('Header-Builder', () => {
       proxyConfiguration: {
         ...connectivityProxyConfigMock,
         headers: proxyHeaders
-      }
+      },
+      authentication: 'PrincipalPropagation'
     };
 
     const request = new ODataRequest(getAllRequestConfig(), destination);

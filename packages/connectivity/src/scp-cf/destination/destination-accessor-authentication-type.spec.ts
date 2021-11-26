@@ -21,7 +21,6 @@ import {
   providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
-  subscriberJwtBearerToken,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../../test-resources/test/test-util/mocked-access-tokens';
@@ -32,6 +31,8 @@ import {
   destinationName,
   oauthClientCredentialsMultipleResponse,
   oauthClientCredentialsSingleResponse,
+  oauthJwtBearerResponse,
+  oauthJwtBearerSingleResponse,
   oauthMultipleResponse,
   oauthPasswordMultipleResponse,
   oauthPasswordSingleResponse,
@@ -83,7 +84,11 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(subscriberJwtBearerToken).headers
+          {
+            ...wrapJwtInHeader(subscriberServiceToken).headers,
+            'X-user-token': subscriberUserJwt
+          },
+          { badheaders: [] }
         )
       ];
 
@@ -322,6 +327,47 @@ describe('authentication types', () => {
     });
   });
 
+  describe('authentication type OAuth2JWTBearer', () => {
+    it('should use provider service token subscriber x-user-token for provider destination and subscriber jwt', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockJwtBearerToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          oauthJwtBearerResponse,
+          200,
+          providerServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          oauthJwtBearerSingleResponse,
+          200,
+          destinationName,
+          {
+            ...wrapJwtInHeader(providerServiceToken).headers,
+            'x-user-token': subscriberUserJwt
+          },
+          { badheaders: [] }
+        )
+      ];
+
+      const expected = parseDestination(oauthJwtBearerSingleResponse);
+      const actual = await getDestination({
+        destinationName,
+        jwt: subscriberUserJwt,
+        iasToXsuaaTokenExchange: false
+      });
+      expect(actual).toMatchObject(expected);
+      expectAllMocksUsed(httpMocks);
+    });
+  });
+
   describe('authentication type OAuth2UserTokenExchange', () => {
     it('should use the userApprovedProviderServiceToken as auth header and no exchange header for provider destination and provider jwt', async () => {
       mockServiceBindings();
@@ -385,7 +431,8 @@ describe('authentication types', () => {
           {
             ...wrapJwtInHeader(providerServiceToken).headers,
             'X-user-token': subscriberUserJwt
-          }
+          },
+          { badheaders: [] }
         )
       ];
 
@@ -425,7 +472,8 @@ describe('authentication types', () => {
           {
             ...wrapJwtInHeader(subscriberServiceToken).headers,
             'X-user-token': subscriberUserJwt
-          }
+          },
+          { badheaders: [] }
         )
       ];
 

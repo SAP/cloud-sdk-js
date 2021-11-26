@@ -55,5 +55,11 @@ export interface Systems {
   destination: {
     subscriberOAuth2UserTokenExchange: string;
     providerOAuth2Password: string;
+    providerOauth2ClientCredentials: string;
+    providerOauth2ClientCredentialsCommonTokenURL: string;
+    providerOauth2JWTBearer: string;
+    providerOauth2JWTBearerCommonTokenURL: string;
+    providerOauth2UserTokenExchange: string;
+    providerOauth2UserTokenExchangeCommonTokenURL: string;
   };
 }

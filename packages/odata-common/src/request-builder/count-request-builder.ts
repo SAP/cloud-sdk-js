@@ -4,7 +4,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase } from '../entity-base';
-import { ODataCountRequestConfig } from '../request/odata-count-request-config';
+import { ODataCountRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
 import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 

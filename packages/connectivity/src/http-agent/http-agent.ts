@@ -7,6 +7,7 @@ import {
   getProtocolOrDefault,
   Protocol
 } from '../scp-cf';
+/* Careful the proxy imports cause circular dependencies if imported from scp directly */
 import {
   addProxyConfigurationInternet,
   proxyAgent,

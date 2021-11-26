@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { EntitySerializer } from '../entity-serializer';
-import type { ODataUri } from '../uri-conversion/odata-uri';
+import type { ODataUri } from '../uri-conversion';
 import type {
   Constructable,
   EntityBase,
@@ -14,7 +14,7 @@ import type {
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request/odata-create-request-config';
-import { Link } from '../selectable/link';
+import { Link } from '../selectable';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**

@@ -2,7 +2,7 @@ import { transformComplexTypesBase } from '../common';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { VdmComplexType } from '../../vdm-types';
 import { parseComplexTypesV2 } from '../../edmx-parser/v2';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { ServiceMetadata } from '../../edmx-parser';
 
 // eslint-disable-next-line valid-jsdoc
 /**

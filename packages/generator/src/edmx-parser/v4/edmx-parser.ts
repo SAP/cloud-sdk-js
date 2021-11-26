@@ -7,7 +7,7 @@ import {
 } from '../common/edmx-parser';
 import { forceArray } from '../../generator-utils';
 import { joinEntityTypes } from '../../edmx-to-vdm/v4';
-import { stripNamespace } from '../../edmx-to-vdm/edmx-to-vdm-util';
+import { stripNamespace } from '../../edmx-to-vdm';
 import {
   EdmxAction,
   EdmxActionImport,

@@ -1,5 +1,5 @@
 import { createLogger, last } from '@sap-cloud-sdk/util';
-import { EdmxMetadata } from '../edmx-parser/edmx-file-reader';
+import { EdmxMetadata } from '../edmx-parser';
 import { EdmxProperty } from '../edmx-parser/common';
 import {
   edmToFieldType,

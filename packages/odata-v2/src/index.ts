@@ -29,5 +29,5 @@ export {
   UpdateRequestBuilder,
   FunctionImportRequestBuilder
 } from './request-builder';
-export { CustomField } from './selectable/custom-field';
+export { CustomField } from './selectable';
 export { Entity } from './entity';

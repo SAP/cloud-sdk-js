@@ -5,8 +5,7 @@
  * @param request - OData request configuration to create headers for
  * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
  */
-import { ODataRequest } from './request';
-import { ODataRequestConfig } from './request';
+import { ODataRequest, ODataRequestConfig } from './request';
 
 /**
  * Create Headers from request object.

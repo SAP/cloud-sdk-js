@@ -27,5 +27,11 @@ export { FunctionImportRequestBuilder } from './request-builder/function-import-
 export { Entity } from './entity';
 export { CustomField } from './selectable';
 
-export { edmToTs, CustomDeSerializers, DeSerializers } from './de-serializers';
-export { deserializeComplexType } from './entity-deserializer';
+export {
+  CustomDeSerializers,
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers,
+  edmToTs,
+  mergeDefaultDeSerializersWith
+} from './de-serializers';

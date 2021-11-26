@@ -2,7 +2,7 @@ import {
   ODataUri,
   createODataUri as createODataUriBase,
   DeSerializers,
-  UriConverter
+  createUriConverter
 } from '@sap-cloud-sdk/odata-common/internal';
 import { getExpand } from './get-expand';
 import { getSelect } from './get-select';
@@ -19,7 +19,7 @@ function getExpandWrapped(selects, expands, entityConstructor) {
  * @internal
  */
 export function createODataUri(deSerializers: DeSerializers): ODataUri {
-  const uriConverter = new UriConverter(deSerializers);
+  const uriConverter = createUriConverter(deSerializers);
 
   return createODataUriBase(uriConverter, getExpandWrapped, getSelect);
 }

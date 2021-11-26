@@ -2,10 +2,13 @@ import {
   Constructable,
   DeleteRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
-import { CustomDeSerializers } from '../de-serializers/custom-de-serializers';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  CustomDeSerializers
+} from '../de-serializers';
 import { Entity } from '../entity';
-import { oDataUri } from '../uri-conversion';
+import { createODataUri } from '../uri-conversion';
 /**
  * Create OData query to delete an entity.
  * @typeparam EntityT - Type of the entity to be deleted

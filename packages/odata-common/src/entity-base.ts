@@ -20,6 +20,7 @@ export interface Constructable<EntityT extends EntityBase> {
   _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
+  _keys: string[];
   // _allFields: (Field<EntityT, boolean, boolean> | Link<EntityT>)[];
   // _keyFields: Field<EntityT, boolean, boolean>[];
   // _keys: {

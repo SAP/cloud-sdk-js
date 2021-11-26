@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import {
   and,
+  defaultDeSerializersRaw,
   BatchChangeSet,
   ODataCreateRequestConfig,
   Filterable,
@@ -20,17 +21,13 @@ import {
   entitySerializer as entitySerializerBase,
   createUriConverter,
   serializersCommon,
-  uriConvertersCommon,
   createODataUri,
   createEdmToTs
 } from '../src/internal';
 import { CommonEntity } from './common-entity';
 
-export const commonUriConverter = createUriConverter(
-  serializersCommon,
-  uriConvertersCommon as any
-);
-export const commonOdataUri = createODataUri(
+export const commonUriConverter = createUriConverter(defaultDeSerializersRaw);
+export const commonODataUri = createODataUri(
   commonUriConverter,
   () => undefined as any,
   selects =>
@@ -58,7 +55,7 @@ export function getAllRequestConfig(
 ): ODataGetAllRequestConfig<CommonEntity> {
   const requestConfig = new ODataGetAllRequestConfig<CommonEntity>(
     CommonEntity,
-    commonOdataUri
+    commonODataUri
   );
   if (options?.filter) {
     requestConfig.filter = and([options?.filter]);
@@ -115,7 +112,7 @@ export function getByKeyRequestBuilder(
     return new CommonByKeyRequestBuilder(
       CommonEntity,
       options?.keys,
-      commonOdataUri,
+      commonODataUri,
       commonEntityDeserializer,
       responseDataAccessor
     );
@@ -132,7 +129,7 @@ export function createRequestBuilder(
     return new CommonCreateRequestBuilder(
       CommonEntity,
       options.payload! as CommonEntity,
-      commonOdataUri,
+      commonODataUri,
       commonEntitySerializer,
       commonEntityDeserializer,
       responseDataAccessor
@@ -151,7 +148,7 @@ export function updateRequestBuilder(
     return new CommonUpdateRequestBuilder(
       CommonEntity,
       options.payload! as CommonEntity,
-      commonOdataUri,
+      commonODataUri,
       commonEntitySerializer,
       commonExtractODataEtag,
       body => body
@@ -168,14 +165,14 @@ export function deleteRequestBuilder(
   if (options?.keys) {
     return new CommonDeleteRequestBuilder(
       CommonEntity,
-      commonOdataUri,
+      commonODataUri,
       options.keys
     );
   }
   if (options?.payload) {
     return new CommonDeleteRequestBuilder(
       CommonEntity,
-      commonOdataUri,
+      commonODataUri,
       options.payload
     );
   }

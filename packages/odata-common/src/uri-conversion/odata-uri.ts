@@ -5,9 +5,9 @@ import { Filterable } from '../filter/filterable';
 import { Selectable } from '../selectable/selectable';
 import { Orderable } from '../order/orderable';
 import { FieldType } from '../selectable/field';
+import { UriConverter } from '../de-serializers';
 import { getEntityKeys } from './get-keys';
 import { getOrderBy } from './get-orderby';
-import { UriConverter } from './uri-value-converter';
 import { createGetFilter } from './get-filter';
 import { createGetResourcePathForKeys } from './get-resource-path';
 

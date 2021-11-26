@@ -8,7 +8,7 @@ import {
   ODataRequest,
   ODataUpdateRequestConfig
 } from '../internal';
-import { commonOdataUri } from '../../test/common-request-config';
+import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity } from '../../test/common-entity';
 
 describe('OData Request', () => {
@@ -252,7 +252,7 @@ function createRequest(
   requestConfigConstructor,
   destination: Destination = { url: '' }
 ) {
-  const config = new requestConfigConstructor(CommonEntity, commonOdataUri);
+  const config = new requestConfigConstructor(CommonEntity, commonODataUri);
   config.keys = {
     KeyPropertyGuid: uuid(),
     KeyPropertyString: 'id'

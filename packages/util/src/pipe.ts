@@ -1,7 +1,8 @@
 /**
- * Identity function
- * @param argument - Any object
- * @returns the given argument without doing something
- *
+ * Identity function.
+ * @param value - Any value.
+ * @returns The given value.
  */
-export const identity = <T>(argument: T): T => argument;
+export function identity<T>(value: T): T {
+  return value;
+}

@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { CommonEntity } from '../../test/common-entity';
 import {
-  commonOdataUri,
+  commonODataUri,
   commonUriConverter
 } from '../../test/common-request-config';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util';
@@ -10,7 +10,7 @@ import { ODataGetByKeyRequestConfig } from './odata-get-by-key-request-config';
 describe('ODataGetByKeyRequestConfig', () => {
   let config: ODataGetByKeyRequestConfig<CommonEntity>;
   beforeEach(() => {
-    config = new ODataGetByKeyRequestConfig(CommonEntity, commonOdataUri);
+    config = new ODataGetByKeyRequestConfig(CommonEntity, commonODataUri);
   });
 
   it('method is get', () => {

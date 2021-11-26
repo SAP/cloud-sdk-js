@@ -34,7 +34,6 @@ export {
 } from './request-builder';
 export { ODataBatchRequestBuilder } from './batch-request-builder';
 export { ActionImportParameter } from './request';
-export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
 
 export { Entity } from './entity';
 export { CustomField } from './selectable';

@@ -15,7 +15,7 @@ import {
   createOriginalTestEntityDataWithLinks,
   createTestEntityV4 as createTestEntity
 } from '../../../../test-resources/test/test-util/test-data';
-import { any } from '..';
+import { any } from '../filter';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {

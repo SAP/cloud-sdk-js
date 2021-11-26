@@ -57,7 +57,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * @internal
  */
 export function entityDeserializer(
-  edmToTs: any, // TODO v 2.0 try to get commen typing for v2 and v4 in here
+  edmToTs: any, // TODO v 2.0 try to get common typing for v2 and v4 in here
   extractODataETag: ExtractODataETagType,
   extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
 ): EntityDeserializer {

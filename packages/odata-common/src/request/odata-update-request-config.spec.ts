@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import {
-  commonOdataUri,
+  commonODataUri,
   commonUriConverter
 } from '../../test/common-request-config';
 import { CommonEntity } from '../../test/common-entity';
@@ -10,7 +10,7 @@ import { ODataUpdateRequestConfig } from './odata-update-request-config';
 describe('ODataUpdateRequestConfig', () => {
   let config: ODataUpdateRequestConfig<CommonEntity>;
   beforeEach(() => {
-    config = new ODataUpdateRequestConfig(CommonEntity, commonOdataUri);
+    config = new ODataUpdateRequestConfig(CommonEntity, commonODataUri);
   });
 
   it('method is patch as default', () => {

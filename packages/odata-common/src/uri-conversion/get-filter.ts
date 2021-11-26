@@ -19,7 +19,7 @@ import {
   isFilter
 } from '../filter';
 import { OneToManyLink, ComplexTypeField, FieldType } from '../selectable';
-import { UriConverter } from './uri-value-converter';
+import { UriConverter } from '../de-serializers';
 
 type GetFilterType<EntityT extends EntityBase> = (
   filter: Filterable<EntityT>,

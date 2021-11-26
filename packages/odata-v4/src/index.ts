@@ -23,13 +23,15 @@ export {
   transformReturnValueForUndefined
 } from './request-builder/response-transformers';
 
-export { ActionImportRequestBuilder } from './request-builder/action-import-request-builder';
-export { CreateRequestBuilder } from './request-builder/create-request-builder';
-export { DeleteRequestBuilder } from './request-builder/delete-request-builder';
-export { FunctionImportRequestBuilder } from './request-builder/function-import-request-builder';
-export { GetAllRequestBuilder } from './request-builder/get-all-request-builder';
-export { GetByKeyRequestBuilder } from './request-builder/get-by-key-request-builder';
-export { UpdateRequestBuilder } from './request-builder/update-request-builder';
+export {
+  ActionImportRequestBuilder,
+  CreateRequestBuilder,
+  DeleteRequestBuilder,
+  FunctionImportRequestBuilder,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  UpdateRequestBuilder
+} from './request-builder';
 export { ODataBatchRequestBuilder } from './batch-request-builder';
 export { ActionImportParameter } from './request';
 

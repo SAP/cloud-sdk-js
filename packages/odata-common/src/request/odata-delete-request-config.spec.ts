@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { CommonEntity } from '../../test/common-entity';
 import {
-  commonOdataUri,
+  commonODataUri,
   commonUriConverter
 } from '../../test/common-request-config';
 import { ODataDeleteRequestConfig } from './odata-delete-request-config';
@@ -10,7 +10,7 @@ import { ODataDeleteRequestConfig } from './odata-delete-request-config';
 describe('ODataDeleteRequestConfig', () => {
   let config: ODataDeleteRequestConfig<CommonEntity>;
   beforeEach(() => {
-    config = new ODataDeleteRequestConfig(CommonEntity, commonOdataUri);
+    config = new ODataDeleteRequestConfig(CommonEntity, commonODataUri);
   });
 
   it('method is delete', () => {

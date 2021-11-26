@@ -238,7 +238,7 @@ describe('OAuth flows', () => {
     expect(destination!.authTokens![0]!.error).toBeNull();
   }, 60000);
 
-  it('iss test', async () => {
+  it('Basic Auth: iss as token ', async () => {
     const destination = await getDestination({
       destinationName: systems.s4.providerBasic,
       iss: 'http://s4sdk.localhost:8080/uaa/oauth/token'

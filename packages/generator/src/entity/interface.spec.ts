@@ -1,4 +1,4 @@
-import { entityTypeInterface } from '../../src/entity';
+import { entityTypeInterface } from '../entity';
 import {
   breakfastEntity,
   breakfastTime,

@@ -1,5 +1,5 @@
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
-import { Link } from '../selectable/link';
+import { Link } from '../selectable';
 import type { Filterable } from './filterable';
 
 /**

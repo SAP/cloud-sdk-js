@@ -1,7 +1,7 @@
 import type { EntityBase } from '../entity-base';
-import { FilterLink } from '../filter/filter-link';
-import { Orderable } from '../order/orderable';
-import type { Filterable } from '../filter/filterable';
+import { FilterLink } from '../filter';
+import { Orderable } from '../order';
+import type { Filterable } from '../filter';
 import { Link } from './link';
 
 /**

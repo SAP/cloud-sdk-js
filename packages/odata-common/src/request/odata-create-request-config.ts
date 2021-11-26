@@ -1,6 +1,6 @@
 import { Constructable, EntityBase } from '../entity-base';
-import { ODataUri } from '../uri-conversion/odata-uri';
-import { Link } from '../selectable/link';
+import { ODataUri } from '../uri-conversion';
+import { Link } from '../selectable';
 import { ODataRequestConfig } from './odata-request-config';
 
 /**

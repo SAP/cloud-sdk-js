@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { EdmTypeShared } from '../edm-types';
 import { EntityBase, ODataVersionOf } from '../entity-base';
-import { Field, FieldType } from '../selectable/field';
+import { Field, FieldType } from '../selectable';
 import { Filter } from './filter';
 
 /**

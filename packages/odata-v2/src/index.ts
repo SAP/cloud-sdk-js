@@ -28,4 +28,3 @@ export { CustomField } from './selectable';
 
 export { edmToTs, CustomDeSerializers, DeSerializers } from './de-serializers';
 export { deserializeComplexType } from './entity-deserializer';
-

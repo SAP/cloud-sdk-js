@@ -4,6 +4,7 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  Constructable,
   entityDeserializer,
   FunctionImportParameter,
   throwErrorWhenReturnTypeIsUnionType
@@ -20,7 +21,7 @@ import {
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList
 } from '@sap-cloud-sdk/odata-v2';
-import { TestEntity, TestEntityApi } from './TestEntity';
+import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
 import { DeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
 import {
@@ -29,6 +30,7 @@ import {
 } from '@sap-cloud-sdk/odata-v2/internal';
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
 import { responseTransformers } from '@sap-cloud-sdk/odata-v2/internal';
+import { TestEntityApi } from './TestEntityApi';
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
@@ -165,7 +167,7 @@ export function testFunctionImportEntityReturnType<T extends DeSerializers>(
     data =>
       responseTransformers(deSerializers).transformReturnValueForEntity(
         data,
-        TestEntity,
+        TestEntity as Constructable<TestEntity<T>>,
         new TestEntityApi(deSerializers).schema
       ) as TestEntity<T>,
     params,
@@ -204,7 +206,7 @@ export function testFunctionImportEntityReturnTypeCollection<
     data =>
       responseTransformers(deSerializers).transformReturnValueForEntityList(
         data,
-        TestEntity,
+        TestEntity as Constructable<TestEntity<T>>,
         new TestEntityApi(deSerializers).schema
       ) as TestEntity<T>[],
     params,

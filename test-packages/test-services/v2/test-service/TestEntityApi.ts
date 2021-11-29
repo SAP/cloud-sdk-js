@@ -6,8 +6,6 @@
 import {
   defaultDeSerializers,
   DeSerializers,
-  Entity,
-  filterFunctions,
   mergeDefaultDeSerializersWith
 } from '@sap-cloud-sdk/odata-v2';
 import { entityBuilder } from '@sap-cloud-sdk/odata-common/internal';
@@ -23,8 +21,7 @@ import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { TestComplexTypeField } from './TestComplexType';
 import {
-  TestEntityMultiLink,
-  TestEntityMultiLinkApi
+  TestEntityMultiLink
 } from './TestEntityMultiLink';
 import { BigNumber } from 'bignumber.js';
 import moment from 'moment';
@@ -296,14 +293,14 @@ export class TestEntityApi<
   entityConstructor = TestEntity;
 
   requestBuilder(): TestEntityRequestBuilder<
-    DeSerializers< BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>
+    DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>
   > {
     return new TestEntityRequestBuilder(this);
   }
 
   entityBuilder(): EntityBuilderType<
     TestEntity<
-      DeSerializers<BinaryT,BooleanT,ByteT,DecimalT,DoubleT,FloatT,Int16T,Int32T,Int64T,GuidT,SByteT,SingleT,StringT,AnyT,DateTimeT,DateTimeOffsetT,TimeT>
+      DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>
     >
   > {
     return entityBuilder(this);

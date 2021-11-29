@@ -6,7 +6,7 @@ import { OpenApiDocumentRefs } from './refs';
 import { parseSchema } from './schema';
 import { parseResponses } from './responses';
 import { OperationInfo } from './parsing-info';
-import { reservedJsKeywords } from './reserved-words';
+import { reservedJsKeywords } from '@sap-cloud-sdk/generator-common/internal';
 import { ensureUniqueNames } from './unique-naming';
 import { ParserOptions } from './options';
 

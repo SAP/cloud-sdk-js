@@ -129,11 +129,20 @@ class DestinationFromServiceRetriever {
       destination.authentication === 'OAuth2JWTBearer' ||
       destination.authentication === 'OAuth2SAMLBearerAssertion'
     ) {
-      destination = await da.fetchDestinationWithUserExchangeFlows(destinationResult);
+      destination = await da.fetchDestinationWithUserExchangeFlows(
+        destinationResult
+      );
     }
 
-    if (destination.authentication === 'OAuth2Password'||destination.authentication === 'ClientCertificateAuthentication'||destination.authentication === 'OAuth2ClientCredentials') {
-      destination = await da.fetchDestinationWithNonUserExchangeFlows(destinationResult);
+    if (
+      destination.authentication === 'OAuth2Password' ||
+      destination.authentication === 'ClientCertificateAuthentication' ||
+      destination.authentication === 'OAuth2ClientCredentials' ||
+      da.usesSustemUser(destination)
+    ) {
+      destination = await da.fetchDestinationWithNonUserExchangeFlows(
+        destinationResult
+      );
     }
 
     const withProxySetting = await da.addProxyConfiguration(destination);
@@ -150,27 +159,27 @@ class DestinationFromServiceRetriever {
           'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
         );
       }
-      const encoded = await
-          serviceToken('destination', {
-            ...options
-          });
-      return { userJwt: {
+      const encoded = await serviceToken('destination', {
+        ...options
+      });
+      return {
+        userJwt: {
           decoded: await verifyJwt(options.jwt, options),
           encoded: options.jwt
         },
-        serviceJwt : { encoded, decoded: decodeJwt(encoded) }
-        };
+        serviceJwt: { encoded, decoded: decodeJwt(encoded) }
       };
+    }
 
     if (options.iss) {
       logger.info(
         'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
       );
       const payload = { iss: options.iss };
-      const encoded = await
-          serviceToken('destination',
-      { ...options,jwt:payload }
-          );
+      const encoded = await serviceToken('destination', {
+        ...options,
+        jwt: payload
+      });
       const clientCertJwt = { encoded, decoded: decodeJwt(encoded) };
       return { serviceJwt: clientCertJwt };
     }
@@ -198,7 +207,7 @@ class DestinationFromServiceRetriever {
     readonly name: string,
     options: DestinationOptions & { xsuaaCredentials: XsuaaServiceCredentials },
     readonly subscriberToken: SubscriberTokens | undefined,
-    readonly providerServiceToken: JwtPair,
+    readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {
       isolationStrategy: IsolationStrategy.Tenant_User,
@@ -289,7 +298,7 @@ class DestinationFromServiceRetriever {
   }
 
   private getExchangeTenant(destination: Destination): string | undefined {
-    if(destination.authentication!=='OAuth2ClientCredentials'){
+    if (destination.authentication !== 'OAuth2ClientCredentials') {
       return undefined;
     }
     if (destination.originalProperties!['tokenServiceURLType'] !== 'Common') {
@@ -320,33 +329,31 @@ class DestinationFromServiceRetriever {
   }
 
   // This covers the two technical user propagation https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
-  private async handleSystemUser(
-    destinationResult: DestinationSearchResult
-  ): Promise<AuthAndExchangeTokens> {
-    logger.debug(
-      `System user found on destination: "${destinationResult.destination.name}". 
+  private usesSustemUser(destination: Destination): boolean {
+    // put this in the non user dependent block
+    if (
+      destination.systemUser &&
+      destination.authentication === 'OAuth2SAMLBearerAssertion'
+    ) {
+      logger.debug(
+        `System user found on destination: "${destination.name}". 
 The property SystemUser has been deprecated. 
 It is highly recommended that you stop using it.
 Possible alternatives for such technical user authentication are BasicAuthentication, OAuth2ClientCredentials, or ClientCertificateAuthentication`
-    );
+      );
+      return true;
+    }
 
-    const authHeaderJwt =
-      destinationResult.origin === 'provider'
-        ? this.providerServiceToken.encoded
-        : this.subscriberToken!.serviceJwt.encoded;
-    return { authHeaderJwt };
+    return false;
   }
 
   private async getAuthTokenForOAuth2UserBasedTokenExchanges(
     destinationResult: DestinationSearchResult
   ): Promise<AuthAndExchangeTokens> {
-    if (destinationResult.destination.systemUser) {
-      return this.handleSystemUser(destinationResult);
-    }
-
+    const { destination, origin } = destinationResult;
     if (!this.subscriberToken || !isUserToken(this.subscriberToken.userJwt)) {
       throw Error(
-        `No user token (JWT) has been provided. This is strictly necessary for '${destinationResult.destination.authentication}'.`
+        `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
       );
     }
     // This covers OAuth to user dependend auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
@@ -365,29 +372,22 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         )
       };
     }
-    // Case 2 Destination in provider and jwt issued for subscriber account -> x-user-token  header passed to determine user and tenant
-    if (destinationResult.origin === 'provider') {
-      logger.debug(
-        `UserExchange flow started for destination ${this.name} of the provider account.`
-      );
-      return {
-        authHeaderJwt: this.providerServiceToken.encoded, // token to get destination from service
-        exchangeHeaderJwt: this.subscriberToken.userJwt.encoded // token considered for user and tenant
-      };
-    }
+    // Case 2 Subscriber and provider account not the same -> x-user-token  header passed to determine user and tenant in token service URL and service token to get the destination
+    const serviceJwt =
+      origin === 'subscriber'
+        ? this.subscriberToken.serviceJwt
+        : this.providerServiceToken;
+    logger.debug(
+      `UserExchange flow started for destination ${this.name} of the ${origin} account.`
+    );
 
-    // Case 3 Destination in subscriber and jwt issued for subscriber account -> x-user-token header passed to determine user and tenant
-    if (destinationResult.origin === 'subscriber') {
-      logger.debug(
-        `UserExchange flow started for destination ${this.name} of the subscriber account.`
-      );
-      return {
-        authHeaderJwt: this.subscriberToken.serviceJwt.encoded,   // token to get destination from service
-        exchangeHeaderJwt: this.subscriberToken.userJwt.encoded        // token considered for user and tenant
-      };
-    }
+    return {
+      authHeaderJwt: serviceJwt.encoded, // token to get destination from service
+      exchangeHeaderJwt: this.subscriberToken.userJwt.encoded // token considered for user and tenant
+    };
+
     throw new Error(
-      'Not possible to build tokens for OAuth2UserTokenExchange flow.'
+      `Not possible to build tokens for ${destination.authentication} flow for destination ${destination.name}.`
     );
   }
 
@@ -395,9 +395,15 @@ Possible alternatives for such technical user authentication are BasicAuthentica
    * @internal
    * This method calls the 'find destination by name' endpoint of the destination service using a client credentials grant.
    * For the find by name endpoint, the destination service will take care of OAuth flows and include the token in the destination.
+   * @param destinationResult - Result of the getDestinations call for which the exchange flow is triggred
+   * @returns Destination containing the auth token.
    */
-  private async fetchDestinationWithNonUserExchangeFlows(destinationResult: DestinationSearchResult): Promise<Destination> {
-    const token = await this.getAuthTokenForOAuth2ClientCrendentials(destinationResult);
+  private async fetchDestinationWithNonUserExchangeFlows(
+    destinationResult: DestinationSearchResult
+  ): Promise<Destination> {
+    const token = await this.getAuthTokenForOAuth2ClientCrendentials(
+      destinationResult
+    );
 
     return this.fetchDestinationByToken(token);
   }
@@ -416,7 +422,10 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case ProxyStrategy.ON_PREMISE_PROXY:
-        return addProxyConfigurationOnPrem(destination, this.subscriberToken?.userJwt);
+        return addProxyConfigurationOnPrem(
+          destination,
+          this.subscriberToken?.userJwt
+        );
       case ProxyStrategy.INTERNET_PROXY:
         return addProxyConfigurationInternet(destination);
       case ProxyStrategy.NO_PROXY:
@@ -429,11 +438,14 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   // For iss token the userJwt may be undefined.
-  private selectSubscriberJwt(): JwtPayload{
-    if(!this.subscriberToken){
+  private selectSubscriberJwt(): JwtPayload {
+    if (!this.subscriberToken) {
       throw new Error('Try to get subscriber token but value is undefined.');
     }
-    return this.subscriberToken.userJwt?.decoded || this.subscriberToken.serviceJwt.decoded;
+    return (
+      this.subscriberToken.userJwt?.decoded ||
+      this.subscriberToken.serviceJwt.decoded
+    );
   }
 
   private updateDestinationCache(

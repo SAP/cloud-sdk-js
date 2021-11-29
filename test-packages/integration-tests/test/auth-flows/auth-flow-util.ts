@@ -40,6 +40,7 @@ export interface UserAccessTokens {
 export interface Systems {
   s4onPrem: {
     providerBasic: string;
+    providerPrincipalPropagation: string;
   };
   s4: {
     providerBasic: string;
@@ -53,8 +54,8 @@ export interface Systems {
     providerOauth2JWTBearer: string;
   };
   destination: {
-    subscriberOAuth2UserTokenExchange: string;
-    providerOAuth2Password: string;
+    subscriberOauth2UserTokenExchange: string;
+    providerOauth2Password: string;
     providerOauth2ClientCredentials: string;
     providerOauth2ClientCredentialsCommonTokenURL: string;
     providerOauth2JWTBearer: string;

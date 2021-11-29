@@ -46,6 +46,15 @@ Once you press the `Get new Access Token` you will be redirected to the login pa
 Postman will show you the token after successful login flow.
 For details on token retrieval have a look [here](https://sap.github.io/cloud-sdk/docs/java/guides/cloud-foundry-xsuaa-service/#scp-cf-xsuaa-key-use-cases).
 
+For the ias token do the following also in postman:
+- POST request with:
+  - URL: <idp-url>oauth2/token?grant_type=password&username=<user>&password=<pwd>
+  - For the user and password fill a existing user of the IdP
+  - Add the `Content-Type: application/x-www-form-urlencoded` header
+  - Ass authorization put basic with user/pwd the clientId and secret of the IAS service instance
+
+You need to configure the IAS like: XYZ. Junjie
+
 ### VCAP variables
 
 Create a file `vcap-services.json` containing the VCAP variables of an application with services bindings to the `destination` and `workflow` service.

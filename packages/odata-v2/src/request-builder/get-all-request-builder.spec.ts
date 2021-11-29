@@ -171,7 +171,7 @@ describe('GetAllRequestBuilder', () => {
       const nocks = [
         nock(onlyIssuerXsuaaUrl)
           .post('/oauth/token')
-          .times(2)
+          .times(1)
           .reply(200, { access_token: onlyIssuerServiceToken }),
         nock(providerXsuaaUrl)
           .post('/oauth/token')

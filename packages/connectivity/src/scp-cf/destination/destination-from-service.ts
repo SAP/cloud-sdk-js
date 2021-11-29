@@ -127,7 +127,8 @@ class DestinationFromServiceRetriever {
     if (
       destination.authentication === 'OAuth2UserTokenExchange' ||
       destination.authentication === 'OAuth2JWTBearer' ||
-      destination.authentication === 'OAuth2SAMLBearerAssertion'
+      (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
+        !da.usesSustemUser(destination))
     ) {
       destination = await da.fetchDestinationWithUserExchangeFlows(
         destinationResult

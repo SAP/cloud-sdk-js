@@ -47,6 +47,7 @@ Postman will show you the token after successful login flow.
 For details on token retrieval have a look [here](https://sap.github.io/cloud-sdk/docs/java/guides/cloud-foundry-xsuaa-service/#scp-cf-xsuaa-key-use-cases).
 
 For the ias token do the following also in postman:
+
 - POST request with:
   - URL: <idp-url>oauth2/token?grant_type=password&username=<user>&password=<pwd>
   - For the user and password fill a existing user of the IdP

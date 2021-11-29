@@ -23,7 +23,7 @@ const logger = createLogger({
 type FromJsonType<JsonT> = {
   [key: string]: any; // custom properties
 } & {
-  [P in keyof JsonT]?: JsonT[P] extends (infer U)[]
+  [P in keyof Omit<JsonT, keyof EntityBase>]?: JsonT[P] extends (infer U)[]
     ? U extends Record<string, any>
       ? FromJsonType<U>[] // one-to-many navigation properties
       : JsonT[P] // collection type
@@ -35,7 +35,7 @@ type FromJsonType<JsonT> = {
 /**
  * @internal
  */
-export class EntityBuilder<EntityT extends EntityBase, JsonT> {
+export class EntityBuilder<EntityT extends EntityBase> {
   protected entity: EntityT;
 
   constructor(
@@ -75,7 +75,7 @@ export class EntityBuilder<EntityT extends EntityBase, JsonT> {
    * @param json - Representation of the entity in JSON format.
    * @returns EntityBase constructed from JSON representation.
    */
-  public fromJson(json: FromJsonType<JsonT>): EntityT {
+  public fromJson(json: FromJsonType<EntityT>): EntityT {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const entityBuilder = this; // ._entityConstructor.builder();
     const entityConstructor = this._entityConstructor;

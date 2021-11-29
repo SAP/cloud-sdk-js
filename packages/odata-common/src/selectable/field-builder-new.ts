@@ -66,6 +66,7 @@ export class NewFieldBuilder<
    * Creates an instance of `FieldBuilder`.
    * @param fieldOf - Entity or complex type field, for which the field builder shall create fields.
    */
+  // constructor(public fieldOf: FieldOfT, public deSerializers: T) {}
   constructor(public fieldOf: FieldOfT, public deSerializers: T) {}
 
   // buildEdmTypeField<EdmT extends OrderableEdmType, NullableT extends boolean>(

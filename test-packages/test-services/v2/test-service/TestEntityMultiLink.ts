@@ -110,7 +110,7 @@ import {
 import { DeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
 import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/field-builder-new';
-import { ConstructableBASE } from '@sap-cloud-sdk/odata-common/dist/entity-base';
+import { EntityApi } from '@sap-cloud-sdk/odata-common/dist/entity-base';
 import BigNumber from 'bignumber.js';
 
 export interface TestEntityMultiLinkType<
@@ -144,7 +144,7 @@ export class TestEntityMultiLinkApi<
   DateTimeOffsetT = moment.Moment,
   TimeT = Time
 > implements
-    ConstructableBASE<
+    EntityApi<
       TestEntityMultiLink<
         DefaultDeSerializationMiddleware<
           BinaryT,
@@ -253,7 +253,7 @@ export class TestEntityMultiLinkApi<
     this.deSerializers = getDeSerializers(deSerializers);
   }
 
-  schema() {
+  schema {
     const _fieldBuilder = new NewFieldBuilder(
       TestEntityMultiLink,
       this.deSerializers
@@ -313,7 +313,7 @@ export class TestEntityMultiLinkApi<
   > {
     return new TestEntityMultiLinkRequestBuilder(
       this.deSerializers,
-      this.schema()
+      this.schema
     );
   }
 
@@ -324,7 +324,7 @@ export class TestEntityMultiLinkApi<
     return Entity.entityBuilder(
       TestEntityMultiLink as any,
       this.deSerializers,
-      this.schema()
+      this.schema
     ) as any;
   }
 }

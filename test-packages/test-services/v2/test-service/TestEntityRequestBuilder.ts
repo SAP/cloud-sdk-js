@@ -4,12 +4,12 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
-  DefaultDeSerializationMiddleware as DeSerializationMiddlewareCommon,
+  DefaultDeSerializers as DeSerializersCommon,
   defaultDeSerializersRaw as defaultDeSerializersRawCommon,
   Time
 } from '@sap-cloud-sdk/odata-common';
 import {
-  DeSerializationMiddlewareBASE,
+  DeSerializersBASE,
   DeserializedType
 } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
 import {
@@ -18,11 +18,11 @@ import {
   CreateRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
-  DefaultDeSerializationMiddleware,
+  DefaultDeSerializers,
   defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v2';
 import { DeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
-import { CustomDeSerializer } from '@sap-cloud-sdk/odata-v2/internal';
+import { CustomDeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
 
 import { RequestBuilder } from '@sap-cloud-sdk/odata-v2/internal';
 
@@ -32,7 +32,7 @@ import { TestEntity } from './TestEntity';
  * Request builder class for operations supported on the [[TestEntity]] entity.
  */
 export class TestEntityRequestBuilder<
-  T extends DeSerializers = DefaultDeSerializationMiddleware
+  T extends DeSerializers = DefaultDeSerializers
 > extends RequestBuilder<TestEntity<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
@@ -60,9 +60,9 @@ export class TestEntityRequestBuilder<
    */
   getAll(): GetAllRequestBuilder<TestEntity<T>, T> {
     return new GetAllRequestBuilder<TestEntity<T>, T>(
-      TestEntity,
-      this.deSerializers,
-      this.schema
+      this.entityApi.entityConstructor,
+      this.entityApi.deSerializers,
+      this.entityApi.schema
     );
   }
 

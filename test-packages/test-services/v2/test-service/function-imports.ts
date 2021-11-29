@@ -166,7 +166,7 @@ export function testFunctionImportEntityReturnType<T extends DeSerializers>(
       responseTransformers(deSerializers).transformReturnValueForEntity(
         data,
         TestEntity,
-        new TestEntityApi(deSerializers).schema()
+        new TestEntityApi(deSerializers).schema
       ) as TestEntity<T>,
     params,
     deSerializers
@@ -205,7 +205,7 @@ export function testFunctionImportEntityReturnTypeCollection<
       responseTransformers(deSerializers).transformReturnValueForEntityList(
         data,
         TestEntity,
-        new TestEntityApi(deSerializers).schema()
+        new TestEntityApi(deSerializers).schema
       ) as TestEntity<T>[],
     params,
     deSerializers
@@ -317,7 +317,7 @@ export function testFunctionImportComplexReturnType<T extends DeSerializers>(
   const params = {};
 
   const entityDes = entityDeserializer(
-    new TestEntityApi(deSerializers).schema(),
+    new TestEntityApi(deSerializers).schema,
     edmToTs,
     extractODataEtag,
     getLinkedCollectionResult,
@@ -410,7 +410,7 @@ export function testFunctionImportComplexReturnTypeCollection<
   const params = {};
 
   const entityDes = entityDeserializer(
-    new TestEntityApi(deSerializers).schema(),
+    new TestEntityApi(deSerializers).schema,
     edmToTs,
     extractODataEtag,
     getLinkedCollectionResult,
@@ -594,7 +594,7 @@ export function createTestComplexType<T extends DeSerializers>(
 > {
   const params = {};
   const entityDes = entityDeserializer(
-    new TestEntityApi(deSerializers).schema(),
+    new TestEntityApi(deSerializers).schema,
     edmToTs,
     extractODataEtag,
     getLinkedCollectionResult,

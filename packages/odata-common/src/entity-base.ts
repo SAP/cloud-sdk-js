@@ -35,26 +35,32 @@ export interface Constructable<EntityT extends EntityBase> {
   // ): CustomField<EntityT, any, boolean>;
 }
 
-export interface ConstructableBASE<
-  EntityT extends EntityBase,
-  T extends DeSerializers = DefaultDeSerializers,
-  JsonT = any
+/**
+ * @internal
+ * Represents the API of an entity, including its request and entity builders as well as its schema.
+ * @typeparam EntityT - Type of the entity.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @typeparam JsonT - Type of the entity without methods.
+ */
+export interface EntityApi<
+  EntityT extends EntityBase, //TestEntity
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
-  deSerializers: T;
+  deSerializers: DeSerializersT;
   requestBuilder(): RequestBuilder<EntityT>;
-  entityBuilder(): EntityBuilderType<EntityT, JsonT>;
-  // entityConstructor(): EntityT;
-  schema(): Record<string, any>;
+  entityBuilder(): EntityBuilderType<EntityT>;
+  entityConstructor: Constructable<EntityT>;
+  schema: Record<string, any>;
 }
 
 /**
  * @internal
  */
-export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
-  [property in keyof Required<EntityTypeT>]: (
-    value: EntityTypeT[property]
-  ) => EntityBuilderType<EntityT, EntityTypeT>;
-} & EntityBuilder<EntityT, EntityTypeT>;
+export type EntityBuilderType<EntityT extends EntityBase> = {
+  [property in keyof Required<Omit<EntityT, keyof EntityBase>>]: (
+    value: EntityT[property]
+  ) => EntityBuilderType<EntityT>;
+} & EntityBuilder<EntityT>;
 
 /**
  * Super class for all representations of OData entity types.
@@ -65,12 +71,12 @@ export abstract class EntityBase {
   static _entityName: string;
   static _defaultServicePath: string;
 
-  public static entityBuilder<EntityT extends EntityBase, EntityTypeT>(
+  public static entityBuilder<EntityT extends EntityBase>(
     entityConstructor: Constructable<EntityT>,
     deSerializers: DeSerializers,
     allFields: Record<string, any>
-  ): EntityBuilderType<EntityT, EntityTypeT> {
-    const builder = new EntityBuilder<EntityT, EntityTypeT>(
+  ): EntityBuilderType<EntityT> {
+    const builder = new EntityBuilder<EntityT>(
       entityConstructor,
       deSerializers
     );
@@ -81,7 +87,7 @@ export abstract class EntityBase {
         return this;
       };
     });
-    return builder as EntityBuilderType<EntityT, EntityTypeT>;
+    return builder as EntityBuilderType<EntityT>;
   }
 
   /**
@@ -377,4 +383,23 @@ export function isExpandedProperty<
     isExistentProperty(json, link) &&
     !json[link._fieldName].hasOwnProperty('__deferred')
   );
+}
+
+export function entityBuilder<
+  EntityT extends EntityBase,
+  T extends EntityApi<EntityT, DeSerializersT>,
+  DeSerializersT extends DeSerializers
+>(entityApi: T): EntityBuilderType<EntityT> {
+  const builder = new EntityBuilder<EntityT>(
+    entityApi.entityConstructor,
+    entityApi.deSerializers
+  );
+  entityApi.schema.forEach(field => {
+    const fieldName = `${camelCase(field._fieldName)}`;
+    builder[fieldName] = function (value) {
+      this.entity[fieldName] = value;
+      return this;
+    };
+  });
+  return builder as EntityBuilderType<EntityT>;
 }

@@ -15,7 +15,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
-import { oDataUri } from '../uri-conversion/odata-uri';
+import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
 
 const logger = createLogger({

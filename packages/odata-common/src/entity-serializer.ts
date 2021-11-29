@@ -3,14 +3,14 @@ import { Constructable, EntityBase } from './entity-base';
 import {
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
-  PropertyMetadata
-} from './selectable/complex-type-namespace';
-import { EdmTypeField } from './selectable/edm-type-field';
-import { OneToOneLink } from './selectable/one-to-one-link';
-import { Link } from './selectable/link';
-import { ComplexTypeField } from './selectable/complex-type-field';
-import { CollectionField } from './selectable/collection-field';
-import { EnumField } from './selectable/enum-field';
+  PropertyMetadata,
+  EdmTypeField,
+  OneToOneLink,
+  Link,
+  ComplexTypeField,
+  CollectionField,
+  EnumField
+} from './selectable';
 import { EdmTypeShared, isEdmType } from './edm-types';
 
 const logger = createLogger({
@@ -20,6 +20,7 @@ const logger = createLogger({
 
 /**
  * Interface representing the return type of the builder function [[entitySerializer]].
+ * @internal
  */
 export interface EntitySerializer<
   EntityT extends EntityBase = any,

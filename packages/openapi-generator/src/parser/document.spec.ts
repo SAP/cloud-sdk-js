@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types';
 import { emptyDocument } from '../../test/test-util';
-import { ServiceOptions } from '../options/options-per-service';
+import { ServiceOptions } from '../options';
 import { parseOpenApiDocument } from './document';
 import * as api from './api';
 

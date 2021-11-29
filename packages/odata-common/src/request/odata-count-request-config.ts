@@ -1,6 +1,6 @@
 import { createLogger, pick, removeTrailingSlashes } from '@sap-cloud-sdk/util';
 import { EntityBase } from '../entity-base';
-import type { GetAllRequestBuilderBase } from '../request-builder/get-all-request-builder-base';
+import type { GetAllRequestBuilderBase } from '../request-builder';
 import { ODataRequestConfig } from './odata-request-config';
 
 const logger = createLogger({

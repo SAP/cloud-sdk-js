@@ -1,13 +1,12 @@
 import { Expandable } from '../expandable';
 import { EntityBase, Constructable } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
-import { Filterable } from '../filter/filterable';
-import { Selectable } from '../selectable/selectable';
-import { Orderable } from '../order/orderable';
-import { FieldType } from '../selectable/field';
+import { Filterable } from '../filter';
+import { Selectable, FieldType } from '../selectable';
+import { Orderable } from '../order';
+import { UriConverter } from '../de-serializers';
 import { getEntityKeys } from './get-keys';
 import { getOrderBy } from './get-orderby';
-import { UriConverter } from './uri-value-converter';
 import { createGetFilter } from './get-filter';
 import { createGetResourcePathForKeys } from './get-resource-path';
 

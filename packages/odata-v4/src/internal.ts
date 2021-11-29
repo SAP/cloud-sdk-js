@@ -1,9 +1,9 @@
+export * from './de-serializers';
 export * from './filter';
 export * from './request';
 export * from './request-builder';
 export * from './selectable';
 export * from './uri-conversion';
-export * from './batch-change-set';
 export * from './batch-request-builder';
 export * from './edm-types';
 export * from './entity';
@@ -12,4 +12,3 @@ export * from './entity-serializer';
 export * from './extract-odata-etag';
 export * from './filter-function';
 export * from './filter-functions';
-export * from './payload-value-converter';

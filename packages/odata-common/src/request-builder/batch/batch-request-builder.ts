@@ -4,9 +4,8 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder-base';
-import { ODataBatchRequestConfig } from '../../request/odata-batch-request-config';
+import { ODataBatchRequestConfig, ODataRequest } from '../../request';
 import { Constructable, EntityBase } from '../../entity-base';
-import { ODataRequest } from '../../request/odata-request';
 import { BatchChangeSet } from './batch-change-set';
 import { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';

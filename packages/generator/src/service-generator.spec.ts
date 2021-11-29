@@ -327,8 +327,7 @@ describe('service-generator', () => {
           builderFunction:
             '(data) => deserializeComplexType(data, TestComplexType)',
           isCollection: false,
-          isNullable: false,
-          isMulti: false
+          isNullable: false
         };
 
         expect(functionImport.name).toEqual(functionImportName);

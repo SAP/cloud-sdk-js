@@ -25,7 +25,7 @@ import {
   parseEntitySetsV2,
   parseEntityTypes
 } from '../../edmx-parser/v2';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { ServiceMetadata } from '../../edmx-parser';
 import { stripNamespace } from '../edmx-to-vdm-util';
 /* eslint-disable valid-jsdoc */
 
@@ -105,8 +105,6 @@ function navigationProperties(
       from: entity.entityType.Name,
       to: to.EntitySet,
       toEntityClassName: classNames[to.EntitySet],
-      multiplicity: from.Multiplicity + ' - ' + to.Multiplicity,
-      isMultiLink: to.Multiplicity.endsWith('*'),
       isCollection: to.Multiplicity.endsWith('*')
     };
   });

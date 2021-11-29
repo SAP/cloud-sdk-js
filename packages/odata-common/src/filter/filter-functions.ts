@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { EntityBase } from '../entity-base';
-import { Field } from '../selectable/field';
+import { Field } from '../selectable';
 import { StringFilterFunction } from './string-filter-function';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { filterFunction } from './filter-function';

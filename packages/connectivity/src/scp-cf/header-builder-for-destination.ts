@@ -4,7 +4,7 @@ import {
   pickNonNullish
 } from '@sap-cloud-sdk/util';
 import { getAuthHeaders } from './authorization-header';
-import { Destination } from './destination/destination-service-types';
+import { Destination } from './destination';
 
 export async function buildHeadersForDestination(
   destination: Destination,

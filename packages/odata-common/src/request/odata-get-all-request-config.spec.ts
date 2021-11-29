@@ -1,15 +1,11 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
-import {
-  asc,
-  ODataGetAllRequestConfig
-} from '@sap-cloud-sdk/odata-common/internal';
-import { testFilterString } from '../../../../test-resources/test/test-util/filter-factory';
+import { asc, ODataGetAllRequestConfig } from '../internal';
+import { CommonEntity } from '../../test/common-entity';
+import { commonODataUri } from '../../test/common-request-config';
 
 describe('ODataGetAllRequestConfig', () => {
-  let config: ODataGetAllRequestConfig<TestEntity>;
+  let config: ODataGetAllRequestConfig<CommonEntity>;
   beforeEach(() => {
-    config = new ODataGetAllRequestConfig(TestEntity, oDataUri);
+    config = new ODataGetAllRequestConfig(CommonEntity, commonODataUri);
   });
 
   it('method is get', () => {
@@ -17,7 +13,7 @@ describe('ODataGetAllRequestConfig', () => {
   });
 
   it('has resourcePath without keys', () => {
-    expect(config.resourcePath()).toBe(TestEntity._entityName);
+    expect(config.resourcePath()).toBe(CommonEntity._entityName);
   });
 
   it('has format json', () => {
@@ -43,12 +39,15 @@ describe('ODataGetAllRequestConfig', () => {
   });
 
   it('has selection if set', () => {
-    config.selects = [TestEntity.KEY_PROPERTY_GUID, TestEntity.STRING_PROPERTY];
+    config.selects = [
+      CommonEntity.KEY_PROPERTY_GUID,
+      CommonEntity.STRING_PROPERTY
+    ];
     expect(Object.keys(config.queryParameters())).toContain('$select');
   });
 
   it('select all fields', () => {
-    config.selects = [TestEntity.ALL_FIELDS];
+    config.selects = [CommonEntity.ALL_FIELDS];
     expect(Object.keys(config.queryParameters())).toContain('$select');
   });
 
@@ -57,7 +56,7 @@ describe('ODataGetAllRequestConfig', () => {
   });
 
   it('has filters if set', () => {
-    config.filter = testFilterString.filter;
+    config.filter = CommonEntity.STRING_PROPERTY.equals('test');
     expect(Object.keys(config.queryParameters())).toContain('$filter');
   });
 
@@ -66,7 +65,7 @@ describe('ODataGetAllRequestConfig', () => {
   });
 
   it('has orderby if set', () => {
-    config.orderBy = [asc(TestEntity.INT_16_PROPERTY)];
+    config.orderBy = [asc(CommonEntity.INT_16_PROPERTY)];
     expect(Object.keys(config.queryParameters())).toContain('$orderby');
   });
 

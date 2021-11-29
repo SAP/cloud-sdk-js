@@ -1,31 +1,7 @@
-/* eslint-disable valid-jsdoc */
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
+import { defaultDeSerializers } from '../de-serializers';
 
-import {
-  UriConverter,
-  uriConvertersCommon,
-  createUriConverter
-} from '@sap-cloud-sdk/odata-common/internal';
-import { edmToTs, serializers } from '../payload-value-converter';
-import { EdmType } from '../edm-types';
-
-type UriConverterMapping = { [key in EdmType]: (value: any) => string };
 /**
  * @internal
  */
-export const uriConverters: UriConverterMapping = {
-  ...uriConvertersCommon,
-  'Edm.DateTime': value =>
-    `datetime'${edmToTs(value, 'Edm.DateTime')
-      .toISOString()
-      .replace(/Z$/, '')}'`,
-  'Edm.DateTimeOffset': value =>
-    `datetimeoffset'${edmToTs(value, 'Edm.DateTimeOffset').toISOString()}'`,
-  'Edm.Decimal': value => `${value}M`,
-  'Edm.Time': value => `time'${value}'`,
-  'Edm.Guid': value => `guid'${value}'`
-};
-
-export const uriConverter: UriConverter = createUriConverter(
-  serializers,
-  uriConverters
-);
+export const uriConverter = createUriConverter(defaultDeSerializers);

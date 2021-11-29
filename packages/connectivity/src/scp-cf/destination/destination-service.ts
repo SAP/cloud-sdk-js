@@ -11,7 +11,7 @@ import {
   ResilienceOptions
 } from '../resilience-options';
 import { CachingOptions } from '../cache';
-import { urlAndAgent } from '../../http-agent/http-agent';
+import { urlAndAgent } from '../../http-agent';
 import {
   DestinationConfiguration,
   DestinationJson,

@@ -10,7 +10,6 @@ export * from './code-block';
 export * from './documentation-block';
 export * from './constants';
 export * from './equal';
-export * from './error';
 export * from './error-with-cause';
 export * from './fs';
 export * from './logger';

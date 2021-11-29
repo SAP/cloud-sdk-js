@@ -13,15 +13,15 @@ import { EdmTypeShared, isEdmType } from './edm-types';
 import {
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
-  PropertyMetadata
-} from './selectable/complex-type-namespace';
-import { Field } from './selectable/field';
-import { Link } from './selectable/link';
-import { EdmTypeField } from './selectable/edm-type-field';
-import { EnumField } from './selectable/enum-field';
-import { CollectionField } from './selectable/collection-field';
-import { ComplexTypeField } from './selectable/complex-type-field';
-import { OneToOneLink } from './selectable/one-to-one-link';
+  PropertyMetadata,
+  Field,
+  Link,
+  EdmTypeField,
+  EnumField,
+  CollectionField,
+  ComplexTypeField,
+  OneToOneLink
+} from './selectable';
 
 const logger = createLogger({
   package: 'odata-common',
@@ -57,7 +57,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * @internal
  */
 export function entityDeserializer(
-  edmToTs: any, // TODO v 2.0 try to get commen typing for v2 and v4 in here
+  edmToTs: any, // TODO v 2.0 try to get common typing for v2 and v4 in here
   extractODataETag: ExtractODataETagType,
   extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
 ): EntityDeserializer {
@@ -85,7 +85,7 @@ export function entityDeserializer(
         );
         return entity;
       }, new entityConstructor())
-      .initializeCustomFields(extractCustomFields(json, entityConstructor))
+      .setCustomFields(extractCustomFields(json, entityConstructor))
       .setVersionIdentifier(etag)
       .setOrInitializeRemoteState();
   }

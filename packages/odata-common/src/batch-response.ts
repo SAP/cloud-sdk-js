@@ -1,5 +1,7 @@
 import { Constructable, EntityBase } from './entity-base';
-
+/**
+ * @internal
+ */
 export type BatchResponse = ReadResponse | WriteResponses | ErrorResponse;
 
 /**

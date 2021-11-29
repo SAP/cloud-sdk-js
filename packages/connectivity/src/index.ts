@@ -2,46 +2,35 @@ export {
   parseDestination,
   noDestinationErrorMessage,
   toDestinationNameUrl,
-  sanitizeDestination
-} from './scp-cf/destination/destination';
-export {
+  sanitizeDestination,
   Destination,
-  DestinationRetrievalOptions
-} from './scp-cf/destination/destination-service-types';
-
-export {
+  DestinationRetrievalOptions,
   DestinationOptions,
   DestinationFetchOptions,
-  DestinationAccessorOptions
-} from './scp-cf/destination/destination-accessor-types';
-export {
+  DestinationAccessorOptions,
   getDestination,
-  useOrFetchDestination
-} from './scp-cf/destination/destination-accessor';
-export { getDestinationFromDestinationService } from './scp-cf/destination/destination-from-service';
-export {
+  useOrFetchDestination,
+  getDestinationFromDestinationService,
   alwaysProvider,
   alwaysSubscriber,
-  subscriberFirst
-} from './scp-cf/destination/destination-selection-strategies';
-export { parseProxyEnv } from './scp-cf/destination/proxy-util';
-export {
+  subscriberFirst,
+  parseProxyEnv,
   ProxyConfiguration,
-  ProxyConfigurationHeaders
-} from './scp-cf/connectivity-service-types';
-export { Protocol } from './scp-cf/protocol';
-
-export { CachingOptions, IsolationStrategy } from './scp-cf/cache';
-export { ResilienceOptions } from './scp-cf/resilience-options';
-export { decodeJwt, retrieveJwt, VerifyJwtOptions } from './scp-cf/jwt';
-export { jwtBearerToken, serviceToken } from './scp-cf/token-accessor';
-export {
+  ProxyConfigurationHeaders,
+  Protocol,
+  CachingOptions,
+  IsolationStrategy,
+  ResilienceOptions,
+  decodeJwt,
+  retrieveJwt,
+  VerifyJwtOptions,
+  jwtBearerToken,
+  serviceToken,
   Service,
-  ServiceCredentials
-} from './scp-cf/environment-accessor-types';
-export { buildHeadersForDestination } from './scp-cf/header-builder-for-destination';
-export {
+  ServiceCredentials,
+  buildHeadersForDestination,
   getClientCredentialsToken,
   getUserToken
-} from './scp-cf/xsuaa-service';
-export { getAgentConfig } from './http-agent/http-agent';
+} from './scp-cf';
+
+export { getAgentConfig } from './http-agent';

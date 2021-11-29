@@ -3,27 +3,16 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import {
-  DefaultDeSerializers as DeSerializersCommon,
-  defaultDeSerializersRaw as defaultDeSerializersRawCommon,
-  Time
-} from '@sap-cloud-sdk/odata-common';
-import {
-  DeSerializersBASE,
-  DeserializedType
-} from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
 import {
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   CreateRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder,
-  DefaultDeSerializers,
-  defaultDeSerializers
+  DefaultDeSerializers
 } from '@sap-cloud-sdk/odata-v2';
 import { DeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
-import { CustomDeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
-
 import { RequestBuilder } from '@sap-cloud-sdk/odata-v2/internal';
 
 import { TestEntity } from './TestEntity';
@@ -44,14 +33,18 @@ export class TestEntityRequestBuilder<
     keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>,
     keyPropertyString: DeserializedType<T, 'Edm.String'>
   ): GetByKeyRequestBuilder<TestEntity<T>> {
-    return new GetByKeyRequestBuilder(
-      TestEntity,
-      {
-        KeyPropertyGuid: keyPropertyGuid,
-        KeyPropertyString: keyPropertyString
-      },
-      this.deSerializers
-    );
+    return new GetByKeyRequestBuilder<TestEntity<T>, T>(this.entityApi, {
+      KeyPropertyGuid: keyPropertyGuid,
+      KeyPropertyString: keyPropertyString
+    });
+    // (
+    //   TestEntity,
+    //   {
+    //     KeyPropertyGuid: keyPropertyGuid,
+    //     KeyPropertyString: keyPropertyString
+    //   },
+    //   this.deSerializers
+    // );
   }
 
   /**
@@ -59,11 +52,7 @@ export class TestEntityRequestBuilder<
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
    */
   getAll(): GetAllRequestBuilder<TestEntity<T>, T> {
-    return new GetAllRequestBuilder<TestEntity<T>, T>(
-      this.entityApi.entityConstructor,
-      this.entityApi.deSerializers,
-      this.entityApi.schema
-    );
+    return new GetAllRequestBuilder<TestEntity<T>, T>(this.entityApi);
   }
 
   /**
@@ -71,8 +60,8 @@ export class TestEntityRequestBuilder<
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntity`.
    */
-  create(entity: TestEntity): CreateRequestBuilder<TestEntity> {
-    return new CreateRequestBuilder(TestEntity, entity, this.deSerializers);
+  create(entity: TestEntity<T>): CreateRequestBuilder<TestEntity<T>, T> {
+    return new CreateRequestBuilder<TestEntity<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -80,8 +69,8 @@ export class TestEntityRequestBuilder<
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntity`.
    */
-  update(entity: TestEntity): UpdateRequestBuilder<TestEntity> {
-    return new UpdateRequestBuilder(TestEntity, entity, this.deSerializers);
+  update(entity: TestEntity<T>): UpdateRequestBuilder<TestEntity<T>, T> {
+    return new UpdateRequestBuilder<TestEntity<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -93,26 +82,25 @@ export class TestEntityRequestBuilder<
   delete(
     keyPropertyGuid: string,
     keyPropertyString: string
-  ): DeleteRequestBuilder<TestEntity>;
+  ): DeleteRequestBuilder<TestEntity<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntity` by taking the entity as a parameter.
    */
-  delete(entity: TestEntity): DeleteRequestBuilder<TestEntity>;
+  delete(entity: TestEntity<T>): DeleteRequestBuilder<TestEntity<T>, T>;
   delete(
     keyPropertyGuidOrEntity: any,
     keyPropertyString?: string
-  ): DeleteRequestBuilder<TestEntity> {
-    return new DeleteRequestBuilder(
-      TestEntity,
+  ): DeleteRequestBuilder<TestEntity<T>, T> {
+    return new DeleteRequestBuilder<TestEntity<T>, T>(
+      this.entityApi,
       keyPropertyGuidOrEntity instanceof TestEntity
         ? keyPropertyGuidOrEntity
         : {
             KeyPropertyGuid: keyPropertyGuidOrEntity!,
             KeyPropertyString: keyPropertyString!
-          },
-      this.deSerializers
+          }
     );
   }
 }

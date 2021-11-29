@@ -11,16 +11,13 @@ import {
   ODataUpdateRequestConfig,
   UpdateRequestBuilderBase,
   isNavigationProperty,
-  removePropertyOnCondition
+  removePropertyOnCondition,
+  EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { extractODataEtag } from '../extract-odata-etag';
-import {
-  CustomDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers
-} from '../de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 
 const logger = createLogger({
@@ -41,17 +38,15 @@ export class UpdateRequestBuilder<
 {
   /**
    * Creates an instance of UpdateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be updated
+   * @param entityApi - Constructor of the entity to create the request for, the (de-)serializers, and the schema.
    * @param _entity - Entity to be updated
-   * @param deSerializers - TODO
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    readonly _entity: EntityT,
-    deSerializers: CustomDeSerializers<T>
+    { entityConstructor, deSerializers }: EntityApi<EntityT, T>,
+    readonly _entity: EntityT
   ) {
     super(
-      _entityConstructor,
+      entityConstructor,
       _entity,
       createODataUri(deSerializers),
       entitySerializer,

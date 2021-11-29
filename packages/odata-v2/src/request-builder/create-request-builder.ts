@@ -1,12 +1,11 @@
 import {
-  Constructable,
   EntityIdentifiable,
   CreateRequestBuilderBase,
-  entityDeserializer
+  entityDeserializer,
+  EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
 import {
   DeSerializers,
-  CustomDeSerializers,
   DefaultDeSerializers,
   edmToTs
 } from '../de-serializers';
@@ -32,18 +31,15 @@ export class CreateRequestBuilder<
 {
   /**
    * Creates an instance of CreateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be created
+   * @param entityApi - Constructor of the entity to create the request for, the (de-)serializers, and the schema.
    * @param _entity - Entity to be created
-   * @param deSerializers - TODO
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    readonly _entity: EntityT,
-    deSerializers: CustomDeSerializers<T>,
-    schema: Record<string, any>
+    { entityConstructor, deSerializers, schema }: EntityApi<EntityT, T>,
+    readonly _entity: EntityT
   ) {
     super(
-      _entityConstructor,
+      entityConstructor,
       _entity,
       createODataUri(deSerializers),
       entitySerializer,

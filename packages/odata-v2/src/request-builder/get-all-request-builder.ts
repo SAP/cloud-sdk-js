@@ -1,20 +1,21 @@
 import {
-  Constructable,
   EntityIdentifiable,
   GetAllRequestBuilderBase,
   ODataGetAllRequestConfig,
   entityDeserializer,
-  Filterable
+  Filterable,
+  EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { edmToTs } from '../de-serializers/payload-value-converter';
 import { extractODataEtag } from '../extract-odata-etag';
-import { CustomDeSerializers, DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 import {
   getLinkedCollectionResult,
   responseDataAccessor
 } from './response-data-accessor';
+
 export class GetAllRequestBuilder<
     EntityT extends Entity,
     T extends DeSerializers = DefaultDeSerializers
@@ -24,15 +25,13 @@ export class GetAllRequestBuilder<
 {
   /**
    * Creates an instance of GetAllRequestBuilder.
-   * @param entityConstructor - Constructor of the entity to create the request for
-   * @param deSerializers - TODO
-   * @param schema - TODO
+   * @param entityApi - Constructor of the entity to create the request for, the (de-)serializers, and the schema.
    */
-  constructor(
-    entityConstructor: Constructable<EntityT>,
-    deSerializers: CustomDeSerializers<T>,
-    schema: Record<string, any>
-  ) {
+  constructor({
+    entityConstructor,
+    deSerializers,
+    schema
+  }: EntityApi<EntityT, T>) {
     super(
       entityConstructor,
       new ODataGetAllRequestConfig(

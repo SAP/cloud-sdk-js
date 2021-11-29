@@ -1,10 +1,14 @@
 import {
-  Constructable,
+  EntityApi,
   entityDeserializer,
   EntityIdentifiable,
   GetByKeyRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DefaultDeSerializers, DeSerializers, edmToTs } from '../de-serializers';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  edmToTs
+} from '../de-serializers';
 import { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
@@ -30,19 +34,15 @@ export class GetByKeyRequestBuilder<
 
   /**
    * Creates an instance of GetByKeyRequestBuilder.
-   * @param _entityConstructor - Constructor of the entity to create the request for
+   * @param entityApi - Constructor of the entity to create the request for, the (de-)serializers, and the schema.
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
-   * @param deSerializers - TODO
-   * @param schema - TODO
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    keys: Record<string, any>,
-    deSerializers: T,
-    schema: Record<string, any>
+    { entityConstructor, deSerializers, schema }: EntityApi<EntityT, T>,
+    keys: Record<string, any>
   ) {
     super(
-      _entityConstructor,
+      entityConstructor,
       keys,
       createODataUri(deSerializers),
       entityDeserializer(

@@ -7,7 +7,7 @@ import {
   EdmxEntitySet,
   EdmxEntityTypeV4
 } from '../../edmx-parser/v4';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { ServiceMetadata } from '../../edmx-parser';
 import { generateEntitiesV4 } from './entity';
 import { generateActionImportsV4 } from './action-import';
 import { generateComplexTypesV4 } from './complex-type';

@@ -1,10 +1,4 @@
 /**
- * @deprecated Since v1.29.0. Use `Record<string, T>` instead.
- * Convenience type for JavaScript objects.
- */
-export type MapType<T> = Record<string, T>;
-
-/**
  * Denotes the OData version.
  */
 export type ODataVersion = 'v2' | 'v4';

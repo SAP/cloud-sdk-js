@@ -2,7 +2,7 @@ import { VdmParameter } from '../../vdm-types';
 import { isNullableProperty } from '../../generator-utils';
 import { parameterDescription } from '../description-util';
 import { EdmxNamed, EdmxParameter } from '../../edmx-parser/common';
-import { SwaggerPath } from '../../swagger-parser/swagger-types';
+import { SwaggerPath } from '../../swagger-parser';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { EdmxFunctionImportV2 as EdmxFunctionImportV2 } from '../../edmx-parser/v2';
 import {

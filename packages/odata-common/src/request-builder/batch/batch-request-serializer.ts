@@ -1,7 +1,6 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
-import { ODataRequest } from '../../request/odata-request';
-import { ODataRequestConfig } from '../../request/odata-request-config';
+import { ODataRequest, ODataRequestConfig } from '../../request';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { BatchChangeSet } from './batch-change-set';
 import {

@@ -11,7 +11,7 @@ import {
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { extractODataEtag } from '../extract-odata-etag';
-import { oDataUri } from '../uri-conversion/odata-uri';
+import { oDataUri } from '../uri-conversion';
 
 export class UpdateRequestBuilder<
   EntityT extends Entity

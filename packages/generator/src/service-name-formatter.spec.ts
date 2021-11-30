@@ -1,4 +1,4 @@
-import { ServiceNameFormatter } from '../src/service-name-formatter';
+import { ServiceNameFormatter } from './service-name-formatter';
 
 describe('name-formatter', () => {
   describe('formats name for', () => {

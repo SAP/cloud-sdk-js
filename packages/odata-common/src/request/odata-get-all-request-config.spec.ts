@@ -1,11 +1,11 @@
 import { asc, ODataGetAllRequestConfig } from '../internal';
 import { CommonEntity } from '../../test/common-entity';
-import { commonOdataUri } from '../../test/common-request-config';
+import { commonODataUri } from '../../test/common-request-config';
 
 describe('ODataGetAllRequestConfig', () => {
   let config: ODataGetAllRequestConfig<CommonEntity>;
   beforeEach(() => {
-    config = new ODataGetAllRequestConfig(CommonEntity, commonOdataUri);
+    config = new ODataGetAllRequestConfig(CommonEntity, commonODataUri);
   });
 
   it('method is get', () => {

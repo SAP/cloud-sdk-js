@@ -1,6 +1,6 @@
 import { camelCase } from '@sap-cloud-sdk/util';
 import { EntityBase, Constructable } from '../entity-base';
-import { Field } from '../selectable/field';
+import { Field } from '../selectable';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.

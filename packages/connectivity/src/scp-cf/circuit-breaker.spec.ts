@@ -8,7 +8,7 @@ import {
 import { privateKey } from '../../../../test-resources/test/test-util/keys';
 import { circuitBreakerDefaultOptions } from './resilience-options';
 import { getClientCredentialsToken } from './xsuaa-service';
-import { fetchDestination } from './destination/destination-service';
+import { fetchDestination } from './destination';
 
 const jwt = jwt123.sign(
   JSON.stringify({ user_id: 'user', zid: 'tenant' }),

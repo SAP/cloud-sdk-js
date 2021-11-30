@@ -2,7 +2,7 @@ import {
   EntityBase,
   Constructable
 } from '@sap-cloud-sdk/odata-common/internal';
-import { CustomField } from './selectable/custom-field';
+import { CustomField } from './selectable';
 
 /**
  * Super class for all representations of OData v4 entity types.

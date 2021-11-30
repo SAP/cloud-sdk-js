@@ -3,11 +3,11 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  ODataBatchChangeSet,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { Photos, People, Airlines, Airports } from './index';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Batch builder for operations supported on the Microsoft O Data Service Sample Trippin In Memory Models Service.
  * @param requests The requests of the batch
@@ -16,13 +16,13 @@ import { Photos, People, Airlines, Airports } from './index';
 export declare function batch(
   ...requests: Array<
     | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | BatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export declare function batch(
   requests: Array<
     | ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder
-    | ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
+    | BatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 /**
@@ -32,10 +32,10 @@ export declare function batch(
  */
 export declare function changeset(
   ...requests: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
+): BatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
 export declare function changeset(
   requests: Array<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>
-): ODataBatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
+): BatchChangeSet<WriteMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder>;
 export declare const defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath =
   'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
 export declare type ReadMicrosoftODataServiceSampleTrippinInMemoryModelsServiceRequestBuilder =

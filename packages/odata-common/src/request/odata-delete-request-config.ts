@@ -1,6 +1,6 @@
 import { Constructable, EntityBase } from '../entity-base';
-import { ODataUri } from '../uri-conversion/odata-uri';
-import { FieldType } from '../selectable/field';
+import { ODataUri } from '../uri-conversion';
+import { FieldType } from '../selectable';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
 

@@ -84,7 +84,7 @@ export function changesetFunction(
             }
           ],
           returns: {
-            type: 'ODataBatchChangeSet',
+            type: 'BatchChangeSet',
             description: 'A change set for batch.'
           }
         }
@@ -96,13 +96,13 @@ export function changesetFunction(
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: '...requests', type: asArray(type) }],
-      returnType: `ODataBatchChangeSet<Write${service.className}RequestBuilder>`,
+      returnType: `BatchChangeSet<Write${service.className}RequestBuilder>`,
       docs
     },
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: 'requests', type: asArray(type) }],
-      returnType: `ODataBatchChangeSet<Write${service.className}RequestBuilder>`
+      returnType: `BatchChangeSet<Write${service.className}RequestBuilder>`
     }
   ];
 
@@ -114,9 +114,9 @@ export function changesetFunction(
       { name: 'first', type: `undefined|${type}|${asArray(type)}` },
       { name: '...rest', type: asArray(type) }
     ],
-    returnType: `ODataBatchChangeSet<Write${service.className}RequestBuilder>`,
+    returnType: `BatchChangeSet<Write${service.className}RequestBuilder>`,
     statements:
-      'return new ODataBatchChangeSet(variadicArgumentToArray(first,rest));',
+      'return new BatchChangeSet(variadicArgumentToArray(first,rest));',
     overloads
   };
 }
@@ -126,5 +126,5 @@ function asArray(type: string): string {
 }
 
 function getBatchParameterType(service: VdmServiceMetadata): string {
-  return `Read${service.className}RequestBuilder | ODataBatchChangeSet<Write${service.className}RequestBuilder>`;
+  return `Read${service.className}RequestBuilder | BatchChangeSet<Write${service.className}RequestBuilder>`;
 }

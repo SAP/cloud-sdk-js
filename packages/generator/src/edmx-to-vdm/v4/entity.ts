@@ -17,7 +17,7 @@ import {
   parseEntitySetsV4,
   parseEntityType
 } from '../../edmx-parser/v4';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { ServiceMetadata } from '../../edmx-parser';
 import { isCollectionType } from '../edmx-to-vdm-util';
 /* eslint-disable valid-jsdoc */
 
@@ -103,8 +103,6 @@ function navigationProperties(
       from: entityType.Name,
       to: navBinding.Target,
       toEntityClassName: classNames[navBinding.Target],
-      multiplicity: isCollection ? '1 - *' : '1 - 1',
-      isMultiLink: isCollection,
       isCollection
     };
   });

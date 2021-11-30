@@ -5,8 +5,7 @@ import {
   noDestinationErrorMessage,
   useOrFetchDestination
 } from '@sap-cloud-sdk/connectivity';
-import { ODataRequest } from '../request/odata-request';
-import { ODataRequestConfig } from '../request/odata-request-config';
+import { ODataRequest, ODataRequestConfig } from '../request';
 
 /**
  * Base class for all request builders.
@@ -43,17 +42,6 @@ export abstract class MethodRequestBuilder<
   }
 
   /**
-   * @deprecated Since version 1.34.0 Use [[addCustomHeaders]] instead.
-   * Add custom headers to the request.
-   * @param headers - Key-value pairs denoting additional custom headers.
-   * @returns The request builder itself, to facilitate method chaining.
-   */
-  withCustomHeaders(headers: Record<string, string>): this {
-    this.requestConfig.addCustomHeaders(headers);
-    return this;
-  }
-
-  /**
    * Add custom headers to the request. Existing headers will be overwritten.
    * @param headers - Key-value pairs denoting additional custom headers.
    * @returns The request builder itself, to facilitate method chaining.
@@ -64,35 +52,12 @@ export abstract class MethodRequestBuilder<
   }
 
   /**
-   * @deprecated Since version 1.34.0 Use [[addCustomQueryParameters]] instead.
-   * Add custom query parameters to the request.
-   * @param queryParameters - Key-value pairs denoting additional custom query parameters to be set in the request.
-   * @returns The request builder itself, to facilitate method chaining.
-   */
-  withCustomQueryParameters(queryParameters: Record<string, string>): this {
-    this.requestConfig.addCustomQueryParameters(queryParameters);
-    return this;
-  }
-
-  /**
    * Add custom query parameters to the request. If a query parameter with the given name already exists it is overwritten.
    * @param queryParameters - Key-value pairs denoting additional custom query parameters to be set in the request.
    * @returns The request builder itself, to facilitate method chaining
    */
   addCustomQueryParameters(queryParameters: Record<string, string>): this {
     this.requestConfig.addCustomQueryParameters(queryParameters);
-    return this;
-  }
-
-  /**
-   * @deprecated Since version 1.34.0 Use [[setCustomServicePath]] instead.
-   * Replace the default service path with the given custom path.
-   * In case of the SAP S/4HANA APIs the servicePath defaults to `/sap/opu/odata/sap/<SERVICE_NAME>` and can be overwritten here.
-   * @param servicePath - Path to override the default with.
-   * @returns The request builder itself, to facilitate method chaining.
-   */
-  withCustomServicePath(servicePath: string): this {
-    this.requestConfig.customServicePath = servicePath;
     return this;
   }
 

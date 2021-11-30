@@ -134,7 +134,7 @@ export class CommonEntitySingleLink
 {
   static _entityName = 'A_CommonEntitySingleLink';
   readonly _oDataVersion: any;
-  static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
+  static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
   keyProperty!: string;
   stringProperty?: string;
 
@@ -213,7 +213,7 @@ export namespace CommonEntitySingleLink {
 export class CommonEntity extends Entity implements CommonEntityType {
   static _entityName = 'A_CommonEntity';
   readonly _oDataVersion: any;
-  static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
+  static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
   keyPropertyGuid!: string;
   keyPropertyString!: string;
   stringProperty?: string;

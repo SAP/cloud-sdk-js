@@ -1,12 +1,12 @@
 import { resolve, join } from 'path';
-import { promises } from 'fs';
-import { createLogger, unixEOL } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
 import { generate as generateOdata } from '../packages/generator/src';
 import {
   generate as generateOpenApi,
   GeneratorOptions
 } from '../packages/openapi-generator/src';
 import { ODataVersion } from '../packages/util/src';
+import { generateCommonEntity } from '../packages/odata-common/test/generate-common-entity';
 
 const odataServiceSpecsDir = join('test-resources', 'odata-service-specs');
 const packageOutputDir = resolve('test-packages', 'test-services');
@@ -61,6 +61,11 @@ async function generateAll(): Promise<void> {
   });
 
   const arg = process.argv[2];
+
+  if (arg === 'common' || arg === 'all') {
+    await generateCommonEntity();
+  }
+
   if (arg === 'v2' || arg === 'odata' || arg === 'all') {
     await generateTestServicesPackage(packageOutputDir, 'v2');
   }
@@ -83,7 +88,6 @@ async function generateAll(): Promise<void> {
       outputDir: resolve('test-packages', 'test-services-e2e', 'TripPin'),
       generateJs: true
     });
-    await generateCommonTestEntity();
   }
 
   if (arg === 'openapi' || arg === 'rest' || arg === 'all') {
@@ -95,85 +99,3 @@ async function generateAll(): Promise<void> {
 }
 
 generateAll();
-
-function removeImports(str: string): string {
-  return str.replace(/import \{.*\}.*;/g, '');
-}
-
-function adjustRequestBuilder(str: string): string {
-  return str
-    .replace(
-      /return new .*RequestBuilder\(\)/,
-      "throw new Error('not implemented')"
-    )
-    .replace(
-      /static requestBuilder\(\):.*RequestBuilder/,
-      'static requestBuilder(): any'
-    );
-}
-
-function adjustCustomField(str: string): string {
-  return str.replace(
-    'return Entity.customFieldSelector',
-    'return new CustomField'
-  );
-}
-
-function addODataVersion(str: string): string {
-  const firstProperty = "static _entityName = 'A_CommonEntity';";
-  const nameString = str.match(/static _entityName =.*/)![0];
-  return str.replace(
-    nameString,
-    [nameString, 'readonly _oDataVersion: any;'].join(unixEOL)
-  );
-}
-
-function removeJsDoc(str: string): string {
-  return str.replace(/\/\*\*\n(?:\s+\*\s+.+\n)+\s+\*\/\n/g, '');
-}
-
-function readClasses(): Promise<string[]> {
-  const basePath = join(packageOutputDir, 'v4', 'common-service');
-  return Promise.all(
-    [
-      'CommonEntity.ts',
-      'CommonEntitySingleLink.ts',
-      'CommonComplexType.ts',
-      'NestedComplexType.ts'
-    ].map(name => promises.readFile(join(basePath, name), 'utf8'))
-  );
-}
-
-async function generateCommonTestEntity() {
-  const files = await readClasses();
-
-  const [entity, entityLink, complexType, nestedComplex] = files
-    .map(str => removeImports(str))
-    .map(str => removeJsDoc(str));
-
-  const [adjustedEntity, adjustedEntityLink] = [entity, entityLink]
-    .map(str => adjustRequestBuilder(str))
-    .map(str => adjustCustomField(str))
-    .map(str => addODataVersion(str));
-
-  const allParts = [
-    disableEslint,
-    disclaimer,
-    imports,
-    complexType,
-    nestedComplex,
-    adjustedEntityLink,
-    adjustedEntity
-  ].join(unixEOL);
-  await promises.writeFile(
-    resolve(__dirname, '../packages/odata-common/test/common-entity.ts'),
-    allParts,
-    'utf8'
-  );
-}
-
-const disclaimer = `/* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.
-The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/`;
-const imports =
-  "import { AllFields, Constructable,  EntityBuilderType,OneToOneLink, Field,CollectionField,  OrderableEdmTypeField,CustomField,ComplexTypeField, ConstructorOrField, EdmTypeField, FieldBuilder, FieldOptions, PropertyMetadata, EntityBase as Entity } from '../src/internal';";
-const disableEslint = '/* eslint-disable */';

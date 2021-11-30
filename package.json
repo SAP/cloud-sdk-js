@@ -41,7 +41,7 @@
     "test:e2e": "yarn e2e-tests test",
     "generate:test-services:v2": "yarn generate v2 && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services:v4": "yarn generate v4 && yarn lint:fix && yarn --frozen-lockfile",
-    "test1234": "yarn ts-node scripts/generate-test-services.ts",
+    "generate:common": "yarn generate common && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services:openapi": "yarn generate openapi && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services:e2e": "yarn generate e2e && yarn lint:fix && yarn --frozen-lockfile",
     "generate:test-services": "yarn generate all && yarn lint:fix && yarn --frozen-lockfile",

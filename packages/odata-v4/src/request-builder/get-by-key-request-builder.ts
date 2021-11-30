@@ -8,7 +8,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
 import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion/odata-uri';
+import { oDataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create an OData request to get a single entity based on its key properties.

@@ -1,14 +1,16 @@
 import { v4 as uuid } from 'uuid';
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
-import { ODataDeleteRequestConfig } from '@sap-cloud-sdk/odata-common/internal';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { uriConverter } from '../../../odata-v2/src/uri-conversion/uri-value-converter';
+import { CommonEntity } from '../../test/common-entity';
+import {
+  commonODataUri,
+  commonUriConverter
+} from '../../test/common-request-config';
+import { ODataDeleteRequestConfig } from './odata-delete-request-config';
 
 describe('ODataDeleteRequestConfig', () => {
-  let config: ODataDeleteRequestConfig<TestEntity>;
+  let config: ODataDeleteRequestConfig<CommonEntity>;
   beforeEach(() => {
-    config = new ODataDeleteRequestConfig(TestEntity, oDataUriV2);
+    config = new ODataDeleteRequestConfig(CommonEntity, commonODataUri);
   });
 
   it('method is delete', () => {
@@ -26,7 +28,8 @@ describe('ODataDeleteRequestConfig', () => {
       testEntityResourcePath(
         keyPropGuid,
         keyPropString,
-        uriConverter.convertToUriFormat
+        commonUriConverter.convertToUriFormat,
+        'A_CommonEntity'
       )
     );
   });

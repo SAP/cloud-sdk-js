@@ -3,16 +3,17 @@ import http from 'http';
 import { assoc, createLogger, last } from '@sap-cloud-sdk/util';
 import {
   Destination,
-  DestinationCertificate
-} from '../scp-cf/destination/destination-service-types';
-import { getProtocolOrDefault } from '../scp-cf/get-protocol';
-import { Protocol } from '../scp-cf/protocol';
+  DestinationCertificate,
+  getProtocolOrDefault,
+  Protocol
+} from '../scp-cf';
+/* Careful the proxy imports cause circular dependencies if imported from scp directly */
 import {
   addProxyConfigurationInternet,
   proxyAgent,
   proxyStrategy,
   ProxyStrategy
-} from '../scp-cf/destination/proxy-util';
+} from '../scp-cf/destination';
 import { HttpAgentConfig, HttpsAgentConfig } from './agent-config';
 
 const logger = createLogger({

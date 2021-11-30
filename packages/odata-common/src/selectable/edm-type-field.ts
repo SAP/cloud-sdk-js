@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { EntityBase } from '../entity-base';
 import { Time } from '../time';
-import { Filter } from '../filter/filter';
+import { Filter } from '../filter';
 import { EdmTypeShared } from '../edm-types';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
 import { ConstructorOrField } from './constructor-or-field';

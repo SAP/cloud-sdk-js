@@ -3,10 +3,9 @@ import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { EntitySerializer } from '../entity-serializer';
-import { ODataUpdateRequestConfig } from '../request/odata-update-request-config';
-import { ODataUri } from '../uri-conversion/odata-uri';
-import { Selectable } from '../selectable/selectable';
-import { ODataRequest } from '../request/odata-request';
+import { ODataUpdateRequestConfig, ODataRequest } from '../request';
+import { ODataUri } from '../uri-conversion';
+import { Selectable } from '../selectable';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -60,44 +59,11 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
   }
 
   /**
-   * @deprecated Since v1.29.0. This method should never be called, it has severe side effects.
-   * Builds the payload and the entity keys of the query.
-   * @returns the builder itself
-   */
-  prepare(): this {
-    this.requestConfig.keys = this.oDataUri.getEntityKeys(
-      this._entity,
-      this._entityConstructor
-    );
-
-    this.requestConfig.payload = this.getPayload();
-
-    return this;
-  }
-
-  /**
    * Explicitly configure 'PUT' as the method of the update request. By default, only the properties that have changed compared to the last known remote state are sent using 'PATCH', while with 'PUT', the whole entity is sent.
    * @returns The entity itself, to facilitate method chaining.
    */
   replaceWholeEntityWithPut(): this {
     this.requestConfig.updateWithPut();
-    this.requestConfig.payload = this.getPayload();
-    return this;
-  }
-
-  /**
-   * @deprecated Since version 1.34.0 Use [[setRequiredFields]] instead.
-   * Specifies required entity keys for the update request.
-   * @param fields - Enumeration of the fields to be required.
-   * @returns The entity itself, to facilitate method chaining.
-   */
-  requiredFields(...fields: Selectable<EntityT>[]): this;
-  requiredFields(fields: Selectable<EntityT>[]): this;
-  requiredFields(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
-  ): this {
-    this.required = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
     return this;
   }
@@ -114,23 +80,6 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
     ...rest: Selectable<EntityT>[]
   ): this {
     this.required = this.toSet(variadicArgumentToArray(first, rest));
-    this.requestConfig.payload = this.getPayload();
-    return this;
-  }
-
-  /**
-   * @deprecated Since version 1.34.0 Use [[setIgnoredFields]] instead.
-   * Specifies entity fields to ignore by the update request.
-   * @param fields - Enumeration of the fields to be ignored.
-   * @returns The entity itself, to facilitate method chaining.
-   */
-  ignoredFields(...fields: Selectable<EntityT>[]): this;
-  ignoredFields(fields: Selectable<EntityT>[]): this;
-  ignoredFields(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
-  ): this {
-    this.ignored = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
     return this;
   }
@@ -157,17 +106,6 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    */
   ignoreVersionIdentifier(): this {
     this.requestConfig.versionIdentifierIgnored = true;
-    return this;
-  }
-
-  /**
-   * @deprecated Since version 1.34.0 Use [[setVersionIdentifier]] instead.
-   * Specifies a custom ETag version identifier of the entity to update.
-   * @param etag - Custom ETag version identifier to be sent in the header of the request.
-   * @returns The request itself to ease chaining while executing the request.
-   */
-  withCustomVersionIdentifier(etag: string): this {
-    this.requestConfig.eTag = etag;
     return this;
   }
 

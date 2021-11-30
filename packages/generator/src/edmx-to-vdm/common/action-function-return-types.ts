@@ -125,7 +125,6 @@ function getVoidReturnType(): VdmFunctionImportReturnType {
     returnTypeCategory: VdmReturnTypeCategory.VOID,
     returnType: 'undefined',
     builderFunction: '(val) => undefined',
-    isMulti: false,
     isNullable: false,
     isCollection: false
   };
@@ -144,7 +143,6 @@ function getEdmReturnType(
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
     returnType: typeMapping.jsType,
     builderFunction: `(${valueAlias}) => edmToTs(${extracted}, '${typeMapping.edmType}')`,
-    isMulti: isCollection,
     isNullable,
     isCollection
   };
@@ -166,14 +164,12 @@ function getEntityReturnType(
         returnTypeCategory: VdmReturnTypeCategory.ENTITY,
         returnType: first(entities)!.className,
         builderFunction: first(entities)!.className,
-        isMulti: isCollection,
         isNullable,
         isCollection
       }
     : {
         returnTypeCategory: VdmReturnTypeCategory.NEVER,
         returnType: 'never',
-        isMulti: isCollection,
         isNullable,
         isCollection,
         unsupportedReason: VdmUnsupportedReason.ENTITY_NOT_DESERIALIZABLE
@@ -189,7 +185,6 @@ function getComplexReturnType(
     returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
     builderFunction: `(data) => deserializeComplexType(data, ${complexType.typeName})`,
-    isMulti: isCollection,
     isNullable,
     isCollection
   };

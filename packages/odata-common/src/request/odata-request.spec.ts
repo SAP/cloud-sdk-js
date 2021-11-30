@@ -7,9 +7,9 @@ import {
   ODataGetAllRequestConfig,
   ODataRequest,
   ODataUpdateRequestConfig
-} from '@sap-cloud-sdk/odata-common/internal';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+} from '../internal';
+import { commonODataUri } from '../../test/common-request-config';
+import { CommonEntity } from '../../test/common-entity';
 
 describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;
@@ -161,20 +161,20 @@ describe('OData Request', () => {
     it('should contain appended path', () => {
       const request = createRequest(ODataGetAllRequestConfig);
       const requestConfig =
-        request.config as ODataGetAllRequestConfig<TestEntity>;
+        request.config as ODataGetAllRequestConfig<CommonEntity>;
       requestConfig.appendPath('/$value');
       expect(request.relativeUrl()).toBe(
-        'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/$value?$format=json'
+        'sap/opu/odata/sap/API_TEST_SRV/A_CommonEntity/$value?$format=json'
       );
     });
 
     it('should not remove the trailing slash', () => {
       const request = createRequest(ODataGetAllRequestConfig);
       const requestConfig =
-        request.config as ODataGetAllRequestConfig<TestEntity>;
+        request.config as ODataGetAllRequestConfig<CommonEntity>;
       requestConfig.appendPath('/');
       expect(request.relativeUrl()).toBe(
-        'sap/opu/odata/sap/API_TEST_SRV/A_TestEntity/?$format=json'
+        'sap/opu/odata/sap/API_TEST_SRV/A_CommonEntity/?$format=json'
       );
     });
   });
@@ -252,7 +252,7 @@ function createRequest(
   requestConfigConstructor,
   destination: Destination = { url: '' }
 ) {
-  const config = new requestConfigConstructor(TestEntity, oDataUri);
+  const config = new requestConfigConstructor(CommonEntity, commonODataUri);
   config.keys = {
     KeyPropertyGuid: uuid(),
     KeyPropertyString: 'id'

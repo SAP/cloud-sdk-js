@@ -1,4 +1,4 @@
-import { SwaggerEntity } from '../../swagger-parser/swagger-types';
+import { SwaggerEntity } from '../../swagger-parser';
 /**
  * @internal
  */

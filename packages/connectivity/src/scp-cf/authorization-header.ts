@@ -8,9 +8,9 @@ import {
 import {
   AuthenticationType,
   Destination,
-  DestinationAuthToken
-} from './destination/destination-service-types';
-import { sanitizeDestination } from './destination/destination';
+  DestinationAuthToken,
+  sanitizeDestination
+} from './destination';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -139,29 +139,6 @@ function headerForProxy(
   }
 }
 
-// TODO the proxy header are for OnPrem auth and are now handled correctly and should be removed here
-// However this would be a breaking change, since we recommended to use 'NoAuthentication' to achieve principal propagation as a workaround.
-// Remove this in v2
-function legacyNoAuthOnPremiseProxy(
-  destination: Destination
-): Record<string, any> {
-  logger.warn(
-    `You are using 'NoAuthentication' in destination: ${destination.name} which is an OnPremise destination. This is a deprecated configuration, most likely you wanted to set-up 'PrincipalPropagation' so please change the destination property to the desired authentication scheme.`
-  );
-
-  let principalPropagationHeader;
-  try {
-    principalPropagationHeader = headerForPrincipalPropagation(destination);
-  } catch (e) {
-    logger.warn('No principal propagation header found.');
-  }
-
-  return {
-    ...headerForProxy(destination),
-    ...principalPropagationHeader
-  };
-}
-
 interface AuthenticationHeaderCloud {
   authorization: string;
 }
@@ -184,9 +161,10 @@ function getProxyRelatedAuthHeaders(
     destination.proxyType === 'OnPremise' &&
     destination.authentication === 'NoAuthentication'
   ) {
-    return legacyNoAuthOnPremiseProxy(destination) as any;
+    throw Error(
+      'OnPremise connections are not possible with NoAuthentication. Please select a supported authentication method e.g. PrincipalPropagation or BasicAuthentication.'
+    );
   }
-
   // The connectivity service will raise an exception if it can not obtain the 'Proxy-Authorization' and the destination lookup will fail early
   return headerForProxy(destination);
 }

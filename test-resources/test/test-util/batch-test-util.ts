@@ -1,12 +1,5 @@
 /* Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. */
-import { ODataBatchChangeSet } from '@sap-cloud-sdk/odata-v2/internal';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-
-export function createChangeSetWithFakeId(
-  ...requests
-): ODataBatchChangeSet<any> {
-  return new ODataBatchChangeSet(requests, 'changeSet_boundary');
-}
 
 export function buildTestEntity(): TestEntity {
   return TestEntity.builder()

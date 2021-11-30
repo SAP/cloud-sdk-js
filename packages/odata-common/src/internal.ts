@@ -1,3 +1,4 @@
+export * from './de-serializers';
 export * from './filter';
 export * from './order';
 export * from './request';

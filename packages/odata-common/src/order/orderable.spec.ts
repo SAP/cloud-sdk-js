@@ -1,20 +1,20 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { asc, desc } from '@sap-cloud-sdk/odata-common/internal';
+import { CommonEntity } from '../../test/common-entity';
+import { asc, desc } from './orderable';
 
 describe('Orderable', () => {
   describe('order type', () => {
     it('should be ascending', () => {
-      const order = asc(TestEntity.STRING_PROPERTY);
+      const order = asc(CommonEntity.STRING_PROPERTY);
       expect(order.orderType).toBe('asc');
     });
 
     it('should be descending', () => {
-      const order = desc(TestEntity.STRING_PROPERTY);
+      const order = desc(CommonEntity.STRING_PROPERTY);
       expect(order.orderType).toBe('desc');
     });
 
     it('should be ascending for complex type', () => {
-      const order = asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty);
+      const order = asc(CommonEntity.COMPLEX_TYPE_PROPERTY.stringProperty);
       expect(order.orderType).toBe('asc');
     });
   });

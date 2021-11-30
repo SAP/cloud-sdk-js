@@ -3,11 +3,11 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  ODataBatchChangeSet,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity1, TestEntity2, TestEntity3, TestEntity4 } from './index';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Batch builder for operations supported on the Multiple Schemas Service.
  * @param requests The requests of the batch
@@ -16,13 +16,13 @@ import { TestEntity1, TestEntity2, TestEntity3, TestEntity4 } from './index';
 export declare function batch(
   ...requests: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export declare function batch(
   requests: Array<
     | ReadMultipleSchemasServiceRequestBuilder
-    | ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 /**
@@ -32,10 +32,10 @@ export declare function batch(
  */
 export declare function changeset(
   ...requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
+): BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
 export declare function changeset(
   requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
+): BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
 export declare const defaultMultipleSchemasServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
 export declare type ReadMultipleSchemasServiceRequestBuilder =

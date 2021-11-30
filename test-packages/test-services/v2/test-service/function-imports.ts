@@ -19,7 +19,8 @@ import {
   transformReturnValueForEntity,
   transformReturnValueForEntityList,
   transformReturnValueForComplexType,
-  transformReturnValueForComplexTypeList
+  transformReturnValueForComplexTypeList,
+  defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v2';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
@@ -63,6 +64,10 @@ export function testFunctionImportNoReturnType<T extends DeSerializers>(
     deSerializers
   );
 }
+
+// testFunctionImportNoReturnType(defaultDeSerializers, {}).execute({
+//   url: 'tsjk'
+// });
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].

@@ -9,6 +9,9 @@ import type { Filterable } from './filterable';
  */
 export type FilterLambdaOperator = 'any' | 'all';
 
+/**
+ * @internal
+ */
 export class FilterLambdaExpression<EntityT extends EntityBase> {
   constructor(
     public filters: FilterList<EntityT>,

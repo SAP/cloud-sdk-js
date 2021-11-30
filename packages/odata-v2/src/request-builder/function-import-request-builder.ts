@@ -3,8 +3,8 @@ import {
   RequestMethodType,
   ActionFunctionImportRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { oDataUri } from '../uri-conversion/odata-uri';
-import { ODataFunctionImportRequestConfig } from '../request/odata-function-import-request-config';
+import { oDataUri } from '../uri-conversion';
+import { ODataFunctionImportRequestConfig } from '../request';
 
 /**
  * Create OData request to execute a function import.

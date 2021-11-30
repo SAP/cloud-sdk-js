@@ -1,36 +1,21 @@
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
-import {
-  ODataGetAllRequestConfig,
-  ODataRequest,
-  ODataUpdateRequestConfig,
-  buildHeaders
-} from '@sap-cloud-sdk/odata-common/internal';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
 import {
   defaultDestination,
   mockHeaderRequest
 } from '../../../test-resources/test/test-util/request-mocker';
 import { connectivityProxyConfigMock } from '../../../test-resources/test/test-util/environment-mocks';
-
-function createGetAllRequest(
-  dest: Destination
-): ODataRequest<ODataGetAllRequestConfig<TestEntity>> {
-  const requestConfig = new ODataGetAllRequestConfig(TestEntity, oDataUri);
-  return new ODataRequest(requestConfig, dest);
-}
-
-function createUpdateRequest(
-  dest: Destination
-): ODataRequest<ODataUpdateRequestConfig<TestEntity>> {
-  const requestConfig = new ODataUpdateRequestConfig(TestEntity, oDataUri);
-  return new ODataRequest(requestConfig, dest);
-}
+import { CommonEntity } from '../test/common-entity';
+import {
+  getAllRequestConfig,
+  updateRequestConfig
+} from '../test/common-request-config';
+import { ODataRequest } from './request';
+import { buildHeaders } from './header-builder';
 
 describe('Header-Builder', () => {
   it('customHeaders are not overwritten', async () => {
     const authString = 'initial';
-    const request = createGetAllRequest(defaultDestination);
+    const request = new ODataRequest(getAllRequestConfig(), defaultDestination);
     request.config.customHeaders = { authorization: authString };
 
     const headers = await buildHeaders(request);
@@ -54,15 +39,19 @@ describe('Header-Builder', () => {
         }
       ]
     };
-    const request = createGetAllRequest(destination);
+    const request = new ODataRequest(getAllRequestConfig(), destination);
     const headers = await buildHeaders(request);
 
     expect(headers.Destination!.authorization).toBe('Bearer some.token');
   });
 
+  const commonEntity = CommonEntity.builder().build();
   describe('update request header with ETag', () => {
     it('if-match should not be set when no ETag is specified', async () => {
-      const request = createUpdateRequest(defaultDestination);
+      const request = new ODataRequest(
+        updateRequestConfig({ payload: commonEntity }),
+        defaultDestination
+      );
 
       mockHeaderRequest({ request });
 
@@ -71,7 +60,10 @@ describe('Header-Builder', () => {
     });
 
     it('if-match should be set when ETag is specified in header-builder', async () => {
-      const request = createUpdateRequest(defaultDestination);
+      const request = new ODataRequest(
+        updateRequestConfig({ payload: commonEntity }),
+        defaultDestination
+      );
       request.config.eTag = 'W//';
 
       mockHeaderRequest({ request });
@@ -81,7 +73,10 @@ describe('Header-Builder', () => {
     });
 
     it('if-match should be set to * when version identifier is ignored', async () => {
-      const request = createUpdateRequest(defaultDestination);
+      const request = new ODataRequest(
+        updateRequestConfig({ payload: commonEntity }),
+        defaultDestination
+      );
       request.config.eTag = 'W//';
       // Set by ignoreVersionIdentifier()
       request.config.versionIdentifierIgnored = true;
@@ -105,10 +100,11 @@ describe('Header-Builder', () => {
       proxyConfiguration: {
         ...connectivityProxyConfigMock,
         headers: proxyHeaders
-      }
+      },
+      authentication: 'PrincipalPropagation'
     };
 
-    const request = createGetAllRequest(destination);
+    const request = new ODataRequest(getAllRequestConfig(), destination);
     const headers = await request.headers();
 
     expect(headers.Destination!['Proxy-Authorization']).toBe('Bearer jwt');
@@ -123,7 +119,7 @@ describe('Header-Builder', () => {
       cloudConnectorLocationId: 'Potsdam'
     };
 
-    const request = createGetAllRequest(destination);
+    const request = new ODataRequest(getAllRequestConfig(), destination);
     const headers = await request.headers();
     expect(headers.Destination!['SAP-Connectivity-SCC-Location_ID']).toBe(
       'Potsdam'
@@ -131,7 +127,7 @@ describe('Header-Builder', () => {
   });
 
   it('Prioritizes custom Authorization headers (upper case A)', async () => {
-    const request = createGetAllRequest(defaultDestination);
+    const request = new ODataRequest(getAllRequestConfig(), defaultDestination);
     request.config.addCustomHeaders({
       Authorization: 'Basic SOMETHINGSOMETHING'
     });
@@ -141,7 +137,7 @@ describe('Header-Builder', () => {
   });
 
   it('Prioritizes custom Authorization headers (lower case A)', async () => {
-    const request = createGetAllRequest(defaultDestination);
+    const request = new ODataRequest(getAllRequestConfig(), defaultDestination);
     request.config.addCustomHeaders({
       authorization: 'Basic SOMETHINGSOMETHING'
     });

@@ -5,7 +5,7 @@ import {
   EntityIdentifiable,
   ODataVersionOf
 } from '../entity-base';
-import { FieldType } from '../selectable/field';
+import { FieldType } from '../selectable';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 

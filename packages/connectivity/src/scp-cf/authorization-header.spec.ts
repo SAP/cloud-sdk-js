@@ -3,7 +3,7 @@ import {
   defaultDestination
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { getAuthHeaders } from './authorization-header';
-import { Destination } from './destination/destination-service-types';
+import { Destination } from './destination';
 
 const principalPropagationDestination = {
   url: '',

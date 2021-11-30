@@ -3,14 +3,14 @@ import {
   createLogger,
   disableExceptionLogger,
   enableExceptionLogger,
-  getLogger,
-  setLogLevel,
-  setGlobalLogLevel,
   getGlobalLogLevel,
+  getLogger,
   muteLoggers,
-  unmuteLoggers,
-  getMessageOrStack
-} from '../../src';
+  setGlobalLogLevel,
+  setLogLevel,
+  unmuteLoggers
+} from './cloud-sdk-logger';
+import { getMessageOrStack } from './format';
 
 describe('Cloud SDK Logger', () => {
   const messageContext = 'my-module';

@@ -1,6 +1,6 @@
 import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
-import { FieldType } from '../selectable/field';
+import { FieldType } from '../selectable';
 import {
   FilterFunction,
   FilterFunctionParameterType

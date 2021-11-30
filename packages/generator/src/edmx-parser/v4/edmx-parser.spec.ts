@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import { readEdmxFile } from '../edmx-file-reader';
-import { parseComplexTypesBase } from '../common/edmx-parser';
+import { parseComplexTypesBase } from '../common';
 import {
   parseActionImport,
   parseActions,
@@ -10,7 +10,7 @@ import {
   parseEnumTypes,
   parseFunctionImportsV4,
   parseFunctions
-} from '../../../src/edmx-parser/v4';
+} from '../v4';
 import { oDataServiceSpecs } from '../../../../../test-resources/odata-service-specs';
 
 describe('edmx-edmx-parser', () => {

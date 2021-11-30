@@ -32,21 +32,6 @@ export abstract class ODataRequestConfig {
   private _appendedPaths: string[] = [];
   private _fetchCsrfToken = true;
 
-  /**
-   * @deprecated Since v1.30.0. Use [[defaultHeaders]] instead.
-   */
-  get contentType(): any {
-    return this.defaultHeaders['content-type'];
-  }
-
-  /**
-   * @deprecated Since v1.30.0.
-   */
-  constructor(
-    method: RequestMethodType,
-    defaultServicePath: string,
-    contentType: string
-  );
   constructor(
     method: RequestMethodType,
     defaultServicePath: string,

@@ -5,8 +5,8 @@ import {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
-} from '@sap-cloud-sdk/odata-v2';
-import { CommonEntity } from './index';
+} from '@sap-cloud-sdk/odata-v4';
+import { CommonEntity, CommonEntitySingleLink } from './index';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Batch builder for operations supported on the Common Service.
@@ -40,9 +40,14 @@ export declare const defaultCommonServicePath =
   '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
 export declare type ReadCommonServiceRequestBuilder =
   | GetAllRequestBuilder<CommonEntity>
-  | GetByKeyRequestBuilder<CommonEntity>;
+  | GetAllRequestBuilder<CommonEntitySingleLink>
+  | GetByKeyRequestBuilder<CommonEntity>
+  | GetByKeyRequestBuilder<CommonEntitySingleLink>;
 export declare type WriteCommonServiceRequestBuilder =
   | CreateRequestBuilder<CommonEntity>
   | UpdateRequestBuilder<CommonEntity>
-  | DeleteRequestBuilder<CommonEntity>;
+  | DeleteRequestBuilder<CommonEntity>
+  | CreateRequestBuilder<CommonEntitySingleLink>
+  | UpdateRequestBuilder<CommonEntitySingleLink>
+  | DeleteRequestBuilder<CommonEntitySingleLink>;
 //# sourceMappingURL=BatchRequest.d.ts.map

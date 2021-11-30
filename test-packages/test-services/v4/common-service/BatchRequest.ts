@@ -10,9 +10,9 @@ import {
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
-} from '@sap-cloud-sdk/odata-v2';
+} from '@sap-cloud-sdk/odata-v4';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { CommonEntity } from './index';
+import { CommonEntity, CommonEntitySingleLink } from './index';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
@@ -76,11 +76,19 @@ export function changeset(
 
 export const defaultCommonServicePath =
   '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
-const map = { A_CommonEntity: CommonEntity };
+const map = {
+  A_CommonEntity: CommonEntity,
+  A_CommonEntitySingleLink: CommonEntitySingleLink
+};
 export type ReadCommonServiceRequestBuilder =
   | GetAllRequestBuilder<CommonEntity>
-  | GetByKeyRequestBuilder<CommonEntity>;
+  | GetAllRequestBuilder<CommonEntitySingleLink>
+  | GetByKeyRequestBuilder<CommonEntity>
+  | GetByKeyRequestBuilder<CommonEntitySingleLink>;
 export type WriteCommonServiceRequestBuilder =
   | CreateRequestBuilder<CommonEntity>
   | UpdateRequestBuilder<CommonEntity>
-  | DeleteRequestBuilder<CommonEntity>;
+  | DeleteRequestBuilder<CommonEntity>
+  | CreateRequestBuilder<CommonEntitySingleLink>
+  | UpdateRequestBuilder<CommonEntitySingleLink>
+  | DeleteRequestBuilder<CommonEntitySingleLink>;

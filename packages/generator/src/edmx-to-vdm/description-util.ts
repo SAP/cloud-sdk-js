@@ -12,7 +12,7 @@ import {
   SwaggerPath,
   SwaggerPathParameter,
   SwaggerProperty
-} from '../swagger-parser/swagger-types';
+} from '../swagger-parser';
 /* eslint-disable valid-jsdoc */
 
 /**

@@ -3,11 +3,11 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  ODataBatchChangeSet,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
-} from '@sap-cloud-sdk/odata-v4';
-import { CommonEntity, CommonEntitySingleLink } from './index';
+} from '@sap-cloud-sdk/odata-v2';
+import { CommonEntity } from './index';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * Batch builder for operations supported on the Common Service.
  * @param requests The requests of the batch
@@ -16,13 +16,13 @@ import { CommonEntity, CommonEntitySingleLink } from './index';
 export declare function batch(
   ...requests: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export declare function batch(
   requests: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 /**
@@ -32,22 +32,17 @@ export declare function batch(
  */
 export declare function changeset(
   ...requests: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder>;
+): BatchChangeSet<WriteCommonServiceRequestBuilder>;
 export declare function changeset(
   requests: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder>;
+): BatchChangeSet<WriteCommonServiceRequestBuilder>;
 export declare const defaultCommonServicePath =
   '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
 export declare type ReadCommonServiceRequestBuilder =
   | GetAllRequestBuilder<CommonEntity>
-  | GetAllRequestBuilder<CommonEntitySingleLink>
-  | GetByKeyRequestBuilder<CommonEntity>
-  | GetByKeyRequestBuilder<CommonEntitySingleLink>;
+  | GetByKeyRequestBuilder<CommonEntity>;
 export declare type WriteCommonServiceRequestBuilder =
   | CreateRequestBuilder<CommonEntity>
   | UpdateRequestBuilder<CommonEntity>
-  | DeleteRequestBuilder<CommonEntity>
-  | CreateRequestBuilder<CommonEntitySingleLink>
-  | UpdateRequestBuilder<CommonEntitySingleLink>
-  | DeleteRequestBuilder<CommonEntitySingleLink>;
+  | DeleteRequestBuilder<CommonEntity>;
 //# sourceMappingURL=BatchRequest.d.ts.map

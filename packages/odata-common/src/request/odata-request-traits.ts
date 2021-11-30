@@ -1,8 +1,7 @@
 import { EntityBase } from '../entity-base';
-import { Selectable } from '../selectable/selectable';
-import { Filterable } from '../filter/filterable';
-import { Orderable } from '../order/orderable';
-import { FieldType } from '../selectable/field';
+import { Selectable, FieldType } from '../selectable';
+import { Filterable } from '../filter';
+import { Orderable } from '../order';
 
 /**
  * @internal

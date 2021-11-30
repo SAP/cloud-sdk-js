@@ -7,7 +7,7 @@ import {
 } from '../../edmx-parser/v4';
 import { ServiceNameFormatter } from '../../service-name-formatter';
 import { EdmxProperty } from '../../edmx-parser/common';
-import { ServiceMetadata } from '../../edmx-parser/edmx-file-reader';
+import { ServiceMetadata } from '../../edmx-parser';
 import { generateComplexTypesV4 } from './complex-type';
 import { generateEntitiesV4 } from './entity';
 
@@ -103,7 +103,6 @@ describe('entity', () => {
       from: 'TestEntityType',
       to: 'TestEntity',
       toEntityClassName: 'TestEntity',
-      multiplicity: '1 - 1',
       isCollection: false
     });
   });
@@ -129,7 +128,6 @@ describe('entity', () => {
       from: 'TestEntityType',
       to: 'TestEntity',
       toEntityClassName: 'TestEntity',
-      multiplicity: '1 - *',
       isCollection: true
     });
   });

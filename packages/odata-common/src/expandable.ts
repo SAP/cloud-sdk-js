@@ -1,10 +1,8 @@
 import { EntityBase, ODataVersionOf } from './entity-base';
-import { OneToManyLink } from './selectable/one-to-many-link';
-import { AllFields } from './selectable/all-fields';
-import { OneToOneLink } from './selectable/one-to-one-link';
+import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
 
 /**
- * Represents all expandables, i.e. everything that can be used in an `.expand` statement. Only relevant for OData v4 requests.
+ * Represents everything that can be used in an `.expand` statement. Only relevant for OData v4 requests.
  * @typeparam EntityT - Type of the entity to be selected on
  * @internal
  */

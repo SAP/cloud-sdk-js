@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { EntitySerializer } from '../entity-serializer';
-import type { ODataUri } from '../uri-conversion/odata-uri';
+import type { ODataUri } from '../uri-conversion';
 import type {
   Constructable,
   EntityBase,
@@ -13,8 +13,8 @@ import type {
 } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
-import { ODataCreateRequestConfig } from '../request/odata-create-request-config';
-import { Link } from '../selectable/link';
+import { ODataCreateRequestConfig } from '../request';
+import { Link } from '../selectable';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -48,18 +48,6 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
 
   get entity(): EntityT {
     return this._entity;
-  }
-
-  /**
-   * @deprecated Since v1.29.0. This method should never be called, it has severe side effects.   * Builds the payload of the query.
-   * @returns the builder itself
-   */
-  prepare(): this {
-    this.requestConfig.payload = this.serializer.serializeEntity(
-      this._entity,
-      this._entityConstructor
-    );
-    return this;
   }
 
   /**

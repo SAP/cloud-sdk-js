@@ -16,16 +16,16 @@ const createTestEntityFromOtherService =
     MultiSchemaTestEntity.builder().build()
   );
 
-// $ExpectType ODataBatchChangeSet<WriteTestServiceRequestBuilder>
+// $ExpectType BatchChangeSet<WriteTestServiceRequestBuilder>
 const changeSetTestEntity = testEntityChangeset(createTestEntity);
 
-// $ExpectType ODataBatchChangeSet<WriteTestServiceRequestBuilder>
+// $ExpectType BatchChangeSet<WriteTestServiceRequestBuilder>
 testEntityChangeset(createTestEntity, createTestEntity);
 
-// $ExpectType ODataBatchChangeSet<WriteTestServiceRequestBuilder>
+// $ExpectType BatchChangeSet<WriteTestServiceRequestBuilder>
 testEntityChangeset([createTestEntity, createTestEntity]);
 
-// $ExpectType ODataBatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+// $ExpectType BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
 otherServiceChangeset(createTestEntityFromOtherService);
 
 // // $ExpectError

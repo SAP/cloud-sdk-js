@@ -66,14 +66,12 @@ export const brunchEntity: VdmEntity = {
 export const toBrunch: VdmNavigationProperty = {
   from: 'Breakfast',
   to: brunchEntity.entitySetName,
-  isMultiLink: false,
   isCollection: false,
   instancePropertyName: 'toBrunch',
   staticPropertyName: 'TO_BRUNCH',
   propertyNameAsParam: 'toBrunch',
   originalName: 'TO_BRUNCH',
-  toEntityClassName: brunchEntity.className,
-  multiplicity: '1-1'
+  toEntityClassName: brunchEntity.className
 };
 
 export const breakfastEntity: VdmEntity = {

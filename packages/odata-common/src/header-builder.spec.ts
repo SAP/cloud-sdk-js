@@ -9,7 +9,7 @@ import {
   getAllRequestConfig,
   updateRequestConfig
 } from '../test/common-request-config';
-import { ODataRequest } from './request/odata-request';
+import { ODataRequest } from './request';
 import { buildHeaders } from './header-builder';
 
 describe('Header-Builder', () => {
@@ -100,7 +100,8 @@ describe('Header-Builder', () => {
       proxyConfiguration: {
         ...connectivityProxyConfigMock,
         headers: proxyHeaders
-      }
+      },
+      authentication: 'PrincipalPropagation'
     };
 
     const request = new ODataRequest(getAllRequestConfig(), destination);

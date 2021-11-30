@@ -89,7 +89,7 @@ export function getServiceCredentialsList(service: string): any[] {
  * @internal
  */
 export function getServiceList(service: string): Service[] {
-  return xsenv.filterServices({ label: service }); // TODO: how do we allow propagating custom secret paths for k8s?
+  return xsenv.filterServices({ label: service });
 }
 
 /**

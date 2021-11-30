@@ -8,12 +8,12 @@ import {
   DeleteRequestBuilder,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
-  ODataBatchChangeSet,
   ODataBatchRequestBuilder,
   UpdateRequestBuilder
-} from '@sap-cloud-sdk/odata-v4';
+} from '@sap-cloud-sdk/odata-v2';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
-import { CommonEntity, CommonEntitySingleLink } from './index';
+import { CommonEntity } from './index';
+import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Batch builder for operations supported on the Common Service.
@@ -23,27 +23,27 @@ import { CommonEntity, CommonEntitySingleLink } from './index';
 export function batch(
   ...requests: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export function batch(
   requests: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder;
 export function batch(
   first:
     | undefined
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
     | Array<
         | ReadCommonServiceRequestBuilder
-        | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+        | BatchChangeSet<WriteCommonServiceRequestBuilder>
       >,
   ...rest: Array<
     | ReadCommonServiceRequestBuilder
-    | ODataBatchChangeSet<WriteCommonServiceRequestBuilder>
+    | BatchChangeSet<WriteCommonServiceRequestBuilder>
   >
 ): ODataBatchRequestBuilder {
   return new ODataBatchRequestBuilder(
@@ -60,35 +60,27 @@ export function batch(
  */
 export function changeset(
   ...requests: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder>;
+): BatchChangeSet<WriteCommonServiceRequestBuilder>;
 export function changeset(
   requests: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder>;
+): BatchChangeSet<WriteCommonServiceRequestBuilder>;
 export function changeset(
   first:
     | undefined
     | WriteCommonServiceRequestBuilder
     | Array<WriteCommonServiceRequestBuilder>,
   ...rest: Array<WriteCommonServiceRequestBuilder>
-): ODataBatchChangeSet<WriteCommonServiceRequestBuilder> {
-  return new ODataBatchChangeSet(variadicArgumentToArray(first, rest));
+): BatchChangeSet<WriteCommonServiceRequestBuilder> {
+  return new BatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultCommonServicePath =
   '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
-const map = {
-  A_CommonEntity: CommonEntity,
-  A_CommonEntitySingleLink: CommonEntitySingleLink
-};
+const map = { A_CommonEntity: CommonEntity };
 export type ReadCommonServiceRequestBuilder =
   | GetAllRequestBuilder<CommonEntity>
-  | GetAllRequestBuilder<CommonEntitySingleLink>
-  | GetByKeyRequestBuilder<CommonEntity>
-  | GetByKeyRequestBuilder<CommonEntitySingleLink>;
+  | GetByKeyRequestBuilder<CommonEntity>;
 export type WriteCommonServiceRequestBuilder =
   | CreateRequestBuilder<CommonEntity>
   | UpdateRequestBuilder<CommonEntity>
-  | DeleteRequestBuilder<CommonEntity>
-  | CreateRequestBuilder<CommonEntitySingleLink>
-  | UpdateRequestBuilder<CommonEntitySingleLink>
-  | DeleteRequestBuilder<CommonEntitySingleLink>;
+  | DeleteRequestBuilder<CommonEntity>;

@@ -3,7 +3,7 @@ import {
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { ODataRequestConfig } from '../request/odata-request-config';
+import { ODataRequestConfig } from '../request';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**

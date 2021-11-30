@@ -6,11 +6,12 @@ exports.defaultCommonServicePath = exports.changeset = exports.batch = void 0;
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const util_1 = require('@sap-cloud-sdk/util');
 const index_1 = require('./index');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 function batch(first, ...rest) {
-  return new odata_v4_1.ODataBatchRequestBuilder(
+  return new odata_v2_1.ODataBatchRequestBuilder(
     exports.defaultCommonServicePath,
     (0, util_1.variadicArgumentToArray)(first, rest),
     map
@@ -18,14 +19,11 @@ function batch(first, ...rest) {
 }
 exports.batch = batch;
 function changeset(first, ...rest) {
-  return new odata_v4_1.ODataBatchChangeSet(
+  return new internal_1.BatchChangeSet(
     (0, util_1.variadicArgumentToArray)(first, rest)
   );
 }
 exports.changeset = changeset;
 exports.defaultCommonServicePath = '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
-const map = {
-  A_CommonEntity: index_1.CommonEntity,
-  A_CommonEntitySingleLink: index_1.CommonEntitySingleLink
-};
+const map = { A_CommonEntity: index_1.CommonEntity };
 //# sourceMappingURL=BatchRequest.js.map

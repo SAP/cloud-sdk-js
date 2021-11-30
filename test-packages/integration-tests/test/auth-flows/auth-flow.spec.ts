@@ -119,20 +119,6 @@ describe('OAuth flows', () => {
     expect(result.length).toBe(1);
   }, 60000);
 
-  xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
-    const destination = await getDestination({
-      destinationName: systems.s4.providerOAuth2SAMLBearerAssertion,
-      jwt: accessToken.provider
-    });
-    expect(destination!.authTokens![0].error).toBeNull();
-
-    const result = await BusinessPartner.requestBuilder()
-      .getAll()
-      .top(1)
-      .execute(destination!);
-    expect(result.length).toBe(1);
-  }, 60000);
-
   xit('OAuth2ClientCredentials: Provider Destination (common token url)', async () => {
     let destination = await getDestination({
       destinationName:

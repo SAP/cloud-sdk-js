@@ -81,6 +81,7 @@ export function mergeOptionsWithPriority(
 /**
  * Get all [[Origin]]s as an array in an ascent order (from low to high priority).
  * @returns Origins in an ascent oder.
+ * @internal
  */
 export function getAllOriginsAsc(): Origin[] {
   return ['RequestConfig', 'Destination', 'DestinationProperty', 'Custom'];

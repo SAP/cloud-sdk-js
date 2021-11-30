@@ -11,6 +11,4 @@ export {
   Origin,
   OriginOptions
 } from './http-client-types';
-export {
-  mergeOptionsWithPriority
-} from './http-request-config';
+export { mergeOptionsWithPriority } from './http-request-config';

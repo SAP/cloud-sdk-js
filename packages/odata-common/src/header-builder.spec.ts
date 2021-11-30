@@ -34,7 +34,7 @@ describe('Header-Builder', () => {
     request.config.customHeaders = { authorization: authString };
 
     const headers = await buildHeaders(request);
-    expect(headers.authorization.Custom).toBe(authString);
+    expect(headers.Custom!.authorization).toBe(authString);
   });
 
   it('uses authTokens if present on a destination', async () => {
@@ -57,7 +57,7 @@ describe('Header-Builder', () => {
     const request = createGetAllRequest(destination);
     const headers = await buildHeaders(request);
 
-    expect(headers.authorization.Destination).toBe('Bearer some.token');
+    expect(headers.Destination!.authorization).toBe('Bearer some.token');
   });
 
   describe('update request header with ETag', () => {
@@ -77,7 +77,7 @@ describe('Header-Builder', () => {
       mockHeaderRequest({ request });
 
       const actual = await buildHeaders(request);
-      expect(actual['if-match'].RequestConfig).toBe('W//');
+      expect(actual.RequestConfig!['if-match']).toBe('W//');
     });
 
     it('if-match should be set to * when version identifier is ignored', async () => {
@@ -89,7 +89,7 @@ describe('Header-Builder', () => {
       mockHeaderRequest({ request });
 
       const actual = await buildHeaders(request);
-      expect(actual['if-match'].RequestConfig).toBe('*');
+      expect(actual.RequestConfig!['if-match']).toBe('*');
     });
   });
 
@@ -111,8 +111,8 @@ describe('Header-Builder', () => {
     const request = createGetAllRequest(destination);
     const headers = await request.headers();
 
-    expect(headers['Proxy-Authorization'].Destination).toBe('Bearer jwt');
-    expect(headers['SAP-Connectivity-Authentication'].Destination).toBe(
+    expect(headers.Destination!['Proxy-Authorization']).toBe('Bearer jwt');
+    expect(headers.Destination!['SAP-Connectivity-Authentication']).toBe(
       'Bearer jwt'
     );
   });
@@ -125,7 +125,7 @@ describe('Header-Builder', () => {
 
     const request = createGetAllRequest(destination);
     const headers = await request.headers();
-    expect(headers['SAP-Connectivity-SCC-Location_ID'].Destination).toBe(
+    expect(headers.Destination!['SAP-Connectivity-SCC-Location_ID']).toBe(
       'Potsdam'
     );
   });
@@ -137,7 +137,7 @@ describe('Header-Builder', () => {
     });
 
     const headers = await request.headers();
-    expect(headers.authorization.Destination).toBe('Basic SOMETHINGSOMETHING');
+    expect(headers.Destination!.authorization).toBe('Basic SOMETHINGSOMETHING');
   });
 
   it('Prioritizes custom Authorization headers (lower case A)', async () => {
@@ -147,6 +147,6 @@ describe('Header-Builder', () => {
     });
 
     const headers = await request.headers();
-    expect(headers.authorization.Destination).toBe('Basic SOMETHINGSOMETHING');
+    expect(headers.Destination!.authorization).toBe('Basic SOMETHINGSOMETHING');
   });
 });

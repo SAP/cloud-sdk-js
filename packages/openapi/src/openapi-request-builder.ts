@@ -14,8 +14,7 @@ import {
 } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
-  mergeOptionsWithOrigin,
-  ValueWithOrigin
+  OriginOptions
 } from '@sap-cloud-sdk/http-client/internal';
 
 /**
@@ -129,18 +128,12 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     );
   }
 
-  private getHeaders(): Record<string, ValueWithOrigin> {
-    return mergeOptionsWithOrigin({
-      origin: 'Custom',
-      option: this.customHeaders
-    });
+  private getHeaders(): OriginOptions {
+    return { Custom: this.customHeaders };
   }
 
-  private getParameters(): Record<string, ValueWithOrigin> {
-    return mergeOptionsWithOrigin({
-      origin: 'RequestConfig',
-      option: this.parameters?.queryParameters
-    });
+  private getParameters(): OriginOptions {
+    return { RequestConfig: this.parameters?.queryParameters };
   }
 
   private getPath(): string {

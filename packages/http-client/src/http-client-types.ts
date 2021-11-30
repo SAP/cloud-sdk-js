@@ -41,8 +41,8 @@ export type HttpRequestConfig = HttpRequestConfigBase & {
  * @internal
  */
 export type HttpRequestConfigWithOrigin = HttpRequestConfigBase & {
-  params?: Record<string, ValueWithOrigin>;
-  headers?: Record<string, ValueWithOrigin>;
+  params?: OriginOptions;
+  headers?: OriginOptions;
 };
 
 interface HttpRequestConfigBase {
@@ -100,17 +100,6 @@ export type Origin =
   | 'Destination'
   | 'RequestConfig';
 
-/**
- * @internal
- */
-export type ValueWithOrigin = {
-  [key in Origin]?: string;
+export type OriginOptions = {
+  [key in Origin]?: Record<string, string>;
 };
-
-/**
- * @internal
- */
-export interface OptionWithOrigin {
-  origin: Origin;
-  option?: Record<string, string>;
-}

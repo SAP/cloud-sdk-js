@@ -8,5 +8,6 @@ export {
   HttpRequestOptions,
   HttpResponse,
   Method,
-  Origin
+  Origin,
+  OriginOptions
 } from './http-client-types';

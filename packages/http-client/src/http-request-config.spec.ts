@@ -2,14 +2,12 @@ import { createLogger } from '@sap-cloud-sdk/util';
 import {
   buildHttpRequestConfig,
   filterCustomRequestConfig,
-  getValueWithPriority,
-  mergeOptionsWithOrigin
+  mergeOptionsWithPriority
 } from './http-request-config';
 import {
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
-  OptionWithOrigin,
-  ValueWithOrigin
+  OriginOptions
 } from './http-client-types';
 
 const logger = createLogger('http-request-config');
@@ -41,12 +39,13 @@ describe('buildHttpRequestConfig', () => {
     const withOrigin: HttpRequestConfigWithOrigin = {
       method: 'get',
       headers: {
-        Authorization: {
-          DestinationProperty: 'destProp',
-          RequestConfig: 'reqConfig'
-        }
+        DestinationProperty: { Authorization: 'destProp' },
+        RequestConfig: { Authorization: 'reqConfig' }
       },
-      params: { param: { Custom: 'custom', RequestConfig: 'reqConfig' } }
+      params: {
+        Custom: { param: 'custom' },
+        RequestConfig: { param: 'reqConfig' }
+      }
     };
 
     const expected: HttpRequestConfig = {
@@ -58,55 +57,49 @@ describe('buildHttpRequestConfig', () => {
   });
 });
 
-describe('getValueWithPriority', () => {
-  it('should pick values from destination', () => {
-    const valueWithOrigin: ValueWithOrigin = {
-      Destination: 'dest',
-      RequestConfig: 'reqConfig'
-    };
-    expect(getValueWithPriority(valueWithOrigin)).toBe('dest');
-  });
-
-  it('should pick values from destination property', () => {
-    const valueWithOrigin: ValueWithOrigin = {
-      DestinationProperty: 'destProp',
-      Destination: 'dest'
-    };
-    expect(getValueWithPriority(valueWithOrigin)).toBe('destProp');
-  });
-
-  it('should pick values from destination property', () => {
-    const valueWithOrigin: ValueWithOrigin = {
-      Custom: 'custom',
-      DestinationProperty: 'destProp'
-    };
-    expect(getValueWithPriority(valueWithOrigin)).toBe('custom');
-  });
-});
-
-describe('mergeOptionsWithOrigin', () => {
+describe('getOptionWithPriority', () => {
   it('should merge options', () => {
-    const customOption: OptionWithOrigin = {
-      origin: 'Custom',
-      option: { Authorization: 'customAuth' }
+    const originOptions: OriginOptions = {
+      Custom: { Authorization: 'customAuth' },
+      Destination: { 'sap-client': '001' },
+      RequestConfig: { 'if-match': 'etag' }
     };
-    const destOption: OptionWithOrigin = {
-      origin: 'Destination',
-      option: { 'sap-client': '001' }
+    const expected = {
+      Authorization: 'customAuth',
+      'sap-client': '001',
+      'if-match': 'etag'
     };
-    const reqConfigOption: OptionWithOrigin = {
-      origin: 'RequestConfig',
-      option: { Authorization: 'reqAuth', 'content-type': 'application/json' }
-    };
+    expect(mergeOptionsWithPriority(originOptions)).toStrictEqual(expected);
+  });
 
-    const expected: Record<string, ValueWithOrigin> = {
-      Authorization: { Custom: 'customAuth', RequestConfig: 'reqAuth' },
-      'sap-client': { Destination: '001' },
-      'content-type': { RequestConfig: 'application/json' }
+  it('should use options with higher priority', () => {
+    const originOptions: OriginOptions = {
+      Custom: { param1: 'customParam1' },
+      DestinationProperty: {
+        param1: 'destPropParam1',
+        param2: 'destPropParam2'
+      },
+      Destination: { param2: 'destParam2', param3: 'destParam3' },
+      RequestConfig: { param3: 'reqParam3', param4: 'reqParam4' }
     };
+    const expected = {
+      param1: 'customParam1',
+      param2: 'destPropParam2',
+      param3: 'destParam3',
+      param4: 'reqParam4'
+    };
+    expect(mergeOptionsWithPriority(originOptions)).toStrictEqual(expected);
+  });
 
-    expect(
-      mergeOptionsWithOrigin(customOption, destOption, reqConfigOption)
-    ).toStrictEqual(expected);
+  it('should use options with higher priority and ignore case', () => {
+    const originOptions: OriginOptions = {
+      Custom: { Authorization: 'customAuth' },
+      Destination: { authorization: 'destAuth', 'sap-client': '001' }
+    };
+    const expected = {
+      Authorization: 'customAuth',
+      'sap-client': '001'
+    };
+    expect(mergeOptionsWithPriority(originOptions)).toStrictEqual(expected);
   });
 });

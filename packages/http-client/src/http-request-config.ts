@@ -1,9 +1,9 @@
-import { createLogger, exclude } from '@sap-cloud-sdk/util';
+import { createLogger, exclude, mergeIgnoreCase } from '@sap-cloud-sdk/util';
 import {
   HttpRequestConfig,
   HttpRequestConfigWithOrigin,
-  OptionWithOrigin,
-  ValueWithOrigin
+  Origin,
+  OriginOptions
 } from './http-client-types';
 
 const logger = createLogger({
@@ -57,79 +57,31 @@ export function buildHttpRequestConfig(
   configWithOrigin: HttpRequestConfigWithOrigin
 ): HttpRequestConfig {
   const requestConfig = configWithOrigin as HttpRequestConfig;
-  requestConfig.headers = getOptionWithPriority(configWithOrigin.headers);
-  requestConfig.params = getOptionWithPriority(configWithOrigin.params);
+  requestConfig.headers = mergeOptionsWithPriority(configWithOrigin.headers);
+  requestConfig.params = mergeOptionsWithPriority(configWithOrigin.params);
   return requestConfig;
 }
 
 /**
- * Build http request options from given options with origin information. When reaching conflicts, values with higher priority are chosen.
- * @param headersOrParams - The given options with origin information
- * @returns The resulting options
- * @internal
+ * Merge options from a given [[OriginOptions]]. When reaching conflicts, values with higher priorities are chosen.
+ * @param headersOrParams - Given options with origin information.
+ * @returns The resulting merged options.
  */
-export function getOptionWithPriority(
-  headersOrParams?: Record<string, ValueWithOrigin>
+export function mergeOptionsWithPriority(
+  headersOrParams?: OriginOptions
 ): Record<string, string> | undefined {
   if (headersOrParams) {
-    return Object.entries(headersOrParams).reduce(
-      (prev, [key, valueWithOrigin]) => {
-        const value = getValueWithPriority(valueWithOrigin);
-        if (value) {
-          prev[key] = value;
-        }
-        return prev;
-      },
+    return getAllOriginsAsc().reduce(
+      (prev, origin) => mergeIgnoreCase(prev, headersOrParams[origin]),
       {} as Record<string, string>
     );
   }
 }
 
 /**
- * Pick the value with highest priority, defined by origin.
- * @param valueWithOrigin - Values with origin information
- * @returns The value with highest priority.
- * @internal
+ * Get all [[Origin]]s as an array in an ascent order (from low to high priority).
+ * @returns Origins in an ascent oder.
  */
-export function getValueWithPriority(
-  valueWithOrigin: ValueWithOrigin
-): string | undefined {
-  return (
-    valueWithOrigin.Custom ||
-    valueWithOrigin.DestinationProperty ||
-    valueWithOrigin.Destination ||
-    valueWithOrigin.RequestConfig
-  );
-}
-
-/**
- * Merge all the options to one object with the origin information
- * @param optionsWithOrigin - One or multiple objects that contains http request options with origin information
- * @returns The merged object
- * @internal
- */
-export function mergeOptionsWithOrigin(
-  ...optionsWithOrigin: OptionWithOrigin[]
-): Record<string, ValueWithOrigin> {
-  return optionsWithOrigin.reduce(
-    (prevOptionWithOrigin, currentOptionWithOrigin) => {
-      if (currentOptionWithOrigin.option) {
-        Object.entries(currentOptionWithOrigin.option).reduce(
-          (prev, [optionKey, optionValue]) => {
-            if (prev[optionKey]) {
-              prev[optionKey][currentOptionWithOrigin.origin] = optionValue;
-            } else {
-              prev[optionKey] = {
-                [currentOptionWithOrigin.origin]: optionValue
-              };
-            }
-            return prev;
-          },
-          prevOptionWithOrigin
-        );
-      }
-      return prevOptionWithOrigin;
-    },
-    {} as Record<string, ValueWithOrigin>
-  );
+export function getAllOriginsAsc(): Origin[] {
+  return ['RequestConfig', 'Destination', 'DestinationProperty', 'Custom'];
 }

@@ -16,11 +16,11 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import {
   HttpResponse,
-  executeHttpRequestWithOrigin
+  executeHttpRequestWithOrigin,
+  mergeOptionsWithPriority
 } from '@sap-cloud-sdk/http-client';
 import {
   filterCustomRequestConfig,
-  getOptionWithPriority,
   OriginOptions
 } from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequestConfig } from './odata-request-config';
@@ -142,7 +142,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Query parameter string
    */
   query(): string {
-    const parameters = getOptionWithPriority(this.queryParameters());
+    const parameters = mergeOptionsWithPriority(this.queryParameters());
     if (parameters) {
       const query = Object.entries(parameters)
         .map(([key, value]) => `${key}=${value}`)

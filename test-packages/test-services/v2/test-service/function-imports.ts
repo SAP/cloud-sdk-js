@@ -7,7 +7,8 @@ import {
   Constructable,
   entityDeserializer,
   FunctionImportParameter,
-  throwErrorWhenReturnTypeIsUnionType
+  throwErrorWhenReturnTypeIsUnionType,
+  Time
 } from '@sap-cloud-sdk/odata-common/internal';
 import {
   edmToTs,
@@ -20,7 +21,8 @@ import {
   transformReturnValueForEntityList,
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList,
-  defaultDeSerializers
+  defaultDeSerializers,
+  mergeDefaultDeSerializersWith
 } from '@sap-cloud-sdk/odata-v2';
 import { TestEntity } from './TestEntity';
 import { TestComplexType } from './TestComplexType';
@@ -32,6 +34,7 @@ import {
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
 import { responseTransformers } from '@sap-cloud-sdk/odata-v2/internal';
 import { TestEntityApi } from './TestEntityApi';
+import BigNumber from 'bignumber.js';
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
@@ -64,10 +67,6 @@ export function testFunctionImportNoReturnType<T extends DeSerializers>(
     deSerializers
   );
 }
-
-// testFunctionImportNoReturnType(defaultDeSerializers, {}).execute({
-//   url: 'tsjk'
-// });
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
@@ -653,20 +652,118 @@ export function fContinue<T extends DeSerializers>(
   );
 }
 
-export const functionImports = {
-  testFunctionImportNoReturnType,
-  testFunctionImportEdmReturnType,
-  testFunctionImportEdmReturnTypeCollection,
-  testFunctionImportEntityReturnType,
-  testFunctionImportEntityReturnTypeCollection,
-  testFunctionImportSharedEntityReturnType,
-  testFunctionImportSharedEntityReturnTypeCollection,
-  testFunctionImportComplexReturnType,
-  testFunctionImportUnsupportedEdmTypes,
-  testFunctionImportComplexReturnTypeCollection,
-  testFunctionImportGet,
-  testFunctionImportPost,
-  testFunctionImportMultipleParams,
-  createTestComplexType,
-  fContinue
-};
+export function functionImports<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any,
+  DateTimeT = moment.Moment,
+  DateTimeOffsetT = moment.Moment,
+  TimeT = Time
+>(
+  customDeSerializers: Partial<
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+    >
+  > = defaultDeSerializers as any
+) {
+  const deSerializers = mergeDefaultDeSerializersWith(customDeSerializers);
+  return {
+    testFunctionImportNoReturnType: (
+      parameters: TestFunctionImportNoReturnTypeParameters<typeof deSerializers>
+    ) => testFunctionImportNoReturnType(deSerializers, parameters),
+    testFunctionImportEdmReturnType: (
+      parameters: TestFunctionImportEdmReturnTypeParameters<
+        typeof deSerializers
+      >
+    ) => testFunctionImportEdmReturnType(deSerializers, parameters),
+    testFunctionImportEdmReturnTypeCollection: (
+      parameters: TestFunctionImportEdmReturnTypeCollectionParameters<
+        typeof deSerializers
+      >
+    ) => testFunctionImportEdmReturnTypeCollection(deSerializers, parameters),
+    testFunctionImportEntityReturnType: (
+      parameters: TestFunctionImportEntityReturnTypeParameters<
+        typeof deSerializers
+      >
+    ) => testFunctionImportEntityReturnType(deSerializers, parameters),
+    testFunctionImportEntityReturnTypeCollection: (
+      parameters: TestFunctionImportEntityReturnTypeCollectionParameters<
+        typeof deSerializers
+      >
+    ) =>
+      testFunctionImportEntityReturnTypeCollection(deSerializers, parameters),
+    testFunctionImportSharedEntityReturnType: (
+      parameters: TestFunctionImportSharedEntityReturnTypeParameters<
+        typeof deSerializers
+      >
+    ) => testFunctionImportSharedEntityReturnType(deSerializers, parameters),
+    testFunctionImportSharedEntityReturnTypeCollection: (
+      parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters<
+        typeof deSerializers
+      >
+    ) =>
+      testFunctionImportSharedEntityReturnTypeCollection(
+        deSerializers,
+        parameters
+      ),
+    testFunctionImportComplexReturnType: (
+      parameters: TestFunctionImportComplexReturnTypeParameters<
+        typeof deSerializers
+      >
+    ) => testFunctionImportComplexReturnType(deSerializers, parameters),
+    testFunctionImportUnsupportedEdmTypes: (
+      parameters: TestFunctionImportUnsupportedEdmTypesParameters<
+        typeof deSerializers
+      >
+    ) => testFunctionImportUnsupportedEdmTypes(deSerializers, parameters),
+    testFunctionImportComplexReturnTypeCollection: (
+      parameters: TestFunctionImportComplexReturnTypeCollectionParameters<
+        typeof deSerializers
+      >
+    ) =>
+      testFunctionImportComplexReturnTypeCollection(deSerializers, parameters),
+    testFunctionImportGet: (
+      parameters: TestFunctionImportGetParameters<typeof deSerializers>
+    ) => testFunctionImportGet(deSerializers, parameters),
+    testFunctionImportPost: (
+      parameters: TestFunctionImportPostParameters<typeof deSerializers>
+    ) => testFunctionImportPost(deSerializers, parameters),
+    testFunctionImportMultipleParams: (
+      parameters: TestFunctionImportMultipleParamsParameters<
+        typeof deSerializers
+      >
+    ) => testFunctionImportMultipleParams(deSerializers, parameters),
+    createTestComplexType: (
+      parameters: CreateTestComplexTypeParameters<typeof deSerializers>
+    ) => createTestComplexType(deSerializers, parameters),
+    fContinue: (parameters: FContinueParameters<typeof deSerializers>) =>
+      fContinue(deSerializers, parameters)
+  };
+}

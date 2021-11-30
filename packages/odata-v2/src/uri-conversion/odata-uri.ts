@@ -20,6 +20,5 @@ function getExpandWrapped(selects, expands, entityConstructor) {
  */
 export function createODataUri(deSerializers: DeSerializers): ODataUri {
   const uriConverter = createUriConverter(deSerializers);
-
   return createODataUriBase(uriConverter, getExpandWrapped, getSelect);
 }

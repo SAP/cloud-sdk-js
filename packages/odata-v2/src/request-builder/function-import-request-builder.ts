@@ -17,10 +17,9 @@ import { createODataUri } from '../uri-conversion';
  * @typeparam ReturnT - Type of the function import return value
  */
 export class FunctionImportRequestBuilder<
-  // reuse
   ParametersT,
   ReturnT,
-  T extends DeSerializers = DefaultDeSerializers
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
 > extends ActionFunctionImportRequestBuilderBase<
   ReturnT,
   ODataFunctionImportRequestConfig<ParametersT>
@@ -40,7 +39,7 @@ export class FunctionImportRequestBuilder<
     functionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
     parameters: FunctionImportParameters<ParametersT>,
-    deSerializers: CustomDeSerializers<T>
+    deSerializers: CustomDeSerializers<DeSerializersT>
   ) {
     super(
       responseTransformer,

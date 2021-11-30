@@ -20,9 +20,7 @@ import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/fie
 import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { TestComplexTypeField } from './TestComplexType';
-import {
-  TestEntityMultiLink
-} from './TestEntityMultiLink';
+import { TestEntityMultiLink } from './TestEntityMultiLink';
 import { BigNumber } from 'bignumber.js';
 import moment from 'moment';
 
@@ -47,17 +45,89 @@ export class TestEntityApi<
 > implements
     EntityApi<
       TestEntity<
-        DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeT,
+          DateTimeOffsetT,
+          TimeT
+        >
       >,
-      DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >
     >
 {
-  public deSerializers: DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>;
+  public deSerializers: DeSerializers<
+    BinaryT,
+    BooleanT,
+    ByteT,
+    DecimalT,
+    DoubleT,
+    FloatT,
+    Int16T,
+    Int32T,
+    Int64T,
+    GuidT,
+    SByteT,
+    SingleT,
+    StringT,
+    AnyT,
+    DateTimeT,
+    DateTimeOffsetT,
+    TimeT
+  >;
   public schema;
 
   constructor(
     deSerializers: Partial<
-      DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >
     > = defaultDeSerializers as any
   ) {
     this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
@@ -293,14 +363,50 @@ export class TestEntityApi<
   entityConstructor = TestEntity;
 
   requestBuilder(): TestEntityRequestBuilder<
-    DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+    >
   > {
     return new TestEntityRequestBuilder(this);
   }
 
   entityBuilder(): EntityBuilderType<
     TestEntity<
-      DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >
     >
   > {
     return entityBuilder(this);
@@ -313,6 +419,11 @@ export class TestEntityApi<
 //     serialize: (val: number): any => '3'
 //   }
 // };
+
+// import {TestEntityApi, TestEntity, TestComplexType, functionImports} from 'test';
+// const entestEntity: TestEntity<typeof customDes> = await TestEntityApi(customDes).requestBuilder().getAll()...
+// TestEntityApi(customDes).entityBuilder().build();
+// await entity: TestEntity<typeof customDes> = functionImports(c).functionimportfn({}).execute();
 
 // const testEntityApi = new TestEntityApi(c);
 // testEntityApi.schema.STRING_PROPERTY.equals(4);

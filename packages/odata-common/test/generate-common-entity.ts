@@ -94,5 +94,5 @@ async function generateCommonTestEntity(project: Project) {
 const disclaimer = `/* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.
 The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/`;
 const imports =
-  "import { AllFields, Constructable,  EntityBuilderType,OneToOneLink, Field,CollectionField,  OrderableEdmTypeField,CustomField,ComplexTypeField, ConstructorOrField, EdmTypeField, FieldBuilder, FieldOptions, PropertyMetadata, EntityBase as Entity } from '../src/internal';";
+  "import { AllFields, Constructable, EntityBuilderType,OneToOneLink, Field,CollectionField, OrderableEdmTypeField, CustomField, ComplexTypeField, ConstructorOrField, EdmTypeField, FieldBuilder, FieldOptions, PropertyMetadata, EntityBase as Entity } from '../src/internal';";
 const disableEslint = '/* eslint-disable */';

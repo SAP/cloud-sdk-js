@@ -9,15 +9,15 @@ describe('CountRequestBuilder', () => {
   describe('url', () => {
     it('is built basic count correctly', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/A_CommonEntity/$count';
+        '/testination/sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$count';
 
       const actual = await requestBuilder.count().url(defaultDestination);
       expect(actual).toBe(expected);
     });
 
-    it('is works also with additional parameters', async () => {
+    it('works also with additional parameters', async () => {
       const expected =
-        "/testination/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/A_CommonEntity/$count?$filter=(SomeProp%20eq%20'test')";
+        "/testination/sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$count?$filter=(SomeProp%20eq%20'test')";
       const actual = await getAllRequestBuilder({
         filter: new Filter<any, any>('SomeProp', 'eq', 'test', 'Edm.String')
       })
@@ -28,7 +28,7 @@ describe('CountRequestBuilder', () => {
 
     it('ignores methods which must not affect count like $format, $top, $skip', async () => {
       const expected =
-        '/testination/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/A_CommonEntity/$count';
+        '/testination/sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$count';
       const actual = await requestBuilder
         .top(1)
         .skip(1)

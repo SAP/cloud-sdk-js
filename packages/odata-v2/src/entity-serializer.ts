@@ -9,7 +9,7 @@ import { tsToEdm } from './de-serializers';
  * See [[EntitySerializer]] for the provided methods.
  * @internal
  */
-export const entitySerializer: EntitySerializer = entitySerializerBase(tsToEdm);
+const entitySerializer: EntitySerializer = entitySerializerBase(tsToEdm);
 
 /**
  * @internal

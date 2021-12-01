@@ -8,6 +8,7 @@ import {
   createGetFilter,
   getOrderBy
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 import { getSelect } from './get-select';
 import { uriConverter } from './uri-value-converter';
@@ -24,8 +25,11 @@ function prependDollar(param: string): string {
  * @returns An object containing the query parameter or an empty object
  * @internal
  */
-export function getExpand<EntityT extends Entity>(
-  expands: Expandable<EntityT>[] = [],
+export function getExpand<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  expands: Expandable<EntityT, DeSerializersT>[] = [],
   entityConstructor: Constructable<EntityT>
 ): Partial<{ expand: string }> {
   return expands.length
@@ -37,8 +41,11 @@ export function getExpand<EntityT extends Entity>(
     : {};
 }
 
-function getExpandAsString<EntityT extends Entity>(
-  expand: Expandable<EntityT>,
+function getExpandAsString<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  expand: Expandable<EntityT, DeSerializersT>,
   entityConstructor: Constructable<EntityT>
 ): string {
   if (expand instanceof AllFields) {

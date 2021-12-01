@@ -29,6 +29,7 @@ export interface ReadResponse {
   as: <T extends EntityBase>(constructor: Constructable<T>) => T[];
   isSuccess: () => boolean;
 }
+
 /**
  * @internal
  */

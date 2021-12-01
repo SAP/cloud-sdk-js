@@ -6,15 +6,18 @@ import {
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
+import { DeSerializers } from '../de-serializers';
 import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  * @typeparam EntityT - Type of the entity to be created
  */
-export class CreateRequestBuilder<EntityT extends Entity>
-  extends CreateRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT>
+export class CreateRequestBuilder<
+    EntityT extends Entity,
+    DeSerializersT extends DeSerializers
+  >
+  extends CreateRequestBuilderBase<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
    * Creates an instance of CreateRequestBuilder.
@@ -28,7 +31,7 @@ export class CreateRequestBuilder<EntityT extends Entity>
     super(
       _entityConstructor,
       _entity,
-      oDataUri,
+      createODataUri(),
       entitySerializer,
       entityDeserializer,
       responseDataAccessor

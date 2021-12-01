@@ -3,7 +3,7 @@ import {
   RequestMethodType,
   ActionFunctionImportRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers, CustomDeSerializers } from '../de-serializers';
+import { DeSerializers } from '../de-serializers';
 import { ODataFunctionImportRequestConfig } from '../request';
 import { createODataUri } from '../uri-conversion';
 
@@ -35,7 +35,7 @@ export class FunctionImportRequestBuilder<
     functionImportName: string,
     readonly responseTransformer: (data: any) => ReturnT,
     parameters: FunctionImportParameters<ParametersT>,
-    deSerializers: CustomDeSerializers<DeSerializersT>
+    deSerializers: DeSerializersT
   ) {
     super(
       responseTransformer,

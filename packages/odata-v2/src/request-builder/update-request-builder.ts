@@ -12,12 +12,12 @@ import {
   UpdateRequestBuilderBase,
   isNavigationProperty,
   removePropertyOnCondition,
-  EntityApi
+  EntityApi,
+  entitySerializer
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
-import { entitySerializer } from '../entity-serializer';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DeSerializers } from '../de-serializers';
+import { DeSerializers, tsToEdm } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 
 const logger = createLogger({
@@ -49,7 +49,7 @@ export class UpdateRequestBuilder<
       entityConstructor,
       _entity,
       createODataUri(deSerializers),
-      entitySerializer,
+      entitySerializer(tsToEdm),
       extractODataEtag,
       removeNavPropsAndComplexTypes
     );

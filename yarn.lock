@@ -3731,11 +3731,6 @@ dezalgo@^1.0.0:
     asap "^2.0.0"
     wrappy "1"
 
-diff-sequences@^27.0.6:
-  version "27.0.6"
-  resolved "https://registry.npmjs.org/diff-sequences/-/diff-sequences-27.0.6.tgz#3305cb2e55a033924054695cc66019fd7f8e5723"
-  integrity sha512-ag6wfpBFyNXZ0p8pcuIDS//D8H062ZQJ3fzYxjpmeKjnz8W4pekL3AI8VohmyZmsWW2PWaHgjsmqR6L13101VQ==
-
 diff-sequences@^27.4.0:
   version "27.4.0"
   resolved "https://registry.npmjs.org/diff-sequences/-/diff-sequences-27.4.0.tgz#d783920ad8d06ec718a060d00196dfef25b132a5"
@@ -5785,17 +5780,7 @@ jest-config@^27.3.1:
     micromatch "^4.0.4"
     pretty-format "^27.3.1"
 
-jest-diff@^27.0.0, jest-diff@^27.2.5, jest-diff@^27.3.1:
-  version "27.3.1"
-  resolved "https://registry.npmjs.org/jest-diff/-/jest-diff-27.3.1.tgz#d2775fea15411f5f5aeda2a5e02c2f36440f6d55"
-  integrity sha512-PCeuAH4AWUo2O5+ksW4pL9v5xJAcIKPUPfIhZBcG1RKv/0+dvaWTQK1Nrau8d67dp65fOqbeMdoil+6PedyEPQ==
-  dependencies:
-    chalk "^4.0.0"
-    diff-sequences "^27.0.6"
-    jest-get-type "^27.3.1"
-    pretty-format "^27.3.1"
-
-jest-diff@^27.4.2:
+jest-diff@^27.0.0, jest-diff@^27.2.5, jest-diff@^27.3.1, jest-diff@^27.4.2:
   version "27.4.2"
   resolved "https://registry.npmjs.org/jest-diff/-/jest-diff-27.4.2.tgz#786b2a5211d854f848e2dcc1e324448e9481f36f"
   integrity sha512-ujc9ToyUZDh9KcqvQDkk/gkbf6zSaeEg9AiBxtttXW59H/AcqEYp1ciXAtJp+jXWva5nAf/ePtSsgWwE5mqp4Q==
@@ -5849,21 +5834,16 @@ jest-environment-node@^27.3.1:
     jest-util "^27.3.1"
 
 jest-extended@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/jest-extended/-/jest-extended-1.1.0.tgz#85b6f33c3ca53c65087b34663d4118927e728db8"
-  integrity sha512-rC1U9N4SYSFEiHJP3H0ZSbVAARwnjzBOFoluuFYePATsOJaX7PMMNiM9svS4WTgSNCIIVT3RWlWy+Y4W3zLsjg==
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/jest-extended/-/jest-extended-1.2.0.tgz#6ef87d806bd9501a0aeae56fe8c7af73777987ed"
+  integrity sha512-KYc5DgD+/8viJSEKBzb1vRXe/rEEQUxEovBTdNEer9A6lzvHvhuyslM5tQFBz8TbLEkicCmsEcQF+4N7GiPTLg==
   dependencies:
     expect "^26.6.2"
     jest-diff "^27.2.5"
     jest-get-type "^27.0.6"
     jest-matcher-utils "^27.2.4"
 
-jest-get-type@^27.0.6, jest-get-type@^27.3.1:
-  version "27.3.1"
-  resolved "https://registry.npmjs.org/jest-get-type/-/jest-get-type-27.3.1.tgz#a8a2b0a12b50169773099eee60a0e6dd11423eff"
-  integrity sha512-+Ilqi8hgHSAdhlQ3s12CAVNd8H96ZkQBfYoXmArzZnOfAtVAJEiPDBirjByEblvG/4LPJmkL+nBqPO3A1YJAEg==
-
-jest-get-type@^27.4.0:
+jest-get-type@^27.0.6, jest-get-type@^27.3.1, jest-get-type@^27.4.0:
   version "27.4.0"
   resolved "https://registry.npmjs.org/jest-get-type/-/jest-get-type-27.4.0.tgz#7503d2663fffa431638337b3998d39c5e928e9b5"
   integrity sha512-tk9o+ld5TWq41DkK14L4wox4s2D9MtTpKaAVzXfr5CUKm5ZK2ExcaFE0qls2W71zE/6R2TxxrK9w2r6svAFDBQ==
@@ -5930,17 +5910,7 @@ jest-leak-detector@^27.3.1:
     jest-get-type "^27.3.1"
     pretty-format "^27.3.1"
 
-jest-matcher-utils@^27.2.4, jest-matcher-utils@^27.3.1:
-  version "27.3.1"
-  resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-27.3.1.tgz#257ad61e54a6d4044e080d85dbdc4a08811e9c1c"
-  integrity sha512-hX8N7zXS4k+8bC1Aj0OWpGb7D3gIXxYvPNK1inP5xvE4ztbz3rc4AkI6jGVaerepBnfWB17FL5lWFJT3s7qo8w==
-  dependencies:
-    chalk "^4.0.0"
-    jest-diff "^27.3.1"
-    jest-get-type "^27.3.1"
-    pretty-format "^27.3.1"
-
-jest-matcher-utils@^27.4.2:
+jest-matcher-utils@^27.2.4, jest-matcher-utils@^27.3.1, jest-matcher-utils@^27.4.2:
   version "27.4.2"
   resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-27.4.2.tgz#d17c5038607978a255e0a9a5c32c24e984b6c60b"
   integrity sha512-jyP28er3RRtMv+fmYC/PKG8wvAmfGcSNproVTW2Y0P/OY7/hWUOmsPfxN1jOhM+0u2xU984u2yEagGivz9OBGQ==

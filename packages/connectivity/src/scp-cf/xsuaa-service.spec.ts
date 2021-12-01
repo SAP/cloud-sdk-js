@@ -10,7 +10,7 @@ describe('getSubdomainAndZoneId', () => {
     jest.clearAllMocks();
   });
 
-  it('returns null subdomain and zoneId for null jwt', () => {
+  it('returns null subdomain and zoneId for undefined jwt', () => {
     const actual = getSubdomainAndZoneId();
     const expected = { subdomain: null, zoneId: null };
     expect(actual).toEqual(expected);

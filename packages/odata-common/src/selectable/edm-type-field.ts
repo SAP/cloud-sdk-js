@@ -87,7 +87,7 @@ export class EdmTypeField<
     DeSerializersT,
     FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
   > {
-    return new Filter(this.fieldPath(), 'eq', value);
+    return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 
   /**
@@ -102,7 +102,7 @@ export class EdmTypeField<
     DeSerializersT,
     FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
   > {
-    return new Filter(this.fieldPath(), 'ne', value);
+    return new Filter(this.fieldPath(), 'ne', value, this.edmType);
   }
 
   /**

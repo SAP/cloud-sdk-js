@@ -55,7 +55,7 @@ export class EnumField<
    * @returns The resulting filter
    */
   equals(value: EnumType<EnumT>): Filter<EntityT, DeSerializersT, string> {
-    return new Filter(this.fieldPath(), 'eq', value);
+    return new Filter(this.fieldPath(), 'eq', value, this.edmType);
   }
 
   /**
@@ -64,7 +64,7 @@ export class EnumField<
    * @returns The resulting filter
    */
   notEquals(value: EnumType<EnumT>): Filter<EntityT, DeSerializersT, string> {
-    return new Filter(this.fieldPath(), 'eq', value);
+    return new Filter(this.fieldPath(), 'ne', value, this.edmType);
   }
 }
 

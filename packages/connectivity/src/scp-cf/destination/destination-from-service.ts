@@ -330,7 +330,7 @@ class DestinationFromServiceRetriever {
   }
 
   // This covers the two technical user propagation https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/3cb7b81115c44cf594e0e3631291af94.html
-  private usesSustemUser(destination: Destination): boolean {
+  private usesSystemUser(destination: Destination): boolean {
     // put this in the non user dependent block
     if (
       destination.systemUser &&

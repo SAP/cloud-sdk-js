@@ -113,11 +113,11 @@ export function hasSubset<
 >(
   subset:
     | ParamT[]
-    | CollectionField<EntityT, any, boolean, boolean>
+    | CollectionField<EntityT, any, any, boolean, boolean>
     | CollectionFilterFunction<EntityT, ReturnT>,
   set:
     | ParamT[]
-    | CollectionField<EntityT, any, boolean, boolean>
+    | CollectionField<EntityT, any, any, boolean, boolean>
     | CollectionFilterFunction<EntityT, ReturnT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('hassubset', 'boolean', subset, set);

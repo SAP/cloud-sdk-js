@@ -1,7 +1,7 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
 import type { OneToManyLink } from '../selectable';
-import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { DeSerializers } from '../de-serializers';
 import type { BooleanFilterFunction } from './boolean-filter-function';
 import type { Filter } from './filter';
 import { UnaryFilter } from './unary-filter';
@@ -22,7 +22,7 @@ export type Filterable<
   | Filter<EntityT, DeSerializersT, any>
   | FilterLink<EntityT, DeSerializersT>
   | FilterList<EntityT, DeSerializersT>
-  | FilterLambdaExpression<EntityT, DefaultDeSerializers>
+  | FilterLambdaExpression<EntityT, DeSerializersT>
   | UnaryFilter<EntityT>
   | BooleanFilterFunction<EntityT>
   | OneToManyLink<EntityT, DeSerializersT, LinkedEntityT>;

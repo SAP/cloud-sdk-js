@@ -30,7 +30,12 @@ export {
   ServiceCredentials,
   buildHeadersForDestination,
   getClientCredentialsToken,
-  getUserToken
+  getUserToken,
+  setTestDestination,
+  mockAllTestDestinations,
+  mockTestDestination,
+  unmockTestDestination,
+  unmockAllTestDestinations
 } from './scp-cf';
 
 export { getAgentConfig } from './http-agent';

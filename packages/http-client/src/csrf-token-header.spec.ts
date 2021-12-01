@@ -1,6 +1,5 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
   defaultBasicCredentials,
   defaultDestination,
@@ -88,10 +87,6 @@ describe('buildCsrfHeaders', () => {
   });
 
   it('should try csrf request with / in the end first', async () => {
-    const destination: Destination = {
-      ...defaultDestination,
-      proxyType: 'OnPremise'
-    };
     const request = await createRequestBuilder({
       payload: new CommonEntity()
     }).build(defaultDestination);
@@ -116,10 +111,6 @@ describe('buildCsrfHeaders', () => {
   });
 
   it('tries csrf request without / if the first one fails', async () => {
-    const destination: Destination = {
-      ...defaultDestination,
-      proxyType: 'OnPremise'
-    };
     const request = await createRequestBuilder({
       payload: new CommonEntity()
     }).build(defaultDestination);

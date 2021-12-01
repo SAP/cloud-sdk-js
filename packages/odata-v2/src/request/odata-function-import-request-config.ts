@@ -5,13 +5,15 @@ import {
   RequestMethodType,
   ODataFunctionImportRequestConfig as ODataFunctionImportRequestConfigBase
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '..';
 
 /**
  * @internal
  */
 export class ODataFunctionImportRequestConfig<
+  DeSerializersT extends DeSerializers,
   ParametersT
-> extends ODataFunctionImportRequestConfigBase<ParametersT> {
+> extends ODataFunctionImportRequestConfigBase<DeSerializersT, ParametersT> {
   /**
    * Creates an instance of ODataFunctionImportRequestConfig.
    * @param method - HTTP method for the request
@@ -25,7 +27,7 @@ export class ODataFunctionImportRequestConfig<
     defaultServicePath: string,
     functionImportName: string,
     parameters: FunctionImportParameters<ParametersT>,
-    oDataUri: ODataUri
+    oDataUri: ODataUri<DeSerializersT>
   ) {
     super(method, defaultServicePath, functionImportName, parameters, oDataUri);
   }

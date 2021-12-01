@@ -17,7 +17,7 @@ import {
 import { Entity } from '../entity';
 import { entitySerializer } from '../entity-serializer';
 import { extractODataEtag } from '../extract-odata-etag';
-import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
+import { DeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
 
 const logger = createLogger({
@@ -31,10 +31,10 @@ const logger = createLogger({
  */
 export class UpdateRequestBuilder<
     EntityT extends Entity,
-    T extends DeSerializers = DefaultDeSerializers
+    DeSerializersT extends DeSerializers
   >
-  extends UpdateRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT>
+  extends UpdateRequestBuilderBase<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
    * Creates an instance of UpdateRequestBuilder.
@@ -42,7 +42,7 @@ export class UpdateRequestBuilder<
    * @param _entity - Entity to be updated
    */
   constructor(
-    { entityConstructor, deSerializers }: EntityApi<EntityT, T>,
+    { entityConstructor, deSerializers }: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT
   ) {
     super(
@@ -100,11 +100,14 @@ export class UpdateRequestBuilder<
 /*
  * In case the entity contains a navigation to a different entity a warning is printed.
  */
-function warnIfNavigation<EntityT extends Entity>(
-  request: ODataRequest<ODataUpdateRequestConfig<EntityT>>,
+function warnIfNavigation<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  request: ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>>,
   entity: EntityT,
   entityConstructor: Constructable<EntityT>
-): ODataRequest<ODataUpdateRequestConfig<EntityT>> {
+): ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>> {
   const setNavigationProperties = Object.keys(entity).filter(
     key =>
       !isNullish(entity[key]) && isNavigationProperty(key, entityConstructor)

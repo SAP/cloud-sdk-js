@@ -1,6 +1,7 @@
 import { Constructable, EntityBase } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { Link } from '../selectable';
+import { DeSerializers } from '../de-serializers';
 import { ODataRequestConfig } from './odata-request-config';
 
 /**
@@ -9,7 +10,8 @@ import { ODataRequestConfig } from './odata-request-config';
  * @internal
  */
 export class ODataCreateRequestConfig<
-  EntityT extends EntityBase
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
 > extends ODataRequestConfig {
   /**
    * Keys of the parent of the entity to create. Defined only when attempting to create child entities.
@@ -19,7 +21,7 @@ export class ODataCreateRequestConfig<
   /**
    * Field that links the parent entity class to the child entity class.
    */
-  childField: Link<EntityBase, EntityT>;
+  childField: Link<EntityBase, DeSerializersT, EntityT>;
 
   /**
    * Creates an instance of ODataRequest.
@@ -27,7 +29,7 @@ export class ODataCreateRequestConfig<
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    private oDataUri: ODataUri
+    private oDataUri: ODataUri<DeSerializersT>
   ) {
     super('post', _entityConstructor._defaultServicePath);
   }

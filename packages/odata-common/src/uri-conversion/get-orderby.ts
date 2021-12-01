@@ -1,3 +1,4 @@
+import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
 import { Orderable, OrderLink, Order } from '../order';
 
@@ -8,9 +9,10 @@ import { Orderable, OrderLink, Order } from '../order';
  * @returns An object containing the query parameter or an empty object
  * @internal
  */
-export function getOrderBy<EntityT extends EntityBase>(
-  orderBy: Orderable<EntityT>[]
-): Partial<{ orderby: string }> {
+export function getOrderBy<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(orderBy: Orderable<EntityT, DeSerializersT>[]): Partial<{ orderby: string }> {
   if (typeof orderBy !== 'undefined' && orderBy.length) {
     return {
       orderby: getODataOrderByExpressions(orderBy).join(',')
@@ -19,12 +21,18 @@ export function getOrderBy<EntityT extends EntityBase>(
   return {};
 }
 
-function getODataOrderByExpressions<OrderByEntityT extends EntityBase>(
-  orderBys: Orderable<OrderByEntityT>[],
+function getODataOrderByExpressions<
+  OrderByEntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  orderBys: Orderable<OrderByEntityT, DeSerializersT>[],
   parentFieldNames: string[] = []
 ): string[] {
   return orderBys.reduce(
-    (expressions: string[], orderBy: Orderable<OrderByEntityT>) => {
+    (
+      expressions: string[],
+      orderBy: Orderable<OrderByEntityT, DeSerializersT>
+    ) => {
       if (orderBy instanceof OrderLink) {
         return [
           ...expressions,
@@ -42,9 +50,10 @@ function getODataOrderByExpressions<OrderByEntityT extends EntityBase>(
 
 function getOrderByExpressionForOrderLink<
   OrderByEntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
 >(
-  orderBy: OrderLink<OrderByEntityT, LinkedEntityT>,
+  orderBy: OrderLink<OrderByEntityT, DeSerializersT, LinkedEntityT>,
   parentFieldNames: string[] = []
 ): string {
   return getODataOrderByExpressions(orderBy.orderBy, [
@@ -53,8 +62,11 @@ function getOrderByExpressionForOrderLink<
   ]).join(',');
 }
 
-function getOrderByExpressionForOrder<OrderByEntityT extends EntityBase>(
-  orderBy: Order<OrderByEntityT>,
+function getOrderByExpressionForOrder<
+  OrderByEntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  orderBy: Order<OrderByEntityT, DeSerializersT>,
   parentFieldNames: string[] = []
 ): string {
   return [

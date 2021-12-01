@@ -47,7 +47,7 @@ export interface EntityApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   deSerializers: DeSerializersT;
-  requestBuilder(): RequestBuilder<EntityT>;
+  requestBuilder(): RequestBuilder<EntityT, DeSerializersT>;
   entityBuilder(): EntityBuilderType<EntityT>;
   entityConstructor: Constructable<EntityT>;
   schema: Record<string, any>;
@@ -356,10 +356,10 @@ export interface EntityIdentifiable<
 /**
  * @internal
  */
-export function isSelectedProperty<EntityT extends EntityBase>(
-  json: any,
-  field: Field<EntityT> | Link<EntityT>
-): boolean {
+export function isSelectedProperty<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(json: any, field: Field<EntityT> | Link<EntityT, DeSerializersT>): boolean {
   return json.hasOwnProperty(field._fieldName);
 }
 
@@ -368,8 +368,9 @@ export function isSelectedProperty<EntityT extends EntityBase>(
  */
 export function isExistentProperty<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
->(json: any, link: Link<EntityT, LinkedEntityT>): boolean {
+>(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityT>): boolean {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
 }
 
@@ -378,8 +379,9 @@ export function isExistentProperty<
  */
 export function isExpandedProperty<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
->(json: any, link: Link<EntityT, LinkedEntityT>): boolean {
+>(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityT>): boolean {
   return (
     isExistentProperty(json, link) &&
     !json[link._fieldName].hasOwnProperty('__deferred')

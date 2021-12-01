@@ -108,9 +108,13 @@ export function entityDeserializer<T extends DeSerializers>(
       .setOrInitializeRemoteState();
   }
 
-  function getFieldValue<EntityT extends EntityBase, JsonT>(
+  function getFieldValue<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
+    JsonT
+  >(
     json: Partial<JsonT>,
-    field: Field<EntityT> | Link<EntityT>
+    field: Field<EntityT> | Link<EntityT, DeSerializersT>
   ) {
     if (field instanceof EdmTypeField) {
       return edmToTs(json[field._fieldName], field.edmType, deSerializers);
@@ -139,9 +143,10 @@ export function entityDeserializer<T extends DeSerializers>(
 
   function getLinkFromJson<
     EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
     LinkedEntityT extends EntityBase,
     JsonT
-  >(json: Partial<JsonT>, link: Link<EntityT, LinkedEntityT>) {
+  >(json: Partial<JsonT>, link: Link<EntityT, DeSerializersT, LinkedEntityT>) {
     return link instanceof OneToOneLink
       ? getSingleLinkFromJson(json, link)
       : getMultiLinkFromJson(json, link);
@@ -151,11 +156,12 @@ export function entityDeserializer<T extends DeSerializers>(
   // Not sure the purpose of the usage of null.
   function getSingleLinkFromJson<
     EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
     LinkedEntityT extends EntityBase,
     JsonT
   >(
     json: Partial<JsonT>,
-    link: Link<EntityT, LinkedEntityT>
+    link: Link<EntityT, DeSerializersT, LinkedEntityT>
   ): LinkedEntityT | null {
     if (isExpandedProperty(json, link)) {
       return deserializeEntity(
@@ -169,11 +175,12 @@ export function entityDeserializer<T extends DeSerializers>(
 
   function getMultiLinkFromJson<
     EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
     LinkedEntityT extends EntityBase,
     JsonT
   >(
     json: Partial<JsonT>,
-    link: Link<EntityT, LinkedEntityT>
+    link: Link<EntityT, DeSerializersT, LinkedEntityT>
   ): LinkedEntityT[] | undefined {
     if (isSelectedProperty(json, link)) {
       const results = extractDataFromOneToManyLink(json[link._fieldName]);
@@ -184,9 +191,12 @@ export function entityDeserializer<T extends DeSerializers>(
   }
 
   // TODO: get rid of this function in v2.0
-  function deserializeComplexTypeLegacy<EntityT extends EntityBase>(
+  function deserializeComplexTypeLegacy<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >(
     json: Record<string, any>,
-    complexTypeField: ComplexTypeField<EntityT>
+    complexTypeField: ComplexTypeField<EntityT, DeSerializersT>
   ): Record<string, any> | null {
     logger.warn(
       'It seems that you are using an outdated OData client. To make this warning disappear, please regenerate your client using the latest version of the SAP Cloud SDK generator.'

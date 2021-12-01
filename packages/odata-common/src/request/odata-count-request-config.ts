@@ -1,4 +1,5 @@
 import { createLogger, pick, removeTrailingSlashes } from '@sap-cloud-sdk/util';
+import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
 import type { GetAllRequestBuilderBase } from '../request-builder';
 import { ODataRequestConfig } from './odata-request-config';
@@ -14,13 +15,16 @@ const logger = createLogger({
  * @internal
  */
 export class ODataCountRequestConfig<
-  EntityT extends EntityBase
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
 > extends ODataRequestConfig {
   /**
    * Creates an instance of ODataGetAllRequestConfig.
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
-  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityT>) {
+  constructor(
+    readonly getAllRequest: GetAllRequestBuilderBase<EntityT, DeSerializersT>
+  ) {
     super('get', getAllRequest._entityConstructor._defaultServicePath);
   }
 

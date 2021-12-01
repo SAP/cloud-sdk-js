@@ -7,18 +7,25 @@ import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { ODataDeleteRequestConfig } from '../request';
+import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
  * @typeparam EntityT - Type of the entity to be deleted
  * @internal
  */
-export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilder<ODataDeleteRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT>
+export abstract class DeleteRequestBuilderBase<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
+  extends MethodRequestBuilder<
+    ODataDeleteRequestConfig<EntityT, DeSerializersT>
+  >
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
+  readonly _deSerializers: DeSerializersT;
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
@@ -28,7 +35,7 @@ export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
-    oDataUri: ODataUri,
+    oDataUri: ODataUri<DeSerializersT>,
     keysOrEntity: Record<string, any> | EntityBase
   ) {
     super(new ODataDeleteRequestConfig(entityConstructor, oDataUri));

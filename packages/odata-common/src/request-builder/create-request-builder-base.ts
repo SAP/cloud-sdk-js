@@ -15,6 +15,7 @@ import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
 import { Link } from '../selectable';
+import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -22,10 +23,17 @@ import { MethodRequestBuilder } from './request-builder-base';
  * @typeparam EntityT - Type of the entity to be created
  * @internal
  */
-export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilder<ODataCreateRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT>
+export abstract class CreateRequestBuilderBase<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
+  extends MethodRequestBuilder<
+    ODataCreateRequestConfig<EntityT, DeSerializersT>
+  >
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
+  readonly _deSerializers: DeSerializersT;
+
   /**
    * Creates an instance of CreateRequestBuilder.
    * @param _entityConstructor - Constructor type of the entity to be created
@@ -34,7 +42,7 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT,
-    readonly odataUri: ODataUri,
+    readonly odataUri: ODataUri<DeSerializersT>,
     readonly serializer: EntitySerializer,
     readonly deserializer: EntityDeserializer,
     readonly responseDataAccessor: ResponseDataAccessor
@@ -58,7 +66,7 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
    */
   asChildOf<ParentEntityT extends EntityBase>(
     parentEntity: ParentEntityT,
-    linkField: Link<ParentEntityT, EntityT>
+    linkField: Link<ParentEntityT, DeSerializersT, EntityT>
   ): this {
     this.requestConfig.parentKeys = this.odataUri.getEntityKeys(
       parentEntity,

@@ -23,7 +23,7 @@ import {
  * The retrieve and change sets will be executed in order, while the order within a change set can vary.
  */
 export class ODataBatchRequestBuilder<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > extends BatchRequestBuilder {
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
@@ -33,7 +33,7 @@ export class ODataBatchRequestBuilder<
    */
   async execute(
     destination: Destination | DestinationFetchOptions,
-    deSerializers: T,
+    deSerializers: DeSerializersT,
     schema: Record<string, any>
   ): Promise<BatchResponse[]> {
     return this.executeRaw(destination)

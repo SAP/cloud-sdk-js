@@ -7,13 +7,13 @@ import type { Entity } from '../entity';
 
 export class CustomField<
   EntityT extends Entity,
-  T extends DeSerializers,
+  DeSerializersT extends DeSerializers,
   NullableT extends boolean = false
-> extends CustomFieldBase<EntityT, T, NullableT> {
+> extends CustomFieldBase<EntityT, DeSerializersT, NullableT> {
   edmDateTime(): OrderableEdmTypeField<
     EntityT,
+    DeSerializersT,
     'Edm.DateTime',
-    T,
     NullableT,
     true
   > {
@@ -23,7 +23,13 @@ export class CustomField<
       this._fieldOptions.isNullable
     );
   }
-  edmTime(): OrderableEdmTypeField<EntityT, 'Edm.Time', T, NullableT, true> {
+  edmTime(): OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Time',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Time',

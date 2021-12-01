@@ -1,3 +1,4 @@
+import { DeSerializers } from '../de-serializers';
 import { EntityBase, Constructable } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
@@ -8,7 +9,10 @@ import { WithKeys, WithETag } from './odata-request-traits';
  * @typeparam EntityT - Type of the entity to setup a request for
  * @internal
  */
-export class ODataUpdateRequestConfig<EntityT extends EntityBase>
+export class ODataUpdateRequestConfig<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
   extends ODataRequestConfig
   implements WithKeys, WithETag
 {
@@ -22,7 +26,7 @@ export class ODataUpdateRequestConfig<EntityT extends EntityBase>
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
-    private oDataUri: ODataUri
+    private oDataUri: ODataUri<DeSerializersT>
   ) {
     super(
       UpdateStrategy.MODIFY_WITH_PATCH,

@@ -1,3 +1,4 @@
+import { DeSerializers } from '../de-serializers';
 import { ODataUri } from '../uri-conversion';
 import { FunctionImportParameters } from './function-import-parameter';
 import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
@@ -6,6 +7,7 @@ import { ODataRequestConfig, RequestMethodType } from './odata-request-config';
  * @internal
  */
 export abstract class ODataFunctionImportRequestConfig<
+  DeSerializersT extends DeSerializers,
   ParametersT
 > extends ODataRequestConfig {
   /**
@@ -20,7 +22,7 @@ export abstract class ODataFunctionImportRequestConfig<
     defaultServicePath: string,
     readonly functionImportName: string,
     public parameters: FunctionImportParameters<ParametersT>,
-    protected oDataUri: ODataUri
+    protected oDataUri: ODataUri<DeSerializersT>
   ) {
     super(method, defaultServicePath);
   }

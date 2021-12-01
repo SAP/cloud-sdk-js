@@ -40,7 +40,7 @@ import BigNumber from 'bignumber.js';
  * Type of the parameters to be passed to [[testFunctionImportNoReturnType]].
  */
 export interface TestFunctionImportNoReturnTypeParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {}
 
 /**
@@ -48,13 +48,15 @@ export interface TestFunctionImportNoReturnTypeParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportNoReturnType<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: TestFunctionImportNoReturnTypeParameters<T>
+export function testFunctionImportNoReturnType<
+  DeSerializersT extends DeSerializers
+>(
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportNoReturnTypeParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportNoReturnTypeParameters<T>,
+  TestFunctionImportNoReturnTypeParameters<DeSerializersT>,
   undefined,
-  T
+  DeSerializersT
 > {
   const params = {};
 
@@ -72,7 +74,7 @@ export function testFunctionImportNoReturnType<T extends DeSerializers>(
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
  */
 export interface TestFunctionImportEdmReturnTypeParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {}
 
 /**
@@ -80,13 +82,15 @@ export interface TestFunctionImportEdmReturnTypeParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEdmReturnType<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: TestFunctionImportEdmReturnTypeParameters<T>
+export function testFunctionImportEdmReturnType<
+  DeSerializersT extends DeSerializers
+>(
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportEdmReturnTypeParameters<T>,
-  DeserializedType<T, 'Edm.Boolean'>,
-  T
+  TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
+  DeserializedType<DeSerializersT, 'Edm.Boolean'>,
+  DeSerializersT
 > {
   const params = {};
 
@@ -109,7 +113,7 @@ export function testFunctionImportEdmReturnType<T extends DeSerializers>(
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnTypeCollection]].
  */
 export interface TestFunctionImportEdmReturnTypeCollectionParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {}
 
 /**
@@ -118,14 +122,14 @@ export interface TestFunctionImportEdmReturnTypeCollectionParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportEdmReturnTypeCollection<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 >(
-  deSerializers: T,
-  parameters: TestFunctionImportEdmReturnTypeCollectionParameters<T>
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportEdmReturnTypeCollectionParameters<T>,
-  DeserializedType<T, 'Edm.String'>[],
-  T
+  TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
+  DeserializedType<DeSerializersT, 'Edm.String'>[],
+  DeSerializersT
 > {
   const params = {};
 
@@ -146,7 +150,7 @@ export function testFunctionImportEdmReturnTypeCollection<
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnType]].
  */
 export interface TestFunctionImportEntityReturnTypeParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {}
 
 /**
@@ -154,13 +158,15 @@ export interface TestFunctionImportEntityReturnTypeParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEntityReturnType<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: TestFunctionImportEntityReturnTypeParameters<T>
+export function testFunctionImportEntityReturnType<
+  DeSerializersT extends DeSerializers
+>(
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportEntityReturnTypeParameters<T>,
-  TestEntity<T>,
-  T
+  TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
+  TestEntity<DeSerializersT>,
+  DeSerializersT
 > {
   const params = {};
 
@@ -171,9 +177,9 @@ export function testFunctionImportEntityReturnType<T extends DeSerializers>(
     data =>
       responseTransformers(deSerializers).transformReturnValueForEntity(
         data,
-        TestEntity as Constructable<TestEntity<T>>,
+        TestEntity as Constructable<TestEntity<DeSerializersT>>,
         new TestEntityApi(deSerializers).schema
-      ) as TestEntity<T>,
+      ) as TestEntity<DeSerializersT>,
     params,
     deSerializers
   );
@@ -183,7 +189,7 @@ export function testFunctionImportEntityReturnType<T extends DeSerializers>(
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]].
  */
 export interface TestFunctionImportEntityReturnTypeCollectionParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {}
 
 /**
@@ -192,14 +198,14 @@ export interface TestFunctionImportEntityReturnTypeCollectionParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportEntityReturnTypeCollection<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 >(
-  deSerializers: T,
-  parameters: TestFunctionImportEntityReturnTypeCollectionParameters<T>
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportEntityReturnTypeCollectionParameters<T>,
-  TestEntity<T>[],
-  T
+  TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
+  TestEntity<DeSerializersT>[],
+  DeSerializersT
 > {
   const params = {};
 
@@ -210,9 +216,9 @@ export function testFunctionImportEntityReturnTypeCollection<
     data =>
       responseTransformers(deSerializers).transformReturnValueForEntityList(
         data,
-        TestEntity as Constructable<TestEntity<T>>,
+        TestEntity as Constructable<TestEntity<DeSerializersT>>,
         new TestEntityApi(deSerializers).schema
-      ) as TestEntity<T>[],
+      ) as TestEntity<DeSerializersT>[],
     params,
     deSerializers
   );
@@ -222,7 +228,7 @@ export function testFunctionImportEntityReturnTypeCollection<
  * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnType]].
  */
 export interface TestFunctionImportSharedEntityReturnTypeParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {}
 
 /**
@@ -231,15 +237,15 @@ export interface TestFunctionImportSharedEntityReturnTypeParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportSharedEntityReturnType<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 >(
-  deSerializers: T,
-  parameters: TestFunctionImportSharedEntityReturnTypeParameters<T>
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>
 ): Omit<
   FunctionImportRequestBuilder<
-    TestFunctionImportSharedEntityReturnTypeParameters<T>,
+    TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
     never,
-    T
+    DeSerializersT
   >,
   'execute'
 > {
@@ -263,7 +269,7 @@ export function testFunctionImportSharedEntityReturnType<
  * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnTypeCollection]].
  */
 export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {}
 
 /**
@@ -272,15 +278,15 @@ export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportSharedEntityReturnTypeCollection<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 >(
-  deSerializers: T,
-  parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters<T>
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>
 ): Omit<
   FunctionImportRequestBuilder<
-    TestFunctionImportSharedEntityReturnTypeCollectionParameters<T>,
+    TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
     never,
-    T
+    DeSerializersT
   >,
   'execute'
 > {
@@ -304,7 +310,7 @@ export function testFunctionImportSharedEntityReturnTypeCollection<
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnType]].
  */
 export interface TestFunctionImportComplexReturnTypeParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {}
 
 /**
@@ -312,13 +318,15 @@ export interface TestFunctionImportComplexReturnTypeParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportComplexReturnType<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: TestFunctionImportComplexReturnTypeParameters<T>
+export function testFunctionImportComplexReturnType<
+  DeSerializersT extends DeSerializers
+>(
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportComplexReturnTypeParameters<T>,
+  TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
   TestComplexType,
-  T
+  DeSerializersT
 > {
   const params = {};
 
@@ -347,7 +355,7 @@ export function testFunctionImportComplexReturnType<T extends DeSerializers>(
  * Type of the parameters to be passed to [[testFunctionImportUnsupportedEdmTypes]].
  */
 export interface TestFunctionImportUnsupportedEdmTypesParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {
   /**
    * Simple Param.
@@ -360,13 +368,15 @@ export interface TestFunctionImportUnsupportedEdmTypesParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportUnsupportedEdmTypes<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: TestFunctionImportUnsupportedEdmTypesParameters<T>
+export function testFunctionImportUnsupportedEdmTypes<
+  DeSerializersT extends DeSerializers
+>(
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportUnsupportedEdmTypesParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportUnsupportedEdmTypesParameters<T>,
+  TestFunctionImportUnsupportedEdmTypesParameters<DeSerializersT>,
   any,
-  T
+  DeSerializersT
 > {
   const params = {
     simpleParam: new FunctionImportParameter(
@@ -395,7 +405,7 @@ export function testFunctionImportUnsupportedEdmTypes<T extends DeSerializers>(
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]].
  */
 export interface TestFunctionImportComplexReturnTypeCollectionParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {}
 
 /**
@@ -404,14 +414,14 @@ export interface TestFunctionImportComplexReturnTypeCollectionParameters<
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
 export function testFunctionImportComplexReturnTypeCollection<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 >(
-  deSerializers: T,
-  parameters: TestFunctionImportComplexReturnTypeCollectionParameters<T>
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportComplexReturnTypeCollectionParameters<T>,
+  TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
   TestComplexType[],
-  T
+  DeSerializersT
 > {
   const params = {};
 
@@ -439,11 +449,13 @@ export function testFunctionImportComplexReturnTypeCollection<
 /**
  * Type of the parameters to be passed to [[testFunctionImportGet]].
  */
-export interface TestFunctionImportGetParameters<T extends DeSerializers> {
+export interface TestFunctionImportGetParameters<
+  DeSerializersT extends DeSerializers
+> {
   /**
    * Simple Param.
    */
-  simpleParam: DeserializedType<T, 'Edm.String'>;
+  simpleParam: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 
 /**
@@ -451,13 +463,13 @@ export interface TestFunctionImportGetParameters<T extends DeSerializers> {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportGet<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: TestFunctionImportGetParameters<T>
+export function testFunctionImportGet<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportGetParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportGetParameters<T>,
-  DeserializedType<T, 'Edm.Boolean'>,
-  T
+  TestFunctionImportGetParameters<DeSerializersT>,
+  DeserializedType<DeSerializersT, 'Edm.Boolean'>,
+  DeSerializersT
 > {
   const params = {
     simpleParam: new FunctionImportParameter(
@@ -483,11 +495,13 @@ export function testFunctionImportGet<T extends DeSerializers>(
 /**
  * Type of the parameters to be passed to [[testFunctionImportPost]].
  */
-export interface TestFunctionImportPostParameters<T extends DeSerializers> {
+export interface TestFunctionImportPostParameters<
+  DeSerializersT extends DeSerializers
+> {
   /**
    * Simple Param.
    */
-  simpleParam: DeserializedType<T, 'Edm.String'>;
+  simpleParam: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 
 /**
@@ -495,12 +509,12 @@ export interface TestFunctionImportPostParameters<T extends DeSerializers> {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportPost<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: TestFunctionImportPostParameters<T>
+export function testFunctionImportPost<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportPostParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportPostParameters<T>,
-  DeserializedType<T, 'Edm.Boolean'>
+  TestFunctionImportPostParameters<DeSerializersT>,
+  DeserializedType<DeSerializersT, 'Edm.Boolean'>
 > {
   const params = {
     simpleParam: new FunctionImportParameter(
@@ -527,16 +541,16 @@ export function testFunctionImportPost<T extends DeSerializers>(
  * Type of the parameters to be passed to [[testFunctionImportMultipleParams]].
  */
 export interface TestFunctionImportMultipleParamsParameters<
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {
   /**
    * String Param.
    */
-  stringParam: DeserializedType<T, 'Edm.String'>;
+  stringParam: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Boolean Param.
    */
-  booleanParam: DeserializedType<T, 'Edm.Boolean'>;
+  booleanParam: DeserializedType<DeSerializersT, 'Edm.Boolean'>;
 }
 
 /**
@@ -544,13 +558,15 @@ export interface TestFunctionImportMultipleParamsParameters<
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportMultipleParams<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: TestFunctionImportMultipleParamsParameters<T>
+export function testFunctionImportMultipleParams<
+  DeSerializersT extends DeSerializers
+>(
+  deSerializers: DeSerializersT,
+  parameters: TestFunctionImportMultipleParamsParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  TestFunctionImportMultipleParamsParameters<T>,
+  TestFunctionImportMultipleParamsParameters<DeSerializersT>,
   boolean,
-  T
+  DeSerializersT
 > {
   const params = {
     stringParam: new FunctionImportParameter(
@@ -583,20 +599,22 @@ export function testFunctionImportMultipleParams<T extends DeSerializers>(
 /**
  * Type of the parameters to be passed to [[createTestComplexType]].
  */
-export interface CreateTestComplexTypeParameters<T extends DeSerializers> {}
+export interface CreateTestComplexTypeParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Create Test Complex Type.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function createTestComplexType<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: CreateTestComplexTypeParameters<T>
+export function createTestComplexType<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT,
+  parameters: CreateTestComplexTypeParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  CreateTestComplexTypeParameters<T>,
+  CreateTestComplexTypeParameters<DeSerializersT>,
   TestComplexType,
-  T
+  DeSerializersT
 > {
   const params = {};
   const entityDes = entityDeserializer(
@@ -623,19 +641,19 @@ export function createTestComplexType<T extends DeSerializers>(
 /**
  * Type of the parameters to be passed to [[fContinue]].
  */
-export interface FContinueParameters<T extends DeSerializers> {}
+export interface FContinueParameters<DeSerializersT extends DeSerializers> {}
 
 /**
  * Continue.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function fContinue<T extends DeSerializers>(
-  deSerializers: T,
-  parameters: FContinueParameters<T>
+export function fContinue<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT,
+  parameters: FContinueParameters<DeSerializersT>
 ): FunctionImportRequestBuilder<
-  FContinueParameters<T>,
-  DeserializedType<T, 'Edm.Boolean'>
+  FContinueParameters<DeSerializersT>,
+  DeserializedType<DeSerializersT, 'Edm.Boolean'>
 > {
   const params = {};
 

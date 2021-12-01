@@ -6,6 +6,7 @@ import { EntitySerializer } from '../entity-serializer';
 import { ODataUpdateRequestConfig, ODataRequest } from '../request';
 import { ODataUri } from '../uri-conversion';
 import { Selectable } from '../selectable';
+import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -13,10 +14,16 @@ import { MethodRequestBuilder } from './request-builder-base';
  * @typeparam EntityT - Type of the entity to be updated
  * @internal
  */
-export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilder<ODataUpdateRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT>
+export abstract class UpdateRequestBuilderBase<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
+  extends MethodRequestBuilder<
+    ODataUpdateRequestConfig<EntityT, DeSerializersT>
+  >
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
+  readonly _deSerializers: DeSerializersT;
   private ignored: Set<string>;
   private required: Set<string>;
 
@@ -32,7 +39,7 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
     readonly _entity: EntityT,
-    readonly oDataUri: ODataUri,
+    readonly oDataUri: ODataUri<DeSerializersT>,
     readonly entitySerializer: EntitySerializer,
     readonly extractODataEtag: (
       json: Record<string, any>
@@ -73,11 +80,14 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    * @param fields - Enumeration of the fields to be required.
    * @returns The entity itself, to facilitate method chaining.
    */
-  setRequiredFields(...fields: Selectable<EntityT>[]): this;
-  setRequiredFields(fields: Selectable<EntityT>[]): this;
+  setRequiredFields(...fields: Selectable<EntityT, DeSerializersT>[]): this;
+  setRequiredFields(fields: Selectable<EntityT, DeSerializersT>[]): this;
   setRequiredFields(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
+    first:
+      | undefined
+      | Selectable<EntityT, DeSerializersT>
+      | Selectable<EntityT, DeSerializersT>[],
+    ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
     this.required = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
@@ -89,11 +99,14 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    * @param fields - Enumeration of the fields to be ignored.
    * @returns The entity itself, to facilitate method chaining.
    */
-  setIgnoredFields(...fields: Selectable<EntityT>[]): this;
-  setIgnoredFields(fields: Selectable<EntityT>[]): this;
+  setIgnoredFields(...fields: Selectable<EntityT, DeSerializersT>[]): this;
+  setIgnoredFields(fields: Selectable<EntityT, DeSerializersT>[]): this;
   setIgnoredFields(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
+    first:
+      | undefined
+      | Selectable<EntityT, DeSerializersT>
+      | Selectable<EntityT, DeSerializersT>[],
+    ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
     this.ignored = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
@@ -125,7 +138,7 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    * @returns A promise resolving to the entity once it was updated.
    */
   protected async executeRequest(
-    request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
+    request: ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>>
   ): Promise<EntityT> {
     return (
       this.executeRequestRaw(request)
@@ -146,7 +159,7 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
   }
 
   protected async executeRequestRaw(
-    request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
+    request: ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>>
   ): Promise<HttpResponse> {
     return request.execute();
   }
@@ -193,7 +206,7 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
     return Object.keys(this._entityConstructor._keys);
   }
 
-  private toSet(fields: Selectable<EntityT>[]) {
+  private toSet(fields: Selectable<EntityT, DeSerializersT>[]) {
     const set = new Set<string>();
     Object.values(fields).forEach(field => {
       set.add(field._fieldName);

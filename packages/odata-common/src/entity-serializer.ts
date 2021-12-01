@@ -12,6 +12,7 @@ import {
   EnumField
 } from './selectable';
 import { EdmTypeShared, isEdmType } from './edm-types';
+import { DeSerializers } from './de-serializers';
 
 const logger = createLogger({
   package: 'odata-common',
@@ -142,8 +143,8 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   }
 
   // TODO: get rid of this function in v2.0
-  function serializeComplexTypeFieldLegacy<EntityT extends EntityBase>(
-    complexTypeField: ComplexTypeField<EntityT>,
+  function serializeComplexTypeFieldLegacy<EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
+    complexTypeField: ComplexTypeField<EntityT, DeSerializersT>,
     fieldValue: any
   ): any {
     logger.warn(

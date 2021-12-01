@@ -28,7 +28,7 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
    * @param edmType - EDM type of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter
    */
-  equals(value: ReturnT): Filter<EntityT, ReturnT> {
+  equals(value: ReturnT): Filter<EntityT, any, ReturnT> {
     return new Filter(this, 'eq', value, this.edmType);
   }
 
@@ -38,7 +38,7 @@ export abstract class FilterFunction<EntityT extends EntityBase, ReturnT> {
    * @param edmType - EDM type of the value, used when converting the value to URL. Use `Edm.String` as default value.
    * @returns The resulting filter
    */
-  notEquals(value: ReturnT): Filter<EntityT, ReturnT> {
+  notEquals(value: ReturnT): Filter<EntityT, any, ReturnT> {
     return new Filter(this, 'ne', value, this.edmType);
   }
 }

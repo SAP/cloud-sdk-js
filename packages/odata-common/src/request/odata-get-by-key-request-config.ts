@@ -2,6 +2,7 @@ import { EntityBase, Constructable } from '../entity-base';
 import { Expandable } from '../expandable';
 import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
+import { DeSerializers } from '../de-serializers';
 import { WithKeys, WithSelection } from './odata-request-traits';
 import { ODataRequestConfig } from './odata-request-config';
 
@@ -10,13 +11,16 @@ import { ODataRequestConfig } from './odata-request-config';
  * @typeparam EntityT - Type of the entity to setup a request for
  * @internal
  */
-export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
+export class ODataGetByKeyRequestConfig<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
   extends ODataRequestConfig
-  implements WithKeys, WithSelection<EntityT>
+  implements WithKeys, WithSelection<EntityT, DeSerializersT>
 {
   keys: Record<string, any>;
-  selects: Selectable<EntityT>[] = [];
-  expands: Expandable<EntityT>[];
+  selects: Selectable<EntityT, DeSerializersT>[] = [];
+  expands: Expandable<EntityT, DeSerializersT>[];
 
   /**
    * Creates an instance of ODataGetByKeyRequestConfig.
@@ -24,7 +28,7 @@ export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
    */
   constructor(
     readonly entityConstructor: Constructable<EntityT>,
-    private oDataUri: ODataUri
+    private oDataUri: ODataUri<DeSerializersT>
   ) {
     super('get', entityConstructor._defaultServicePath);
   }

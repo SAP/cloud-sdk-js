@@ -1,15 +1,12 @@
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
-import { DeSerializers, DeserializedType } from '../de-serializers';
+import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
-import { NewField } from '../selectable/field-new';
 import { Field } from '../selectable';
 import { StringFilterFunction } from './string-filter-function';
 import { BooleanFilterFunction } from './boolean-filter-function';
 import { filterFunction } from './filter-function';
 import { NumberFilterFunction } from './number-filter-function';
-import { newFilterFunction } from './filter-function-new';
-import { NewBooleanFilterFunction } from './boolean-filter-function-new';
 
 /* String Functions */
 /**
@@ -30,21 +27,6 @@ export function endsWith<EntityT extends EntityBase>(
     | StringFilterFunction<EntityT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('endswith', 'boolean', str, suffix);
-}
-
-export function newEndsWith<
-  EntityT extends EntityBase,
-  T extends DeSerializers
->(
-  deSerializers: T,
-  str: DeserializedType<T, 'Edm.String'> | NewField<EntityT, boolean, boolean>,
-  // | StringFilterFunction<EntityT>,
-  suffix:
-    | DeserializedType<T, 'Edm.String'>
-    | NewField<EntityT, boolean, boolean>
-  // | StringFilterFunction<EntityT>
-): NewBooleanFilterFunction<EntityT> {
-  return newFilterFunction('endswith', 'boolean', str, suffix);
 }
 
 /**
@@ -387,15 +369,6 @@ export function filterFunctions<
 ): Record<string, any> {
   return {
     endsWith,
-    newEndsWith: <EntityT extends EntityBase>(
-      str:
-        | DeserializedType<typeof deSerializers, 'Edm.String'>
-        | NewField<EntityT, boolean, boolean>,
-      suffix:
-        | DeserializedType<typeof deSerializers, 'Edm.String'>
-        | NewField<EntityT, boolean, boolean>
-    ): NewBooleanFilterFunction<EntityT> =>
-      newEndsWith(deSerializers, str, suffix),
     startsWith,
     length,
     indexOf,

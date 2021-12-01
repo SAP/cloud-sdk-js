@@ -17,6 +17,8 @@ function getExpandWrapped(selects, expands, entityConstructor) {
  * @returns TODO
  * @internal
  */
-export function createODataUri(deSerializers: DeSerializers): ODataUri {
+export function createODataUri<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT
+): ODataUri<DeSerializersT> {
   return createODataUriBase(deSerializers, getExpandWrapped, getSelect);
 }

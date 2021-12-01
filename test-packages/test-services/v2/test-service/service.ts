@@ -86,3 +86,23 @@ TestEntityApi().entityBuilder();
 // 2. check complex types
 // 3. finalize "new" fields, fieldbuilders, filter, etc.
 // 20. nest-like modules for DI (retro topic)
+
+import { functionImports } from './function-imports';
+const { testFunctionImportComplexReturnType } = functionImports(c);
+
+BusinessPartner.requestBuilder()
+  .getAll()
+  .orderBy(asc(BusinessPartner.FIRST_NAME));
+
+
+  '$orderby=FirstName asc'
+
+const businessPartnerApi = new BusinessPartnerApi(c);
+const defaultBusinessPartnerApi = new BusinessPartnerApi();
+businessPartnerApi
+  .requestBuilder()
+  .getAll()
+  .filter(or(testApi.schema.FIRST_NAME.equals(4), defaultBusinessPartnerApi.schema.FIRST_NAME.equals('test')))
+  .filter("FirstName eq 'test'")
+  .orderBy(asc(businessPartnerApi.schema.FIRST_NAME)); //works
+  .orderBy(asc(defaultBusinessPartnerApi.schema.FIRST_NAME)); //fails

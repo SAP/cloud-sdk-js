@@ -9,6 +9,7 @@ import { Orderable } from '../order';
 import { ODataGetAllRequestConfig } from '../request';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
+import { DeSerializers } from '../de-serializers';
 import { CountRequestBuilder } from './count-request-builder';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 
@@ -18,8 +19,13 @@ import { GetRequestBuilderBase } from './get-request-builder-base';
  * @internal
  */
 export abstract class GetAllRequestBuilderBase<
-  EntityT extends EntityBase
-> extends GetRequestBuilderBase<EntityT, ODataGetAllRequestConfig<EntityT>> {
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> extends GetRequestBuilderBase<
+  EntityT,
+  DeSerializersT,
+  ODataGetAllRequestConfig<EntityT, DeSerializersT>
+> {
   /**
    * Creates an instance of GetAllRequestBuilder.
    * @param entityConstructor - Constructor of the entity to create the request for
@@ -27,7 +33,7 @@ export abstract class GetAllRequestBuilderBase<
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
-    getAllRequestConfig: ODataGetAllRequestConfig<EntityT>,
+    getAllRequestConfig: ODataGetAllRequestConfig<EntityT, DeSerializersT>,
     readonly entityDeserializer: EntityDeserializer,
     readonly dataAccessor: ResponseDataAccessor
   ) {
@@ -38,11 +44,14 @@ export abstract class GetAllRequestBuilderBase<
    * @param selects - Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
-  select(...selects: Selectable<EntityT>[]): this;
-  select(selects: Selectable<EntityT>[]): this;
+  select(...selects: Selectable<EntityT, DeSerializersT>[]): this;
+  select(selects: Selectable<EntityT, DeSerializersT>[]): this;
   select(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
+    first:
+      | undefined
+      | Selectable<EntityT, DeSerializersT>
+      | Selectable<EntityT, DeSerializersT>[],
+    ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
     this.requestConfig.selects = variadicArgumentToArray(first, rest);
     return this;
@@ -53,11 +62,14 @@ export abstract class GetAllRequestBuilderBase<
    * @param orderBy - OrderBy statements to order the response by
    * @returns The request builder itself, to facilitate method chaining
    */
-  orderBy(orderBy: Orderable<EntityT>[]): this;
-  orderBy(...orderBy: Orderable<EntityT>[]): this;
+  orderBy(orderBy: Orderable<EntityT, DeSerializersT>[]): this;
+  orderBy(...orderBy: Orderable<EntityT, DeSerializersT>[]): this;
   orderBy(
-    first: undefined | Orderable<EntityT> | Orderable<EntityT>[],
-    ...rest: Orderable<EntityT>[]
+    first:
+      | undefined
+      | Orderable<EntityT, DeSerializersT>
+      | Orderable<EntityT, DeSerializersT>[],
+    ...rest: Orderable<EntityT, DeSerializersT>[]
   ): this {
     this.requestConfig.orderBy = variadicArgumentToArray(first, rest);
     return this;
@@ -87,7 +99,7 @@ export abstract class GetAllRequestBuilderBase<
    * Count the number of entities.
    * @returns A count request builder for execution
    */
-  count(): CountRequestBuilder<EntityT> {
+  count(): CountRequestBuilder<EntityT, DeSerializersT> {
     return new CountRequestBuilder(this);
   }
 

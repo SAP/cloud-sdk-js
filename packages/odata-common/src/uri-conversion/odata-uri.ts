@@ -15,14 +15,14 @@ import { createGetResourcePathForKeys } from './get-resource-path';
  * In v2/uri-conversion/odata-uri.ts and v4/uri-conversion/odata-uri.ts the instance for v2 and v4 are created.
  * @internal
  */
-export interface ODataUri {
+export interface ODataUri<DeSerializersT extends DeSerializers> {
   getExpand<EntityT extends EntityBase>(
-    selects: Selectable<EntityT>[],
-    expands: Expandable<EntityT>[],
+    selects: Selectable<EntityT, DeSerializersT>[],
+    expands: Expandable<EntityT, DeSerializersT>[],
     entityConstructor: Constructable<EntityT>
   ): Partial<{ expand: string }>;
   getFilter<EntityT extends EntityBase>(
-    filter: Filterable<EntityT>,
+    filter: Filterable<EntityT, DeSerializersT>,
     entityConstructor: Constructable<EntityT>
   ): Partial<{ filter: string }>;
   getEntityKeys<EntityT extends EntityBase>(
@@ -30,14 +30,14 @@ export interface ODataUri {
     entityConstructor: Constructable<EntityT>
   ): Record<string, any>;
   getOrderBy<EntityT extends EntityBase>(
-    orderBy: Orderable<EntityT>[]
+    orderBy: Orderable<EntityT, DeSerializersT>[]
   ): Partial<{ orderby: string }>;
   getResourcePathForKeys<EntityT extends EntityBase>(
     keys: Record<string, any>,
     entityConstructor: Constructable<EntityT>
   ): string;
   getSelect<EntityT extends EntityBase>(
-    selects: Selectable<EntityT>[]
+    selects: Selectable<EntityT, DeSerializersT>[]
   ): Partial<{ select: string }>;
   convertToUriFormat(
     value: any,
@@ -73,7 +73,7 @@ export function createODataUri<DeSerializersT extends DeSerializers>(
   getSelect: <EntityT extends EntityBase>(
     selects: Selectable<EntityT, DeSerializersT>[]
   ) => Partial<{ select: string }>
-): ODataUri {
+): ODataUri<DeSerializersT> {
   const uriConverter = createUriConverter(deSerializers);
 
   const { getFilter } = createGetFilter(uriConverter);

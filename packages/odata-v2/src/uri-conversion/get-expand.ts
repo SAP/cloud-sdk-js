@@ -1,4 +1,5 @@
 import { Selectable, Link } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 
 /**
@@ -10,15 +11,21 @@ import { Entity } from '../entity';
  * @returns An object containing the query parameter or an empty object
  *  @internal
  */
-export function getExpand<EntityT extends Entity>(
-  selects: Selectable<EntityT>[] = []
+export function getExpand<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  selects: Selectable<EntityT, DeSerializersT>[] = []
 ): Partial<{ expand: string }> {
   const expand = getExpandsAsString(selects);
   return expand.length ? { expand: expand.join(',') } : {};
 }
 
-function getExpandsAsString<EntityT extends Entity>(
-  selectables: Selectable<EntityT>[],
+function getExpandsAsString<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  selectables: Selectable<EntityT, DeSerializersT>[],
   initialExpand: string[] = [],
   parent = ''
 ): string[] {

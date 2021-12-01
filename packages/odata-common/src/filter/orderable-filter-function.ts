@@ -34,7 +34,7 @@ export abstract class OrderableFilterFunction<
    * @param edmType - EDM type of the field to filter on
    * @returns The resulting filter
    */
-  greaterThan(value: ReturnT): Filter<EntityT, ReturnT> {
+  greaterThan(value: ReturnT): Filter<EntityT, any, ReturnT> {
     return new Filter(this, 'gt', value, this.edmType);
   }
 
@@ -44,7 +44,7 @@ export abstract class OrderableFilterFunction<
    * @param edmType - EDM type of the field to filter on
    * @returns The resulting filter
    */
-  greaterOrEqual(value: ReturnT): Filter<EntityT, ReturnT> {
+  greaterOrEqual(value: ReturnT): Filter<EntityT, any, ReturnT> {
     return new Filter(this, 'ge', value, this.edmType);
   }
 
@@ -54,7 +54,7 @@ export abstract class OrderableFilterFunction<
    * @param edmType - EDM type of the field to filter on
    * @returns The resulting filter
    */
-  lessThan(value: ReturnT): Filter<EntityT, ReturnT> {
+  lessThan(value: ReturnT): Filter<EntityT, any, ReturnT> {
     return new Filter(this, 'lt', value, this.edmType);
   }
 
@@ -64,7 +64,7 @@ export abstract class OrderableFilterFunction<
    * @param edmType - EDM type of the field to filter on
    * @returns The resulting filter
    */
-  lessOrEqual(value: ReturnT): Filter<EntityT, ReturnT> {
+  lessOrEqual(value: ReturnT): Filter<EntityT, any, ReturnT> {
     return new Filter(this, 'le', value, this.edmType);
   }
 }

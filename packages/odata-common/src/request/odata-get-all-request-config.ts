@@ -4,6 +4,7 @@ import { Filterable } from '../filter';
 import { Expandable } from '../expandable';
 import { Orderable } from '../order';
 import { ODataUri } from '../uri-conversion';
+import { DeSerializers } from '../de-serializers';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithGetAllRestrictions } from './odata-request-traits';
 
@@ -12,16 +13,19 @@ import { WithGetAllRestrictions } from './odata-request-traits';
  * @typeparam EntityT - Type of the entity to setup a request for
  * @internal
  */
-export class ODataGetAllRequestConfig<EntityT extends EntityBase>
+export class ODataGetAllRequestConfig<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
   extends ODataRequestConfig
-  implements WithGetAllRestrictions<EntityT>
+  implements WithGetAllRestrictions<EntityT, DeSerializersT>
 {
   top: number;
   skip: number;
-  filter: Filterable<EntityT>;
-  orderBy: Orderable<EntityT>[];
-  selects: Selectable<EntityT>[];
-  expands: Expandable<EntityT>[];
+  filter: Filterable<EntityT, DeSerializersT>;
+  orderBy: Orderable<EntityT, DeSerializersT>[];
+  selects: Selectable<EntityT, DeSerializersT>[];
+  expands: Expandable<EntityT, DeSerializersT>[];
 
   /**
    * Creates an instance of ODataGetAllRequestConfig.
@@ -29,7 +33,7 @@ export class ODataGetAllRequestConfig<EntityT extends EntityBase>
    */
   constructor(
     readonly entityConstructor: Constructable<EntityT>,
-    private oDataUri: ODataUri
+    private oDataUri: ODataUri<DeSerializersT>
   ) {
     super('get', entityConstructor._defaultServicePath);
   }

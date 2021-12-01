@@ -7,7 +7,11 @@
     "composite": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["dist/**/*",
-    "../connectivity/test/test/**/*", "**/*.spec.ts", "node_modules/**/*"],
+  "exclude": [
+    "dist/**/*",
+    "../connectivity/test/test/**/*",
+    "**/*.spec.ts",
+    "node_modules/**/*"
+  ],
   "references": []
 }

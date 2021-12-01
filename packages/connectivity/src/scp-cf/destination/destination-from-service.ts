@@ -311,7 +311,7 @@ class DestinationFromServiceRetriever {
     const subdomainProvider = getSubdomainAndZoneId(
       this.providerServiceToken?.encoded
     ).subdomain;
-    return subdomainSubscriber || subdomainProvider;
+    return subdomainSubscriber || subdomainProvider || undefined;
   }
 
   private async getAuthTokenForOAuth2ClientCrendentials(

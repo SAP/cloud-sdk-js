@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join, parse, resolve, sep } from 'path';
 import { createLogger } from '@sap-cloud-sdk/util';
-import { Destination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination';
+import { Destination } from '@sap-cloud-sdk/connectivity';
 
 const logger = createLogger({
   package: 'test-util',

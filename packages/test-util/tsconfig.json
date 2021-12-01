@@ -9,7 +9,7 @@
   "include": ["src/**/*.ts"],
   "exclude": [
     "dist/**/*",
-    "../connectivity/test/test/**/*",
+    "./test/test/**/*",
     "**/*.spec.ts",
     "node_modules/**/*"
   ],

@@ -128,7 +128,7 @@ class DestinationFromServiceRetriever {
       destination.authentication === 'OAuth2UserTokenExchange' ||
       destination.authentication === 'OAuth2JWTBearer' ||
       (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
-        !da.usesSustemUser(destination))
+        !da.usesSystemUser(destination))
     ) {
       destination = await da.fetchDestinationWithUserExchangeFlows(
         destinationResult
@@ -139,7 +139,7 @@ class DestinationFromServiceRetriever {
       destination.authentication === 'OAuth2Password' ||
       destination.authentication === 'ClientCertificateAuthentication' ||
       destination.authentication === 'OAuth2ClientCredentials' ||
-      da.usesSustemUser(destination)
+      da.usesSystemUser(destination)
     ) {
       destination = await da.fetchDestinationWithNonUserExchangeFlows(
         destinationResult

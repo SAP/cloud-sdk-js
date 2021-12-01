@@ -18,6 +18,8 @@ const jwtPayload = {
   zid: 'my-zone'
 };
 
+const uaaDomain = xsuaaBindingMock.credentials.uaadomain;
+
 function responseWithPublicKey(key = publicKey) {
   return {
     keys: [
@@ -66,31 +68,16 @@ describe('jwt', () => {
   describe('verifyJwt', () => {
     const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
 
-    beforeEach(() => {
-      process.env.VCAP_SERVICES = JSON.stringify({
-        xsuaa: [
-          {
-            ...xsuaaBindingMock,
-            credentials: {
-              ...xsuaaBindingMock.credentials,
-              verificationkey: undefined
-            }
-          }
-        ]
-      });
-    });
-
     afterEach(() => {
       nock.cleanAll();
       verificationKeyCache.clear();
-      delete process.env.VCAP_SERVICES;
     });
 
     it('succeeds and decodes for correct key', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -100,7 +87,7 @@ describe('jwt', () => {
         .reply(200, responseWithPublicKey(publicKey.split(unixEOL).join('')));
 
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -108,7 +95,7 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, { keys: [] });
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT. Could not retrieve verification key.',
         cause: {
@@ -124,7 +111,7 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, response);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT. Could not retrieve verification key.',
         cause: {
@@ -139,7 +126,8 @@ describe('jwt', () => {
           signedJwtForVerification(
             jwtPayload,
             'https://my-jku-url.some.wrong.domain.com'
-          )
+          ),
+          uaaDomain
         )
       )
         .rejects.toThrowError()
@@ -152,7 +140,7 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, responseWithPublicKey('WRONG'));
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
       ).rejects.toThrowErrorMatchingInlineSnapshot('"Invalid JWT."');
     });
 
@@ -160,25 +148,25 @@ describe('jwt', () => {
       // We mock only a single HTTP call
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      await verifyJwt(signedJwtForVerification(jwtPayload, jku));
+      await verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain);
 
       // But due to caching multiple calls should not lead to errors
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
       ).resolves.toEqual(jwtPayload);
     });
 
     it('fails on the second call when caching is disabled', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      await verifyJwt(signedJwtForVerification(jwtPayload, jku), {
+      await verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain, {
         cacheVerificationKeys: false
       });
 
       nock(jku).get('/').reply(500);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Failed to verify JWT. Could not retrieve verification key."'
       );
@@ -201,10 +189,10 @@ describe('jwt', () => {
         jku
       );
 
-      await verifyJwt(jwt1);
+      await verifyJwt(jwt1, uaaDomain);
       verificationKeyCache.clear();
 
-      await verifyJwt(jwt2);
+      await verifyJwt(jwt2, uaaDomain);
       expect(secondXsuaaMock.isDone()).toBe(true);
     });
   });

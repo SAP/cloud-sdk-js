@@ -158,8 +158,9 @@ class DestinationFromServiceRetriever {
           'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
         );
       }
+      const creds = getXsuaaServiceCredentials(options.jwt);
       return {
-        decoded: await verifyJwt(options.jwt, options),
+        decoded: await verifyJwt(options.jwt, creds.uaadomain, options),
         encoded: options.jwt
       };
     }

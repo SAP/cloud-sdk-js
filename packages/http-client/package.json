@@ -37,9 +37,6 @@
     "axios": "^0.24.0"
   },
   "devDependencies": {
-    "@sap-cloud-sdk/odata-common": "^1.50.0",
-    "@sap-cloud-sdk/odata-v2": "^1.50.0",
-    "@sap-cloud-sdk/test-services": "^1.50.0",
     "nock": "^13.0.11"
   }
 }

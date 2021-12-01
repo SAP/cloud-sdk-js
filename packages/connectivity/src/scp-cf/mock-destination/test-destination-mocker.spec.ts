@@ -1,7 +1,5 @@
 import { resolve } from 'path';
 import mock from 'mock-fs';
-import { Destination } from '@sap-cloud-sdk/connectivity';
-import { credentials, systems } from '../test/test-util/test-destinations';
 import {
   mockAllTestDestinations,
   mockTestDestination,
@@ -9,6 +7,8 @@ import {
   unmockAllTestDestinations,
   unmockTestDestination
 } from './test-destination-mocker';
+import {Destination} from "../destination";
+import {credentials, systems} from "../../../test/test-util/test-destinations";
 
 describe('setTestDestinationInEnv', () => {
   const pathRootNodeModules = resolve(__dirname, '../../../node_modules');

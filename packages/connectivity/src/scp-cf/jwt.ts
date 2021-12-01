@@ -2,9 +2,7 @@ import { IncomingMessage } from 'http';
 import * as url from 'url';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { decode, Jwt, JwtHeader, JwtPayload, verify } from 'jsonwebtoken';
-import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
-import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { Cache } from './cache';
 import { fetchVerificationKeys } from './verification-keys';
 
@@ -141,20 +139,21 @@ function validateJwtHeaderForVerification(
 /**
  * Verifies the given JWT and returns the decoded payload.
  * @param token - JWT to be verified
+ * @param uaaDomain - Domain given in the XSUAA credentials.
  * @param options - Options to control certain aspects of JWT verification behavior.
  * @returns A Promise to the decoded and verified JWT.
  *  @internal
  */
 export async function verifyJwt(
   token: string,
+  uaaDomain: string,
   options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
   options = { ...defaultVerifyJwtOptions, ...options };
 
-  const creds = getXsuaaServiceCredentials(token);
   const header = decodeJwtComplete(token).header;
 
-  validateJwtHeaderForVerification(header, creds.uaadomain);
+  validateJwtHeaderForVerification(header, uaaDomain);
   const cacheKey = buildCacheKey(header.jku, header.kid);
 
   if (options.cacheVerificationKeys) {
@@ -166,16 +165,15 @@ export async function verifyJwt(
         );
         logger.warn(`Original error: ${error.message}`);
 
-        return fetchAndCacheKeyAndVerify(creds, header, token, options);
+        return fetchAndCacheKeyAndVerify(header, token, options);
       });
     }
   }
 
-  return fetchAndCacheKeyAndVerify(creds, header, token, options); // Verify only here
+  return fetchAndCacheKeyAndVerify(header, token, options); // Verify only here
 }
 
 async function fetchAndCacheKeyAndVerify(
-  creds: XsuaaServiceCredentials,
   header: JwtHeader,
   token: string,
   options?: VerifyJwtOptions

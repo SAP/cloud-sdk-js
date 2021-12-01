@@ -4,7 +4,7 @@ import nock from 'nock';
 import {
   mockAllTestDestinations,
   unmockAllTestDestinations
-} from '@sap-cloud-sdk/connectivity';
+} from '@sap-cloud-sdk/test-util';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 

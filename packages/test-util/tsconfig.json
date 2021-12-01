@@ -13,5 +13,5 @@
     "**/*.spec.ts",
     "node_modules/**/*"
   ],
-  "references": []
+  "references": [{ "path": "../connectivity" }]
 }

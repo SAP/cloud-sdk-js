@@ -1,5 +1,4 @@
 export * from './destination';
-export * from './mock-destination';
 export * from './authorization-header';
 export * from './cache';
 export * from './client-credentials-token-cache';

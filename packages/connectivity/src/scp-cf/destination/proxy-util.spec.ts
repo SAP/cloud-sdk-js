@@ -1,7 +1,7 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Protocol } from '../protocol';
 import { basicHeader } from '../authorization-header';
-import { unmockAllTestDestinations } from '../mock-destination';
+import { unmockAllTestDestinations } from '../../../../test-util/src';
 import {
   addProxyConfigurationInternet,
   parseProxyEnv,

@@ -1,4 +1,4 @@
-import { Destination } from '../destination';
+import { Destination } from '@sap-cloud-sdk/connectivity/dist/scp-cf/destination';
 import {
   getTestDestinationByAlias,
   GetTestDestinationOptions,

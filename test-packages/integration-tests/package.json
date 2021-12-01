@@ -16,6 +16,7 @@
     "@sap-cloud-sdk/connectivity": "^1.50.0",
     "@sap-cloud-sdk/http-client": "^1.50.0",
     "@sap-cloud-sdk/test-services": "^1.50.0",
+    "@sap-cloud-sdk/test-util": "^1.50.0",
     "@sap-cloud-sdk/util": "^1.50.0",
     "@sap/xssec": "^3.2.5"
   },

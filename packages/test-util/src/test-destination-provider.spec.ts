@@ -3,7 +3,7 @@ import mock from 'mock-fs';
 import {
   credentials,
   systems
-} from '../../../test/test-util/test-destinations';
+} from '@sap-cloud-sdk/connectivity/test/test-util/test-destinations';
 import {
   getTestDestinationByAlias,
   getTestDestinations

@@ -1,13 +1,18 @@
 import {
-  Constructable,
+  EntityApi,
   CreateRequestBuilderBase,
+  entityDeserializer,
+  entitySerializer,
   EntityIdentifiable
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers, edmToTs, tsToEdm } from '../de-serializers';
 import { Entity } from '../entity';
-import { entitySerializer } from '../entity-serializer';
-import { entityDeserializer } from '../entity-deserializer';
-import { DeSerializers } from '../de-serializers';
-import { responseDataAccessor } from './response-data-accessor';
+import { createODataUri } from '../uri-conversion';
+import { extractODataEtag } from '../extract-odata-etag';
+import {
+  responseDataAccessor,
+  getLinkedCollectionResult
+} from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  * @typeparam EntityT - Type of the entity to be created
@@ -25,15 +30,25 @@ export class CreateRequestBuilder<
    * @param _entity - Entity to be created
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    {
+      entityConstructor,
+      deSerializers,
+      schema
+    }: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT
   ) {
     super(
-      _entityConstructor,
+      entityConstructor,
       _entity,
-      createODataUri(),
-      entitySerializer,
-      entityDeserializer,
+      createODataUri(deSerializers),
+      entitySerializer(tsToEdm),
+      entityDeserializer(
+        schema,
+        edmToTs,
+        extractODataEtag,
+        getLinkedCollectionResult,
+        deSerializers
+      ),
       responseDataAccessor
     );
   }

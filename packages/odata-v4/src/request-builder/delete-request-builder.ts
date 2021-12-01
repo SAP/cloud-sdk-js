@@ -1,19 +1,21 @@
 import {
   Constructable,
   DeleteRequestBuilderBase,
-  EntityIdentifiable,
+  EntityApi,
   FieldType
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
-import { oDataUri } from '../uri-conversion';
+import { createODataUri } from '../uri-conversion';
+
 /**
  * Create OData query to delete an entity.
  * @typeparam EntityT - Type of the entity to be deleted
  */
-export class DeleteRequestBuilder<EntityT extends Entity>
-  extends DeleteRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT>
-{
+export class DeleteRequestBuilder<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+> extends DeleteRequestBuilderBase<EntityT, DeSerializersT> {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
 
@@ -21,12 +23,13 @@ export class DeleteRequestBuilder<EntityT extends Entity>
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
    * @param entityConstructor - Constructor type of the entity to be deleted
    * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
+   * @param deSerializers - TODO
    */
   constructor(
-    entityConstructor: Constructable<EntityT>,
+    { entityConstructor, deSerializers }: EntityApi<EntityT, DeSerializersT>,
     keysOrEntity: Record<string, FieldType> | Entity
   ) {
-    super(entityConstructor, oDataUri, keysOrEntity);
+    super(entityConstructor, createODataUri(deSerializers), keysOrEntity);
   }
 
   /**

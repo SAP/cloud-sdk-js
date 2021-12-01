@@ -52,9 +52,7 @@ For the ias token do the following also in postman:
   - URL: <idp-url>oauth2/token?grant_type=password&username=<user>&password=<pwd>
   - For the user and password fill a existing user of the IdP
   - Add the `Content-Type: application/x-www-form-urlencoded` header
-  - Ass authorization put basic with user/pwd the clientId and secret of the IAS service instance
-
-You need to configure the IAS like: XYZ. Junjie
+  - Use basic auth type, where clientId and secret of the IAS service instance are used as username and password respectively.
 
 ### VCAP variables
 

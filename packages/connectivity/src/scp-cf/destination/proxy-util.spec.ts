@@ -1,4 +1,3 @@
-import { unmockAllTestDestinations } from '@sap-cloud-sdk/test-util';
 import { createLogger } from '@sap-cloud-sdk/util';
 import { Protocol } from '../protocol';
 import { basicHeader } from '../authorization-header';
@@ -9,6 +8,7 @@ import {
   proxyStrategy
 } from './proxy-util';
 import { Destination } from './destination-service-types';
+import {unmockAllTestDestinations} from "../mock-destination";
 
 describe('proxy-util', () => {
   afterEach(() => {

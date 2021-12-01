@@ -377,6 +377,8 @@
 ### Signature changed
 
 - [core] `EdmTypeField` only support EDM types, no field types in generics
+- [connectivity] `verifyJwt` needs the uaaDomain as input. The domain can be obtained from the XSUAA credentials.
+- [test-util] Destination mock methods are moved to `connectivty` package.
 
 ### Implementation changed
 

@@ -46,7 +46,7 @@ export class OrderableEdmTypeField<
     DeSerializersT,
     FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
   > {
-    return new Filter(this.fieldPath(), 'ge', value);
+    return new Filter(this.fieldPath(), 'ge', value, this.edmType);
   }
 
   /**
@@ -61,7 +61,7 @@ export class OrderableEdmTypeField<
     DeSerializersT,
     FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
   > {
-    return new Filter(this.fieldPath(), 'lt', value);
+    return new Filter(this.fieldPath(), 'lt', value, this.edmType);
   }
 
   /**
@@ -76,6 +76,6 @@ export class OrderableEdmTypeField<
     DeSerializersT,
     FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
   > {
-    return new Filter(this.fieldPath(), 'le', value);
+    return new Filter(this.fieldPath(), 'le', value, this.edmType);
   }
 }

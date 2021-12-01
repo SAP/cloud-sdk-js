@@ -28,10 +28,5 @@
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
     "check:dependencies": "depcheck ."
-  },
-  "dependencies": {
-    "@sap-cloud-sdk/connectivity": "^1.50.0",
-    "@sap-cloud-sdk/util": "^1.50.0",
-    "mock-fs": "^5.0.0"
   }
 }

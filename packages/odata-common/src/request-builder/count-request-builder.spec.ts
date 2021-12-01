@@ -7,7 +7,7 @@ describe('CountRequestBuilder', () => {
   const requestBuilder = getAllRequestBuilder();
 
   describe('url', () => {
-    it('is built basic count correctly', async () => {
+    it('builds basic count correctly', async () => {
       const expected =
         '/testination/sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$count';
 

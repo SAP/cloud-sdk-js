@@ -1,9 +1,6 @@
 import { fail } from 'assert';
 import mock from 'mock-fs';
-import {
-  credentials,
-  systems
-} from '../test/test-util/test-destinations';
+import { credentials, systems } from '../test/test-util/test-destinations';
 import {
   getTestDestinationByAlias,
   getTestDestinations

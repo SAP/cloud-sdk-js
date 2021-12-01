@@ -1,3 +1,4 @@
+import { DeSerializers } from '../de-serializers';
 import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
 import { OneToManyLink } from '../selectable';
 import type { Filterable } from './filterable';
@@ -7,8 +8,10 @@ import type { Filterable } from './filterable';
  * @typeparam EntityT -
  * @internal
  */
-export class FilterList<EntityT extends EntityBase>
-  implements EntityIdentifiable<EntityT>
+export class FilterList<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
    * Constructor type of the entity to be filtered.
@@ -18,6 +21,7 @@ export class FilterList<EntityT extends EntityBase>
    * Entity type of the entity tp be filtered.
    */
   readonly _entity: EntityT;
+  _deSerializers: DeSerializersT;
 
   /**
    * Creates an instance of FilterList.
@@ -25,8 +29,8 @@ export class FilterList<EntityT extends EntityBase>
    * @param orFilters - Filters to be combined by logical disjunction (`or`)
    */
   constructor(
-    public andFilters: Filterable<EntityT>[] = [],
-    public orFilters: Filterable<EntityT>[] = []
+    public andFilters: Filterable<EntityT, DeSerializersT>[] = [],
+    public orFilters: Filterable<EntityT, DeSerializersT>[] = []
   ) {}
 }
 
@@ -36,9 +40,12 @@ export class FilterList<EntityT extends EntityBase>
  * @returns boolean
  * @internal
  */
-export function isFilterList<T extends EntityBase>(
-  filterable: Filterable<T>
-): filterable is FilterList<T> {
+export function isFilterList<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  filterable: Filterable<EntityT, DeSerializersT>
+): filterable is FilterList<EntityT, DeSerializersT> {
   return (
     typeof filterable['field'] === 'undefined' &&
     typeof filterable['operator'] === 'undefined' &&

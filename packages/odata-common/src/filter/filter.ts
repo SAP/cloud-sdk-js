@@ -1,3 +1,4 @@
+import { DeSerializers } from '../de-serializers';
 import { EdmTypeShared } from '../edm-types';
 import {
   Constructable,
@@ -39,8 +40,11 @@ export type FilterOperatorByType<FieldT> = FieldT extends string
  * @internal
  */
 // TODO 2.0 rename to BinaryFilter
-export class Filter<EntityT extends EntityBase, FieldT>
-  implements EntityIdentifiable<EntityT>
+export class Filter<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  FieldT
+> implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
    * Constructor type of the entity to be filtered.
@@ -51,14 +55,8 @@ export class Filter<EntityT extends EntityBase, FieldT>
    */
   readonly _entity: EntityT;
 
-  /**
-   * @deprecated Since v1.16.0. Use [[field]] instead.
-   */
-  public _fieldName: string | FilterFunction<EntityT, FieldT>;
+  readonly _deSerializers: DeSerializersT;
 
-  // TODO: change the constructor to the following:
-  // Constructor(public field: string | Field<EntityT>, public operator: FilterOperator, public value: FieldT) {}
-  // And deprecate passing a string as the field is needed later on
   /**
    * Creates an instance of Filter.
    * @param field - Name of the field of the entity to be filtered on or a filter function
@@ -66,26 +64,27 @@ export class Filter<EntityT extends EntityBase, FieldT>
    * @param value - Value to be used by the operator
    * @param edmType - EDM type of the field to filter on, needed for custom fields
    */
-
   constructor(
     public field: string | FilterFunction<EntityT, FieldT>,
     public operator: FilterOperator,
     public value: FieldT,
     public edmType?: EdmTypeShared<ODataVersionOf<EntityT>>
-  ) {
-    this._fieldName = field;
-  }
+  ) {}
 }
 
 /**
- * Typeguard for the Filter class.
- * @param filterable - Object to be checked
- * @returns boolean
+ * Type guard for the `Filter` class.
+ * @param filterable - Object to be checked.
+ * @returns Whether the given object is of type `Filter`.
  * @internal
  */
-export function isFilter<T extends EntityBase, FieldT>(
-  filterable: Filterable<T>
-): filterable is Filter<T, FieldT> {
+export function isFilter<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  FieldT
+>(
+  filterable: Filterable<EntityT, DeSerializersT>
+): filterable is Filter<EntityT, DeSerializersT, FieldT> {
   return (
     typeof filterable['field'] !== 'undefined' &&
     typeof filterable['operator'] !== 'undefined' &&

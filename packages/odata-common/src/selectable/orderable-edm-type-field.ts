@@ -14,20 +14,24 @@ import { EdmTypeField, FieldTypeByEdmType } from './edm-type-field';
  */
 export class OrderableEdmTypeField<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   EdmT extends EdmTypeShared<'any'>,
-  T extends DeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends EdmTypeField<EntityT, EdmT, T, NullableT, SelectableT> {
+> extends EdmTypeField<EntityT, DeSerializersT, EdmT, NullableT, SelectableT> {
   /**
    * Creates an instance of Filter for this field and the given value using the operator 'gt', i.e. `>`.
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
   greaterThan(
-    value: FieldTypeByEdmType<T, EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<T, EdmT, NullableT>> {
-    return new Filter(this.fieldPath(), 'gt', value, this.edmType);
+    value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  ): Filter<
+    EntityT,
+    DeSerializersT,
+    FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  > {
+    return new Filter(this.fieldPath(), 'gt', value);
   }
 
   /**
@@ -36,9 +40,13 @@ export class OrderableEdmTypeField<
    * @returns The resulting filter
    */
   greaterOrEqual(
-    value: FieldTypeByEdmType<T, EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<T, EdmT, NullableT>> {
-    return new Filter(this.fieldPath(), 'ge', value, this.edmType);
+    value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  ): Filter<
+    EntityT,
+    DeSerializersT,
+    FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  > {
+    return new Filter(this.fieldPath(), 'ge', value);
   }
 
   /**
@@ -47,9 +55,13 @@ export class OrderableEdmTypeField<
    * @returns The resulting filter
    */
   lessThan(
-    value: FieldTypeByEdmType<T, EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<T, EdmT, NullableT>> {
-    return new Filter(this.fieldPath(), 'lt', value, this.edmType);
+    value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  ): Filter<
+    EntityT,
+    DeSerializersT,
+    FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  > {
+    return new Filter(this.fieldPath(), 'lt', value);
   }
 
   /**
@@ -58,8 +70,12 @@ export class OrderableEdmTypeField<
    * @returns The resulting filter
    */
   lessOrEqual(
-    value: FieldTypeByEdmType<T, EdmT, NullableT>
-  ): Filter<EntityT, FieldTypeByEdmType<T, EdmT, NullableT>> {
-    return new Filter(this.fieldPath(), 'le', value, this.edmType);
+    value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  ): Filter<
+    EntityT,
+    DeSerializersT,
+    FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  > {
+    return new Filter(this.fieldPath(), 'le', value);
   }
 }

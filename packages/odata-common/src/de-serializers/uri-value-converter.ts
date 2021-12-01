@@ -23,20 +23,17 @@ export function convertToUriForEdmString(value: any): string {
 /**
  * @internal
  */
-export interface UriConverter {
-  convertToUriFormat: (value: any, edmType: EdmTypeShared<'any'>) => string;
-}
+export type UriConverter = (
+  value: any,
+  edmType: EdmTypeShared<'any'>
+) => string;
 
 /**
  * @internal
  */
 export function createUriConverter(deSerializers: DeSerializers): UriConverter {
-  return {
-    convertToUriFormat: (value: any, edmType: EdmTypeShared<'any'>): string => {
-      const { serializeToUri, serialize } = deSerializers[edmType];
-      return serializeToUri
-        ? serializeToUri(value, serialize)
-        : serialize(value);
-    }
+  return (value: any, edmType: EdmTypeShared<'any'>): string => {
+    const { serializeToUri, serialize } = deSerializers[edmType];
+    return serializeToUri ? serializeToUri(value, serialize) : serialize(value);
   };
 }

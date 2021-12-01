@@ -1,6 +1,7 @@
 import { EntityBase } from '../entity-base';
 import { Filter } from '../filter';
 import { EdmTypeShared } from '../edm-types';
+import { DeSerializers } from '../de-serializers';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
@@ -15,6 +16,7 @@ import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
  */
 export class EnumField<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   EnumT extends string = string,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
@@ -52,8 +54,8 @@ export class EnumField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  equals(value: EnumType<EnumT>): Filter<EntityT, string> {
-    return new Filter(this.fieldPath(), 'eq', value, this.edmType);
+  equals(value: EnumType<EnumT>): Filter<EntityT, DeSerializersT, string> {
+    return new Filter(this.fieldPath(), 'eq', value);
   }
 
   /**
@@ -61,8 +63,8 @@ export class EnumField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  notEquals(value: EnumType<EnumT>): Filter<EntityT, string> {
-    return new Filter(this.fieldPath(), 'eq', value, this.edmType);
+  notEquals(value: EnumType<EnumT>): Filter<EntityT, DeSerializersT, string> {
+    return new Filter(this.fieldPath(), 'eq', value);
   }
 }
 

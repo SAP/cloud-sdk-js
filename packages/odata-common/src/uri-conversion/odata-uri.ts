@@ -4,7 +4,7 @@ import { EdmTypeShared } from '../edm-types';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
 import { Filterable } from '../filter';
-import { UriConverter } from '../de-serializers';
+import { createUriConverter, DeSerializers } from '../de-serializers';
 import { getEntityKeys } from './get-keys';
 import { getOrderBy } from './get-orderby';
 import { createGetFilter } from './get-filter';
@@ -62,21 +62,23 @@ export function prependDollar(param: string): string {
  * @returns An ODataURI
  * @internal
  */
-export function createODataUri(
-  uriConverter: UriConverter,
+export function createODataUri<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT,
   getExpand: <EntityT extends EntityBase>(
-    selects: Selectable<EntityT>[],
-    expands: Expandable<EntityT>[],
+    selects: Selectable<EntityT, DeSerializersT>[],
+    expands: Expandable<EntityT, DeSerializersT>[],
     entityConstructor: Constructable<EntityT>
   ) => Partial<{ expand: string }>,
 
   getSelect: <EntityT extends EntityBase>(
-    selects: Selectable<EntityT>[]
+    selects: Selectable<EntityT, DeSerializersT>[]
   ) => Partial<{ select: string }>
 ): ODataUri {
+  const uriConverter = createUriConverter(deSerializers);
+
   const { getFilter } = createGetFilter(uriConverter);
   const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
-  const { convertToUriFormat } = uriConverter;
+  const convertToUriFormat = uriConverter;
 
   return {
     getExpand,

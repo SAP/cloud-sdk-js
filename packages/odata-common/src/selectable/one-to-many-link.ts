@@ -2,6 +2,7 @@ import type { EntityBase } from '../entity-base';
 import { FilterLink } from '../filter';
 import { Orderable } from '../order';
 import type { Filterable } from '../filter';
+import { DeSerializers } from '../de-serializers';
 import { Link } from './link';
 
 /**
@@ -11,8 +12,11 @@ import { Link } from './link';
  */
 export function toFilterableList<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
->(filters: Filterable<EntityT, LinkedEntityT>[]): Filterable<EntityT>[] {
+>(
+  filters: Filterable<EntityT, DeSerializersT, LinkedEntityT>[]
+): Filterable<EntityT, DeSerializersT>[] {
   return filters.map(f => (f instanceof OneToManyLink ? f._filters : f));
 }
 
@@ -24,10 +28,11 @@ export function toFilterableList<
  */
 export class OneToManyLink<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
-> extends Link<EntityT, LinkedEntityT> {
-  _filters: FilterLink<EntityT, LinkedEntityT>;
-  _orderBy: Orderable<LinkedEntityT>[] = [];
+> extends Link<EntityT, DeSerializersT, LinkedEntityT> {
+  _filters: FilterLink<EntityT, DeSerializersT, LinkedEntityT>;
+  _orderBy: Orderable<LinkedEntityT, DeSerializersT>[] = [];
   _top: number;
   _skip: number;
 
@@ -47,8 +52,8 @@ export class OneToManyLink<
    */
   filter(
     ...expressions: (
-      | Filterable<LinkedEntityT>
-      | OneToManyLink<LinkedEntityT, any>
+      | Filterable<LinkedEntityT, DeSerializersT>
+      | OneToManyLink<LinkedEntityT, DeSerializersT, any>
     )[]
   ): this {
     const link = this.clone();
@@ -62,7 +67,7 @@ export class OneToManyLink<
    ** @param orderBy - OrderBy statements to order the response by.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  orderBy(...orderBy: Orderable<LinkedEntityT>[]): this {
+  orderBy(...orderBy: Orderable<LinkedEntityT, DeSerializersT>[]): this {
     const link = this.clone();
     link._orderBy = orderBy;
     return link;

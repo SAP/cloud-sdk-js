@@ -10,21 +10,27 @@ import { OrderableEdmTypeField } from './orderable-edm-type-field';
  */
 export class CustomField<
   EntityT extends EntityBase,
-  T extends DeSerializers,
+  DeSerializersT extends DeSerializers,
   NullableT extends boolean = false
 > extends Field<EntityT, NullableT> {
-  protected fieldBuilder: FieldBuilder<Constructable<EntityT>, T>;
+  protected fieldBuilder: FieldBuilder<Constructable<EntityT>, DeSerializersT>;
   constructor(
     fieldName: string,
     entityConstructor: Constructable<EntityT>,
-    private deSerializers: T,
+    private deSerializers: DeSerializersT,
     isNullable: NullableT = false as NullableT
   ) {
     super(fieldName, entityConstructor, { isNullable });
     this.fieldBuilder = new FieldBuilder(entityConstructor, this.deSerializers);
   }
 
-  edmString(): EdmTypeField<EntityT, 'Edm.String', T, NullableT, true> {
+  edmString(): EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.String',
@@ -32,7 +38,13 @@ export class CustomField<
     );
   }
 
-  edmBoolean(): EdmTypeField<EntityT, 'Edm.Boolean', T, NullableT, true> {
+  edmBoolean(): EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Boolean',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Boolean',
@@ -40,7 +52,13 @@ export class CustomField<
     );
   }
 
-  edmGuid(): EdmTypeField<EntityT, 'Edm.Guid', T, NullableT, true> {
+  edmGuid(): EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Guid',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Guid',
@@ -48,7 +66,13 @@ export class CustomField<
     );
   }
 
-  edmDecimal(): EdmTypeField<EntityT, 'Edm.Decimal', T, NullableT, true> {
+  edmDecimal(): OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Decimal',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Decimal',
@@ -56,7 +80,13 @@ export class CustomField<
     );
   }
 
-  edmInt16(): OrderableEdmTypeField<EntityT, 'Edm.Int16', T, NullableT, true> {
+  edmInt16(): OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Int16',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Int16',
@@ -64,7 +94,13 @@ export class CustomField<
     );
   }
 
-  edmInt32(): OrderableEdmTypeField<EntityT, 'Edm.Int32', T, NullableT, true> {
+  edmInt32(): OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Int32',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Int32',
@@ -72,7 +108,13 @@ export class CustomField<
     );
   }
 
-  edmInt64(): OrderableEdmTypeField<EntityT, 'Edm.Int64', T, NullableT, true> {
+  edmInt64(): OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Int64',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Int64',
@@ -82,8 +124,8 @@ export class CustomField<
 
   edmSingle(): OrderableEdmTypeField<
     EntityT,
+    DeSerializersT,
     'Edm.Single',
-    T,
     NullableT,
     true
   > {
@@ -96,8 +138,8 @@ export class CustomField<
 
   edmDouble(): OrderableEdmTypeField<
     EntityT,
+    DeSerializersT,
     'Edm.Double',
-    T,
     NullableT,
     true
   > {
@@ -108,7 +150,13 @@ export class CustomField<
     );
   }
 
-  edmByte(): OrderableEdmTypeField<EntityT, 'Edm.Byte', T, NullableT, true> {
+  edmByte(): OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Byte',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Byte',
@@ -116,7 +164,13 @@ export class CustomField<
     );
   }
 
-  edmSByte(): OrderableEdmTypeField<EntityT, 'Edm.SByte', T, NullableT, true> {
+  edmSByte(): OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.SByte',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.SByte',
@@ -126,8 +180,8 @@ export class CustomField<
 
   edmDateTimeOffset(): OrderableEdmTypeField<
     EntityT,
+    DeSerializersT,
     'Edm.DateTimeOffset',
-    T,
     NullableT,
     true
   > {
@@ -138,7 +192,13 @@ export class CustomField<
     );
   }
 
-  edmBinary(): EdmTypeField<EntityT, 'Edm.Binary', T, NullableT, true> {
+  edmBinary(): EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Binary',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Binary',

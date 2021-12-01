@@ -109,7 +109,7 @@ export function createGetResourcePathForKeys(
     entityConstructor: Constructable<EntityT>
   ): string {
     const edmType = entityConstructor[upperCaseSnakeCase(key)].edmType;
-    return `${key}=${uriConverter.convertToUriFormat(value, edmType)}`;
+    return `${key}=${uriConverter(value, edmType)}`;
   }
 
   function validateKeys<EntityT extends EntityBase>(

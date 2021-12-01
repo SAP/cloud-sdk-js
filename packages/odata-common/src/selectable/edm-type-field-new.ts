@@ -36,7 +36,6 @@ export type FieldTypeByEdmType<
   NullableT extends boolean
 > = NullableFieldType<DeserializedType<T, EdmT>, NullableT>;
 
-// type GeneralFieldType<EntityT extends EntityBase>
 
 /**
  * Represents a property of an OData entity with an EDM type.

@@ -1,3 +1,4 @@
+import { DeSerializers } from '../de-serializers';
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
 import type { Expandable } from '../expandable';
 import type { Selectable } from './selectable';
@@ -22,16 +23,18 @@ import type { Selectable } from './selectable';
  */
 export class Link<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase = any
-> implements EntityIdentifiable<EntityT>
+> implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entity: EntityT;
+  readonly _deSerializers: DeSerializersT;
 
   /**
    * List of selectables on the linked entity.
    */
-  _selects: Selectable<LinkedEntityT>[] = [];
-  _expand: Expandable<LinkedEntityT>[] = [];
+  _selects: Selectable<LinkedEntityT, DeSerializersT>[] = [];
+  _expand: Expandable<LinkedEntityT, DeSerializersT>[] = [];
 
   /**
    * Creates an instance of Link.
@@ -52,13 +55,13 @@ export class Link<
    * @param selects - Selection of fields or links on a linked entity
    * @returns The link itself, to facilitate method chaining
    */
-  select(...selects: Selectable<LinkedEntityT>[]): this {
+  select(...selects: Selectable<LinkedEntityT, DeSerializersT>[]): this {
     const link = this.clone();
     link._selects = selects;
     return link;
   }
 
-  expand(...expands: Expandable<LinkedEntityT>[]): this {
+  expand(...expands: Expandable<LinkedEntityT, DeSerializersT>[]): this {
     const link = this.clone();
     link._expand = expands;
     return link;

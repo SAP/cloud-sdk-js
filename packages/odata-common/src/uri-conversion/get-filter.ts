@@ -22,7 +22,7 @@ import { UriConverter } from '../de-serializers';
 import { ComplexTypeField, OneToManyLink } from '../selectable';
 
 type GetFilterType<EntityT extends EntityBase> = (
-  filter: Filterable<EntityT>,
+  filter: Filterable<EntityT, any>,
   entityConstructor: Constructable<EntityT>
 ) => Partial<{ filter: string }>;
 
@@ -50,7 +50,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
    * @returns An object containing the query parameter with encoding or an empty object
    */
   function getFilter<EntityT extends EntityBase>(
-    filter: Filterable<EntityT>,
+    filter: Filterable<EntityT, any>,
     entityConstructor: Constructable<EntityT>
   ): Partial<{ filter: string }> {
     if (typeof filter !== 'undefined') {
@@ -69,7 +69,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   }
 
   function getODataFilterExpression<FilterEntityT extends EntityBase>(
-    filter: Filterable<FilterEntityT>,
+    filter: Filterable<FilterEntityT, any>,
     parentFieldNames: string[] = [],
     targetEntityConstructor: Constructable<any>,
     lambdaExpressionLevel = 0
@@ -173,13 +173,13 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       return param.toString();
     }
     if (typeof param === 'string') {
-      return uriConverter.convertToUriFormat(param, 'Edm.String');
+      return uriConverter(param, 'Edm.String');
     }
     if (param instanceof FilterFunction) {
       return filterFunctionToString(param, parentFieldNames);
     }
     if (moment.isMoment(param)) {
-      return uriConverter.convertToUriFormat(param, 'Edm.DateTimeOffset');
+      return uriConverter(param, 'Edm.DateTimeOffset');
     }
     if (Array.isArray(param)) {
       return `[${param
@@ -194,10 +194,8 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
     edmType: EdmTypeShared<'any'>
   ): string {
     return Array.isArray(value)
-      ? `[${value
-          .map(v => uriConverter.convertToUriFormat(v, edmType))
-          .join(',')}]`
-      : uriConverter.convertToUriFormat(value, edmType);
+      ? `[${value.map(v => uriConverter(v, edmType)).join(',')}]`
+      : uriConverter(value, edmType);
   }
 
   function getODataFilterExpressionForUnaryFilter<
@@ -217,7 +215,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForFilterLambdaExpression<
     FilterEntityT extends EntityBase
   >(
-    filter: FilterLambdaExpression<FilterEntityT>,
+    filter: FilterLambdaExpression<FilterEntityT, any>,
     parentFieldNames: string[],
     targetEntityConstructor: Constructable<any>,
     lambdaExpressionLevel: number
@@ -237,7 +235,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForFilterList<
     FilterEntityT extends EntityBase
   >(
-    filter: FilterList<FilterEntityT>,
+    filter: FilterList<FilterEntityT, any>,
     parentFieldNames: string[],
     targetEntityConstructor: Constructable<any>,
     lambdaExpressionLevel: number
@@ -283,7 +281,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForFilterLink<
     FilterEntityT extends EntityBase
   >(
-    filter: FilterLink<FilterEntityT>,
+    filter: FilterLink<FilterEntityT, any>,
     parentFieldNames: string[],
     targetEntityConstructor: Constructable<any>,
     lambdaExpressionLevel: number
@@ -304,7 +302,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   }
 
   function getODataFilterExpressionForFilter<FilterEntityT extends EntityBase>(
-    filter: Filter<FilterEntityT, any>,
+    filter: Filter<FilterEntityT, any, any>,
     parentFieldNames: string[],
     targetEntityConstructor: Constructable<any>
   ): string {

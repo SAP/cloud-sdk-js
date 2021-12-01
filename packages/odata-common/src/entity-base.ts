@@ -43,7 +43,7 @@ export interface Constructable<EntityT extends EntityBase> {
  * @typeparam JsonT - Type of the entity without methods.
  */
 export interface EntityApi<
-  EntityT extends EntityBase, //TestEntity
+  EntityT extends EntityBase, // TestEntity
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   deSerializers: DeSerializersT;
@@ -340,14 +340,15 @@ export abstract class EntityBase {
 /**
  * @internal
  */
-export interface EntityIdentifiable<T extends EntityBase> {
+export interface EntityIdentifiable<
+  T extends EntityBase,
+  DeSerializersT extends DeSerializers
+> {
+  // TODO can this be removed?
+  // TODO do we need the _?
   readonly _entityConstructor: Constructable<T>;
   readonly _entity: T;
-}
-
-export interface NewEntityIdentifiable<EntityT, DeSerializersT> {
-  readonly entity: EntityT;
-  readonly deSerializers: DeSerializersT;
+  readonly _deSerializers: DeSerializersT;
 }
 
 /* eslint-disable valid-jsdoc */

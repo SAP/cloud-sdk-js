@@ -18,11 +18,13 @@ import { EnumField } from './enum-field';
 type ComplexTypeFieldConstructor<
   ComplexTypeFieldT extends ComplexTypeField<
     EntityT,
+    DeSerializersT,
     ComplexT,
     NullableT,
     SelectableT
   >,
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   ComplexT,
   NullableT extends boolean,
   SelectableT extends boolean
@@ -53,17 +55,21 @@ type EntityTypeFromFieldOf<FieldOfT extends ConstructorOrField<any>> =
 /**
  * Field builder to orchestrate the creation of the different kinds of fields.
  * @typeparam FieldOfT - Type of the entity or complex type field this field belongs to.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
  * @internal
  */
 export class FieldBuilder<
   FieldOfT extends ConstructorOrField<any>,
-  T extends DeSerializers
+  DeSerializersT extends DeSerializers
 > {
   /**
    * Creates an instance of `FieldBuilder`.
    * @param fieldOf - Entity or complex type field, for which the field builder shall create fields.
    */
-  constructor(public fieldOf: FieldOfT, private deSerializers: T) {}
+  constructor(
+    public fieldOf: FieldOfT,
+    private deSerializers: DeSerializersT
+  ) {}
 
   buildEdmTypeField<EdmT extends OrderableEdmType, NullableT extends boolean>(
     fieldName: string,
@@ -71,8 +77,8 @@ export class FieldBuilder<
     isNullable: NullableT
   ): OrderableEdmTypeField<
     EntityTypeFromFieldOf<FieldOfT>,
+    DeSerializersT,
     EdmT,
-    T,
     NullableT,
     IsSelectableField<FieldOfT>
   >;
@@ -85,8 +91,8 @@ export class FieldBuilder<
     isNullable: NullableT
   ): EdmTypeField<
     EntityTypeFromFieldOf<FieldOfT>,
+    DeSerializersT,
     EdmT,
-    T,
     NullableT,
     IsSelectableField<FieldOfT>
   >;
@@ -110,15 +116,15 @@ export class FieldBuilder<
   ):
     | OrderableEdmTypeField<
         EntityTypeFromFieldOf<FieldOfT>,
+        DeSerializersT,
         EdmT,
-        T,
         NullableT,
         IsSelectableField<FieldOfT>
       >
     | EdmTypeField<
         EntityTypeFromFieldOf<FieldOfT>,
+        DeSerializersT,
         EdmT,
-        T,
         NullableT,
         IsSelectableField<FieldOfT>
       > {
@@ -147,6 +153,7 @@ export class FieldBuilder<
   buildComplexTypeField<
     ComplexTypeFieldT extends ComplexTypeField<
       EntityTypeFromFieldOf<FieldOfT>,
+      DeSerializersT,
       any,
       NullableT,
       IsSelectableField<FieldOfT>
@@ -158,6 +165,7 @@ export class FieldBuilder<
     complexTypeFieldCtor: ComplexTypeFieldConstructor<
       ComplexTypeFieldT,
       EntityTypeFromFieldOf<FieldOfT>,
+      DeSerializersT,
       ComplexT,
       NullableT,
       IsSelectableField<FieldOfT>
@@ -190,6 +198,7 @@ export class FieldBuilder<
     isNullable: NullableT
   ): CollectionField<
     EntityTypeFromFieldOf<FieldOfT>,
+    DeSerializersT,
     CollectionFieldT,
     NullableT,
     IsSelectableField<FieldOfT>
@@ -215,6 +224,7 @@ export class FieldBuilder<
     isNullable: NullableT
   ): EnumField<
     EntityTypeFromFieldOf<FieldOfT>,
+    DeSerializersT,
     EnumT,
     NullableT,
     IsSelectableField<FieldOfT>

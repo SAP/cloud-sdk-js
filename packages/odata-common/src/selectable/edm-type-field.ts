@@ -1,4 +1,4 @@
-import { EntityBase } from '../entity-base';
+import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { Filter } from '../filter';
 import { EdmTypeShared } from '../edm-types';
 import { DeSerializers, DeserializedType } from '../de-serializers';
@@ -28,8 +28,6 @@ export type FieldTypeByEdmType<
   NullableT extends boolean
 > = NullableFieldType<DeserializedType<T, EdmT>, NullableT>;
 
-// type GeneralFieldType<EntityT extends EntityBase>
-
 /**
  * Represents a property of an OData entity with an EDM type.
  *
@@ -40,32 +38,38 @@ export type FieldTypeByEdmType<
  * can be supplied as argument to the select function, e.g. `BusinessPartner.FIRST_NAME`.
  *
  * See also: [[Selectable]]
- * @typeparam EntityT - Type of the entity the field belongs to
+ * @typeparam EntityT - Type of the entity the field belongs to.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
  * @typeparam EdmT - EDM type of the field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
  * @internal
  */
 export class EdmTypeField<
-  EntityT extends EntityBase,
-  EdmT extends EdmTypeShared<'any'>,
-  T extends DeSerializers,
-  NullableT extends boolean = false,
-  SelectableT extends boolean = false
-> extends Field<EntityT, NullableT, SelectableT> {
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
+    EdmT extends EdmTypeShared<'any'>,
+    NullableT extends boolean = false,
+    SelectableT extends boolean = false
+  >
+  extends Field<EntityT, NullableT, SelectableT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
+{
+  readonly _entity: EntityT;
+
   /**
    * Creates an instance of EdmTypeField.
    * @param fieldName - Actual name of the field used in the OData request.
    * @param _fieldOf - Constructor type of the entity the field belongs to.
    * @param edmType - Type of the field according to the metadata description.
-   * @param deSerializers - TODO
+   * @param _deSerializers - (De-)serializers used for transformation.
    * @param fieldOptions - Optional settings for this field.
    */
   constructor(
     fieldName: string,
     readonly _fieldOf: ConstructorOrField<EntityT>,
     readonly edmType: EdmT,
-    public deSerializers: T,
+    public _deSerializers: DeSerializersT, // Only necessary for the type, unused otherwise
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, getEntityConstructor(_fieldOf), fieldOptions);
@@ -76,8 +80,14 @@ export class EdmTypeField<
    * @param value - Value to be used in the filter
    * @returns The resulting filter
    */
-  equals(value: FieldTypeByEdmType<T, EdmT, NullableT>): Filter<EntityT, any> {
-    return new Filter(this.fieldPath(), 'eq', value as any, this.edmType);
+  equals(
+    value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  ): Filter<
+    EntityT,
+    DeSerializersT,
+    FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  > {
+    return new Filter(this.fieldPath(), 'eq', value);
   }
 
   /**
@@ -86,9 +96,13 @@ export class EdmTypeField<
    * @returns The resulting filter
    */
   notEquals(
-    value: FieldTypeByEdmType<T, EdmT, NullableT>
-  ): Filter<EntityT, any> {
-    return new Filter(this.fieldPath(), 'ne', value as any, this.edmType);
+    value: FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  ): Filter<
+    EntityT,
+    DeSerializersT,
+    FieldTypeByEdmType<DeSerializersT, EdmT, NullableT>
+  > {
+    return new Filter(this.fieldPath(), 'ne', value);
   }
 
   /**

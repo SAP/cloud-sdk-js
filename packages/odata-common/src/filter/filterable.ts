@@ -1,14 +1,13 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import type { EntityBase } from '../entity-base';
 import type { OneToManyLink } from '../selectable';
+import { DefaultDeSerializers, DeSerializers } from '../de-serializers';
 import type { BooleanFilterFunction } from './boolean-filter-function';
 import type { Filter } from './filter';
 import { UnaryFilter } from './unary-filter';
 import { FilterList } from './filter-list';
 import { FilterLambdaExpression } from './filter-lambda-expression';
 import { FilterLink } from './filter-link';
-import { NewBooleanFilterFunction } from './boolean-filter-function-new';
-import { NewFilter } from './filter-new';
 
 /**
  * A union of all types that can be used for filtering.
@@ -17,17 +16,16 @@ import { NewFilter } from './filter-new';
  */
 export type Filterable<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase = any
 > =
-  | Filter<EntityT, any>
-  | NewFilter<EntityT, any, any>
-  | FilterLink<EntityT>
-  | FilterList<EntityT>
-  | FilterLambdaExpression<EntityT>
+  | Filter<EntityT, DeSerializersT, any>
+  | FilterLink<EntityT, DeSerializersT>
+  | FilterList<EntityT, DeSerializersT>
+  | FilterLambdaExpression<EntityT, DefaultDeSerializers>
   | UnaryFilter<EntityT>
   | BooleanFilterFunction<EntityT>
-  | NewBooleanFilterFunction<EntityT>
-  | OneToManyLink<EntityT, LinkedEntityT>;
+  | OneToManyLink<EntityT, DeSerializersT, LinkedEntityT>;
 
 /**
  * Combine [[Filterable]]s with logical `and` to create a [[FilterList]].
@@ -50,16 +48,22 @@ export type Filterable<
  * @returns The newly created FilterList.
  * @internal
  */
-export function and<EntityT extends EntityBase>(
-  expressions: Filterable<EntityT>[]
-): FilterList<EntityT>;
+export function and<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  expressions: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT>;
 
 /**
  * @internal
  */
-export function and<EntityT extends EntityBase>(
-  ...expressions: Filterable<EntityT>[]
-): FilterList<EntityT>;
+export function and<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  ...expressions: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT>;
 
 /**
  * @param first - first
@@ -67,10 +71,16 @@ export function and<EntityT extends EntityBase>(
  * @returns A FilterList
  * @internal
  */
-export function and<EntityT extends EntityBase>(
-  first: undefined | Filterable<EntityT> | Filterable<EntityT>[],
-  ...rest: Filterable<EntityT>[]
-): FilterList<EntityT> {
+export function and<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  first:
+    | undefined
+    | Filterable<EntityT, DeSerializersT>
+    | Filterable<EntityT, DeSerializersT>[],
+  ...rest: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT> {
   return new FilterList(variadicArgumentToArray(first, rest));
 }
 
@@ -88,16 +98,22 @@ export function and<EntityT extends EntityBase>(
  * @returns The newly created FilterList
  * @internal
  */
-export function or<EntityT extends EntityBase>(
-  expressions: Filterable<EntityT>[]
-): FilterList<EntityT>;
+export function or<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  expressions: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT>;
 
 /**
  * @internal
  */
-export function or<EntityT extends EntityBase>(
-  ...expressions: Filterable<EntityT>[]
-): FilterList<EntityT>;
+export function or<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  ...expressions: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT>;
 
 /**
  * @param first - first
@@ -105,10 +121,15 @@ export function or<EntityT extends EntityBase>(
  * @returns A FilterList
  * @internal
  */
-export function or<EntityT extends EntityBase>(
-  first: Filterable<EntityT> | Filterable<EntityT>[],
-  ...rest: Filterable<EntityT>[]
-): FilterList<EntityT> {
+export function or<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
+  first:
+    | Filterable<EntityT, DeSerializersT>
+    | Filterable<EntityT, DeSerializersT>[],
+  ...rest: Filterable<EntityT, DeSerializersT>[]
+): FilterList<EntityT, DeSerializersT> {
   return new FilterList([], variadicArgumentToArray(first, rest));
 }
 
@@ -118,8 +139,9 @@ export function or<EntityT extends EntityBase>(
  * @returns The negated filter.
  * @internal
  */
-export function not<EntityT extends EntityBase>(
-  filter: Filterable<EntityT>
-): UnaryFilter<EntityT> {
+export function not<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(filter: Filterable<EntityT, DeSerializersT>): UnaryFilter<EntityT> {
   return new UnaryFilter(filter, 'not');
 }

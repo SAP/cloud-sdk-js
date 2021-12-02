@@ -268,6 +268,7 @@ export interface DestinationConfiguration {
   Authentication?: AuthenticationType;
   TrustAll?: string;
   tokenServiceURL?: string;
+  tokenServiceURLType?: 'Common' | 'Dedicated;';
   tokenServiceUsername?: string;
   tokenServicePass?: string;
   clientId?: string;

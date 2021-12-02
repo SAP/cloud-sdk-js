@@ -102,6 +102,14 @@ describe('openapi-request-builder', () => {
     mockServiceToken();
 
     const nocks = [
+      nock(onlyIssuerXsuaaUrl)
+        .post('/oauth/token')
+        .times(1)
+        .reply(200, { access_token: onlyIssuerServiceToken }),
+      nock(providerXsuaaUrl)
+        .post('/oauth/token')
+        .times(1)
+        .reply(200, { access_token: providerServiceToken }),
       mockInstanceDestinationsCall(nock, [], 200, onlyIssuerServiceToken),
       mockSubaccountDestinationsCall(
         nock,

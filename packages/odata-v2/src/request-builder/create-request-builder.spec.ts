@@ -5,6 +5,7 @@ import {
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   defaultHost,
@@ -12,7 +13,7 @@ import {
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { testPostRequestOutcome } from '../../../../test-resources/test/test-util/testPostRequestOutcome';
-import { uriConverter } from '../uri-conversion/uri-value-converter';
+import { defaultDeSerializers } from '../de-serializers';
 import { CreateRequestBuilder } from './create-request-builder';
 
 describe('CreateRequestBuilder', () => {
@@ -175,7 +176,7 @@ describe('CreateRequestBuilder', () => {
     const toChildPath = `${testEntityResourcePath(
       parentKeyGuid,
       parentKeyString,
-      uriConverter.convertToUriFormat
+      createUriConverter(defaultDeSerializers)
     )}/to_MultiLink`;
 
     mockCreateRequest({

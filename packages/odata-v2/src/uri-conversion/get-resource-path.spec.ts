@@ -1,10 +1,14 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { v4 as uuid } from 'uuid';
-import { createGetResourcePathForKeys } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  createGetResourcePathForKeys,
+  createUriConverter
+} from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { uriConverter } from './uri-value-converter';
+import { defaultDeSerializers } from '../de-serializers';
 
+const uriConverter = createUriConverter(defaultDeSerializers);
 const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
 
 describe('get resource path', () => {
@@ -17,11 +21,7 @@ describe('get resource path', () => {
     };
 
     expect(getResourcePathForKeys(keys, TestEntity)).toEqual(
-      testEntityResourcePath(
-        keyPropGuid,
-        keyPropString,
-        uriConverter.convertToUriFormat
-      )
+      testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
     );
   });
 

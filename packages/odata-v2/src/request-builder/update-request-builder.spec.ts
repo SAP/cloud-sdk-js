@@ -5,14 +5,16 @@ import {
   TestEntity,
   TestEntityMultiLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   mockUpdateRequest
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { uriConverter } from '../uri-conversion/uri-value-converter';
+import { defaultDeSerializers } from '../de-serializers';
 import { UpdateRequestBuilder } from './update-request-builder';
 
+const uriConverter = createUriConverter(defaultDeSerializers);
 function createTestEntity() {
   const keyPropGuid = uuid();
   const keyPropString = 'stringId';
@@ -69,7 +71,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       )
     });
 
@@ -94,7 +96,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       )
     });
 
@@ -119,7 +121,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       )
     });
 
@@ -145,7 +147,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       ),
       method: 'put'
     });
@@ -166,7 +168,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       )
     });
 
@@ -200,7 +202,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       ),
       additionalHeaders: { 'if-match': 'not-a-star' }
     });
@@ -221,7 +223,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       ),
       additionalHeaders: { 'if-match': customVersionIdentifier }
     });
@@ -243,7 +245,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       ),
       additionalHeaders: { 'if-match': '*' }
     });
@@ -285,7 +287,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       ),
       statusCode: 204,
       responseHeaders: { Etag: eTag }
@@ -311,7 +313,7 @@ describe('UpdateRequestBuilder', () => {
       path: testEntityResourcePath(
         entity.keyPropertyGuid,
         entity.keyPropertyString,
-        uriConverter.convertToUriFormat
+        uriConverter
       ),
       statusCode: 201
     });
@@ -353,7 +355,7 @@ describe('UpdateRequestBuilder', () => {
         path: testEntityResourcePath(
           entity.keyPropertyGuid,
           entity.keyPropertyString,
-          uriConverter.convertToUriFormat
+          uriConverter
         ),
         responseBody: response
       });

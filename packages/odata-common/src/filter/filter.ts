@@ -71,7 +71,7 @@ export class Filter<
     public operator: FilterOperator,
     public value: FieldT,
     public edmType?: EdmTypeShared<ODataVersionOf<EntityT>>
-  ){};
+  ) {}
 }
 
 /**

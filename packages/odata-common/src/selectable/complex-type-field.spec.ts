@@ -1,25 +1,25 @@
-import { getEntityConstructor } from '@sap-cloud-sdk/odata-common/internal';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { getEntityConstructor } from '../internal';
+import { CommonEntity } from '../../test/common-entity';
 import { getEdmType } from './complex-type-field';
 
 describe('complex-type-field', () => {
   describe('getEntityConstructor', () => {
     it('should get entity constructor from entity constructor', () => {
-      expect(getEntityConstructor(TestEntity)).toBe(TestEntity);
+      expect(getEntityConstructor(CommonEntity)).toBe(CommonEntity);
     });
 
     it('should get entity constructor from complex type field', () => {
-      expect(getEntityConstructor(TestEntity.COMPLEX_TYPE_PROPERTY)).toBe(
-        TestEntity
+      expect(getEntityConstructor(CommonEntity.COMPLEX_TYPE_PROPERTY)).toBe(
+        CommonEntity
       );
     });
 
     it('should get entity constructor from nested complex type field', () => {
       expect(
         getEntityConstructor(
-          TestEntity.COMPLEX_TYPE_PROPERTY.complexTypeProperty
+          CommonEntity.COMPLEX_TYPE_PROPERTY.complexTypeProperty
         )
-      ).toBe(TestEntity);
+      ).toBe(CommonEntity);
     });
   });
 

@@ -1,22 +1,15 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import BigNumber from 'bignumber.js';
-import moment from 'moment';
-import { EntityBuilder } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  TestEntity,
-  TestEntityLvl2SingleLink,
-  TestEntityMultiLink,
-  TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+import { CommonEntity, CommonEntitySingleLink } from '../test/common-entity';
+import { EntityBuilder } from './internal';
 
 describe('EntityBuilder', () => {
   it('should build an empty entity when no properties are defined', () => {
-    const builder = new EntityBuilder<TestEntity, unknown>(TestEntity);
-    expect(builder.build()).toEqual(new TestEntity());
+    const builder = new EntityBuilder<CommonEntity, unknown>(CommonEntity);
+    expect(builder.build()).toEqual(new CommonEntity());
   });
 
   it('should build an entity with custom fields', () => {
-    const builder = new EntityBuilder<TestEntity, unknown>(TestEntity);
+    const builder = new EntityBuilder<CommonEntity, unknown>(CommonEntity);
     const expected = { SomeCustomField: null };
     expect(
       builder
@@ -27,7 +20,7 @@ describe('EntityBuilder', () => {
   });
 
   it('ignores existing fields in custom fields', () => {
-    const builder = new EntityBuilder<TestEntity, unknown>(TestEntity);
+    const builder = new EntityBuilder<CommonEntity, unknown>(CommonEntity);
     const expected = { SomeCustomField: null };
     expect(
       builder
@@ -41,75 +34,53 @@ describe('EntityBuilder', () => {
     ).toEqual(expected);
   });
 
-  it('should build an entity with non-primitive JS types (moment, BigNumber etc.)', () => {
-    const expected: TestEntity = new TestEntity();
-
-    expected.dateProperty = moment();
-    expected.decimalProperty = new BigNumber(10);
-
-    const actual = TestEntity.builder()
-      .dateProperty(expected.dateProperty)
-      .decimalProperty(expected.decimalProperty)
-      .build();
-
-    expect(expected).toEqual(actual);
-  });
-
   describe('fromJson', () => {
     it('should build an entity from json', () => {
       const stringProperty = 'stringProperty';
-      const singleLinkStringProperty = 'singleLinkedValue';
-      const multiLinkStringProperty = 'multiLinkedValue';
-      const entity = TestEntity.builder().fromJson({
-        stringProperty,
-        toSingleLink: {
-          stringProperty: singleLinkStringProperty
-        },
-        toMultiLink: [
-          {
-            stringProperty: multiLinkStringProperty
-          }
-        ]
+
+      const entity = CommonEntity.builder().fromJson({
+        stringProperty
       });
-      const expectedEntity = TestEntity.builder()
+      const expectedEntity = CommonEntity.builder()
         .stringProperty(stringProperty)
-        .toSingleLink(
-          TestEntitySingleLink.builder()
-            .stringProperty(singleLinkStringProperty)
-            .build()
-        )
-        .toMultiLink([
-          TestEntityMultiLink.builder()
-            .stringProperty(multiLinkStringProperty)
-            .build()
-        ])
         .build();
       expect(entity).toStrictEqual(expectedEntity);
     });
 
-    it('should build an entity with nested navigation properties from json', () => {
+    it('should build an entity from json with 1:1 link', () => {
       const stringProperty = 'stringProperty';
-      const singleLinkStringProperty = 'singleLinkedValue';
-      const nestedSingleLinkStringProperty = 'nestedSingleLinkedValue';
-      const entity = TestEntity.builder().fromJson({
+
+      const entity = CommonEntity.builder().fromJson({
         stringProperty,
-        toSingleLink: {
-          stringProperty: singleLinkStringProperty,
-          toSingleLink: {
-            stringProperty: nestedSingleLinkStringProperty
-          }
-        }
+        toSingleLink: { stringProperty: 'singleLinkedValue' }
       });
-      const expectedEntity = TestEntity.builder()
+      const expectedEntity = CommonEntity.builder()
         .stringProperty(stringProperty)
         .toSingleLink(
-          TestEntitySingleLink.builder()
-            .stringProperty(singleLinkStringProperty)
-            .toSingleLink(
-              TestEntityLvl2SingleLink.builder()
-                .stringProperty(nestedSingleLinkStringProperty)
-                .build()
-            )
+          CommonEntitySingleLink.builder()
+            .stringProperty('singleLinkedValue')
+            .build()
+        )
+        .build();
+      expect(entity).toStrictEqual(expectedEntity);
+    });
+
+    it('should build an entity from json with 1:1 link and custom fields in link', () => {
+      const stringProperty = 'stringProperty';
+
+      const entity = CommonEntity.builder().fromJson({
+        stringProperty,
+        toSingleLink: {
+          stringProperty: 'singleLinkedValue',
+          customField: 'customField'
+        }
+      });
+      const expectedEntity = CommonEntity.builder()
+        .stringProperty(stringProperty)
+        .toSingleLink(
+          CommonEntitySingleLink.builder()
+            .stringProperty('singleLinkedValue')
+            .withCustomFields({ customField: 'customField' })
             .build()
         )
         .build();
@@ -120,8 +91,8 @@ describe('EntityBuilder', () => {
       const entityJson = {
         customField: 'customField'
       };
-      const entity = TestEntity.builder().fromJson(entityJson);
-      const expectedEntity = TestEntity.builder()
+      const entity = CommonEntity.builder().fromJson(entityJson);
+      const expectedEntity = CommonEntity.builder()
         .withCustomFields({
           customField: entityJson.customField
         })
@@ -135,8 +106,8 @@ describe('EntityBuilder', () => {
       const entityJson = {
         complexTypeProperty: { stringProperty: 'complexTypeValue' }
       };
-      const entity = TestEntity.builder().fromJson(entityJson);
-      const expectedEntity = TestEntity.builder()
+      const entity = CommonEntity.builder().fromJson(entityJson);
+      const expectedEntity = CommonEntity.builder()
         .complexTypeProperty(entityJson.complexTypeProperty)
         .build();
       expect(entity).toStrictEqual(expectedEntity);
@@ -146,8 +117,8 @@ describe('EntityBuilder', () => {
       const entityJson = {
         collectionProperty: ['collectionValue']
       };
-      const entity = TestEntity.builder().fromJson(entityJson);
-      const expectedEntity = TestEntity.builder()
+      const entity = CommonEntity.builder().fromJson(entityJson);
+      const expectedEntity = CommonEntity.builder()
         .collectionProperty(entityJson.collectionProperty)
         .build();
       expect(entity).toStrictEqual(expectedEntity);
@@ -157,8 +128,8 @@ describe('EntityBuilder', () => {
       const entityJson = {
         collectionProperty: []
       };
-      const entity = TestEntity.builder().fromJson(entityJson);
-      const expectedEntity = TestEntity.builder()
+      const entity = CommonEntity.builder().fromJson(entityJson);
+      const expectedEntity = CommonEntity.builder()
         .collectionProperty(entityJson.collectionProperty)
         .build();
       expect(entity).toStrictEqual(expectedEntity);
@@ -172,61 +143,14 @@ describe('EntityBuilder', () => {
           customField: 'customField'
         }
       };
-      const entity = TestEntity.builder().fromJson(entityJson);
-      const expectedEntity = TestEntity.builder()
+      const entity = CommonEntity.builder().fromJson(entityJson);
+      const expectedEntity = CommonEntity.builder()
         .withCustomFields(entityJson._customFields)
         .build();
       expect(entity.getCustomFields()).toEqual(
         expectedEntity.getCustomFields()
       );
       expect(warnSpy).toHaveBeenCalled();
-    });
-
-    it('should build an entity from json with existing entities as navigation properties', () => {
-      const expectedEntity = TestEntity.builder()
-        .stringProperty('someValue')
-        .toSingleLink(
-          TestEntitySingleLink.builder()
-            .stringProperty('singleLinkedValue')
-            .withCustomFields({ customField: 'customField' })
-            .build()
-        )
-        .toMultiLink([
-          TestEntityMultiLink.builder()
-            .stringProperty('singleLinkedValue')
-            .build()
-        ])
-        .build();
-
-      const entityJson = {
-        stringProperty: expectedEntity.stringProperty,
-        toSingleLink: expectedEntity.toSingleLink,
-        toMultiLink: expectedEntity.toMultiLink
-      };
-      const entity = TestEntity.builder().fromJson(entityJson);
-
-      expect(entity).toStrictEqual(expectedEntity);
-      expect(entity.toSingleLink!.getCustomFields()).toEqual(
-        expectedEntity.toSingleLink!.getCustomFields()
-      );
-    });
-
-    it('should build an entity from json with one-to-one navigation properties being null', () => {
-      const entity = TestEntity.builder().fromJson({
-        toSingleLink: null
-      });
-      const expectedEntity = TestEntity.builder().toSingleLink(null).build();
-      expect(entity).toStrictEqual(expectedEntity);
-    });
-
-    it('should build an entity from json with one-to-one navigation properties being undefined', () => {
-      const entity = TestEntity.builder().fromJson({
-        toSingleLink: undefined
-      });
-      const expectedEntity = TestEntity.builder()
-        .toSingleLink(undefined)
-        .build();
-      expect(entity).toStrictEqual(expectedEntity);
     });
   });
 });

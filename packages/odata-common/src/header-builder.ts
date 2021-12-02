@@ -5,6 +5,7 @@
  * @param request - OData request configuration to create headers for
  * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
  */
+import { OriginOptions } from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequest, ODataRequestConfig } from './request';
 
 /**
@@ -15,7 +16,7 @@ import { ODataRequest, ODataRequestConfig } from './request';
  */
 export async function buildHeaders<RequestT extends ODataRequestConfig>(
   request: ODataRequest<RequestT>
-): Promise<Record<string, string>> {
+): Promise<OriginOptions> {
   if (!request.destination) {
     throw Error('The request destination is undefined.');
   }

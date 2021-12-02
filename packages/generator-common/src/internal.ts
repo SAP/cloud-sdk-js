@@ -1,3 +1,5 @@
 export * from './sdk-metadata';
 export * from './compiler';
 export * from './readme';
+export * from './reserved-words';
+export * from './util';

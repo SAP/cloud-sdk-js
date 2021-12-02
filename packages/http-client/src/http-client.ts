@@ -20,9 +20,11 @@ import {
   ExecuteHttpRequestFn,
   HttpRequest,
   HttpRequestConfig,
+  HttpRequestConfigWithOrigin,
   HttpRequestOptions,
   HttpResponse
 } from './http-client-types';
+import { buildHttpRequestConfig } from './http-request-config';
 import { buildCsrfHeaders } from './csrf-token-header';
 
 const logger = createLogger({
@@ -110,16 +112,18 @@ export function execute<ReturnT>(executeFn: ExecuteHttpRequestFn<ReturnT>) {
 
 function logRequestInformation(request: HttpRequestConfig) {
   const basicRequestInfo = `Execute '${request.method}' request with target: ${request.url}.`;
-  const headerText = Object.keys(request.headers).reduce((previous, key) => {
-    if (
-      key.toLowerCase().includes('authentication') ||
-      key.toLowerCase().includes('authorization')
-    ) {
-      return `${previous}${unixEOL}${key}:*******`;
-    }
-    return `${previous}${unixEOL}${key}:${request.headers[key]}`;
-  }, 'The headers of the request are:');
-  logger.debug(`${basicRequestInfo}${unixEOL}${headerText}`);
+  if (request.headers) {
+    const headerText = Object.keys(request.headers).reduce((previous, key) => {
+      if (
+        key.toLowerCase().includes('authentication') ||
+        key.toLowerCase().includes('authorization')
+      ) {
+        return `${previous}${unixEOL}${key}:*******`;
+      }
+      return `${previous}${unixEOL}${key}:${request.headers![key]}`;
+    }, 'The headers of the request are:');
+    logger.debug(`${basicRequestInfo}${unixEOL}${headerText}`);
+  }
 }
 
 /**
@@ -143,6 +147,7 @@ export async function buildAxiosRequestConfig<T extends HttpRequestConfig>(
   return { ...getAxiosConfigWithDefaultsWithoutMethod(), ...request };
 }
 
+// TODO: deprecate this and consider switching to executeHttpRequestWithOrigin
 /**
  * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
  * and executes it (using Axios).
@@ -157,6 +162,28 @@ export function executeHttpRequest<T extends HttpRequestConfig>(
   options?: HttpRequestOptions
 ): Promise<HttpResponse> {
   return execute(executeWithAxios)(destination, requestConfig, options);
+}
+
+/**
+ * Builds a [[DestinationHttpRequestConfig]] for the given destination, merges it into the given requestConfig
+ * and executes it (using Axios).
+ * @param destination - A destination or a destination name and a JWT.
+ * @param requestConfig - Any object representing an HTTP request.
+ * @param options - An [[HttpRequestOptions]] of the http request for configuring e.g., csrf token delegation. By default, the SDK will not fetch the csrf token.
+ * @returns A promise resolving to an [[HttpResponse]].
+ */
+export function executeHttpRequestWithOrigin<
+  T extends HttpRequestConfigWithOrigin
+>(
+  destination: Destination | DestinationFetchOptions,
+  requestConfig: T,
+  options?: HttpRequestOptions
+): Promise<HttpResponse> {
+  return execute(executeWithAxios)(
+    destination,
+    buildHttpRequestConfig(requestConfig),
+    options
+  );
 }
 
 function buildDestinationHttpRequestConfig(

@@ -14,8 +14,15 @@ import {
   Destination,
   sanitizeDestination
 } from '@sap-cloud-sdk/connectivity';
-import { executeHttpRequest, HttpResponse } from '@sap-cloud-sdk/http-client';
-import { filterCustomRequestConfig } from '@sap-cloud-sdk/http-client/internal';
+import {
+  HttpResponse,
+  executeHttpRequestWithOrigin,
+  mergeOptionsWithPriority
+} from '@sap-cloud-sdk/http-client';
+import {
+  filterCustomRequestConfig,
+  OriginOptions
+} from '@sap-cloud-sdk/http-client/internal';
 import { ODataRequestConfig } from './odata-request-config';
 import { isWithETag } from './odata-request-traits';
 /**
@@ -135,17 +142,21 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
    * @returns Query parameter string
    */
   query(): string {
-    const query = Object.entries(this.queryParameters())
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&');
-    return query.length ? `?${query}` : '';
+    const parameters = mergeOptionsWithPriority(this.queryParameters());
+    if (parameters) {
+      const query = Object.entries(parameters)
+        .map(([key, value]) => `${key}=${value}`)
+        .join('&');
+      return query.length ? `?${query}` : '';
+    }
+    return '';
   }
 
   /**
    * Create object containing all headers, including custom headers for the given request.
    * @returns Key-value pairs where the key is the name of a header property and the value is the respective value
    */
-  async headers(): Promise<Record<string, any>> {
+  async headers(): Promise<OriginOptions> {
     try {
       if (!this.destination) {
         throw Error('The destination is undefined.');
@@ -155,12 +166,10 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
         this.destination,
         this.config.customHeaders
       );
-
       return {
-        ...destinationRelatedHeaders,
-        ...this.defaultHeaders(),
-        ...this.eTagHeaders(),
-        ...this.customHeaders()
+        Custom: this.customHeaders(),
+        Destination: destinationRelatedHeaders,
+        RequestConfig: { ...this.defaultHeaders(), ...this.eTagHeaders() }
       };
     } catch (error) {
       throw new ErrorWithCause(
@@ -221,7 +230,7 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
       throw Error('The destination cannot be undefined.');
     }
 
-    return executeHttpRequest(
+    return executeHttpRequestWithOrigin(
       destination,
       {
         ...filterCustomRequestConfig(this.config.customRequestConfiguration),
@@ -246,11 +255,11 @@ export class ODataRequest<RequestConfigT extends ODataRequestConfig> {
     return mergeIgnoreCase(destinationHeaders, customHeaders);
   }
 
-  private queryParameters(): Record<string, any> {
+  private queryParameters(): OriginOptions {
     return {
-      ...this.config.queryParameters(),
-      ...this.destination?.queryParameters,
-      ...this.config.customQueryParameters
+      Custom: this.config.customQueryParameters,
+      Destination: this.destination?.queryParameters,
+      RequestConfig: this.config.queryParameters()
     };
   }
 }

@@ -132,6 +132,7 @@ async function fetchDestinations(
 export interface AuthAndExchangeTokens {
   authHeaderJwt: string;
   exchangeHeaderJwt?: string;
+  exchangeTenant?: string;
 }
 
 /**
@@ -190,6 +191,10 @@ async function fetchDestinationByTokens(
   let authHeader = wrapJwtInHeader(tokens.authHeaderJwt).headers;
   authHeader = tokens.exchangeHeaderJwt
     ? { ...authHeader, 'X-user-token': tokens.exchangeHeaderJwt }
+    : authHeader;
+
+  authHeader = tokens.exchangeTenant
+    ? { ...authHeader, 'X-tenant': tokens.exchangeTenant }
     : authHeader;
 
   return callDestinationService(targetUri, authHeader, options)

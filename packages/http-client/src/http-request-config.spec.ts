@@ -94,7 +94,7 @@ describe('getOptionWithPriority', () => {
   it('should use options with higher priority and ignore case', () => {
     const originOptions: OriginOptions = {
       Custom: { Authorization: 'customAuth' },
-      Destination: { authorization: 'destAuth', 'sap-client': '001' }
+      Destination: { AuTHORizaTION: 'destAuth', 'sap-client': '001' }
     };
     const expected = {
       Authorization: 'customAuth',

@@ -8,11 +8,14 @@ import {
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import {
-  executeHttpRequest,
   Method,
-  HttpResponse
+  HttpResponse,
+  executeHttpRequestWithOrigin
 } from '@sap-cloud-sdk/http-client';
-import { filterCustomRequestConfig } from '@sap-cloud-sdk/http-client/internal';
+import {
+  filterCustomRequestConfig,
+  OriginOptions
+} from '@sap-cloud-sdk/http-client/internal';
 
 /**
  * Request builder for OpenAPI requests.
@@ -93,14 +96,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     if (isNullish(destination)) {
       throw Error(noDestinationErrorMessage(destination));
     }
-    return executeHttpRequest(
+    return executeHttpRequestWithOrigin(
       resolvedDestination as Destination,
       {
         ...filterCustomRequestConfig(this.customRequestConfiguration),
         method: this.method,
         url: this.getPath(),
-        headers: this.customHeaders,
-        params: this.parameters?.queryParameters,
+        headers: this.getHeaders(),
+        params: this.getParameters(),
         data: this.parameters?.body
       },
       // TODO: Remove this in v 2.0, when this becomes true becomes the default
@@ -123,6 +126,14 @@ export class OpenApiRequestBuilder<ResponseT = any> {
     throw new Error(
       'Could not access response data. Response was not an axios response.'
     );
+  }
+
+  private getHeaders(): OriginOptions {
+    return { Custom: this.customHeaders };
+  }
+
+  private getParameters(): OriginOptions {
+    return { RequestConfig: this.parameters?.queryParameters };
   }
 
   private getPath(): string {

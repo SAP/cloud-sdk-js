@@ -147,6 +147,25 @@ describe('GetAllRequestBuilder', () => {
 
       await expect(getAllRequest).rejects.toThrowErrorMatchingSnapshot();
     });
+
+    it('sets custom headers instead of destination headers', async () => {
+      const entityData = createOriginalTestEntityData1();
+      const customAuthHeader = { Authorization: 'custom' };
+      mockGetRequest({
+        headers: customAuthHeader,
+        responseBody: { d: { results: [entityData] } }
+      });
+
+      const destinationWithAuthHeader = {
+        ...defaultDestination,
+        Authorization: 'destination'
+      };
+      const actual = await requestBuilder
+        .addCustomHeaders(customAuthHeader)
+        .execute(destinationWithAuthHeader);
+
+      expect(actual).toEqual([createTestEntity(entityData)]);
+    });
   });
 
   describe('executeRaw', () => {
@@ -195,7 +214,7 @@ describe('GetAllRequestBuilder', () => {
           .get(/.*/)
           .reply(200, 'iss token used on the way')
       ];
-      const spy = jest.spyOn(httpClient, 'executeHttpRequest');
+      const spy = jest.spyOn(httpClient, 'executeHttpRequestWithOrigin');
       const response = await requestBuilder.executeRaw({
         destinationName: 'ERNIE-UND-CERT',
         iss: onlyIssuerXsuaaUrl

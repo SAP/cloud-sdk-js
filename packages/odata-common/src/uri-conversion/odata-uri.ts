@@ -11,9 +11,9 @@ import { createGetFilter } from './get-filter';
 import { createGetResourcePathForKeys } from './get-resource-path';
 
 /**
+ * @internal
  * Union of necessary methods for the OData URI conversion.
  * In v2/uri-conversion/odata-uri.ts and v4/uri-conversion/odata-uri.ts the instance for v2 and v4 are created.
- * @internal
  */
 export interface ODataUri<DeSerializersT extends DeSerializers> {
   getExpand<EntityT extends EntityBase>(
@@ -46,21 +46,21 @@ export interface ODataUri<DeSerializersT extends DeSerializers> {
 }
 
 /**
- * Add a dollar to a string
- * @param param - String to be modified.
- * @returns string containing the dollar
  * @internal
+ * Add a dollar to a string.
+ * @param param - String to be modified.
+ * @returns The given string starting with a dollar.
  */
 export function prependDollar(param: string): string {
   return `$${param}`;
 }
 
 /**
- * @param uriConverter - uriConverter
- * @param getExpand - getExpand
- * @param getSelect - getSelect
- * @returns An ODataURI
  * @internal
+ * @param deSerializers - (De-)serializers used for transformation.
+ * @param getExpand - `getExpand` function.
+ * @param getSelect - `getSelect`function.
+ * @returns An instance of ODataUri
  */
 export function createODataUri<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT,

@@ -25,7 +25,7 @@ export class FunctionImportRequestBuilder<
    * @param functionImportName - The name of the function import.
    * @param responseTransformer - Transformation function for the response
    * @param parameters - Parameters to be set in the function
-   * @param deSerializers - TODO
+   * @param deSerializers - (De-)serializers used for transformation.
    */
   constructor(
     defaultServicePath: string,

@@ -57,26 +57,7 @@ export function fromEdmToNumber(value: string | number): number {
   return num;
 }
 
-/**
- * @internal
- */
-export function fromNumberToEdm(value: number): number | string {
-  if (value === Number.POSITIVE_INFINITY) {
-    return 'INF';
-  }
-  if (value === Number.NEGATIVE_INFINITY) {
-    return '-INF';
-  }
-  if (Number.isNaN(value)) {
-    return 'NaN';
-  }
 
-  if (typeof value === 'number') {
-    return value;
-  }
-
-  throw new Error(`TS->EDM: Cannot create number from input "${value}"`);
-}
 
 /**
  * @internal

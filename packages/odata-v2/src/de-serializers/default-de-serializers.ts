@@ -1,8 +1,7 @@
 import {
-  wrapDefaultDeserialization,
-  wrapDefaultSerialization,
   defaultDeSerializersRaw as defaultDeSerializersCommon,
-  Time
+  Time,
+  wrapDefaultDeSerializers
 } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
 import {
@@ -71,16 +70,6 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
 /**
  * The default (de-)serializers.
  */
-export const defaultDeSerializers: DefaultDeSerializers = Object.entries(
+export const defaultDeSerializers = wrapDefaultDeSerializers(
   defaultDeSerializersRaw
-).reduce(
-  (entries, [edmType, { deserialize, serialize, serializeToUri }]) => ({
-    ...entries,
-    [edmType]: {
-      deserialize: wrapDefaultDeserialization(deserialize),
-      serialize: wrapDefaultSerialization(serialize),
-      serializeToUri
-    }
-  }),
-  {}
-) as DefaultDeSerializers;
+);

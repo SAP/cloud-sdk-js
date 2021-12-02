@@ -13,7 +13,7 @@ function getExpandWrapped(selects, expands, entityConstructor) {
 
 /**
  * Instance of the [[ODataUri]] conversion interface for OData v2.
- * @param deSerializers - TODO
+ * @param deSerializers - (De-)serializers used for transformation.
  * @returns TODO
  * @internal
  */

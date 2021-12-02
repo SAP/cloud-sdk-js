@@ -127,21 +127,9 @@ export class ServiceNameFormatter {
     return this.originalToComplexTypeName(str);
   }
 
-  typeNameToFactoryName(str: string): string;
-  /**
-   * @deprecated Since v1.25.0. In the refactored version of the generator the reserved names are obsolete.
-   */
-  /* eslint-disable-next-line  @typescript-eslint/unified-signatures */
-  typeNameToFactoryName(str: string, reservedNames: Set<string>): string;
-  typeNameToFactoryName(str: string, reservedNames?: Set<string>): string {
-    let factoryName = `create${str}`;
-    if (reservedNames) {
-      let index = 1;
-      while (reservedNames.has(factoryName)) {
-        factoryName = `${factoryName}_${index}`;
-        index += 1;
-      }
-    }
+  typeNameToFactoryName(str: string): string
+  {
+    const factoryName = `create${str}`;
     return this.serviceWideNameGenerator.generateAndSaveUniqueName(factoryName);
   }
 

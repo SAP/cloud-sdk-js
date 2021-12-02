@@ -55,11 +55,6 @@ export class Filter<
    */
   readonly _entity: EntityT;
 
-  /**
-   * @deprecated Since v1.16.0. Use [[field]] instead.
-   */
-  public _fieldName: string | FilterFunction<EntityT, FieldT>;
-
   // TODO: change the constructor to the following:
   // Constructor(public field: string | Field<EntityT>, public operator: FilterOperator, public value: FieldT) {}
   // And deprecate passing a string as the field is needed later on
@@ -76,9 +71,7 @@ export class Filter<
     public operator: FilterOperator,
     public value: FieldT,
     public edmType?: EdmTypeShared<ODataVersionOf<EntityT>>
-  ) {
-    this._fieldName = field;
-  }
+  ){};
 }
 
 /**

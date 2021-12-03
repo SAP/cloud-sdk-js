@@ -160,29 +160,34 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
 }
 
 export interface TestEntityType<
-  T extends DeSerializers = DefaultDeSerializers
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
-  keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>;
-  keyPropertyString: DeserializedType<T, 'Edm.String'>;
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
-  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
-  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
-  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
-  int32Property?: DeserializedType<T, 'Edm.Int32'> | null;
-  int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
-  decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
-  singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
-  doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
-  floatProperty?: DeserializedType<T, 'Edm.Float'> | null;
-  timeProperty?: DeserializedType<T, 'Edm.Time'> | null;
-  dateTimeProperty?: DeserializedType<T, 'Edm.DateTime'> | null;
-  dateTimeOffSetProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
-  byteProperty?: DeserializedType<T, 'Edm.Byte'> | null;
-  sByteProperty?: DeserializedType<T, 'Edm.SByte'> | null;
-  somethingTheSdkDoesNotSupport?: DeserializedType<T, 'Edm.Any'> | null;
-  complexTypeProperty?: TestComplexType<T> | null;
-  toMultiLink: TestEntityMultiLinkType<T>[];
+  keyPropertyGuid: DeserializedType<DeSerializersT, 'Edm.Guid'>;
+  keyPropertyString: DeserializedType<DeSerializersT, 'Edm.String'>;
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'> | null;
+  booleanProperty?: DeserializedType<DeSerializersT, 'Edm.Boolean'> | null;
+  guidProperty?: DeserializedType<DeSerializersT, 'Edm.Guid'> | null;
+  int16Property?: DeserializedType<DeSerializersT, 'Edm.Int16'> | null;
+  int32Property?: DeserializedType<DeSerializersT, 'Edm.Int32'> | null;
+  int64Property?: DeserializedType<DeSerializersT, 'Edm.Int64'> | null;
+  decimalProperty?: DeserializedType<DeSerializersT, 'Edm.Decimal'> | null;
+  singleProperty?: DeserializedType<DeSerializersT, 'Edm.Single'> | null;
+  doubleProperty?: DeserializedType<DeSerializersT, 'Edm.Double'> | null;
+  floatProperty?: DeserializedType<DeSerializersT, 'Edm.Float'> | null;
+  timeProperty?: DeserializedType<DeSerializersT, 'Edm.Time'> | null;
+  dateTimeProperty?: DeserializedType<DeSerializersT, 'Edm.DateTime'> | null;
+  dateTimeOffSetProperty?: DeserializedType<
+    DeSerializersT,
+    'Edm.DateTimeOffset'
+  > | null;
+  byteProperty?: DeserializedType<DeSerializersT, 'Edm.Byte'> | null;
+  sByteProperty?: DeserializedType<DeSerializersT, 'Edm.SByte'> | null;
+  somethingTheSdkDoesNotSupport?: DeserializedType<
+    DeSerializersT,
+    'Edm.Any'
+  > | null;
+  complexTypeProperty?: TestComplexType<DeSerializersT> | null;
+  toMultiLink: TestEntityMultiLinkType<DeSerializersT>[];
   toOtherMultiLink: TestEntityOtherMultiLinkType[];
   toSingleLink?: TestEntitySingleLinkType | null;
 }
-

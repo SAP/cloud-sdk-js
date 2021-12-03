@@ -176,3 +176,10 @@ export function wrapDefaultDeSerializers<DeSerializersT extends DeSerializers>(
     {}
   ) as DeSerializersT;
 }
+
+/**
+ * Default (de-)serializers without `null` and `undefined` handling.
+ */
+export const defaultDeSerializers = wrapDefaultDeSerializers(
+  defaultDeSerializersRaw
+);

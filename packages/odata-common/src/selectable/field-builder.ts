@@ -31,6 +31,7 @@ type ComplexTypeFieldConstructor<
 > = new (
   fieldName: string,
   fieldOf: ConstructorOrField<EntityT>,
+  deSerializers: DeSerializersT,
   fieldOptions?: FieldOptions<NullableT, SelectableT>
 ) => ComplexTypeFieldT;
 
@@ -174,10 +175,15 @@ export class FieldBuilder<
   ): ComplexTypeFieldT {
     const isSelectable = (this.fieldOf instanceof
       ComplexTypeField) as IsSelectableField<FieldOfT>;
-    return new complexTypeFieldCtor(fieldName, this.fieldOf, {
-      isNullable,
-      isSelectable
-    });
+    return new complexTypeFieldCtor(
+      fieldName,
+      this.fieldOf,
+      this.deSerializers,
+      {
+        isNullable,
+        isSelectable
+      }
+    );
   }
 
   /**

@@ -1,4 +1,5 @@
-import { createLogger, encodeBase64 } from '@sap-cloud-sdk/util';
+import { createLogger } from '@sap-cloud-sdk/util';
+import { JwtPayload } from 'jsonwebtoken';
 import { decodeJwt, isUserToken, JwtPair, verifyJwt } from '../jwt';
 import { IsolationStrategy } from '../cache';
 import { jwtBearerToken, serviceToken } from '../token-accessor';
@@ -13,15 +14,19 @@ import {
   DestinationServiceCredentials,
   XsuaaServiceCredentials
 } from '../environment-accessor-types';
+import { getSubdomainAndZoneId } from '../xsuaa-service';
+import {
+  addProxyConfigurationInternet,
+  ProxyStrategy,
+  proxyStrategy
+} from '../../../http-agent';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
   alwaysSubscriber,
   subscriberFirst
 } from './destination-selection-strategies';
-import {
-  DestinationsByType
-} from './destination-accessor-types';
+import { DestinationsByType } from './destination-accessor-types';
 import {
   AuthAndExchangeTokens,
   fetchDestination,
@@ -29,11 +34,7 @@ import {
   fetchSubaccountDestinations
 } from './destination-service';
 import { destinationCache } from './destination-cache';
-
-import {JwtPayload} from "jsonwebtoken";
-import {getSubdomainAndZoneId} from "../xsuaa-service";
-import {DestinationOptions} from "./destination-accessor";
-import {addProxyConfigurationInternet, ProxyStrategy, proxyStrategy} from "../../../http-agent";
+import { DestinationOptions } from './destination-accessor';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -92,24 +93,24 @@ class DestinationFromServiceRetriever {
     options: DestinationOptions
   ): Promise<Destination | null> {
     const subscriberToken =
-        await DestinationFromServiceRetriever.getSubscriberToken(options);
+      await DestinationFromServiceRetriever.getSubscriberToken(options);
 
     const xsuaaCredentials = getXsuaaServiceCredentials(options.userJwt);
     const providerToken =
-        await DestinationFromServiceRetriever.getProviderServiceToken(
-            xsuaaCredentials,
-            options
-        );
+      await DestinationFromServiceRetriever.getProviderServiceToken(
+        xsuaaCredentials,
+        options
+      );
 
     const da = new DestinationFromServiceRetriever(
-       name,
-        { ...options, xsuaaCredentials },
-        subscriberToken,
-        providerToken
+      name,
+      { ...options, xsuaaCredentials },
+      subscriberToken,
+      providerToken
     );
 
     const destinationResult =
-        await da.searchDestinationWithSelectionStrategyAndCache();
+      await da.searchDestinationWithSelectionStrategyAndCache();
     if (!destinationResult) {
       return null;
     }
@@ -121,24 +122,24 @@ class DestinationFromServiceRetriever {
     let { destination } = destinationResult;
 
     if (
-        destination.authentication === 'OAuth2UserTokenExchange' ||
-        destination.authentication === 'OAuth2JWTBearer' ||
-        (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
-            !da.usesSystemUser(destination))
+      destination.authentication === 'OAuth2UserTokenExchange' ||
+      destination.authentication === 'OAuth2JWTBearer' ||
+      (destination.authentication === 'OAuth2SAMLBearerAssertion' &&
+        !da.usesSystemUser(destination))
     ) {
       destination = await da.fetchDestinationWithUserExchangeFlows(
-          destinationResult
+        destinationResult
       );
     }
 
     if (
-        destination.authentication === 'OAuth2Password' ||
-        destination.authentication === 'ClientCertificateAuthentication' ||
-        destination.authentication === 'OAuth2ClientCredentials' ||
-        da.usesSystemUser(destination)
+      destination.authentication === 'OAuth2Password' ||
+      destination.authentication === 'ClientCertificateAuthentication' ||
+      destination.authentication === 'OAuth2ClientCredentials' ||
+      da.usesSystemUser(destination)
     ) {
       destination = await da.fetchDestinationWithNonUserExchangeFlows(
-          destinationResult
+        destinationResult
       );
     }
 
@@ -153,7 +154,7 @@ class DestinationFromServiceRetriever {
     if (options.userJwt) {
       if (options.iss) {
         logger.warn(
-            'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
+          'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
         );
       }
       const encoded = await serviceToken('destination', {
@@ -170,7 +171,7 @@ class DestinationFromServiceRetriever {
 
     if (options.iss) {
       logger.info(
-          'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
+        'Using `iss` option to fetch a destination instead of a full JWT. No validation is performed.'
       );
       const payload = { iss: options.iss };
       const encoded = await serviceToken('destination', {
@@ -183,8 +184,8 @@ class DestinationFromServiceRetriever {
   }
 
   private static async getProviderServiceToken(
-      xsuaaCredentials: XsuaaServiceCredentials,
-      options: DestinationOptions
+    xsuaaCredentials: XsuaaServiceCredentials,
+    options: DestinationOptions
   ): Promise<JwtPair> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userJwt, ...optionsWithoutJwt } = options;
@@ -196,15 +197,15 @@ class DestinationFromServiceRetriever {
   }
 
   private options: RequiredProperties<
-      Omit<DestinationOptions, 'userJwt' | 'iss'>,
-      'isolationStrategy' | 'selectionStrategy' | 'useCache'
-      >;
+    Omit<DestinationOptions, 'userJwt' | 'iss'>,
+    'isolationStrategy' | 'selectionStrategy' | 'useCache'
+  >;
 
   private constructor(
-      readonly name: string,
-      options: DestinationOptions & { xsuaaCredentials: XsuaaServiceCredentials },
-      readonly subscriberToken: SubscriberTokens | undefined,
-      readonly providerServiceToken: JwtPair
+    readonly name: string,
+    options: DestinationOptions & { xsuaaCredentials: XsuaaServiceCredentials },
+    readonly subscriberToken: SubscriberTokens | undefined,
+    readonly providerServiceToken: JwtPair
   ) {
     const defaultOptions = {
       isolationStrategy: IsolationStrategy.Tenant_User,
@@ -216,26 +217,26 @@ class DestinationFromServiceRetriever {
   }
 
   private async searchDestinationWithSelectionStrategyAndCache(): Promise<
-      DestinationSearchResult | undefined
-      > {
+    DestinationSearchResult | undefined
+  > {
     let destinationSearchResult: DestinationSearchResult | undefined;
     if (this.isSubscriberNeeded()) {
       destinationSearchResult =
-          await this.searchSubscriberAccountForDestination();
+        await this.searchSubscriberAccountForDestination();
     }
 
     if (this.isProviderNeeded(destinationSearchResult)) {
       destinationSearchResult =
-          await this.searchProviderAccountForDestination();
+        await this.searchProviderAccountForDestination();
     }
     if (destinationSearchResult && !destinationSearchResult.fromCache) {
       logger.debug(
-          'Successfully retrieved destination from destination service.'
+        'Successfully retrieved destination from destination service.'
       );
     }
     if (destinationSearchResult && destinationSearchResult.fromCache) {
       logger.debug(
-          `Successfully retrieved destination from destination service cache for ${destinationSearchResult.origin} destinations.`
+        `Successfully retrieved destination from destination service cache for ${destinationSearchResult.origin} destinations.`
       );
     }
     if (!destinationSearchResult) {
@@ -246,18 +247,18 @@ class DestinationFromServiceRetriever {
   }
 
   private async getInstanceAndSubaccountDestinations(
-      accessToken: string
+    accessToken: string
   ): Promise<DestinationsByType> {
     const [instance, subaccount] = await Promise.all([
       fetchInstanceDestinations(
-          this.destinationServiceCredentials.uri,
-          accessToken,
-          this.options
+        this.destinationServiceCredentials.uri,
+        accessToken,
+        this.options
       ),
       fetchSubaccountDestinations(
-          this.destinationServiceCredentials.uri,
-          accessToken,
-          this.options
+        this.destinationServiceCredentials.uri,
+        accessToken,
+        this.options
       )
     ]);
 
@@ -271,12 +272,12 @@ class DestinationFromServiceRetriever {
     const credentials = getDestinationServiceCredentialsList();
     if (!credentials || credentials.length === 0) {
       throw Error(
-          'No binding to a destination service instance found. Please bind a destination service instance to your application.'
+        'No binding to a destination service instance found. Please bind a destination service instance to your application.'
       );
     }
     if (credentials.length > 1) {
       logger.info(
-          'Found more than one destination service instance. Using the first one.'
+        'Found more than one destination service instance. Using the first one.'
       );
     }
 
@@ -284,13 +285,13 @@ class DestinationFromServiceRetriever {
   }
 
   private async fetchDestinationByToken(
-      jwt: string | AuthAndExchangeTokens
+    jwt: string | AuthAndExchangeTokens
   ): Promise<Destination> {
     return fetchDestination(
-        this.destinationServiceCredentials.uri,
-        jwt,
-        this.name,
-        this.options
+      this.destinationServiceCredentials.uri,
+      jwt,
+      this.name,
+      this.options
     );
   }
 
@@ -302,25 +303,25 @@ class DestinationFromServiceRetriever {
       return undefined;
     }
     const subdomainSubscriber = getSubdomainAndZoneId(
-        this.subscriberToken?.userJwt?.encoded
+      this.subscriberToken?.userJwt?.encoded
     ).subdomain;
     const subdomainProvider = getSubdomainAndZoneId(
-        this.providerServiceToken?.encoded
+      this.providerServiceToken?.encoded
     ).subdomain;
     return subdomainSubscriber || subdomainProvider || undefined;
   }
 
   private async getAuthTokenForOAuth2ClientCrendentials(
-      destinationResult: DestinationSearchResult
+    destinationResult: DestinationSearchResult
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
     // This covers the X-Tenant case https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     const exchangeTenant = this.getExchangeTenant(destination);
     const clientGrant = await serviceToken('destination', {
       userJwt:
-          origin === 'subscriber'
-              ? this.subscriberToken!.serviceJwt.decoded
-              : this.providerServiceToken.decoded
+        origin === 'subscriber'
+          ? this.subscriberToken!.serviceJwt.decoded
+          : this.providerServiceToken.decoded
     });
     return { authHeaderJwt: clientGrant, exchangeTenant };
   }
@@ -329,11 +330,11 @@ class DestinationFromServiceRetriever {
   private usesSystemUser(destination: Destination): boolean {
     // put this in the non user dependent block
     if (
-        destination.systemUser &&
-        destination.authentication === 'OAuth2SAMLBearerAssertion'
+      destination.systemUser &&
+      destination.authentication === 'OAuth2SAMLBearerAssertion'
     ) {
       logger.debug(
-          `System user found on destination: "${destination.name}". 
+        `System user found on destination: "${destination.name}". 
 The property SystemUser has been deprecated. 
 It is highly recommended that you stop using it.
 Possible alternatives for such technical user authentication are BasicAuthentication, OAuth2ClientCredentials, or ClientCertificateAuthentication`
@@ -345,12 +346,12 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private async getAuthTokenForOAuth2UserBasedTokenExchanges(
-      destinationResult: DestinationSearchResult
+    destinationResult: DestinationSearchResult
   ): Promise<AuthAndExchangeTokens> {
     const { destination, origin } = destinationResult;
     if (!this.subscriberToken || !isUserToken(this.subscriberToken.userJwt)) {
       throw Error(
-          `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
+        `No user token (JWT) has been provided. This is strictly necessary for '${destination.authentication}'.`
       );
     }
     // This covers OAuth to user dependend auth flows https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/39d42654093e4f8db20398a06f7eab2b.html and https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
@@ -359,23 +360,23 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     // Case 1 Destination in provider and jwt issued for provider account -> not extra x-user-token header needed
     if (this.isProviderAndSubscriberSameTenant()) {
       logger.debug(
-          `UserExchange flow started without user exchange token for destination ${this.name} of the provider account.`
+        `UserExchange flow started without user exchange token for destination ${this.name} of the provider account.`
       );
       return {
         authHeaderJwt: await jwtBearerToken(
-            this.subscriberToken.userJwt.encoded,
-            getDestinationService(),
-            this.options
+          this.subscriberToken.userJwt.encoded,
+          getDestinationService(),
+          this.options
         )
       };
     }
     // Case 2 Subscriber and provider account not the same -> x-user-token  header passed to determine user and tenant in token service URL and service token to get the destination
     const serviceJwt =
-        origin === 'subscriber'
-            ? this.subscriberToken.serviceJwt
-            : this.providerServiceToken;
+      origin === 'subscriber'
+        ? this.subscriberToken.serviceJwt
+        : this.providerServiceToken;
     logger.debug(
-        `UserExchange flow started for destination ${this.name} of the ${origin} account.`
+      `UserExchange flow started for destination ${this.name} of the ${origin} account.`
     );
 
     return {
@@ -384,7 +385,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
     };
 
     throw new Error(
-        `Not possible to build tokens for ${destination.authentication} flow for destination ${destination.name}.`
+      `Not possible to build tokens for ${destination.authentication} flow for destination ${destination.name}.`
     );
   }
 
@@ -396,32 +397,32 @@ Possible alternatives for such technical user authentication are BasicAuthentica
    * @returns Destination containing the auth token.
    */
   private async fetchDestinationWithNonUserExchangeFlows(
-      destinationResult: DestinationSearchResult
+    destinationResult: DestinationSearchResult
   ): Promise<Destination> {
     const token = await this.getAuthTokenForOAuth2ClientCrendentials(
-        destinationResult
+      destinationResult
     );
 
     return this.fetchDestinationByToken(token);
   }
 
   private async fetchDestinationWithUserExchangeFlows(
-      destinationResult: DestinationSearchResult
+    destinationResult: DestinationSearchResult
   ): Promise<Destination> {
     const token = await this.getAuthTokenForOAuth2UserBasedTokenExchanges(
-        destinationResult
+      destinationResult
     );
     return this.fetchDestinationByToken(token);
   }
 
   private async addProxyConfiguration(
-      destination: Destination
+    destination: Destination
   ): Promise<Destination> {
     switch (proxyStrategy(destination)) {
       case ProxyStrategy.ON_PREMISE_PROXY:
         return addProxyConfigurationOnPrem(
-            destination,
-            this.subscriberToken?.userJwt
+          destination,
+          this.subscriberToken?.userJwt
         );
       case ProxyStrategy.INTERNET_PROXY:
         return addProxyConfigurationInternet(destination);
@@ -429,7 +430,7 @@ Possible alternatives for such technical user authentication are BasicAuthentica
         return destination;
       default:
         throw new Error(
-            'Illegal argument: No valid proxy configuration found in the destination input to be aded.'
+          'Illegal argument: No valid proxy configuration found in the destination input to be aded.'
         );
     }
   }
@@ -440,39 +441,39 @@ Possible alternatives for such technical user authentication are BasicAuthentica
       throw new Error('Try to get subscriber token but value is undefined.');
     }
     return (
-        this.subscriberToken.userJwt?.decoded ||
-        this.subscriberToken.serviceJwt.decoded
+      this.subscriberToken.userJwt?.decoded ||
+      this.subscriberToken.serviceJwt.decoded
     );
   }
 
   private updateDestinationCache(
-      destination: Destination,
-      destinationOrigin: DestinationOrigin
+    destination: Destination,
+    destinationOrigin: DestinationOrigin
   ) {
     if (!this.options.useCache) {
       return destination;
     }
     destinationCache.cacheRetrievedDestination(
-        destinationOrigin === 'subscriber'
-            ? this.selectSubscriberJwt()
-            : this.providerServiceToken.decoded,
-        destination,
-        this.options.isolationStrategy
+      destinationOrigin === 'subscriber'
+        ? this.selectSubscriberJwt()
+        : this.providerServiceToken.decoded,
+      destination,
+      this.options.isolationStrategy
     );
   }
 
   private async getProviderDestinationService(): Promise<
-      DestinationSearchResult | undefined
-      > {
+    DestinationSearchResult | undefined
+  > {
     const provider = await this.getInstanceAndSubaccountDestinations(
-        this.providerServiceToken.encoded
+      this.providerServiceToken.encoded
     );
     const destination = this.options.selectionStrategy(
-        {
-          subscriber: emptyDestinationByType,
-          provider
-        },
-        this.name
+      {
+        subscriber: emptyDestinationByType,
+        provider
+      },
+      this.name
     );
     if (destination) {
       return {
@@ -485,9 +486,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
   private getProviderDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
-        this.providerServiceToken.decoded,
-        this.name,
-        this.options.isolationStrategy
+      this.providerServiceToken.decoded,
+      this.name,
+      this.options.isolationStrategy
     );
 
     if (destination) {
@@ -496,23 +497,23 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private async getSubscriberDestinationService(): Promise<
-      DestinationSearchResult | undefined
-      > {
+    DestinationSearchResult | undefined
+  > {
     if (!this.subscriberToken) {
       throw new Error(
-          'Try to get destinations from subscriber account but user JWT was not set.'
+        'Try to get destinations from subscriber account but user JWT was not set.'
       );
     }
 
     const subscriber = await this.getInstanceAndSubaccountDestinations(
-        this.subscriberToken.serviceJwt.encoded
+      this.subscriberToken.serviceJwt.encoded
     );
     const destination = this.options.selectionStrategy(
-        {
-          subscriber,
-          provider: emptyDestinationByType
-        },
-        this.name
+      {
+        subscriber,
+        provider: emptyDestinationByType
+      },
+      this.name
     );
 
     if (destination) {
@@ -522,9 +523,9 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
   private getSubscriberDestinationCache(): DestinationSearchResult | undefined {
     const destination = destinationCache.retrieveDestinationFromCache(
-        this.selectSubscriberJwt(),
-        this.name,
-        this.options.isolationStrategy
+      this.selectSubscriberJwt(),
+      this.name,
+      this.options.isolationStrategy
     );
 
     if (destination) {
@@ -534,24 +535,24 @@ Possible alternatives for such technical user authentication are BasicAuthentica
 
   private isProviderAndSubscriberSameTenant() {
     return (
-        this.subscriberToken &&
-        isIdenticalTenant(
-            this.subscriberToken.serviceJwt.decoded,
-            this.providerServiceToken.decoded
-        )
+      this.subscriberToken &&
+      isIdenticalTenant(
+        this.subscriberToken.serviceJwt.decoded,
+        this.providerServiceToken.decoded
+      )
     );
   }
 
   private isProviderNeeded(
-      resultFromSubscriber: DestinationSearchResult | undefined
+    resultFromSubscriber: DestinationSearchResult | undefined
   ): boolean {
     if (this.options.selectionStrategy === alwaysSubscriber) {
       return false;
     }
 
     if (
-        this.options.selectionStrategy === subscriberFirst &&
-        resultFromSubscriber
+      this.options.selectionStrategy === subscriberFirst &&
+      resultFromSubscriber
     ) {
       return false;
     }
@@ -572,20 +573,20 @@ Possible alternatives for such technical user authentication are BasicAuthentica
   }
 
   private async searchProviderAccountForDestination(): Promise<
-      DestinationSearchResult | undefined
-      > {
+    DestinationSearchResult | undefined
+  > {
     return (
-        (this.options.useCache && this.getProviderDestinationCache()) ||
-        this.getProviderDestinationService()
+      (this.options.useCache && this.getProviderDestinationCache()) ||
+      this.getProviderDestinationService()
     );
   }
 
   private async searchSubscriberAccountForDestination(): Promise<
-      DestinationSearchResult | undefined
-      > {
+    DestinationSearchResult | undefined
+  > {
     return (
-        (this.options.useCache && this.getSubscriberDestinationCache()) ||
-        this.getSubscriberDestinationService()
+      (this.options.useCache && this.getSubscriberDestinationCache()) ||
+      this.getSubscriberDestinationService()
     );
   }
 }

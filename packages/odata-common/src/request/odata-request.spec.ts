@@ -45,7 +45,7 @@ describe('OData Request', () => {
     });
 
     describe('isTrustingAllCertificates is defined', () => {
-      it('rejectUnauthorized property of HttpsAgent should be set to TRUE when TrustAll is false', async () => {
+      it('rejectUnauthorized property of HttpsAgent should be set to true when TrustAll is false', async () => {
         const destination: Destination = {
           url: 'https://example.com',
           isTrustingAllCertificates: true
@@ -66,7 +66,7 @@ describe('OData Request', () => {
         );
       });
 
-      it('rejectUnauthorized property of HttpsAgent should be set to FALSE when TrustAll is true', async () => {
+      it('rejectUnauthorized property of HttpsAgent should be set to false when TrustAll is true', async () => {
         const destination: Destination = {
           url: 'https://example.com',
           isTrustingAllCertificates: false
@@ -135,7 +135,7 @@ describe('OData Request', () => {
   describe('serviceUrl', () => {
     it('should contain "sap/opu/odata/sap/"', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      expect(request.serviceUrl()).toBe('/sap/opu/odata/sap/API_TEST_SRV');
+      expect(request.serviceUrl()).toBe('/sap/opu/odata/sap/API_COMMON_SRV');
     });
 
     it('should contain custom service path', () => {
@@ -164,7 +164,7 @@ describe('OData Request', () => {
         request.config as ODataGetAllRequestConfig<CommonEntity>;
       requestConfig.appendPath('/$value');
       expect(request.relativeUrl()).toBe(
-        'sap/opu/odata/sap/API_TEST_SRV/A_CommonEntity/$value?$format=json'
+        'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$value?$format=json'
       );
     });
 
@@ -174,7 +174,7 @@ describe('OData Request', () => {
         request.config as ODataGetAllRequestConfig<CommonEntity>;
       requestConfig.appendPath('/');
       expect(request.relativeUrl()).toBe(
-        'sap/opu/odata/sap/API_TEST_SRV/A_CommonEntity/?$format=json'
+        'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/?$format=json'
       );
     });
   });

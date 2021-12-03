@@ -99,7 +99,7 @@ describe('OData Request', () => {
   });
 
   describe('query', () => {
-    it.only('should have json parameter by default for get request', () => {
+    it('should have json parameter by default for get request', () => {
       const request = createRequest(ODataGetAllRequestConfig);
       expect(request.query()).toEqual('?$format=json');
     });

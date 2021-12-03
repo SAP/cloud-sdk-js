@@ -124,7 +124,7 @@ export function getByKeyRequestBuilder(
 
 export function createRequestBuilder(
   options?: Options
-): CommonCreateRequestBuilder {
+): CreateRequestBuilderBase<CommonEntity> {
   if (options?.payload) {
     return new CommonCreateRequestBuilder(
       CommonEntity,

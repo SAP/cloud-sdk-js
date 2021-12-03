@@ -46,19 +46,19 @@ describe('jwt', () => {
 
     it('correctly reads jwt from incoming message with correct auth token', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT('Bearer test'))).toBe(
-          'test'
+        'test'
       );
     });
 
     it('works for arbitrary capitalizations of "bearer" (e.g. lowercase)', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT('bearer test'))).toBe(
-          'test'
+        'test'
       );
       expect(retrieveJwt(createIncomingMessageWithJWT('BeArEr test'))).toBe(
-          'test'
+        'test'
       );
       expect(retrieveJwt(createIncomingMessageWithJWT('BEARER test'))).toBe(
-          'test'
+        'test'
       );
     });
   });
@@ -90,17 +90,17 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
       await expect(
-          verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).resolves.toEqual(jwtPayload);
     });
 
     it('succeeds and decodes for correct inline key', async () => {
       nock(jku)
-          .get('/')
-          .reply(200, responseWithPublicKey(publicKey.split(unixEOL).join('')));
+        .get('/')
+        .reply(200, responseWithPublicKey(publicKey.split(unixEOL).join('')));
 
       await expect(
-          verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -108,12 +108,12 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, { keys: [] });
 
       await expect(() =>
-          verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT. Could not retrieve verification key.',
         cause: {
           message:
-              'No verification keys have been returned by the XSUAA service.'
+            'No verification keys have been returned by the XSUAA service.'
         }
       });
     });
@@ -124,7 +124,7 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, response);
 
       await expect(() =>
-          verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT. Could not retrieve verification key.',
         cause: {
@@ -135,24 +135,24 @@ describe('jwt', () => {
 
     it('fails for jku URL and xsuaa different domain', async () => {
       await expect(() =>
-          verifyJwt(
-              signedJwtForVerification(
-                  jwtPayload,
-                  'https://my-jku-url.some.wrong.domain.com'
-              )
+        verifyJwt(
+          signedJwtForVerification(
+            jwtPayload,
+            'https://my-jku-url.some.wrong.domain.com'
           )
+        )
       )
-          .rejects.toThrowError()
-          .catch(err => {
-            expect(err.cause).toEqual('test');
-          });
+        .rejects.toThrowError()
+        .catch(err => {
+          expect(err.cause).toEqual('test');
+        });
     });
 
     it('fails if the verification key is not conform with the signed JWT', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey('WRONG'));
 
       await expect(() =>
-          verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toThrowErrorMatchingInlineSnapshot('"Invalid JWT."');
     });
 
@@ -164,7 +164,7 @@ describe('jwt', () => {
 
       // But due to caching multiple calls should not lead to errors
       await expect(
-          verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -178,9 +178,9 @@ describe('jwt', () => {
       nock(jku).get('/').reply(500);
 
       await expect(() =>
-          verifyJwt(signedJwtForVerification(jwtPayload, jku))
+        verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-          '"Failed to verify JWT. Could not retrieve verification key."'
+        '"Failed to verify JWT. Could not retrieve verification key."'
       );
     });
 
@@ -188,17 +188,17 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
       const secondXsuaaMock = nock(jku)
-          .get('/')
-          .reply(200, responseWithPublicKey());
+        .get('/')
+        .reply(200, responseWithPublicKey());
 
       const jwt1 = signedJwtForVerification(jwtPayload, jku);
       const jwt2 = signedJwtForVerification(
-          {
-            sub: '1234567890',
-            name: 'Jane Doe',
-            iat: 1516239022
-          },
-          jku
+        {
+          sub: '1234567890',
+          name: 'Jane Doe',
+          iat: 1516239022
+        },
+        jku
       );
 
       await verifyJwt(jwt1);

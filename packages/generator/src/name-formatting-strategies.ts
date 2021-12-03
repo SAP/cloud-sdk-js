@@ -1,5 +1,5 @@
 import voca from 'voca';
-import { reservedJsKeywords } from './reserved-words';
+import { reservedJsKeywords } from '@sap-cloud-sdk/generator-common/internal';
 
 const applyPrefixOnJSReservedWords =
   (prefix: string) =>

@@ -106,17 +106,16 @@ export abstract class MethodRequestBuilder<
     return this;
   }
 
-  build(): ODataRequest<RequestConfigT>;
-  build(
+  protected build(): ODataRequest<RequestConfigT>;
+  protected build(
     destination: Destination | DestinationFetchOptions
   ): Promise<ODataRequest<RequestConfigT>>;
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
-   * @deprecated Since v1.30.0. This method will be protected and should not be used externally.
    * @param destination - Targeted destination or DestionationFetchOptions on which the request is performed.
    * @returns The OData request executor including the destination configuration, if one was given.
    */
-  build(
+  protected build(
     destination?: Destination | DestinationFetchOptions
   ): ODataRequest<RequestConfigT> | Promise<ODataRequest<RequestConfigT>> {
     if (destination) {

@@ -6,8 +6,7 @@ import {
   deserializeToNumber,
   serializeFromNumber,
   deserializeToBigNumber,
-  validateGuid,
-  convertToNumber
+  validateGuid
 } from './payload-value-converter';
 import { convertToUriForEdmString, isInfOrNan } from './uri-value-converter';
 
@@ -48,8 +47,8 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
     serializeToUri: (value, serialize) => String(serialize(value))
   },
   'Edm.Byte': {
-    deserialize: convertToNumber,
-    serialize: convertToNumber,
+    deserialize: Number,
+    serialize: Number,
     serializeToUri: (value, serialize) => String(serialize(value))
   },
   'Edm.Double': {
@@ -69,13 +68,13 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
     }
   },
   'Edm.Int16': {
-    deserialize: convertToNumber,
-    serialize: convertToNumber,
+    deserialize: Number,
+    serialize: Number,
     serializeToUri: (value, serialize) => String(serialize(value))
   },
   'Edm.Int32': {
-    deserialize: convertToNumber,
-    serialize: convertToNumber,
+    deserialize: Number,
+    serialize: Number,
     serializeToUri: (value, serialize) => String(serialize(value))
   },
   'Edm.Int64': {
@@ -84,8 +83,8 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
     serializeToUri: (value, serialize) => `${serialize(value)}L`
   },
   'Edm.SByte': {
-    deserialize: convertToNumber,
-    serialize: convertToNumber,
+    deserialize: Number,
+    serialize: Number,
     serializeToUri: (value, serialize) => String(serialize(value))
   },
   'Edm.Single': {

@@ -34,7 +34,7 @@ import {
   fetchSubaccountDestinations
 } from './destination-service';
 import { destinationCache } from './destination-cache';
-import { DestinationOptions } from './destination-accessor';
+import type { DestinationOptions } from './destination-accessor';
 
 type DestinationOrigin = 'subscriber' | 'provider';
 

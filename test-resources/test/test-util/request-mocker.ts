@@ -1,6 +1,7 @@
 import nock = require('nock');
 import {
   Constructable,
+  GetAllRequestBuilderBase,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
   ODataGetAllRequestConfig,
@@ -63,6 +64,7 @@ interface MockRequestParams {
   responseHeaders?: Record<string, any>;
   query?: Record<string, any>;
   method?: string;
+  headers?: Record<string, any>;
 }
 
 export function mockCreateRequest(
@@ -127,6 +129,20 @@ export function mockUpdateRequest(
   });
 }
 
+export function mockCountRequest(
+  destination: Destination,
+  count: number,
+  getAllRequest:
+    | GetAllRequestBuilderBase<any>
+    | GetAllRequestBuilderBase<any> = TestEntityV2.requestBuilder().getAll()
+) {
+  const servicePath = getAllRequest._entityConstructor._defaultServicePath;
+  const entityName = getAllRequest._entityConstructor._entityName;
+  return nock(defaultHost)
+    .get(`${destination.url}${servicePath}/${entityName}/$count`)
+    .reply(200, count.toString());
+}
+
 export function mockGetRequest(
   params: MockRequestParams,
   entityConstructor: Constructable<any> = TestEntityV2
@@ -173,14 +189,15 @@ export function mockRequest(
     body,
     query = {},
     responseBody,
-    responseHeaders
+    responseHeaders,
+    headers
   }: MockRequestParams
 ) {
   const request = new ODataRequest(requestConfig, destination);
 
   mockHeaderRequest({ request, path });
 
-  return nock(host, getRequestHeaders(method, additionalHeaders))
+  return nock(host, getRequestHeaders(method, additionalHeaders, headers))
     [method](
       path ? `${request.serviceUrl()}/${path}` : request.resourceUrl(),
       body
@@ -191,8 +208,13 @@ export function mockRequest(
 
 function getRequestHeaders(
   method: string,
-  additionalHeaders?: Record<string, any>
+  additionalHeaders?: Record<string, any>,
+  headers?: Record<string, any>
 ) {
+  if (headers) {
+    return { reqheaders: headers };
+  }
+
   if (additionalHeaders) {
     const initialHeaders =
       method === 'get'

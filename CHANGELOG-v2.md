@@ -156,6 +156,7 @@
   - `verifyJwt`
   - `verifyJwtWithKey`
   - `wrapJwtInHeader`
+  - `convertToNumber`
 
 ### Function moved
 
@@ -383,6 +384,7 @@
 ### Implementation changed
 
 - [generator] changed the following implementations
+  - `ServiceNameFormatter` deprecated constructor removed, reserverdName parameter from typeNameToFactoryName method removed
   - `VdmNavigationpropety` multiplicity, isMultiLink removed
   - `VdmFunctionImportReturnType` isMulti removed
 - [openapi] changed the following implementations
@@ -394,9 +396,10 @@
   - `CreateRequestBuilderBase` prepare removed
   - `EntityBase` getCurrentMapKey, initializeCustomFields removed
   - `EnumField` edmType removed
+  - `Filter` \_fieldName property removed
   - `FilterFunction` toString, transformParameter removed
   - `Link` clone, selects removed
-  - `MethodRequestBuilder` withCustomHeaders, withCustomQueryParameters, withCustomServicePath removed
+  - `MethodRequestBuilder` withCustomHeaders, withCustomQueryParameters, withCustomServicePath removed, build protected
   - `ODataRequestConfig` contentType, deprecated constructor removed
   - `ODataBatchRequestConfig` batchId, content_type_prefix removed
   - `OneToOneLink` clone removed

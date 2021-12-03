@@ -80,7 +80,7 @@ describe('DestinationServiceCache', () => {
       200,
       singleDest.Name,
       wrapJwtInHeader(subscriberServiceToken).headers,
-      destinationServiceUrl
+      { uri: destinationServiceUrl }
     );
     mockSingleDestinationCall(
       nock,
@@ -88,7 +88,7 @@ describe('DestinationServiceCache', () => {
       200,
       singleDest.Name,
       wrapJwtInHeader(subscriberUserJwt).headers,
-      destinationServiceUrl
+      { uri: destinationServiceUrl }
     );
   });
   afterEach(() => {

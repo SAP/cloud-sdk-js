@@ -13,7 +13,6 @@ import {
   DestinationServiceCredentials,
   XsuaaServiceCredentials
 } from '../environment-accessor-types';
-import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { Destination } from './destination-service-types';
 import {
   alwaysProvider,
@@ -21,8 +20,6 @@ import {
   subscriberFirst
 } from './destination-selection-strategies';
 import {
-  DestinationFetchOptions,
-  DestinationOptions,
   DestinationsByType
 } from './destination-accessor-types';
 import {
@@ -32,11 +29,11 @@ import {
   fetchSubaccountDestinations
 } from './destination-service';
 import { destinationCache } from './destination-cache';
-import {
-  addProxyConfigurationInternet,
-  ProxyStrategy,
-  proxyStrategy
-} from './proxy-util';
+
+import {JwtPayload} from "jsonwebtoken";
+import {getSubdomainAndZoneId} from "../xsuaa-service";
+import {DestinationOptions} from "./destination-accessor";
+import {addProxyConfigurationInternet, ProxyStrategy, proxyStrategy} from "../../../http-agent";
 
 type DestinationOrigin = 'subscriber' | 'provider';
 
@@ -52,6 +49,11 @@ interface DestinationSearchResult {
   destination: Destination;
   fromCache: boolean;
   origin: DestinationOrigin;
+}
+
+interface SubscriberTokens {
+  userJwt?: JwtPair; // is undefined when iss is passed ad token
+  serviceJwt: JwtPair;
 }
 
 const emptyDestinationByType: DestinationsByType = {
@@ -100,7 +102,7 @@ class DestinationFromServiceRetriever {
         );
 
     const da = new DestinationFromServiceRetriever(
-        options.destinationName,
+       name,
         { ...options, xsuaaCredentials },
         subscriberToken,
         providerToken
@@ -146,9 +148,9 @@ class DestinationFromServiceRetriever {
   }
 
   private static async getSubscriberToken(
-      options: DestinationFetchOptions
+    options: DestinationOptions
   ): Promise<SubscriberTokens | undefined> {
-    if (options.jwt) {
+    if (options.userJwt) {
       if (options.iss) {
         logger.warn(
             'You have provided the `userJwt` and `iss` options to fetch the destination. This is most likely unintentional. Ignoring `iss`.'
@@ -159,8 +161,8 @@ class DestinationFromServiceRetriever {
       });
       return {
         userJwt: {
-          decoded: await verifyJwt(options.jwt, options),
-          encoded: options.jwt
+          decoded: await verifyJwt(options.userJwt, options),
+          encoded: options.userJwt
         },
         serviceJwt: { encoded, decoded: decodeJwt(encoded) }
       };
@@ -173,7 +175,7 @@ class DestinationFromServiceRetriever {
       const payload = { iss: options.iss };
       const encoded = await serviceToken('destination', {
         ...options,
-        jwt: payload
+        userJwt: payload
       });
       const clientCertJwt = { encoded, decoded: decodeJwt(encoded) };
       return { serviceJwt: clientCertJwt };
@@ -182,10 +184,10 @@ class DestinationFromServiceRetriever {
 
   private static async getProviderServiceToken(
       xsuaaCredentials: XsuaaServiceCredentials,
-      options: DestinationFetchOptions
+      options: DestinationOptions
   ): Promise<JwtPair> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { jwt, ...optionsWithoutJwt } = options;
+    const { userJwt, ...optionsWithoutJwt } = options;
     const encoded = await serviceToken('destination', {
       ...optionsWithoutJwt,
       xsuaaCredentials
@@ -315,7 +317,7 @@ class DestinationFromServiceRetriever {
     // This covers the X-Tenant case https://api.sap.com/api/SAP_CP_CF_Connectivity_Destination/resource
     const exchangeTenant = this.getExchangeTenant(destination);
     const clientGrant = await serviceToken('destination', {
-      jwt:
+      userJwt:
           origin === 'subscriber'
               ? this.subscriberToken!.serviceJwt.decoded
               : this.providerServiceToken.decoded

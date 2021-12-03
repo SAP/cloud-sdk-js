@@ -1,15 +1,15 @@
 import nock from 'nock';
 import {
-  expectAllMocksUsed,
-  certificateMultipleResponse,
-  certificateSingleResponse,
-  mockInstanceDestinationsCall,
-  mockServiceBindings,
-  mockServiceToken,
-  mockSingleDestinationCall,
-  mockSubaccountDestinationsCall,
-  onlyIssuerServiceToken,
-  onlyIssuerXsuaaUrl
+    expectAllMocksUsed,
+    certificateMultipleResponse,
+    certificateSingleResponse,
+    mockInstanceDestinationsCall,
+    mockServiceBindings,
+    mockServiceToken,
+    mockSingleDestinationCall,
+    mockSubaccountDestinationsCall,
+    onlyIssuerServiceToken,
+    onlyIssuerXsuaaUrl, providerServiceToken, providerXsuaaUrl
 } from '../../test/test-util';
 import * as httpClient from '../http-client/http-client';
 import {

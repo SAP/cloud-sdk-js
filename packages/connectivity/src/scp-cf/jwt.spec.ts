@@ -18,8 +18,6 @@ const jwtPayload = {
   zid: 'my-zone'
 };
 
-const uaaDomain = xsuaaBindingMock.credentials.uaadomain;
-
 function responseWithPublicKey(key = publicKey) {
   return {
     keys: [
@@ -48,19 +46,19 @@ describe('jwt', () => {
 
     it('correctly reads jwt from incoming message with correct auth token', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT('Bearer test'))).toBe(
-        'test'
+          'test'
       );
     });
 
     it('works for arbitrary capitalizations of "bearer" (e.g. lowercase)', () => {
       expect(retrieveJwt(createIncomingMessageWithJWT('bearer test'))).toBe(
-        'test'
+          'test'
       );
       expect(retrieveJwt(createIncomingMessageWithJWT('BeArEr test'))).toBe(
-        'test'
+          'test'
       );
       expect(retrieveJwt(createIncomingMessageWithJWT('BEARER test'))).toBe(
-        'test'
+          'test'
       );
     });
   });
@@ -68,26 +66,41 @@ describe('jwt', () => {
   describe('verifyJwt', () => {
     const jku = 'https://my-jku-url.authentication.sap.hana.ondemand.com';
 
+    beforeEach(() => {
+      process.env.VCAP_SERVICES = JSON.stringify({
+        xsuaa: [
+          {
+            ...xsuaaBindingMock,
+            credentials: {
+              ...xsuaaBindingMock.credentials,
+              verificationkey: undefined
+            }
+          }
+        ]
+      });
+    });
+
     afterEach(() => {
       nock.cleanAll();
       verificationKeyCache.clear();
+      delete process.env.VCAP_SERVICES;
     });
 
     it('succeeds and decodes for correct key', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
+          verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).resolves.toEqual(jwtPayload);
     });
 
     it('succeeds and decodes for correct inline key', async () => {
       nock(jku)
-        .get('/')
-        .reply(200, responseWithPublicKey(publicKey.split(unixEOL).join('')));
+          .get('/')
+          .reply(200, responseWithPublicKey(publicKey.split(unixEOL).join('')));
 
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
+          verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).resolves.toEqual(jwtPayload);
     });
 
@@ -95,12 +108,12 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, { keys: [] });
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
+          verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT. Could not retrieve verification key.',
         cause: {
           message:
-            'No verification keys have been returned by the XSUAA service.'
+              'No verification keys have been returned by the XSUAA service.'
         }
       });
     });
@@ -111,7 +124,7 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, response);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
+          verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toMatchObject({
         message: 'Failed to verify JWT. Could not retrieve verification key.',
         cause: {
@@ -122,25 +135,24 @@ describe('jwt', () => {
 
     it('fails for jku URL and xsuaa different domain', async () => {
       await expect(() =>
-        verifyJwt(
-          signedJwtForVerification(
-            jwtPayload,
-            'https://my-jku-url.some.wrong.domain.com'
-          ),
-          uaaDomain
-        )
+          verifyJwt(
+              signedJwtForVerification(
+                  jwtPayload,
+                  'https://my-jku-url.some.wrong.domain.com'
+              )
+          )
       )
-        .rejects.toThrowError()
-        .catch(err => {
-          expect(err.cause).toEqual('test');
-        });
+          .rejects.toThrowError()
+          .catch(err => {
+            expect(err.cause).toEqual('test');
+          });
     });
 
     it('fails if the verification key is not conform with the signed JWT', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey('WRONG'));
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
+          verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toThrowErrorMatchingInlineSnapshot('"Invalid JWT."');
     });
 
@@ -148,27 +160,27 @@ describe('jwt', () => {
       // We mock only a single HTTP call
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      await verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain);
+      await verifyJwt(signedJwtForVerification(jwtPayload, jku));
 
       // But due to caching multiple calls should not lead to errors
       await expect(
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
+          verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).resolves.toEqual(jwtPayload);
     });
 
     it('fails on the second call when caching is disabled', async () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
-      await verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain, {
+      await verifyJwt(signedJwtForVerification(jwtPayload, jku), {
         cacheVerificationKeys: false
       });
 
       nock(jku).get('/').reply(500);
 
       await expect(() =>
-        verifyJwt(signedJwtForVerification(jwtPayload, jku), uaaDomain)
+          verifyJwt(signedJwtForVerification(jwtPayload, jku))
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Failed to verify JWT. Could not retrieve verification key."'
+          '"Failed to verify JWT. Could not retrieve verification key."'
       );
     });
 
@@ -176,23 +188,23 @@ describe('jwt', () => {
       nock(jku).get('/').reply(200, responseWithPublicKey());
 
       const secondXsuaaMock = nock(jku)
-        .get('/')
-        .reply(200, responseWithPublicKey());
+          .get('/')
+          .reply(200, responseWithPublicKey());
 
       const jwt1 = signedJwtForVerification(jwtPayload, jku);
       const jwt2 = signedJwtForVerification(
-        {
-          sub: '1234567890',
-          name: 'Jane Doe',
-          iat: 1516239022
-        },
-        jku
+          {
+            sub: '1234567890',
+            name: 'Jane Doe',
+            iat: 1516239022
+          },
+          jku
       );
 
-      await verifyJwt(jwt1, uaaDomain);
+      await verifyJwt(jwt1);
       verificationKeyCache.clear();
 
-      await verifyJwt(jwt2, uaaDomain);
+      await verifyJwt(jwt2);
       expect(secondXsuaaMock.isDone()).toBe(true);
     });
   });

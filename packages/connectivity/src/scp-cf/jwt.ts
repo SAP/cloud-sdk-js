@@ -2,7 +2,9 @@ import { IncomingMessage } from 'http';
 import * as url from 'url';
 import { createLogger, ErrorWithCause } from '@sap-cloud-sdk/util';
 import { decode, Jwt, JwtHeader, JwtPayload, verify } from 'jsonwebtoken';
+import { getXsuaaServiceCredentials } from './environment-accessor';
 import { TokenKey } from './xsuaa-service-types';
+import { XsuaaServiceCredentials } from './environment-accessor-types';
 import { Cache } from './cache';
 import { fetchVerificationKeys } from './verification-keys';
 
@@ -30,7 +32,7 @@ export function decodeJwtComplete(token: string): Jwt {
   const decodedToken = decode(token, { complete: true });
   if (decodedToken === null || typeof decodedToken === 'string') {
     throw new Error(
-      'JwtError: The given jwt payload does not encode valid JSON.'
+        'JwtError: The given jwt payload does not encode valid JSON.'
     );
   }
   return decodedToken;
@@ -50,7 +52,7 @@ export function retrieveJwt(req: IncomingMessage): string | undefined {
 
 function authHeader(req: IncomingMessage): string | undefined {
   const entries = Object.entries(req.headers).find(
-    ([key]) => key.toLowerCase() === 'authorization'
+      ([key]) => key.toLowerCase() === 'authorization'
   );
   if (entries) {
     const header = entries[1];
@@ -92,18 +94,18 @@ function validateAuthHeader(header: string | undefined): boolean {
  *  @internal
  */
 function validateJwtHeaderForVerification(
-  header: JwtHeader,
-  uaaDomain: string
+    header: JwtHeader,
+    uaaDomain: string
 ): void {
   if (!header.jku || !header.kid) {
     throw new Error(
-      'JWT does not contain verification key URL (`jku`) and/or key ID (`kid`).'
+        'JWT does not contain verification key URL (`jku`) and/or key ID (`kid`).'
     );
   }
   const jkuDomain = url.parse(header.jku).hostname;
   if (!uaaDomain || !jkuDomain || !jkuDomain.endsWith(uaaDomain)) {
     throw new Error(
-      `The domains of the XSUAA and verification URL do not match. The XSUAA domain is '${uaaDomain}' and the jku field provided in the JWT is '${jkuDomain}'.`
+        `The domains of the XSUAA and verification URL do not match. The XSUAA domain is '${uaaDomain}' and the jku field provided in the JWT is '${jkuDomain}'.`
     );
   }
 }
@@ -139,21 +141,20 @@ function validateJwtHeaderForVerification(
 /**
  * Verifies the given JWT and returns the decoded payload.
  * @param token - JWT to be verified
- * @param uaaDomain - Domain given in the XSUAA credentials.
  * @param options - Options to control certain aspects of JWT verification behavior.
  * @returns A Promise to the decoded and verified JWT.
  *  @internal
  */
 export async function verifyJwt(
-  token: string,
-  uaaDomain: string,
-  options?: VerifyJwtOptions
+    token: string,
+    options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
   options = { ...defaultVerifyJwtOptions, ...options };
 
+  const creds = getXsuaaServiceCredentials(token);
   const header = decodeJwtComplete(token).header;
 
-  validateJwtHeaderForVerification(header, uaaDomain);
+  validateJwtHeaderForVerification(header, creds.uaadomain);
   const cacheKey = buildCacheKey(header.jku, header.kid);
 
   if (options.cacheVerificationKeys) {
@@ -161,27 +162,28 @@ export async function verifyJwt(
     if (key) {
       return verifyJwtWithKey(token, key.value).catch(error => {
         logger.warn(
-          'Unable to verify JWT with cached key, fetching new verification key.'
+            'Unable to verify JWT with cached key, fetching new verification key.'
         );
         logger.warn(`Original error: ${error.message}`);
 
-        return fetchAndCacheKeyAndVerify(header, token, options);
+        return fetchAndCacheKeyAndVerify(creds, header, token, options);
       });
     }
   }
 
-  return fetchAndCacheKeyAndVerify(header, token, options); // Verify only here
+  return fetchAndCacheKeyAndVerify(creds, header, token, options); // Verify only here
 }
 
 async function fetchAndCacheKeyAndVerify(
-  header: JwtHeader,
-  token: string,
-  options?: VerifyJwtOptions
+    creds: XsuaaServiceCredentials,
+    header: JwtHeader,
+    token: string,
+    options?: VerifyJwtOptions
 ): Promise<JwtPayload> {
   const key = await getVerificationKey(header).catch(error => {
     throw new ErrorWithCause(
-      'Failed to verify JWT. Could not retrieve verification key.',
-      error
+        'Failed to verify JWT. Could not retrieve verification key.',
+        error
     );
   });
 
@@ -211,11 +213,11 @@ function getVerificationKey(header: JwtHeader): Promise<TokenKey> {
   return fetchVerificationKeys(header.jku).then(verificationKeys => {
     if (!verificationKeys.length) {
       throw Error(
-        'No verification keys have been returned by the XSUAA service.'
+          'No verification keys have been returned by the XSUAA service.'
       );
     }
     const verificationKey = verificationKeys.find(
-      key => key.keyId === header.kid
+        key => key.keyId === header.kid
     );
     if (!verificationKey) {
       throw new Error('Could not find verification key for the given key ID.');
@@ -231,12 +233,12 @@ function getVerificationKey(header: JwtHeader): Promise<TokenKey> {
 export const verificationKeyCache = new Cache<TokenKey>({ minutes: 15 });
 
 function buildCacheKey(
-  jku: string | undefined,
-  kid: string | undefined
+    jku: string | undefined,
+    kid: string | undefined
 ): string {
   if (!jku || !kid) {
     throw new Error(
-      'Could not build cache key. `jku` and/or `kid` is not defined.'
+        'Could not build cache key. `jku` and/or `kid` is not defined.'
     );
   }
   return jku + kid;
@@ -250,8 +252,8 @@ function buildCacheKey(
  *  @internal
  */
 export function verifyJwtWithKey(
-  token: string,
-  key: string
+    token: string,
+    key: string
 ): Promise<JwtPayload> {
   return new Promise((resolve, reject) => {
     verify(token, sanitizeVerificationKey(key), (err, decodedToken) => {
@@ -269,9 +271,9 @@ export function verifyJwtWithKey(
 function sanitizeVerificationKey(key: string) {
   // Add new line after -----BEGIN PUBLIC KEY----- and before -----END PUBLIC KEY----- because the lib won't work otherwise
   return key
-    .replace(/\n/g, '')
-    .replace(/(KEY\s*-+)([^\n-])/, '$1\n$2')
-    .replace(/([^\n-])(-+\s*END)/, '$1\n$2');
+      .replace(/\n/g, '')
+      .replace(/(KEY\s*-+)([^\n-])/, '$1\n$2')
+      .replace(/([^\n-])(-+\s*END)/, '$1\n$2');
 }
 
 /**
@@ -308,7 +310,7 @@ function audiencesFromAud(decodedToken: JwtPayload): string[] {
     return [];
   }
   return decodedToken.aud.map(aud =>
-    aud.includes('.') ? aud.substr(0, aud.indexOf('.')) : aud
+      aud.includes('.') ? aud.substr(0, aud.indexOf('.')) : aud
   );
 }
 
@@ -318,9 +320,9 @@ function audiencesFromScope(decodedToken: JwtPayload): string[] {
   }
 
   const scopes =
-    decodedToken.scope instanceof Array
-      ? decodedToken.scope
-      : [decodedToken.scope];
+      decodedToken.scope instanceof Array
+          ? decodedToken.scope
+          : [decodedToken.scope];
   return scopes.reduce((aud, scope) => {
     if (scope.includes('.')) {
       return [...aud, scope.substr(0, scope.indexOf('.'))];
@@ -348,12 +350,12 @@ export function wrapJwtInHeader(token: string): {
  * @returns the property if present.
  */
 export function readPropertyWithWarn(
-  jwtPayload: JwtPayload,
-  property: string
+    jwtPayload: JwtPayload,
+    property: string
 ): any {
   if (!jwtPayload[property]) {
     logger.warn(
-      `WarningJWT: The provided JWT payload does not include a '${property}' property.`
+        `WarningJWT: The provided JWT payload does not include a '${property}' property.`
     );
   }
 
@@ -379,14 +381,14 @@ export type JwtKeyMapping<InterfaceT, JwtKeysT> = {
  * @internal
  */
 export function checkMandatoryValue<InterfaceT, JwtKeysT>(
-  key: keyof InterfaceT,
-  mapping: JwtKeyMapping<InterfaceT, JwtKeysT>,
-  jwtPayload: JwtPayload
+    key: keyof InterfaceT,
+    mapping: JwtKeyMapping<InterfaceT, JwtKeysT>,
+    jwtPayload: JwtPayload
 ): void {
   const value = mapping[key].extractorFunction(jwtPayload);
   if (!value) {
     throw new Error(
-      `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
+        `Property '${mapping[key].keyInJwt}' is missing in JWT payload.`
     );
   }
 }

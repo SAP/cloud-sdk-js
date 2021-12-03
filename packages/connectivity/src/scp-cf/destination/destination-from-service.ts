@@ -160,7 +160,7 @@ class DestinationFromServiceRetriever {
       }
       const creds = getXsuaaServiceCredentials(options.jwt);
       return {
-        decoded: await verifyJwt(options.jwt, creds.uaadomain, options),
+        decoded: await verifyJwt(options.jwt, options),
         encoded: options.jwt
       };
     }

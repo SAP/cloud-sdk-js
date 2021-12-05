@@ -46,6 +46,8 @@ import {
 } from './action-function-import/file';
 import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata, getServiceDescription } from './sdk-metadata';
+import { createFile } from './generator-common/create-file';
+import { file } from './generator-without-ts-morph';
 
 const logger = createLogger({
   package: 'generator',
@@ -53,12 +55,17 @@ const logger = createLogger({
 });
 
 export async function generate(options: GeneratorOptions): Promise<void> {
-  const project = await generateProject(options);
-  if (!project) {
+  const projectAndServices  = await generateProject(options);
+  if (!projectAndServices) {
     throw Error('The project is undefined.');
   }
+  const project = projectAndServices.project;
+  const services = projectAndServices.services;
 
   await project.save();
+
+  await generateFilesWithoutTsMorph(services, options);
+
   if (options.generateJs) {
     const directories = project
       .getDirectories()
@@ -93,7 +100,7 @@ export async function transpileDirectories(
  */
 export async function generateProject(
   options: GeneratorOptions
-): Promise<Project | undefined> {
+): Promise<ProjectAndServices | undefined> {
   options = sanitizeOptions(options);
   const services = parseServices(options);
 
@@ -123,8 +130,36 @@ export async function generateProject(
     { overwrite: true }
   );
 
-  return project;
+  return { project, services } ;
 }
+
+interface ProjectAndServices {
+  project: Project,
+  services: VdmServiceMetadata[]
+}
+
+async function generateFilesWithoutTsMorph(services: VdmServiceMetadata[], options: GeneratorOptions){
+  const promises = services.map(service =>
+    generateApi(service, options)
+  );
+  await Promise.all(promises);
+}
+
+async function generateApi(
+  service: VdmServiceMetadata,
+  options: GeneratorOptions): Promise<void>{
+  const serviceDir = resolvePath(service.directoryName, options);
+  await service.entities.map(
+    entity =>
+      createFile(
+        serviceDir,
+        `${entity.className}Api.ts`,
+        file(entity, service),
+        options.forceOverwrite
+      )
+  )
+}
+
 /**
  * @internal
  */

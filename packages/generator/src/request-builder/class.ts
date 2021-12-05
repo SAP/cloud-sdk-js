@@ -23,9 +23,9 @@ export function requestBuilderClass(
 ): ClassDeclarationStructure {
   return {
     kind: StructureKind.Class,
-    name: `${entity.className}RequestBuilder`,
+    name: `${entity.className}RequestBuilder<T extends DeSerializers = DefaultDeSerializers>`,
     isExported: true,
-    extends: `RequestBuilder<${entity.className}>`,
+    extends: `RequestBuilder<${entity.className}<T>, T>`,
     methods: requestBuilderMethods(entity),
     docs: [addLeadingNewline(getRequestBuilderDescription(entity))]
   };
@@ -58,9 +58,9 @@ function getByKeyRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
     name: 'getByKey',
     parameters: entity.keys.map(key => ({
       name: key.propertyNameAsParam,
-      type: key.jsType
+      type: `DeserializedType<T, '${key.edmType}'>`
     })),
-    returnType: `GetByKeyRequestBuilder<${entity.className}>`,
+    returnType: `GetByKeyRequestBuilder<${entity.className}<T>, T>`,
     statements: buildParametrizedStatements(entity, 'GetByKeyRequestBuilder'),
     docs: [
       addLeadingNewline(
@@ -87,8 +87,8 @@ function getAllRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'getAll',
-    returnType: `GetAllRequestBuilder<${entity.className}>`,
-    statements: `return new GetAllRequestBuilder(${entity.className});`,
+    returnType: `GetAllRequestBuilder<${entity.className}<T>, T>`,
+    statements: `return new GetAllRequestBuilder<${entity.className}<T>, T>(this.entityApi);`,
     docs: [
       addLeadingNewline(
         getFunctionDoc(
@@ -109,14 +109,14 @@ function createRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'create',
-    returnType: `CreateRequestBuilder<${entity.className}>`,
+    returnType: `CreateRequestBuilder<${entity.className}<T>, T>`,
     parameters: [
       {
         name: 'entity',
-        type: entity.className
+        type: `${entity.className}<T>`
       }
     ],
-    statements: `return new CreateRequestBuilder(${entity.className}, entity);`,
+    statements: `return new CreateRequestBuilder<${entity.className}<T>, T>(this.entityApi, entity);`,
     docs: [
       addLeadingNewline(
         getFunctionDoc(
@@ -144,14 +144,14 @@ function updateRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'update',
-    returnType: `UpdateRequestBuilder<${entity.className}>`,
+    returnType: `UpdateRequestBuilder<${entity.className}<T>, T>`,
     parameters: [
       {
         name: 'entity',
-        type: entity.className
+        type: `${entity.className}<T>`
       }
     ],
-    statements: `return new UpdateRequestBuilder(${entity.className}, entity);`,
+    statements: `return new UpdateRequestBuilder<${entity.className}<T>, T>(this.entityApi, entity);`,
     docs: [
       addLeadingNewline(
         getFunctionDoc(
@@ -179,9 +179,12 @@ function deleteRequestBuilder(entity: VdmEntity): MethodDeclarationStructure {
   return {
     kind: StructureKind.Method,
     name: 'delete',
-    returnType: `DeleteRequestBuilder<${entity.className}>`,
+    returnType: `DeleteRequestBuilder<${entity.className}<T>, T>`,
+    // implementation parameters
     parameters: deleteRequestBuilderParameters(entity),
+    // implementation
     statements: deleteRequestBuilderStatements(entity),
+    // signature of overloads
     overloads: deleteRequestBuilderOverload(entity)
   };
 }
@@ -219,7 +222,7 @@ function deleteRequestBuilderOverload(
   return [
     {
       kind: StructureKind.MethodOverload,
-      returnType: `DeleteRequestBuilder<${entity.className}>`,
+      returnType: `DeleteRequestBuilder<${entity.className}<T>, T>`,
       parameters: entity.keys.map(key => ({
         name: key.propertyNameAsParam,
         type: key.jsType
@@ -245,11 +248,11 @@ function deleteRequestBuilderOverload(
     },
     {
       kind: StructureKind.MethodOverload,
-      returnType: `DeleteRequestBuilder<${entity.className}>`,
+      returnType: `DeleteRequestBuilder<${entity.className}<T>, T>`,
       parameters: [
         {
           name: 'entity',
-          type: entity.className
+          type: `${entity.className}<T>`
         }
       ],
       docs: [
@@ -283,7 +286,7 @@ function deleteRequestBuilderStatements(entity: VdmEntity) {
   const keys = entity.keys
     .map((key, index) => `${key.originalName}: ${params[index]}!`)
     .join(`,${unixEOL}`);
-  return `return new DeleteRequestBuilder(${entity.className}, ${params[0]} instanceof ${entity.className} ? ${params[0]} : {${keys}});`;
+  return `return new DeleteRequestBuilder<${entity.className}<T>, T>(this.entityApi, ${params[0]} instanceof ${entity.className} ? ${params[0]} : {${keys}});`;
 }
 
 function buildParametrizedStatements(
@@ -293,7 +296,7 @@ function buildParametrizedStatements(
   const params = entity.keys
     .map(key => `${key.originalName}: ${key.propertyNameAsParam}`)
     .join(`,${unixEOL}`);
-  return `return new ${requestBuilder}(${entity.className}, {${params}});`;
+  return `return new ${requestBuilder}<${entity.className}<T>, T>(this.entityApi, {${params}});`;
 }
 
 type RequestBuilderName =

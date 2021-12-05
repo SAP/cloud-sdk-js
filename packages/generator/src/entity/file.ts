@@ -17,10 +17,9 @@ export function entitySourceFile(
     kind: StructureKind.SourceFile,
     statements: [
       ...entityImportDeclarations(entity, service.oDataVersion),
-      entityClass(entity, service),
       ...otherEntityImports(entity, service),
-      entityTypeInterface(entity, service),
-      entityNamespace(entity, service)
+      entityClass(entity, service),
+      entityTypeInterface(entity, service)
     ]
   };
 }

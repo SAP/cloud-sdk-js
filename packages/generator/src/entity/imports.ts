@@ -21,30 +21,22 @@ export function entityImportDeclarations(
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   return [
-    {
-      kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: `./${entity.className}RequestBuilder`,
-      namedImports: [`${entity.className}RequestBuilder`]
-    },
-    ...externalImportDeclarations(entity.properties),
+    // {
+    //   kind: StructureKind.ImportDeclaration,
+    //   moduleSpecifier: `./${entity.className}RequestBuilder`,
+    //   namedImports: [`${entity.className}RequestBuilder`]
+    // },
+    // ...externalImportDeclarations(entity.properties),
     ...complexTypeImportDeclarations(entity.properties),
     ...enumTypeImportDeclarations(entity.properties),
-    odataImportDeclaration(['CustomField', 'Entity'], oDataVersion),
+    odataImportDeclaration(['Entity', 'DefaultDeSerializers', 'DeSerializers'], oDataVersion),
     odataCommonImportDeclaration(
       [
-        ...propertyTypeImportNames(entity.properties),
-        ...propertyFieldTypeImportNames(entity.properties),
-        ...navPropertyFieldTypeImportNames(
-          entity.navigationProperties,
-          oDataVersion
-        ),
-        'AllFields',
-        'Constructable',
-        'EntityBuilderType',
-        'FieldBuilder',
-        'Field'
-      ].sort()
+        'DeserializedType'
+      ]
     )
+
+
   ];
 }
 /**

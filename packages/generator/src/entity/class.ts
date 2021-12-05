@@ -29,9 +29,9 @@ export function entityClass(
 ): ClassDeclarationStructure {
   return {
     kind: StructureKind.Class,
-    name: entity.className,
+    name: `${entity.className}<T extends DeSerializers = DefaultDeSerializers>`,
     extends: 'Entity',
-    implements: [`${entity.className}Type`],
+    implements: [`${entity.className}Type<T>`],
     properties: [
       ...staticProperties(entity, service),
       ...properties(entity),
@@ -47,7 +47,7 @@ function staticProperties(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): PropertyDeclarationStructure[] {
-  return [entityName(entity), defaultServicePath(service)];
+  return [entityName(entity), defaultServicePath(service), keys(entity)];
 }
 
 function entityName(entity: VdmEntity): PropertyDeclarationStructure {
@@ -72,6 +72,18 @@ function defaultServicePath(
   };
 }
 
+function keys(
+  entity: VdmEntity
+): PropertyDeclarationStructure {
+  return {
+    kind: StructureKind.Property,
+    name: prependPrefix('keys'),
+    isStatic: true,
+    initializer: `[${entity.keys.map(key => `'${key.originalName}'`).join(',')}]`,
+    docs: [addLeadingNewline(`All key fields of the ${entity.className} entity`)]
+  };
+}
+
 function properties(entity: VdmEntity): PropertyDeclarationStructure[] {
   return entity.properties.map(prop => property(prop));
 }
@@ -80,7 +92,7 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
     name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
-    type: prop.isCollection ? `${prop.jsType}[]` : prop.jsType,
+    type: prop.isComplex ? `${prop.jsType}<T>`: `DeserializedType<T, '${prop.edmType}'>`,
     docs: [
       addLeadingNewline(
         getPropertyDescription(prop, {
@@ -116,16 +128,13 @@ function navProperty(
   return {
     kind: StructureKind.Property,
     name: navProp.instancePropertyName + (navProp.isCollection ? '!' : '?'),
-    type: entity.className + (navProp.isCollection ? '[]' : ' | null'),
+    type: entity.className + '<T>' + (navProp.isCollection ? '[]' : ' | null'),
     docs: [addLeadingNewline(getNavPropertyDescription(navProp))]
   };
 }
 
 function methods(entity: VdmEntity): MethodDeclarationStructure[] {
   return [
-    builder(entity),
-    requestBuilder(entity),
-    customField(entity),
     toJSON()
   ];
 }

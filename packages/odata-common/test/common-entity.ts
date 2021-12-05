@@ -1,6 +1,7 @@
 /* eslint-disable */
 /* This entity was generated from the COMMON_SRV.edmx and the generate-test-service.ts script.
 The idea behind this entity is to use only odata-common imports and use it in the tests for the odata-common functionality.*/
+import BigNumber from 'bignumber.js';
 import {
   AllFields,
   Constructable,
@@ -15,7 +16,15 @@ import {
   FieldOptions,
   FieldType,
   PropertyMetadata,
-  EntityBase as Entity
+  EntityBase as Entity,
+  DeSerializers,
+  DefaultDeSerializers,
+  DeserializedType,
+  Time,
+  EntityApi,
+  RequestBuilder,
+  defaultDeSerializers,
+  mergeDefaultDeSerializersWith
 } from '../src/internal';
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
@@ -23,32 +32,59 @@ import {
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
-export interface CommonComplexType {
-  stringProperty: string;
+export interface CommonComplexType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
+  stringProperty: DeserializedType<DeSerializersT, 'Edm.String'>;
   booleanProperty?: boolean;
 }
 
 export class CommonComplexTypeField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, CommonComplexType, NullableT, SelectableT> {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', false, false> =
-    this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', false);
-  booleanProperty: EdmTypeField<EntityT, 'Edm.Boolean', true, false> =
-    this._fieldBuilder.buildEdmTypeField(
-      'BooleanProperty',
-      'Edm.Boolean',
-      true
-    );
+> extends ComplexTypeField<
+  EntityT,
+  DeSerializersT,
+  CommonComplexType,
+  NullableT,
+  SelectableT
+> {
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
+  stringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    false
+  );
+  booleanProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Boolean',
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'BooleanProperty',
+    'Edm.Boolean',
+    true
+  );
 
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, CommonComplexType, fieldOptions);
+    super(fieldName, fieldOf, deSerializers, CommonComplexType, fieldOptions);
   }
 }
 
@@ -75,100 +111,168 @@ export namespace CommonComplexType {
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
-export class CommonEntity extends Entity implements CommonEntityType {
+export class CommonEntity<
+    DeSerializersT extends DeSerializers = DefaultDeSerializers
+  >
+  extends Entity
+  implements CommonEntityType<DeSerializersT>
+{
   static _entityName = 'A_CommonEntity';
   readonly _oDataVersion: any;
   static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_ENTITY_SRV/';
-  keyPropertyGuid!: string;
-  keyPropertyString!: string;
-  stringProperty?: string;
-  int16Property?: number;
+  static _keys = ['KeyPropertyGuid', 'KeyPropertyString'];
+  keyPropertyGuid!: DeserializedType<DeSerializersT, 'Edm.Guid'>;
+  keyPropertyString!: DeserializedType<DeSerializersT, 'Edm.String'>;
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
+  int16Property?: DeserializedType<DeSerializersT, 'Edm.Int16'>;
   complexTypeProperty?: CommonComplexType;
-
-  static builder(): EntityBuilderType<CommonEntity, CommonEntityType> {
-    return Entity.entityBuilder(CommonEntity);
-  }
-
-  static requestBuilder(): any {
-    throw new Error('not implemented');
-  }
-
-  static customField(fieldName: string): CustomField<CommonEntity> {
-    return new CustomField(fieldName, CommonEntity);
-  }
 
   toJSON(): { [key: string]: any } {
     return { ...this, ...this._customFields };
   }
 }
 
-export interface CommonEntityType {
-  keyPropertyGuid: string;
-  keyPropertyString: string;
-  stringProperty?: string | null;
-  int16Property?: number | null;
+export interface CommonEntityType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
+  keyPropertyGuid: DeserializedType<DeSerializersT, 'Edm.Guid'>;
+  keyPropertyString: DeserializedType<DeSerializersT, 'Edm.String'>;
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'> | null;
+  int16Property?: DeserializedType<DeSerializersT, 'Edm.Int16'> | null;
   complexTypeProperty?: CommonComplexType | null;
 }
 
-export namespace CommonEntity {
-  const _fieldBuilder: FieldBuilder<Constructable<CommonEntity>> =
-    new FieldBuilder(CommonEntity);
-  export const KEY_PROPERTY_GUID = _fieldBuilder.buildEdmTypeField(
-    'KeyPropertyGuid',
-    'Edm.Guid',
-    false
-  );
-  export const KEY_PROPERTY_STRING = _fieldBuilder.buildEdmTypeField(
-    'KeyPropertyString',
-    'Edm.String',
-    false
-  );
-  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'StringProperty',
-    'Edm.String',
-    true
-  );
-  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'Int16Property',
-    'Edm.Int16',
-    true
-  );
-  export const COMPLEX_TYPE_PROPERTY = _fieldBuilder.buildComplexTypeField(
-    'ComplexTypeProperty',
-    CommonComplexTypeField,
-    true
-  );
-  export const _allFields: Array<
-    | EdmTypeField<CommonEntity, 'Edm.Guid', false, true>
-    | EdmTypeField<CommonEntity, 'Edm.String', false, true>
-    | EdmTypeField<CommonEntity, 'Edm.String', true, true>
-    | OrderableEdmTypeField<CommonEntity, 'Edm.Int16', true, true>
-    | CommonComplexTypeField<CommonEntity, true, true>
-  > = [
-    CommonEntity.KEY_PROPERTY_GUID,
-    CommonEntity.KEY_PROPERTY_STRING,
-    CommonEntity.STRING_PROPERTY,
-    CommonEntity.INT_16_PROPERTY,
-    CommonEntity.COMPLEX_TYPE_PROPERTY
-  ];
-  export const ALL_FIELDS: AllFields<CommonEntity> = new AllFields(
-    '*',
-    CommonEntity
-  );
-  export const _keyFields: Array<Field<CommonEntity, boolean, boolean>> = [
-    CommonEntity.KEY_PROPERTY_GUID,
-    CommonEntity.KEY_PROPERTY_STRING
-  ];
-  export const _keys: {
-    [keys: string]: Field<CommonEntity, boolean, boolean>;
-  } = CommonEntity._keyFields.reduce(
-    (
-      acc: { [keys: string]: Field<CommonEntity, boolean, boolean> },
-      field: Field<CommonEntity, boolean, boolean>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+export class CommonEntityApi<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any
+> implements
+    EntityApi<
+      CommonEntity<
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT
+        >
+      >,
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT
+      >
+    >
+{
+  public deSerializers: DeSerializers<
+    BinaryT,
+    BooleanT,
+    ByteT,
+    DecimalT,
+    DoubleT,
+    FloatT,
+    Int16T,
+    Int32T,
+    Int64T,
+    GuidT,
+    SByteT,
+    SingleT,
+    StringT,
+    AnyT
+  >;
+  public schema;
+
+  constructor(
+    deSerializers: Partial<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT
+      >
+    > = defaultDeSerializers as any
+  ) {
+    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+    const fieldBuilder = new FieldBuilder(CommonEntity, this.deSerializers);
+
+    this.schema = {
+      KEY_PROPERTY_GUID: fieldBuilder.buildEdmTypeField(
+        'KeyPropertyGuid',
+        'Edm.Guid',
+        false
+      ),
+      KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
+        'KeyPropertyString',
+        'Edm.String',
+        false
+      ),
+      STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+        'StringProperty',
+        'Edm.String',
+        true
+      ),
+      INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
+        'Int16Property',
+        'Edm.Int16',
+        true
+      ),
+      COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(
+        'ComplexTypeProperty',
+        CommonComplexTypeField,
+        true
+      ),
+      ALL_FIELDS: new AllFields('*', CommonEntity) as AllFields<CommonEntity>
+    };
+  }
+
+  requestBuilder(): RequestBuilder<CommonEntity<any>, any> {
+    throw new Error('Method not implemented.');
+  }
+
+  entityBuilder(): EntityBuilderType<CommonEntity<any>> {
+    throw new Error('Method not implemented.');
+  }
+
+  entityConstructor = CommonEntity;
 }

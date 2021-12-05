@@ -1,9 +1,9 @@
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
 import moment = require('moment');
-import { edmToTs } from '../de-serializers';
-import { uriConverter } from './uri-value-converter';
+import { defaultDeSerializers, edmToTs } from '../de-serializers';
 
-const { convertToUriFormat } = uriConverter;
+const convertToUriFormat = createUriConverter(defaultDeSerializers);
 
 describe('convertToUriFormat', () => {
   it('Edm.Binary', () => {

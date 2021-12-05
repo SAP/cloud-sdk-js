@@ -5,10 +5,11 @@ import {
   commonODataUri,
   commonUriConverter
 } from '../../test/common-request-config';
+import { DefaultDeSerializers } from '../de-serializers';
 import { ODataDeleteRequestConfig } from './odata-delete-request-config';
 
 describe('ODataDeleteRequestConfig', () => {
-  let config: ODataDeleteRequestConfig<CommonEntity>;
+  let config: ODataDeleteRequestConfig<CommonEntity, DefaultDeSerializers>;
   beforeEach(() => {
     config = new ODataDeleteRequestConfig(CommonEntity, commonODataUri);
   });
@@ -28,7 +29,7 @@ describe('ODataDeleteRequestConfig', () => {
       testEntityResourcePath(
         keyPropGuid,
         keyPropString,
-        commonUriConverter.convertToUriFormat,
+        commonUriConverter,
         'A_CommonEntity'
       )
     );

@@ -1,21 +1,31 @@
-import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
   EntityIdentifiable,
-  Constructable,
-  Filterable,
-  and,
-  ODataGetAllRequestConfig,
-  Expandable,
   GetAllRequestBuilderBase,
-  toFilterableList
+  ODataGetAllRequestConfig,
+  entityDeserializer,
+  Filterable,
+  Expandable,
+  EntityApi,
+  toFilterableList,
+  and
 } from '@sap-cloud-sdk/odata-common/internal';
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
-import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
-import { responseDataAccessor } from './response-data-accessor';
-export class GetAllRequestBuilder<EntityT extends Entity>
-  extends GetAllRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT>
+import { edmToTs } from '../de-serializers/payload-value-converter';
+import { extractODataEtag } from '../extract-odata-etag';
+import { DeSerializers } from '../de-serializers';
+import { createODataUri } from '../uri-conversion';
+import {
+  getLinkedCollectionResult,
+  responseDataAccessor
+} from './response-data-accessor';
+
+export class GetAllRequestBuilder<
+    EntityT extends Entity,
+    DeSerializersT extends DeSerializers
+  >
+  extends GetAllRequestBuilderBase<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entity: EntityT;
 
@@ -23,20 +33,36 @@ export class GetAllRequestBuilder<EntityT extends Entity>
    * Creates an instance of GetAllRequestBuilder.
    * @param entityConstructor - Constructor of the entity to create the request for
    */
-  constructor(entityConstructor: Constructable<EntityT>) {
+  constructor({
+    entityConstructor,
+    deSerializers,
+    schema
+  }: EntityApi<EntityT, DeSerializersT>) {
     super(
       entityConstructor,
-      new ODataGetAllRequestConfig<EntityT>(entityConstructor, oDataUri),
-      entityDeserializer,
+      new ODataGetAllRequestConfig(
+        entityConstructor,
+        createODataUri(deSerializers)
+      ),
+      entityDeserializer(
+        schema,
+        edmToTs,
+        extractODataEtag,
+        getLinkedCollectionResult,
+        deSerializers
+      ),
       responseDataAccessor
     );
   }
 
-  expand(expands: Expandable<EntityT>[]): this;
-  expand(...expands: Expandable<EntityT>[]): this;
+  expand(expands: Expandable<EntityT, DeSerializersT>[]): this;
+  expand(...expands: Expandable<EntityT, DeSerializersT>[]): this;
   expand(
-    first: undefined | Expandable<EntityT> | Expandable<EntityT>[],
-    ...rest: Expandable<EntityT>[]
+    first:
+      | undefined
+      | Expandable<EntityT, DeSerializersT>
+      | Expandable<EntityT, DeSerializersT>[],
+    ...rest: Expandable<EntityT, DeSerializersT>[]
   ): this {
     this.requestConfig.expands = variadicArgumentToArray(first, rest);
     return this;
@@ -48,7 +74,7 @@ export class GetAllRequestBuilder<EntityT extends Entity>
    * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
-  filter(...expressions: Filterable<EntityT>[]): this {
+  filter(...expressions: Filterable<EntityT, DeSerializersT>[]): this {
     this.requestConfig.filter = and(toFilterableList(expressions)) as any;
     return this;
   }

@@ -16,7 +16,6 @@ export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
  * @internal
  */
 export interface Constructable<EntityT extends EntityBase> {
-  _serviceName: string;
   _entityName: string;
   _defaultServicePath: string;
   _keys: string[];

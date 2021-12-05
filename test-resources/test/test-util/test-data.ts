@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { uriConverter } from '@sap-cloud-sdk/odata-v4';
+import { defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import {
   TestEntity,
   TestEntityMultiLink,
@@ -12,8 +12,7 @@ import {
   TestEntityWithEnumKey
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
-
-const { convertToUriFormat } = uriConverter;
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 
 export function createOriginalTestEntityData1() {
   return {
@@ -99,7 +98,7 @@ export function createTestEntityV4(originalData): TestEntityV4 {
 export function testEntityResourcePath(
   guid,
   str,
-  toUriFormat = convertToUriFormat,
+  toUriFormat = createUriConverter(defaultDeSerializers),
   entityName = 'A_TestEntity'
 ): string {
   return `${entityName}(KeyPropertyGuid=${toUriFormat(

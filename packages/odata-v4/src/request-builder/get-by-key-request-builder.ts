@@ -1,15 +1,21 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
-  Constructable,
+  entityDeserializer,
   EntityIdentifiable,
   Expandable,
   GetByKeyRequestBuilderBase,
-  FieldType
+  FieldType,
+  EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers, edmToTs } from '../de-serializers';
 import { Entity } from '../entity';
-import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
-import { responseDataAccessor } from './response-data-accessor';
+import { createODataUri } from '../uri-conversion';
+import { extractODataEtag } from '../extract-odata-etag';
+import {
+  responseDataAccessor,
+  getLinkedCollectionResult
+} from './response-data-accessor';
+
 /**
  * Create an OData request to get a single entity based on its key properties.
  * The properties available in the response can be restricted by creating a [[GetByKeyRequestBuilderV4.select selection]], where no selection is equal to selecting all fields of the entity.
@@ -17,9 +23,12 @@ import { responseDataAccessor } from './response-data-accessor';
  * where no selection is equal to selecting all fields.
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilder<EntityT extends Entity>
-  extends GetByKeyRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT>
+export class GetByKeyRequestBuilder<
+    EntityT extends Entity,
+    DeSerializersT extends DeSerializers
+  >
+  extends GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entity: EntityT;
 
@@ -29,23 +38,36 @@ export class GetByKeyRequestBuilder<EntityT extends Entity>
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    {
+      entityConstructor,
+      deSerializers,
+      schema
+    }: EntityApi<EntityT, DeSerializersT>,
     keys: Record<string, FieldType>
   ) {
     super(
-      _entityConstructor,
+      entityConstructor,
       keys,
-      oDataUri,
-      entityDeserializer,
+      createODataUri(deSerializers),
+      entityDeserializer(
+        schema,
+        edmToTs,
+        extractODataEtag,
+        getLinkedCollectionResult,
+        deSerializers
+      ),
       responseDataAccessor
     );
   }
 
-  expand(expands: Expandable<EntityT>[]): this;
-  expand(...expands: Expandable<EntityT>[]): this;
+  expand(expands: Expandable<EntityT, DeSerializersT>[]): this;
+  expand(...expands: Expandable<EntityT, DeSerializersT>[]): this;
   expand(
-    first: undefined | Expandable<EntityT> | Expandable<EntityT>[],
-    ...rest: Expandable<EntityT>[]
+    first:
+      | undefined
+      | Expandable<EntityT, DeSerializersT>
+      | Expandable<EntityT, DeSerializersT>[],
+    ...rest: Expandable<EntityT, DeSerializersT>[]
   ): this {
     this.requestConfig.expands = variadicArgumentToArray(first, rest);
     return this;

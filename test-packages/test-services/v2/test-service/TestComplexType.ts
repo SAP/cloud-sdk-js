@@ -144,8 +144,8 @@ export class TestComplexTypeField<
    */
   stringProperty: EdmTypeField<
     EntityT,
-    'Edm.String',
     DeSerializersT,
+    'Edm.String',
     false,
     false
   > = this._fieldBuilder.buildEdmTypeField(
@@ -159,8 +159,8 @@ export class TestComplexTypeField<
    */
   booleanProperty: EdmTypeField<
     EntityT,
-    'Edm.Boolean',
     DeSerializersT,
+    'Edm.Boolean',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField(
@@ -172,7 +172,7 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.guidProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  guidProperty: EdmTypeField<EntityT, 'Edm.Guid', DeSerializersT, true, false> =
+  guidProperty: EdmTypeField<EntityT, DeSerializersT, 'Edm.Guid', true, false> =
     this._fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true);
   /**
    * Representation of the [[TestComplexType.int16Property]] property for query construction.
@@ -180,8 +180,8 @@ export class TestComplexTypeField<
    */
   int16Property: EdmTypeField<
     EntityT,
-    'Edm.Int16',
     DeSerializersT,
+    'Edm.Int16',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true);
@@ -191,8 +191,8 @@ export class TestComplexTypeField<
    */
   int32Property: EdmTypeField<
     EntityT,
-    'Edm.Int32',
     DeSerializersT,
+    'Edm.Int32',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField('Int32Property', 'Edm.Int32', true);
@@ -202,8 +202,8 @@ export class TestComplexTypeField<
    */
   int64Property: EdmTypeField<
     EntityT,
-    'Edm.Int64',
     DeSerializersT,
+    'Edm.Int64',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField('Int64Property', 'Edm.Int64', true);
@@ -213,8 +213,8 @@ export class TestComplexTypeField<
    */
   decimalProperty: EdmTypeField<
     EntityT,
-    'Edm.Decimal',
     DeSerializersT,
+    'Edm.Decimal',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField(
@@ -228,8 +228,8 @@ export class TestComplexTypeField<
    */
   singleProperty: EdmTypeField<
     EntityT,
-    'Edm.Single',
     DeSerializersT,
+    'Edm.Single',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField(
@@ -243,8 +243,8 @@ export class TestComplexTypeField<
    */
   doubleProperty: EdmTypeField<
     EntityT,
-    'Edm.Double',
     DeSerializersT,
+    'Edm.Double',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField(
@@ -258,8 +258,8 @@ export class TestComplexTypeField<
    */
   floatProperty: EdmTypeField<
     EntityT,
-    'Edm.Float',
     DeSerializersT,
+    'Edm.Float',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField('FloatProperty', 'Edm.Float', true);
@@ -267,7 +267,7 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.timeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  timeProperty: EdmTypeField<EntityT, 'Edm.Time', DeSerializersT, true, false> =
+  timeProperty: EdmTypeField<EntityT, DeSerializersT, 'Edm.Time', true, false> =
     this._fieldBuilder.buildEdmTypeField('TimeProperty', 'Edm.Time', true);
   /**
    * Representation of the [[TestComplexType.dateTimeProperty]] property for query construction.
@@ -275,8 +275,8 @@ export class TestComplexTypeField<
    */
   dateTimeProperty: EdmTypeField<
     EntityT,
-    'Edm.DateTime',
     DeSerializersT,
+    'Edm.DateTime',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField(
@@ -290,8 +290,8 @@ export class TestComplexTypeField<
    */
   dateTimeOffSetProperty: EdmTypeField<
     EntityT,
-    'Edm.DateTimeOffset',
     DeSerializersT,
+    'Edm.DateTimeOffset',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField(
@@ -303,7 +303,7 @@ export class TestComplexTypeField<
    * Representation of the [[TestComplexType.byteProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  byteProperty: EdmTypeField<EntityT, 'Edm.Byte', DeSerializersT, true, false> =
+  byteProperty: EdmTypeField<EntityT, DeSerializersT, 'Edm.Byte', true, false> =
     this._fieldBuilder.buildEdmTypeField('ByteProperty', 'Edm.Byte', true);
   /**
    * Representation of the [[TestComplexType.sByteProperty]] property for query construction.
@@ -311,8 +311,8 @@ export class TestComplexTypeField<
    */
   sByteProperty: EdmTypeField<
     EntityT,
-    'Edm.SByte',
     DeSerializersT,
+    'Edm.SByte',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField('SByteProperty', 'Edm.SByte', true);
@@ -322,8 +322,8 @@ export class TestComplexTypeField<
    */
   somethingTheSdkDoesNotSupport: EdmTypeField<
     EntityT,
-    'Edm.Any',
     DeSerializersT,
+    'Edm.Any',
     true,
     false
   > = this._fieldBuilder.buildEdmTypeField(

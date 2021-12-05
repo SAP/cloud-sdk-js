@@ -5,6 +5,7 @@ import {
   Filterable,
   toFilterableList
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '..';
 
 /**
  * Will return the entity if at least one element of the one-to-many link relation fulfills the condition.
@@ -13,10 +14,11 @@ import {
  */
 export function any<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
 >(
-  ...filters: Filterable<EntityT, LinkedEntityT>[]
-): FilterLambdaExpression<EntityT> {
+  ...filters: Filterable<EntityT, DeSerializersT, LinkedEntityT>[]
+): FilterLambdaExpression<EntityT, DeSerializersT> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'any');
 }
 
@@ -28,9 +30,10 @@ export function any<
  */
 export function all<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
 >(
-  ...filters: Filterable<EntityT, LinkedEntityT>[]
-): FilterLambdaExpression<EntityT> {
+  ...filters: Filterable<EntityT, DeSerializersT, LinkedEntityT>[]
+): FilterLambdaExpression<EntityT, DeSerializersT> {
   return new FilterLambdaExpression(and(toFilterableList(filters)), 'all');
 }

@@ -13,10 +13,10 @@ import {
   AllFields,
   EntityApi,
   EntityBuilderType,
+  FieldBuilder,
   Link,
   Time
 } from '@sap-cloud-sdk/odata-common/internal';
-import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/field-builder-new';
 import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
 import { TestComplexTypeField } from './TestComplexType';
@@ -131,7 +131,7 @@ export class TestEntityApi<
     > = defaultDeSerializers as any
   ) {
     this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
-    const fieldBuilder = new NewFieldBuilder(TestEntity, this.deSerializers);
+    const fieldBuilder = new FieldBuilder(TestEntity, this.deSerializers);
 
     this.schema = {
       /**

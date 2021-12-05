@@ -68,7 +68,7 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * @param edmToTs - Converters  emd input to ts values.
  * @param extractODataETag - Extractor for the ETag.
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
- * @param deSerializers - TODO
+ * @param deSerializers - (De-)serializers used for transformation.
  * @returns an entity deserializer as defined by [[EntityDeserializer]]
  * @internal
  */

@@ -5,7 +5,6 @@ export * from './request';
 export * from './request-builder';
 export * from './selectable';
 export * from './uri-conversion';
-export * from './payload-value-converter';
 export * from './entity-builder';
 export * from './response-transformer';
 export * from './properties-util';

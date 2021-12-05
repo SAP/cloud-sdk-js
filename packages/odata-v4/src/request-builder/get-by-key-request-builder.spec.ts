@@ -2,6 +2,7 @@ import {
   TestEntity,
   TestEntityWithEnumKey
 } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   mockGetRequest
@@ -13,10 +14,10 @@ import {
   createTestEntityWithEnumKey,
   testEntityResourcePath
 } from '../../../../test-resources/test/test-util/test-data';
-import { uriConverter } from '../uri-conversion/uri-value-converter';
+import { defaultDeSerializers } from '../de-serializers';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
-const { convertToUriFormat } = uriConverter;
+const convertToUriFormat = createUriConverter(defaultDeSerializers);
 
 describe('GetByKeyRequestBuilder', () => {
   describe('execute', () => {

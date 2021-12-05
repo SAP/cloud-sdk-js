@@ -28,7 +28,7 @@ import { CommonEntity } from './common-entity';
 
 export const commonUriConverter = createUriConverter(defaultDeSerializersRaw);
 export const commonODataUri = createODataUri(
-  commonUriConverter,
+  defaultDeSerializersRaw,
   () => undefined as any,
   selects =>
     selects?.length ? { select: selects.map(s => s._fieldName).join(',') } : {}

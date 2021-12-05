@@ -1,15 +1,16 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   mockDeleteRequest
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { uriConverter } from '../uri-conversion/uri-value-converter';
+import { defaultDeSerializers } from '../de-serializers';
 import { DeleteRequestBuilder } from './delete-request-builder';
 
-const { convertToUriFormat } = uriConverter;
+const convertToUriFormat = createUriConverter(defaultDeSerializers);
 
 describe('DeleteRequestBuilder', () => {
   const keyPropGuid = uuid();

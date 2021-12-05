@@ -21,22 +21,14 @@ export function entityImportDeclarations(
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   return [
-    // {
-    //   kind: StructureKind.ImportDeclaration,
-    //   moduleSpecifier: `./${entity.className}RequestBuilder`,
-    //   namedImports: [`${entity.className}RequestBuilder`]
-    // },
-    // ...externalImportDeclarations(entity.properties),
-    ...complexTypeImportDeclarations(entity.properties),
-    ...enumTypeImportDeclarations(entity.properties),
     odataImportDeclaration(['Entity', 'DefaultDeSerializers', 'DeSerializers'], oDataVersion),
     odataCommonImportDeclaration(
       [
         'DeserializedType'
       ]
-    )
-
-
+    ),
+    ...complexTypeImportDeclarations(entity.properties),
+    ...enumTypeImportDeclarations(entity.properties)
   ];
 }
 /**

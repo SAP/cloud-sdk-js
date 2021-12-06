@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`OData Request execute throws an error if the destination URL uses neither "http" nor "https" as protocol (e.g. RFC) 1`] = `"Protocol of the provided destination (rfc://example.com) is not supported! Currently only HTTP and HTTPS are supported."`;

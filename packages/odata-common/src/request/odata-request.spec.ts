@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
@@ -11,17 +10,33 @@ import {
 import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity } from '../../test/common-entity';
 
+// jest.mock('../../http-client/node_modules/axios', () => ({
+//   request: () => Promise.resolve()
+// }));
+//   .spyOn(axios, 'request')
+//   .mockResolvedValue({ 'x-csrf-token': 'test' });
+
+// jest.mock('@sap-cloud-sdk/http-client');
+
+jest.mock('@sap-cloud-sdk/http-client', () => {
+  const actual = jest.requireActual('@sap-cloud-sdk/http-client');
+  return {
+    ...actual,
+    executeHttpRequestWithOrigin: jest
+      .fn()
+      .mockResolvedValue({ 'x-csrf-token': 'test' })
+  };
+});
+
 describe('OData Request', () => {
-  let requestSpy: jest.SpyInstance;
+  // const requestSpy
   describe('format', () => {
     beforeEach(() => {
-      requestSpy = jest
-        .spyOn(axios, 'request')
-        .mockResolvedValue({ 'x-csrf-token': 'test' });
+      // requestSpy.mockResolvedValue({ 'x-csrf-token': 'test' });
     });
 
     afterEach(() => {
-      requestSpy.mockRestore();
+      // requestSpy.mockReset();
     });
 
     it('should be json for GET', async () => {
@@ -42,50 +57,6 @@ describe('OData Request', () => {
     it('should not be json for DELETE', async () => {
       const request = createRequestWithHeaders(ODataDeleteRequestConfig);
       expect(request.url()).not.toContain('$format=json');
-    });
-
-    describe('isTrustingAllCertificates is defined', () => {
-      it('rejectUnauthorized property of HttpsAgent should be set to true when TrustAll is false', async () => {
-        const destination: Destination = {
-          url: 'https://example.com',
-          isTrustingAllCertificates: true
-        };
-        const request = createRequestWithHeaders(
-          ODataDeleteRequestConfig,
-          destination
-        );
-        request.config.fetchCsrfToken = false;
-        await request.execute();
-        const expectedJsonHttpsAgent = {
-          httpsAgent: expect.objectContaining({
-            options: expect.objectContaining({ rejectUnauthorized: false })
-          })
-        };
-        expect(axios.request).toHaveBeenCalledWith(
-          expect.objectContaining(expectedJsonHttpsAgent)
-        );
-      });
-
-      it('rejectUnauthorized property of HttpsAgent should be set to false when TrustAll is true', async () => {
-        const destination: Destination = {
-          url: 'https://example.com',
-          isTrustingAllCertificates: false
-        };
-        const request = createRequestWithHeaders(
-          ODataDeleteRequestConfig,
-          destination
-        );
-        request.config.fetchCsrfToken = false;
-        await request.execute();
-        const expectedJsonHttpsAgent = {
-          httpsAgent: expect.objectContaining({
-            options: expect.objectContaining({ rejectUnauthorized: true })
-          })
-        };
-        expect(axios.request).toHaveBeenCalledWith(
-          expect.objectContaining(expectedJsonHttpsAgent)
-        );
-      });
     });
 
     function createRequestWithHeaders(
@@ -176,74 +147,6 @@ describe('OData Request', () => {
       expect(request.relativeUrl()).toBe(
         'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/?$format=json'
       );
-    });
-  });
-
-  describe('execute', () => {
-    beforeEach(() => {
-      requestSpy = jest.spyOn(axios, 'request').mockResolvedValue('test');
-    });
-
-    afterEach(() => {
-      requestSpy.mockRestore();
-    });
-
-    it('request config contains headers without ETag value when there is no ETag config', async () => {
-      const destination: Destination = {
-        url: 'http://example.com'
-      };
-
-      await createRequest(ODataGetAllRequestConfig, destination).execute();
-
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining({
-          headers: expect.not.objectContaining({
-            'if-match': expect.anything()
-          })
-        })
-      );
-    });
-
-    it('request config contains httpAgent when destination URL uses "http" as protocol', async () => {
-      const expectedConfigEntry = { httpAgent: expect.anything() };
-      const httpDestination: Destination = {
-        url: 'http://example.com',
-        authentication: 'NoAuthentication'
-      };
-
-      await createRequest(ODataGetAllRequestConfig, httpDestination).execute();
-
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining(expectedConfigEntry)
-      );
-    });
-
-    it('request config contains httpsAgent when destination URL uses "https" as protocol', async () => {
-      const expectedConfigEntry = { httpsAgent: expect.anything() };
-      const httpsDestination: Destination = {
-        url: 'https://example.com',
-        authentication: 'NoAuthentication'
-      };
-
-      await createRequest(ODataGetAllRequestConfig, httpsDestination).execute();
-
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining(expectedConfigEntry)
-      );
-    });
-
-    it('throws an error if the destination URL uses neither "http" nor "https" as protocol (e.g. RFC)', async () => {
-      const rfcDestination: Destination = {
-        url: 'rfc://example.com',
-        authentication: 'NoAuthentication'
-      };
-
-      const request = createRequest(
-        ODataGetAllRequestConfig,
-        rfcDestination
-      ).execute();
-
-      await expect(request).rejects.toThrowErrorMatchingSnapshot();
     });
   });
 });

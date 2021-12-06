@@ -1,8 +1,8 @@
 import { promises } from 'fs';
 import { resolve } from 'path';
-import { createOptions } from '@sap-cloud-sdk/generator/test/test-util/create-generator-options';
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { Project } from 'ts-morph';
+import { createOptions } from '../../generator/test/test-util/create-generator-options';
 import { generateProject } from '../../generator/src/internal';
 
 export async function generateCommonEntity() {

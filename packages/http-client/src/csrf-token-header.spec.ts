@@ -1,18 +1,13 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import nock from 'nock';
-import { Destination } from '@sap-cloud-sdk/connectivity';
-import {
-  ODataCreateRequestConfig,
-  ODataRequest
-} from '@sap-cloud-sdk/odata-common/internal';
-import { oDataUri } from '@sap-cloud-sdk/odata-v2/internal';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   defaultBasicCredentials,
   defaultDestination,
   defaultHost,
   mockHeaderRequest
 } from '../../../test-resources/test/test-util';
+import { createRequestBuilder } from '../../odata-common/test/common-request-config';
+import { CommonEntity } from '../../odata-common/test/common-entity';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 
 const standardHeaders = {
@@ -21,18 +16,13 @@ const standardHeaders = {
   'content-type': 'application/json'
 };
 
-export function createCreateRequest(
-  dest: Destination
-): ODataRequest<ODataCreateRequestConfig<any>> {
-  const requestConfig = new ODataCreateRequestConfig(TestEntity, oDataUri);
-  return new ODataRequest(requestConfig, dest);
-}
-
 describe('buildCsrfHeaders', () => {
   const logger = createLogger('csrf-token-header');
 
   it('should build "cookie" and "x-csrf-token" properties.', async () => {
-    const request = createCreateRequest(defaultDestination);
+    const request = await createRequestBuilder({
+      payload: new CommonEntity()
+    })['build'](defaultDestination);
     const mockedHeaders = {
       'x-csrf-token': 'mocked-x-csrf-token',
       'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
@@ -52,7 +42,9 @@ describe('buildCsrfHeaders', () => {
   });
 
   it('"x-csrf-token" should not be defined in header when not defined in CSRF headers response.', async () => {
-    const request = createCreateRequest(defaultDestination);
+    const request = await createRequestBuilder({
+      payload: new CommonEntity()
+    })['build'](defaultDestination);
     const warnSpy = jest.spyOn(logger, 'warn');
 
     mockHeaderRequest({
@@ -73,7 +65,9 @@ describe('buildCsrfHeaders', () => {
   });
 
   it('"cookie" should not be defined in header when not defined in CSRF headers response.', async () => {
-    const request = createCreateRequest(defaultDestination);
+    const request = await createRequestBuilder({
+      payload: new CommonEntity()
+    })['build'](defaultDestination);
     const warnSpy = jest.spyOn(logger, 'warn');
 
     mockHeaderRequest({
@@ -93,11 +87,9 @@ describe('buildCsrfHeaders', () => {
   });
 
   it('should try csrf request with / in the end first', async () => {
-    const destination: Destination = {
-      ...defaultDestination,
-      proxyType: 'OnPremise'
-    };
-    const request = createCreateRequest(destination);
+    const request = await createRequestBuilder({
+      payload: new CommonEntity()
+    })['build'](defaultDestination);
     const mockedHeaders = {
       'x-csrf-token': 'mocked-x-csrf-token',
       'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']
@@ -119,11 +111,9 @@ describe('buildCsrfHeaders', () => {
   });
 
   it('tries csrf request without / if the first one fails', async () => {
-    const destination: Destination = {
-      ...defaultDestination,
-      proxyType: 'OnPremise'
-    };
-    const request = createCreateRequest(destination);
+    const request = await createRequestBuilder({
+      payload: new CommonEntity()
+    })['build'](defaultDestination);
     const mockedHeaders = {
       'x-csrf-token': 'mocked-x-csrf-token',
       'set-cookie': ['mocked-cookie-0;mocked-cookie-1', 'mocked-cookie-2']

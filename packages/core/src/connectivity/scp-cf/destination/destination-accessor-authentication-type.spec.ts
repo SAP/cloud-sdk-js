@@ -1,7 +1,8 @@
 import nock from 'nock';
 import {
   mockServiceBindings,
-  onlyIssuerXsuaaUrl
+  onlyIssuerXsuaaUrl,
+  TestTenants
 } from '../../../../test/test-util/environment-mocks';
 import {
   expectAllMocksUsed,
@@ -19,7 +20,6 @@ import {
   providerJwtBearerToken,
   providerServiceToken,
   providerUserJwt,
-  subscriberJwtBearerToken,
   subscriberServiceToken,
   subscriberUserJwt
 } from '../../../../test/test-util/mocked-access-tokens';
@@ -30,6 +30,8 @@ import {
   destinationName,
   oauthClientCredentialsMultipleResponse,
   oauthClientCredentialsSingleResponse,
+  oauthJwtBearerResponse,
+  oauthJwtBearerSingleResponse,
   oauthMultipleResponse,
   oauthPasswordMultipleResponse,
   oauthPasswordSingleResponse,
@@ -76,7 +78,11 @@ describe('authentication types', () => {
           oauthSingleResponse,
           200,
           destinationName,
-          wrapJwtInHeader(subscriberJwtBearerToken).headers
+          {
+            ...wrapJwtInHeader(subscriberServiceToken).headers,
+            'X-user-token': subscriberUserJwt
+          },
+          { badheaders: [] }
         )
       ];
 
@@ -253,6 +259,87 @@ describe('authentication types', () => {
       expect(actual).toMatchObject(expected);
       expectAllMocksUsed(httpMocks);
     });
+
+    it('returns a destination with authTokens if its authenticationType is OAuth2ClientCredentials, tokenServiceUrlType common and sets X-token header.', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockJwtBearerToken();
+
+      const withTokenServiceType = {
+        ...oauthClientCredentialsSingleResponse,
+        tokenServiceURLType: 'Common'
+      };
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          [withTokenServiceType],
+          200,
+          providerServiceToken
+        ),
+        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSingleDestinationCall(
+          nock,
+          withTokenServiceType,
+          200,
+          destinationName,
+          {
+            ...wrapJwtInHeader(providerServiceToken).headers,
+            'X-tenant': TestTenants.SUBSCRIBER
+          },
+          { badheaders: [] }
+        )
+      ];
+
+      const expected = parseDestination(oauthClientCredentialsSingleResponse);
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberUserJwt
+      });
+      expect(actual).toMatchObject(expected);
+      expectAllMocksUsed(httpMocks);
+    });
+  });
+
+  describe('authentication type OAuth2JWTBearer', () => {
+    it('should use provider service token subscriber x-user-token for provider destination and subscriber jwt', async () => {
+      mockServiceBindings();
+      mockVerifyJwt();
+      mockServiceToken();
+      mockJwtBearerToken();
+
+      const httpMocks = [
+        mockInstanceDestinationsCall(nock, [], 200, providerServiceToken),
+        mockInstanceDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(nock, [], 200, subscriberServiceToken),
+        mockSubaccountDestinationsCall(
+          nock,
+          oauthJwtBearerResponse,
+          200,
+          providerServiceToken
+        ),
+        mockSingleDestinationCall(
+          nock,
+          oauthJwtBearerSingleResponse,
+          200,
+          destinationName,
+          {
+            ...wrapJwtInHeader(providerServiceToken).headers,
+            'x-user-token': subscriberUserJwt
+          },
+          { badheaders: [] }
+        )
+      ];
+
+      const expected = parseDestination(oauthJwtBearerSingleResponse);
+      const actual = await getDestination(destinationName, {
+        userJwt: subscriberUserJwt
+      });
+      expect(actual).toMatchObject(expected);
+      expectAllMocksUsed(httpMocks);
+    });
   });
 
   describe('authentication type OAuth2UserTokenExchange', () => {
@@ -309,7 +396,8 @@ describe('authentication types', () => {
           {
             ...wrapJwtInHeader(providerServiceToken).headers,
             'X-user-token': subscriberUserJwt
-          }
+          },
+          { badheaders: [] }
         )
       ];
 
@@ -344,7 +432,8 @@ describe('authentication types', () => {
           {
             ...wrapJwtInHeader(subscriberServiceToken).headers,
             'X-user-token': subscriberUserJwt
-          }
+          },
+          { badheaders: [] }
         )
       ];
 
@@ -559,7 +648,9 @@ describe('authentication types', () => {
       ];
 
       await expect(
-        getDestination('OnPremise', { iss: onlyIssuerXsuaaUrl })
+        getDestination('OnPremise', {
+          iss: onlyIssuerXsuaaUrl
+        })
       ).rejects.toThrowError('For principal propagation a user JWT is needed.');
       expectAllMocksUsed(httpMocks);
     });

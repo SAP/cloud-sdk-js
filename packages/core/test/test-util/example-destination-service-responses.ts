@@ -89,6 +89,13 @@ export const oauthPasswordSingleResponse = destinationSingleResponse(
   oauthPasswordMultipleResponse
 );
 
+export const oauthJwtBearerResponse: DestinationConfiguration[] = [
+  destinationWithAuthType('OAuth2JWTBearer')
+];
+export const oauthJwtBearerSingleResponse = destinationSingleResponse(
+  oauthJwtBearerResponse
+);
+
 export const oauthClientCredentialsMultipleResponse: DestinationConfiguration[] =
   [destinationWithAuthType('OAuth2ClientCredentials')];
 export const oauthClientCredentialsSingleResponse: DestinationJson =

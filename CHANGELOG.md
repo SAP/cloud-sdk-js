@@ -27,7 +27,7 @@
 ## Fixed Issues
 
 - [core] Fix parsing of batch response with HTTP 200 status code and containing empty body.
-
+- [core] Fix missing `x-tenant` and `x-user-token` header for multiple authorization flows.
 
 # 1.52.0
 

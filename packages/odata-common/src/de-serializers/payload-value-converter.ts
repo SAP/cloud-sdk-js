@@ -4,14 +4,6 @@ import BigNumber from 'bignumber.js';
 
 /**
  * @internal
- * @deprecated I think this should be removed and replaced by the number functions below.
- */
-export function convertToNumber(value: any): number {
-  return Number(value);
-}
-
-/**
- * @internal
  * Check if string is guid format and throws exception if not.
  * @param value - string to be checked
  * @returns string

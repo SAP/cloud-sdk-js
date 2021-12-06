@@ -42,10 +42,11 @@ export function mockSingleDestinationCall(
   responseCode: number,
   destName: string,
   headers: Record<string, any>,
-  uri: string = destinationServiceUri
+  options?: { uri?: string; badheaders?: string[] }
 ) {
-  return nockRef(uri, {
-    reqheaders: headers
+  return nockRef(options?.uri || destinationServiceUri, {
+    reqheaders: headers,
+    badheaders: options?.badheaders || ['X-tenant', 'X-user-token'] // X-tenant only allowed for OAuth2ClientCredentials flow
   })
     .get(`/destination-configuration/v1/destinations/${destName}`)
     .reply(responseCode, response);

@@ -5,7 +5,6 @@ import {
 } from '../../../../../test-resources/test/test-util/environment-mocks';
 import {
   providerServiceToken,
-  subscriberJwtBearerToken,
   subscriberServiceToken,
   subscriberServiceTokenWithVerificationURL,
   subscriberUserJwt
@@ -134,7 +133,11 @@ describe('Failure cases', () => {
         },
         401,
         destinationName,
-        wrapJwtInHeader(subscriberJwtBearerToken).headers
+        {
+          ...wrapJwtInHeader(subscriberServiceToken).headers,
+          'x-user-token': subscriberUserJwt
+        },
+        { badheaders: [] }
       )
     ];
 
@@ -205,7 +208,7 @@ describe('Failure cases', () => {
         iasToXsuaaTokenExchange: false
       })
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"No user token (JWT) has been provided. This is strictly necessary for principal propagation."'
+      '"No user token (JWT) has been provided. This is strictly necessary for \'OAuth2SAMLBearerAssertion\'."'
     );
     expect(instanceDestinationCallMock.isDone()).toBe(true);
     expect(subaccountDestinationCallMock.isDone()).toBe(true);

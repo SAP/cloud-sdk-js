@@ -7,7 +7,6 @@ export * from './options';
 export * from './parsing-info';
 export * from './refs';
 export * from './request-body';
-export * from './reserved-words';
 export * from './responses';
 export * from './schema-naming';
 export * from './schema';

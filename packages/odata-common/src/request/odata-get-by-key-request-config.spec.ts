@@ -1,16 +1,22 @@
 import { v4 as uuid } from 'uuid';
 import { CommonEntity } from '../../test/common-entity';
 import {
+  commonEntityApi,
   commonODataUri,
   commonUriConverter
 } from '../../test/common-request-config';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util';
+import { defaultDeSerializers, DefaultDeSerializers } from '../de-serializers';
 import { ODataGetByKeyRequestConfig } from './odata-get-by-key-request-config';
 
 describe('ODataGetByKeyRequestConfig', () => {
-  let config: ODataGetByKeyRequestConfig<CommonEntity>;
+  let config: ODataGetByKeyRequestConfig<CommonEntity, DefaultDeSerializers>;
   beforeEach(() => {
-    config = new ODataGetByKeyRequestConfig(CommonEntity, commonODataUri);
+    config = new ODataGetByKeyRequestConfig(
+      CommonEntity,
+      defaultDeSerializers,
+      commonODataUri
+    );
   });
 
   it('method is get', () => {
@@ -28,7 +34,7 @@ describe('ODataGetByKeyRequestConfig', () => {
       testEntityResourcePath(
         keyPropGuid,
         keyPropString,
-        commonUriConverter.convertToUriFormat,
+        commonUriConverter,
         'A_CommonEntity'
       )
     );
@@ -40,8 +46,8 @@ describe('ODataGetByKeyRequestConfig', () => {
 
   it('has selection', () => {
     config.selects = [
-      CommonEntity.STRING_PROPERTY,
-      CommonEntity.INT_16_PROPERTY
+      commonEntityApi.schema.STRING_PROPERTY,
+      commonEntityApi.schema.INT_16_PROPERTY
     ];
     expect(Object.keys(config.queryParameters())).toContain('$select');
   });

@@ -4,7 +4,7 @@ import {
   mockHeaderRequest
 } from '../../../test-resources/test/test-util/request-mocker';
 import { connectivityProxyConfigMock } from '../../../test-resources/test/test-util/environment-mocks';
-import { CommonEntity } from '../test/common-entity';
+import { CommonEntityApi } from '../test/common-entity';
 import {
   getAllRequestConfig,
   updateRequestConfig
@@ -45,7 +45,7 @@ describe('Header-Builder', () => {
     expect(headers.Destination!.authorization).toBe('Bearer some.token');
   });
 
-  const commonEntity = CommonEntity.builder().build();
+  const commonEntity = new CommonEntityApi().entityBuilder().build();
   describe('update request header with ETag', () => {
     it('if-match should not be set when no ETag is specified', async () => {
       const request = new ODataRequest(

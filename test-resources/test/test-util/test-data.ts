@@ -2,14 +2,19 @@ import { v4 as uuid } from 'uuid';
 import { defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import {
   TestEntity,
-  TestEntityMultiLink,
-  TestEntitySingleLink
+  // @ts-ignore
+  TestEntityApi,
+  // @ts-ignore
+  TestEntitySingleLinkApi,
+  TestEntityMultiLinkApi
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
-  TestEntityMultiLink as TestEntityMultiLinkV4,
-  TestEntitySingleLink as TestEntitySingleLinkV4,
-  TestEntityWithEnumKey
+  TestEntityWithEnumKey,
+  // @ts-ignore
+  TestEntitySingleLinkApi as TestEntitySingleLinkApiV4,
+  // @ts-ignore
+  TestEntityWithEnumKeyApi
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
@@ -51,7 +56,8 @@ export function createOriginalTestEntityDataWithLinks() {
 }
 
 export function createTestEntity(originalData): TestEntity {
-  const entity = TestEntity.builder()
+  const entity = new TestEntityApi()
+    .entityBuilder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
     .keyPropertyString(originalData.KeyPropertyString)
     .stringProperty(originalData.StringProperty)
@@ -60,20 +66,27 @@ export function createTestEntity(originalData): TestEntity {
     .build()
     .setOrInitializeRemoteState();
   if (originalData.to_SingleLink) {
-    entity.toSingleLink = TestEntitySingleLink.builder()
+    entity.toSingleLink = new TestEntitySingleLinkApi()
+      .entityBuilder()
       .keyProperty(originalData.to_SingleLink.KeyProperty)
       .build();
   }
   if (originalData.to_MultiLink) {
     entity.toMultiLink = originalData.to_MultiLink.map(ml =>
-      TestEntityMultiLink.builder().keyProperty(ml.KeyProperty).build()
+      new TestEntityMultiLinkApi()
+        // @ts-ignore
+        .entityBuilder()
+        .keyProperty(ml.KeyProperty)
+        .build()
     );
   }
   return entity;
 }
 
 export function createTestEntityV4(originalData): TestEntityV4 {
-  const entity = TestEntityV4.builder()
+  // @ts-ignore
+  const entity = new TestEntityApiV4()
+    .entityBuilder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
     .keyPropertyString(originalData.KeyPropertyString)
     .stringProperty(originalData.StringProperty)
@@ -83,13 +96,18 @@ export function createTestEntityV4(originalData): TestEntityV4 {
     .build()
     .setOrInitializeRemoteState();
   if (originalData.to_SingleLink) {
-    entity.toSingleLink = TestEntitySingleLinkV4.builder()
+    entity.toSingleLink = new TestEntitySingleLinkApiV4()
+      .entityBuilder()
       .keyProperty(originalData.to_SingleLink.KeyProperty)
       .build();
   }
   if (originalData.to_MultiLink) {
     entity.toMultiLink = originalData.to_MultiLink.map(ml =>
-      TestEntityMultiLinkV4.builder().keyProperty(ml.KeyProperty).build()
+      // @ts-ignore
+      new TestEntityMultiLinkApiV4()
+        .entityBuilder()
+        .keyProperty(ml.KeyProperty)
+        .build()
     );
   }
   return entity;
@@ -116,7 +134,8 @@ export function createOriginalTestEntityWithEnumKeyData() {
 export function createTestEntityWithEnumKey(
   originalData
 ): TestEntityWithEnumKey {
-  return TestEntityWithEnumKey.builder()
+  return new TestEntityWithEnumKeyApi()
+    .entityBuilder()
     .keyPropertyEnum1(originalData.KeyPropertyEnum1)
     .build()
     .setOrInitializeRemoteState();

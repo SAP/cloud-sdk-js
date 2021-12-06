@@ -4,7 +4,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
-import { createODataUri } from '../uri-conversion';
+import { createODataUriV2 } from '../uri-conversion';
 
 /**
  * Create OData query to delete an entity.
@@ -31,7 +31,7 @@ export class DeleteRequestBuilder<
     super(
       entityConstructor,
       schema,
-      createODataUri(deSerializers),
+      createODataUriV2(deSerializers),
       keysOrEntity
     );
   }

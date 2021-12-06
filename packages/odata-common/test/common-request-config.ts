@@ -32,12 +32,12 @@ export const commonODataUri = createODataUri(
   selects =>
     selects?.length ? { select: selects.map(s => s._fieldName).join(',') } : {}
 );
-const commonEntitySchema = new CommonEntityApi().schema;
+export const commonEntityApi = new CommonEntityApi();
 const commonEntitySerializer = entitySerializer(defaultDeSerializers);
 const commonExtractODataEtag = () => undefined;
 const commonEntityDeserializer = entityDeserializer(
   defaultDeSerializers,
-  commonEntitySchema,
+  commonEntityApi.schema,
   commonExtractODataEtag,
   () => undefined as any
 );
@@ -55,7 +55,7 @@ export function getAllRequestConfig(
   const requestConfig = new ODataGetAllRequestConfig<
     CommonEntity,
     DefaultDeSerializers
-  >(CommonEntity, commonEntitySchema, commonODataUri);
+  >(CommonEntity, commonEntityApi.schema, commonODataUri);
   if (options?.filter) {
     requestConfig.filter = and([options?.filter]);
   }
@@ -110,7 +110,7 @@ export function getByKeyRequestBuilder(
   if (options?.keys) {
     return new CommonByKeyRequestBuilder(
       CommonEntity,
-      commonEntitySchema,
+      commonEntityApi.schema,
       options?.keys,
       commonODataUri,
       commonEntityDeserializer,
@@ -128,7 +128,7 @@ export function createRequestBuilder(
   if (options?.payload) {
     return new CommonCreateRequestBuilder(
       CommonEntity,
-      commonEntitySchema,
+      commonEntityApi.schema,
       options.payload! as CommonEntity,
       commonODataUri,
       commonEntitySerializer,
@@ -148,7 +148,7 @@ export function updateRequestBuilder(
   if (options?.payload) {
     return new CommonUpdateRequestBuilder(
       CommonEntity,
-      commonEntitySchema,
+      commonEntityApi.schema,
       options.payload! as CommonEntity,
       commonODataUri,
       commonEntitySerializer,
@@ -167,7 +167,7 @@ export function deleteRequestBuilder(
   if (options?.keys) {
     return new CommonDeleteRequestBuilder(
       CommonEntity,
-      commonEntitySchema,
+      commonEntityApi.schema,
       commonODataUri,
       options.keys
     );
@@ -175,7 +175,7 @@ export function deleteRequestBuilder(
   if (options?.payload) {
     return new CommonDeleteRequestBuilder(
       CommonEntity,
-      commonEntitySchema,
+      commonEntityApi.schema,
       commonODataUri,
       options.payload
     );

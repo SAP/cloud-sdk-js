@@ -5,12 +5,17 @@ import {
   commonUriConverter
 } from '../../test/common-request-config';
 import { CommonEntity } from '../../test/common-entity';
+import { defaultDeSerializers, DefaultDeSerializers } from '../de-serializers';
 import { ODataUpdateRequestConfig } from './odata-update-request-config';
 
 describe('ODataUpdateRequestConfig', () => {
-  let config: ODataUpdateRequestConfig<CommonEntity>;
+  let config: ODataUpdateRequestConfig<CommonEntity, DefaultDeSerializers>;
   beforeEach(() => {
-    config = new ODataUpdateRequestConfig(CommonEntity, commonODataUri);
+    config = new ODataUpdateRequestConfig(
+      CommonEntity,
+      defaultDeSerializers,
+      commonODataUri
+    );
   });
 
   it('method is patch as default', () => {
@@ -33,7 +38,7 @@ describe('ODataUpdateRequestConfig', () => {
       testEntityResourcePath(
         keyPropGuid,
         keyPropString,
-        commonUriConverter.convertToUriFormat,
+        commonUriConverter,
         'A_CommonEntity'
       )
     );

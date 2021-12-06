@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { CommonEntity } from '../../test/common-entity';
+import { CommonEntity, CommonEntityApi } from '../../test/common-entity';
 import {
   commonODataUri,
   commonUriConverter
@@ -11,7 +11,11 @@ import { ODataDeleteRequestConfig } from './odata-delete-request-config';
 describe('ODataDeleteRequestConfig', () => {
   let config: ODataDeleteRequestConfig<CommonEntity, DefaultDeSerializers>;
   beforeEach(() => {
-    config = new ODataDeleteRequestConfig(CommonEntity, commonODataUri);
+    config = new ODataDeleteRequestConfig(
+      CommonEntity,
+      new CommonEntityApi().schema,
+      commonODataUri
+    );
   });
 
   it('method is delete', () => {

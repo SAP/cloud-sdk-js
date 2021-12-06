@@ -13,7 +13,7 @@ import {
 import { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
 import { DeSerializers } from '../de-serializers';
-import { createODataUri } from '../uri-conversion';
+import { createODataUriV4 } from '../uri-conversion';
 
 export class UpdateRequestBuilder<
     EntityT extends Entity,
@@ -39,7 +39,7 @@ export class UpdateRequestBuilder<
       entityConstructor,
       schema,
       _entity,
-      createODataUri(deSerializers),
+      createODataUriV4(deSerializers),
       entitySerializer(deSerializers),
       extractODataEtag,
       identity

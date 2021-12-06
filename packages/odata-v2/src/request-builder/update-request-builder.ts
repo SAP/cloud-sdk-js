@@ -18,7 +18,7 @@ import {
 import { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
 import { DeSerializers } from '../de-serializers';
-import { createODataUri } from '../uri-conversion';
+import { createODataUriV2 } from '../uri-conversion';
 
 const logger = createLogger({
   package: 'odata-v2',
@@ -53,7 +53,7 @@ export class UpdateRequestBuilder<
       entityConstructor,
       schema,
       _entity,
-      createODataUri(deSerializers),
+      createODataUriV2(deSerializers),
       entitySerializer(deSerializers),
       extractODataEtag,
       removeNavPropsAndComplexTypes

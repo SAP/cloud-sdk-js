@@ -1,5 +1,5 @@
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { CommonEntity } from '../../../test/common-entity';
+import { CommonEntity, CommonEntityApi } from '../../../test/common-entity';
 import {
   batchRequestBuilder,
   createRequestBuilder,
@@ -17,7 +17,8 @@ import {
 import { BatchChangeSet } from './batch-change-set';
 
 function commonEntity(): CommonEntity {
-  return CommonEntity.builder()
+  return new CommonEntityApi()
+    .entityBuilder()
     .keyPropertyGuid('guidId')
     .keyPropertyString('strId')
     .stringProperty('value')

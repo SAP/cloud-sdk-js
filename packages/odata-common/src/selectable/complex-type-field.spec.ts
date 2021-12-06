@@ -1,24 +1,21 @@
 import { getEntityConstructor } from '../internal';
-import { CommonEntity } from '../../test/common-entity';
+import { CommonEntity, CommonEntityApi } from '../../test/common-entity';
 import { getEdmType } from './complex-type-field';
 
 describe('complex-type-field', () => {
+  const { COMPLEX_TYPE_PROPERTY } = new CommonEntityApi().schema;
   describe('getEntityConstructor', () => {
     it('should get entity constructor from entity constructor', () => {
       expect(getEntityConstructor(CommonEntity)).toBe(CommonEntity);
     });
 
     it('should get entity constructor from complex type field', () => {
-      expect(getEntityConstructor(CommonEntity.COMPLEX_TYPE_PROPERTY)).toBe(
-        CommonEntity
-      );
+      expect(getEntityConstructor(COMPLEX_TYPE_PROPERTY)).toBe(CommonEntity);
     });
 
     it('should get entity constructor from nested complex type field', () => {
       expect(
-        getEntityConstructor(
-          CommonEntity.COMPLEX_TYPE_PROPERTY.complexTypeProperty
-        )
+        getEntityConstructor(COMPLEX_TYPE_PROPERTY.complexTypeProperty)
       ).toBe(CommonEntity);
     });
   });

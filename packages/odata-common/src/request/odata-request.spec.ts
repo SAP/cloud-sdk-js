@@ -2,6 +2,7 @@ import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
+  DefaultDeSerializers,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
   ODataGetAllRequestConfig,
@@ -9,7 +10,7 @@ import {
   ODataUpdateRequestConfig
 } from '../internal';
 import { commonODataUri } from '../../test/common-request-config';
-import { CommonEntity } from '../../test/common-entity';
+import { CommonEntity, CommonEntityApi } from '../../test/common-entity';
 
 describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;
@@ -160,8 +161,10 @@ describe('OData Request', () => {
   describe('relativeUrl', () => {
     it('should contain appended path', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      const requestConfig =
-        request.config as ODataGetAllRequestConfig<CommonEntity>;
+      const requestConfig = request.config as ODataGetAllRequestConfig<
+        CommonEntity,
+        DefaultDeSerializers
+      >;
       requestConfig.appendPath('/$value');
       expect(request.relativeUrl()).toBe(
         'sap/opu/odata/sap/API_TEST_SRV/A_CommonEntity/$value?$format=json'
@@ -170,8 +173,10 @@ describe('OData Request', () => {
 
     it('should not remove the trailing slash', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      const requestConfig =
-        request.config as ODataGetAllRequestConfig<CommonEntity>;
+      const requestConfig = request.config as ODataGetAllRequestConfig<
+        CommonEntity,
+        DefaultDeSerializers
+      >;
       requestConfig.appendPath('/');
       expect(request.relativeUrl()).toBe(
         'sap/opu/odata/sap/API_TEST_SRV/A_CommonEntity/?$format=json'
@@ -252,7 +257,11 @@ function createRequest(
   requestConfigConstructor,
   destination: Destination = { url: '' }
 ) {
-  const config = new requestConfigConstructor(CommonEntity, commonODataUri);
+  const config = new requestConfigConstructor(
+    CommonEntity,
+    new CommonEntityApi().schema,
+    commonODataUri
+  );
   config.keys = {
     KeyPropertyGuid: uuid(),
     KeyPropertyString: 'id'

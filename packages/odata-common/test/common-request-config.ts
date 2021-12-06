@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import {
   and,
+  DefaultDeSerializers,
   defaultDeSerializersRaw,
   BatchChangeSet,
   ODataCreateRequestConfig,
@@ -16,29 +17,27 @@ import {
   ODataGetByKeyRequestConfig,
   ODataGetAllRequestConfig,
   GetByKeyRequestBuilderBase,
-  deserializersCommon,
-  entityDeserializer as entityDeserializerBase,
-  entitySerializer as entitySerializerBase,
+  entitySerializer,
   createUriConverter,
-  serializersCommon,
   createODataUri,
-  createEdmToTs
+  defaultDeSerializers,
+  entityDeserializer
 } from '../src/internal';
-import { CommonEntity } from './common-entity';
+import { CommonEntity, CommonEntityApi } from './common-entity';
 
 export const commonUriConverter = createUriConverter(defaultDeSerializersRaw);
 export const commonODataUri = createODataUri(
-  defaultDeSerializersRaw,
+  defaultDeSerializers,
   () => undefined as any,
   selects =>
     selects?.length ? { select: selects.map(s => s._fieldName).join(',') } : {}
 );
-const commonEntitySerializer = entitySerializerBase(
-  createEdmToTs(serializersCommon)
-);
+const commonEntitySchema = new CommonEntityApi().schema;
+const commonEntitySerializer = entitySerializer(defaultDeSerializers);
 const commonExtractODataEtag = () => undefined;
-const commonEntityDeserializer = entityDeserializerBase(
-  createEdmToTs(deserializersCommon),
+const commonEntityDeserializer = entityDeserializer(
+  defaultDeSerializers,
+  commonEntitySchema,
   commonExtractODataEtag,
   () => undefined as any
 );
@@ -52,11 +51,11 @@ interface Options {
 
 export function getAllRequestConfig(
   options?: Options
-): ODataGetAllRequestConfig<CommonEntity> {
-  const requestConfig = new ODataGetAllRequestConfig<CommonEntity>(
+): ODataGetAllRequestConfig<CommonEntity, DefaultDeSerializers> {
+  const requestConfig = new ODataGetAllRequestConfig<
     CommonEntity,
-    commonODataUri
-  );
+    DefaultDeSerializers
+  >(CommonEntity, commonEntitySchema, commonODataUri);
   if (options?.filter) {
     requestConfig.filter = and([options?.filter]);
   }
@@ -68,31 +67,31 @@ export function getAllRequestConfig(
 
 export function getByKeyRequestConfig(
   options?: Options
-): ODataGetByKeyRequestConfig<CommonEntity> {
+): ODataGetByKeyRequestConfig<CommonEntity, DefaultDeSerializers> {
   return getByKeyRequestBuilder(options).requestConfig;
 }
 
 export function deleteRequestConfig(
   options?: Options
-): ODataDeleteRequestConfig<CommonEntity> {
+): ODataDeleteRequestConfig<CommonEntity, DefaultDeSerializers> {
   return deleteRequestBuilder(options).requestConfig;
 }
 
 export function createRequestConfig(
   options?: Options
-): ODataCreateRequestConfig<CommonEntity> {
+): ODataCreateRequestConfig<CommonEntity, DefaultDeSerializers> {
   return createRequestBuilder(options).requestConfig;
 }
 
 export function updateRequestConfig(
   options?: Options
-): ODataUpdateRequestConfig<CommonEntity> {
+): ODataUpdateRequestConfig<CommonEntity, DefaultDeSerializers> {
   return updateRequestBuilder(options).requestConfig;
 }
 
 export function getAllRequestBuilder(
   options?: Options
-): GetAllRequestBuilderBase<CommonEntity> {
+): GetAllRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   const builder = new CommonGetAllRequestBuilder(
     CommonEntity,
     getAllRequestConfig(options),
@@ -107,10 +106,11 @@ export function getAllRequestBuilder(
 
 export function getByKeyRequestBuilder(
   options?: Options
-): GetByKeyRequestBuilderBase<CommonEntity> {
+): GetByKeyRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   if (options?.keys) {
     return new CommonByKeyRequestBuilder(
       CommonEntity,
+      commonEntitySchema,
       options?.keys,
       commonODataUri,
       commonEntityDeserializer,
@@ -124,10 +124,11 @@ export function getByKeyRequestBuilder(
 
 export function createRequestBuilder(
   options?: Options
-): CreateRequestBuilderBase<CommonEntity> {
+): CreateRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   if (options?.payload) {
     return new CommonCreateRequestBuilder(
       CommonEntity,
+      commonEntitySchema,
       options.payload! as CommonEntity,
       commonODataUri,
       commonEntitySerializer,
@@ -143,10 +144,11 @@ export function createRequestBuilder(
 
 export function updateRequestBuilder(
   options?: Options
-): UpdateRequestBuilderBase<CommonEntity> {
+): UpdateRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   if (options?.payload) {
     return new CommonUpdateRequestBuilder(
       CommonEntity,
+      commonEntitySchema,
       options.payload! as CommonEntity,
       commonODataUri,
       commonEntitySerializer,
@@ -161,10 +163,11 @@ export function updateRequestBuilder(
 
 export function deleteRequestBuilder(
   options?: Options
-): DeleteRequestBuilderBase<CommonEntity> {
+): DeleteRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   if (options?.keys) {
     return new CommonDeleteRequestBuilder(
       CommonEntity,
+      commonEntitySchema,
       commonODataUri,
       options.keys
     );
@@ -172,6 +175,7 @@ export function deleteRequestBuilder(
   if (options?.payload) {
     return new CommonDeleteRequestBuilder(
       CommonEntity,
+      commonEntitySchema,
       commonODataUri,
       options.payload
     );
@@ -195,13 +199,25 @@ export function batchRequestBuilder(
   return builder;
 }
 
-class CommonGetAllRequestBuilder extends GetAllRequestBuilderBase<CommonEntity> {}
+class CommonGetAllRequestBuilder extends GetAllRequestBuilderBase<
+  CommonEntity,
+  DefaultDeSerializers
+> {}
 
-class CommonUpdateRequestBuilder extends UpdateRequestBuilderBase<CommonEntity> {}
+class CommonUpdateRequestBuilder extends UpdateRequestBuilderBase<
+  CommonEntity,
+  DefaultDeSerializers
+> {}
 
-class CommonCreateRequestBuilder extends CreateRequestBuilderBase<CommonEntity> {}
+class CommonCreateRequestBuilder extends CreateRequestBuilderBase<
+  CommonEntity,
+  DefaultDeSerializers
+> {}
 
-class CommonDeleteRequestBuilder extends DeleteRequestBuilderBase<CommonEntity> {
+class CommonDeleteRequestBuilder extends DeleteRequestBuilderBase<
+  CommonEntity,
+  DefaultDeSerializers
+> {
   setVersionIdentifier(eTag: string): this {
     if (eTag) {
       // In principle this is v2/v4 specific, but the method is called in the request config so we provide some dummy implementation.
@@ -211,7 +227,10 @@ class CommonDeleteRequestBuilder extends DeleteRequestBuilderBase<CommonEntity> 
   }
 }
 
-class CommonByKeyRequestBuilder extends GetByKeyRequestBuilderBase<CommonEntity> {}
+class CommonByKeyRequestBuilder extends GetByKeyRequestBuilderBase<
+  CommonEntity,
+  DefaultDeSerializers
+> {}
 
 class CommonBacthRequestBuilder extends BatchRequestBuilder {}
 

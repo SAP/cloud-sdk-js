@@ -34,7 +34,8 @@ export interface ODataUri<DeSerializersT extends DeSerializers> {
   ): Partial<{ orderby: string }>;
   getResourcePathForKeys<EntityT extends EntityBase>(
     keys: Record<string, any>,
-    entityConstructor: Constructable<EntityT>
+    entityConstructor: Constructable<EntityT>,
+    schema: Record<string, any>
   ): string;
   getSelect<EntityT extends EntityBase>(
     selects: Selectable<EntityT, DeSerializersT>[]

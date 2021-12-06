@@ -33,6 +33,7 @@ export class ODataGetAllRequestConfig<
    */
   constructor(
     readonly entityConstructor: Constructable<EntityT>,
+    schema: Record<string, any>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
     super('get', entityConstructor._defaultServicePath);

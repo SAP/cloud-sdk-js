@@ -3,7 +3,6 @@ import {
   entityDeserializer
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers/de-serializers';
-import { edmToTs } from '../de-serializers/payload-value-converter';
 import { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
 import {
@@ -31,11 +30,10 @@ export function transformReturnValueForEntity<
   schema: Record<string, any>
 ): ReturnT {
   const deserializeEntity = entityDeserializer(
+    deSerializers,
     schema,
-    edmToTs,
     extractODataEtag,
-    getLinkedCollectionResult,
-    deSerializers
+    getLinkedCollectionResult
   ).deserializeEntity;
   return deserializeEntity(
     getSingleResult(data),
@@ -53,11 +51,10 @@ export function transformReturnValueForEntityList<
   schema: Record<string, any>
 ): ReturnT[] {
   const deserializeEntity = entityDeserializer(
+    deSerializers,
     schema,
-    edmToTs,
     extractODataEtag,
-    getLinkedCollectionResult,
-    deSerializers
+    getLinkedCollectionResult
   ).deserializeEntity;
 
   return getCollectionResult(data).map(

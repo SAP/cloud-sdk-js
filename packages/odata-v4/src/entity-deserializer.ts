@@ -2,7 +2,6 @@ import {
   entityDeserializer as entityDeserializerBase,
   EntityDeserializer
 } from '@sap-cloud-sdk/odata-common/internal';
-import { edmToTs } from './de-serializers';
 import { extractODataEtag } from './extract-odata-etag';
 import { getLinkedCollectionResult } from './request-builder/response-data-accessor';
 import { defaultDeSerializers } from './de-serializers/default-de-serializers';
@@ -13,11 +12,10 @@ import { defaultDeSerializers } from './de-serializers/default-de-serializers';
  *  @internal
  */
 export const entityDeserializer: EntityDeserializer = entityDeserializerBase(
+  defaultDeSerializers,
   {},
-  edmToTs,
   extractODataEtag,
-  getLinkedCollectionResult,
-  defaultDeSerializers
+  getLinkedCollectionResult
 );
 
 /**

@@ -13,7 +13,8 @@ const logger = createLogger({
 
 type GetResourcePathForKeysType<EntityT extends EntityBase> = (
   keys: Record<string, any>,
-  entityConstructor: Constructable<EntityT>
+  entityConstructor: Constructable<EntityT>,
+  schema: Record<string, any>
 ) => string;
 
 interface GetResourcePathForKeys<EntityT extends EntityBase = any> {
@@ -40,14 +41,15 @@ export function createGetResourcePathForKeys(
    */
   function getResourcePathForKeys<EntityT extends EntityBase>(
     keys: Record<string, any> = {},
-    entityConstructor: Constructable<EntityT>
+    entityConstructor: Constructable<EntityT>,
+    schema: Record<string, any>
   ): string {
     keys = filterNonKeyProperties(keys, entityConstructor);
     validateKeys(keys, entityConstructor);
 
     if (Object.keys(keys).length) {
       const byKey = Object.entries(keys)
-        .map(([key, value]) => keyToOData(key, value, entityConstructor))
+        .map(([key, value]) => keyToOData(key, value, schema))
         .join(',');
       return `${entityConstructor._entityName}(${byKey})`;
     }
@@ -60,7 +62,7 @@ export function createGetResourcePathForKeys(
     entityConstructor: Constructable<EntityT>
   ): string[] {
     const givenKeys = Object.keys(keys);
-    return entityConstructor._keys // type assertion for backwards compatibility, TODO: remove in v2.0
+    return entityConstructor._keys
       .map(key => key)
       .filter(fieldName => !givenKeys.includes(fieldName));
   }
@@ -69,7 +71,6 @@ export function createGetResourcePathForKeys(
     keys: Record<string, any>,
     entityConstructor: Constructable<EntityT>
   ): string[] {
-    // type assertion for backwards compatibility, TODO: remove in v2.0
     return Object.keys(keys).filter(
       key => !entityConstructor._keys.includes(key)
     );
@@ -103,12 +104,12 @@ export function createGetResourcePathForKeys(
     return keys;
   }
 
-  function keyToOData<EntityT extends EntityBase>(
+  function keyToOData(
     key: string,
     value: any,
-    entityConstructor: Constructable<EntityT>
+    schema: Record<string, any>
   ): string {
-    const edmType = entityConstructor[upperCaseSnakeCase(key)].edmType;
+    const edmType = schema[upperCaseSnakeCase(key)].edmType;
     return `${key}=${uriConverter(value, edmType)}`;
   }
 

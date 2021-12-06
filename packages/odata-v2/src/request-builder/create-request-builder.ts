@@ -5,7 +5,7 @@ import {
   entitySerializer,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers, edmToTs, tsToEdm } from '../de-serializers';
+import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
@@ -40,15 +40,15 @@ export class CreateRequestBuilder<
   ) {
     super(
       entityConstructor,
+      schema,
       _entity,
       createODataUri(deSerializers),
-      entitySerializer(tsToEdm),
+      entitySerializer(deSerializers),
       entityDeserializer(
+        deSerializers,
         schema,
-        edmToTs,
         extractODataEtag,
-        getLinkedCollectionResult,
-        deSerializers
+        getLinkedCollectionResult
       ),
       responseDataAccessor
     );

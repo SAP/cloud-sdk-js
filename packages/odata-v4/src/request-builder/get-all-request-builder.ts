@@ -11,7 +11,6 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
-import { edmToTs } from '../de-serializers/payload-value-converter';
 import { extractODataEtag } from '../extract-odata-etag';
 import { DeSerializers } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
@@ -42,14 +41,14 @@ export class GetAllRequestBuilder<
       entityConstructor,
       new ODataGetAllRequestConfig(
         entityConstructor,
+        schema,
         createODataUri(deSerializers)
       ),
       entityDeserializer(
+        deSerializers,
         schema,
-        edmToTs,
         extractODataEtag,
-        getLinkedCollectionResult,
-        deSerializers
+        getLinkedCollectionResult
       ),
       responseDataAccessor
     );

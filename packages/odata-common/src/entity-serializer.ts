@@ -12,7 +12,7 @@ import {
   EnumField
 } from './selectable';
 import { EdmTypeShared, isEdmType } from './edm-types';
-import { DeSerializers } from './de-serializers';
+import { createValueSerializer, DeSerializers } from './de-serializers';
 
 const logger = createLogger({
   package: 'odata-common',
@@ -42,19 +42,17 @@ export interface EntitySerializer<
   ) => Record<string, any>;
 }
 
-type TsToEdmType = (
-  value: any,
-  edmType: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>
-) => any;
-
 /**
  * Constructs an entitySerializer given the OData v2 or v4 specific tsToEdm method.
  * The concrete serializers are created in odata/v2/entity-serializer.ts and odata/v4/entity-serializer.ts
- * @param tsToEdm - Converters ts input to EDM values
+ * @param deSerializers - (De-)serializers used for transformation.
  * @returns a entity serializer as defined by [[EntitySerializer]]
  * @internal
  */
-export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
+export function entitySerializer(
+  deSerializers: DeSerializers
+): EntitySerializer {
+  const tsToEdm = createValueSerializer(deSerializers);
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service.
    * @param entity - An instance of an entity.
@@ -143,7 +141,10 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   }
 
   // TODO: get rid of this function in v2.0
-  function serializeComplexTypeFieldLegacy<EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
+  function serializeComplexTypeFieldLegacy<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >(
     complexTypeField: ComplexTypeField<EntityT, DeSerializersT>,
     fieldValue: any
   ): any {

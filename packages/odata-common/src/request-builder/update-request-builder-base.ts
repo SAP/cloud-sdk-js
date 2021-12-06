@@ -38,6 +38,7 @@ export abstract class UpdateRequestBuilderBase<
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
+    readonly _entitySchema: Record<string, any>,
     readonly _entity: EntityT,
     readonly oDataUri: ODataUri<DeSerializersT>,
     readonly entitySerializer: EntitySerializer,
@@ -48,7 +49,9 @@ export abstract class UpdateRequestBuilderBase<
       body: Record<string, any>
     ) => Record<string, any>
   ) {
-    super(new ODataUpdateRequestConfig(_entityConstructor, oDataUri));
+    super(
+      new ODataUpdateRequestConfig(_entityConstructor, _entitySchema, oDataUri)
+    );
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();

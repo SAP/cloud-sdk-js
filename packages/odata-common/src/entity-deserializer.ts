@@ -3,7 +3,7 @@ import {
   createLogger,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
-import { DeSerializers } from './de-serializers';
+import { createValueDeserializer, DeSerializers } from './de-serializers';
 import {
   Constructable,
   EntityBase,
@@ -33,18 +33,6 @@ const logger = createLogger({
  * Interface representing the return type of the builder function [[entityDeserializer]]
  * @internal
  */
-// export interface EntityDeserializer<EntityT extends EntityBase = any> {
-//   deserializeEntity: (
-//     json: any,
-//     entityConstructor: Constructable<EntityT>,
-//     requestHeader?: any
-//   ) => EntityT;
-//   deserializeComplexType: (
-//     json: Record<string, any>,
-//     complexType: ComplexTypeNamespace<any>
-//   ) => any;
-// }
-
 export interface EntityDeserializer<EntityT extends EntityBase = any> {
   deserializeEntity: (
     json: any,
@@ -64,21 +52,20 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
 /**
  * Constructs an entityDeserializer given the OData v2 or v4 specific methods.
  * The concrete deserializers are created in odata/v2/entity-deserializer.ts and odata/v4/entity-deserializer.ts
- * @param schema - TODO
- * @param edmToTs - Converters  emd input to ts values.
+ * @param deSerializers - (De-)serializers used for transformation.
+ * @param schema - Schema of the entity.
  * @param extractODataETag - Extractor for the ETag.
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
- * @param deSerializers - (De-)serializers used for transformation.
  * @returns an entity deserializer as defined by [[EntityDeserializer]]
  * @internal
  */
 export function entityDeserializer<T extends DeSerializers>(
+  deSerializers: T,
   schema: Record<string, any>,
-  edmToTs: any, // TODO v 2.0 try to get common typing for v2 and v4 in here
   extractODataETag: ExtractODataETagType,
-  extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType,
-  deSerializers: T
+  extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
 ): EntityDeserializer<any> {
+  const edmToTs = createValueDeserializer(deSerializers);
   /**
    * Converts the JSON payload for a single entity into an instance of the corresponding generated entity class.
    * It sets the remote state to the data provided by the JSON payload.
@@ -117,7 +104,7 @@ export function entityDeserializer<T extends DeSerializers>(
     field: Field<EntityT> | Link<EntityT, DeSerializersT>
   ) {
     if (field instanceof EdmTypeField) {
-      return edmToTs(json[field._fieldName], field.edmType, deSerializers);
+      return edmToTs(json[field._fieldName], field.edmType);
     }
     if (field instanceof Link) {
       return getLinkFromJson(json, field);
@@ -216,7 +203,7 @@ export function entityDeserializer<T extends DeSerializers>(
           ...complexTypeObject,
           [camelCase(fieldName)]:
             field instanceof EdmTypeField
-              ? edmToTs(json[field._fieldName], field.edmType, deSerializers)
+              ? edmToTs(json[field._fieldName], field.edmType)
               : deserializeComplexTypeLegacy(json[field._fieldName], field)
         }),
         {}
@@ -235,7 +222,7 @@ export function entityDeserializer<T extends DeSerializers>(
       return deserializeComplexType(propertyValue, propertyMetadata.type);
     }
 
-    return edmToTs(propertyValue, propertyMetadata.type, deSerializers);
+    return edmToTs(propertyValue, propertyMetadata.type);
   }
 
   function deserializeComplexType(
@@ -265,7 +252,7 @@ export function entityDeserializer<T extends DeSerializers>(
     FieldT extends EdmTypeShared<'any'> | Record<string, any>
   >(json: any[], fieldType: FieldT) {
     if (isEdmType(fieldType)) {
-      return json.map(val => edmToTs(val, fieldType, deSerializers));
+      return json.map(val => edmToTs(val, fieldType));
     }
     if (isComplexTypeNameSpace(fieldType)) {
       return json.map(val => deserializeComplexType(val, fieldType));

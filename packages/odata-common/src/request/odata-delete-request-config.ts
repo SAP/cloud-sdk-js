@@ -26,6 +26,7 @@ export class ODataDeleteRequestConfig<
    */
   constructor(
     readonly entityConstructor: Constructable<EntityT>,
+    readonly _entitySchema: Record<string, any>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
     super('delete', entityConstructor._defaultServicePath);
@@ -34,7 +35,8 @@ export class ODataDeleteRequestConfig<
   resourcePath(): string {
     return this.oDataUri.getResourcePathForKeys(
       this.keys,
-      this.entityConstructor
+      this.entityConstructor,
+      this._entitySchema
     );
   }
 

@@ -33,6 +33,7 @@ export abstract class GetByKeyRequestBuilderBase<
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
+    schema: Record<string, any>,
     keys: Record<string, any>,
     oDataUri: ODataUri<DeSerializersT>,
     readonly entityDeserializer: EntityDeserializer,
@@ -40,7 +41,7 @@ export abstract class GetByKeyRequestBuilderBase<
   ) {
     super(
       entityConstructor,
-      new ODataGetByKeyRequestConfig(entityConstructor, oDataUri)
+      new ODataGetByKeyRequestConfig(entityConstructor, schema, oDataUri)
     );
     this.requestConfig.keys = keys;
   }

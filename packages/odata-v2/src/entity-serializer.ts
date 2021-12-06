@@ -2,14 +2,15 @@ import {
   EntitySerializer,
   entitySerializer as entitySerializerBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { tsToEdm } from './de-serializers';
+import { defaultDeSerializers } from './de-serializers';
 
 /**
  * Entity serializer instance for v2 entities.
  * See [[EntitySerializer]] for the provided methods.
  * @internal
  */
-const entitySerializer: EntitySerializer = entitySerializerBase(tsToEdm);
+const entitySerializer: EntitySerializer =
+  entitySerializerBase(defaultDeSerializers);
 
 /**
  * @internal

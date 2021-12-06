@@ -80,5 +80,23 @@ export type DeserializedType<
 > = EdmT extends keyof DeSerializersT
   ? DeSerializersT[EdmT] extends DeSerializer<infer DeserializedT>
     ? DeserializedT
-    : never
-  : never;
+    : any
+  : any;
+
+export function createValueDeserializer<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT
+): <EdmT>(value: any, edmType: EdmT) => DeserializedType<DeSerializersT, EdmT> {
+  return (value, edmType) => {
+    const deserialize = deSerializers[edmType as any]?.deserialize;
+    return deserialize ? deserialize(value) : value;
+  };
+}
+
+export function createValueSerializer<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT
+): <EdmT>(value: any, edmType: EdmT) => any {
+  return (value, edmType) => {
+    const serialize = deSerializers[edmType as any]?.serialize;
+    return serialize ? serialize(value) : value;
+  };
+}

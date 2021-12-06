@@ -21,10 +21,19 @@ export class DeleteRequestBuilder<
    * @param deSerializers - (De-)serializers used for transformation.
    */
   constructor(
-    { entityConstructor, deSerializers }: EntityApi<EntityT, DeSerializersT>,
+    {
+      entityConstructor,
+      deSerializers,
+      schema
+    }: EntityApi<EntityT, DeSerializersT>,
     keysOrEntity: Record<string, any> | Entity
   ) {
-    super(entityConstructor, createODataUri(deSerializers), keysOrEntity);
+    super(
+      entityConstructor,
+      schema,
+      createODataUri(deSerializers),
+      keysOrEntity
+    );
   }
 
   /**

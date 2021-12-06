@@ -10,7 +10,6 @@ import {
   BatchRequestBuilder,
   entityDeserializer
 } from '@sap-cloud-sdk/odata-common/internal';
-import { edmToTs } from '../de-serializers/payload-value-converter';
 import { extractODataEtag } from '../extract-odata-etag';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import {
@@ -44,11 +43,10 @@ export class ODataBatchRequestBuilder<
           this.entityToConstructorMap,
           responseDataAccessor,
           entityDeserializer(
+            deSerializers,
             schema,
-            edmToTs,
             extractODataEtag,
-            getLinkedCollectionResult,
-            deSerializers
+            getLinkedCollectionResult
           )
         )
       )

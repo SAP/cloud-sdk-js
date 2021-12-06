@@ -26,6 +26,7 @@ export class ODataUpdateRequestConfig<
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
+    readonly _entitySchema: Record<string, any>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
     super(
@@ -37,7 +38,8 @@ export class ODataUpdateRequestConfig<
   resourcePath(): string {
     return this.oDataUri.getResourcePathForKeys(
       this.keys,
-      this._entityConstructor
+      this._entityConstructor,
+      this._entitySchema
     );
   }
 

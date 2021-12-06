@@ -29,6 +29,7 @@ export class ODataCreateRequestConfig<
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
+    readonly _entitySchema: Record<string, any>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
     super('post', _entityConstructor._defaultServicePath);
@@ -48,7 +49,8 @@ export class ODataCreateRequestConfig<
     return (
       this.oDataUri.getResourcePathForKeys(
         this.parentKeys,
-        this.childField._entityConstructor
+        this.childField._entityConstructor,
+        this._entitySchema
       ) +
       '/' +
       this.childField._fieldName

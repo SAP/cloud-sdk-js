@@ -41,13 +41,14 @@ export abstract class CreateRequestBuilderBase<
    */
   constructor(
     readonly _entityConstructor: Constructable<EntityT>,
+    schema: Record<string, any>,
     readonly _entity: EntityT,
     readonly odataUri: ODataUri<DeSerializersT>,
     readonly serializer: EntitySerializer,
     readonly deserializer: EntityDeserializer,
     readonly responseDataAccessor: ResponseDataAccessor
   ) {
-    super(new ODataCreateRequestConfig(_entityConstructor, odataUri));
+    super(new ODataCreateRequestConfig(_entityConstructor, schema, odataUri));
     this.requestConfig.payload = serializer.serializeEntity(
       this._entity,
       this._entityConstructor

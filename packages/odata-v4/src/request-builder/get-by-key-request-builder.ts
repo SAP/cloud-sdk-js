@@ -7,7 +7,7 @@ import {
   FieldType,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers, edmToTs } from '../de-serializers';
+import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
@@ -47,14 +47,14 @@ export class GetByKeyRequestBuilder<
   ) {
     super(
       entityConstructor,
+      schema,
       keys,
       createODataUri(deSerializers),
       entityDeserializer(
+        deSerializers,
         schema,
-        edmToTs,
         extractODataEtag,
-        getLinkedCollectionResult,
-        deSerializers
+        getLinkedCollectionResult
       ),
       responseDataAccessor
     );

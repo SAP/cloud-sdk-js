@@ -28,6 +28,7 @@ export class ODataGetByKeyRequestConfig<
    */
   constructor(
     readonly entityConstructor: Constructable<EntityT>,
+    readonly _entitySchema: Record<string, any>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
     super('get', entityConstructor._defaultServicePath);
@@ -36,7 +37,8 @@ export class ODataGetByKeyRequestConfig<
   resourcePath(): string {
     return this.oDataUri.getResourcePathForKeys(
       this.keys,
-      this.entityConstructor
+      this.entityConstructor,
+      this._entitySchema
     );
   }
 

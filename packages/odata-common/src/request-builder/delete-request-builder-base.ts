@@ -35,10 +35,11 @@ export abstract class DeleteRequestBuilderBase<
    */
   constructor(
     entityConstructor: Constructable<EntityT>,
+    schema: Record<string, any>,
     oDataUri: ODataUri<DeSerializersT>,
     keysOrEntity: Record<string, any> | EntityBase
   ) {
-    super(new ODataDeleteRequestConfig(entityConstructor, oDataUri));
+    super(new ODataDeleteRequestConfig(entityConstructor, schema, oDataUri));
     this._entityConstructor = entityConstructor;
     if (keysOrEntity instanceof EntityBase) {
       this.requestConfig.keys = oDataUri.getEntityKeys(

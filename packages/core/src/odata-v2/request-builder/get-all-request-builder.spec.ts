@@ -20,11 +20,12 @@ import {
   certificateSingleResponse,
   mockInstanceDestinationsCall,
   mockServiceBindings,
-  mockServiceToken,
   mockSingleDestinationCall,
   mockSubaccountDestinationsCall,
   onlyIssuerServiceToken,
-  onlyIssuerXsuaaUrl, providerXsuaaUrl, providerServiceToken
+  onlyIssuerXsuaaUrl,
+  providerXsuaaUrl,
+  providerServiceToken
 } from '../../../test/test-util';
 import { parseDestination, wrapJwtInHeader } from '../../connectivity';
 import * as httpClient from '../../http-client/http-client';

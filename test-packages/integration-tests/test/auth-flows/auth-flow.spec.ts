@@ -1,18 +1,12 @@
-import { executeHttpRequest } from '@sap-cloud-sdk/http-client';
-import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import {
+  Destination,
+  executeHttpRequest,
   getService,
-  fetchDestination,
-  wrapJwtInHeader
-} from '@sap-cloud-sdk/connectivity/internal';
-import {
-  decodeJwt,
-  jwtBearerToken,
+  wrapJwtInHeader,
   getDestination,
-  getDestinationFromDestinationService,
-  serviceToken
-} from '@sap-cloud-sdk/connectivity';
-import * as xssec from '@sap/xssec';
+  getDestinationFromDestinationService
+} from '@sap-cloud-sdk/core';
+import { BusinessPartner } from '@sap/cloud-sdk-vdm-business-partner-service';
 import {
   loadLocalVcap,
   readSystems,
@@ -35,31 +29,31 @@ describe('OAuth flows', () => {
   });
 
   xit('OAuth2Password: Fetches destination and destination service has token', async () => {
-    const destination = await getDestination({
-      destinationName: systems.destination.providerOauth2Password
-    });
+    const destination = await getDestination(
+      systems.destination.providerOauth2Password
+    );
 
     expect(destination!.authTokens![0].type).toBe('bearer');
     expect(destination!.authTokens![0].value).toBeDefined();
   }, 60000);
 
   xit('BasicAuth: Provider Destination & Provider Token + GET request', async () => {
-    const destination = await getDestination({
-      destinationName: systems.s4.providerBasic,
-      jwt: accessToken.provider
+    const destination = await getDestination(systems.s4.providerBasic, {
+      userJwt: accessToken.provider
     });
 
     const result = await BusinessPartner.requestBuilder()
-        .getAll()
-        .top(1)
-        .execute(destination!);
+      .getAll()
+      .top(1)
+      .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
   xit('BasicAuth onPrem  Basic Authentication', async () => {
-    const destination = await getDestinationFromDestinationService({
-      destinationName: systems.s4onPrem.providerBasic
-    });
+    const destination = await getDestinationFromDestinationService(
+      systems.s4onPrem.providerBasic,
+      {}
+    );
 
     expect(destination!.proxyConfiguration).toMatchObject({
       headers: { 'Proxy-Authorization': expect.stringMatching(/Bearer.*/) },
@@ -70,100 +64,108 @@ describe('OAuth flows', () => {
   }, 60000);
 
   xit('BasicAuth: Provider Destination & Provider Token + PUT request (csrf token)', async () => {
-    const destination = await getDestination({
-      destinationName: systems.s4.providerBasic,
-      jwt: accessToken.provider
+    const destination = await getDestination(systems.s4.providerBasic, {
+      userJwt: accessToken.provider
     });
 
     const buPa = BusinessPartner.builder()
-        .businessPartnerCategory('1')
-        .lastName('name')
-        .build();
+      .businessPartnerCategory('1')
+      .lastName('name')
+      .build();
     const result = await BusinessPartner.requestBuilder()
-        .create(buPa)
-        .execute(destination!);
+      .create(buPa)
+      .execute(destination!);
     expect(result.lastName).toBe('name');
   }, 60000);
 
   xit('BasicAuth: Subscriber Destination & Subscriber Token', async () => {
-    const destination = await getDestination({
-      destinationName: systems.s4.subscriberBasic,
-      jwt: accessToken.subscriber
+    const destination = await getDestination(systems.s4.subscriberBasic, {
+      userJwt: accessToken.subscriber
     });
 
     const result = await BusinessPartner.requestBuilder()
-        .getAll()
-        .top(1)
-        .execute(destination!);
+      .getAll()
+      .top(1)
+      .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
   xit('Basic Auth: iss as token ', async () => {
-    const destination = await getDestination({
-      destinationName: systems.s4.providerBasic,
+    const destination = await getDestination(systems.s4.providerBasic, {
       iss: 'http://s4sdk.localhost:8080/uaa/oauth/token'
     });
     expect(destination?.password).toBeDefined();
   }, 60000);
 
   xit('OAuth2SAMLBearerAssertion: Provider Destination & Provider Token', async () => {
-    const destination = await getDestination({
-      destinationName: systems.s4.providerOAuth2SAMLBearerAssertion,
-      jwt: accessToken.provider
-    });
+    const destination = await getDestination(
+      systems.s4.providerOAuth2SAMLBearerAssertion,
+      {
+        userJwt: accessToken.provider
+      }
+    );
     expect(destination!.authTokens![0].error).toBeNull();
 
     const result = await BusinessPartner.requestBuilder()
-        .getAll()
-        .top(1)
-        .execute(destination!);
+      .getAll()
+      .top(1)
+      .execute(destination!);
     expect(result.length).toBe(1);
   }, 60000);
 
   xit('OAuth2ClientCredentials: Provider Destination (common token url)', async () => {
-    let destination = await getDestination({
-      destinationName:
-      systems.destination.providerOauth2ClientCredentialsCommonTokenURL
-    });
-    expect(destination!.authTokens![0]!.error).toBeUndefined();
-    destination = await getDestination({
-      destinationName:
+    let destination = await getDestination(
       systems.destination.providerOauth2ClientCredentialsCommonTokenURL,
-      jwt: accessToken.subscriber
-    });
-    expect(destination!.authTokens![0]!.error).toBeUndefined();
-    destination = await getDestination({
-      destinationName:
+      {}
+    );
+    expect(destination!.authTokens![0]!.error).toBeNull();
+    destination = await getDestination(
       systems.destination.providerOauth2ClientCredentialsCommonTokenURL,
-      jwt: accessToken.provider
-    });
-    expect(destination!.authTokens![0]!.error).toBeUndefined();
+      {
+        userJwt: accessToken.subscriber
+      }
+    );
+    expect(destination!.authTokens![0]!.error).toBeNull();
+    destination = await getDestination(
+      systems.destination.providerOauth2ClientCredentialsCommonTokenURL,
+      {
+        userJwt: accessToken.provider
+      }
+    );
+    expect(destination!.authTokens![0]!.error).toBeNull();
     assertCommenTokenUrl(destination!);
   }, 60000);
 
   xit('OAuth2ClientCredentials: Provider Destination (dedicated token service url)', async () => {
-    let destination = await getDestination({
-      destinationName: systems.destination.providerOauth2ClientCredentials
-    });
+    let destination = await getDestination(
+      systems.destination.providerOauth2ClientCredentials,
+      {}
+    );
     expect(destination!.authTokens![0]!.error).toBeNull();
-    destination = await getDestination({
-      destinationName: systems.destination.providerOauth2ClientCredentials,
-      jwt: accessToken.provider
-    });
+    destination = await getDestination(
+      systems.destination.providerOauth2ClientCredentials,
+      {
+        userJwt: accessToken.provider
+      }
+    );
     expect(destination!.authTokens![0]!.error).toBeNull();
-    destination = await getDestination({
-      destinationName: systems.destination.providerOauth2ClientCredentials,
-      jwt: accessToken.subscriber
-    });
+    destination = await getDestination(
+      systems.destination.providerOauth2ClientCredentials,
+      {
+        userJwt: accessToken.subscriber
+      }
+    );
     expect(destination!.authTokens![0]!.error).toBeNull();
     assertDedicatedTokenUrl(destination!);
   }, 60000);
 
   xit('OAuth2ClientCredentials: Provider Destination & Provider Jwt (workflow)', async () => {
-    const destination = await getDestination({
-      destinationName: systems.workflow.providerOAuth2ClientCredentials,
-      jwt: accessToken.provider
-    });
+    const destination = await getDestination(
+      systems.workflow.providerOAuth2ClientCredentials,
+      {
+        userJwt: accessToken.provider
+      }
+    );
     expect(destination!.authTokens![0].error).toBeNull();
 
     destination!.url = destination!.url + '/v1/workflow-definitions';
@@ -173,10 +175,12 @@ describe('OAuth flows', () => {
   }, 60000);
 
   xit('OAuth2UserTokenExchange: Provider destination and Provider Jwt (workflow)', async () => {
-    const destination = await getDestination({
-      destinationName: systems.workflow.providerOAuth2UserTokenExchange,
-      jwt: accessToken.provider
-    });
+    const destination = await getDestination(
+      systems.workflow.providerOAuth2UserTokenExchange,
+      {
+        userJwt: accessToken.provider
+      }
+    );
 
     expect(destination!.authTokens![0].error).toBeNull();
 
@@ -187,62 +191,72 @@ describe('OAuth flows', () => {
   }, 60000);
 
   xit('OAuth2UserTokenExchange: Provider destination (common token url)', async () => {
-    let destination = await getDestination({
-      destinationName:
+    let destination = await getDestination(
       systems.destination.providerOauth2UserTokenExchangeCommonTokenURL,
-      jwt: accessToken.subscriber
-    });
+      {
+        userJwt: accessToken.subscriber
+      }
+    );
     expect(destination!.authTokens![0].error).toBeNull();
-    destination = await getDestination({
-      destinationName:
+    destination = await getDestination(
       systems.destination.providerOauth2UserTokenExchangeCommonTokenURL,
-      jwt: accessToken.provider
-    });
+      {
+        userJwt: accessToken.provider
+      }
+    );
     expect(destination!.authTokens![0].error).toBeNull();
     assertCommenTokenUrl(destination!);
   }, 60000);
 
   xit('OAuth2UserTokenExchange: Subscriber destination and Subscriber Jwt', async () => {
-    const destination = await getDestination({
-      destinationName: systems.destination.subscriberOauth2UserTokenExchange,
-      jwt: accessToken.subscriber
-    });
+    const destination = await getDestination(
+      systems.destination.subscriberOauth2UserTokenExchange,
+      {
+        userJwt: accessToken.subscriber
+      }
+    );
     expect(destination!.authTokens![0].error).toBeNull();
 
     const response = await executeHttpRequest(
-        {
-          url: 'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
-        },
-        {
-          method: 'get',
-          headers: wrapJwtInHeader(destination!.authTokens![0].value).headers
-        }
+      {
+        url: 'https://destination-configuration.cfapps.sap.hana.ondemand.com/destination-configuration/v1/subaccountDestinations'
+      },
+      {
+        method: 'get',
+        headers: wrapJwtInHeader(destination!.authTokens![0].value).headers
+      }
     );
 
     expect(response.status).toBe(200);
   }, 60000);
 
   xit('OAuth2UserTokenExchange: Provider destination (dedicated token url)', async () => {
-    let destination = await getDestination({
-      destinationName: systems.destination.providerOauth2UserTokenExchange,
-      jwt: accessToken.provider
-    });
+    let destination = await getDestination(
+      systems.destination.providerOauth2UserTokenExchange,
+      {
+        userJwt: accessToken.provider
+      }
+    );
     expect(destination!.authTokens![0].error).toBeNull();
-    destination = await getDestination({
-      destinationName: systems.destination.providerOauth2UserTokenExchange,
-      jwt: accessToken.subscriber
-    });
+    destination = await getDestination(
+      systems.destination.providerOauth2UserTokenExchange,
+      {
+        userJwt: accessToken.subscriber
+      }
+    );
     expect(destination!.authTokens![0].error).toMatch(
-        /Invalid issuer.*token did not match expected/
+      /Invalid issuer.*token did not match expected/
     );
     assertDedicatedTokenUrl(destination!);
   }, 60000);
 
   xit('OAuth2JWTBearer: Provider Destination & Provider Token (workflow call)', async () => {
-    const destination = await getDestination({
-      destinationName: systems.workflow.providerOauth2JWTBearer,
-      jwt: accessToken.provider
-    });
+    const destination = await getDestination(
+      systems.workflow.providerOauth2JWTBearer,
+      {
+        userJwt: accessToken.provider
+      }
+    );
 
     expect(destination!.authTokens![0].error).toBeNull();
 
@@ -253,42 +267,46 @@ describe('OAuth flows', () => {
   }, 60000);
 
   xit('OAuth2JWTBearer: Provider Destination  (common token service URL)', async () => {
-    let destination = await getDestination({
-      destinationName:
+    let destination = await getDestination(
       systems.destination.providerOauth2JWTBearerCommonTokenURL,
-      jwt: accessToken.provider
-    });
+      {
+        userJwt: accessToken.provider
+      }
+    );
     expect(destination!.authTokens![0]!.error).toBeNull();
-    destination = await getDestination({
-      destinationName:
+    destination = await getDestination(
       systems.destination.providerOauth2JWTBearerCommonTokenURL,
-      jwt: accessToken.subscriber
-    });
+      {
+        userJwt: accessToken.subscriber
+      }
+    );
     expect(destination!.authTokens![0]!.error).toBeNull();
   }, 60000);
 
   xit('OAuth2JWTBearer: Provider Destination (dedicated token service URL)', async () => {
-    let destination = await getDestination({
-      destinationName: systems.destination.providerOauth2JWTBearer,
-      jwt: accessToken.subscriber
-    });
+    let destination = await getDestination(
+      systems.destination.providerOauth2JWTBearer,
+      {
+        userJwt: accessToken.subscriber
+      }
+    );
     expect(destination!.authTokens![0]!.error).toMatch(/Unable to map issuer/);
-    destination = await getDestination({
-      destinationName: systems.destination.providerOauth2JWTBearer,
-      jwt: accessToken.provider
-    });
+    destination = await getDestination(
+      systems.destination.providerOauth2JWTBearer,
+      {
+        userJwt: accessToken.provider
+      }
+    );
     expect(destination!.authTokens![0]!.error).toBeNull();
   }, 60000);
 
   xit('ClientCertificate: Fetches the certificate and uses it', async () => {
-    const destination = await getDestination({
-      destinationName: systems.s4.providerClientCert
-    });
+    const destination = await getDestination(systems.s4.providerClientCert, {});
     expect(destination!.certificates!.length).toBe(1);
     const bps = await BusinessPartner.requestBuilder()
-        .getAll()
-        .top(5)
-        .execute(destination!);
+      .getAll()
+      .top(5)
+      .execute(destination!);
     expect(bps.length).toBeGreaterThan(0);
   }, 10000);
 
@@ -297,118 +315,49 @@ describe('OAuth flows', () => {
   xit('ClientCertificate: Fetches the certificate and uses it - ignoring broken proxy', async () => {
     process.env.HTTPS_PROXY = 'http://someHost:1234'; // we changed to xssec which does not consider the no_proxy when calling the token. We would need a proper local forward everything proxy
     process.env.NO_PROXY =
-        'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token,https://my300470-api.s4hana.ondemand.com';
+      'https://s4sdk.authentication.sap.hana.ondemand.com/oauth/token,https://my300470-api.s4hana.ondemand.com';
 
-    const destination = await getDestination({
-      destinationName: systems.s4.providerClientCert
-    });
+    const destination = await getDestination(systems.s4.providerClientCert, {});
     expect(destination!.certificates!.length).toBe(1);
     const bps = await BusinessPartner.requestBuilder()
-        .getAll()
-        .top(5)
-        .execute(destination!);
+      .getAll()
+      .top(5)
+      .execute(destination!);
     expect(bps.length).toBeGreaterThan(0);
   }, 60000);
 
   xit('PrincipalPropagation: Provider not E2E', async () => {
-    const destination = await getDestination({
-      destinationName: systems.s4onPrem.providerPrincipalPropagation,
-      jwt: accessToken.provider
-    });
+    const destination = await getDestination(
+      systems.s4onPrem.providerPrincipalPropagation,
+      {
+        userJwt: accessToken.provider
+      }
+    );
     // Call to backend will not work because the proxy is not rechable, but you can check the set headers.
     expect(destination?.proxyConfiguration).toBeDefined();
     expect(
-        destination?.proxyConfiguration?.headers?.['Proxy-Authorization']
+      destination?.proxyConfiguration?.headers?.['Proxy-Authorization']
     ).toBeDefined();
     expect(
-        destination?.proxyConfiguration?.headers?.[
-            'SAP-Connectivity-Authentication'
-            ]
+      destination?.proxyConfiguration?.headers?.[
+        'SAP-Connectivity-Authentication'
+      ]
     ).toBeDefined();
-  }, 60000);
-
-  xit('IAS: token exchange by making an xsuaa call', async () => {
-    const iasToken = accessToken.iasProvider;
-    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
-        .credentials;
-    const token = await new Promise(
-        (resolve: (value: string) => void, reject) => {
-          xssec.requests.requestUserToken(
-              iasToken,
-              xsuaaConfig,
-              null,
-              null,
-              null,
-              xsuaaConfig.subaccountid,
-              (err: Error, xsuaaToken) => (err ? reject(err) : resolve(xsuaaToken))
-          );
-        }
-    );
-    const decoded = decodeJwt(token);
-    expect(decoded.scope.length).toBeGreaterThan(0);
-  }, 60000);
-
-  xit('IAS: token exchange with xssec createSecurityContext', async () => {
-    const iasToken = accessToken.iasProvider;
-    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
-        .credentials;
-    const token = await new Promise((resolve: (p: string) => void, reject) => {
-      xssec.createSecurityContext(
-          iasToken,
-          xsuaaConfig,
-          (err: Error, context, tokenInfo) =>
-              err ? reject(err) : resolve(tokenInfo.getTokenValue())
-      );
-    });
-    const decoded = decodeJwt(token);
-    expect(decoded.scope.length).toBeGreaterThan(0);
-  }, 60000);
-
-  xit('IAS + OAuth2ClientCredentials: Provider Destination & Provider Jwt', async () => {
-    const iasToken = accessToken.iasProvider;
-    const xsuaaConfig = JSON.parse(process.env.VCAP_SERVICES!).xsuaa[0]
-        .credentials;
-    const xsuaaToken = await new Promise(
-        (resolve: (p: string) => void, reject) => {
-          xssec.createSecurityContext(
-              iasToken,
-              xsuaaConfig,
-              (err: Error, context, tokenInfo) =>
-                  err ? reject(err) : resolve(tokenInfo.getTokenValue())
-          );
-        }
-    );
-
-    const clientGrant = await serviceToken('destination', {
-      jwt: xsuaaToken
-    });
-
-    const destination = await fetchDestination(
-        destinationService!.credentials.uri,
-        clientGrant,
-        systems.workflow.providerOAuth2ClientCredentials
-    );
-    expect(destination.authTokens![0].error).toBeNull();
-
-    destination.url = destination.url + '/v1/workflow-definitions';
-    const response = await executeHttpRequest(destination, { method: 'get' });
-
-    expect(response.status).toBe(200);
   }, 60000);
 });
 
 function assertCommenTokenUrl(destination: Destination) {
   expect(
-      destination.originalProperties!.destinationConfiguration[
-          'tokenServiceURLType'
-          ]
+    destination.originalProperties!.destinationConfiguration[
+      'tokenServiceURLType'
+    ]
   ).toBe('Common');
 }
 
 function assertDedicatedTokenUrl(destination: Destination) {
   expect(
-      destination.originalProperties!.destinationConfiguration[
-          'tokenServiceURLType'
-          ]
+    destination.originalProperties!.destinationConfiguration[
+      'tokenServiceURLType'
+    ]
   ).toBe('Dedicated');
 }

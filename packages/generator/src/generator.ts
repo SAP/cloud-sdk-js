@@ -134,8 +134,8 @@ export async function generateProject(
 }
 
 interface ProjectAndServices {
-  project: Project,
-  services: VdmServiceMetadata[]
+  project: Project;
+  services: VdmServiceMetadata[];
 }
 
 async function generateFilesWithoutTsMorph(services: VdmServiceMetadata[], options: GeneratorOptions){
@@ -157,7 +157,7 @@ async function generateApi(
         file(entity, service),
         options.forceOverwrite
       )
-  )
+  );
 }
 
 /**

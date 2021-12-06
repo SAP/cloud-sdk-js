@@ -1,6 +1,6 @@
-import { codeBlock, ErrorWithCause, unixEOL } from '@sap-cloud-sdk/util';
 import { join } from 'path';
 import { promises } from 'fs';
+import { codeBlock, ErrorWithCause, unixEOL } from '@sap-cloud-sdk/util';
 
 const { writeFile } = promises;
 

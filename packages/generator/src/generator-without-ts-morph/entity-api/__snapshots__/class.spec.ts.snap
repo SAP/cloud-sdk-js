@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`entity api class gets proper class content 1`] = `
+"export class BreakfastApi<BinaryT = string,
+BooleanT = boolean,
+ByteT = number,
+DecimalT = BigNumber,
+DoubleT = number,
+FloatT = number,
+Int16T = number,
+Int32T = number,
+Int64T = BigNumber,
+GuidT = string,
+SByteT = number,
+SingleT = number,
+StringT = string,
+AnyT = any,
+DateTimeT = moment.Moment,
+DateTimeOffsetT = moment.Moment,
+TimeT = Time> implements 
+    EntityApi<
+      Breakfast<
+        DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeT,
+DateTimeOffsetT,
+TimeT>
+      >
+    >, 
+    DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeT,
+DateTimeOffsetT,
+TimeT> {
+  public deSerializers: DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeT,
+DateTimeOffsetT,
+TimeT>;
+  public schema;
+
+  constructor(
+    deSerializers: Partial<DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeT,
+DateTimeOffsetT,
+TimeT>> = defaultDeSerializers as any){
+      this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+      const fieldBuilder = new FieldBuilder(Breakfast, this.deSerializers);
+      this.schema = 
+        { 
+            /**
+         * Static representation of the [[entityName]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        ENTITY_NAME: fieldBuilder.buildEdmTypeField('EntityName', 'Edm.String', false),
+        /**
+         * Static representation of the [[numberOfEggs]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        NUMBER_OF_EGGS: fieldBuilder.buildEdmTypeField('A_noEggs', 'Edm.Decimal', true),
+        /**
+         * Static representation of the [[breakfastTime]] property for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        BREAKFAST_TIME: fieldBuilder.buildEdmTypeField('BreakfastTime', 'Edm.DateTime', false), 
+          }
+      ;
+    }
+  
+  entityConstructor = Breakfast;
+  
+  requestBuilder(): BreakfastRequestBuilder<
+    DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeT,
+DateTimeOffsetT,
+TimeT>
+  > {
+    return new BreakfastRequestBuilder(this);
+  }
+  
+  entityBuilder(): EntityBuilderType<
+    Breakfast<
+      DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeT,
+DateTimeOffsetT,
+TimeT>
+    >
+  > {
+    return entityBuilder(this);
+  }
+}"
+`;

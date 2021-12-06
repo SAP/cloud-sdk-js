@@ -1,3 +1,4 @@
+import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
 import { Import, serializeImports } from '../../generator-common';
 import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import {
@@ -5,7 +6,6 @@ import {
   propertyFieldTypeImportNames,
   propertyTypeImportNames
 } from '../../imports';
-import { ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
 import { odataCommonImport, odataImport, complexTypeImports, externalImports, enumTypeImports } from './imports';
 import { classContent } from './class';
 
@@ -45,29 +45,7 @@ function getImports(entity: VdmEntity, oDataVersion: ODataVersion): Import[] {
       'AllFields',
       'EntityBuilderType',
       'EntityApi',
-      'FieldBuilder',
-      // todo not needed?
-      // 'Constructable',
-      // 'Field'
+      'FieldBuilder'
     ])
     ];
-
 }
-
-// function getImports(api: OpenApiApi): Import[] {
-//   const refs = collectRefsFromOperations(api.operations).map(
-//     requestBodyType => requestBodyType.schemaName
-//   );
-//
-//   const refImports = {
-//     names: refs,
-//     moduleIdentifier: './schema',
-//     typeOnly: true
-//   };
-//   const openApiImports = {
-//     names: ['OpenApiRequestBuilder'],
-//     moduleIdentifier: '@sap-cloud-sdk/openapi'
-//   };
-//
-//   return [openApiImports, refImports];
-// }

@@ -2,6 +2,7 @@ import { ODataVersion, unique } from '@sap-cloud-sdk/util';
 import { Import } from '../../generator-common';
 import { VdmMappedEdmType, VdmProperty } from '../../vdm-types';
 import { potentialExternalImportDeclarations } from '../../imports';
+/* eslint-disable valid-jsdoc */
 
 /**
  * @internal
@@ -106,11 +107,11 @@ function enumTypeImport(
   };
 }
 
-//todo test
+// todo test
 /**
  * @internal
  */
-function mergeImports(
+export function mergeImports(
   imports: Import[]
 ): Import[] {
   return imports
@@ -118,7 +119,8 @@ function mergeImports(
       (prev, next) => {
         const sameModuleIdentifier = prev.find(
           declaration =>
-            declaration.moduleIdentifier === next.moduleIdentifier
+            declaration.moduleIdentifier === next.moduleIdentifier &&
+            !declaration.typeOnly === !next.typeOnly
         );
         if (sameModuleIdentifier) {
             sameModuleIdentifier.names = [

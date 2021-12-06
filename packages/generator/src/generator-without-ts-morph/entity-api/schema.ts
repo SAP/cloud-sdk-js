@@ -1,12 +1,17 @@
+import { documentationBlock, flat, unixEOL } from '@sap-cloud-sdk/util';
 import { VdmEntity, VdmProperty } from '../../vdm-types';
 import { getStaticPropertyDescription } from '../../typedoc';
-import { documentationBlock, flat, unixEOL } from '@sap-cloud-sdk/util';
 import { createPropertyFieldInitializerForEntity } from '../../entity';
 
+/* eslint-disable valid-jsdoc */
+
+/**
+ * @internal
+ */
 export function getSchema(entity: VdmEntity): string{
   return `{ 
     ${flat(properties(entity)).join(unixEOL)} 
-  }`
+  }`;
 }
 
 function properties(entity: VdmEntity): string[][] {

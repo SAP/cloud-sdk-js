@@ -3,10 +3,7 @@ import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   odataImportDeclaration,
-  propertyFieldTypeImportNames,
-  propertyTypeImportNames,
   enumTypeImportDeclarations,
-  externalImportDeclarations,
   odataCommonImportDeclaration
 } from '../imports';
 import { VdmComplexType } from '../vdm-types';

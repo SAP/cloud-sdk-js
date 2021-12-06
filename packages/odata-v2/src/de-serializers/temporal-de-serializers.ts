@@ -1,27 +1,28 @@
 /* eslint-disable valid-jsdoc */
 import { Temporal } from '@js-temporal/polyfill';
+import { DeSerializer } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * Temporal (de-)serializers for Odata-v2.
  * @internal
  */
-export const temporalDeSerializers: any = {
+export const temporalDeSerializers = {
   'Edm.DateTime': {
     deserialize: deserializeToPlainDateTime,
     serialize: serializeFromPlainDateTime,
     serializeToUri: (value, serialize) =>
-      `datetime'${serialize.replace(/Z$/, '')}'`
-  },
+      `datetime'${serialize(value).toString().replace(/Z$/, '')}'`
+  } as DeSerializer<Temporal.PlainDateTime>,
   'Edm.DateTimeOffset': {
     deserialize: deserializeToZonedDateTime,
     serialize: serializeFromZonedDateTime,
     serializeToUri: (value, serialize) => `datetimeoffset'${serialize(value)}'`
-  },
+  } as DeSerializer<Temporal.ZonedDateTime>,
   'Edm.Time': {
     deserialize: deserializeToPlainTime,
     serialize: serializeFromPlainTime,
     serializeToUri: (value, serialize) => `time'${serialize(value)}'`
-  }
+  } as DeSerializer<Temporal.PlainTime>
 };
 
 /**

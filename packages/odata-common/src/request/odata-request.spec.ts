@@ -10,35 +10,8 @@ import {
 import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity } from '../../test/common-entity';
 
-// jest.mock('../../http-client/node_modules/axios', () => ({
-//   request: () => Promise.resolve()
-// }));
-//   .spyOn(axios, 'request')
-//   .mockResolvedValue({ 'x-csrf-token': 'test' });
-
-// jest.mock('@sap-cloud-sdk/http-client');
-
-jest.mock('@sap-cloud-sdk/http-client', () => {
-  const actual = jest.requireActual('@sap-cloud-sdk/http-client');
-  return {
-    ...actual,
-    executeHttpRequestWithOrigin: jest
-      .fn()
-      .mockResolvedValue({ 'x-csrf-token': 'test' })
-  };
-});
-
 describe('OData Request', () => {
-  // const requestSpy
   describe('format', () => {
-    beforeEach(() => {
-      // requestSpy.mockResolvedValue({ 'x-csrf-token': 'test' });
-    });
-
-    afterEach(() => {
-      // requestSpy.mockReset();
-    });
-
     it('should be json for GET', async () => {
       const request = createRequestWithHeaders(ODataGetAllRequestConfig);
       expect(request.url()).toContain('$format=json');
@@ -148,6 +121,22 @@ describe('OData Request', () => {
         'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/?$format=json'
       );
     });
+  });
+
+  it('request config contains headers without ETag value when there is no ETag config', async () => {
+    const destination: Destination = {
+      url: 'http://example.com'
+    };
+
+    const request = createRequest(ODataGetAllRequestConfig, destination);
+
+    expect(request.headers()).toEqual(
+      expect.objectContaining({
+        headers: expect.not.objectContaining({
+          'if-match': expect.anything()
+        })
+      })
+    );
   });
 });
 

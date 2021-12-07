@@ -546,23 +546,6 @@ sap-client:001`);
       );
     });
 
-    it('request config contains headers without ETag value when there is no ETag config', async () => {
-      jest.spyOn(axios, 'request').mockResolvedValue({});
-      const destination: Destination = {
-        url: 'http://example.com'
-      };
-
-      await executeHttpRequest(destination, { method: 'get' });
-
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining({
-          headers: expect.not.objectContaining({
-            'if-match': expect.anything()
-          })
-        })
-      );
-    });
-
     it('request config contains httpAgent when destination URL uses "http" as protocol', async () => {
       jest.spyOn(axios, 'request').mockResolvedValue({});
 

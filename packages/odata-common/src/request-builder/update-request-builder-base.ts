@@ -1,6 +1,11 @@
 import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
+import {
+  Constructable,
+  EntityApi,
+  EntityBase,
+  EntityIdentifiable
+} from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { EntitySerializer } from '../entity-serializer';
 import { ODataUpdateRequestConfig, ODataRequest } from '../request';
@@ -24,6 +29,7 @@ export abstract class UpdateRequestBuilderBase<
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _deSerializers: DeSerializersT;
+  readonly _entityConstructor: Constructable<EntityT>;
   private ignored: Set<string>;
   private required: Set<string>;
 
@@ -37,8 +43,7 @@ export abstract class UpdateRequestBuilderBase<
    * @param payloadManipulator - Manipulator for the payload.
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    readonly _entitySchema: Record<string, any>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT,
     readonly oDataUri: ODataUri<DeSerializersT>,
     readonly entitySerializer: EntitySerializer,
@@ -49,16 +54,14 @@ export abstract class UpdateRequestBuilderBase<
       body: Record<string, any>
     ) => Record<string, any>
   ) {
-    super(
-      new ODataUpdateRequestConfig(_entityConstructor, _entitySchema, oDataUri)
-    );
+    super(new ODataUpdateRequestConfig(_entityApi, oDataUri));
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();
 
     this.requestConfig.keys = this.oDataUri.getEntityKeys(
       this._entity,
-      this._entityConstructor
+      this._entityApi
     );
 
     this.requestConfig.payload = this.getPayload();
@@ -170,7 +173,7 @@ export abstract class UpdateRequestBuilderBase<
   protected getPayload(): Record<string, any> {
     const serializedBody = this.entitySerializer.serializeEntity(
       this._entity,
-      this._entityConstructor
+      this._entityApi
     );
 
     if (this.requestConfig.method === 'patch') {
@@ -221,7 +224,7 @@ export abstract class UpdateRequestBuilderBase<
     return {
       ...this.entitySerializer.serializeEntity(
         this._entity,
-        this._entityConstructor,
+        this._entityApi,
         true
       )
     };

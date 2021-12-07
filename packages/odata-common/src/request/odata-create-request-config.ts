@@ -1,4 +1,4 @@
-import { Constructable, EntityBase } from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { Link } from '../selectable';
 import { DeSerializers } from '../de-serializers';
@@ -28,16 +28,15 @@ export class ODataCreateRequestConfig<
    * @param _entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    readonly _entitySchema: Record<string, any>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('post', _entityConstructor._defaultServicePath);
+    super('post', _entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
     return this.parentKeys === undefined
-      ? this._entityConstructor._entityName
+      ? this._entityApi.entityConstructor._entityName
       : this.resourcePathAsChild();
   }
 
@@ -49,8 +48,7 @@ export class ODataCreateRequestConfig<
     return (
       this.oDataUri.getResourcePathForKeys(
         this.parentKeys,
-        this.childField._entityConstructor,
-        this._entitySchema
+        this.childField._linkedEntityApi
       ) +
       '/' +
       this.childField._fieldName

@@ -3,7 +3,7 @@ import {
   Destination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import { Constructable, EntityBase } from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataGetByKeyRequestConfig } from '../request';
@@ -32,17 +32,13 @@ export abstract class GetByKeyRequestBuilderBase<
    * @param entityDeserializer - Entity deserializer
    */
   constructor(
-    entityConstructor: Constructable<EntityT>,
-    schema: Record<string, any>,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
     keys: Record<string, any>,
     oDataUri: ODataUri<DeSerializersT>,
     readonly entityDeserializer: EntityDeserializer,
     readonly dataAccessor: ResponseDataAccessor
   ) {
-    super(
-      entityConstructor,
-      new ODataGetByKeyRequestConfig(entityConstructor, schema, oDataUri)
-    );
+    super(entityApi, new ODataGetByKeyRequestConfig(entityApi, oDataUri));
     this.requestConfig.keys = keys;
   }
 
@@ -76,7 +72,7 @@ export abstract class GetByKeyRequestBuilderBase<
       .then(response =>
         this.entityDeserializer.deserializeEntity(
           this.dataAccessor.getSingleResult(response.data),
-          this._entityConstructor,
+          this._entityApi,
           response.headers
         )
       )

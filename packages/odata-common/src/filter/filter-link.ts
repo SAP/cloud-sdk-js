@@ -59,7 +59,7 @@ export function isFilterLink<
   DeSerializersT extends DeSerializers,
   LinkedT extends EntityBase
 >(
-  filterable: Filterable<EntityT, DeSerializersT>
+  filterable: Filterable<EntityT, DeSerializersT, LinkedT>
 ): filterable is FilterLink<EntityT, DeSerializersT, LinkedT> {
   return (
     typeof filterable['link'] !== 'undefined' &&

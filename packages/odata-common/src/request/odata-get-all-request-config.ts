@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Filterable } from '../filter';
 import { Expandable } from '../expandable';
@@ -32,27 +32,22 @@ export class ODataGetAllRequestConfig<
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(
-    readonly entityConstructor: Constructable<EntityT>,
-    schema: Record<string, any>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('get', entityConstructor._defaultServicePath);
+    super('get', _entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return this.entityConstructor._entityName;
+    return this._entityApi.entityConstructor._entityName;
   }
 
   queryParameters(): Record<string, any> {
     const params: Record<string, any> = {
       format: 'json',
       ...this.oDataUri.getSelect(this.selects),
-      ...this.oDataUri.getExpand(
-        this.selects,
-        this.expands,
-        this.entityConstructor
-      ),
-      ...this.oDataUri.getFilter(this.filter, this.entityConstructor),
+      ...this.oDataUri.getExpand(this.selects, this.expands, this._entityApi),
+      ...this.oDataUri.getFilter(this.filter, this._entityApi),
       ...this.oDataUri.getOrderBy(this.orderBy)
     };
     if (typeof this.top !== 'undefined') {

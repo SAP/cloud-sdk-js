@@ -1,5 +1,5 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityBase, Constructable } from '../entity-base';
+import { EntityBase, EntityApi } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
@@ -25,22 +25,17 @@ export class ODataUpdateRequestConfig<
    * @param _entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    readonly _entitySchema: Record<string, any>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
     super(
       UpdateStrategy.MODIFY_WITH_PATCH,
-      _entityConstructor._defaultServicePath
+      _entityApi.entityConstructor._defaultServicePath
     );
   }
 
   resourcePath(): string {
-    return this.oDataUri.getResourcePathForKeys(
-      this.keys,
-      this._entityConstructor,
-      this._entitySchema
-    );
+    return this.oDataUri.getResourcePathForKeys(this.keys, this._entityApi);
   }
 
   queryParameters(): Record<string, any> {

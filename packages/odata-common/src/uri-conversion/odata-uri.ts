@@ -1,5 +1,5 @@
 import { Expandable } from '../expandable';
-import { EntityBase, Constructable } from '../entity-base';
+import { EntityBase, EntityApi } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
@@ -19,23 +19,22 @@ export interface ODataUri<DeSerializersT extends DeSerializers> {
   getExpand<EntityT extends EntityBase>(
     selects: Selectable<EntityT, DeSerializersT>[],
     expands: Expandable<EntityT, DeSerializersT>[],
-    entityConstructor: Constructable<EntityT>
+    entityApi: EntityApi<EntityT, DeSerializersT>
   ): Partial<{ expand: string }>;
   getFilter<EntityT extends EntityBase>(
     filter: Filterable<EntityT, DeSerializersT>,
-    entityConstructor: Constructable<EntityT>
+    entityApi: EntityApi<EntityT, DeSerializersT>
   ): Partial<{ filter: string }>;
   getEntityKeys<EntityT extends EntityBase>(
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>
+    entityApi: EntityApi<EntityT, DeSerializersT>
   ): Record<string, any>;
   getOrderBy<EntityT extends EntityBase>(
     orderBy: Orderable<EntityT, DeSerializersT>[]
   ): Partial<{ orderby: string }>;
   getResourcePathForKeys<EntityT extends EntityBase>(
     keys: Record<string, any>,
-    entityConstructor: Constructable<EntityT>,
-    schema: Record<string, any>
+    _entityApi: EntityApi<EntityT, DeSerializersT>
   ): string;
   getSelect<EntityT extends EntityBase>(
     selects: Selectable<EntityT, DeSerializersT>[]
@@ -68,7 +67,7 @@ export function createODataUri<DeSerializersT extends DeSerializers>(
   getExpand: <EntityT extends EntityBase>(
     selects: Selectable<EntityT, DeSerializersT>[],
     expands: Expandable<EntityT, DeSerializersT>[],
-    entityConstructor: Constructable<EntityT>
+    entityApi: EntityApi<EntityT, DeSerializersT>
   ) => Partial<{ expand: string }>,
 
   getSelect: <EntityT extends EntityBase>(

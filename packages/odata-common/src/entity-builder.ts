@@ -80,7 +80,7 @@ export class EntityBuilder<
   public fromJson(json: FromJsonType<EntityT>): EntityT {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const entityBuilder = this; // ._entityConstructor.builder();
-    const entityConstructor = this._entityApi.entityConstructor;
+    // const entityConstructor = this._entityApi.entityConstructor;
 
     const [entityEntries, customEntries] = partition(
       Object.entries(json),

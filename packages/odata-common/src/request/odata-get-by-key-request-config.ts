@@ -1,4 +1,4 @@
-import { EntityBase, Constructable } from '../entity-base';
+import { EntityBase, EntityApi } from '../entity-base';
 import { Expandable } from '../expandable';
 import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
@@ -27,30 +27,21 @@ export class ODataGetByKeyRequestConfig<
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(
-    readonly entityConstructor: Constructable<EntityT>,
-    readonly _entitySchema: Record<string, any>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('get', entityConstructor._defaultServicePath);
+    super('get', _entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return this.oDataUri.getResourcePathForKeys(
-      this.keys,
-      this.entityConstructor,
-      this._entitySchema
-    );
+    return this.oDataUri.getResourcePathForKeys(this.keys, this._entityApi);
   }
 
   queryParameters(): Record<string, any> {
     return this.prependDollarToQueryParameters({
       format: 'json',
       ...this.oDataUri.getSelect(this.selects),
-      ...this.oDataUri.getExpand(
-        this.selects,
-        this.expands,
-        this.entityConstructor
-      )
+      ...this.oDataUri.getExpand(this.selects, this.expands, this._entityApi)
     });
   }
 }

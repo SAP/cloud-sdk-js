@@ -1,5 +1,5 @@
 import { DeSerializers } from '../de-serializers';
-import { Constructable, EntityBase } from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
@@ -25,19 +25,14 @@ export class ODataDeleteRequestConfig<
    * @param entityConstructor - Constructor type of the entity to create a configuration for
    */
   constructor(
-    readonly entityConstructor: Constructable<EntityT>,
-    readonly _entitySchema: Record<string, any>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('delete', entityConstructor._defaultServicePath);
+    super('delete', _entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return this.oDataUri.getResourcePathForKeys(
-      this.keys,
-      this.entityConstructor,
-      this._entitySchema
-    );
+    return this.oDataUri.getResourcePathForKeys(this.keys, this._entityApi);
   }
 
   queryParameters(): Record<string, any> {

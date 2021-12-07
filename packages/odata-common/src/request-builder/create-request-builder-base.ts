@@ -8,6 +8,7 @@ import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion';
 import type {
   Constructable,
+  EntityApi,
   EntityBase,
   EntityIdentifiable
 } from '../entity-base';
@@ -33,6 +34,7 @@ export abstract class CreateRequestBuilderBase<
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _deSerializers: DeSerializersT;
+  readonly _entityConstructor: Constructable<EntityT>;
 
   /**
    * Creates an instance of CreateRequestBuilder.
@@ -40,18 +42,17 @@ export abstract class CreateRequestBuilderBase<
    * @param _entity - Entity to be created
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    schema: Record<string, any>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT,
-    readonly odataUri: ODataUri<DeSerializersT>,
+    readonly oDataUri: ODataUri<DeSerializersT>,
     readonly serializer: EntitySerializer,
     readonly deserializer: EntityDeserializer,
     readonly responseDataAccessor: ResponseDataAccessor
   ) {
-    super(new ODataCreateRequestConfig(_entityConstructor, schema, odataUri));
+    super(new ODataCreateRequestConfig(_entityApi, oDataUri));
     this.requestConfig.payload = serializer.serializeEntity(
       this._entity,
-      this._entityConstructor
+      this._entityApi
     );
   }
 
@@ -69,9 +70,9 @@ export abstract class CreateRequestBuilderBase<
     parentEntity: ParentEntityT,
     linkField: Link<ParentEntityT, DeSerializersT, EntityT>
   ): this {
-    this.requestConfig.parentKeys = this.odataUri.getEntityKeys(
+    this.requestConfig.parentKeys = this.oDataUri.getEntityKeys(
       parentEntity,
-      linkField._entityConstructor
+      linkField._entityApi
     );
     this.requestConfig.childField = linkField;
     return this;
@@ -89,7 +90,7 @@ export abstract class CreateRequestBuilderBase<
       .then(response =>
         this.deserializer.deserializeEntity(
           this.responseDataAccessor.getSingleResult(response.data),
-          this._entityConstructor,
+          this._entityApi,
           response.headers
         )
       )

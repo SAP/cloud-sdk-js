@@ -1,4 +1,5 @@
-import { Constructable } from '@sap-cloud-sdk/odata-common/internal';
+import { EntityApi } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '..';
 import { Entity } from '../entity';
 import { deserializeEntity } from '../entity-deserializer';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
@@ -11,25 +12,25 @@ export function transformReturnValueForUndefined<ReturnT>(
   return builderFn(data);
 }
 
-export function transformReturnValueForEntity<ReturnT extends Entity>(
-  data: any,
-  entityConstructor: Constructable<ReturnT>
-): ReturnT {
+export function transformReturnValueForEntity<
+  ReturnT extends Entity,
+  DeSerializersT extends DeSerializers
+>(data: any, entityApi: EntityApi<ReturnT, DeSerializersT>): ReturnT {
   return deserializeEntity(
     getSingleResult(data),
-    entityConstructor
+    entityApi
   ).setOrInitializeRemoteState() as ReturnT;
 }
 
-export function transformReturnValueForEntityList<ReturnT extends Entity>(
-  data: any,
-  entityConstructor: Constructable<ReturnT>
-): ReturnT[] {
+export function transformReturnValueForEntityList<
+  ReturnT extends Entity,
+  DeSerializersT extends DeSerializers
+>(data: any, entityApi: EntityApi<ReturnT, DeSerializersT>): ReturnT[] {
   return getCollectionResult(data).map(
     entityJson =>
       deserializeEntity(
         entityJson,
-        entityConstructor
+        entityApi
       ).setOrInitializeRemoteState() as ReturnT
   );
 }

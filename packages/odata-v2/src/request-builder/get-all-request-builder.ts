@@ -11,7 +11,7 @@ import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
 import { DeSerializers } from '../de-serializers';
-import { createODataUriV2 } from '../uri-conversion';
+import { createODataUri } from '../uri-conversion';
 import {
   getLinkedCollectionResult,
   responseDataAccessor
@@ -28,21 +28,16 @@ export class GetAllRequestBuilder<
    * Creates an instance of GetAllRequestBuilder.
    * @param entityApi - Constructor of the entity to create the request for, the (de-)serializers, and the schema.
    */
-  constructor({
-    entityConstructor,
-    deSerializers,
-    schema
-  }: EntityApi<EntityT, DeSerializersT>) {
+  constructor(entityApi: EntityApi<EntityT, DeSerializersT>) {
     super(
-      entityConstructor,
+      entityApi,
       new ODataGetAllRequestConfig(
-        entityConstructor,
-        schema,
-        createODataUriV2(deSerializers)
+        entityApi,
+        createODataUri(entityApi.deSerializers)
       ),
       entityDeserializer(
-        deSerializers,
-        schema,
+        entityApi.deSerializers,
+        entityApi.schema,
         extractODataEtag,
         getLinkedCollectionResult
       ),

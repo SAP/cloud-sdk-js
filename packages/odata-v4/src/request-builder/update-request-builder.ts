@@ -13,7 +13,7 @@ import {
 import { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
 import { DeSerializers } from '../de-serializers';
-import { createODataUriV4 } from '../uri-conversion';
+import { createODataUri } from '../uri-conversion';
 
 export class UpdateRequestBuilder<
     EntityT extends Entity,
@@ -28,19 +28,14 @@ export class UpdateRequestBuilder<
    * @param _entity - Entity to be updated
    */
   constructor(
-    {
-      entityConstructor,
-      deSerializers,
-      schema
-    }: EntityApi<EntityT, DeSerializersT>,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT
   ) {
     super(
-      entityConstructor,
-      schema,
+      entityApi,
       _entity,
-      createODataUriV4(deSerializers),
-      entitySerializer(deSerializers),
+      createODataUri(entityApi.deSerializers),
+      entitySerializer(entityApi.deSerializers),
       extractODataEtag,
       identity
     );

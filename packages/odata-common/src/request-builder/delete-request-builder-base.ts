@@ -4,7 +4,12 @@ import {
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
+import {
+  Constructable,
+  EntityApi,
+  EntityBase,
+  EntityIdentifiable
+} from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { ODataDeleteRequestConfig } from '../request';
 import { DeSerializers } from '../de-serializers';
@@ -34,17 +39,16 @@ export abstract class DeleteRequestBuilderBase<
    * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
    */
   constructor(
-    entityConstructor: Constructable<EntityT>,
-    schema: Record<string, any>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     oDataUri: ODataUri<DeSerializersT>,
     keysOrEntity: Record<string, any> | EntityBase
   ) {
-    super(new ODataDeleteRequestConfig(entityConstructor, schema, oDataUri));
-    this._entityConstructor = entityConstructor;
+    super(new ODataDeleteRequestConfig(_entityApi, oDataUri));
+    this._entityConstructor = _entityApi.entityConstructor;
     if (keysOrEntity instanceof EntityBase) {
       this.requestConfig.keys = oDataUri.getEntityKeys(
         keysOrEntity,
-        entityConstructor
+        _entityApi
       );
       this.setVersionIdentifier(keysOrEntity.versionIdentifier);
     } else {

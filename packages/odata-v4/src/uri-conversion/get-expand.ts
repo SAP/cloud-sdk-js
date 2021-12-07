@@ -1,12 +1,12 @@
 import {
   Expandable,
   OneToManyLink,
-  Constructable,
   AllFields,
   Link,
   and,
   createGetFilter,
-  getOrderBy
+  getOrderBy,
+  EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
@@ -30,12 +30,12 @@ export function getExpand<
   DeSerializersT extends DeSerializers
 >(
   expands: Expandable<EntityT, DeSerializersT>[] = [],
-  entityConstructor: Constructable<EntityT>
+  entityApi: EntityApi<EntityT, DeSerializersT>
 ): Partial<{ expand: string }> {
   return expands.length
     ? {
         expand: expands
-          .map(expand => getExpandAsString(expand, entityConstructor))
+          .map(expand => getExpandAsString(expand, entityApi))
           .join(',')
       }
     : {};
@@ -46,7 +46,7 @@ function getExpandAsString<
   DeSerializersT extends DeSerializers
 >(
   expand: Expandable<EntityT, DeSerializersT>,
-  entityConstructor: Constructable<EntityT>
+  entityApi: EntityApi<EntityT, DeSerializersT>
 ): string {
   if (expand instanceof AllFields) {
     return '*';
@@ -58,7 +58,7 @@ function getExpandAsString<
     params = {
       ...params,
       ...getSelect(expand._selects),
-      ...getExpand(expand._expand, expand._linkedEntity)
+      ...getExpand(expand._expand, expand._linkedEntityApi)
     };
 
     if (expand instanceof OneToManyLink) {
@@ -66,7 +66,7 @@ function getExpandAsString<
         ...params,
         ...createGetFilter(uriConverter).getFilter(
           and(expand._filters?.filters || []),
-          entityConstructor
+          entityApi
         ),
         ...(expand._skip && { skip: expand._skip }),
         ...(expand._top && { top: expand._top }),

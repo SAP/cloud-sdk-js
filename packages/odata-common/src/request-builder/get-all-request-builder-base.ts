@@ -3,7 +3,7 @@ import {
   Destination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import { Constructable, EntityBase } from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
 import { ODataGetAllRequestConfig } from '../request';
@@ -32,12 +32,12 @@ export abstract class GetAllRequestBuilderBase<
    * @param getAllRequestConfig - Request config of the get all request.
    */
   constructor(
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
     getAllRequestConfig: ODataGetAllRequestConfig<EntityT, DeSerializersT>,
     readonly entityDeserializer: EntityDeserializer,
     readonly dataAccessor: ResponseDataAccessor
   ) {
-    super(entityConstructor, getAllRequestConfig);
+    super(entityApi, getAllRequestConfig);
   }
   /**
    * Restrict the response to the given selection of properties in the request.
@@ -118,7 +118,7 @@ export abstract class GetAllRequestBuilderBase<
         .map(json =>
           this.entityDeserializer.deserializeEntity(
             json,
-            this._entityConstructor,
+            this._entityApi,
             response.headers
           )
         )

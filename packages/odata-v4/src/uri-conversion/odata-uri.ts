@@ -11,10 +11,10 @@ const getExpandWrapped = (selects, expands, entityConstructor) =>
   getExpand(expands, entityConstructor);
 
 /**
- * Instance of the [[ODataUri]] conversion interface for OData v2.
+ * Instance of the [[ODataUri]] conversion interface for OData v4.
  * @internal
  */
-export function createODataUriV4<DeSerializersT extends DeSerializers>(
+export function createODataUri<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT
 ): ODataUri<DeSerializersT> {
   return createODataUriBase(deSerializers, getExpandWrapped, getSelect);

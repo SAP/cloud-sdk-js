@@ -17,7 +17,7 @@ import {
 import { Entity } from '../entity';
 import { extractODataEtag } from '../extract-odata-etag';
 import { DeSerializers } from '../de-serializers';
-import { createODataUriV2 } from '../uri-conversion';
+import { createODataUri } from '../uri-conversion';
 
 const logger = createLogger({
   package: 'odata-v2',
@@ -41,19 +41,14 @@ export class UpdateRequestBuilder<
    * @param _entity - Entity to be updated
    */
   constructor(
-    {
-      entityConstructor,
-      deSerializers,
-      schema
-    }: EntityApi<EntityT, DeSerializersT>,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT
   ) {
     super(
-      entityConstructor,
-      schema,
+      entityApi,
       _entity,
-      createODataUriV2(deSerializers),
-      entitySerializer(deSerializers),
+      createODataUri(entityApi.deSerializers),
+      entitySerializer(entityApi.deSerializers),
       extractODataEtag,
       removeNavPropsAndComplexTypes
     );
@@ -73,7 +68,7 @@ export class UpdateRequestBuilder<
     }
 
     const request = await this.build(destination);
-    warnIfNavigation(request, this._entity, this._entitySchema);
+    warnIfNavigation(request, this._entity, this._entityApi.schema);
 
     return super.executeRequest(request);
   }

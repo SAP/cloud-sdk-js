@@ -175,10 +175,9 @@ export function testFunctionImportEntityReturnType<
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType',
     data =>
-      responseTransformers(deSerializers).transformReturnValueForEntity(
+      transformReturnValueForEntity(
         data,
-        TestEntity as Constructable<TestEntity<DeSerializersT>>,
-        new TestEntityApi(deSerializers).schema
+        new TestEntityApi(deSerializers)
       ) as TestEntity<DeSerializersT>,
     params,
     deSerializers
@@ -214,10 +213,9 @@ export function testFunctionImportEntityReturnTypeCollection<
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnTypeCollection',
     data =>
-      responseTransformers(deSerializers).transformReturnValueForEntityList(
+      transformReturnValueForEntityList(
         data,
-        TestEntity as Constructable<TestEntity<DeSerializersT>>,
-        new TestEntityApi(deSerializers).schema
+        new TestEntityApi(deSerializers)
       ) as TestEntity<DeSerializersT>[],
     params,
     deSerializers

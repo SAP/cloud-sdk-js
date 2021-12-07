@@ -1,4 +1,5 @@
-import { Constructable, EntityBase } from './entity-base';
+import { DeSerializers } from './de-serializers';
+import { Constructable, EntityApi, EntityBase } from './entity-base';
 /**
  * @internal
  */
@@ -26,7 +27,7 @@ export interface ReadResponse {
   httpCode: number;
   body: Record<string, any>;
   type: Constructable<EntityBase>;
-  as: <T extends EntityBase>(constructor: Constructable<T>) => T[];
+  as: <EntityT extends EntityBase, DeSerializersT extends DeSerializers>(entityApi: EntityApi<EntityT, DeSerializersT>) => EntityT[];
   isSuccess: () => boolean;
 }
 
@@ -37,5 +38,7 @@ export interface WriteResponse {
   httpCode: number;
   body?: Record<string, any>;
   type?: Constructable<EntityBase>;
-  as?: <T extends EntityBase>(constructor: Constructable<T>) => T;
+  as?: <EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
+    entityApi: EntityApi<EntityT, DeSerializersT>
+  ) => EntityT;
 }

@@ -5,7 +5,8 @@ import {
   WriteResponse,
   WriteResponses
 } from '../../batch-response';
-import { Constructable, EntityBase } from '../../entity-base';
+import { DeSerializers } from '../../de-serializers';
+import { Constructable, EntityApi, EntityBase } from '../../entity-base';
 import { EntityDeserializer } from '../../entity-deserializer';
 import { ResponseDataAccessor } from '../../response-data-accessor';
 import { ResponseData, isHttpSuccessCode } from './batch-response-parser';
@@ -154,8 +155,9 @@ function asReadResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <EntityT extends EntityBase>(
-    constructor: Constructable<EntityT>
+  return <EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
+    // constructor: Constructable<EntityT>
+    entityApi: EntityApi<EntityT, DeSerializersT>
   ): EntityT[] => {
     if (body.error) {
       throw new ErrorWithCause('Could not parse read response.', body.error);
@@ -163,12 +165,12 @@ function asReadResponse(
     if (responseDataAccessor.isCollectionResult(body)) {
       return responseDataAccessor
         .getCollectionResult(body)
-        .map(r => deserializer.deserializeEntity(r, constructor));
+        .map(r => deserializer.deserializeEntity(r, entityApi));
     }
     return [
       deserializer.deserializeEntity(
         responseDataAccessor.getSingleResult(body),
-        constructor
+        entityApi
       )
     ];
   };
@@ -186,10 +188,12 @@ function asWriteResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <EntityT extends EntityBase>(constructor: Constructable<EntityT>) =>
+  return <EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
+    entityApi: EntityApi<EntityT, DeSerializersT>
+  ) =>
     deserializer.deserializeEntity(
       responseDataAccessor.getSingleResult(body),
-      constructor
+      entityApi
     );
 }
 

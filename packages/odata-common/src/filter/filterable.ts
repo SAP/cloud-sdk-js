@@ -20,7 +20,7 @@ export type Filterable<
   LinkedEntityT extends EntityBase = any
 > =
   | Filter<EntityT, DeSerializersT, any>
-  | FilterLink<EntityT, DeSerializersT>
+  | FilterLink<EntityT, DeSerializersT, LinkedEntityT>
   | FilterList<EntityT, DeSerializersT>
   | FilterLambdaExpression<EntityT, DeSerializersT>
   | UnaryFilter<EntityT>

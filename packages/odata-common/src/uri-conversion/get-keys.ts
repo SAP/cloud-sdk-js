@@ -1,5 +1,5 @@
 import { camelCase } from '@sap-cloud-sdk/util';
-import { EntityBase, Constructable } from '../entity-base';
+import { EntityBase, EntityApi } from '../entity-base';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.
@@ -10,15 +10,14 @@ import { EntityBase, Constructable } from '../entity-base';
  */
 export function getEntityKeys<EntityT extends EntityBase>(
   entity: EntityT,
-  entityConstructor: Constructable<EntityT>
+  entityApi: EntityApi<EntityT, any>
 ): Record<string, any> {
   if (!entity) {
     throw new Error(
       'getEntityKeys() cannot extract keys from an undefined or null object.'
     );
   }
-  // type assertion for backwards compatibility, TODO: remove in v2.0
-  return entityConstructor._keys.reduce(
+  return entityApi.entityConstructor._keys.reduce(
     (prev, curr) => ({
       ...prev,
       [curr]: encodeURIComponent(entity[camelCase(curr)])

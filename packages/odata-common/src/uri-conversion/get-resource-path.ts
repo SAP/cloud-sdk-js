@@ -3,7 +3,7 @@ import {
   isNullish,
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
-import { EntityBase, Constructable } from '../entity-base';
+import { EntityBase, Constructable, EntityApi } from '../entity-base';
 import { UriConverter } from '../de-serializers';
 
 const logger = createLogger({
@@ -13,8 +13,7 @@ const logger = createLogger({
 
 type GetResourcePathForKeysType<EntityT extends EntityBase> = (
   keys: Record<string, any>,
-  entityConstructor: Constructable<EntityT>,
-  schema: Record<string, any>
+  entityApi: EntityApi<EntityT, any>
 ) => string;
 
 interface GetResourcePathForKeys<EntityT extends EntityBase = any> {
@@ -41,8 +40,7 @@ export function createGetResourcePathForKeys(
    */
   function getResourcePathForKeys<EntityT extends EntityBase>(
     keys: Record<string, any> = {},
-    entityConstructor: Constructable<EntityT>,
-    schema: Record<string, any>
+    { entityConstructor, schema }: EntityApi<EntityT, any>
   ): string {
     keys = filterNonKeyProperties(keys, entityConstructor);
     validateKeys(keys, entityConstructor);

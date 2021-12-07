@@ -1,5 +1,5 @@
 import {
-  Constructable,
+  EntityApi,
   entityDeserializer
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers/de-serializers';
@@ -22,37 +22,27 @@ export function transformReturnValueForUndefined<ReturnT>(
 
 export function transformReturnValueForEntity<
   ReturnT extends Entity,
-  T extends DeSerializers
->(
-  deSerializers: T,
-  data: any,
-  entityConstructor: Constructable<ReturnT>,
-  schema: Record<string, any>
-): ReturnT {
+  DeSerializersT extends DeSerializers
+>(data: any, entityApi: EntityApi<ReturnT, DeSerializersT>): ReturnT {
   const deserializeEntity = entityDeserializer(
-    deSerializers,
-    schema,
+    entityApi.deSerializers,
+    entityApi.schema,
     extractODataEtag,
     getLinkedCollectionResult
   ).deserializeEntity;
   return deserializeEntity(
     getSingleResult(data),
-    entityConstructor
+    entityApi
   ).setOrInitializeRemoteState() as ReturnT;
 }
 
 export function transformReturnValueForEntityList<
   ReturnT extends Entity,
-  T extends DeSerializers
->(
-  deSerializers: T,
-  data: any,
-  entityConstructor: Constructable<ReturnT>,
-  schema: Record<string, any>
-): ReturnT[] {
+  DeSerializersT extends DeSerializers
+>(data: any, entityApi: EntityApi<ReturnT, DeSerializersT>): ReturnT[] {
   const deserializeEntity = entityDeserializer(
-    deSerializers,
-    schema,
+    entityApi.deSerializers,
+    entityApi.schema,
     extractODataEtag,
     getLinkedCollectionResult
   ).deserializeEntity;
@@ -61,7 +51,7 @@ export function transformReturnValueForEntityList<
     entityJson =>
       deserializeEntity(
         entityJson,
-        entityConstructor
+        entityApi
       ).setOrInitializeRemoteState() as ReturnT
   );
 }
@@ -92,39 +82,4 @@ export function transformReturnValueForEdmTypeList<ReturnT>(
   builderFn: (data: any) => ReturnT
 ): ReturnT[] {
   return getCollectionResult(data).map(builderFn);
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function responseTransformers<T extends DeSerializers>(
-  deSerializers: T
-) {
-  return {
-    transformReturnValueForUndefined,
-    transformReturnValueForEntity: <ReturnT extends Entity>(
-      data: any,
-      entityConstructor: Constructable<ReturnT>,
-      schema: Record<string, any>
-    ): ReturnT =>
-      transformReturnValueForEntity(
-        deSerializers,
-        data,
-        entityConstructor,
-        schema
-      ),
-    transformReturnValueForEntityList: <ReturnT extends Entity>(
-      data: any,
-      entityConstructor: Constructable<ReturnT>,
-      schema: Record<string, any>
-    ): ReturnT[] =>
-      transformReturnValueForEntityList(
-        deSerializers,
-        data,
-        entityConstructor,
-        schema
-      ),
-    transformReturnValueForComplexType,
-    transformReturnValueForComplexTypeList,
-    transformReturnValueForEdmType,
-    transformReturnValueForEdmTypeList
-  };
 }

@@ -34,6 +34,7 @@ export class Link<
 {
   readonly _entity: EntityT;
   readonly _deSerializers: DeSerializersT;
+  readonly _entityConstructor: Constructable<EntityT>;
 
   /**
    * List of selectables on the linked entity.
@@ -49,7 +50,7 @@ export class Link<
    */
   constructor(
     readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _linkedEntityApi: EntityApi<LinkedEntityT, DeSerializersT>
   ) {}
 

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { upperCaseSnakeCase } from '@sap-cloud-sdk/util';
-import { Constructable, EntityBase } from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
 import {
   FilterLambdaExpression,
@@ -23,7 +23,7 @@ import { ComplexTypeField, OneToManyLink } from '../selectable';
 
 type GetFilterType<EntityT extends EntityBase> = (
   filter: Filterable<EntityT, any>,
-  entityConstructor: Constructable<EntityT>
+  entityApi: EntityApi<EntityT, any>
 ) => Partial<{ filter: string }>;
 
 /**
@@ -51,14 +51,10 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
    */
   function getFilter<EntityT extends EntityBase>(
     filter: Filterable<EntityT, any>,
-    entityConstructor: Constructable<EntityT>
+    entityApi: EntityApi<EntityT, any>
   ): Partial<{ filter: string }> {
     if (typeof filter !== 'undefined') {
-      const filterExpression = getODataFilterExpression(
-        filter,
-        [],
-        entityConstructor
-      );
+      const filterExpression = getODataFilterExpression(filter, [], entityApi);
       if (filterExpression) {
         return {
           filter: encodeURIComponent(filterExpression)
@@ -71,14 +67,14 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpression<FilterEntityT extends EntityBase>(
     filter: Filterable<FilterEntityT, any>,
     parentFieldNames: string[] = [],
-    targetEntityConstructor: Constructable<any>,
+    targetEntityApi: EntityApi<any, any>,
     lambdaExpressionLevel = 0
   ): string {
     if (isFilterList(filter)) {
       return getODataFilterExpressionForFilterList(
         filter,
         parentFieldNames,
-        targetEntityConstructor,
+        targetEntityApi,
         lambdaExpressionLevel
       );
     }
@@ -87,7 +83,6 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       return getODataFilterExpressionForFilterLink(
         filter,
         parentFieldNames,
-        targetEntityConstructor,
         lambdaExpressionLevel
       );
     }
@@ -96,7 +91,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       return getODataFilterExpressionForFilter(
         filter,
         parentFieldNames,
-        targetEntityConstructor
+        targetEntityApi
       );
     }
 
@@ -108,7 +103,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       return getODataFilterExpressionForUnaryFilter(
         filter,
         parentFieldNames,
-        targetEntityConstructor
+        targetEntityApi
       );
     }
 
@@ -116,7 +111,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       return getODataFilterExpressionForFilterLambdaExpression(
         filter,
         parentFieldNames,
-        targetEntityConstructor,
+        targetEntityApi,
         lambdaExpressionLevel
       );
     }
@@ -125,7 +120,6 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
       return getODataFilterExpressionForFilterLink(
         filter._filters,
         parentFieldNames,
-        targetEntityConstructor,
         lambdaExpressionLevel
       );
     }
@@ -139,12 +133,12 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
 
   function retrieveField(
     filterField: string,
-    targetEntityConstructor: Constructable<any>,
+    targetEntityApi: EntityApi<any, any>,
     filterEdmType?: EdmTypeShared<'v2'>
   ) {
     // In case of complex types there will be a property name as part of the filter.field
     const [fieldName] = filterField.split('/');
-    const field = targetEntityConstructor[upperCaseSnakeCase(fieldName)];
+    const field = targetEntityApi.schema[upperCaseSnakeCase(fieldName)];
     if (field instanceof ComplexTypeField) {
       return Object.values(field)
         .filter(pField => pField?.fieldPath) // Filter for ComplexTypePropertyFields only
@@ -203,12 +197,12 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   >(
     filter: UnaryFilter<FilterEntityT>,
     parentFieldNames: string[],
-    targetEntityConstructor: Constructable<any>
+    targetEntityApi: EntityApi<any, any>
   ): string {
     return `${filter.operator} (${getODataFilterExpression(
       filter.singleOperand,
       parentFieldNames,
-      targetEntityConstructor
+      targetEntityApi
     )})`;
   }
 
@@ -217,14 +211,14 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   >(
     filter: FilterLambdaExpression<FilterEntityT, any>,
     parentFieldNames: string[],
-    targetEntityConstructor: Constructable<any>,
+    targetEntityApi: EntityApi<any, any>,
     lambdaExpressionLevel: number
   ): string {
     const alias = `a${lambdaExpressionLevel}`;
     const filterExp = getODataFilterExpression(
       filter.filters,
       [alias],
-      targetEntityConstructor,
+      targetEntityApi,
       lambdaExpressionLevel + 1
     );
     return `${parentFieldNames.join('/')}/${
@@ -237,7 +231,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   >(
     filter: FilterList<FilterEntityT, any>,
     parentFieldNames: string[],
-    targetEntityConstructor: Constructable<any>,
+    targetEntityApi: EntityApi<any, any>,
     lambdaExpressionLevel: number
   ): string {
     let andExp = filter.andFilters
@@ -245,7 +239,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
         getODataFilterExpression(
           subFilter,
           parentFieldNames,
-          targetEntityConstructor,
+          targetEntityApi,
           lambdaExpressionLevel
         )
       )
@@ -258,7 +252,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
         getODataFilterExpression(
           subFilter,
           parentFieldNames,
-          targetEntityConstructor,
+          targetEntityApi,
           lambdaExpressionLevel
         )
       )
@@ -283,7 +277,6 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   >(
     filter: FilterLink<FilterEntityT, any>,
     parentFieldNames: string[],
-    targetEntityConstructor: Constructable<any>,
     lambdaExpressionLevel: number
   ): string {
     let linkExp = filter.filters
@@ -291,7 +284,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
         getODataFilterExpression(
           subFilter,
           [...parentFieldNames, filter.link._fieldName],
-          filter.link._linkedEntity,
+          filter.link._linkedEntityApi,
           lambdaExpressionLevel
         )
       )
@@ -304,12 +297,12 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForFilter<FilterEntityT extends EntityBase>(
     filter: Filter<FilterEntityT, any, any>,
     parentFieldNames: string[],
-    targetEntityConstructor: Constructable<any>
+    targetEntityApi: EntityApi<any, any>
   ): string {
     if (typeof filter.field === 'string') {
       const field = retrieveField(
         filter.field,
-        targetEntityConstructor,
+        targetEntityApi,
         filter.edmType
       );
       return [

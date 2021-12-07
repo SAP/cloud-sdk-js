@@ -1,5 +1,5 @@
 import { createLogger, upperCaseSnakeCase } from '@sap-cloud-sdk/util';
-import { Constructable, EntityBase } from './entity-base';
+import { EntityApi, EntityBase } from './entity-base';
 import {
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
@@ -29,7 +29,7 @@ export interface EntitySerializer<
 > {
   serializeEntity: (
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, any>,
     diff?: boolean
   ) => Record<string, any>;
   serializeComplexType: (
@@ -38,7 +38,7 @@ export interface EntitySerializer<
   ) => any;
   serializeEntityNonCustomFields: (
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>
+    entityApi: EntityApi<EntityT, any>
   ) => Record<string, any>;
 }
 
@@ -62,11 +62,11 @@ export function entitySerializer(
    */
   function serializeEntity<EntityT extends EntityBase>(
     entity: EntityT,
-    entityApi: Entity
+    entityApi: EntityApi<EntityT, any>,
     diff = false
   ): Record<string, any> {
     return {
-      ...serializeEntityNonCustomFields(entity, entityConstructor, diff),
+      ...serializeEntityNonCustomFields(entity, entityApi, diff),
       ...(diff ? entity.getUpdatedCustomFields() : entity.getCustomFields())
     };
   }
@@ -83,7 +83,7 @@ export function entitySerializer(
     }
     if (field instanceof Link) {
       return fieldValue.map(linkedEntity =>
-        serializeEntity(linkedEntity, field._linkedEntity)
+        serializeEntity(linkedEntity, field._linkedEntityApi)
       );
     }
     if (field instanceof ComplexTypeField) {
@@ -109,11 +109,11 @@ export function entitySerializer(
    */
   function serializeEntityNonCustomFields<EntityT extends EntityBase>(
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, any>,
     diff = false
   ): Record<string, any> {
     return getFieldNames(entity, diff).reduce((serialized, key) => {
-      const field = entityConstructor[upperCaseSnakeCase(key)];
+      const field = entityApi.schema[upperCaseSnakeCase(key)];
       const fieldValue = entity[key];
 
       const serializedValue = serializeField(field, fieldValue);

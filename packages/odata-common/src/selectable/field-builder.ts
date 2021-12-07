@@ -242,4 +242,34 @@ export class FieldBuilder<
       isSelectable
     });
   }
+
+  // buildCustomField<NullableT extends boolean>(
+  //   fieldName: string,
+  //   isNullable: NullableT
+  // ): CustomField<EntityTypeFromFieldOf<FieldOfT>, DeSerializersT, NullableT> {
+  //   return new CustomField(
+  //     fieldName,
+  //     getEntityConstructor(this.fieldOf),
+  //     this.deSerializers,
+  //     isNullable
+  //   );
+  // }
 }
+
+// export function customFieldSelector<
+//   EntityT extends EntityBase,
+//   DeSerializersT extends DeSerializers,
+//   NullableT extends boolean = false
+// >(
+//   fieldName: string,
+//   entityConstructor: Constructable<EntityT>,
+//   deSerializers: DeSerializersT,
+//   isNullable: NullableT = false as NullableT
+// ): CustomField<EntityT, DeSerializersT, NullableT> {
+//   return new CustomField(
+//     fieldName,
+//     entityConstructor,
+//     deSerializers,
+//     isNullable
+//   );
+// }

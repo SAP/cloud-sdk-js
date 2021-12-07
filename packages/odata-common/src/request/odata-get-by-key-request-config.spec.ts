@@ -53,7 +53,7 @@ describe('ODataGetByKeyRequestConfig', () => {
   });
 
   it('has custom field selection', () => {
-    config.selects = [CommonEntity.customField('SomeCustomField')];
+    config.selects = [commonEntityApi.customField('SomeCustomField')];
     expect(config.queryParameters()['$select']).toBe('SomeCustomField');
   });
 });

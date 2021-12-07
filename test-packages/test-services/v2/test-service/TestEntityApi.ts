@@ -4,12 +4,14 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  CustomField,
   defaultDeSerializers,
   DeSerializers,
+  Entity,
   mergeDefaultDeSerializersWith
 } from '@sap-cloud-sdk/odata-v2';
-import { entityBuilder } from '@sap-cloud-sdk/odata-common/internal';
 import {
+  entityBuilder,
   AllFields,
   EntityApi,
   EntityBuilderType,
@@ -86,6 +88,7 @@ export class TestEntityApi<
       >
     >
 {
+  private fieldBuilder;
   public deSerializers: DeSerializers<
     BinaryT,
     BooleanT,
@@ -131,14 +134,14 @@ export class TestEntityApi<
     > = defaultDeSerializers as any
   ) {
     this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
-    const fieldBuilder = new FieldBuilder(TestEntity, this.deSerializers);
+    this.fieldBuilder = new FieldBuilder(TestEntity, this.deSerializers);
 
     this.schema = {
       /**
        * Static representation of the [[keyPropertyGuid]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      KEY_PROPERTY_GUID: fieldBuilder.buildEdmTypeField(
+      KEY_PROPERTY_GUID: this.fieldBuilder.buildEdmTypeField(
         'KeyPropertyGuid',
         'Edm.Guid',
         false
@@ -147,7 +150,7 @@ export class TestEntityApi<
        * Static representation of the [[keyPropertyString]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
+      KEY_PROPERTY_STRING: this.fieldBuilder.buildEdmTypeField(
         'KeyPropertyString',
         'Edm.String',
         false
@@ -156,7 +159,7 @@ export class TestEntityApi<
        * Static representation of the [[stringProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
+      STRING_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'StringProperty',
         'Edm.String',
         true
@@ -165,7 +168,7 @@ export class TestEntityApi<
        * Static representation of the [[booleanProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
+      BOOLEAN_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'BooleanProperty',
         'Edm.Boolean',
         true
@@ -174,7 +177,7 @@ export class TestEntityApi<
        * Static representation of the [[guidProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
+      GUID_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'GuidProperty',
         'Edm.Guid',
         true
@@ -183,7 +186,7 @@ export class TestEntityApi<
        * Static representation of the [[int16Property]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
+      INT_16_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'Int16Property',
         'Edm.Int16',
         true
@@ -192,7 +195,7 @@ export class TestEntityApi<
        * Static representation of the [[int32Property]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      INT_32_PROPERTY: fieldBuilder.buildEdmTypeField(
+      INT_32_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'Int32Property',
         'Edm.Int32',
         true
@@ -201,7 +204,7 @@ export class TestEntityApi<
        * Static representation of the [[int64Property]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      INT_64_PROPERTY: fieldBuilder.buildEdmTypeField(
+      INT_64_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'Int64Property',
         'Edm.Int64',
         true
@@ -210,7 +213,7 @@ export class TestEntityApi<
        * Static representation of the [[decimalProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      DECIMAL_PROPERTY: fieldBuilder.buildEdmTypeField(
+      DECIMAL_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'DecimalProperty',
         'Edm.Decimal',
         true
@@ -219,7 +222,7 @@ export class TestEntityApi<
        * Static representation of the [[singleProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      SINGLE_PROPERTY: fieldBuilder.buildEdmTypeField(
+      SINGLE_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'SingleProperty',
         'Edm.Single',
         true
@@ -228,7 +231,7 @@ export class TestEntityApi<
        * Static representation of the [[doubleProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      DOUBLE_PROPERTY: fieldBuilder.buildEdmTypeField(
+      DOUBLE_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'DoubleProperty',
         'Edm.Double',
         true
@@ -237,7 +240,7 @@ export class TestEntityApi<
        * Static representation of the [[floatProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      FLOAT_PROPERTY: fieldBuilder.buildEdmTypeField(
+      FLOAT_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'FloatProperty',
         'Edm.Float',
         true
@@ -246,7 +249,7 @@ export class TestEntityApi<
        * Static representation of the [[timeProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      TIME_PROPERTY: fieldBuilder.buildEdmTypeField(
+      TIME_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'TimeProperty',
         'Edm.Time',
         true
@@ -255,7 +258,7 @@ export class TestEntityApi<
        * Static representation of the [[dateTimeProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      DATE_TIME_PROPERTY: fieldBuilder.buildEdmTypeField(
+      DATE_TIME_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'DateTimeProperty',
         'Edm.DateTime',
         true
@@ -264,7 +267,7 @@ export class TestEntityApi<
        * Static representation of the [[dateTimeOffSetProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      DATE_TIME_OFF_SET_PROPERTY: fieldBuilder.buildEdmTypeField(
+      DATE_TIME_OFF_SET_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'DateTimeOffSetProperty',
         'Edm.DateTimeOffset',
         true
@@ -273,7 +276,7 @@ export class TestEntityApi<
        * Static representation of the [[byteProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      BYTE_PROPERTY: fieldBuilder.buildEdmTypeField(
+      BYTE_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'ByteProperty',
         'Edm.Byte',
         true
@@ -282,7 +285,7 @@ export class TestEntityApi<
        * Static representation of the [[sByteProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      S_BYTE_PROPERTY: fieldBuilder.buildEdmTypeField(
+      S_BYTE_PROPERTY: this.fieldBuilder.buildEdmTypeField(
         'SByteProperty',
         'Edm.SByte',
         true
@@ -291,7 +294,7 @@ export class TestEntityApi<
        * Static representation of the [[somethingTheSdkDoesNotSupport]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      SOMETHING_THE_SDK_DOES_NOT_SUPPORT: fieldBuilder.buildEdmTypeField(
+      SOMETHING_THE_SDK_DOES_NOT_SUPPORT: this.fieldBuilder.buildEdmTypeField(
         'SomethingTheSDKDoesNotSupport',
         'Edm.Any',
         true
@@ -300,7 +303,7 @@ export class TestEntityApi<
        * Static representation of the [[complexTypeProperty]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
-      COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField(
+      COMPLEX_TYPE_PROPERTY: this.fieldBuilder.buildComplexTypeField(
         'ComplexTypeProperty',
         TestComplexTypeField,
         true
@@ -313,7 +316,29 @@ export class TestEntityApi<
         'to_MultiLink',
         TestEntity,
         TestEntityMultiLink
-      ) as Link<TestEntity, TestEntityMultiLink>,
+      ) as Link<
+        TestEntity,
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeT,
+          DateTimeOffsetT,
+          TimeT
+        >,
+        TestEntityMultiLink
+      >,
       // /**
       //  * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
       //  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -411,6 +436,60 @@ export class TestEntityApi<
   > {
     return entityBuilder(this);
   }
+
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<
+    TestEntity<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+    >,
+    NullableT
+  > {
+    return new CustomField(
+      fieldName,
+      this.entityConstructor,
+      this.deSerializers,
+      isNullable
+    );
+  }
 }
 
 // const c = {
@@ -426,6 +505,7 @@ export class TestEntityApi<
 // await entity: TestEntity<typeof customDes> = functionImports(c).functionimportfn({}).execute();
 
 // const testEntityApi = new TestEntityApi(c);
+// const cf = testEntityApi.customField('test', true)
 // testEntityApi.schema.STRING_PROPERTY.equals(4);
 // testEntityApi.entityBuilder().stringProperty(54);
 // const testEntityApi2 = new TestEntityApi();

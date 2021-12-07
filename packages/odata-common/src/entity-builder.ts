@@ -4,7 +4,7 @@ import {
   upperCaseSnakeCase
 } from '@sap-cloud-sdk/util';
 import { isNavigationProperty } from './properties-util';
-import type { Constructable, EntityBase } from './entity-base';
+import type { EntityApi, EntityBase } from './entity-base';
 import { defaultDeSerializersRaw } from './de-serializers/default-de-serializers';
 import { DeSerializers } from './de-serializers';
 
@@ -35,15 +35,15 @@ type FromJsonType<JsonT> = {
 /**
  * @internal
  */
-export class EntityBuilder<EntityT extends EntityBase> {
+export class EntityBuilder<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> {
   protected entity: EntityT;
 
-  constructor(
-    private _entityConstructor: Constructable<EntityT>,
-    private deSerializers: DeSerializers
-  ) {
+  constructor(private _entityApi: EntityApi<EntityT, DeSerializersT>) {
     if (!this.entity) {
-      this.entity = new this._entityConstructor(this.deSerializers);
+      this.entity = new _entityApi.entityConstructor(_entityApi.deSerializers);
     }
   }
 
@@ -64,7 +64,9 @@ export class EntityBuilder<EntityT extends EntityBase> {
    */
   public build(): EntityT {
     const entity = this.entity;
-    this.entity = new this._entityConstructor(defaultDeSerializersRaw);
+    this.entity = new this._entityApi.entityConstructor(
+      defaultDeSerializersRaw
+    );
     return entity;
   }
 
@@ -78,7 +80,7 @@ export class EntityBuilder<EntityT extends EntityBase> {
   public fromJson(json: FromJsonType<EntityT>): EntityT {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const entityBuilder = this; // ._entityConstructor.builder();
-    const entityConstructor = this._entityConstructor;
+    const entityConstructor = this._entityApi.entityConstructor;
 
     const [entityEntries, customEntries] = partition(
       Object.entries(json),
@@ -87,13 +89,8 @@ export class EntityBuilder<EntityT extends EntityBase> {
 
     entityEntries.forEach(([key, value]) => {
       const propertyValue =
-        isNavigationProperty(key, entityConstructor) && !!value
-          ? buildNavigationPropertyFromJson(
-              key,
-              value,
-              entityConstructor,
-              this.deSerializers
-            )
+        isNavigationProperty(key, this._entityApi.schema) && !!value
+          ? buildNavigationPropertyFromJson(key, value, this._entityApi)
           : value;
 
       entityBuilder[key](propertyValue);
@@ -119,12 +116,12 @@ export class EntityBuilder<EntityT extends EntityBase> {
     customFields: Record<string, any>
   ): Record<string, any> {
     return Object.keys(customFields).reduce((validCfs, cf) => {
-      if (!this._entityConstructor[upperCaseSnakeCase(cf)]) {
+      if (!this._entityApi.schema[upperCaseSnakeCase(cf)]) {
         validCfs[cf] = customFields[cf];
       }
       logger.warn(
         `Field name "${cf}" is already existing in "${toClassName(
-          this._entityConstructor._entityName
+          this._entityApi.entityConstructor._entityName
         )}" and thus cannot be defined as custom field. `
       );
       return validCfs;
@@ -138,30 +135,29 @@ function toClassName(entityName: string) {
 
 function buildNavigationPropertyFromJson<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
 >(
   key: string,
   value: FromJsonType<unknown>,
-  entityConstructor: Constructable<EntityT>,
-  deSerializers: DeSerializers
+  entityApi: EntityApi<EntityT, DeSerializersT>
 ): LinkedEntityT | LinkedEntityT[] {
-  const field = entityConstructor[upperCaseSnakeCase(key)];
-  const linkedEntityConstructor: Constructable<LinkedEntityT> =
-    field._linkedEntity;
+  const field = entityApi.schema[upperCaseSnakeCase(key)];
+  const linkedEntityApi = field._linkedEntityApi;
   return Array.isArray(value)
-    ? value.map(item =>
-        buildSingleEntityFromJson(item, linkedEntityConstructor, deSerializers)
-      )
-    : buildSingleEntityFromJson(value, linkedEntityConstructor, deSerializers);
+    ? value.map(item => buildSingleEntityFromJson(item, linkedEntityApi))
+    : // TODO: remove type assertion?
+      (buildSingleEntityFromJson(value, linkedEntityApi) as LinkedEntityT);
 }
 
-function buildSingleEntityFromJson<LinkedEntityT extends EntityBase>(
+function buildSingleEntityFromJson<
+  LinkedEntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(
   json: FromJsonType<unknown>,
-  linkedEntityConstructor: Constructable<LinkedEntityT>,
-  deSerializers: DeSerializers
+  linkedEntityApi: EntityApi<LinkedEntityT, DeSerializersT>
 ): LinkedEntityT {
-  return {} as any;
-  // return json instanceof linkedEntityConstructor
-  //   ? json
-  //   : linkedEntityConstructor.builder(deSerializers).fromJson(json);
+  return json instanceof linkedEntityApi.entityConstructor
+    ? json
+    : linkedEntityApi.entityBuilder().fromJson(json);
 }

@@ -3,7 +3,7 @@ import { upperCaseSnakeCase } from '@sap-cloud-sdk/util';
 /**
  * Make property non enumerable
  * @param target - Object to be adjusted
- * @param propertyKey - property key whichis adjusted.
+ * @param propertyKey - property key which is adjusted.
  * @internal
  */
 export const nonEnumerable = (target: any, propertyKey: string): void => {
@@ -24,7 +24,7 @@ export const nonEnumerable = (target: any, propertyKey: string): void => {
  */
 export function isNavigationProperty(
   key: string,
-  entityConstructor: any
+  schema: Record<string, any>
 ): boolean {
-  return '_linkedEntity' in entityConstructor[upperCaseSnakeCase(key)];
+  return '_linkedEntityApi' in schema[upperCaseSnakeCase(key)];
 }

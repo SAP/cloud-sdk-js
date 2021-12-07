@@ -62,7 +62,7 @@ export function entitySerializer(
    */
   function serializeEntity<EntityT extends EntityBase>(
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: Entity
     diff = false
   ): Record<string, any> {
     return {
@@ -79,7 +79,7 @@ export function entitySerializer(
       return tsToEdm(fieldValue, field.edmType);
     }
     if (field instanceof OneToOneLink) {
-      return serializeEntity(fieldValue, field._linkedEntity);
+      return serializeEntity(fieldValue, field._linkedEntityApi);
     }
     if (field instanceof Link) {
       return fieldValue.map(linkedEntity =>

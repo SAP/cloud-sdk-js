@@ -5,7 +5,6 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
-  Constructable,
   EntityIdentifiable,
   ODataRequest,
   ODataUpdateRequestConfig,
@@ -74,7 +73,7 @@ export class UpdateRequestBuilder<
     }
 
     const request = await this.build(destination);
-    warnIfNavigation(request, this._entity, this._entityConstructor);
+    warnIfNavigation(request, this._entity, this._entitySchema);
 
     return super.executeRequest(request);
   }
@@ -111,11 +110,10 @@ function warnIfNavigation<
 >(
   request: ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>>,
   entity: EntityT,
-  entityConstructor: Constructable<EntityT>
+  schema: Record<string, any>
 ): ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>> {
   const setNavigationProperties = Object.keys(entity).filter(
-    key =>
-      !isNullish(entity[key]) && isNavigationProperty(key, entityConstructor)
+    key => !isNullish(entity[key]) && isNavigationProperty(key, schema)
   );
 
   if (setNavigationProperties.length) {

@@ -3,7 +3,7 @@
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
-import type { Field, Link } from './selectable';
+import type { CustomField, Field, Link } from './selectable';
 import type { RequestBuilder } from './request-builder';
 import { DefaultDeSerializers, DeSerializers } from './de-serializers';
 
@@ -42,24 +42,30 @@ export interface Constructable<EntityT extends EntityBase> {
  * @typeparam JsonT - Type of the entity without methods.
  */
 export interface EntityApi<
-  EntityT extends EntityBase, // TestEntity
+  EntityT extends EntityBase,
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   deSerializers: DeSerializersT;
   requestBuilder(): RequestBuilder<EntityT, DeSerializersT>;
-  entityBuilder(): EntityBuilderType<EntityT>;
+  entityBuilder(): EntityBuilderType<EntityT, DeSerializersT>;
   entityConstructor: Constructable<EntityT>;
   schema: Record<string, any>;
+  customField<NullableT extends boolean>(
+    fieldName: string
+  ): CustomField<EntityT, DeSerializersT, NullableT>;
 }
 
 /**
  * @internal
  */
-export type EntityBuilderType<EntityT extends EntityBase> = {
+export type EntityBuilderType<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> = {
   [property in keyof Required<Omit<EntityT, keyof EntityBase>>]: (
     value: EntityT[property]
-  ) => EntityBuilderType<EntityT>;
-} & EntityBuilder<EntityT>;
+  ) => EntityBuilderType<EntityT, DeSerializersT>;
+} & EntityBuilder<EntityT, DeSerializersT>;
 
 /**
  * Super class for all representations of OData entity types.
@@ -70,24 +76,24 @@ export abstract class EntityBase {
   static _entityName: string;
   static _defaultServicePath: string;
 
-  public static entityBuilder<EntityT extends EntityBase>(
-    entityConstructor: Constructable<EntityT>,
-    deSerializers: DeSerializers,
-    allFields: Record<string, any>
-  ): EntityBuilderType<EntityT> {
-    const builder = new EntityBuilder<EntityT>(
-      entityConstructor,
-      deSerializers
-    );
-    allFields.forEach(field => {
-      const fieldName = `${camelCase(field._fieldName)}`;
-      builder[fieldName] = function (value) {
-        this.entity[fieldName] = value;
-        return this;
-      };
-    });
-    return builder as EntityBuilderType<EntityT>;
-  }
+  // public static entityBuilder<EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
+  //   entityConstructor: Constructable<EntityT>,
+  //   deSerializers: DeSerializersT,
+  //   allFields: Record<string, any>
+  // ): EntityBuilderType<EntityT> {
+  //   const builder = new EntityBuilder<EntityT, DeSerializersT>(
+  //     entityConstructor,
+  //     deSerializers
+  //   );
+  //   allFields.forEach(field => {
+  //     const fieldName = `${camelCase(field._fieldName)}`;
+  //     builder[fieldName] = function (value) {
+  //       this.entity[fieldName] = value;
+  //       return this;
+  //     };
+  //   });
+  //   return builder as EntityBuilderType<EntityT>;
+  // }
 
   /**
    * The remote state of the entity.
@@ -389,13 +395,12 @@ export function isExpandedProperty<
 
 export function entityBuilder<
   EntityT extends EntityBase,
-  T extends EntityApi<EntityT, DeSerializersT>,
+  // EntityApiT extends EntityApi<EntityT, DeSerializersT>,
   DeSerializersT extends DeSerializers
->(entityApi: T): EntityBuilderType<EntityT> {
-  const builder = new EntityBuilder<EntityT>(
-    entityApi.entityConstructor,
-    entityApi.deSerializers
-  );
+>(
+  entityApi: EntityApi<EntityT, DeSerializersT>
+): EntityBuilderType<EntityT, DeSerializersT> {
+  const builder = new EntityBuilder<EntityT, DeSerializersT>(entityApi);
   entityApi.schema.forEach(field => {
     const fieldName = `${camelCase(field._fieldName)}`;
     builder[fieldName] = function (value) {
@@ -403,5 +408,5 @@ export function entityBuilder<
       return this;
     };
   });
-  return builder as EntityBuilderType<EntityT>;
+  return builder as EntityBuilderType<EntityT, DeSerializersT>;
 }

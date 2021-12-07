@@ -5,7 +5,7 @@ import {
 } from '@sap-cloud-sdk/util';
 import { createValueDeserializer, DeSerializers } from './de-serializers';
 import {
-  Constructable,
+  EntityApi,
   EntityBase,
   isExpandedProperty,
   isSelectedProperty
@@ -36,7 +36,7 @@ const logger = createLogger({
 export interface EntityDeserializer<EntityT extends EntityBase = any> {
   deserializeEntity: (
     json: any,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, any>,
     requestHeader?: any
   ) => EntityT;
 
@@ -77,7 +77,7 @@ export function entityDeserializer<T extends DeSerializers>(
    */
   function deserializeEntity<EntityT extends EntityBase, JsonT>(
     json: Partial<JsonT>,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, any>,
     requestHeader?: any
   ): EntityT {
     const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
@@ -89,7 +89,7 @@ export function entityDeserializer<T extends DeSerializers>(
           staticField
         );
         return entity;
-      }, new entityConstructor())
+      }, new entityApi.entityConstructor())
       .setCustomFields(extractCustomFields(json, schema))
       .setVersionIdentifier(etag)
       .setOrInitializeRemoteState();
@@ -151,11 +151,7 @@ export function entityDeserializer<T extends DeSerializers>(
     link: Link<EntityT, DeSerializersT, LinkedEntityT>
   ): LinkedEntityT | null {
     if (isExpandedProperty(json, link)) {
-      return deserializeEntity(
-        json[link._fieldName],
-        link._linkedEntity,
-        deSerializers
-      );
+      return deserializeEntity(json[link._fieldName], link._linkedEntityApi);
     }
     return null;
   }
@@ -172,7 +168,7 @@ export function entityDeserializer<T extends DeSerializers>(
     if (isSelectedProperty(json, link)) {
       const results = extractDataFromOneToManyLink(json[link._fieldName]);
       return results.map(linkJson =>
-        deserializeEntity(linkJson, link._linkedEntity)
+        deserializeEntity(linkJson, link._linkedEntityApi)
       );
     }
   }

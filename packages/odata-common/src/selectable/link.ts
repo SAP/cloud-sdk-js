@@ -1,5 +1,10 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
+import {
+  EntityBase,
+  EntityIdentifiable,
+  Constructable,
+  EntityApi
+} from '../entity-base';
 import type { Expandable } from '../expandable';
 import type { Selectable } from './selectable';
 
@@ -39,13 +44,13 @@ export class Link<
   /**
    * Creates an instance of Link.
    * @param _fieldName - Name of the linking field to be used in the OData request.
-   * @param _entityConstructor - Constructor type of the entity the field belongs to
-   * @param _linkedEntity - Constructor type of the linked entity
+   * @param _entityConstructor - Constructor of the entity the field belongs to.
+   * @param _linkedEntity - Constructor of the linked entity.
    */
   constructor(
     readonly _fieldName: string,
     readonly _entityConstructor: Constructable<EntityT>,
-    readonly _linkedEntity: Constructable<LinkedEntityT>
+    readonly _linkedEntityApi: EntityApi<LinkedEntityT, DeSerializersT>
   ) {}
 
   /**
@@ -78,7 +83,7 @@ export class Link<
     const clonedLink = new (this.constructor as any)(
       this._fieldName,
       this._entityConstructor,
-      this._linkedEntity
+      this._linkedEntityApi
     );
     clonedLink._selects = this._selects;
     clonedLink._expand = this._expand;

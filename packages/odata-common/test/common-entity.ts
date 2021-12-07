@@ -400,6 +400,53 @@ export class CommonEntitySingleLinkApi<
     throw new Error('Method not implemented.');
   }
   entityConstructor = CommonEntitySingleLink;
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<
+    CommonEntitySingleLink<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT
+      >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT
+    >,
+    NullableT
+  > {
+    return new CustomField(
+      fieldName,
+      this.entityConstructor,
+      this.deSerializers,
+      isNullable
+    );
+  }
 }
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
@@ -570,7 +617,7 @@ export class CommonEntityApi<
       TO_SINGLE_LINK: new OneToOneLink(
         'to_SingleLink',
         CommonEntity,
-        CommonEntitySingleLink
+        new CommonEntitySingleLinkApi(this.deSerializers)
       ) as OneToOneLink<
         CommonEntity,
         DeSerializers<
@@ -621,4 +668,51 @@ export class CommonEntityApi<
   }
 
   entityConstructor = CommonEntity;
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<
+    CommonEntity<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT
+      >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT
+    >,
+    NullableT
+  > {
+    return new CustomField(
+      fieldName,
+      this.entityConstructor,
+      this.deSerializers,
+      isNullable
+    );
+  }
 }

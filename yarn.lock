@@ -1736,9 +1736,9 @@
     fs-extra "9.0.1"
 
 "@sap/cds@^5.0.0", "@sap/cds@^5.4.0", "@sap/cds@^5.5.4":
-  version "5.6.4"
-  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.6.4.tgz#c7e451a6213964a8fa1775b6174f5669cd9d0471"
-  integrity sha512-TG7i7RIJlmNoyMskM8jEOEZ+Iq0d2Z1VVkBrhvZhJjdV2EygL17rglYybpsJwcbDaTCF7A75GjepojpuesRatg==
+  version "5.7.1"
+  resolved "https://registry.npmjs.org/@sap/cds/-/cds-5.7.1.tgz#a75ad988cbb36ac222e0e8999e1416a2f737bb2e"
+  integrity sha512-ZDzIFsXiPNTcnvRrbO5Y6UDK9vEjQjiM09+ZgLLSNyETqaTIkKdhnCsEtoR1zVPHUi5hqj/unsIh/IWmG1m72w==
   dependencies:
     "@sap-cloud-sdk/core" "^1.41"
     "@sap-cloud-sdk/util" "^1.41"
@@ -3101,9 +3101,9 @@ color-name@^1.0.0, color-name@^1.1.4, color-name@~1.1.4:
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
 color-string@>=1.5.5, color-string@^1.6.0:
-  version "1.8.2"
-  resolved "https://registry.npmjs.org/color-string/-/color-string-1.8.2.tgz#08bd49fa5f3889c27b0c670052ed746dd7a671de"
-  integrity sha512-w5ZkKRdLsc5NOYsmnpS2DpyRW71npwZGwbRpLrJTuqjfTs2Bhrba7UiV59IX9siBlCPl2pne5NtiwnVWUzvYFA==
+  version "1.9.0"
+  resolved "https://registry.npmjs.org/color-string/-/color-string-1.9.0.tgz#63b6ebd1bec11999d1df3a79a7569451ac2be8aa"
+  integrity sha512-9Mrz2AQLefkH1UvASKj6v6hj/7eWgjnT/cVsR8CumieLoT+g900exWeNogqtweI8dxloXN9BDQTYro1oWu/5CQ==
   dependencies:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"

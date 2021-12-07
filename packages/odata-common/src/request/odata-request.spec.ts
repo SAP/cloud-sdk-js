@@ -131,10 +131,8 @@ describe('OData Request', () => {
     const request = createRequest(ODataGetAllRequestConfig, destination);
 
     expect(request.headers()).toEqual(
-      expect.objectContaining({
-        headers: expect.not.objectContaining({
-          'if-match': expect.anything()
-        })
+      expect.not.objectContaining({
+        'if-match': expect.anything()
       })
     );
   });

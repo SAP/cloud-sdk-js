@@ -5,7 +5,7 @@ import {
   Filterable,
   toFilterableList
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '..';
+import { DeSerializers } from '../de-serializers';
 
 /**
  * Will return the entity if at least one element of the one-to-many link relation fulfills the condition.

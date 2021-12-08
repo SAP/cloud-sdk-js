@@ -26,5 +26,5 @@ export function isNavigationProperty(
   key: string,
   schema: Record<string, any>
 ): boolean {
-  return '_linkedEntityApi' in schema[upperCaseSnakeCase(key)];
+  return !!schema[upperCaseSnakeCase(key)]?._linkedEntityApi;
 }

@@ -202,8 +202,10 @@ export class CommonEntitySingleLink<DeSerializersT extends DeSerializers>
   keyProperty!: DeserializedType<DeSerializersT, 'Edm.String'>;
   stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
 
-  toJSON(): { [key: string]: any } {
-    return { ...this, ...this._customFields };
+  toJSON(): Record<string, any> {
+    // @ts-ignore
+    const { schema, ...entity } = this;
+    return { ...entity, ...this._customFields };
   }
 }
 
@@ -480,8 +482,10 @@ export class CommonEntity<
   complexTypeProperty?: CommonComplexType<DeSerializersT>;
   toSingleLink?: CommonEntitySingleLink<DeSerializersT> | null;
 
-  toJSON(): { [key: string]: any } {
-    return { ...this, ...this._customFields };
+  toJSON(): Record<string, any> {
+    // @ts-ignore
+    const { schema, ...entity } = this;
+    return { ...entity, ...this._customFields };
   }
 }
 

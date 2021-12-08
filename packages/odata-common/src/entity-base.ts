@@ -314,7 +314,7 @@ export abstract class EntityBase {
    * @returns Boolean value that describes whether a field name can be defined as custom field
    */
   protected isConflictingCustomField(customFieldName: string): boolean {
-    return Object.keys(this.schema)
+    return Object.values(this.schema)
       .map((f: any) => f._fieldName)
       .includes(customFieldName);
   }
@@ -326,11 +326,13 @@ export abstract class EntityBase {
    */
   protected asObject(visitedEntities: EntityBase[] = []): Record<string, any> {
     visitedEntities.push(this);
-    return Object.keys(this)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [schema, ...keys] = Object.keys(this);
+    return keys
       .filter(
         key =>
           this.propertyIsEnumerable(key) &&
-          (!isNavigationProperty(key, this.constructor) ||
+          (!isNavigationProperty(key, this.schema) ||
             !this.isVisitedEntity(this[key], visitedEntities))
       )
       .reduce(

@@ -14,6 +14,7 @@ import {
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { testPostRequestOutcome } from '../../../../test-resources/test/test-util/testPostRequestOutcome';
 import { defaultDeSerializers } from '../de-serializers';
+import { testEntityApi } from '../../test/test-util';
 import { CreateRequestBuilder } from './create-request-builder';
 
 describe('CreateRequestBuilder', () => {
@@ -31,14 +32,16 @@ describe('CreateRequestBuilder', () => {
       path: 'A_TestEntity'
     });
 
-    const entity = TestEntity.builder()
+    const entity = testEntityApi
+      .entityBuilder()
       .keyPropertyGuid(keyProp)
       .stringProperty(stringProp)
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new CreateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
@@ -60,10 +63,14 @@ describe('CreateRequestBuilder', () => {
       }
     });
 
-    const entity = TestEntity.builder().stringProperty(stringProp).build();
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const entity = testEntityApi
+      .entityBuilder()
+      .stringProperty(stringProp)
+      .build();
+    const actual = await new CreateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     expect(actual['_versionIdentifier']).toBe(eTag);
     expect(actual['remoteState']).toEqual(entity);
@@ -78,15 +85,17 @@ describe('CreateRequestBuilder', () => {
       path: 'A_TestEntity'
     });
 
-    const entity = TestEntity.builder()
+    const entity = testEntityApi
+      .entityBuilder()
       .toSingleLink(
         TestEntitySingleLink.builder().stringProperty(stringProp).build()
       )
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new CreateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
@@ -105,7 +114,8 @@ describe('CreateRequestBuilder', () => {
       responseBody: { to_MultiLink: { results: linkedEntityBody } }
     });
 
-    const entity = TestEntity.builder()
+    const entity = testEntityApi
+      .entityBuilder()
       .toMultiLink([
         TestEntityMultiLink.builder()
           .keyProperty(keyProp)
@@ -114,9 +124,10 @@ describe('CreateRequestBuilder', () => {
       ])
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new CreateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
@@ -142,15 +153,17 @@ describe('CreateRequestBuilder', () => {
       path: 'A_TestEntity'
     });
 
-    const entity = TestEntity.builder()
+    const entity = testEntityApi
+      .entityBuilder()
       .keyPropertyGuid(keyProp)
       .stringProperty(stringProp)
       .withCustomFields(customFields)
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new CreateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     testPostRequestOutcome(actual, entity.setOrInitializeRemoteState());
   });
@@ -166,7 +179,8 @@ describe('CreateRequestBuilder', () => {
       .int16Property(int16Prop)
       .build();
 
-    const parentEntity = TestEntity.builder()
+    const parentEntity = testEntityApi
+      .entityBuilder()
       .keyPropertyGuid(parentKeyGuid)
       .keyPropertyString(parentKeyString)
       .build();
@@ -200,10 +214,10 @@ describe('CreateRequestBuilder', () => {
       statusCode: 500
     });
 
-    const someEntity = TestEntity.builder().stringProperty('').build();
+    const someEntity = testEntityApi.entityBuilder().stringProperty('').build();
 
     const createRequest = new CreateRequestBuilder(
-      TestEntity,
+      testEntityApi,
       someEntity
     ).execute(defaultDestination);
 
@@ -222,12 +236,13 @@ describe('CreateRequestBuilder', () => {
       )
       .reply(200, { d: postBody }, {});
 
-    const entity = TestEntity.builder()
+    const entity = testEntityApi
+      .entityBuilder()
       .keyPropertyGuid(keyProp)
       .stringProperty(stringProp)
       .build();
 
-    const actual = await new CreateRequestBuilder(TestEntity, entity)
+    const actual = await new CreateRequestBuilder(testEntityApi, entity)
       .skipCsrfTokenFetching()
       .execute(defaultDestination);
 
@@ -245,13 +260,14 @@ describe('CreateRequestBuilder', () => {
         path: 'A_TestEntity'
       });
 
-      const entity = TestEntity.builder()
+      const entity = testEntityApi
+        .entityBuilder()
         .keyPropertyGuid(keyProp)
         .stringProperty(stringProp)
         .build();
 
       const actual = await new CreateRequestBuilder(
-        TestEntity,
+        testEntityApi,
         entity
       ).executeRaw(defaultDestination);
 

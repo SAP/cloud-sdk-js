@@ -317,7 +317,7 @@ export class TestEntityApi<
         'to_MultiLink',
         this,
         new TestEntityMultiLinkApi(this.deSerializers) as any
-      )
+      ),
       // as Link<
       //   TestEntity,
       //   DeSerializers<
@@ -341,7 +341,6 @@ export class TestEntityApi<
       //   >,
       //   TestEntityMultiLink
       // >,
-      ,
       // /**
       //  * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
       //  * Use to reference this property in query operations such as 'select' in the fluent request API.

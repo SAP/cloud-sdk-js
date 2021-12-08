@@ -1,7 +1,6 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import {
-  TestEntity,
   testFunctionImportComplexReturnType,
   testFunctionImportEdmReturnType,
   testFunctionImportEdmReturnTypeCollection,
@@ -18,6 +17,7 @@ import {
   defaultDestination,
   defaultHost
 } from '../../../../test-resources/test/test-util/request-mocker';
+import { testEntityApi } from '../../test/test-util';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';
 
@@ -205,7 +205,8 @@ describe('FunctionImportRequestBuilder', () => {
 });
 
 function createTestEntity() {
-  return TestEntity.builder()
+  return testEntityApi
+    .entityBuilder()
     .keyPropertyGuid(uuid())
     .keyPropertyString('id')
     .build();

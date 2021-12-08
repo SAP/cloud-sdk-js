@@ -12,6 +12,7 @@ import {
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { defaultDeSerializers } from '../de-serializers';
+import { testEntityApi } from '../../test/test-util';
 import { UpdateRequestBuilder } from './update-request-builder';
 
 const uriConverter = createUriConverter(defaultDeSerializers);
@@ -22,7 +23,8 @@ function createTestEntity() {
   const stringProp = undefined;
   const booleanProp = null;
 
-  return TestEntity.builder()
+  return testEntityApi
+    .entityBuilder()
     .keyPropertyGuid(keyPropGuid)
     .keyPropertyString(keyPropString)
     .int32Property(int32Prop)
@@ -39,9 +41,10 @@ describe('UpdateRequestBuilder', () => {
   it('no request is executed when there is no difference between current and remote state', async () => {
     const entity = createTestEntity().setOrInitializeRemoteState();
     const scope = nock(/.*/).get(/.*/).reply(500);
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity);
     expect(scope.isDone()).toBe(false);
   });
@@ -51,9 +54,10 @@ describe('UpdateRequestBuilder', () => {
     const entity = createTestEntity().setOrInitializeRemoteState();
     entity.keyPropertyGuid = uuid();
     entity.keyPropertyString = 'UPDATED!';
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity);
     expect(scope.isDone()).toBe(false);
   });
@@ -75,9 +79,10 @@ describe('UpdateRequestBuilder', () => {
       )
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -100,9 +105,10 @@ describe('UpdateRequestBuilder', () => {
       )
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -125,9 +131,10 @@ describe('UpdateRequestBuilder', () => {
       )
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -152,7 +159,7 @@ describe('UpdateRequestBuilder', () => {
       method: 'put'
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
       .replaceWholeEntityWithPut()
       .execute(defaultDestination);
 
@@ -172,7 +179,7 @@ describe('UpdateRequestBuilder', () => {
       )
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
       .setRequiredFields(TestEntity.KEY_PROPERTY_GUID)
       .execute(defaultDestination);
 
@@ -185,7 +192,7 @@ describe('UpdateRequestBuilder', () => {
 
     const scope = nock(/.*/).patch(/.*/).reply(500);
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
       .setIgnoredFields(TestEntity.INT_32_PROPERTY)
       .execute(defaultDestination);
 
@@ -207,9 +214,10 @@ describe('UpdateRequestBuilder', () => {
       additionalHeaders: { 'if-match': 'not-a-star' }
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -228,7 +236,7 @@ describe('UpdateRequestBuilder', () => {
       additionalHeaders: { 'if-match': customVersionIdentifier }
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
       .setVersionIdentifier(customVersionIdentifier)
       .execute(defaultDestination);
 
@@ -250,7 +258,7 @@ describe('UpdateRequestBuilder', () => {
       additionalHeaders: { 'if-match': '*' }
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
       .ignoreVersionIdentifier()
       .execute(defaultDestination);
 
@@ -269,9 +277,10 @@ describe('UpdateRequestBuilder', () => {
       statusCode: 500
     });
 
-    const updateRequest = new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const updateRequest = new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     await expect(updateRequest).rejects.toThrowErrorMatchingSnapshot();
   });
@@ -293,9 +302,10 @@ describe('UpdateRequestBuilder', () => {
       responseHeaders: { Etag: eTag }
     });
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     expect(actual['_versionIdentifier']).toBe(eTag);
     expect(actual['remoteState']).toEqual(entity);
@@ -318,7 +328,7 @@ describe('UpdateRequestBuilder', () => {
       statusCode: 201
     });
 
-    await new UpdateRequestBuilder(TestEntity, entity).execute(
+    await new UpdateRequestBuilder(testEntityApi, entity).execute(
       defaultDestination
     );
 
@@ -361,7 +371,7 @@ describe('UpdateRequestBuilder', () => {
       });
 
       const actual = await new UpdateRequestBuilder(
-        TestEntity,
+        testEntityApi,
         entity
       ).executeRaw(defaultDestination);
       expect(actual!.data).toEqual(response);

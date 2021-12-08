@@ -1,20 +1,21 @@
 import {
-  TestEntity,
   TestEntityLvl2MultiLink,
   TestEntityLvl2SingleLink,
   TestEntityMultiLink,
   TestEntitySingleLink
 } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testEntityApi } from '../test/test-util';
 import { serializeEntity } from './entity-serializer';
 import { tsToEdm } from './de-serializers';
 describe('entity-serializer', () => {
   it('should serialize simple entity', () => {
-    const testEntity = TestEntity.builder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .stringProperty('test')
       .int16Property(100)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
       StringProperty: testEntity.stringProperty,
       Int16Property: testEntity.int16Property
     });
@@ -23,7 +24,8 @@ describe('entity-serializer', () => {
   it('should serialize entity with complex type fields', () => {
     const stringProperty1 = 'test';
     const stringProperty2 = 'nest';
-    const testEntity = TestEntity.builder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .complexTypeProperty({
         stringProperty: stringProperty1,
         complexTypeProperty: {
@@ -33,7 +35,7 @@ describe('entity-serializer', () => {
       .int16Property(100)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
       ComplexTypeProperty: {
         StringProperty: stringProperty1,
         ComplexTypeProperty: {
@@ -45,7 +47,8 @@ describe('entity-serializer', () => {
   });
 
   it('should serialize entity with custom fields', () => {
-    const testEntity = TestEntity.builder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .stringProperty('Peter')
       .singleProperty(14.5)
       .withCustomFields({
@@ -54,7 +57,7 @@ describe('entity-serializer', () => {
       })
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
       StringProperty: testEntity.stringProperty,
       SingleProperty: tsToEdm(testEntity.singleProperty, 'Edm.Single'),
       CustomField1: 'abcd',
@@ -63,8 +66,8 @@ describe('entity-serializer', () => {
   });
 
   it('should serialize empty entities', () => {
-    const emptyEntity = TestEntity.builder().build();
-    expect(serializeEntity(emptyEntity, TestEntity)).toEqual({});
+    const emptyEntity = testEntityApi.entityBuilder().build();
+    expect(serializeEntity(emptyEntity, testEntityApi)).toEqual({});
   });
 
   it('should serialize one to one linked entities', () => {
@@ -72,13 +75,14 @@ describe('entity-serializer', () => {
       .stringProperty('prop')
       .build();
 
-    const testEntity = TestEntity.builder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .stringProperty('testEntity')
       .booleanProperty(false)
       .toSingleLink(singleLinkEntity)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
       StringProperty: testEntity.stringProperty,
       BooleanProperty: testEntity.booleanProperty,
       to_SingleLink: {
@@ -102,14 +106,15 @@ describe('entity-serializer', () => {
       .toSingleLink(lvl2SingleLinkEntity)
       .build();
 
-    const testEntity = TestEntity.builder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .stringProperty('root')
       .int32Property(6474389)
       .timeProperty({ hours: 12, minutes: 35, seconds: 54 })
       .toMultiLink([multiLinkEntity])
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
       StringProperty: testEntity.stringProperty,
       Int32Property: tsToEdm(testEntity.int32Property, 'Edm.Int32'),
       TimeProperty: tsToEdm(testEntity.timeProperty, 'Edm.Time'),
@@ -130,7 +135,8 @@ describe('entity-serializer', () => {
   });
 
   it('should serialize linked entities with custom fields', () => {
-    const testEntity = TestEntity.builder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .toSingleLink(
         TestEntitySingleLink.builder()
           .withCustomFields({ custom: 'custom' })
@@ -143,19 +149,20 @@ describe('entity-serializer', () => {
       ])
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
       to_SingleLink: { custom: 'custom' },
       to_MultiLink: [{ custom: 'custom' }]
     });
   });
 
   it('should serialize null value', () => {
-    const testEntity = TestEntity.builder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .stringProperty(null)
       .toSingleLink(null)
       .build();
 
-    expect(serializeEntity(testEntity, TestEntity)).toEqual({
+    expect(serializeEntity(testEntity, testEntityApi)).toEqual({
       StringProperty: null,
       to_SingleLink: null
     });

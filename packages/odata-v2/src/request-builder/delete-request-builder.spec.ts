@@ -1,6 +1,5 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
@@ -8,6 +7,7 @@ import {
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { defaultDeSerializers } from '../de-serializers';
+import { testEntityApi } from '../../test/test-util';
 import { DeleteRequestBuilder } from './delete-request-builder';
 
 describe('DeleteRequestBuilder', () => {
@@ -24,7 +24,7 @@ describe('DeleteRequestBuilder', () => {
       path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     }).execute(defaultDestination);
@@ -34,7 +34,8 @@ describe('DeleteRequestBuilder', () => {
 
   it('delete request with entity and version identifier should resolve', async () => {
     const versionId = 'not-a-star';
-    const entity = TestEntity.builder()
+    const entity = testEntityApi
+      .entityBuilder()
       .keyPropertyGuid(keyPropGuid)
       .keyPropertyString(keyPropString)
       .build()
@@ -47,9 +48,10 @@ describe('DeleteRequestBuilder', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const deleteRequest = new DeleteRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     await expect(deleteRequest).resolves.toBe(undefined);
   });
@@ -64,7 +66,7 @@ describe('DeleteRequestBuilder', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     })
@@ -79,7 +81,7 @@ describe('DeleteRequestBuilder', () => {
       path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     })
@@ -97,7 +99,7 @@ describe('DeleteRequestBuilder', () => {
       }
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     })
@@ -113,7 +115,7 @@ describe('DeleteRequestBuilder', () => {
       statusCode: 500
     });
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid
     }).execute(defaultDestination);
 
@@ -126,7 +128,7 @@ describe('DeleteRequestBuilder', () => {
         path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
       });
 
-      const actual = await new DeleteRequestBuilder(TestEntity, {
+      const actual = await new DeleteRequestBuilder(testEntityApi, {
         KeyPropertyGuid: keyPropGuid,
         KeyPropertyString: keyPropString
       }).executeRaw(defaultDestination);

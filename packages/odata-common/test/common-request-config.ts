@@ -145,7 +145,7 @@ export function updateRequestBuilder(
   if (options?.payload) {
     return new CommonUpdateRequestBuilder(
       commonEntityApi,
-      options.payload! as CommonEntity,
+      options.payload as CommonEntity,
       commonODataUri,
       commonEntitySerializer,
       commonExtractODataEtag,

@@ -105,9 +105,10 @@ describe('batch request serializer', () => {
     });
 
     it('serializes update request', () => {
-      expect(
-        serializeRequest(updateRequestBuilder({ payload: commonEntity() }))
-      ).toMatchSnapshot();
+      const test = serializeRequest(
+        updateRequestBuilder({ payload: commonEntity() })
+      );
+      expect(test).toMatchSnapshot();
     });
 
     it('serializes update request using put', () => {

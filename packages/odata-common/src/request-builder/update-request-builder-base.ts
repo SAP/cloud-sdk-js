@@ -209,7 +209,7 @@ export abstract class UpdateRequestBuilderBase<
   }
 
   private getKeyFieldNames(): string[] {
-    return Object.keys(this._entityConstructor._keys);
+    return this._entityApi.entityConstructor._keys;
   }
 
   private toSet(fields: Selectable<EntityT, DeSerializersT>[]) {

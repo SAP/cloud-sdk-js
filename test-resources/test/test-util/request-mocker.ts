@@ -70,8 +70,7 @@ export function mockCreateRequest<T extends EntityApi<any, any>>(
   entityApi: T
 ) {
   const requestConfig = new ODataCreateRequestConfig(
-    entityApi.entityConstructor,
-    entityApi.schema,
+    entityApi,
     createODataUriV2(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {
@@ -87,8 +86,7 @@ export function mockCreateRequestV4<T extends EntityApi<any, any>>(
   entityApi: T
 ) {
   const requestConfig = new ODataCreateRequestConfig(
-    entityApi.entityConstructor,
-    entityApi.schema,
+    entityApi,
     createODataUriV4(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {
@@ -104,8 +102,7 @@ export function mockDeleteRequest<T extends EntityApi<any, any>>(
   entityApi: T
 ) {
   const requestConfig = new ODataDeleteRequestConfig(
-    entityApi.entityConstructor,
-    entityApi.schema,
+    entityApi,
     createODataUriV2(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {
@@ -120,8 +117,7 @@ export function mockUpdateRequest<T extends EntityApi<any, any>>(
   entityApi: T
 ) {
   const requestConfig = new ODataUpdateRequestConfig(
-    entityApi.entityConstructor,
-    entityApi.schema,
+    entityApi,
     createODataUriV2(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {
@@ -148,8 +144,7 @@ export function mockGetRequest<T extends EntityApi<any, any>>(
   entityApi: T
 ) {
   const requestConfig = new ODataGetAllRequestConfig(
-    entityApi.entityConstructor,
-    entityApi.schema,
+    entityApi,
     createODataUriV2(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {

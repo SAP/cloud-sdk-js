@@ -25,7 +25,8 @@ import {
   EntityApi,
   RequestBuilder,
   defaultDeSerializers,
-  mergeDefaultDeSerializersWith
+  mergeDefaultDeSerializersWith,
+  entityBuilder
 } from '../src/internal';
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
@@ -201,17 +202,6 @@ export class CommonEntitySingleLink<DeSerializersT extends DeSerializers>
   keyProperty!: DeserializedType<DeSerializersT, 'Edm.String'>;
   stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
 
-  // static builder(): EntityBuilderType<
-  //   CommonEntitySingleLink,
-  //   CommonEntitySingleLinkType
-  // > {
-  //   return Entity.entityBuilder(CommonEntitySingleLink);
-  // }
-
-  // static customField(fieldName: string): CustomField<CommonEntitySingleLink> {
-  //   return new CustomField(fieldName, CommonEntitySingleLink);
-  // }
-
   toJSON(): { [key: string]: any } {
     return { ...this, ...this._customFields };
   }
@@ -377,6 +367,7 @@ export class CommonEntitySingleLinkApi<
   > {
     throw new Error('Method not implemented.');
   }
+
   entityBuilder(): EntityBuilderType<
     CommonEntitySingleLink<
       DeSerializers<
@@ -395,10 +386,27 @@ export class CommonEntitySingleLinkApi<
         StringT,
         AnyT
       >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT
     >
   > {
-    throw new Error('Method not implemented.');
+    return entityBuilder(this);
   }
+
   entityConstructor = CommonEntitySingleLink;
   customField<NullableT extends boolean = false>(
     fieldName: string,
@@ -616,7 +624,7 @@ export class CommonEntityApi<
       ),
       TO_SINGLE_LINK: new OneToOneLink(
         'to_SingleLink',
-        CommonEntity,
+        commonEntityApi,
         new CommonEntitySingleLinkApi(this.deSerializers)
       ) as OneToOneLink<
         CommonEntity,
@@ -663,8 +671,43 @@ export class CommonEntityApi<
     throw new Error('Method not implemented.');
   }
 
-  entityBuilder(): EntityBuilderType<CommonEntity<any>> {
-    throw new Error('Method not implemented.');
+  entityBuilder(): EntityBuilderType<
+    CommonEntity<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT
+      >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT
+    >
+  > {
+    return entityBuilder(this);
   }
 
   entityConstructor = CommonEntity;
@@ -716,3 +759,5 @@ export class CommonEntityApi<
     );
   }
 }
+
+export const commonEntityApi = new CommonEntityApi();

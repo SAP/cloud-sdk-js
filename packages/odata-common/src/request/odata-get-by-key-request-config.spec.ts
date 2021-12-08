@@ -1,22 +1,17 @@
 import { v4 as uuid } from 'uuid';
-import { CommonEntity } from '../../test/common-entity';
+import { CommonEntity, commonEntityApi } from '../../test/common-entity';
 import {
-  commonEntityApi,
   commonODataUri,
   commonUriConverter
 } from '../../test/common-request-config';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util';
-import { defaultDeSerializers, DefaultDeSerializers } from '../de-serializers';
+import { DefaultDeSerializers } from '../de-serializers';
 import { ODataGetByKeyRequestConfig } from './odata-get-by-key-request-config';
 
 describe('ODataGetByKeyRequestConfig', () => {
   let config: ODataGetByKeyRequestConfig<CommonEntity, DefaultDeSerializers>;
   beforeEach(() => {
-    config = new ODataGetByKeyRequestConfig(
-      CommonEntity,
-      defaultDeSerializers,
-      commonODataUri
-    );
+    config = new ODataGetByKeyRequestConfig(commonEntityApi, commonODataUri);
   });
 
   it('method is get', () => {

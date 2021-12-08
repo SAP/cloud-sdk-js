@@ -25,6 +25,7 @@ import { TestComplexTypeField } from './TestComplexType';
 import { TestEntityMultiLink } from './TestEntityMultiLink';
 import { BigNumber } from 'bignumber.js';
 import moment from 'moment';
+import { TestEntityMultiLinkApi } from '.';
 
 export class TestEntityApi<
   BinaryT = string,
@@ -314,31 +315,33 @@ export class TestEntityApi<
        */
       TO_MULTI_LINK: new Link(
         'to_MultiLink',
-        TestEntity,
-        TestEntityMultiLink
-      ) as Link<
-        TestEntity,
-        DeSerializers<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT,
-          DateTimeT,
-          DateTimeOffsetT,
-          TimeT
-        >,
-        TestEntityMultiLink
-      >,
+        this,
+        new TestEntityMultiLinkApi(this.deSerializers) as any
+      )
+      // as Link<
+      //   TestEntity,
+      //   DeSerializers<
+      //     BinaryT,
+      //     BooleanT,
+      //     ByteT,
+      //     DecimalT,
+      //     DoubleT,
+      //     FloatT,
+      //     Int16T,
+      //     Int32T,
+      //     Int64T,
+      //     GuidT,
+      //     SByteT,
+      //     SingleT,
+      //     StringT,
+      //     AnyT,
+      //     DateTimeT,
+      //     DateTimeOffsetT,
+      //     TimeT
+      //   >,
+      //   TestEntityMultiLink
+      // >,
+      ,
       // /**
       //  * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
       //  * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -432,6 +435,25 @@ export class TestEntityApi<
         DateTimeOffsetT,
         TimeT
       >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
     >
   > {
     return entityBuilder(this);

@@ -5,7 +5,6 @@ import {
 } from '@sap-cloud-sdk/util';
 import { isNavigationProperty } from './properties-util';
 import type { EntityApi, EntityBase } from './entity-base';
-import { defaultDeSerializersRaw } from './de-serializers/default-de-serializers';
 import { DeSerializers } from './de-serializers';
 
 const logger = createLogger({
@@ -43,7 +42,7 @@ export class EntityBuilder<
 
   constructor(private _entityApi: EntityApi<EntityT, DeSerializersT>) {
     if (!this.entity) {
-      this.entity = new _entityApi.entityConstructor(_entityApi.deSerializers);
+      this.entity = new _entityApi.entityConstructor(_entityApi.schema);
     }
   }
 
@@ -64,9 +63,7 @@ export class EntityBuilder<
    */
   public build(): EntityT {
     const entity = this.entity;
-    this.entity = new this._entityApi.entityConstructor(
-      defaultDeSerializersRaw
-    );
+    this.entity = new this._entityApi.entityConstructor(this._entityApi.schema);
     return entity;
   }
 

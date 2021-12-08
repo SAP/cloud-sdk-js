@@ -23,7 +23,7 @@ import {
   defaultDeSerializers,
   entityDeserializer
 } from '../src/internal';
-import { CommonEntity, CommonEntityApi } from './common-entity';
+import { CommonEntity, commonEntityApi } from './common-entity';
 
 export const commonUriConverter = createUriConverter(defaultDeSerializersRaw);
 export const commonODataUri = createODataUri(
@@ -32,7 +32,6 @@ export const commonODataUri = createODataUri(
   selects =>
     selects?.length ? { select: selects.map(s => s._fieldName).join(',') } : {}
 );
-export const commonEntityApi = new CommonEntityApi();
 const commonEntitySerializer = entitySerializer(defaultDeSerializers);
 const commonExtractODataEtag = () => undefined;
 const commonEntityDeserializer = entityDeserializer(
@@ -55,7 +54,7 @@ export function getAllRequestConfig(
   const requestConfig = new ODataGetAllRequestConfig<
     CommonEntity,
     DefaultDeSerializers
-  >(CommonEntity, commonEntityApi.schema, commonODataUri);
+  >(commonEntityApi, commonODataUri);
   if (options?.filter) {
     requestConfig.filter = and([options?.filter]);
   }
@@ -93,7 +92,7 @@ export function getAllRequestBuilder(
   options?: Options
 ): GetAllRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   const builder = new CommonGetAllRequestBuilder(
-    CommonEntity,
+    commonEntityApi,
     getAllRequestConfig(options),
     commonEntityDeserializer,
     responseDataAccessor
@@ -109,8 +108,7 @@ export function getByKeyRequestBuilder(
 ): GetByKeyRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   if (options?.keys) {
     return new CommonByKeyRequestBuilder(
-      CommonEntity,
-      commonEntityApi.schema,
+      commonEntityApi,
       options?.keys,
       commonODataUri,
       commonEntityDeserializer,
@@ -127,8 +125,7 @@ export function createRequestBuilder(
 ): CreateRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   if (options?.payload) {
     return new CommonCreateRequestBuilder(
-      CommonEntity,
-      commonEntityApi.schema,
+      commonEntityApi,
       options.payload! as CommonEntity,
       commonODataUri,
       commonEntitySerializer,
@@ -147,8 +144,7 @@ export function updateRequestBuilder(
 ): UpdateRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   if (options?.payload) {
     return new CommonUpdateRequestBuilder(
-      CommonEntity,
-      commonEntityApi.schema,
+      commonEntityApi,
       options.payload! as CommonEntity,
       commonODataUri,
       commonEntitySerializer,
@@ -166,16 +162,14 @@ export function deleteRequestBuilder(
 ): DeleteRequestBuilderBase<CommonEntity, DefaultDeSerializers> {
   if (options?.keys) {
     return new CommonDeleteRequestBuilder(
-      CommonEntity,
-      commonEntityApi.schema,
+      commonEntityApi,
       commonODataUri,
       options.keys
     );
   }
   if (options?.payload) {
     return new CommonDeleteRequestBuilder(
-      CommonEntity,
-      commonEntityApi.schema,
+      commonEntityApi,
       commonODataUri,
       options.payload
     );

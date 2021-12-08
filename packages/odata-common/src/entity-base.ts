@@ -401,7 +401,7 @@ export function entityBuilder<
   entityApi: EntityApi<EntityT, DeSerializersT>
 ): EntityBuilderType<EntityT, DeSerializersT> {
   const builder = new EntityBuilder<EntityT, DeSerializersT>(entityApi);
-  entityApi.schema.forEach(field => {
+  Object.values(entityApi.schema).forEach(field => {
     const fieldName = `${camelCase(field._fieldName)}`;
     builder[fieldName] = function (value) {
       this.entity[fieldName] = value;

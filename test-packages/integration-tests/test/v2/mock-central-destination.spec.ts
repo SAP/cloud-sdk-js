@@ -1,10 +1,10 @@
 import { unlinkSync, writeFileSync } from 'fs';
 import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import nock from 'nock';
 import {
   mockAllTestDestinations,
   unmockAllTestDestinations
 } from '@sap-cloud-sdk/test-util';
-import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 

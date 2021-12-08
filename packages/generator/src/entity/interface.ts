@@ -20,7 +20,7 @@ export function entityTypeInterface(
 ): InterfaceDeclarationStructure {
   return {
     kind: StructureKind.Interface,
-    name: `${entity.className}Type`,
+    name: `${entity.className}Type<DeSerializersT extends DeSerializers = DefaultDeSerializers>`,
     isExported: true,
     properties: [...properties(entity), ...navProperties(entity, service)]
   };
@@ -34,9 +34,10 @@ function property(prop: VdmProperty): PropertySignatureStructure {
   return {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName + (prop.nullable ? '?' : ''),
-    type: prop.isCollection
-      ? `${prop.jsType}[]` + (prop.nullable ? ' | null' : '')
-      : prop.jsType + (prop.nullable ? ' | null' : '')
+    // todo collection
+    type: prop.isComplex
+      ? 'TestComplexType<DeSerializersT>' + (prop.nullable ? ' | null' : '')
+      : `DeserializedType<DeSerializersT, '${prop.edmType}'>` + (prop.nullable ? ' | null' : '')
   };
 }
 
@@ -65,6 +66,6 @@ function navProperty(
   return {
     kind: StructureKind.PropertySignature,
     name: navProp.instancePropertyName + (navProp.isCollection ? '' : '?'),
-    type: entity.className + 'Type' + (navProp.isCollection ? '[]' : ' | null')
+    type: entity.className + 'Type<DeSerializersT>' + (navProp.isCollection ? '[]' : ' | null')
   };
 }

@@ -11,8 +11,6 @@ describe('file', () => {
     );
 
     expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
-      './BreakfastRequestBuilder',
-      'bignumber.js',
       '@sap-cloud-sdk/odata-v2',
       '@sap-cloud-sdk/odata-common/internal',
       './Brunch'
@@ -34,6 +32,6 @@ describe('file', () => {
       element => element.kind === StructureKind.Module
     );
 
-    expect(namespaces.length).toBe(1);
+    expect(namespaces.length).toBe(0);
   });
 });

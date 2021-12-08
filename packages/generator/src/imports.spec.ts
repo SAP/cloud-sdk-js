@@ -147,7 +147,7 @@ describe('imports', () => {
         {
           kind: StructureKind.ImportDeclaration,
           moduleSpecifier: './ComplexType',
-          namedImports: ['ComplexType', 'ComplexTypeField']
+          namedImports: ['ComplexType']
         }
       ]);
     });

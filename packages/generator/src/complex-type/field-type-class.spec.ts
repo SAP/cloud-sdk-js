@@ -12,22 +12,22 @@ describe('field-type-class', () => {
 
     expect(actual).toEqual({
       kind: StructureKind.Class,
-      name: 'ComplexMealField<EntityT extends Entity, NullableT extends boolean = false, SelectableT extends boolean = false>',
+      name: 'ComplexMealField<EntityT extends Entity, DeSerializersT extends DeSerializers = DefaultDeSerializers, NullableT extends boolean = false, SelectableT extends boolean = false>',
       extends:
-        'ComplexTypeField<EntityT, ComplexMealType, NullableT, SelectableT>',
+        'ComplexTypeField<EntityT, DeSerializersT, ComplexMealType, NullableT, SelectableT>',
       isExported: true,
       properties: [
         {
           kind: StructureKind.Property,
           scope: Scope.Private,
           name: '_fieldBuilder',
-          type: 'FieldBuilder<this>',
-          initializer: 'new FieldBuilder(this)'
+          type: 'FieldBuilder<this, DeSerializersT>',
+          initializer: 'new FieldBuilder(this, this.deSerializers)'
         },
         {
           kind: StructureKind.Property,
           name: 'complexity',
-          type: "EdmTypeField<EntityT, 'Edm.String', false, false>",
+          type: "EdmTypeField<EntityT, 'Edm.String', DeSerializersT, false, false>",
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Complexity', 'Edm.String', false)",
           docs: [
@@ -37,7 +37,7 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           name: 'amount',
-          type: "OrderableEdmTypeField<EntityT, 'Edm.Int16', false, false>",
+          type: "OrderableEdmTypeField<EntityT, 'Edm.Int16', DeSerializersT, false, false>",
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Amount', 'Edm.Int16', false)",
           docs: [
@@ -80,22 +80,22 @@ describe('field-type-class', () => {
     const actual = fieldTypeClass(complexMealWithDesert);
     expect(actual).toEqual({
       kind: StructureKind.Class,
-      name: 'ComplexMealWithDesertField<EntityT extends Entity, NullableT extends boolean = false, SelectableT extends boolean = false>',
+      name: 'ComplexMealWithDesertField<EntityT extends Entity, DeSerializersT extends DeSerializers = DefaultDeSerializers, NullableT extends boolean = false, SelectableT extends boolean = false>',
       extends:
-        'ComplexTypeField<EntityT, ComplexMealWithDesertType, NullableT, SelectableT>',
+        'ComplexTypeField<EntityT, DeSerializersT, ComplexMealWithDesertType, NullableT, SelectableT>',
       isExported: true,
       properties: [
         {
           kind: StructureKind.Property,
           scope: Scope.Private,
-          type: 'FieldBuilder<this>',
+          type: 'FieldBuilder<this, DeSerializersT>',
           name: '_fieldBuilder',
-          initializer: 'new FieldBuilder(this)'
+          initializer: 'new FieldBuilder(this, this.deSerializers)'
         },
         {
           kind: StructureKind.Property,
           name: 'complexDesert',
-          type: 'ComplexDesertField<EntityT, false, false>',
+          type: 'ComplexDesertField<EntityT, DeSerializersT, false, false>',
           initializer:
             "this._fieldBuilder.buildComplexTypeField('ComplexDesert', ComplexDesertField, false)",
           docs: [
@@ -105,7 +105,7 @@ describe('field-type-class', () => {
         {
           kind: StructureKind.Property,
           name: 'amount',
-          type: "OrderableEdmTypeField<EntityT, 'Edm.Int16', false, false>",
+          type: "OrderableEdmTypeField<EntityT, 'Edm.Int16', DeSerializersT, false, false>",
           initializer:
             "this._fieldBuilder.buildEdmTypeField('Amount', 'Edm.Int16', false)",
           docs: [

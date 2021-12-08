@@ -13,7 +13,7 @@ describe('complex type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v2',
-        namedImports: ['deserializeComplexType', 'Entity']
+        namedImports: ['DefaultDeSerializers', 'DeSerializers', 'Entity']
       },
       {
         kind: StructureKind.ImportDeclaration,
@@ -21,11 +21,9 @@ describe('complex type imports', () => {
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
-          'EdmTypeField',
+          'DeserializedType',
           'FieldBuilder',
           'FieldOptions',
-          'FieldType',
-          'OrderableEdmTypeField',
           'PropertyMetadata'
         ]
       }
@@ -38,12 +36,12 @@ describe('complex type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: './ComplexDesert',
-        namedImports: ['ComplexDesert', 'ComplexDesertField']
+        namedImports: ['ComplexDesert']
       },
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v2',
-        namedImports: ['deserializeComplexType', 'Entity']
+        namedImports: ['DefaultDeSerializers', 'DeSerializers', 'Entity']
       },
       {
         kind: StructureKind.ImportDeclaration,
@@ -51,10 +49,9 @@ describe('complex type imports', () => {
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
+          'DeserializedType',
           'FieldBuilder',
           'FieldOptions',
-          'FieldType',
-          'OrderableEdmTypeField',
           'PropertyMetadata'
         ]
       }
@@ -76,12 +73,12 @@ describe('complex type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: './ComplexDesert',
-        namedImports: ['ComplexDesert', 'ComplexDesertField']
+        namedImports: ['ComplexDesert']
       },
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v2',
-        namedImports: ['deserializeComplexType', 'Entity']
+        namedImports: ['DefaultDeSerializers', 'DeSerializers', 'Entity']
       },
       {
         kind: StructureKind.ImportDeclaration,
@@ -89,9 +86,9 @@ describe('complex type imports', () => {
         namedImports: [
           'ComplexTypeField',
           'ConstructorOrField',
+          'DeserializedType',
           'FieldBuilder',
           'FieldOptions',
-          'FieldType',
           'PropertyMetadata'
         ]
       }

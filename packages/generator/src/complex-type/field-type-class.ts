@@ -21,16 +21,16 @@ export function fieldTypeClass(
 ): ClassDeclarationStructure {
   return {
     kind: StructureKind.Class,
-    name: `${complexType.fieldType}<EntityT extends Entity, NullableT extends boolean = false, SelectableT extends boolean = false>`,
-    extends: `ComplexTypeField<EntityT, ${complexType.typeName}, NullableT, SelectableT>`,
+    name: `${complexType.fieldType}<EntityT extends Entity, DeSerializersT extends DeSerializers = DefaultDeSerializers, NullableT extends boolean = false, SelectableT extends boolean = false>`,
+    extends: `ComplexTypeField<EntityT, DeSerializersT, ${complexType.typeName}, NullableT, SelectableT>`,
     isExported: true,
     properties: [
       {
         kind: StructureKind.Property,
         scope: Scope.Private,
         name: '_fieldBuilder',
-        type: 'FieldBuilder<this>',
-        initializer: 'new FieldBuilder(this)'
+        type: 'FieldBuilder<this, DeSerializersT>',
+        initializer: 'new FieldBuilder(this, this.deSerializers)'
       },
       ...properties(complexType)
     ],

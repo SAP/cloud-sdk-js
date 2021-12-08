@@ -270,7 +270,7 @@ export function getGenericParameters(
       params.push(`'${prop.edmType}'`);
     }
   }
-
+  params.push('DeSerializersT');
   params.push(prop.nullable.toString());
   params.push(isSelectable.toString());
 

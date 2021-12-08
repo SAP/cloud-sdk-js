@@ -15,7 +15,7 @@ export function complexTypeInterface(
 ): InterfaceDeclarationStructure {
   return {
     kind: StructureKind.Interface,
-    name: complexType.typeName,
+    name: `${complexType.typeName}<DeSerializersT extends DeSerializers = DefaultDeSerializers>`,
     isExported: true,
     properties: properties(complexType),
     docs: [addLeadingNewline(complexType.typeName)]
@@ -27,11 +27,10 @@ function properties(complexType: VdmComplexType): PropertySignatureStructure[] {
 }
 
 function property(prop: VdmProperty): PropertySignatureStructure {
-  const type = prop.isCollection ? `${prop.jsType}[]` : prop.jsType;
   return {
     kind: StructureKind.PropertySignature,
     name: prop.instancePropertyName,
-    type,
+    type: `DeserializedType<DeSerializersT, '${prop.edmType}'>`,
     hasQuestionToken: prop.nullable,
     docs: [
       addLeadingNewline(

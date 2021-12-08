@@ -10,7 +10,7 @@ import {
   ODataUpdateRequestConfig
 } from '../internal';
 import { commonODataUri } from '../../test/common-request-config';
-import { CommonEntity, CommonEntityApi } from '../../test/common-entity';
+import { CommonEntity, commonEntityApi } from '../../test/common-entity';
 
 describe('OData Request', () => {
   let requestSpy: jest.SpyInstance;
@@ -257,11 +257,7 @@ function createRequest(
   requestConfigConstructor,
   destination: Destination = { url: '' }
 ) {
-  const config = new requestConfigConstructor(
-    CommonEntity,
-    new CommonEntityApi().schema,
-    commonODataUri
-  );
+  const config = new requestConfigConstructor(commonEntityApi, commonODataUri);
   config.keys = {
     KeyPropertyGuid: uuid(),
     KeyPropertyString: 'id'

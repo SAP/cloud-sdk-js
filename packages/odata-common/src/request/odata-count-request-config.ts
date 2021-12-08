@@ -25,12 +25,15 @@ export class ODataCountRequestConfig<
   constructor(
     readonly getAllRequest: GetAllRequestBuilderBase<EntityT, DeSerializersT>
   ) {
-    super('get', getAllRequest._entityConstructor._defaultServicePath);
+    super(
+      'get',
+      getAllRequest._entityApi.entityConstructor._defaultServicePath
+    );
   }
 
   resourcePath(): string {
     return `${removeTrailingSlashes(
-      this.getAllRequest._entityConstructor._entityName
+      this.getAllRequest._entityApi.entityConstructor._entityName
     )}/$count`;
   }
 

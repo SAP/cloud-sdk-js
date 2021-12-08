@@ -3,11 +3,7 @@ import { ODataVersion } from '@sap-cloud-sdk/util';
 import {
   complexTypeImportDeclarations,
   odataImportDeclaration,
-  navPropertyFieldTypeImportNames,
-  propertyFieldTypeImportNames,
-  propertyTypeImportNames,
   enumTypeImportDeclarations,
-  externalImportDeclarations,
   odataCommonImportDeclaration
 } from '../imports';
 import { VdmEntity, VdmServiceMetadata } from '../vdm-types';
@@ -21,30 +17,14 @@ export function entityImportDeclarations(
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   return [
-    {
-      kind: StructureKind.ImportDeclaration,
-      moduleSpecifier: `./${entity.className}RequestBuilder`,
-      namedImports: [`${entity.className}RequestBuilder`]
-    },
-    ...externalImportDeclarations(entity.properties),
-    ...complexTypeImportDeclarations(entity.properties),
-    ...enumTypeImportDeclarations(entity.properties),
-    odataImportDeclaration(['CustomField', 'Entity'], oDataVersion),
+    odataImportDeclaration(['Entity', 'DefaultDeSerializers', 'DeSerializers'], oDataVersion),
     odataCommonImportDeclaration(
       [
-        ...propertyTypeImportNames(entity.properties),
-        ...propertyFieldTypeImportNames(entity.properties),
-        ...navPropertyFieldTypeImportNames(
-          entity.navigationProperties,
-          oDataVersion
-        ),
-        'AllFields',
-        'Constructable',
-        'EntityBuilderType',
-        'FieldBuilder',
-        'Field'
-      ].sort()
-    )
+        'DeserializedType'
+      ]
+    ),
+    ...complexTypeImportDeclarations(entity.properties),
+    ...enumTypeImportDeclarations(entity.properties)
   ];
 }
 /**

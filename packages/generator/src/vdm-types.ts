@@ -35,6 +35,8 @@ export type VdmServiceMetadata = VdmServicePackageMetaData & VdmServiceEntities;
  * @internal
  */
 export interface VdmEntity {
+  // todo uniqueness check like request builder
+  // apiName: string;
   entitySetName: string;
   entityTypeName: string;
   className: string;

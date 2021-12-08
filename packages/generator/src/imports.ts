@@ -7,7 +7,7 @@ import {
   VdmProperty
 } from './vdm-types';
 
-const potentialExternalImportDeclarations = [
+export const potentialExternalImportDeclarations = [
   ['moment', 'Moment', 'Duration'],
   ['bignumber.js', 'BigNumber']
 ];
@@ -60,14 +60,15 @@ export function odataCommonImportDeclaration(
  */
 export function odataImportDeclaration(
   namedImports: string[],
-  odataVersion: ODataVersion
+  odataVersion: ODataVersion,
+  internal = false
 ): ImportDeclarationStructure {
   return {
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier:
       odataVersion === 'v2'
-        ? '@sap-cloud-sdk/odata-v2'
-        : '@sap-cloud-sdk/odata-v4',
+        ? '@sap-cloud-sdk/odata-v2' + (internal ? '/internal' : '')
+        : '@sap-cloud-sdk/odata-v4' + (internal ? '/internal' : ''),
     namedImports: unique(namedImports)
   };
 }
@@ -184,7 +185,8 @@ function complexTypeImportDeclaration(
   return {
     kind: StructureKind.ImportDeclaration,
     moduleSpecifier: `./${prop.jsType}`,
-    namedImports: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])]
+    // namedImports: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])]
+    namedImports: [prop.jsType]
   };
 }
 

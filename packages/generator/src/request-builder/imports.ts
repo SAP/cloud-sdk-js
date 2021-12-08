@@ -19,17 +19,18 @@ export function requestBuilderImportDeclarations(
   return [
     ...externalImportDeclarations(entity.keys),
     odataCommonImportDeclaration([
-      'RequestBuilder',
+      'DeserializedType',
       ...propertyTypeImportNames(entity.keys)
     ]),
     odataImportDeclaration(requestBuilderImports(entity), oDataVersion),
+    odataImportDeclaration(['RequestBuilder'], oDataVersion, true),
     entityImportDeclaration(entity),
     ...entityKeyImportDeclaration(entity.keys)
   ];
 }
 
 function requestBuilderImports(entity: VdmEntity) {
-  const imports = ['GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
+  const imports = ['DefaultDeSerializers', 'DeSerializers', 'GetAllRequestBuilder', 'GetByKeyRequestBuilder'];
 
   if (entity.creatable) {
     imports.push('CreateRequestBuilder');

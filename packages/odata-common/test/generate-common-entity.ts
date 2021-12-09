@@ -12,7 +12,7 @@ export async function generateCommonEntity() {
       forceOverwrite: true
     })
   );
-  await generateCommonTestEntity(project!);
+  // await generateCommonTestEntity(project!);
 }
 
 function removeImports(str: string): string {

@@ -13,7 +13,6 @@ import { defaultDeSerializers } from './de-serializers/default-de-serializers';
  */
 export const entityDeserializer: EntityDeserializer = entityDeserializerBase(
   defaultDeSerializers,
-  {},
   extractODataEtag,
   getLinkedCollectionResult
 );

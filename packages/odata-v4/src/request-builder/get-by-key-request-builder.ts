@@ -47,7 +47,6 @@ export class GetByKeyRequestBuilder<
       createODataUri(entityApi.deSerializers),
       entityDeserializer(
         entityApi.deSerializers,
-        entityApi.schema,
         extractODataEtag,
         getLinkedCollectionResult
       ),

@@ -40,26 +40,29 @@ export function batchFunction(
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: '...requests', type: asArray(type) }],
-      returnType: 'ODataBatchRequestBuilder',
+      returnType: 'ODataBatchRequestBuilder<DeSerializersT>',
       docs
     },
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: 'requests', type: asArray(type) }],
-      returnType: 'ODataBatchRequestBuilder'
+      returnType: 'ODataBatchRequestBuilder<DeSerializersT>'
     }
   ];
 
   return {
     kind: StructureKind.Function,
-    name: 'batch',
+    name: 'batch<DeSerializersT extends DeSerializers>',
     isExported: true,
     parameters: [
       { name: 'first', type: `undefined|${type}|${asArray(type)}` },
       { name: '...rest', type: asArray(type) }
     ],
-    returnType: 'ODataBatchRequestBuilder',
-    statements: `return new ODataBatchRequestBuilder(default${service.className}Path, variadicArgumentToArray(first,rest), map);`,
+    returnType: 'ODataBatchRequestBuilder<DeSerializersT>',
+    statements: `return new ODataBatchRequestBuilder(
+      default${service.className}Path,
+      variadicArgumentToArray(first,rest)
+    );`,
     overloads
   };
 }
@@ -69,7 +72,7 @@ export function batchFunction(
 export function changesetFunction(
   service: VdmServiceMetadata
 ): FunctionDeclarationStructure {
-  const type = `Write${service.className}RequestBuilder`;
+  const type = `Write${service.className}RequestBuilder<DeSerializersT>`;
 
   const docs = [
     addLeadingNewline(
@@ -96,25 +99,25 @@ export function changesetFunction(
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: '...requests', type: asArray(type) }],
-      returnType: `BatchChangeSet<Write${service.className}RequestBuilder>`,
+      returnType: 'BatchChangeSet<DeSerializersT>',
       docs
     },
     {
       kind: StructureKind.FunctionOverload,
       parameters: [{ name: 'requests', type: asArray(type) }],
-      returnType: `BatchChangeSet<Write${service.className}RequestBuilder>`
+      returnType: 'BatchChangeSet<DeSerializersT>'
     }
   ];
 
   return {
     kind: StructureKind.Function,
-    name: 'changeset',
+    name: 'changeset<DeSerializersT extends DeSerializers>',
     isExported: true,
     parameters: [
       { name: 'first', type: `undefined|${type}|${asArray(type)}` },
       { name: '...rest', type: asArray(type) }
     ],
-    returnType: `BatchChangeSet<Write${service.className}RequestBuilder>`,
+    returnType: 'BatchChangeSet<DeSerializersT>',
     statements:
       'return new BatchChangeSet(variadicArgumentToArray(first,rest));',
     overloads
@@ -126,5 +129,12 @@ function asArray(type: string): string {
 }
 
 function getBatchParameterType(service: VdmServiceMetadata): string {
-  return `Read${service.className}RequestBuilder | BatchChangeSet<Write${service.className}RequestBuilder>`;
+  return `Read${service.className}RequestBuilder<DeSerializersT> | BatchChangeSet<DeSerializersT>`;
+}
+
+function mappingInitializer(service: VdmServiceMetadata): string {
+  const mapBody = service.entities
+    .map(e => `'${e.entitySetName}' : new ${e.className}Api(deSerializers)`)
+    .join(', ');
+  return `{${mapBody}}`;
 }

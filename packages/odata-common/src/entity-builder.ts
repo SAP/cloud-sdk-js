@@ -156,5 +156,5 @@ function buildSingleEntityFromJson<
 ): LinkedEntityT {
   return json instanceof linkedEntityApi.entityConstructor
     ? json
-    : linkedEntityApi.entityBuilder().fromJson(json);
+    : (linkedEntityApi.entityBuilder().fromJson(json) as LinkedEntityT);
 }

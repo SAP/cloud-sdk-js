@@ -38,7 +38,7 @@ function wrapRequestBuilderAroundType(
   parameterName: string,
   type: string
 ) {
-  return `${requestBuilderName}<${parameterName}, ${type}>`;
+  return `${requestBuilderName}<DeSerializersT, ${parameterName}, ${type}>`;
 }
 /* eslint-disable valid-jsdoc */
 

@@ -19,14 +19,19 @@ export function importDeclarations(
   return [
     ...complexTypeImportDeclarations(complexType.properties),
     ...enumTypeImportDeclarations(complexType.properties),
-    odataImportDeclaration(['DefaultDeSerializers', 'DeSerializers', 'Entity'], oDataVersion),
+    odataImportDeclaration(
+      ['DefaultDeSerializers', 'DeSerializers', 'Entity'],
+      oDataVersion
+    ),
     odataCommonImportDeclaration(
       [
         'ComplexTypeField',
         'ConstructorOrField',
         'DeserializedType',
+        'EdmTypeField',
         'FieldBuilder',
         'FieldOptions',
+        'OrderableEdmTypeField',
         'PropertyMetadata'
       ].sort()
     )

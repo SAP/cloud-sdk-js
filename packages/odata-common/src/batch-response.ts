@@ -1,15 +1,18 @@
 import { DeSerializers } from './de-serializers';
-import { Constructable, EntityApi, EntityBase } from './entity-base';
+import { EntityApi, EntityBase } from './entity-base';
 /**
  * @internal
  */
-export type BatchResponse = ReadResponse | WriteResponses | ErrorResponse;
+export type BatchResponse<DeSerializersT extends DeSerializers> =
+  | ReadResponse<DeSerializersT>
+  | WriteResponses<DeSerializersT>
+  | ErrorResponse;
 
 /**
  * @internal
  */
-export interface WriteResponses {
-  responses: WriteResponse[];
+export interface WriteResponses<DeSerializersT extends DeSerializers> {
+  responses: WriteResponse<DeSerializersT>[];
   isSuccess: () => boolean;
 }
 /**
@@ -23,22 +26,24 @@ export interface ErrorResponse {
 /**
  * @internal
  */
-export interface ReadResponse {
+export interface ReadResponse<DeSerializersT extends DeSerializers> {
   httpCode: number;
   body: Record<string, any>;
-  type: Constructable<EntityBase>;
-  as: <EntityT extends EntityBase, DeSerializersT extends DeSerializers>(entityApi: EntityApi<EntityT, DeSerializersT>) => EntityT[];
+  type: EntityApi<EntityBase, DeSerializersT>;
+  as: <EntityT extends EntityBase>(
+    entityApi: EntityApi<EntityT, DeSerializersT>
+  ) => EntityT[];
   isSuccess: () => boolean;
 }
 
 /**
  * @internal
  */
-export interface WriteResponse {
+export interface WriteResponse<DeSerializersT extends DeSerializers> {
   httpCode: number;
   body?: Record<string, any>;
-  type?: Constructable<EntityBase>;
-  as?: <EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
+  type?: EntityApi<EntityBase, DeSerializersT>;
+  as?: <EntityT extends EntityBase>(
     entityApi: EntityApi<EntityT, DeSerializersT>
   ) => EntityT;
 }

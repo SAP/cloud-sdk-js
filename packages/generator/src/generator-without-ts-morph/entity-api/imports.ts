@@ -7,14 +7,12 @@ import { potentialExternalImportDeclarations } from '../../imports';
 /**
  * @internal
  */
-export function odataCommonImport(
-  namedImports: string[]
-): Import {
+export function odataCommonImport(namedImports: string[]): Import {
   return {
-      names: unique(namedImports),
-      moduleIdentifier: '@sap-cloud-sdk/odata-common/internal',
-      typeOnly: false
-    };
+    names: unique(namedImports),
+    moduleIdentifier: '@sap-cloud-sdk/odata-common/internal',
+    typeOnly: false
+  };
 }
 
 /**
@@ -26,9 +24,10 @@ export function odataImport(
 ): Import {
   return {
     names: unique(namedImports),
-    moduleIdentifier: odataVersion === 'v2'
-      ? '@sap-cloud-sdk/odata-v2'
-      : '@sap-cloud-sdk/odata-v4',
+    moduleIdentifier:
+      odataVersion === 'v2'
+        ? '@sap-cloud-sdk/odata-v2'
+        : '@sap-cloud-sdk/odata-v4',
     typeOnly: false
   };
 }
@@ -36,9 +35,7 @@ export function odataImport(
 /**
  * @internal
  */
-export function complexTypeImports(
-  properties: VdmProperty[]
-): Import[] {
+export function complexTypeImports(properties: VdmProperty[]): Import[] {
   return mergeImports(
     properties
       .filter(prop => prop.isComplex)
@@ -46,9 +43,7 @@ export function complexTypeImports(
   );
 }
 
-function complexTypeImport(
-  prop: VdmProperty
-): Import {
+function complexTypeImport(prop: VdmProperty): Import {
   return {
     names: [prop.jsType, ...(prop.isCollection ? [] : [prop.fieldType])],
     moduleIdentifier: `./${prop.jsType}`,
@@ -59,16 +54,12 @@ function complexTypeImport(
 /**
  * @internal
  */
-export function externalImports(
-  properties: VdmMappedEdmType[]
-): Import[] {
+export function externalImports(properties: VdmMappedEdmType[]): Import[] {
   return potentialExternalImportDeclarations
     .map(([moduleIdentifier, ...names]) =>
       externalImport(properties, moduleIdentifier, names)
     )
-    .filter(
-      anImport => anImport.names && anImport.names.length
-    );
+    .filter(anImport => anImport.names && anImport.names.length);
 }
 
 function externalImport(
@@ -87,19 +78,13 @@ function externalImport(
 /**
  * @internal
  */
-export function enumTypeImports(
-  properties: VdmProperty[]
-): Import[] {
+export function enumTypeImports(properties: VdmProperty[]): Import[] {
   return mergeImports(
-    properties
-      .filter(prop => prop.isEnum)
-      .map(prop => enumTypeImport(prop))
+    properties.filter(prop => prop.isEnum).map(prop => enumTypeImport(prop))
   );
 }
 
-function enumTypeImport(
-  prop: VdmProperty
-): Import {
+function enumTypeImport(prop: VdmProperty): Import {
   return {
     moduleIdentifier: `./${prop.jsType}`,
     names: [prop.jsType],
@@ -111,35 +96,27 @@ function enumTypeImport(
 /**
  * @internal
  */
-export function mergeImports(
-  imports: Import[]
-): Import[] {
+export function mergeImports(imports: Import[]): Import[] {
   return imports
-    .reduce(
-      (prev, next) => {
-        const sameModuleIdentifier = prev.find(
-          declaration =>
-            declaration.moduleIdentifier === next.moduleIdentifier &&
-            !declaration.typeOnly === !next.typeOnly
-        );
-        if (sameModuleIdentifier) {
-            sameModuleIdentifier.names = [
-              ...sameModuleIdentifier.names,
-              ...next.names
-            ];
-        } else {
-          prev.push(next);
-        }
-        return prev;
-      },
-      [] as Import[]
-    )
+    .reduce((prev, next) => {
+      const sameModuleIdentifier = prev.find(
+        declaration =>
+          declaration.moduleIdentifier === next.moduleIdentifier &&
+          !declaration.typeOnly === !next.typeOnly
+      );
+      if (sameModuleIdentifier) {
+        sameModuleIdentifier.names = [
+          ...sameModuleIdentifier.names,
+          ...next.names
+        ];
+      } else {
+        prev.push(next);
+      }
+      return prev;
+    }, [] as Import[])
     .map(anImport => {
       anImport.names = unique(anImport.names);
       return anImport;
     })
-    .filter(
-      anImport =>
-        anImport.names && anImport.names.length
-    );
+    .filter(anImport => anImport.names && anImport.names.length);
 }

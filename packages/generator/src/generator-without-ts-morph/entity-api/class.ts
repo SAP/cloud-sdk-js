@@ -3,20 +3,24 @@ import { VdmEntity } from '../../vdm-types';
 import { getSchema } from './schema';
 
 export function classContent(entity: VdmEntity): string {
-  return codeBlock`export class ${entity.className}Api<${getGenericTypesWithDefault()}> implements 
+  return codeBlock`export class ${
+    entity.className
+  }Api<${getGenericTypesWithDefault()}> implements 
     EntityApi<
       ${entity.className}<
         DeSerializers<${getGenericTypes()}>
-      >
-    >, 
-    DeSerializers<${getGenericTypes()}> {
+      >, 
+      DeSerializers<${getGenericTypes()}>
+    > {
   public deSerializers: DeSerializers<${getGenericTypes()}>;
   public schema;
 
   constructor(
-    deSerializers: Partial<DeSerializers<${getGenericTypes()}>> = defaultDeSerializers as any){
+    deSerializers: Partial<DeSerializers<${getGenericTypes()}>> = defaultDeSerializers as any) {
       this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
-      const fieldBuilder = new FieldBuilder(${entity.className}, this.deSerializers);
+      const fieldBuilder = new FieldBuilder(${
+        entity.className
+      }, this.deSerializers);
       this.schema = 
         ${getSchema(entity)}
       ;
@@ -33,21 +37,49 @@ export function classContent(entity: VdmEntity): string {
   entityBuilder(): EntityBuilderType<
     ${entity.className}<
       DeSerializers<${getGenericTypes()}>
-    >
+    >,
+    DeSerializers<${getGenericTypes()}>
   > {
     return entityBuilder(this);
+  }
+
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<
+  ${entity.className}<
+      DeSerializers<
+      ${getGenericTypes()}
+      >
+    >,
+    DeSerializers<
+    ${getGenericTypes()}
+    >,
+    NullableT
+  > {
+    return new CustomField(
+      fieldName,
+      this.entityConstructor,
+      this.deSerializers,
+      isNullable
+    );
   }
 }`;
 }
 
-function getGenericTypesWithDefault(): string{
-  return genericTypeAndDefault.map(typeAndDefault => `${typeAndDefault[0]} = ${typeAndDefault[1]}`).join(`,${unixEOL}`);
+function getGenericTypesWithDefault(): string {
+  return genericTypeAndDefault
+    .map(typeAndDefault => `${typeAndDefault[0]} = ${typeAndDefault[1]}`)
+    .join(`,${unixEOL}`);
 }
-function getGenericTypes(): string{
-  return genericTypeAndDefault.map(typeAndDefault => typeAndDefault[0]).join(`,${unixEOL}`);
+function getGenericTypes(): string {
+  return genericTypeAndDefault
+    .map(typeAndDefault => typeAndDefault[0])
+    .join(`,${unixEOL}`);
 }
 
-const genericTypeAndDefault: string[][] = [['BinaryT', 'string'],
+const genericTypeAndDefault: string[][] = [
+  ['BinaryT', 'string'],
   ['BooleanT', 'boolean'],
   ['ByteT', 'number'],
   ['DecimalT', 'BigNumber'],
@@ -61,7 +93,7 @@ const genericTypeAndDefault: string[][] = [['BinaryT', 'string'],
   ['SingleT', 'number'],
   ['StringT', 'string'],
   ['AnyT', 'any'],
-  ['DateTimeT', 'moment.Moment'],
-  ['DateTimeOffsetT', 'moment.Moment'],
+  ['DateTimeT', 'Moment'],
+  ['DateTimeOffsetT', 'Moment'],
   ['TimeT', 'Time']
 ];

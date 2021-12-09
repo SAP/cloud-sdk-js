@@ -36,7 +36,6 @@ const commonEntitySerializer = entitySerializer(defaultDeSerializers);
 const commonExtractODataEtag = () => undefined;
 const commonEntityDeserializer = entityDeserializer(
   defaultDeSerializers,
-  commonEntityApi.schema,
   commonExtractODataEtag,
   () => undefined as any
 );

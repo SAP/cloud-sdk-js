@@ -41,7 +41,6 @@ export class CreateRequestBuilder<
       entitySerializer(entityApi.deSerializers),
       entityDeserializer(
         entityApi.deSerializers,
-        entityApi.schema,
         extractODataEtag,
         getLinkedCollectionResult
       ),

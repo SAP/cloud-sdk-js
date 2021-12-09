@@ -23,7 +23,9 @@ import {
  */
 export class ODataBatchRequestBuilder<
   DeSerializersT extends DeSerializers
-> extends BatchRequestBuilder {
+> extends BatchRequestBuilder<DeSerializersT> {
+  private deSerializers: DeSerializersT;
+
   /**
    * Execute the given request and return the according promise. Please notice: The sub-requests may fail even the main request is successful.
    * @param destination - Targeted destination or DestinationFetchOptions on which the request is performed.
@@ -31,20 +33,17 @@ export class ODataBatchRequestBuilder<
    * @returns Promise resolving to the requested data.
    */
   async execute(
-    destination: Destination | DestinationFetchOptions,
-    deSerializers: DeSerializersT,
-    schema: Record<string, any>
-  ): Promise<BatchResponse[]> {
+    destination: Destination | DestinationFetchOptions
+  ): Promise<BatchResponse<DeSerializersT>[]> {
     return this.executeRaw(destination)
       .then(response => parseBatchResponse(response))
       .then(parsedResponse =>
         deserializeBatchResponse(
           parsedResponse,
-          this.entityToConstructorMap,
+          this.getEntityToApiMap(),
           responseDataAccessor,
           entityDeserializer(
-            deSerializers,
-            schema,
+            this.deSerializers,
             extractODataEtag,
             getLinkedCollectionResult
           )

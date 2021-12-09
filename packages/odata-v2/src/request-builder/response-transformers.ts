@@ -26,7 +26,6 @@ export function transformReturnValueForEntity<
 >(data: any, entityApi: EntityApi<ReturnT, DeSerializersT>): ReturnT {
   const deserializeEntity = entityDeserializer(
     entityApi.deSerializers,
-    entityApi.schema,
     extractODataEtag,
     getLinkedCollectionResult
   ).deserializeEntity;
@@ -42,7 +41,6 @@ export function transformReturnValueForEntityList<
 >(data: any, entityApi: EntityApi<ReturnT, DeSerializersT>): ReturnT[] {
   const deserializeEntity = entityDeserializer(
     entityApi.deSerializers,
-    entityApi.schema,
     extractODataEtag,
     getLinkedCollectionResult
   ).deserializeEntity;

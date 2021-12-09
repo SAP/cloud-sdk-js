@@ -2,6 +2,7 @@ import { unixEOL } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { ODataRequest, ODataRequestConfig } from '../../request';
 import { MethodRequestBuilder } from '../request-builder-base';
+import { DeSerializers } from '../../de-serializers';
 import { BatchChangeSet } from './batch-change-set';
 import {
   BatchRequestSerializationOptions,
@@ -15,8 +16,8 @@ import type { BatchRequestBuilder } from './batch-request-builder';
  * @returns The serialized string representation of a change set.
  * @internal
  */
-export function serializeChangeSet(
-  changeSet: BatchChangeSet,
+export function serializeChangeSet<DeSerializersT extends DeSerializers>(
+  changeSet: BatchChangeSet<DeSerializersT>,
   options: BatchRequestSerializationOptions = {}
 ): string | undefined {
   if (changeSet.requests.length) {
@@ -107,8 +108,8 @@ function validateOptions(options: BatchRequestSerializationOptions): void {
  * @returns String representation of the batch request.
  * @internal
  */
-export function serializeBatchRequest(
-  request: BatchRequestBuilder,
+export function serializeBatchRequest<DeSerializersT extends DeSerializers>(
+  request: BatchRequestBuilder<DeSerializersT>,
   options: BatchRequestSerializationOptions = {}
 ): string {
   validateOptions(options);

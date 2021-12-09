@@ -61,7 +61,6 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  */
 export function entityDeserializer<T extends DeSerializers>(
   deSerializers: T,
-  schema: Record<string, any>,
   extractODataETag: ExtractODataETagType,
   extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
 ): EntityDeserializer<any> {
@@ -81,7 +80,7 @@ export function entityDeserializer<T extends DeSerializers>(
     requestHeader?: any
   ): EntityT {
     const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
-    return Object.values(schema) // (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
+    return Object.values(entityApi.schema) // (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
       .filter(field => isSelectedProperty(json, field))
       .reduce((entity, staticField) => {
         entity[camelCase(staticField._fieldName)] = getFieldValue(
@@ -90,7 +89,7 @@ export function entityDeserializer<T extends DeSerializers>(
         );
         return entity;
       }, new entityApi.entityConstructor())
-      .setCustomFields(extractCustomFields(json, schema))
+      .setCustomFields(extractCustomFields(json, entityApi.schema))
       .setVersionIdentifier(etag)
       .setOrInitializeRemoteState();
   }

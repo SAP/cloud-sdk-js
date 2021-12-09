@@ -6,13 +6,23 @@ import {
   propertyFieldTypeImportNames,
   propertyTypeImportNames
 } from '../../imports';
-import { odataCommonImport, odataImport, complexTypeImports, externalImports, enumTypeImports } from './imports';
+import {
+  odataCommonImport,
+  odataImport,
+  complexTypeImports,
+  enumTypeImports
+} from './imports';
 import { classContent } from './class';
 
-export function file(entity: VdmEntity, service: VdmServiceMetadata): string{
+export function file(entity: VdmEntity, service: VdmServiceMetadata): string {
   const imports = serializeImports(getImports(entity, service.oDataVersion));
   const content = classContent(entity);
-  return [imports, content].join(unixEOL);
+  return [
+    imports,
+    "import { BigNumber } from 'bignumber.js';",
+    "import { Moment } from 'moment';",
+    content
+  ].join(unixEOL);
 }
 
 function getImports(entity: VdmEntity, oDataVersion: ODataVersion): Import[] {
@@ -27,15 +37,19 @@ function getImports(entity: VdmEntity, oDataVersion: ODataVersion): Import[] {
       moduleIdentifier: `./${entity.className}RequestBuilder`,
       typeOnly: false
     },
-    ...externalImports(entity.properties),
+    // ...externalImports(entity.properties),
     ...complexTypeImports(entity.properties),
     // todo test odata v4
     ...enumTypeImports(entity.properties),
-    odataImport(['defaultDeSerializers',
-      'DeSerializers',
-      'mergeDefaultDeSerializersWith'], oDataVersion),
-    odataCommonImport(
-    [
+    odataImport(
+      [
+        'defaultDeSerializers',
+        'DeSerializers',
+        'mergeDefaultDeSerializersWith'
+      ],
+      oDataVersion
+    ),
+    odataCommonImport([
       ...propertyTypeImportNames(entity.properties),
       ...propertyFieldTypeImportNames(entity.properties),
       ...navPropertyFieldTypeImportNames(
@@ -43,9 +57,12 @@ function getImports(entity: VdmEntity, oDataVersion: ODataVersion): Import[] {
         oDataVersion
       ),
       'AllFields',
+      'CustomField',
+      'entityBuilder',
       'EntityBuilderType',
       'EntityApi',
-      'FieldBuilder'
+      'FieldBuilder',
+      'Time'
     ])
-    ];
+  ];
 }

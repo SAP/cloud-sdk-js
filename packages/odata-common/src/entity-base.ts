@@ -61,11 +61,13 @@ export interface EntityApi<
 export type EntityBuilderType<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
-> = {
-  [property in keyof Required<Omit<EntityT, keyof EntityBase>>]: (
-    value: EntityT[property]
-  ) => EntityBuilderType<EntityT, DeSerializersT>;
-} & EntityBuilder<EntityT, DeSerializersT>;
+> = EntityT extends EntityBase
+  ? {
+      [property in keyof Required<Omit<EntityT, keyof EntityBase>>]: (
+        value: EntityT[property]
+      ) => EntityBuilderType<EntityT, DeSerializersT>;
+    } & EntityBuilder<EntityT, DeSerializersT>
+  : EntityBuilder<EntityT, DeSerializersT>;
 
 /**
  * Super class for all representations of OData entity types.

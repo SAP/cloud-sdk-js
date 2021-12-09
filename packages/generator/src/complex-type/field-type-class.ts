@@ -47,6 +47,10 @@ export function fieldTypeClass(
             type: 'ConstructorOrField<EntityT>'
           },
           {
+            name: 'deSerializers',
+            type: 'DeSerializersT'
+          },
+          {
             name: 'fieldOptions',
             type: 'FieldOptions<NullableT, SelectableT>',
             hasQuestionToken: true
@@ -56,7 +60,7 @@ export function fieldTypeClass(
           `${unixEOL}Creates an instance of ${complexType.fieldType}.${unixEOL}@param fieldName - Actual name of the field as used in the OData request.${unixEOL}@param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.`
         ],
         statements: [
-          `super(fieldName, fieldOf, ${complexType.typeName}, fieldOptions);`
+          `super(fieldName, fieldOf, deSerializers, ${complexType.typeName}, fieldOptions);`
         ]
       }
     ]

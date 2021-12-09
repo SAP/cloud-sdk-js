@@ -149,6 +149,7 @@ export function importDeclarationsAction(
     functionImportParameters,
     [
       { name: 'FunctionImportRequestBuilder', version: service.oDataVersion },
+      { name: 'DeSerializers', version: service.oDataVersion },
       { name: 'FunctionImportParameter', version: 'common' }
     ],
     service.oDataVersion

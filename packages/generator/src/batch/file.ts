@@ -18,16 +18,8 @@ export function batchSourceFile(
       batchFunction(service),
       changesetFunction(service),
       `export const default${service.className}Path = '${service.servicePath}';`,
-      `const map = ${mappingInitializer(service)};`,
       readRequestType(service),
       writeRequestType(service)
     ]
   };
-}
-
-function mappingInitializer(service: VdmServiceMetadata): string {
-  const mapBody = service.entities
-    .map(e => `'${e.entitySetName}' : ${e.className}`)
-    .join(', ');
-  return `{${mapBody}}`;
 }

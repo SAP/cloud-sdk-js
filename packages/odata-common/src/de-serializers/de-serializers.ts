@@ -32,6 +32,7 @@ export interface DeSerializers<
   'Edm.Single': DeSerializer<SingleT>;
   'Edm.String': DeSerializer<StringT>;
   'Edm.Any': DeSerializer<AnyT>;
+  // [key: string]: DeSerializer<any>;
 }
 
 /**

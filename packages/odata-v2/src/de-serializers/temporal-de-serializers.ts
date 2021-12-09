@@ -1,6 +1,7 @@
 /* eslint-disable valid-jsdoc */
 import { Temporal } from '@js-temporal/polyfill';
 import { DeSerializer } from '@sap-cloud-sdk/odata-common/internal';
+import { durationRegex } from './converters';
 
 /**
  * Temporal (de-)serializers for Odata-v2.
@@ -57,17 +58,30 @@ export function deserializeToZonedDateTime(
   return dateTimeInstant.toZonedDateTimeISO('UTC');
 }
 
-function parseEdmDateTimeOffset(edmDateTime: string): {
-  [key: string]: string;
-} {
+interface DateTimeOffsetComponents {
+  ticks: string;
+  sign?: string;
+  offset?: string;
+}
+
+function parseEdmDateTimeOffset(edmDateTime: string): DateTimeOffsetComponents {
   const dateTimeOffsetComponents =
     /^\/Date\((?<ticks>\d+)((?<sign>[+-])(?<offset>\d{4}))?\)\/$/.exec(
       edmDateTime
     )?.groups;
-  if (!dateTimeOffsetComponents) {
+  if (
+    dateTimeOffsetComponents === undefined ||
+    !isDateTimeOffsetComponents(dateTimeOffsetComponents)
+  ) {
     throw new Error(`Failed to parse edmDateTime: ${edmDateTime}.`);
   }
   return dateTimeOffsetComponents;
+}
+
+function isDateTimeOffsetComponents(
+  parsed: { [p: string]: string } | DateTimeOffsetComponents
+): parsed is DateTimeOffsetComponents {
+  return !!parsed.ticks;
 }
 
 /**
@@ -88,21 +102,20 @@ export function serializeFromZonedDateTime(
 ): string {
   const operator = value.offset[0];
   const offset = value.offset.replace(/[-+:]/g, '');
-  return `/Date(${value.epochMilliseconds}${operator}${leftpad(offset, 4)})/`;
+  return `/Date(${value.epochMilliseconds}${operator}${offset})/`;
 }
 
 /**
  * @internal
  */
 export function deserializeToPlainTime(value: string): Temporal.PlainTime {
-  const regexResult =
-    /PT(?<hours>\d{1,2}H)?(?<minutes>\d{1,2}M)?(?<seconds>\d{1,2}S)?/.exec(
-      value
-    );
+  const regexResult = durationRegex.exec(value);
   if (!regexResult) {
     throw new Error(`Failed to parse the value: ${value} to time.`);
   }
-  const { hours, minutes, seconds } = regexResult?.groups || {};
+  const hours = regexResult.groups?.hours || '0';
+  const minutes = regexResult.groups?.minutes || '0';
+  const seconds = regexResult.groups?.seconds || '0';
 
   return new Temporal.PlainTime(
     parseInt(hours),
@@ -117,19 +130,11 @@ export function deserializeToPlainTime(value: string): Temporal.PlainTime {
 export function serializeFromPlainTime(value: Temporal.PlainTime): string {
   return (
     'PT' +
-    leftpad(value.hour, 2) +
+    String(value.hour).padStart(2, '0') +
     'H' +
-    leftpad(value.minute, 2) +
+    String(value.minute).padStart(2, '0') +
     'M' +
-    leftpad(value.second, 2) +
+    String(value.second).padStart(2, '0') +
     'S'
   );
-}
-
-function leftpad(value: any, targetLength: number): string {
-  const str = value.toString();
-  if (str.length >= targetLength) {
-    return str;
-  }
-  return '0'.repeat(targetLength - str.length) + str;
 }

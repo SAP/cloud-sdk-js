@@ -39,14 +39,13 @@ export function serializePlainTimeToTime(value: Temporal.PlainTime): string {
  * @internal
  */
 export function deserializeDateToTemporal(date: string): Temporal.PlainDate {
-  const dateFormat = /\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])/;
-  if (!dateFormat.exec(date)) {
+  try {
+    return Temporal.PlainDate.from(date);
+  } catch (e) {
     throw new Error(
       `Provided date value ${date} does not follow the Edm.Date pattern: YYYY-MM-DD`
     );
   }
-  const parsed = Temporal.PlainDate.from(date);
-  return parsed;
 }
 
 /**
@@ -93,15 +92,13 @@ export function serializeZonedDateTimeToDateTimeOffset(
 export function deserializeDurationToTemporal(
   value: string
 ): Temporal.Duration {
-  const durationPattern =
-    /([+-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
-  const captured = durationPattern.exec(value);
-  if (!captured || captured[0] !== value) {
+  try {
+    return Temporal.Duration.from(value);
+  } catch (e) {
     throw new Error(
       `Provided duration value ${value} does not follow the Edm.Duration pattern: +/- P0DT0H0M0S`
     );
   }
-  return Temporal.Duration.from(value);
 }
 
 /**

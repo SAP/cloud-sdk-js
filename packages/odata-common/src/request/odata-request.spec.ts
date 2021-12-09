@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import {
@@ -12,18 +11,7 @@ import { commonODataUri } from '../../test/common-request-config';
 import { CommonEntity } from '../../test/common-entity';
 
 describe('OData Request', () => {
-  let requestSpy: jest.SpyInstance;
   describe('format', () => {
-    beforeEach(() => {
-      requestSpy = jest
-        .spyOn(axios, 'request')
-        .mockResolvedValue({ 'x-csrf-token': 'test' });
-    });
-
-    afterEach(() => {
-      requestSpy.mockRestore();
-    });
-
     it('should be json for GET', async () => {
       const request = createRequestWithHeaders(ODataGetAllRequestConfig);
       expect(request.url()).toContain('$format=json');
@@ -44,50 +32,6 @@ describe('OData Request', () => {
       expect(request.url()).not.toContain('$format=json');
     });
 
-    describe('isTrustingAllCertificates is defined', () => {
-      it('rejectUnauthorized property of HttpsAgent should be set to TRUE when TrustAll is false', async () => {
-        const destination: Destination = {
-          url: 'https://example.com',
-          isTrustingAllCertificates: true
-        };
-        const request = createRequestWithHeaders(
-          ODataDeleteRequestConfig,
-          destination
-        );
-        request.config.fetchCsrfToken = false;
-        await request.execute();
-        const expectedJsonHttpsAgent = {
-          httpsAgent: expect.objectContaining({
-            options: expect.objectContaining({ rejectUnauthorized: false })
-          })
-        };
-        expect(axios.request).toHaveBeenCalledWith(
-          expect.objectContaining(expectedJsonHttpsAgent)
-        );
-      });
-
-      it('rejectUnauthorized property of HttpsAgent should be set to FALSE when TrustAll is true', async () => {
-        const destination: Destination = {
-          url: 'https://example.com',
-          isTrustingAllCertificates: false
-        };
-        const request = createRequestWithHeaders(
-          ODataDeleteRequestConfig,
-          destination
-        );
-        request.config.fetchCsrfToken = false;
-        await request.execute();
-        const expectedJsonHttpsAgent = {
-          httpsAgent: expect.objectContaining({
-            options: expect.objectContaining({ rejectUnauthorized: true })
-          })
-        };
-        expect(axios.request).toHaveBeenCalledWith(
-          expect.objectContaining(expectedJsonHttpsAgent)
-        );
-      });
-    });
-
     function createRequestWithHeaders(
       configConstructor,
       destination?
@@ -99,7 +43,7 @@ describe('OData Request', () => {
   });
 
   describe('query', () => {
-    it.only('should have json parameter by default for get request', () => {
+    it('should have json parameter by default for get request', () => {
       const request = createRequest(ODataGetAllRequestConfig);
       expect(request.query()).toEqual('?$format=json');
     });
@@ -135,7 +79,7 @@ describe('OData Request', () => {
   describe('serviceUrl', () => {
     it('should contain "sap/opu/odata/sap/"', () => {
       const request = createRequest(ODataGetAllRequestConfig);
-      expect(request.serviceUrl()).toBe('/sap/opu/odata/sap/API_TEST_SRV');
+      expect(request.serviceUrl()).toBe('/sap/opu/odata/sap/API_COMMON_SRV');
     });
 
     it('should contain custom service path', () => {
@@ -164,7 +108,7 @@ describe('OData Request', () => {
         request.config as ODataGetAllRequestConfig<CommonEntity>;
       requestConfig.appendPath('/$value');
       expect(request.relativeUrl()).toBe(
-        'sap/opu/odata/sap/API_TEST_SRV/A_CommonEntity/$value?$format=json'
+        'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$value?$format=json'
       );
     });
 
@@ -174,77 +118,23 @@ describe('OData Request', () => {
         request.config as ODataGetAllRequestConfig<CommonEntity>;
       requestConfig.appendPath('/');
       expect(request.relativeUrl()).toBe(
-        'sap/opu/odata/sap/API_TEST_SRV/A_CommonEntity/?$format=json'
+        'sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/?$format=json'
       );
     });
   });
 
-  describe('execute', () => {
-    beforeEach(() => {
-      requestSpy = jest.spyOn(axios, 'request').mockResolvedValue('test');
-    });
+  it('request config contains headers without ETag value when there is no ETag config', async () => {
+    const destination: Destination = {
+      url: 'http://example.com'
+    };
 
-    afterEach(() => {
-      requestSpy.mockRestore();
-    });
+    const request = createRequest(ODataGetAllRequestConfig, destination);
 
-    it('request config contains headers without ETag value when there is no ETag config', async () => {
-      const destination: Destination = {
-        url: 'http://example.com'
-      };
-
-      await createRequest(ODataGetAllRequestConfig, destination).execute();
-
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining({
-          headers: expect.not.objectContaining({
-            'if-match': expect.anything()
-          })
-        })
-      );
-    });
-
-    it('request config contains httpAgent when destination URL uses "http" as protocol', async () => {
-      const expectedConfigEntry = { httpAgent: expect.anything() };
-      const httpDestination: Destination = {
-        url: 'http://example.com',
-        authentication: 'NoAuthentication'
-      };
-
-      await createRequest(ODataGetAllRequestConfig, httpDestination).execute();
-
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining(expectedConfigEntry)
-      );
-    });
-
-    it('request config contains httpsAgent when destination URL uses "https" as protocol', async () => {
-      const expectedConfigEntry = { httpsAgent: expect.anything() };
-      const httpsDestination: Destination = {
-        url: 'https://example.com',
-        authentication: 'NoAuthentication'
-      };
-
-      await createRequest(ODataGetAllRequestConfig, httpsDestination).execute();
-
-      expect(axios.request).toHaveBeenCalledWith(
-        expect.objectContaining(expectedConfigEntry)
-      );
-    });
-
-    it('throws an error if the destination URL uses neither "http" nor "https" as protocol (e.g. RFC)', async () => {
-      const rfcDestination: Destination = {
-        url: 'rfc://example.com',
-        authentication: 'NoAuthentication'
-      };
-
-      const request = createRequest(
-        ODataGetAllRequestConfig,
-        rfcDestination
-      ).execute();
-
-      await expect(request).rejects.toThrowErrorMatchingSnapshot();
-    });
+    expect(request.headers()).toEqual(
+      expect.not.objectContaining({
+        'if-match': expect.anything()
+      })
+    );
   });
 });
 

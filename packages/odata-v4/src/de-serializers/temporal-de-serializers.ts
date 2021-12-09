@@ -63,8 +63,7 @@ export function deserializeDateTimeOffsetToTemporal(
   dateTime: string
 ): Temporal.ZonedDateTime {
   try {
-    const parsed = Temporal.Instant.from(dateTime).toZonedDateTimeISO('UTC');
-    return parsed;
+    return Temporal.Instant.from(dateTime).toZonedDateTimeISO('UTC');
   } catch (err) {
     throw new Error(
       `Provided date-time value ${dateTime} does not follow the Edm.DateTimeOffset pattern: YYYY-MM-DDTHH:mm(:ss(.SSS))Z`
@@ -94,7 +93,8 @@ export function deserializeDurationToTemporal(
   value: string
 ): Temporal.Duration {
   try {
-    if (!value.match(durationPattern)?.groups) {
+    const match = value.match(durationPattern);
+    if (match && match[0] !== value) {
       throw new Error();
     }
     return Temporal.Duration.from(value);

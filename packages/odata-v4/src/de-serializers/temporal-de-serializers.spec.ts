@@ -44,10 +44,9 @@ describe('edmToTs()', () => {
       deserializeDateTimeOffsetToTemporal('2020-05-13T16:14:23+5:00')
     ).toThrow(/ does not follow the Edm.DateTimeOffset pattern/);
 
-    // TODO: Fix this test
-    // expect(() =>
-    // deserializeDateTimeOffsetToTemporal('2020-05-13T16:14:23.1Z')
-    // ).toThrow(/ does not follow the Edm.DateTimeOffset pattern/);
+    expect(() =>
+      deserializeDateTimeOffsetToTemporal('2020-05-13T16:14:23.1 Z')
+    ).toThrow(/ does not follow the Edm.DateTimeOffset pattern/);
   });
 
   it('should parse Edm.DateTimeOffset to string', () => {

@@ -26,6 +26,17 @@
 
 ## Fixed Issues
 
+-
+
+
+# 1.53.0
+
+Release Date: TBD<br>
+API Docs: https://sap.github.io/cloud-sdk/api/1.53.0<br>
+Blog: TBD<br>
+
+## Fixed Issues
+
 - [core] Fix parsing of batch response with HTTP 200 status code and containing empty body.
 - [core] Fix missing `x-tenant` and `x-user-token` header for multiple authorization flows.
 

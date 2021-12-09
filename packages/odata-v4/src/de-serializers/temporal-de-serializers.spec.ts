@@ -97,7 +97,7 @@ describe('edmToTs()', () => {
       / does not follow the Edm.Duration pattern/
     );
 
-    expect(() => deserializeDurationToTemporal('+P4DT23H13m123S')).toThrow(
+    expect(() => deserializeDurationToTemporal('+P4DT23H13m23S')).toThrow(
       / does not follow the Edm.Duration pattern/
     );
 

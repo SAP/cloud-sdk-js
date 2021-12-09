@@ -1,6 +1,7 @@
 /* eslint-disable valid-jsdoc */
 import { Temporal } from '@js-temporal/polyfill';
 import { DeSerializer } from '@sap-cloud-sdk/odata-common/internal';
+import { durationPattern } from './converters';
 /**
  * Temporal (de-)serializers for Odata-v4.
  * @internal
@@ -93,6 +94,9 @@ export function deserializeDurationToTemporal(
   value: string
 ): Temporal.Duration {
   try {
+    if (!value.match(durationPattern)?.groups) {
+      throw new Error();
+    }
     return Temporal.Duration.from(value);
   } catch (e) {
     throw new Error(

@@ -5,6 +5,12 @@ import moment from 'moment';
 /**
  * @internal
  */
+export const durationPattern =
+  /([+-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
+
+/**
+ * @internal
+ */
 export function deserializeDateToMoment(date: string): moment.Moment {
   const parsed = moment.utc(date, 'YYYY-MM-DD', true);
   if (!parsed.isValid()) {
@@ -51,8 +57,6 @@ export function serializeToDateTimeOffset(value: moment.Moment): string {
  * @internal
  */
 export function deserializeDurationToMoment(value: string): moment.Duration {
-  const durationPattern =
-    /([+-]{1,1})?P(\d{1,2}D)?(T(\d{1,2}H)?(\d{1,2}M)?(\d{1,2}S)?(\d{2,2}\.\d+S)?)?/;
   const captured = durationPattern.exec(value);
   if (!captured || captured[0] !== value) {
     throw new Error(

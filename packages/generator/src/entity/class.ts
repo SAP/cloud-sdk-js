@@ -91,9 +91,11 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
     name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
-    type: prop.isComplex
-      ? `${prop.jsType}<T>`
-      : `DeserializedType<T, '${prop.edmType}'>`,
+    type:
+      (prop.isComplex
+        ? `${prop.jsType}<T>`
+        : `DeserializedType<T, '${prop.edmType}'>`) +
+      (prop.nullable ? ' | null' : ''),
     docs: [
       addLeadingNewline(
         getPropertyDescription(prop, {

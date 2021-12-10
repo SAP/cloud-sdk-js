@@ -33,9 +33,7 @@ const entityKeys = {
   KeyPropertyString: 'test'
 };
 
-export function changeSet(
-  requests: WriteBuilder[]
-): BatchChangeSet<WriteBuilder> {
+export function changeSet(requests: WriteBuilder[]): BatchChangeSet {
   return new BatchChangeSet<any>(requests, 'changeSet_boundary');
 }
 

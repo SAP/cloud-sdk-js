@@ -242,7 +242,9 @@ describe('getFilter for filter functions', () => {
   it('for length filter function', () => {
     expect(
       oDataUri.getFilter(
-        filterFunctions.length(testEntityApi.schema.STRING_PROPERTY).equals(3),
+        filterFunctions()
+          .length(testEntityApi.schema.STRING_PROPERTY)
+          .equals(3),
         testEntityApi
       ).filter
     ).toBe(encodeURIComponent('length(StringProperty) eq 3'));
@@ -250,7 +252,7 @@ describe('getFilter for filter functions', () => {
 
   it('for round filter function with default double', () => {
     expect(
-      oDataUri.getFilter(filterFunctions.round(10.1).equals(3), testEntityApi)
+      oDataUri.getFilter(filterFunctions().round(10.1).equals(3), testEntityApi)
         .filter
     ).toBe(encodeURIComponent('round(10.1) eq 3D'));
   });
@@ -258,7 +260,7 @@ describe('getFilter for filter functions', () => {
   it('for round filter function with decimal', () => {
     expect(
       oDataUri.getFilter(
-        filterFunctions.round(10.1, 'decimal').equals(3),
+        filterFunctions().round(10.1, 'decimal').equals(3),
         testEntityApi
       ).filter
     ).toBe(encodeURIComponent('round(10.1) eq 3M'));
@@ -267,7 +269,7 @@ describe('getFilter for filter functions', () => {
   it('for startsWith filter function with eq/ne', () => {
     expect(
       oDataUri.getFilter(
-        filterFunctions.startsWith('string', 'str').equals(false),
+        filterFunctions().startsWith('string', 'str').equals(false),
         testEntityApi
       ).filter
     ).toBe(encodeURIComponent("startswith('string','str') eq false"));
@@ -276,7 +278,7 @@ describe('getFilter for filter functions', () => {
   it('for startsWith filter function without eq/ne', () => {
     expect(
       oDataUri.getFilter(
-        filterFunctions.startsWith('string', 'str'),
+        filterFunctions().startsWith('string', 'str'),
         testEntityApi
       ).filter
     ).toBe(encodeURIComponent("startswith('string','str')"));
@@ -285,7 +287,7 @@ describe('getFilter for filter functions', () => {
   it('for startsWith filter function with not operator with eq/ne', () => {
     expect(
       oDataUri.getFilter(
-        not(filterFunctions.startsWith('string', 'str').equals(false)),
+        not(filterFunctions().startsWith('string', 'str').equals(false)),
         testEntityApi
       ).filter
     ).toBe(encodeURIComponent("not (startswith('string','str') eq false)"));
@@ -294,7 +296,7 @@ describe('getFilter for filter functions', () => {
   it('for startsWith filter function with not operator without eq/ne', () => {
     expect(
       oDataUri.getFilter(
-        not(filterFunctions.startsWith('string', 'str')),
+        not(filterFunctions().startsWith('string', 'str')),
         testEntityApi
       ).filter
     ).toBe(encodeURIComponent("not (startswith('string','str'))"));

@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { DeSerializers } from '../../de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
 import { CreateRequestBuilderBase } from '../create-request-builder-base';
 import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
 import { UpdateRequestBuilderBase } from '../update-request-builder-base';
@@ -9,7 +9,9 @@ import { UpdateRequestBuilderBase } from '../update-request-builder-base';
  * Representation of a batch change set, which holds a collection of write operations.
  * @internal
  */
-export class BatchChangeSet<DeSerializersT extends DeSerializers> {
+export class BatchChangeSet<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Create an instance of BatchChangeSet.
    * @param requests - Requests to combine to one change set.

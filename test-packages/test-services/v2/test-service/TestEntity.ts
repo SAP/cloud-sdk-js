@@ -39,87 +39,87 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends 
    * Maximum length: 10.
    * @nullable
    */
-  stringProperty?: DeserializedType<T, 'Edm.String'>;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Boolean Property.
    * @nullable
    */
-  booleanProperty?: DeserializedType<T, 'Edm.Boolean'>;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Guid Property.
    * @nullable
    */
-  guidProperty?: DeserializedType<T, 'Edm.Guid'>;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Int 16 Property.
    * @nullable
    */
-  int16Property?: DeserializedType<T, 'Edm.Int16'>;
+  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   /**
    * Int 32 Property.
    * @nullable
    */
-  int32Property?: DeserializedType<T, 'Edm.Int32'>;
+  int32Property?: DeserializedType<T, 'Edm.Int32'> | null;
   /**
    * Int 64 Property.
    * @nullable
    */
-  int64Property?: DeserializedType<T, 'Edm.Int64'>;
+  int64Property?: DeserializedType<T, 'Edm.Int64'> | null;
   /**
    * Decimal Property.
    * @nullable
    */
-  decimalProperty?: DeserializedType<T, 'Edm.Decimal'>;
+  decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
   /**
    * Single Property.
    * @nullable
    */
-  singleProperty?: DeserializedType<T, 'Edm.Single'>;
+  singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
   /**
    * Double Property.
    * @nullable
    */
-  doubleProperty?: DeserializedType<T, 'Edm.Double'>;
+  doubleProperty?: DeserializedType<T, 'Edm.Double'> | null;
   /**
    * Float Property.
    * @nullable
    */
-  floatProperty?: DeserializedType<T, 'Edm.Float'>;
+  floatProperty?: DeserializedType<T, 'Edm.Float'> | null;
   /**
    * Time Property.
    * @nullable
    */
-  timeProperty?: DeserializedType<T, 'Edm.Time'>;
+  timeProperty?: DeserializedType<T, 'Edm.Time'> | null;
   /**
    * Date Time Property.
    * @nullable
    */
-  dateTimeProperty?: DeserializedType<T, 'Edm.DateTime'>;
+  dateTimeProperty?: DeserializedType<T, 'Edm.DateTime'> | null;
   /**
    * Date Time Off Set Property.
    * @nullable
    */
-  dateTimeOffSetProperty?: DeserializedType<T, 'Edm.DateTimeOffset'>;
+  dateTimeOffSetProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
   /**
    * Byte Property.
    * @nullable
    */
-  byteProperty?: DeserializedType<T, 'Edm.Byte'>;
+  byteProperty?: DeserializedType<T, 'Edm.Byte'> | null;
   /**
    * S Byte Property.
    * @nullable
    */
-  sByteProperty?: DeserializedType<T, 'Edm.SByte'>;
+  sByteProperty?: DeserializedType<T, 'Edm.SByte'> | null;
   /**
    * Something The Sdk Does Not Support.
    * @nullable
    */
-  somethingTheSdkDoesNotSupport?: DeserializedType<T, 'Edm.Any'>;
+  somethingTheSdkDoesNotSupport?: DeserializedType<T, 'Edm.Any'> | null;
   /**
    * Complex Type Property.
    * @nullable
    */
-  complexTypeProperty?: TestComplexType<T>;
+  complexTypeProperty?: TestComplexType<T> | null;
   /**
    * One-to-many navigation property to the [[TestEntityMultiLink]] entity.
    */

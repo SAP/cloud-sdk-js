@@ -5,8 +5,8 @@
  */
 import { Casetest_1 } from './Casetest_1';
 import { Casetest_1RequestBuilder } from './Casetest_1RequestBuilder';
-import { defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
-import { EdmTypeField, AllFields, CustomField, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 export class Casetest_1Api<BinaryT = string,

@@ -28,22 +28,22 @@ export declare class TestEntityMultiLink<T extends DeSerializers = DefaultDeSeri
      * Maximum length: 10.
      * @nullable
      */
-    stringProperty?: DeserializedType<T, 'Edm.String'>;
+    stringProperty?: DeserializedType<T, 'Edm.String'> | null;
     /**
      * Boolean Property.
      * @nullable
      */
-    booleanProperty?: DeserializedType<T, 'Edm.Boolean'>;
+    booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
     /**
      * Guid Property.
      * @nullable
      */
-    guidProperty?: DeserializedType<T, 'Edm.Guid'>;
+    guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
     /**
      * Int 16 Property.
      * @nullable
      */
-    int16Property?: DeserializedType<T, 'Edm.Int16'>;
+    int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
     /**
      * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
      */

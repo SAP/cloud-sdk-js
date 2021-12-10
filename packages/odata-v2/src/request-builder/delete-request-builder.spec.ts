@@ -20,9 +20,12 @@ describe('DeleteRequestBuilder', () => {
   });
 
   it('delete request with keys should resolve', async () => {
-    mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
-    });
+    mockDeleteRequest(
+      {
+        path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
+      },
+      testEntityApi
+    );
 
     const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
@@ -41,12 +44,15 @@ describe('DeleteRequestBuilder', () => {
       .build()
       .setVersionIdentifier(versionId);
 
-    mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter),
-      additionalHeaders: {
-        'if-match': versionId
-      }
-    });
+    mockDeleteRequest(
+      {
+        path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter),
+        additionalHeaders: {
+          'if-match': versionId
+        }
+      },
+      testEntityApi
+    );
 
     const deleteRequest = new DeleteRequestBuilder(
       testEntityApi,
@@ -59,12 +65,15 @@ describe('DeleteRequestBuilder', () => {
   it('delete request with version identifier on the request should resolve', async () => {
     const versionId = 'not-a-star';
 
-    mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter),
-      additionalHeaders: {
-        'if-match': versionId
-      }
-    });
+    mockDeleteRequest(
+      {
+        path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter),
+        additionalHeaders: {
+          'if-match': versionId
+        }
+      },
+      testEntityApi
+    );
 
     const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
@@ -77,9 +86,12 @@ describe('DeleteRequestBuilder', () => {
   });
 
   it('delete requests does not use if-match header when the version identifier is an empty string', async () => {
-    mockDeleteRequest({
-      path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
-    });
+    mockDeleteRequest(
+      {
+        path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
+      },
+      testEntityApi
+    );
 
     const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
@@ -97,7 +109,7 @@ describe('DeleteRequestBuilder', () => {
       additionalHeaders: {
         'if-match': '*'
       }
-    });
+    },testEntityApi);
 
     const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
@@ -113,7 +125,7 @@ describe('DeleteRequestBuilder', () => {
     mockDeleteRequest({
       path: testEntityResourcePath(keyPropGuid, keyPropString),
       statusCode: 500
-    });
+    },testEntityApi);
 
     const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid
@@ -126,7 +138,7 @@ describe('DeleteRequestBuilder', () => {
     it('returns request and raw response', async () => {
       mockDeleteRequest({
         path: testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
-      });
+      },testEntityApi);
 
       const actual = await new DeleteRequestBuilder(testEntityApi, {
         KeyPropertyGuid: keyPropGuid,

@@ -31,7 +31,7 @@ class TestEntityWithSharedEntityType1Api {
         return (0, internal_1.entityBuilder)(this);
     }
     customField(fieldName, isNullable = false) {
-        return new internal_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
+        return new odata_v2_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
     }
 }
 exports.TestEntityWithSharedEntityType1Api = TestEntityWithSharedEntityType1Api;

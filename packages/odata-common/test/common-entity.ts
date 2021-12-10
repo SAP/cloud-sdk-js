@@ -475,12 +475,6 @@ export class CommonEntity<
   collectionProperty?: DeserializedType<DeSerializersT, 'Edm.String'>[];
   complexTypeProperty?: CommonComplexType<DeSerializersT>;
   toSingleLink?: CommonEntitySingleLink<DeSerializersT> | null;
-
-  toJSON(): Record<string, any> {
-    // @ts-ignore
-    const { schema, ...entity } = this;
-    return { ...entity, ...this._customFields };
-  }
 }
 
 export interface CommonEntityType<

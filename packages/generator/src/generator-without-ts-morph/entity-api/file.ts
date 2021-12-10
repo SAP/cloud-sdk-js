@@ -43,6 +43,7 @@ function getImports(entity: VdmEntity, oDataVersion: ODataVersion): Import[] {
     ...enumTypeImports(entity.properties),
     odataImport(
       [
+        'CustomField',
         'defaultDeSerializers',
         'DeSerializers',
         'mergeDefaultDeSerializersWith'
@@ -57,7 +58,6 @@ function getImports(entity: VdmEntity, oDataVersion: ODataVersion): Import[] {
         oDataVersion
       ),
       'AllFields',
-      'CustomField',
       'entityBuilder',
       'EntityBuilderType',
       'EntityApi',

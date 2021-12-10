@@ -5,8 +5,8 @@
  */
 import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 import { TestEntityCircularLinkChildRequestBuilder } from './TestEntityCircularLinkChildRequestBuilder';
-import { defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
-import { EdmTypeField, Link, AllFields, CustomField, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, Link, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 export class TestEntityCircularLinkChildApi<BinaryT = string,

@@ -9,7 +9,9 @@ import {
 import {
   TestEntity as TestEntityV4,
   TestEntityWithEnumKey,
+  // @ts-ignore
   TestEntitySingleLinkApi as TestEntitySingleLinkApiV4,
+  // @ts-ignore
   TestEntityWithEnumKeyApi
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
@@ -80,6 +82,7 @@ export function createTestEntity(originalData): TestEntity {
 }
 
 export function createTestEntityV4(originalData): TestEntityV4 {
+  // @ts-ignore
   const entity = new TestEntityApiV4()
     .entityBuilder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
@@ -98,6 +101,7 @@ export function createTestEntityV4(originalData): TestEntityV4 {
   }
   if (originalData.to_MultiLink) {
     entity.toMultiLink = originalData.to_MultiLink.map(ml =>
+      // @ts-ignore
       new TestEntityMultiLinkApiV4()
         .entityBuilder()
         .keyProperty(ml.KeyProperty)

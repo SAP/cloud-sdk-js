@@ -1,6 +1,5 @@
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
@@ -13,6 +12,7 @@ import {
   testEntityResourcePath
 } from '../../../../test-resources/test/test-util/test-data';
 import { defaultDeSerializers } from '../de-serializers';
+import { testEntityApi } from '../../test/test-util';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 const uriConverter = createUriConverter(defaultDeSerializers);
@@ -25,7 +25,7 @@ describe('GetByKeyRequestBuilder', () => {
       const expected =
         /^\/testination\/sap\/opu\/odata\/sap\/API_TEST_SRV\/A_TestEntity\(KeyPropertyGuid=guid'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}',KeyPropertyString='ABCDE'\)\/to_SingleLink\/to_MultiLink\/\?\$format=json$/;
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: entity.keyPropertyGuid,
         KeyPropertyString: entity.keyPropertyString
       })
@@ -40,16 +40,19 @@ describe('GetByKeyRequestBuilder', () => {
       const entityData = createOriginalTestEntityData1();
       const expected = createTestEntity(entityData);
 
-      mockGetRequest({
-        path: testEntityResourcePath(
-          expected.keyPropertyGuid,
-          expected.keyPropertyString,
-          uriConverter
-        ),
-        responseBody: { d: entityData }
-      });
+      mockGetRequest(
+        {
+          path: testEntityResourcePath(
+            expected.keyPropertyGuid,
+            expected.keyPropertyString,
+            uriConverter
+          ),
+          responseBody: { d: entityData }
+        },
+        testEntityApi
+      );
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -63,16 +66,19 @@ describe('GetByKeyRequestBuilder', () => {
       entityData['__metadata'] = { etag: versionIdentifier };
       const expected = createTestEntity(entityData);
 
-      mockGetRequest({
-        path: testEntityResourcePath(
-          expected.keyPropertyGuid,
-          expected.keyPropertyString,
-          uriConverter
-        ),
-        responseBody: { d: entityData }
-      });
+      mockGetRequest(
+        {
+          path: testEntityResourcePath(
+            expected.keyPropertyGuid,
+            expected.keyPropertyString,
+            uriConverter
+          ),
+          responseBody: { d: entityData }
+        },
+        testEntityApi
+      );
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -86,17 +92,20 @@ describe('GetByKeyRequestBuilder', () => {
       const versionIdentifier = 'etagInHeader';
       expected.setVersionIdentifier(versionIdentifier);
 
-      mockGetRequest({
-        path: testEntityResourcePath(
-          expected.keyPropertyGuid,
-          expected.keyPropertyString,
-          uriConverter
-        ),
-        responseBody: { d: entityData },
-        responseHeaders: { Etag: versionIdentifier }
-      });
+      mockGetRequest(
+        {
+          path: testEntityResourcePath(
+            expected.keyPropertyGuid,
+            expected.keyPropertyString,
+            uriConverter
+          ),
+          responseBody: { d: entityData },
+          responseHeaders: { Etag: versionIdentifier }
+        },
+        testEntityApi
+      );
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -107,16 +116,19 @@ describe('GetByKeyRequestBuilder', () => {
       const entityData = createOriginalTestEntityData1();
       const expected = createTestEntity(entityData);
 
-      mockGetRequest({
-        path: testEntityResourcePath(
-          expected.keyPropertyGuid,
-          expected.keyPropertyString,
-          uriConverter
-        ),
-        responseBody: { d: { results: entityData } }
-      });
+      mockGetRequest(
+        {
+          path: testEntityResourcePath(
+            expected.keyPropertyGuid,
+            expected.keyPropertyString,
+            uriConverter
+          ),
+          responseBody: { d: { results: entityData } }
+        },
+        testEntityApi
+      );
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -130,16 +142,19 @@ describe('GetByKeyRequestBuilder', () => {
       const entityData = createOriginalTestEntityData1();
       const expected = createTestEntity(entityData);
 
-      mockGetRequest({
-        path: testEntityResourcePath(
-          expected.keyPropertyGuid,
-          expected.keyPropertyString,
-          uriConverter
-        ),
-        responseBody: { d: entityData }
-      });
+      mockGetRequest(
+        {
+          path: testEntityResourcePath(
+            expected.keyPropertyGuid,
+            expected.keyPropertyString,
+            uriConverter
+          ),
+          responseBody: { d: entityData }
+        },
+        testEntityApi
+      );
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).executeRaw(defaultDestination);
@@ -151,15 +166,18 @@ describe('GetByKeyRequestBuilder', () => {
       const entityData = createOriginalTestEntityDataWithLinks();
       const entity = createTestEntity(entityData);
 
-      mockGetRequest({
-        path: `${testEntityResourcePath(
-          entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter
-        )}/to_SingleLink/to_MultiLink`
-      });
+      mockGetRequest(
+        {
+          path: `${testEntityResourcePath(
+            entity.keyPropertyGuid,
+            entity.keyPropertyString,
+            uriConverter
+          )}/to_SingleLink/to_MultiLink`
+        },
+        testEntityApi
+      );
 
-      const response = await new GetByKeyRequestBuilder(TestEntity, {
+      const response = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: entity.keyPropertyGuid,
         KeyPropertyString: entity.keyPropertyString
       })
@@ -172,7 +190,7 @@ describe('GetByKeyRequestBuilder', () => {
   it('throws a useful error when request execution fails', async () => {
     nock(/.*/).get(/.*/).reply(500);
 
-    const getByKeyRequest = new GetByKeyRequestBuilder(TestEntity, {
+    const getByKeyRequest = new GetByKeyRequestBuilder(testEntityApi, {
       KeyPropertyGuid: uuid(),
       KeyPropertyString: 'test'
     }).execute(defaultDestination);

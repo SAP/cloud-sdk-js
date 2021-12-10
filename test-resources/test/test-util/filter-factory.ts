@@ -4,6 +4,7 @@ import { or } from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntityApi } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
+  // @ts-ignore
   TestEntityApi as TestEntityApiV4,
   TestEnumType
 } from '@sap-cloud-sdk/test-services/v4/test-service';
@@ -91,6 +92,7 @@ export const testFilterLambdaExpressionWithOr = {
 export const testFilterLambdaExpressionFilterListOnLink = {
   filter: TestEntityV4.TO_MULTI_LINK.filter(
     any(
+      // @ts-ignore
       or(
         testEntityApiV4.schema.STRING_PROPERTY.equals('test1'),
         testEntityApiV4.schema.INT_16_PROPERTY.equals(1)
@@ -135,6 +137,7 @@ export const testFilterLambdaExpressionFilterFunctionOnLink = {
   filter: testEntityApiV4.schema.TO_MULTI_LINK.filter(
     any(
       filterFunctions
+        // @ts-ignore
         .substring(
           testEntityApiV4.schema.TO_MULTI_LINK._linkedEntityApi.schema
             .STRING_PROPERTY,

@@ -1,9 +1,11 @@
-import { DeSerializers } from './de-serializers';
+import { DefaultDeSerializers, DeSerializers } from './de-serializers';
 import { EntityApi, EntityBase } from './entity-base';
 /**
  * @internal
  */
-export type BatchResponse<DeSerializersT extends DeSerializers> =
+export type BatchResponse<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> =
   | ReadResponse<DeSerializersT>
   | WriteResponses<DeSerializersT>
   | ErrorResponse;
@@ -11,7 +13,9 @@ export type BatchResponse<DeSerializersT extends DeSerializers> =
 /**
  * @internal
  */
-export interface WriteResponses<DeSerializersT extends DeSerializers> {
+export interface WriteResponses<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   responses: WriteResponse<DeSerializersT>[];
   isSuccess: () => boolean;
 }
@@ -26,7 +30,9 @@ export interface ErrorResponse {
 /**
  * @internal
  */
-export interface ReadResponse<DeSerializersT extends DeSerializers> {
+export interface ReadResponse<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   httpCode: number;
   body: Record<string, any>;
   type: EntityApi<EntityBase, DeSerializersT>;

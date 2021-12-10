@@ -102,6 +102,7 @@ export abstract class EntityBase {
   abstract readonly _oDataVersion: any;
 
   constructor(private schema: Record<string, any>) {
+    nonEnumerable(this, 'schema');
     nonEnumerable(this, '_oDataVersion');
     nonEnumerable(this, '_customFields');
     this._customFields = {};
@@ -265,8 +266,7 @@ export abstract class EntityBase {
    * @returns An object containing all instance variables + custom fields.
    */
   toJSON(): { [key: string]: any } {
-    const { schema, ...entity } = this;
-    return { ...entity, ...this._customFields };
+    return { ...this, ...this._customFields };
   }
 
   protected isVisitedEntity<EntityT extends EntityBase>(
@@ -312,8 +312,7 @@ export abstract class EntityBase {
   protected asObject(visitedEntities: EntityBase[] = []): Record<string, any> {
     visitedEntities.push(this);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [schema, ...keys] = Object.keys(this);
-    return keys
+    return Object.keys(this)
       .filter(
         key =>
           this.propertyIsEnumerable(key) &&

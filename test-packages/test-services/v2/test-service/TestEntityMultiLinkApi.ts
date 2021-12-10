@@ -5,8 +5,8 @@
  */
 import { TestEntityMultiLink } from './TestEntityMultiLink';
 import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import { defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
-import { EdmTypeField, OrderableEdmTypeField, Link, OneToOneLink, AllFields, CustomField, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, OrderableEdmTypeField, Link, OneToOneLink, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 export class TestEntityMultiLinkApi<BinaryT = string,

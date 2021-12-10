@@ -1,9 +1,6 @@
 import nock from 'nock';
 import * as httpClient from '@sap-cloud-sdk/http-client';
-import {
-  TestEntity,
-  TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { wrapJwtInHeader } from '../../../connectivity/src/scp-cf/jwt';
 import {
   defaultDestination,
@@ -31,17 +28,19 @@ import {
   providerServiceToken
 } from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
+import { testEntityApi } from '../../test/test-util';
+import { DefaultDeSerializers } from '../de-serializers';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {
-  let requestBuilder: GetAllRequestBuilder<TestEntity>;
+  let requestBuilder: GetAllRequestBuilder<TestEntity, DefaultDeSerializers>;
 
   afterEach(() => {
     unmockDestinationsEnv();
   });
 
   beforeEach(() => {
-    requestBuilder = new GetAllRequestBuilder(TestEntity);
+    requestBuilder = new GetAllRequestBuilder(testEntityApi);
   });
 
   describe('url', () => {
@@ -56,7 +55,7 @@ describe('GetAllRequestBuilder', () => {
       const expected =
         "/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$filter=(StringProperty%20eq%20'%C3%A4%20%C3%B6%2B%20''c')";
       const actual = await requestBuilder
-        .filter(TestEntity.STRING_PROPERTY.equals("ä ö+ 'c"))
+        .filter(testEntityApi.schema.STRING_PROPERTY.equals("ä ö+ 'c"))
         .url(defaultDestination);
       expect(actual).toBe(expected);
     });
@@ -66,8 +65,8 @@ describe('GetAllRequestBuilder', () => {
         '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$select=to_SingleLink/BooleanProperty&$expand=to_SingleLink';
       const actual = await requestBuilder
         .select(
-          TestEntity.TO_SINGLE_LINK.select(
-            TestEntitySingleLink.BOOLEAN_PROPERTY
+          testEntityApi.schema.TO_SINGLE_LINK.select(
+            testEntityApi.schema.BOOLEAN_PROPERTY
           )
         )
         .url(defaultDestination);
@@ -81,13 +80,16 @@ describe('GetAllRequestBuilder', () => {
         SomethingTheSDKDoesNotSupport: 'SomeValue'
       };
 
-      mockGetRequest({
-        query: { $select: 'SomethingTheSDKDoesNotSupport' },
-        responseBody: { d: { results: [entityData1] } }
-      });
+      mockGetRequest(
+        {
+          query: { $select: 'SomethingTheSDKDoesNotSupport' },
+          responseBody: { d: { results: [entityData1] } }
+        },
+        testEntityApi
+      );
 
       const actual = await requestBuilder
-        .select(TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT)
+        .select(testEntityApi.schema.SOMETHING_THE_SDK_DOES_NOT_SUPPORT)
         .execute(defaultDestination);
       expect(actual[0].somethingTheSdkDoesNotSupport).toBe('SomeValue');
     });
@@ -96,9 +98,12 @@ describe('GetAllRequestBuilder', () => {
       const entityData1 = createOriginalTestEntityData1();
       const entityData2 = createOriginalTestEntityData2();
 
-      mockGetRequest({
-        responseBody: { d: { results: [entityData1, entityData2] } }
-      });
+      mockGetRequest(
+        {
+          responseBody: { d: { results: [entityData1, entityData2] } }
+        },
+        testEntityApi
+      );
 
       const actual = await requestBuilder.execute(defaultDestination);
       expect(actual).toEqual([
@@ -109,10 +114,13 @@ describe('GetAllRequestBuilder', () => {
 
     it('top(1) returns the first entity', async () => {
       const entityData1 = createOriginalTestEntityData1();
-      mockGetRequest({
-        query: { $top: 1 },
-        responseBody: { d: { results: [entityData1] } }
-      });
+      mockGetRequest(
+        {
+          query: { $top: 1 },
+          responseBody: { d: { results: [entityData1] } }
+        },
+        testEntityApi
+      );
 
       const actual = await requestBuilder.top(1).execute(defaultDestination);
       expect(actual).toEqual([createTestEntity(entityData1)]);
@@ -120,10 +128,13 @@ describe('GetAllRequestBuilder', () => {
 
     it('skip(1) skips the first entity', async () => {
       const entityData2 = createOriginalTestEntityData2();
-      mockGetRequest({
-        query: { $skip: 1 },
-        responseBody: { d: { results: [entityData2] } }
-      });
+      mockGetRequest(
+        {
+          query: { $skip: 1 },
+          responseBody: { d: { results: [entityData2] } }
+        },
+        testEntityApi
+      );
       const actual = await requestBuilder.skip(1).execute(defaultDestination);
       expect(actual).toEqual([createTestEntity(entityData2)]);
     });
@@ -139,10 +150,13 @@ describe('GetAllRequestBuilder', () => {
     });
 
     it('throws an error when request execution fails', async () => {
-      mockGetRequest({
-        responseBody: { error: 'ERROR' },
-        statusCode: 500
-      });
+      mockGetRequest(
+        {
+          responseBody: { error: 'ERROR' },
+          statusCode: 500
+        },
+        testEntityApi
+      );
 
       const getAllRequest = requestBuilder.execute(defaultDestination);
 
@@ -152,10 +166,13 @@ describe('GetAllRequestBuilder', () => {
     it('sets custom headers instead of destination headers', async () => {
       const entityData = createOriginalTestEntityData1();
       const customAuthHeader = { Authorization: 'custom' };
-      mockGetRequest({
-        headers: customAuthHeader,
-        responseBody: { d: { results: [entityData] } }
-      });
+      mockGetRequest(
+        {
+          headers: customAuthHeader,
+          responseBody: { d: { results: [entityData] } }
+        },
+        testEntityApi
+      );
 
       const destinationWithAuthHeader = {
         ...defaultDestination,
@@ -172,7 +189,7 @@ describe('GetAllRequestBuilder', () => {
       mockCountRequest(
         defaultDestination,
         4711,
-        TestEntity.requestBuilder().getAll()
+        testEntityApi.schema.requestBuilder().getAll()
       );
       const count = await requestBuilder.count().execute(defaultDestination);
       expect(count).toBe(4711);
@@ -185,9 +202,12 @@ describe('GetAllRequestBuilder', () => {
       const entityData2 = createOriginalTestEntityData2();
       const rawResponse = { d: { results: [entityData1, entityData2] } };
 
-      mockGetRequest({
-        responseBody: rawResponse
-      });
+      mockGetRequest(
+        {
+          responseBody: rawResponse
+        },
+        testEntityApi
+      );
 
       const actual = await requestBuilder.executeRaw(defaultDestination);
       expect(actual.data).toEqual(rawResponse);
@@ -255,7 +275,7 @@ describe('GetAllRequestBuilder', () => {
       mockCountRequest(
         defaultDestination,
         4711,
-        TestEntity.requestBuilder().getAll()
+        testEntityApi.schema.requestBuilder().getAll()
       );
       const actual = await requestBuilder
         .count()

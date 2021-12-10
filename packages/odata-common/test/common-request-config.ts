@@ -179,12 +179,11 @@ export function deleteRequestBuilder(
 }
 
 export function batchRequestBuilder(
-  requests: (ReadBuilders | BatchChangeSet<WriteBuilder>)[]
-): BatchRequestBuilder {
-  const builder = new CommonBacthRequestBuilder(
+  requests: (ReadBuilders | BatchChangeSet)[]
+): BatchRequestBuilder<DefaultDeSerializers> {
+  const builder = new CommonBatchRequestBuilder(
     CommonEntity._defaultServicePath,
-    requests,
-    { A_CommonEntity: CommonEntity }
+    requests
   );
   Object.assign(builder.requestConfig, {
     boundary: 'batch_fixed_boundary_for_testing'
@@ -225,7 +224,7 @@ class CommonByKeyRequestBuilder extends GetByKeyRequestBuilderBase<
   DefaultDeSerializers
 > {}
 
-class CommonBacthRequestBuilder extends BatchRequestBuilder {}
+class CommonBatchRequestBuilder extends BatchRequestBuilder<DefaultDeSerializers> {}
 
 type ReadBuilders = CommonByKeyRequestBuilder | CommonGetAllRequestBuilder;
 export type WriteBuilder =

@@ -1,10 +1,5 @@
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
-import {
-  TestEntity,
-  TestEntityMultiLink,
-  TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v2/test-service';
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
@@ -14,7 +9,11 @@ import {
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { testPostRequestOutcome } from '../../../../test-resources/test/test-util/testPostRequestOutcome';
 import { defaultDeSerializers } from '../de-serializers';
-import { testEntityApi } from '../../test/test-util';
+import {
+  testEntityApi,
+  testEntityMultiLinkApi,
+  testEntitySingleLinkApi
+} from '../../test/test-util';
 import { CreateRequestBuilder } from './create-request-builder';
 
 describe('CreateRequestBuilder', () => {
@@ -27,10 +26,13 @@ describe('CreateRequestBuilder', () => {
     const stringProp = 'testStr';
     const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
-    mockCreateRequest({
-      body: postBody,
-      path: 'A_TestEntity'
-    });
+    mockCreateRequest(
+      {
+        body: postBody,
+        path: 'A_TestEntity'
+      },
+      testEntityApi
+    );
 
     const entity = testEntityApi
       .entityBuilder()
@@ -54,14 +56,17 @@ describe('CreateRequestBuilder', () => {
       StringProperty: stringProp
     };
 
-    mockCreateRequest({
-      body: postBody,
-      path: 'A_TestEntity',
-      responseBody: {
-        ...postBody,
-        __metadata: { etag: eTag }
-      }
-    });
+    mockCreateRequest(
+      {
+        body: postBody,
+        path: 'A_TestEntity',
+        responseBody: {
+          ...postBody,
+          __metadata: { etag: eTag }
+        }
+      },
+      testEntityApi
+    );
 
     const entity = testEntityApi
       .entityBuilder()
@@ -80,15 +85,21 @@ describe('CreateRequestBuilder', () => {
     const stringProp = 'test';
     const postBody = { to_SingleLink: { StringProperty: stringProp } };
 
-    mockCreateRequest({
-      body: postBody,
-      path: 'A_TestEntity'
-    });
+    mockCreateRequest(
+      {
+        body: postBody,
+        path: 'A_TestEntity'
+      },
+      testEntityApi
+    );
 
     const entity = testEntityApi
       .entityBuilder()
       .toSingleLink(
-        TestEntitySingleLink.builder().stringProperty(stringProp).build()
+        testEntitySingleLinkApi.schema
+          .entityBuilder()
+          .stringProperty(stringProp)
+          .build()
       )
       .build();
 
@@ -108,16 +119,20 @@ describe('CreateRequestBuilder', () => {
       { KeyProperty: keyProp, StringProperty: stringProp }
     ];
 
-    mockCreateRequest({
-      body: { to_MultiLink: linkedEntityBody },
-      path: 'A_TestEntity',
-      responseBody: { to_MultiLink: { results: linkedEntityBody } }
-    });
+    mockCreateRequest(
+      {
+        body: { to_MultiLink: linkedEntityBody },
+        path: 'A_TestEntity',
+        responseBody: { to_MultiLink: { results: linkedEntityBody } }
+      },
+      testEntityApi
+    );
 
     const entity = testEntityApi
       .entityBuilder()
       .toMultiLink([
-        TestEntityMultiLink.builder()
+        testEntityMultiLinkApi
+          .entityBuilder()
           .keyProperty(keyProp)
           .stringProperty(stringProp)
           .build()
@@ -148,10 +163,13 @@ describe('CreateRequestBuilder', () => {
       ...customFields
     };
 
-    mockCreateRequest({
-      body: postBody,
-      path: 'A_TestEntity'
-    });
+    mockCreateRequest(
+      {
+        body: postBody,
+        path: 'A_TestEntity'
+      },
+      testEntityApi
+    );
 
     const entity = testEntityApi
       .entityBuilder()
@@ -174,7 +192,8 @@ describe('CreateRequestBuilder', () => {
     const parentKeyGuid = uuid();
     const parentKeyString = 'test-key';
 
-    const childEntity = TestEntityMultiLink.builder()
+    const childEntity = testEntityMultiLinkApi
+      .entityBuilder()
       .booleanProperty(booleanProp)
       .int16Property(int16Prop)
       .build();
@@ -193,26 +212,32 @@ describe('CreateRequestBuilder', () => {
       createUriConverter(defaultDeSerializers)
     )}/to_MultiLink`;
 
-    mockCreateRequest({
-      body: postBody,
-      path: toChildPath
-    });
+    mockCreateRequest(
+      {
+        body: postBody,
+        path: toChildPath
+      },
+      testEntityApi
+    );
 
     const actual = await new CreateRequestBuilder(
-      TestEntityMultiLink,
+      testEntityMultiLinkApi,
       childEntity
     )
-      .asChildOf(parentEntity, TestEntity.TO_MULTI_LINK)
+      .asChildOf(parentEntity, testEntityApi.schema.TO_MULTI_LINK)
       .execute(defaultDestination);
 
     testPostRequestOutcome(actual, childEntity.setOrInitializeRemoteState());
   });
 
   it('throws an error when request execution fails', async () => {
-    mockCreateRequest({
-      body: () => true,
-      statusCode: 500
-    });
+    mockCreateRequest(
+      {
+        body: () => true,
+        statusCode: 500
+      },
+      testEntityApi
+    );
 
     const someEntity = testEntityApi.entityBuilder().stringProperty('').build();
 
@@ -255,10 +280,13 @@ describe('CreateRequestBuilder', () => {
       const stringProp = 'testStr';
       const postBody = { KeyPropertyGuid: keyProp, StringProperty: stringProp };
 
-      mockCreateRequest({
-        body: postBody,
-        path: 'A_TestEntity'
-      });
+      mockCreateRequest(
+        {
+          body: postBody,
+          path: 'A_TestEntity'
+        },
+        testEntityApi
+      );
 
       const entity = testEntityApi
         .entityBuilder()

@@ -1,7 +1,7 @@
 import { TestEntityEndsWithSomethingElse } from './TestEntityEndsWithSomethingElse';
 import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
-import { DeSerializers } from '@sap-cloud-sdk/odata-v2';
-import { EdmTypeField, CustomField, EntityBuilderType, EntityApi, Time } from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, DeSerializers } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, EntityBuilderType, EntityApi, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
 export declare class TestEntityEndsWithSomethingElseApi<BinaryT = string, BooleanT = boolean, ByteT = number, DecimalT = BigNumber, DoubleT = number, FloatT = number, Int16T = number, Int32T = number, Int64T = BigNumber, GuidT = string, SByteT = number, SingleT = number, StringT = string, AnyT = any, DateTimeT = Moment, DateTimeOffsetT = Moment, TimeT = Time> implements EntityApi<TestEntityEndsWithSomethingElse<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>>, DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeT, DateTimeOffsetT, TimeT>> {

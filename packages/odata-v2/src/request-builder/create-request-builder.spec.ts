@@ -96,7 +96,7 @@ describe('CreateRequestBuilder', () => {
     const entity = testEntityApi
       .entityBuilder()
       .toSingleLink(
-        testEntitySingleLinkApi.schema
+        testEntitySingleLinkApi
           .entityBuilder()
           .stringProperty(stringProp)
           .build()

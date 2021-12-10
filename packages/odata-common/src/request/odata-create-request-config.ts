@@ -48,7 +48,7 @@ export class ODataCreateRequestConfig<
     return (
       this.oDataUri.getResourcePathForKeys(
         this.parentKeys,
-        this.childField._linkedEntityApi
+        this.childField._entityApi
       ) +
       '/' +
       this.childField._fieldName

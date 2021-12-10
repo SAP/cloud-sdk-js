@@ -112,7 +112,7 @@ export abstract class MethodRequestBuilder<
   ): Promise<ODataRequest<RequestConfigT>>;
   /**
    * Build an ODataRequest that holds essential configuration for the service request and executes it.
-   * @param destination - Targeted destination or DestionationFetchOptions on which the request is performed.
+   * @param destination - Targeted destination or DestinationFetchOptions on which the request is performed.
    * @returns The OData request executor including the destination configuration, if one was given.
    */
   protected build(

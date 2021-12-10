@@ -1,5 +1,8 @@
-import { TestEntityMultiLinkApi } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { TestEntityApi } from '@sap-cloud-sdk/test-services/v2/test-service/TestEntityApi';
+import {
+  testEntityMultiLinkApi,
+  testEntitySingleLinkApi
+} from '../test/test-util';
 
 describe('remote state', () => {
   it('setOrInitializeRemoteState() sets remote state on entity', () => {
@@ -7,13 +10,13 @@ describe('remote state', () => {
       .entityBuilder()
       .stringProperty('test')
       .toSingleLink(
-        new TestEntitySingleLinkApi()
+        testEntitySingleLinkApi
           .entityBuilder()
           .stringProperty('singleLink')
           .build()
       )
       .toMultiLink([
-        new TestEntityMultiLinkApi()
+        testEntityMultiLinkApi
           .entityBuilder()
           .stringProperty('multiLink')
           .build()

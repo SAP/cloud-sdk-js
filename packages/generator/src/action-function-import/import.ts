@@ -53,6 +53,7 @@ function actionFunctionImportDeclarations(
         ...complexTypeRelatedImports(returnTypes),
         ...version,
         ...responseTransformerFunctionVersionDependent,
+        'DeSerializers',
         'DefaultDeSerializers',
         'defaultDeSerializers'
       ],

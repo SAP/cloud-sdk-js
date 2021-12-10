@@ -39,7 +39,7 @@ export class GetByKeyRequestBuilder<
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
-    keys: Record<string, FieldType>
+    keys: Record<string, any>
   ) {
     super(
       entityApi,

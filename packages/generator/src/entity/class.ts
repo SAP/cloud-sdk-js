@@ -91,11 +91,7 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
     name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
-    type:
-      (prop.isComplex
-        ? `${prop.jsType}<T>`
-        : `DeserializedType<T, '${prop.edmType}'>`) +
-      (prop.nullable ? ' | null' : ''),
+    type: getPropertyType(prop),
     docs: [
       addLeadingNewline(
         getPropertyDescription(prop, {
@@ -105,6 +101,32 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
       )
     ]
   };
+}
+
+export function getPropertyType(prop: VdmProperty){
+  if (prop.isCollection) {
+    if (prop.isComplex) {
+      return `${prop.jsType}<T>[]` + getNullableSuffix(prop);
+    }
+    if (prop.isEnum) {
+      return `${prop.jsType}[]` + getNullableSuffix(prop);
+    }
+    return `DeserializedType<T, '${prop.edmType}'>[]` + getNullableSuffix(prop);
+  }
+
+  if (prop.isComplex) {
+    return `${prop.jsType}<T>` + getNullableSuffix(prop);
+  }
+
+  if (prop.isEnum) {
+    return `${prop.jsType}` + getNullableSuffix(prop);
+  }
+
+  return `DeserializedType<T, '${prop.edmType}'>` + getNullableSuffix(prop);
+}
+
+function getNullableSuffix(prop: VdmProperty){
+  return prop.nullable ? ' | null' : '';
 }
 
 function navProperties(

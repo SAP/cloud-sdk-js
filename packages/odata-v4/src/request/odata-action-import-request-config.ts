@@ -1,13 +1,15 @@
-import { ODataRequestConfig } from '@sap-cloud-sdk/odata-common/internal';
+import { ODataRequestConfig, ODataUri } from '@sap-cloud-sdk/odata-common/internal';
 import {
   ActionImportParameters,
   ActionImportParameter
 } from './action-import-parameter';
+import { DeSerializers } from '../de-serializers';
 
 /**
  * @internal
  */
 export class ODataActionImportRequestConfig<
+  DeSerializersT extends DeSerializers,
   ParametersT
 > extends ODataRequestConfig {
   /**
@@ -15,11 +17,13 @@ export class ODataActionImportRequestConfig<
    * @param defaultServicePath - Default path of the service
    * @param actionImportName - The name of the action import.
    * @param parameters - Parameters of the action imports
+   * @param oDataUri - Union of necessary methods for the OData URI conversion.
    */
   constructor(
     defaultServicePath: string,
     readonly actionImportName: string,
-    parameters: ActionImportParameters<ParametersT>
+    public parameters: ActionImportParameters<ParametersT>,
+    protected oDataUri: ODataUri<DeSerializersT>
   ) {
     super('post', defaultServicePath);
     this.payload = this.buildHttpPayload(parameters);

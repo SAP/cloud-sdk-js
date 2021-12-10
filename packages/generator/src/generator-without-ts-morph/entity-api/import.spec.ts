@@ -32,11 +32,12 @@ describe('entity api import', () => {
       typeOnly: false
     } as Import;
 
-    const merged = [{
-      moduleIdentifier: './module1',
-      names: ['Type1', 'Type11'],
-      typeOnly: true
-    },
+    const merged = [
+      {
+        moduleIdentifier: './module1',
+        names: ['Type1', 'Type11'],
+        typeOnly: true
+      },
       {
         moduleIdentifier: './module1',
         names: ['Import1'],

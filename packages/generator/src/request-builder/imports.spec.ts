@@ -26,9 +26,7 @@ describe('imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v2/internal',
-        namedImports: [
-          'RequestBuilder'
-        ]
+        namedImports: ['RequestBuilder']
       },
       {
         kind: StructureKind.ImportDeclaration,

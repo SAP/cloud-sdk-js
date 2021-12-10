@@ -17,12 +17,11 @@ export function entityImportDeclarations(
   oDataVersion: ODataVersion
 ): ImportDeclarationStructure[] {
   return [
-    odataImportDeclaration(['Entity', 'DefaultDeSerializers', 'DeSerializers'], oDataVersion),
-    odataCommonImportDeclaration(
-      [
-        'DeserializedType'
-      ]
+    odataImportDeclaration(
+      ['Entity', 'DefaultDeSerializers', 'DeSerializers'],
+      oDataVersion
     ),
+    odataCommonImportDeclaration(['DeserializedType']),
     ...complexTypeImportDeclarations(entity.properties),
     ...enumTypeImportDeclarations(entity.properties)
   ];

@@ -8,7 +8,7 @@ import { createPropertyFieldInitializerForEntity } from '../../entity';
 /**
  * @internal
  */
-export function getSchema(entity: VdmEntity): string{
+export function getSchema(entity: VdmEntity): string {
   return `{ 
     ${flat(properties(entity)).join(unixEOL)} 
   }`;
@@ -21,6 +21,9 @@ function properties(entity: VdmEntity): string[][] {
 function property(prop: VdmProperty): string[] {
   return [
     documentationBlock`${getStaticPropertyDescription(prop)}`,
-    `${prop.staticPropertyName}: ${createPropertyFieldInitializerForEntity(prop, 'fieldBuilder')},`
+    `${prop.staticPropertyName}: ${createPropertyFieldInitializerForEntity(
+      prop,
+      'fieldBuilder'
+    )},`
   ];
 }

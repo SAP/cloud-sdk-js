@@ -1,0 +1,7 @@
+{
+  "COMMON_SRV": {
+    "directoryName": "common-service",
+    "servicePath": "/sap/opu/odata/sap/API_COMMON_SRV",
+    "npmPackageName": "common-service"
+  }
+}

@@ -55,7 +55,7 @@ const logger = createLogger({
 });
 
 export async function generate(options: GeneratorOptions): Promise<void> {
-  const projectAndServices  = await generateProject(options);
+  const projectAndServices = await generateProject(options);
   if (!projectAndServices) {
     throw Error('The project is undefined.');
   }
@@ -130,33 +130,37 @@ export async function generateProject(
     { overwrite: true }
   );
 
-  return { project, services } ;
+  return { project, services };
 }
 
-interface ProjectAndServices {
+/**
+ * @internal
+ */
+export interface ProjectAndServices {
   project: Project;
   services: VdmServiceMetadata[];
 }
 
-async function generateFilesWithoutTsMorph(services: VdmServiceMetadata[], options: GeneratorOptions){
-  const promises = services.map(service =>
-    generateApi(service, options)
-  );
+async function generateFilesWithoutTsMorph(
+  services: VdmServiceMetadata[],
+  options: GeneratorOptions
+) {
+  const promises = services.map(service => generateApi(service, options));
   await Promise.all(promises);
 }
 
 async function generateApi(
   service: VdmServiceMetadata,
-  options: GeneratorOptions): Promise<void>{
+  options: GeneratorOptions
+): Promise<void> {
   const serviceDir = resolvePath(service.directoryName, options);
-  await service.entities.map(
-    entity =>
-      createFile(
-        serviceDir,
-        `${entity.className}Api.ts`,
-        file(entity, service),
-        options.forceOverwrite
-      )
+  await service.entities.map(entity =>
+    createFile(
+      serviceDir,
+      `${entity.className}Api.ts`,
+      file(entity, service),
+      options.forceOverwrite
+    )
   );
 }
 

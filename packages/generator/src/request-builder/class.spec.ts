@@ -6,7 +6,9 @@ import { requestBuilderClass } from './class';
 describe('request builder class', () => {
   it('should generate request builder correctly', () => {
     const requestBuilder = requestBuilderClass(breakfastEntity);
-    expect(requestBuilder.name).toBe('BreakfastRequestBuilder<T extends DeSerializers = DefaultDeSerializers>');
+    expect(requestBuilder.name).toBe(
+      'BreakfastRequestBuilder<T extends DeSerializers = DefaultDeSerializers>'
+    );
     expect(requestBuilder.extends).toBe('RequestBuilder<Breakfast<T>, T>');
 
     const methods = requestBuilder.methods!.map(method => ({
@@ -27,19 +29,22 @@ describe('request builder class', () => {
     const getAll = {
       name: 'getAll',
       returnType: 'GetAllRequestBuilder<Breakfast<T>, T>',
-      statements: 'return new GetAllRequestBuilder<Breakfast<T>, T>(this.entityApi);',
+      statements:
+        'return new GetAllRequestBuilder<Breakfast<T>, T>(this.entityApi);',
       parameters: undefined
     };
     const create = {
       name: 'create',
       returnType: 'CreateRequestBuilder<Breakfast<T>, T>',
-      statements: 'return new CreateRequestBuilder<Breakfast<T>, T>(this.entityApi, entity);',
+      statements:
+        'return new CreateRequestBuilder<Breakfast<T>, T>(this.entityApi, entity);',
       parameters: [{ name: 'entity', type: 'Breakfast<T>' }]
     };
     const update = {
       name: 'update',
       returnType: 'UpdateRequestBuilder<Breakfast<T>, T>',
-      statements: 'return new UpdateRequestBuilder<Breakfast<T>, T>(this.entityApi, entity);',
+      statements:
+        'return new UpdateRequestBuilder<Breakfast<T>, T>(this.entityApi, entity);',
       parameters: [{ name: 'entity', type: 'Breakfast<T>' }]
     };
     expect(methods).toEqual([getByKey, getAll, create, update]);

@@ -29,7 +29,8 @@
     "prepare": "yarn compile",
     "test": "yarn jest",
     "coverage": "yarn jest --coverage",
-    "check:dependencies": "depcheck .  --ignores=@sap-cloud-sdk/odata-common"
+    "check:dependencies": "depcheck .  --ignores=@sap-cloud-sdk/odata-common",
+    "test123": "ts-node test/generate-common-entity.ts"
   },
   "dependencies": {
     "@sap-cloud-sdk/http-client": "^1.50.0",

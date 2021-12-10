@@ -1,6 +1,4 @@
-import {
-  breakfastEntity,
-} from '../../../test/test-util/data-model';
+import { breakfastEntity } from '../../../test/test-util/data-model';
 import { classContent } from './class';
 
 describe('entity api class', () => {

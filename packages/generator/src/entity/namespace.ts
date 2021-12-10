@@ -75,7 +75,10 @@ function getFieldInitializer(
   };
 }
 
-export function createPropertyFieldInitializerForEntity(prop: VdmProperty, fieldBuilderName = '_fieldBuilder'): string {
+export function createPropertyFieldInitializerForEntity(
+  prop: VdmProperty,
+  fieldBuilderName = '_fieldBuilder'
+): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
       return `${fieldBuilderName}.buildCollectionField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;

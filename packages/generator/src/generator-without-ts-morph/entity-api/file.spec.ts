@@ -1,5 +1,6 @@
 import {
-  breakfastEntity, foodService
+  breakfastEntity,
+  foodService
 } from '../../../test/test-util/data-model';
 import { file } from './file';
 

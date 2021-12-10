@@ -36,8 +36,9 @@ function property(prop: VdmProperty): PropertySignatureStructure {
     name: prop.instancePropertyName + (prop.nullable ? '?' : ''),
     // todo collection
     type: prop.isComplex
-      ? 'TestComplexType<DeSerializersT>' + (prop.nullable ? ' | null' : '')
-      : `DeserializedType<DeSerializersT, '${prop.edmType}'>` + (prop.nullable ? ' | null' : '')
+      ? `${prop.jsType}<DeSerializersT>` + (prop.nullable ? ' | null' : '')
+      : `DeserializedType<DeSerializersT, '${prop.edmType}'>` +
+        (prop.nullable ? ' | null' : '')
   };
 }
 
@@ -66,6 +67,9 @@ function navProperty(
   return {
     kind: StructureKind.PropertySignature,
     name: navProp.instancePropertyName + (navProp.isCollection ? '' : '?'),
-    type: entity.className + 'Type<DeSerializersT>' + (navProp.isCollection ? '[]' : ' | null')
+    type:
+      entity.className +
+      'Type<DeSerializersT>' +
+      (navProp.isCollection ? '[]' : ' | null')
   };
 }

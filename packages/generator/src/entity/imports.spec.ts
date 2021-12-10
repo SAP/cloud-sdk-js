@@ -31,9 +31,7 @@ const expectedEntityImports = [
   },
   {
     moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
-    namedImports: [
-      'DeserializedType'
-    ]
+    namedImports: ['DeserializedType']
   }
 ];
 

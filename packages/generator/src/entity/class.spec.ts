@@ -11,7 +11,9 @@ import { entityClass } from './class';
 describe('entity class generator', () => {
   it('creates a class', () => {
     const classDeclaration = entityClass(breakfastEntity, foodService);
-    expect(classDeclaration.name).toBe(`${breakfastEntity.className}<T extends DeSerializers = DefaultDeSerializers>`);
+    expect(classDeclaration.name).toBe(
+      `${breakfastEntity.className}<T extends DeSerializers = DefaultDeSerializers>`
+    );
     const staticProperties = classDeclaration.properties!.filter(
       prop => prop.isStatic
     );
@@ -26,13 +28,19 @@ describe('entity class generator', () => {
       prop => !prop.isStatic
     );
     expect(instanceProperties.map(prop => [prop.name, prop.type])).toEqual([
-      [`${entityName.instancePropertyName}!`, "DeserializedType<T, 'Edm.String'>"],
-      [`${numberOfEggs.instancePropertyName}?`, "DeserializedType<T, 'Edm.Decimal'>"],
-      [`${breakfastTime.instancePropertyName}!`, "DeserializedType<T, 'Edm.DateTime'>"],
       [
-        `${toBrunch.instancePropertyName}?`,
-        'Brunch<T> | null'
-      ]
+        `${entityName.instancePropertyName}!`,
+        "DeserializedType<T, 'Edm.String'>"
+      ],
+      [
+        `${numberOfEggs.instancePropertyName}?`,
+        "DeserializedType<T, 'Edm.Decimal'>"
+      ],
+      [
+        `${breakfastTime.instancePropertyName}!`,
+        "DeserializedType<T, 'Edm.DateTime'>"
+      ],
+      [`${toBrunch.instancePropertyName}?`, 'Brunch<T> | null']
     ]);
 
     expect(classDeclaration.methods!.map(method => method.name)).toEqual([

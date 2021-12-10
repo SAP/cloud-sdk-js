@@ -1,6 +1,9 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import {
+  TestEntity,
+  TestEntityApi
+} from '@sap-cloud-sdk/test-services/v2/test-service';
 
-const builder = TestEntity.builder();
+const builder = new TestEntityApi().entityBuilder();
 
 // $ExpectError
 builder.keyPropertyString(undefined);

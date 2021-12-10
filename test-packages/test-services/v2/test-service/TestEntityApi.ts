@@ -29,6 +29,7 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
+import {Field} from "@sap-cloud-sdk/odata-common/dist/selectable";
 export class TestEntityApi<
   BinaryT = string,
   BooleanT = boolean,

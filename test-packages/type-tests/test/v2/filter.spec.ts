@@ -1,18 +1,25 @@
 import {
   TestEntity,
+  TestEntityApi,
   TestEntityMultiLink,
-  TestEntitySingleLink
+  TestEntityMultiLinkApi,
+  TestEntitySingleLink,
+  TestEntitySingleLinkApi
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { and, or } from '@sap-cloud-sdk/odata-common/internal';
 
+const testEntitySchema = new TestEntityApi().schema;
+const testEntityMultiLinkSchema = new TestEntityMultiLinkApi().schema;
+const testEntitySingleLinkSchema = new TestEntitySingleLinkApi().schema;
+
 // $ExpectType Filter<TestEntity, string | null>
-const stringProp = TestEntity.STRING_PROPERTY.equals('test');
+const stringProp = testEntitySchema.STRING_PROPERTY.equals('test');
 
 // $ExpectType Filter<TestEntity, boolean | null>
-const booleanProp = TestEntity.BOOLEAN_PROPERTY.equals(true);
+const booleanProp = testEntitySchema.BOOLEAN_PROPERTY.equals(true);
 
 // $ExpectType Filter<TestEntityMultiLink, number | null>
-const multiLinkInt16Prop = TestEntityMultiLink.INT_16_PROPERTY.equals(15);
+const multiLinkInt16Prop = testEntityMultiLinkSchema.INT_16_PROPERTY.equals(15);
 
 // $ExpectType FilterList<TestEntity>
 const filterAnd = and(stringProp, booleanProp);
@@ -30,21 +37,21 @@ and(multiLinkInt16Prop);
 and(stringProp, booleanProp, multiLinkInt16Prop);
 
 // $ExpectError
-TestEntity.TO_MULTI_LINK.filter;
+testEntitySchema.TO_MULTI_LINK.filter;
 
 // $ExpectType FilterLink<TestEntity, TestEntitySingleLink>
-TestEntity.TO_SINGLE_LINK.filter(
-  TestEntitySingleLink.STRING_PROPERTY.equals('test')
+testEntitySchema.TO_SINGLE_LINK.filter(
+  testEntitySingleLinkSchema.STRING_PROPERTY.equals('test')
 );
 
 // $ExpectType Filter<TestEntity, string>
-TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test');
+testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test');
 
 // $ExpectError
-TestEntity.COMPLEX_TYPE_PROPERTY.equals('test');
+testEntitySchema.COMPLEX_TYPE_PROPERTY.equals('test');
 
 // $ExpectError
-TestEntity.KEY_PROPERTY_STRING.equals(null);
+testEntitySchema.KEY_PROPERTY_STRING.equals(null);
 
 // $ExpectType Filter<TestEntity, string | null>
-TestEntity.STRING_PROPERTY.equals(null);
+testEntitySchema.STRING_PROPERTY.equals(null);

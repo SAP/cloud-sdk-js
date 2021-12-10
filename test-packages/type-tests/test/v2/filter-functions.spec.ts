@@ -1,6 +1,8 @@
 import {
   TestEntity,
-  TestEntitySingleLink
+  TestEntityApi,
+  TestEntitySingleLink,
+  TestEntitySingleLinkApi
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   filterFunctions,
@@ -8,6 +10,9 @@ import {
   substring,
   substringOf
 } from '@sap-cloud-sdk/odata-v2';
+
+const testEntitySchema = new TestEntityApi().schema;
+const testEntitySingleLinkSchema = new TestEntitySingleLinkApi().schema;
 
 /* Backwards compatibility */
 
@@ -22,25 +27,25 @@ length('str');
 
 // $ExpectType Filter<TestEntity, string>
 const filter = filterFunctions
-  .substring(TestEntity.STRING_PROPERTY, TestEntity.INT_16_PROPERTY)
+  .substring(testEntitySchema.STRING_PROPERTY, testEntitySchema.INT_16_PROPERTY)
   .equals('test');
 
 // $ExpectType GetAllRequestBuilder<TestEntity>
-TestEntity.requestBuilder().getAll().filter(filter);
+new TestEntityApi().requestBuilder().getAll().filter(filter);
 
 // $ExpectError
-TestEntitySingleLink.requestBuilder().getAll().filter(filter);
+new TestEntitySingleLinkApi().requestBuilder().getAll().filter(filter);
 
 filterFunctions.substring(
-  TestEntitySingleLink.STRING_PROPERTY,
-  TestEntity.STRING_PROPERTY // $ExpectError
+  testEntitySingleLinkSchema.STRING_PROPERTY,
+  testEntitySchema.STRING_PROPERTY // $ExpectError
 );
 
 // $ExpectType Filter<TestEntity, number>
-filterFunctions.length(TestEntity.STRING_PROPERTY).greaterThan(1);
+filterFunctions.length(testEntitySchema.STRING_PROPERTY).greaterThan(1);
 
 // $ExpectType Filter<TestEntity, number>
-filterFunctions.round(TestEntity.STRING_PROPERTY).greaterThan(1);
+filterFunctions.round(testEntitySchema.STRING_PROPERTY).greaterThan(1);
 
 // $ExpectType NumberFilterFunction<TestEntity>
-filterFunctions.day(TestEntity.STRING_PROPERTY);
+filterFunctions.day(testEntitySchema.STRING_PROPERTY);

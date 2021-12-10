@@ -14,16 +14,14 @@ jobs:
           node-version: '12.x'
       - run: yarn install --frozen-lockfile
       - name: Version 1 Stable Release
-        if:
-          if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           yarn lerna publish from-package --force-publish -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
       - name: Version 2 Beta Release
-        if:
-          if: github.ref == 'refs/heads/2.0'
+        if: github.ref == 'refs/heads/2.0'
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           yarn lerna publish --canary major --no-push --no-git-tag-version --dist-tag beta --force-publish -y

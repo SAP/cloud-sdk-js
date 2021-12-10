@@ -1,4 +1,4 @@
-import { codeBlock, unixEOL } from '@sap-cloud-sdk/util';
+import { codeBlock, ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
 import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import { getSchema } from './schema';
 
@@ -8,18 +8,18 @@ export function classContent(
 ): string {
   return codeBlock`export class ${
     entity.className
-  }Api<${getGenericTypesWithDefault()}> implements 
+  }Api<${getGenericTypesWithDefault(service.oDataVersion)}> implements 
     EntityApi<
       ${entity.className}<
-        DeSerializers<${getGenericTypes()}>
+        DeSerializers<${getGenericTypes(service.oDataVersion)}>
       >, 
-      DeSerializers<${getGenericTypes()}>
+      DeSerializers<${getGenericTypes(service.oDataVersion)}>
     > {
-  public deSerializers: DeSerializers<${getGenericTypes()}>;
+  public deSerializers: DeSerializers<${getGenericTypes(service.oDataVersion)}>;
   public schema: Record<string, any>;
 
   constructor(
-    deSerializers: Partial<DeSerializers<${getGenericTypes()}>> = defaultDeSerializers as any) {
+    deSerializers: Partial<DeSerializers<${getGenericTypes(service.oDataVersion)}>> = defaultDeSerializers as any) {
       this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
       const fieldBuilder = new FieldBuilder(${
         entity.className
@@ -32,16 +32,16 @@ export function classContent(
   entityConstructor = ${entity.className};
   
   requestBuilder(): ${entity.className}RequestBuilder<
-    DeSerializers<${getGenericTypes()}>
+    DeSerializers<${getGenericTypes(service.oDataVersion)}>
   > {
     return new ${entity.className}RequestBuilder(this);
   }
   
   entityBuilder(): EntityBuilderType<
     ${entity.className}<
-      DeSerializers<${getGenericTypes()}>
+      DeSerializers<${getGenericTypes(service.oDataVersion)}>
     >,
-    DeSerializers<${getGenericTypes()}>
+    DeSerializers<${getGenericTypes(service.oDataVersion)}>
   > {
     return entityBuilder(this);
   }
@@ -52,11 +52,11 @@ export function classContent(
   ): CustomField<
   ${entity.className}<
       DeSerializers<
-      ${getGenericTypes()}
+      ${getGenericTypes(service.oDataVersion)}
       >
     >,
     DeSerializers<
-    ${getGenericTypes()}
+    ${getGenericTypes(service.oDataVersion)}
     >,
     NullableT
   > {
@@ -70,18 +70,32 @@ export function classContent(
 }`;
 }
 
-function getGenericTypesWithDefault(): string {
-  return genericTypeAndDefault
+function getGenericTypesWithDefault(oDataVersion: ODataVersion): string {
+  return getGenericTypeAndDefault(oDataVersion)
     .map(typeAndDefault => `${typeAndDefault[0]} = ${typeAndDefault[1]}`)
     .join(`,${unixEOL}`);
 }
-function getGenericTypes(): string {
-  return genericTypeAndDefault
+
+function getGenericTypes(oDataVersion: ODataVersion): string {
+  return getGenericTypeAndDefault(oDataVersion)
     .map(typeAndDefault => typeAndDefault[0])
     .join(`,${unixEOL}`);
 }
 
-const genericTypeAndDefault: string[][] = [
+function getGenericTypeAndDefault(oDataVersion: ODataVersion): string[][]{
+  const nonCommonGenericTypeAndDefault = oDataVersion === 'v4' ?
+    [['DateT', 'Moment'],
+     ['DurationT', 'Duration'],
+     ['TimeOfDayT', 'Time']
+    ]
+    :[
+      ['DateTimeT', 'Moment'],
+      ['TimeT', 'Time']
+    ];
+  return [...commonGenericTypeAndDefault, ...nonCommonGenericTypeAndDefault];
+}
+
+const commonGenericTypeAndDefault: string[][] = [
   ['BinaryT', 'string'],
   ['BooleanT', 'boolean'],
   ['ByteT', 'number'],
@@ -96,7 +110,10 @@ const genericTypeAndDefault: string[][] = [
   ['SingleT', 'number'],
   ['StringT', 'string'],
   ['AnyT', 'any'],
-  ['DateTimeT', 'Moment'],
-  ['DateTimeOffsetT', 'Moment'],
-  ['TimeT', 'Time']
+  ['DateTimeOffsetT', 'Moment']
+  // ['DateTimeT', 'Moment'],//v2
+  // ['TimeT', 'Time'], //v2
+  // ['DateT', 'Moment'], //v4
+  // ['DurationT', 'Duration'],//v4
+  // ['TimeOfDayT', 'Time'] //v4
 ];

@@ -8,13 +8,14 @@ import {
   transformReturnValueForEdmType,
   transformReturnValueForEntity
 } from './response-transformers';
+import { testEntityApi } from '../../test/test-util';
 
 describe('Response transformer', () => {
   it('should transform for TestEntity', () => {
     const entityData = createOriginalTestEntityData1();
     const expected = createTestEntity(entityData);
 
-    const actual = transformReturnValueForEntity(entityData, TestEntity);
+    const actual = transformReturnValueForEntity(entityData, testEntityApi);
     expect(actual).toEqual(expected);
   });
 

@@ -18,16 +18,23 @@ import {
 } from '../../../../test-resources/test/test-util/test-data';
 import { any } from '../filter';
 import { GetAllRequestBuilder } from './get-all-request-builder';
+import { DefaultDeSerializers } from '../de-serializers';
+import {
+  testEntityApi,
+  testEntityLvl2MultiLinkApi,
+  testEntityMultiLinkApi,
+  testEntitySingleLinkApi
+} from '../../test/test-util';
 
 describe('GetAllRequestBuilder', () => {
-  let requestBuilder: GetAllRequestBuilder<TestEntity>;
+  let requestBuilder: GetAllRequestBuilder<TestEntity, DefaultDeSerializers>;
 
   afterEach(() => {
     unmockDestinationsEnv();
   });
 
   beforeEach(() => {
-    requestBuilder = new GetAllRequestBuilder(TestEntity);
+    requestBuilder = new GetAllRequestBuilder(testEntityApi);
   });
 
   describe('url', () => {
@@ -43,9 +50,9 @@ describe('GetAllRequestBuilder', () => {
         '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_MultiLink($expand=to_MultiLink1($expand=to_MultiLink2))';
       const actual = await requestBuilder
         .expand(
-          TestEntity.TO_MULTI_LINK.expand(
-            TestEntityMultiLink.TO_MULTI_LINK_1.expand(
-              TestEntityLvl2MultiLink.TO_MULTI_LINK_2.expand()
+          testEntityApi.schema.TO_MULTI_LINK.expand(
+            testEntityMultiLinkApi.schema.TO_MULTI_LINK_1.expand(
+              testEntityLvl2MultiLinkApi.schema.TO_MULTI_LINK_2.expand()
             )
           )
         )
@@ -59,7 +66,7 @@ describe('GetAllRequestBuilder', () => {
       '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_SingleLink($select=BooleanProperty)';
     const actual = await requestBuilder
       .expand(
-        TestEntity.TO_SINGLE_LINK.select(TestEntitySingleLink.BOOLEAN_PROPERTY)
+        testEntityApi.schema.TO_SINGLE_LINK.select(testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY)
       )
       .url(defaultDestination);
     expect(actual).toBe(expected);
@@ -74,10 +81,10 @@ describe('GetAllRequestBuilder', () => {
         {
           responseBody: { value: [testEntity1, testEntity2] }
         },
-        TestEntity
+        testEntityApi
       );
 
-      const actual = await new GetAllRequestBuilder(TestEntity).execute(
+      const actual = await new GetAllRequestBuilder(testEntityApi).execute(
         defaultDestination
       );
       expect(actual).toEqual([
@@ -93,7 +100,7 @@ describe('GetAllRequestBuilder', () => {
           query: { $top: 1 },
           responseBody: { value: [testEntity1] }
         },
-        TestEntity
+        testEntityApi
       );
 
       const actual = await requestBuilder.top(1).execute(defaultDestination);
@@ -107,7 +114,7 @@ describe('GetAllRequestBuilder', () => {
           query: { $skip: 1 },
           responseBody: { value: [testEntity2] }
         },
-        TestEntity
+        testEntityApi
       );
       const actual = await requestBuilder.skip(1).execute(defaultDestination);
       expect(actual).toEqual([createTestEntity(testEntity2)]);
@@ -123,11 +130,11 @@ describe('GetAllRequestBuilder', () => {
           },
           responseBody: { value: [testEntity] }
         },
-        TestEntity
+        testEntityApi
       );
       const actual = await requestBuilder
-        .select(TestEntity.ALL_FIELDS)
-        .expand(TestEntity.TO_SINGLE_LINK, TestEntity.TO_MULTI_LINK)
+        .select(testEntityApi.schema.ALL_FIELDS)
+        .expand(testEntityApi.schema.TO_SINGLE_LINK, testEntityApi.schema.TO_MULTI_LINK)
         .execute(defaultDestination);
       expect(actual).toEqual([createTestEntity(testEntity)]);
     });
@@ -142,14 +149,14 @@ describe('GetAllRequestBuilder', () => {
           },
           responseBody: { value: [testEntity] }
         },
-        TestEntity
+        testEntityApi
       );
       const actual = await requestBuilder
         .expand(
-          TestEntity.TO_SINGLE_LINK,
-          TestEntity.TO_MULTI_LINK.filter(
-            TestEntityMultiLink.TO_MULTI_LINK_1.filter(
-              any(TestEntityLvl2MultiLink.STRING_PROPERTY.notEquals('test'))
+          testEntityApi.schema.TO_SINGLE_LINK,
+          testEntityApi.schema.TO_MULTI_LINK.filter(
+            testEntityMultiLinkApi.schema.TO_MULTI_LINK_1.filter(
+              any(testEntityLvl2MultiLinkApi.schema.STRING_PROPERTY.notEquals('test'))
             )
           )
         )
@@ -161,7 +168,7 @@ describe('GetAllRequestBuilder', () => {
       mockCountRequest(
         defaultDestination,
         4711,
-        TestEntity.requestBuilder().getAll()
+        testEntityApi.requestBuilder().getAll()
       );
       const count = await requestBuilder.count().execute(defaultDestination);
       expect(count).toBe(4711);
@@ -173,7 +180,7 @@ describe('GetAllRequestBuilder', () => {
       mockCountRequest(
         defaultDestination,
         4711,
-        TestEntity.requestBuilder().getAll()
+        testEntityApi.requestBuilder().getAll()
       );
       const count = await requestBuilder.count().execute(defaultDestination);
       expect(count).toBe(4711);

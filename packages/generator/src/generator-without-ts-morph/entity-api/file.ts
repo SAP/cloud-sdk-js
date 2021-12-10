@@ -1,8 +1,9 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { Import, serializeImports } from '../../generator-common';
-import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
+import { VdmEntity, VdmMappedEdmType, VdmServiceMetadata } from '../../vdm-types';
 import {
-  navPropertyFieldTypeImportNames,
+  externalImportDeclaration,
+  navPropertyFieldTypeImportNames, potentialExternalImportDeclarations,
   propertyFieldTypeImportNames,
   propertyTypeImportNames
 } from '../../imports';
@@ -20,9 +21,44 @@ export function file(entity: VdmEntity, service: VdmServiceMetadata): string {
   return [
     imports,
     "import { BigNumber } from 'bignumber.js';",
-    "import { Moment } from 'moment';",
+    "import { Moment, Duration } from 'moment';",
     content
   ].join(unixEOL);
+}
+
+// todo Use this function instead the one above, when the todo of "de-serializers.ts" is solved, so that unnecessary external dependencies are not imported.
+// export function file(entity: VdmEntity, service: VdmServiceMetadata): string {
+//   const imports = serializeImports([...getImports(entity, service), ...externalImports(entity.properties)]);
+//   const content = classContent(entity, service);
+//   return [
+//     imports,
+//     content
+//   ].join(unixEOL);
+// }
+
+function externalImports(
+  properties: VdmMappedEdmType[]
+): Import[] {
+  return potentialExternalImportDeclarations
+    .map(([moduleIdentifier, ...names]) =>
+      externalImport(properties, moduleIdentifier, names)
+    )
+    .filter(
+      declaration => declaration.names && declaration.names.length
+    );
+}
+
+function externalImport(
+  properties: VdmMappedEdmType[],
+  moduleIdentifier: string,
+  names: string[]
+): Import {
+  return {
+    moduleIdentifier,
+    names: names.filter(name =>
+      properties.map(prop => prop.jsType).includes(name)
+    )
+  };
 }
 
 function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
@@ -40,7 +76,6 @@ function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
     ...otherEntityApiImports(entity, service),
     // ...externalImports(entity.properties),
     ...complexTypeImports(entity.properties),
-    // todo test odata v4
     ...enumTypeImports(entity.properties),
     odataImport(
       [

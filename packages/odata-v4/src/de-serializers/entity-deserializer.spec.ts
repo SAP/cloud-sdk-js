@@ -7,21 +7,22 @@ import {
   deserializeComplexType,
   deserializeEntity
 } from './entity-deserializer';
+import { testEntityApi } from '../../test/test-util';
 
 describe('entity-deserializer', () => {
   it('should deserialize an enum property', () => {
     const enumProperty = TestEnumType.Member1;
-    expect(deserializeEntity({ EnumProperty: 'Member1' }, TestEntity)).toEqual(
-      TestEntity.builder().enumProperty(enumProperty).build()
+    expect(deserializeEntity({ EnumProperty: 'Member1' }, testEntityApi)).toEqual(
+      testEntityApi.entityBuilder().enumProperty(enumProperty).build()
     );
   });
 
   it('should deserialize an entity with string collection property', () => {
     const collectionProperty = ['abc', 'def'];
     expect(
-      deserializeEntity({ CollectionProperty: collectionProperty }, TestEntity)
+      deserializeEntity({ CollectionProperty: collectionProperty }, testEntityApi)
     ).toEqual(
-      TestEntity.builder().collectionProperty(collectionProperty).build()
+      testEntityApi.entityBuilder().collectionProperty(collectionProperty).build()
     );
   });
 
@@ -30,10 +31,10 @@ describe('entity-deserializer', () => {
     expect(
       deserializeEntity(
         { EnumCollectionProperty: enumCollectionProperty },
-        TestEntity
+        testEntityApi
       )
     ).toEqual(
-      TestEntity.builder()
+      testEntityApi.entityBuilder()
         .enumCollectionProperty(enumCollectionProperty)
         .build()
     );
@@ -52,10 +53,10 @@ describe('entity-deserializer', () => {
             { StringProperty: stringProp2 }
           ]
         },
-        TestEntity
+        testEntityApi
       )
     ).toEqual(
-      TestEntity.builder()
+      testEntityApi.entityBuilder()
         .complexTypeProperty({ stringProperty: stringProp1 })
         .complexTypeCollectionProperty([
           { stringProperty: stringProp1 },

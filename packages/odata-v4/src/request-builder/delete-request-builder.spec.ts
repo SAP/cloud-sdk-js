@@ -9,6 +9,7 @@ import {
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { defaultDeSerializers } from '../de-serializers';
 import { DeleteRequestBuilder } from './delete-request-builder';
+import { testEntityApi } from '../../test/test-util';
 
 const convertToUriFormat = createUriConverter(defaultDeSerializers);
 
@@ -27,9 +28,9 @@ describe('DeleteRequestBuilder', () => {
         keyPropString,
         convertToUriFormat
       )
-    });
+    }, testEntityApi);
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, {
+    const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
       KeyPropertyString: keyPropString
     }).execute(defaultDestination);
@@ -39,7 +40,7 @@ describe('DeleteRequestBuilder', () => {
 
   it('should resolve if entity and version identifier are given', async () => {
     const versionId = 'not-a-star';
-    const entity = TestEntity.builder()
+    const entity = testEntityApi.entityBuilder()
       .keyPropertyGuid(keyPropGuid)
       .keyPropertyString(keyPropString)
       .build()
@@ -54,9 +55,9 @@ describe('DeleteRequestBuilder', () => {
       additionalHeaders: {
         'if-match': versionId
       }
-    });
+    }, testEntityApi);
 
-    const deleteRequest = new DeleteRequestBuilder(TestEntity, entity).execute(
+    const deleteRequest = new DeleteRequestBuilder(testEntityApi, entity).execute(
       defaultDestination
     );
 

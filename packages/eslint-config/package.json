@@ -30,7 +30,7 @@
   "peerDependencies": {
     "eslint": "^8.0.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-unused-imports": "^1.50.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/eslint-parser": "^5.4.0"
   }

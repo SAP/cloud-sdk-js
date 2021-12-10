@@ -22,6 +22,11 @@ class TestEntityOtherMultiLinkApi {
              * Use to reference this property in query operations such as 'select' in the fluent request API.
              */
                 KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+                /**
+                 *
+                 * All fields selector.
+                 */
+                ALL_FIELDS: new internal_1.AllFields('*', TestEntityOtherMultiLink_1.TestEntityOtherMultiLink)
             };
     }
     requestBuilder() {

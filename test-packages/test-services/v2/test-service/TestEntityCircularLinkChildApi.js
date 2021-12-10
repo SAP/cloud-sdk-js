@@ -22,6 +22,16 @@ class TestEntityCircularLinkChildApi {
              * Use to reference this property in query operations such as 'select' in the fluent request API.
              */
                 KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+                /**
+                 * Static representation of the one-to-many navigation property [[toParent]] for query construction.
+                 * Use to reference this property in query operations such as 'select' in the fluent request API.
+                 */
+                TO_PARENT: new internal_1.Link('to_Parent', this, new TestEntityCircularLinkChildApi(deSerializers)),
+                /**
+                 *
+                 * All fields selector.
+                 */
+                ALL_FIELDS: new internal_1.AllFields('*', TestEntityCircularLinkChild_1.TestEntityCircularLinkChild)
             };
     }
     requestBuilder() {

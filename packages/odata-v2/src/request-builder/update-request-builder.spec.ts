@@ -337,7 +337,7 @@ describe('UpdateRequestBuilder', () => {
     expect(actual['remoteState']).toEqual(entity);
   });
 
-  it('warns if navigation properties are sent', async () => {
+  it.only('warns if navigation properties are sent', async () => {
     const entity = createTestEntity();
     entity.toMultiLink = [
       testEntityMultiLinkApi.entityBuilder().keyProperty('someKey').build()

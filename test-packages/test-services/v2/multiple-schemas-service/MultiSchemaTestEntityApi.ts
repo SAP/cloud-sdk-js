@@ -81,7 +81,7 @@ AnyT,
 DateTimeT,
 DateTimeOffsetT,
 TimeT>;
-  public schema;
+  public schema: Record<string, any>;
 
   constructor(
     deSerializers: Partial<DeSerializers<BinaryT,
@@ -109,7 +109,12 @@ TimeT>> = defaultDeSerializers as any) {
          * Static representation of the [[keyProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
-        KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false), 
+        KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+        /**
+         * 
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', MultiSchemaTestEntity) 
           }
       ;
     }

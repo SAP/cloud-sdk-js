@@ -5,6 +5,7 @@
  */
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
+import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
 import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
 import { EdmTypeField, Link, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
@@ -81,7 +82,7 @@ AnyT,
 DateTimeT,
 DateTimeOffsetT,
 TimeT>;
-  public schema;
+  public schema: Record<string, any>;
 
   constructor(
     deSerializers: Partial<DeSerializers<BinaryT,
@@ -109,7 +110,17 @@ TimeT>> = defaultDeSerializers as any) {
          * Static representation of the [[keyProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
-        KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false), 
+        KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+        /**
+         * Static representation of the one-to-many navigation property [[toChild]] for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        TO_CHILD: new Link('to_Child', this, new TestEntityCircularLinkChildApi(deSerializers)),
+        /**
+         * 
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntityCircularLinkParent) 
           }
       ;
     }

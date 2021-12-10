@@ -8,6 +8,8 @@ exports.TestEntityMultiLinkApi = void 0;
  */
 const TestEntityMultiLink_1 = require("./TestEntityMultiLink");
 const TestEntityMultiLinkRequestBuilder_1 = require("./TestEntityMultiLinkRequestBuilder");
+const TestEntityLvl2MultiLinkApi_1 = require("./TestEntityLvl2MultiLinkApi");
+const TestEntityLvl2SingleLinkApi_1 = require("./TestEntityLvl2SingleLinkApi");
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 const internal_1 = require("@sap-cloud-sdk/odata-common/internal");
 class TestEntityMultiLinkApi {
@@ -42,6 +44,21 @@ class TestEntityMultiLinkApi {
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
                 INT_16_PROPERTY: fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true),
+                /**
+                 * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+                 * Use to reference this property in query operations such as 'select' in the fluent request API.
+                 */
+                TO_MULTI_LINK: new internal_1.Link('to_MultiLink', this, new TestEntityLvl2MultiLinkApi_1.TestEntityLvl2MultiLinkApi(deSerializers)),
+                /**
+                 * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
+                 * Use to reference this property in query operations such as 'select' in the fluent request API.
+                 */
+                TO_SINGLE_LINK: new internal_1.OneToOneLink('to_SingleLink', this, new TestEntityLvl2SingleLinkApi_1.TestEntityLvl2SingleLinkApi(deSerializers)),
+                /**
+                 *
+                 * All fields selector.
+                 */
+                ALL_FIELDS: new internal_1.AllFields('*', TestEntityMultiLink_1.TestEntityMultiLink)
             };
     }
     requestBuilder() {

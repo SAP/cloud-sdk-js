@@ -142,7 +142,7 @@ export class TestEntity extends Entity implements TestEntityType {
    * Maximum length: 10.
    * @nullable
    */
-  collectionProperty?: string[];
+  collectionProperty?: DeserializedType<'Edm.String'>[];
   /**
    * Complex Type Property.
    * @nullable

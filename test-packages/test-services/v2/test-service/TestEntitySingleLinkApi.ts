@@ -5,6 +5,8 @@
  */
 import { TestEntitySingleLink } from './TestEntitySingleLink';
 import { TestEntitySingleLinkRequestBuilder } from './TestEntitySingleLinkRequestBuilder';
+import { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
+import { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
 import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
 import { EdmTypeField, OrderableEdmTypeField, Link, OneToOneLink, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
@@ -81,7 +83,7 @@ AnyT,
 DateTimeT,
 DateTimeOffsetT,
 TimeT>;
-  public schema;
+  public schema: Record<string, any>;
 
   constructor(
     deSerializers: Partial<DeSerializers<BinaryT,
@@ -129,7 +131,22 @@ TimeT>> = defaultDeSerializers as any) {
          * Static representation of the [[int16Property]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
-        INT_16_PROPERTY: fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true), 
+        INT_16_PROPERTY: fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true),
+        /**
+         * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        TO_MULTI_LINK: new Link('to_MultiLink', this, new TestEntityLvl2MultiLinkApi(deSerializers)),
+        /**
+         * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        TO_SINGLE_LINK: new OneToOneLink('to_SingleLink', this, new TestEntityLvl2SingleLinkApi(deSerializers)),
+        /**
+         * 
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntitySingleLink) 
           }
       ;
     }

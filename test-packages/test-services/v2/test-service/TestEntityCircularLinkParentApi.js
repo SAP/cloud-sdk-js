@@ -8,6 +8,7 @@ exports.TestEntityCircularLinkParentApi = void 0;
  */
 const TestEntityCircularLinkParent_1 = require("./TestEntityCircularLinkParent");
 const TestEntityCircularLinkParentRequestBuilder_1 = require("./TestEntityCircularLinkParentRequestBuilder");
+const TestEntityCircularLinkChildApi_1 = require("./TestEntityCircularLinkChildApi");
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 const internal_1 = require("@sap-cloud-sdk/odata-common/internal");
 class TestEntityCircularLinkParentApi {
@@ -22,6 +23,16 @@ class TestEntityCircularLinkParentApi {
              * Use to reference this property in query operations such as 'select' in the fluent request API.
              */
                 KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+                /**
+                 * Static representation of the one-to-many navigation property [[toChild]] for query construction.
+                 * Use to reference this property in query operations such as 'select' in the fluent request API.
+                 */
+                TO_CHILD: new internal_1.Link('to_Child', this, new TestEntityCircularLinkChildApi_1.TestEntityCircularLinkChildApi(deSerializers)),
+                /**
+                 *
+                 * All fields selector.
+                 */
+                ALL_FIELDS: new internal_1.AllFields('*', TestEntityCircularLinkParent_1.TestEntityCircularLinkParent)
             };
     }
     requestBuilder() {

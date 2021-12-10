@@ -26,4 +26,3 @@ const defaultEntityDeserializer = entityDeserializer(defaultDeSerializers);
 
 export const deserializeComplexType =
   defaultEntityDeserializer.deserializeComplexType;
-export const deserializeEntity = defaultEntityDeserializer.deserializeEntity;

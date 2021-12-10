@@ -42,6 +42,11 @@ class TestEntityLvl2MultiLinkApi {
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
                 INT_16_PROPERTY: fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true),
+                /**
+                 *
+                 * All fields selector.
+                 */
+                ALL_FIELDS: new internal_1.AllFields('*', TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink)
             };
     }
     requestBuilder() {

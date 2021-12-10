@@ -5,6 +5,9 @@
  */
 import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
+import { TestEntityMultiLinkApi } from './TestEntityMultiLinkApi';
+import { TestEntityOtherMultiLinkApi } from './TestEntityOtherMultiLinkApi';
+import { TestEntitySingleLinkApi } from './TestEntitySingleLinkApi';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
 import { Time, EdmTypeField, OrderableEdmTypeField, Link, OneToOneLink, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder } from '@sap-cloud-sdk/odata-common/internal';
@@ -82,7 +85,7 @@ AnyT,
 DateTimeT,
 DateTimeOffsetT,
 TimeT>;
-  public schema;
+  public schema: Record<string, any>;
 
   constructor(
     deSerializers: Partial<DeSerializers<BinaryT,
@@ -200,7 +203,27 @@ TimeT>> = defaultDeSerializers as any) {
          * Static representation of the [[complexTypeProperty]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
-        COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestComplexTypeField, true), 
+        COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestComplexTypeField, true),
+        /**
+         * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        TO_MULTI_LINK: new Link('to_MultiLink', this, new TestEntityMultiLinkApi(deSerializers)),
+        /**
+         * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        TO_OTHER_MULTI_LINK: new Link('to_OtherMultiLink', this, new TestEntityOtherMultiLinkApi(deSerializers)),
+        /**
+         * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
+         * Use to reference this property in query operations such as 'select' in the fluent request API.
+         */
+        TO_SINGLE_LINK: new OneToOneLink('to_SingleLink', this, new TestEntitySingleLinkApi(deSerializers)),
+        /**
+         * 
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntity) 
           }
       ;
     }

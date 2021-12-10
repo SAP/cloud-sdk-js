@@ -1,8 +1,11 @@
 import { codeBlock, unixEOL } from '@sap-cloud-sdk/util';
-import { VdmEntity } from '../../vdm-types';
+import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import { getSchema } from './schema';
 
-export function classContent(entity: VdmEntity): string {
+export function classContent(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): string {
   return codeBlock`export class ${
     entity.className
   }Api<${getGenericTypesWithDefault()}> implements 
@@ -13,7 +16,7 @@ export function classContent(entity: VdmEntity): string {
       DeSerializers<${getGenericTypes()}>
     > {
   public deSerializers: DeSerializers<${getGenericTypes()}>;
-  public schema;
+  public schema: Record<string, any>;
 
   constructor(
     deSerializers: Partial<DeSerializers<${getGenericTypes()}>> = defaultDeSerializers as any) {
@@ -22,7 +25,7 @@ export function classContent(entity: VdmEntity): string {
         entity.className
       }, this.deSerializers);
       this.schema = 
-        ${getSchema(entity)}
+        ${getSchema(entity, service)}
       ;
     }
   

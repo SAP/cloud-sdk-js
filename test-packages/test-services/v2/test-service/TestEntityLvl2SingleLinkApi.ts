@@ -81,7 +81,7 @@ AnyT,
 DateTimeT,
 DateTimeOffsetT,
 TimeT>;
-  public schema;
+  public schema: Record<string, any>;
 
   constructor(
     deSerializers: Partial<DeSerializers<BinaryT,
@@ -129,7 +129,12 @@ TimeT>> = defaultDeSerializers as any) {
          * Static representation of the [[int16Property]] property for query construction.
          * Use to reference this property in query operations such as 'select' in the fluent request API.
          */
-        INT_16_PROPERTY: fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true), 
+        INT_16_PROPERTY: fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true),
+        /**
+         * 
+         * All fields selector.
+         */
+        ALL_FIELDS: new AllFields('*', TestEntityLvl2SingleLink) 
           }
       ;
     }

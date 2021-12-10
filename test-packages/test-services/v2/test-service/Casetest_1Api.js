@@ -22,6 +22,11 @@ class Casetest_1Api {
              * Use to reference this property in query operations such as 'select' in the fluent request API.
              */
                 KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false),
+                /**
+                 *
+                 * All fields selector.
+                 */
+                ALL_FIELDS: new internal_1.AllFields('*', Casetest_1_1.Casetest_1)
             };
     }
     requestBuilder() {

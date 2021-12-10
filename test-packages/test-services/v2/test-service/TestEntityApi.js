@@ -8,6 +8,9 @@ exports.TestEntityApi = void 0;
  */
 const TestEntity_1 = require("./TestEntity");
 const TestEntityRequestBuilder_1 = require("./TestEntityRequestBuilder");
+const TestEntityMultiLinkApi_1 = require("./TestEntityMultiLinkApi");
+const TestEntityOtherMultiLinkApi_1 = require("./TestEntityOtherMultiLinkApi");
+const TestEntitySingleLinkApi_1 = require("./TestEntitySingleLinkApi");
 const TestComplexType_1 = require("./TestComplexType");
 const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
 const internal_1 = require("@sap-cloud-sdk/odata-common/internal");
@@ -113,6 +116,26 @@ class TestEntityApi {
                  * Use to reference this property in query operations such as 'select' in the fluent request API.
                  */
                 COMPLEX_TYPE_PROPERTY: fieldBuilder.buildComplexTypeField('ComplexTypeProperty', TestComplexType_1.TestComplexTypeField, true),
+                /**
+                 * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+                 * Use to reference this property in query operations such as 'select' in the fluent request API.
+                 */
+                TO_MULTI_LINK: new internal_1.Link('to_MultiLink', this, new TestEntityMultiLinkApi_1.TestEntityMultiLinkApi(deSerializers)),
+                /**
+                 * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
+                 * Use to reference this property in query operations such as 'select' in the fluent request API.
+                 */
+                TO_OTHER_MULTI_LINK: new internal_1.Link('to_OtherMultiLink', this, new TestEntityOtherMultiLinkApi_1.TestEntityOtherMultiLinkApi(deSerializers)),
+                /**
+                 * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
+                 * Use to reference this property in query operations such as 'select' in the fluent request API.
+                 */
+                TO_SINGLE_LINK: new internal_1.OneToOneLink('to_SingleLink', this, new TestEntitySingleLinkApi_1.TestEntitySingleLinkApi(deSerializers)),
+                /**
+                 *
+                 * All fields selector.
+                 */
+                ALL_FIELDS: new internal_1.AllFields('*', TestEntity_1.TestEntity)
             };
     }
     requestBuilder() {

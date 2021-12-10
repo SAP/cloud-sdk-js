@@ -24,6 +24,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v2')
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
-          yarn lerna publish --canary major --no-push --no-git-tag-version --dist-tag beta --force-publish -y
+          yarn lerna publish --canary major --no-push --no-git-tag-version --dist-tag beta --force-publish --preid "beta" -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

@@ -5,211 +5,86 @@
  */
 import { Casetest_1 } from './Casetest_1';
 import { Casetest_1RequestBuilder } from './Casetest_1RequestBuilder';
-import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
-import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DeSerializers,
+  mergeDefaultDeSerializersWith
+} from '@sap-cloud-sdk/odata-v2';
+import {
+  EdmTypeField,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  FieldBuilder,
+  Time
+} from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
-export class Casetest_1Api<BinaryT = string,
-BooleanT = boolean,
-ByteT = number,
-DecimalT = BigNumber,
-DoubleT = number,
-FloatT = number,
-Int16T = number,
-Int32T = number,
-Int64T = BigNumber,
-GuidT = string,
-SByteT = number,
-SingleT = number,
-StringT = string,
-AnyT = any,
-DateTimeT = Moment,
-DateTimeOffsetT = Moment,
-TimeT = Time> implements 
+export class Casetest_1Api<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any,
+  DateTimeT = Moment,
+  DateTimeOffsetT = Moment,
+  TimeT = Time
+> implements
     EntityApi<
       Casetest_1<
-        DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeT,
-DateTimeOffsetT,
-TimeT>
-      >, 
-      DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeT,
-DateTimeOffsetT,
-TimeT>
-    > {
-  public deSerializers: DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeT,
-DateTimeOffsetT,
-TimeT>;
-  public schema: Record<string, any>;
-
-  constructor(
-    deSerializers: Partial<DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeT,
-DateTimeOffsetT,
-TimeT>> = defaultDeSerializers as any) {
-      this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
-      const fieldBuilder = new FieldBuilder(Casetest_1, this.deSerializers);
-      this.schema = 
-        { 
-            /**
-         * Static representation of the [[keyPropertyString]] property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-        KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false),
-        /**
-         * 
-         * All fields selector.
-         */
-        ALL_FIELDS: new AllFields('*', Casetest_1) 
-          }
-      ;
-    }
-  
-  entityConstructor = Casetest_1;
-  
-  requestBuilder(): Casetest_1RequestBuilder<
-    DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeT,
-DateTimeOffsetT,
-TimeT>
-  > {
-    return new Casetest_1RequestBuilder(this);
-  }
-  
-  entityBuilder(): EntityBuilderType<
-    Casetest_1<
-      DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeT,
-DateTimeOffsetT,
-TimeT>
-    >,
-    DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeT,
-DateTimeOffsetT,
-TimeT>
-  > {
-    return entityBuilder(this);
-  }
-
-  customField<NullableT extends boolean = false>(
-    fieldName: string,
-    isNullable: NullableT = false as NullableT
-  ): CustomField<
-  Casetest_1<
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeT,
+          DateTimeOffsetT,
+          TimeT
+        >
+      >,
       DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
       >
-    >,
-    DeSerializers<
+    >
+{
+  public deSerializers: DeSerializers<
     BinaryT,
     BooleanT,
     ByteT,
@@ -227,6 +102,166 @@ TimeT>
     DateTimeT,
     DateTimeOffsetT,
     TimeT
+  >;
+  public schema: Record<string, any>;
+
+  constructor(
+    deSerializers: Partial<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >
+    > = defaultDeSerializers as any
+  ) {
+    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+    const fieldBuilder = new FieldBuilder(Casetest_1, this.deSerializers);
+    this.schema = {
+      /**
+       * Static representation of the [[keyPropertyString]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
+        'KeyPropertyString',
+        'Edm.String',
+        false
+      ),
+      /**
+       *
+       * All fields selector.
+       */
+      ALL_FIELDS: new AllFields('*', Casetest_1)
+    };
+  }
+
+  entityConstructor = Casetest_1;
+
+  requestBuilder(): Casetest_1RequestBuilder<
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+    >
+  > {
+    return new Casetest_1RequestBuilder(this);
+  }
+
+  entityBuilder(): EntityBuilderType<
+    Casetest_1<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+    >
+  > {
+    return entityBuilder(this);
+  }
+
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<
+    Casetest_1<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeT,
+        DateTimeOffsetT,
+        TimeT
+      >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
     >,
     NullableT
   > {

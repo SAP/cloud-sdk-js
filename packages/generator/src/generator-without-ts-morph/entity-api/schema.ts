@@ -19,15 +19,15 @@ import { linkClass } from '../../generator-utils';
  * @internal
  */
 export function getSchema(
-    entity: VdmEntity,
-    service: VdmServiceMetadata
+  entity: VdmEntity,
+  service: VdmServiceMetadata
 ): string {
   return `{ 
     ${[
-    ...properties(entity),
-    ...navigationProperties(entity, service),
-    allFieldsSelector(entity)
-  ].join(',\n')} 
+      ...properties(entity),
+      ...navigationProperties(entity, service),
+      allFieldsSelector(entity)
+    ].join(',\n')} 
   }`;
 }
 
@@ -39,33 +39,33 @@ function property(prop: VdmProperty): string {
   return [
     documentationBlock`${getStaticPropertyDescription(prop)}`,
     `${prop.staticPropertyName}: ${createPropertyFieldInitializerForEntity(
-        prop,
-        'fieldBuilder'
+      prop,
+      'fieldBuilder'
     )}`
   ].join('\n');
 }
 
 function navigationProperties(
-    entity: VdmEntity,
-    service: VdmServiceMetadata
+  entity: VdmEntity,
+  service: VdmServiceMetadata
 ): string[] {
   return entity.navigationProperties.map(navProp =>
-      navigationProperty(navProp, service)
+    navigationProperty(navProp, service)
   );
 }
 
 function navigationProperty(
-    navProp: VdmNavigationProperty,
-    service: VdmServiceMetadata
+  navProp: VdmNavigationProperty,
+  service: VdmServiceMetadata
 ): string {
   const matchedEntity = service.entities.find(
-      e => e.entitySetName === navProp.to
+    e => e.entitySetName === navProp.to
   );
   if (!matchedEntity) {
     throw Error(
-        `Failed to find the entity from the service: ${JSON.stringify(
-            service
-        )} for nav property ${navProp}`
+      `Failed to find the entity from the service: ${JSON.stringify(
+        service
+      )} for nav property ${navProp}`
     );
   }
 
@@ -74,8 +74,8 @@ function navigationProperty(
   return [
     documentationBlock`${getStaticNavPropertyDescription(navProp)}`,
     `${navProp.staticPropertyName}: new ${linkClass(
-        navProp,
-        service.oDataVersion
+      navProp,
+      service.oDataVersion
     )}('${navProp.originalName}', this, new ${toEntity}Api(deSerializers))`
   ].join('\n');
 }

@@ -3,17 +3,33 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v2';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v2';
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
-import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
-import { TestEntityOtherMultiLink, TestEntityOtherMultiLinkType } from './TestEntityOtherMultiLink';
-import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
+import {
+  TestEntityMultiLink,
+  TestEntityMultiLinkType
+} from './TestEntityMultiLink';
+import {
+  TestEntityOtherMultiLink,
+  TestEntityOtherMultiLinkType
+} from './TestEntityOtherMultiLink';
+import {
+  TestEntitySingleLink,
+  TestEntitySingleLinkType
+} from './TestEntitySingleLink';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityType<T> {
+export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements TestEntityType<T>
+{
   /**
    * Technical entity name for TestEntity.
    */
@@ -134,7 +150,9 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends 
   toSingleLink?: TestEntitySingleLink<T> | null;
 }
 
-export interface TestEntityType<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntityType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   keyPropertyGuid: DeserializedType<DeSerializersT, 'Edm.Guid'>;
   keyPropertyString: DeserializedType<DeSerializersT, 'Edm.String'>;
   stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'> | null;
@@ -149,10 +167,16 @@ export interface TestEntityType<DeSerializersT extends DeSerializers = DefaultDe
   floatProperty?: DeserializedType<DeSerializersT, 'Edm.Float'> | null;
   timeProperty?: DeserializedType<DeSerializersT, 'Edm.Time'> | null;
   dateTimeProperty?: DeserializedType<DeSerializersT, 'Edm.DateTime'> | null;
-  dateTimeOffSetProperty?: DeserializedType<DeSerializersT, 'Edm.DateTimeOffset'> | null;
+  dateTimeOffSetProperty?: DeserializedType<
+    DeSerializersT,
+    'Edm.DateTimeOffset'
+  > | null;
   byteProperty?: DeserializedType<DeSerializersT, 'Edm.Byte'> | null;
   sByteProperty?: DeserializedType<DeSerializersT, 'Edm.SByte'> | null;
-  somethingTheSdkDoesNotSupport?: DeserializedType<DeSerializersT, 'Edm.Any'> | null;
+  somethingTheSdkDoesNotSupport?: DeserializedType<
+    DeSerializersT,
+    'Edm.Any'
+  > | null;
   complexTypeProperty?: TestComplexType<DeSerializersT> | null;
   toMultiLink: TestEntityMultiLinkType<DeSerializersT>[];
   toOtherMultiLink: TestEntityOtherMultiLinkType<DeSerializersT>[];

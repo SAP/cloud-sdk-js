@@ -627,4 +627,6 @@ export namespace TestEntity {
 }
 
 // TestEntity.requestBuilder().getAll().filter(filterFunction('leng'))
-TestEntity.requestBuilder().getAll().filter(length(TestEntity.COLLECTION_PROPERTY))
+TestEntity.requestBuilder()
+  .getAll()
+  .filter(length(TestEntity.COLLECTION_PROPERTY));

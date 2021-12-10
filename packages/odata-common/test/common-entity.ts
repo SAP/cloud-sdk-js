@@ -295,7 +295,7 @@ export class CommonEntitySingleLinkApi<
     StringT,
     AnyT
   >;
-  public schema;
+  public schema: Record<string, any>;
 
   constructor(
     deSerializers: Partial<
@@ -332,7 +332,8 @@ export class CommonEntitySingleLinkApi<
         'StringProperty',
         'Edm.String',
         true
-      )
+      ),
+      ALL_FIELDS: new AllFields('*', CommonEntitySingleLink)
     };
   }
 
@@ -542,7 +543,7 @@ export class CommonEntityApi<
     StringT,
     AnyT
   >;
-  public schema;
+  public schema: Record<string, any>;
 
   constructor(
     deSerializers: Partial<
@@ -596,7 +597,13 @@ export class CommonEntityApi<
         'ComplexTypeProperty',
         CommonComplexTypeField,
         true
-      )
+      ),
+      TO_SINGLE_LINK: new OneToOneLink(
+        'to_SingleLink',
+        this,
+        new CommonEntitySingleLinkApi(deSerializers)
+      ),
+      ALL_FIELDS: new AllFields('*', CommonEntity)
     };
   }
 

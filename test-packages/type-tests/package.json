@@ -1,6 +1,6 @@
 {
   "name": "@sap-cloud-sdk/type-tests",
-  "version": "2.0.0",
+  "version": "1.50.0",
   "description": "Tests to ensure correct types in the SAP Cloud SDK for JavaScript.",
   "homepage": "https://sap.github.io/cloud-sdk/docs/js/overview-cloud-sdk-for-javascript",
   "license": "Apache-2.0",
@@ -12,10 +12,10 @@
     "check:dependencies": "echo Nothing to check here."
   },
   "dependencies": {
-    "@sap-cloud-sdk/http-client": "^2.0.0",
-    "@sap-cloud-sdk/odata-v2": "^2.0.0",
-    "@sap-cloud-sdk/odata-v4": "^2.0.0",
-    "@sap-cloud-sdk/test-services": "^2.0.0"
+    "@sap-cloud-sdk/http-client": "^1.50.0",
+    "@sap-cloud-sdk/odata-v2": "^1.50.0",
+    "@sap-cloud-sdk/odata-v4": "^1.50.0",
+    "@sap-cloud-sdk/test-services": "^1.50.0"
   },
   "devDependencies": {
     "dtslint": "^4.0.0"

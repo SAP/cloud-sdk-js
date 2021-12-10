@@ -163,7 +163,7 @@ function getEntityReturnType(
     ? {
         returnTypeCategory: VdmReturnTypeCategory.ENTITY,
         returnType: first(entities)!.className,
-        builderFunction: first(entities)!.className,
+        builderFunction: `new ${first(entities)!.className}Api(deSerializers)`,
         isNullable,
         isCollection
       }
@@ -184,7 +184,9 @@ function getComplexReturnType(
   return {
     returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
     returnType: complexType.typeName,
-    builderFunction: `(data) => deserializeComplexType(data, ${complexType.typeName})`,
+    builderFunction: `(data) => entityDeserializer(
+          deSerializers
+        ).deserializeComplexType(data, ${complexType.typeName})`,
     isNullable,
     isCollection
   };

@@ -18,12 +18,17 @@ export function functionImportFunction(
   const returnType = functionImportReturnType(functionImport);
   return {
     kind: StructureKind.Function,
-    name: functionImport.name,
+    name: `${functionImport.name}<DeSerializersT extends DeSerializers = DefaultDeSerializers>`,
     isExported: true,
     parameters: [
       {
         name: parameterName,
-        type: functionImport.parametersTypeName
+        type: `${functionImport.parametersTypeName}<DeSerializersT>`
+      },
+      {
+        name: 'deSerializers',
+        type: 'DeSerializersT',
+        initializer: 'defaultDeSerializers as any'
       }
     ],
     returnType,
@@ -55,15 +60,21 @@ function getFunctionImportStatements(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): string {
-  const context = functionImport.parameters
-    ? functionImport.parameters.reduce((cumulator, currentParameters) => {
-        if (cumulator !== `const params = {${unixEOL}`) {
-          cumulator += `,${unixEOL}`;
-        }
-        cumulator += `${currentParameters.parameterName}: new FunctionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
-        return cumulator;
-      }, `const params = {${unixEOL}`) + `${unixEOL}}`
-    : '{}';
+  // const context = functionImport.parameters
+  //   ? functionImport.parameters.reduce((cumulator, currentParameters) => {
+  //       if (cumulator !== `const params = {${unixEOL}`) {
+  //         cumulator += `,${unixEOL}`;
+  //       }
+  //       cumulator += `${currentParameters.parameterName}: new FunctionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
+  //       return cumulator;
+  //     }, `const params = {${unixEOL}`) + `${unixEOL}}`
+  //   : '{}';
+
+  const paramsLines = (functionImport.parameters || []).map(
+    param =>
+      `${param.parameterName}: new FunctionImportParameter('${param.originalName}', '${param.edmType}', ${parameterName}.${param.parameterName})`
+  );
+  const params = `const params = {\n${paramsLines.join(',\n')}\n};`;
 
   let parameters = getRequestBuilderArgumentsBase(functionImport, service);
   if (service.oDataVersion === 'v2') {
@@ -74,5 +85,5 @@ function getFunctionImportStatements(
     ', '
   )});`;
 
-  return context + unixEOL + unixEOL + returnStatement;
+  return [params, '\n', returnStatement].join('\n');
 }

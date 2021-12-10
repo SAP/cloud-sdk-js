@@ -1,13 +1,11 @@
 import {
   ClassDeclarationStructure,
-  MethodDeclarationStructure,
   PropertyDeclarationStructure,
   StructureKind
 } from 'ts-morph';
 import { prependPrefix } from '../internal-prefix';
 import {
   getEntityDescription,
-  getFunctionDoc,
   getNavPropertyDescription,
   getPropertyDescription,
   addLeadingNewline
@@ -37,7 +35,6 @@ export function entityClass(
       ...properties(entity),
       ...navProperties(entity, service)
     ],
-    methods: methods(),
     isExported: true,
     docs: [addLeadingNewline(getEntityDescription(entity, service))]
   };
@@ -72,15 +69,17 @@ function defaultServicePath(
   };
 }
 
-function keys(
-  entity: VdmEntity
-): PropertyDeclarationStructure {
+function keys(entity: VdmEntity): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
     name: prependPrefix('keys'),
     isStatic: true,
-    initializer: `[${entity.keys.map(key => `'${key.originalName}'`).join(',')}]`,
-    docs: [addLeadingNewline(`All key fields of the ${entity.className} entity`)]
+    initializer: `[${entity.keys
+      .map(key => `'${key.originalName}'`)
+      .join(',')}]`,
+    docs: [
+      addLeadingNewline(`All key fields of the ${entity.className} entity`)
+    ]
   };
 }
 
@@ -92,7 +91,9 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
   return {
     kind: StructureKind.Property,
     name: prop.instancePropertyName + (prop.nullable ? '?' : '!'),
-    type: prop.isComplex ? `${prop.jsType}<T>`: `DeserializedType<T, '${prop.edmType}'>`,
+    type: prop.isComplex
+      ? `${prop.jsType}<T>`
+      : `DeserializedType<T, '${prop.edmType}'>`,
     docs: [
       addLeadingNewline(
         getPropertyDescription(prop, {
@@ -130,35 +131,5 @@ function navProperty(
     name: navProp.instancePropertyName + (navProp.isCollection ? '!' : '?'),
     type: entity.className + '<T>' + (navProp.isCollection ? '[]' : ' | null'),
     docs: [addLeadingNewline(getNavPropertyDescription(navProp))]
-  };
-}
-
-function methods(): MethodDeclarationStructure[] {
-  return [
-    toJSON()
-  ];
-}
-
-function toJSON(): MethodDeclarationStructure {
-  return {
-    kind: StructureKind.Method,
-    name: 'toJSON',
-    isStatic: false,
-    statements: 'return { ...this, ...this._customFields };',
-    returnType: '{ [key: string]: any }',
-    docs: [
-      addLeadingNewline(
-        getFunctionDoc(
-          'Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.',
-          {
-            returns: {
-              type: '{ [key: string]: any }',
-              description:
-                'An object containing all instance variables + custom fields.'
-            }
-          }
-        )
-      )
-    ]
   };
 }

@@ -2,18 +2,14 @@ import { v4 as uuid } from 'uuid';
 import { defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import {
   TestEntity,
-  // @ts-ignore
   TestEntityApi,
-  // @ts-ignore
   TestEntitySingleLinkApi,
   TestEntityMultiLinkApi
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
   TestEntityWithEnumKey,
-  // @ts-ignore
   TestEntitySingleLinkApi as TestEntitySingleLinkApiV4,
-  // @ts-ignore
   TestEntityWithEnumKeyApi
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
@@ -74,7 +70,7 @@ export function createTestEntity(originalData): TestEntity {
   if (originalData.to_MultiLink) {
     entity.toMultiLink = originalData.to_MultiLink.map(ml =>
       new TestEntityMultiLinkApi()
-        // @ts-ignore
+
         .entityBuilder()
         .keyProperty(ml.KeyProperty)
         .build()
@@ -84,7 +80,6 @@ export function createTestEntity(originalData): TestEntity {
 }
 
 export function createTestEntityV4(originalData): TestEntityV4 {
-  // @ts-ignore
   const entity = new TestEntityApiV4()
     .entityBuilder()
     .keyPropertyGuid(originalData.KeyPropertyGuid)
@@ -103,7 +98,6 @@ export function createTestEntityV4(originalData): TestEntityV4 {
   }
   if (originalData.to_MultiLink) {
     entity.toMultiLink = originalData.to_MultiLink.map(ml =>
-      // @ts-ignore
       new TestEntityMultiLinkApiV4()
         .entityBuilder()
         .keyProperty(ml.KeyProperty)

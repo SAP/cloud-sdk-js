@@ -1,7 +1,6 @@
 import { EntityApi } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '..';
 import { Entity } from '../entity';
-import { deserializeEntity } from '../entity-deserializer';
+import { DeSerializers, deserializeEntity } from '../de-serializers';
 import { getSingleResult, getCollectionResult } from './response-data-accessor';
 /* eslint-disable valid-jsdoc */
 

@@ -2,7 +2,7 @@ import {
   EntitySerializer,
   entitySerializer as entitySerializerBase
 } from '@sap-cloud-sdk/odata-common/internal';
-import { defaultDeSerializers } from './de-serializers';
+import { defaultDeSerializers } from './default-de-serializers';
 
 /**
  * Entity serializer instance for v4 entities.

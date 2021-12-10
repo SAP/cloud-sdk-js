@@ -52,7 +52,9 @@ function actionFunctionImportDeclarations(
         ...edmRelatedImports(returnTypes),
         ...complexTypeRelatedImports(returnTypes),
         ...version,
-        ...responseTransformerFunctionVersionDependent
+        ...responseTransformerFunctionVersionDependent,
+        'DefaultDeSerializers',
+        'defaultDeSerializers'
       ],
       oDataVersion
     ),
@@ -67,7 +69,7 @@ function complexTypeRelatedImports(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
   )
-    ? ['deserializeComplexType']
+    ? ['entityDeserializer']
     : [];
 }
 
@@ -91,18 +93,34 @@ function returnTypeImports(
           returnType.returnTypeCategory !== VdmReturnTypeCategory.VOID &&
           returnType.returnTypeCategory !== VdmReturnTypeCategory.NEVER
       )
-      .map(returnType => returnTypeImport(returnType))
+      .reduce(
+        (imports, returnType) => [...imports, ...returnTypeImport(returnType)],
+        []
+      )
   );
 }
 
 function returnTypeImport(
   returnType: VdmActionFunctionImportReturnType
-): ImportDeclarationStructure {
-  return {
-    kind: StructureKind.ImportDeclaration,
-    namedImports: [returnType.returnType],
-    moduleSpecifier: `./${returnType.returnType}`
-  };
+): ImportDeclarationStructure[] {
+  const typeImports: ImportDeclarationStructure[] = [
+    {
+      kind: StructureKind.ImportDeclaration,
+      namedImports: [returnType.returnType],
+      moduleSpecifier: `./${returnType.returnType}`
+    }
+  ];
+  if (returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY) {
+    return [
+      ...typeImports,
+      {
+        kind: StructureKind.ImportDeclaration,
+        namedImports: [`${returnType.returnType}Api`],
+        moduleSpecifier: `./${returnType.returnType}Api`
+      }
+    ];
+  }
+  return typeImports;
 }
 
 /**

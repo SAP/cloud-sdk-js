@@ -78,25 +78,6 @@ export abstract class EntityBase {
   static _entityName: string;
   static _defaultServicePath: string;
 
-  // public static entityBuilder<EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
-  //   entityConstructor: Constructable<EntityT>,
-  //   deSerializers: DeSerializersT,
-  //   allFields: Record<string, any>
-  // ): EntityBuilderType<EntityT> {
-  //   const builder = new EntityBuilder<EntityT, DeSerializersT>(
-  //     entityConstructor,
-  //     deSerializers
-  //   );
-  //   allFields.forEach(field => {
-  //     const fieldName = `${camelCase(field._fieldName)}`;
-  //     builder[fieldName] = function (value) {
-  //       this.entity[fieldName] = value;
-  //       return this;
-  //     };
-  //   });
-  //   return builder as EntityBuilderType<EntityT>;
-  // }
-
   /**
    * The remote state of the entity.
    * Remote state refers to the last known state of the entity on the remote system from which it has been retrieved or to which it has been posted.
@@ -196,7 +177,7 @@ export abstract class EntityBase {
    * @param etag - The returned ETag version of the entity.
    * @returns The entity itself, to facilitate method chaining.
    */
-  public setVersionIdentifier(etag: string | undefined): this {
+  setVersionIdentifier(etag: string | undefined): this {
     if (etag && typeof etag === 'string') {
       nonEnumerable(this, '_versionIdentifier');
       this._versionIdentifier = etag;
@@ -212,7 +193,7 @@ export abstract class EntityBase {
    * @param state - State to be set as remote state.
    * @returns The entity itself, to facilitate method chaining
    */
-  public setOrInitializeRemoteState(state?: Record<string, any>): this {
+  setOrInitializeRemoteState(state?: Record<string, any>): this {
     if (!this.remoteState) {
       nonEnumerable(this, 'remoteState');
     }
@@ -233,7 +214,7 @@ export abstract class EntityBase {
    * Returns all updated custom field properties compared to the last known remote state.
    * @returns An object containing all updated custom properties, with their new values.
    */
-  public getUpdatedCustomFields(): Record<string, any> {
+  getUpdatedCustomFields(): Record<string, any> {
     if (!this.remoteState) {
       return this._customFields;
     }
@@ -255,7 +236,7 @@ export abstract class EntityBase {
    * Use [[getUpdatedCustomFields]], if you need custom fields.
    * @returns EntityBase with all properties that changed
    */
-  public getUpdatedProperties(): Record<string, any> {
+  getUpdatedProperties(): Record<string, any> {
     const current = this.asObject();
     return this.getUpdatedPropertyNames().reduce(
       (patch, key) => ({ ...patch, [key]: current[key] }),
@@ -269,7 +250,7 @@ export abstract class EntityBase {
    * Use [[getUpdatedCustomFields]], if you need custom fields.
    * @returns EntityBase with all properties that changed
    */
-  public getUpdatedPropertyNames(): string[] {
+  getUpdatedPropertyNames(): string[] {
     const currentState = this.asObject();
     const names = Object.keys(currentState).filter(
       key => this.propertyIsEnumerable(key) && !this.hasCustomField(key)
@@ -284,8 +265,10 @@ export abstract class EntityBase {
    * @returns An object containing all instance variables + custom fields.
    */
   toJSON(): { [key: string]: any } {
-    return { ...this, ...this._customFields };
+    const { schema, ...entity } = this;
+    return { ...entity, ...this._customFields };
   }
+
   protected isVisitedEntity<EntityT extends EntityBase>(
     entity: EntityT,
     visitedEntities: EntityBase[] = []

@@ -201,12 +201,6 @@ export class CommonEntitySingleLink<DeSerializersT extends DeSerializers>
   static _defaultServicePath = '/sap/opu/odata/sap/API_COMMON_SRV';
   keyProperty!: DeserializedType<DeSerializersT, 'Edm.String'>;
   stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
-
-  toJSON(): Record<string, any> {
-    // @ts-ignore
-    const { schema, ...entity } = this;
-    return { ...entity, ...this._customFields };
-  }
 }
 
 // static requestBuilder(): any {

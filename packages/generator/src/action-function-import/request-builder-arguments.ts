@@ -19,7 +19,8 @@ export function getRequestBuilderArgumentsBase(
     `'${service.servicePath}'`,
     `'${actionFunctionImport.originalName}'`,
     transformer,
-    'params'
+    'params',
+    'deSerializers'
   ];
 }
 

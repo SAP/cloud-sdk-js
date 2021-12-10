@@ -3,39 +3,15 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { TestEntityMultiLinkRequestBuilder } from './TestEntityMultiLinkRequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializationMiddleware,
-  Entity
-} from '@sap-cloud-sdk/odata-v2';
-import {
-  AllFields,
-  Constructable,
-  EdmTypeField,
-  EntityBuilderType,
-  Field,
-  FieldBuilder,
-  Link,
-  OneToOneLink,
-  OrderableEdmTypeField,
-  Time
-} from '@sap-cloud-sdk/odata-common/internal';
-import {
-  CustomDeSerializer,
-  getDeSerializers
-} from '@sap-cloud-sdk/odata-v2/internal';
+import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v2';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
+import { TestEntityLvl2MultiLink, TestEntityLvl2MultiLinkType } from './TestEntityLvl2MultiLink';
+import { TestEntityLvl2SingleLink, TestEntityLvl2SingleLinkType } from './TestEntityLvl2SingleLink';
 
 /**
  * This class represents the entity "A_TestEntityMultiLink" of service "API_TEST_SRV".
  */
-export class TestEntityMultiLink<
-    T extends DeSerializers = DefaultDeSerializationMiddleware
-  >
-  extends Entity
-  implements TestEntityMultiLinkType<T>
-{
+export class TestEntityMultiLink<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityMultiLinkType<T> {
   /**
    * Technical entity name for TestEntityMultiLink.
    */
@@ -44,7 +20,9 @@ export class TestEntityMultiLink<
    * Default url path for the according service.
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-
+  /**
+   * All key fields of the TestEntityMultiLink entity
+   */
   static _keys = ['KeyProperty'];
   /**
    * Key Property.
@@ -75,256 +53,19 @@ export class TestEntityMultiLink<
   /**
    * One-to-many navigation property to the [[TestEntityLvl2MultiLink]] entity.
    */
-  toMultiLink!: TestEntityLvl2MultiLink[];
+  toMultiLink!: TestEntityLvl2MultiLink<T>[];
   /**
    * One-to-one navigation property to the [[TestEntityLvl2SingleLink]] entity.
    */
-  toSingleLink?: TestEntityLvl2SingleLink | null;
-
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityMultiLink`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `TestEntityMultiLink`.
-   */
-  // static customField(fieldName: string): CustomField<TestEntityMultiLink> {
-  //   return Entity.customFieldSelector(fieldName, TestEntityMultiLink);
-  // }
-
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): { [key: string]: any } {
-    return { ...this, ...this._customFields };
-  }
+  toSingleLink?: TestEntityLvl2SingleLink<T> | null;
 }
 
-import {
-  TestEntityLvl2MultiLink,
-  TestEntityLvl2MultiLinkType
-} from './TestEntityLvl2MultiLink';
-import {
-  TestEntityLvl2SingleLink,
-  TestEntityLvl2SingleLinkType
-} from './TestEntityLvl2SingleLink';
-import { DeSerializers } from '@sap-cloud-sdk/odata-v2/internal';
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/dist/de-serializers/de-serializers';
-import { NewFieldBuilder } from '@sap-cloud-sdk/odata-common/dist/selectable/field-builder-new';
-import { EntityApi } from '@sap-cloud-sdk/odata-common/dist/entity-base';
-import BigNumber from 'bignumber.js';
-
-export interface TestEntityMultiLinkType<
-  T extends DeSerializers = DefaultDeSerializationMiddleware
-> {
-  keyProperty: DeserializedType<T, 'Edm.String'>;
-  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
-  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
-  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
-  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
-  toMultiLink: TestEntityLvl2MultiLinkType[];
-  toSingleLink?: TestEntityLvl2SingleLinkType | null;
-}
-
-export class TestEntityMultiLinkApi<
-  BinaryT = string,
-  BooleanT = boolean,
-  ByteT = number,
-  DecimalT = BigNumber,
-  DoubleT = number,
-  FloatT = number,
-  Int16T = number,
-  Int32T = number,
-  Int64T = BigNumber,
-  GuidT = string,
-  SByteT = number,
-  SingleT = number,
-  StringT = string,
-  AnyT = any,
-  DateTimeT = moment.Moment,
-  DateTimeOffsetT = moment.Moment,
-  TimeT = Time
-> implements
-    EntityApi<
-      TestEntityMultiLink<
-        DefaultDeSerializationMiddleware<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT,
-          DateTimeT,
-          DateTimeOffsetT,
-          TimeT
-        >
-      >,
-      DefaultDeSerializationMiddleware<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >,
-      TestEntityMultiLinkType<
-        DefaultDeSerializationMiddleware<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT,
-          DateTimeT,
-          DateTimeOffsetT,
-          TimeT
-        >
-      >
-    >
-{
-  public deSerializers: DefaultDeSerializationMiddleware<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeT,
-    DateTimeOffsetT,
-    TimeT
-  >;
-  constructor(
-    deSerializers: Partial<
-      DefaultDeSerializationMiddleware<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >
-    > = defaultDeSerializers as any
-  ) {
-    this.deSerializers = getDeSerializers(deSerializers);
-  }
-
-  schema {
-    const _fieldBuilder = new NewFieldBuilder(
-      TestEntityMultiLink,
-      this.deSerializers
-    );
-
-    return {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: _fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[stringProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      STRING_PROPERTY: _fieldBuilder.buildEdmTypeField(
-        'StringProperty',
-        'Edm.String',
-        true
-      ),
-      /**
-       * Static representation of the [[booleanProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      BOOLEAN_PROPERTY: _fieldBuilder.buildEdmTypeField(
-        'BooleanProperty',
-        'Edm.Boolean',
-        true
-      ),
-      /**
-       * Static representation of the [[guidProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      GUID_PROPERTY: _fieldBuilder.buildEdmTypeField(
-        'GuidProperty',
-        'Edm.Guid',
-        true
-      ),
-      /**
-       * Static representation of the [[int16Property]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      INT_16_PROPERTY: _fieldBuilder.buildEdmTypeField(
-        'Int16Property',
-        'Edm.Int16',
-        true
-      )
-    };
-  }
-
-  requestBuilder(): TestEntityMultiLinkRequestBuilder<
-    typeof this.deSerializers
-  > {
-    return new TestEntityMultiLinkRequestBuilder(
-      this.deSerializers,
-      this.schema
-    );
-  }
-
-  entityBuilder(): EntityBuilderType<
-    TestEntityMultiLink<typeof this.deSerializers>,
-    TestEntityMultiLinkType<typeof this.deSerializers>
-  > {
-    return Entity.entityBuilder(
-      TestEntityMultiLink as any,
-      this.deSerializers,
-      this.schema
-    ) as any;
-  }
+export interface TestEntityMultiLinkType<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
+  keyProperty: DeserializedType<DeSerializersT, 'Edm.String'>;
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'> | null;
+  booleanProperty?: DeserializedType<DeSerializersT, 'Edm.Boolean'> | null;
+  guidProperty?: DeserializedType<DeSerializersT, 'Edm.Guid'> | null;
+  int16Property?: DeserializedType<DeSerializersT, 'Edm.Int16'> | null;
+  toMultiLink: TestEntityLvl2MultiLinkType<DeSerializersT>[];
+  toSingleLink?: TestEntityLvl2SingleLinkType<DeSerializersT> | null;
 }

@@ -3,34 +3,17 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-
-import {
-  Entity,
-  DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v2';
+import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v2';
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
-import { TestComplexType } from './TestComplexType';
-import {
-  TestEntityMultiLink,
-  TestEntityMultiLinkType
-} from './TestEntityMultiLink';
-import {
-  TestEntityOtherMultiLink,
-  TestEntityOtherMultiLinkType
-} from './TestEntityOtherMultiLink';
-import {
-  TestEntitySingleLink,
-  TestEntitySingleLinkType
-} from './TestEntitySingleLink';
+import { TestComplexType, TestComplexTypeField } from './TestComplexType';
+import { TestEntityMultiLink, TestEntityMultiLinkType } from './TestEntityMultiLink';
+import { TestEntityOtherMultiLink, TestEntityOtherMultiLinkType } from './TestEntityOtherMultiLink';
+import { TestEntitySingleLink, TestEntitySingleLinkType } from './TestEntitySingleLink';
 
 /**
  * This class represents the entity "A_TestEntity" of service "API_TEST_SRV".
  */
-export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
-  extends Entity
-  implements TestEntityType<T>
-{
+export class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityType<T> {
   /**
    * Technical entity name for TestEntity.
    */
@@ -39,9 +22,9 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
    * Default url path for the according service.
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-
-  // static _allFields: any = [];
-  // static _keyFields = [];
+  /**
+   * All key fields of the TestEntity entity
+   */
   static _keys = ['KeyPropertyGuid', 'KeyPropertyString'];
   /**
    * Key Property Guid.
@@ -144,24 +127,14 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
   /**
    * One-to-many navigation property to the [[TestEntityOtherMultiLink]] entity.
    */
-  toOtherMultiLink!: TestEntityOtherMultiLink[];
+  toOtherMultiLink!: TestEntityOtherMultiLink<T>[];
   /**
    * One-to-one navigation property to the [[TestEntitySingleLink]] entity.
    */
-  toSingleLink?: TestEntitySingleLink | null;
-
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): { [key: string]: any } {
-    return { ...this, ...this._customFields };
-  }
+  toSingleLink?: TestEntitySingleLink<T> | null;
 }
 
-export interface TestEntityType<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> {
+export interface TestEntityType<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
   keyPropertyGuid: DeserializedType<DeSerializersT, 'Edm.Guid'>;
   keyPropertyString: DeserializedType<DeSerializersT, 'Edm.String'>;
   stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'> | null;
@@ -176,18 +149,12 @@ export interface TestEntityType<
   floatProperty?: DeserializedType<DeSerializersT, 'Edm.Float'> | null;
   timeProperty?: DeserializedType<DeSerializersT, 'Edm.Time'> | null;
   dateTimeProperty?: DeserializedType<DeSerializersT, 'Edm.DateTime'> | null;
-  dateTimeOffSetProperty?: DeserializedType<
-    DeSerializersT,
-    'Edm.DateTimeOffset'
-  > | null;
+  dateTimeOffSetProperty?: DeserializedType<DeSerializersT, 'Edm.DateTimeOffset'> | null;
   byteProperty?: DeserializedType<DeSerializersT, 'Edm.Byte'> | null;
   sByteProperty?: DeserializedType<DeSerializersT, 'Edm.SByte'> | null;
-  somethingTheSdkDoesNotSupport?: DeserializedType<
-    DeSerializersT,
-    'Edm.Any'
-  > | null;
+  somethingTheSdkDoesNotSupport?: DeserializedType<DeSerializersT, 'Edm.Any'> | null;
   complexTypeProperty?: TestComplexType<DeSerializersT> | null;
   toMultiLink: TestEntityMultiLinkType<DeSerializersT>[];
-  toOtherMultiLink: TestEntityOtherMultiLinkType[];
-  toSingleLink?: TestEntitySingleLinkType | null;
+  toOtherMultiLink: TestEntityOtherMultiLinkType<DeSerializersT>[];
+  toSingleLink?: TestEntitySingleLinkType<DeSerializersT> | null;
 }

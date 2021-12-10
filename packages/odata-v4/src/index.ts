@@ -45,7 +45,8 @@ export {
   defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers,
+  deserializeComplexType,
   edmToTs,
+  entityDeserializer,
   mergeDefaultDeSerializersWith
 } from './de-serializers';
-export { deserializeComplexType } from './entity-deserializer';

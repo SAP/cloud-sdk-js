@@ -34,5 +34,6 @@ export {
   DefaultDeSerializers,
   DeSerializers,
   edmToTs,
+  entityDeserializer,
   mergeDefaultDeSerializersWith
 } from './de-serializers';

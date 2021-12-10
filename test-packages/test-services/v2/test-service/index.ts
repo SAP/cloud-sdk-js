@@ -4,7 +4,6 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 export * from './TestEntity';
-export * from './TestEntityApi';
 export * from './TestEntityMultiLink';
 export * from './TestEntityOtherMultiLink';
 export * from './TestEntityLvl2MultiLink';
@@ -18,6 +17,20 @@ export * from './TestEntityEndsWith';
 export * from './TestEntityEndsWithSomethingElse';
 export * from './CaseTest';
 export * from './Casetest_1';
+export * from './TestEntityApi';
+export * from './TestEntityMultiLinkApi';
+export * from './TestEntityOtherMultiLinkApi';
+export * from './TestEntityLvl2MultiLinkApi';
+export * from './TestEntitySingleLinkApi';
+export * from './TestEntityLvl2SingleLinkApi';
+export * from './TestEntityWithSharedEntityType1Api';
+export * from './TestEntityWithSharedEntityType2Api';
+export * from './TestEntityCircularLinkParentApi';
+export * from './TestEntityCircularLinkChildApi';
+export * from './TestEntityEndsWithApi';
+export * from './TestEntityEndsWithSomethingElseApi';
+export * from './CaseTestApi';
+export * from './Casetest_1Api';
 export * from './TestEntityRequestBuilder';
 export * from './TestEntityMultiLinkRequestBuilder';
 export * from './TestEntityOtherMultiLinkRequestBuilder';

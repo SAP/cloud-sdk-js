@@ -2,7 +2,6 @@ import { unixEOL } from '@sap-cloud-sdk/util';
 import { Import, serializeImports } from '../../generator-common';
 import { VdmEntity, VdmMappedEdmType, VdmServiceMetadata } from '../../vdm-types';
 import {
-  externalImportDeclaration,
   navPropertyFieldTypeImportNames, potentialExternalImportDeclarations,
   propertyFieldTypeImportNames,
   propertyTypeImportNames

@@ -1,6 +1,5 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
@@ -8,8 +7,8 @@ import {
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { defaultDeSerializers } from '../de-serializers';
-import { UpdateRequestBuilder } from './update-request-builder';
 import { testEntityApi } from '../../test/test-util';
+import { UpdateRequestBuilder } from './update-request-builder';
 
 const convertToUriFormat = createUriConverter(defaultDeSerializers);
 

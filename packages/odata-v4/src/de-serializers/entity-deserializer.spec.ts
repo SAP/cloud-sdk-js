@@ -1,13 +1,12 @@
 import {
-  TestComplexType,
-  TestEntity
+  TestComplexType
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
+import { testEntityApi } from '../../test/test-util';
 import {
   deserializeComplexType,
   deserializeEntity
 } from './entity-deserializer';
-import { testEntityApi } from '../../test/test-util';
 
 describe('entity-deserializer', () => {
   it('should deserialize an enum property', () => {

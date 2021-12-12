@@ -1,14 +1,13 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createTestEntity
 } from '../../../../test-resources/test/test-util/test-data';
 import { edmToTs } from '../de-serializers';
+import { testEntityApi } from '../../test/test-util';
 import {
   transformReturnValueForEdmType,
   transformReturnValueForEntity
 } from './response-transformers';
-import { testEntityApi } from '../../test/test-util';
 
 describe('Response transformer', () => {
   it('should transform for TestEntity', () => {

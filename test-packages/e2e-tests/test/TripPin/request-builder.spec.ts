@@ -1,24 +1,30 @@
 import { resetDataSource } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/action-imports';
 import { PersonGender } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service/PersonGender';
-import { People } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
-import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/dist/entity-deserializer';
+import {
+  People,
+  PeopleApi
+} from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
+import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/internal';
 import { any } from '@sap-cloud-sdk/odata-v4';
 
 const url = 'https://services.odata.org/';
 const destination = { url };
+const entityBuilder = new PeopleApi().entityBuilder();
+const requestBuilder = new PeopleApi().requestBuilder();
+const schema = new PeopleApi().schema;
 
 async function deletePerson(userName: string): Promise<void> {
-  const queried = await People.requestBuilder()
+  const queried = await requestBuilder
     .getByKey(userName)
     .execute(destination);
   // The trippin service return not 404 exception but 204 if an entity is not found. Hence this check
   if (queried.userName) {
-    return People.requestBuilder().delete(queried).execute(destination);
+    return requestBuilder.delete(queried).execute(destination);
   }
 }
 
 function createPeople(userName: string): People {
-  return People.builder()
+  return entityBuilder
     .firstName('SomeFirstName')
     .lastName('SomeLastName')
     .gender(PersonGender.Male)
@@ -28,9 +34,9 @@ function createPeople(userName: string): People {
 
 xdescribe('Request builder', () => {
   it('should return a collection of entities for get all request', async () => {
-    const people = await People.requestBuilder()
+    const people = await requestBuilder
       .getAll()
-      .expand(People.FRIENDS)
+      .expand(schema.FRIENDS)
       .execute(destination);
     expect(people).toEqual(
       expect.arrayContaining([
@@ -43,13 +49,13 @@ xdescribe('Request builder', () => {
 
   it('should return a collection all friends of a person', async () => {
     const people = (
-      await People.requestBuilder()
+      await requestBuilder
         .getByKey('russellwhyte')
         .appendPath('/Friends')
         .executeRaw(destination)
     ).data.value as any[];
     const actual = people.map(
-      person => deserializeEntity(person, People) as People
+      person => deserializeEntity(person, new PeopleApi()) as People
     );
     expect(actual.length).toEqual(4);
     expect(actual).toEqual(
@@ -62,11 +68,11 @@ xdescribe('Request builder', () => {
   });
 
   it('should return a collection of entities with filtered one to many navigation properties', async () => {
-    const people = await People.requestBuilder()
+    const people = await requestBuilder
       .getAll()
       .expand(
-        People.FRIENDS.filter(
-          People.FRIENDS.filter(any(People.USER_NAME.equals('russellwhyte')))
+        schema.FRIENDS.filter(
+          schema.FRIENDS.filter(any(schema.USER_NAME.equals('russellwhyte')))
         )
       )
       .execute(destination);
@@ -86,9 +92,9 @@ xdescribe('Request builder', () => {
   });
 
   it('should handle nested expands', async () => {
-    const result = await People.requestBuilder()
+    const result = await requestBuilder
       .getAll()
-      .expand(People.FRIENDS.expand(People.FRIENDS))
+      .expand(schema.FRIENDS.expand(schema.FRIENDS))
       .execute(destination);
     expect(result[0].friends[0].friends[0]).not.toBe(undefined);
   });
@@ -109,9 +115,9 @@ xdescribe('Request builder', () => {
       }
     ];
 
-    await People.requestBuilder().create(entity).execute(destination);
+    await requestBuilder.create(entity).execute(destination);
 
-    const expected = await People.requestBuilder()
+    const expected = await requestBuilder
       .getByKey(myKey)
       .execute(destination);
     expect(expected.addressInfo!.length).toBe(2);
@@ -133,9 +139,9 @@ xdescribe('Request builder', () => {
     const entity = createPeople(keyRoot);
     entity.friends = [createPeople(keyChild1), createPeople(keyChild2)];
 
-    await People.requestBuilder().create(entity).execute(destination);
+    await requestBuilder.create(entity).execute(destination);
 
-    const expected = await People.requestBuilder()
+    const expected = await requestBuilder
       .getByKey(keyRoot)
       .execute(destination);
     expect(expected.friends!.length).toBe(2);

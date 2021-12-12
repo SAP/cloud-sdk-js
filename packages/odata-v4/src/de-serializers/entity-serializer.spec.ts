@@ -1,11 +1,9 @@
 import {
-  TestComplexType,
-  TestEntity,
-  TestEntitySingleLink
+  TestComplexType
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
-import { serializeComplexType, serializeEntity } from './entity-serializer';
 import { testEntityApi, testEntitySingleLinkApi } from '../../test/test-util';
+import { serializeComplexType, serializeEntity } from './entity-serializer';
 
 describe('entity-serializer', () => {
   it('should serialize entity with enum field', () => {

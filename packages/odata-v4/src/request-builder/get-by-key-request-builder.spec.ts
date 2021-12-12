@@ -1,7 +1,4 @@
-import {
-  TestEntity,
-  TestEntityWithEnumKey
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
@@ -15,8 +12,8 @@ import {
   testEntityResourcePath
 } from '../../../../test-resources/test/test-util/test-data';
 import { defaultDeSerializers } from '../de-serializers';
-import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 import { testEntityApi, testEntityWithEnumKeyApi } from '../../test/test-util';
+import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 const convertToUriFormat = createUriConverter(defaultDeSerializers);
 

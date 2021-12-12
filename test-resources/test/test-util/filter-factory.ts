@@ -3,7 +3,6 @@ import { all, any, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 import { or } from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntityApi } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
-  TestEntity as TestEntityV4,
   // @ts-ignore
   TestEntityApi as TestEntityApiV4,
   TestEnumType
@@ -90,7 +89,7 @@ export const testFilterLambdaExpressionWithOr = {
 };
 
 export const testFilterLambdaExpressionFilterListOnLink = {
-  filter: TestEntityV4.TO_MULTI_LINK.filter(
+  filter: testEntityApiV4.schema.TO_MULTI_LINK.filter(
     any(
       // @ts-ignore
       or(

@@ -1,12 +1,10 @@
 import {
   TestEntityApi,
-  TestEntityCircularLinkChild,
   TestEntityCircularLinkChildApi,
   TestEntityCircularLinkParentApi,
   TestEntityLvl2MultiLinkApi,
   TestEntityMultiLinkApi,
   TestEntitySingleLinkApi,
-  TestEntityWithEnumKey,
   TestEntityWithEnumKeyApi
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 

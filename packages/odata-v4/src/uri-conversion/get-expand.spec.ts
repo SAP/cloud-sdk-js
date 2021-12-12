@@ -1,11 +1,6 @@
 import { asc } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  TestEntity,
-  TestEntityMultiLink,
-  TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v4/test-service';
-import { getExpand } from './get-expand';
 import { testEntityApi, testEntityMultiLinkApi, testEntitySingleLinkApi } from '../../test/test-util';
+import { getExpand } from './get-expand';
 
 describe('get expand', () => {
   it('for first level expand without sub-query', () => {

@@ -4,7 +4,6 @@ import {
   EntityIdentifiable,
   Expandable,
   GetByKeyRequestBuilderBase,
-  FieldType,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';

@@ -1,8 +1,5 @@
 import {
-  TestEntity,
-  TestEntityLvl2MultiLink,
-  TestEntityMultiLink,
-  TestEntitySingleLink
+  TestEntity
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import {
   defaultDestination,
@@ -17,7 +14,6 @@ import {
   createTestEntityV4 as createTestEntity
 } from '../../../../test-resources/test/test-util/test-data';
 import { any } from '../filter';
-import { GetAllRequestBuilder } from './get-all-request-builder';
 import { DefaultDeSerializers } from '../de-serializers';
 import {
   testEntityApi,
@@ -25,6 +21,7 @@ import {
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
 } from '../../test/test-util';
+import { GetAllRequestBuilder } from './get-all-request-builder';
 
 describe('GetAllRequestBuilder', () => {
   let requestBuilder: GetAllRequestBuilder<TestEntity, DefaultDeSerializers>;

@@ -1,4 +1,3 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
 import {
   testFilterEnum,
   testFilterLambdaExpressionFilterFunctionOnLink,
@@ -12,9 +11,9 @@ import {
 } from '../../../../test-resources/test/test-util/filter-factory';
 import { filterFunctions } from '../filter-functions';
 import { filterFunction } from '../filter-function';
-import { createODataUri } from './odata-uri';
 import { testEntityApi } from '../../test/test-util';
 import { defaultDeSerializers } from '../de-serializers';
+import { createODataUri } from './odata-uri';
 
 const oDataUri = createODataUri(defaultDeSerializers);
 const { getFilter } = oDataUri;

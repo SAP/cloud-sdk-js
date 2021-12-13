@@ -36,7 +36,7 @@ export function deserializeToPlainDateTime(
   const dateTimeInstant = Temporal.Instant.fromEpochMilliseconds(
     parseInt(dateTimeOffsetComponents.ticks)
   );
-  return Temporal.PlainDateTime.from(dateTimeInstant.toString());
+  return dateTimeInstant.toZonedDateTimeISO('UTC').toPlainDateTime();
 }
 
 /**

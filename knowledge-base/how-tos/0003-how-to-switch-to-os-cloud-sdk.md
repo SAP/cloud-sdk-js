@@ -6,7 +6,6 @@ As a result, the packages were renamed as shown in the table below. No Breaking 
 | old package name         | new package name         |
 | ------------------------ | ------------------------ |
 | @sap/cloud-sdk-util      | @sap-cloud-sdk/util      |
-| @sap/cloud-sdk-analytics | @sap-cloud-sdk/analytics |
 | @sap/cloud-sdk-core      | @sap-cloud-sdk/core      |
 | @sap/cloud-sdk-generator | @sap-cloud-sdk/generator |
 | @sap/cloud-sdk-test-util | @sap-cloud-sdk/test-util |

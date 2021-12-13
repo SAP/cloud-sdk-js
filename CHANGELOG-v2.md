@@ -157,6 +157,7 @@
   - `verifyJwtWithKey`
   - `wrapJwtInHeader`
   - `convertToNumber`
+  - [analytics] Deprecate the `@sap-cloud-sdk/analytics` package
 
 ### Function moved
 

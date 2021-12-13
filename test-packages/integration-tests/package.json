@@ -12,7 +12,6 @@
     "check:dependencies": "depcheck . --ignores=@sap-cloud-sdk/generator,@sap-cloud-sdk/openapi-generator"
   },
   "dependencies": {
-    "@sap-cloud-sdk/analytics": "^1.50.0",
     "@sap-cloud-sdk/connectivity": "^1.50.0",
     "@sap-cloud-sdk/test-services": "^1.50.0",
     "@sap-cloud-sdk/test-util": "^1.50.0",

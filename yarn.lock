@@ -7576,9 +7576,9 @@ ono@^4.0.11:
     format-util "^1.0.3"
 
 openapi-backend@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.0.1.tgz#49d6cf74cdf844ce9bbffb6e2098cc4c2b7c3b69"
-  integrity sha512-DHjQ7d3izTgIy6lSD+WGLhlunZ+fkyleHjNnUSGjHC7Lii3ukuB3N/J74NaCHf5mrDlXgCfylFMRVtq4oDwPKQ==
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/openapi-backend/-/openapi-backend-5.1.0.tgz#f567264963e8a53ce5167bb0094cd0772173c5ff"
+  integrity sha512-+WQvhHy/jUhrzlvHgHXt2G8EeOXKGNC17RoVROUwvGeqa8rBV3omoNxXKAkILenqjDXk5/JgJhtmgv7CS9AKvg==
   dependencies:
     "@apidevtools/json-schema-ref-parser" "^9.0.7"
     ajv "^8.6.2"
@@ -7586,29 +7586,24 @@ openapi-backend@^5.0.0:
     cookie "^0.4.0"
     lodash "^4.17.15"
     mock-json-schema "^1.0.7"
-    openapi-schema-validator "^9.2.0"
-    openapi-types "^9.2.0"
+    openapi-schema-validator "^10.0.0"
+    openapi-types "^10.0.0"
     qs "^6.9.3"
 
-openapi-schema-validator@^9.2.0:
-  version "9.3.0"
-  resolved "https://registry.npmjs.org/openapi-schema-validator/-/openapi-schema-validator-9.3.0.tgz#ea22cc88724fb17b9d5c89ed0eb9ca31c0a52b0b"
-  integrity sha512-KlvgZMWTu+H1FHFSZNAGj369uXl3BD1nXSIq+sXlG6P+OrsAHd3YORx0ZEZ3WGdu2LQrPGmtowGQavYXL+PLwg==
+openapi-schema-validator@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.npmjs.org/openapi-schema-validator/-/openapi-schema-validator-10.0.0.tgz#c2e9a8cffc75fcb6e323b30a29a4f2a340d02be1"
+  integrity sha512-tfXR7kLhI2f7QgArfJn5imkFJ1dvLOO5r4b1JZQoW3PgPb3caOiaWZ+H1iLzFj3IG1gmM3BrYZD1sAvWtDwUCA==
   dependencies:
     ajv "^8.1.0"
     ajv-formats "^2.0.2"
     lodash.merge "^4.6.1"
-    openapi-types "^9.3.0"
+    openapi-types "^10.0.0"
 
 openapi-types@^10.0.0:
   version "10.0.0"
   resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-10.0.0.tgz#0debbf663b2feed0322030b5b7c9080804076934"
   integrity sha512-Y8xOCT2eiKGYDzMW9R4x5cmfc3vGaaI4EL2pwhDmodWw1HlK18YcZ4uJxc7Rdp7/gGzAygzH9SXr6GKYIXbRcQ==
-
-openapi-types@^9.2.0, openapi-types@^9.3.0:
-  version "9.3.1"
-  resolved "https://registry.npmjs.org/openapi-types/-/openapi-types-9.3.1.tgz#617ae6db3efd3e3f68e849f65ced58801d01d3cf"
-  integrity sha512-/Yvsd2D7miYB4HLJ3hOOS0+vnowQpaT75FsHzr/y5M9P4q9bwa7RcbW2YdH6KZBn8ceLbKGnHxMZ1CHliGHUFw==
 
 opossum@^6.0.0:
   version "6.2.1"
@@ -8117,9 +8112,9 @@ postcss-values-parser@^5.0.0:
     quote-unquote "^1.0.0"
 
 postcss@>=8.2.10, postcss@^8.1.10, postcss@^8.1.7, postcss@^8.2.13:
-  version "8.4.4"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.4.tgz#d53d4ec6a75fd62557a66bb41978bf47ff0c2869"
-  integrity sha512-joU6fBsN6EIer28Lj6GDFoC/5yOZzLCfn0zHAn/MYXI7aPt4m4hK5KC5ovEZXy+lnCjmYIbQWngvju2ddyEr8Q==
+  version "8.4.5"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.5.tgz#bae665764dfd4c6fcc24dc0fdf7e7aa00cc77f95"
+  integrity sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==
   dependencies:
     nanoid "^3.1.30"
     picocolors "^1.0.0"

@@ -8,11 +8,13 @@ import {
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   TestEntity as TestEntityV4,
+  TestEntityApi as TestEntityApiV4,
   TestEntityWithEnumKey,
   // @ts-ignore
   TestEntitySingleLinkApi as TestEntitySingleLinkApiV4,
   // @ts-ignore
-  TestEntityWithEnumKeyApi
+  TestEntityWithEnumKeyApi,
+  TestEntityMultiLinkApi as TestEntityMultiLinkApiV4
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';

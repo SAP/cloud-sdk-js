@@ -1,9 +1,5 @@
 import { asc } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  TestEntity,
-  TestEntityMultiLink,
-  TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+import { testEntityApi, testEntityMultiLinkApi, testEntitySingleLinkApi } from '../../test/test-util';
 import { getExpand } from './get-expand';
 
 describe('get expand', () => {
@@ -11,23 +7,23 @@ describe('get expand', () => {
     expect(
       getExpand(
         [
-          TestEntity.ALL_FIELDS,
-          TestEntity.TO_SINGLE_LINK,
-          TestEntity.TO_MULTI_LINK
+          testEntityApi.schema.ALL_FIELDS,
+          testEntityApi.schema.TO_SINGLE_LINK,
+          testEntityApi.schema.TO_MULTI_LINK
         ],
-        TestEntity
+        testEntityApi
       ).expand
     ).toBe('*,to_SingleLink,to_MultiLink');
   });
 
   it('for single link with sub-query', () => {
-    expect(getExpand([testExpandSingleLink.expand], TestEntity).expand).toBe(
+    expect(getExpand([testExpandSingleLink.expand], testEntityApi).expand).toBe(
       `${testExpandSingleLink.odataStr}`
     );
   });
 
   it('for multi link with sub-query', () => {
-    expect(getExpand([testExpandMultiLink.expand], TestEntity).expand).toBe(
+    expect(getExpand([testExpandMultiLink.expand], testEntityApi).expand).toBe(
       `${testExpandMultiLink.odataStr}`
     );
   });
@@ -36,20 +32,20 @@ describe('get expand', () => {
 const encodedSpace = encodeURIComponent(' ');
 
 const testExpandSingleLink = {
-  expand: TestEntity.TO_SINGLE_LINK.select(
-    TestEntitySingleLink.STRING_PROPERTY,
-    TestEntitySingleLink.BOOLEAN_PROPERTY
+  expand: testEntityApi.schema.TO_SINGLE_LINK.select(
+    testEntitySingleLinkApi.schema.STRING_PROPERTY,
+    testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY
   ),
   odataStr: 'to_SingleLink($select=StringProperty,BooleanProperty)'
 };
 
 const testExpandMultiLink = {
-  expand: TestEntity.TO_MULTI_LINK.select(
-    TestEntityMultiLink.STRING_PROPERTY,
-    TestEntityMultiLink.BOOLEAN_PROPERTY
+  expand: testEntityApi.schema.TO_MULTI_LINK.select(
+    testEntityMultiLinkApi.schema.STRING_PROPERTY,
+    testEntityMultiLinkApi.schema.BOOLEAN_PROPERTY
   )
-    .orderBy(asc(TestEntityMultiLink.STRING_PROPERTY))
-    .filter(TestEntityMultiLink.STRING_PROPERTY.equals('test'))
+    .orderBy(asc(testEntityMultiLinkApi.schema.STRING_PROPERTY))
+    .filter(testEntityMultiLinkApi.schema.STRING_PROPERTY.equals('test'))
     .top(1)
     .skip(1),
   odataStr: `to_MultiLink($select=StringProperty,BooleanProperty;$filter=(StringProperty%20eq%20'test');$skip=1;$top=1;$orderby=StringProperty${encodedSpace}asc)`

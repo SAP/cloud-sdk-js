@@ -3,14 +3,14 @@ import { testFunctionImportNullableTest } from '@sap-cloud-sdk/test-services/v4/
 // $ExpectError
 testFunctionImportNullableTest({});
 
-// $ExpectType FunctionImportRequestBuilder<TestFunctionImportNullableTestParameters, string[] | null>
+// $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportNullableTestParameters<DefaultDeSerializers>, string[] | null>
 testFunctionImportNullableTest({
   nullableExplicit: null,
   nullablePerDefault: null,
   nonNullable: ''
 });
 
-// $ExpectType FunctionImportRequestBuilder<TestFunctionImportNullableTestParameters, string[] | null>
+// $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportNullableTestParameters<DefaultDeSerializers>, string[] | null>
 testFunctionImportNullableTest({
   nonNullable: 'someValue'
 });

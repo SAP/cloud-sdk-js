@@ -1,7 +1,4 @@
-import {
-  TestEntity,
-  TestEntityWithEnumKey
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
@@ -15,6 +12,7 @@ import {
   testEntityResourcePath
 } from '../../../../test-resources/test/test-util/test-data';
 import { defaultDeSerializers } from '../de-serializers';
+import { testEntityApi, testEntityWithEnumKeyApi } from '../../test/test-util';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
 
 const convertToUriFormat = createUriConverter(defaultDeSerializers);
@@ -34,10 +32,10 @@ describe('GetByKeyRequestBuilder', () => {
           ),
           responseBody: entityData
         },
-        TestEntity
+        testEntityApi
       );
 
-      const actual = await new GetByKeyRequestBuilder(TestEntity, {
+      const actual = await new GetByKeyRequestBuilder(testEntityApi, {
         KeyPropertyGuid: expected.keyPropertyGuid,
         KeyPropertyString: expected.keyPropertyString
       }).execute(defaultDestination);
@@ -53,10 +51,10 @@ describe('GetByKeyRequestBuilder', () => {
           path: "A_TestEntityWithEnumKey(KeyPropertyEnum1='Member1')",
           responseBody: entityData
         },
-        TestEntityWithEnumKey
+        testEntityWithEnumKeyApi
       );
 
-      const actual = await new GetByKeyRequestBuilder(TestEntityWithEnumKey, {
+      const actual = await new GetByKeyRequestBuilder(testEntityWithEnumKeyApi, {
         KeyPropertyEnum1: expected.keyPropertyEnum1
       }).execute(defaultDestination);
       expect(actual).toEqual(expected);
@@ -71,11 +69,11 @@ describe('GetByKeyRequestBuilder', () => {
     mockGetRequest({
       query: { $select: 'SomethingTheSDKDoesNotSupport' },
       responseBody: { value: [entityData1] }
-    });
+    }, testEntityApi);
 
-    const actual = await TestEntity.requestBuilder()
+    const actual = await testEntityApi.requestBuilder()
       .getAll()
-      .select(TestEntity.SOMETHING_THE_SDK_DOES_NOT_SUPPORT)
+      .select(testEntityApi.schema.SOMETHING_THE_SDK_DOES_NOT_SUPPORT)
       .execute(defaultDestination);
     expect(actual[0].somethingTheSdkDoesNotSupport).toBe('SomeValue');
   });
@@ -93,9 +91,9 @@ describe('GetByKeyRequestBuilder', () => {
         convertToUriFormat
       ),
       responseBody: entityData
-    });
+    }, testEntityApi);
 
-    const actual = await new GetByKeyRequestBuilder(TestEntity, {
+    const actual = await new GetByKeyRequestBuilder(testEntityApi, {
       KeyPropertyGuid: expected.keyPropertyGuid,
       KeyPropertyString: expected.keyPropertyString
     }).execute(defaultDestination);
@@ -117,9 +115,9 @@ describe('GetByKeyRequestBuilder', () => {
       ),
       responseBody: entityData,
       responseHeaders: { Etag: versionIdentifier }
-    });
+    }, testEntityApi);
 
-    const actual = await new GetByKeyRequestBuilder(TestEntity, {
+    const actual = await new GetByKeyRequestBuilder(testEntityApi, {
       KeyPropertyGuid: expected.keyPropertyGuid,
       KeyPropertyString: expected.keyPropertyString
     }).execute(defaultDestination);

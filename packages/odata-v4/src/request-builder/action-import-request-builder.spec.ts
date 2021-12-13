@@ -6,7 +6,7 @@ import {
   testActionImportUnsupportedEdmTypes
 } from '@sap-cloud-sdk/test-services/v4/test-service/action-imports';
 import { TestComplexType } from '@sap-cloud-sdk/test-services/v4/test-service';
-import { serializeComplexType } from '../entity-serializer';
+import { serializeComplexType } from '../de-serializers';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const host = 'https://example.com';

@@ -1,9 +1,9 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
 import {
   createOriginalTestEntityData1,
   createTestEntity
 } from '../../../../test-resources/test/test-util/test-data';
 import { edmToTs } from '../de-serializers';
+import { testEntityApi } from '../../test/test-util';
 import {
   transformReturnValueForEdmType,
   transformReturnValueForEntity
@@ -14,7 +14,7 @@ describe('Response transformer', () => {
     const entityData = createOriginalTestEntityData1();
     const expected = createTestEntity(entityData);
 
-    const actual = transformReturnValueForEntity(entityData, TestEntity);
+    const actual = transformReturnValueForEntity(entityData, testEntityApi);
     expect(actual).toEqual(expected);
   });
 

@@ -92,7 +92,6 @@ function enumTypeImport(prop: VdmProperty): Import {
   };
 }
 
-// todo test
 /**
  * @internal
  */

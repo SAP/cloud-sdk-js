@@ -1,25 +1,30 @@
 import {
-  TestEntity,
-  TestEntityLink
+  TestEntityApi,
+  TestEntityLinkApi
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import moment from 'moment';
 import { and } from '@sap-cloud-sdk/odata-common/internal';
-import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/dist/entity-deserializer';
+import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/internal';
 import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';
 import { destination } from './test-util';
 
 const entityKey = 123;
 const entityLinkKey = 987;
+const schema = new TestEntityApi().schema;
+const requestBuilder = new TestEntityApi().requestBuilder();
+const entityBuilder = new TestEntityApi().entityBuilder();
+const linkEntityBuilder = new TestEntityLinkApi().entityBuilder();
+const linkRequestBuilder = new TestEntityLinkApi().requestBuilder();
 
-async function createEntity(key: number): Promise<TestEntity> {
-  const dataForCreation = TestEntity.builder()
+async function createEntity(key: number) {
+  const dataForCreation = entityBuilder
     .keyTestEntity(key)
     .stringProperty('someValue')
     .dateProperty(moment(0))
     .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3 })
     .dataTimeOffsetDataTimeProperty(moment(0))
     .build();
-  return TestEntity.requestBuilder()
+  return requestBuilder
     .create(dataForCreation)
     .execute(destination);
 }
@@ -29,13 +34,13 @@ describe('Request builder', () => {
   beforeEach(async () => deleteEntity(entityKey, destination));
 
   it('should return a collection of entities for get all request', async () => {
-    const testEntities = await TestEntity.requestBuilder()
+    const testEntities = await requestBuilder
       .getAll()
       .filter(
         and(
-          TestEntity.KEY_TEST_ENTITY.greaterOrEqual(101),
-          TestEntity.KEY_TEST_ENTITY.lessOrEqual(104),
-          TestEntity.KEY_TEST_ENTITY.notEquals(102)
+          schema.KEY_TEST_ENTITY.greaterOrEqual(101),
+          schema.KEY_TEST_ENTITY.lessOrEqual(104),
+          schema.KEY_TEST_ENTITY.notEquals(102)
         )
       )
       .execute(destination);
@@ -59,7 +64,7 @@ describe('Request builder', () => {
   });
 
   it('should return an entity for get by key request', async () => {
-    const testEntity = await TestEntity.requestBuilder()
+    const testEntity = await requestBuilder
       .getByKey(101)
       .execute(destination);
     expect(testEntity).toEqual(expect.objectContaining({ keyTestEntity: 101 }));
@@ -67,13 +72,13 @@ describe('Request builder', () => {
 
   it('should return one to many navigation property of an entity', async () => {
     const multiLinks = (
-      await TestEntity.requestBuilder()
+      await requestBuilder
         .getByKey(101)
         .appendPath('/ToMultiLink')
         .executeRaw(destination)
     ).data.value as any[];
     const actual = multiLinks.map(multiLink =>
-      deserializeEntity(multiLink, TestEntityLink)
+      deserializeEntity(multiLink, new TestEntityLinkApi())
     );
 
     expect(actual).toEqual(
@@ -86,13 +91,13 @@ describe('Request builder', () => {
   it('should create an entity and a link as child of the entity', async () => {
     const testEntity = await createEntity(entityKey);
 
-    const entityLink = TestEntityLink.builder()
+    const entityLink = linkEntityBuilder
       .keyTestEntityLink(entityLinkKey)
       .build();
 
-    await TestEntityLink.requestBuilder()
+    await linkRequestBuilder
       .create(entityLink)
-      .asChildOf(testEntity, TestEntity.TO_MULTI_LINK)
+      .asChildOf(testEntity, schema.TO_MULTI_LINK)
       .execute(destination);
 
     const queried = await queryEntity(entityKey, destination);
@@ -115,12 +120,12 @@ describe('Request builder', () => {
     expect(queriedBeforeUpdate.stringProperty).not.toBe(null);
 
     const newDate = moment.utc('2020-01-01', 'YYYY-MM-DD');
-    const newEntity = TestEntity.builder()
+    const newEntity = entityBuilder
       .keyTestEntity(entityKey)
       .stringProperty(null)
       .dateProperty(newDate)
       .build();
-    await TestEntity.requestBuilder().update(newEntity).execute(destination);
+    await requestBuilder.update(newEntity).execute(destination);
 
     const queriedAfterUpdate = await queryEntity(entityKey, destination);
     expect(queriedAfterUpdate.stringProperty).toBe(null);
@@ -130,21 +135,21 @@ describe('Request builder', () => {
   });
 
   it('should create an entity with related entities (deep create)', async () => {
-    const entity = TestEntity.builder()
+    const entity = entityBuilder
       .keyTestEntity(entityKey)
       .toMultiLink([
-        TestEntityLink.builder()
+        linkEntityBuilder
           .keyToTestEntity(entityKey)
           .keyTestEntityLink(20)
           .build(),
-        TestEntityLink.builder()
+        linkEntityBuilder
           .keyToTestEntity(entityKey)
           .keyTestEntityLink(30)
           .build()
       ])
       .build();
 
-    await TestEntity.requestBuilder().create(entity).execute(destination);
+    await requestBuilder.create(entity).execute(destination);
     const queried = await queryEntity(entityKey, destination);
     expect(queried.toMultiLink.length).toBe(2);
     expect(queried.toMultiLink.map(link => link.keyTestEntityLink)).toEqual([
@@ -154,14 +159,14 @@ describe('Request builder', () => {
 
   it('should create an entity with related entities via asChildOf()', async () => {
     const parent = await createEntity(entityKey);
-    const child = TestEntityLink.builder()
+    const child = linkEntityBuilder
       .keyToTestEntity(entityKey)
       .keyTestEntityLink(20)
       .build();
 
-    await TestEntityLink.requestBuilder()
+    await linkRequestBuilder
       .create(child)
-      .asChildOf(parent, TestEntity.TO_MULTI_LINK)
+      .asChildOf(parent, schema.TO_MULTI_LINK)
       .execute(destination);
     const parentWithChild = await queryEntity(entityKey, destination);
     expect(parentWithChild.toMultiLink.length).toBe(1);
@@ -170,22 +175,22 @@ describe('Request builder', () => {
 
   // CAP only supports OData 4.0
   it('should update an entity including existing related entities', async () => {
-    const entity = TestEntity.builder()
+    const entity = entityBuilder
       .keyTestEntity(entityKey)
       .stringProperty('oldValueParent')
       .toMultiLink([
-        TestEntityLink.builder()
+        linkEntityBuilder
           .keyToTestEntity(entityKey)
           .keyTestEntityLink(20)
           .stringProperty('oldValueChild')
           .build()
       ])
       .build();
-    await TestEntity.requestBuilder().create(entity).execute(destination);
+    await requestBuilder.create(entity).execute(destination);
     const beforeUpdate = await queryEntity(entityKey, destination);
     beforeUpdate.stringProperty = 'newValueParent';
     beforeUpdate.toMultiLink[0].stringProperty = 'newValueChild';
-    await TestEntity.requestBuilder().update(beforeUpdate).execute(destination);
+    await requestBuilder.update(beforeUpdate).execute(destination);
 
     const afterUpdate = await queryEntity(entityKey, destination);
     expect(afterUpdate.stringProperty).toBe('newValueParent');
@@ -197,13 +202,13 @@ describe('Request builder', () => {
     await createEntity(entityKey);
     const withoutAssociation = await queryEntity(entityKey, destination);
     withoutAssociation.toMultiLink = [
-      TestEntityLink.builder()
+      linkEntityBuilder
         .keyToTestEntity(entityKey)
         .keyTestEntityLink(20)
         .build()
     ];
     withoutAssociation.stringProperty = 'newValue';
-    await TestEntity.requestBuilder()
+    await requestBuilder
       .update(withoutAssociation)
       .execute(destination);
 
@@ -214,22 +219,22 @@ describe('Request builder', () => {
   });
 
   it('should count the entities', async () => {
-    const result = await TestEntity.requestBuilder()
+    const result = await requestBuilder
       .getAll()
       .count()
       .execute(destination);
     expect(result).toBeGreaterThan(2);
 
-    const resultTopped = await TestEntity.requestBuilder()
+    const resultTopped = await requestBuilder
       .getAll()
       .top(3)
       .count()
       .execute(destination);
     expect(resultTopped).toBeGreaterThan(3);
 
-    const resultFiltered = await TestEntity.requestBuilder()
+    const resultFiltered = await requestBuilder
       .getAll()
-      .filter(TestEntity.STRING_PROPERTY.equals('Edgar Allen Poe'))
+      .filter(schema.STRING_PROPERTY.equals('Edgar Allen Poe'))
       .count()
       .execute(destination);
     expect(resultFiltered).toBe(1);

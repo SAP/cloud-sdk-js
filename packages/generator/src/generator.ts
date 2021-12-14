@@ -355,7 +355,6 @@ function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
   return options;
 }
 
-// TODO 1728 move to a new package for reduce code duplication.
 function copyAdditionalFiles(
   toDirectory: Directory,
   options: GeneratorOptions

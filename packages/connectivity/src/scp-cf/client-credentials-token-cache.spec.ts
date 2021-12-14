@@ -14,7 +14,7 @@ describe('ClientCredentialsTokenCache', () => {
       scope: ''
     };
 
-    clientCredentialsTokenCache.cacheRetrievedToken(
+    clientCredentialsTokenCache.cacheToken(
       'https://url_valid',
       'clientid',
       validToken
@@ -22,7 +22,7 @@ describe('ClientCredentialsTokenCache', () => {
 
     jest.advanceTimersByTime(oneHourInSeconds * 2 * 1000);
 
-    const valid = clientCredentialsTokenCache.getGrantTokenFromCache(
+    const valid = clientCredentialsTokenCache.getToken(
       'https://url_valid',
       'clientid'
     );
@@ -41,14 +41,14 @@ describe('ClientCredentialsTokenCache', () => {
       scope: ''
     };
 
-    clientCredentialsTokenCache.cacheRetrievedToken(
+    clientCredentialsTokenCache.cacheToken(
       'https://url_expired',
       'clientid',
       expiredToken
     );
     jest.advanceTimersByTime(oneHourInSeconds * 2 * 1000);
 
-    const expired = clientCredentialsTokenCache.getGrantTokenFromCache(
+    const expired = clientCredentialsTokenCache.getToken(
       'https://url_expired',
       'clientid'
     );

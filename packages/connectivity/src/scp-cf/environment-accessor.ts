@@ -10,10 +10,8 @@ import { audiences, decodeJwt } from './jwt';
 import {
   DestinationServiceCredentials,
   Service,
-  ServiceCredentials,
   XsuaaServiceCredentials
 } from './environment-accessor-types';
-import { ClientCredentials } from './xsuaa-service-types';
 
 const logger = createLogger({
   package: 'connectivity',
@@ -244,26 +242,6 @@ export function resolveService(service: string | Service): Service {
     return serviceInstance;
   }
   return service;
-}
-
-/**
- * Extracts the credentials of a service into an instance of [[ClientCredentials]].
- * @param serviceCreds - The credentials of a service as read from VCAP_SERVICES.
- * @returns A [[ClientCredentials]] instance.
- *   @internal
- */
-export function extractClientCredentials(
-  serviceCreds: ServiceCredentials
-): ClientCredentials {
-  if (!serviceCreds.clientsecret) {
-    throw new Error(
-      `Cloud not extract client secret for clientId: ${serviceCreds.clientid}.`
-    );
-  }
-  return {
-    username: serviceCreds.clientid,
-    password: serviceCreds.clientsecret
-  };
 }
 
 function selectXsuaaInstance(token?: JwtPayload): XsuaaServiceCredentials {

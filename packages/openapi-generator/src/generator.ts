@@ -285,7 +285,6 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
   );
 }
 
-// TODO 1728 move to a new package to reduce code duplication.
 async function copyAdditionalFiles(
   serviceDir: string,
   additionalFiles: string[],

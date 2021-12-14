@@ -98,7 +98,6 @@ class DestinationFromServiceRetriever {
     const subscriberToken =
       await DestinationFromServiceRetriever.getSubscriberToken(options);
 
-    const xsuaaCredentials = getXsuaaServiceCredentials(options.jwt);
     const providerToken =
       await DestinationFromServiceRetriever.getProviderServiceToken(
         options

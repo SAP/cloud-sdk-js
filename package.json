@@ -13,7 +13,6 @@
   ],
   "repository": "github:SAP/cloud-sdk-js",
   "workspaces": [
-    "packages/analytics",
     "packages/connectivity",
     "packages/http-client",
     "packages/openapi",
@@ -58,7 +57,6 @@
     "check:license": "ts-node scripts/check-licenses.ts",
     "check:test-service": "yarn generate:test-services && yarn ts-node scripts/check-test-service-for-changes.ts",
     "check:public-api": "ts-node scripts/check-public-api-cli.ts",
-    "analytics": "yarn workspace @sap-cloud-sdk/analytics",
     "connectivity": "yarn workspace @sap-cloud-sdk/connectivity",
     "generator": "yarn workspace @sap-cloud-sdk/generator",
     "generator-common": "yarn workspace @sap-cloud-sdk/generator-common",

@@ -14,5 +14,5 @@
     "node_modules/**/*"
   ],
   "files": [],
-  "references": [{ "path": "../util" }, { "path": "../analytics" }]
+  "references": [{ "path": "../util" }]
 }

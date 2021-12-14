@@ -2,7 +2,6 @@
   "extends": "./tsconfig.json",
   "include": [
     "./packages/util/**/*",
-    "./packages/analytics/**/*",
     "./packages/odata-common/**/*",
     "./packages/odata-v2/**/*",
     "./packages/odata-v4/**/*",
@@ -17,9 +16,6 @@
   "references": [
     {
       "path": "./packages/util"
-    },
-    {
-      "path": "./packages/analytics"
     },
     {
       "path": "./packages/odata-common"
@@ -53,7 +49,6 @@
     "out": "docs/api/1.50.0",
     "entryPoints": [
       "packages/util/src/index.ts",
-      "packages/analytics/src/index.ts",
       "packages/connectivity/src/index.ts",
       "packages/http-client/src/index.ts",
       "packages/openapi/src/index.ts",

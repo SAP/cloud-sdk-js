@@ -17,6 +17,7 @@
 - [generator] Remove the option: `aggregatorDirectoryName` and `aggregatorNpmPackageName`
 - [generator] Remove `packageJson` function from aggregator-package
 - [core] Remove the following functions:
+
   - `AllDestinations`
   - `AuthAndExchangeTokens`
   - `AuthenticationType`

@@ -101,13 +101,12 @@ class DestinationFromServiceRetriever {
     const xsuaaCredentials = getXsuaaServiceCredentials(options.jwt);
     const providerToken =
       await DestinationFromServiceRetriever.getProviderServiceToken(
-        xsuaaCredentials,
         options
       );
 
     const da = new DestinationFromServiceRetriever(
       options.destinationName,
-      { ...options, xsuaaCredentials },
+      options,
       subscriberToken,
       providerToken
     );
@@ -187,14 +186,12 @@ class DestinationFromServiceRetriever {
   }
 
   private static async getProviderServiceToken(
-    xsuaaCredentials: XsuaaServiceCredentials,
     options: DestinationFetchOptions
   ): Promise<JwtPair> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { jwt, ...optionsWithoutJwt } = options;
     const encoded = await serviceToken('destination', {
-      ...optionsWithoutJwt,
-      xsuaaCredentials
+      ...optionsWithoutJwt
     });
     return { encoded, decoded: decodeJwt(encoded) };
   }
@@ -206,7 +203,7 @@ class DestinationFromServiceRetriever {
 
   private constructor(
     readonly name: string,
-    options: DestinationOptions & { xsuaaCredentials: XsuaaServiceCredentials },
+    options: DestinationOptions,
     readonly subscriberToken: SubscriberTokens | undefined,
     readonly providerServiceToken: JwtPair
   ) {

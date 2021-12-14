@@ -5,68 +5,169 @@
  */
 import { TestEntityCircularLinkParent } from './TestEntityCircularLinkParent';
 import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
+import { TestEntityCircularLinkChild } from './TestEntityCircularLinkChild';
 import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v2';
-import {
-  EdmTypeField,
-  Link,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  Time
-} from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, Link, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
-export class TestEntityCircularLinkParentApi<
-  BinaryT = string,
-  BooleanT = boolean,
-  ByteT = number,
-  DecimalT = BigNumber,
-  DoubleT = number,
-  FloatT = number,
-  Int16T = number,
-  Int32T = number,
-  Int64T = BigNumber,
-  GuidT = string,
-  SByteT = number,
-  SingleT = number,
-  StringT = string,
-  AnyT = any,
-  DateTimeT = Moment,
-  DateTimeOffsetT = Moment,
-  TimeT = Time
-> implements
+import { Moment, Duration } from 'moment';
+export class TestEntityCircularLinkParentApi<BinaryT = string,
+BooleanT = boolean,
+ByteT = number,
+DecimalT = BigNumber,
+DoubleT = number,
+FloatT = number,
+Int16T = number,
+Int32T = number,
+Int64T = BigNumber,
+GuidT = string,
+SByteT = number,
+SingleT = number,
+StringT = string,
+AnyT = any,
+DateTimeOffsetT = Moment,
+DateTimeT = Moment,
+TimeT = Time> implements 
     EntityApi<
       TestEntityCircularLinkParent<
-        DeSerializers<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT,
-          DateTimeT,
-          DateTimeOffsetT,
-          TimeT
-        >
-      >,
-      DeSerializers<
-        BinaryT,
+        DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+      >, 
+      DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+    > {
+  public deSerializers: DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>;
+
+  constructor(
+    deSerializers: Partial<DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>> = defaultDeSerializers as any) {
+    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  }
+
+  private navigationPropertyFields!: {
+      /**
+       * Static representation of the one-to-many navigation property [[toChild]] for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      TO_CHILD: Link<
+            TestEntityCircularLinkParent<DeSerializers<BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeOffsetT,
+      DateTimeT,
+      TimeT>>,
+            DeSerializers<BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeOffsetT,
+      DateTimeT,
+      TimeT>,
+            TestEntityCircularLinkChild<DeSerializers<BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeOffsetT,
+      DateTimeT,
+      TimeT>>
+          >
+    };
+
+  _addNavigationProperties(
+      linkedApis: [
+        TestEntityCircularLinkChildApi<BinaryT,
         BooleanT,
         ByteT,
         DecimalT,
@@ -80,13 +181,111 @@ export class TestEntityCircularLinkParentApi<
         SingleT,
         StringT,
         AnyT,
-        DateTimeT,
         DateTimeOffsetT,
-        TimeT
+        DateTimeT,
+        TimeT>
+      ]): this {
+        this.navigationPropertyFields = {
+          TO_CHILD: new Link(
+              'to_Child',
+              this,
+              linkedApis[0]
+            )
+        };
+        return this;
+      }
+  
+  entityConstructor = TestEntityCircularLinkParent;
+  
+  requestBuilder(): TestEntityCircularLinkParentRequestBuilder<
+    DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+  > {
+    return new TestEntityCircularLinkParentRequestBuilder(this);
+  }
+  
+  entityBuilder(): EntityBuilderType<
+    TestEntityCircularLinkParent<
+      DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+    >,
+    DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+  > {
+    return entityBuilder(this);
+  }
+
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<
+  TestEntityCircularLinkParent<
+      DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeOffsetT,
+      DateTimeT,
+      TimeT
       >
-    >
-{
-  public deSerializers: DeSerializers<
+    >,
+    DeSerializers<
     BinaryT,
     BooleanT,
     ByteT,
@@ -101,181 +300,9 @@ export class TestEntityCircularLinkParentApi<
     SingleT,
     StringT,
     AnyT,
-    DateTimeT,
     DateTimeOffsetT,
+    DateTimeT,
     TimeT
-  >;
-  public schema: Record<string, any>;
-
-  constructor(
-    deSerializers: Partial<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >
-    > = defaultDeSerializers as any
-  ) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
-    const fieldBuilder = new FieldBuilder(
-      TestEntityCircularLinkParent,
-      this.deSerializers
-    );
-    this.schema = {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the one-to-many navigation property [[toChild]] for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      TO_CHILD: new Link(
-        'to_Child',
-        this,
-        new TestEntityCircularLinkChildApi(deSerializers)
-      ),
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityCircularLinkParent)
-    };
-  }
-
-  entityConstructor = TestEntityCircularLinkParent;
-
-  requestBuilder(): TestEntityCircularLinkParentRequestBuilder<
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
-    >
-  > {
-    return new TestEntityCircularLinkParentRequestBuilder(this);
-  }
-
-  entityBuilder(): EntityBuilderType<
-    TestEntityCircularLinkParent<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
-    >
-  > {
-    return entityBuilder(this);
-  }
-
-  customField<NullableT extends boolean = false>(
-    fieldName: string,
-    isNullable: NullableT = false as NullableT
-  ): CustomField<
-    TestEntityCircularLinkParent<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
     >,
     NullableT
   > {
@@ -285,5 +312,22 @@ export class TestEntityCircularLinkParentApi<
       this.deSerializers,
       isNullable
     );
+  }
+
+  get schema() {
+    const fieldBuilder = new FieldBuilder(TestEntityCircularLinkParent, this.deSerializers);
+    return { 
+    /**
+ * Static representation of the [[keyProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', TestEntityCircularLinkParent) 
+  };
   }
 }

@@ -47,7 +47,8 @@ import {
 import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata, getServiceDescription } from './sdk-metadata';
 import { createFile } from './generator-common/create-file';
-import { file } from './generator-without-ts-morph';
+import { entityApiFile } from './generator-without-ts-morph';
+import { serviceFile } from './generator-without-ts-morph/service/file';
 
 const logger = createLogger({
   package: 'generator',
@@ -144,22 +145,40 @@ export interface ProjectAndServices {
 async function generateFilesWithoutTsMorph(
   services: VdmServiceMetadata[],
   options: GeneratorOptions
-) {
-  const promises = services.map(service => generateApi(service, options));
+): Promise<void> {
+  const promises = services.flatMap(service => [
+    generateEntityApis(service, options),
+    generateServiceFile(service, options)
+  ]);
   await Promise.all(promises);
 }
 
-async function generateApi(
+async function generateServiceFile(
   service: VdmServiceMetadata,
   options: GeneratorOptions
 ): Promise<void> {
   const serviceDir = resolvePath(service.directoryName, options);
-  await service.entities.map(entity =>
-    createFile(
-      serviceDir,
-      `${entity.className}Api.ts`,
-      file(entity, service),
-      options.forceOverwrite
+  await createFile(
+    serviceDir,
+    'service.ts',
+    serviceFile(service),
+    options.forceOverwrite
+  );
+}
+
+async function generateEntityApis(
+  service: VdmServiceMetadata,
+  options: GeneratorOptions
+): Promise<void> {
+  const serviceDir = resolvePath(service.directoryName, options);
+  await Promise.all(
+    service.entities.map(entity =>
+      createFile(
+        serviceDir,
+        `${entity.className}Api.ts`,
+        entityApiFile(entity, service),
+        options.forceOverwrite
+      )
     )
   );
 }

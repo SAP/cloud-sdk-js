@@ -5,8 +5,11 @@
  */
 import { TestEntity } from './TestEntity';
 import { TestEntityRequestBuilder } from './TestEntityRequestBuilder';
+import { TestEntityMultiLink } from './TestEntityMultiLink';
 import { TestEntityMultiLinkApi } from './TestEntityMultiLinkApi';
+import { TestEntityOtherMultiLink } from './TestEntityOtherMultiLink';
 import { TestEntityOtherMultiLinkApi } from './TestEntityOtherMultiLinkApi';
+import { TestEntitySingleLink } from './TestEntitySingleLink';
 import { TestEntitySingleLinkApi } from './TestEntitySingleLinkApi';
 import { TestComplexType, TestComplexTypeField } from './TestComplexType';
 import {
@@ -28,8 +31,7 @@ import {
   FieldBuilder
 } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
-import {Field} from "@sap-cloud-sdk/odata-common/dist/selectable";
+import { Moment, Duration } from 'moment';
 export class TestEntityApi<
   BinaryT = string,
   BooleanT = boolean,
@@ -45,8 +47,8 @@ export class TestEntityApi<
   SingleT = number,
   StringT = string,
   AnyT = any,
-  DateTimeT = Moment,
   DateTimeOffsetT = Moment,
+  DateTimeT = Moment,
   TimeT = Time
 > implements
     EntityApi<
@@ -66,8 +68,8 @@ export class TestEntityApi<
           SingleT,
           StringT,
           AnyT,
-          DateTimeT,
           DateTimeOffsetT,
+          DateTimeT,
           TimeT
         >
       >,
@@ -86,8 +88,8 @@ export class TestEntityApi<
         SingleT,
         StringT,
         AnyT,
-        DateTimeT,
         DateTimeOffsetT,
+        DateTimeT,
         TimeT
       >
     >
@@ -107,11 +109,10 @@ export class TestEntityApi<
     SingleT,
     StringT,
     AnyT,
-    DateTimeT,
     DateTimeOffsetT,
+    DateTimeT,
     TimeT
   >;
-  public schema: Record<string, any>;
 
   constructor(
     deSerializers: Partial<
@@ -130,15 +131,416 @@ export class TestEntityApi<
         SingleT,
         StringT,
         AnyT,
-        DateTimeT,
         DateTimeOffsetT,
+        DateTimeT,
         TimeT
       >
     > = defaultDeSerializers as any
   ) {
     this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  }
+
+  private navigationPropertyFields!: {
+    /**
+     * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_MULTI_LINK: Link<
+      TestEntity<
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeOffsetT,
+          DateTimeT,
+          TimeT
+        >
+      >,
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeOffsetT,
+        DateTimeT,
+        TimeT
+      >,
+      TestEntityMultiLink<
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeOffsetT,
+          DateTimeT,
+          TimeT
+        >
+      >
+    >;
+    /**
+     * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_OTHER_MULTI_LINK: Link<
+      TestEntity<
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeOffsetT,
+          DateTimeT,
+          TimeT
+        >
+      >,
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeOffsetT,
+        DateTimeT,
+        TimeT
+      >,
+      TestEntityOtherMultiLink<
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeOffsetT,
+          DateTimeT,
+          TimeT
+        >
+      >
+    >;
+    /**
+     * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    TO_SINGLE_LINK: OneToOneLink<
+      TestEntity<
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeOffsetT,
+          DateTimeT,
+          TimeT
+        >
+      >,
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeOffsetT,
+        DateTimeT,
+        TimeT
+      >,
+      TestEntitySingleLink<
+        DeSerializers<
+          BinaryT,
+          BooleanT,
+          ByteT,
+          DecimalT,
+          DoubleT,
+          FloatT,
+          Int16T,
+          Int32T,
+          Int64T,
+          GuidT,
+          SByteT,
+          SingleT,
+          StringT,
+          AnyT,
+          DateTimeOffsetT,
+          DateTimeT,
+          TimeT
+        >
+      >
+    >;
+  };
+
+  _addNavigationProperties(
+    linkedApis: [
+      TestEntityMultiLinkApi<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeOffsetT,
+        DateTimeT,
+        TimeT
+      >,
+      TestEntityOtherMultiLinkApi<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeOffsetT,
+        DateTimeT,
+        TimeT
+      >,
+      TestEntitySingleLinkApi<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeOffsetT,
+        DateTimeT,
+        TimeT
+      >
+    ]
+  ): this {
+    this.navigationPropertyFields = {
+      TO_MULTI_LINK: new Link('to_MultiLink', this, linkedApis[0]),
+      TO_OTHER_MULTI_LINK: new Link('to_OtherMultiLink', this, linkedApis[1]),
+      TO_SINGLE_LINK: new OneToOneLink('to_SingleLink', this, linkedApis[2])
+    };
+    return this;
+  }
+
+  entityConstructor = TestEntity;
+
+  requestBuilder(): TestEntityRequestBuilder<
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeOffsetT,
+      DateTimeT,
+      TimeT
+    >
+  > {
+    return new TestEntityRequestBuilder(this);
+  }
+
+  entityBuilder(): EntityBuilderType<
+    TestEntity<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeOffsetT,
+        DateTimeT,
+        TimeT
+      >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeOffsetT,
+      DateTimeT,
+      TimeT
+    >
+  > {
+    return entityBuilder(this);
+  }
+
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<
+    TestEntity<
+      DeSerializers<
+        BinaryT,
+        BooleanT,
+        ByteT,
+        DecimalT,
+        DoubleT,
+        FloatT,
+        Int16T,
+        Int32T,
+        Int64T,
+        GuidT,
+        SByteT,
+        SingleT,
+        StringT,
+        AnyT,
+        DateTimeOffsetT,
+        DateTimeT,
+        TimeT
+      >
+    >,
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeOffsetT,
+      DateTimeT,
+      TimeT
+    >,
+    NullableT
+  > {
+    return new CustomField(
+      fieldName,
+      this.entityConstructor,
+      this.deSerializers,
+      isNullable
+    );
+  }
+
+  get schema() {
     const fieldBuilder = new FieldBuilder(TestEntity, this.deSerializers);
-    this.schema = {
+    return {
       /**
        * Static representation of the [[keyPropertyGuid]] property for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -310,163 +712,12 @@ export class TestEntityApi<
         TestComplexTypeField,
         true
       ),
-      /**
-       * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      TO_MULTI_LINK: new Link(
-        'to_MultiLink',
-        this,
-        new TestEntityMultiLinkApi(deSerializers)
-      ),
-      /**
-       * Static representation of the one-to-many navigation property [[toOtherMultiLink]] for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      TO_OTHER_MULTI_LINK: new Link(
-        'to_OtherMultiLink',
-        this,
-        new TestEntityOtherMultiLinkApi(deSerializers)
-      ),
-      /**
-       * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      TO_SINGLE_LINK: new OneToOneLink(
-        'to_SingleLink',
-        this,
-        new TestEntitySingleLinkApi(deSerializers)
-      ),
+      ...this.navigationPropertyFields,
       /**
        *
        * All fields selector.
        */
       ALL_FIELDS: new AllFields('*', TestEntity)
     };
-  }
-
-  entityConstructor = TestEntity;
-
-  requestBuilder(): TestEntityRequestBuilder<
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
-    >
-  > {
-    return new TestEntityRequestBuilder(this);
-  }
-
-  entityBuilder(): EntityBuilderType<
-    TestEntity<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
-    >
-  > {
-    return entityBuilder(this);
-  }
-
-  customField<NullableT extends boolean = false>(
-    fieldName: string,
-    isNullable: NullableT = false as NullableT
-  ): CustomField<
-    TestEntity<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
-    >,
-    NullableT
-  > {
-    return new CustomField(
-      fieldName,
-      this.entityConstructor,
-      this.deSerializers,
-      isNullable
-    );
   }
 }

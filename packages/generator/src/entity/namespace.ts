@@ -100,6 +100,33 @@ export function createPropertyFieldInitializerForEntity(
   return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
 }
 
+export function getPropertyFieldType(
+  entity: VdmEntity,
+  prop: VdmProperty,
+  fieldBuilderName = '_fieldBuilder'
+): string {
+  if (prop.isCollection) {
+    if (prop.isComplex) {
+      return `CollectionField<${entity.className}, DeSerializersT, ${prop.jsType}, ${prop.nullable}, true>`;
+    }
+    if (prop.isEnum) {
+      return `CollectionField<${entity.className}, DeSerializersT, string, ${prop.nullable}, true>`;
+    }
+    return `CollectionField<${entity.className}, DeSerializersT, DeSerializedType<DeSerializersT,, ${prop.nullable}, true>`;
+  }
+
+  if (prop.isComplex) {
+    return 'Comple';
+    return `${fieldBuilderName}.buildComplexTypeField('${prop.originalName}', ${prop.fieldType}, ${prop.nullable})`;
+  }
+
+  if (prop.isEnum) {
+    return `${fieldBuilderName}.buildEnumField('${prop.originalName}', ${prop.jsType}, ${prop.nullable})`;
+  }
+
+  return `${fieldBuilderName}.buildEdmTypeField('${prop.originalName}', '${prop.edmType}', ${prop.nullable})`;
+}
+
 function property(prop: VdmProperty): VariableStatementStructure {
   return {
     kind: StructureKind.VariableStatement,

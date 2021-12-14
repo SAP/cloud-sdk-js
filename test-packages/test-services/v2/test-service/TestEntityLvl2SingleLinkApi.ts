@@ -5,87 +5,209 @@
  */
 import { TestEntityLvl2SingleLink } from './TestEntityLvl2SingleLink';
 import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v2';
-import {
-  EdmTypeField,
-  OrderableEdmTypeField,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  Time
-} from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, OrderableEdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
-export class TestEntityLvl2SingleLinkApi<
-  BinaryT = string,
-  BooleanT = boolean,
-  ByteT = number,
-  DecimalT = BigNumber,
-  DoubleT = number,
-  FloatT = number,
-  Int16T = number,
-  Int32T = number,
-  Int64T = BigNumber,
-  GuidT = string,
-  SByteT = number,
-  SingleT = number,
-  StringT = string,
-  AnyT = any,
-  DateTimeT = Moment,
-  DateTimeOffsetT = Moment,
-  TimeT = Time
-> implements
+import { Moment, Duration } from 'moment';
+export class TestEntityLvl2SingleLinkApi<BinaryT = string,
+BooleanT = boolean,
+ByteT = number,
+DecimalT = BigNumber,
+DoubleT = number,
+FloatT = number,
+Int16T = number,
+Int32T = number,
+Int64T = BigNumber,
+GuidT = string,
+SByteT = number,
+SingleT = number,
+StringT = string,
+AnyT = any,
+DateTimeOffsetT = Moment,
+DateTimeT = Moment,
+TimeT = Time> implements 
     EntityApi<
       TestEntityLvl2SingleLink<
-        DeSerializers<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT,
-          DateTimeT,
-          DateTimeOffsetT,
-          TimeT
-        >
-      >,
+        DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+      >, 
+      DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+    > {
+  public deSerializers: DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>;
+
+  constructor(
+    deSerializers: Partial<DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>> = defaultDeSerializers as any) {
+    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  }
+
+  private navigationPropertyFields!: {
+      
+    };
+
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
+  entityConstructor = TestEntityLvl2SingleLink;
+  
+  requestBuilder(): TestEntityLvl2SingleLinkRequestBuilder<
+    DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+  > {
+    return new TestEntityLvl2SingleLinkRequestBuilder(this);
+  }
+  
+  entityBuilder(): EntityBuilderType<
+    TestEntityLvl2SingleLink<
+      DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+    >,
+    DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>
+  > {
+    return entityBuilder(this);
+  }
+
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<
+  TestEntityLvl2SingleLink<
       DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeOffsetT,
+      DateTimeT,
+      TimeT
       >
-    >
-{
-  public deSerializers: DeSerializers<
+    >,
+    DeSerializers<
     BinaryT,
     BooleanT,
     ByteT,
@@ -100,208 +222,9 @@ export class TestEntityLvl2SingleLinkApi<
     SingleT,
     StringT,
     AnyT,
-    DateTimeT,
     DateTimeOffsetT,
+    DateTimeT,
     TimeT
-  >;
-  public schema: Record<string, any>;
-
-  constructor(
-    deSerializers: Partial<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >
-    > = defaultDeSerializers as any
-  ) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
-    const fieldBuilder = new FieldBuilder(
-      TestEntityLvl2SingleLink,
-      this.deSerializers
-    );
-    this.schema = {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[stringProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      STRING_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'StringProperty',
-        'Edm.String',
-        true
-      ),
-      /**
-       * Static representation of the [[booleanProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'BooleanProperty',
-        'Edm.Boolean',
-        true
-      ),
-      /**
-       * Static representation of the [[guidProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      GUID_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'GuidProperty',
-        'Edm.Guid',
-        true
-      ),
-      /**
-       * Static representation of the [[int16Property]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      INT_16_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'Int16Property',
-        'Edm.Int16',
-        true
-      ),
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityLvl2SingleLink)
-    };
-  }
-
-  entityConstructor = TestEntityLvl2SingleLink;
-
-  requestBuilder(): TestEntityLvl2SingleLinkRequestBuilder<
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
-    >
-  > {
-    return new TestEntityLvl2SingleLinkRequestBuilder(this);
-  }
-
-  entityBuilder(): EntityBuilderType<
-    TestEntityLvl2SingleLink<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
-    >
-  > {
-    return entityBuilder(this);
-  }
-
-  customField<NullableT extends boolean = false>(
-    fieldName: string,
-    isNullable: NullableT = false as NullableT
-  ): CustomField<
-    TestEntityLvl2SingleLink<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeT,
-        DateTimeOffsetT,
-        TimeT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeT,
-      DateTimeOffsetT,
-      TimeT
     >,
     NullableT
   > {
@@ -311,5 +234,42 @@ export class TestEntityLvl2SingleLinkApi<
       this.deSerializers,
       isNullable
     );
+  }
+
+  get schema() {
+    const fieldBuilder = new FieldBuilder(TestEntityLvl2SingleLink, this.deSerializers);
+    return { 
+    /**
+ * Static representation of the [[keyProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+/**
+ * Static representation of the [[stringProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+STRING_PROPERTY: fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true),
+/**
+ * Static representation of the [[booleanProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField('BooleanProperty', 'Edm.Boolean', true),
+/**
+ * Static representation of the [[guidProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+GUID_PROPERTY: fieldBuilder.buildEdmTypeField('GuidProperty', 'Edm.Guid', true),
+/**
+ * Static representation of the [[int16Property]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+INT_16_PROPERTY: fieldBuilder.buildEdmTypeField('Int16Property', 'Edm.Int16', true),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', TestEntityLvl2SingleLink) 
+  };
   }
 }

@@ -1,8 +1,13 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { Import, serializeImports } from '../../generator-common';
-import { VdmEntity, VdmMappedEdmType, VdmServiceMetadata } from '../../vdm-types';
 import {
-  navPropertyFieldTypeImportNames, potentialExternalImportDeclarations,
+  VdmEntity,
+  VdmMappedEdmType,
+  VdmServiceMetadata
+} from '../../vdm-types';
+import {
+  navPropertyFieldTypeImportNames,
+  potentialExternalImportDeclarations,
   propertyFieldTypeImportNames,
   propertyTypeImportNames
 } from '../../imports';
@@ -14,7 +19,7 @@ import {
 } from './imports';
 import { classContent } from './class';
 
-export function file(entity: VdmEntity, service: VdmServiceMetadata): string {
+export function entityApiFile(entity: VdmEntity, service: VdmServiceMetadata): string {
   const imports = serializeImports(getImports(entity, service));
   const content = classContent(entity, service);
   return [
@@ -35,16 +40,12 @@ export function file(entity: VdmEntity, service: VdmServiceMetadata): string {
 //   ].join(unixEOL);
 // }
 
-function externalImports(
-  properties: VdmMappedEdmType[]
-): Import[] {
+function externalImports(properties: VdmMappedEdmType[]): Import[] {
   return potentialExternalImportDeclarations
     .map(([moduleIdentifier, ...names]) =>
       externalImport(properties, moduleIdentifier, names)
     )
-    .filter(
-      declaration => declaration.names && declaration.names.length
-    );
+    .filter(declaration => declaration.names && declaration.names.length);
 }
 
 function externalImport(
@@ -119,12 +120,18 @@ function otherEntityApiImports(
       return matchedEntity.className;
     })
     .filter(name => name !== entity.className)
-    .map(name => otherEntityApiImport(name));
+    .flatMap(name => otherEntityImports(name));
 }
 
-function otherEntityApiImport(name: string): Import {
-  return {
-    names: [`${name}Api`],
-    moduleIdentifier: `./${name}Api`
-  };
+function otherEntityImports(name: string): Import[] {
+  return [
+    {
+      names: [`${name}`],
+      moduleIdentifier: `./${name}`
+    },
+    {
+      names: [`${name}Api`],
+      moduleIdentifier: `./${name}Api`
+    }
+  ];
 }

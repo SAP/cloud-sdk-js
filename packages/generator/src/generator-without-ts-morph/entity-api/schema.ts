@@ -25,7 +25,8 @@ export function getSchema(
   return `{ 
     ${[
       ...properties(entity),
-      ...navigationProperties(entity, service),
+      '...this.navigationPropertyFields',
+      // ...navigationProperties(entity, service),
       allFieldsSelector(entity)
     ].join(',\n')} 
   }`;
@@ -76,7 +77,7 @@ function navigationProperty(
     `${navProp.staticPropertyName}: new ${linkClass(
       navProp,
       service.oDataVersion
-    )}('${navProp.originalName}', this, new ${toEntity}Api(deSerializers))`
+    )}('${navProp.originalName}', this, new ${toEntity}Api(this.deSerializers))`
   ].join('\n');
 }
 

@@ -1,5 +1,13 @@
-import { codeBlock, ODataVersion, unixEOL } from '@sap-cloud-sdk/util';
+import { codeBlock } from '@sap-cloud-sdk/util';
 import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
+import {
+  getGenericTypesWithDefault,
+  getGenericTypes
+} from '../de-serializers-generic-types';
+import {
+  addNavigationPropertyFieldsFunction,
+  navigationPropertyFieldsVariable
+} from './navigation-properties';
 import { getSchema } from './schema';
 
 export function classContent(
@@ -16,18 +24,17 @@ export function classContent(
       DeSerializers<${getGenericTypes(service.oDataVersion)}>
     > {
   public deSerializers: DeSerializers<${getGenericTypes(service.oDataVersion)}>;
-  public schema: Record<string, any>;
 
   constructor(
-    deSerializers: Partial<DeSerializers<${getGenericTypes(service.oDataVersion)}>> = defaultDeSerializers as any) {
-      this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
-      const fieldBuilder = new FieldBuilder(${
-        entity.className
-      }, this.deSerializers);
-      this.schema = 
-        ${getSchema(entity, service)}
-      ;
-    }
+    deSerializers: Partial<DeSerializers<${getGenericTypes(
+      service.oDataVersion
+    )}>> = defaultDeSerializers as any) {
+    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  }
+
+  ${navigationPropertyFieldsVariable(entity, service)}
+
+  ${addNavigationPropertyFieldsFunction(entity, service)}
   
   entityConstructor = ${entity.className};
   
@@ -67,53 +74,12 @@ export function classContent(
       isNullable
     );
   }
+
+  get schema() {
+    const fieldBuilder = new FieldBuilder(${
+      entity.className
+    }, this.deSerializers);
+    return ${getSchema(entity, service)};
+  }
 }`;
 }
-
-function getGenericTypesWithDefault(oDataVersion: ODataVersion): string {
-  return getGenericTypeAndDefault(oDataVersion)
-    .map(typeAndDefault => `${typeAndDefault[0]} = ${typeAndDefault[1]}`)
-    .join(`,${unixEOL}`);
-}
-
-function getGenericTypes(oDataVersion: ODataVersion): string {
-  return getGenericTypeAndDefault(oDataVersion)
-    .map(typeAndDefault => typeAndDefault[0])
-    .join(`,${unixEOL}`);
-}
-
-function getGenericTypeAndDefault(oDataVersion: ODataVersion): string[][]{
-  const nonCommonGenericTypeAndDefault = oDataVersion === 'v4' ?
-    [['DateT', 'Moment'],
-     ['DurationT', 'Duration'],
-     ['TimeOfDayT', 'Time']
-    ]
-    :[
-      ['DateTimeT', 'Moment'],
-      ['TimeT', 'Time']
-    ];
-  return [...commonGenericTypeAndDefault, ...nonCommonGenericTypeAndDefault];
-}
-
-const commonGenericTypeAndDefault: string[][] = [
-  ['BinaryT', 'string'],
-  ['BooleanT', 'boolean'],
-  ['ByteT', 'number'],
-  ['DecimalT', 'BigNumber'],
-  ['DoubleT', 'number'],
-  ['FloatT', 'number'],
-  ['Int16T', 'number'],
-  ['Int32T', 'number'],
-  ['Int64T', 'BigNumber'],
-  ['GuidT', 'string'],
-  ['SByteT', 'number'],
-  ['SingleT', 'number'],
-  ['StringT', 'string'],
-  ['AnyT', 'any'],
-  ['DateTimeOffsetT', 'Moment']
-  // ['DateTimeT', 'Moment'],//v2
-  // ['TimeT', 'Time'], //v2
-  // ['DateT', 'Moment'], //v4
-  // ['DurationT', 'Duration'],//v4
-  // ['TimeOfDayT', 'Time'] //v4
-];

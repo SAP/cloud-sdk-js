@@ -1,7 +1,5 @@
 import {
-  TestEntity,
   TestEntityApi,
-  TestEntitySingleLink,
   TestEntitySingleLinkApi
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {

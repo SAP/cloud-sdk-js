@@ -1,9 +1,6 @@
 import {
-  TestEntity,
   TestEntityApi,
-  TestEntityMultiLink,
   TestEntityMultiLinkApi,
-  TestEntitySingleLink,
   TestEntitySingleLinkApi
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { and, or } from '@sap-cloud-sdk/odata-common/internal';

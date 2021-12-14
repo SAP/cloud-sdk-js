@@ -1,5 +1,4 @@
 import {
-  TestEntity,
   TestEntityApi
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 

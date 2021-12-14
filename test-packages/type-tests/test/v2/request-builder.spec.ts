@@ -1,12 +1,8 @@
 import {
-  TestEntity,
   TestEntityApi,
-  TestEntityMultiLink,
-  TestEntityMultiLinkApi,
-  TestEntitySingleLink
+  TestEntityMultiLinkApi
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common/internal';
-import { DefaultDeSerializers } from '@sap-cloud-sdk/odata-v2';
 
 const testEntityApi = new TestEntityApi();
 const testEntityMultiLinkApi = new TestEntityMultiLinkApi();

@@ -1,12 +1,10 @@
 import {
   changeset as otherServiceChangeset,
-  MultiSchemaTestEntity,
   MultiSchemaTestEntityApi
 } from '@sap-cloud-sdk/test-services/v2/multiple-schemas-service';
 import {
   batch,
   changeset as testEntityChangeset,
-  TestEntity,
   TestEntityApi
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 

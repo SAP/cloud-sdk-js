@@ -1,12 +1,12 @@
-import { TestEntityApi } from '@sap-cloud-sdk/test-services/v2/test-service/TestEntityApi';
 import {
+  testEntityApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
 } from '../test/test-util';
 
 describe('remote state', () => {
   it('setOrInitializeRemoteState() sets remote state on entity', () => {
-    const entity = new TestEntityApi()
+    const entity = testEntityApi
       .entityBuilder()
       .stringProperty('test')
       .toSingleLink(

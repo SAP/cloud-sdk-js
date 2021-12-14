@@ -28,7 +28,7 @@ import {
   providerServiceToken
 } from '../../../../test-resources/test/test-util';
 import { parseDestination } from '../../../connectivity/src/scp-cf/destination/destination';
-import { testEntityApi } from '../../test/test-util';
+import { testEntityApi, testEntitySingleLinkApi } from '../../test/test-util';
 import { DefaultDeSerializers } from '../de-serializers';
 import { GetAllRequestBuilder } from './get-all-request-builder';
 
@@ -66,7 +66,7 @@ describe('GetAllRequestBuilder', () => {
       const actual = await requestBuilder
         .select(
           testEntityApi.schema.TO_SINGLE_LINK.select(
-            testEntityApi.schema.BOOLEAN_PROPERTY
+            testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY
           )
         )
         .url(defaultDestination);
@@ -189,7 +189,7 @@ describe('GetAllRequestBuilder', () => {
       mockCountRequest(
         defaultDestination,
         4711,
-        testEntityApi.schema.requestBuilder().getAll()
+        testEntityApi.requestBuilder().getAll()
       );
       const count = await requestBuilder.count().execute(defaultDestination);
       expect(count).toBe(4711);
@@ -275,7 +275,7 @@ describe('GetAllRequestBuilder', () => {
       mockCountRequest(
         defaultDestination,
         4711,
-        testEntityApi.schema.requestBuilder().getAll()
+        testEntityApi.requestBuilder().getAll()
       );
       const actual = await requestBuilder
         .count()

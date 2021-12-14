@@ -6,14 +6,10 @@ import { jwtBearerToken, serviceToken } from '../token-accessor';
 import { addProxyConfigurationOnPrem } from '../connectivity-service';
 import {
   getDestinationService,
-  getDestinationServiceCredentialsList,
-  getXsuaaServiceCredentials
+  getDestinationServiceCredentialsList
 } from '../environment-accessor';
 import { isIdenticalTenant } from '../tenant';
-import {
-  DestinationServiceCredentials,
-  XsuaaServiceCredentials
-} from '../environment-accessor-types';
+import { DestinationServiceCredentials } from '../environment-accessor-types';
 import { exchangeToken, isTokenExchangeEnabled } from '../identity-service';
 import { getSubdomainAndZoneId } from '../xsuaa-service';
 import { Destination } from './destination-service-types';
@@ -99,9 +95,7 @@ class DestinationFromServiceRetriever {
       await DestinationFromServiceRetriever.getSubscriberToken(options);
 
     const providerToken =
-      await DestinationFromServiceRetriever.getProviderServiceToken(
-        options
-      );
+      await DestinationFromServiceRetriever.getProviderServiceToken(options);
 
     const da = new DestinationFromServiceRetriever(
       options.destinationName,

@@ -1,16 +1,11 @@
 import moment from 'moment';
 import { Cache } from './cache';
-import {
-  ClientCredentialsResponse
-} from './xsuaa-service-types';
+import { ClientCredentialsResponse } from './xsuaa-service-types';
 
 const ClientCredentialsTokenCache = (
   cache: Cache<ClientCredentialsResponse>
 ) => ({
-  getToken: (
-    url,
-    clientId: string
-  ): ClientCredentialsResponse | undefined =>
+  getToken: (url, clientId: string): ClientCredentialsResponse | undefined =>
     cache.get(getCacheKey(url, clientId)),
 
   cacheToken: (
@@ -38,10 +33,7 @@ const ClientCredentialsTokenCache = (
  * @param clientId - ClientId to fetch the token
  * @returns the token
  */
-export function getCacheKey(
-  url: string,
-  clientId: string
-): string {
+export function getCacheKey(url: string, clientId: string): string {
   return [url, clientId].join(':');
 }
 

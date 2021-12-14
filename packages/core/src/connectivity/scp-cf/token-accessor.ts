@@ -31,8 +31,6 @@ export async function serviceToken(
   options?: CachingOptions &
     ResilienceOptions & {
       userJwt?: string | JwtPayload;
-      // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here
-      xsuaaCredentials?: XsuaaServiceCredentials;
     }
 ): Promise<string> {
   const opts = {
@@ -43,6 +41,7 @@ export async function serviceToken(
 
   service = resolveService(service);
   const serviceCredentials = service.credentials;
+  // TODO 2.0 Once the xssec supports caching remove all xsuaa related content here and use the cache
   const xsuaa = multiTenantXsuaaCredentials(options);
 
   if (opts.useCache) {

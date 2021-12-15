@@ -222,5 +222,3 @@ export type FilterFunctionNames = FilterFunctionNamesCommon |
   'now' |
   'hasSubset' |
   'hasSubsequence';
-
-// filterFunctions()

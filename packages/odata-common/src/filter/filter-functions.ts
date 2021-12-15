@@ -312,7 +312,7 @@ export function isOf<EntityT extends EntityBase>(
 ): BooleanFilterFunction<EntityT>;
 
 /**
- * @param expressionOrType - expressionOrTpye
+ * @param expressionOrType - expressionOrType
  * @param type - type
  * @returns returns if the type matches
  * @internal
@@ -350,7 +350,6 @@ export function filterFunctions<
   StringT = string,
   AnyT = any
 >(
-    // d: any
   deSerializers: DeSerializers<
     BinaryT,
     BooleanT,
@@ -368,7 +367,6 @@ export function filterFunctions<
     AnyT
   >
 ): Record<FilterFunctionNames, any> {
-// ) {
   return {
     endsWith,
     startsWith,

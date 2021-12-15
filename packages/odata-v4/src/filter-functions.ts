@@ -12,9 +12,9 @@ import {
   FilterFunctionNames as FilterFunctionNamesCommon,
   Time
 } from '@sap-cloud-sdk/odata-common/internal';
+import BigNumber from 'bignumber.js';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
-import BigNumber from 'bignumber.js';
 import { defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from './de-serializers';
 
 /* String Functions */

@@ -350,6 +350,7 @@ export function filterFunctions<
   StringT = string,
   AnyT = any
 >(
+    // d: any
   deSerializers: DeSerializers<
     BinaryT,
     BooleanT,
@@ -366,7 +367,8 @@ export function filterFunctions<
     StringT,
     AnyT
   >
-): Record<string, any> {
+): Record<FilterFunctionNames, any> {
+// ) {
   return {
     endsWith,
     startsWith,
@@ -389,3 +391,23 @@ export function filterFunctions<
     isOf
   };
 }
+
+export type FilterFunctionNames = 'endsWith' |
+  'startsWith' |
+  'length' |
+  'indexOf' |
+  'substring' |
+  'toLower' |
+  'toUpper' |
+  'trim' |
+  'concat' |
+  'round' |
+  'floor' |
+  'ceiling' |
+  'day' |
+  'hour' |
+  'minute' |
+  'month' |
+  'second' |
+  'year' |
+  'isOf';

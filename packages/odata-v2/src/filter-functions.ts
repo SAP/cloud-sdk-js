@@ -4,7 +4,8 @@ import {
   BooleanFilterFunction,
   filterFunction,
   filterFunctions as filterFunctionsCommon,
-  Time
+  Time,
+  FilterFunctionNames as FilterFunctionNamesCommon
 } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
 import { DeSerializers } from './de-serializers/de-serializers';
@@ -108,10 +109,12 @@ export function filterFunctions<
       TimeT
     >
   > = defaultDeSerializers as any
-): Record<string, any> {
+): Record<FilterFunctionNames, any> {
   return {
     ...filterFunctionsCommon(mergeDefaultDeSerializersWith(deSerializers)),
     substringOf,
     replace
   };
 }
+
+export type FilterFunctionNames = FilterFunctionNamesCommon | 'substringOf' | 'replace';

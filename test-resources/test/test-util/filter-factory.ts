@@ -136,8 +136,7 @@ export const testNestedFilterLambdaExpressionOnLink = {
 export const testFilterLambdaExpressionFilterFunctionOnLink = {
   filter: testEntityApiV4.schema.TO_MULTI_LINK.filter(
     any(
-      filterFunctions
-
+      filterFunctions()
         .substring(
           testEntityApiV4.schema.TO_MULTI_LINK._linkedEntityApi.schema
             .STRING_PROPERTY,

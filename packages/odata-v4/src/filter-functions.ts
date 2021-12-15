@@ -8,10 +8,14 @@ import {
   FieldType,
   CollectionField,
   CollectionFilterFunction,
-  filterFunctions as filterFunctionsCommon
+  filterFunctions as filterFunctionsCommon,
+  FilterFunctionNames as FilterFunctionNamesCommon,
+  Time
 } from '@sap-cloud-sdk/odata-common/internal';
+import BigNumber from 'bignumber.js';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
+import { defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from './de-serializers';
 
 /* String Functions */
 /**
@@ -153,15 +157,68 @@ export function hasSubsequence<
 /**
  * OData v4 specific filter functions
  */
-export const filterFunctions = {
-  ...filterFunctionsCommon,
-  contains,
-  matchesPattern,
-  fractionalSeconds,
-  totalOffsetMinutes,
-  maxDateTime,
-  minDateTime,
-  now,
-  hasSubset,
-  hasSubsequence
-};
+export function filterFunctions<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any,
+  DateTimeT = moment.Moment,
+  DateTimeOffsetT = moment.Moment,
+  TimeT = Time
+  >(
+  deSerializers: Partial<
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+      >
+    > = defaultDeSerializers as any
+): Record<FilterFunctionNames, any> {
+  return {
+    ...filterFunctionsCommon(mergeDefaultDeSerializersWith(deSerializers)),
+    contains,
+    matchesPattern,
+    fractionalSeconds,
+    totalOffsetMinutes,
+    maxDateTime,
+    minDateTime,
+    now,
+    hasSubset,
+    hasSubsequence
+  };
+}
+
+export type FilterFunctionNames = FilterFunctionNamesCommon |
+  'contains' |
+  'matchesPattern' |
+  'fractionalSeconds' |
+  'totalOffsetMinutes' |
+  'maxDateTime' |
+  'minDateTime' |
+  'now' |
+  'hasSubset' |
+  'hasSubsequence';

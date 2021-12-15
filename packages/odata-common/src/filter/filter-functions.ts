@@ -312,7 +312,7 @@ export function isOf<EntityT extends EntityBase>(
 ): BooleanFilterFunction<EntityT>;
 
 /**
- * @param expressionOrType - expressionOrTpye
+ * @param expressionOrType - expressionOrType
  * @param type - type
  * @returns returns if the type matches
  * @internal
@@ -366,7 +366,7 @@ export function filterFunctions<
     StringT,
     AnyT
   >
-): Record<string, any> {
+): Record<FilterFunctionNames, any> {
   return {
     endsWith,
     startsWith,
@@ -389,3 +389,23 @@ export function filterFunctions<
     isOf
   };
 }
+
+export type FilterFunctionNames = 'endsWith' |
+  'startsWith' |
+  'length' |
+  'indexOf' |
+  'substring' |
+  'toLower' |
+  'toUpper' |
+  'trim' |
+  'concat' |
+  'round' |
+  'floor' |
+  'ceiling' |
+  'day' |
+  'hour' |
+  'minute' |
+  'month' |
+  'second' |
+  'year' |
+  'isOf';

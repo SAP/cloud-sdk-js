@@ -103,7 +103,7 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
   };
 }
 
-export function getPropertyType(prop: VdmProperty){
+export function getPropertyType(prop: VdmProperty) {
   if (prop.isCollection) {
     if (prop.isComplex) {
       return `${prop.jsType}<T>[]` + getNullableSuffix(prop);
@@ -125,7 +125,7 @@ export function getPropertyType(prop: VdmProperty){
   return `DeserializedType<T, '${prop.edmType}'>` + getNullableSuffix(prop);
 }
 
-function getNullableSuffix(prop: VdmProperty){
+function getNullableSuffix(prop: VdmProperty) {
   return prop.nullable ? ' | null' : '';
 }
 

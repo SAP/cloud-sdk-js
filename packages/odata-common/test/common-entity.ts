@@ -211,10 +211,10 @@ export class CommonEntitySingleLink<
 }
 
 export interface CommonEntitySingleLinkType<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
+  T extends DeSerializers = DefaultDeSerializers
 > {
-  keyProperty: DeserializedType<DeSerializersT, 'Edm.String'>;
-  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'> | null;
+  keyProperty: DeserializedType<T, 'Edm.String'>;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
 }
 
 /*
@@ -224,105 +224,49 @@ export interface CommonEntitySingleLinkType<
  */
 
 export class CommonEntitySingleLinkApi<
-  BinaryT = string,
-  BooleanT = boolean,
-  ByteT = number,
-  DecimalT = BigNumber,
-  DoubleT = number,
-  FloatT = number,
-  Int16T = number,
-  Int32T = number,
-  Int64T = BigNumber,
-  GuidT = string,
-  SByteT = number,
-  SingleT = number,
-  StringT = string,
-  AnyT = any,
-  DateTimeT = Moment,
-  DateTimeOffsetT = Moment,
-  TimeT = Time
-> implements
-    EntityApi<
-      CommonEntitySingleLink<
-        DeSerializers<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT
-        >
-      >,
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >
+  T extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<CommonEntitySingleLink<T>, T>
 {
-  public deSerializers: DeSerializers<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT
-  >;
-  public schema: Record<string, any>;
+  public deSerializers: T;
 
-  constructor(
-    deSerializers: Partial<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    > = defaultDeSerializers as any
-  ) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  constructor(deSerializers: T = defaultDeSerializers as any) {
+    this.deSerializers = deSerializers;
+  }
+
+  private navigationPropertyFields!: {};
+
+  _addNavigationProperties(linkedApis: []): this {
+    this.navigationPropertyFields = {};
+    return this;
+  }
+
+  entityConstructor = CommonEntitySingleLink;
+
+  requestBuilder(): any {
+    throw new Error('Not implemented');
+  }
+  entityBuilder(): EntityBuilderType<CommonEntitySingleLink<T>, T> {
+    return entityBuilder(this);
+  }
+
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<CommonEntitySingleLink<T>, T, NullableT> {
+    return new CustomField(
+      fieldName,
+      this.entityConstructor,
+      this.deSerializers,
+      isNullable
+    ) as any;
+  }
+
+  get schema() {
     const fieldBuilder = new FieldBuilder(
       CommonEntitySingleLink,
       this.deSerializers
     );
-    this.schema = {
+    return {
       KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
         'KeyProperty',
         'Edm.String',
@@ -333,100 +277,9 @@ export class CommonEntitySingleLinkApi<
         'Edm.String',
         true
       ),
+      ...this.navigationPropertyFields,
       ALL_FIELDS: new AllFields('*', CommonEntitySingleLink)
     };
-  }
-
-  entityConstructor = CommonEntitySingleLink;
-
-  requestBuilder(): any {
-    throw new Error('Not implemented');
-  }
-  entityBuilder(): EntityBuilderType<
-    CommonEntitySingleLink<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT
-    >
-  > {
-    return entityBuilder(this);
-  }
-
-  customField<NullableT extends boolean = false>(
-    fieldName: string,
-    isNullable: NullableT = false as NullableT
-  ): CustomField<
-    CommonEntitySingleLink<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT
-    >,
-    NullableT
-  > {
-    return new CustomField(
-      fieldName,
-      this.entityConstructor,
-      this.deSerializers,
-      isNullable
-    );
   }
 }
 
@@ -448,21 +301,21 @@ export class CommonEntity<T extends DeSerializers = DefaultDeSerializers>
   keyPropertyString!: DeserializedType<T, 'Edm.String'>;
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
-  collectionProperty?: DeserializedType<T, 'Edm.String'> | null;
+  collectionProperty?: DeserializedType<T, 'Edm.String'>[] | null;
   complexTypeProperty?: CommonComplexType<T> | null;
   toSingleLink?: CommonEntitySingleLink<T> | null;
 }
 
 export interface CommonEntityType<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
+  T extends DeSerializers = DefaultDeSerializers
 > {
-  keyPropertyGuid: DeserializedType<DeSerializersT, 'Edm.Guid'>;
-  keyPropertyString: DeserializedType<DeSerializersT, 'Edm.String'>;
-  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'> | null;
-  int16Property?: DeserializedType<DeSerializersT, 'Edm.Int16'> | null;
-  collectionProperty?: DeserializedType<DeSerializersT, 'Edm.String'> | null;
-  complexTypeProperty?: CommonComplexType<DeSerializersT> | null;
-  toSingleLink?: CommonEntitySingleLinkType<DeSerializersT> | null;
+  keyPropertyGuid: DeserializedType<T, 'Edm.Guid'>;
+  keyPropertyString: DeserializedType<T, 'Edm.String'>;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+  collectionProperty?: DeserializedType<T, 'Edm.String'>[] | null;
+  complexTypeProperty?: CommonComplexType<T> | null;
+  toSingleLink?: CommonEntitySingleLinkType<T> | null;
 }
 
 /*
@@ -471,103 +324,50 @@ export interface CommonEntityType<
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
-export class CommonEntityApi<
-  BinaryT = string,
-  BooleanT = boolean,
-  ByteT = number,
-  DecimalT = BigNumber,
-  DoubleT = number,
-  FloatT = number,
-  Int16T = number,
-  Int32T = number,
-  Int64T = BigNumber,
-  GuidT = string,
-  SByteT = number,
-  SingleT = number,
-  StringT = string,
-  AnyT = any,
-  DateTimeT = Moment,
-  DateTimeOffsetT = Moment,
-  TimeT = Time
-> implements
-    EntityApi<
-      CommonEntity<
-        DeSerializers<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT
-        >
-      >,
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >
+export class CommonEntityApi<T extends DeSerializers = DefaultDeSerializers>
+  implements EntityApi<CommonEntity<T>, T>
 {
-  public deSerializers: DeSerializers<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT
-  >;
-  public schema: Record<string, any>;
+  public deSerializers: T;
 
-  constructor(
-    deSerializers: Partial<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    > = defaultDeSerializers as any
-  ) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  constructor(deSerializers: T = defaultDeSerializers as any) {
+    this.deSerializers = deSerializers;
+  }
+
+  private navigationPropertyFields!: {
+    TO_SINGLE_LINK: OneToOneLink<CommonEntity<T>, T, CommonEntitySingleLink<T>>;
+  };
+
+  _addNavigationProperties(linkedApis: [CommonEntitySingleLinkApi<T>]): this {
+    this.navigationPropertyFields = {
+      TO_SINGLE_LINK: new OneToOneLink('to_SingleLink', this, linkedApis[0])
+    };
+    return this;
+  }
+
+  entityConstructor = CommonEntity;
+
+  requestBuilder(): any {
+    throw new Error('Not implemented');
+  }
+  entityBuilder(): EntityBuilderType<CommonEntity<T>, T> {
+    return entityBuilder(this);
+  }
+
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<CommonEntity<T>, T, NullableT> {
+    return new CustomField(
+      fieldName,
+      this.entityConstructor,
+      this.deSerializers,
+      isNullable
+    ) as any;
+  }
+
+  get schema() {
     const fieldBuilder = new FieldBuilder(CommonEntity, this.deSerializers);
-    this.schema = {
+    return {
       KEY_PROPERTY_GUID: fieldBuilder.buildEdmTypeField(
         'KeyPropertyGuid',
         'Edm.Guid',
@@ -598,105 +398,9 @@ export class CommonEntityApi<
         CommonComplexTypeField,
         true
       ),
-      TO_SINGLE_LINK: new OneToOneLink(
-        'to_SingleLink',
-        this,
-        new CommonEntitySingleLinkApi(deSerializers)
-      ),
+      ...this.navigationPropertyFields,
       ALL_FIELDS: new AllFields('*', CommonEntity)
     };
-  }
-
-  entityConstructor = CommonEntity;
-
-  requestBuilder(): any {
-    throw new Error('Not implemented');
-  }
-  entityBuilder(): EntityBuilderType<
-    CommonEntity<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT
-    >
-  > {
-    return entityBuilder(this);
-  }
-
-  customField<NullableT extends boolean = false>(
-    fieldName: string,
-    isNullable: NullableT = false as NullableT
-  ): CustomField<
-    CommonEntity<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT
-    >,
-    NullableT
-  > {
-    return new CustomField(
-      fieldName,
-      this.entityConstructor,
-      this.deSerializers,
-      isNullable
-    );
   }
 }
 

@@ -7,7 +7,10 @@ import {
   mockHeaderRequest
 } from '../../../test-resources/test/test-util';
 import { createRequestBuilder } from '../../odata-common/test/common-request-config';
-import { CommonEntity, commonEntityApi } from '../../odata-common/test/common-entity';
+import {
+  CommonEntity,
+  commonEntityApi
+} from '../../odata-common/test/common-entity';
 import { buildCsrfFetchHeaders, buildCsrfHeaders } from './csrf-token-header';
 
 const standardHeaders = {

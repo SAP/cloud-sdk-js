@@ -1,4 +1,7 @@
-import { ODataRequestConfig, ODataUri } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  ODataRequestConfig,
+  ODataUri
+} from '@sap-cloud-sdk/odata-common/internal';
 import { DeSerializers } from '../de-serializers';
 import {
   ActionImportParameters,

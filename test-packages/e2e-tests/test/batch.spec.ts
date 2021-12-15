@@ -15,7 +15,8 @@ describe('batch', () => {
 
   it('should execute retrieve and change set requests', async () => {
     const getAll = requestBuilder.getAll();
-    const testEntity = new TestEntityApi().entityBuilder()
+    const testEntity = new TestEntityApi()
+      .entityBuilder()
       .keyTestEntity(entityKey)
       .stringProperty('batch')
       .build();

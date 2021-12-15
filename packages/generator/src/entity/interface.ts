@@ -65,8 +65,6 @@ function navProperty(
     kind: StructureKind.PropertySignature,
     name: navProp.instancePropertyName + (navProp.isCollection ? '' : '?'),
     type:
-      entity.className +
-      'Type<T>' +
-      (navProp.isCollection ? '[]' : ' | null')
+      entity.className + 'Type<T>' + (navProp.isCollection ? '[]' : ' | null')
   };
 }

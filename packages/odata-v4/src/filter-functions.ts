@@ -15,7 +15,11 @@ import {
 import BigNumber from 'bignumber.js';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
-import { defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from './de-serializers';
+import {
+  defaultDeSerializers,
+  DeSerializers,
+  mergeDefaultDeSerializersWith
+} from './de-serializers';
 
 /* String Functions */
 /**
@@ -175,7 +179,7 @@ export function filterFunctions<
   DateTimeT = moment.Moment,
   DateTimeOffsetT = moment.Moment,
   TimeT = Time
-  >(
+>(
   deSerializers: Partial<
     DeSerializers<
       BinaryT,
@@ -195,8 +199,8 @@ export function filterFunctions<
       DateTimeT,
       DateTimeOffsetT,
       TimeT
-      >
-    > = defaultDeSerializers as any
+    >
+  > = defaultDeSerializers as any
 ): Record<FilterFunctionNames, any> {
   return {
     ...filterFunctionsCommon(mergeDefaultDeSerializersWith(deSerializers)),
@@ -212,13 +216,14 @@ export function filterFunctions<
   };
 }
 
-export type FilterFunctionNames = FilterFunctionNamesCommon |
-  'contains' |
-  'matchesPattern' |
-  'fractionalSeconds' |
-  'totalOffsetMinutes' |
-  'maxDateTime' |
-  'minDateTime' |
-  'now' |
-  'hasSubset' |
-  'hasSubsequence';
+export type FilterFunctionNames =
+  | FilterFunctionNamesCommon
+  | 'contains'
+  | 'matchesPattern'
+  | 'fractionalSeconds'
+  | 'totalOffsetMinutes'
+  | 'maxDateTime'
+  | 'minDateTime'
+  | 'now'
+  | 'hasSubset'
+  | 'hasSubsequence';

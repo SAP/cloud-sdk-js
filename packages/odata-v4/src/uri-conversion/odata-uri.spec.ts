@@ -45,8 +45,10 @@ describe('getFilter', () => {
 
   it('for lambda expression with FilterList on one-to-many navigation property', () => {
     expect(
-      getFilter(testFilterLambdaExpressionFilterListOnLink.filter, testEntityApi)
-        .filter
+      getFilter(
+        testFilterLambdaExpressionFilterListOnLink.filter,
+        testEntityApi
+      ).filter
     ).toBe(
       encodeURIComponent(testFilterLambdaExpressionFilterListOnLink.odataStr)
     );
@@ -54,8 +56,10 @@ describe('getFilter', () => {
 
   it('for lambda expression with FilterLink on one-to-many navigation property', () => {
     expect(
-      getFilter(testFilterLambdaExpressionFilterLinkOnLink.filter, testEntityApi)
-        .filter
+      getFilter(
+        testFilterLambdaExpressionFilterLinkOnLink.filter,
+        testEntityApi
+      ).filter
     ).toBe(
       encodeURIComponent(testFilterLambdaExpressionFilterLinkOnLink.odataStr)
     );

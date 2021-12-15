@@ -32,6 +32,10 @@ __exportStar(require('./Photos'), exports);
 __exportStar(require('./People'), exports);
 __exportStar(require('./Airlines'), exports);
 __exportStar(require('./Airports'), exports);
+__exportStar(require('./PhotosApi'), exports);
+__exportStar(require('./PeopleApi'), exports);
+__exportStar(require('./AirlinesApi'), exports);
+__exportStar(require('./AirportsApi'), exports);
 __exportStar(require('./PhotosRequestBuilder'), exports);
 __exportStar(require('./PeopleRequestBuilder'), exports);
 __exportStar(require('./AirlinesRequestBuilder'), exports);
@@ -44,4 +48,5 @@ __exportStar(require('./PersonGender'), exports);
 __exportStar(require('./function-imports'), exports);
 __exportStar(require('./action-imports'), exports);
 __exportStar(require('./BatchRequest'), exports);
+__exportStar(require('./service'), exports);
 //# sourceMappingURL=index.js.map

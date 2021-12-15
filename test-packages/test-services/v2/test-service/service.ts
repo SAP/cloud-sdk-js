@@ -23,10 +23,11 @@ import { Moment } from 'moment';
 import {
   defaultDeSerializers,
   DeSerializers,
+  DefaultDeSerializers,
   mergeDefaultDeSerializersWith
 } from '@sap-cloud-sdk/odata-v2';
 
-export class TestService<
+export function builder<
   BinaryT = string,
   BooleanT = boolean,
   ByteT = number,
@@ -44,9 +45,30 @@ export class TestService<
   DateTimeOffsetT = Moment,
   DateTimeT = Moment,
   TimeT = Time
-> {
-  private apis: Record<string, any> = {};
-  private deSerializers: DeSerializers<
+>(
+  deSerializers: Partial<
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeOffsetT,
+      DateTimeT,
+      TimeT
+    >
+  > = defaultDeSerializers as any
+): TestService<
+  DeSerializers<
     BinaryT,
     BooleanT,
     ByteT,
@@ -64,32 +86,16 @@ export class TestService<
     DateTimeOffsetT,
     DateTimeT,
     TimeT
-  >;
+  >
+> {
+  return new TestService(mergeDefaultDeSerializersWith(deSerializers));
+}
+export class TestService<T extends DeSerializers = DefaultDeSerializers> {
+  private apis: Record<string, any> = {};
+  private deSerializers: T;
 
-  constructor(
-    deSerializers: Partial<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeOffsetT,
-        DateTimeT,
-        TimeT
-      >
-    > = defaultDeSerializers as any
-  ) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  constructor(deSerializers: T) {
+    this.deSerializers = deSerializers;
   }
 
   private initApi(key: string, ctor: new (...args: any[]) => any): any {
@@ -99,25 +105,7 @@ export class TestService<
     return this.apis[key];
   }
 
-  get testEntityApi(): TestEntityApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityApi(): TestEntityApi<T> {
     const api = this.initApi('testEntityApi', TestEntityApi);
     const linkedApis = [
       this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi),
@@ -128,25 +116,7 @@ export class TestService<
     return api;
   }
 
-  get testEntityMultiLinkApi(): TestEntityMultiLinkApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityMultiLinkApi(): TestEntityMultiLinkApi<T> {
     const api = this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi);
     const linkedApis = [
       this.initApi('testEntityLvl2MultiLinkApi', TestEntityLvl2MultiLinkApi),
@@ -156,25 +126,7 @@ export class TestService<
     return api;
   }
 
-  get testEntityOtherMultiLinkApi(): TestEntityOtherMultiLinkApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityOtherMultiLinkApi(): TestEntityOtherMultiLinkApi<T> {
     const api = this.initApi(
       'testEntityOtherMultiLinkApi',
       TestEntityOtherMultiLinkApi
@@ -183,25 +135,7 @@ export class TestService<
     return api;
   }
 
-  get testEntityLvl2MultiLinkApi(): TestEntityLvl2MultiLinkApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityLvl2MultiLinkApi(): TestEntityLvl2MultiLinkApi<T> {
     const api = this.initApi(
       'testEntityLvl2MultiLinkApi',
       TestEntityLvl2MultiLinkApi
@@ -210,25 +144,7 @@ export class TestService<
     return api;
   }
 
-  get testEntitySingleLinkApi(): TestEntitySingleLinkApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntitySingleLinkApi(): TestEntitySingleLinkApi<T> {
     const api = this.initApi(
       'testEntitySingleLinkApi',
       TestEntitySingleLinkApi
@@ -241,25 +157,7 @@ export class TestService<
     return api;
   }
 
-  get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<T> {
     const api = this.initApi(
       'testEntityLvl2SingleLinkApi',
       TestEntityLvl2SingleLinkApi
@@ -268,25 +166,7 @@ export class TestService<
     return api;
   }
 
-  get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<T> {
     const api = this.initApi(
       'testEntityWithSharedEntityType1Api',
       TestEntityWithSharedEntityType1Api
@@ -295,25 +175,7 @@ export class TestService<
     return api;
   }
 
-  get testEntityWithSharedEntityType2Api(): TestEntityWithSharedEntityType2Api<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityWithSharedEntityType2Api(): TestEntityWithSharedEntityType2Api<T> {
     const api = this.initApi(
       'testEntityWithSharedEntityType2Api',
       TestEntityWithSharedEntityType2Api
@@ -322,25 +184,7 @@ export class TestService<
     return api;
   }
 
-  get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<T> {
     const api = this.initApi(
       'testEntityCircularLinkParentApi',
       TestEntityCircularLinkParentApi
@@ -355,25 +199,7 @@ export class TestService<
     return api;
   }
 
-  get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<T> {
     const api = this.initApi(
       'testEntityCircularLinkChildApi',
       TestEntityCircularLinkChildApi
@@ -388,49 +214,13 @@ export class TestService<
     return api;
   }
 
-  get testEntityEndsWithApi(): TestEntityEndsWithApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityEndsWithApi(): TestEntityEndsWithApi<T> {
     const api = this.initApi('testEntityEndsWithApi', TestEntityEndsWithApi);
 
     return api;
   }
 
-  get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<T> {
     const api = this.initApi(
       'testEntityEndsWithSomethingElseApi',
       TestEntityEndsWithSomethingElseApi
@@ -439,49 +229,13 @@ export class TestService<
     return api;
   }
 
-  get caseTestApi(): CaseTestApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get caseTestApi(): CaseTestApi<T> {
     const api = this.initApi('caseTestApi', CaseTestApi);
 
     return api;
   }
 
-  get casetest_1Api(): Casetest_1Api<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-  > {
+  get casetest_1Api(): Casetest_1Api<T> {
     const api = this.initApi('casetest_1Api', Casetest_1Api);
 
     return api;

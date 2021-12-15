@@ -1,6 +1,4 @@
-import {
-  TestComplexType
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+import { TestComplexType } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
 import { testEntityApi, testEntitySingleLinkApi } from '../../test/test-util';
 import { serializeComplexType, serializeEntity } from './entity-serializer';
@@ -8,7 +6,10 @@ import { serializeComplexType, serializeEntity } from './entity-serializer';
 describe('entity-serializer', () => {
   it('should serialize entity with enum field', () => {
     const enumProperty = TestEnumType.Member2;
-    const testEntity = testEntityApi.entityBuilder().enumProperty(enumProperty).build();
+    const testEntity = testEntityApi
+      .entityBuilder()
+      .enumProperty(enumProperty)
+      .build();
 
     expect(serializeEntity(testEntity, testEntityApi)).toEqual({
       EnumProperty: 'Member2'
@@ -21,7 +22,8 @@ describe('entity-serializer', () => {
       stringProperty: stringProp1,
       enumProperty: TestEnumType.Member1
     };
-    const testEntity = testEntityApi.entityBuilder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .complexTypeProperty(complexType1)
       .build();
 
@@ -35,7 +37,8 @@ describe('entity-serializer', () => {
 
   it('should serialize entity with string collection field', () => {
     const collectionProperty = ['abc', 'def'];
-    const testEntity = testEntityApi.entityBuilder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .collectionProperty(collectionProperty)
       .build();
 
@@ -46,7 +49,8 @@ describe('entity-serializer', () => {
 
   it('should serialize entity with enum collection field', () => {
     const enumCollectionProperty = [TestEnumType.Member1, TestEnumType.Member2];
-    const testEntity = testEntityApi.entityBuilder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .enumCollectionProperty(enumCollectionProperty)
       .build();
 
@@ -61,7 +65,8 @@ describe('entity-serializer', () => {
     const complexType1 = { stringProperty: stringProp1 };
     const complexType2 = { stringProperty: stringProp2 };
     const collectionPropWithComplexType = [complexType1, complexType2];
-    const testEntity = testEntityApi.entityBuilder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .complexTypeProperty(complexType1)
       .complexTypeCollectionProperty(collectionPropWithComplexType)
       .build();
@@ -112,7 +117,8 @@ describe('entity-serializer', () => {
   });
 
   it('should serialize TimeOfDay.', () => {
-    const testEntity = testEntityApi.entityBuilder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3 })
       .build();
 
@@ -120,7 +126,8 @@ describe('entity-serializer', () => {
       TimeOfDayProperty: '01:02:03'
     });
 
-    const testEntityFractional = testEntityApi.entityBuilder()
+    const testEntityFractional = testEntityApi
+      .entityBuilder()
       .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3.456 })
       .build();
 
@@ -130,9 +137,11 @@ describe('entity-serializer', () => {
   });
 
   it('should include custom fields on navigation properties', () => {
-    const testEntity = testEntityApi.entityBuilder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .toSingleLink(
-        testEntitySingleLinkApi.entityBuilder()
+        testEntitySingleLinkApi
+          .entityBuilder()
           .withCustomFields({ custom: 'custom' })
           .build()
       )
@@ -145,11 +154,15 @@ describe('entity-serializer', () => {
   });
 
   it('should consider only changed items when diff is true', () => {
-    const testEntity = testEntityApi.entityBuilder()
+    const testEntity = testEntityApi
+      .entityBuilder()
       .stringProperty('entity')
       .withCustomFields({ custom: 'custom' })
       .toSingleLink(
-        testEntitySingleLinkApi.entityBuilder().stringProperty('linkedEntity').build()
+        testEntitySingleLinkApi
+          .entityBuilder()
+          .stringProperty('linkedEntity')
+          .build()
       )
       .build()
       .setOrInitializeRemoteState();

@@ -117,4 +117,7 @@ export function filterFunctions<
   };
 }
 
-export type FilterFunctionNames = FilterFunctionNamesCommon | 'substringOf' | 'replace';
+export type FilterFunctionNames =
+  | FilterFunctionNamesCommon
+  | 'substringOf'
+  | 'replace';

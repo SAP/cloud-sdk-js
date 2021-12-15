@@ -3,7 +3,10 @@ import {
   TestComplexTypeField,
   TestEntity
 } from '@sap-cloud-sdk/test-services/v4/test-service';
-import { FieldBuilder, defaultDeSerializers } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  FieldBuilder,
+  defaultDeSerializers
+} from '@sap-cloud-sdk/odata-common/internal';
 
 // $ExpectType FieldBuilder<typeof TestEntity, DefaultDeSerializers>
 const entityFieldBuilder = new FieldBuilder(TestEntity, defaultDeSerializers);
@@ -28,7 +31,10 @@ entityFieldBuilder.buildCollectionField('fieldName', 'Edm.Int32', false);
 entityFieldBuilder.buildCollectionField('fieldName', TestComplexType, true);
 
 // $ExpectType FieldBuilder<TestComplexTypeField<TestEntity, true, true>>
-const complexTypeFieldBuilder = new FieldBuilder(complexTypeField, defaultDeSerializers);
+const complexTypeFieldBuilder = new FieldBuilder(
+  complexTypeField,
+  defaultDeSerializers
+);
 
 // $ExpectType EdmTypeField<TestEntity, "Edm.String", true, false>
 complexTypeFieldBuilder.buildEdmTypeField('fieldName', 'Edm.String', true);

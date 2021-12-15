@@ -1,8 +1,13 @@
-import { City, CityField } from './City';
-import { Entity } from '@sap-cloud-sdk/odata-v4';
+import { CityField } from './City';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  Entity
+} from '@sap-cloud-sdk/odata-v4';
 import {
   ComplexTypeField,
   ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
   FieldOptions,
   PropertyMetadata
@@ -10,19 +15,24 @@ import {
 /**
  * AirportLocation
  */
-export interface AirportLocation {
+export interface AirportLocation<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Loc.
    */
-  loc: any;
+  loc: DeserializedType<DeSerializersT, 'Edm.Any'>;
   /**
    * Address.
    */
-  address: string;
+  address: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * City.
    */
-  city: City;
+  city: DeserializedType<
+    DeSerializersT,
+    'Microsoft.OData.SampleService.Models.TripPin.City'
+  >;
 }
 /**
  * AirportLocationField
@@ -30,25 +40,32 @@ export interface AirportLocation {
  */
 export declare class AirportLocationField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, AirportLocation, NullableT, SelectableT> {
+> extends ComplexTypeField<
+  EntityT,
+  DeSerializersT,
+  AirportLocation,
+  NullableT,
+  SelectableT
+> {
   private _fieldBuilder;
   /**
    * Representation of the [[AirportLocation.loc]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  loc: EdmTypeField<EntityT, 'Edm.Any', false, false>;
+  loc: EdmTypeField<EntityT, DeSerializersT, 'Edm.Any', false, false>;
   /**
    * Representation of the [[AirportLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, 'Edm.String', false, false>;
+  address: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false>;
   /**
    * Representation of the [[AirportLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT, false, false>;
+  city: CityField<EntityT, DeSerializersT, false, false>;
   /**
    * Creates an instance of AirportLocationField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -57,6 +74,7 @@ export declare class AirportLocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }

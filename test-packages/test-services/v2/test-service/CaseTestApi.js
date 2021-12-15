@@ -1,49 +1,61 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.CaseTestApi = void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-const CaseTest_1 = require("./CaseTest");
-const CaseTestRequestBuilder_1 = require("./CaseTestRequestBuilder");
-const odata_v2_1 = require("@sap-cloud-sdk/odata-v2");
-const internal_1 = require("@sap-cloud-sdk/odata-common/internal");
+const CaseTest_1 = require('./CaseTest');
+const CaseTestRequestBuilder_1 = require('./CaseTestRequestBuilder');
+const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 class CaseTestApi {
-    constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
-        this.entityConstructor = CaseTest_1.CaseTest;
-        this.deSerializers = (0, odata_v2_1.mergeDefaultDeSerializersWith)(deSerializers);
-    }
-    _addNavigationProperties(linkedApis) {
-        this.navigationPropertyFields = {};
-        return this;
-    }
-    requestBuilder() {
-        return new CaseTestRequestBuilder_1.CaseTestRequestBuilder(this);
-    }
-    entityBuilder() {
-        return (0, internal_1.entityBuilder)(this);
-    }
-    customField(fieldName, isNullable = false) {
-        return new odata_v2_1.CustomField(fieldName, this.entityConstructor, this.deSerializers, isNullable);
-    }
-    get schema() {
-        const fieldBuilder = new internal_1.FieldBuilder(CaseTest_1.CaseTest, this.deSerializers);
-        return {
-            /**
-         * Static representation of the [[keyPropertyString]] property for query construction.
-         * Use to reference this property in query operations such as 'select' in the fluent request API.
-         */
-            KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false),
-            ...this.navigationPropertyFields,
-            /**
-             *
-             * All fields selector.
-             */
-            ALL_FIELDS: new internal_1.AllFields('*', CaseTest_1.CaseTest)
-        };
-    }
+  constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
+    this.entityConstructor = CaseTest_1.CaseTest;
+    this.deSerializers = deSerializers;
+  }
+  _addNavigationProperties(linkedApis) {
+    this.navigationPropertyFields = {};
+    return this;
+  }
+  requestBuilder() {
+    return new CaseTestRequestBuilder_1.CaseTestRequestBuilder(this);
+  }
+  entityBuilder() {
+    return (0, internal_1.entityBuilder)(this);
+  }
+  customField(fieldName, isNullable = false) {
+    return new odata_v2_1.CustomField(
+      fieldName,
+      this.entityConstructor,
+      this.deSerializers,
+      isNullable
+    );
+  }
+  get schema() {
+    const fieldBuilder = new internal_1.FieldBuilder(
+      CaseTest_1.CaseTest,
+      this.deSerializers
+    );
+    return {
+      /**
+       * Static representation of the [[keyPropertyString]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
+        'KeyPropertyString',
+        'Edm.String',
+        false
+      ),
+      ...this.navigationPropertyFields,
+      /**
+       *
+       * All fields selector.
+       */
+      ALL_FIELDS: new internal_1.AllFields('*', CaseTest_1.CaseTest)
+    };
+  }
 }
 exports.CaseTestApi = CaseTestApi;
 //# sourceMappingURL=CaseTestApi.js.map

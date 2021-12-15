@@ -1,4 +1,5 @@
 import { first, last } from '@sap-cloud-sdk/util';
+import voca from 'voca';
 import {
   VdmActionImportReturnType,
   VdmComplexType,
@@ -163,7 +164,9 @@ function getEntityReturnType(
     ? {
         returnTypeCategory: VdmReturnTypeCategory.ENTITY,
         returnType: first(entities)!.className,
-        builderFunction: `new ${first(entities)!.className}Api(deSerializers)`,
+        builderFunction: `builder(deSerializers).${voca.decapitalize(
+          first(entities)!.className
+        )}Api`, // `new ${first(entities)!.className}Api(deSerializers)`,
         isNullable,
         isCollection
       }

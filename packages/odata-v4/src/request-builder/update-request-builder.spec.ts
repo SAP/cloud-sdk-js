@@ -17,7 +17,8 @@ function createTestEntity() {
   const keyPropString = 'stringId';
   const int32Prop = 125;
 
-  return testEntityApi.entityBuilder()
+  return testEntityApi
+    .entityBuilder()
     .keyPropertyGuid(keyPropGuid)
     .keyPropertyString(keyPropString)
     .int32Property(int32Prop)
@@ -49,9 +50,10 @@ describe('UpdateRequestBuilder', () => {
       testEntityApi
     );
 
-    const actual = await new UpdateRequestBuilder(testEntityApi, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 });

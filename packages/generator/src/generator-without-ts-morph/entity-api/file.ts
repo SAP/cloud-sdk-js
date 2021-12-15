@@ -19,7 +19,10 @@ import {
 } from './imports';
 import { classContent } from './class';
 
-export function entityApiFile(entity: VdmEntity, service: VdmServiceMetadata): string {
+export function entityApiFile(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): string {
   const imports = serializeImports(getImports(entity, service));
   const content = classContent(entity, service);
   return [
@@ -81,6 +84,7 @@ function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
       [
         'CustomField',
         'defaultDeSerializers',
+        'DefaultDeSerializers',
         'DeSerializers',
         'mergeDefaultDeSerializersWith'
       ],

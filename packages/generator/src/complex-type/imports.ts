@@ -33,7 +33,7 @@ export function importDeclarations(
         'FieldOptions',
         'OrderableEdmTypeField',
         'PropertyMetadata',
-        ...(oDataVersion === 'v4' ? ['CollectionField', 'EnumField']:[])
+        ...(oDataVersion === 'v4' ? ['CollectionField', 'EnumField'] : [])
       ].sort()
     )
   ];

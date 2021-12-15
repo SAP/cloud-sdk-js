@@ -24,9 +24,7 @@ async function createEntity(key: number) {
     .timeOfDayProperty({ hours: 1, minutes: 2, seconds: 3 })
     .dataTimeOffsetDataTimeProperty(moment(0))
     .build();
-  return requestBuilder
-    .create(dataForCreation)
-    .execute(destination);
+  return requestBuilder.create(dataForCreation).execute(destination);
 }
 
 describe('Request builder', () => {
@@ -64,9 +62,7 @@ describe('Request builder', () => {
   });
 
   it('should return an entity for get by key request', async () => {
-    const testEntity = await requestBuilder
-      .getByKey(101)
-      .execute(destination);
+    const testEntity = await requestBuilder.getByKey(101).execute(destination);
     expect(testEntity).toEqual(expect.objectContaining({ keyTestEntity: 101 }));
   });
 
@@ -202,15 +198,10 @@ describe('Request builder', () => {
     await createEntity(entityKey);
     const withoutAssociation = await queryEntity(entityKey, destination);
     withoutAssociation.toMultiLink = [
-      linkEntityBuilder
-        .keyToTestEntity(entityKey)
-        .keyTestEntityLink(20)
-        .build()
+      linkEntityBuilder.keyToTestEntity(entityKey).keyTestEntityLink(20).build()
     ];
     withoutAssociation.stringProperty = 'newValue';
-    await requestBuilder
-      .update(withoutAssociation)
-      .execute(destination);
+    await requestBuilder.update(withoutAssociation).execute(destination);
 
     const afterUpdate = await queryEntity(entityKey, destination);
     expect(afterUpdate.stringProperty).toBe('newValue');
@@ -219,10 +210,7 @@ describe('Request builder', () => {
   });
 
   it('should count the entities', async () => {
-    const result = await requestBuilder
-      .getAll()
-      .count()
-      .execute(destination);
+    const result = await requestBuilder.getAll().count().execute(destination);
     expect(result).toBeGreaterThan(2);
 
     const resultTopped = await requestBuilder

@@ -4,34 +4,46 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { City, CityField } from './City';
-import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
+  DefaultDeSerializers,
+  DeSerializers,
+  Entity
+} from '@sap-cloud-sdk/odata-v4';
+import {
+  CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
+  EnumField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
+  OrderableEdmTypeField,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * EventLocation
  */
-export interface EventLocation {
+export interface EventLocation<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Building Info.
    * @nullable
    */
-  buildingInfo?: string;
+  buildingInfo?: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Address.
    */
-  address: string;
+  address: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * City.
    */
-  city: City;
+  city: DeserializedType<
+    DeSerializersT,
+    'Microsoft.OData.SampleService.Models.TripPin.City'
+  >;
 }
 
 /**
@@ -40,27 +52,42 @@ export interface EventLocation {
  */
 export class EventLocationField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, EventLocation, NullableT, SelectableT> {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+> extends ComplexTypeField<
+  EntityT,
+  DeSerializersT,
+  EventLocation,
+  NullableT,
+  SelectableT
+> {
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[EventLocation.buildingInfo]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  buildingInfo: EdmTypeField<EntityT, 'Edm.String', true, false> =
-    this._fieldBuilder.buildEdmTypeField('BuildingInfo', 'Edm.String', true);
+  buildingInfo: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField('BuildingInfo', 'Edm.String', true);
   /**
    * Representation of the [[EventLocation.address]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  address: EdmTypeField<EntityT, 'Edm.String', false, false> =
+  address: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false> =
     this._fieldBuilder.buildEdmTypeField('Address', 'Edm.String', false);
   /**
    * Representation of the [[EventLocation.city]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  city: CityField<EntityT, false, false> =
+  city: CityField<EntityT, DeSerializersT, false, false> =
     this._fieldBuilder.buildComplexTypeField('City', CityField, false);
 
   /**
@@ -71,9 +98,10 @@ export class EventLocationField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, EventLocation, fieldOptions);
+    super(fieldName, fieldOf, deSerializers, EventLocation, fieldOptions);
   }
 }
 

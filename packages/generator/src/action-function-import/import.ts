@@ -116,6 +116,11 @@ function returnTypeImport(
       ...typeImports,
       {
         kind: StructureKind.ImportDeclaration,
+        namedImports: ['builder'],
+        moduleSpecifier: './service'
+      },
+      {
+        kind: StructureKind.ImportDeclaration,
         namedImports: [`${returnType.returnType}Api`],
         moduleSpecifier: `./${returnType.returnType}Api`
       }

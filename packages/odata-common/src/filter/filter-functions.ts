@@ -390,22 +390,23 @@ export function filterFunctions<
   };
 }
 
-export type FilterFunctionNames = 'endsWith' |
-  'startsWith' |
-  'length' |
-  'indexOf' |
-  'substring' |
-  'toLower' |
-  'toUpper' |
-  'trim' |
-  'concat' |
-  'round' |
-  'floor' |
-  'ceiling' |
-  'day' |
-  'hour' |
-  'minute' |
-  'month' |
-  'second' |
-  'year' |
-  'isOf';
+export type FilterFunctionNames =
+  | 'endsWith'
+  | 'startsWith'
+  | 'length'
+  | 'indexOf'
+  | 'substring'
+  | 'toLower'
+  | 'toUpper'
+  | 'trim'
+  | 'concat'
+  | 'round'
+  | 'floor'
+  | 'ceiling'
+  | 'day'
+  | 'hour'
+  | 'minute'
+  | 'month'
+  | 'second'
+  | 'year'
+  | 'isOf';

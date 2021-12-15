@@ -2,6 +2,10 @@ export * from './Photos';
 export * from './People';
 export * from './Airlines';
 export * from './Airports';
+export * from './PhotosApi';
+export * from './PeopleApi';
+export * from './AirlinesApi';
+export * from './AirportsApi';
 export * from './PhotosRequestBuilder';
 export * from './PeopleRequestBuilder';
 export * from './AirlinesRequestBuilder';
@@ -14,4 +18,5 @@ export * from './PersonGender';
 export * from './function-imports';
 export * from './action-imports';
 export * from './BatchRequest';
+export * from './service';
 //# sourceMappingURL=index.d.ts.map

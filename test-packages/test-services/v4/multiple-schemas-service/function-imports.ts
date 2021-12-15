@@ -4,63 +4,50 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  FunctionImportRequestBuilder,
-  transformReturnValueForEntity
-} from '@sap-cloud-sdk/odata-v4';
+import { FunctionImportRequestBuilder, DeSerializers, transformReturnValueForEntity, DefaultDeSerializers, defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
 import { TestEntity1 } from './TestEntity1';
+import { TestEntity1Api } from './TestEntity1Api';
 import { TestEntity2 } from './TestEntity2';
+import { TestEntity2Api } from './TestEntity2Api';
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnType1]].
  */
-export interface TestFunctionImportEntityReturnType1Parameters {}
+export interface TestFunctionImportEntityReturnType1Parameters<DeSerializersT extends DeSerializers> {
+}
 
 /**
- * Test Function Import Entity Return Type 1.
+ * Test Function Import Entity Return Type 1. 
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEntityReturnType1(
-  parameters: TestFunctionImportEntityReturnType1Parameters
-): FunctionImportRequestBuilder<
-  TestFunctionImportEntityReturnType1Parameters,
-  TestEntity1
-> {
-  const params = {};
+export function testFunctionImportEntityReturnType1<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: TestFunctionImportEntityReturnType1Parameters<DeSerializersT>, deSerializers: DeSerializersT = defaultDeSerializers as any): FunctionImportRequestBuilder<DeSerializersT, TestFunctionImportEntityReturnType1Parameters<DeSerializersT>, TestEntity1> {
+  const params = {
 
-  return new FunctionImportRequestBuilder(
-    '/sap/opu/odata/sap/API_TEST_SRV',
-    'TestFunctionImportEntityReturnType1',
-    data => transformReturnValueForEntity(data, TestEntity1),
-    params
-  );
+  };
+
+
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', (data) => transformReturnValueForEntity(data, new TestEntity1Api(deSerializers)), params, deSerializers);
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnType2]].
  */
-export interface TestFunctionImportEntityReturnType2Parameters {}
+export interface TestFunctionImportEntityReturnType2Parameters<DeSerializersT extends DeSerializers> {
+}
 
 /**
- * Test Function Import Entity Return Type 2.
+ * Test Function Import Entity Return Type 2. 
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEntityReturnType2(
-  parameters: TestFunctionImportEntityReturnType2Parameters
-): FunctionImportRequestBuilder<
-  TestFunctionImportEntityReturnType2Parameters,
-  TestEntity2
-> {
-  const params = {};
+export function testFunctionImportEntityReturnType2<DeSerializersT extends DeSerializers = DefaultDeSerializers>(parameters: TestFunctionImportEntityReturnType2Parameters<DeSerializersT>, deSerializers: DeSerializersT = defaultDeSerializers as any): FunctionImportRequestBuilder<DeSerializersT, TestFunctionImportEntityReturnType2Parameters<DeSerializersT>, TestEntity2> {
+  const params = {
 
-  return new FunctionImportRequestBuilder(
-    '/sap/opu/odata/sap/API_TEST_SRV',
-    'TestFunctionImportEntityReturnType2',
-    data => transformReturnValueForEntity(data, TestEntity2),
-    params
-  );
+  };
+
+
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', (data) => transformReturnValueForEntity(data, new TestEntity2Api(deSerializers)), params, deSerializers);
 }
 
 export const functionImports = {

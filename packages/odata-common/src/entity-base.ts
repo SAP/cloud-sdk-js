@@ -282,7 +282,7 @@ export abstract class EntityBase {
     key: string,
     visitedEntities: EntityBase[] = []
   ): any {
-    if (isNavigationProperty(key, this.constructor)) {
+    if (isNavigationProperty(key, this.schema)) {
       if (isNullish(this[key])) {
         return this[key];
       }

@@ -3,37 +3,30 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder
-} from '@sap-cloud-sdk/odata-v4';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
+import { DefaultDeSerializers, DeSerializers, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-v4/internal';
 import { TestEntitySingleLink } from './TestEntitySingleLink';
 
 /**
  * Request builder class for operations supported on the [[TestEntitySingleLink]] entity.
  */
-export class TestEntitySingleLinkRequestBuilder extends RequestBuilder<TestEntitySingleLink> {
+export class TestEntitySingleLinkRequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<TestEntitySingleLink<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntitySingleLink` entity based on its keys.
    * @param keyProperty Key property. See [[TestEntitySingleLink.keyProperty]].
    * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
    */
-  getByKey(keyProperty: string): GetByKeyRequestBuilder<TestEntitySingleLink> {
-    return new GetByKeyRequestBuilder(TestEntitySingleLink, {
-      KeyProperty: keyProperty
-    });
+  getByKey(keyProperty: DeserializedType<T, 'Edm.String'>): GetByKeyRequestBuilder<TestEntitySingleLink<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntitySingleLink<T>, T>(this.entityApi, { KeyProperty: keyProperty });
   }
 
   /**
    * Returns a request builder for querying all `TestEntitySingleLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntitySingleLink` entities.
    */
-  getAll(): GetAllRequestBuilder<TestEntitySingleLink> {
-    return new GetAllRequestBuilder(TestEntitySingleLink);
+  getAll(): GetAllRequestBuilder<TestEntitySingleLink<T>, T> {
+    return new GetAllRequestBuilder<TestEntitySingleLink<T>, T>(this.entityApi);
   }
 
   /**
@@ -41,10 +34,8 @@ export class TestEntitySingleLinkRequestBuilder extends RequestBuilder<TestEntit
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntitySingleLink`.
    */
-  create(
-    entity: TestEntitySingleLink
-  ): CreateRequestBuilder<TestEntitySingleLink> {
-    return new CreateRequestBuilder(TestEntitySingleLink, entity);
+  create(entity: TestEntitySingleLink<T>): CreateRequestBuilder<TestEntitySingleLink<T>, T> {
+    return new CreateRequestBuilder<TestEntitySingleLink<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -52,10 +43,8 @@ export class TestEntitySingleLinkRequestBuilder extends RequestBuilder<TestEntit
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntitySingleLink`.
    */
-  update(
-    entity: TestEntitySingleLink
-  ): UpdateRequestBuilder<TestEntitySingleLink> {
-    return new UpdateRequestBuilder(TestEntitySingleLink, entity);
+  update(entity: TestEntitySingleLink<T>): UpdateRequestBuilder<TestEntitySingleLink<T>, T> {
+    return new UpdateRequestBuilder<TestEntitySingleLink<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -63,21 +52,14 @@ export class TestEntitySingleLinkRequestBuilder extends RequestBuilder<TestEntit
    * @param keyProperty Key property. See [[TestEntitySingleLink.keyProperty]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntitySingleLink`.
    */
-  delete(keyProperty: string): DeleteRequestBuilder<TestEntitySingleLink>;
+  delete(keyProperty: string): DeleteRequestBuilder<TestEntitySingleLink<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntitySingleLink`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntitySingleLink` by taking the entity as a parameter.
    */
-  delete(
-    entity: TestEntitySingleLink
-  ): DeleteRequestBuilder<TestEntitySingleLink>;
-  delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntitySingleLink> {
-    return new DeleteRequestBuilder(
-      TestEntitySingleLink,
-      keyPropertyOrEntity instanceof TestEntitySingleLink
-        ? keyPropertyOrEntity
-        : { KeyProperty: keyPropertyOrEntity! }
-    );
+  delete(entity: TestEntitySingleLink<T>): DeleteRequestBuilder<TestEntitySingleLink<T>, T>;
+  delete(keyPropertyOrEntity: any): DeleteRequestBuilder<TestEntitySingleLink<T>, T> {
+    return new DeleteRequestBuilder<TestEntitySingleLink<T>, T>(this.entityApi, keyPropertyOrEntity instanceof TestEntitySingleLink ? keyPropertyOrEntity : { KeyProperty: keyPropertyOrEntity! });
   }
 }

@@ -1,15 +1,17 @@
 import { v4 as uuid } from 'uuid';
 import { all, any, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 import { or } from '@sap-cloud-sdk/odata-common/internal';
-import { TestEntityApi } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
-  // @ts-ignore
-  TestEntityApi as TestEntityApiV4,
-  TestEnumType
+  TestEnumType,
+  TestService as TestServiceV4
 } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { TestService } from '@sap-cloud-sdk/test-services/v2/test-service';
 
-const testEntityApi = new TestEntityApi();
-const testEntityApiV4 = new TestEntityApiV4();
+const { testEntityApi } = new TestService();
+const {
+  testEntityApi: testEntityApiV4,
+  testEntityMultiLinkApi: testEntityMultiLinkApiV4
+} = new TestServiceV4();
 
 export const testFilterString = {
   filter: testEntityApi.schema.STRING_PROPERTY.equals('test'),
@@ -91,10 +93,9 @@ export const testFilterLambdaExpressionWithOr = {
 export const testFilterLambdaExpressionFilterListOnLink = {
   filter: testEntityApiV4.schema.TO_MULTI_LINK.filter(
     any(
-      // @ts-ignore
       or(
-        testEntityApiV4.schema.STRING_PROPERTY.equals('test1'),
-        testEntityApiV4.schema.INT_16_PROPERTY.equals(1)
+        testEntityMultiLinkApiV4.schema.STRING_PROPERTY.equals('test1'),
+        testEntityMultiLinkApiV4.schema.INT_16_PROPERTY.equals(1)
       )
     )
   )._filters,
@@ -136,7 +137,7 @@ export const testFilterLambdaExpressionFilterFunctionOnLink = {
   filter: testEntityApiV4.schema.TO_MULTI_LINK.filter(
     any(
       filterFunctions
-        // @ts-ignore
+
         .substring(
           testEntityApiV4.schema.TO_MULTI_LINK._linkedEntityApi.schema
             .STRING_PROPERTY,

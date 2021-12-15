@@ -1,102 +1,33 @@
-import { TestEntity2RequestBuilder } from './TestEntity2RequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
-import {
-  AllFields,
-  EdmTypeField,
-  EntityBuilderType,
-  Field,
-  OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-common/internal';
+import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v4';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "A_TestEntity2" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export declare class TestEntity2 extends Entity implements TestEntity2Type {
-  /**
-   * Technical entity name for TestEntity2.
-   */
-  static _entityName: string;
-  /**
-   * Default url path for the according service.
-   */
-  static _defaultServicePath: string;
-  /**
-   * Key Property String.
-   */
-  keyPropertyString: string;
-  /**
-   * Single Property.
-   * @nullable
-   */
-  singleProperty?: number;
-  /**
-   * Returns an entity builder to construct instances of `TestEntity2`.
-   * @returns A builder that constructs instances of entity type `TestEntity2`.
-   */
-  static builder(): EntityBuilderType<TestEntity2, TestEntity2Type>;
-  /**
-   * Returns a request builder to construct requests for operations on the `TestEntity2` entity type.
-   * @returns A `TestEntity2` request builder.
-   */
-  static requestBuilder(): TestEntity2RequestBuilder;
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntity2`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `TestEntity2`.
-   */
-  static customField(fieldName: string): CustomField<TestEntity2>;
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): {
-    [key: string]: any;
-  };
+export declare class TestEntity2<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntity2Type<T> {
+    /**
+     * Technical entity name for TestEntity2.
+     */
+    static _entityName: string;
+    /**
+     * Default url path for the according service.
+     */
+    static _defaultServicePath: string;
+    /**
+     * All key fields of the TestEntity2 entity
+     */
+    static _keys: string[];
+    /**
+     * Key Property String.
+     */
+    keyPropertyString: DeserializedType<T, 'Edm.String'>;
+    /**
+     * Single Property.
+     * @nullable
+     */
+    singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
 }
-export interface TestEntity2Type {
-  keyPropertyString: string;
-  singleProperty?: number | null;
-}
-export declare namespace TestEntity2 {
-  /**
-   * Static representation of the [[keyPropertyString]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const KEY_PROPERTY_STRING: EdmTypeField<
-    TestEntity2,
-    'Edm.String',
-    false,
-    true
-  >;
-  /**
-   * Static representation of the [[singleProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const SINGLE_PROPERTY: OrderableEdmTypeField<
-    TestEntity2,
-    'Edm.Single',
-    true,
-    true
-  >;
-  /**
-   * All fields of the TestEntity2 entity.
-   */
-  const _allFields: Array<
-    | EdmTypeField<TestEntity2, 'Edm.String', false, true>
-    | OrderableEdmTypeField<TestEntity2, 'Edm.Single', true, true>
-  >;
-  /**
-   * All fields selector.
-   */
-  const ALL_FIELDS: AllFields<TestEntity2>;
-  /**
-   * All key fields of the TestEntity2 entity.
-   */
-  const _keyFields: Array<Field<TestEntity2, boolean, boolean>>;
-  /**
-   * Mapping of all key field names to the respective static field property TestEntity2.
-   */
-  const _keys: {
-    [keys: string]: Field<TestEntity2, boolean, boolean>;
-  };
+export interface TestEntity2Type<T extends DeSerializers = DefaultDeSerializers> {
+    keyPropertyString: DeserializedType<T, 'Edm.String'>;
+    singleProperty?: DeserializedType<T, 'Edm.Single'> | null;
 }
 //# sourceMappingURL=TestEntity2.d.ts.map

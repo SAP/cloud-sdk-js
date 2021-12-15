@@ -24,7 +24,8 @@ export function imports(service: VdmServiceMetadata): Import[] {
       moduleIdentifier: 'bignumber.js'
     },
     {
-      names: ['Moment'],
+      names:
+        service.oDataVersion === 'v2' ? ['Moment'] : ['Moment', 'Duration'],
       moduleIdentifier: 'moment'
     },
     {
@@ -33,7 +34,7 @@ export function imports(service: VdmServiceMetadata): Import[] {
         'DeSerializers',
         'mergeDefaultDeSerializersWith'
       ],
-      moduleIdentifier: '@sap-cloud-sdk/odata-v2'
+      moduleIdentifier: `@sap-cloud-sdk/odata-${service.oDataVersion}`
     }
   ];
 }

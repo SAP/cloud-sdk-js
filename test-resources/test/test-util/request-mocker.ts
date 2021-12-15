@@ -132,8 +132,9 @@ export function mockCountRequest(
   count: number,
   getAllRequest: GetAllRequestBuilderBase<any, any>
 ) {
-  const servicePath = getAllRequest._entityConstructor._defaultServicePath;
-  const entityName = getAllRequest._entityConstructor._entityName;
+  const servicePath =
+    getAllRequest._entityApi.entityConstructor._defaultServicePath;
+  const entityName = getAllRequest._entityApi.entityConstructor._entityName;
   return nock(defaultHost)
     .get(`${destination.url}${servicePath}/${entityName}/$count`)
     .reply(200, count.toString());

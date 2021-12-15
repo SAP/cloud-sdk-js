@@ -1,5 +1,7 @@
 import {
-  testEntityApi, testEntityCircularLinkChildApi, testEntityCircularLinkParentApi,
+  testEntityApi,
+  testEntityCircularLinkChildApi,
+  testEntityCircularLinkParentApi,
   testEntityLvl2MultiLinkApi,
   testEntityMultiLinkApi,
   testEntitySingleLinkApi
@@ -26,13 +28,18 @@ describe('entity', () => {
   };
 
   beforeEach(() => {
-    entity = testEntityApi.entityBuilder()
+    entity = testEntityApi
+      .entityBuilder()
       .stringProperty('1')
       .collectionProperty(['a', 'b'])
       .toSingleLink(
-        testEntitySingleLinkApi.entityBuilder()
+        testEntitySingleLinkApi
+          .entityBuilder()
           .toSingleLink(
-            testEntityLvl2MultiLinkApi.entityBuilder().stringProperty('test').build()
+            testEntityLvl2MultiLinkApi
+              .entityBuilder()
+              .stringProperty('test')
+              .build()
           )
           .withCustomFields({
             customField: 2
@@ -40,7 +47,8 @@ describe('entity', () => {
           .build()
       )
       .toMultiLink([
-        testEntityMultiLinkApi.entityBuilder()
+        testEntityMultiLinkApi
+          .entityBuilder()
           .booleanProperty(false)
           .withCustomFields({
             customField: 3
@@ -69,14 +77,17 @@ describe('entity', () => {
   });
 
   it('asObject() does not run endlessly', () => {
-    const parent = testEntityCircularLinkParentApi.entityBuilder()
+    const parent = testEntityCircularLinkParentApi
+      .entityBuilder()
       .keyProperty('parent')
       .build();
-    const child1 = testEntityCircularLinkChildApi.entityBuilder()
+    const child1 = testEntityCircularLinkChildApi
+      .entityBuilder()
       .keyProperty('child1')
       .toParent(parent)
       .build();
-    const child2 = testEntityCircularLinkChildApi.entityBuilder()
+    const child2 = testEntityCircularLinkChildApi
+      .entityBuilder()
       .keyProperty('child2')
       .toParent(parent)
       .build();

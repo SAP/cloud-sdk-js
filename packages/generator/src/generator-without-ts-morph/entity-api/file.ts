@@ -19,13 +19,18 @@ import {
 } from './imports';
 import { classContent } from './class';
 
-export function entityApiFile(entity: VdmEntity, service: VdmServiceMetadata): string {
+export function entityApiFile(
+  entity: VdmEntity,
+  service: VdmServiceMetadata
+): string {
   const imports = serializeImports(getImports(entity, service));
   const content = classContent(entity, service);
   return [
     imports,
     "import { BigNumber } from 'bignumber.js';",
-    "import { Moment, Duration } from 'moment';",
+    `import { ${
+      service.oDataVersion === 'v2' ? 'Moment' : 'Moment, Duration'
+    } } from 'moment';`,
     content
   ].join(unixEOL);
 }

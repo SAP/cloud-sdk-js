@@ -28,7 +28,9 @@ export function entityApiFile(
   return [
     imports,
     "import { BigNumber } from 'bignumber.js';",
-    "import { Moment, Duration } from 'moment';",
+    `import { ${
+      service.oDataVersion === 'v2' ? 'Moment' : 'Moment, Duration'
+    } } from 'moment';`,
     content
   ].join(unixEOL);
 }

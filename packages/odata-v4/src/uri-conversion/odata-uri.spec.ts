@@ -88,7 +88,7 @@ describe('getFilter', () => {
   it('for hasSubset filter function with collection', () => {
     expect(
       oDataUri.getFilter(
-        filterFunctions
+        filterFunctions()
           .hasSubset(['1', '2'], testEntityApi.schema.COLLECTION_PROPERTY)
           .equals(true),
         testEntityApi

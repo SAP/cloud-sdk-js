@@ -29,48 +29,37 @@ function removeImports(str: string): string {
 }
 
 function reduceGenericArguments(str: string): string {
-  return str.replace(
-    /AnyT\,\n\s*DateTimeT\,\n\s*DateTimeOffsetT\,\n\s*TimeT/gm,
-    'AnyT'
-  );
+  return str.replace(/(AnyT = any|AnyT),[,=\n\s\w]*(>)/gm, '$1$2');
 }
 
-function adjustRequestBuilder(str: string): string {
-  const start = findRequestBuilderStartLine(str);
-  const end = findRequestBuilderEndLine(str, start);
-  if (start && end) {
-    const lines = str.split(unixEOL);
-    for (var i = start; i <= end; i++) {
-      lines[i] = '';
-    }
-    lines[i] = 'requestBuilder():any{throw new Error("Not implemented")}';
-    return lines.join(unixEOL);
+function replaceRequestBuilder(str: string): string {
+  const lines = str.split('\n');
+  const start = findRequestBuilderStartIndex(lines);
+  const count = findRequestBuilderLineCount(lines, start);
+  if (start && count) {
+    lines.splice(
+      start,
+      count,
+      'requestBuilder(): any { throw new Error("Not implemented"); }'
+    );
   }
-  return str;
+
+  return lines.join('\n');
 }
 
-function findRequestBuilderEndLine(
-  str,
+function findRequestBuilderLineCount(
+  lines: string[],
   start: number | undefined
 ): number | undefined {
-  if (!start) {
-    return;
-  }
-  const lines = str.split(unixEOL);
-  for (let i = start; i < lines.length; i++) {
-    if (lines[i].includes('}')) {
-      return i;
-    }
+  if (start) {
+    const index = lines.slice(start).findIndex(line => line.includes('}'));
+    return index >= 0 ? index + 1 : undefined;
   }
 }
 
-function findRequestBuilderStartLine(str): number | undefined {
-  const lines = str.split(unixEOL);
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].includes('requestBuilder()')) {
-      return i;
-    }
-  }
+function findRequestBuilderStartIndex(lines: string[]): number | undefined {
+  const start = lines.findIndex(line => line.includes('requestBuilder()'));
+  return start >= 0 ? start : undefined;
 }
 
 function adjustCustomField(str: string): string {
@@ -108,7 +97,8 @@ const fileList = [
   'CommonEntitySingleLink.ts',
   'CommonEntitySingleLinkApi.ts',
   'CommonComplexType.ts',
-  'NestedComplexType.ts'
+  'NestedComplexType.ts',
+  'service.ts'
 ];
 
 async function readClasses(): Promise<string[]> {
@@ -119,11 +109,19 @@ async function readClasses(): Promise<string[]> {
 
 async function generateCommonTestEntity() {
   const classes = await readClasses();
-  const [entity, entityApi, link, linkApi, complexType, nestedComplex] = classes
+  const [
+    entity,
+    entityApi,
+    link,
+    linkApi,
+    complexType,
+    nestedComplex,
+    service
+  ] = classes
     .map(str => removeImports(str))
     .map(str => removeJsDoc(str))
     .map(str => reduceGenericArguments(str))
-    .map(str => adjustRequestBuilder(str))
+    .map(str => replaceRequestBuilder(str))
     .map(str => adjustCustomField(str))
     .map(str => addODataVersion(str));
 
@@ -137,7 +135,8 @@ async function generateCommonTestEntity() {
     linkApi,
     entity,
     entityApi,
-    'export const commonEntityApi = new CommonEntityApi();'
+    service,
+    'export const { commonEntityApi } = new CommonService();'
   ].join(unixEOL);
   await promises.writeFile(
     resolve(__dirname, 'common-entity.ts'),

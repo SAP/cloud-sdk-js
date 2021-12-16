@@ -1,0 +1,94 @@
+import { TestEntityWithSharedEntityType1 } from './TestEntityWithSharedEntityType1';
+import { TestEntityWithSharedEntityType1RequestBuilder } from './TestEntityWithSharedEntityType1RequestBuilder';
+import {
+  CustomField,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
+import {
+  EdmTypeField,
+  AllFields,
+  EntityBuilderType,
+  EntityApi
+} from '@sap-cloud-sdk/odata-common/internal';
+export declare class TestEntityWithSharedEntityType1Api<
+  T extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<TestEntityWithSharedEntityType1<T>, T>
+{
+  deSerializers: T;
+  constructor(deSerializers?: T);
+  private navigationPropertyFields;
+  _addNavigationProperties(linkedApis: []): this;
+  entityConstructor: typeof TestEntityWithSharedEntityType1;
+  requestBuilder(): TestEntityWithSharedEntityType1RequestBuilder<T>;
+  entityBuilder(): EntityBuilderType<TestEntityWithSharedEntityType1<T>, T>;
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable?: NullableT
+  ): CustomField<TestEntityWithSharedEntityType1<T>, T, NullableT>;
+  get schema(): {
+    /**
+     *
+     * All fields selector.
+     */
+    ALL_FIELDS: AllFields<
+      TestEntityWithSharedEntityType1<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >
+    >;
+    /**
+     * Static representation of the [[keyProperty]] property for query construction.
+     * Use to reference this property in query operations such as 'select' in the fluent request API.
+     */
+    KEY_PROPERTY: EdmTypeField<
+      TestEntityWithSharedEntityType1<
+        DeSerializers<
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any,
+          any
+        >
+      >,
+      T,
+      'Edm.String',
+      false,
+      true
+    >;
+  };
+}
+//# sourceMappingURL=TestEntityWithSharedEntityType1Api.d.ts.map

@@ -77,6 +77,7 @@ function joinFunctionImportData(
  */
 export function generateFunctionImportsV4(
   serviceMetadata: ServiceMetadata,
+  serviceName: string,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
@@ -112,7 +113,8 @@ export function generateFunctionImportsV4(
             edmxFunction.ReturnType,
             entities,
             complexTypes,
-            extractResponse
+            extractResponse,
+            serviceName
           )
         };
       })

@@ -12,17 +12,17 @@ export function classContent(
 ): string {
   return codeBlock`export class ${
     entity.className
-  }Api<T extends DeSerializers = DefaultDeSerializers> implements 
+  }Api<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
     EntityApi<
       ${entity.className}<
-        T
+        DeSerializersT
       >, 
-      T
+      DeSerializersT
     > {
-  public deSerializers: T;
+  public deSerializers: DeSerializersT;
 
   constructor(
-    deSerializers: T = defaultDeSerializers as any) {
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
@@ -33,16 +33,16 @@ export function classContent(
   entityConstructor = ${entity.className};
   
   requestBuilder(): ${entity.className}RequestBuilder<
-    T
+    DeSerializersT
   > {
     return new ${entity.className}RequestBuilder(this);
   }
   
   entityBuilder(): EntityBuilderType<
     ${entity.className}<
-      T
+      DeSerializersT
     >,
-    T
+    DeSerializersT
   > {
     return entityBuilder(this);
   }
@@ -52,8 +52,8 @@ export function classContent(
     isNullable: NullableT = false as NullableT
   ): CustomField<
   ${entity.className}<
-      T>,
-    T,
+      DeSerializersT>,
+    DeSerializersT,
     NullableT
   > {
     return new CustomField(

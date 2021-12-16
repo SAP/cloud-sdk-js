@@ -75,9 +75,9 @@ function navigationPropertyType(
   return [
     documentationBlock`${getStaticNavPropertyDescription(navProp)}`,
     `${navProp.staticPropertyName}: ${linkClass(navProp, service.oDataVersion)}<
-      ${entity.className}<T>,
-      T,
-      ${toEntity}<T>
+      ${entity.className}<DeSerializersT>,
+      DeSerializersT,
+      ${toEntity}<DeSerializersT>
     >`
   ].join('\n');
 }
@@ -96,5 +96,5 @@ function navigationPropertyApiType(
   service: VdmServiceMetadata
 ): string {
   const toEntity = matchEntity(navProp, service).className;
-  return `${toEntity}Api<T>`;
+  return `${toEntity}Api<DeSerializersT>`;
 }

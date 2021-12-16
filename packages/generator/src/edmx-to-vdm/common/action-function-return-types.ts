@@ -24,13 +24,15 @@ export function parseFunctionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: ExtractResponse
+  extractResponse: ExtractResponse,
+  serviceName: string
 ): VdmFunctionImportReturnType {
   return parseReturnTypes(
     returnType,
     entities,
     complexTypes,
-    extractResponse
+    extractResponse,
+    serviceName
   ) as VdmFunctionImportReturnType;
 }
 /**
@@ -40,13 +42,15 @@ export function parseActionImportReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: ExtractResponse
+  extractResponse: ExtractResponse,
+  serviceName: string
 ): VdmActionImportReturnType {
   return parseReturnTypes(
     returnType,
     entities,
     complexTypes,
-    extractResponse
+    extractResponse,
+    serviceName
   ) as VdmActionImportReturnType;
 }
 
@@ -54,7 +58,8 @@ function parseReturnTypes(
   returnType: EdmxReturnType | undefined,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
-  extractResponse: ExtractResponse
+  extractResponse: ExtractResponse,
+  serviceName: string
 ): VdmFunctionImportReturnType | VdmActionImportReturnType {
   if (!returnType) {
     return getVoidReturnType();
@@ -71,7 +76,12 @@ function parseReturnTypes(
 
   const filteredEntities = findEntityTypes(returnType.Type, entities);
   if (filteredEntities.length) {
-    return getEntityReturnType(isCollection, isNullable, filteredEntities);
+    return getEntityReturnType(
+      isCollection,
+      isNullable,
+      filteredEntities,
+      serviceName
+    );
   }
 
   const complexType = findComplexType(returnType.Type, complexTypes);
@@ -152,7 +162,8 @@ function getEdmReturnType(
 function getEntityReturnType(
   isCollection: boolean,
   isNullable: boolean,
-  entities: VdmEntity[]
+  entities: VdmEntity[],
+  serviceName: string
 ): VdmFunctionImportReturnType {
   if (!entities.length) {
     throw Error(
@@ -164,9 +175,9 @@ function getEntityReturnType(
     ? {
         returnTypeCategory: VdmReturnTypeCategory.ENTITY,
         returnType: first(entities)!.className,
-        builderFunction: `builder(deSerializers).${voca.decapitalize(
-          first(entities)!.className
-        )}Api`, // `new ${first(entities)!.className}Api(deSerializers)`,
+        builderFunction: `${voca.decapitalize(
+          serviceName
+        )}(deSerializers).${voca.decapitalize(first(entities)!.className)}Api`,
         isNullable,
         isCollection
       }

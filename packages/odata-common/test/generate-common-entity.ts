@@ -136,7 +136,7 @@ async function generateCommonTestEntity() {
     entity,
     entityApi,
     service,
-    'export const { commonEntityApi } = new CommonService();'
+    'export const { commonEntityApi } = commonService();'
   ].join(unixEOL);
   await promises.writeFile(
     resolve(__dirname, 'common-entity.ts'),

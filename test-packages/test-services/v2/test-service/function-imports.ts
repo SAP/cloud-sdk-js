@@ -22,8 +22,8 @@ import {
   DefaultDeSerializers,
   defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v2';
+import { testService } from './service';
 import { TestEntity } from './TestEntity';
-import { builder } from './service';
 import { TestEntityApi } from './TestEntityApi';
 import { TestComplexType } from './TestComplexType';
 
@@ -164,7 +164,10 @@ export function testFunctionImportEntityReturnType<
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType',
     data =>
-      transformReturnValueForEntity(data, builder(deSerializers).testEntityApi),
+      transformReturnValueForEntity(
+        data,
+        testService(deSerializers).testEntityApi
+      ),
     params,
     deSerializers
   );
@@ -201,7 +204,7 @@ export function testFunctionImportEntityReturnTypeCollection<
     data =>
       transformReturnValueForEntityList(
         data,
-        builder(deSerializers).testEntityApi
+        testService(deSerializers).testEntityApi
       ),
     params,
     deSerializers

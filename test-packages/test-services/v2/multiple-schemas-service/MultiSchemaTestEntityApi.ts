@@ -5,55 +5,64 @@
  */
 import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v2';
-import {
-  EdmTypeField,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  Time
-} from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
-import { Moment, Duration } from 'moment';
-export class MultiSchemaTestEntityApi<
-  T extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<MultiSchemaTestEntity<T>, T>
-{
-  public deSerializers: T;
+import { Moment } from 'moment';
+export class MultiSchemaTestEntityApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      MultiSchemaTestEntity<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
+  public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {};
+  private navigationPropertyFields!: {
+      
+    };
 
-  _addNavigationProperties(linkedApis: []): this {
-    this.navigationPropertyFields = {};
-    return this;
-  }
-
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
   entityConstructor = MultiSchemaTestEntity;
-
-  requestBuilder(): MultiSchemaTestEntityRequestBuilder<T> {
+  
+  requestBuilder(): MultiSchemaTestEntityRequestBuilder<
+    DeSerializersT
+  > {
     return new MultiSchemaTestEntityRequestBuilder(this);
   }
-
-  entityBuilder(): EntityBuilderType<MultiSchemaTestEntity<T>, T> {
+  
+  entityBuilder(): EntityBuilderType<
+    MultiSchemaTestEntity<
+      DeSerializersT
+    >,
+    DeSerializersT
+  > {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<MultiSchemaTestEntity<T>, T, NullableT> {
+  ): CustomField<
+  MultiSchemaTestEntity<
+      DeSerializersT>,
+    DeSerializersT,
+    NullableT
+  > {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -63,26 +72,19 @@ export class MultiSchemaTestEntityApi<
   }
 
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      MultiSchemaTestEntity,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', MultiSchemaTestEntity)
-    };
+    const fieldBuilder = new FieldBuilder(MultiSchemaTestEntity, this.deSerializers);
+    return { 
+    /**
+ * Static representation of the [[keyProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', MultiSchemaTestEntity) 
+  };
   }
 }

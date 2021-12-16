@@ -11,7 +11,8 @@ import { generateEntitiesV2 } from './entity';
  * @internal
  */
 export function getServiceEntitiesV2(
-  serviceMetadata: ServiceMetadata
+  serviceMetadata: ServiceMetadata,
+  serviceName: string
 ): VdmServiceEntities {
   const formatter = new ServiceNameFormatter();
 
@@ -19,6 +20,7 @@ export function getServiceEntitiesV2(
   const entities = generateEntitiesV2(serviceMetadata, complexTypes, formatter);
   const functionImports = generateFunctionImportsV2(
     serviceMetadata,
+    serviceName,
     entities,
     complexTypes,
     formatter

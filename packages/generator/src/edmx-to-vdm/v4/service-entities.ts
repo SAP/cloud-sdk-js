@@ -13,7 +13,8 @@ import { generateEnumTypesV4 } from './enum-type';
  * @internal
  */
 export function getServiceEntitiesV4(
-  serviceMetadata: ServiceMetadata
+  serviceMetadata: ServiceMetadata,
+  serviceName: string
 ): VdmServiceEntities {
   const formatter = new ServiceNameFormatter();
 
@@ -31,12 +32,14 @@ export function getServiceEntitiesV4(
   );
   const actionsImports = generateActionImportsV4(
     serviceMetadata,
+    serviceName,
     entities,
     complexTypes,
     formatter
   );
   const functionImports = generateFunctionImportsV4(
     serviceMetadata,
+    serviceName,
     entities,
     complexTypes,
     formatter

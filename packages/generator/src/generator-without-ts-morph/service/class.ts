@@ -10,9 +10,11 @@ import {
 export function serviceBuilder(
   serviceName: string,
   oDataVersion: ODataVersion
-) {
+): string {
   return codeBlock`
-  export function builder<${getGenericTypesWithDefault(oDataVersion)}>(
+  export function ${voca.decapitalize(
+    serviceName
+  )}<${getGenericTypesWithDefault(oDataVersion)}>(
   deSerializers: Partial<DeSerializers<${getGenericTypes(
     oDataVersion
   )}>> = defaultDeSerializers as any
@@ -26,11 +28,11 @@ export function serviceBuilder(
 export function serviceClass(service: VdmServiceMetadata): string {
   return codeBlock`export class ${
     service.className
-  }<T extends DeSerializers = DefaultDeSerializers> {
+  }<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     private apis: Record<string, any> = {};
-    private deSerializers: T;
+    private deSerializers: DeSerializersT;
 
-    constructor(deSerializers: T) {
+    constructor(deSerializers: DeSerializersT) {
       this.deSerializers = deSerializers;
     }
 
@@ -53,7 +55,7 @@ function getEntityApiFunction(
 ): string {
   return codeBlock`get ${voca.decapitalize(entity.className)}Api(): ${
     entity.className
-  }Api<T> {
+  }Api<DeSerializersT> {
     const api = ${getApiInitializer(entity.className)};
     ${entity.navigationProperties.length ? addLinkedApis(entity, service) : ''}
     return api;

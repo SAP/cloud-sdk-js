@@ -77,6 +77,7 @@ ${actionImportsWithoutActions
  */
 export function generateActionImportsV4(
   serviceMetadata: ServiceMetadata,
+  serviceName: string,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
@@ -111,7 +112,8 @@ export function generateActionImportsV4(
             edmxAction.ReturnType,
             entities,
             complexTypes,
-            extractResponse
+            extractResponse,
+            serviceName
           )
         };
       })

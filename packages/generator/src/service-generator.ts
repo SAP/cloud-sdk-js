@@ -50,9 +50,16 @@ class ServiceGenerator {
       serviceMetadata,
       serviceDefinitionPaths
     );
+
     const vdmServiceEntities = isV2Metadata(serviceMetadata.edmx)
-      ? getServiceEntitiesV2(serviceMetadata)
-      : getServiceEntitiesV4(serviceMetadata);
+      ? getServiceEntitiesV2(
+          serviceMetadata,
+          vdmServicePackageMetaData.className
+        )
+      : getServiceEntitiesV4(
+          serviceMetadata,
+          vdmServicePackageMetaData.className
+        );
 
     return {
       ...vdmServicePackageMetaData,

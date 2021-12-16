@@ -224,12 +224,12 @@ export interface CommonEntitySingleLinkType<
  */
 
 export class CommonEntitySingleLinkApi<
-  T extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<CommonEntitySingleLink<T>, T>
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<CommonEntitySingleLink<DeSerializersT>, DeSerializersT>
 {
-  public deSerializers: T;
+  public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
@@ -245,14 +245,22 @@ export class CommonEntitySingleLinkApi<
   requestBuilder(): any {
     throw new Error('Not implemented');
   }
-  entityBuilder(): EntityBuilderType<CommonEntitySingleLink<T>, T> {
+
+  entityBuilder(): EntityBuilderType<
+    CommonEntitySingleLink<DeSerializersT>,
+    DeSerializersT
+  > {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<CommonEntitySingleLink<T>, T, NullableT> {
+  ): CustomField<
+    CommonEntitySingleLink<DeSerializersT>,
+    DeSerializersT,
+    NullableT
+  > {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -324,20 +332,27 @@ export interface CommonEntityType<
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
-export class CommonEntityApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<CommonEntity<T>, T>
+export class CommonEntityApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<CommonEntity<DeSerializersT>, DeSerializersT>
 {
-  public deSerializers: T;
+  public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
   private navigationPropertyFields!: {
-    TO_SINGLE_LINK: OneToOneLink<CommonEntity<T>, T, CommonEntitySingleLink<T>>;
+    TO_SINGLE_LINK: OneToOneLink<
+      CommonEntity<DeSerializersT>,
+      DeSerializersT,
+      CommonEntitySingleLink<DeSerializersT>
+    >;
   };
 
-  _addNavigationProperties(linkedApis: [CommonEntitySingleLinkApi<T>]): this {
+  _addNavigationProperties(
+    linkedApis: [CommonEntitySingleLinkApi<DeSerializersT>]
+  ): this {
     this.navigationPropertyFields = {
       TO_SINGLE_LINK: new OneToOneLink('to_SingleLink', this, linkedApis[0])
     };
@@ -349,14 +364,18 @@ export class CommonEntityApi<T extends DeSerializers = DefaultDeSerializers>
   requestBuilder(): any {
     throw new Error('Not implemented');
   }
-  entityBuilder(): EntityBuilderType<CommonEntity<T>, T> {
+
+  entityBuilder(): EntityBuilderType<
+    CommonEntity<DeSerializersT>,
+    DeSerializersT
+  > {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<CommonEntity<T>, T, NullableT> {
+  ): CustomField<CommonEntity<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -404,4 +423,100 @@ export class CommonEntityApi<T extends DeSerializers = DefaultDeSerializers>
   }
 }
 
-export const commonEntityApi = new CommonEntityApi();
+/*
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
+
+export function commonService<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any
+>(
+  deSerializers: Partial<
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT
+    >
+  > = defaultDeSerializers as any
+): CommonService<
+  DeSerializers<
+    BinaryT,
+    BooleanT,
+    ByteT,
+    DecimalT,
+    DoubleT,
+    FloatT,
+    Int16T,
+    Int32T,
+    Int64T,
+    GuidT,
+    SByteT,
+    SingleT,
+    StringT,
+    AnyT
+  >
+> {
+  return new CommonService(mergeDefaultDeSerializersWith(deSerializers));
+}
+export class CommonService<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
+  private apis: Record<string, any> = {};
+  private deSerializers: DeSerializersT;
+
+  constructor(deSerializers: DeSerializersT) {
+    this.deSerializers = deSerializers;
+  }
+
+  private initApi(key: string, ctor: new (...args: any[]) => any): any {
+    if (!this.apis[key]) {
+      this.apis[key] = new ctor(this.deSerializers);
+    }
+    return this.apis[key];
+  }
+
+  get commonEntityApi(): CommonEntityApi<DeSerializersT> {
+    const api = this.initApi('commonEntityApi', CommonEntityApi);
+    const linkedApis = [
+      this.initApi('commonEntitySingleLinkApi', CommonEntitySingleLinkApi)
+    ];
+    api._addNavigationProperties(linkedApis);
+    return api;
+  }
+
+  get commonEntitySingleLinkApi(): CommonEntitySingleLinkApi<DeSerializersT> {
+    const api = this.initApi(
+      'commonEntitySingleLinkApi',
+      CommonEntitySingleLinkApi
+    );
+
+    return api;
+  }
+}
+
+export const { commonEntityApi } = commonService();

@@ -5,55 +5,64 @@
  */
 import { TestEntityOtherMultiLink } from './TestEntityOtherMultiLink';
 import { TestEntityOtherMultiLinkRequestBuilder } from './TestEntityOtherMultiLinkRequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v2';
-import {
-  EdmTypeField,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  Time
-} from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
-import { Moment, Duration } from 'moment';
-export class TestEntityOtherMultiLinkApi<
-  T extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntityOtherMultiLink<T>, T>
-{
-  public deSerializers: T;
+import { Moment } from 'moment';
+export class TestEntityOtherMultiLinkApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      TestEntityOtherMultiLink<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
+  public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {};
+  private navigationPropertyFields!: {
+      
+    };
 
-  _addNavigationProperties(linkedApis: []): this {
-    this.navigationPropertyFields = {};
-    return this;
-  }
-
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
   entityConstructor = TestEntityOtherMultiLink;
-
-  requestBuilder(): TestEntityOtherMultiLinkRequestBuilder<T> {
+  
+  requestBuilder(): TestEntityOtherMultiLinkRequestBuilder<
+    DeSerializersT
+  > {
     return new TestEntityOtherMultiLinkRequestBuilder(this);
   }
-
-  entityBuilder(): EntityBuilderType<TestEntityOtherMultiLink<T>, T> {
+  
+  entityBuilder(): EntityBuilderType<
+    TestEntityOtherMultiLink<
+      DeSerializersT
+    >,
+    DeSerializersT
+  > {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<TestEntityOtherMultiLink<T>, T, NullableT> {
+  ): CustomField<
+  TestEntityOtherMultiLink<
+      DeSerializersT>,
+    DeSerializersT,
+    NullableT
+  > {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -63,26 +72,19 @@ export class TestEntityOtherMultiLinkApi<
   }
 
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      TestEntityOtherMultiLink,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityOtherMultiLink)
-    };
+    const fieldBuilder = new FieldBuilder(TestEntityOtherMultiLink, this.deSerializers);
+    return { 
+    /**
+ * Static representation of the [[keyProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', TestEntityOtherMultiLink) 
+  };
   }
 }

@@ -1,47 +1,55 @@
-import {
-  TestEntity,
-  TestEntityMultiLink
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testEntityApi, testEntityMultiLinkApi } from '../v2/test-util';
 import {
   testEntityKeyPropGuid,
   testEntityKeyPropString,
   testEntityMultiLinkKeyProp
 } from './keys';
 
-export const getAllRequest = TestEntity.requestBuilder().getAll();
-export const getByKeyRequest = TestEntity.requestBuilder().getByKey(
-  testEntityKeyPropGuid,
-  testEntityKeyPropString
-);
+export const getAllRequest = testEntityApi.requestBuilder().getAll();
+export const getByKeyRequest = testEntityApi
+  .requestBuilder()
+  .getByKey(testEntityKeyPropGuid, testEntityKeyPropString);
 
-export const createRequest = TestEntity.requestBuilder().create(
-  TestEntity.builder()
-    .stringProperty('stringProp')
-    .int16Property(16)
-    .booleanProperty(false)
-    .build()
-);
-
-export const createAsChildOfRequest = TestEntityMultiLink.requestBuilder()
+export const createRequest = testEntityApi
+  .requestBuilder()
   .create(
-    TestEntityMultiLink.builder().stringProperty('multiLinkStringProp').build()
+    testEntityApi
+      .entityBuilder()
+      .stringProperty('stringProp')
+      .int16Property(16)
+      .booleanProperty(false)
+      .build()
+  );
+
+export const createAsChildOfRequest = testEntityMultiLinkApi
+  .requestBuilder()
+  .create(
+    testEntityMultiLinkApi
+      .entityBuilder()
+      .stringProperty('multiLinkStringProp')
+      .build()
   )
   .asChildOf(
-    TestEntity.builder()
+    testEntityApi
+      .entityBuilder()
       .keyPropertyGuid(testEntityKeyPropGuid)
       .keyPropertyString(testEntityKeyPropString)
       .build(),
-    TestEntity.TO_MULTI_LINK
+    testEntityApi.schema.TO_MULTI_LINK
   );
 
-export const patchRequest = TestEntityMultiLink.requestBuilder().update(
-  TestEntityMultiLink.builder()
-    .keyProperty(testEntityMultiLinkKeyProp)
-    .stringProperty('multiLinkStringProp')
-    .build()
-);
+export const patchRequest = testEntityMultiLinkApi
+  .requestBuilder()
+  .update(
+    testEntityMultiLinkApi
+      .entityBuilder()
+      .keyProperty(testEntityMultiLinkKeyProp)
+      .stringProperty('multiLinkStringProp')
+      .build()
+  );
 
-export const testEntity = TestEntity.builder()
+export const testEntity = testEntityApi
+  .entityBuilder()
   .keyPropertyGuid(testEntityKeyPropGuid)
   .keyPropertyString(testEntityKeyPropString)
   .build()
@@ -49,13 +57,16 @@ export const testEntity = TestEntity.builder()
 
 testEntity.stringProperty = 'newStringProp';
 
-export const putRequest = TestEntity.requestBuilder()
+export const putRequest = testEntityApi
+  .requestBuilder()
   .update(testEntity)
   .replaceWholeEntityWithPut();
 
-export const deleteRequest = TestEntity.requestBuilder()
+export const deleteRequest = testEntityApi
+  .requestBuilder()
   .delete(
-    TestEntity.builder()
+    testEntityApi
+      .entityBuilder()
       .keyPropertyGuid(testEntityKeyPropGuid)
       .keyPropertyString(testEntityKeyPropString)
       .build()

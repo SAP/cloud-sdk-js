@@ -3,15 +3,15 @@ import { all, any, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 import { or } from '@sap-cloud-sdk/odata-common/internal';
 import {
   TestEnumType,
-  TestService as TestServiceV4
+  testService as testServiceV4
 } from '@sap-cloud-sdk/test-services/v4/test-service';
-import { TestService } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
 
-const { testEntityApi } = new TestService();
+const { testEntityApi } = testService();
 const {
   testEntityApi: testEntityApiV4,
   testEntityMultiLinkApi: testEntityMultiLinkApiV4
-} = new TestServiceV4();
+} = testServiceV4();
 
 export const testFilterString = {
   filter: testEntityApi.schema.STRING_PROPERTY.equals('test'),

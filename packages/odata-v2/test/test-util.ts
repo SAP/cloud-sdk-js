@@ -1,4 +1,4 @@
-import { TestService } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 export const {
   testEntityApi,
@@ -6,4 +6,4 @@ export const {
   testEntitySingleLinkApi,
   testEntityLvl2MultiLinkApi,
   testEntityLvl2SingleLinkApi
-} = new TestService();
+} = testService();

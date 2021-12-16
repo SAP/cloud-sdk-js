@@ -108,5 +108,3 @@ describe('Complex types', () => {
     expect(actual).toMatchObject(expected);
   });
 });
-
-testEntityApi.schema

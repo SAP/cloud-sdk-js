@@ -12,6 +12,7 @@ import {
   DefaultDeSerializers,
   defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v4';
+import { microsoftODataServiceSampleTrippinInMemoryModelsService } from './service';
 
 /**
  * Type of the parameters to be passed to [[resetDataSource]].

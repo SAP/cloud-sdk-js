@@ -11,8 +11,8 @@ import {
   DefaultDeSerializers,
   defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v4';
+import { microsoftODataServiceSampleTrippinInMemoryModelsService } from './service';
 import { Airports } from './Airports';
-import { builder } from './service';
 import { AirportsApi } from './AirportsApi';
 
 /**
@@ -55,7 +55,11 @@ export function getNearestAirport<
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
     'GetNearestAirport',
     data =>
-      transformReturnValueForEntity(data, builder(deSerializers).airportsApi),
+      transformReturnValueForEntity(
+        data,
+        microsoftODataServiceSampleTrippinInMemoryModelsService(deSerializers)
+          .airportsApi
+      ),
     params,
     deSerializers
   );

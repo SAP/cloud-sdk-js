@@ -4,7 +4,7 @@ import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import { DeSerializers, DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
-export declare function builder<
+export declare function testService<
   BinaryT = string,
   BooleanT = boolean,
   ByteT = number,
@@ -69,13 +69,13 @@ export declare function builder<
   >
 >;
 export declare class TestService<
-  T extends DeSerializers = DefaultDeSerializers
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   private apis;
   private deSerializers;
-  constructor(deSerializers: T);
+  constructor(deSerializers: DeSerializersT);
   private initApi;
-  get testEntityApi(): TestEntityApi<T>;
-  get testEntityLinkApi(): TestEntityLinkApi<T>;
+  get testEntityApi(): TestEntityApi<DeSerializersT>;
+  get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT>;
 }
 //# sourceMappingURL=service.d.ts.map

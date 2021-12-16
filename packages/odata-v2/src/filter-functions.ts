@@ -68,6 +68,8 @@ export const substring = filterFunctionsCommon(defaultDeSerializers).substring;
 
 /**
  * OData v2 specific filter functions
+ * @param deSerializers - DeSerializer used in the filter
+ * @returns Filter functions object
  */
 export function filterFunctions<
   BinaryT = string,

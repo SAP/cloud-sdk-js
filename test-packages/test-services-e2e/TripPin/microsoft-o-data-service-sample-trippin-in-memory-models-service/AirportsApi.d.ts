@@ -12,20 +12,21 @@ import {
   EntityBuilderType,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-export declare class AirportsApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<Airports<T>, T>
+export declare class AirportsApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<Airports<DeSerializersT>, DeSerializersT>
 {
-  deSerializers: T;
-  constructor(deSerializers?: T);
+  deSerializers: DeSerializersT;
+  constructor(deSerializers?: DeSerializersT);
   private navigationPropertyFields;
   _addNavigationProperties(linkedApis: []): this;
   entityConstructor: typeof Airports;
-  requestBuilder(): AirportsRequestBuilder<T>;
-  entityBuilder(): EntityBuilderType<Airports<T>, T>;
+  requestBuilder(): AirportsRequestBuilder<DeSerializersT>;
+  entityBuilder(): EntityBuilderType<Airports<DeSerializersT>, DeSerializersT>;
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable?: NullableT
-  ): CustomField<Airports<T>, T, NullableT>;
+  ): CustomField<Airports<DeSerializersT>, DeSerializersT, NullableT>;
   get schema(): {
     /**
      *
@@ -84,7 +85,7 @@ export declare class AirportsApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       false,
       true
@@ -117,7 +118,7 @@ export declare class AirportsApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       false,
       true
@@ -150,7 +151,7 @@ export declare class AirportsApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       false,
       true
@@ -183,7 +184,7 @@ export declare class AirportsApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       false,
       true
     >;

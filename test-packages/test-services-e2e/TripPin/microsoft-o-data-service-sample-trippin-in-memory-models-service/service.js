@@ -1,7 +1,7 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.MicrosoftODataServiceSampleTrippinInMemoryModelsService =
-  exports.builder = void 0;
+  exports.microsoftODataServiceSampleTrippinInMemoryModelsService = void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -12,12 +12,15 @@ const PeopleApi_1 = require('./PeopleApi');
 const AirlinesApi_1 = require('./AirlinesApi');
 const AirportsApi_1 = require('./AirportsApi');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-function builder(deSerializers = odata_v4_1.defaultDeSerializers) {
+function microsoftODataServiceSampleTrippinInMemoryModelsService(
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   return new MicrosoftODataServiceSampleTrippinInMemoryModelsService(
     (0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers)
   );
 }
-exports.builder = builder;
+exports.microsoftODataServiceSampleTrippinInMemoryModelsService =
+  microsoftODataServiceSampleTrippinInMemoryModelsService;
 class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
   constructor(deSerializers) {
     this.apis = {};

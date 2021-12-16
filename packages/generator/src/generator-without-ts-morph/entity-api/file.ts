@@ -1,13 +1,8 @@
 import { unixEOL } from '@sap-cloud-sdk/util';
 import { Import, serializeImports } from '../../generator-common';
-import {
-  VdmEntity,
-  VdmMappedEdmType,
-  VdmServiceMetadata
-} from '../../vdm-types';
+import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import {
   navPropertyFieldTypeImportNames,
-  potentialExternalImportDeclarations,
   propertyFieldTypeImportNames,
   propertyTypeImportNames
 } from '../../imports';
@@ -44,27 +39,6 @@ export function entityApiFile(
 //     content
 //   ].join(unixEOL);
 // }
-
-function externalImports(properties: VdmMappedEdmType[]): Import[] {
-  return potentialExternalImportDeclarations
-    .map(([moduleIdentifier, ...names]) =>
-      externalImport(properties, moduleIdentifier, names)
-    )
-    .filter(declaration => declaration.names && declaration.names.length);
-}
-
-function externalImport(
-  properties: VdmMappedEdmType[],
-  moduleIdentifier: string,
-  names: string[]
-): Import {
-  return {
-    moduleIdentifier,
-    names: names.filter(name =>
-      properties.map(prop => prop.jsType).includes(name)
-    )
-  };
-}
 
 function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
   return [

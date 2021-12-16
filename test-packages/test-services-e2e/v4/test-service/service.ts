@@ -15,7 +15,7 @@ import {
   mergeDefaultDeSerializersWith
 } from '@sap-cloud-sdk/odata-v4';
 
-export function builder<
+export function testService<
   BinaryT = string,
   BooleanT = boolean,
   ByteT = number,
@@ -81,11 +81,13 @@ export function builder<
 > {
   return new TestService(mergeDefaultDeSerializersWith(deSerializers));
 }
-export class TestService<T extends DeSerializers = DefaultDeSerializers> {
+export class TestService<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   private apis: Record<string, any> = {};
-  private deSerializers: T;
+  private deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T) {
+  constructor(deSerializers: DeSerializersT) {
     this.deSerializers = deSerializers;
   }
 
@@ -96,14 +98,14 @@ export class TestService<T extends DeSerializers = DefaultDeSerializers> {
     return this.apis[key];
   }
 
-  get testEntityApi(): TestEntityApi<T> {
+  get testEntityApi(): TestEntityApi<DeSerializersT> {
     const api = this.initApi('testEntityApi', TestEntityApi);
     const linkedApis = [this.initApi('testEntityLinkApi', TestEntityLinkApi)];
     api._addNavigationProperties(linkedApis);
     return api;
   }
 
-  get testEntityLinkApi(): TestEntityLinkApi<T> {
+  get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT> {
     const api = this.initApi('testEntityLinkApi', TestEntityLinkApi);
 
     return api;

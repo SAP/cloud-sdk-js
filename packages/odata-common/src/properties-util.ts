@@ -18,7 +18,7 @@ export const nonEnumerable = (target: any, propertyKey: string): void => {
 /**
  * Checks if the property with name key of the entity is a navigation property.
  * @param key - Name of the property.
- * @param entityConstructor - Constructor of the entity.
+ * @param schema - Schema which contains the potential navigation property.
  * @returns A boolean denoting whether an entity is a navigation property or not.
  * @internal
  */

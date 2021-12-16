@@ -1,7 +1,6 @@
 import { promises } from 'fs';
 import { join, resolve } from 'path';
 import { unixEOL } from '@sap-cloud-sdk/util';
-import { Project } from 'ts-morph';
 import { createOptions } from '../../generator/test/test-util/create-generator-options';
 import { generate } from '../../generator/src/internal';
 
@@ -82,13 +81,6 @@ function addODataVersion(str: string): string {
 
 function removeJsDoc(str: string): string {
   return str.replace(/\/\*\*\n(?:\s+\*\s+.+\n)+\s+\*\/\n/g, '');
-}
-
-function readClass(project: Project, fileName: string): string {
-  const sourceFiles = project.getSourceFiles();
-  const names = sourceFiles.map(sf => sf.getBaseName());
-  const file = sourceFiles.find(sf => sf.getBaseName() === fileName)!;
-  return file.getFullText();
 }
 
 const fileList = [

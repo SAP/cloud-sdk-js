@@ -24,12 +24,13 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class AirportsApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<Airports<T>, T>
+export class AirportsApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<Airports<DeSerializersT>, DeSerializersT>
 {
-  public deSerializers: T;
+  public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
@@ -42,18 +43,18 @@ export class AirportsApi<T extends DeSerializers = DefaultDeSerializers>
 
   entityConstructor = Airports;
 
-  requestBuilder(): AirportsRequestBuilder<T> {
+  requestBuilder(): AirportsRequestBuilder<DeSerializersT> {
     return new AirportsRequestBuilder(this);
   }
 
-  entityBuilder(): EntityBuilderType<Airports<T>, T> {
+  entityBuilder(): EntityBuilderType<Airports<DeSerializersT>, DeSerializersT> {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<Airports<T>, T, NullableT> {
+  ): CustomField<Airports<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,

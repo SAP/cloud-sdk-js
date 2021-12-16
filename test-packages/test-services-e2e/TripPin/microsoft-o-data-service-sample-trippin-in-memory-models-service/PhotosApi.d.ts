@@ -12,20 +12,21 @@ import {
   EntityBuilderType,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-export declare class PhotosApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<Photos<T>, T>
+export declare class PhotosApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<Photos<DeSerializersT>, DeSerializersT>
 {
-  deSerializers: T;
-  constructor(deSerializers?: T);
+  deSerializers: DeSerializersT;
+  constructor(deSerializers?: DeSerializersT);
   private navigationPropertyFields;
   _addNavigationProperties(linkedApis: []): this;
   entityConstructor: typeof Photos;
-  requestBuilder(): PhotosRequestBuilder<T>;
-  entityBuilder(): EntityBuilderType<Photos<T>, T>;
+  requestBuilder(): PhotosRequestBuilder<DeSerializersT>;
+  entityBuilder(): EntityBuilderType<Photos<DeSerializersT>, DeSerializersT>;
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable?: NullableT
-  ): CustomField<Photos<T>, T, NullableT>;
+  ): CustomField<Photos<DeSerializersT>, DeSerializersT, NullableT>;
   get schema(): {
     /**
      *
@@ -84,7 +85,7 @@ export declare class PhotosApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Int64',
       false,
       true
@@ -117,7 +118,7 @@ export declare class PhotosApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       true,
       true

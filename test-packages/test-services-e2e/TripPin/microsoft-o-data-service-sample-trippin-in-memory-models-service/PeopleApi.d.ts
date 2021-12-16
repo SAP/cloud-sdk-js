@@ -20,20 +20,23 @@ import {
   EntityBuilderType,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-export declare class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<People<T>, T>
+export declare class PeopleApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<People<DeSerializersT>, DeSerializersT>
 {
-  deSerializers: T;
-  constructor(deSerializers?: T);
+  deSerializers: DeSerializersT;
+  constructor(deSerializers?: DeSerializersT);
   private navigationPropertyFields;
-  _addNavigationProperties(linkedApis: [PeopleApi<T>, PhotosApi<T>]): this;
+  _addNavigationProperties(
+    linkedApis: [PeopleApi<DeSerializersT>, PhotosApi<DeSerializersT>]
+  ): this;
   entityConstructor: typeof People;
-  requestBuilder(): PeopleRequestBuilder<T>;
-  entityBuilder(): EntityBuilderType<People<T>, T>;
+  requestBuilder(): PeopleRequestBuilder<DeSerializersT>;
+  entityBuilder(): EntityBuilderType<People<DeSerializersT>, DeSerializersT>;
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable?: NullableT
-  ): CustomField<People<T>, T, NullableT>;
+  ): CustomField<People<DeSerializersT>, DeSerializersT, NullableT>;
   get schema(): {
     /**
      *
@@ -68,12 +71,20 @@ export declare class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
      * Static representation of the one-to-many navigation property [[friends]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    FRIENDS: OneToManyLink<People<T>, T, People<T>>;
+    FRIENDS: OneToManyLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      People<DeSerializersT>
+    >;
     /**
      * Static representation of the one-to-one navigation property [[photo]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    PHOTO: OneToOneLink<People<T>, T, Photos<T>>;
+    PHOTO: OneToOneLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      Photos<DeSerializersT>
+    >;
     /**
      * Static representation of the [[userName]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -102,7 +113,7 @@ export declare class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       false,
       true
@@ -135,7 +146,7 @@ export declare class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       false,
       true
@@ -168,7 +179,7 @@ export declare class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       false,
       true
@@ -201,7 +212,7 @@ export declare class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       true,
       true
@@ -234,7 +245,7 @@ export declare class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       Location<DefaultDeSerializers>,
       true,
       true
@@ -267,7 +278,7 @@ export declare class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       PersonGender,
       true,
       true
@@ -300,7 +311,7 @@ export declare class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Int64',
       false,
       true

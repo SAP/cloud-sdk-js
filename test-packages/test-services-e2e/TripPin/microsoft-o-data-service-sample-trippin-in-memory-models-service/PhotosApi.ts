@@ -24,12 +24,13 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class PhotosApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<Photos<T>, T>
+export class PhotosApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<Photos<DeSerializersT>, DeSerializersT>
 {
-  public deSerializers: T;
+  public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
@@ -42,18 +43,18 @@ export class PhotosApi<T extends DeSerializers = DefaultDeSerializers>
 
   entityConstructor = Photos;
 
-  requestBuilder(): PhotosRequestBuilder<T> {
+  requestBuilder(): PhotosRequestBuilder<DeSerializersT> {
     return new PhotosRequestBuilder(this);
   }
 
-  entityBuilder(): EntityBuilderType<Photos<T>, T> {
+  entityBuilder(): EntityBuilderType<Photos<DeSerializersT>, DeSerializersT> {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<Photos<T>, T, NullableT> {
+  ): CustomField<Photos<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,

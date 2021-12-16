@@ -36,7 +36,9 @@ function getNearestAirport(
     data =>
       (0, odata_v4_1.transformReturnValueForEntity)(
         data,
-        (0, service_1.builder)(deSerializers).airportsApi
+        (0, service_1.microsoftODataServiceSampleTrippinInMemoryModelsService)(
+          deSerializers
+        ).airportsApi
       ),
     params,
     deSerializers

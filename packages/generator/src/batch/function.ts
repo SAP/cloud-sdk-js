@@ -131,10 +131,3 @@ function asArray(type: string): string {
 function getBatchParameterType(service: VdmServiceMetadata): string {
   return `Read${service.className}RequestBuilder<DeSerializersT> | BatchChangeSet<DeSerializersT>`;
 }
-
-function mappingInitializer(service: VdmServiceMetadata): string {
-  const mapBody = service.entities
-    .map(e => `'${e.entitySetName}' : new ${e.className}Api(deSerializers)`)
-    .join(', ');
-  return `{${mapBody}}`;
-}

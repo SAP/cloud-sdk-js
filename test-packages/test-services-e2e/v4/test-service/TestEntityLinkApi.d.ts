@@ -13,20 +13,23 @@ import {
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
 export declare class TestEntityLinkApi<
-  T extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntityLink<T>, T>
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<TestEntityLink<DeSerializersT>, DeSerializersT>
 {
-  deSerializers: T;
-  constructor(deSerializers?: T);
+  deSerializers: DeSerializersT;
+  constructor(deSerializers?: DeSerializersT);
   private navigationPropertyFields;
   _addNavigationProperties(linkedApis: []): this;
   entityConstructor: typeof TestEntityLink;
-  requestBuilder(): TestEntityLinkRequestBuilder<T>;
-  entityBuilder(): EntityBuilderType<TestEntityLink<T>, T>;
+  requestBuilder(): TestEntityLinkRequestBuilder<DeSerializersT>;
+  entityBuilder(): EntityBuilderType<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT
+  >;
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable?: NullableT
-  ): CustomField<TestEntityLink<T>, T, NullableT>;
+  ): CustomField<TestEntityLink<DeSerializersT>, DeSerializersT, NullableT>;
   get schema(): {
     /**
      *
@@ -85,7 +88,7 @@ export declare class TestEntityLinkApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Int32',
       false,
       true
@@ -118,7 +121,7 @@ export declare class TestEntityLinkApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Int32',
       false,
       true
@@ -151,7 +154,7 @@ export declare class TestEntityLinkApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       true,
       true

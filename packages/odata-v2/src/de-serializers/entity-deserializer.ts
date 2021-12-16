@@ -11,6 +11,8 @@ import { defaultDeSerializers } from './default-de-serializers';
  * Entity deserializer instance for v2 entities.
  * See [[EntityDeserializer]] for the provided methods.
  *  @internal
+ *  @param deSerializers - DeSerializer
+ *  @returns EntityDeserializer
  */
 export function entityDeserializer<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT

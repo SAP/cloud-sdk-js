@@ -30,7 +30,7 @@ export class GetAllRequestBuilder<
 
   /**
    * Creates an instance of GetAllRequestBuilder.
-   * @param entityConstructor - Constructor of the entity to create the request for
+   * @param entityApi - EntityApi on which the get all is executed
    */
   constructor(entityApi: EntityApi<EntityT, DeSerializersT>) {
     super(

@@ -12,6 +12,8 @@ const getExpandWrapped = (selects, expands, entityConstructor) =>
 
 /**
  * Instance of the [[ODataUri]] conversion interface for OData v4.
+ * @param deSerializers - DeSerializer instance used for conversions
+ * @returns ODataUri
  * @internal
  */
 export function createODataUri<DeSerializersT extends DeSerializers>(

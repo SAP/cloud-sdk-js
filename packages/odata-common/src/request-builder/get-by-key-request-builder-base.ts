@@ -26,7 +26,7 @@ export abstract class GetByKeyRequestBuilderBase<
 > {
   /**
    * Creates an instance of GetByKeyRequestBuilder.
-   * @param entityConstructor - Constructor of the entity to create the request for
+   * @param entityApi - EntityApi on which the get by key request is executed
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    * @param oDataUri - Uri conversion methods
    * @param entityDeserializer - Entity deserializer

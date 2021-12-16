@@ -5,64 +5,55 @@
  */
 import { CaseTest } from './CaseTest';
 import { CaseTestRequestBuilder } from './CaseTestRequestBuilder';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
-import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers,
+  mergeDefaultDeSerializersWith
+} from '@sap-cloud-sdk/odata-v2';
+import {
+  EdmTypeField,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  FieldBuilder,
+  Time
+} from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
-export class CaseTestApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
-    EntityApi<
-      CaseTest<
-        DeSerializersT
-      >, 
-      DeSerializersT
-    > {
+export class CaseTestApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<CaseTest<DeSerializersT>, DeSerializersT>
+{
   public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {
-      
-    };
+  private navigationPropertyFields!: {};
 
-  _addNavigationProperties(
-      linkedApis: [
-        
-      ]): this {
-        this.navigationPropertyFields = {
-          
-        };
-        return this;
-      }
-  
+  _addNavigationProperties(linkedApis: []): this {
+    this.navigationPropertyFields = {};
+    return this;
+  }
+
   entityConstructor = CaseTest;
-  
-  requestBuilder(): CaseTestRequestBuilder<
-    DeSerializersT
-  > {
+
+  requestBuilder(): CaseTestRequestBuilder<DeSerializersT> {
     return new CaseTestRequestBuilder(this);
   }
-  
-  entityBuilder(): EntityBuilderType<
-    CaseTest<
-      DeSerializersT
-    >,
-    DeSerializersT
-  > {
+
+  entityBuilder(): EntityBuilderType<CaseTest<DeSerializersT>, DeSerializersT> {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<
-  CaseTest<
-      DeSerializersT>,
-    DeSerializersT,
-    NullableT
-  > {
+  ): CustomField<CaseTest<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -73,18 +64,22 @@ export class CaseTestApi<DeSerializersT extends DeSerializers = DefaultDeSeriali
 
   get schema() {
     const fieldBuilder = new FieldBuilder(CaseTest, this.deSerializers);
-    return { 
-    /**
- * Static representation of the [[keyPropertyString]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false),
-...this.navigationPropertyFields,
-/**
- * 
- * All fields selector.
- */
-ALL_FIELDS: new AllFields('*', CaseTest) 
-  };
+    return {
+      /**
+       * Static representation of the [[keyPropertyString]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
+        'KeyPropertyString',
+        'Edm.String',
+        false
+      ),
+      ...this.navigationPropertyFields,
+      /**
+       *
+       * All fields selector.
+       */
+      ALL_FIELDS: new AllFields('*', CaseTest)
+    };
   }
 }

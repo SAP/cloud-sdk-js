@@ -31,7 +31,7 @@ function createTestEntityById(
     data =>
       (0, odata_v4_1.transformReturnValueForEntity)(
         data,
-        (0, service_1.builder)(deSerializers).testEntityApi
+        (0, service_1.testService)(deSerializers).testEntityApi
       ),
     params,
     deSerializers

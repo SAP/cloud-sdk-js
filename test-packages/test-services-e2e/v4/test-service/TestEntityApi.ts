@@ -27,12 +27,13 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class TestEntityApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<TestEntity<T>, T>
+export class TestEntityApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<TestEntity<DeSerializersT>, DeSerializersT>
 {
-  public deSerializers: T;
+  public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
@@ -41,10 +42,16 @@ export class TestEntityApi<T extends DeSerializers = DefaultDeSerializers>
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TO_MULTI_LINK: OneToManyLink<TestEntity<T>, T, TestEntityLink<T>>;
+    TO_MULTI_LINK: OneToManyLink<
+      TestEntity<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLink<DeSerializersT>
+    >;
   };
 
-  _addNavigationProperties(linkedApis: [TestEntityLinkApi<T>]): this {
+  _addNavigationProperties(
+    linkedApis: [TestEntityLinkApi<DeSerializersT>]
+  ): this {
     this.navigationPropertyFields = {
       TO_MULTI_LINK: new OneToManyLink('ToMultiLink', this, linkedApis[0])
     };
@@ -53,18 +60,21 @@ export class TestEntityApi<T extends DeSerializers = DefaultDeSerializers>
 
   entityConstructor = TestEntity;
 
-  requestBuilder(): TestEntityRequestBuilder<T> {
+  requestBuilder(): TestEntityRequestBuilder<DeSerializersT> {
     return new TestEntityRequestBuilder(this);
   }
 
-  entityBuilder(): EntityBuilderType<TestEntity<T>, T> {
+  entityBuilder(): EntityBuilderType<
+    TestEntity<DeSerializersT>,
+    DeSerializersT
+  > {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<TestEntity<T>, T, NullableT> {
+  ): CustomField<TestEntity<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,

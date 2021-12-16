@@ -62,7 +62,7 @@ function getAll(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     data =>
       (0, odata_v4_1.transformReturnValueForEntityList)(
         data,
-        (0, service_1.builder)(deSerializers).testEntityApi
+        (0, service_1.testService)(deSerializers).testEntityApi
       ),
     params,
     deSerializers
@@ -88,7 +88,7 @@ function getByKey(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     data =>
       (0, odata_v4_1.transformReturnValueForEntity)(
         data,
-        (0, service_1.builder)(deSerializers).testEntityApi
+        (0, service_1.testService)(deSerializers).testEntityApi
       ),
     params,
     deSerializers

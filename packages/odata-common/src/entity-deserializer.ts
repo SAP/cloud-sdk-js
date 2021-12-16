@@ -53,7 +53,6 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
  * Constructs an entityDeserializer given the OData v2 or v4 specific methods.
  * The concrete deserializers are created in odata/v2/entity-deserializer.ts and odata/v4/entity-deserializer.ts
  * @param deSerializers - (De-)serializers used for transformation.
- * @param schema - Schema of the entity.
  * @param extractODataETag - Extractor for the ETag.
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
  * @returns an entity deserializer as defined by [[EntityDeserializer]]
@@ -70,7 +69,7 @@ export function entityDeserializer<T extends DeSerializers>(
    * It sets the remote state to the data provided by the JSON payload.
    * If a version identifier is found in the '__metadata' or in the request header, the method also sets it.
    * @param json - The JSON payload.
-   * @param entityConstructor - The constructor function of the entity class.
+   * @param entityApi - EntityApi which is deserialized.
    * @param requestHeader - Optional parameter which may be used to add a version identifier (ETag) to the entity
    * @returns An instance of the entity class.
    */

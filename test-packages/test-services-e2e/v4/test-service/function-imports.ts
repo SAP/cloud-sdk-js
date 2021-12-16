@@ -15,8 +15,8 @@ import {
   DefaultDeSerializers,
   defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 import { TestEntity } from './TestEntity';
-import { builder } from './service';
 import { TestEntityApi } from './TestEntityApi';
 
 /**
@@ -93,7 +93,7 @@ export function getAll<
     data =>
       transformReturnValueForEntityList(
         data,
-        builder(deSerializers).testEntityApi
+        testService(deSerializers).testEntityApi
       ),
     params,
     deSerializers
@@ -133,7 +133,10 @@ export function getByKey<
     '/odata/test-service',
     'getByKey',
     data =>
-      transformReturnValueForEntity(data, builder(deSerializers).testEntityApi),
+      transformReturnValueForEntity(
+        data,
+        testService(deSerializers).testEntityApi
+      ),
     params,
     deSerializers
   );

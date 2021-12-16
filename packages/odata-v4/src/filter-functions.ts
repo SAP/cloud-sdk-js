@@ -160,6 +160,8 @@ export function hasSubsequence<
 
 /**
  * OData v4 specific filter functions
+ * @param deSerializers - DeSerializer used in the filter function
+ * @returns Object containing the filter functions
  */
 export function filterFunctions<
   BinaryT = string,

@@ -28,8 +28,10 @@ export abstract class GetAllRequestBuilderBase<
 > {
   /**
    * Creates an instance of GetAllRequestBuilder.
-   * @param entityConstructor - Constructor of the entity to create the request for
+   * @param entityApi - EntityApi on which the get all is executed
    * @param getAllRequestConfig - Request config of the get all request.
+   * @param entityDeserializer - DeSerializer used in the request
+   * @param dataAccessor - DataAccessor to extract the data
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,

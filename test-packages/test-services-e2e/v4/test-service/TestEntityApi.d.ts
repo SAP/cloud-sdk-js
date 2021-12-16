@@ -16,20 +16,25 @@ import {
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
 export declare class TestEntityApi<
-  T extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntity<T>, T>
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<TestEntity<DeSerializersT>, DeSerializersT>
 {
-  deSerializers: T;
-  constructor(deSerializers?: T);
+  deSerializers: DeSerializersT;
+  constructor(deSerializers?: DeSerializersT);
   private navigationPropertyFields;
-  _addNavigationProperties(linkedApis: [TestEntityLinkApi<T>]): this;
+  _addNavigationProperties(
+    linkedApis: [TestEntityLinkApi<DeSerializersT>]
+  ): this;
   entityConstructor: typeof TestEntity;
-  requestBuilder(): TestEntityRequestBuilder<T>;
-  entityBuilder(): EntityBuilderType<TestEntity<T>, T>;
+  requestBuilder(): TestEntityRequestBuilder<DeSerializersT>;
+  entityBuilder(): EntityBuilderType<
+    TestEntity<DeSerializersT>,
+    DeSerializersT
+  >;
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable?: NullableT
-  ): CustomField<TestEntity<T>, T, NullableT>;
+  ): CustomField<TestEntity<DeSerializersT>, DeSerializersT, NullableT>;
   get schema(): {
     /**
      *
@@ -64,7 +69,11 @@ export declare class TestEntityApi<
      * Static representation of the one-to-many navigation property [[toMultiLink]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    TO_MULTI_LINK: OneToManyLink<TestEntity<T>, T, TestEntityLink<T>>;
+    TO_MULTI_LINK: OneToManyLink<
+      TestEntity<DeSerializersT>,
+      DeSerializersT,
+      TestEntityLink<DeSerializersT>
+    >;
     /**
      * Static representation of the [[keyTestEntity]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
@@ -93,7 +102,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Int32',
       false,
       true
@@ -126,7 +135,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       true,
       true
@@ -159,7 +168,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Guid',
       true,
       true
@@ -192,7 +201,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Boolean',
       true,
       true
@@ -225,7 +234,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Int64',
       true,
       true
@@ -258,7 +267,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Double',
       true,
       true
@@ -291,7 +300,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Decimal',
       true,
       true
@@ -324,7 +333,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.Date',
       true,
       true
@@ -357,7 +366,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.TimeOfDay',
       true,
       true
@@ -390,7 +399,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.DateTimeOffset',
       true,
       true
@@ -423,7 +432,7 @@ export declare class TestEntityApi<
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.DateTimeOffset',
       true,
       true

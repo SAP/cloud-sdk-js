@@ -17,7 +17,7 @@ import {
   mergeDefaultDeSerializersWith
 } from '@sap-cloud-sdk/odata-v4';
 
-export function builder<
+export function microsoftODataServiceSampleTrippinInMemoryModelsService<
   BinaryT = string,
   BooleanT = boolean,
   ByteT = number,
@@ -86,12 +86,12 @@ export function builder<
   );
 }
 export class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
-  T extends DeSerializers = DefaultDeSerializers
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
 > {
   private apis: Record<string, any> = {};
-  private deSerializers: T;
+  private deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T) {
+  constructor(deSerializers: DeSerializersT) {
     this.deSerializers = deSerializers;
   }
 
@@ -102,13 +102,13 @@ export class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
     return this.apis[key];
   }
 
-  get photosApi(): PhotosApi<T> {
+  get photosApi(): PhotosApi<DeSerializersT> {
     const api = this.initApi('photosApi', PhotosApi);
 
     return api;
   }
 
-  get peopleApi(): PeopleApi<T> {
+  get peopleApi(): PeopleApi<DeSerializersT> {
     const api = this.initApi('peopleApi', PeopleApi);
     const linkedApis = [
       this.initApi('peopleApi', PeopleApi),
@@ -118,13 +118,13 @@ export class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
     return api;
   }
 
-  get airlinesApi(): AirlinesApi<T> {
+  get airlinesApi(): AirlinesApi<DeSerializersT> {
     const api = this.initApi('airlinesApi', AirlinesApi);
 
     return api;
   }
 
-  get airportsApi(): AirportsApi<T> {
+  get airportsApi(): AirportsApi<DeSerializersT> {
     const api = this.initApi('airportsApi', AirportsApi);
 
     return api;

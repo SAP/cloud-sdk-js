@@ -5,50 +5,49 @@
  */
 import { TestEntityEndsWith } from './TestEntityEndsWith';
 import { TestEntityEndsWithRequestBuilder } from './TestEntityEndsWithRequestBuilder';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
-import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers,
+  mergeDefaultDeSerializersWith
+} from '@sap-cloud-sdk/odata-v4';
+import {
+  EdmTypeField,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  FieldBuilder,
+  Time
+} from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class TestEntityEndsWithApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
-    EntityApi<
-      TestEntityEndsWith<
-        DeSerializersT
-      >, 
-      DeSerializersT
-    > {
+export class TestEntityEndsWithApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<TestEntityEndsWith<DeSerializersT>, DeSerializersT>
+{
   public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {
-      
-    };
+  private navigationPropertyFields!: {};
 
-  _addNavigationProperties(
-      linkedApis: [
-        
-      ]): this {
-        this.navigationPropertyFields = {
-          
-        };
-        return this;
-      }
-  
+  _addNavigationProperties(linkedApis: []): this {
+    this.navigationPropertyFields = {};
+    return this;
+  }
+
   entityConstructor = TestEntityEndsWith;
-  
-  requestBuilder(): TestEntityEndsWithRequestBuilder<
-    DeSerializersT
-  > {
+
+  requestBuilder(): TestEntityEndsWithRequestBuilder<DeSerializersT> {
     return new TestEntityEndsWithRequestBuilder(this);
   }
-  
+
   entityBuilder(): EntityBuilderType<
-    TestEntityEndsWith<
-      DeSerializersT
-    >,
+    TestEntityEndsWith<DeSerializersT>,
     DeSerializersT
   > {
     return entityBuilder(this);
@@ -58,8 +57,7 @@ export class TestEntityEndsWithApi<DeSerializersT extends DeSerializers = Defaul
     fieldName: string,
     isNullable: NullableT = false as NullableT
   ): CustomField<
-  TestEntityEndsWith<
-      DeSerializersT>,
+    TestEntityEndsWith<DeSerializersT>,
     DeSerializersT,
     NullableT
   > {
@@ -72,19 +70,26 @@ export class TestEntityEndsWithApi<DeSerializersT extends DeSerializers = Defaul
   }
 
   get schema() {
-    const fieldBuilder = new FieldBuilder(TestEntityEndsWith, this.deSerializers);
-    return { 
-    /**
- * Static representation of the [[keyProperty]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
-...this.navigationPropertyFields,
-/**
- * 
- * All fields selector.
- */
-ALL_FIELDS: new AllFields('*', TestEntityEndsWith) 
-  };
+    const fieldBuilder = new FieldBuilder(
+      TestEntityEndsWith,
+      this.deSerializers
+    );
+    return {
+      /**
+       * Static representation of the [[keyProperty]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
+        'KeyProperty',
+        'Edm.String',
+        false
+      ),
+      ...this.navigationPropertyFields,
+      /**
+       *
+       * All fields selector.
+       */
+      ALL_FIELDS: new AllFields('*', TestEntityEndsWith)
+    };
   }
 }

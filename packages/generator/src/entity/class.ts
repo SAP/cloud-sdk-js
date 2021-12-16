@@ -103,7 +103,12 @@ function property(prop: VdmProperty): PropertyDeclarationStructure {
   };
 }
 
-export function getPropertyType(prop: VdmProperty) {
+/**
+ * @internal
+ * @param prop - Property type in Vdm form.
+ * @returns Property type as string.
+ */
+export function getPropertyType(prop: VdmProperty): string {
   if (prop.isCollection) {
     if (prop.isComplex) {
       return `${prop.jsType}<T>[]` + getNullableSuffix(prop);

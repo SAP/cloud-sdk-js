@@ -11,20 +11,21 @@ import {
   EntityBuilderType,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-export declare class AirlinesApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<Airlines<T>, T>
+export declare class AirlinesApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<Airlines<DeSerializersT>, DeSerializersT>
 {
-  deSerializers: T;
-  constructor(deSerializers?: T);
+  deSerializers: DeSerializersT;
+  constructor(deSerializers?: DeSerializersT);
   private navigationPropertyFields;
   _addNavigationProperties(linkedApis: []): this;
   entityConstructor: typeof Airlines;
-  requestBuilder(): AirlinesRequestBuilder<T>;
-  entityBuilder(): EntityBuilderType<Airlines<T>, T>;
+  requestBuilder(): AirlinesRequestBuilder<DeSerializersT>;
+  entityBuilder(): EntityBuilderType<Airlines<DeSerializersT>, DeSerializersT>;
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable?: NullableT
-  ): CustomField<Airlines<T>, T, NullableT>;
+  ): CustomField<Airlines<DeSerializersT>, DeSerializersT, NullableT>;
   get schema(): {
     /**
      *
@@ -83,7 +84,7 @@ export declare class AirlinesApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       false,
       true
@@ -116,7 +117,7 @@ export declare class AirlinesApi<T extends DeSerializers = DefaultDeSerializers>
           any
         >
       >,
-      T,
+      DeSerializersT,
       'Edm.String',
       false,
       true

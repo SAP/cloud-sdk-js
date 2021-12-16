@@ -68,7 +68,7 @@ export function classContent(
     const fieldBuilder = new FieldBuilder(${
       entity.className
     }, this.deSerializers);
-    return ${getSchema(entity, service)};
+    return ${getSchema(entity)};
   }
 }`;
 }

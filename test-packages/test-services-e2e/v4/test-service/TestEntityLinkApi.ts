@@ -24,12 +24,13 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class TestEntityLinkApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<TestEntityLink<T>, T>
+export class TestEntityLinkApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<TestEntityLink<DeSerializersT>, DeSerializersT>
 {
-  public deSerializers: T;
+  public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
@@ -42,18 +43,21 @@ export class TestEntityLinkApi<T extends DeSerializers = DefaultDeSerializers>
 
   entityConstructor = TestEntityLink;
 
-  requestBuilder(): TestEntityLinkRequestBuilder<T> {
+  requestBuilder(): TestEntityLinkRequestBuilder<DeSerializersT> {
     return new TestEntityLinkRequestBuilder(this);
   }
 
-  entityBuilder(): EntityBuilderType<TestEntityLink<T>, T> {
+  entityBuilder(): EntityBuilderType<
+    TestEntityLink<DeSerializersT>,
+    DeSerializersT
+  > {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<TestEntityLink<T>, T, NullableT> {
+  ): CustomField<TestEntityLink<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,

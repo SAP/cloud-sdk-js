@@ -26,7 +26,7 @@ export class CreateRequestBuilder<
 {
   /**
    * Creates an instance of CreateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be created
+   * @param entityApi - EntityApi on which the create is executed
    * @param _entity - Entity to be created
    */
   constructor(

@@ -32,12 +32,13 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
-  implements EntityApi<People<T>, T>
+export class PeopleApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<People<DeSerializersT>, DeSerializersT>
 {
-  public deSerializers: T;
+  public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: T = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
@@ -46,15 +47,25 @@ export class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
      * Static representation of the one-to-many navigation property [[friends]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    FRIENDS: OneToManyLink<People<T>, T, People<T>>;
+    FRIENDS: OneToManyLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      People<DeSerializersT>
+    >;
     /**
      * Static representation of the one-to-one navigation property [[photo]] for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-    PHOTO: OneToOneLink<People<T>, T, Photos<T>>;
+    PHOTO: OneToOneLink<
+      People<DeSerializersT>,
+      DeSerializersT,
+      Photos<DeSerializersT>
+    >;
   };
 
-  _addNavigationProperties(linkedApis: [PeopleApi<T>, PhotosApi<T>]): this {
+  _addNavigationProperties(
+    linkedApis: [PeopleApi<DeSerializersT>, PhotosApi<DeSerializersT>]
+  ): this {
     this.navigationPropertyFields = {
       FRIENDS: new OneToManyLink('Friends', this, linkedApis[0]),
       PHOTO: new OneToOneLink('Photo', this, linkedApis[1])
@@ -64,18 +75,18 @@ export class PeopleApi<T extends DeSerializers = DefaultDeSerializers>
 
   entityConstructor = People;
 
-  requestBuilder(): PeopleRequestBuilder<T> {
+  requestBuilder(): PeopleRequestBuilder<DeSerializersT> {
     return new PeopleRequestBuilder(this);
   }
 
-  entityBuilder(): EntityBuilderType<People<T>, T> {
+  entityBuilder(): EntityBuilderType<People<DeSerializersT>, DeSerializersT> {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<People<T>, T, NullableT> {
+  ): CustomField<People<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,

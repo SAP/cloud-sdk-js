@@ -24,7 +24,7 @@ export class UpdateRequestBuilder<
 {
   /**
    * Creates an instance of UpdateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be updated
+   * @param entityApi - EntityApi on which the update is executed
    * @param _entity - Entity to be updated
    */
   constructor(

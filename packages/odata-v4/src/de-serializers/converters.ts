@@ -1,3 +1,4 @@
+/* eslint-disable valid-jsdoc */
 import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import moment from 'moment';
 

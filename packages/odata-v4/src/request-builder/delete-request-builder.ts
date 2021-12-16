@@ -21,9 +21,8 @@ export class DeleteRequestBuilder<
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
-   * @param entityConstructor - Constructor type of the entity to be deleted
+   * @param entityApi - EntityApi on which the delete is executed
    * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
-   * @param deSerializers - (De-)serializers used for transformation.
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,

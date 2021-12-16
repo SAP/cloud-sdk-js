@@ -14,8 +14,8 @@ import {
   DefaultDeSerializers,
   defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 import { TestEntity } from './TestEntity';
-import { builder } from './service';
 import { TestEntityApi } from './TestEntityApi';
 
 /**
@@ -54,7 +54,10 @@ export function createTestEntityById<
     '/odata/test-service',
     'createTestEntityById',
     data =>
-      transformReturnValueForEntity(data, builder(deSerializers).testEntityApi),
+      transformReturnValueForEntity(
+        data,
+        testService(deSerializers).testEntityApi
+      ),
     params,
     deSerializers
   );

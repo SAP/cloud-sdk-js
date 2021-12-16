@@ -333,6 +333,8 @@ export function isOf<EntityT extends EntityBase>(
  *  .filter(startsWith(BusinessPartner.FIRST_NAME, 'A').equals(true))
  * ```
  * @internal
+ * @param deSerializers - DeSerializer used in the filter
+ * @returns filter functions
  */
 export function filterFunctions<
   BinaryT = string,
@@ -350,6 +352,7 @@ export function filterFunctions<
   StringT = string,
   AnyT = any
 >(
+  // eslint-disable-next-line
   deSerializers: DeSerializers<
     BinaryT,
     BooleanT,

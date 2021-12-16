@@ -9,102 +9,22 @@ import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 import { TestEntityLvl2MultiLinkApi } from './TestEntityLvl2MultiLinkApi';
 import { TestEntityLvl2SingleLink } from './TestEntityLvl2SingleLink';
 import { TestEntityLvl2SingleLinkApi } from './TestEntityLvl2SingleLinkApi';
-import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
 import { EdmTypeField, OrderableEdmTypeField, Link, OneToOneLink, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
-import { Moment, Duration } from 'moment';
-export class TestEntitySingleLinkApi<BinaryT = string,
-BooleanT = boolean,
-ByteT = number,
-DecimalT = BigNumber,
-DoubleT = number,
-FloatT = number,
-Int16T = number,
-Int32T = number,
-Int64T = BigNumber,
-GuidT = string,
-SByteT = number,
-SingleT = number,
-StringT = string,
-AnyT = any,
-DateTimeOffsetT = Moment,
-DateTimeT = Moment,
-TimeT = Time> implements 
+import { Moment } from 'moment';
+export class TestEntitySingleLinkApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
     EntityApi<
       TestEntitySingleLink<
-        DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateTimeT,
-TimeT>
+        DeSerializersT
       >, 
-      DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateTimeT,
-TimeT>
+      DeSerializersT
     > {
-  public deSerializers: DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateTimeT,
-TimeT>;
+  public deSerializers: DeSerializersT;
 
   constructor(
-    deSerializers: Partial<DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateTimeT,
-TimeT>> = defaultDeSerializers as any) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+    this.deSerializers = deSerializers;
   }
 
   private navigationPropertyFields!: {
@@ -113,152 +33,24 @@ TimeT>> = defaultDeSerializers as any) {
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
       TO_MULTI_LINK: Link<
-            TestEntitySingleLink<DeSerializers<BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeOffsetT,
-      DateTimeT,
-      TimeT>>,
-            DeSerializers<BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeOffsetT,
-      DateTimeT,
-      TimeT>,
-            TestEntityLvl2MultiLink<DeSerializers<BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeOffsetT,
-      DateTimeT,
-      TimeT>>
+            TestEntitySingleLink<DeSerializersT>,
+            DeSerializersT,
+            TestEntityLvl2MultiLink<DeSerializersT>
           >,
       /**
        * Static representation of the one-to-one navigation property [[toSingleLink]] for query construction.
        * Use to reference this property in query operations such as 'select' in the fluent request API.
        */
       TO_SINGLE_LINK: OneToOneLink<
-            TestEntitySingleLink<DeSerializers<BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeOffsetT,
-      DateTimeT,
-      TimeT>>,
-            DeSerializers<BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeOffsetT,
-      DateTimeT,
-      TimeT>,
-            TestEntityLvl2SingleLink<DeSerializers<BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeOffsetT,
-      DateTimeT,
-      TimeT>>
+            TestEntitySingleLink<DeSerializersT>,
+            DeSerializersT,
+            TestEntityLvl2SingleLink<DeSerializersT>
           >
     };
 
   _addNavigationProperties(
       linkedApis: [
-        TestEntityLvl2MultiLinkApi<BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeOffsetT,
-        DateTimeT,
-        TimeT>,TestEntityLvl2SingleLinkApi<BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT,
-        DateTimeOffsetT,
-        DateTimeT,
-        TimeT>
+        TestEntityLvl2MultiLinkApi<DeSerializersT>,TestEntityLvl2SingleLinkApi<DeSerializersT>
       ]): this {
         this.navigationPropertyFields = {
           TO_MULTI_LINK: new Link(
@@ -278,64 +70,16 @@ TimeT>> = defaultDeSerializers as any) {
   entityConstructor = TestEntitySingleLink;
   
   requestBuilder(): TestEntitySingleLinkRequestBuilder<
-    DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateTimeT,
-TimeT>
+    DeSerializersT
   > {
     return new TestEntitySingleLinkRequestBuilder(this);
   }
   
   entityBuilder(): EntityBuilderType<
     TestEntitySingleLink<
-      DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateTimeT,
-TimeT>
+      DeSerializersT
     >,
-    DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateTimeT,
-TimeT>
+    DeSerializersT
   > {
     return entityBuilder(this);
   }
@@ -345,45 +89,8 @@ TimeT>
     isNullable: NullableT = false as NullableT
   ): CustomField<
   TestEntitySingleLink<
-      DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeOffsetT,
-      DateTimeT,
-      TimeT
-      >
-    >,
-    DeSerializers<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT
-    >,
+      DeSerializersT>,
+    DeSerializersT,
     NullableT
   > {
     return new CustomField(
@@ -391,7 +98,7 @@ TimeT>
       this.entityConstructor,
       this.deSerializers,
       isNullable
-    );
+    ) as any;
   }
 
   get schema() {

@@ -7,107 +7,22 @@ import { TestEntity1 } from './TestEntity1';
 import { TestEntity1RequestBuilder } from './TestEntity1RequestBuilder';
 import { TestComplexType1, TestComplexType1Field } from './TestComplexType1';
 import { TestEnumType1 } from './TestEnumType1';
-import { CustomField, defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
 import { EdmTypeField, OrderableEdmTypeField, EnumField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class TestEntity1Api<BinaryT = string,
-BooleanT = boolean,
-ByteT = number,
-DecimalT = BigNumber,
-DoubleT = number,
-FloatT = number,
-Int16T = number,
-Int32T = number,
-Int64T = BigNumber,
-GuidT = string,
-SByteT = number,
-SingleT = number,
-StringT = string,
-AnyT = any,
-DateTimeOffsetT = Moment,
-DateT = Moment,
-DurationT = Duration,
-TimeOfDayT = Time> implements 
+export class TestEntity1Api<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
     EntityApi<
       TestEntity1<
-        DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>
+        DeSerializersT
       >, 
-      DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>
+      DeSerializersT
     > {
-  public deSerializers: DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>;
+  public deSerializers: DeSerializersT;
 
   constructor(
-    deSerializers: Partial<DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>> = defaultDeSerializers as any) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+    this.deSerializers = deSerializers;
   }
 
   private navigationPropertyFields!: {
@@ -127,67 +42,16 @@ TimeOfDayT>> = defaultDeSerializers as any) {
   entityConstructor = TestEntity1;
   
   requestBuilder(): TestEntity1RequestBuilder<
-    DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>
+    DeSerializersT
   > {
     return new TestEntity1RequestBuilder(this);
   }
   
   entityBuilder(): EntityBuilderType<
     TestEntity1<
-      DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>
+      DeSerializersT
     >,
-    DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>
+    DeSerializersT
   > {
     return entityBuilder(this);
   }
@@ -197,47 +61,8 @@ TimeOfDayT>
     isNullable: NullableT = false as NullableT
   ): CustomField<
   TestEntity1<
-      DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT,
-      DateTimeOffsetT,
-      DateT,
-      DurationT,
-      TimeOfDayT
-      >
-    >,
-    DeSerializers<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT
-    >,
+      DeSerializersT>,
+    DeSerializersT,
     NullableT
   > {
     return new CustomField(
@@ -245,7 +70,7 @@ TimeOfDayT>
       this.entityConstructor,
       this.deSerializers,
       isNullable
-    );
+    ) as any;
   }
 
   get schema() {

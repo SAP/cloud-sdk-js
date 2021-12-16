@@ -15,25 +15,26 @@ import { Casetest_1Api } from './Casetest_1Api';
 import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
-import { DeSerializers } from '@sap-cloud-sdk/odata-v2';
-export declare class TestService<BinaryT = string, BooleanT = boolean, ByteT = number, DecimalT = BigNumber, DoubleT = number, FloatT = number, Int16T = number, Int32T = number, Int64T = BigNumber, GuidT = string, SByteT = number, SingleT = number, StringT = string, AnyT = any, DateTimeOffsetT = Moment, DateTimeT = Moment, TimeT = Time> {
+import { DeSerializers, DefaultDeSerializers } from '@sap-cloud-sdk/odata-v2';
+export declare function testService<BinaryT = string, BooleanT = boolean, ByteT = number, DecimalT = BigNumber, DoubleT = number, FloatT = number, Int16T = number, Int32T = number, Int64T = BigNumber, GuidT = string, SByteT = number, SingleT = number, StringT = string, AnyT = any, DateTimeOffsetT = Moment, DateTimeT = Moment, TimeT = Time>(deSerializers?: Partial<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>): TestService<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>;
+export declare class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     private apis;
     private deSerializers;
-    constructor(deSerializers?: Partial<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>);
+    constructor(deSerializers: DeSerializersT);
     private initApi;
-    get testEntityApi(): TestEntityApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityMultiLinkApi(): TestEntityMultiLinkApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityOtherMultiLinkApi(): TestEntityOtherMultiLinkApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityLvl2MultiLinkApi(): TestEntityLvl2MultiLinkApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntitySingleLinkApi(): TestEntitySingleLinkApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityWithSharedEntityType2Api(): TestEntityWithSharedEntityType2Api<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityEndsWithApi(): TestEntityEndsWithApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get caseTestApi(): CaseTestApi<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    get casetest_1Api(): Casetest_1Api<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
+    get testEntityApi(): TestEntityApi<DeSerializersT>;
+    get testEntityMultiLinkApi(): TestEntityMultiLinkApi<DeSerializersT>;
+    get testEntityOtherMultiLinkApi(): TestEntityOtherMultiLinkApi<DeSerializersT>;
+    get testEntityLvl2MultiLinkApi(): TestEntityLvl2MultiLinkApi<DeSerializersT>;
+    get testEntitySingleLinkApi(): TestEntitySingleLinkApi<DeSerializersT>;
+    get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<DeSerializersT>;
+    get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<DeSerializersT>;
+    get testEntityWithSharedEntityType2Api(): TestEntityWithSharedEntityType2Api<DeSerializersT>;
+    get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<DeSerializersT>;
+    get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<DeSerializersT>;
+    get testEntityEndsWithApi(): TestEntityEndsWithApi<DeSerializersT>;
+    get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<DeSerializersT>;
+    get caseTestApi(): CaseTestApi<DeSerializersT>;
+    get casetest_1Api(): Casetest_1Api<DeSerializersT>;
 }
 //# sourceMappingURL=service.d.ts.map

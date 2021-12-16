@@ -1,19 +1,17 @@
 import { MultiSchemaTestEntity } from './MultiSchemaTestEntity';
 import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
-import { CustomField, DeSerializers } from '@sap-cloud-sdk/odata-v2';
-import { EdmTypeField, AllFields, EntityBuilderType, EntityApi, Time } from '@sap-cloud-sdk/odata-common/internal';
-import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
-export declare class MultiSchemaTestEntityApi<BinaryT = string, BooleanT = boolean, ByteT = number, DecimalT = BigNumber, DoubleT = number, FloatT = number, Int16T = number, Int32T = number, Int64T = BigNumber, GuidT = string, SByteT = number, SingleT = number, StringT = string, AnyT = any, DateTimeOffsetT = Moment, DateTimeT = Moment, TimeT = Time> implements EntityApi<MultiSchemaTestEntity<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>, DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>> {
-    deSerializers: DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    constructor(deSerializers?: Partial<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>);
+import { CustomField, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, AllFields, EntityBuilderType, EntityApi } from '@sap-cloud-sdk/odata-common/internal';
+export declare class MultiSchemaTestEntityApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements EntityApi<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT> {
+    deSerializers: DeSerializersT;
+    constructor(deSerializers?: DeSerializersT);
     private navigationPropertyFields;
     _addNavigationProperties(linkedApis: [
     ]): this;
     entityConstructor: typeof MultiSchemaTestEntity;
-    requestBuilder(): MultiSchemaTestEntityRequestBuilder<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>;
-    entityBuilder(): EntityBuilderType<MultiSchemaTestEntity<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>, DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>;
-    customField<NullableT extends boolean = false>(fieldName: string, isNullable?: NullableT): CustomField<MultiSchemaTestEntity<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>, DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>, NullableT>;
+    requestBuilder(): MultiSchemaTestEntityRequestBuilder<DeSerializersT>;
+    entityBuilder(): EntityBuilderType<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT>;
+    customField<NullableT extends boolean = false>(fieldName: string, isNullable?: NullableT): CustomField<MultiSchemaTestEntity<DeSerializersT>, DeSerializersT, NullableT>;
     get schema(): {
         /**
          *
@@ -24,7 +22,7 @@ export declare class MultiSchemaTestEntityApi<BinaryT = string, BooleanT = boole
      * Static representation of the [[keyProperty]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-        KEY_PROPERTY: EdmTypeField<MultiSchemaTestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>, "Edm.String", false, true>;
+        KEY_PROPERTY: EdmTypeField<MultiSchemaTestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializersT, "Edm.String", false, true>;
     };
 }
 //# sourceMappingURL=MultiSchemaTestEntityApi.d.ts.map

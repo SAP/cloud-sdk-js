@@ -6,7 +6,6 @@ import {
   VdmServiceMetadata,
   VdmNavigationProperty
 } from '../../vdm-types';
-import { getGenericTypes } from '../de-serializers-generic-types';
 import { matchEntity } from './match-entity';
 
 export function navigationPropertyFieldsVariable(
@@ -76,11 +75,9 @@ function navigationPropertyType(
   return [
     documentationBlock`${getStaticNavPropertyDescription(navProp)}`,
     `${navProp.staticPropertyName}: ${linkClass(navProp, service.oDataVersion)}<
-      ${entity.className}<DeSerializers<${getGenericTypes(
-      service.oDataVersion
-    )}>>,
-      DeSerializers<${getGenericTypes(service.oDataVersion)}>,
-      ${toEntity}<DeSerializers<${getGenericTypes(service.oDataVersion)}>>
+      ${entity.className}<DeSerializersT>,
+      DeSerializersT,
+      ${toEntity}<DeSerializersT>
     >`
   ].join('\n');
 }
@@ -99,5 +96,5 @@ function navigationPropertyApiType(
   service: VdmServiceMetadata
 ): string {
   const toEntity = matchEntity(navProp, service).className;
-  return `${toEntity}Api<${getGenericTypes(service.oDataVersion)}>`;
+  return `${toEntity}Api<DeSerializersT>`;
 }

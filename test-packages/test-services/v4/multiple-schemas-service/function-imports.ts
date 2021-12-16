@@ -5,6 +5,7 @@
  */
 import { FunctionImportParameter } from '@sap-cloud-sdk/odata-common/internal';
 import { FunctionImportRequestBuilder, DeSerializers, transformReturnValueForEntity, DefaultDeSerializers, defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import { multipleSchemasService } from './service';
 import { TestEntity1 } from './TestEntity1';
 import { TestEntity1Api } from './TestEntity1Api';
 import { TestEntity2 } from './TestEntity2';
@@ -27,7 +28,7 @@ export function testFunctionImportEntityReturnType1<DeSerializersT extends DeSer
   };
 
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', (data) => transformReturnValueForEntity(data, new TestEntity1Api(deSerializers)), params, deSerializers);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType1', (data) => transformReturnValueForEntity(data, multipleSchemasService(deSerializers).testEntity1Api), params, deSerializers);
 }
 
 /**
@@ -47,7 +48,7 @@ export function testFunctionImportEntityReturnType2<DeSerializersT extends DeSer
   };
 
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', (data) => transformReturnValueForEntity(data, new TestEntity2Api(deSerializers)), params, deSerializers);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType2', (data) => transformReturnValueForEntity(data, multipleSchemasService(deSerializers).testEntity2Api), params, deSerializers);
 }
 
 export const functionImports = {

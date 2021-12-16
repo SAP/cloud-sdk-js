@@ -10,9 +10,9 @@ import { TestEntity4Api } from './TestEntity4Api';
 import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-import { defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
+import { defaultDeSerializers, DeSerializers, DefaultDeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
   
-export class MultipleSchemasService<BinaryT = string,
+  export function multipleSchemasService<BinaryT = string,
 BooleanT = boolean,
 ByteT = number,
 DecimalT = BigNumber,
@@ -29,46 +29,52 @@ AnyT = any,
 DateTimeOffsetT = Moment,
 DateT = Moment,
 DurationT = Duration,
-TimeOfDayT = Time> {
+TimeOfDayT = Time>(
+  deSerializers: Partial<DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateT,
+DurationT,
+TimeOfDayT>> = defaultDeSerializers as any
+  ):MultipleSchemasService<DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateT,
+DurationT,
+TimeOfDayT>>  
+  {
+  return new MultipleSchemasService(mergeDefaultDeSerializersWith(deSerializers))
+  } 
+export class MultipleSchemasService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     private apis: Record<string, any> = {};
-    private deSerializers: DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>;
+    private deSerializers: DeSerializersT;
 
-    constructor(deSerializers: Partial<DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>> = defaultDeSerializers as any) {
-      this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+    constructor(deSerializers: DeSerializersT) {
+      this.deSerializers = deSerializers;
     }
 
     private initApi(key: string, ctor: new (...args: any[]) => any): any {
@@ -78,93 +84,25 @@ TimeOfDayT>> = defaultDeSerializers as any) {
       return this.apis[key];
     }
 
-    get testEntity1Api(): TestEntity1Api<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntity1Api(): TestEntity1Api<DeSerializersT> {
         const api = this.initApi('testEntity1Api', TestEntity1Api);
         
         return api;
       }
     
-    get testEntity2Api(): TestEntity2Api<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntity2Api(): TestEntity2Api<DeSerializersT> {
         const api = this.initApi('testEntity2Api', TestEntity2Api);
         
         return api;
       }
     
-    get testEntity3Api(): TestEntity3Api<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntity3Api(): TestEntity3Api<DeSerializersT> {
         const api = this.initApi('testEntity3Api', TestEntity3Api);
         
         return api;
       }
     
-    get testEntity4Api(): TestEntity4Api<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntity4Api(): TestEntity4Api<DeSerializersT> {
         const api = this.initApi('testEntity4Api', TestEntity4Api);
         
         return api;

@@ -5,6 +5,7 @@
  */
 import { throwErrorWhenReturnTypeIsUnionType } from '@sap-cloud-sdk/odata-common/internal';
 import { edmToTs, entityDeserializer, ActionImportRequestBuilder, ActionImportParameter, transformReturnValueForUndefined, transformReturnValueForComplexType, transformReturnValueForEdmType, transformReturnValueForEntity, DeSerializers, DefaultDeSerializers, defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 import { TestComplexType } from './TestComplexType';
 import { TestEntity } from './TestEntity';
 import { TestEntityApi } from './TestEntityApi';
@@ -111,7 +112,7 @@ export function testActionImportNoParameterEntityReturnType<DeSerializersT exten
 
   }
 
-  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterEntityReturnType', (data) => transformReturnValueForEntity(data, new TestEntityApi(deSerializers)), params, deSerializers);
+  return new ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterEntityReturnType', (data) => transformReturnValueForEntity(data, testService(deSerializers).testEntityApi), params, deSerializers);
 }
 
 /**

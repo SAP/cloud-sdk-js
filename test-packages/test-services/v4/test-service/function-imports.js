@@ -8,7 +8,7 @@ exports.functionImports = exports.testFunctionImportWithDifferentName = exports.
  */
 const internal_1 = require("@sap-cloud-sdk/odata-common/internal");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
-const TestEntityApi_1 = require("./TestEntityApi");
+const service_1 = require("./service");
 const TestComplexType_1 = require("./TestComplexType");
 /**
  * Test Function Import Edm Return Type.
@@ -51,7 +51,7 @@ exports.testFunctionImportNullableTest = testFunctionImportNullableTest;
  */
 function testFunctionImportEntityReturnType(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => (0, odata_v4_1.transformReturnValueForEntity)(data, new TestEntityApi_1.TestEntityApi(deSerializers)), params, deSerializers);
+    return new odata_v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers);
 }
 exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
 /**
@@ -61,7 +61,7 @@ exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
  */
 function testFunctionImportEntityReturnTypeCollection(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => (0, odata_v4_1.transformReturnValueForEntityList)(data, new TestEntityApi_1.TestEntityApi(deSerializers)), params, deSerializers);
+    return new odata_v4_1.FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => (0, odata_v4_1.transformReturnValueForEntityList)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers);
 }
 exports.testFunctionImportEntityReturnTypeCollection = testFunctionImportEntityReturnTypeCollection;
 /**

@@ -1,25 +1,39 @@
-import { codeBlock } from '@sap-cloud-sdk/util';
+import { codeBlock, ODataVersion } from '@sap-cloud-sdk/util';
 import voca from 'voca';
 import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
+import { matchEntity } from '../entity-api/match-entity';
 import {
   getGenericTypes,
   getGenericTypesWithDefault
 } from '../de-serializers-generic-types';
-import { matchEntity } from '../entity-api/match-entity';
+
+export function serviceBuilder(
+  serviceName: string,
+  oDataVersion: ODataVersion
+): string {
+  return codeBlock`
+  export function ${voca.decapitalize(
+    serviceName
+  )}<${getGenericTypesWithDefault(oDataVersion)}>(
+  deSerializers: Partial<DeSerializers<${getGenericTypes(
+    oDataVersion
+  )}>> = defaultDeSerializers as any
+  ):${serviceName}<DeSerializers<${getGenericTypes(oDataVersion)}>>  
+  {
+  return new ${serviceName}(mergeDefaultDeSerializersWith(deSerializers))
+  }
+  `;
+}
 
 export function serviceClass(service: VdmServiceMetadata): string {
   return codeBlock`export class ${
     service.className
-  }<${getGenericTypesWithDefault(service.oDataVersion)}> {
+  }<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     private apis: Record<string, any> = {};
-    private deSerializers: DeSerializers<${getGenericTypes(
-      service.oDataVersion
-    )}>;
+    private deSerializers: DeSerializersT;
 
-    constructor(deSerializers: Partial<DeSerializers<${getGenericTypes(
-      service.oDataVersion
-    )}>> = defaultDeSerializers as any) {
-      this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+    constructor(deSerializers: DeSerializersT) {
+      this.deSerializers = deSerializers;
     }
 
     private initApi(key: string, ctor: new (...args: any[]) => any): any {
@@ -41,7 +55,7 @@ function getEntityApiFunction(
 ): string {
   return codeBlock`get ${voca.decapitalize(entity.className)}Api(): ${
     entity.className
-  }Api<${getGenericTypes(service.oDataVersion)}> {
+  }Api<DeSerializersT> {
     const api = ${getApiInitializer(entity.className)};
     ${entity.navigationProperties.length ? addLinkedApis(entity, service) : ''}
     return api;

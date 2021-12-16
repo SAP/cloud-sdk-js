@@ -1,6 +1,4 @@
-import {
-  TestEntityApi
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+import { TestEntityApi } from '@sap-cloud-sdk/test-services/v2/test-service';
 
 const builder = new TestEntityApi().entityBuilder();
 

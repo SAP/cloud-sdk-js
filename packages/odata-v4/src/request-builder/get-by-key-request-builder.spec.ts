@@ -1,4 +1,3 @@
-
 import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
@@ -54,9 +53,12 @@ describe('GetByKeyRequestBuilder', () => {
         testEntityWithEnumKeyApi
       );
 
-      const actual = await new GetByKeyRequestBuilder(testEntityWithEnumKeyApi, {
-        KeyPropertyEnum1: expected.keyPropertyEnum1
-      }).execute(defaultDestination);
+      const actual = await new GetByKeyRequestBuilder(
+        testEntityWithEnumKeyApi,
+        {
+          KeyPropertyEnum1: expected.keyPropertyEnum1
+        }
+      ).execute(defaultDestination);
       expect(actual).toEqual(expected);
     });
   });
@@ -66,12 +68,16 @@ describe('GetByKeyRequestBuilder', () => {
       SomethingTheSDKDoesNotSupport: 'SomeValue'
     };
 
-    mockGetRequest({
-      query: { $select: 'SomethingTheSDKDoesNotSupport' },
-      responseBody: { value: [entityData1] }
-    }, testEntityApi);
+    mockGetRequest(
+      {
+        query: { $select: 'SomethingTheSDKDoesNotSupport' },
+        responseBody: { value: [entityData1] }
+      },
+      testEntityApi
+    );
 
-    const actual = await testEntityApi.requestBuilder()
+    const actual = await testEntityApi
+      .requestBuilder()
       .getAll()
       .select(testEntityApi.schema.SOMETHING_THE_SDK_DOES_NOT_SUPPORT)
       .execute(defaultDestination);
@@ -84,14 +90,17 @@ describe('GetByKeyRequestBuilder', () => {
     entityData['@odata.etag'] = versionIdentifier;
     const expected = createTestEntity(entityData);
 
-    mockGetRequest({
-      path: testEntityResourcePath(
-        expected.keyPropertyGuid,
-        expected.keyPropertyString,
-        convertToUriFormat
-      ),
-      responseBody: entityData
-    }, testEntityApi);
+    mockGetRequest(
+      {
+        path: testEntityResourcePath(
+          expected.keyPropertyGuid,
+          expected.keyPropertyString,
+          convertToUriFormat
+        ),
+        responseBody: entityData
+      },
+      testEntityApi
+    );
 
     const actual = await new GetByKeyRequestBuilder(testEntityApi, {
       KeyPropertyGuid: expected.keyPropertyGuid,
@@ -107,15 +116,18 @@ describe('GetByKeyRequestBuilder', () => {
     const versionIdentifier = 'etagInHeader';
     expected.setVersionIdentifier(versionIdentifier);
 
-    mockGetRequest({
-      path: testEntityResourcePath(
-        expected.keyPropertyGuid,
-        expected.keyPropertyString,
-        convertToUriFormat
-      ),
-      responseBody: entityData,
-      responseHeaders: { Etag: versionIdentifier }
-    }, testEntityApi);
+    mockGetRequest(
+      {
+        path: testEntityResourcePath(
+          expected.keyPropertyGuid,
+          expected.keyPropertyString,
+          convertToUriFormat
+        ),
+        responseBody: entityData,
+        responseHeaders: { Etag: versionIdentifier }
+      },
+      testEntityApi
+    );
 
     const actual = await new GetByKeyRequestBuilder(testEntityApi, {
       KeyPropertyGuid: expected.keyPropertyGuid,

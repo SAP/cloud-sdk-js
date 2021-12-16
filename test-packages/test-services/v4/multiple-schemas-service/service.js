@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MultipleSchemasService = void 0;
+exports.MultipleSchemasService = exports.multipleSchemasService = void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -11,10 +11,14 @@ const TestEntity2Api_1 = require("./TestEntity2Api");
 const TestEntity3Api_1 = require("./TestEntity3Api");
 const TestEntity4Api_1 = require("./TestEntity4Api");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
+function multipleSchemasService(deSerializers = odata_v4_1.defaultDeSerializers) {
+    return new MultipleSchemasService((0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers));
+}
+exports.multipleSchemasService = multipleSchemasService;
 class MultipleSchemasService {
-    constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
+    constructor(deSerializers) {
         this.apis = {};
-        this.deSerializers = (0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers);
+        this.deSerializers = deSerializers;
     }
     initApi(key, ctor) {
         if (!this.apis[key]) {

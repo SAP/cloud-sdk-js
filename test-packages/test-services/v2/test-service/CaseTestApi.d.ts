@@ -1,19 +1,17 @@
 import { CaseTest } from './CaseTest';
 import { CaseTestRequestBuilder } from './CaseTestRequestBuilder';
-import { CustomField, DeSerializers } from '@sap-cloud-sdk/odata-v2';
-import { EdmTypeField, AllFields, EntityBuilderType, EntityApi, Time } from '@sap-cloud-sdk/odata-common/internal';
-import { BigNumber } from 'bignumber.js';
-import { Moment } from 'moment';
-export declare class CaseTestApi<BinaryT = string, BooleanT = boolean, ByteT = number, DecimalT = BigNumber, DoubleT = number, FloatT = number, Int16T = number, Int32T = number, Int64T = BigNumber, GuidT = string, SByteT = number, SingleT = number, StringT = string, AnyT = any, DateTimeOffsetT = Moment, DateTimeT = Moment, TimeT = Time> implements EntityApi<CaseTest<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>, DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>> {
-    deSerializers: DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>;
-    constructor(deSerializers?: Partial<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>);
+import { CustomField, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v2';
+import { EdmTypeField, AllFields, EntityBuilderType, EntityApi } from '@sap-cloud-sdk/odata-common/internal';
+export declare class CaseTestApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements EntityApi<CaseTest<DeSerializersT>, DeSerializersT> {
+    deSerializers: DeSerializersT;
+    constructor(deSerializers?: DeSerializersT);
     private navigationPropertyFields;
     _addNavigationProperties(linkedApis: [
     ]): this;
     entityConstructor: typeof CaseTest;
-    requestBuilder(): CaseTestRequestBuilder<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>;
-    entityBuilder(): EntityBuilderType<CaseTest<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>, DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>;
-    customField<NullableT extends boolean = false>(fieldName: string, isNullable?: NullableT): CustomField<CaseTest<DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>>, DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>, NullableT>;
+    requestBuilder(): CaseTestRequestBuilder<DeSerializersT>;
+    entityBuilder(): EntityBuilderType<CaseTest<DeSerializersT>, DeSerializersT>;
+    customField<NullableT extends boolean = false>(fieldName: string, isNullable?: NullableT): CustomField<CaseTest<DeSerializersT>, DeSerializersT, NullableT>;
     get schema(): {
         /**
          *
@@ -24,7 +22,7 @@ export declare class CaseTestApi<BinaryT = string, BooleanT = boolean, ByteT = n
      * Static representation of the [[keyPropertyString]] property for query construction.
      * Use to reference this property in query operations such as 'select' in the fluent request API.
      */
-        KEY_PROPERTY_STRING: EdmTypeField<CaseTest<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<BinaryT, BooleanT, ByteT, DecimalT, DoubleT, FloatT, Int16T, Int32T, Int64T, GuidT, SByteT, SingleT, StringT, AnyT, DateTimeOffsetT, DateTimeT, TimeT>, "Edm.String", false, true>;
+        KEY_PROPERTY_STRING: EdmTypeField<CaseTest<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializersT, "Edm.String", false, true>;
     };
 }
 //# sourceMappingURL=CaseTestApi.d.ts.map

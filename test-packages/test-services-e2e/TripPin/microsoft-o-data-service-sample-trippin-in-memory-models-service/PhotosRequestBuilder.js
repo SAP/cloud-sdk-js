@@ -1,8 +1,8 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.PhotosRequestBuilder = void 0;
-const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const internal_1 = require('@sap-cloud-sdk/odata-v4/internal');
 const Photos_1 = require('./Photos');
 /**
  * Request builder class for operations supported on the [[Photos]] entity.
@@ -14,14 +14,14 @@ class PhotosRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
    */
   getByKey(id) {
-    return new odata_v4_1.GetByKeyRequestBuilder(Photos_1.Photos, { Id: id });
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, { Id: id });
   }
   /**
    * Returns a request builder for querying all `Photos` entities.
    * @returns A request builder for creating requests to retrieve all `Photos` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(Photos_1.Photos);
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `Photos` entity.
@@ -29,7 +29,7 @@ class PhotosRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `Photos`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(Photos_1.Photos, entity);
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `Photos`.
@@ -37,11 +37,11 @@ class PhotosRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `Photos`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(Photos_1.Photos, entity);
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(idOrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      Photos_1.Photos,
+      this.entityApi,
       idOrEntity instanceof Photos_1.Photos ? idOrEntity : { Id: idOrEntity }
     );
   }

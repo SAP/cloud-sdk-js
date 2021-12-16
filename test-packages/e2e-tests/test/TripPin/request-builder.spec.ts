@@ -14,9 +14,7 @@ const requestBuilder = new PeopleApi().requestBuilder();
 const schema = new PeopleApi().schema;
 
 async function deletePerson(userName: string): Promise<void> {
-  const queried = await requestBuilder
-    .getByKey(userName)
-    .execute(destination);
+  const queried = await requestBuilder.getByKey(userName).execute(destination);
   // The trippin service return not 404 exception but 204 if an entity is not found. Hence this check
   if (queried.userName) {
     return requestBuilder.delete(queried).execute(destination);
@@ -117,9 +115,7 @@ xdescribe('Request builder', () => {
 
     await requestBuilder.create(entity).execute(destination);
 
-    const expected = await requestBuilder
-      .getByKey(myKey)
-      .execute(destination);
+    const expected = await requestBuilder.getByKey(myKey).execute(destination);
     expect(expected.addressInfo!.length).toBe(2);
     expect(expected.addressInfo!.map(address => address.address)).toEqual([
       'Address1',

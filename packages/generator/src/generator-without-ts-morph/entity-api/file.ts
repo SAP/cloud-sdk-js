@@ -86,6 +86,7 @@ function getImports(entity: VdmEntity, service: VdmServiceMetadata): Import[] {
       [
         'CustomField',
         'defaultDeSerializers',
+        'DefaultDeSerializers',
         'DeSerializers',
         'mergeDefaultDeSerializersWith'
       ],

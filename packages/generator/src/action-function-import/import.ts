@@ -1,5 +1,6 @@
 import { flat, ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import voca from 'voca';
 import {
   VdmActionFunctionImportReturnType,
   VdmParameter,
@@ -21,7 +22,7 @@ function actionFunctionImportDeclarations(
   returnTypes: VdmActionFunctionImportReturnType[],
   parameters: VdmParameter[],
   additionalImports: { name: string; version: ODataVersion | 'common' }[],
-  oDataVersion: ODataVersion
+  { oDataVersion, className }: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
   const responseTransformerFunctionCommon = returnTypes.find(returnType =>
     isEntityNotDeserializable(returnType)
@@ -59,6 +60,11 @@ function actionFunctionImportDeclarations(
       ],
       oDataVersion
     ),
+    {
+      kind: StructureKind.ImportDeclaration,
+      namedImports: [voca.decapitalize(className)],
+      moduleSpecifier: './service'
+    },
     ...returnTypeImports(returnTypes)
   ];
 }
@@ -147,7 +153,7 @@ export function importDeclarationsFunction(
       { name: 'ActionImportRequestBuilder', version: service.oDataVersion },
       { name: 'ActionImportParameter', version: service.oDataVersion }
     ],
-    service.oDataVersion
+    service
   );
 }
 
@@ -171,6 +177,6 @@ export function importDeclarationsAction(
       { name: 'DeSerializers', version: service.oDataVersion },
       { name: 'FunctionImportParameter', version: 'common' }
     ],
-    service.oDataVersion
+    service
   );
 }

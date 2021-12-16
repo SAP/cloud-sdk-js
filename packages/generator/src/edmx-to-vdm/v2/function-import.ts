@@ -18,6 +18,7 @@ const extractResponse = (functionName: string) => (response: string) =>
  */
 export function generateFunctionImportsV2(
   serviceMetadata: ServiceMetadata,
+  serviceName: string,
   entities: VdmEntity[],
   complexTypes: Omit<VdmComplexType, 'factoryName'>[],
   formatter: ServiceNameFormatter
@@ -50,7 +51,8 @@ export function generateFunctionImportsV2(
               : undefined,
             entities,
             complexTypes,
-            extractResponse(f.Name)
+            extractResponse(f.Name),
+            serviceName
           )
         };
       })

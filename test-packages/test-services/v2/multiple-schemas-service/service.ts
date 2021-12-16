@@ -7,9 +7,9 @@ import { MultiSchemaTestEntityApi } from './MultiSchemaTestEntityApi';
 import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment } from 'moment';
-import { defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { defaultDeSerializers, DeSerializers, DefaultDeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
   
-export class MultipleSchemasService<BinaryT = string,
+  export function multipleSchemasService<BinaryT = string,
 BooleanT = boolean,
 ByteT = number,
 DecimalT = BigNumber,
@@ -25,44 +25,50 @@ StringT = string,
 AnyT = any,
 DateTimeOffsetT = Moment,
 DateTimeT = Moment,
-TimeT = Time> {
+TimeT = Time>(
+  deSerializers: Partial<DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>> = defaultDeSerializers as any
+  ):MultipleSchemasService<DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateTimeT,
+TimeT>>  
+  {
+  return new MultipleSchemasService(mergeDefaultDeSerializersWith(deSerializers))
+  } 
+export class MultipleSchemasService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     private apis: Record<string, any> = {};
-    private deSerializers: DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateTimeT,
-TimeT>;
+    private deSerializers: DeSerializersT;
 
-    constructor(deSerializers: Partial<DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateTimeT,
-TimeT>> = defaultDeSerializers as any) {
-      this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+    constructor(deSerializers: DeSerializersT) {
+      this.deSerializers = deSerializers;
     }
 
     private initApi(key: string, ctor: new (...args: any[]) => any): any {
@@ -72,23 +78,7 @@ TimeT>> = defaultDeSerializers as any) {
       return this.apis[key];
     }
 
-    get multiSchemaTestEntityApi(): MultiSchemaTestEntityApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateTimeT,
-    TimeT> {
+    get multiSchemaTestEntityApi(): MultiSchemaTestEntityApi<DeSerializersT> {
         const api = this.initApi('multiSchemaTestEntityApi', MultiSchemaTestEntityApi);
         
         return api;

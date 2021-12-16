@@ -11,13 +11,11 @@ exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath =
  */
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const util_1 = require('@sap-cloud-sdk/util');
-const index_1 = require('./index');
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 function batch(first, ...rest) {
   return new odata_v4_1.ODataBatchRequestBuilder(
     exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath,
-    (0, util_1.variadicArgumentToArray)(first, rest),
-    map
+    (0, util_1.variadicArgumentToArray)(first, rest)
   );
 }
 exports.batch = batch;
@@ -29,10 +27,4 @@ function changeset(first, ...rest) {
 exports.changeset = changeset;
 exports.defaultMicrosoftODataServiceSampleTrippinInMemoryModelsServicePath =
   'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/';
-const map = {
-  Photos: index_1.Photos,
-  People: index_1.People,
-  Airlines: index_1.Airlines,
-  Airports: index_1.Airports
-};
 //# sourceMappingURL=BatchRequest.js.map

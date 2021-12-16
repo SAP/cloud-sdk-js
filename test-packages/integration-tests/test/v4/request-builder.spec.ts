@@ -62,7 +62,10 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = testEntityApi.requestBuilder().getAll().execute(destination);
+    const request = testEntityApi
+      .requestBuilder()
+      .getAll()
+      .execute(destination);
 
     await expect(request).resolves.not.toThrow();
   });
@@ -87,9 +90,11 @@ describe('Request Builder', () => {
       })
       .reply(200, response);
 
-    const request = testEntityApi.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .create(
-        testEntityApi.entityBuilder()
+        testEntityApi
+          .entityBuilder()
           .stringProperty('someProperty')
           .int16Property(16)
           .booleanProperty(false)
@@ -122,9 +127,11 @@ describe('Request Builder', () => {
       )
       .reply(204);
 
-    const request = testEntityApi.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .update(
-        testEntityApi.entityBuilder()
+        testEntityApi
+          .entityBuilder()
           .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
           .keyPropertyString('abcd1234')
           .stringProperty('newStringProp')
@@ -140,7 +147,8 @@ describe('Request Builder', () => {
       `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
     );
 
-    const entity = testEntityApi.entityBuilder()
+    const entity = testEntityApi
+      .entityBuilder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
       .keyPropertyString('abcd1234')
       .stringProperty('someContent')
@@ -162,7 +170,8 @@ describe('Request Builder', () => {
       )
       .reply(200, entityJson);
 
-    const request = testEntityApi.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .delete(entity.keyPropertyGuid, entity.keyPropertyString)
       .execute(destination);
 

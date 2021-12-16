@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestService = void 0;
+exports.TestService = exports.testService = void 0;
 /*
  * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
  *
@@ -21,10 +21,14 @@ const TestEntityCircularLinkChildApi_1 = require("./TestEntityCircularLinkChildA
 const TestEntityEndsWithApi_1 = require("./TestEntityEndsWithApi");
 const TestEntityEndsWithSomethingElseApi_1 = require("./TestEntityEndsWithSomethingElseApi");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
+function testService(deSerializers = odata_v4_1.defaultDeSerializers) {
+    return new TestService((0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers));
+}
+exports.testService = testService;
 class TestService {
-    constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
+    constructor(deSerializers) {
         this.apis = {};
-        this.deSerializers = (0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers);
+        this.deSerializers = deSerializers;
     }
     initApi(key, ctor) {
         if (!this.apis[key]) {

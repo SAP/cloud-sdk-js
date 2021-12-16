@@ -1,17 +1,16 @@
-import { PhotosRequestBuilder } from './PhotosRequestBuilder';
-import { BigNumber } from 'bignumber.js';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
-  AllFields,
-  EdmTypeField,
-  EntityBuilderType,
-  Field,
-  OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-common/internal';
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "Photos" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export declare class Photos extends Entity implements PhotosType {
+export declare class Photos<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements PhotosType<T>
+{
   /**
    * Technical entity name for Photos.
    */
@@ -21,73 +20,21 @@ export declare class Photos extends Entity implements PhotosType {
    */
   static _defaultServicePath: string;
   /**
+   * All key fields of the Photos entity
+   */
+  static _keys: string[];
+  /**
    * Id.
    */
-  id: BigNumber;
+  id: DeserializedType<T, 'Edm.Int64'>;
   /**
    * Name.
    * @nullable
    */
-  name?: string;
-  /**
-   * Returns an entity builder to construct instances of `Photos`.
-   * @returns A builder that constructs instances of entity type `Photos`.
-   */
-  static builder(): EntityBuilderType<Photos, PhotosType>;
-  /**
-   * Returns a request builder to construct requests for operations on the `Photos` entity type.
-   * @returns A `Photos` request builder.
-   */
-  static requestBuilder(): PhotosRequestBuilder;
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `Photos`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `Photos`.
-   */
-  static customField(fieldName: string): CustomField<Photos>;
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): {
-    [key: string]: any;
-  };
+  name?: DeserializedType<T, 'Edm.String'> | null;
 }
-export interface PhotosType {
-  id: BigNumber;
-  name?: string | null;
-}
-export declare namespace Photos {
-  /**
-   * Static representation of the [[id]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const ID: OrderableEdmTypeField<Photos, 'Edm.Int64', false, true>;
-  /**
-   * Static representation of the [[name]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const NAME: EdmTypeField<Photos, 'Edm.String', true, true>;
-  /**
-   * All fields of the Photos entity.
-   */
-  const _allFields: Array<
-    | OrderableEdmTypeField<Photos, 'Edm.Int64', false, true>
-    | EdmTypeField<Photos, 'Edm.String', true, true>
-  >;
-  /**
-   * All fields selector.
-   */
-  const ALL_FIELDS: AllFields<Photos>;
-  /**
-   * All key fields of the Photos entity.
-   */
-  const _keyFields: Array<Field<Photos, boolean, boolean>>;
-  /**
-   * Mapping of all key field names to the respective static field property Photos.
-   */
-  const _keys: {
-    [keys: string]: Field<Photos, boolean, boolean>;
-  };
+export interface PhotosType<T extends DeSerializers = DefaultDeSerializers> {
+  id: DeserializedType<T, 'Edm.Int64'>;
+  name?: DeserializedType<T, 'Edm.String'> | null;
 }
 //# sourceMappingURL=Photos.d.ts.map

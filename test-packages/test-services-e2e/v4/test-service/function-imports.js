@@ -15,13 +15,16 @@ exports.functionImports =
  */
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const TestEntity_1 = require('./TestEntity');
+const service_1 = require('./service');
 /**
  * Concat Strings.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function concatStrings(parameters) {
+function concatStrings(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {
     str1: new internal_1.FunctionImportParameter(
       'Str1',
@@ -41,7 +44,8 @@ function concatStrings(parameters) {
       (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
         (0, odata_v4_1.edmToTs)(val.value, 'Edm.String')
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.concatStrings = concatStrings;
@@ -50,7 +54,7 @@ exports.concatStrings = concatStrings;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function getAll(parameters) {
+function getAll(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
   const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/odata/test-service',
@@ -58,9 +62,10 @@ function getAll(parameters) {
     data =>
       (0, odata_v4_1.transformReturnValueForEntityList)(
         data,
-        TestEntity_1.TestEntity
+        (0, service_1.builder)(deSerializers).testEntityApi
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.getAll = getAll;
@@ -69,7 +74,7 @@ exports.getAll = getAll;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function getByKey(parameters) {
+function getByKey(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
   const params = {
     param: new internal_1.FunctionImportParameter(
       'param',
@@ -83,9 +88,10 @@ function getByKey(parameters) {
     data =>
       (0, odata_v4_1.transformReturnValueForEntity)(
         data,
-        TestEntity_1.TestEntity
+        (0, service_1.builder)(deSerializers).testEntityApi
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.getByKey = getByKey;
@@ -94,7 +100,10 @@ exports.getByKey = getByKey;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function returnCollection(parameters) {
+function returnCollection(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {
     param: new internal_1.FunctionImportParameter(
       'param',
@@ -109,7 +118,8 @@ function returnCollection(parameters) {
       (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val =>
         (0, odata_v4_1.edmToTs)(val, 'Edm.Int32')
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.returnCollection = returnCollection;
@@ -118,7 +128,10 @@ exports.returnCollection = returnCollection;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function returnInt(parameters) {
+function returnInt(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {
     param: new internal_1.FunctionImportParameter(
       'param',
@@ -133,7 +146,8 @@ function returnInt(parameters) {
       (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
         (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32')
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.returnInt = returnInt;
@@ -142,7 +156,10 @@ exports.returnInt = returnInt;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function returnSapCloudSdk(parameters) {
+function returnSapCloudSdk(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v4_1.FunctionImportRequestBuilder(
     '/odata/test-service',
@@ -151,7 +168,8 @@ function returnSapCloudSdk(parameters) {
       (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
         (0, odata_v4_1.edmToTs)(val.value, 'Edm.String')
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.returnSapCloudSdk = returnSapCloudSdk;

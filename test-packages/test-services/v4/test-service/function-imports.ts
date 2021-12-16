@@ -5,6 +5,7 @@
  */
 import { FunctionImportParameter, throwErrorWhenReturnTypeIsUnionType } from '@sap-cloud-sdk/odata-common/internal';
 import { edmToTs, entityDeserializer, FunctionImportRequestBuilder, DeSerializers, transformReturnValueForEdmType, transformReturnValueForEdmTypeList, transformReturnValueForEntity, transformReturnValueForEntityList, transformReturnValueForComplexType, transformReturnValueForComplexTypeList, transformReturnValueForUndefined, DefaultDeSerializers, defaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 import { TestEntity } from './TestEntity';
 import { TestEntityApi } from './TestEntityApi';
 import { TestComplexType } from './TestComplexType';
@@ -100,7 +101,7 @@ export function testFunctionImportEntityReturnType<DeSerializersT extends DeSeri
   };
 
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => transformReturnValueForEntity(data, new TestEntityApi(deSerializers)), params, deSerializers);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnType', (data) => transformReturnValueForEntity(data, testService(deSerializers).testEntityApi), params, deSerializers);
 }
 
 /**
@@ -120,7 +121,7 @@ export function testFunctionImportEntityReturnTypeCollection<DeSerializersT exte
   };
 
 
-  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => transformReturnValueForEntityList(data, new TestEntityApi(deSerializers)), params, deSerializers);
+  return new FunctionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestFunctionImportEntityReturnTypeCollection', (data) => transformReturnValueForEntityList(data, testService(deSerializers).testEntityApi), params, deSerializers);
 }
 
 /**

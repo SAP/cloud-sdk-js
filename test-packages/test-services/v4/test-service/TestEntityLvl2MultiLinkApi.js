@@ -13,7 +13,7 @@ const internal_1 = require("@sap-cloud-sdk/odata-common/internal");
 class TestEntityLvl2MultiLinkApi {
     constructor(deSerializers = odata_v4_1.defaultDeSerializers) {
         this.entityConstructor = TestEntityLvl2MultiLink_1.TestEntityLvl2MultiLink;
-        this.deSerializers = (0, odata_v4_1.mergeDefaultDeSerializersWith)(deSerializers);
+        this.deSerializers = deSerializers;
     }
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {

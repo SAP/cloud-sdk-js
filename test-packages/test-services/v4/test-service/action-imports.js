@@ -8,8 +8,8 @@ exports.actionImports = exports.testActionImportNullableTest = exports.testActio
  */
 const internal_1 = require("@sap-cloud-sdk/odata-common/internal");
 const odata_v4_1 = require("@sap-cloud-sdk/odata-v4");
+const service_1 = require("./service");
 const TestComplexType_1 = require("./TestComplexType");
-const TestEntityApi_1 = require("./TestEntityApi");
 /**
  * Test Action Import No Parameter No Return Type.
  *
@@ -58,7 +58,7 @@ exports.testActionImportUnsupportedEdmTypes = testActionImportUnsupportedEdmType
  */
 function testActionImportNoParameterEntityReturnType(parameters, deSerializers = odata_v4_1.defaultDeSerializers) {
     const params = {};
-    return new odata_v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterEntityReturnType', (data) => (0, odata_v4_1.transformReturnValueForEntity)(data, new TestEntityApi_1.TestEntityApi(deSerializers)), params, deSerializers);
+    return new odata_v4_1.ActionImportRequestBuilder('/sap/opu/odata/sap/API_TEST_SRV', 'TestActionImportNoParameterEntityReturnType', (data) => (0, odata_v4_1.transformReturnValueForEntity)(data, (0, service_1.testService)(deSerializers).testEntityApi), params, deSerializers);
 }
 exports.testActionImportNoParameterEntityReturnType = testActionImportNoParameterEntityReturnType;
 /**

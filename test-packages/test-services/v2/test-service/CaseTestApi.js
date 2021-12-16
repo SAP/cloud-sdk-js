@@ -13,7 +13,7 @@ const internal_1 = require("@sap-cloud-sdk/odata-common/internal");
 class CaseTestApi {
     constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
         this.entityConstructor = CaseTest_1.CaseTest;
-        this.deSerializers = (0, odata_v2_1.mergeDefaultDeSerializersWith)(deSerializers);
+        this.deSerializers = deSerializers;
     }
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {};

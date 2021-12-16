@@ -13,7 +13,7 @@ const internal_1 = require("@sap-cloud-sdk/odata-common/internal");
 class TestEntitySingleLinkApi {
     constructor(deSerializers = odata_v2_1.defaultDeSerializers) {
         this.entityConstructor = TestEntitySingleLink_1.TestEntitySingleLink;
-        this.deSerializers = (0, odata_v2_1.mergeDefaultDeSerializersWith)(deSerializers);
+        this.deSerializers = deSerializers;
     }
     _addNavigationProperties(linkedApis) {
         this.navigationPropertyFields = {

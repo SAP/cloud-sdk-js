@@ -1,6 +1,4 @@
-import {
-  TestEntity
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
 import {
   defaultDestination,
   mockCountRequest,
@@ -63,7 +61,9 @@ describe('GetAllRequestBuilder', () => {
       '/testination/sap/opu/odata/sap/API_TEST_SRV/A_TestEntity?$format=json&$expand=to_SingleLink($select=BooleanProperty)';
     const actual = await requestBuilder
       .expand(
-        testEntityApi.schema.TO_SINGLE_LINK.select(testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY)
+        testEntityApi.schema.TO_SINGLE_LINK.select(
+          testEntitySingleLinkApi.schema.BOOLEAN_PROPERTY
+        )
       )
       .url(defaultDestination);
     expect(actual).toBe(expected);
@@ -131,7 +131,10 @@ describe('GetAllRequestBuilder', () => {
       );
       const actual = await requestBuilder
         .select(testEntityApi.schema.ALL_FIELDS)
-        .expand(testEntityApi.schema.TO_SINGLE_LINK, testEntityApi.schema.TO_MULTI_LINK)
+        .expand(
+          testEntityApi.schema.TO_SINGLE_LINK,
+          testEntityApi.schema.TO_MULTI_LINK
+        )
         .execute(defaultDestination);
       expect(actual).toEqual([createTestEntity(testEntity)]);
     });
@@ -153,7 +156,11 @@ describe('GetAllRequestBuilder', () => {
           testEntityApi.schema.TO_SINGLE_LINK,
           testEntityApi.schema.TO_MULTI_LINK.filter(
             testEntityMultiLinkApi.schema.TO_MULTI_LINK_1.filter(
-              any(testEntityLvl2MultiLinkApi.schema.STRING_PROPERTY.notEquals('test'))
+              any(
+                testEntityLvl2MultiLinkApi.schema.STRING_PROPERTY.notEquals(
+                  'test'
+                )
+              )
             )
           )
         )

@@ -3,27 +3,34 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import {
+  DefaultDeSerializers,
+  DeSerializers,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   CreateRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-v4/internal';
 import { TestEntity } from './TestEntity';
 
 /**
  * Request builder class for operations supported on the [[TestEntity]] entity.
  */
-export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
+export class TestEntityRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<TestEntity<T>, T> {
   /**
    * Returns a request builder for retrieving one `TestEntity` entity based on its keys.
    * @param keyTestEntity Key property. See [[TestEntity.keyTestEntity]].
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
-  getByKey(keyTestEntity: number): GetByKeyRequestBuilder<TestEntity> {
-    return new GetByKeyRequestBuilder(TestEntity, {
+  getByKey(
+    keyTestEntity: DeserializedType<T, 'Edm.Int32'>
+  ): GetByKeyRequestBuilder<TestEntity<T>, T> {
+    return new GetByKeyRequestBuilder<TestEntity<T>, T>(this.entityApi, {
       KeyTestEntity: keyTestEntity
     });
   }
@@ -32,8 +39,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * Returns a request builder for querying all `TestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
    */
-  getAll(): GetAllRequestBuilder<TestEntity> {
-    return new GetAllRequestBuilder(TestEntity);
+  getAll(): GetAllRequestBuilder<TestEntity<T>, T> {
+    return new GetAllRequestBuilder<TestEntity<T>, T>(this.entityApi);
   }
 
   /**
@@ -41,8 +48,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `TestEntity`.
    */
-  create(entity: TestEntity): CreateRequestBuilder<TestEntity> {
-    return new CreateRequestBuilder(TestEntity, entity);
+  create(entity: TestEntity<T>): CreateRequestBuilder<TestEntity<T>, T> {
+    return new CreateRequestBuilder<TestEntity<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -50,8 +57,8 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `TestEntity`.
    */
-  update(entity: TestEntity): UpdateRequestBuilder<TestEntity> {
-    return new UpdateRequestBuilder(TestEntity, entity);
+  update(entity: TestEntity<T>): UpdateRequestBuilder<TestEntity<T>, T> {
+    return new UpdateRequestBuilder<TestEntity<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -59,16 +66,16 @@ export class TestEntityRequestBuilder extends RequestBuilder<TestEntity> {
    * @param keyTestEntity Key property. See [[TestEntity.keyTestEntity]].
    * @returns A request builder for creating requests that delete an entity of type `TestEntity`.
    */
-  delete(keyTestEntity: number): DeleteRequestBuilder<TestEntity>;
+  delete(keyTestEntity: number): DeleteRequestBuilder<TestEntity<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `TestEntity`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `TestEntity` by taking the entity as a parameter.
    */
-  delete(entity: TestEntity): DeleteRequestBuilder<TestEntity>;
-  delete(keyTestEntityOrEntity: any): DeleteRequestBuilder<TestEntity> {
-    return new DeleteRequestBuilder(
-      TestEntity,
+  delete(entity: TestEntity<T>): DeleteRequestBuilder<TestEntity<T>, T>;
+  delete(keyTestEntityOrEntity: any): DeleteRequestBuilder<TestEntity<T>, T> {
+    return new DeleteRequestBuilder<TestEntity<T>, T>(
+      this.entityApi,
       keyTestEntityOrEntity instanceof TestEntity
         ? keyTestEntityOrEntity
         : { KeyTestEntity: keyTestEntityOrEntity! }

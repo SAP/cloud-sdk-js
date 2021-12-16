@@ -1,6 +1,4 @@
-import {
-  TestComplexType
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+import { TestComplexType } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
 import { testEntityApi } from '../../test/test-util';
 import {
@@ -11,17 +9,23 @@ import {
 describe('entity-deserializer', () => {
   it('should deserialize an enum property', () => {
     const enumProperty = TestEnumType.Member1;
-    expect(deserializeEntity({ EnumProperty: 'Member1' }, testEntityApi)).toEqual(
-      testEntityApi.entityBuilder().enumProperty(enumProperty).build()
-    );
+    expect(
+      deserializeEntity({ EnumProperty: 'Member1' }, testEntityApi)
+    ).toEqual(testEntityApi.entityBuilder().enumProperty(enumProperty).build());
   });
 
   it('should deserialize an entity with string collection property', () => {
     const collectionProperty = ['abc', 'def'];
     expect(
-      deserializeEntity({ CollectionProperty: collectionProperty }, testEntityApi)
+      deserializeEntity(
+        { CollectionProperty: collectionProperty },
+        testEntityApi
+      )
     ).toEqual(
-      testEntityApi.entityBuilder().collectionProperty(collectionProperty).build()
+      testEntityApi
+        .entityBuilder()
+        .collectionProperty(collectionProperty)
+        .build()
     );
   });
 
@@ -33,7 +37,8 @@ describe('entity-deserializer', () => {
         testEntityApi
       )
     ).toEqual(
-      testEntityApi.entityBuilder()
+      testEntityApi
+        .entityBuilder()
         .enumCollectionProperty(enumCollectionProperty)
         .build()
     );
@@ -55,7 +60,8 @@ describe('entity-deserializer', () => {
         testEntityApi
       )
     ).toEqual(
-      testEntityApi.entityBuilder()
+      testEntityApi
+        .entityBuilder()
         .complexTypeProperty({ stringProperty: stringProp1 })
         .complexTypeCollectionProperty([
           { stringProperty: stringProp1 },

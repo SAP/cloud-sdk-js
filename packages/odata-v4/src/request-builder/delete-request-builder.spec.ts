@@ -21,13 +21,16 @@ describe('DeleteRequestBuilder', () => {
   });
 
   it('should resolve if only the key is given.', async () => {
-    mockDeleteRequest({
-      path: testEntityResourcePath(
-        keyPropGuid,
-        keyPropString,
-        convertToUriFormat
-      )
-    }, testEntityApi);
+    mockDeleteRequest(
+      {
+        path: testEntityResourcePath(
+          keyPropGuid,
+          keyPropString,
+          convertToUriFormat
+        )
+      },
+      testEntityApi
+    );
 
     const deleteRequest = new DeleteRequestBuilder(testEntityApi, {
       KeyPropertyGuid: keyPropGuid,
@@ -39,26 +42,31 @@ describe('DeleteRequestBuilder', () => {
 
   it('should resolve if entity and version identifier are given', async () => {
     const versionId = 'not-a-star';
-    const entity = testEntityApi.entityBuilder()
+    const entity = testEntityApi
+      .entityBuilder()
       .keyPropertyGuid(keyPropGuid)
       .keyPropertyString(keyPropString)
       .build()
       .setVersionIdentifier(versionId);
 
-    mockDeleteRequest({
-      path: testEntityResourcePath(
-        keyPropGuid,
-        keyPropString,
-        convertToUriFormat
-      ),
-      additionalHeaders: {
-        'if-match': versionId
-      }
-    }, testEntityApi);
-
-    const deleteRequest = new DeleteRequestBuilder(testEntityApi, entity).execute(
-      defaultDestination
+    mockDeleteRequest(
+      {
+        path: testEntityResourcePath(
+          keyPropGuid,
+          keyPropString,
+          convertToUriFormat
+        ),
+        additionalHeaders: {
+          'if-match': versionId
+        }
+      },
+      testEntityApi
     );
+
+    const deleteRequest = new DeleteRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     await expect(deleteRequest).resolves.toBe(undefined);
   });

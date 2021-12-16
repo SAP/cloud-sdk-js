@@ -1,10 +1,6 @@
 import { codeBlock } from '@sap-cloud-sdk/util';
 import { VdmEntity, VdmServiceMetadata } from '../../vdm-types';
 import {
-  getGenericTypesWithDefault,
-  getGenericTypes
-} from '../de-serializers-generic-types';
-import {
   addNavigationPropertyFieldsFunction,
   navigationPropertyFieldsVariable
 } from './navigation-properties';
@@ -16,20 +12,18 @@ export function classContent(
 ): string {
   return codeBlock`export class ${
     entity.className
-  }Api<${getGenericTypesWithDefault(service.oDataVersion)}> implements 
+  }Api<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
     EntityApi<
       ${entity.className}<
-        DeSerializers<${getGenericTypes(service.oDataVersion)}>
+        DeSerializersT
       >, 
-      DeSerializers<${getGenericTypes(service.oDataVersion)}>
+      DeSerializersT
     > {
-  public deSerializers: DeSerializers<${getGenericTypes(service.oDataVersion)}>;
+  public deSerializers: DeSerializersT;
 
   constructor(
-    deSerializers: Partial<DeSerializers<${getGenericTypes(
-      service.oDataVersion
-    )}>> = defaultDeSerializers as any) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+    this.deSerializers = deSerializers;
   }
 
   ${navigationPropertyFieldsVariable(entity, service)}
@@ -39,16 +33,16 @@ export function classContent(
   entityConstructor = ${entity.className};
   
   requestBuilder(): ${entity.className}RequestBuilder<
-    DeSerializers<${getGenericTypes(service.oDataVersion)}>
+    DeSerializersT
   > {
     return new ${entity.className}RequestBuilder(this);
   }
   
   entityBuilder(): EntityBuilderType<
     ${entity.className}<
-      DeSerializers<${getGenericTypes(service.oDataVersion)}>
+      DeSerializersT
     >,
-    DeSerializers<${getGenericTypes(service.oDataVersion)}>
+    DeSerializersT
   > {
     return entityBuilder(this);
   }
@@ -58,13 +52,8 @@ export function classContent(
     isNullable: NullableT = false as NullableT
   ): CustomField<
   ${entity.className}<
-      DeSerializers<
-      ${getGenericTypes(service.oDataVersion)}
-      >
-    >,
-    DeSerializers<
-    ${getGenericTypes(service.oDataVersion)}
-    >,
+      DeSerializersT>,
+    DeSerializersT,
     NullableT
   > {
     return new CustomField(
@@ -72,7 +61,7 @@ export function classContent(
       this.entityConstructor,
       this.deSerializers,
       isNullable
-    );
+    ) as any;
   }
 
   get schema() {

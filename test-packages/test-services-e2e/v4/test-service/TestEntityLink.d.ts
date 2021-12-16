@@ -1,18 +1,17 @@
-import { TestEntityLinkRequestBuilder } from './TestEntityLinkRequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
-  AllFields,
-  EdmTypeField,
-  EntityBuilderType,
-  Field,
-  OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-common/internal';
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "TestEntityLink" of service "TestService".
  */
-export declare class TestEntityLink
+export declare class TestEntityLink<
+    T extends DeSerializers = DefaultDeSerializers
+  >
   extends Entity
-  implements TestEntityLinkType
+  implements TestEntityLinkType<T>
 {
   /**
    * Technical entity name for TestEntityLink.
@@ -23,94 +22,29 @@ export declare class TestEntityLink
    */
   static _defaultServicePath: string;
   /**
+   * All key fields of the TestEntityLink entity
+   */
+  static _keys: string[];
+  /**
    * Key Test Entity Link.
    */
-  keyTestEntityLink: number;
+  keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>;
   /**
    * Key To Test Entity.
    */
-  keyToTestEntity: number;
+  keyToTestEntity: DeserializedType<T, 'Edm.Int32'>;
   /**
    * String Property.
    * Maximum length: 111.
    * @nullable
    */
-  stringProperty?: string;
-  /**
-   * Returns an entity builder to construct instances of `TestEntityLink`.
-   * @returns A builder that constructs instances of entity type `TestEntityLink`.
-   */
-  static builder(): EntityBuilderType<TestEntityLink, TestEntityLinkType>;
-  /**
-   * Returns a request builder to construct requests for operations on the `TestEntityLink` entity type.
-   * @returns A `TestEntityLink` request builder.
-   */
-  static requestBuilder(): TestEntityLinkRequestBuilder;
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityLink`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `TestEntityLink`.
-   */
-  static customField(fieldName: string): CustomField<TestEntityLink>;
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): {
-    [key: string]: any;
-  };
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
 }
-export interface TestEntityLinkType {
-  keyTestEntityLink: number;
-  keyToTestEntity: number;
-  stringProperty?: string | null;
-}
-export declare namespace TestEntityLink {
-  /**
-   * Static representation of the [[keyTestEntityLink]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const KEY_TEST_ENTITY_LINK: OrderableEdmTypeField<
-    TestEntityLink,
-    'Edm.Int32',
-    false,
-    true
-  >;
-  /**
-   * Static representation of the [[keyToTestEntity]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const KEY_TO_TEST_ENTITY: OrderableEdmTypeField<
-    TestEntityLink,
-    'Edm.Int32',
-    false,
-    true
-  >;
-  /**
-   * Static representation of the [[stringProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const STRING_PROPERTY: EdmTypeField<TestEntityLink, 'Edm.String', true, true>;
-  /**
-   * All fields of the TestEntityLink entity.
-   */
-  const _allFields: Array<
-    | OrderableEdmTypeField<TestEntityLink, 'Edm.Int32', false, true>
-    | EdmTypeField<TestEntityLink, 'Edm.String', true, true>
-  >;
-  /**
-   * All fields selector.
-   */
-  const ALL_FIELDS: AllFields<TestEntityLink>;
-  /**
-   * All key fields of the TestEntityLink entity.
-   */
-  const _keyFields: Array<Field<TestEntityLink, boolean, boolean>>;
-  /**
-   * Mapping of all key field names to the respective static field property TestEntityLink.
-   */
-  const _keys: {
-    [keys: string]: Field<TestEntityLink, boolean, boolean>;
-  };
+export interface TestEntityLinkType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
+  keyTestEntityLink: DeserializedType<T, 'Edm.Int32'>;
+  keyToTestEntity: DeserializedType<T, 'Edm.Int32'>;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
 }
 //# sourceMappingURL=TestEntityLink.d.ts.map

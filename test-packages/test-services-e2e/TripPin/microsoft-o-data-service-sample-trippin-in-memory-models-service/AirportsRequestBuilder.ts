@@ -3,35 +3,44 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import {
+  DefaultDeSerializers,
+  DeSerializers,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   CreateRequestBuilder,
   UpdateRequestBuilder,
   DeleteRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-v4/internal';
 import { Airports } from './Airports';
 
 /**
  * Request builder class for operations supported on the [[Airports]] entity.
  */
-export class AirportsRequestBuilder extends RequestBuilder<Airports> {
+export class AirportsRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<Airports<T>, T> {
   /**
    * Returns a request builder for retrieving one `Airports` entity based on its keys.
    * @param icaoCode Key property. See [[Airports.icaoCode]].
    * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
    */
-  getByKey(icaoCode: string): GetByKeyRequestBuilder<Airports> {
-    return new GetByKeyRequestBuilder(Airports, { IcaoCode: icaoCode });
+  getByKey(
+    icaoCode: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Airports<T>, T> {
+    return new GetByKeyRequestBuilder<Airports<T>, T>(this.entityApi, {
+      IcaoCode: icaoCode
+    });
   }
 
   /**
    * Returns a request builder for querying all `Airports` entities.
    * @returns A request builder for creating requests to retrieve all `Airports` entities.
    */
-  getAll(): GetAllRequestBuilder<Airports> {
-    return new GetAllRequestBuilder(Airports);
+  getAll(): GetAllRequestBuilder<Airports<T>, T> {
+    return new GetAllRequestBuilder<Airports<T>, T>(this.entityApi);
   }
 
   /**
@@ -39,8 +48,8 @@ export class AirportsRequestBuilder extends RequestBuilder<Airports> {
    * @param entity The entity to be created
    * @returns A request builder for creating requests that create an entity of type `Airports`.
    */
-  create(entity: Airports): CreateRequestBuilder<Airports> {
-    return new CreateRequestBuilder(Airports, entity);
+  create(entity: Airports<T>): CreateRequestBuilder<Airports<T>, T> {
+    return new CreateRequestBuilder<Airports<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -48,8 +57,8 @@ export class AirportsRequestBuilder extends RequestBuilder<Airports> {
    * @param entity The entity to be updated
    * @returns A request builder for creating requests that update an entity of type `Airports`.
    */
-  update(entity: Airports): UpdateRequestBuilder<Airports> {
-    return new UpdateRequestBuilder(Airports, entity);
+  update(entity: Airports<T>): UpdateRequestBuilder<Airports<T>, T> {
+    return new UpdateRequestBuilder<Airports<T>, T>(this.entityApi, entity);
   }
 
   /**
@@ -57,16 +66,16 @@ export class AirportsRequestBuilder extends RequestBuilder<Airports> {
    * @param icaoCode Key property. See [[Airports.icaoCode]].
    * @returns A request builder for creating requests that delete an entity of type `Airports`.
    */
-  delete(icaoCode: string): DeleteRequestBuilder<Airports>;
+  delete(icaoCode: string): DeleteRequestBuilder<Airports<T>, T>;
   /**
    * Returns a request builder for deleting an entity of type `Airports`.
    * @param entity Pass the entity to be deleted.
    * @returns A request builder for creating requests that delete an entity of type `Airports` by taking the entity as a parameter.
    */
-  delete(entity: Airports): DeleteRequestBuilder<Airports>;
-  delete(icaoCodeOrEntity: any): DeleteRequestBuilder<Airports> {
-    return new DeleteRequestBuilder(
-      Airports,
+  delete(entity: Airports<T>): DeleteRequestBuilder<Airports<T>, T>;
+  delete(icaoCodeOrEntity: any): DeleteRequestBuilder<Airports<T>, T> {
+    return new DeleteRequestBuilder<Airports<T>, T>(
+      this.entityApi,
       icaoCodeOrEntity instanceof Airports
         ? icaoCodeOrEntity
         : { IcaoCode: icaoCodeOrEntity! }

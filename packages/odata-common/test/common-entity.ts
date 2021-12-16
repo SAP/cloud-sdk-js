@@ -224,96 +224,13 @@ export interface CommonEntitySingleLinkType<
  */
 
 export class CommonEntitySingleLinkApi<
-  BinaryT = string,
-  BooleanT = boolean,
-  ByteT = number,
-  DecimalT = BigNumber,
-  DoubleT = number,
-  FloatT = number,
-  Int16T = number,
-  Int32T = number,
-  Int64T = BigNumber,
-  GuidT = string,
-  SByteT = number,
-  SingleT = number,
-  StringT = string,
-  AnyT = any
-> implements
-    EntityApi<
-      CommonEntitySingleLink<
-        DeSerializers<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT
-        >
-      >,
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<CommonEntitySingleLink<DeSerializersT>, DeSerializersT>
 {
-  public deSerializers: DeSerializers<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT
-  >;
+  public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: Partial<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    > = defaultDeSerializers as any
-  ) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+    this.deSerializers = deSerializers;
   }
 
   private navigationPropertyFields!: {};
@@ -330,40 +247,8 @@ export class CommonEntitySingleLinkApi<
   }
 
   entityBuilder(): EntityBuilderType<
-    CommonEntitySingleLink<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT
-    >
+    CommonEntitySingleLink<DeSerializersT>,
+    DeSerializersT
   > {
     return entityBuilder(this);
   }
@@ -372,40 +257,8 @@ export class CommonEntitySingleLinkApi<
     fieldName: string,
     isNullable: NullableT = false as NullableT
   ): CustomField<
-    CommonEntitySingleLink<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT
-    >,
+    CommonEntitySingleLink<DeSerializersT>,
+    DeSerializersT,
     NullableT
   > {
     return new CustomField(
@@ -413,7 +266,7 @@ export class CommonEntitySingleLinkApi<
       this.entityConstructor,
       this.deSerializers,
       isNullable
-    );
+    ) as any;
   }
 
   get schema() {
@@ -480,174 +333,25 @@ export interface CommonEntityType<
  */
 
 export class CommonEntityApi<
-  BinaryT = string,
-  BooleanT = boolean,
-  ByteT = number,
-  DecimalT = BigNumber,
-  DoubleT = number,
-  FloatT = number,
-  Int16T = number,
-  Int32T = number,
-  Int64T = BigNumber,
-  GuidT = string,
-  SByteT = number,
-  SingleT = number,
-  StringT = string,
-  AnyT = any
-> implements
-    EntityApi<
-      CommonEntity<
-        DeSerializers<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT
-        >
-      >,
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<CommonEntity<DeSerializersT>, DeSerializersT>
 {
-  public deSerializers: DeSerializers<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT
-  >;
+  public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: Partial<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    > = defaultDeSerializers as any
-  ) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+    this.deSerializers = deSerializers;
   }
 
   private navigationPropertyFields!: {
     TO_SINGLE_LINK: OneToOneLink<
-      CommonEntity<
-        DeSerializers<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT
-        >
-      >,
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >,
-      CommonEntitySingleLink<
-        DeSerializers<
-          BinaryT,
-          BooleanT,
-          ByteT,
-          DecimalT,
-          DoubleT,
-          FloatT,
-          Int16T,
-          Int32T,
-          Int64T,
-          GuidT,
-          SByteT,
-          SingleT,
-          StringT,
-          AnyT
-        >
-      >
+      CommonEntity<DeSerializersT>,
+      DeSerializersT,
+      CommonEntitySingleLink<DeSerializersT>
     >;
   };
 
   _addNavigationProperties(
-    linkedApis: [
-      CommonEntitySingleLinkApi<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    ]
+    linkedApis: [CommonEntitySingleLinkApi<DeSerializersT>]
   ): this {
     this.navigationPropertyFields = {
       TO_SINGLE_LINK: new OneToOneLink('to_SingleLink', this, linkedApis[0])
@@ -662,40 +366,8 @@ export class CommonEntityApi<
   }
 
   entityBuilder(): EntityBuilderType<
-    CommonEntity<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT
-    >
+    CommonEntity<DeSerializersT>,
+    DeSerializersT
   > {
     return entityBuilder(this);
   }
@@ -703,49 +375,13 @@ export class CommonEntityApi<
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<
-    CommonEntity<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    >,
-    DeSerializers<
-      BinaryT,
-      BooleanT,
-      ByteT,
-      DecimalT,
-      DoubleT,
-      FloatT,
-      Int16T,
-      Int32T,
-      Int64T,
-      GuidT,
-      SByteT,
-      SingleT,
-      StringT,
-      AnyT
-    >,
-    NullableT
-  > {
+  ): CustomField<CommonEntity<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,
       this.deSerializers,
       isNullable
-    );
+    ) as any;
   }
 
   get schema() {
@@ -793,7 +429,7 @@ export class CommonEntityApi<
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 
-export class CommonService<
+export function commonService<
   BinaryT = string,
   BooleanT = boolean,
   ByteT = number,
@@ -808,9 +444,27 @@ export class CommonService<
   SingleT = number,
   StringT = string,
   AnyT = any
-> {
-  private apis: Record<string, any> = {};
-  private deSerializers: DeSerializers<
+>(
+  deSerializers: Partial<
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT
+    >
+  > = defaultDeSerializers as any
+): CommonService<
+  DeSerializers<
     BinaryT,
     BooleanT,
     ByteT,
@@ -825,29 +479,18 @@ export class CommonService<
     SingleT,
     StringT,
     AnyT
-  >;
+  >
+> {
+  return new CommonService(mergeDefaultDeSerializersWith(deSerializers));
+}
+export class CommonService<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
+  private apis: Record<string, any> = {};
+  private deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: Partial<
-      DeSerializers<
-        BinaryT,
-        BooleanT,
-        ByteT,
-        DecimalT,
-        DoubleT,
-        FloatT,
-        Int16T,
-        Int32T,
-        Int64T,
-        GuidT,
-        SByteT,
-        SingleT,
-        StringT,
-        AnyT
-      >
-    > = defaultDeSerializers as any
-  ) {
-    this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+  constructor(deSerializers: DeSerializersT) {
+    this.deSerializers = deSerializers;
   }
 
   private initApi(key: string, ctor: new (...args: any[]) => any): any {
@@ -857,22 +500,7 @@ export class CommonService<
     return this.apis[key];
   }
 
-  get commonEntityApi(): CommonEntityApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT
-  > {
+  get commonEntityApi(): CommonEntityApi<DeSerializersT> {
     const api = this.initApi('commonEntityApi', CommonEntityApi);
     const linkedApis = [
       this.initApi('commonEntitySingleLinkApi', CommonEntitySingleLinkApi)
@@ -881,22 +509,7 @@ export class CommonService<
     return api;
   }
 
-  get commonEntitySingleLinkApi(): CommonEntitySingleLinkApi<
-    BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT
-  > {
+  get commonEntitySingleLinkApi(): CommonEntitySingleLinkApi<DeSerializersT> {
     const api = this.initApi(
       'commonEntitySingleLinkApi',
       CommonEntitySingleLinkApi
@@ -906,4 +519,4 @@ export class CommonService<
   }
 }
 
-export const { commonEntityApi } = new CommonService();
+export const { commonEntityApi } = commonService();

@@ -20,9 +20,9 @@ import { TestEntityEndsWithSomethingElseApi } from './TestEntityEndsWithSomethin
 import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-import { defaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
+import { defaultDeSerializers, DeSerializers, DefaultDeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
   
-export class TestService<BinaryT = string,
+  export function testService<BinaryT = string,
 BooleanT = boolean,
 ByteT = number,
 DecimalT = BigNumber,
@@ -39,46 +39,52 @@ AnyT = any,
 DateTimeOffsetT = Moment,
 DateT = Moment,
 DurationT = Duration,
-TimeOfDayT = Time> {
+TimeOfDayT = Time>(
+  deSerializers: Partial<DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateT,
+DurationT,
+TimeOfDayT>> = defaultDeSerializers as any
+  ):TestService<DeSerializers<BinaryT,
+BooleanT,
+ByteT,
+DecimalT,
+DoubleT,
+FloatT,
+Int16T,
+Int32T,
+Int64T,
+GuidT,
+SByteT,
+SingleT,
+StringT,
+AnyT,
+DateTimeOffsetT,
+DateT,
+DurationT,
+TimeOfDayT>>  
+  {
+  return new TestService(mergeDefaultDeSerializersWith(deSerializers))
+  } 
+export class TestService<DeSerializersT extends DeSerializers = DefaultDeSerializers> {
     private apis: Record<string, any> = {};
-    private deSerializers: DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>;
+    private deSerializers: DeSerializersT;
 
-    constructor(deSerializers: Partial<DeSerializers<BinaryT,
-BooleanT,
-ByteT,
-DecimalT,
-DoubleT,
-FloatT,
-Int16T,
-Int32T,
-Int64T,
-GuidT,
-SByteT,
-SingleT,
-StringT,
-AnyT,
-DateTimeOffsetT,
-DateT,
-DurationT,
-TimeOfDayT>> = defaultDeSerializers as any) {
-      this.deSerializers = mergeDefaultDeSerializersWith(deSerializers);
+    constructor(deSerializers: DeSerializersT) {
+      this.deSerializers = deSerializers;
     }
 
     private initApi(key: string, ctor: new (...args: any[]) => any): any {
@@ -88,24 +94,7 @@ TimeOfDayT>> = defaultDeSerializers as any) {
       return this.apis[key];
     }
 
-    get testEntityApi(): TestEntityApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityApi(): TestEntityApi<DeSerializersT> {
         const api = this.initApi('testEntityApi', TestEntityApi);
         const linkedApis = [
             this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi),
@@ -116,93 +105,25 @@ TimeOfDayT>> = defaultDeSerializers as any) {
         return api;
       }
     
-    get testEntityWithEnumKeyApi(): TestEntityWithEnumKeyApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityWithEnumKeyApi(): TestEntityWithEnumKeyApi<DeSerializersT> {
         const api = this.initApi('testEntityWithEnumKeyApi', TestEntityWithEnumKeyApi);
         
         return api;
       }
     
-    get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<DeSerializersT> {
         const api = this.initApi('testEntityWithSharedEntityType1Api', TestEntityWithSharedEntityType1Api);
         
         return api;
       }
     
-    get testEntityWithSharedEntityType2Api(): TestEntityWithSharedEntityType2Api<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityWithSharedEntityType2Api(): TestEntityWithSharedEntityType2Api<DeSerializersT> {
         const api = this.initApi('testEntityWithSharedEntityType2Api', TestEntityWithSharedEntityType2Api);
         
         return api;
       }
     
-    get testEntityMultiLinkApi(): TestEntityMultiLinkApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityMultiLinkApi(): TestEntityMultiLinkApi<DeSerializersT> {
         const api = this.initApi('testEntityMultiLinkApi', TestEntityMultiLinkApi);
         const linkedApis = [
             this.initApi('testEntityLvl2MultiLinkApi', TestEntityLvl2MultiLinkApi),
@@ -212,47 +133,13 @@ TimeOfDayT>> = defaultDeSerializers as any) {
         return api;
       }
     
-    get testEntityOtherMultiLinkApi(): TestEntityOtherMultiLinkApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityOtherMultiLinkApi(): TestEntityOtherMultiLinkApi<DeSerializersT> {
         const api = this.initApi('testEntityOtherMultiLinkApi', TestEntityOtherMultiLinkApi);
         
         return api;
       }
     
-    get testEntityLvl2MultiLinkApi(): TestEntityLvl2MultiLinkApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityLvl2MultiLinkApi(): TestEntityLvl2MultiLinkApi<DeSerializersT> {
         const api = this.initApi('testEntityLvl2MultiLinkApi', TestEntityLvl2MultiLinkApi);
         const linkedApis = [
             this.initApi('testEntityLvl3MultiLinkApi', TestEntityLvl3MultiLinkApi)
@@ -261,47 +148,13 @@ TimeOfDayT>> = defaultDeSerializers as any) {
         return api;
       }
     
-    get testEntityLvl3MultiLinkApi(): TestEntityLvl3MultiLinkApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityLvl3MultiLinkApi(): TestEntityLvl3MultiLinkApi<DeSerializersT> {
         const api = this.initApi('testEntityLvl3MultiLinkApi', TestEntityLvl3MultiLinkApi);
         
         return api;
       }
     
-    get testEntitySingleLinkApi(): TestEntitySingleLinkApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntitySingleLinkApi(): TestEntitySingleLinkApi<DeSerializersT> {
         const api = this.initApi('testEntitySingleLinkApi', TestEntitySingleLinkApi);
         const linkedApis = [
             this.initApi('testEntityLvl2MultiLinkApi', TestEntityLvl2MultiLinkApi),
@@ -311,47 +164,13 @@ TimeOfDayT>> = defaultDeSerializers as any) {
         return api;
       }
     
-    get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<DeSerializersT> {
         const api = this.initApi('testEntityLvl2SingleLinkApi', TestEntityLvl2SingleLinkApi);
         
         return api;
       }
     
-    get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<DeSerializersT> {
         const api = this.initApi('testEntityCircularLinkParentApi', TestEntityCircularLinkParentApi);
         const linkedApis = [
             this.initApi('testEntityCircularLinkChildApi', TestEntityCircularLinkChildApi),
@@ -361,24 +180,7 @@ TimeOfDayT>> = defaultDeSerializers as any) {
         return api;
       }
     
-    get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityCircularLinkChildApi(): TestEntityCircularLinkChildApi<DeSerializersT> {
         const api = this.initApi('testEntityCircularLinkChildApi', TestEntityCircularLinkChildApi);
         const linkedApis = [
             this.initApi('testEntityCircularLinkParentApi', TestEntityCircularLinkParentApi)
@@ -387,47 +189,13 @@ TimeOfDayT>> = defaultDeSerializers as any) {
         return api;
       }
     
-    get testEntityEndsWithApi(): TestEntityEndsWithApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityEndsWithApi(): TestEntityEndsWithApi<DeSerializersT> {
         const api = this.initApi('testEntityEndsWithApi', TestEntityEndsWithApi);
         
         return api;
       }
     
-    get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<BinaryT,
-    BooleanT,
-    ByteT,
-    DecimalT,
-    DoubleT,
-    FloatT,
-    Int16T,
-    Int32T,
-    Int64T,
-    GuidT,
-    SByteT,
-    SingleT,
-    StringT,
-    AnyT,
-    DateTimeOffsetT,
-    DateT,
-    DurationT,
-    TimeOfDayT> {
+    get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<DeSerializersT> {
         const api = this.initApi('testEntityEndsWithSomethingElseApi', TestEntityEndsWithSomethingElseApi);
         
         return api;

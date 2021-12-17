@@ -12,6 +12,11 @@ const logger = createLogger({
   messageContext: 'entity-builder'
 });
 
+type NullishTypes = null | undefined;
+type NonNullishType<T> = Exclude<T, NullishTypes>;
+
+type PureEntityType<T> = Omit<NonNullishType<T>, keyof EntityBase>;
+
 /**
  * Type to describe possible inputs for `.fromJson`.
  * This is based on the JSON type of an entity and allows all properties to be optional recursively.
@@ -22,19 +27,19 @@ const logger = createLogger({
 type FromJsonType<JsonT> = {
   [key: string]: any; // custom properties
 } & {
-  [P in keyof Omit<JsonT, keyof EntityBase>]?: JsonT[P] extends (infer U)[]
+  [P in keyof PureEntityType<JsonT>]?: PureEntityType<JsonT>[P] extends (infer U)[]
     ? U extends Record<string, any>
       ? FromJsonType<U>[] // one-to-many navigation properties
-      : JsonT[P] // collection type
-    : JsonT[P] extends Record<string, any> | null | undefined
-      ? FromJsonType<JsonT[P]> | null | undefined // one-to-one navigation properties or complex type
-      : JsonT[P]; // else
+      : PureEntityType<JsonT>[P] // collection type
+    : PureEntityType<JsonT>[P] extends Record<string, any> | null | undefined
+      ? FromJsonType<PureEntityType<JsonT>[P]> | null | undefined // one-to-one navigation properties or complex type
+      : PureEntityType<JsonT>[P]; // else
 };
 
 /**
  * @internal
  */
-export class EntityBuilder<
+export class EntityBuilderBase<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > {

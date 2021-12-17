@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
-import { EntityBuilder } from './entity-builder';
+import { EntityBuilderBase } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
 import type { CustomField, Field, Link } from './selectable';
 import type { RequestBuilder } from './request-builder';
@@ -57,17 +57,28 @@ export interface EntityApi<
 
 /**
  * @internal
+ * Entity builder type with check for EntityT.
  */
 export type EntityBuilderType<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > = EntityT extends EntityBase
-  ? {
-      [property in keyof Required<Omit<EntityT, keyof EntityBase>>]: (
-        value: EntityT[property]
-      ) => EntityBuilderType<EntityT, DeSerializersT>;
-    } & EntityBuilder<EntityT, DeSerializersT>
-  : EntityBuilder<EntityT, DeSerializersT>;
+  ? EntityBuilder<EntityT, DeSerializersT> &
+      EntityBuilderBase<EntityT, DeSerializersT>
+  : EntityBuilderBase<EntityT, DeSerializersT>;
+
+/**
+ * @internal
+ * Actual entity builder type.
+ */
+export type EntityBuilder<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> = {
+  [property in keyof Required<Omit<EntityT, keyof EntityBase>>]: (
+    value: EntityT[property]
+  ) => EntityBuilderType<EntityT, DeSerializersT>;
+};
 
 /**
  * Super class for all representations of OData entity types.
@@ -386,7 +397,7 @@ export function entityBuilder<
 >(
   entityApi: EntityApi<EntityT, DeSerializersT>
 ): EntityBuilderType<EntityT, DeSerializersT> {
-  const builder = new EntityBuilder<EntityT, DeSerializersT>(entityApi);
+  const builder = new EntityBuilderBase<EntityT, DeSerializersT>(entityApi);
   Object.values(entityApi.schema).forEach(field => {
     const fieldName = `${camelCase(field._fieldName)}`;
     builder[fieldName] = function (value) {

@@ -1,20 +1,22 @@
-import {
-  TestEntityApi,
-  TestEntityLinkApi
-} from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
+import {} from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import moment from 'moment';
 import { and } from '@sap-cloud-sdk/odata-common/internal';
 import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/internal';
-import { deleteEntity, queryEntity } from './test-utils/test-entity-operations';
+import {
+  deleteEntity,
+  queryEntity,
+  testEntityApi,
+  testEntityLinkApi
+} from './test-utils/test-entity-operations';
 import { destination } from './test-util';
 
 const entityKey = 123;
 const entityLinkKey = 987;
-const schema = new TestEntityApi().schema;
-const requestBuilder = new TestEntityApi().requestBuilder();
-const entityBuilder = new TestEntityApi().entityBuilder();
-const linkEntityBuilder = new TestEntityLinkApi().entityBuilder();
-const linkRequestBuilder = new TestEntityLinkApi().requestBuilder();
+const schema = testEntityApi.schema;
+const requestBuilder = testEntityApi.requestBuilder();
+const entityBuilder = testEntityApi.entityBuilder();
+const linkEntityBuilder = testEntityLinkApi.entityBuilder();
+const linkRequestBuilder = testEntityLinkApi.requestBuilder();
 
 async function createEntity(key: number) {
   const dataForCreation = entityBuilder
@@ -74,7 +76,7 @@ describe('Request builder', () => {
         .executeRaw(destination)
     ).data.value as any[];
     const actual = multiLinks.map(multiLink =>
-      deserializeEntity(multiLink, new TestEntityLinkApi())
+      deserializeEntity(multiLink, testEntityLinkApi)
     );
 
     expect(actual).toEqual(

@@ -1,13 +1,15 @@
 import {
   batch,
-  changeset,
-  TestEntityApi
+  changeset
 } from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import { destination } from './test-util';
-import { deleteEntity } from './test-utils/test-entity-operations';
+import {
+  deleteEntity,
+  testEntityApi
+} from './test-utils/test-entity-operations';
 
 const entityKey = 456;
-const requestBuilder = new TestEntityApi().requestBuilder();
+const requestBuilder = testEntityApi.requestBuilder();
 
 describe('batch', () => {
   beforeEach(async () => deleteEntity(entityKey, destination));
@@ -15,7 +17,7 @@ describe('batch', () => {
 
   it('should execute retrieve and change set requests', async () => {
     const getAll = requestBuilder.getAll();
-    const testEntity = new TestEntityApi()
+    const testEntity = testEntityApi
       .entityBuilder()
       .keyTestEntity(entityKey)
       .stringProperty('batch')

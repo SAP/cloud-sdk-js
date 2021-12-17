@@ -5,32 +5,20 @@
  */
 import { BigNumber } from 'bignumber.js';
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  DefaultDeSerializers,
-  DeSerializers,
-  GetAllRequestBuilder,
-  GetByKeyRequestBuilder,
-  CreateRequestBuilder,
-  UpdateRequestBuilder,
-  DeleteRequestBuilder
-} from '@sap-cloud-sdk/odata-v4';
+import { DefaultDeSerializers, DeSerializers, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
 import { RequestBuilder } from '@sap-cloud-sdk/odata-v4/internal';
 import { Photos } from './Photos';
 
 /**
  * Request builder class for operations supported on the [[Photos]] entity.
  */
-export class PhotosRequestBuilder<
-  T extends DeSerializers = DefaultDeSerializers
-> extends RequestBuilder<Photos<T>, T> {
+export class PhotosRequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<Photos<T>, T> {
   /**
    * Returns a request builder for retrieving one `Photos` entity based on its keys.
    * @param id Key property. See [[Photos.id]].
    * @returns A request builder for creating requests to retrieve one `Photos` entity based on its keys.
    */
-  getByKey(
-    id: DeserializedType<T, 'Edm.Int64'>
-  ): GetByKeyRequestBuilder<Photos<T>, T> {
+  getByKey(id: DeserializedType<T, 'Edm.Int64'>): GetByKeyRequestBuilder<Photos<T>, T> {
     return new GetByKeyRequestBuilder<Photos<T>, T>(this.entityApi, { Id: id });
   }
 
@@ -73,9 +61,6 @@ export class PhotosRequestBuilder<
    */
   delete(entity: Photos<T>): DeleteRequestBuilder<Photos<T>, T>;
   delete(idOrEntity: any): DeleteRequestBuilder<Photos<T>, T> {
-    return new DeleteRequestBuilder<Photos<T>, T>(
-      this.entityApi,
-      idOrEntity instanceof Photos ? idOrEntity : { Id: idOrEntity! }
-    );
+    return new DeleteRequestBuilder<Photos<T>, T>(this.entityApi, idOrEntity instanceof Photos ? idOrEntity : { Id: idOrEntity! });
   }
 }

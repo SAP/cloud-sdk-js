@@ -31,7 +31,7 @@ export interface WithGetAllRestrictions<
   top: number;
   skip: number;
   filter: Filterable<EntityT, DeSerializersT>;
-  orderBy: Orderable<EntityT, DeSerializersT>[];
+  orderBy: Orderable<EntityT>[];
 }
 
 /**

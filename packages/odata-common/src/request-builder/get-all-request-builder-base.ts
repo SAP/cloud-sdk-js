@@ -64,14 +64,11 @@ export abstract class GetAllRequestBuilderBase<
    * @param orderBy - OrderBy statements to order the response by
    * @returns The request builder itself, to facilitate method chaining
    */
-  orderBy(orderBy: Orderable<EntityT, DeSerializersT>[]): this;
-  orderBy(...orderBy: Orderable<EntityT, DeSerializersT>[]): this;
+  orderBy(orderBy: Orderable<EntityT>[]): this;
+  orderBy(...orderBy: Orderable<EntityT>[]): this;
   orderBy(
-    first:
-      | undefined
-      | Orderable<EntityT, DeSerializersT>
-      | Orderable<EntityT, DeSerializersT>[],
-    ...rest: Orderable<EntityT, DeSerializersT>[]
+    first: undefined | Orderable<EntityT> | Orderable<EntityT>[],
+    ...rest: Orderable<EntityT>[]
   ): this {
     this.requestConfig.orderBy = variadicArgumentToArray(first, rest);
     return this;

@@ -13,12 +13,9 @@ import { OrderLink } from './order-link';
  * @typeparam EntityT - Type of the entity to be ordered
  * @internal
  */
-export type Orderable<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
-> =
-  | Order<EntityT, DeSerializersT>
-  | OrderLink<EntityT, DeSerializersT, EntityBase>;
+export type Orderable<EntityT extends EntityBase> =
+  | Order<EntityT>
+  | OrderLink<EntityT, EntityBase>;
 
 /**
  * A union of all types that can be used as input for ordering.
@@ -43,9 +40,7 @@ export type OrderableInput<
 export function asc<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
->(
-  orderBy: OrderableInput<EntityT, DeSerializersT>
-): Order<EntityT, DeSerializersT> {
+>(orderBy: OrderableInput<EntityT, DeSerializersT>): Order<EntityT> {
   if (orderBy instanceof Link) {
     return new Order(orderBy._fieldName);
   }
@@ -62,9 +57,7 @@ export function asc<
 export function desc<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
->(
-  orderBy: OrderableInput<EntityT, DeSerializersT>
-): Order<EntityT, DeSerializersT> {
+>(orderBy: OrderableInput<EntityT, DeSerializersT>): Order<EntityT> {
   if (orderBy instanceof Link) {
     return new Order(orderBy._fieldName);
   }

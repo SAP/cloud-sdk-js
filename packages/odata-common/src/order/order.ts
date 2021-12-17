@@ -1,4 +1,3 @@
-import { DeSerializers } from '../de-serializers';
 import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
 
 type OrderType = 'asc' | 'desc';
@@ -8,14 +7,12 @@ type OrderType = 'asc' | 'desc';
  * @typeparam EntityT -
  * @internal
  */
-export class Order<
-  EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
-> implements EntityIdentifiable<EntityT, DeSerializersT>
+export class Order<EntityT extends EntityBase>
+  implements EntityIdentifiable<EntityT, any>
 {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
-  readonly _deSerializers: DeSerializersT;
+  readonly _deSerializers: any;
 
   /**
    * Creates an instance of Order.

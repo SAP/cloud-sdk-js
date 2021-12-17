@@ -18,7 +18,7 @@ export class OneToOneLink<
   /**
    * List of criteria of the linked entity to order the given entity by with descending priority.
    */
-  orderBys: Order<LinkedEntityT, DeSerializersT>[] = [];
+  orderBys: Order<LinkedEntityT>[] = [];
 
   /**
    * Filterables to apply to the given entity based on the linked entity.
@@ -45,8 +45,8 @@ export class OneToOneLink<
    * @returns Newly created order link
    */
   orderBy(
-    ...orderBy: Orderable<LinkedEntityT, DeSerializersT>[]
-  ): OrderLink<EntityT, DeSerializersT, LinkedEntityT> {
+    ...orderBy: Orderable<LinkedEntityT>[]
+  ): OrderLink<EntityT, LinkedEntityT> {
     return new OrderLink(this, orderBy);
   }
 

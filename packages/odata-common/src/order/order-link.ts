@@ -1,4 +1,3 @@
-import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
 import { Link } from '../selectable';
 import type { Orderable } from './orderable';
@@ -11,7 +10,6 @@ import type { Orderable } from './orderable';
  */
 export class OrderLink<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
 > {
   readonly entityType: EntityT;
@@ -23,7 +21,7 @@ export class OrderLink<
    * @param orderBy - A list of orderables based on the linked entity
    */
   constructor(
-    public link: Link<EntityT, DeSerializersT, LinkedEntityT>,
-    public orderBy: Orderable<LinkedEntityT, DeSerializersT>[]
+    public link: Link<EntityT, any, LinkedEntityT>,
+    public orderBy: Orderable<LinkedEntityT>[]
   ) {}
 }

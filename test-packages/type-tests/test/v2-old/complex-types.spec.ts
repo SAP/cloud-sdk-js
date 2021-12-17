@@ -1,7 +1,7 @@
-import { TestEntityApi } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common/internal';
 
-const testEntityApi = new TestEntityApi();
+const { testEntityApi } = testService();
 const testEntitySchema = testEntityApi.schema;
 
 // $ExpectType TestComplexTypeField<TestEntity, true, true>
@@ -52,7 +52,7 @@ getAllTSE.orderBy(asc(testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty));
 // $ExpectType GetAllRequestBuilder<TestEntity>
 getAllTSE.orderBy(desc(testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty));
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 getAllTSE.orderBy(
   asc(testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty),
   desc(testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty)

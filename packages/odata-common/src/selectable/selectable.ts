@@ -17,15 +17,15 @@ export type Selectable<
   ?
       | SimpleTypeFields<EntityT>
       | Link<EntityT, DeSerializersT>
-      | ComplexTypeField<EntityT, any, boolean, boolean>
+      | ComplexTypeField<EntityT, DeSerializersT, any, boolean, boolean>
       | CustomField<EntityT, any, boolean>
       | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>
       | AllFields<EntityT>
   : ODataVersionOf<EntityT> extends 'v4'
   ?
       | SimpleTypeFields<EntityT>
-      | ComplexTypeField<EntityT, any, boolean, boolean>
-      | CustomField<EntityT, any, boolean>
-      | CollectionField<EntityT, any, DeSerializersT, boolean, boolean>
+      | ComplexTypeField<EntityT, DeSerializersT, any, boolean, boolean>
+      | CustomField<EntityT, DeSerializersT, boolean>
+      | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>
       | AllFields<EntityT>
   : never;

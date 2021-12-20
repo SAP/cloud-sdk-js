@@ -6,7 +6,7 @@ import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig, ODataRequest } from '../../request';
 import { DeSerializers } from '../../de-serializers';
-import { EntityApi } from '../../entity-base';
+import { EntityApi, EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { BatchChangeSet } from './batch-change-set';
@@ -32,8 +32,8 @@ export class BatchRequestBuilder<
     readonly defaultServicePath: string,
     readonly requests: (
       | BatchChangeSet<DeSerializersT>
-      | GetAllRequestBuilderBase<any, DeSerializersT>
-      | GetByKeyRequestBuilderBase<any, DeSerializersT>
+      | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
+      | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
     )[] // readonly entityToConstructorMap: Record< //   string, //   EntityApi<EntityBase, DeSerializersT> // >
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
@@ -71,7 +71,7 @@ export class BatchRequestBuilder<
 
   protected getEntityToApiMap(): Record<
     string,
-    EntityApi<any, DeSerializersT>
+    EntityApi<EntityBase, DeSerializersT>
   > {
     return this.requests.reduce(
       (apis, request) => ({

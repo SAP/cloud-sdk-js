@@ -35,7 +35,7 @@ export function classContent(
   requestBuilder(): ${entity.className}RequestBuilder<
     DeSerializersT
   > {
-    return new ${entity.className}RequestBuilder(this);
+    return new ${entity.className}RequestBuilder<DeSerializersT>(this);
   }
   
   entityBuilder(): EntityBuilderType<

@@ -19,7 +19,7 @@ import type { Filterable } from './filterable';
 export class FilterLink<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase = any
+  LinkedEntityT extends EntityBase = EntityBase
 > implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**

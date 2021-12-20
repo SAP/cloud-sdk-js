@@ -11,13 +11,13 @@ const logger = createLogger({
   messageContext: 'get-resource-path'
 });
 
-type GetResourcePathForKeysType<EntityT extends EntityBase> = (
+type GetResourcePathForKeysType = <EntityT extends EntityBase>(
   keys: Record<string, any>,
   entityApi: EntityApi<EntityT, any>
 ) => string;
 
-interface GetResourcePathForKeys<EntityT extends EntityBase = any> {
-  getResourcePathForKeys: GetResourcePathForKeysType<EntityT>;
+interface GetResourcePathForKeys {
+  getResourcePathForKeys: GetResourcePathForKeysType;
 }
 
 /**

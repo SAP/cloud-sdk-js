@@ -1,6 +1,7 @@
 import nock = require('nock');
 import {
   EntityApi,
+  EntityBase,
   GetAllRequestBuilderBase,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
@@ -65,7 +66,7 @@ interface MockRequestParams {
   headers?: Record<string, any>;
 }
 
-export function mockCreateRequest<T extends EntityApi<any, any>>(
+export function mockCreateRequest<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
   entityApi: T
 ) {
@@ -81,7 +82,7 @@ export function mockCreateRequest<T extends EntityApi<any, any>>(
   });
 }
 
-export function mockCreateRequestV4<T extends EntityApi<any, any>>(
+export function mockCreateRequestV4<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
   entityApi: T
 ) {
@@ -97,7 +98,7 @@ export function mockCreateRequestV4<T extends EntityApi<any, any>>(
   });
 }
 
-export function mockDeleteRequest<T extends EntityApi<any, any>>(
+export function mockDeleteRequest<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
   entityApi: T
 ) {
@@ -112,7 +113,7 @@ export function mockDeleteRequest<T extends EntityApi<any, any>>(
   });
 }
 
-export function mockUpdateRequest<T extends EntityApi<any, any>>(
+export function mockUpdateRequest<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
   entityApi: T
 ) {
@@ -130,7 +131,7 @@ export function mockUpdateRequest<T extends EntityApi<any, any>>(
 export function mockCountRequest(
   destination: Destination,
   count: number,
-  getAllRequest: GetAllRequestBuilderBase<any, any>
+  getAllRequest: GetAllRequestBuilderBase<EntityBase, any>
 ) {
   const servicePath =
     getAllRequest._entityApi.entityConstructor._defaultServicePath;
@@ -140,7 +141,7 @@ export function mockCountRequest(
     .reply(200, count.toString());
 }
 
-export function mockGetRequest<T extends EntityApi<any, any>>(
+export function mockGetRequest<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
   entityApi: T
 ) {

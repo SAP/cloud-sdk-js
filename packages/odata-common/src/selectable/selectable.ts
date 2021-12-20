@@ -16,7 +16,7 @@ export type Selectable<
 > = ODataVersionOf<EntityT> extends 'v2'
   ?
       | SimpleTypeFields<EntityT>
-      | Link<EntityT, DeSerializersT>
+      | Link<EntityT, DeSerializersT, EntityBase>
       | ComplexTypeField<EntityT, DeSerializersT, any, boolean, boolean>
       | CustomField<EntityT, any, boolean>
       | CollectionField<EntityT, DeSerializersT, any, boolean, boolean>

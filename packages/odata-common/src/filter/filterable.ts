@@ -17,7 +17,7 @@ import { FilterLink } from './filter-link';
 export type Filterable<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers,
-  LinkedEntityT extends EntityBase = any
+  LinkedEntityT extends EntityBase = EntityBase
 > =
   | Filter<EntityT, DeSerializersT, any>
   | FilterLink<EntityT, DeSerializersT, LinkedEntityT>

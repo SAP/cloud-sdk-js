@@ -53,7 +53,7 @@ export class OneToManyLink<
   filter(
     ...expressions: (
       | Filterable<LinkedEntityT, DeSerializersT>
-      | OneToManyLink<LinkedEntityT, DeSerializersT, any>
+      | OneToManyLink<LinkedEntityT, DeSerializersT, EntityBase>
     )[]
   ): this {
     const link = this.clone();

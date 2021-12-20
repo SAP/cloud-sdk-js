@@ -125,7 +125,7 @@ export function createRequestBuilder(
   if (options?.payload) {
     return new CommonCreateRequestBuilder(
       commonEntityApi,
-      options.payload! as CommonEntity,
+      options.payload as CommonEntity,
       commonODataUri,
       commonEntitySerializer,
       commonEntityDeserializer,

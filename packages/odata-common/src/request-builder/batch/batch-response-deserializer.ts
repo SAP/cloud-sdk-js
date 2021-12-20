@@ -136,7 +136,7 @@ export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
  */
 export function deserializeBatchResponse<DeSerializersT extends DeSerializers>(
   parsedBatchResponse: (ResponseData[] | ResponseData)[],
-  entityToApi: Record<string, EntityApi<any, DeSerializersT>>,
+  entityToApi: Record<string, EntityApi<EntityBase, DeSerializersT>>,
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ): (

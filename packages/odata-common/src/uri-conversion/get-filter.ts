@@ -21,7 +21,7 @@ import {
 import { UriConverter } from '../de-serializers';
 import { ComplexTypeField, OneToManyLink } from '../selectable';
 
-type GetFilterType<EntityT extends EntityBase> = (
+type GetFilterType = <EntityT extends EntityBase>(
   filter: Filterable<EntityT, any>,
   entityApi: EntityApi<EntityT, any>
 ) => Partial<{ filter: string }>;
@@ -30,8 +30,8 @@ type GetFilterType<EntityT extends EntityBase> = (
  * Interface representing the return of the getFilter creator [[createGetFilter]].
  * @internal
  */
-export interface GetFilter<EntityT extends EntityBase = any> {
-  getFilter: GetFilterType<EntityT>;
+export interface GetFilter {
+  getFilter: GetFilterType;
 }
 
 /**
@@ -67,7 +67,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpression<FilterEntityT extends EntityBase>(
     filter: Filterable<FilterEntityT, any>,
     parentFieldNames: string[] = [],
-    targetEntityApi: EntityApi<any, any>,
+    targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel = 0
   ): string {
     if (isFilterList(filter)) {
@@ -133,7 +133,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
 
   function retrieveField(
     filterField: string,
-    targetEntityApi: EntityApi<any, any>,
+    targetEntityApi: EntityApi<EntityBase, any>,
     filterEdmType?: EdmTypeShared<'v2'>
   ) {
     // In case of complex types there will be a property name as part of the filter.field
@@ -197,7 +197,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   >(
     filter: UnaryFilter<FilterEntityT>,
     parentFieldNames: string[],
-    targetEntityApi: EntityApi<any, any>
+    targetEntityApi: EntityApi<EntityBase, any>
   ): string {
     return `${filter.operator} (${getODataFilterExpression(
       filter.singleOperand,
@@ -211,7 +211,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   >(
     filter: FilterLambdaExpression<FilterEntityT, any>,
     parentFieldNames: string[],
-    targetEntityApi: EntityApi<any, any>,
+    targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel: number
   ): string {
     const alias = `a${lambdaExpressionLevel}`;
@@ -231,7 +231,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   >(
     filter: FilterList<FilterEntityT, any>,
     parentFieldNames: string[],
-    targetEntityApi: EntityApi<any, any>,
+    targetEntityApi: EntityApi<EntityBase, any>,
     lambdaExpressionLevel: number
   ): string {
     let andExp = filter.andFilters
@@ -275,7 +275,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForFilterLink<
     FilterEntityT extends EntityBase
   >(
-    filter: FilterLink<FilterEntityT, any>,
+    filter: FilterLink<FilterEntityT, any, EntityBase>,
     parentFieldNames: string[],
     lambdaExpressionLevel: number
   ): string {
@@ -297,7 +297,7 @@ export function createGetFilter(uriConverter: UriConverter): GetFilter {
   function getODataFilterExpressionForFilter<FilterEntityT extends EntityBase>(
     filter: Filter<FilterEntityT, any, any>,
     parentFieldNames: string[],
-    targetEntityApi: EntityApi<any, any>
+    targetEntityApi: EntityApi<EntityBase, any>
   ): string {
     if (typeof filter.field === 'string') {
       const field = retrieveField(

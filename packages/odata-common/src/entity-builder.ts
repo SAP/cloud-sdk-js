@@ -39,7 +39,7 @@ type FromJsonType<JsonT> = {
 /**
  * @internal
  */
-export class EntityBuilderBase<
+export class EntityBuilder<
   EntityT extends EntityBase,
   DeSerializersT extends DeSerializers
 > {

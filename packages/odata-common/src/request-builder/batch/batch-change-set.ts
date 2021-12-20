@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
+import { EntityBase } from '../../entity-base';
 import { CreateRequestBuilderBase } from '../create-request-builder-base';
 import { DeleteRequestBuilderBase } from '../delete-request-builder-base';
 import { UpdateRequestBuilderBase } from '../update-request-builder-base';
@@ -19,9 +20,9 @@ export class BatchChangeSet<
    */
   constructor(
     readonly requests: (
-      | CreateRequestBuilderBase<any, DeSerializersT>
-      | UpdateRequestBuilderBase<any, DeSerializersT>
-      | DeleteRequestBuilderBase<any, DeSerializersT>
+      | CreateRequestBuilderBase<EntityBase, DeSerializersT>
+      | UpdateRequestBuilderBase<EntityBase, DeSerializersT>
+      | DeleteRequestBuilderBase<EntityBase, DeSerializersT>
     )[],
     readonly boundary: string = `changeset_${uuid()}`
   ) {}

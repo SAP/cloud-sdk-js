@@ -33,8 +33,8 @@ const logger = createLogger({
  * Interface representing the return type of the builder function [[entityDeserializer]]
  * @internal
  */
-export interface EntityDeserializer<EntityT extends EntityBase = any> {
-  deserializeEntity: (
+export interface EntityDeserializer {
+  deserializeEntity: <EntityT extends EntityBase = EntityBase>(
     json: any,
     entityApi: EntityApi<EntityT, any>,
     requestHeader?: any
@@ -62,7 +62,7 @@ export function entityDeserializer<T extends DeSerializers>(
   deSerializers: T,
   extractODataETag: ExtractODataETagType,
   extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
-): EntityDeserializer<any> {
+): EntityDeserializer {
   const edmToTs = createValueDeserializer(deSerializers);
   /**
    * Converts the JSON payload for a single entity into an instance of the corresponding generated entity class.

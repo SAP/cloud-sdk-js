@@ -12,7 +12,6 @@ export abstract class RequestBuilder<
   EntityT extends Entity,
   DeSerializersT extends DeSerializers
 > extends RequestBuilderCommon<EntityT, DeSerializersT> {
-  // constructor(public deSerializers: T, public schema: Record<string, any>) {
   constructor(public entityApi: EntityApi<EntityT, DeSerializersT>) {
     super();
   }

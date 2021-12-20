@@ -9,10 +9,11 @@ import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
  */
 export type Expandable<
   EntityT extends EntityBase,
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers,
+  LinkedEntityT extends EntityBase = EntityBase
 > = ODataVersionOf<EntityT> extends 'v2'
   ? never
   :
-      | OneToOneLink<EntityT, DeSerializersT, any>
-      | OneToManyLink<EntityT, DeSerializersT, any>
+      | OneToOneLink<EntityT, DeSerializersT, LinkedEntityT>
+      | OneToManyLink<EntityT, DeSerializersT, LinkedEntityT>
       | AllFields<EntityT>;

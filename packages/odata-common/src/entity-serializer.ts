@@ -23,20 +23,19 @@ const logger = createLogger({
  * Interface representing the return type of the builder function [[entitySerializer]].
  * @internal
  */
-export interface EntitySerializer<
-  EntityT extends EntityBase = any,
-  ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
-> {
-  serializeEntity: (
+export interface EntitySerializer {
+  serializeEntity: <EntityT extends EntityBase>(
     entity: EntityT,
     entityApi: EntityApi<EntityT, any>,
     diff?: boolean
   ) => Record<string, any>;
-  serializeComplexType: (
+  serializeComplexType: <
+    ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
+  >(
     fieldValue: any,
     complexTypeNameSpace: ComplexTypeNamespaceT
   ) => any;
-  serializeEntityNonCustomFields: (
+  serializeEntityNonCustomFields: <EntityT extends EntityBase>(
     entity: EntityT,
     entityApi: EntityApi<EntityT, any>
   ) => Record<string, any>;

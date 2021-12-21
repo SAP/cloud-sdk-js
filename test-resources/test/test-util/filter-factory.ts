@@ -6,6 +6,8 @@ import {
   testService as testServiceV4
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
+import {FilterLambdaExpression} from "@sap-cloud-sdk/odata-common/dist/filter";
+import {EntityBase} from "@sap-cloud-sdk/odata-common/dist/entity-base";
 
 const { testEntityApi } = testService();
 const {
@@ -135,15 +137,12 @@ export const testNestedFilterLambdaExpressionOnLink = {
 
 export const testFilterLambdaExpressionFilterFunctionOnLink = {
   filter: testEntityApiV4.schema.TO_MULTI_LINK.filter(
-    any(
-      filterFunctions()
-        .substring(
-          testEntityApiV4.schema.TO_MULTI_LINK._linkedEntityApi.schema
-            .STRING_PROPERTY,
-          1
-        )
-        .equals('test')
-    )
+      any(filterFunctions()
+          .substring(
+              testEntityMultiLinkApiV4.schema
+                  .STRING_PROPERTY,
+              1
+          ).equals('test'))
   )._filters,
   odataStr: "(to_MultiLink/any(a0:(substring(a0/StringProperty,1) eq 'test')))"
 };

@@ -44,7 +44,7 @@ export class TestEntityLinkApi<
   entityConstructor = TestEntityLink;
 
   requestBuilder(): TestEntityLinkRequestBuilder<DeSerializersT> {
-    return new TestEntityLinkRequestBuilder(this);
+    return new TestEntityLinkRequestBuilder<DeSerializersT>(this);
   }
 
   entityBuilder(): EntityBuilderType<

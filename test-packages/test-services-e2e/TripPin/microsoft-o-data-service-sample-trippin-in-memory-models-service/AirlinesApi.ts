@@ -43,7 +43,7 @@ export class AirlinesApi<
   entityConstructor = Airlines;
 
   requestBuilder(): AirlinesRequestBuilder<DeSerializersT> {
-    return new AirlinesRequestBuilder(this);
+    return new AirlinesRequestBuilder<DeSerializersT>(this);
   }
 
   entityBuilder(): EntityBuilderType<Airlines<DeSerializersT>, DeSerializersT> {

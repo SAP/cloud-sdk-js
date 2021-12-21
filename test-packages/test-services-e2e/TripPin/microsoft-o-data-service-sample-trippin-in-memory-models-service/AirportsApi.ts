@@ -44,7 +44,7 @@ export class AirportsApi<
   entityConstructor = Airports;
 
   requestBuilder(): AirportsRequestBuilder<DeSerializersT> {
-    return new AirportsRequestBuilder(this);
+    return new AirportsRequestBuilder<DeSerializersT>(this);
   }
 
   entityBuilder(): EntityBuilderType<Airports<DeSerializersT>, DeSerializersT> {

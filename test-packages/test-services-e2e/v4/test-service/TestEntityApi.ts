@@ -61,7 +61,7 @@ export class TestEntityApi<
   entityConstructor = TestEntity;
 
   requestBuilder(): TestEntityRequestBuilder<DeSerializersT> {
-    return new TestEntityRequestBuilder(this);
+    return new TestEntityRequestBuilder<DeSerializersT>(this);
   }
 
   entityBuilder(): EntityBuilderType<

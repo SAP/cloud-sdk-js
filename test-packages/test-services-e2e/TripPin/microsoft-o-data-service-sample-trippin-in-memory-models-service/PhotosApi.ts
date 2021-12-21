@@ -44,7 +44,7 @@ export class PhotosApi<
   entityConstructor = Photos;
 
   requestBuilder(): PhotosRequestBuilder<DeSerializersT> {
-    return new PhotosRequestBuilder(this);
+    return new PhotosRequestBuilder<DeSerializersT>(this);
   }
 
   entityBuilder(): EntityBuilderType<Photos<DeSerializersT>, DeSerializersT> {

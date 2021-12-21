@@ -8,7 +8,7 @@
   "types": "types",
   "repository": "github:SAP/cloud-sdk-js",
   "scripts": {
-    "test": "yarn dtslint --expectOnly --localTs ../../node_modules/typescript/lib test/v2",
+    "test": "yarn dtslint --expectOnly --localTs ../../node_modules/typescript/lib test",
     "check:dependencies": "echo Nothing to check here."
   },
   "dependencies": {

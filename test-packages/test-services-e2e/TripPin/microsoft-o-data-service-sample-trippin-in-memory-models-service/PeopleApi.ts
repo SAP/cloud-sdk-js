@@ -76,7 +76,7 @@ export class PeopleApi<
   entityConstructor = People;
 
   requestBuilder(): PeopleRequestBuilder<DeSerializersT> {
-    return new PeopleRequestBuilder(this);
+    return new PeopleRequestBuilder<DeSerializersT>(this);
   }
 
   entityBuilder(): EntityBuilderType<People<DeSerializersT>, DeSerializersT> {

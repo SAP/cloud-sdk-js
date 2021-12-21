@@ -13,7 +13,7 @@ noReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType  ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportMultipleParameterComplexReturnTypeParameters<DefaultDeSerializers>, TestComplexType<DefaultDeSerializers>>
+// $ExpectType ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportMultipleParameterComplexReturnTypeParameters<DefaultDeSerializers>, TestComplexType<DefaultDeSerializers>>
 const complexReturnTypeRequestBuilder =
   testActionImportMultipleParameterComplexReturnType({
     stringParam: 'stringParam',
@@ -25,7 +25,7 @@ complexReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType  ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportUnsupportedEdmTypesParameters<DefaultDeSerializers>, any>
+// $ExpectType ActionImportRequestBuilder<DefaultDeSerializers, TestActionImportUnsupportedEdmTypesParameters<DefaultDeSerializers>, any>
 const unsupportedEdmTypesRequestBuilder = testActionImportUnsupportedEdmTypes({
   simpleParam: 123
 });

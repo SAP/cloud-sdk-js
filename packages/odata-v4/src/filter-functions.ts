@@ -204,7 +204,7 @@ export function filterFunctions<
       TimeT
     >
   > = defaultDeSerializers as any
-): Record<FilterFunctionNames, any> {
+): FilterFunctionTypes {
   return {
     ...filterFunctionsCommon(mergeDefaultDeSerializersWith(deSerializers)),
     contains,

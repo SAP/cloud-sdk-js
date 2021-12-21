@@ -19,3 +19,29 @@ NUMBER_OF_EGGS: fieldBuilder.buildEdmTypeField('A_noEggs', 'Edm.Decimal', true),
 BREAKFAST_TIME: fieldBuilder.buildEdmTypeField('BreakfastTime', 'Edm.DateTime', false), 
   }"
 `;
+
+exports[`entity api schema gets proper schema 1`] = `
+"{ 
+    /**
+ * Static representation of the [[entityName]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+ENTITY_NAME: fieldBuilder.buildEdmTypeField('EntityName', 'Edm.String', false),
+/**
+ * Static representation of the [[numberOfEggs]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+NUMBER_OF_EGGS: fieldBuilder.buildEdmTypeField('A_noEggs', 'Edm.Decimal', true),
+/**
+ * Static representation of the [[breakfastTime]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+BREAKFAST_TIME: fieldBuilder.buildEdmTypeField('BreakfastTime', 'Edm.DateTime', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', Breakfast) 
+  }"
+`;

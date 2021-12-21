@@ -1,24 +1,21 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { filterFunction, filterFunctions } from '@sap-cloud-sdk/odata-v4';
 
-// $ExpectType Filter<TestEntity, string>
-filterFunctions
-  .substring(TestEntity.STRING_PROPERTY, TestEntity.INT_16_PROPERTY)
+const testEntitySchema = testService().testEntityApi.schema;
+
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, any, string>
+filterFunctions()
+  .substring(testEntitySchema.STRING_PROPERTY, testEntitySchema.INT_16_PROPERTY)
   .equals('test');
 
-// $ExpectType BooleanFilterFunction<TestEntity>
-filterFunctions.contains(TestEntity.STRING_PROPERTY, 'test');
+// $ExpectType BooleanFilterFunction<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>>
+filterFunctions().contains(testEntitySchema.STRING_PROPERTY, 'test');
 
-// $ExpectType BooleanFilterFunction<TestEntity>
-filterFunctions.hasSubset(TestEntity.COLLECTION_PROPERTY, [1]);
-
-MyEntity.requestBuilder()
-  .getAll()
-  .filter(filterFunctions.hasSubset(MyEntity.COLLECTION_PROPERTY, [1]))
-  .filter(filterFunctions.length(MyEntity.COLLECTION_PROPERTY).equals(3));
+// $ExpectType BooleanFilterFunction<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>>
+filterFunctions().hasSubset(testEntitySchema.COLLECTION_PROPERTY, [1]);
 
 // $ExpectError
-filterFunctions.hasSubset(['1'], [1]);
+filterFunctions().hasSubset(['1'], [1]);
 
 // $ExpectType BooleanFilterFunction<Entity>
 filterFunction('fn', 'boolean');

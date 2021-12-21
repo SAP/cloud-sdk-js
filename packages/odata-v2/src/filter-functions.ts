@@ -4,6 +4,7 @@ import {
   BooleanFilterFunction,
   filterFunction,
   filterFunctions as filterFunctionsCommon,
+  FilterFunctionsType as FilterFunctionsCommonType,
   Time,
   FilterFunctionNames as FilterFunctionNamesCommon
 } from '@sap-cloud-sdk/odata-common/internal';
@@ -111,13 +112,18 @@ export function filterFunctions<
       TimeT
     >
   > = defaultDeSerializers as any
-): Record<FilterFunctionNames, any> {
+): FilterFunctionsType {
   return {
     ...filterFunctionsCommon(mergeDefaultDeSerializersWith(deSerializers)),
     substringOf,
     replace
   };
 }
+
+export type FilterFunctionsType = FilterFunctionsCommonType & {
+  substringOf: typeof substringOf;
+  replace: typeof replace;
+};
 
 export type FilterFunctionNames =
   | FilterFunctionNamesCommon

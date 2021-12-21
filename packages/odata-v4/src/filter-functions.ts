@@ -10,6 +10,7 @@ import {
   CollectionFilterFunction,
   filterFunctions as filterFunctionsCommon,
   FilterFunctionNames as FilterFunctionNamesCommon,
+  FilterFunctionsType as FilterFunctionsCommonType,
   Time
 } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
@@ -217,6 +218,18 @@ export function filterFunctions<
     hasSubsequence
   };
 }
+
+export type FilterFunctionTypes = FilterFunctionsCommonType & {
+  contains: typeof contains;
+  matchesPattern: typeof matchesPattern;
+  fractionalSeconds: typeof fractionalSeconds;
+  totalOffsetMinutes: typeof totalOffsetMinutes;
+  maxDateTime: typeof maxDateTime;
+  minDateTime: typeof minDateTime;
+  now: typeof now;
+  hasSubset: typeof hasSubset;
+  hasSubsequence: typeof hasSubsequence;
+};
 
 export type FilterFunctionNames =
   | FilterFunctionNamesCommon

@@ -369,7 +369,7 @@ export function filterFunctions<
     StringT,
     AnyT
   >
-): Record<FilterFunctionNames, any> {
+): FilterFunctionsType {
   return {
     endsWith,
     startsWith,
@@ -392,6 +392,49 @@ export function filterFunctions<
     isOf
   };
 }
+
+export interface FilterFunctionsType {
+  endsWith: typeof endsWith;
+  startsWith: typeof startsWith;
+  length: typeof length;
+  indexOf: typeof indexOf;
+  substring: typeof substring;
+  toLower: typeof toLower;
+  toUpper: typeof toUpper;
+  trim: typeof trim;
+  concat: typeof concat;
+  round: typeof round;
+  floor: typeof floor;
+  ceiling: typeof ceiling;
+  day: typeof day;
+  hour: typeof hour;
+  minute: typeof minute;
+  month: typeof month;
+  second: typeof second;
+  year: typeof year;
+  isOf: typeof isOf;
+};
+
+export type FilterFunctionTypes =
+  | typeof endsWith
+    | typeof startsWith
+    | typeof length
+    | typeof indexOf
+    | typeof substring
+    | typeof toLower
+    | typeof toUpper
+    | typeof  trim
+    | typeof  concat
+    | typeof  round
+    | typeof  floor
+    | typeof  ceiling
+    | typeof  day
+    | typeof  hour
+    | typeof  minute
+    | typeof  month
+    | typeof  second
+    | typeof  year
+    | typeof  isOf ;
 
 export type FilterFunctionNames =
   | 'endsWith'

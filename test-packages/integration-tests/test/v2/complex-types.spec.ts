@@ -71,7 +71,7 @@ describe('Complex types', () => {
       )
       .reply(200, getAllResponse);
 
-    const t = asc(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty);
+    asc(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty);
     const request = testEntityApi
       .requestBuilder()
       .getAll()

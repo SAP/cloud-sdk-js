@@ -34,17 +34,13 @@ describe('entity class generator', () => {
       ],
       [
         `${numberOfEggs.instancePropertyName}?`,
-        "DeserializedType<T, 'Edm.Decimal'>"
+        "DeserializedType<T, 'Edm.Decimal'> | null"
       ],
       [
         `${breakfastTime.instancePropertyName}!`,
         "DeserializedType<T, 'Edm.DateTime'>"
       ],
       [`${toBrunch.instancePropertyName}?`, 'Brunch<T> | null']
-    ]);
-
-    expect(classDeclaration.methods!.map(method => method.name)).toEqual([
-      'toJSON'
     ]);
   });
 });

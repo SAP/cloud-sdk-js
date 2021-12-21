@@ -53,7 +53,7 @@ function getEntityApiFunction(
   entity: VdmEntity,
   service: VdmServiceMetadata
 ): string {
-  return codeBlock`get ${voca.decapitalize(entity.className)}Api(): ${
+  return codeBlock`get ${getApiName(entity.className)}(): ${
     entity.className
   }Api<DeSerializersT> {
     const api = ${getApiInitializer(entity.className)};
@@ -74,7 +74,16 @@ function addLinkedApis(entity: VdmEntity, service: VdmServiceMetadata): string {
 }
 
 function getApiInitializer(entityClassName: string): string {
-  return `this.initApi('${voca.decapitalize(
+  return `this.initApi('${getApiName(
     entityClassName
   )}Api', ${entityClassName}Api)`;
+}
+
+/**
+ * @internal
+ * @param entityName - Name of the Entity for which the api property name is build.
+ * @returns apiName e.g. testEntityApi if the entity is called TestEntity.
+ */
+export function getApiName(entityName: string): string {
+  return `${voca.decapitalize(entityName)}Api`;
 }

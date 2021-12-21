@@ -15,24 +15,21 @@ describe('entity interface generator', () => {
       foodService
     );
     expect(interfaceDeclaration.name).toBe(
-      `${breakfastEntity.className}Type<DeSerializersT extends DeSerializers = DefaultDeSerializers>`
+      `${breakfastEntity.className}Type<T extends DeSerializers = DefaultDeSerializers>`
     );
     expect(interfaceDeclaration.isExported).toBeTruthy();
     const instanceProperties = interfaceDeclaration.properties;
     expect(instanceProperties!.map(prop => [prop.name, prop.type])).toEqual([
-      [
-        entityName.instancePropertyName,
-        "DeserializedType<DeSerializersT, 'Edm.String'>"
-      ],
+      [entityName.instancePropertyName, "DeserializedType<T, 'Edm.String'>"],
       [
         `${numberOfEggs.instancePropertyName}?`,
-        "DeserializedType<DeSerializersT, 'Edm.Decimal'> | null"
+        "DeserializedType<T, 'Edm.Decimal'> | null"
       ],
       [
         `${breakfastTime.instancePropertyName}`,
-        "DeserializedType<DeSerializersT, 'Edm.DateTime'>"
+        "DeserializedType<T, 'Edm.DateTime'>"
       ],
-      [`${toBrunch.instancePropertyName}?`, 'BrunchType<DeSerializersT> | null']
+      [`${toBrunch.instancePropertyName}?`, 'BrunchType<T> | null']
     ]);
   });
 });

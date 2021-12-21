@@ -22,8 +22,10 @@ describe('complex type imports', () => {
           'ComplexTypeField',
           'ConstructorOrField',
           'DeserializedType',
+          'EdmTypeField',
           'FieldBuilder',
           'FieldOptions',
+          'OrderableEdmTypeField',
           'PropertyMetadata'
         ]
       }
@@ -36,7 +38,7 @@ describe('complex type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: './ComplexDesert',
-        namedImports: ['ComplexDesert']
+        namedImports: ['ComplexDesert', 'ComplexDesertField']
       },
       {
         kind: StructureKind.ImportDeclaration,
@@ -50,8 +52,10 @@ describe('complex type imports', () => {
           'ComplexTypeField',
           'ConstructorOrField',
           'DeserializedType',
+          'EdmTypeField',
           'FieldBuilder',
           'FieldOptions',
+          'OrderableEdmTypeField',
           'PropertyMetadata'
         ]
       }
@@ -73,7 +77,7 @@ describe('complex type imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: './ComplexDesert',
-        namedImports: ['ComplexDesert']
+        namedImports: ['ComplexDesert', 'ComplexDesertField']
       },
       {
         kind: StructureKind.ImportDeclaration,
@@ -87,8 +91,10 @@ describe('complex type imports', () => {
           'ComplexTypeField',
           'ConstructorOrField',
           'DeserializedType',
+          'EdmTypeField',
           'FieldBuilder',
           'FieldOptions',
+          'OrderableEdmTypeField',
           'PropertyMetadata'
         ]
       }

@@ -64,7 +64,11 @@ export function getApiSpecificUsage(
   if (service.entities?.length > 0) {
     const entity = getODataEntity(service.originalFileName, service.entities);
     return {
-      ...entityCodeSample(entity.className, service.npmPackageName),
+      ...entityCodeSample(
+        entity.className,
+        service.className,
+        service.npmPackageName
+      ),
       header: usageHeaderText
     };
   }

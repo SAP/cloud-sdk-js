@@ -15,6 +15,7 @@ import {
 } from '../edmx-to-vdm-util';
 import { EdmxReturnType } from '../../edmx-parser/v4';
 import { isNullableProperty } from '../../generator-utils';
+import { getApiName } from '../../generator-without-ts-morph/service';
 /* eslint-disable valid-jsdoc */
 
 /**
@@ -177,7 +178,7 @@ function getEntityReturnType(
         returnType: first(entities)!.className,
         builderFunction: `${voca.decapitalize(
           serviceName
-        )}(deSerializers).${voca.decapitalize(first(entities)!.className)}Api`,
+        )}(deSerializers).${getApiName(first(entities)!.className)}`,
         isNullable,
         isCollection
       }

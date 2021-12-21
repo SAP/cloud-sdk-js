@@ -23,7 +23,7 @@ describe('generator', () => {
         })
       );
 
-      const sourceFiles = project!.getSourceFiles();
+      const sourceFiles = project!.project!.getSourceFiles();
       expect(
         sourceFiles.find(file => file.getBaseName() === 'some-test-markdown.md')
       ).toBeDefined();
@@ -41,7 +41,7 @@ describe('generator', () => {
           generateSdkMetadata: true
         })
       );
-      const sourceFiles = project!.getSourceFiles();
+      const sourceFiles = project!.project!.getSourceFiles();
       const clientFile = sourceFiles.find(
         file => file.getBaseName() === 'API_TEST_SRV_CLIENT_JS.json'
       );
@@ -94,15 +94,11 @@ describe('generator', () => {
       expect(testEntityFile).toBeDefined();
       expect(testEntityFile!.getClasses().length).toBe(1);
       expect(testEntityFile!.getInterfaces().length).toBe(1);
-      expect(testEntityFile!.getModules().length).toBe(1);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(24);
+      expect(entityClass!.getProperties().length).toBe(25);
 
       checkStaticProperties(entityClass!);
-
-      const entityNamespace = testEntityFile!.getModule('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(27);
     });
 
     it('generates function-imports.ts file', () => {
@@ -129,31 +125,24 @@ describe('generator', () => {
       expect(testEntityFile).toBeDefined();
       expect(testEntityFile!.getClasses().length).toBe(1);
       expect(testEntityFile!.getInterfaces().length).toBe(1);
-      expect(testEntityFile!.getModules().length).toBe(1);
       const imports = testEntityFile!
         .getImportStringLiterals()
         .map(stringLiteral => stringLiteral.getLiteralValue());
       expect(imports).toEqual([
-        './TestEntityRequestBuilder',
-        'moment',
-        'bignumber.js',
+        '@sap-cloud-sdk/odata-v4',
+        '@sap-cloud-sdk/odata-common/internal',
         './TestComplexType',
         './TestEnumType',
         './TestEnumTypeInt64',
         './TestEnumTypeWithOneMember',
-        '@sap-cloud-sdk/odata-v4',
-        '@sap-cloud-sdk/odata-common/internal',
         './TestEntityMultiLink',
         './TestEntitySingleLink'
       ]);
 
       const entityClass = testEntityFile!.getClass('TestEntity');
-      expect(entityClass!.getProperties().length).toBe(32);
+      expect(entityClass!.getProperties().length).toBe(33);
 
       checkStaticProperties(entityClass!);
-
-      const entityNamespace = testEntityFile!.getModule('TestEntity');
-      expect(entityNamespace!.getVariableDeclarations().length).toBe(35);
     });
 
     it('generates function-imports.ts file', () => {

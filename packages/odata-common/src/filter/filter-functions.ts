@@ -413,28 +413,28 @@ export interface FilterFunctionsType {
   second: typeof second;
   year: typeof year;
   isOf: typeof isOf;
-};
+}
 
 export type FilterFunctionTypes =
   | typeof endsWith
-    | typeof startsWith
-    | typeof length
-    | typeof indexOf
-    | typeof substring
-    | typeof toLower
-    | typeof toUpper
-    | typeof  trim
-    | typeof  concat
-    | typeof  round
-    | typeof  floor
-    | typeof  ceiling
-    | typeof  day
-    | typeof  hour
-    | typeof  minute
-    | typeof  month
-    | typeof  second
-    | typeof  year
-    | typeof  isOf ;
+  | typeof startsWith
+  | typeof length
+  | typeof indexOf
+  | typeof substring
+  | typeof toLower
+  | typeof toUpper
+  | typeof trim
+  | typeof concat
+  | typeof round
+  | typeof floor
+  | typeof ceiling
+  | typeof day
+  | typeof hour
+  | typeof minute
+  | typeof month
+  | typeof second
+  | typeof year
+  | typeof isOf;
 
 export type FilterFunctionNames =
   | 'endsWith'

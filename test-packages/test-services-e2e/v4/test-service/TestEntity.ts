@@ -3,14 +3,21 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v4';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntityLink, TestEntityLinkType } from './TestEntityLink';
 
 /**
  * This class represents the entity "TestEntity" of service "TestService".
  */
-export class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityType<T> {
+export class TestEntity<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements TestEntityType<T>
+{
   /**
    * Technical entity name for TestEntity.
    */
@@ -72,19 +79,27 @@ export class TestEntity<T extends DeSerializers = DefaultDeSerializers> extends 
    * Data Time Offset Data Time Property.
    * @nullable
    */
-  dataTimeOffsetDataTimeProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * Data Time Offset Timestamp Property.
    * @nullable
    */
-  dataTimeOffsetTimestampProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetTimestampProperty?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   /**
    * One-to-many navigation property to the [[TestEntityLink]] entity.
    */
   toMultiLink!: TestEntityLink<T>[];
 }
 
-export interface TestEntityType<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntityType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyTestEntity: DeserializedType<T, 'Edm.Int32'>;
   stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
@@ -94,7 +109,13 @@ export interface TestEntityType<T extends DeSerializers = DefaultDeSerializers> 
   decimalProperty?: DeserializedType<T, 'Edm.Decimal'> | null;
   dateProperty?: DeserializedType<T, 'Edm.Date'> | null;
   timeOfDayProperty?: DeserializedType<T, 'Edm.TimeOfDay'> | null;
-  dataTimeOffsetDataTimeProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
-  dataTimeOffsetTimestampProperty?: DeserializedType<T, 'Edm.DateTimeOffset'> | null;
+  dataTimeOffsetDataTimeProperty?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
+  dataTimeOffsetTimestampProperty?: DeserializedType<
+    T,
+    'Edm.DateTimeOffset'
+  > | null;
   toMultiLink: TestEntityLinkType<T>[];
 }

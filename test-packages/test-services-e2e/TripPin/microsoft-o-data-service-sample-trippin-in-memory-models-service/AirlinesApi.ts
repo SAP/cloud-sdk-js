@@ -5,64 +5,55 @@
  */
 import { Airlines } from './Airlines';
 import { AirlinesRequestBuilder } from './AirlinesRequestBuilder';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
-import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers,
+  mergeDefaultDeSerializersWith
+} from '@sap-cloud-sdk/odata-v4';
+import {
+  EdmTypeField,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  FieldBuilder,
+  Time
+} from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class AirlinesApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
-    EntityApi<
-      Airlines<
-        DeSerializersT
-      >, 
-      DeSerializersT
-    > {
+export class AirlinesApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<Airlines<DeSerializersT>, DeSerializersT>
+{
   public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {
-      
-    };
+  private navigationPropertyFields!: {};
 
-  _addNavigationProperties(
-      linkedApis: [
-        
-      ]): this {
-        this.navigationPropertyFields = {
-          
-        };
-        return this;
-      }
-  
+  _addNavigationProperties(linkedApis: []): this {
+    this.navigationPropertyFields = {};
+    return this;
+  }
+
   entityConstructor = Airlines;
-  
-  requestBuilder(): AirlinesRequestBuilder<
-    DeSerializersT
-  > {
+
+  requestBuilder(): AirlinesRequestBuilder<DeSerializersT> {
     return new AirlinesRequestBuilder(this);
   }
-  
-  entityBuilder(): EntityBuilderType<
-    Airlines<
-      DeSerializersT
-    >,
-    DeSerializersT
-  > {
+
+  entityBuilder(): EntityBuilderType<Airlines<DeSerializersT>, DeSerializersT> {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<
-  Airlines<
-      DeSerializersT>,
-    DeSerializersT,
-    NullableT
-  > {
+  ): CustomField<Airlines<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -73,23 +64,27 @@ export class AirlinesApi<DeSerializersT extends DeSerializers = DefaultDeSeriali
 
   get schema() {
     const fieldBuilder = new FieldBuilder(Airlines, this.deSerializers);
-    return { 
-    /**
- * Static representation of the [[airlineCode]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-AIRLINE_CODE: fieldBuilder.buildEdmTypeField('AirlineCode', 'Edm.String', false),
-/**
- * Static representation of the [[name]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
-...this.navigationPropertyFields,
-/**
- * 
- * All fields selector.
- */
-ALL_FIELDS: new AllFields('*', Airlines) 
-  };
+    return {
+      /**
+       * Static representation of the [[airlineCode]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      AIRLINE_CODE: fieldBuilder.buildEdmTypeField(
+        'AirlineCode',
+        'Edm.String',
+        false
+      ),
+      /**
+       * Static representation of the [[name]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false),
+      ...this.navigationPropertyFields,
+      /**
+       *
+       * All fields selector.
+       */
+      ALL_FIELDS: new AllFields('*', Airlines)
+    };
   }
 }

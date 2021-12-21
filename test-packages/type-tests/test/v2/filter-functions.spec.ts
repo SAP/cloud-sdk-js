@@ -1,6 +1,7 @@
 import {
   TestEntityApi,
-  TestEntitySingleLinkApi, testService
+  TestEntitySingleLinkApi,
+  testService
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   filterFunctions,

@@ -5,64 +5,56 @@
  */
 import { Photos } from './Photos';
 import { PhotosRequestBuilder } from './PhotosRequestBuilder';
-import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
-import { OrderableEdmTypeField, EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  CustomField,
+  defaultDeSerializers,
+  DefaultDeSerializers,
+  DeSerializers,
+  mergeDefaultDeSerializersWith
+} from '@sap-cloud-sdk/odata-v4';
+import {
+  OrderableEdmTypeField,
+  EdmTypeField,
+  AllFields,
+  entityBuilder,
+  EntityBuilderType,
+  EntityApi,
+  FieldBuilder,
+  Time
+} from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class PhotosApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
-    EntityApi<
-      Photos<
-        DeSerializersT
-      >, 
-      DeSerializersT
-    > {
+export class PhotosApi<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> implements EntityApi<Photos<DeSerializersT>, DeSerializersT>
+{
   public deSerializers: DeSerializersT;
 
-  constructor(
-    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {
-      
-    };
+  private navigationPropertyFields!: {};
 
-  _addNavigationProperties(
-      linkedApis: [
-        
-      ]): this {
-        this.navigationPropertyFields = {
-          
-        };
-        return this;
-      }
-  
+  _addNavigationProperties(linkedApis: []): this {
+    this.navigationPropertyFields = {};
+    return this;
+  }
+
   entityConstructor = Photos;
-  
-  requestBuilder(): PhotosRequestBuilder<
-    DeSerializersT
-  > {
+
+  requestBuilder(): PhotosRequestBuilder<DeSerializersT> {
     return new PhotosRequestBuilder(this);
   }
-  
-  entityBuilder(): EntityBuilderType<
-    Photos<
-      DeSerializersT
-    >,
-    DeSerializersT
-  > {
+
+  entityBuilder(): EntityBuilderType<Photos<DeSerializersT>, DeSerializersT> {
     return entityBuilder(this);
   }
 
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<
-  Photos<
-      DeSerializersT>,
-    DeSerializersT,
-    NullableT
-  > {
+  ): CustomField<Photos<DeSerializersT>, DeSerializersT, NullableT> {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -73,23 +65,23 @@ export class PhotosApi<DeSerializersT extends DeSerializers = DefaultDeSerialize
 
   get schema() {
     const fieldBuilder = new FieldBuilder(Photos, this.deSerializers);
-    return { 
-    /**
- * Static representation of the [[id]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-ID: fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false),
-/**
- * Static representation of the [[name]] property for query construction.
- * Use to reference this property in query operations such as 'select' in the fluent request API.
- */
-NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true),
-...this.navigationPropertyFields,
-/**
- * 
- * All fields selector.
- */
-ALL_FIELDS: new AllFields('*', Photos) 
-  };
+    return {
+      /**
+       * Static representation of the [[id]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      ID: fieldBuilder.buildEdmTypeField('Id', 'Edm.Int64', false),
+      /**
+       * Static representation of the [[name]] property for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      NAME: fieldBuilder.buildEdmTypeField('Name', 'Edm.String', true),
+      ...this.navigationPropertyFields,
+      /**
+       *
+       * All fields selector.
+       */
+      ALL_FIELDS: new AllFields('*', Photos)
+    };
   }
 }

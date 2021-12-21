@@ -4,21 +4,35 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
-import { DefaultDeSerializers, DeSerializers, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v4';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v4';
 import { RequestBuilder } from '@sap-cloud-sdk/odata-v4/internal';
 import { Airlines } from './Airlines';
 
 /**
  * Request builder class for operations supported on the [[Airlines]] entity.
  */
-export class AirlinesRequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<Airlines<T>, T> {
+export class AirlinesRequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<Airlines<T>, T> {
   /**
    * Returns a request builder for retrieving one `Airlines` entity based on its keys.
    * @param airlineCode Key property. See [[Airlines.airlineCode]].
    * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
    */
-  getByKey(airlineCode: DeserializedType<T, 'Edm.String'>): GetByKeyRequestBuilder<Airlines<T>, T> {
-    return new GetByKeyRequestBuilder<Airlines<T>, T>(this.entityApi, { AirlineCode: airlineCode });
+  getByKey(
+    airlineCode: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Airlines<T>, T> {
+    return new GetByKeyRequestBuilder<Airlines<T>, T>(this.entityApi, {
+      AirlineCode: airlineCode
+    });
   }
 
   /**
@@ -60,6 +74,11 @@ export class AirlinesRequestBuilder<T extends DeSerializers = DefaultDeSerialize
    */
   delete(entity: Airlines<T>): DeleteRequestBuilder<Airlines<T>, T>;
   delete(airlineCodeOrEntity: any): DeleteRequestBuilder<Airlines<T>, T> {
-    return new DeleteRequestBuilder<Airlines<T>, T>(this.entityApi, airlineCodeOrEntity instanceof Airlines ? airlineCodeOrEntity : { AirlineCode: airlineCodeOrEntity! });
+    return new DeleteRequestBuilder<Airlines<T>, T>(
+      this.entityApi,
+      airlineCodeOrEntity instanceof Airlines
+        ? airlineCodeOrEntity
+        : { AirlineCode: airlineCodeOrEntity! }
+    );
   }
 }

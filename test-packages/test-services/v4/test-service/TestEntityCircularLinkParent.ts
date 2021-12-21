@@ -3,14 +3,26 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { Entity, DefaultDeSerializers, DeSerializers } from '@sap-cloud-sdk/odata-v4';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
-import { TestEntityCircularLinkChild, TestEntityCircularLinkChildType } from './TestEntityCircularLinkChild';
+import {
+  TestEntityCircularLinkChild,
+  TestEntityCircularLinkChildType
+} from './TestEntityCircularLinkChild';
 
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
  */
-export class TestEntityCircularLinkParent<T extends DeSerializers = DefaultDeSerializers> extends Entity implements TestEntityCircularLinkParentType<T> {
+export class TestEntityCircularLinkParent<
+    T extends DeSerializers = DefaultDeSerializers
+  >
+  extends Entity
+  implements TestEntityCircularLinkParentType<T>
+{
   /**
    * Technical entity name for TestEntityCircularLinkParent.
    */
@@ -38,7 +50,9 @@ export class TestEntityCircularLinkParent<T extends DeSerializers = DefaultDeSer
   toChildren!: TestEntityCircularLinkChild<T>[];
 }
 
-export interface TestEntityCircularLinkParentType<T extends DeSerializers = DefaultDeSerializers> {
+export interface TestEntityCircularLinkParentType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
   keyProperty: DeserializedType<T, 'Edm.String'>;
   toFirstChild?: TestEntityCircularLinkChildType<T> | null;
   toChildren: TestEntityCircularLinkChildType<T>[];

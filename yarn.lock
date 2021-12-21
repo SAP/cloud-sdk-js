@@ -1703,7 +1703,7 @@
   dependencies:
     "@sap-cloud-sdk/core" "^1.47.1"
 
-"@sap/edm-converters@^1.0.41", "@sap/edm-converters@~1.0.21":
+"@sap/edm-converters@^1.0.41", "@sap/edm-converters@~1.0.41":
   version "1.0.41"
   resolved "https://registry.npmjs.org/@sap/edm-converters/-/edm-converters-1.0.41.tgz#e38cdd69b49ac407ef3c6637f78f1c6ea26ada4d"
   integrity sha512-Af7L7amlh06YXfOK2ufjKUZXhcuwXSt0uzPDrHbVBvN1lQS8Gj4BxzXTbnskiFweTR2CFuhoqsSaV2r/7l9mYw==

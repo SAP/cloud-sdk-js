@@ -22,7 +22,7 @@
 
 ## Improvements
 
--
+- [generator] Update the version of `@sap/edm-converters` to make sure node 14 is supported.
 
 ## Fixed Issues
 

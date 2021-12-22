@@ -11,11 +11,19 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: '14.x'
       - run: yarn install --frozen-lockfile
-      - name: Stable Release
+      - name: Version 1 Stable Release
+        if: startsWith(github.ref, 'refs/tags/v1')
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
           yarn lerna publish from-package --force-publish -y
+        env:
+          NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
+      - name: Version 2 Beta Release
+        if: startsWith(github.ref, 'refs/tags/v2')
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
+          yarn lerna publish --canary major --no-push --no-git-tag-version --dist-tag beta --force-publish --preid "beta" -y
         env:
           NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}

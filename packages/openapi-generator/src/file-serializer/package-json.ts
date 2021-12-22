@@ -33,8 +33,7 @@ export function packageJson(
           url: ''
         },
         scripts: {
-          compile: 'npx tsc',
-          doc: 'npx typedoc'
+          compile: 'npx tsc'
         },
         dependencies: {
           '@sap-cloud-sdk/openapi': `^${sdkVersion}`
@@ -43,7 +42,6 @@ export function packageJson(
           '@sap-cloud-sdk/openapi': `^${sdkVersion}`
         },
         devDependencies: {
-          typedoc: '^0.20.36',
           typescript: '~4.1.2'
         }
       },

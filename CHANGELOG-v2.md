@@ -15,8 +15,10 @@
 ### Function removed
 
 - [generator] Remove the option: `aggregatorDirectoryName` and `aggregatorNpmPackageName`
+- [generator] Remove the option: `generateTypedocJson`
 - [generator] Remove `packageJson` function from aggregator-package
 - [core] Remove the following functions:
+
   - `AllDestinations`
   - `AuthAndExchangeTokens`
   - `AuthenticationType`
@@ -157,6 +159,8 @@
   - `verifyJwtWithKey`
   - `wrapJwtInHeader`
   - `convertToNumber`
+
+- [analytics] Remove the `@sap-cloud-sdk/analytics` package
 
 ### Function moved
 

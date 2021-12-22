@@ -12,7 +12,6 @@ export interface GeneratorOptions {
   forceOverwrite: boolean;
   clearOutputDir: boolean;
   generateNpmrc: boolean;
-  generateTypedocJson: boolean;
   generatePackageJson: boolean;
   versionInPackageJson?: string;
   generateJs: boolean;
@@ -105,12 +104,6 @@ export const generatorOptionsCli: KeysToOptions = {
       'Deprecated. If set to true the generator will generate an .npmrc file specifying a registry for @sap scoped dependencies. This is not necessary anymore and will be skipped by default.',
     type: 'boolean',
     default: false
-  },
-  generateTypedocJson: {
-    describe:
-      'By default, the generator will generate a typedoc.json file for each package, used for the corresponding "doc" npm script. When set to false, the generator will skip the generation of the typedoc.json.',
-    type: 'boolean',
-    default: true
   },
   generatePackageJson: {
     describe:

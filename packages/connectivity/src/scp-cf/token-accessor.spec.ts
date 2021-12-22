@@ -91,7 +91,7 @@ describe('token accessor', () => {
 
       const retrieveFromCacheSpy = jest.spyOn(
         clientCredentialsTokenCache,
-        'getGrantTokenFromCache'
+        'getToken'
       );
 
       const first = await serviceToken('destination');
@@ -117,7 +117,7 @@ describe('token accessor', () => {
 
       const retrieveFromCacheSpy = jest.spyOn(
         clientCredentialsTokenCache,
-        'getGrantTokenFromCache'
+        'getToken'
       );
 
       const first = await serviceToken('destination');
@@ -152,53 +152,38 @@ describe('token accessor', () => {
         jwt: subscriberUserJwt
       });
 
-      const providerTokenFromCache =
-        clientCredentialsTokenCache.getGrantTokenFromCache(providerXsuaaUrl, {
-          username: destinationBindingClientSecretMock.credentials.clientid,
-          password: destinationBindingClientSecretMock.credentials.clientsecret
-        });
-      const subscriberTokenFromCache =
-        clientCredentialsTokenCache.getGrantTokenFromCache(subscriberXsuaaUrl, {
-          username: destinationBindingClientSecretMock.credentials.clientid,
-          password: destinationBindingClientSecretMock.credentials.clientsecret
-        });
+      const providerTokenFromCache = clientCredentialsTokenCache.getToken(
+        providerXsuaaUrl,
+        destinationBindingClientSecretMock.credentials.clientid
+      );
+      const subscriberTokenFromCache = clientCredentialsTokenCache.getToken(
+        subscriberXsuaaUrl,
+        destinationBindingClientSecretMock.credentials.clientid
+      );
 
       expect(providerTokenFromCache?.access_token).toEqual(providerToken);
       expect(subscriberTokenFromCache?.access_token).toEqual(subscriberToken);
 
       expect(
-        clientCredentialsTokenCache.getGrantTokenFromCache(
+        clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
-          {
-            username: destinationBindingClientSecretMock.credentials.clientid,
-            password:
-              destinationBindingClientSecretMock.credentials.clientsecret
-          }
+          destinationBindingClientSecretMock.credentials.clientid
         )
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getGrantTokenFromCache(
+        clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
-          {
-            username: 'schmusername',
-            password: 'aligator3'
-          }
+          'schmusername'
         )
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getGrantTokenFromCache(providerXsuaaUrl, {
-          username: 'schmusername',
-          password: 'aligator3'
-        })
+        clientCredentialsTokenCache.getToken(providerXsuaaUrl, 'schmusername')
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getGrantTokenFromCache(subscriberXsuaaUrl, {
-          username: 'schmusername',
-          password: 'aligator3'
-        })
+        clientCredentialsTokenCache.getToken(subscriberXsuaaUrl, 'schmusername')
       ).toBeUndefined();
     });
 
@@ -222,7 +207,7 @@ describe('token accessor', () => {
 
       const retrieveFromCacheSpy = jest.spyOn(
         clientCredentialsTokenCache,
-        'getGrantTokenFromCache'
+        'getToken'
       );
 
       const first = await serviceToken('destination', { useCache: false });

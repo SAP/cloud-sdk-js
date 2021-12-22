@@ -511,6 +511,83 @@ sap-client:001`);
       );
     });
 
+    it('rejectUnauthorized property of HttpsAgent should be set to true when isTrustingAllCertificates is false', async () => {
+      jest.spyOn(axios, 'request').mockResolvedValue({});
+      const destination: Destination = {
+        url: 'https://example.com',
+        isTrustingAllCertificates: true
+      };
+
+      await executeHttpRequest(destination, { method: 'get' });
+      const expectedJsonHttpsAgent = {
+        httpsAgent: expect.objectContaining({
+          options: expect.objectContaining({ rejectUnauthorized: false })
+        })
+      };
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedJsonHttpsAgent)
+      );
+    });
+
+    it('rejectUnauthorized property of HttpsAgent should be set to false when isTrustingAllCertificates is true', async () => {
+      jest.spyOn(axios, 'request').mockResolvedValue({});
+      const destination: Destination = {
+        url: 'https://example.com',
+        isTrustingAllCertificates: false
+      };
+      await executeHttpRequest(destination, { method: 'get' });
+      const expectedJsonHttpsAgent = {
+        httpsAgent: expect.objectContaining({
+          options: expect.objectContaining({ rejectUnauthorized: true })
+        })
+      };
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedJsonHttpsAgent)
+      );
+    });
+
+    it('request config contains httpAgent when destination URL uses "http" as protocol', async () => {
+      jest.spyOn(axios, 'request').mockResolvedValue({});
+
+      const expectedConfigEntry = { httpAgent: expect.anything() };
+      const destination: Destination = {
+        url: 'http://example.com',
+        authentication: 'NoAuthentication'
+      };
+
+      await executeHttpRequest(destination, { method: 'get' });
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfigEntry)
+      );
+    });
+
+    it('request config contains httpsAgent when destination URL uses "https" as protocol', async () => {
+      jest.spyOn(axios, 'request').mockResolvedValue({});
+      const expectedConfigEntry = { httpsAgent: expect.anything() };
+      const destination: Destination = {
+        url: 'https://example.com',
+        authentication: 'NoAuthentication'
+      };
+
+      await executeHttpRequest(destination, { method: 'get' });
+
+      expect(axios.request).toHaveBeenCalledWith(
+        expect.objectContaining(expectedConfigEntry)
+      );
+    });
+
+    it('throws an error if the destination URL uses neither "http" nor "https" as protocol (e.g. RFC)', async () => {
+      jest.spyOn(axios, 'request').mockResolvedValue({});
+      const destination: Destination = {
+        url: 'rfc://example.com',
+        authentication: 'NoAuthentication'
+      };
+
+      await expect(
+        executeHttpRequest(destination, { method: 'get' })
+      ).rejects.toThrowErrorMatchingSnapshot();
+    });
+
     it('includes the default axios config in request', async () => {
       const destination: Destination = { url: 'https://destinationUrl' };
       const requestSpy = jest.spyOn(axios, 'request').mockResolvedValue(true);

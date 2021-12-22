@@ -18,7 +18,6 @@ const generatorConfigOData = {
   writeReadme: false,
   clearOutputDir: true,
   generateNpmrc: false,
-  generateTypedocJson: false,
   generatePackageJson: false,
   generateCSN: false,
   generateSdkMetadata: false,

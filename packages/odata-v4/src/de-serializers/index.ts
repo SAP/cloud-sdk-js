@@ -5,3 +5,4 @@ export * from './default-de-serializers';
 export * from './entity-serializer';
 export * from './entity-deserializer';
 export * from './payload-value-converter';
+export * from './temporal-de-serializers';

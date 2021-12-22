@@ -31,9 +31,9 @@ export { CustomField } from './selectable';
 export {
   CustomDeSerializers,
   defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
   edmToTs,
   entityDeserializer,
   mergeDefaultDeSerializersWith
 } from './de-serializers';
+
+export type { DefaultDeSerializers, DeSerializers } from './de-serializers';

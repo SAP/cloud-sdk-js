@@ -1,29 +1,26 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import moment from 'moment';
 import { Cache } from './cache';
-import {
-  ClientCredentials,
-  ClientCredentialsResponse
-} from './xsuaa-service-types';
+import { ClientCredentialsResponse } from './xsuaa-service-types';
+
+const logger = createLogger({
+  package: 'connectivity',
+  messageContext: 'client-credentials-token-cache'
+});
 
 const ClientCredentialsTokenCache = (
   cache: Cache<ClientCredentialsResponse>
 ) => ({
-  // TODO: this method name can be shortened
-  // TODO: Remove client credentials in v2.0
-  getGrantTokenFromCache: (
-    url,
-    credentialsOrClientId: ClientCredentials | string
-  ): ClientCredentialsResponse | undefined =>
-    cache.get(getGrantTokenCacheKey(url, credentialsOrClientId)),
+  getToken: (url, clientId: string): ClientCredentialsResponse | undefined =>
+    cache.get(getCacheKey(url, clientId)),
 
-  // TODO: this method name can be shortened
-  cacheRetrievedToken: (
+  cacheToken: (
     url,
-    credentialsOrClientId: ClientCredentials | string,
+    clientId: string,
     token: ClientCredentialsResponse
   ): void => {
     cache.set(
-      getGrantTokenCacheKey(url, credentialsOrClientId),
+      getCacheKey(url, clientId),
       token,
       token.expires_in
         ? moment().add(token.expires_in, 'second').unix() * 1000
@@ -39,17 +36,18 @@ const ClientCredentialsTokenCache = (
 /** *
  * @internal
  * @param url - URL from where the token is fetched
- * @param credentialsOrClientId - Credentials to fetch the token
+ * @param clientId - ClientId to fetch the token
  * @returns the token
  */
-export function getGrantTokenCacheKey(
-  url: string,
-  credentialsOrClientId: ClientCredentials | string
-): string {
-  const clientId =
-    typeof credentialsOrClientId === 'string'
-      ? credentialsOrClientId
-      : credentialsOrClientId.username;
+export function getCacheKey(url: string, clientId: string): string | undefined {
+  if (!url) {
+    logger.warn('Cannot get cache key. The url was undefined.');
+    return;
+  }
+  if (!clientId) {
+    logger.warn('Cannot get cache key. The ClientId was undefined.');
+    return;
+  }
   return [url, clientId].join(':');
 }
 

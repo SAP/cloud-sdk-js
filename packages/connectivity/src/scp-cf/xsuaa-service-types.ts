@@ -1,14 +1,6 @@
 /**
  * @internal
  */
-export interface ClientCredentials {
-  username: string;
-  password: string;
-}
-
-/**
- * @internal
- */
 export interface ClientCredentialsResponse {
   access_token: string;
   token_type: string;

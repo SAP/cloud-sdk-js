@@ -44,6 +44,5 @@
     "uuid": "^8.2.0"
   },
   "devDependencies": {
-    "ts-morph": "^13.0.1"
   }
 }

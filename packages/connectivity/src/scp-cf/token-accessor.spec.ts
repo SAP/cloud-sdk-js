@@ -154,17 +154,11 @@ describe('token accessor', () => {
 
       const providerTokenFromCache = clientCredentialsTokenCache.getToken(
         providerXsuaaUrl,
-        {
-          username: destinationBindingClientSecretMock.credentials.clientid,
-          password: destinationBindingClientSecretMock.credentials.clientsecret
-        }
+        destinationBindingClientSecretMock.credentials.clientid
       );
       const subscriberTokenFromCache = clientCredentialsTokenCache.getToken(
         subscriberXsuaaUrl,
-        {
-          username: destinationBindingClientSecretMock.credentials.clientid,
-          password: destinationBindingClientSecretMock.credentials.clientsecret
-        }
+        destinationBindingClientSecretMock.credentials.clientid
       );
 
       expect(providerTokenFromCache?.access_token).toEqual(providerToken);
@@ -173,36 +167,23 @@ describe('token accessor', () => {
       expect(
         clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
-          {
-            username: destinationBindingClientSecretMock.credentials.clientid,
-            password:
-              destinationBindingClientSecretMock.credentials.clientsecret
-          }
+          destinationBindingClientSecretMock.credentials.clientid
         )
       ).toBeUndefined();
 
       expect(
         clientCredentialsTokenCache.getToken(
           'https://doesnotexist.example.com',
-          {
-            username: 'schmusername',
-            password: 'aligator3'
-          }
+          'schmusername'
         )
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getToken(providerXsuaaUrl, {
-          username: 'schmusername',
-          password: 'aligator3'
-        })
+        clientCredentialsTokenCache.getToken(providerXsuaaUrl, 'schmusername')
       ).toBeUndefined();
 
       expect(
-        clientCredentialsTokenCache.getToken(subscriberXsuaaUrl, {
-          username: 'schmusername',
-          password: 'aligator3'
-        })
+        clientCredentialsTokenCache.getToken(subscriberXsuaaUrl, 'schmusername')
       ).toBeUndefined();
     });
 

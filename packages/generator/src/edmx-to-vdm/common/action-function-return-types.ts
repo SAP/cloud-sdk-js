@@ -154,7 +154,7 @@ function getEdmReturnType(
   return {
     returnTypeCategory: VdmReturnTypeCategory.EDM_TYPE,
     returnType: typeMapping.jsType,
-    builderFunction: `(${valueAlias}) => edmToTs(${extracted}, '${typeMapping.edmType}')`,
+    builderFunction: `(${valueAlias}) => edmToTs(${extracted}, '${typeMapping.edmType}', deSerializers)`,
     isNullable,
     isCollection
   };

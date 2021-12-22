@@ -27,7 +27,7 @@ describe('function', () => {
         `order a breakfast ${unixEOL}@param parameters - Object containing all parameters for the function import.${unixEOL}@returns A request builder that allows to overwrite some of the values and execute the resulting request.`
       ],
       isExported: true,
-      statements: `const params = {${unixEOL}withHoneyToast: new FunctionImportParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}${unixEOL}return new FunctionImportRequestBuilder('post', 'some/path/to/food', 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, Edm.String)), params, deSerializers);`
+      statements: `const params = {${unixEOL}withHoneyToast: new FunctionImportParameter('WithHoneyToast', 'Edm.Boolean', parameters.withHoneyToast)${unixEOL}};${unixEOL}${unixEOL}${unixEOL}return new FunctionImportRequestBuilder('post', 'some/path/to/food', 'OrderBreakfast', (data) => transformReturnValueForEdmType(data, (val) => edmToTs(val, 'Edm.String', deSerializers)), params, deSerializers);`
     });
   });
 

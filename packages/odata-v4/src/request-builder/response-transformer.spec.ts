@@ -2,7 +2,7 @@ import {
   createOriginalTestEntityData1,
   createTestEntity
 } from '../../../../test-resources/test/test-util/test-data';
-import { edmToTs } from '../de-serializers';
+import { defaultDeSerializers, edmToTs } from '../de-serializers';
 import { testEntityApi } from '../../test/test-util';
 import {
   transformReturnValueForEdmType,
@@ -23,7 +23,7 @@ describe('Response transformer', () => {
     const data = { value: singleNumber };
 
     const actual = transformReturnValueForEdmType(data, val =>
-      edmToTs(val.value, 'Edm.Int32')
+      edmToTs(val.value, 'Edm.Int32', defaultDeSerializers)
     );
     expect(actual).toEqual(singleNumber);
   });

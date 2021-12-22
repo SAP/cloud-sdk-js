@@ -41,7 +41,6 @@ export async function packageJson(
         },
         scripts: {
           compile: 'npx tsc',
-          doc: 'npx typedoc',
           ...(sdkAfterVersionScript
             ? { version: 'node ../../../after-version-update.js' }
             : {})
@@ -55,7 +54,6 @@ export async function packageJson(
           [oDataModule]: `^${await getSdkVersion()}`
         },
         devDependencies: {
-          typedoc: '^0.20.36',
           typescript: '~4.1.2'
         }
       },

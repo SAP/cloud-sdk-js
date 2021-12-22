@@ -4,4 +4,3 @@ export * from './npmrc';
 export * from './package-json';
 export * from './readme';
 export * from './ts-config';
-export * from './typedoc-json';

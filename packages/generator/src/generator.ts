@@ -38,7 +38,6 @@ import { npmrc } from './service/npmrc';
 import { packageJson } from './service/package-json';
 import { readme } from './service/readme';
 import { tsConfig } from './service/ts-config';
-import { typedocJson } from './service/typedoc-json';
 import { VdmServiceMetadata } from './vdm-types';
 import {
   actionImportSourceFile,
@@ -252,16 +251,6 @@ export async function generateSourcesForService(
   if (options.generateNpmrc) {
     logger.info(`[${service.originalFileName}] Generating .npmrc for ...`);
     otherFile(serviceDir, '.npmrc', npmrc(), options.forceOverwrite);
-  }
-
-  if (options.generateTypedocJson) {
-    logger.info(`[${service.originalFileName}] Generating typedoc.json ...`);
-    otherFile(
-      serviceDir,
-      'typedoc.json',
-      typedocJson(),
-      options.forceOverwrite
-    );
   }
 
   if (options.generateCSN) {

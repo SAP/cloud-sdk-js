@@ -1,6 +1,12 @@
+import { createLogger } from '@sap-cloud-sdk/util';
 import moment from 'moment';
 import { Cache } from './cache';
 import { ClientCredentialsResponse } from './xsuaa-service-types';
+
+const logger = createLogger({
+  package: 'connectivity',
+  messageContext: 'client-credentials-token-cache'
+});
 
 const ClientCredentialsTokenCache = (
   cache: Cache<ClientCredentialsResponse>
@@ -33,7 +39,19 @@ const ClientCredentialsTokenCache = (
  * @param clientId - ClientId to fetch the token
  * @returns the token
  */
-export function getCacheKey(url: string, clientId: string): string {
+export function getCacheKey(url: string, clientId: string): string | undefined {
+  if (!url) {
+    logger.warn(
+      'Cannot get cache key. The url was undefined.'
+    );
+    return;
+  }
+  if (!clientId) {
+    logger.warn(
+      'Cannot get cache key. The ClientId was undefined.'
+    );
+    return;
+  }
   return [url, clientId].join(':');
 }
 

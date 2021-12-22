@@ -43,6 +43,5 @@
     "axios": "^0.23.0",
     "uuid": "^8.2.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

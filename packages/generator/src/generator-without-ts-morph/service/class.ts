@@ -76,7 +76,7 @@ function addLinkedApis(entity: VdmEntity, service: VdmServiceMetadata): string {
 function getApiInitializer(entityClassName: string): string {
   return `this.initApi('${getApiName(
     entityClassName
-  )}Api', ${entityClassName}Api)`;
+  )}', ${entityClassName}Api)`;
 }
 
 /**

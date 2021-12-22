@@ -79,8 +79,6 @@ function getApiInitializer(entityClassName: string): string {
   )}', ${entityClassName}Api)`;
 }
 
-
-getApiInitializer(undefined as any)
 /**
  * @internal
  * @param entityName - Name of the Entity for which the api property name is build.

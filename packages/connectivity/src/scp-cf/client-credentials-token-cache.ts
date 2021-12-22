@@ -41,15 +41,11 @@ const ClientCredentialsTokenCache = (
  */
 export function getCacheKey(url: string, clientId: string): string | undefined {
   if (!url) {
-    logger.warn(
-      'Cannot get cache key. The url was undefined.'
-    );
+    logger.warn('Cannot get cache key. The url was undefined.');
     return;
   }
   if (!clientId) {
-    logger.warn(
-      'Cannot get cache key. The ClientId was undefined.'
-    );
+    logger.warn('Cannot get cache key. The ClientId was undefined.');
     return;
   }
   return [url, clientId].join(':');

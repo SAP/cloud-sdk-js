@@ -41,7 +41,7 @@ It used the following sub-scores:
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
 1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
-1.  **[Project popularity](#project-popularity)**: **0.13** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **0.14** (weight is 0.5)
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
 
 
@@ -186,7 +186,7 @@ This sub-score is based on 2 features:
 
 ### Project popularity
 
-Score: **0.13**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **0.14**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -198,7 +198,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **84**
+1.  Number of stars for a GitHub repository: **85**
 1.  Number of watchers for a GitHub repository: **15**
 
 ### Security reviews

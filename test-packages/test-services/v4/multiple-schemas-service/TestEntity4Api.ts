@@ -5,49 +5,50 @@
  */
 import { TestEntity4 } from './TestEntity4';
 import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v4';
-import {
-  EdmTypeField,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  Time
-} from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
+import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class TestEntity4Api<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements EntityApi<TestEntity4<DeSerializersT>, DeSerializersT>
-{
+export class TestEntity4Api<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      TestEntity4<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {};
+  private navigationPropertyFields!: {
+      
+    };
 
-  _addNavigationProperties(linkedApis: []): this {
-    this.navigationPropertyFields = {};
-    return this;
-  }
-
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
   entityConstructor = TestEntity4;
-
-  requestBuilder(): TestEntity4RequestBuilder<DeSerializersT> {
+  
+  requestBuilder(): TestEntity4RequestBuilder<
+    DeSerializersT
+  > {
     return new TestEntity4RequestBuilder<DeSerializersT>(this);
   }
-
+  
   entityBuilder(): EntityBuilderType<
-    TestEntity4<DeSerializersT>,
+    TestEntity4<
+      DeSerializersT
+    >,
     DeSerializersT
   > {
     return entityBuilder(this);
@@ -56,7 +57,12 @@ export class TestEntity4Api<
   customField<NullableT extends boolean = false>(
     fieldName: string,
     isNullable: NullableT = false as NullableT
-  ): CustomField<TestEntity4<DeSerializersT>, DeSerializersT, NullableT> {
+  ): CustomField<
+  TestEntity4<
+      DeSerializersT>,
+    DeSerializersT,
+    NullableT
+  > {
     return new CustomField(
       fieldName,
       this.entityConstructor,
@@ -67,31 +73,23 @@ export class TestEntity4Api<
 
   get schema() {
     const fieldBuilder = new FieldBuilder(TestEntity4, this.deSerializers);
-    return {
-      /**
-       * Static representation of the [[keyPropertyString]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField(
-        'KeyPropertyString',
-        'Edm.String',
-        false
-      ),
-      /**
-       * Static representation of the [[booleanProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'BooleanProperty',
-        'Edm.Boolean',
-        true
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntity4)
-    };
+    return { 
+    /**
+ * Static representation of the [[keyPropertyString]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY_STRING: fieldBuilder.buildEdmTypeField('KeyPropertyString', 'Edm.String', false),
+/**
+ * Static representation of the [[booleanProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+BOOLEAN_PROPERTY: fieldBuilder.buildEdmTypeField('BooleanProperty', 'Edm.Boolean', true),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', TestEntity4) 
+  };
   }
 }

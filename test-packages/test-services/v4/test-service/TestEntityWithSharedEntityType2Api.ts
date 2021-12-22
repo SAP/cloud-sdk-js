@@ -5,52 +5,50 @@
  */
 import { TestEntityWithSharedEntityType2 } from './TestEntityWithSharedEntityType2';
 import { TestEntityWithSharedEntityType2RequestBuilder } from './TestEntityWithSharedEntityType2RequestBuilder';
-import {
-  CustomField,
-  defaultDeSerializers,
-  DefaultDeSerializers,
-  DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v4';
-import {
-  EdmTypeField,
-  AllFields,
-  entityBuilder,
-  EntityBuilderType,
-  EntityApi,
-  FieldBuilder,
-  Time
-} from '@sap-cloud-sdk/odata-common/internal';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v4';
+import { EdmTypeField, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder, Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-export class TestEntityWithSharedEntityType2Api<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
-> implements
-    EntityApi<TestEntityWithSharedEntityType2<DeSerializersT>, DeSerializersT>
-{
+export class TestEntityWithSharedEntityType2Api<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      TestEntityWithSharedEntityType2<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
   public deSerializers: DeSerializersT;
 
-  constructor(deSerializers: DeSerializersT = defaultDeSerializers as any) {
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
     this.deSerializers = deSerializers;
   }
 
-  private navigationPropertyFields!: {};
+  private navigationPropertyFields!: {
+      
+    };
 
-  _addNavigationProperties(linkedApis: []): this {
-    this.navigationPropertyFields = {};
-    return this;
-  }
-
+  _addNavigationProperties(
+      linkedApis: [
+        
+      ]): this {
+        this.navigationPropertyFields = {
+          
+        };
+        return this;
+      }
+  
   entityConstructor = TestEntityWithSharedEntityType2;
-
-  requestBuilder(): TestEntityWithSharedEntityType2RequestBuilder<DeSerializersT> {
-    return new TestEntityWithSharedEntityType2RequestBuilder<DeSerializersT>(
-      this
-    );
+  
+  requestBuilder(): TestEntityWithSharedEntityType2RequestBuilder<
+    DeSerializersT
+  > {
+    return new TestEntityWithSharedEntityType2RequestBuilder<DeSerializersT>(this);
   }
-
+  
   entityBuilder(): EntityBuilderType<
-    TestEntityWithSharedEntityType2<DeSerializersT>,
+    TestEntityWithSharedEntityType2<
+      DeSerializersT
+    >,
     DeSerializersT
   > {
     return entityBuilder(this);
@@ -60,7 +58,8 @@ export class TestEntityWithSharedEntityType2Api<
     fieldName: string,
     isNullable: NullableT = false as NullableT
   ): CustomField<
-    TestEntityWithSharedEntityType2<DeSerializersT>,
+  TestEntityWithSharedEntityType2<
+      DeSerializersT>,
     DeSerializersT,
     NullableT
   > {
@@ -73,26 +72,19 @@ export class TestEntityWithSharedEntityType2Api<
   }
 
   get schema() {
-    const fieldBuilder = new FieldBuilder(
-      TestEntityWithSharedEntityType2,
-      this.deSerializers
-    );
-    return {
-      /**
-       * Static representation of the [[keyProperty]] property for query construction.
-       * Use to reference this property in query operations such as 'select' in the fluent request API.
-       */
-      KEY_PROPERTY: fieldBuilder.buildEdmTypeField(
-        'KeyProperty',
-        'Edm.String',
-        false
-      ),
-      ...this.navigationPropertyFields,
-      /**
-       *
-       * All fields selector.
-       */
-      ALL_FIELDS: new AllFields('*', TestEntityWithSharedEntityType2)
-    };
+    const fieldBuilder = new FieldBuilder(TestEntityWithSharedEntityType2, this.deSerializers);
+    return { 
+    /**
+ * Static representation of the [[keyProperty]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+KEY_PROPERTY: fieldBuilder.buildEdmTypeField('KeyProperty', 'Edm.String', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', TestEntityWithSharedEntityType2) 
+  };
   }
 }

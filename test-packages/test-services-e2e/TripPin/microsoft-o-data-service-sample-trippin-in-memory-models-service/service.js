@@ -33,8 +33,7 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
     return this.apis[key];
   }
   get photosApi() {
-    const api = this.initApi('photosApi', PhotosApi_1.PhotosApi);
-    return api;
+    return this.initApi('photosApi', PhotosApi_1.PhotosApi);
   }
   get peopleApi() {
     const api = this.initApi('peopleApi', PeopleApi_1.PeopleApi);
@@ -46,12 +45,10 @@ class MicrosoftODataServiceSampleTrippinInMemoryModelsService {
     return api;
   }
   get airlinesApi() {
-    const api = this.initApi('airlinesApi', AirlinesApi_1.AirlinesApi);
-    return api;
+    return this.initApi('airlinesApi', AirlinesApi_1.AirlinesApi);
   }
   get airportsApi() {
-    const api = this.initApi('airportsApi', AirportsApi_1.AirportsApi);
-    return api;
+    return this.initApi('airportsApi', AirportsApi_1.AirportsApi);
   }
 }
 exports.MicrosoftODataServiceSampleTrippinInMemoryModelsService =

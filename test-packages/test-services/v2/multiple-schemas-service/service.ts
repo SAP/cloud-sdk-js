@@ -97,11 +97,6 @@ export class MultipleSchemasService<
   }
 
   get multiSchemaTestEntityApi(): MultiSchemaTestEntityApi<DeSerializersT> {
-    const api = this.initApi(
-      'multiSchemaTestEntityApi',
-      MultiSchemaTestEntityApi
-    );
-
-    return api;
+    return this.initApi('multiSchemaTestEntityApi', MultiSchemaTestEntityApi);
   }
 }

@@ -106,8 +106,6 @@ export class TestService<
   }
 
   get testEntityLinkApi(): TestEntityLinkApi<DeSerializersT> {
-    const api = this.initApi('testEntityLinkApi', TestEntityLinkApi);
-
-    return api;
+    return this.initApi('testEntityLinkApi', TestEntityLinkApi);
   }
 }

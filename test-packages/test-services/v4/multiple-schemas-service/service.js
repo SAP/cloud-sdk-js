@@ -31,20 +31,16 @@ class MultipleSchemasService {
     return this.apis[key];
   }
   get testEntity1Api() {
-    const api = this.initApi('testEntity1Api', TestEntity1Api_1.TestEntity1Api);
-    return api;
+    return this.initApi('testEntity1Api', TestEntity1Api_1.TestEntity1Api);
   }
   get testEntity2Api() {
-    const api = this.initApi('testEntity2Api', TestEntity2Api_1.TestEntity2Api);
-    return api;
+    return this.initApi('testEntity2Api', TestEntity2Api_1.TestEntity2Api);
   }
   get testEntity3Api() {
-    const api = this.initApi('testEntity3Api', TestEntity3Api_1.TestEntity3Api);
-    return api;
+    return this.initApi('testEntity3Api', TestEntity3Api_1.TestEntity3Api);
   }
   get testEntity4Api() {
-    const api = this.initApi('testEntity4Api', TestEntity4Api_1.TestEntity4Api);
-    return api;
+    return this.initApi('testEntity4Api', TestEntity4Api_1.TestEntity4Api);
   }
 }
 exports.MultipleSchemasService = MultipleSchemasService;

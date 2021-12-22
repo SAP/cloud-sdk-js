@@ -76,18 +76,16 @@ class TestService {
     return api;
   }
   get testEntityOtherMultiLinkApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityOtherMultiLinkApi',
       TestEntityOtherMultiLinkApi_1.TestEntityOtherMultiLinkApi
     );
-    return api;
   }
   get testEntityLvl2MultiLinkApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityLvl2MultiLinkApi',
       TestEntityLvl2MultiLinkApi_1.TestEntityLvl2MultiLinkApi
     );
-    return api;
   }
   get testEntitySingleLinkApi() {
     const api = this.initApi(
@@ -108,25 +106,22 @@ class TestService {
     return api;
   }
   get testEntityLvl2SingleLinkApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityLvl2SingleLinkApi',
       TestEntityLvl2SingleLinkApi_1.TestEntityLvl2SingleLinkApi
     );
-    return api;
   }
   get testEntityWithSharedEntityType1Api() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityWithSharedEntityType1Api',
       TestEntityWithSharedEntityType1Api_1.TestEntityWithSharedEntityType1Api
     );
-    return api;
   }
   get testEntityWithSharedEntityType2Api() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityWithSharedEntityType2Api',
       TestEntityWithSharedEntityType2Api_1.TestEntityWithSharedEntityType2Api
     );
-    return api;
   }
   get testEntityCircularLinkParentApi() {
     const api = this.initApi(
@@ -157,26 +152,22 @@ class TestService {
     return api;
   }
   get testEntityEndsWithApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityEndsWithApi',
       TestEntityEndsWithApi_1.TestEntityEndsWithApi
     );
-    return api;
   }
   get testEntityEndsWithSomethingElseApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityEndsWithSomethingElseApi',
       TestEntityEndsWithSomethingElseApi_1.TestEntityEndsWithSomethingElseApi
     );
-    return api;
   }
   get caseTestApi() {
-    const api = this.initApi('caseTestApi', CaseTestApi_1.CaseTestApi);
-    return api;
+    return this.initApi('caseTestApi', CaseTestApi_1.CaseTestApi);
   }
   get casetest_1Api() {
-    const api = this.initApi('casetest_1Api', Casetest_1Api_1.Casetest_1Api);
-    return api;
+    return this.initApi('casetest_1Api', Casetest_1Api_1.Casetest_1Api);
   }
 }
 exports.TestService = TestService;

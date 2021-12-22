@@ -58,25 +58,22 @@ class TestService {
     return api;
   }
   get testEntityWithEnumKeyApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityWithEnumKeyApi',
       TestEntityWithEnumKeyApi_1.TestEntityWithEnumKeyApi
     );
-    return api;
   }
   get testEntityWithSharedEntityType1Api() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityWithSharedEntityType1Api',
       TestEntityWithSharedEntityType1Api_1.TestEntityWithSharedEntityType1Api
     );
-    return api;
   }
   get testEntityWithSharedEntityType2Api() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityWithSharedEntityType2Api',
       TestEntityWithSharedEntityType2Api_1.TestEntityWithSharedEntityType2Api
     );
-    return api;
   }
   get testEntityMultiLinkApi() {
     const api = this.initApi(
@@ -97,11 +94,10 @@ class TestService {
     return api;
   }
   get testEntityOtherMultiLinkApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityOtherMultiLinkApi',
       TestEntityOtherMultiLinkApi_1.TestEntityOtherMultiLinkApi
     );
-    return api;
   }
   get testEntityLvl2MultiLinkApi() {
     const api = this.initApi(
@@ -118,11 +114,10 @@ class TestService {
     return api;
   }
   get testEntityLvl3MultiLinkApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityLvl3MultiLinkApi',
       TestEntityLvl3MultiLinkApi_1.TestEntityLvl3MultiLinkApi
     );
-    return api;
   }
   get testEntitySingleLinkApi() {
     const api = this.initApi(
@@ -143,11 +138,10 @@ class TestService {
     return api;
   }
   get testEntityLvl2SingleLinkApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityLvl2SingleLinkApi',
       TestEntityLvl2SingleLinkApi_1.TestEntityLvl2SingleLinkApi
     );
-    return api;
   }
   get testEntityCircularLinkParentApi() {
     const api = this.initApi(
@@ -182,18 +176,16 @@ class TestService {
     return api;
   }
   get testEntityEndsWithApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityEndsWithApi',
       TestEntityEndsWithApi_1.TestEntityEndsWithApi
     );
-    return api;
   }
   get testEntityEndsWithSomethingElseApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityEndsWithSomethingElseApi',
       TestEntityEndsWithSomethingElseApi_1.TestEntityEndsWithSomethingElseApi
     );
-    return api;
   }
 }
 exports.TestService = TestService;

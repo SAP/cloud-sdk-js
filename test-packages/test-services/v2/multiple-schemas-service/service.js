@@ -28,11 +28,10 @@ class MultipleSchemasService {
     return this.apis[key];
   }
   get multiSchemaTestEntityApi() {
-    const api = this.initApi(
+    return this.initApi(
       'multiSchemaTestEntityApi',
       MultiSchemaTestEntityApi_1.MultiSchemaTestEntityApi
     );
-    return api;
   }
 }
 exports.MultipleSchemasService = MultipleSchemasService;

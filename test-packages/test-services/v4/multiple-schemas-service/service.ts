@@ -103,26 +103,18 @@ export class MultipleSchemasService<
   }
 
   get testEntity1Api(): TestEntity1Api<DeSerializersT> {
-    const api = this.initApi('testEntity1Api', TestEntity1Api);
-
-    return api;
+    return this.initApi('testEntity1Api', TestEntity1Api);
   }
 
   get testEntity2Api(): TestEntity2Api<DeSerializersT> {
-    const api = this.initApi('testEntity2Api', TestEntity2Api);
-
-    return api;
+    return this.initApi('testEntity2Api', TestEntity2Api);
   }
 
   get testEntity3Api(): TestEntity3Api<DeSerializersT> {
-    const api = this.initApi('testEntity3Api', TestEntity3Api);
-
-    return api;
+    return this.initApi('testEntity3Api', TestEntity3Api);
   }
 
   get testEntity4Api(): TestEntity4Api<DeSerializersT> {
-    const api = this.initApi('testEntity4Api', TestEntity4Api);
-
-    return api;
+    return this.initApi('testEntity4Api', TestEntity4Api);
   }
 }

@@ -510,12 +510,7 @@ export class CommonService<
   }
 
   get commonEntitySingleLinkApi(): CommonEntitySingleLinkApi<DeSerializersT> {
-    const api = this.initApi(
-      'commonEntitySingleLinkApi',
-      CommonEntitySingleLinkApi
-    );
-
-    return api;
+    return this.initApi('commonEntitySingleLinkApi', CommonEntitySingleLinkApi);
   }
 }
 

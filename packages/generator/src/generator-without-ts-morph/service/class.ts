@@ -55,22 +55,30 @@ function getEntityApiFunction(
 ): string {
   return codeBlock`get ${getApiName(entity.className)}(): ${
     entity.className
-  }Api<DeSerializersT> {
-    const api = ${getApiInitializer(entity.className)};
-    ${entity.navigationProperties.length ? addLinkedApis(entity, service) : ''}
-    return api;
+  }Api<DeSerializersT> { 
+    ${
+      entity.navigationProperties.length
+        ? withLinks(entity, service)
+        : withoutLinks(entity)
+    }    
   }`;
 }
 
-function addLinkedApis(entity: VdmEntity, service: VdmServiceMetadata): string {
-  return `const linkedApis = [
+function withoutLinks(entity: VdmEntity) {
+  return `return ${getApiInitializer(entity.className)}`;
+}
+
+function withLinks(entity: VdmEntity, service: VdmServiceMetadata): string {
+  return `const api = ${getApiInitializer(entity.className)};
+  const linkedApis = [
     ${entity.navigationProperties
       .map(navProp =>
         getApiInitializer(matchEntity(navProp, service).className)
       )
       .join(',\n')}
   ];
-  api._addNavigationProperties(linkedApis);`;
+  api._addNavigationProperties(linkedApis);
+  return api`;
 }
 
 function getApiInitializer(entityClassName: string): string {

@@ -122,30 +122,21 @@ export class TestService<
   }
 
   get testEntityWithEnumKeyApi(): TestEntityWithEnumKeyApi<DeSerializersT> {
-    const api = this.initApi(
-      'testEntityWithEnumKeyApi',
-      TestEntityWithEnumKeyApi
-    );
-
-    return api;
+    return this.initApi('testEntityWithEnumKeyApi', TestEntityWithEnumKeyApi);
   }
 
   get testEntityWithSharedEntityType1Api(): TestEntityWithSharedEntityType1Api<DeSerializersT> {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityWithSharedEntityType1Api',
       TestEntityWithSharedEntityType1Api
     );
-
-    return api;
   }
 
   get testEntityWithSharedEntityType2Api(): TestEntityWithSharedEntityType2Api<DeSerializersT> {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityWithSharedEntityType2Api',
       TestEntityWithSharedEntityType2Api
     );
-
-    return api;
   }
 
   get testEntityMultiLinkApi(): TestEntityMultiLinkApi<DeSerializersT> {
@@ -159,12 +150,10 @@ export class TestService<
   }
 
   get testEntityOtherMultiLinkApi(): TestEntityOtherMultiLinkApi<DeSerializersT> {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityOtherMultiLinkApi',
       TestEntityOtherMultiLinkApi
     );
-
-    return api;
   }
 
   get testEntityLvl2MultiLinkApi(): TestEntityLvl2MultiLinkApi<DeSerializersT> {
@@ -180,12 +169,10 @@ export class TestService<
   }
 
   get testEntityLvl3MultiLinkApi(): TestEntityLvl3MultiLinkApi<DeSerializersT> {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityLvl3MultiLinkApi',
       TestEntityLvl3MultiLinkApi
     );
-
-    return api;
   }
 
   get testEntitySingleLinkApi(): TestEntitySingleLinkApi<DeSerializersT> {
@@ -202,12 +189,10 @@ export class TestService<
   }
 
   get testEntityLvl2SingleLinkApi(): TestEntityLvl2SingleLinkApi<DeSerializersT> {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityLvl2SingleLinkApi',
       TestEntityLvl2SingleLinkApi
     );
-
-    return api;
   }
 
   get testEntityCircularLinkParentApi(): TestEntityCircularLinkParentApi<DeSerializersT> {
@@ -245,17 +230,13 @@ export class TestService<
   }
 
   get testEntityEndsWithApi(): TestEntityEndsWithApi<DeSerializersT> {
-    const api = this.initApi('testEntityEndsWithApi', TestEntityEndsWithApi);
-
-    return api;
+    return this.initApi('testEntityEndsWithApi', TestEntityEndsWithApi);
   }
 
   get testEntityEndsWithSomethingElseApi(): TestEntityEndsWithSomethingElseApi<DeSerializersT> {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityEndsWithSomethingElseApi',
       TestEntityEndsWithSomethingElseApi
     );
-
-    return api;
   }
 }

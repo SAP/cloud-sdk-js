@@ -103,9 +103,7 @@ export class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
   }
 
   get photosApi(): PhotosApi<DeSerializersT> {
-    const api = this.initApi('photosApi', PhotosApi);
-
-    return api;
+    return this.initApi('photosApi', PhotosApi);
   }
 
   get peopleApi(): PeopleApi<DeSerializersT> {
@@ -119,14 +117,10 @@ export class MicrosoftODataServiceSampleTrippinInMemoryModelsService<
   }
 
   get airlinesApi(): AirlinesApi<DeSerializersT> {
-    const api = this.initApi('airlinesApi', AirlinesApi);
-
-    return api;
+    return this.initApi('airlinesApi', AirlinesApi);
   }
 
   get airportsApi(): AirportsApi<DeSerializersT> {
-    const api = this.initApi('airportsApi', AirportsApi);
-
-    return api;
+    return this.initApi('airportsApi', AirportsApi);
   }
 }

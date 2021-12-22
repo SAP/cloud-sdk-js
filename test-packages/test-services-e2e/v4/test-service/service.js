@@ -35,11 +35,10 @@ class TestService {
     return api;
   }
   get testEntityLinkApi() {
-    const api = this.initApi(
+    return this.initApi(
       'testEntityLinkApi',
       TestEntityLinkApi_1.TestEntityLinkApi
     );
-    return api;
   }
 }
 exports.TestService = TestService;

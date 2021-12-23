@@ -2,7 +2,6 @@ import {
   EntityIdentifiable,
   GetAllRequestBuilderBase,
   ODataGetAllRequestConfig,
-  entityDeserializer,
   Filterable,
   Expandable,
   EntityApi,
@@ -11,13 +10,9 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
-import { extractODataEtag } from '../extract-odata-etag';
-import { DeSerializers } from '../de-serializers';
+import { DeSerializers, entityDeserializer } from '../de-serializers';
 import { createODataUri } from '../uri-conversion';
-import {
-  getLinkedCollectionResult,
-  responseDataAccessor
-} from './response-data-accessor';
+import { responseDataAccessor } from './response-data-accessor';
 
 export class GetAllRequestBuilder<
     EntityT extends Entity,
@@ -39,11 +34,7 @@ export class GetAllRequestBuilder<
         entityApi,
         createODataUri(entityApi.deSerializers)
       ),
-      entityDeserializer(
-        entityApi.deSerializers,
-        extractODataEtag,
-        getLinkedCollectionResult
-      ),
+      entityDeserializer(entityApi.deSerializers),
       responseDataAccessor
     );
   }

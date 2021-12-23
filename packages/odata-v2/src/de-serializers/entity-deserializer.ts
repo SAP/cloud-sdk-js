@@ -5,7 +5,6 @@ import {
 import { getLinkedCollectionResult } from '../request-builder/response-data-accessor';
 import { extractODataEtag } from '../extract-odata-etag';
 import { DeSerializers } from './de-serializers';
-import { defaultDeSerializers } from './default-de-serializers';
 
 /**
  * Entity deserializer instance for v2 entities.
@@ -22,8 +21,3 @@ export function entityDeserializer<DeSerializersT extends DeSerializers>(
     getLinkedCollectionResult
   );
 }
-
-const defaultEntityDeserializer = entityDeserializer(defaultDeSerializers);
-
-export const deserializeComplexType =
-  defaultEntityDeserializer.deserializeComplexType;

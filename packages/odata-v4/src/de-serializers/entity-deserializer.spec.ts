@@ -1,12 +1,12 @@
 import { TestComplexType } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
+import { defaultDeSerializers } from '../de-serializers';
 import { testEntityApi } from '../../test/test-util';
-import {
-  deserializeComplexType,
-  deserializeEntity
-} from './entity-deserializer';
+import { entityDeserializer } from './entity-deserializer';
 
 describe('entity-deserializer', () => {
+  const { deserializeEntity, deserializeComplexType } =
+    entityDeserializer(defaultDeSerializers);
   it('should deserialize an enum property', () => {
     const enumProperty = TestEnumType.Member1;
     expect(

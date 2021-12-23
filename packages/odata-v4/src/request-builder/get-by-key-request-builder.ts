@@ -1,19 +1,14 @@
 import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
-  entityDeserializer,
   EntityIdentifiable,
   Expandable,
   GetByKeyRequestBuilderBase,
   EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
-import { DeSerializers } from '../de-serializers';
+import { DeSerializers, entityDeserializer } from '../de-serializers';
 import { Entity } from '../entity';
 import { createODataUri } from '../uri-conversion';
-import { extractODataEtag } from '../extract-odata-etag';
-import {
-  responseDataAccessor,
-  getLinkedCollectionResult
-} from './response-data-accessor';
+import { responseDataAccessor } from './response-data-accessor';
 
 /**
  * Create an OData request to get a single entity based on its key properties.
@@ -44,11 +39,7 @@ export class GetByKeyRequestBuilder<
       entityApi,
       keys,
       createODataUri(entityApi.deSerializers),
-      entityDeserializer(
-        entityApi.deSerializers,
-        extractODataEtag,
-        getLinkedCollectionResult
-      ),
+      entityDeserializer(entityApi.deSerializers),
       responseDataAccessor
     );
   }

@@ -1,15 +1,8 @@
-import {
-  EntityApi,
-  entityDeserializer
-} from '@sap-cloud-sdk/odata-common/internal';
+import { EntityApi } from '@sap-cloud-sdk/odata-common/internal';
+import { entityDeserializer } from '../de-serializers';
 import { DeSerializers } from '../de-serializers/de-serializers';
 import { Entity } from '../entity';
-import { extractODataEtag } from '../extract-odata-etag';
-import {
-  getSingleResult,
-  getCollectionResult,
-  getLinkedCollectionResult
-} from './response-data-accessor';
+import { getSingleResult, getCollectionResult } from './response-data-accessor';
 
 /* eslint-disable valid-jsdoc */
 
@@ -24,15 +17,9 @@ export function transformReturnValueForEntity<
   ReturnT extends Entity,
   DeSerializersT extends DeSerializers
 >(data: any, entityApi: EntityApi<ReturnT, DeSerializersT>): ReturnT {
-  const deserializeEntity = entityDeserializer(
-    entityApi.deSerializers,
-    extractODataEtag,
-    getLinkedCollectionResult
-  ).deserializeEntity;
-  return deserializeEntity(
-    getSingleResult(data),
-    entityApi
-  ).setOrInitializeRemoteState() as ReturnT;
+  return entityDeserializer(entityApi.deSerializers)
+    .deserializeEntity(getSingleResult(data), entityApi)
+    .setOrInitializeRemoteState() as ReturnT;
 }
 
 export function transformReturnValueForEntityList<
@@ -40,9 +27,7 @@ export function transformReturnValueForEntityList<
   DeSerializersT extends DeSerializers
 >(data: any, entityApi: EntityApi<ReturnT, DeSerializersT>): ReturnT[] {
   const deserializeEntity = entityDeserializer(
-    entityApi.deSerializers,
-    extractODataEtag,
-    getLinkedCollectionResult
+    entityApi.deSerializers
   ).deserializeEntity;
 
   return getCollectionResult(data).map(

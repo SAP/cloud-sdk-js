@@ -7,15 +7,10 @@ import {
   BatchResponse,
   parseBatchResponse,
   BatchRequestBuilder,
-  deserializeBatchResponse,
-  entityDeserializer
+  deserializeBatchResponse
 } from '@sap-cloud-sdk/odata-common/internal';
-import {
-  getLinkedCollectionResult,
-  responseDataAccessor
-} from './request-builder';
-import { extractODataEtag } from './extract-odata-etag';
-import { DeSerializers } from './de-serializers';
+import { responseDataAccessor } from './request-builder';
+import { DeSerializers, entityDeserializer } from './de-serializers';
 
 /**
  * Create a batch request to invoke multiple requests as a batch. The batch request builder accepts retrieve requests, i. e. [[GetAllRequestBuilder | getAll]] and [[GetByKeyRequestBuilder | getByKey]] requests and change sets, which in turn can contain [[CreateRequestBuilder | create]], [[UpdateRequestBuilder | update]] or [[DeleteRequestBuilder | delete]] requests.
@@ -41,11 +36,7 @@ export class ODataBatchRequestBuilder<
           parsedResponse,
           this.getEntityToApiMap(),
           responseDataAccessor,
-          entityDeserializer(
-            this.deSerializers,
-            extractODataEtag,
-            getLinkedCollectionResult
-          )
+          entityDeserializer(this.deSerializers)
         )
       )
       .catch(error => {

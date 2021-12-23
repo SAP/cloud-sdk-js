@@ -43,7 +43,6 @@ export { all, any } from './filter';
 export {
   CustomDeSerializers,
   defaultDeSerializers,
-  deserializeComplexType,
   edmToTs,
   entityDeserializer,
   mergeDefaultDeSerializersWith

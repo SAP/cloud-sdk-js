@@ -60,16 +60,6 @@ function getFunctionImportStatements(
   functionImport: VdmFunctionImport,
   service: VdmServiceMetadata
 ): string {
-  // const context = functionImport.parameters
-  //   ? functionImport.parameters.reduce((cumulator, currentParameters) => {
-  //       if (cumulator !== `const params = {${unixEOL}`) {
-  //         cumulator += `,${unixEOL}`;
-  //       }
-  //       cumulator += `${currentParameters.parameterName}: new FunctionImportParameter('${currentParameters.originalName}', '${currentParameters.edmType}', ${parameterName}.${currentParameters.parameterName})`;
-  //       return cumulator;
-  //     }, `const params = {${unixEOL}`) + `${unixEOL}}`
-  //   : '{}';
-
   const paramsLines = (functionImport.parameters || []).map(
     param =>
       `${param.parameterName}: new FunctionImportParameter('${param.originalName}', '${param.edmType}', ${parameterName}.${param.parameterName})`

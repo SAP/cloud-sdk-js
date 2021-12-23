@@ -8,7 +8,7 @@ import {
 import { functionImportFunction } from './function';
 
 describe('function', () => {
-  it('functionImportFunction', () => {
+  it.only('functionImportFunction', () => {
     const actual = functionImportFunction(orderBreakfast, foodService);
     expect(actual).toEqual({
       kind: StructureKind.Function,

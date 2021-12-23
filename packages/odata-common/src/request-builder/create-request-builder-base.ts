@@ -6,12 +6,7 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion';
-import type {
-  Constructable,
-  EntityApi,
-  EntityBase,
-  EntityIdentifiable
-} from '../entity-base';
+import type { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
@@ -34,12 +29,15 @@ export abstract class CreateRequestBuilderBase<
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _deSerializers: DeSerializersT;
-  readonly _entityConstructor: Constructable<EntityT>;
 
   /**
    * Creates an instance of CreateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be created
-   * @param _entity - Entity to be created
+   * @param _entityApi - TODO MM
+   * @param _entity - Entity to be created.
+   * @param oDataUri - TODO MM
+   * @param serializer - TODO MM
+   * @param deserializer - TODO MM
+   * @param responseDataAccessor - TODO MM
    */
   constructor(
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,

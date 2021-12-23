@@ -24,7 +24,7 @@ export class CountRequestBuilder<
 > {
   /**
    * Creates an instance of CountRequestBuilder.
-   * @param _entityConstructor - Constructor of the entity to create the request for
+   * @param getAllRequest - Get all request builder to count result for.
    */
   constructor(
     readonly getAllRequest: GetAllRequestBuilderBase<EntityT, DeSerializersT>

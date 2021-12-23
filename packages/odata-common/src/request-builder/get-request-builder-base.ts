@@ -37,7 +37,7 @@ export abstract class GetRequestBuilderBase<
 
   /**
    * Creates an instance of GetAllRequestBuilder.
-   * @param _entityConstructor - Constructor of the entity to create the request for.
+   * @param _entityApi - TODO MM
    * @param requestConfig - Request config of the get all or get by key request.
    */
   constructor(

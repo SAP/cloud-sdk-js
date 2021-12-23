@@ -1,11 +1,6 @@
 import { DeSerializers } from '../de-serializers';
 import { EdmTypeShared } from '../edm-types';
-import {
-  Constructable,
-  EntityBase,
-  EntityIdentifiable,
-  ODataVersionOf
-} from '../entity-base';
+import { EntityBase, EntityIdentifiable, ODataVersionOf } from '../entity-base';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 
@@ -46,10 +41,6 @@ export class Filter<
   FieldT
 > implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  /**
-   * Constructor type of the entity to be filtered.
-   */
-  readonly _entityConstructor: Constructable<EntityT>;
   /**
    * Entity type of the entity tp be filtered.
    */

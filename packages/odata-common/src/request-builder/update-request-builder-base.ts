@@ -1,11 +1,6 @@
 import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import {
-  Constructable,
-  EntityApi,
-  EntityBase,
-  EntityIdentifiable
-} from '../entity-base';
+import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { EntitySerializer } from '../entity-serializer';
 import { ODataUpdateRequestConfig, ODataRequest } from '../request';
@@ -29,13 +24,12 @@ export abstract class UpdateRequestBuilderBase<
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _deSerializers: DeSerializersT;
-  readonly _entityConstructor: Constructable<EntityT>;
   private ignored: Set<string>;
   private required: Set<string>;
 
   /**
    * Creates an instance of UpdateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be updated
+   * @param _entityApi - TODO MM
    * @param _entity - Entity to be updated
    * @param oDataUri - Collection of URI conversion methods
    * @param entitySerializer - Entity serializer

@@ -1,5 +1,4 @@
 import {
-  Constructable,
   DeleteRequestBuilderBase,
   EntityApi,
   FieldType
@@ -16,7 +15,6 @@ export class DeleteRequestBuilder<
   EntityT extends Entity,
   DeSerializersT extends DeSerializers
 > extends DeleteRequestBuilderBase<EntityT, DeSerializersT> {
-  readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
 
   /**

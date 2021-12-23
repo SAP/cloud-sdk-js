@@ -1,5 +1,5 @@
 import { DeSerializers } from '../de-serializers';
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
+import { EntityBase, EntityIdentifiable } from '../entity-base';
 import { Link } from '../selectable';
 import type { Filterable } from './filterable';
 
@@ -22,10 +22,6 @@ export class FilterLink<
   LinkedEntityT extends EntityBase = EntityBase
 > implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  /**
-   * Constructor type of the entity to be filtered.
-   */
-  readonly _entityConstructor: Constructable<EntityT>;
   /**
    * Entity type of the entity tp be filtered.
    */

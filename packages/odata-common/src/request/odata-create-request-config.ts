@@ -25,19 +25,19 @@ export class ODataCreateRequestConfig<
 
   /**
    * Creates an instance of ODataRequest.
-   * @param _entityApi - TODO MM
+   * @param entityApi - Entity API for building and executing the request.
    * @param oDataUri - TODO MM
    */
   constructor(
-    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('post', _entityApi.entityConstructor._defaultServicePath);
+    super('post', entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
     return this.parentKeys === undefined
-      ? this._entityApi.entityConstructor._entityName
+      ? this.entityApi.entityConstructor._entityName
       : this.resourcePathAsChild();
   }
 

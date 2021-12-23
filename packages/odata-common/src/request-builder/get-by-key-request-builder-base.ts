@@ -26,9 +26,9 @@ export abstract class GetByKeyRequestBuilderBase<
 > {
   /**
    * Creates an instance of GetByKeyRequestBuilder.
-   * @param entityApi - EntityApi on which the get by key request is executed
+   * @param entityApi - Entity API for building and executing the request.
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
-   * @param oDataUri - Uri conversion methods
+   * @param oDataUri - URI conversion functions.
    * @param entityDeserializer - Entity deserializer
    */
   constructor(
@@ -72,7 +72,7 @@ export abstract class GetByKeyRequestBuilderBase<
       .then(response =>
         this.entityDeserializer.deserializeEntity(
           this.dataAccessor.getSingleResult(response.data),
-          this._entityApi,
+          this.entityApi,
           response.headers
         )
       )

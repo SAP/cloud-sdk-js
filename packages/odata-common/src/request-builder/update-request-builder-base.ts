@@ -29,7 +29,7 @@ export abstract class UpdateRequestBuilderBase<
 
   /**
    * Creates an instance of UpdateRequestBuilder.
-   * @param _entityApi - TODO MM
+   * @param entityApi - Entity API for building and executing the request.
    * @param _entity - Entity to be updated
    * @param oDataUri - Collection of URI conversion methods
    * @param entitySerializer - Entity serializer
@@ -37,7 +37,7 @@ export abstract class UpdateRequestBuilderBase<
    * @param payloadManipulator - Manipulator for the payload.
    */
   constructor(
-    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT,
     readonly oDataUri: ODataUri<DeSerializersT>,
     readonly entitySerializer: EntitySerializer,
@@ -48,14 +48,14 @@ export abstract class UpdateRequestBuilderBase<
       body: Record<string, any>
     ) => Record<string, any>
   ) {
-    super(new ODataUpdateRequestConfig(_entityApi, oDataUri));
+    super(new ODataUpdateRequestConfig(entityApi, oDataUri));
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();
 
     this.requestConfig.keys = this.oDataUri.getEntityKeys(
       this._entity,
-      this._entityApi
+      this.entityApi
     );
 
     this.requestConfig.payload = this.getPayload();
@@ -167,7 +167,7 @@ export abstract class UpdateRequestBuilderBase<
   protected getPayload(): Record<string, any> {
     const serializedBody = this.entitySerializer.serializeEntity(
       this._entity,
-      this._entityApi
+      this.entityApi
     );
 
     if (this.requestConfig.method === 'patch') {
@@ -203,7 +203,7 @@ export abstract class UpdateRequestBuilderBase<
   }
 
   private getKeyFieldNames(): string[] {
-    return this._entityApi.entityConstructor._keys;
+    return this.entityApi.entityConstructor._keys;
   }
 
   private toSet(fields: Selectable<EntityT, DeSerializersT>[]): Set<string> {
@@ -217,7 +217,7 @@ export abstract class UpdateRequestBuilderBase<
     return {
       ...this.entitySerializer.serializeEntity(
         this._entity,
-        this._entityApi,
+        this.entityApi,
         true
       )
     };

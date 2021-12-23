@@ -18,9 +18,9 @@ export class DeleteRequestBuilder<
   readonly _entity: EntityT;
 
   /**
-   * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
-   * @param entityApi - EntityApi on which the delete is executed
-   * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
+   * Creates an instance of DeleteRequestBuilder. If the entity is passed, a version identifier will also be added.
+   * @param entityApi - Entity API for building and executing the request.
+   * @param keysOrEntity - Entity or key-value pairs of key properties for the given entity.
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,

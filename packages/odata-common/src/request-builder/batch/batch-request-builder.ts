@@ -80,14 +80,14 @@ export class BatchRequestBuilder<
           ? request.requests.reduce(
               (changeSetApis, changesetReq) => ({
                 ...changeSetApis,
-                [changesetReq._entityApi.entityConstructor._entityName]:
-                  changesetReq._entityApi
+                [changesetReq.entityApi.entityConstructor._entityName]:
+                  changesetReq.entityApi
               }),
               {}
             )
           : {
-              [request._entityApi.entityConstructor._entityName]:
-                request._entityApi
+              [request.entityApi.entityConstructor._entityName]:
+                request.entityApi
             })
       }),
       {}

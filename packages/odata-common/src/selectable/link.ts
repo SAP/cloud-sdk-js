@@ -39,7 +39,7 @@ export class Link<
   /**
    * Creates an instance of Link.
    * @param _fieldName - Name of the linking field to be used in the OData request.
-   * @param _entityApi - TODO MM
+   * @param _entityApi - Entity API for building and executing the request.
    * @param _linkedEntity - Constructor of the linked entity.
    */
   constructor(

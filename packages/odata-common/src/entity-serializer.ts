@@ -55,7 +55,7 @@ export function entitySerializer(
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service.
    * @param entity - An instance of an entity.
-   * @param entityApi - EntityApi used in the serializer.
+   * @param entityApi - Entity API to serialize for.
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns JSON.
    */
@@ -102,7 +102,7 @@ export function entitySerializer(
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service, ignoring custom fields.
    * @param entity - An instance of an entity.
-   * @param entityApi - EntityApi for which the serialize is done.
+   * @param entityApi - Entity API to serialize for.
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns A JSON Representation of the non custom fields
    */

@@ -27,8 +27,8 @@ export class CreateRequestBuilder<
 {
   /**
    * Creates an instance of CreateRequestBuilder.
-   * @param entityApi - Constructor of the entity to create the request for, the (de-)serializers, and the schema.
-   * @param _entity - Entity to be created
+   * @param entityApi - Entity API for building and executing the request.
+   * @param _entity - Entity to be created.
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,

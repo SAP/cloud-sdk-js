@@ -33,9 +33,9 @@ export function createGetResourcePathForKeys(
   /**
    * Get the resource path of an entity specified by key-value pairs.
    * @typeparam EntityT - Type of the entity to get the resource path for
-   * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
-   * @param entityApi - TODO MM
-   * @returns The path to the resource
+   * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value.
+   * @param entityApi - Entity API of the entity to get the resource path for.
+   * @returns The path to the resource.
    */
   function getResourcePathForKeys<EntityT extends EntityBase>(
     keys: Record<string, any> = {},

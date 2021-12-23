@@ -28,10 +28,10 @@ export abstract class GetAllRequestBuilderBase<
 > {
   /**
    * Creates an instance of GetAllRequestBuilder.
-   * @param entityApi - EntityApi on which the get all is executed
+   * @param entityApi - Entity API for building and executing the request.
    * @param getAllRequestConfig - Request config of the get all request.
-   * @param entityDeserializer - DeSerializer used in the request
-   * @param dataAccessor - DataAccessor to extract the data
+   * @param entityDeserializer - TODO MM
+   * @param dataAccessor - TODO MM
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,
@@ -117,7 +117,7 @@ export abstract class GetAllRequestBuilderBase<
         .map(json =>
           this.entityDeserializer.deserializeEntity(
             json,
-            this._entityApi,
+            this.entityApi,
             response.headers
           )
         )

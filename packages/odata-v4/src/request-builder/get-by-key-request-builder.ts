@@ -33,7 +33,7 @@ export class GetByKeyRequestBuilder<
 
   /**
    * Creates an instance of GetByKeyRequestBuilder.
-   * @param entityApi - EntityApi on which the get all is executed
+   * @param entityApi - Entity API for building and executing the request.
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    */
   constructor(

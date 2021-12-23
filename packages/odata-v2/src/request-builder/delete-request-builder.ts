@@ -16,7 +16,7 @@ export class DeleteRequestBuilder<
 > extends DeleteRequestBuilderBase<EntityT, DeSerializersT> {
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
-   * @param entityApi - EntityApi on which the delete is executed.
+   * @param entityApi - Entity API for building and executing the request.
    * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
    */
   constructor(

@@ -24,8 +24,8 @@ export class UpdateRequestBuilder<
 {
   /**
    * Creates an instance of UpdateRequestBuilder.
-   * @param entityApi - EntityApi on which the update is executed
-   * @param _entity - Entity to be updated
+   * @param entityApi - Entity API for building and executing the request.
+   * @param _entity - Entity to be updated.
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,

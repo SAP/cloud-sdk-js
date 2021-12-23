@@ -3,8 +3,8 @@ import { EntityBase, EntityApi } from '../entity-base';
 
 /**
  * Helper function that maps an entity to its keys map with their original names.
- * @param entity - Entity to map
- * @param entityApi - EntityApi for which the keys are constructed
+ * @param entity - Entity to map.
+ * @param entityApi - Entity API of the entity to get keys for.
  * @returns object that includes all keys that represent given entity
  * @internal
  */

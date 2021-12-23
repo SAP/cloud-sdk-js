@@ -24,25 +24,25 @@ export class ODataGetByKeyRequestConfig<
 
   /**
    * Creates an instance of ODataGetByKeyRequestConfig.
-   * @param _entityApi - TODO MM
+   * @param entityApi - Entity API for building and executing the request.
    * @param oDataUri - TODO MM
    */
   constructor(
-    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('get', _entityApi.entityConstructor._defaultServicePath);
+    super('get', entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return this.oDataUri.getResourcePathForKeys(this.keys, this._entityApi);
+    return this.oDataUri.getResourcePathForKeys(this.keys, this.entityApi);
   }
 
   queryParameters(): Record<string, any> {
     return this.prependDollarToQueryParameters({
       format: 'json',
       ...this.oDataUri.getSelect(this.selects),
-      ...this.oDataUri.getExpand(this.selects, this.expands, this._entityApi)
+      ...this.oDataUri.getExpand(this.selects, this.expands, this.entityApi)
     });
   }
 }

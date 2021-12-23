@@ -37,7 +37,7 @@ export class UpdateRequestBuilder<
 {
   /**
    * Creates an instance of UpdateRequestBuilder.
-   * @param entityApi - Constructor of the entity to create the request for, the (de-)serializers, and the schema.
+   * @param entityApi - Entity API for building and executing the request.
    * @param _entity - Entity to be updated
    */
   constructor(
@@ -68,7 +68,7 @@ export class UpdateRequestBuilder<
     }
 
     const request = await this.build(destination);
-    warnIfNavigation(request, this._entity, this._entityApi.schema);
+    warnIfNavigation(request, this._entity, this.entityApi.schema);
 
     return super.executeRequest(request);
   }
@@ -90,7 +90,7 @@ export class UpdateRequestBuilder<
     }
 
     const request = await this.build(destination);
-    warnIfNavigation(request, this._entity, this._entityApi.schema);
+    warnIfNavigation(request, this._entity, this.entityApi.schema);
 
     return super.executeRequestRaw(request);
   }

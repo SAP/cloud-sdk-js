@@ -29,26 +29,26 @@ export class ODataGetAllRequestConfig<
 
   /**
    * Creates an instance of ODataGetAllRequestConfig.
-   * @param _entityApi - TODO MM
+   * @param entityApi - Entity API for building and executing the request.
    * @param oDataUri - TODO MM
    */
   constructor(
-    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('get', _entityApi.entityConstructor._defaultServicePath);
+    super('get', entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return this._entityApi.entityConstructor._entityName;
+    return this.entityApi.entityConstructor._entityName;
   }
 
   queryParameters(): Record<string, any> {
     const params: Record<string, any> = {
       format: 'json',
       ...this.oDataUri.getSelect(this.selects),
-      ...this.oDataUri.getExpand(this.selects, this.expands, this._entityApi),
-      ...this.oDataUri.getFilter(this.filter, this._entityApi),
+      ...this.oDataUri.getExpand(this.selects, this.expands, this.entityApi),
+      ...this.oDataUri.getFilter(this.filter, this.entityApi),
       ...this.oDataUri.getOrderBy(this.orderBy)
     };
     if (typeof this.top !== 'undefined') {

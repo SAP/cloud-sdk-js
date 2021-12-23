@@ -26,7 +26,7 @@ export class GetAllRequestBuilder<
 {
   /**
    * Creates an instance of GetAllRequestBuilder.
-   * @param entityApi - Constructor of the entity to create the request for, the (de-)serializers, and the schema.
+   * @param entityApi - Entity API for building and executing the request.
    */
   constructor(entityApi: EntityApi<EntityT, DeSerializersT>) {
     super(

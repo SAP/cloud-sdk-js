@@ -22,18 +22,18 @@ export class ODataDeleteRequestConfig<
 
   /**
    * Creates an instance of ODataDeleteRequestConfig.
-   * @param _entityApi - TODO MM
+   * @param entityApi - Entity API for building and executing the request.
    * @param oDataUri - TODO MM
    */
   constructor(
-    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
     private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('delete', _entityApi.entityConstructor._defaultServicePath);
+    super('delete', entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return this.oDataUri.getResourcePathForKeys(this.keys, this._entityApi);
+    return this.oDataUri.getResourcePathForKeys(this.keys, this.entityApi);
   }
 
   queryParameters(): Record<string, any> {

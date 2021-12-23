@@ -13,7 +13,6 @@ describe('imports', () => {
     expect(imports.map(i => i.moduleSpecifier)).toIncludeSameMembers([
       '@sap-cloud-sdk/odata-common/internal',
       '@sap-cloud-sdk/odata-v2',
-      '@sap-cloud-sdk/odata-v2/internal',
       './Breakfast'
     ]);
 

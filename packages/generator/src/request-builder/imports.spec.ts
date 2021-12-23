@@ -9,7 +9,7 @@ describe('imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
-        namedImports: ['DeserializedType', 'Time']
+        namedImports: ['DeserializedType', 'RequestBuilder', 'Time']
       },
       {
         kind: StructureKind.ImportDeclaration,
@@ -22,11 +22,6 @@ describe('imports', () => {
           'CreateRequestBuilder',
           'UpdateRequestBuilder'
         ]
-      },
-      {
-        kind: StructureKind.ImportDeclaration,
-        moduleSpecifier: '@sap-cloud-sdk/odata-v2/internal',
-        namedImports: ['RequestBuilder']
       },
       {
         kind: StructureKind.ImportDeclaration,

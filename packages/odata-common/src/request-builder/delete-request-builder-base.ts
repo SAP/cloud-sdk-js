@@ -39,7 +39,10 @@ export abstract class DeleteRequestBuilderBase<
   ) {
     super(new ODataDeleteRequestConfig(_entityApi, oDataUri));
     if (keysOrEntity instanceof EntityBase) {
-      this.requestConfig.keys = oDataUri.getEntityKeys(keysOrEntity, _entityApi);
+      this.requestConfig.keys = oDataUri.getEntityKeys(
+        keysOrEntity,
+        _entityApi
+      );
       this.setVersionIdentifier(keysOrEntity.versionIdentifier);
     } else {
       this.requestConfig.keys = keysOrEntity;

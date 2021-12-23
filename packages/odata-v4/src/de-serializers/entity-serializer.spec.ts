@@ -1,9 +1,13 @@
+import { entitySerializer } from '@sap-cloud-sdk/odata-common/internal';
 import { TestComplexType } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { TestEnumType } from '@sap-cloud-sdk/test-services/v4/test-service/TestEnumType';
+import { defaultDeSerializers } from '../de-serializers';
 import { testEntityApi, testEntitySingleLinkApi } from '../../test/test-util';
-import { serializeComplexType, serializeEntity } from './entity-serializer';
 
 describe('entity-serializer', () => {
+  const { serializeEntity, serializeComplexType } =
+    entitySerializer(defaultDeSerializers);
+
   it('should serialize entity with enum field', () => {
     const enumProperty = TestEnumType.Member2;
     const testEntity = testEntityApi

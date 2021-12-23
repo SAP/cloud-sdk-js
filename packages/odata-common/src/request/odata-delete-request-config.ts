@@ -23,7 +23,7 @@ export class ODataDeleteRequestConfig<
   /**
    * Creates an instance of ODataDeleteRequestConfig.
    * @param entityApi - Entity API for building and executing the request.
-   * @param oDataUri - TODO MM
+   * @param oDataUri - URI conversion functions.
    */
   constructor(
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,

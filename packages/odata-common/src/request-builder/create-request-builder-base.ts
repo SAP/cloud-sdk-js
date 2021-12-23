@@ -34,10 +34,10 @@ export abstract class CreateRequestBuilderBase<
    * Creates an instance of CreateRequestBuilder.
    * @param entityApi - Entity API for building and executing the request.
    * @param _entity - Entity to be created.
-   * @param oDataUri - TODO MM
-   * @param serializer - TODO MM
-   * @param deserializer - TODO MM
-   * @param responseDataAccessor - TODO MM
+   * @param oDataUri - URI conversion functions.
+   * @param serializer - Entity serializer.
+   * @param deserializer - Entity deserializer.
+   * @param responseDataAccessor - Object access functions for get requests.
    */
   constructor(
     readonly entityApi: EntityApi<EntityT, DeSerializersT>,

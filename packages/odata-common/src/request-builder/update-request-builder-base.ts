@@ -31,7 +31,7 @@ export abstract class UpdateRequestBuilderBase<
    * Creates an instance of UpdateRequestBuilder.
    * @param entityApi - Entity API for building and executing the request.
    * @param _entity - Entity to be updated
-   * @param oDataUri - Collection of URI conversion methods
+   * @param oDataUri - URI conversion functions.
    * @param entitySerializer - Entity serializer
    * @param extractODataEtag - Extractor for ETag from payload
    * @param payloadManipulator - Manipulator for the payload.

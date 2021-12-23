@@ -29,7 +29,8 @@ export abstract class GetByKeyRequestBuilderBase<
    * @param entityApi - Entity API for building and executing the request.
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    * @param oDataUri - URI conversion functions.
-   * @param entityDeserializer - Entity deserializer
+   * @param entityDeserializer - Entity deserializer.
+   * @param dataAccessor - Object access functions for get requests.
    */
   constructor(
     entityApi: EntityApi<EntityT, DeSerializersT>,

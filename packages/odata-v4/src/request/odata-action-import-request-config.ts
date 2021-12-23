@@ -20,7 +20,7 @@ export class ODataActionImportRequestConfig<
    * @param defaultServicePath - Default path of the service
    * @param actionImportName - The name of the action import.
    * @param parameters - Parameters of the action imports
-   * @param oDataUri - Union of necessary methods for the OData URI conversion.
+   * @param oDataUri - URI conversion functions.
    */
   constructor(
     defaultServicePath: string,

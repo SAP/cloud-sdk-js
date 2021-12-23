@@ -29,7 +29,7 @@ export abstract class DeleteRequestBuilderBase<
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
    * @param entityApi - Entity API for building and executing the request.
-   * @param oDataUri - ODataUri conversion interface at runtime for either OData v2 or v4.
+   * @param oDataUri - URI conversion functions.
    * @param keysOrEntity - Entity or key-value pairs of key properties for the given entity.
    */
   constructor(

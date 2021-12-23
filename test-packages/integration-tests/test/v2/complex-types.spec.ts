@@ -7,7 +7,10 @@ import nock from 'nock';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { asc } from '@sap-cloud-sdk/odata-common/internal';
-import { deserializeComplexType } from '@sap-cloud-sdk/odata-v2/internal';
+import {
+  defaultDeSerializers,
+  entityDeserializer
+} from '@sap-cloud-sdk/odata-v2';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
 import { testEntityApi } from './test-util';
 
@@ -82,7 +85,9 @@ describe('Complex types', () => {
   });
 
   it('should be constructable by a builder', () => {
-    const actual = deserializeComplexType(
+    const actual = entityDeserializer(
+      defaultDeSerializers
+    ).deserializeComplexType(
       {
         StringProperty: 'random value',
         BooleanProperty: false,

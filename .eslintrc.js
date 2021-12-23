@@ -15,6 +15,7 @@ module.exports = {
         'test-packages/test-services-e2e/**/*',
         'packages/rest-generator/test/test-services/**/*',
         'test-resources/cli/**/*',
+        '**/test-output/**',
         '**/README.md'
       ]
     },
@@ -27,7 +28,8 @@ module.exports = {
     'test-packages/test-services',
     'test-packages/test-services-e2e',
     'packages/rest-generator/test/test-services',
-    'test-resources/cli/'
+    'test-resources/cli/',
+    'test-resources/generator/test-output'
   ],
   overrides: [
     {

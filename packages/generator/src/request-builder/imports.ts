@@ -20,10 +20,10 @@ export function requestBuilderImportDeclarations(
     ...externalImportDeclarations(entity.keys),
     odataCommonImportDeclaration([
       'DeserializedType',
+      'RequestBuilder',
       ...propertyTypeImportNames(entity.keys)
     ]),
     odataImportDeclaration(requestBuilderImports(entity), oDataVersion),
-    odataCommonImportDeclaration(['RequestBuilder']),
     entityImportDeclaration(entity),
     ...entityKeyImportDeclaration(entity.keys)
   ];

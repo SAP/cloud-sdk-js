@@ -27,4 +27,8 @@ const defaultEntityDeserializer = entityDeserializer(defaultDeSerializers);
 
 export const deserializeComplexType =
   defaultEntityDeserializer.deserializeComplexType;
+
+/**
+ * @internal
+ */
 export const deserializeEntity = defaultEntityDeserializer.deserializeEntity;

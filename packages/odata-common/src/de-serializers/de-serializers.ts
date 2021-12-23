@@ -88,6 +88,13 @@ export type DeserializedType<
     : any
   : any;
 
+/**
+ * @internal
+ * Creates a function to deserialize values (from EDM to their representation in code).
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @param deSerializers - (De-)serializers object to use for deserialization of values.
+ * @returns A function that deserializes values with the given deserializers.
+ */
 export function createValueDeserializer<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT
 ): <EdmT>(value: any, edmType: EdmT) => DeserializedType<DeSerializersT, EdmT> {
@@ -97,6 +104,13 @@ export function createValueDeserializer<DeSerializersT extends DeSerializers>(
   };
 }
 
+/**
+ * @internal
+ * Creates a function to serialize values (from their representation in code to EDM).
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @param deSerializers - (De-)serializers object to use for deserialization of values.
+ * @returns A function that serializes values with the given serializers.
+ */
 export function createValueSerializer<DeSerializersT extends DeSerializers>(
   deSerializers: DeSerializersT
 ): <EdmT>(value: any, edmType: EdmT) => any {

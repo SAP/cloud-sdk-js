@@ -363,6 +363,9 @@ export function isExpandedProperty<
   );
 }
 
+/**
+ * @internal
+ */
 export function entityBuilder<
   EntityT extends EntityBase,
   // EntityApiT extends EntityApi<EntityT, DeSerializersT>,

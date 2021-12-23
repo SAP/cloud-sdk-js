@@ -28,6 +28,7 @@ export type CustomOrDefaultType<
   : DeserializedType<DefaultDeSerializersT, EdmT>;
 
 /**
+ * @internal
  * Get a complete set of (de-)serializers, that consists of the given partial custom (de-)serializers and default (de-)serializers (aka. default (de-)serializers merged with custom (de-)serializers).
  * The custom (de-)serializers are merged with the default (de-)serializers, while custom (de-)serializers take precedence.
  * @param customDeSerializers - Custom (de-)serialization functions.
@@ -75,6 +76,7 @@ export function mergeDefaultDeSerializersWith<
 }
 
 /**
+ * @internal
  * Type of the full set of (de-)serialization functions, that include custom (de-)serializers (aka. default (de-)serializers type merged with custom (de-)serializers type).
  */
 export type CustomDeSerializers<T> = DeSerializers<

@@ -10,11 +10,11 @@ import { NumberFilterFunction } from './number-filter-function';
 
 /* String Functions */
 /**
+ * @internal
  * Build a filter function to test whether a string ends with another. Evaluates to boolean.
  * @param str - The string to test. This can either be a string, a reference to a field or another filter function.
  * @param suffix - The suffix to test for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function endsWith<EntityT extends EntityBase>(
   str:
@@ -30,11 +30,11 @@ export function endsWith<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to test whether a string starts with another. Evaluates to boolean.
  * @param str - The string to test. This can either be a string, a reference to a field or another filter function.
  * @param prefix - The prefix to test for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function startsWith<EntityT extends EntityBase>(
   str:
@@ -50,10 +50,10 @@ export function startsWith<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to get the length of a string. Evaluates to int.
  * @param str - The string to compute the length for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function length<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -62,11 +62,11 @@ export function length<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to get the start index of a substring. Evaluates to int.
  * @param str - The string to get the index from. This can either be a string, a reference to a field or another filter function.
  * @param substr - The substring to get the index for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function indexOf<EntityT extends EntityBase>(
   str:
@@ -82,12 +82,12 @@ export function indexOf<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to get a substring starting from a designated position. Evaluates to string.
  * @param str - The string to get a substring from. This can either be a string, a reference to a field or another filter function.
  * @param pos - The starting position of the substring. This can be either a number, a reference to a field or another filter function.
  * @param len - The length of the substring. This can be either a number, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function substring<EntityT extends EntityBase>(
   str:
@@ -109,10 +109,10 @@ export function substring<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to transform a string to lower case. Evaluates to string.
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function toLower<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -121,10 +121,10 @@ export function toLower<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to transform a string to upper case. Evaluates to string.
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function toUpper<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -133,10 +133,10 @@ export function toUpper<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to trim whitespace from a string. Evaluates to string.
  * @param str - The string to trim whitespace from. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function trim<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -145,11 +145,11 @@ export function trim<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to concatenate two strings. Evaluates to string.
  * @param str1 - The first string to concatenate. This can either be a string, a reference to a field or another filter function.
  * @param str2 - The second string to concatenate. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function concat<EntityT extends EntityBase>(
   str1:
@@ -393,6 +393,9 @@ export function filterFunctions<
   };
 }
 
+/**
+ * @internal
+ */
 export interface FilterFunctionsType {
   endsWith: typeof endsWith;
   startsWith: typeof startsWith;
@@ -415,6 +418,9 @@ export interface FilterFunctionsType {
   isOf: typeof isOf;
 }
 
+/**
+ * @internal
+ */
 export type FilterFunctionTypes =
   | typeof endsWith
   | typeof startsWith
@@ -436,6 +442,9 @@ export type FilterFunctionTypes =
   | typeof year
   | typeof isOf;
 
+/**
+ * @internal
+ */
 export type FilterFunctionNames =
   | 'endsWith'
   | 'startsWith'

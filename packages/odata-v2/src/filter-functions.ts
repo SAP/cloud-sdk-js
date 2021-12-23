@@ -120,11 +120,17 @@ export function filterFunctions<
   };
 }
 
+/**
+ * @internal
+ */
 export type FilterFunctionsType = FilterFunctionsCommonType & {
   substringOf: typeof substringOf;
   replace: typeof replace;
 };
 
+/**
+ * @internal
+ */
 export type FilterFunctionNames =
   | FilterFunctionNamesCommon
   | 'substringOf'

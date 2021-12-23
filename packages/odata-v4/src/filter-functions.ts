@@ -219,6 +219,9 @@ export function filterFunctions<
   };
 }
 
+/**
+ * @internal
+ */
 export type FilterFunctionTypes = FilterFunctionsCommonType & {
   contains: typeof contains;
   matchesPattern: typeof matchesPattern;
@@ -231,6 +234,9 @@ export type FilterFunctionTypes = FilterFunctionsCommonType & {
   hasSubsequence: typeof hasSubsequence;
 };
 
+/**
+ * @internal
+ */
 export type FilterFunctionNames =
   | FilterFunctionNamesCommon
   | 'contains'

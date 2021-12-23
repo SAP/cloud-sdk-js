@@ -3,7 +3,10 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-common/internal';
 import {
   DefaultDeSerializers,
   DeSerializers,
@@ -13,7 +16,6 @@ import {
   UpdateRequestBuilder,
   DeleteRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntityLvl2MultiLink } from './TestEntityLvl2MultiLink';
 
 /**

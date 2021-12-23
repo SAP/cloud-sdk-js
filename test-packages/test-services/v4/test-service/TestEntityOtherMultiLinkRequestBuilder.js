@@ -1,8 +1,13 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestEntityOtherMultiLinkRequestBuilder = void 0;
-const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+/*
+ * Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ *
+ * This is a generated file powered by the SAP Cloud SDK for JavaScript.
+ */
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const TestEntityOtherMultiLink_1 = require('./TestEntityOtherMultiLink');
 /**
  * Request builder class for operations supported on the [[TestEntityOtherMultiLink]] entity.

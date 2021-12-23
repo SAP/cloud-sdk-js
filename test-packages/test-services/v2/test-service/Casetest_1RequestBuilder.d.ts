@@ -1,4 +1,7 @@
-import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  DeserializedType,
+  RequestBuilder
+} from '@sap-cloud-sdk/odata-common/internal';
 import {
   DefaultDeSerializers,
   DeSerializers,
@@ -8,7 +11,6 @@ import {
   UpdateRequestBuilder,
   DeleteRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
-import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
 import { Casetest_1 } from './Casetest_1';
 /**
  * Request builder class for operations supported on the [[Casetest_1]] entity.

@@ -1,8 +1,8 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.PhotosRequestBuilder = void 0;
-const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
+const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const Photos_1 = require('./Photos');
 /**
  * Request builder class for operations supported on the [[Photos]] entity.

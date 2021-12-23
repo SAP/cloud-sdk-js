@@ -1,5 +1,9 @@
 import { Destination } from '@sap-cloud-sdk/connectivity';
-import { CommonEntity } from '../../../test/common-entity';
+import {
+  CommonEntity,
+  commonEntityApi,
+  CommonEntityApi
+} from '../../../test/common-entity';
 import {
   batchRequestBuilder,
   createRequestBuilder,
@@ -17,7 +21,8 @@ import {
 import { BatchChangeSet } from './batch-change-set';
 
 function commonEntity(): CommonEntity {
-  return CommonEntity.builder()
+  return new CommonEntityApi()
+    .entityBuilder()
     .keyPropertyGuid('guidId')
     .keyPropertyString('strId')
     .stringProperty('value')
@@ -28,9 +33,7 @@ const entityKeys = {
   KeyPropertyString: 'test'
 };
 
-export function changeSet(
-  requests: WriteBuilder[]
-): BatchChangeSet<WriteBuilder> {
+export function changeSet(requests: WriteBuilder[]): BatchChangeSet {
   return new BatchChangeSet<any>(requests, 'changeSet_boundary');
 }
 
@@ -44,7 +47,7 @@ describe('batch request serializer', () => {
       expect(
         serializeRequest(
           getAllRequestBuilder({
-            filter: CommonEntity.STRING_PROPERTY.equals('test')
+            filter: commonEntityApi.schema.STRING_PROPERTY.equals('test')
           })
         )
       ).toMatchSnapshot();
@@ -54,7 +57,8 @@ describe('batch request serializer', () => {
       expect(
         serializeRequest(
           getAllRequestBuilder({
-            filter: CommonEntity.STRING_PROPERTY.equals('with EmptySpace')
+            filter:
+              commonEntityApi.schema.STRING_PROPERTY.equals('with EmptySpace')
           })
         )
       ).toMatch(/filter=\(StringProperty%20eq%20'with%20EmptySpace'\)/);
@@ -99,9 +103,10 @@ describe('batch request serializer', () => {
     });
 
     it('serializes update request', () => {
-      expect(
-        serializeRequest(updateRequestBuilder({ payload: commonEntity() }))
-      ).toMatchSnapshot();
+      const test = serializeRequest(
+        updateRequestBuilder({ payload: commonEntity() })
+      );
+      expect(test).toMatchSnapshot();
     });
 
     it('serializes update request using put', () => {

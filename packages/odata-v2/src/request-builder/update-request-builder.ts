@@ -5,45 +5,50 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
-  Constructable,
   EntityIdentifiable,
   ODataRequest,
   ODataUpdateRequestConfig,
   UpdateRequestBuilderBase,
   isNavigationProperty,
-  removePropertyOnCondition
+  removePropertyOnCondition,
+  EntityApi,
+  entitySerializer
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
-import { entitySerializer } from '../entity-serializer';
-import { oDataUri } from '../uri-conversion';
 import { extractODataEtag } from '../extract-odata-etag';
+import { DeSerializers } from '../de-serializers';
+import { createODataUri } from '../uri-conversion';
 
 const logger = createLogger({
   package: 'odata-v2',
   messageContext: 'update-request-builder-v2'
 });
+
 /**
  * Create OData query to update an entity.
  * @typeparam EntityT - Type of the entity to be updated
  */
-export class UpdateRequestBuilder<EntityT extends Entity>
-  extends UpdateRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT>
+export class UpdateRequestBuilder<
+    EntityT extends Entity,
+    DeSerializersT extends DeSerializers
+  >
+  extends UpdateRequestBuilderBase<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
    * Creates an instance of UpdateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be updated
+   * @param entityApi - Entity API for building and executing the request.
    * @param _entity - Entity to be updated
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT
   ) {
     super(
-      _entityConstructor,
+      entityApi,
       _entity,
-      oDataUri,
-      entitySerializer,
+      createODataUri(entityApi.deSerializers),
+      entitySerializer(entityApi.deSerializers),
       extractODataEtag,
       removeNavPropsAndComplexTypes
     );
@@ -63,7 +68,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
     }
 
     const request = await this.build(destination);
-    warnIfNavigation(request, this._entity, this._entityConstructor);
+    warnIfNavigation(request, this._entity, this._entityApi.schema);
 
     return super.executeRequest(request);
   }
@@ -85,7 +90,7 @@ export class UpdateRequestBuilder<EntityT extends Entity>
     }
 
     const request = await this.build(destination);
-    warnIfNavigation(request, this._entity, this._entityConstructor);
+    warnIfNavigation(request, this._entity, this._entityApi.schema);
 
     return super.executeRequestRaw(request);
   }
@@ -94,14 +99,16 @@ export class UpdateRequestBuilder<EntityT extends Entity>
 /*
  * In case the entity contains a navigation to a different entity a warning is printed.
  */
-function warnIfNavigation<EntityT extends Entity>(
-  request: ODataRequest<ODataUpdateRequestConfig<EntityT>>,
+function warnIfNavigation<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  request: ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>>,
   entity: EntityT,
-  entityConstructor: Constructable<EntityT>
-): ODataRequest<ODataUpdateRequestConfig<EntityT>> {
+  schema: Record<string, any>
+): ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>> {
   const setNavigationProperties = Object.keys(entity).filter(
-    key =>
-      !isNullish(entity[key]) && isNavigationProperty(key, entityConstructor)
+    key => !isNullish(entity[key]) && isNavigationProperty(key, schema)
   );
 
   if (setNavigationProperties.length) {

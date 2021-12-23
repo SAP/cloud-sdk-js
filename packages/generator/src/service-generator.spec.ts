@@ -325,7 +325,7 @@ describe('service-generator', () => {
           returnTypeCategory: VdmReturnTypeCategory.COMPLEX_TYPE,
           returnType: 'TestComplexType',
           builderFunction:
-            '(data) => deserializeComplexType(data, TestComplexType)',
+            '(data) => entityDeserializer(\n          deSerializers\n        ).deserializeComplexType(data, TestComplexType)',
           isCollection: false,
           isNullable: false
         };
@@ -366,7 +366,7 @@ describe('service-generator', () => {
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
         expect(functionImport.returnType.builderFunction).toEqual(
-          "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.Boolean')"
+          "(val) => edmToTs(val.TestFunctionImportEdmReturnType, 'Edm.Boolean', deSerializers)"
         );
 
         const functionImportUnsupportedEdmTypes = service.functionImports.find(
@@ -376,7 +376,7 @@ describe('service-generator', () => {
         expect(
           functionImportUnsupportedEdmTypes.returnType.builderFunction
         ).toEqual(
-          "(val) => edmToTs(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any')"
+          "(val) => edmToTs(val.TestFunctionImportUnsupportedEdmTypes, 'Edm.Any', deSerializers)"
         );
         expect(functionImportUnsupportedEdmTypes.parameters[0].edmType).toEqual(
           'Edm.Any'
@@ -486,7 +486,7 @@ describe('service-generator', () => {
 
         expect(functionImport.name).toEqual('testFunctionImportEdmReturnType');
         expect(functionImport.returnType.builderFunction).toEqual(
-          "(val) => edmToTs(val.value, 'Edm.Boolean')"
+          "(val) => edmToTs(val.value, 'Edm.Boolean', deSerializers)"
         );
       });
 
@@ -507,7 +507,7 @@ describe('service-generator', () => {
         );
         expect(
           actionWithUnsupportedEdmType?.returnType.builderFunction
-        ).toEqual("(val) => edmToTs(val.value, 'Edm.Any')");
+        ).toEqual("(val) => edmToTs(val.value, 'Edm.Any', deSerializers)");
         expect(actionWithUnsupportedEdmType?.parameters[0].edmType).toEqual(
           'Edm.Any'
         );

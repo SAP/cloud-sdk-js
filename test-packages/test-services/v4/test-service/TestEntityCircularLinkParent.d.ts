@@ -1,19 +1,21 @@
-import { TestEntityCircularLinkParentRequestBuilder } from './TestEntityCircularLinkParentRequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
-  AllFields,
-  EdmTypeField,
-  EntityBuilderType,
-  Field,
-  OneToManyLink,
-  OneToOneLink
-} from '@sap-cloud-sdk/odata-common/internal';
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
+import {
+  TestEntityCircularLinkChild,
+  TestEntityCircularLinkChildType
+} from './TestEntityCircularLinkChild';
 /**
  * This class represents the entity "A_TestEntityCircularLinkParent" of service "API_TEST_SRV".
  */
-export declare class TestEntityCircularLinkParent
+export declare class TestEntityCircularLinkParent<
+    T extends DeSerializers = DefaultDeSerializers
+  >
   extends Entity
-  implements TestEntityCircularLinkParentType
+  implements TestEntityCircularLinkParentType<T>
 {
   /**
    * Technical entity name for TestEntityCircularLinkParent.
@@ -24,106 +26,28 @@ export declare class TestEntityCircularLinkParent
    */
   static _defaultServicePath: string;
   /**
+   * All key fields of the TestEntityCircularLinkParent entity
+   */
+  static _keys: string[];
+  /**
    * Key Property.
    * Maximum length: 10.
    */
-  keyProperty: string;
+  keyProperty: DeserializedType<T, 'Edm.String'>;
   /**
    * One-to-one navigation property to the [[TestEntityCircularLinkChild]] entity.
    */
-  toFirstChild?: TestEntityCircularLinkChild | null;
+  toFirstChild?: TestEntityCircularLinkChild<T> | null;
   /**
    * One-to-many navigation property to the [[TestEntityCircularLinkChild]] entity.
    */
-  toChildren: TestEntityCircularLinkChild[];
-  /**
-   * Returns an entity builder to construct instances of `TestEntityCircularLinkParent`.
-   * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
-   */
-  static builder(): EntityBuilderType<
-    TestEntityCircularLinkParent,
-    TestEntityCircularLinkParentType
-  >;
-  /**
-   * Returns a request builder to construct requests for operations on the `TestEntityCircularLinkParent` entity type.
-   * @returns A `TestEntityCircularLinkParent` request builder.
-   */
-  static requestBuilder(): TestEntityCircularLinkParentRequestBuilder;
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityCircularLinkParent`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `TestEntityCircularLinkParent`.
-   */
-  static customField(
-    fieldName: string
-  ): CustomField<TestEntityCircularLinkParent>;
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): {
-    [key: string]: any;
-  };
+  toChildren: TestEntityCircularLinkChild<T>[];
 }
-import {
-  TestEntityCircularLinkChild,
-  TestEntityCircularLinkChildType
-} from './TestEntityCircularLinkChild';
-export interface TestEntityCircularLinkParentType {
-  keyProperty: string;
-  toFirstChild?: TestEntityCircularLinkChildType | null;
-  toChildren: TestEntityCircularLinkChildType[];
-}
-export declare namespace TestEntityCircularLinkParent {
-  /**
-   * Static representation of the [[keyProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const KEY_PROPERTY: EdmTypeField<
-    TestEntityCircularLinkParent,
-    'Edm.String',
-    false,
-    true
-  >;
-  /**
-   * Static representation of the one-to-one navigation property [[toFirstChild]] for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const TO_FIRST_CHILD: OneToOneLink<
-    TestEntityCircularLinkParent,
-    TestEntityCircularLinkChild
-  >;
-  /**
-   * Static representation of the one-to-many navigation property [[toChildren]] for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const TO_CHILDREN: OneToManyLink<
-    TestEntityCircularLinkParent,
-    TestEntityCircularLinkChild
-  >;
-  /**
-   * All fields of the TestEntityCircularLinkParent entity.
-   */
-  const _allFields: Array<
-    | EdmTypeField<TestEntityCircularLinkParent, 'Edm.String', false, true>
-    | OneToOneLink<TestEntityCircularLinkParent, TestEntityCircularLinkChild>
-    | OneToManyLink<TestEntityCircularLinkParent, TestEntityCircularLinkChild>
-  >;
-  /**
-   * All fields selector.
-   */
-  const ALL_FIELDS: AllFields<TestEntityCircularLinkParent>;
-  /**
-   * All key fields of the TestEntityCircularLinkParent entity.
-   */
-  const _keyFields: Array<
-    Field<TestEntityCircularLinkParent, boolean, boolean>
-  >;
-  /**
-   * Mapping of all key field names to the respective static field property TestEntityCircularLinkParent.
-   */
-  const _keys: {
-    [keys: string]: Field<TestEntityCircularLinkParent, boolean, boolean>;
-  };
+export interface TestEntityCircularLinkParentType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
+  keyProperty: DeserializedType<T, 'Edm.String'>;
+  toFirstChild?: TestEntityCircularLinkChildType<T> | null;
+  toChildren: TestEntityCircularLinkChildType<T>[];
 }
 //# sourceMappingURL=TestEntityCircularLinkParent.d.ts.map

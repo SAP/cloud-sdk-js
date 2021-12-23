@@ -5,6 +5,7 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { EntityBase } from '../entity-base';
 import { ODataCountRequestConfig } from '../request';
+import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
 
@@ -16,13 +17,18 @@ import type { GetAllRequestBuilderBase } from './get-all-request-builder-base';
  * @internal
  */
 export class CountRequestBuilder<
-  EntityT extends EntityBase
-> extends MethodRequestBuilder<ODataCountRequestConfig<EntityT>> {
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> extends MethodRequestBuilder<
+  ODataCountRequestConfig<EntityT, DeSerializersT>
+> {
   /**
    * Creates an instance of CountRequestBuilder.
-   * @param _entityConstructor - Constructor of the entity to create the request for
+   * @param getAllRequest - Get all request builder to count result for.
    */
-  constructor(readonly getAllRequest: GetAllRequestBuilderBase<EntityT>) {
+  constructor(
+    readonly getAllRequest: GetAllRequestBuilderBase<EntityT, DeSerializersT>
+  ) {
     super(new ODataCountRequestConfig(getAllRequest));
   }
   /**

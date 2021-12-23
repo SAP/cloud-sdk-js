@@ -1,5 +1,6 @@
 import { flat, ODataVersion } from '@sap-cloud-sdk/util';
 import { ImportDeclarationStructure, StructureKind } from 'ts-morph';
+import voca from 'voca';
 import {
   VdmActionFunctionImportReturnType,
   VdmParameter,
@@ -21,7 +22,7 @@ function actionFunctionImportDeclarations(
   returnTypes: VdmActionFunctionImportReturnType[],
   parameters: VdmParameter[],
   additionalImports: { name: string; version: ODataVersion | 'common' }[],
-  oDataVersion: ODataVersion
+  { oDataVersion, className }: VdmServiceMetadata
 ): ImportDeclarationStructure[] {
   const responseTransformerFunctionCommon = returnTypes.find(returnType =>
     isEntityNotDeserializable(returnType)
@@ -52,10 +53,18 @@ function actionFunctionImportDeclarations(
         ...edmRelatedImports(returnTypes),
         ...complexTypeRelatedImports(returnTypes),
         ...version,
-        ...responseTransformerFunctionVersionDependent
+        ...responseTransformerFunctionVersionDependent,
+        'DeSerializers',
+        'DefaultDeSerializers',
+        'defaultDeSerializers'
       ],
       oDataVersion
     ),
+    {
+      kind: StructureKind.ImportDeclaration,
+      namedImports: [voca.decapitalize(className)],
+      moduleSpecifier: './service'
+    },
     ...returnTypeImports(returnTypes)
   ];
 }
@@ -67,7 +76,7 @@ function complexTypeRelatedImports(
     returnType =>
       returnType.returnTypeCategory === VdmReturnTypeCategory.COMPLEX_TYPE
   )
-    ? ['deserializeComplexType']
+    ? ['entityDeserializer']
     : [];
 }
 
@@ -91,18 +100,34 @@ function returnTypeImports(
           returnType.returnTypeCategory !== VdmReturnTypeCategory.VOID &&
           returnType.returnTypeCategory !== VdmReturnTypeCategory.NEVER
       )
-      .map(returnType => returnTypeImport(returnType))
+      .reduce(
+        (imports, returnType) => [...imports, ...returnTypeImport(returnType)],
+        []
+      )
   );
 }
 
 function returnTypeImport(
   returnType: VdmActionFunctionImportReturnType
-): ImportDeclarationStructure {
-  return {
-    kind: StructureKind.ImportDeclaration,
-    namedImports: [returnType.returnType],
-    moduleSpecifier: `./${returnType.returnType}`
-  };
+): ImportDeclarationStructure[] {
+  const typeImports: ImportDeclarationStructure[] = [
+    {
+      kind: StructureKind.ImportDeclaration,
+      namedImports: [returnType.returnType],
+      moduleSpecifier: `./${returnType.returnType}`
+    }
+  ];
+  if (returnType.returnTypeCategory === VdmReturnTypeCategory.ENTITY) {
+    return [
+      ...typeImports,
+      {
+        kind: StructureKind.ImportDeclaration,
+        namedImports: [`${returnType.returnType}Api`],
+        moduleSpecifier: `./${returnType.returnType}Api`
+      }
+    ];
+  }
+  return typeImports;
 }
 
 /**
@@ -128,7 +153,7 @@ export function importDeclarationsFunction(
       { name: 'ActionImportRequestBuilder', version: service.oDataVersion },
       { name: 'ActionImportParameter', version: service.oDataVersion }
     ],
-    service.oDataVersion
+    service
   );
 }
 
@@ -149,8 +174,9 @@ export function importDeclarationsAction(
     functionImportParameters,
     [
       { name: 'FunctionImportRequestBuilder', version: service.oDataVersion },
+      { name: 'DeSerializers', version: service.oDataVersion },
       { name: 'FunctionImportParameter', version: 'common' }
     ],
-    service.oDataVersion
+    service
   );
 }

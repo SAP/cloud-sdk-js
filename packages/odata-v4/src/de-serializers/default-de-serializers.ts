@@ -1,10 +1,9 @@
 /* eslint-disable valid-jsdoc */
 import {
   convertToUriForEdmString,
-  wrapDefaultDeserialization,
-  wrapDefaultSerialization,
   defaultDeSerializersRaw as defaultDeSerializersCommon,
-  Time
+  Time,
+  wrapDefaultDeSerializers
 } from '@sap-cloud-sdk/odata-common/internal';
 import { identity } from '@sap-cloud-sdk/util';
 import BigNumber from 'bignumber.js';
@@ -21,7 +20,6 @@ import {
 import { DeSerializers } from './de-serializers';
 
 /**
- * @internal
  * Type of the default (de-)serializers.
  */
 export type DefaultDeSerializers = DeSerializers<
@@ -89,19 +87,8 @@ const defaultDeSerializersRaw: DefaultDeSerializers = {
 };
 
 /**
- * @internal
  * The default (de-)serializers.
  */
-export const defaultDeSerializers: DefaultDeSerializers = Object.entries(
+export const defaultDeSerializers = wrapDefaultDeSerializers(
   defaultDeSerializersRaw
-).reduce(
-  (entries, [edmType, { deserialize, serialize, serializeToUri }]) => ({
-    ...entries,
-    [edmType]: {
-      deserialize: wrapDefaultDeserialization(deserialize),
-      serialize: wrapDefaultSerialization(serialize),
-      serializeToUri
-    }
-  }),
-  {}
-) as DefaultDeSerializers;
+);

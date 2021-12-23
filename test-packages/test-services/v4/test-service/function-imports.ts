@@ -9,33 +9,44 @@ import {
 } from '@sap-cloud-sdk/odata-common/internal';
 import {
   edmToTs,
-  deserializeComplexType,
+  entityDeserializer,
   FunctionImportRequestBuilder,
+  DeSerializers,
   transformReturnValueForEdmType,
   transformReturnValueForEdmTypeList,
   transformReturnValueForEntity,
   transformReturnValueForEntityList,
   transformReturnValueForComplexType,
   transformReturnValueForComplexTypeList,
-  transformReturnValueForUndefined
+  transformReturnValueForUndefined,
+  DefaultDeSerializers,
+  defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v4';
+import { testService } from './service';
 import { TestEntity } from './TestEntity';
+import { TestEntityApi } from './TestEntityApi';
 import { TestComplexType } from './TestComplexType';
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnType]].
  */
-export interface TestFunctionImportEdmReturnTypeParameters {}
+export interface TestFunctionImportEdmReturnTypeParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Function Import Edm Return Type.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEdmReturnType(
-  parameters: TestFunctionImportEdmReturnTypeParameters
+export function testFunctionImportEdmReturnType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): FunctionImportRequestBuilder<
-  TestFunctionImportEdmReturnTypeParameters,
+  DeSerializersT,
+  TestFunctionImportEdmReturnTypeParameters<DeSerializersT>,
   boolean
 > {
   const params = {};
@@ -45,26 +56,33 @@ export function testFunctionImportEdmReturnType(
     'TestFunctionImportEdmReturnType',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTs(val.value, 'Edm.Boolean')
+        edmToTs(val.value, 'Edm.Boolean', deSerializers)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEdmReturnTypeCollection]].
  */
-export interface TestFunctionImportEdmReturnTypeCollectionParameters {}
+export interface TestFunctionImportEdmReturnTypeCollectionParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Function Import Edm Return Type Collection.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEdmReturnTypeCollection(
-  parameters: TestFunctionImportEdmReturnTypeCollectionParameters
+export function testFunctionImportEdmReturnTypeCollection<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): FunctionImportRequestBuilder<
-  TestFunctionImportEdmReturnTypeCollectionParameters,
+  DeSerializersT,
+  TestFunctionImportEdmReturnTypeCollectionParameters<DeSerializersT>,
   string[]
 > {
   const params = {};
@@ -74,16 +92,19 @@ export function testFunctionImportEdmReturnTypeCollection(
     'TestFunctionImportEdmReturnTypeCollection',
     data =>
       transformReturnValueForEdmTypeList(data, val =>
-        edmToTs(val, 'Edm.String')
+        edmToTs(val, 'Edm.String', deSerializers)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportNullableTest]].
  */
-export interface TestFunctionImportNullableTestParameters {
+export interface TestFunctionImportNullableTestParameters<
+  DeSerializersT extends DeSerializers
+> {
   /**
    * Nullable Per Default.
    */
@@ -103,10 +124,14 @@ export interface TestFunctionImportNullableTestParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportNullableTest(
-  parameters: TestFunctionImportNullableTestParameters
+export function testFunctionImportNullableTest<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportNullableTestParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): FunctionImportRequestBuilder<
-  TestFunctionImportNullableTestParameters,
+  DeSerializersT,
+  TestFunctionImportNullableTestParameters<DeSerializersT>,
   string[] | null
 > {
   const params = {
@@ -132,26 +157,33 @@ export function testFunctionImportNullableTest(
     'TestFunctionImportNullableTest',
     data =>
       transformReturnValueForEdmTypeList(data, val =>
-        edmToTs(val, 'Edm.String')
+        edmToTs(val, 'Edm.String', deSerializers)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnType]].
  */
-export interface TestFunctionImportEntityReturnTypeParameters {}
+export interface TestFunctionImportEntityReturnTypeParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Function Import Entity Return Type.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEntityReturnType(
-  parameters: TestFunctionImportEntityReturnTypeParameters
+export function testFunctionImportEntityReturnType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): FunctionImportRequestBuilder<
-  TestFunctionImportEntityReturnTypeParameters,
+  DeSerializersT,
+  TestFunctionImportEntityReturnTypeParameters<DeSerializersT>,
   TestEntity
 > {
   const params = {};
@@ -159,25 +191,36 @@ export function testFunctionImportEntityReturnType(
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnType',
-    data => transformReturnValueForEntity(data, TestEntity),
-    params
+    data =>
+      transformReturnValueForEntity(
+        data,
+        testService(deSerializers).testEntityApi
+      ),
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportEntityReturnTypeCollection]].
  */
-export interface TestFunctionImportEntityReturnTypeCollectionParameters {}
+export interface TestFunctionImportEntityReturnTypeCollectionParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Function Import Entity Return Type Collection.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportEntityReturnTypeCollection(
-  parameters: TestFunctionImportEntityReturnTypeCollectionParameters
+export function testFunctionImportEntityReturnTypeCollection<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): FunctionImportRequestBuilder<
-  TestFunctionImportEntityReturnTypeCollectionParameters,
+  DeSerializersT,
+  TestFunctionImportEntityReturnTypeCollectionParameters<DeSerializersT>,
   TestEntity[]
 > {
   const params = {};
@@ -185,26 +228,37 @@ export function testFunctionImportEntityReturnTypeCollection(
   return new FunctionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportEntityReturnTypeCollection',
-    data => transformReturnValueForEntityList(data, TestEntity),
-    params
+    data =>
+      transformReturnValueForEntityList(
+        data,
+        testService(deSerializers).testEntityApi
+      ),
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnType]].
  */
-export interface TestFunctionImportSharedEntityReturnTypeParameters {}
+export interface TestFunctionImportSharedEntityReturnTypeParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Function Import Shared Entity Return Type. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportSharedEntityReturnType(
-  parameters: TestFunctionImportSharedEntityReturnTypeParameters
+export function testFunctionImportSharedEntityReturnType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
   FunctionImportRequestBuilder<
-    TestFunctionImportSharedEntityReturnTypeParameters,
+    DeSerializersT,
+    TestFunctionImportSharedEntityReturnTypeParameters<DeSerializersT>,
     never
   >,
   'execute'
@@ -219,25 +273,32 @@ export function testFunctionImportSharedEntityReturnType(
         data,
         'TestFunctionImportSharedEntityReturnType'
       ),
-    params
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportSharedEntityReturnTypeCollection]].
  */
-export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters {}
+export interface TestFunctionImportSharedEntityReturnTypeCollectionParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Function Import Shared Entity Return Type Collection. The 'execute' method does not exist when using this function/action import. Please use the 'executeRaw' for getting the raw response.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportSharedEntityReturnTypeCollection(
-  parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters
+export function testFunctionImportSharedEntityReturnTypeCollection<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): Omit<
   FunctionImportRequestBuilder<
-    TestFunctionImportSharedEntityReturnTypeCollectionParameters,
+    DeSerializersT,
+    TestFunctionImportSharedEntityReturnTypeCollectionParameters<DeSerializersT>,
     never
   >,
   'execute'
@@ -252,24 +313,31 @@ export function testFunctionImportSharedEntityReturnTypeCollection(
         data,
         'TestFunctionImportSharedEntityReturnTypeCollection'
       ),
-    params
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnType]].
  */
-export interface TestFunctionImportComplexReturnTypeParameters {}
+export interface TestFunctionImportComplexReturnTypeParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Function Import Complex Return Type.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportComplexReturnType(
-  parameters: TestFunctionImportComplexReturnTypeParameters
+export function testFunctionImportComplexReturnType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): FunctionImportRequestBuilder<
-  TestFunctionImportComplexReturnTypeParameters,
+  DeSerializersT,
+  TestFunctionImportComplexReturnTypeParameters<DeSerializersT>,
   TestComplexType
 > {
   const params = {};
@@ -279,26 +347,36 @@ export function testFunctionImportComplexReturnType(
     'TestFunctionImportComplexReturnType',
     data =>
       transformReturnValueForComplexType(data, data =>
-        deserializeComplexType(data, TestComplexType)
+        entityDeserializer(deSerializers).deserializeComplexType(
+          data,
+          TestComplexType
+        )
       ),
-    params
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportComplexReturnTypeCollection]].
  */
-export interface TestFunctionImportComplexReturnTypeCollectionParameters {}
+export interface TestFunctionImportComplexReturnTypeCollectionParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Function Import Complex Return Type Collection.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportComplexReturnTypeCollection(
-  parameters: TestFunctionImportComplexReturnTypeCollectionParameters
+export function testFunctionImportComplexReturnTypeCollection<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): FunctionImportRequestBuilder<
-  TestFunctionImportComplexReturnTypeCollectionParameters,
+  DeSerializersT,
+  TestFunctionImportComplexReturnTypeCollectionParameters<DeSerializersT>,
   TestComplexType[]
 > {
   const params = {};
@@ -308,16 +386,22 @@ export function testFunctionImportComplexReturnTypeCollection(
     'TestFunctionImportComplexReturnTypeCollection',
     data =>
       transformReturnValueForComplexTypeList(data, data =>
-        deserializeComplexType(data, TestComplexType)
+        entityDeserializer(deSerializers).deserializeComplexType(
+          data,
+          TestComplexType
+        )
       ),
-    params
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportMultipleParams]].
  */
-export interface TestFunctionImportMultipleParamsParameters {
+export interface TestFunctionImportMultipleParamsParameters<
+  DeSerializersT extends DeSerializers
+> {
   /**
    * String Param.
    */
@@ -341,10 +425,14 @@ export interface TestFunctionImportMultipleParamsParameters {
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportMultipleParams(
-  parameters: TestFunctionImportMultipleParamsParameters
+export function testFunctionImportMultipleParams<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportMultipleParamsParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): FunctionImportRequestBuilder<
-  TestFunctionImportMultipleParamsParameters,
+  DeSerializersT,
+  TestFunctionImportMultipleParamsParameters<DeSerializersT>,
   boolean | null
 > {
   const params = {
@@ -375,26 +463,33 @@ export function testFunctionImportMultipleParams(
     'TestFunctionImportMultipleParams',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTs(val.value, 'Edm.Boolean')
+        edmToTs(val.value, 'Edm.Boolean', deSerializers)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testFunctionImportWithDifferentName]].
  */
-export interface TestFunctionImportWithDifferentNameParameters {}
+export interface TestFunctionImportWithDifferentNameParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Function Import With Different Name.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testFunctionImportWithDifferentName(
-  parameters: TestFunctionImportWithDifferentNameParameters
+export function testFunctionImportWithDifferentName<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): FunctionImportRequestBuilder<
-  TestFunctionImportWithDifferentNameParameters,
+  DeSerializersT,
+  TestFunctionImportWithDifferentNameParameters<DeSerializersT>,
   undefined
 > {
   const params = {};
@@ -403,7 +498,8 @@ export function testFunctionImportWithDifferentName(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestFunctionImportWithDifferentName',
     data => transformReturnValueForUndefined(data, val => undefined),
-    params
+    params,
+    deSerializers
   );
 }
 

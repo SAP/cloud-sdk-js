@@ -1,23 +1,19 @@
-import { PeopleRequestBuilder } from './PeopleRequestBuilder';
-import { BigNumber } from 'bignumber.js';
+import {
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 import { Location } from './Location';
 import { PersonGender } from './PersonGender';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
-import {
-  AllFields,
-  CollectionField,
-  EdmTypeField,
-  EntityBuilderType,
-  EnumField,
-  Field,
-  OneToManyLink,
-  OneToOneLink,
-  OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-common/internal';
+import { Photos, PhotosType } from './Photos';
 /**
  * This class represents the entity "People" of service "Microsoft.OData.SampleService.Models.TripPin".
  */
-export declare class People extends Entity implements PeopleType {
+export declare class People<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements PeopleType<T>
+{
   /**
    * Technical entity name for People.
    */
@@ -27,151 +23,58 @@ export declare class People extends Entity implements PeopleType {
    */
   static _defaultServicePath: string;
   /**
+   * All key fields of the People entity
+   */
+  static _keys: string[];
+  /**
    * User Name.
    */
-  userName: string;
+  userName: DeserializedType<T, 'Edm.String'>;
   /**
    * First Name.
    */
-  firstName: string;
+  firstName: DeserializedType<T, 'Edm.String'>;
   /**
    * Last Name.
    */
-  lastName: string;
+  lastName: DeserializedType<T, 'Edm.String'>;
   /**
    * Emails.
    * @nullable
    */
-  emails?: string[];
+  emails?: DeserializedType<T, 'Edm.String'>[] | null;
   /**
    * Address Info.
    * @nullable
    */
-  addressInfo?: Location[];
+  addressInfo?: Location<T>[] | null;
   /**
    * Gender.
    * @nullable
    */
-  gender?: PersonGender;
+  gender?: PersonGender | null;
   /**
    * Concurrency.
    */
-  concurrency: BigNumber;
+  concurrency: DeserializedType<T, 'Edm.Int64'>;
   /**
    * One-to-many navigation property to the [[People]] entity.
    */
-  friends: People[];
+  friends: People<T>[];
   /**
    * One-to-one navigation property to the [[Photos]] entity.
    */
-  photo?: Photos | null;
-  /**
-   * Returns an entity builder to construct instances of `People`.
-   * @returns A builder that constructs instances of entity type `People`.
-   */
-  static builder(): EntityBuilderType<People, PeopleType>;
-  /**
-   * Returns a request builder to construct requests for operations on the `People` entity type.
-   * @returns A `People` request builder.
-   */
-  static requestBuilder(): PeopleRequestBuilder;
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `People`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `People`.
-   */
-  static customField(fieldName: string): CustomField<People>;
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): {
-    [key: string]: any;
-  };
+  photo?: Photos<T> | null;
 }
-import { Photos, PhotosType } from './Photos';
-export interface PeopleType {
-  userName: string;
-  firstName: string;
-  lastName: string;
-  emails?: string[] | null;
-  addressInfo?: Location[] | null;
+export interface PeopleType<T extends DeSerializers = DefaultDeSerializers> {
+  userName: DeserializedType<T, 'Edm.String'>;
+  firstName: DeserializedType<T, 'Edm.String'>;
+  lastName: DeserializedType<T, 'Edm.String'>;
+  emails?: DeserializedType<T, 'Edm.String'>[] | null;
+  addressInfo?: Location<T>[] | null;
   gender?: PersonGender | null;
-  concurrency: BigNumber;
-  friends: PeopleType[];
-  photo?: PhotosType | null;
-}
-export declare namespace People {
-  /**
-   * Static representation of the [[userName]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const USER_NAME: EdmTypeField<People, 'Edm.String', false, true>;
-  /**
-   * Static representation of the [[firstName]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const FIRST_NAME: EdmTypeField<People, 'Edm.String', false, true>;
-  /**
-   * Static representation of the [[lastName]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const LAST_NAME: EdmTypeField<People, 'Edm.String', false, true>;
-  /**
-   * Static representation of the [[emails]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const EMAILS: CollectionField<People, 'Edm.String', true, true>;
-  /**
-   * Static representation of the [[addressInfo]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const ADDRESS_INFO: CollectionField<People, Location, true, true>;
-  /**
-   * Static representation of the [[gender]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const GENDER: EnumField<People, PersonGender, true, true>;
-  /**
-   * Static representation of the [[concurrency]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const CONCURRENCY: OrderableEdmTypeField<People, 'Edm.Int64', false, true>;
-  /**
-   * Static representation of the one-to-many navigation property [[friends]] for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const FRIENDS: OneToManyLink<People, People>;
-  /**
-   * Static representation of the one-to-one navigation property [[photo]] for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const PHOTO: OneToOneLink<People, Photos>;
-  /**
-   * All fields of the People entity.
-   */
-  const _allFields: Array<
-    | EdmTypeField<People, 'Edm.String', false, true>
-    | CollectionField<People, 'Edm.String', true, true>
-    | CollectionField<People, Location, true, true>
-    | EnumField<People, PersonGender, true, true>
-    | OrderableEdmTypeField<People, 'Edm.Int64', false, true>
-    | OneToManyLink<People, People>
-    | OneToOneLink<People, Photos>
-  >;
-  /**
-   * All fields selector.
-   */
-  const ALL_FIELDS: AllFields<People>;
-  /**
-   * All key fields of the People entity.
-   */
-  const _keyFields: Array<Field<People, boolean, boolean>>;
-  /**
-   * Mapping of all key field names to the respective static field property People.
-   */
-  const _keys: {
-    [keys: string]: Field<People, boolean, boolean>;
-  };
+  concurrency: DeserializedType<T, 'Edm.Int64'>;
+  friends: PeopleType<T>[];
+  photo?: PhotosType<T> | null;
 }
 //# sourceMappingURL=People.d.ts.map

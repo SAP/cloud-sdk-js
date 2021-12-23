@@ -3,12 +3,13 @@ import {
   Destination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import { Constructable, EntityBase } from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { Selectable } from '../selectable';
 import { Orderable } from '../order';
 import { ODataGetAllRequestConfig } from '../request';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
+import { DeSerializers } from '../de-serializers';
 import { CountRequestBuilder } from './count-request-builder';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 
@@ -18,31 +19,41 @@ import { GetRequestBuilderBase } from './get-request-builder-base';
  * @internal
  */
 export abstract class GetAllRequestBuilderBase<
-  EntityT extends EntityBase
-> extends GetRequestBuilderBase<EntityT, ODataGetAllRequestConfig<EntityT>> {
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> extends GetRequestBuilderBase<
+  EntityT,
+  DeSerializersT,
+  ODataGetAllRequestConfig<EntityT, DeSerializersT>
+> {
   /**
    * Creates an instance of GetAllRequestBuilder.
-   * @param entityConstructor - Constructor of the entity to create the request for
+   * @param entityApi - Entity API for building and executing the request.
    * @param getAllRequestConfig - Request config of the get all request.
+   * @param entityDeserializer - Entity deserializer.
+   * @param dataAccessor - Object access functions for get requests.
    */
   constructor(
-    entityConstructor: Constructable<EntityT>,
-    getAllRequestConfig: ODataGetAllRequestConfig<EntityT>,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
+    getAllRequestConfig: ODataGetAllRequestConfig<EntityT, DeSerializersT>,
     readonly entityDeserializer: EntityDeserializer,
     readonly dataAccessor: ResponseDataAccessor
   ) {
-    super(entityConstructor, getAllRequestConfig);
+    super(entityApi, getAllRequestConfig);
   }
   /**
    * Restrict the response to the given selection of properties in the request.
    * @param selects - Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
-  select(...selects: Selectable<EntityT>[]): this;
-  select(selects: Selectable<EntityT>[]): this;
+  select(...selects: Selectable<EntityT, DeSerializersT>[]): this;
+  select(selects: Selectable<EntityT, DeSerializersT>[]): this;
   select(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
+    first:
+      | undefined
+      | Selectable<EntityT, DeSerializersT>
+      | Selectable<EntityT, DeSerializersT>[],
+    ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
     this.requestConfig.selects = variadicArgumentToArray(first, rest);
     return this;
@@ -87,7 +98,7 @@ export abstract class GetAllRequestBuilderBase<
    * Count the number of entities.
    * @returns A count request builder for execution
    */
-  count(): CountRequestBuilder<EntityT> {
+  count(): CountRequestBuilder<EntityT, DeSerializersT> {
     return new CountRequestBuilder(this);
   }
 
@@ -106,7 +117,7 @@ export abstract class GetAllRequestBuilderBase<
         .map(json =>
           this.entityDeserializer.deserializeEntity(
             json,
-            this._entityConstructor,
+            this._entityApi,
             response.headers
           )
         )

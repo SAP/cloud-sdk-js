@@ -11,7 +11,7 @@ export function parametersInterface(
 ): InterfaceDeclarationStructure {
   return {
     kind: StructureKind.Interface,
-    name: actionFunctionImport.parametersTypeName,
+    name: `${actionFunctionImport.parametersTypeName}<DeSerializersT extends DeSerializers>`,
     isExported: true,
     properties: actionFunctionImport.parameters.map(parameter => ({
       name: parameter.parameterName,

@@ -1,4 +1,5 @@
 import { Selectable, Link } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 
 /**
@@ -9,8 +10,11 @@ import { Entity } from '../entity';
  * @returns An object containing the query parameters or an empty object
  * @internal
  */
-export function getSelect<EntityT extends Entity>(
-  selects: Selectable<EntityT>[] = []
+export function getSelect<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  selects: Selectable<EntityT, DeSerializersT>[] = []
 ): Partial<{ select: string }> {
   const select = getSelectsAsStrings(selects);
   return select.length ? { select: filterSelects(select).join(',') } : {};
@@ -32,8 +36,11 @@ function filterSelects(selects: string[]): string[] {
   ];
 }
 
-function getSelectsAsStrings<EntityT extends Entity>(
-  selectables: Selectable<EntityT>[],
+function getSelectsAsStrings<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  selectables: Selectable<EntityT, DeSerializersT>[],
   initialSelect: string[] = [],
   parent = ''
 ): string[] {

@@ -1,6 +1,6 @@
-import { EntityBase, Constructable } from '../entity-base';
+import { DeSerializers } from '../de-serializers';
+import { EntityBase, EntityApi } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
-import { FieldType } from '../selectable';
 import { ODataRequestConfig } from './odata-request-config';
 import { WithKeys, WithETag } from './odata-request-traits';
 
@@ -9,33 +9,34 @@ import { WithKeys, WithETag } from './odata-request-traits';
  * @typeparam EntityT - Type of the entity to setup a request for
  * @internal
  */
-export class ODataUpdateRequestConfig<EntityT extends EntityBase>
+export class ODataUpdateRequestConfig<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
   extends ODataRequestConfig
   implements WithKeys, WithETag
 {
-  keys: Record<string, FieldType>;
+  keys: Record<string, any>;
   eTag: string;
   versionIdentifierIgnored = false;
 
   /**
    * Creates an instance of ODataUpdateRequestConfig.
-   * @param _entityConstructor - Constructor type of the entity to create a configuration for
+   * @param entityApi - Entity API for building and executing the request.
+   * @param oDataUri - URI conversion functions.
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    private oDataUri: ODataUri
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
+    private oDataUri: ODataUri<DeSerializersT>
   ) {
     super(
       UpdateStrategy.MODIFY_WITH_PATCH,
-      _entityConstructor._defaultServicePath
+      entityApi.entityConstructor._defaultServicePath
     );
   }
 
   resourcePath(): string {
-    return this.oDataUri.getResourcePathForKeys(
-      this.keys,
-      this._entityConstructor
-    );
+    return this.oDataUri.getResourcePathForKeys(this.keys, this.entityApi);
   }
 
   queryParameters(): Record<string, any> {

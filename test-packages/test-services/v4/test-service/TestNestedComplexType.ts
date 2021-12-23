@@ -7,31 +7,43 @@ import {
   TestLvl2NestedComplexType,
   TestLvl2NestedComplexTypeField
 } from './TestLvl2NestedComplexType';
-import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
+  DefaultDeSerializers,
+  DeSerializers,
+  Entity
+} from '@sap-cloud-sdk/odata-v4';
+import {
+  CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
+  EnumField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
+  OrderableEdmTypeField,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * TestNestedComplexType
  */
-export interface TestNestedComplexType {
+export interface TestNestedComplexType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * String Property.
    * @nullable
    */
-  stringProperty?: string;
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Complex Type Property.
    * @nullable
    */
-  complexTypeProperty?: TestLvl2NestedComplexType;
+  complexTypeProperty?: DeserializedType<
+    DeSerializersT,
+    'API_TEST_SRV.A_TestLvl2NestedComplexType'
+  >;
 }
 
 /**
@@ -40,31 +52,49 @@ export interface TestNestedComplexType {
  */
 export class TestNestedComplexTypeField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
   EntityT,
+  DeSerializersT,
   TestNestedComplexType,
   NullableT,
   SelectableT
 > {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
-    this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', true);
+  stringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    true
+  );
   /**
    * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty: TestLvl2NestedComplexTypeField<EntityT, true, false> =
-    this._fieldBuilder.buildComplexTypeField(
-      'ComplexTypeProperty',
-      TestLvl2NestedComplexTypeField,
-      true
-    );
+  complexTypeProperty: TestLvl2NestedComplexTypeField<
+    EntityT,
+    DeSerializersT,
+    true,
+    false
+  > = this._fieldBuilder.buildComplexTypeField(
+    'ComplexTypeProperty',
+    TestLvl2NestedComplexTypeField,
+    true
+  );
 
   /**
    * Creates an instance of TestNestedComplexTypeField.
@@ -74,9 +104,16 @@ export class TestNestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, TestNestedComplexType, fieldOptions);
+    super(
+      fieldName,
+      fieldOf,
+      deSerializers,
+      TestNestedComplexType,
+      fieldOptions
+    );
   }
 }
 

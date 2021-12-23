@@ -6,6 +6,7 @@
 import {
   CreateRequestBuilder,
   DeleteRequestBuilder,
+  DeSerializers,
   GetAllRequestBuilder,
   GetByKeyRequestBuilder,
   ODataBatchRequestBuilder,
@@ -20,36 +21,35 @@ import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
  * @param requests The requests of the batch
  * @returns A request builder for batch.
  */
-export function batch(
+export function batch<DeSerializersT extends DeSerializers>(
   ...requests: Array<
-    | ReadMultipleSchemasServiceRequestBuilder
-    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | ReadMultipleSchemasServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilder;
-export function batch(
+): ODataBatchRequestBuilder<DeSerializersT>;
+export function batch<DeSerializersT extends DeSerializers>(
   requests: Array<
-    | ReadMultipleSchemasServiceRequestBuilder
-    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | ReadMultipleSchemasServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilder;
-export function batch(
+): ODataBatchRequestBuilder<DeSerializersT>;
+export function batch<DeSerializersT extends DeSerializers>(
   first:
     | undefined
-    | ReadMultipleSchemasServiceRequestBuilder
-    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | ReadMultipleSchemasServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
     | Array<
-        | ReadMultipleSchemasServiceRequestBuilder
-        | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+        | ReadMultipleSchemasServiceRequestBuilder<DeSerializersT>
+        | BatchChangeSet<DeSerializersT>
       >,
   ...rest: Array<
-    | ReadMultipleSchemasServiceRequestBuilder
-    | BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+    | ReadMultipleSchemasServiceRequestBuilder<DeSerializersT>
+    | BatchChangeSet<DeSerializersT>
   >
-): ODataBatchRequestBuilder {
+): ODataBatchRequestBuilder<DeSerializersT> {
   return new ODataBatchRequestBuilder(
     defaultMultipleSchemasServicePath,
-    variadicArgumentToArray(first, rest),
-    map
+    variadicArgumentToArray(first, rest)
   );
 }
 
@@ -58,49 +58,47 @@ export function batch(
  * @param requests The requests of the change set
  * @returns A change set for batch.
  */
-export function changeset(
-  ...requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
-export function changeset(
-  requests: Array<WriteMultipleSchemasServiceRequestBuilder>
-): BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>;
-export function changeset(
+export function changeset<DeSerializersT extends DeSerializers>(
+  ...requests: Array<WriteMultipleSchemasServiceRequestBuilder<DeSerializersT>>
+): BatchChangeSet<DeSerializersT>;
+export function changeset<DeSerializersT extends DeSerializers>(
+  requests: Array<WriteMultipleSchemasServiceRequestBuilder<DeSerializersT>>
+): BatchChangeSet<DeSerializersT>;
+export function changeset<DeSerializersT extends DeSerializers>(
   first:
     | undefined
-    | WriteMultipleSchemasServiceRequestBuilder
-    | Array<WriteMultipleSchemasServiceRequestBuilder>,
-  ...rest: Array<WriteMultipleSchemasServiceRequestBuilder>
-): BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder> {
+    | WriteMultipleSchemasServiceRequestBuilder<DeSerializersT>
+    | Array<WriteMultipleSchemasServiceRequestBuilder<DeSerializersT>>,
+  ...rest: Array<WriteMultipleSchemasServiceRequestBuilder<DeSerializersT>>
+): BatchChangeSet<DeSerializersT> {
   return new BatchChangeSet(variadicArgumentToArray(first, rest));
 }
 
 export const defaultMultipleSchemasServicePath =
   '/sap/opu/odata/sap/API_TEST_SRV';
-const map = {
-  A_TestEntity1: TestEntity1,
-  A_TestEntity2: TestEntity2,
-  A_TestEntity3: TestEntity3,
-  A_TestEntity4: TestEntity4
-};
-export type ReadMultipleSchemasServiceRequestBuilder =
-  | GetAllRequestBuilder<TestEntity1>
-  | GetAllRequestBuilder<TestEntity2>
-  | GetAllRequestBuilder<TestEntity3>
-  | GetAllRequestBuilder<TestEntity4>
-  | GetByKeyRequestBuilder<TestEntity1>
-  | GetByKeyRequestBuilder<TestEntity2>
-  | GetByKeyRequestBuilder<TestEntity3>
-  | GetByKeyRequestBuilder<TestEntity4>;
-export type WriteMultipleSchemasServiceRequestBuilder =
-  | CreateRequestBuilder<TestEntity1>
-  | UpdateRequestBuilder<TestEntity1>
-  | DeleteRequestBuilder<TestEntity1>
-  | CreateRequestBuilder<TestEntity2>
-  | UpdateRequestBuilder<TestEntity2>
-  | DeleteRequestBuilder<TestEntity2>
-  | CreateRequestBuilder<TestEntity3>
-  | UpdateRequestBuilder<TestEntity3>
-  | DeleteRequestBuilder<TestEntity3>
-  | CreateRequestBuilder<TestEntity4>
-  | UpdateRequestBuilder<TestEntity4>
-  | DeleteRequestBuilder<TestEntity4>;
+export type ReadMultipleSchemasServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | GetAllRequestBuilder<TestEntity1, DeSerializersT>
+  | GetAllRequestBuilder<TestEntity2, DeSerializersT>
+  | GetAllRequestBuilder<TestEntity3, DeSerializersT>
+  | GetAllRequestBuilder<TestEntity4, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity1, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity2, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity3, DeSerializersT>
+  | GetByKeyRequestBuilder<TestEntity4, DeSerializersT>;
+export type WriteMultipleSchemasServiceRequestBuilder<
+  DeSerializersT extends DeSerializers
+> =
+  | CreateRequestBuilder<TestEntity1, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity1, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity1, DeSerializersT>
+  | CreateRequestBuilder<TestEntity2, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity2, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity2, DeSerializersT>
+  | CreateRequestBuilder<TestEntity3, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity3, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity3, DeSerializersT>
+  | CreateRequestBuilder<TestEntity4, DeSerializersT>
+  | UpdateRequestBuilder<TestEntity4, DeSerializersT>
+  | DeleteRequestBuilder<TestEntity4, DeSerializersT>;

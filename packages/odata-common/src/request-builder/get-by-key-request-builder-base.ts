@@ -3,12 +3,13 @@ import {
   Destination,
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
-import { Constructable, EntityBase } from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { EntityDeserializer } from '../entity-deserializer';
 import { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataGetByKeyRequestConfig } from '../request';
-import { FieldType, Selectable } from '../selectable';
+import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
+import { DeSerializers } from '../de-serializers';
 import { GetRequestBuilderBase } from './get-request-builder-base';
 /**
  * Abstract class to create a get by key request containing the shared functionality for OData v2 and v4.
@@ -16,26 +17,29 @@ import { GetRequestBuilderBase } from './get-request-builder-base';
  * @internal
  */
 export abstract class GetByKeyRequestBuilderBase<
-  EntityT extends EntityBase
-> extends GetRequestBuilderBase<EntityT, ODataGetByKeyRequestConfig<EntityT>> {
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> extends GetRequestBuilderBase<
+  EntityT,
+  DeSerializersT,
+  ODataGetByKeyRequestConfig<EntityT, DeSerializersT>
+> {
   /**
    * Creates an instance of GetByKeyRequestBuilder.
-   * @param entityConstructor - Constructor of the entity to create the request for
+   * @param entityApi - Entity API for building and executing the request.
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
-   * @param oDataUri - Uri conversion methods
-   * @param entityDeserializer - Entity deserializer
+   * @param oDataUri - URI conversion functions.
+   * @param entityDeserializer - Entity deserializer.
+   * @param dataAccessor - Object access functions for get requests.
    */
   constructor(
-    entityConstructor: Constructable<EntityT>,
-    keys: Record<string, FieldType>,
-    oDataUri: ODataUri,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
+    keys: Record<string, any>,
+    oDataUri: ODataUri<DeSerializersT>,
     readonly entityDeserializer: EntityDeserializer,
     readonly dataAccessor: ResponseDataAccessor
   ) {
-    super(
-      entityConstructor,
-      new ODataGetByKeyRequestConfig(entityConstructor, oDataUri)
-    );
+    super(entityApi, new ODataGetByKeyRequestConfig(entityApi, oDataUri));
     this.requestConfig.keys = keys;
   }
 
@@ -44,11 +48,14 @@ export abstract class GetByKeyRequestBuilderBase<
    * @param selects - Fields to select in the request
    * @returns The request builder itself, to facilitate method chaining
    */
-  select(...selects: Selectable<EntityT>[]): this;
-  select(selects: Selectable<EntityT>[]): this;
+  select(...selects: Selectable<EntityT, DeSerializersT>[]): this;
+  select(selects: Selectable<EntityT, DeSerializersT>[]): this;
   select(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
+    first:
+      | undefined
+      | Selectable<EntityT, DeSerializersT>
+      | Selectable<EntityT, DeSerializersT>[],
+    ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
     this.requestConfig.selects = variadicArgumentToArray(first, rest);
     return this;
@@ -66,7 +73,7 @@ export abstract class GetByKeyRequestBuilderBase<
       .then(response =>
         this.entityDeserializer.deserializeEntity(
           this.dataAccessor.getSingleResult(response.data),
-          this._entityConstructor,
+          this._entityApi,
           response.headers
         )
       )

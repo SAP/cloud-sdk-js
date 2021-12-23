@@ -1,18 +1,17 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
 import { createLogger } from '@sap-cloud-sdk/util';
-import {
-  TestEntity,
-  TestEntityMultiLink
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   mockUpdateRequest
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { uriConverter } from '../uri-conversion/uri-value-converter';
+import { defaultDeSerializers } from '../de-serializers';
+import { testEntityApi, testEntityMultiLinkApi } from '../../test/test-util';
 import { UpdateRequestBuilder } from './update-request-builder';
 
+const uriConverter = createUriConverter(defaultDeSerializers);
 function createTestEntity() {
   const keyPropGuid = uuid();
   const keyPropString = 'stringId';
@@ -20,7 +19,8 @@ function createTestEntity() {
   const stringProp = undefined;
   const booleanProp = null;
 
-  return TestEntity.builder()
+  return testEntityApi
+    .entityBuilder()
     .keyPropertyGuid(keyPropGuid)
     .keyPropertyString(keyPropString)
     .int32Property(int32Prop)
@@ -37,9 +37,10 @@ describe('UpdateRequestBuilder', () => {
   it('no request is executed when there is no difference between current and remote state', async () => {
     const entity = createTestEntity().setOrInitializeRemoteState();
     const scope = nock(/.*/).get(/.*/).reply(500);
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity);
     expect(scope.isDone()).toBe(false);
   });
@@ -49,9 +50,10 @@ describe('UpdateRequestBuilder', () => {
     const entity = createTestEntity().setOrInitializeRemoteState();
     entity.keyPropertyGuid = uuid();
     entity.keyPropertyString = 'UPDATED!';
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity);
     expect(scope.isDone()).toBe(false);
   });
@@ -64,18 +66,22 @@ describe('UpdateRequestBuilder', () => {
       BooleanProperty: false
     };
 
-    mockUpdateRequest({
-      body: requestBody,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      )
-    });
-
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
+    mockUpdateRequest(
+      {
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        )
+      },
+      testEntityApi
     );
+
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -89,18 +95,22 @@ describe('UpdateRequestBuilder', () => {
       SomeCustomField: customFieldVal
     };
 
-    mockUpdateRequest({
-      body: requestBody,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      )
-    });
-
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
+    mockUpdateRequest(
+      {
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        )
+      },
+      testEntityApi
     );
+
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -114,18 +124,22 @@ describe('UpdateRequestBuilder', () => {
 
     const requestBody = { SomeCustomField: customFieldVal };
 
-    mockUpdateRequest({
-      body: requestBody,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      )
-    });
-
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
+    mockUpdateRequest(
+      {
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        )
+      },
+      testEntityApi
     );
+
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -140,17 +154,20 @@ describe('UpdateRequestBuilder', () => {
       BooleanProperty: null
     };
 
-    mockUpdateRequest({
-      body: putRequestBody,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      ),
-      method: 'put'
-    });
+    mockUpdateRequest(
+      {
+        body: putRequestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        ),
+        method: 'put'
+      },
+      testEntityApi
+    );
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
       .replaceWholeEntityWithPut()
       .execute(defaultDestination);
 
@@ -161,17 +178,20 @@ describe('UpdateRequestBuilder', () => {
     const entity = createTestEntity().setOrInitializeRemoteState();
     const requestBody = { KeyPropertyGuid: entity.keyPropertyGuid };
 
-    const scope = mockUpdateRequest({
-      body: requestBody,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      )
-    });
+    const scope = mockUpdateRequest(
+      {
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        )
+      },
+      testEntityApi
+    );
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
-      .setRequiredFields(TestEntity.KEY_PROPERTY_GUID)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
+      .setRequiredFields(testEntityApi.schema.KEY_PROPERTY_GUID)
       .execute(defaultDestination);
 
     expect(scope.isDone()).toBe(true);
@@ -183,8 +203,8 @@ describe('UpdateRequestBuilder', () => {
 
     const scope = nock(/.*/).patch(/.*/).reply(500);
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
-      .setIgnoredFields(TestEntity.INT_32_PROPERTY)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
+      .setIgnoredFields(testEntityApi.schema.INT_32_PROPERTY)
       .execute(defaultDestination);
 
     expect(scope.isDone()).toBe(false);
@@ -195,19 +215,23 @@ describe('UpdateRequestBuilder', () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
     const requestBody = { Int32Property: entity.int32Property };
 
-    mockUpdateRequest({
-      body: requestBody,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      ),
-      additionalHeaders: { 'if-match': 'not-a-star' }
-    });
-
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
+    mockUpdateRequest(
+      {
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        ),
+        additionalHeaders: { 'if-match': 'not-a-star' }
+      },
+      testEntityApi
     );
+
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 
@@ -216,17 +240,20 @@ describe('UpdateRequestBuilder', () => {
     const requestBody = { Int32Property: entity.int32Property };
     const customVersionIdentifier = 'custom-version-identifier';
 
-    mockUpdateRequest({
-      body: requestBody,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      ),
-      additionalHeaders: { 'if-match': customVersionIdentifier }
-    });
+    mockUpdateRequest(
+      {
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        ),
+        additionalHeaders: { 'if-match': customVersionIdentifier }
+      },
+      testEntityApi
+    );
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
       .setVersionIdentifier(customVersionIdentifier)
       .execute(defaultDestination);
 
@@ -238,17 +265,20 @@ describe('UpdateRequestBuilder', () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
     const requestBody = { Int32Property: entity.int32Property };
 
-    mockUpdateRequest({
-      body: requestBody,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      ),
-      additionalHeaders: { 'if-match': '*' }
-    });
+    mockUpdateRequest(
+      {
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        ),
+        additionalHeaders: { 'if-match': '*' }
+      },
+      testEntityApi
+    );
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity)
+    const actual = await new UpdateRequestBuilder(testEntityApi, entity)
       .ignoreVersionIdentifier()
       .execute(defaultDestination);
 
@@ -258,18 +288,22 @@ describe('UpdateRequestBuilder', () => {
   it('throws an error when request execution fails', async () => {
     const entity = createTestEntity();
 
-    mockUpdateRequest({
-      body: () => true,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString
-      ),
-      statusCode: 500
-    });
-
-    const updateRequest = new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
+    mockUpdateRequest(
+      {
+        body: () => true,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString
+        ),
+        statusCode: 500
+      },
+      testEntityApi
     );
+
+    const updateRequest = new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     await expect(updateRequest).rejects.toThrowErrorMatchingSnapshot();
   });
@@ -280,20 +314,24 @@ describe('UpdateRequestBuilder', () => {
     const entity = createTestEntity().setVersionIdentifier('not-a-star');
     const requestBody = { Int32Property: entity.int32Property };
 
-    mockUpdateRequest({
-      body: requestBody,
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      ),
-      statusCode: 204,
-      responseHeaders: { Etag: eTag }
-    });
-
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
+    mockUpdateRequest(
+      {
+        body: requestBody,
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        ),
+        statusCode: 204,
+        responseHeaders: { Etag: eTag }
+      },
+      testEntityApi
     );
+
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
 
     expect(actual['_versionIdentifier']).toBe(eTag);
     expect(actual['remoteState']).toEqual(entity);
@@ -302,21 +340,24 @@ describe('UpdateRequestBuilder', () => {
   it('warns if navigation properties are sent', async () => {
     const entity = createTestEntity();
     entity.toMultiLink = [
-      TestEntityMultiLink.builder().keyProperty('someKey').build()
+      testEntityMultiLinkApi.entityBuilder().keyProperty('someKey').build()
     ];
     const logger = createLogger('update-request-builder-v2');
     const warnSpy = jest.spyOn(logger, 'warn');
 
-    mockUpdateRequest({
-      path: testEntityResourcePath(
-        entity.keyPropertyGuid,
-        entity.keyPropertyString,
-        uriConverter.convertToUriFormat
-      ),
-      statusCode: 201
-    });
+    mockUpdateRequest(
+      {
+        path: testEntityResourcePath(
+          entity.keyPropertyGuid,
+          entity.keyPropertyString,
+          uriConverter
+        ),
+        statusCode: 201
+      },
+      testEntityApi
+    );
 
-    await new UpdateRequestBuilder(TestEntity, entity).execute(
+    await new UpdateRequestBuilder(testEntityApi, entity).execute(
       defaultDestination
     );
 
@@ -333,10 +374,10 @@ describe('UpdateRequestBuilder', () => {
       entity.keyPropertyGuid = uuid();
       entity.keyPropertyString = 'UPDATED!';
       const actual = await new UpdateRequestBuilder(
-        TestEntity,
+        testEntityApi,
         entity
       ).executeRaw(defaultDestination);
-      await expect(actual).toEqual(undefined);
+      expect(actual).toEqual(undefined);
     });
 
     it('returns request and raw response when sending non-key properties', async () => {
@@ -348,18 +389,21 @@ describe('UpdateRequestBuilder', () => {
       };
       const response = { d: requestBody };
 
-      mockUpdateRequest({
-        body: requestBody,
-        path: testEntityResourcePath(
-          entity.keyPropertyGuid,
-          entity.keyPropertyString,
-          uriConverter.convertToUriFormat
-        ),
-        responseBody: response
-      });
+      mockUpdateRequest(
+        {
+          body: requestBody,
+          path: testEntityResourcePath(
+            entity.keyPropertyGuid,
+            entity.keyPropertyString,
+            uriConverter
+          ),
+          responseBody: response
+        },
+        testEntityApi
+      );
 
       const actual = await new UpdateRequestBuilder(
-        TestEntity,
+        testEntityApi,
         entity
       ).executeRaw(defaultDestination);
       expect(actual!.data).toEqual(response);

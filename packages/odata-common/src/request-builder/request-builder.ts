@@ -1,20 +1,16 @@
-import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
-
-type EntityBasedRequestBuilder<EntityCT extends Constructable<EntityBase>> =
-  ReturnType<EntityCT['requestBuilder']>;
+import { DeSerializers } from '../de-serializers';
+import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 
 /**
  * @internal
  */
-export abstract class RequestBuilder<EntityT extends EntityBase>
-  implements EntityIdentifiable<EntityT>
+export abstract class RequestBuilder<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  static forEntity<EntityCT extends Constructable<EntityBase>>(
-    entity: EntityCT
-  ): EntityBasedRequestBuilder<EntityCT> {
-    return entity.requestBuilder() as EntityBasedRequestBuilder<EntityCT>;
-  }
-
+  _deSerializers: DeSerializersT;
   _entity: EntityT;
-  _entityConstructor: Constructable<EntityT>;
+
+  constructor(public entityApi: EntityApi<EntityT, DeSerializersT>) {}
 }

@@ -235,7 +235,7 @@ const orderBreakfastBuilder = (isNullable: boolean): VdmFunctionImport => ({
   ],
   parametersTypeName: 'Params',
   returnType: {
-    builderFunction: '(val) => edmToTs(val, Edm.String)',
+    builderFunction: "(val) => edmToTs(val, 'Edm.String', deSerializers)",
     returnType: 'string',
     isCollection: false,
     isNullable: false,

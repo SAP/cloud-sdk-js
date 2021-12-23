@@ -11,14 +11,17 @@ exports.actionImports =
  */
 require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const TestEntity_1 = require('./TestEntity');
+const service_1 = require('./service');
 /**
  * Create Test Entity By Id.
  *
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function createTestEntityById(parameters) {
+function createTestEntityById(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {
     id: new odata_v4_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
@@ -28,9 +31,10 @@ function createTestEntityById(parameters) {
     data =>
       (0, odata_v4_1.transformReturnValueForEntity)(
         data,
-        TestEntity_1.TestEntity
+        (0, service_1.testService)(deSerializers).testEntityApi
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.createTestEntityById = createTestEntityById;
@@ -40,7 +44,10 @@ exports.createTestEntityById = createTestEntityById;
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function createTestEntityByIdReturnId(parameters) {
+function createTestEntityByIdReturnId(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {
     id: new odata_v4_1.ActionImportParameter('id', 'Edm.Int32', parameters.id)
   };
@@ -49,9 +56,10 @@ function createTestEntityByIdReturnId(parameters) {
     'createTestEntityByIdReturnId',
     data =>
       (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
-        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32')
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32', deSerializers)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.createTestEntityByIdReturnId = createTestEntityByIdReturnId;

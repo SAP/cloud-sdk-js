@@ -1,30 +1,36 @@
 import { EntityBase } from '../entity-base';
-import { Selectable, FieldType } from '../selectable';
-import { Filterable } from '../filter';
+import { Selectable } from '../selectable';
 import { Orderable } from '../order';
+import { Filterable } from '../filter';
+import { DeSerializers } from '../de-serializers';
 
 /**
  * @internal
  */
 export interface WithKeys {
-  keys: Record<string, FieldType>;
+  keys: Record<string, any>;
 }
 
 /**
  * @internal
  */
-export interface WithSelection<EntityT extends EntityBase> {
-  selects: Selectable<EntityT>[];
+export interface WithSelection<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> {
+  selects: Selectable<EntityT, DeSerializersT>[];
 }
 
 /**
  * @internal
  */
-export interface WithGetAllRestrictions<EntityT extends EntityBase>
-  extends WithSelection<EntityT> {
+export interface WithGetAllRestrictions<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> extends WithSelection<EntityT, DeSerializersT> {
   top: number;
   skip: number;
-  filter: Filterable<EntityT>;
+  filter: Filterable<EntityT, DeSerializersT>;
   orderBy: Orderable<EntityT>[];
 }
 

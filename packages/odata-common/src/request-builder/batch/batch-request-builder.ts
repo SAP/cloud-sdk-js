@@ -5,7 +5,10 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig, ODataRequest } from '../../request';
-import { Constructable, EntityBase } from '../../entity-base';
+import { DeSerializers } from '../../de-serializers';
+import { EntityApi, EntityBase } from '../../entity-base';
+import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
+import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
 import { BatchChangeSet } from './batch-change-set';
 import { BatchSubRequestPathType } from './batch-request-options';
 import { serializeBatchRequest } from './batch-request-serializer';
@@ -15,7 +18,9 @@ import { serializeBatchRequest } from './batch-request-serializer';
  * The retrieve and change sets will be executed in order, while the order within a change set can vary.
  * @internal
  */
-export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestConfig> {
+export class BatchRequestBuilder<
+  DeSerializersT extends DeSerializers
+> extends MethodRequestBuilder<ODataBatchRequestConfig> {
   // FIXME: MethodRequestBuilder is too broad here. Should be getAll and getByKey
   /**
    * Creates an instance of ODataBatchRequestBuilder.
@@ -25,8 +30,11 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
    */
   constructor(
     readonly defaultServicePath: string,
-    readonly requests: (BatchChangeSet | MethodRequestBuilder)[],
-    readonly entityToConstructorMap: Record<string, Constructable<EntityBase>>
+    readonly requests: (
+      | BatchChangeSet<DeSerializersT>
+      | GetAllRequestBuilderBase<EntityBase, DeSerializersT>
+      | GetByKeyRequestBuilderBase<EntityBase, DeSerializersT>
+    )[] // readonly entityToConstructorMap: Record< //   string, //   EntityApi<EntityBase, DeSerializersT> // >
   ) {
     super(new ODataBatchRequestConfig(defaultServicePath));
   }
@@ -59,6 +67,31 @@ export class BatchRequestBuilder extends MethodRequestBuilder<ODataBatchRequestC
     destination: Destination | DestinationFetchOptions
   ): Promise<HttpResponse> {
     return this.build(destination).then(request => request.execute());
+  }
+
+  protected getEntityToApiMap(): Record<
+    string,
+    EntityApi<EntityBase, DeSerializersT>
+  > {
+    return this.requests.reduce(
+      (apis, request) => ({
+        ...apis,
+        ...(request instanceof BatchChangeSet
+          ? request.requests.reduce(
+              (changeSetApis, changesetReq) => ({
+                ...changeSetApis,
+                [changesetReq._entityApi.entityConstructor._entityName]:
+                  changesetReq._entityApi
+              }),
+              {}
+            )
+          : {
+              [request._entityApi.entityConstructor._entityName]:
+                request._entityApi
+            })
+      }),
+      {}
+    );
   }
 
   private setPayload(

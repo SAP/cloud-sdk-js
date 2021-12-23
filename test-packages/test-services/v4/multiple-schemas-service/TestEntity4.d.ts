@@ -1,15 +1,16 @@
-import { TestEntity4RequestBuilder } from './TestEntity4RequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
-  AllFields,
-  EdmTypeField,
-  EntityBuilderType,
-  Field
-} from '@sap-cloud-sdk/odata-common/internal';
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "A_TestEntity4" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export declare class TestEntity4 extends Entity implements TestEntity4Type {
+export declare class TestEntity4<T extends DeSerializers = DefaultDeSerializers>
+  extends Entity
+  implements TestEntity4Type<T>
+{
   /**
    * Technical entity name for TestEntity4.
    */
@@ -19,78 +20,23 @@ export declare class TestEntity4 extends Entity implements TestEntity4Type {
    */
   static _defaultServicePath: string;
   /**
+   * All key fields of the TestEntity4 entity
+   */
+  static _keys: string[];
+  /**
    * Key Property String.
    */
-  keyPropertyString: string;
+  keyPropertyString: DeserializedType<T, 'Edm.String'>;
   /**
    * Boolean Property.
    * @nullable
    */
-  booleanProperty?: boolean;
-  /**
-   * Returns an entity builder to construct instances of `TestEntity4`.
-   * @returns A builder that constructs instances of entity type `TestEntity4`.
-   */
-  static builder(): EntityBuilderType<TestEntity4, TestEntity4Type>;
-  /**
-   * Returns a request builder to construct requests for operations on the `TestEntity4` entity type.
-   * @returns A `TestEntity4` request builder.
-   */
-  static requestBuilder(): TestEntity4RequestBuilder;
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntity4`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `TestEntity4`.
-   */
-  static customField(fieldName: string): CustomField<TestEntity4>;
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): {
-    [key: string]: any;
-  };
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
 }
-export interface TestEntity4Type {
-  keyPropertyString: string;
-  booleanProperty?: boolean | null;
-}
-export declare namespace TestEntity4 {
-  /**
-   * Static representation of the [[keyPropertyString]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const KEY_PROPERTY_STRING: EdmTypeField<
-    TestEntity4,
-    'Edm.String',
-    false,
-    true
-  >;
-  /**
-   * Static representation of the [[booleanProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const BOOLEAN_PROPERTY: EdmTypeField<TestEntity4, 'Edm.Boolean', true, true>;
-  /**
-   * All fields of the TestEntity4 entity.
-   */
-  const _allFields: Array<
-    | EdmTypeField<TestEntity4, 'Edm.String', false, true>
-    | EdmTypeField<TestEntity4, 'Edm.Boolean', true, true>
-  >;
-  /**
-   * All fields selector.
-   */
-  const ALL_FIELDS: AllFields<TestEntity4>;
-  /**
-   * All key fields of the TestEntity4 entity.
-   */
-  const _keyFields: Array<Field<TestEntity4, boolean, boolean>>;
-  /**
-   * Mapping of all key field names to the respective static field property TestEntity4.
-   */
-  const _keys: {
-    [keys: string]: Field<TestEntity4, boolean, boolean>;
-  };
+export interface TestEntity4Type<
+  T extends DeSerializers = DefaultDeSerializers
+> {
+  keyPropertyString: DeserializedType<T, 'Edm.String'>;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
 }
 //# sourceMappingURL=TestEntity4.d.ts.map

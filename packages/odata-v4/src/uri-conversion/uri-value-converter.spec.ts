@@ -1,9 +1,9 @@
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
-import { uriConverter } from './uri-value-converter';
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
+import { defaultDeSerializers } from '../de-serializers';
 
-const { convertToUriFormat } = uriConverter;
-
+const convertToUriFormat = createUriConverter(defaultDeSerializers);
 describe('convertToUriFormat', () => {
   it('should convert guid', () => {
     const value = '01234567-89ab-cdef-0123-456789abcdef';

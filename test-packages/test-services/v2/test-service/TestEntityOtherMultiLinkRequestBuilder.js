@@ -19,19 +19,16 @@ class TestEntityOtherMultiLinkRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `TestEntityOtherMultiLink` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new odata_v2_1.GetByKeyRequestBuilder(
-      TestEntityOtherMultiLink_1.TestEntityOtherMultiLink,
-      { KeyProperty: keyProperty }
-    );
+    return new odata_v2_1.GetByKeyRequestBuilder(this.entityApi, {
+      KeyProperty: keyProperty
+    });
   }
   /**
    * Returns a request builder for querying all `TestEntityOtherMultiLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityOtherMultiLink` entities.
    */
   getAll() {
-    return new odata_v2_1.GetAllRequestBuilder(
-      TestEntityOtherMultiLink_1.TestEntityOtherMultiLink
-    );
+    return new odata_v2_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `TestEntityOtherMultiLink` entity.
@@ -39,10 +36,7 @@ class TestEntityOtherMultiLinkRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntityOtherMultiLink`.
    */
   create(entity) {
-    return new odata_v2_1.CreateRequestBuilder(
-      TestEntityOtherMultiLink_1.TestEntityOtherMultiLink,
-      entity
-    );
+    return new odata_v2_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntityOtherMultiLink`.
@@ -50,14 +44,11 @@ class TestEntityOtherMultiLinkRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntityOtherMultiLink`.
    */
   update(entity) {
-    return new odata_v2_1.UpdateRequestBuilder(
-      TestEntityOtherMultiLink_1.TestEntityOtherMultiLink,
-      entity
-    );
+    return new odata_v2_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyOrEntity) {
     return new odata_v2_1.DeleteRequestBuilder(
-      TestEntityOtherMultiLink_1.TestEntityOtherMultiLink,
+      this.entityApi,
       keyPropertyOrEntity instanceof
       TestEntityOtherMultiLink_1.TestEntityOtherMultiLink
         ? keyPropertyOrEntity

@@ -1,4 +1,6 @@
 import moment from 'moment';
+import BigNumber from 'bignumber.js';
+import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
 import { Field } from '../selectable';
 import { StringFilterFunction } from './string-filter-function';
@@ -8,11 +10,11 @@ import { NumberFilterFunction } from './number-filter-function';
 
 /* String Functions */
 /**
+ * @internal
  * Build a filter function to test whether a string ends with another. Evaluates to boolean.
  * @param str - The string to test. This can either be a string, a reference to a field or another filter function.
  * @param suffix - The suffix to test for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function endsWith<EntityT extends EntityBase>(
   str:
@@ -28,11 +30,11 @@ export function endsWith<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to test whether a string starts with another. Evaluates to boolean.
  * @param str - The string to test. This can either be a string, a reference to a field or another filter function.
  * @param prefix - The prefix to test for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function startsWith<EntityT extends EntityBase>(
   str:
@@ -48,10 +50,10 @@ export function startsWith<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to get the length of a string. Evaluates to int.
  * @param str - The string to compute the length for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function length<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -60,11 +62,11 @@ export function length<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to get the start index of a substring. Evaluates to int.
  * @param str - The string to get the index from. This can either be a string, a reference to a field or another filter function.
  * @param substr - The substring to get the index for. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function indexOf<EntityT extends EntityBase>(
   str:
@@ -80,12 +82,12 @@ export function indexOf<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to get a substring starting from a designated position. Evaluates to string.
  * @param str - The string to get a substring from. This can either be a string, a reference to a field or another filter function.
  * @param pos - The starting position of the substring. This can be either a number, a reference to a field or another filter function.
  * @param len - The length of the substring. This can be either a number, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function substring<EntityT extends EntityBase>(
   str:
@@ -107,10 +109,10 @@ export function substring<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to transform a string to lower case. Evaluates to string.
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function toLower<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -119,10 +121,10 @@ export function toLower<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to transform a string to upper case. Evaluates to string.
  * @param str - The string to transform. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function toUpper<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -131,10 +133,10 @@ export function toUpper<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to trim whitespace from a string. Evaluates to string.
  * @param str - The string to trim whitespace from. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function trim<EntityT extends EntityBase>(
   str: string | Field<EntityT, boolean, boolean> | StringFilterFunction<EntityT>
@@ -143,11 +145,11 @@ export function trim<EntityT extends EntityBase>(
 }
 
 /**
+ * @internal
  * Build a filter function to concatenate two strings. Evaluates to string.
  * @param str1 - The first string to concatenate. This can either be a string, a reference to a field or another filter function.
  * @param str2 - The second string to concatenate. This can either be a string, a reference to a field or another filter function.
  * @returns The newly created filter function
- * @internal
  */
 export function concat<EntityT extends EntityBase>(
   str1:
@@ -310,7 +312,7 @@ export function isOf<EntityT extends EntityBase>(
 ): BooleanFilterFunction<EntityT>;
 
 /**
- * @param expressionOrType - expressionOrTpye
+ * @param expressionOrType - expressionOrType
  * @param type - type
  * @returns returns if the type matches
  * @internal
@@ -331,25 +333,135 @@ export function isOf<EntityT extends EntityBase>(
  *  .filter(startsWith(BusinessPartner.FIRST_NAME, 'A').equals(true))
  * ```
  * @internal
+ * @param deSerializers - DeSerializer used in the filter
+ * @returns filter functions
  */
-export const filterFunctions = {
-  endsWith,
-  startsWith,
-  length,
-  indexOf,
-  substring,
-  toLower,
-  toUpper,
-  trim,
-  concat,
-  round,
-  floor,
-  ceiling,
-  day,
-  hour,
-  minute,
-  month,
-  second,
-  year,
-  isOf
-};
+export function filterFunctions<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any
+>(
+  // eslint-disable-next-line
+  deSerializers: DeSerializers<
+    BinaryT,
+    BooleanT,
+    ByteT,
+    DecimalT,
+    DoubleT,
+    FloatT,
+    Int16T,
+    Int32T,
+    Int64T,
+    GuidT,
+    SByteT,
+    SingleT,
+    StringT,
+    AnyT
+  >
+): FilterFunctionsType {
+  return {
+    endsWith,
+    startsWith,
+    length,
+    indexOf,
+    substring,
+    toLower,
+    toUpper,
+    trim,
+    concat,
+    round,
+    floor,
+    ceiling,
+    day,
+    hour,
+    minute,
+    month,
+    second,
+    year,
+    isOf
+  };
+}
+
+/**
+ * @internal
+ */
+export interface FilterFunctionsType {
+  endsWith: typeof endsWith;
+  startsWith: typeof startsWith;
+  length: typeof length;
+  indexOf: typeof indexOf;
+  substring: typeof substring;
+  toLower: typeof toLower;
+  toUpper: typeof toUpper;
+  trim: typeof trim;
+  concat: typeof concat;
+  round: typeof round;
+  floor: typeof floor;
+  ceiling: typeof ceiling;
+  day: typeof day;
+  hour: typeof hour;
+  minute: typeof minute;
+  month: typeof month;
+  second: typeof second;
+  year: typeof year;
+  isOf: typeof isOf;
+}
+
+/**
+ * @internal
+ */
+export type FilterFunctionTypes =
+  | typeof endsWith
+  | typeof startsWith
+  | typeof length
+  | typeof indexOf
+  | typeof substring
+  | typeof toLower
+  | typeof toUpper
+  | typeof trim
+  | typeof concat
+  | typeof round
+  | typeof floor
+  | typeof ceiling
+  | typeof day
+  | typeof hour
+  | typeof minute
+  | typeof month
+  | typeof second
+  | typeof year
+  | typeof isOf;
+
+/**
+ * @internal
+ */
+export type FilterFunctionNames =
+  | 'endsWith'
+  | 'startsWith'
+  | 'length'
+  | 'indexOf'
+  | 'substring'
+  | 'toLower'
+  | 'toUpper'
+  | 'trim'
+  | 'concat'
+  | 'round'
+  | 'floor'
+  | 'ceiling'
+  | 'day'
+  | 'hour'
+  | 'minute'
+  | 'month'
+  | 'second'
+  | 'year'
+  | 'isOf';

@@ -19,7 +19,7 @@ class AirportsRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `Airports` entity based on its keys.
    */
   getByKey(icaoCode) {
-    return new odata_v4_1.GetByKeyRequestBuilder(Airports_1.Airports, {
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
       IcaoCode: icaoCode
     });
   }
@@ -28,7 +28,7 @@ class AirportsRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `Airports` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(Airports_1.Airports);
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `Airports` entity.
@@ -36,7 +36,7 @@ class AirportsRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `Airports`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(Airports_1.Airports, entity);
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `Airports`.
@@ -44,11 +44,11 @@ class AirportsRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `Airports`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(Airports_1.Airports, entity);
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(icaoCodeOrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      Airports_1.Airports,
+      this.entityApi,
       icaoCodeOrEntity instanceof Airports_1.Airports
         ? icaoCodeOrEntity
         : { IcaoCode: icaoCodeOrEntity }

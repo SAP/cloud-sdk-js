@@ -8,10 +8,11 @@ type OrderType = 'asc' | 'desc';
  * @internal
  */
 export class Order<EntityT extends EntityBase>
-  implements EntityIdentifiable<EntityT>
+  implements EntityIdentifiable<EntityT, any>
 {
   readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
+  readonly _deSerializers: any;
 
   /**
    * Creates an instance of Order.

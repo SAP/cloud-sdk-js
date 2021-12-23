@@ -4,40 +4,44 @@ import {
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
+import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
-import { FieldType } from '../selectable';
 import { ODataDeleteRequestConfig } from '../request';
+import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 /**
  * Abstract class to delete an entity holding the shared parts between OData v2 and v4
  * @typeparam EntityT - Type of the entity to be deleted
  * @internal
  */
-export abstract class DeleteRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilder<ODataDeleteRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT>
+export abstract class DeleteRequestBuilderBase<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
+  extends MethodRequestBuilder<
+    ODataDeleteRequestConfig<EntityT, DeSerializersT>
+  >
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
+  readonly _deSerializers: DeSerializersT;
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
-   * @param entityConstructor - Constructor type of the entity to be deleted
-   * @param oDataUri - ODataUri conversion interface at runtime either v2 or v4
-   * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
+   * @param _entityApi - Entity API for building and executing the request.
+   * @param oDataUri - URI conversion functions.
+   * @param keysOrEntity - Entity or key-value pairs of key properties for the given entity.
    */
   constructor(
-    entityConstructor: Constructable<EntityT>,
-    oDataUri: ODataUri,
-    keysOrEntity: Record<string, FieldType> | EntityBase
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
+    oDataUri: ODataUri<DeSerializersT>,
+    keysOrEntity: Record<string, any> | EntityBase
   ) {
-    super(new ODataDeleteRequestConfig(entityConstructor, oDataUri));
-    this._entityConstructor = entityConstructor;
+    super(new ODataDeleteRequestConfig(_entityApi, oDataUri));
     if (keysOrEntity instanceof EntityBase) {
       this.requestConfig.keys = oDataUri.getEntityKeys(
         keysOrEntity,
-        entityConstructor
+        _entityApi
       );
       this.setVersionIdentifier(keysOrEntity.versionIdentifier);
     } else {

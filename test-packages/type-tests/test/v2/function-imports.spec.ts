@@ -8,7 +8,7 @@ import {
   testFunctionImportSharedEntityReturnType
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 
-// $ExpectType FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeParameters, boolean>
+// $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportEdmReturnTypeParameters<DefaultDeSerializers>, boolean>
 const edmReturnTypeRequestBuilder = testFunctionImportEdmReturnType({});
 
 // $ExpectType Promise<boolean>
@@ -16,7 +16,7 @@ edmReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilder<TestFunctionImportEdmReturnTypeCollectionParameters, string[]>
+// $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportEdmReturnTypeCollectionParameters<DefaultDeSerializers>, string[]>
 const edmCollectionReturnTypeRequestBuilder =
   testFunctionImportEdmReturnTypeCollection({});
 
@@ -25,36 +25,36 @@ edmCollectionReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeParameters, TestComplexType>
+// $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportComplexReturnTypeParameters<DefaultDeSerializers>, TestComplexType<DefaultDeSerializers>>
 const ctReturnTypeRequestBuilder = testFunctionImportComplexReturnType({});
 
-// $ExpectType Promise<TestComplexType>
+// $ExpectType Promise<TestComplexType<DefaultDeSerializers>>
 ctReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilder<TestFunctionImportComplexReturnTypeCollectionParameters, TestComplexType[]>
+// $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportComplexReturnTypeCollectionParameters<DefaultDeSerializers>, TestComplexType<DefaultDeSerializers>[]>
 const ctCollectionReturnTypeRequestBuilder =
   testFunctionImportComplexReturnTypeCollection({});
 
-// $ExpectType Promise<TestComplexType[]>
+// $ExpectType Promise<TestComplexType<DefaultDeSerializers>[]>
 ctCollectionReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeParameters, TestEntity>
+// $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportEntityReturnTypeParameters<DefaultDeSerializers>, TestEntity<DefaultDeSerializers>>
 const entityReturnTypeRequestBuilder = testFunctionImportEntityReturnType({});
 
-// $ExpectType Promise<TestEntity>
+// $ExpectType Promise<TestEntity<DefaultDeSerializers>>
 entityReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });
 
-// $ExpectType FunctionImportRequestBuilder<TestFunctionImportEntityReturnTypeCollectionParameters, TestEntity[]>
+// $ExpectType FunctionImportRequestBuilder<DefaultDeSerializers, TestFunctionImportEntityReturnTypeCollectionParameters<DefaultDeSerializers>, TestEntity<DefaultDeSerializers>[]>
 const entityCollectionReturnTypeRequestBuilder =
   testFunctionImportEntityReturnTypeCollection({});
 
-// $ExpectType Promise<TestEntity[]>
+// $ExpectType Promise<TestEntity<DefaultDeSerializers>[]>
 entityCollectionReturnTypeRequestBuilder.execute({
   url: 'somePath'
 });

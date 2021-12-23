@@ -7,8 +7,12 @@ import nock from 'nock';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 import { asc } from '@sap-cloud-sdk/odata-common/internal';
-import { deserializeComplexTypeV2 } from '@sap-cloud-sdk/odata-v2/internal';
+import {
+  defaultDeSerializers,
+  entityDeserializer
+} from '@sap-cloud-sdk/odata-v2';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response';
+import { testEntityApi } from './test-util';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = TestEntity._entityName;
@@ -41,10 +45,11 @@ describe('Complex types', () => {
       )
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
       .filter(
-        TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals(
+        testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty.equals(
           'someComplexTypeProperty'
         )
       )
@@ -69,16 +74,20 @@ describe('Complex types', () => {
       )
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder()
+    asc(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty);
+    const request = testEntityApi
+      .requestBuilder()
       .getAll()
-      .orderBy(asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty))
+      .orderBy(asc(testEntityApi.schema.COMPLEX_TYPE_PROPERTY.stringProperty))
       .execute(destination);
 
     await expect(request).resolves.not.toThrow();
   });
 
   it('should be constructable by a builder', () => {
-    const actual = deserializeComplexTypeV2(
+    const actual = entityDeserializer(
+      defaultDeSerializers
+    ).deserializeComplexType(
       {
         StringProperty: 'random value',
         BooleanProperty: false,

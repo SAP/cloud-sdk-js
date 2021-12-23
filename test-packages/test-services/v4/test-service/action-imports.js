@@ -16,22 +16,26 @@ exports.actionImports =
  */
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
+const service_1 = require('./service');
 const TestComplexType_1 = require('./TestComplexType');
-const TestEntity_1 = require('./TestEntity');
 /**
  * Test Action Import No Parameter No Return Type.
  *
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testActionImportNoParameterNoReturnType(parameters) {
+function testActionImportNoParameterNoReturnType(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterNoReturnType',
     data =>
       (0, odata_v4_1.transformReturnValueForUndefined)(data, val => undefined),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testActionImportNoParameterNoReturnType =
@@ -42,7 +46,10 @@ exports.testActionImportNoParameterNoReturnType =
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testActionImportMultipleParameterComplexReturnType(parameters) {
+function testActionImportMultipleParameterComplexReturnType(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {
     stringParam: new odata_v4_1.ActionImportParameter(
       'StringParam',
@@ -70,12 +77,12 @@ function testActionImportMultipleParameterComplexReturnType(parameters) {
     'TestActionImportMultipleParameterComplexReturnType',
     data =>
       (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
-        (0, odata_v4_1.deserializeComplexType)(
-          data,
-          TestComplexType_1.TestComplexType
-        )
+        (0, odata_v4_1.entityDeserializer)(
+          deSerializers
+        ).deserializeComplexType(data, TestComplexType_1.TestComplexType)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testActionImportMultipleParameterComplexReturnType =
@@ -86,7 +93,10 @@ exports.testActionImportMultipleParameterComplexReturnType =
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testActionImportUnsupportedEdmTypes(parameters) {
+function testActionImportUnsupportedEdmTypes(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {
     simpleParam: new odata_v4_1.ActionImportParameter(
       'SimpleParam',
@@ -99,9 +109,10 @@ function testActionImportUnsupportedEdmTypes(parameters) {
     'TestActionImportUnsupportedEdmTypes',
     data =>
       (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
-        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Any')
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Any', deSerializers)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testActionImportUnsupportedEdmTypes =
@@ -112,7 +123,10 @@ exports.testActionImportUnsupportedEdmTypes =
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testActionImportNoParameterEntityReturnType(parameters) {
+function testActionImportNoParameterEntityReturnType(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
@@ -120,9 +134,10 @@ function testActionImportNoParameterEntityReturnType(parameters) {
     data =>
       (0, odata_v4_1.transformReturnValueForEntity)(
         data,
-        TestEntity_1.TestEntity
+        (0, service_1.testService)(deSerializers).testEntityApi
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testActionImportNoParameterEntityReturnType =
@@ -133,7 +148,10 @@ exports.testActionImportNoParameterEntityReturnType =
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testActionImportSharedEntityReturnType(parameters) {
+function testActionImportSharedEntityReturnType(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
@@ -143,7 +161,8 @@ function testActionImportSharedEntityReturnType(parameters) {
         data,
         'TestActionImportSharedEntityReturnType'
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testActionImportSharedEntityReturnType =
@@ -154,7 +173,10 @@ exports.testActionImportSharedEntityReturnType =
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testActionImportSharedEntityReturnTypeCollection(parameters) {
+function testActionImportSharedEntityReturnTypeCollection(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
@@ -164,7 +186,8 @@ function testActionImportSharedEntityReturnTypeCollection(parameters) {
         data,
         'TestActionImportSharedEntityReturnTypeCollection'
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testActionImportSharedEntityReturnTypeCollection =
@@ -175,7 +198,10 @@ exports.testActionImportSharedEntityReturnTypeCollection =
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testActionImportNullableTest(parameters) {
+function testActionImportNullableTest(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {
     nullablePerDefault: new odata_v4_1.ActionImportParameter(
       'NullablePerDefault',
@@ -198,12 +224,12 @@ function testActionImportNullableTest(parameters) {
     'TestActionImportNullableTest',
     data =>
       (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
-        (0, odata_v4_1.deserializeComplexType)(
-          data,
-          TestComplexType_1.TestComplexType
-        )
+        (0, odata_v4_1.entityDeserializer)(
+          deSerializers
+        ).deserializeComplexType(data, TestComplexType_1.TestComplexType)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testActionImportNullableTest = testActionImportNullableTest;

@@ -6,7 +6,8 @@ import {
   testActionImportUnsupportedEdmTypes
 } from '@sap-cloud-sdk/test-services/v4/test-service/action-imports';
 import { TestComplexType } from '@sap-cloud-sdk/test-services/v4/test-service';
-import { serializeComplexType } from '../entity-serializer';
+import { entitySerializer } from '@sap-cloud-sdk/odata-common/internal';
+import { defaultDeSerializers } from '../de-serializers';
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const host = 'https://example.com';
@@ -80,7 +81,9 @@ describe('action import request builder', () => {
     const tsBody = { stringParam: 'LaLa', nonNullableStringParam: 'LuLu' };
     const tsResponse = { stringProperty: 'someResponseValue' };
 
-    const httpResponse = serializeComplexType(tsResponse, TestComplexType);
+    const httpResponse = entitySerializer(
+      defaultDeSerializers
+    ).serializeComplexType(tsResponse, TestComplexType);
     const httpBody = { StringParam: 'LaLa', NonNullableStringParam: 'LuLu' };
 
     nock(host)

@@ -1,15 +1,19 @@
 import { createLogger } from '@sap-cloud-sdk/util';
-import { CommonEntity, CommonEntitySingleLink } from '../test/common-entity';
+import {
+  CommonEntity,
+  commonEntityApi,
+  CommonEntitySingleLinkApi
+} from '../test/common-entity';
 import { EntityBuilder } from './internal';
 
 describe('EntityBuilder', () => {
   it('should build an empty entity when no properties are defined', () => {
-    const builder = new EntityBuilder<CommonEntity, unknown>(CommonEntity);
-    expect(builder.build()).toEqual(new CommonEntity());
+    const builder = new EntityBuilder<CommonEntity, any>(commonEntityApi);
+    expect(builder.build()).toEqual(new CommonEntity(commonEntityApi.schema));
   });
 
   it('should build an entity with custom fields', () => {
-    const builder = new EntityBuilder<CommonEntity, unknown>(CommonEntity);
+    const builder = new EntityBuilder<CommonEntity, any>(commonEntityApi);
     const expected = { SomeCustomField: null };
     expect(
       builder
@@ -20,7 +24,7 @@ describe('EntityBuilder', () => {
   });
 
   it('ignores existing fields in custom fields', () => {
-    const builder = new EntityBuilder<CommonEntity, unknown>(CommonEntity);
+    const builder = new EntityBuilder<CommonEntity, any>(commonEntityApi);
     const expected = { SomeCustomField: null };
     expect(
       builder
@@ -38,10 +42,11 @@ describe('EntityBuilder', () => {
     it('should build an entity from json', () => {
       const stringProperty = 'stringProperty';
 
-      const entity = CommonEntity.builder().fromJson({
+      const entity = commonEntityApi.entityBuilder().fromJson({
         stringProperty
       });
-      const expectedEntity = CommonEntity.builder()
+      const expectedEntity = commonEntityApi
+        .entityBuilder()
         .stringProperty(stringProperty)
         .build();
       expect(entity).toStrictEqual(expectedEntity);
@@ -50,14 +55,16 @@ describe('EntityBuilder', () => {
     it('should build an entity from json with 1:1 link', () => {
       const stringProperty = 'stringProperty';
 
-      const entity = CommonEntity.builder().fromJson({
+      const entity = commonEntityApi.entityBuilder().fromJson({
         stringProperty,
         toSingleLink: { stringProperty: 'singleLinkedValue' }
       });
-      const expectedEntity = CommonEntity.builder()
+      const expectedEntity = commonEntityApi
+        .entityBuilder()
         .stringProperty(stringProperty)
         .toSingleLink(
-          CommonEntitySingleLink.builder()
+          new CommonEntitySingleLinkApi()
+            .entityBuilder()
             .stringProperty('singleLinkedValue')
             .build()
         )
@@ -68,17 +75,19 @@ describe('EntityBuilder', () => {
     it('should build an entity from json with 1:1 link and custom fields in link', () => {
       const stringProperty = 'stringProperty';
 
-      const entity = CommonEntity.builder().fromJson({
+      const entity = commonEntityApi.entityBuilder().fromJson({
         stringProperty,
         toSingleLink: {
           stringProperty: 'singleLinkedValue',
           customField: 'customField'
         }
       });
-      const expectedEntity = CommonEntity.builder()
+      const expectedEntity = commonEntityApi
+        .entityBuilder()
         .stringProperty(stringProperty)
         .toSingleLink(
-          CommonEntitySingleLink.builder()
+          new CommonEntitySingleLinkApi()
+            .entityBuilder()
             .stringProperty('singleLinkedValue')
             .withCustomFields({ customField: 'customField' })
             .build()
@@ -91,8 +100,9 @@ describe('EntityBuilder', () => {
       const entityJson = {
         customField: 'customField'
       };
-      const entity = CommonEntity.builder().fromJson(entityJson);
-      const expectedEntity = CommonEntity.builder()
+      const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
+      const expectedEntity = commonEntityApi
+        .entityBuilder()
         .withCustomFields({
           customField: entityJson.customField
         })
@@ -106,8 +116,9 @@ describe('EntityBuilder', () => {
       const entityJson = {
         complexTypeProperty: { stringProperty: 'complexTypeValue' }
       };
-      const entity = CommonEntity.builder().fromJson(entityJson);
-      const expectedEntity = CommonEntity.builder()
+      const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
+      const expectedEntity = commonEntityApi
+        .entityBuilder()
         .complexTypeProperty(entityJson.complexTypeProperty)
         .build();
       expect(entity).toStrictEqual(expectedEntity);
@@ -117,8 +128,9 @@ describe('EntityBuilder', () => {
       const entityJson = {
         collectionProperty: ['collectionValue']
       };
-      const entity = CommonEntity.builder().fromJson(entityJson);
-      const expectedEntity = CommonEntity.builder()
+      const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
+      const expectedEntity = commonEntityApi
+        .entityBuilder()
         .collectionProperty(entityJson.collectionProperty)
         .build();
       expect(entity).toStrictEqual(expectedEntity);
@@ -128,8 +140,9 @@ describe('EntityBuilder', () => {
       const entityJson = {
         collectionProperty: []
       };
-      const entity = CommonEntity.builder().fromJson(entityJson);
-      const expectedEntity = CommonEntity.builder()
+      const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
+      const expectedEntity = commonEntityApi
+        .entityBuilder()
         .collectionProperty(entityJson.collectionProperty)
         .build();
       expect(entity).toStrictEqual(expectedEntity);
@@ -143,8 +156,9 @@ describe('EntityBuilder', () => {
           customField: 'customField'
         }
       };
-      const entity = CommonEntity.builder().fromJson(entityJson);
-      const expectedEntity = CommonEntity.builder()
+      const entity = commonEntityApi.entityBuilder().fromJson(entityJson);
+      const expectedEntity = commonEntityApi
+        .entityBuilder()
         .withCustomFields(entityJson._customFields)
         .build();
       expect(entity.getCustomFields()).toEqual(

@@ -45,6 +45,9 @@ import {
 } from './action-function-import/file';
 import { enumTypeSourceFile } from './enum-type/file';
 import { sdkMetadata, getServiceDescription } from './sdk-metadata';
+import { createFile } from './generator-common/create-file';
+import { entityApiFile } from './generator-without-ts-morph';
+import { serviceFile } from './generator-without-ts-morph/service/file';
 
 const logger = createLogger({
   package: 'generator',
@@ -52,12 +55,17 @@ const logger = createLogger({
 });
 
 export async function generate(options: GeneratorOptions): Promise<void> {
-  const project = await generateProject(options);
-  if (!project) {
+  const projectAndServices = await generateProject(options);
+  if (!projectAndServices) {
     throw Error('The project is undefined.');
   }
+  const project = projectAndServices.project;
+  const services = projectAndServices.services;
 
   await project.save();
+
+  await generateFilesWithoutTsMorph(services, options);
+
   if (options.generateJs) {
     const directories = project
       .getDirectories()
@@ -92,7 +100,7 @@ export async function transpileDirectories(
  */
 export async function generateProject(
   options: GeneratorOptions
-): Promise<Project | undefined> {
+): Promise<ProjectAndServices | undefined> {
   options = sanitizeOptions(options);
   const services = parseServices(options);
 
@@ -122,8 +130,58 @@ export async function generateProject(
     { overwrite: true }
   );
 
-  return project;
+  return { project, services };
 }
+
+/**
+ * @internal
+ */
+export interface ProjectAndServices {
+  project: Project;
+  services: VdmServiceMetadata[];
+}
+
+async function generateFilesWithoutTsMorph(
+  services: VdmServiceMetadata[],
+  options: GeneratorOptions
+): Promise<void> {
+  const promises = services.flatMap(service => [
+    generateEntityApis(service, options),
+    generateServiceFile(service, options)
+  ]);
+  await Promise.all(promises);
+}
+
+async function generateServiceFile(
+  service: VdmServiceMetadata,
+  options: GeneratorOptions
+): Promise<void> {
+  const serviceDir = resolvePath(service.directoryName, options);
+  await createFile(
+    serviceDir,
+    'service.ts',
+    serviceFile(service),
+    options.forceOverwrite
+  );
+}
+
+async function generateEntityApis(
+  service: VdmServiceMetadata,
+  options: GeneratorOptions
+): Promise<void> {
+  const serviceDir = resolvePath(service.directoryName, options);
+  await Promise.all(
+    service.entities.map(entity =>
+      createFile(
+        serviceDir,
+        `${entity.className}Api.ts`,
+        entityApiFile(entity, service),
+        options.forceOverwrite
+      )
+    )
+  );
+}
+
 /**
  * @internal
  */

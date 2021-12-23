@@ -1,3 +1,4 @@
+import { DeSerializers } from './de-serializers';
 import { EntityBase, ODataVersionOf } from './entity-base';
 import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
 
@@ -6,10 +7,13 @@ import { OneToManyLink, AllFields, OneToOneLink } from './selectable';
  * @typeparam EntityT - Type of the entity to be selected on
  * @internal
  */
-export type Expandable<EntityT extends EntityBase> =
-  ODataVersionOf<EntityT> extends 'v2'
-    ? never
-    :
-        | OneToOneLink<EntityT, any>
-        | OneToManyLink<EntityT, any>
-        | AllFields<EntityT>;
+export type Expandable<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  LinkedEntityT extends EntityBase = EntityBase
+> = ODataVersionOf<EntityT> extends 'v2'
+  ? never
+  :
+      | OneToOneLink<EntityT, DeSerializersT, LinkedEntityT>
+      | OneToManyLink<EntityT, DeSerializersT, LinkedEntityT>
+      | AllFields<EntityT>;

@@ -1,6 +1,7 @@
 import {
-  TestEntity,
-  TestEntitySingleLink
+  TestEntityApi,
+  TestEntitySingleLinkApi,
+  testService
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 import {
   filterFunctions,
@@ -8,6 +9,9 @@ import {
   substring,
   substringOf
 } from '@sap-cloud-sdk/odata-v2';
+
+const testEntitySchema = testService().testEntityApi.schema;
+const testEntitySingleLinkSchema = testService().testEntitySingleLinkApi.schema;
 
 /* Backwards compatibility */
 
@@ -20,27 +24,27 @@ substringOf('str', 'str');
 // $ExpectType NumberFilterFunction<EntityBase>
 length('str');
 
-// $ExpectType Filter<TestEntity, string>
-const filter = filterFunctions
-  .substring(TestEntity.STRING_PROPERTY, TestEntity.INT_16_PROPERTY)
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, any, string>
+const filter = filterFunctions()
+  .substring(testEntitySchema.STRING_PROPERTY, testEntitySchema.INT_16_PROPERTY)
   .equals('test');
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
-TestEntity.requestBuilder().getAll().filter(filter);
+// $ExpectType GetAllRequestBuilder<TestEntity<DefaultDeSerializers>, DefaultDeSerializers>
+new TestEntityApi().requestBuilder().getAll().filter(filter);
 
 // $ExpectError
-TestEntitySingleLink.requestBuilder().getAll().filter(filter);
+new TestEntitySingleLinkApi().requestBuilder().getAll().filter(filter);
 
-filterFunctions.substring(
-  TestEntitySingleLink.STRING_PROPERTY,
-  TestEntity.STRING_PROPERTY // $ExpectError
+filterFunctions().substring(
+  testEntitySingleLinkSchema.STRING_PROPERTY,
+  testEntitySchema.STRING_PROPERTY // $ExpectError
 );
 
-// $ExpectType Filter<TestEntity, number>
-filterFunctions.length(TestEntity.STRING_PROPERTY).greaterThan(1);
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, any, number>
+filterFunctions().length(testEntitySchema.STRING_PROPERTY).greaterThan(1);
 
-// $ExpectType Filter<TestEntity, number>
-filterFunctions.round(TestEntity.STRING_PROPERTY).greaterThan(1);
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, any, number>
+filterFunctions().round(testEntitySchema.STRING_PROPERTY).greaterThan(1);
 
-// $ExpectType NumberFilterFunction<TestEntity>
-filterFunctions.day(TestEntity.STRING_PROPERTY);
+// $ExpectType NumberFilterFunction<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>>
+filterFunctions().day(testEntitySchema.STRING_PROPERTY);

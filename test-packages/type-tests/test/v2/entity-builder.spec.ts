@@ -1,6 +1,6 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
 
-const builder = TestEntity.builder();
+const builder = testService().testEntityApi.entityBuilder();
 
 // $ExpectError
 builder.keyPropertyString(undefined);
@@ -8,46 +8,46 @@ builder.keyPropertyString(undefined);
 // $ExpectError
 builder.keyPropertyGuid(null);
 
-// $ExpectType EntityBuilderType<TestEntity, TestEntityType>
+// $ExpectType EntityBuilderType<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.stringProperty(null);
 
-// $ExpectType EntityBuilderType<TestEntity, TestEntityType>
+// $ExpectType EntityBuilderType<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.int64Property(undefined);
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({ stringProperty: '1' });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({ unknownProperty: '1' });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({ stringProperty: null });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({ stringProperty: undefined });
 
 // $ExpectError
 builder.fromJson({ stringProperty: 1 });
 
 // <!--------- single link starts --------->
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toSingleLink: null
 });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toSingleLink: undefined
 });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toSingleLink: {
     stringProperty: ''
   }
 });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toSingleLink: {
     unknownProperty: ''
@@ -61,21 +61,21 @@ builder.fromJson({
 });
 
 // <!--------- nested single link starts --------->
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toSingleLink: {
     toSingleLink: null
   }
 });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toSingleLink: {
     toSingleLink: undefined
   }
 });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toSingleLink: {
     toSingleLink: {
@@ -84,7 +84,7 @@ builder.fromJson({
   }
 });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toSingleLink: {
     toSingleLink: {
@@ -100,12 +100,12 @@ builder.fromJson({
 });
 
 // <!--------- multi link starts --------->
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toMultiLink: []
 });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toMultiLink: [
     {
@@ -114,7 +114,7 @@ builder.fromJson({
   ]
 });
 
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toMultiLink: [
     {
@@ -136,7 +136,7 @@ builder.fromJson({
 });
 
 // <!--------- nested multi link starts --------->
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toMultiLink: [
     {
@@ -144,7 +144,7 @@ builder.fromJson({
     }
   ]
 });
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toMultiLink: [
     {
@@ -156,7 +156,7 @@ builder.fromJson({
     }
   ]
 });
-// $ExpectType TestEntity
+// $ExpectType TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 builder.fromJson({
   toMultiLink: [
     {

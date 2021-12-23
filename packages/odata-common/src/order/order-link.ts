@@ -21,7 +21,7 @@ export class OrderLink<
    * @param orderBy - A list of orderables based on the linked entity
    */
   constructor(
-    public link: Link<EntityT, LinkedEntityT>,
+    public link: Link<EntityT, any, LinkedEntityT>,
     public orderBy: Orderable<LinkedEntityT>[]
   ) {}
 }

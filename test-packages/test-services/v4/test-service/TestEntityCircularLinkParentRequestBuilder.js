@@ -19,19 +19,16 @@ class TestEntityCircularLinkParentRequestBuilder extends internal_1.RequestBuild
    * @returns A request builder for creating requests to retrieve one `TestEntityCircularLinkParent` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new odata_v4_1.GetByKeyRequestBuilder(
-      TestEntityCircularLinkParent_1.TestEntityCircularLinkParent,
-      { KeyProperty: keyProperty }
-    );
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+      KeyProperty: keyProperty
+    });
   }
   /**
    * Returns a request builder for querying all `TestEntityCircularLinkParent` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityCircularLinkParent` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(
-      TestEntityCircularLinkParent_1.TestEntityCircularLinkParent
-    );
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `TestEntityCircularLinkParent` entity.
@@ -39,10 +36,7 @@ class TestEntityCircularLinkParentRequestBuilder extends internal_1.RequestBuild
    * @returns A request builder for creating requests that create an entity of type `TestEntityCircularLinkParent`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(
-      TestEntityCircularLinkParent_1.TestEntityCircularLinkParent,
-      entity
-    );
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntityCircularLinkParent`.
@@ -50,14 +44,11 @@ class TestEntityCircularLinkParentRequestBuilder extends internal_1.RequestBuild
    * @returns A request builder for creating requests that update an entity of type `TestEntityCircularLinkParent`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(
-      TestEntityCircularLinkParent_1.TestEntityCircularLinkParent,
-      entity
-    );
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyOrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      TestEntityCircularLinkParent_1.TestEntityCircularLinkParent,
+      this.entityApi,
       keyPropertyOrEntity instanceof
       TestEntityCircularLinkParent_1.TestEntityCircularLinkParent
         ? keyPropertyOrEntity

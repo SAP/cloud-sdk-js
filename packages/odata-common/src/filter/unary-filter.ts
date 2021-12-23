@@ -8,7 +8,7 @@ type UnaryFilterOperator = 'not';
  */
 export class UnaryFilter<EntityT extends EntityBase> {
   constructor(
-    public singleOperand: Filterable<EntityT>,
+    public singleOperand: Filterable<EntityT, any>,
     public operator: UnaryFilterOperator
   ) {}
 }
@@ -20,7 +20,7 @@ export class UnaryFilter<EntityT extends EntityBase> {
  * @internal
  */
 export function isUnaryFilter<T extends EntityBase>(
-  filterable: Filterable<T>
+  filterable: Filterable<T, any>
 ): filterable is UnaryFilter<T> {
   return (
     typeof filterable['singleOperand'] !== 'undefined' &&

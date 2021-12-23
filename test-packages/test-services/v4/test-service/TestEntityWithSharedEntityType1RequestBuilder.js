@@ -19,19 +19,16 @@ class TestEntityWithSharedEntityType1RequestBuilder extends internal_1.RequestBu
    * @returns A request builder for creating requests to retrieve one `TestEntityWithSharedEntityType1` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new odata_v4_1.GetByKeyRequestBuilder(
-      TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1,
-      { KeyProperty: keyProperty }
-    );
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+      KeyProperty: keyProperty
+    });
   }
   /**
    * Returns a request builder for querying all `TestEntityWithSharedEntityType1` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithSharedEntityType1` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(
-      TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1
-    );
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `TestEntityWithSharedEntityType1` entity.
@@ -39,10 +36,7 @@ class TestEntityWithSharedEntityType1RequestBuilder extends internal_1.RequestBu
    * @returns A request builder for creating requests that create an entity of type `TestEntityWithSharedEntityType1`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(
-      TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1,
-      entity
-    );
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntityWithSharedEntityType1`.
@@ -50,14 +44,11 @@ class TestEntityWithSharedEntityType1RequestBuilder extends internal_1.RequestBu
    * @returns A request builder for creating requests that update an entity of type `TestEntityWithSharedEntityType1`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(
-      TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1,
-      entity
-    );
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyOrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1,
+      this.entityApi,
       keyPropertyOrEntity instanceof
       TestEntityWithSharedEntityType1_1.TestEntityWithSharedEntityType1
         ? keyPropertyOrEntity

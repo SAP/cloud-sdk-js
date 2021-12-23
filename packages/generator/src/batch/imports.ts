@@ -14,6 +14,7 @@ export function importBatchDeclarations(
       [
         'CreateRequestBuilder',
         'DeleteRequestBuilder',
+        'DeSerializers',
         'GetAllRequestBuilder',
         'GetByKeyRequestBuilder',
         'ODataBatchRequestBuilder',

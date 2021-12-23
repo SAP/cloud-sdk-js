@@ -9,12 +9,14 @@ describe('imports', () => {
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
-        namedImports: ['RequestBuilder', 'Time']
+        namedImports: ['DeserializedType', 'RequestBuilder', 'Time']
       },
       {
         kind: StructureKind.ImportDeclaration,
         moduleSpecifier: '@sap-cloud-sdk/odata-v2',
         namedImports: [
+          'DefaultDeSerializers',
+          'DeSerializers',
           'GetAllRequestBuilder',
           'GetByKeyRequestBuilder',
           'CreateRequestBuilder',

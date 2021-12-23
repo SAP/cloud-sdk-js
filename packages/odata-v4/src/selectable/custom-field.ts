@@ -2,13 +2,21 @@ import {
   CustomField as CustomFieldBase,
   OrderableEdmTypeField
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '../de-serializers';
 import type { Entity } from '../entity';
 
 export class CustomField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers,
   NullableT extends boolean = false
-> extends CustomFieldBase<EntityT, NullableT> {
-  edmDate(): OrderableEdmTypeField<EntityT, 'Edm.Date', NullableT, true> {
+> extends CustomFieldBase<EntityT, any, NullableT> {
+  edmDate(): OrderableEdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.Date',
+    NullableT,
+    true
+  > {
     return this.fieldBuilder.buildEdmTypeField(
       this._fieldName,
       'Edm.Date',
@@ -17,6 +25,7 @@ export class CustomField<
   }
   edmDuration(): OrderableEdmTypeField<
     EntityT,
+    DeSerializersT,
     'Edm.Duration',
     NullableT,
     true
@@ -29,6 +38,7 @@ export class CustomField<
   }
   edmTimeOfDay(): OrderableEdmTypeField<
     EntityT,
+    DeSerializersT,
     'Edm.TimeOfDay',
     NullableT,
     true

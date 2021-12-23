@@ -38,7 +38,8 @@ describe('batch response transformer', () => {
       );
     });
   });
-  describe('getConstructor', () => {
+
+  describe('getApi', () => {
     const entityToConstructorMap = {
       entity: 'entity' as any
     };
@@ -65,7 +66,7 @@ describe('batch response transformer', () => {
 
     it('returns constructor for single result', () => {
       expect(
-        batchTransformerSingle['getConstructor']({
+        batchTransformerSingle['getApi']({
           d: { __metadata: { uri: 'entity' } }
         })
       ).toEqual(entityToConstructorMap.entity);
@@ -73,7 +74,7 @@ describe('batch response transformer', () => {
 
     it('returns constructor for collection result', () => {
       expect(
-        batchTransformerCollection['getConstructor']({
+        batchTransformerCollection['getApi']({
           d: { results: [{ __metadata: { uri: 'entity' } }] }
         })
       ).toEqual(entityToConstructorMap.entity);
@@ -83,7 +84,7 @@ describe('batch response transformer', () => {
       const logger = createLogger('batch-response-transformer');
       jest.spyOn(logger, 'warn');
       expect(
-        batchTransformerCollection['getConstructor']({ d: { results: [] } })
+        batchTransformerCollection['getApi']({ d: { results: [] } })
       ).toBeUndefined();
       expect(logger.warn).toHaveBeenCalledWith(
         'Could not parse constructor from response body.'

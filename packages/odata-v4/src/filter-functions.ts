@@ -8,10 +8,19 @@ import {
   FieldType,
   CollectionField,
   CollectionFilterFunction,
-  filterFunctions as filterFunctionsCommon
+  filterFunctions as filterFunctionsCommon,
+  FilterFunctionNames as FilterFunctionNamesCommon,
+  FilterFunctionsType as FilterFunctionsCommonType,
+  Time
 } from '@sap-cloud-sdk/odata-common/internal';
+import BigNumber from 'bignumber.js';
 import { Entity } from './entity';
 import { filterFunction } from './filter-function';
+import {
+  defaultDeSerializers,
+  DeSerializers,
+  mergeDefaultDeSerializersWith
+} from './de-serializers';
 
 /* String Functions */
 /**
@@ -113,11 +122,11 @@ export function hasSubset<
 >(
   subset:
     | ParamT[]
-    | CollectionField<EntityT, any, boolean, boolean>
+    | CollectionField<EntityT, any, any, boolean, boolean>
     | CollectionFilterFunction<EntityT, ReturnT>,
   set:
     | ParamT[]
-    | CollectionField<EntityT, any, boolean, boolean>
+    | CollectionField<EntityT, any, any, boolean, boolean>
     | CollectionFilterFunction<EntityT, ReturnT>
 ): BooleanFilterFunction<EntityT> {
   return filterFunction('hassubset', 'boolean', subset, set);
@@ -152,16 +161,90 @@ export function hasSubsequence<
 
 /**
  * OData v4 specific filter functions
+ * @param deSerializers - DeSerializer used in the filter function
+ * @returns Object containing the filter functions
  */
-export const filterFunctions = {
-  ...filterFunctionsCommon,
-  contains,
-  matchesPattern,
-  fractionalSeconds,
-  totalOffsetMinutes,
-  maxDateTime,
-  minDateTime,
-  now,
-  hasSubset,
-  hasSubsequence
+export function filterFunctions<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any,
+  DateTimeT = moment.Moment,
+  DateTimeOffsetT = moment.Moment,
+  TimeT = Time
+>(
+  deSerializers: Partial<
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+    >
+  > = defaultDeSerializers as any
+): FilterFunctionTypes {
+  return {
+    ...filterFunctionsCommon(mergeDefaultDeSerializersWith(deSerializers)),
+    contains,
+    matchesPattern,
+    fractionalSeconds,
+    totalOffsetMinutes,
+    maxDateTime,
+    minDateTime,
+    now,
+    hasSubset,
+    hasSubsequence
+  };
+}
+
+/**
+ * @internal
+ */
+export type FilterFunctionTypes = FilterFunctionsCommonType & {
+  contains: typeof contains;
+  matchesPattern: typeof matchesPattern;
+  fractionalSeconds: typeof fractionalSeconds;
+  totalOffsetMinutes: typeof totalOffsetMinutes;
+  maxDateTime: typeof maxDateTime;
+  minDateTime: typeof minDateTime;
+  now: typeof now;
+  hasSubset: typeof hasSubset;
+  hasSubsequence: typeof hasSubsequence;
 };
+
+/**
+ * @internal
+ */
+export type FilterFunctionNames =
+  | FilterFunctionNamesCommon
+  | 'contains'
+  | 'matchesPattern'
+  | 'fractionalSeconds'
+  | 'totalOffsetMinutes'
+  | 'maxDateTime'
+  | 'minDateTime'
+  | 'now'
+  | 'hasSubset'
+  | 'hasSubsequence';

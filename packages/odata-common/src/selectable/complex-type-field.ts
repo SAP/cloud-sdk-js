@@ -1,11 +1,9 @@
 import { ODataVersion } from '@sap-cloud-sdk/util';
 import { EdmTypeShared, isEdmType } from '../edm-types';
 import { Constructable, EntityBase } from '../entity-base';
+import { DeSerializers } from '../de-serializers';
 import { Field, FieldOptions } from './field';
-import {
-  isComplexTypeNameSpace,
-  ComplexTypeNamespace
-} from './complex-type-namespace';
+import { ComplexTypeNamespace } from './complex-type-namespace';
 import type { ConstructorOrField } from './constructor-or-field';
 
 /**
@@ -20,6 +18,7 @@ import type { ConstructorOrField } from './constructor-or-field';
  *
  * See also: [[Selectable]]
  * @typeparam EntityT - Type of the entity the field belongs to.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
  * @typeparam ComplexT - Type of complex type represented by this field.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
@@ -27,6 +26,7 @@ import type { ConstructorOrField } from './constructor-or-field';
  */
 export abstract class ComplexTypeField<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   ComplexT = any,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
@@ -39,44 +39,21 @@ export abstract class ComplexTypeField<
   readonly complexTypeName?: string;
 
   /**
-   * The complex type of the complex type property represented by this.
-   */
-  readonly _complexType: ComplexTypeNamespace<ComplexT>;
-
-  /**
    * Creates an instance of ComplexTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
-   * @param complexType - The complex type of the complex type property represented by this.
-   * @param fieldOptions - Optional settings for this field.
-   */
-  constructor(
-    fieldName: string,
-    fieldOf: ConstructorOrField<EntityT, ComplexT>,
-    complexType: ComplexTypeNamespace<ComplexT>,
-    // eslint-disable-next-line @typescript-eslint/unified-signatures
-    fieldOptions?: FieldOptions<NullableT, SelectableT>
-  );
-
-  /**
-   * Creates an instance of ComplexTypeField.
-   * @param fieldName - Actual name of the field as used in the OData request.
-   * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
-   * @param complexTypeOrName - The complex type of the complex type property represented by this or the name of the type of the field according to the metadata description. Using the name here is deprecated.
+   * @param deSerializers - (De-)serializers used for transformation.
+   * @param _complexType - The complex type of the complex type property represented by this.
    * @param fieldOptions - Optional settings for this field.
    */
   constructor(
     fieldName: string,
     readonly fieldOf: ConstructorOrField<EntityT, ComplexT>,
-    complexTypeOrName?: ComplexTypeNamespace<ComplexT> | string,
+    readonly deSerializers: DeSerializersT,
+    readonly _complexType: ComplexTypeNamespace<ComplexT>,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
     super(fieldName, getEntityConstructor(fieldOf), fieldOptions);
-    if (typeof complexTypeOrName === 'string') {
-      this.complexTypeName = complexTypeOrName;
-    } else if (isComplexTypeNameSpace(complexTypeOrName)) {
-      this._complexType = complexTypeOrName;
-    }
   }
 
   /**

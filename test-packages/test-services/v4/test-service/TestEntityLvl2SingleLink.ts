@@ -3,24 +3,21 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { TestEntityLvl2SingleLinkRequestBuilder } from './TestEntityLvl2SingleLinkRequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
-  AllFields,
-  Constructable,
-  EdmTypeField,
-  EntityBuilderType,
-  Field,
-  FieldBuilder,
-  OrderableEdmTypeField
-} from '@sap-cloud-sdk/odata-common/internal';
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * This class represents the entity "A_TestEntityLvl2SingleLink" of service "API_TEST_SRV".
  */
-export class TestEntityLvl2SingleLink
+export class TestEntityLvl2SingleLink<
+    T extends DeSerializers = DefaultDeSerializers
+  >
   extends Entity
-  implements TestEntityLvl2SingleLinkType
+  implements TestEntityLvl2SingleLinkType<T>
 {
   /**
    * Technical entity name for TestEntityLvl2SingleLink.
@@ -31,169 +28,43 @@ export class TestEntityLvl2SingleLink
    */
   static _defaultServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
   /**
+   * All key fields of the TestEntityLvl2SingleLink entity
+   */
+  static _keys = ['KeyProperty'];
+  /**
    * String Property.
    * Maximum length: 10.
    * @nullable
    */
-  stringProperty?: string;
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
   /**
    * Boolean Property.
    * @nullable
    */
-  booleanProperty?: boolean;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
   /**
    * Guid Property.
    * @nullable
    */
-  guidProperty?: string;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
   /**
    * Int 16 Property.
    * @nullable
    */
-  int16Property?: number;
+  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
   /**
    * Key Property.
    * Maximum length: 10.
    */
-  keyProperty!: string;
-
-  /**
-   * Returns an entity builder to construct instances of `TestEntityLvl2SingleLink`.
-   * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
-   */
-  static builder(): EntityBuilderType<
-    TestEntityLvl2SingleLink,
-    TestEntityLvl2SingleLinkType
-  > {
-    return Entity.entityBuilder(TestEntityLvl2SingleLink);
-  }
-
-  /**
-   * Returns a request builder to construct requests for operations on the `TestEntityLvl2SingleLink` entity type.
-   * @returns A `TestEntityLvl2SingleLink` request builder.
-   */
-  static requestBuilder(): TestEntityLvl2SingleLinkRequestBuilder {
-    return new TestEntityLvl2SingleLinkRequestBuilder();
-  }
-
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityLvl2SingleLink`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `TestEntityLvl2SingleLink`.
-   */
-  static customField(fieldName: string): CustomField<TestEntityLvl2SingleLink> {
-    return Entity.customFieldSelector(fieldName, TestEntityLvl2SingleLink);
-  }
-
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): { [key: string]: any } {
-    return { ...this, ...this._customFields };
-  }
+  keyProperty!: DeserializedType<T, 'Edm.String'>;
 }
 
-export interface TestEntityLvl2SingleLinkType {
-  stringProperty?: string | null;
-  booleanProperty?: boolean | null;
-  guidProperty?: string | null;
-  int16Property?: number | null;
-  keyProperty: string;
-}
-
-export namespace TestEntityLvl2SingleLink {
-  const _fieldBuilder: FieldBuilder<Constructable<TestEntityLvl2SingleLink>> =
-    new FieldBuilder(TestEntityLvl2SingleLink);
-  /**
-   * Static representation of the [[stringProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const STRING_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'StringProperty',
-    'Edm.String',
-    true
-  );
-  /**
-   * Static representation of the [[booleanProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const BOOLEAN_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'BooleanProperty',
-    'Edm.Boolean',
-    true
-  );
-  /**
-   * Static representation of the [[guidProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const GUID_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'GuidProperty',
-    'Edm.Guid',
-    true
-  );
-  /**
-   * Static representation of the [[int16Property]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const INT_16_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'Int16Property',
-    'Edm.Int16',
-    true
-  );
-  /**
-   * Static representation of the [[keyProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  export const KEY_PROPERTY = _fieldBuilder.buildEdmTypeField(
-    'KeyProperty',
-    'Edm.String',
-    false
-  );
-  /**
-   * All fields of the TestEntityLvl2SingleLink entity.
-   */
-  export const _allFields: Array<
-    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.String', true, true>
-    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.Boolean', true, true>
-    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.Guid', true, true>
-    | OrderableEdmTypeField<TestEntityLvl2SingleLink, 'Edm.Int16', true, true>
-    | EdmTypeField<TestEntityLvl2SingleLink, 'Edm.String', false, true>
-  > = [
-    TestEntityLvl2SingleLink.STRING_PROPERTY,
-    TestEntityLvl2SingleLink.BOOLEAN_PROPERTY,
-    TestEntityLvl2SingleLink.GUID_PROPERTY,
-    TestEntityLvl2SingleLink.INT_16_PROPERTY,
-    TestEntityLvl2SingleLink.KEY_PROPERTY
-  ];
-  /**
-   * All fields selector.
-   */
-  export const ALL_FIELDS: AllFields<TestEntityLvl2SingleLink> = new AllFields(
-    '*',
-    TestEntityLvl2SingleLink
-  );
-  /**
-   * All key fields of the TestEntityLvl2SingleLink entity.
-   */
-  export const _keyFields: Array<
-    Field<TestEntityLvl2SingleLink, boolean, boolean>
-  > = [TestEntityLvl2SingleLink.KEY_PROPERTY];
-  /**
-   * Mapping of all key field names to the respective static field property TestEntityLvl2SingleLink.
-   */
-  export const _keys: {
-    [keys: string]: Field<TestEntityLvl2SingleLink, boolean, boolean>;
-  } = TestEntityLvl2SingleLink._keyFields.reduce(
-    (
-      acc: {
-        [keys: string]: Field<TestEntityLvl2SingleLink, boolean, boolean>;
-      },
-      field: Field<TestEntityLvl2SingleLink, boolean, boolean>
-    ) => {
-      acc[field._fieldName] = field;
-      return acc;
-    },
-    {}
-  );
+export interface TestEntityLvl2SingleLinkType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
+  stringProperty?: DeserializedType<T, 'Edm.String'> | null;
+  booleanProperty?: DeserializedType<T, 'Edm.Boolean'> | null;
+  guidProperty?: DeserializedType<T, 'Edm.Guid'> | null;
+  int16Property?: DeserializedType<T, 'Edm.Int16'> | null;
+  keyProperty: DeserializedType<T, 'Edm.String'>;
 }

@@ -3,8 +3,9 @@
 import { camelCase, equal, isNullish } from '@sap-cloud-sdk/util';
 import { EntityBuilder } from './entity-builder';
 import { isNavigationProperty, nonEnumerable } from './properties-util';
-import type { Field, Link, CustomField } from './selectable';
+import type { CustomField, Field, Link } from './selectable';
 import type { RequestBuilder } from './request-builder';
+import { DefaultDeSerializers, DeSerializers } from './de-serializers';
 
 /**
  * @internal
@@ -14,35 +15,46 @@ export type ODataVersionOf<T extends EntityBase> = T['_oDataVersion'];
 /**
  * @internal
  */
-export interface Constructable<
-  EntityT extends EntityBase,
-  EntityTypeT = unknown
-> {
-  _serviceName: string;
+export interface Constructable<EntityT extends EntityBase> {
   _entityName: string;
   _defaultServicePath: string;
-  _allFields: (Field<EntityT, boolean, boolean> | Link<EntityT>)[];
-  _keyFields: Field<EntityT, boolean, boolean>[];
-  _keys: {
-    [keys: string]: Field<EntityT, boolean, boolean>;
-  };
+  _keys: string[];
   new (...args: any[]): EntityT;
-  requestBuilder(): RequestBuilder<EntityT>;
-  builder(): EntityBuilderType<EntityT, EntityTypeT>;
-  customField(
-    fieldName: string,
-    isNullable?: boolean
-  ): CustomField<EntityT, boolean>;
 }
 
 /**
  * @internal
+ * Represents the API of an entity, including its request and entity builders as well as its schema.
+ * @typeparam EntityT - Type of the entity.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @typeparam JsonT - Type of the entity without methods.
  */
-export type EntityBuilderType<EntityT extends EntityBase, EntityTypeT> = {
-  [property in keyof Required<EntityTypeT>]: (
-    value: EntityTypeT[property]
-  ) => EntityBuilderType<EntityT, EntityTypeT>;
-} & EntityBuilder<EntityT, EntityTypeT>;
+export interface EntityApi<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
+  deSerializers: DeSerializersT;
+  requestBuilder(): RequestBuilder<EntityT, DeSerializersT>;
+  entityBuilder(): EntityBuilderType<EntityT, DeSerializersT>;
+  entityConstructor: Constructable<EntityT>;
+  schema: Record<string, any>;
+  customField<NullableT extends boolean>(
+    fieldName: string
+  ): CustomField<EntityT, DeSerializersT, NullableT>;
+}
+
+/**
+ * @internal
+ * Entity builder type with check for EntityT.
+ */
+export type EntityBuilderType<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> = {
+  [property in keyof Required<Omit<EntityT, keyof EntityBase>>]: (
+    value: EntityT[property]
+  ) => EntityBuilderType<EntityT, DeSerializersT>;
+} & EntityBuilder<EntityT, DeSerializersT>;
 
 /**
  * Super class for all representations of OData entity types.
@@ -52,20 +64,6 @@ export abstract class EntityBase {
   static _serviceName: string;
   static _entityName: string;
   static _defaultServicePath: string;
-
-  protected static entityBuilder<EntityT extends EntityBase, EntityTypeT>(
-    entityConstructor: Constructable<EntityT, EntityTypeT>
-  ): EntityBuilderType<EntityT, EntityTypeT> {
-    const builder = new EntityBuilder<EntityT, EntityTypeT>(entityConstructor);
-    entityConstructor._allFields.forEach(field => {
-      const fieldName = `${camelCase(field._fieldName)}`;
-      builder[fieldName] = function (value) {
-        this.entity[fieldName] = value;
-        return this;
-      };
-    });
-    return builder as EntityBuilderType<EntityT, EntityTypeT>;
-  }
 
   /**
    * The remote state of the entity.
@@ -90,7 +88,8 @@ export abstract class EntityBase {
 
   abstract readonly _oDataVersion: any;
 
-  constructor() {
+  constructor(private schema: Record<string, any>) {
+    nonEnumerable(this, 'schema');
     nonEnumerable(this, '_oDataVersion');
     nonEnumerable(this, '_customFields');
     this._customFields = {};
@@ -166,7 +165,7 @@ export abstract class EntityBase {
    * @param etag - The returned ETag version of the entity.
    * @returns The entity itself, to facilitate method chaining.
    */
-  public setVersionIdentifier(etag: string | undefined): this {
+  setVersionIdentifier(etag: string | undefined): this {
     if (etag && typeof etag === 'string') {
       nonEnumerable(this, '_versionIdentifier');
       this._versionIdentifier = etag;
@@ -182,7 +181,7 @@ export abstract class EntityBase {
    * @param state - State to be set as remote state.
    * @returns The entity itself, to facilitate method chaining
    */
-  public setOrInitializeRemoteState(state?: Record<string, any>): this {
+  setOrInitializeRemoteState(state?: Record<string, any>): this {
     if (!this.remoteState) {
       nonEnumerable(this, 'remoteState');
     }
@@ -203,7 +202,7 @@ export abstract class EntityBase {
    * Returns all updated custom field properties compared to the last known remote state.
    * @returns An object containing all updated custom properties, with their new values.
    */
-  public getUpdatedCustomFields(): Record<string, any> {
+  getUpdatedCustomFields(): Record<string, any> {
     if (!this.remoteState) {
       return this._customFields;
     }
@@ -225,7 +224,7 @@ export abstract class EntityBase {
    * Use [[getUpdatedCustomFields]], if you need custom fields.
    * @returns EntityBase with all properties that changed
    */
-  public getUpdatedProperties(): Record<string, any> {
+  getUpdatedProperties(): Record<string, any> {
     const current = this.asObject();
     return this.getUpdatedPropertyNames().reduce(
       (patch, key) => ({ ...patch, [key]: current[key] }),
@@ -239,7 +238,7 @@ export abstract class EntityBase {
    * Use [[getUpdatedCustomFields]], if you need custom fields.
    * @returns EntityBase with all properties that changed
    */
-  public getUpdatedPropertyNames(): string[] {
+  getUpdatedPropertyNames(): string[] {
     const currentState = this.asObject();
     const names = Object.keys(currentState).filter(
       key => this.propertyIsEnumerable(key) && !this.hasCustomField(key)
@@ -256,6 +255,7 @@ export abstract class EntityBase {
   toJSON(): { [key: string]: any } {
     return { ...this, ...this._customFields };
   }
+
   protected isVisitedEntity<EntityT extends EntityBase>(
     entity: EntityT,
     visitedEntities: EntityBase[] = []
@@ -269,7 +269,7 @@ export abstract class EntityBase {
     key: string,
     visitedEntities: EntityBase[] = []
   ): any {
-    if (isNavigationProperty(key, this.constructor)) {
+    if (isNavigationProperty(key, this.schema)) {
       if (isNullish(this[key])) {
         return this[key];
       }
@@ -286,8 +286,8 @@ export abstract class EntityBase {
    * @returns Boolean value that describes whether a field name can be defined as custom field
    */
   protected isConflictingCustomField(customFieldName: string): boolean {
-    return (this.constructor as Constructable<this>)._allFields
-      .map(f => f._fieldName)
+    return Object.values(this.schema)
+      .map((f: any) => f._fieldName)
       .includes(customFieldName);
   }
 
@@ -298,11 +298,12 @@ export abstract class EntityBase {
    */
   protected asObject(visitedEntities: EntityBase[] = []): Record<string, any> {
     visitedEntities.push(this);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return Object.keys(this)
       .filter(
         key =>
           this.propertyIsEnumerable(key) &&
-          (!isNavigationProperty(key, this.constructor) ||
+          (!isNavigationProperty(key, this.schema) ||
             !this.isVisitedEntity(this[key], visitedEntities))
       )
       .reduce(
@@ -317,9 +318,12 @@ export abstract class EntityBase {
 /**
  * @internal
  */
-export interface EntityIdentifiable<T extends EntityBase> {
-  readonly _entityConstructor: Constructable<T>;
+export interface EntityIdentifiable<
+  T extends EntityBase,
+  DeSerializersT extends DeSerializers
+> {
   readonly _entity: T;
+  readonly _deSerializers: DeSerializersT;
 }
 
 /* eslint-disable valid-jsdoc */
@@ -327,10 +331,10 @@ export interface EntityIdentifiable<T extends EntityBase> {
 /**
  * @internal
  */
-export function isSelectedProperty<EntityT extends EntityBase>(
-  json: any,
-  field: Field<EntityT> | Link<EntityT>
-): boolean {
+export function isSelectedProperty<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(json: any, field: Field<EntityT> | Link<EntityT, DeSerializersT>): boolean {
   return json.hasOwnProperty(field._fieldName);
 }
 
@@ -339,8 +343,9 @@ export function isSelectedProperty<EntityT extends EntityBase>(
  */
 export function isExistentProperty<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
->(json: any, link: Link<EntityT, LinkedEntityT>): boolean {
+>(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityT>): boolean {
   return isSelectedProperty(json, link) && json[link._fieldName] !== null;
 }
 
@@ -349,10 +354,32 @@ export function isExistentProperty<
  */
 export function isExpandedProperty<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase
->(json: any, link: Link<EntityT, LinkedEntityT>): boolean {
+>(json: any, link: Link<EntityT, DeSerializersT, LinkedEntityT>): boolean {
   return (
     isExistentProperty(json, link) &&
     !json[link._fieldName].hasOwnProperty('__deferred')
   );
+}
+
+/**
+ * @internal
+ */
+export function entityBuilder<
+  EntityT extends EntityBase,
+  // EntityApiT extends EntityApi<EntityT, DeSerializersT>,
+  DeSerializersT extends DeSerializers
+>(
+  entityApi: EntityApi<EntityT, DeSerializersT>
+): EntityBuilderType<EntityT, DeSerializersT> {
+  const builder = new EntityBuilder<EntityT, DeSerializersT>(entityApi);
+  Object.values(entityApi.schema).forEach(field => {
+    const fieldName = `${camelCase(field._fieldName)}`;
+    builder[fieldName] = function (value) {
+      this.entity[fieldName] = value;
+      return this;
+    };
+  });
+  return builder as EntityBuilderType<EntityT, DeSerializersT>;
 }

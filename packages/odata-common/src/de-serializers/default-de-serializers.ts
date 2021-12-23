@@ -118,12 +118,11 @@ export const defaultDeSerializersRaw: DefaultDeSerializers = {
 };
 
 /**
- * @internal
  * Wraps the given default serialization function with a check for null values.
  * @param serialize - Serialization function to wrap.
  * @returns The wrapped serialization function.
  */
-export function wrapDefaultSerialization<T>(
+function wrapDefaultSerializer<T>(
   serialize: DeSerializer<T>['serialize']
 ): DeSerializer<T>['serialize'] {
   return function (value) {
@@ -138,12 +137,11 @@ export function wrapDefaultSerialization<T>(
 }
 
 /**
- * @internal
- * Wraps the given default deserialization function with a check for null values.
+ * Wraps the given default deserialization function with a check for nullish values.
  * @param deserialize - Deserialization function to wrap.
  * @returns The wrapped deserialization function.
  */
-export function wrapDefaultDeserialization<T>(
+function wrapDefaultDeserializer<T>(
   deserialize: DeSerializer<T>['deserialize']
 ): DeSerializer<T>['deserialize'] {
   return function (value) {
@@ -156,3 +154,33 @@ export function wrapDefaultDeserialization<T>(
     return value;
   };
 }
+
+/**
+ * @internal
+ * Wraps the given default (de-)serialization functions with a check for nullish values.
+ * @param deSerializers - (De-)Serializers to wrap.
+ * @returns The wrapped (de-)serializers.
+ */
+export function wrapDefaultDeSerializers<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT
+): DeSerializersT {
+  return Object.entries(deSerializers).reduce(
+    (entries, [edmType, { deserialize, serialize, serializeToUri }]) => ({
+      ...entries,
+      [edmType]: {
+        deserialize: wrapDefaultDeserializer(deserialize),
+        serialize: wrapDefaultSerializer(serialize),
+        serializeToUri
+      }
+    }),
+    {}
+  ) as DeSerializersT;
+}
+
+/**
+ * @internal
+ * Default (de-)serializers without `null` and `undefined` handling.
+ */
+export const defaultDeSerializers = wrapDefaultDeSerializers(
+  defaultDeSerializersRaw
+);

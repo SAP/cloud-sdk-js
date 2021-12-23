@@ -32,7 +32,7 @@ export class BooleanFilterFunction<
  * @internal
  */
 export function isBooleanFilterFunction<EntityT extends EntityBase>(
-  filterable: Filterable<EntityT>
+  filterable: Filterable<EntityT, any>
 ): filterable is BooleanFilterFunction<EntityT> {
   return (
     typeof filterable['functionName'] !== 'undefined' &&

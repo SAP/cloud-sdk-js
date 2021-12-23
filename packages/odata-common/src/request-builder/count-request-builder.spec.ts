@@ -19,7 +19,12 @@ describe('CountRequestBuilder', () => {
       const expected =
         "/testination/sap/opu/odata/sap/API_COMMON_SRV/A_CommonEntity/$count?$filter=(SomeProp%20eq%20'test')";
       const actual = await getAllRequestBuilder({
-        filter: new Filter<any, any>('SomeProp', 'eq', 'test', 'Edm.String')
+        filter: new Filter<any, any, any>(
+          'SomeProp',
+          'eq',
+          'test',
+          'Edm.String'
+        )
       })
         .count()
         .url(defaultDestination);

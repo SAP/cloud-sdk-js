@@ -5,12 +5,14 @@ import {
   OrderableEdmTypeField
 } from '../internal';
 import { CommonComplexTypeField, CommonEntity } from '../../test/common-entity';
+import { defaultDeSerializers, DeSerializers } from '../de-serializers';
 
 export function checkFilter<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   FieldT extends FieldType
 >(
-  filter: Filter<EntityT, FieldT>,
+  filter: Filter<EntityT, DeSerializersT, FieldT>,
   fieldName: string,
   operator: string,
   value: any
@@ -28,7 +30,8 @@ describe('Number Field', () => {
     const field = new OrderableEdmTypeField(
       fieldName,
       CommonEntity,
-      'Edm.Int16'
+      'Edm.Int16',
+      defaultDeSerializers
     );
 
     it('should create filter for "equals"', () => {
@@ -66,12 +69,14 @@ describe('Number Field', () => {
     const parentFieldName = 'complexParentFieldName';
     const parentComplexField = new CommonComplexTypeField(
       parentFieldName,
-      CommonEntity
+      CommonEntity,
+      defaultDeSerializers
     );
     const field = new OrderableEdmTypeField(
       fieldName,
       parentComplexField,
-      'Edm.Single'
+      'Edm.Single',
+      defaultDeSerializers
     );
 
     it('should create filter for "equals" (complex property string)', () => {

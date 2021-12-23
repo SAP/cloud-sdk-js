@@ -1,3 +1,4 @@
+import { DeSerializers } from '../de-serializers';
 import { EntityBase } from '../entity-base';
 import {
   ComplexTypePropertyFields,
@@ -21,9 +22,12 @@ export type Orderable<EntityT extends EntityBase> =
  * @typeparam EntityT - Type of the entity to be ordered
  * @internal
  */
-export type OrderableInput<EntityT extends EntityBase> =
+export type OrderableInput<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+> =
   | SimpleTypeFields<EntityT>
-  | Link<EntityT, EntityBase>
+  | Link<EntityT, DeSerializersT, EntityBase>
   | ComplexTypePropertyFields<EntityT>;
 
 /**
@@ -33,9 +37,10 @@ export type OrderableInput<EntityT extends EntityBase> =
  * @returns New order
  * @internal
  */
-export function asc<EntityT extends EntityBase>(
-  orderBy: OrderableInput<EntityT>
-): Order<EntityT> {
+export function asc<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(orderBy: OrderableInput<EntityT, DeSerializersT>): Order<EntityT> {
   if (orderBy instanceof Link) {
     return new Order(orderBy._fieldName);
   }
@@ -49,9 +54,10 @@ export function asc<EntityT extends EntityBase>(
  * @returns New order
  * @internal
  */
-export function desc<EntityT extends EntityBase>(
-  orderBy: OrderableInput<EntityT>
-): Order<EntityT> {
+export function desc<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
+>(orderBy: OrderableInput<EntityT, DeSerializersT>): Order<EntityT> {
   if (orderBy instanceof Link) {
     return new Order(orderBy._fieldName);
   }

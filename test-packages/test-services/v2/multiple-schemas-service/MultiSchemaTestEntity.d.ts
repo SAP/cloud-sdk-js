@@ -1,17 +1,17 @@
-import { MultiSchemaTestEntityRequestBuilder } from './MultiSchemaTestEntityRequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v2';
 import {
-  AllFields,
-  EdmTypeField,
-  EntityBuilderType,
-  Field
-} from '@sap-cloud-sdk/odata-common/internal';
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v2';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "MultiSchemaTestEntity" of service "API_MULTIPLE_SCHEMAS_SRV".
  */
-export declare class MultiSchemaTestEntity
+export declare class MultiSchemaTestEntity<
+    T extends DeSerializers = DefaultDeSerializers
+  >
   extends Entity
-  implements MultiSchemaTestEntityType
+  implements MultiSchemaTestEntityType<T>
 {
   /**
    * Technical entity name for MultiSchemaTestEntity.
@@ -22,69 +22,17 @@ export declare class MultiSchemaTestEntity
    */
   static _defaultServicePath: string;
   /**
+   * All key fields of the MultiSchemaTestEntity entity
+   */
+  static _keys: string[];
+  /**
    * Key Property.
    */
-  keyProperty: string;
-  /**
-   * Returns an entity builder to construct instances of `MultiSchemaTestEntity`.
-   * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
-   */
-  static builder(): EntityBuilderType<
-    MultiSchemaTestEntity,
-    MultiSchemaTestEntityType
-  >;
-  /**
-   * Returns a request builder to construct requests for operations on the `MultiSchemaTestEntity` entity type.
-   * @returns A `MultiSchemaTestEntity` request builder.
-   */
-  static requestBuilder(): MultiSchemaTestEntityRequestBuilder;
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `MultiSchemaTestEntity`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `MultiSchemaTestEntity`.
-   */
-  static customField(fieldName: string): CustomField<MultiSchemaTestEntity>;
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): {
-    [key: string]: any;
-  };
+  keyProperty: DeserializedType<T, 'Edm.String'>;
 }
-export interface MultiSchemaTestEntityType {
-  keyProperty: string;
-}
-export declare namespace MultiSchemaTestEntity {
-  /**
-   * Static representation of the [[keyProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const KEY_PROPERTY: EdmTypeField<
-    MultiSchemaTestEntity,
-    'Edm.String',
-    false,
-    true
-  >;
-  /**
-   * All fields of the MultiSchemaTestEntity entity.
-   */
-  const _allFields: Array<
-    EdmTypeField<MultiSchemaTestEntity, 'Edm.String', false, true>
-  >;
-  /**
-   * All fields selector.
-   */
-  const ALL_FIELDS: AllFields<MultiSchemaTestEntity>;
-  /**
-   * All key fields of the MultiSchemaTestEntity entity.
-   */
-  const _keyFields: Array<Field<MultiSchemaTestEntity, boolean, boolean>>;
-  /**
-   * Mapping of all key field names to the respective static field property MultiSchemaTestEntity.
-   */
-  const _keys: {
-    [keys: string]: Field<MultiSchemaTestEntity, boolean, boolean>;
-  };
+export interface MultiSchemaTestEntityType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
+  keyProperty: DeserializedType<T, 'Edm.String'>;
 }
 //# sourceMappingURL=MultiSchemaTestEntity.d.ts.map

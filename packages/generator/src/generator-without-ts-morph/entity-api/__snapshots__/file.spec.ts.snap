@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`entity api file gets proper file 1`] = `
+"import { Breakfast } from './Breakfast';
+import { BreakfastRequestBuilder } from './BreakfastRequestBuilder';
+import { Brunch } from './Brunch';
+import { BrunchApi } from './BrunchApi';
+import { CustomField, defaultDeSerializers, DefaultDeSerializers, DeSerializers, mergeDefaultDeSerializersWith } from '@sap-cloud-sdk/odata-v2';
+import { Time, EdmTypeField, OrderableEdmTypeField, OneToOneLink, AllFields, entityBuilder, EntityBuilderType, EntityApi, FieldBuilder } from '@sap-cloud-sdk/odata-common/internal';
+import { BigNumber } from 'bignumber.js';
+import { Moment } from 'moment';
+export class BreakfastApi<DeSerializersT extends DeSerializers = DefaultDeSerializers> implements 
+    EntityApi<
+      Breakfast<
+        DeSerializersT
+      >, 
+      DeSerializersT
+    > {
+  public deSerializers: DeSerializersT;
+
+  constructor(
+    deSerializers: DeSerializersT = defaultDeSerializers as any) {
+    this.deSerializers = deSerializers;
+  }
+
+  private navigationPropertyFields!: {
+      /**
+       * Static representation of the one-to-one navigation property [[toBrunch]] for query construction.
+       * Use to reference this property in query operations such as 'select' in the fluent request API.
+       */
+      TO_BRUNCH: OneToOneLink<
+            Breakfast<DeSerializersT>,
+            DeSerializersT,
+            Brunch<DeSerializersT>
+          >
+    };
+
+  _addNavigationProperties(
+      linkedApis: [
+        BrunchApi<DeSerializersT>
+      ]): this {
+        this.navigationPropertyFields = {
+          TO_BRUNCH: new OneToOneLink(
+              'TO_BRUNCH',
+              this,
+              linkedApis[0]
+            )
+        };
+        return this;
+      }
+  
+  entityConstructor = Breakfast;
+  
+  requestBuilder(): BreakfastRequestBuilder<
+    DeSerializersT
+  > {
+    return new BreakfastRequestBuilder<DeSerializersT>(this);
+  }
+  
+  entityBuilder(): EntityBuilderType<
+    Breakfast<
+      DeSerializersT
+    >,
+    DeSerializersT
+  > {
+    return entityBuilder(this);
+  }
+
+  customField<NullableT extends boolean = false>(
+    fieldName: string,
+    isNullable: NullableT = false as NullableT
+  ): CustomField<
+  Breakfast<
+      DeSerializersT>,
+    DeSerializersT,
+    NullableT
+  > {
+    return new CustomField(
+      fieldName,
+      this.entityConstructor,
+      this.deSerializers,
+      isNullable
+    ) as any;
+  }
+
+  get schema() {
+    const fieldBuilder = new FieldBuilder(Breakfast, this.deSerializers);
+    return { 
+    /**
+ * Static representation of the [[entityName]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+ENTITY_NAME: fieldBuilder.buildEdmTypeField('EntityName', 'Edm.String', false),
+/**
+ * Static representation of the [[numberOfEggs]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+NUMBER_OF_EGGS: fieldBuilder.buildEdmTypeField('A_noEggs', 'Edm.Decimal', true),
+/**
+ * Static representation of the [[breakfastTime]] property for query construction.
+ * Use to reference this property in query operations such as 'select' in the fluent request API.
+ */
+BREAKFAST_TIME: fieldBuilder.buildEdmTypeField('BreakfastTime', 'Edm.DateTime', false),
+...this.navigationPropertyFields,
+/**
+ * 
+ * All fields selector.
+ */
+ALL_FIELDS: new AllFields('*', Breakfast) 
+  };
+  }
+}"
+`;

@@ -40,5 +40,12 @@ export { CustomField } from './selectable';
 export { uriConverter } from './uri-conversion';
 export { all, any } from './filter';
 
-export { edmToTs, CustomDeSerializers, DeSerializers } from './de-serializers';
-export { deserializeComplexType } from './entity-deserializer';
+export {
+  CustomDeSerializers,
+  defaultDeSerializers,
+  edmToTs,
+  entityDeserializer,
+  mergeDefaultDeSerializersWith
+} from './de-serializers';
+
+export type { DefaultDeSerializers, DeSerializers } from './de-serializers';

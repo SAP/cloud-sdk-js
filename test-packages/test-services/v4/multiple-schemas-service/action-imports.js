@@ -19,19 +19,22 @@ const TestComplexType2_1 = require('./TestComplexType2');
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testActionImportNoParameterComplexReturnType1(parameters) {
+function testActionImportNoParameterComplexReturnType1(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType1',
     data =>
       (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
-        (0, odata_v4_1.deserializeComplexType)(
-          data,
-          TestComplexType1_1.TestComplexType1
-        )
+        (0, odata_v4_1.entityDeserializer)(
+          deSerializers
+        ).deserializeComplexType(data, TestComplexType1_1.TestComplexType1)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testActionImportNoParameterComplexReturnType1 =
@@ -42,19 +45,22 @@ exports.testActionImportNoParameterComplexReturnType1 =
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testActionImportNoParameterComplexReturnType2(parameters) {
+function testActionImportNoParameterComplexReturnType2(
+  parameters,
+  deSerializers = odata_v4_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v4_1.ActionImportRequestBuilder(
     '/sap/opu/odata/sap/API_TEST_SRV',
     'TestActionImportNoParameterComplexReturnType2',
     data =>
       (0, odata_v4_1.transformReturnValueForComplexType)(data, data =>
-        (0, odata_v4_1.deserializeComplexType)(
-          data,
-          TestComplexType2_1.TestComplexType2
-        )
+        (0, odata_v4_1.entityDeserializer)(
+          deSerializers
+        ).deserializeComplexType(data, TestComplexType2_1.TestComplexType2)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testActionImportNoParameterComplexReturnType2 =

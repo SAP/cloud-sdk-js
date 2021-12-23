@@ -1,4 +1,5 @@
-import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
+import { DeSerializers } from '../de-serializers';
+import { EntityBase, EntityIdentifiable, EntityApi } from '../entity-base';
 import type { Expandable } from '../expandable';
 import type { Selectable } from './selectable';
 
@@ -22,27 +23,29 @@ import type { Selectable } from './selectable';
  */
 export class Link<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   LinkedEntityT extends EntityBase = any
-> implements EntityIdentifiable<EntityT>
+> implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entity: EntityT;
+  readonly _deSerializers: DeSerializersT;
 
   /**
    * List of selectables on the linked entity.
    */
-  _selects: Selectable<LinkedEntityT>[] = [];
-  _expand: Expandable<LinkedEntityT>[] = [];
+  _selects: Selectable<LinkedEntityT, DeSerializersT>[] = [];
+  _expand: Expandable<LinkedEntityT, DeSerializersT>[] = [];
 
   /**
    * Creates an instance of Link.
    * @param _fieldName - Name of the linking field to be used in the OData request.
-   * @param _entityConstructor - Constructor type of the entity the field belongs to
-   * @param _linkedEntity - Constructor type of the linked entity
+   * @param _entityApi - Entity API for building and executing the request.
+   * @param _linkedEntity - Constructor of the linked entity.
    */
   constructor(
     readonly _fieldName: string,
-    readonly _entityConstructor: Constructable<EntityT>,
-    readonly _linkedEntity: Constructable<LinkedEntityT>
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
+    readonly _linkedEntityApi: EntityApi<LinkedEntityT, DeSerializersT>
   ) {}
 
   /**
@@ -52,13 +55,13 @@ export class Link<
    * @param selects - Selection of fields or links on a linked entity
    * @returns The link itself, to facilitate method chaining
    */
-  select(...selects: Selectable<LinkedEntityT>[]): this {
+  select(...selects: Selectable<LinkedEntityT, DeSerializersT>[]): this {
     const link = this.clone();
     link._selects = selects;
     return link;
   }
 
-  expand(...expands: Expandable<LinkedEntityT>[]): this {
+  expand(...expands: Expandable<LinkedEntityT, DeSerializersT>[]): this {
     const link = this.clone();
     link._expand = expands;
     return link;
@@ -74,8 +77,8 @@ export class Link<
   clone(): this {
     const clonedLink = new (this.constructor as any)(
       this._fieldName,
-      this._entityConstructor,
-      this._linkedEntity
+      this._entityApi,
+      this._linkedEntityApi
     );
     clonedLink._selects = this._selects;
     clonedLink._expand = this._expand;

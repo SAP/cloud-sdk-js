@@ -1,26 +1,30 @@
 import {
-  TestEntity,
-  TestEntityMultiLink,
-  TestEnumType
+  TestEnumType,
+  testService
 } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { and } from '@sap-cloud-sdk/odata-common/internal';
 import { any } from '@sap-cloud-sdk/odata-v4';
 
-// $ExpectType FilterList<TestEntity>
+const { testEntityApi, testEntityMultiLinkApi } = testService();
+
+const schema = testEntityApi.schema;
+const multiLinkSchema = testEntityMultiLinkApi.schema;
+
+// $ExpectType FilterList<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>>
 and(
-  TestEntity.TO_MULTI_LINK.filter(
-    any(TestEntityMultiLink.STRING_PROPERTY.equals('test'))
+  schema.TO_MULTI_LINK.filter(
+    any(multiLinkSchema.STRING_PROPERTY.equals('test'))
   )
 );
 
-// $ExpectType Filter<TestEntity, string>
-TestEntity.ENUM_PROPERTY.equals('Member1');
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>, string>
+schema.ENUM_PROPERTY.equals('Member1');
 
-// $ExpectType Filter<TestEntity, string>
-TestEntity.ENUM_PROPERTY.equals(TestEnumType.Member1);
-
-// $ExpectError
-TestEntity.ENUM_PROPERTY.equals('string');
+// $ExpectType Filter<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Duration, Time, any>, string>
+schema.ENUM_PROPERTY.equals(TestEnumType.Member1);
 
 // $ExpectError
-TestEntity.ENUM_PROPERTY.equals(1);
+schema.ENUM_PROPERTY.equals('string');
+
+// $ExpectError
+schema.ENUM_PROPERTY.equals(1);

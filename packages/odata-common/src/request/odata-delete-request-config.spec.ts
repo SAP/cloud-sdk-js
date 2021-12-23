@@ -1,16 +1,17 @@
 import { v4 as uuid } from 'uuid';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { CommonEntity } from '../../test/common-entity';
+import { CommonEntity, commonEntityApi } from '../../test/common-entity';
 import {
   commonODataUri,
   commonUriConverter
 } from '../../test/common-request-config';
+import { DefaultDeSerializers } from '../de-serializers';
 import { ODataDeleteRequestConfig } from './odata-delete-request-config';
 
 describe('ODataDeleteRequestConfig', () => {
-  let config: ODataDeleteRequestConfig<CommonEntity>;
+  let config: ODataDeleteRequestConfig<CommonEntity, DefaultDeSerializers>;
   beforeEach(() => {
-    config = new ODataDeleteRequestConfig(CommonEntity, commonODataUri);
+    config = new ODataDeleteRequestConfig(commonEntityApi, commonODataUri);
   });
 
   it('method is delete', () => {
@@ -28,7 +29,7 @@ describe('ODataDeleteRequestConfig', () => {
       testEntityResourcePath(
         keyPropGuid,
         keyPropString,
-        commonUriConverter.convertToUriFormat,
+        commonUriConverter,
         'A_CommonEntity'
       )
     );

@@ -13,7 +13,7 @@
         <Property Name="Int16Property" Type="Edm.Int16"/>
        <Property Name="CollectionProperty" Type="Collection(Edm.String)" MaxLength="10" sap:display-format="UpperCase"/>
         <Property Name="ComplexTypeProperty" Type="API_COMMON_SRV.A_CommonComplexType"/>
-        <NavigationProperty Name="to_SingleLink" Type="API_TEST_SRV.A_CommonEntitySingleLinkType"/>
+        <NavigationProperty Name="to_SingleLink" Type="API_COMMON_SRV.A_CommonEntitySingleLinkType"/>
       </EntityType>
 
       <EntityType Name="A_CommonEntitySingleLinkType" sap:content-version="1">
@@ -38,7 +38,7 @@
         <EntitySet Name="A_CommonEntity" EntityType="API_COMMON_SRV.A_CommonEntityType" sap:content-version="1">
             <NavigationPropertyBinding Path="to_SingleLink" Target="A_CommonEntitySingleLink"/>
         </EntitySet>
-       <EntitySet Name="A_CommonEntitySingleLink" EntityType="API_TEST_SRV.A_CommonEntitySingleLinkType" sap:content-version="1"/>
+       <EntitySet Name="A_CommonEntitySingleLink" EntityType="API_COMMON_SRV.A_CommonEntitySingleLinkType" sap:content-version="1"/>
       </EntityContainer>
 
       <Annotations Target="API_COMMON_SRV.API_COMMON_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">

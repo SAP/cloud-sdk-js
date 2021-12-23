@@ -1,11 +1,11 @@
 import {
-  TestEntity,
-  TestEntityCircularLinkChild,
-  TestEntityCircularLinkParent,
-  TestEntityLvl2SingleLink,
-  TestEntityMultiLink,
-  TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v4/test-service';
+  testEntityApi,
+  testEntityCircularLinkChildApi,
+  testEntityCircularLinkParentApi,
+  testEntityLvl2MultiLinkApi,
+  testEntityMultiLinkApi,
+  testEntitySingleLinkApi
+} from '../test/test-util';
 
 describe('entity', () => {
   let entity;
@@ -28,13 +28,18 @@ describe('entity', () => {
   };
 
   beforeEach(() => {
-    entity = TestEntity.builder()
+    entity = testEntityApi
+      .entityBuilder()
       .stringProperty('1')
       .collectionProperty(['a', 'b'])
       .toSingleLink(
-        TestEntitySingleLink.builder()
+        testEntitySingleLinkApi
+          .entityBuilder()
           .toSingleLink(
-            TestEntityLvl2SingleLink.builder().stringProperty('test').build()
+            testEntityLvl2MultiLinkApi
+              .entityBuilder()
+              .stringProperty('test')
+              .build()
           )
           .withCustomFields({
             customField: 2
@@ -42,7 +47,8 @@ describe('entity', () => {
           .build()
       )
       .toMultiLink([
-        TestEntityMultiLink.builder()
+        testEntityMultiLinkApi
+          .entityBuilder()
           .booleanProperty(false)
           .withCustomFields({
             customField: 3
@@ -71,14 +77,17 @@ describe('entity', () => {
   });
 
   it('asObject() does not run endlessly', () => {
-    const parent = TestEntityCircularLinkParent.builder()
+    const parent = testEntityCircularLinkParentApi
+      .entityBuilder()
       .keyProperty('parent')
       .build();
-    const child1 = TestEntityCircularLinkChild.builder()
+    const child1 = testEntityCircularLinkChildApi
+      .entityBuilder()
       .keyProperty('child1')
       .toParent(parent)
       .build();
-    const child2 = TestEntityCircularLinkChild.builder()
+    const child2 = testEntityCircularLinkChildApi
+      .entityBuilder()
       .keyProperty('child2')
       .toParent(parent)
       .build();

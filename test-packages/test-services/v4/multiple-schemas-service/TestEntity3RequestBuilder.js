@@ -19,7 +19,7 @@ class TestEntity3RequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `TestEntity3` entity based on its keys.
    */
   getByKey(keyPropertyString) {
-    return new odata_v4_1.GetByKeyRequestBuilder(TestEntity3_1.TestEntity3, {
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
       KeyPropertyString: keyPropertyString
     });
   }
@@ -28,7 +28,7 @@ class TestEntity3RequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `TestEntity3` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(TestEntity3_1.TestEntity3);
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `TestEntity3` entity.
@@ -36,10 +36,7 @@ class TestEntity3RequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntity3`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(
-      TestEntity3_1.TestEntity3,
-      entity
-    );
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntity3`.
@@ -47,14 +44,11 @@ class TestEntity3RequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntity3`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(
-      TestEntity3_1.TestEntity3,
-      entity
-    );
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyStringOrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      TestEntity3_1.TestEntity3,
+      this.entityApi,
       keyPropertyStringOrEntity instanceof TestEntity3_1.TestEntity3
         ? keyPropertyStringOrEntity
         : { KeyPropertyString: keyPropertyStringOrEntity }

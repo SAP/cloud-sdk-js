@@ -11,13 +11,11 @@ exports.defaultMultipleSchemasServicePath =
  */
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
 const util_1 = require('@sap-cloud-sdk/util');
-const index_1 = require('./index');
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 function batch(first, ...rest) {
   return new odata_v4_1.ODataBatchRequestBuilder(
     exports.defaultMultipleSchemasServicePath,
-    (0, util_1.variadicArgumentToArray)(first, rest),
-    map
+    (0, util_1.variadicArgumentToArray)(first, rest)
   );
 }
 exports.batch = batch;
@@ -28,10 +26,4 @@ function changeset(first, ...rest) {
 }
 exports.changeset = changeset;
 exports.defaultMultipleSchemasServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-const map = {
-  A_TestEntity1: index_1.TestEntity1,
-  A_TestEntity2: index_1.TestEntity2,
-  A_TestEntity3: index_1.TestEntity3,
-  A_TestEntity4: index_1.TestEntity4
-};
 //# sourceMappingURL=BatchRequest.js.map

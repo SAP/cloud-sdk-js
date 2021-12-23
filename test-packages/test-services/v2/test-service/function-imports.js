@@ -24,14 +24,17 @@ exports.functionImports =
  */
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const TestEntity_1 = require('./TestEntity');
+const service_1 = require('./service');
 const TestComplexType_1 = require('./TestComplexType');
 /**
  * Test Function Import No Return Type.
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportNoReturnType(parameters) {
+function testFunctionImportNoReturnType(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'post',
@@ -39,7 +42,8 @@ function testFunctionImportNoReturnType(parameters) {
     'TestFunctionImportNoReturnType',
     data =>
       (0, odata_v2_1.transformReturnValueForUndefined)(data, val => undefined),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
@@ -48,7 +52,10 @@ exports.testFunctionImportNoReturnType = testFunctionImportNoReturnType;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportEdmReturnType(parameters) {
+function testFunctionImportEdmReturnType(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -58,10 +65,12 @@ function testFunctionImportEdmReturnType(parameters) {
       (0, odata_v2_1.transformReturnValueForEdmType)(data, val =>
         (0, odata_v2_1.edmToTs)(
           val.TestFunctionImportEdmReturnType,
-          'Edm.Boolean'
+          'Edm.Boolean',
+          deSerializers
         )
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
@@ -70,7 +79,10 @@ exports.testFunctionImportEdmReturnType = testFunctionImportEdmReturnType;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportEdmReturnTypeCollection(parameters) {
+function testFunctionImportEdmReturnTypeCollection(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -78,9 +90,10 @@ function testFunctionImportEdmReturnTypeCollection(parameters) {
     'TestFunctionImportEdmReturnTypeCollection',
     data =>
       (0, odata_v2_1.transformReturnValueForEdmTypeList)(data, val =>
-        (0, odata_v2_1.edmToTs)(val, 'Edm.String')
+        (0, odata_v2_1.edmToTs)(val, 'Edm.String', deSerializers)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportEdmReturnTypeCollection =
@@ -90,7 +103,10 @@ exports.testFunctionImportEdmReturnTypeCollection =
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportEntityReturnType(parameters) {
+function testFunctionImportEntityReturnType(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -99,9 +115,10 @@ function testFunctionImportEntityReturnType(parameters) {
     data =>
       (0, odata_v2_1.transformReturnValueForEntity)(
         data,
-        TestEntity_1.TestEntity
+        (0, service_1.testService)(deSerializers).testEntityApi
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
@@ -110,7 +127,10 @@ exports.testFunctionImportEntityReturnType = testFunctionImportEntityReturnType;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportEntityReturnTypeCollection(parameters) {
+function testFunctionImportEntityReturnTypeCollection(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -119,9 +139,10 @@ function testFunctionImportEntityReturnTypeCollection(parameters) {
     data =>
       (0, odata_v2_1.transformReturnValueForEntityList)(
         data,
-        TestEntity_1.TestEntity
+        (0, service_1.testService)(deSerializers).testEntityApi
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportEntityReturnTypeCollection =
@@ -131,7 +152,10 @@ exports.testFunctionImportEntityReturnTypeCollection =
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportSharedEntityReturnType(parameters) {
+function testFunctionImportSharedEntityReturnType(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -142,7 +166,8 @@ function testFunctionImportSharedEntityReturnType(parameters) {
         data,
         'TestFunctionImportSharedEntityReturnType'
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportSharedEntityReturnType =
@@ -152,7 +177,10 @@ exports.testFunctionImportSharedEntityReturnType =
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportSharedEntityReturnTypeCollection(parameters) {
+function testFunctionImportSharedEntityReturnTypeCollection(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -163,7 +191,8 @@ function testFunctionImportSharedEntityReturnTypeCollection(parameters) {
         data,
         'TestFunctionImportSharedEntityReturnTypeCollection'
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportSharedEntityReturnTypeCollection =
@@ -173,7 +202,10 @@ exports.testFunctionImportSharedEntityReturnTypeCollection =
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportComplexReturnType(parameters) {
+function testFunctionImportComplexReturnType(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -181,12 +213,12 @@ function testFunctionImportComplexReturnType(parameters) {
     'TestFunctionImportComplexReturnType',
     data =>
       (0, odata_v2_1.transformReturnValueForComplexType)(data, data =>
-        (0, odata_v2_1.deserializeComplexType)(
-          data,
-          TestComplexType_1.TestComplexType
-        )
+        (0, odata_v2_1.entityDeserializer)(
+          deSerializers
+        ).deserializeComplexType(data, TestComplexType_1.TestComplexType)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportComplexReturnType =
@@ -196,7 +228,10 @@ exports.testFunctionImportComplexReturnType =
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportUnsupportedEdmTypes(parameters) {
+function testFunctionImportUnsupportedEdmTypes(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {
     simpleParam: new internal_1.FunctionImportParameter(
       'SimpleParam',
@@ -212,10 +247,12 @@ function testFunctionImportUnsupportedEdmTypes(parameters) {
       (0, odata_v2_1.transformReturnValueForEdmType)(data, val =>
         (0, odata_v2_1.edmToTs)(
           val.TestFunctionImportUnsupportedEdmTypes,
-          'Edm.Any'
+          'Edm.Any',
+          deSerializers
         )
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportUnsupportedEdmTypes =
@@ -225,7 +262,10 @@ exports.testFunctionImportUnsupportedEdmTypes =
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportComplexReturnTypeCollection(parameters) {
+function testFunctionImportComplexReturnTypeCollection(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -233,12 +273,12 @@ function testFunctionImportComplexReturnTypeCollection(parameters) {
     'TestFunctionImportComplexReturnTypeCollection',
     data =>
       (0, odata_v2_1.transformReturnValueForComplexTypeList)(data, data =>
-        (0, odata_v2_1.deserializeComplexType)(
-          data,
-          TestComplexType_1.TestComplexType
-        )
+        (0, odata_v2_1.entityDeserializer)(
+          deSerializers
+        ).deserializeComplexType(data, TestComplexType_1.TestComplexType)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportComplexReturnTypeCollection =
@@ -248,7 +288,10 @@ exports.testFunctionImportComplexReturnTypeCollection =
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportGet(parameters) {
+function testFunctionImportGet(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {
     simpleParam: new internal_1.FunctionImportParameter(
       'SimpleParam',
@@ -262,9 +305,14 @@ function testFunctionImportGet(parameters) {
     'TestFunctionImportGET',
     data =>
       (0, odata_v2_1.transformReturnValueForEdmType)(data, val =>
-        (0, odata_v2_1.edmToTs)(val.TestFunctionImportGET, 'Edm.Boolean')
+        (0, odata_v2_1.edmToTs)(
+          val.TestFunctionImportGET,
+          'Edm.Boolean',
+          deSerializers
+        )
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportGet = testFunctionImportGet;
@@ -273,7 +321,10 @@ exports.testFunctionImportGet = testFunctionImportGet;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportPost(parameters) {
+function testFunctionImportPost(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {
     simpleParam: new internal_1.FunctionImportParameter(
       'SimpleParam',
@@ -287,9 +338,14 @@ function testFunctionImportPost(parameters) {
     'TestFunctionImportPOST',
     data =>
       (0, odata_v2_1.transformReturnValueForEdmType)(data, val =>
-        (0, odata_v2_1.edmToTs)(val.TestFunctionImportPOST, 'Edm.Boolean')
+        (0, odata_v2_1.edmToTs)(
+          val.TestFunctionImportPOST,
+          'Edm.Boolean',
+          deSerializers
+        )
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportPost = testFunctionImportPost;
@@ -298,7 +354,10 @@ exports.testFunctionImportPost = testFunctionImportPost;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function testFunctionImportMultipleParams(parameters) {
+function testFunctionImportMultipleParams(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {
     stringParam: new internal_1.FunctionImportParameter(
       'StringParam',
@@ -319,10 +378,12 @@ function testFunctionImportMultipleParams(parameters) {
       (0, odata_v2_1.transformReturnValueForEdmType)(data, val =>
         (0, odata_v2_1.edmToTs)(
           val.TestFunctionImportMultipleParams,
-          'Edm.Boolean'
+          'Edm.Boolean',
+          deSerializers
         )
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
@@ -331,7 +392,10 @@ exports.testFunctionImportMultipleParams = testFunctionImportMultipleParams;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function createTestComplexType(parameters) {
+function createTestComplexType(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -339,12 +403,12 @@ function createTestComplexType(parameters) {
     'CreateTestComplexType',
     data =>
       (0, odata_v2_1.transformReturnValueForComplexType)(data, data =>
-        (0, odata_v2_1.deserializeComplexType)(
-          data,
-          TestComplexType_1.TestComplexType
-        )
+        (0, odata_v2_1.entityDeserializer)(
+          deSerializers
+        ).deserializeComplexType(data, TestComplexType_1.TestComplexType)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.createTestComplexType = createTestComplexType;
@@ -353,7 +417,10 @@ exports.createTestComplexType = createTestComplexType;
  * @param parameters - Object containing all parameters for the function import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-function fContinue(parameters) {
+function fContinue(
+  parameters,
+  deSerializers = odata_v2_1.defaultDeSerializers
+) {
   const params = {};
   return new odata_v2_1.FunctionImportRequestBuilder(
     'get',
@@ -361,9 +428,10 @@ function fContinue(parameters) {
     'Continue',
     data =>
       (0, odata_v2_1.transformReturnValueForEdmType)(data, val =>
-        (0, odata_v2_1.edmToTs)(val.Continue, 'Edm.Boolean')
+        (0, odata_v2_1.edmToTs)(val.Continue, 'Edm.Boolean', deSerializers)
       ),
-    params
+    params,
+    deSerializers
   );
 }
 exports.fContinue = fContinue;

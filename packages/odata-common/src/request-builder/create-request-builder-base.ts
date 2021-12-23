@@ -6,15 +6,12 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import type { EntitySerializer } from '../entity-serializer';
 import type { ODataUri } from '../uri-conversion';
-import type {
-  Constructable,
-  EntityBase,
-  EntityIdentifiable
-} from '../entity-base';
+import type { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 import type { EntityDeserializer } from '../entity-deserializer';
 import type { ResponseDataAccessor } from '../response-data-accessor';
 import { ODataCreateRequestConfig } from '../request';
 import { Link } from '../selectable';
+import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -22,27 +19,38 @@ import { MethodRequestBuilder } from './request-builder-base';
  * @typeparam EntityT - Type of the entity to be created
  * @internal
  */
-export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilder<ODataCreateRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT>
+export abstract class CreateRequestBuilderBase<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
+  extends MethodRequestBuilder<
+    ODataCreateRequestConfig<EntityT, DeSerializersT>
+  >
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
+  readonly _deSerializers: DeSerializersT;
+
   /**
    * Creates an instance of CreateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be created
-   * @param _entity - Entity to be created
+   * @param _entityApi - Entity API for building and executing the request.
+   * @param _entity - Entity to be created.
+   * @param oDataUri - URI conversion functions.
+   * @param serializer - Entity serializer.
+   * @param deserializer - Entity deserializer.
+   * @param responseDataAccessor - Object access functions for get requests.
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT,
-    readonly odataUri: ODataUri,
+    readonly oDataUri: ODataUri<DeSerializersT>,
     readonly serializer: EntitySerializer,
     readonly deserializer: EntityDeserializer,
     readonly responseDataAccessor: ResponseDataAccessor
   ) {
-    super(new ODataCreateRequestConfig(_entityConstructor, odataUri));
+    super(new ODataCreateRequestConfig(_entityApi, oDataUri));
     this.requestConfig.payload = serializer.serializeEntity(
       this._entity,
-      this._entityConstructor
+      this._entityApi
     );
   }
 
@@ -58,11 +66,11 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
    */
   asChildOf<ParentEntityT extends EntityBase>(
     parentEntity: ParentEntityT,
-    linkField: Link<ParentEntityT, EntityT>
+    linkField: Link<ParentEntityT, DeSerializersT, EntityT>
   ): this {
-    this.requestConfig.parentKeys = this.odataUri.getEntityKeys(
+    this.requestConfig.parentKeys = this.oDataUri.getEntityKeys(
       parentEntity,
-      linkField._entityConstructor
+      linkField._entityApi
     );
     this.requestConfig.childField = linkField;
     return this;
@@ -80,7 +88,7 @@ export abstract class CreateRequestBuilderBase<EntityT extends EntityBase>
       .then(response =>
         this.deserializer.deserializeEntity(
           this.responseDataAccessor.getSingleResult(response.data),
-          this._entityConstructor,
+          this._entityApi,
           response.headers
         )
       )

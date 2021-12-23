@@ -26,30 +26,12 @@ describe('imports', () => {
 
 const expectedEntityImports = [
   {
-    moduleSpecifier: './BreakfastRequestBuilder',
-    namedImports: ['BreakfastRequestBuilder']
-  },
-  {
-    moduleSpecifier: 'bignumber.js',
-    namedImports: ['BigNumber']
-  },
-  {
     moduleSpecifier: '@sap-cloud-sdk/odata-v2',
-    namedImports: ['CustomField', 'Entity']
+    namedImports: ['Entity', 'DefaultDeSerializers', 'DeSerializers']
   },
   {
     moduleSpecifier: '@sap-cloud-sdk/odata-common/internal',
-    namedImports: [
-      'AllFields',
-      'Constructable',
-      'EdmTypeField',
-      'EntityBuilderType',
-      'Field',
-      'FieldBuilder',
-      'OneToOneLink',
-      'OrderableEdmTypeField',
-      'Time'
-    ]
+    namedImports: ['DeserializedType']
   }
 ];
 

@@ -19,7 +19,7 @@ class AirlinesRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `Airlines` entity based on its keys.
    */
   getByKey(airlineCode) {
-    return new odata_v4_1.GetByKeyRequestBuilder(Airlines_1.Airlines, {
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
       AirlineCode: airlineCode
     });
   }
@@ -28,7 +28,7 @@ class AirlinesRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `Airlines` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(Airlines_1.Airlines);
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `Airlines` entity.
@@ -36,7 +36,7 @@ class AirlinesRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `Airlines`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(Airlines_1.Airlines, entity);
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `Airlines`.
@@ -44,11 +44,11 @@ class AirlinesRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `Airlines`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(Airlines_1.Airlines, entity);
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(airlineCodeOrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      Airlines_1.Airlines,
+      this.entityApi,
       airlineCodeOrEntity instanceof Airlines_1.Airlines
         ? airlineCodeOrEntity
         : { AirlineCode: airlineCodeOrEntity }

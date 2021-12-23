@@ -1,31 +1,33 @@
 import {
   changeset as otherServiceChangeset,
-  MultiSchemaTestEntity
+  multipleSchemasService
 } from '@sap-cloud-sdk/test-services/v2/multiple-schemas-service';
 import {
   batch,
   changeset as testEntityChangeset,
-  TestEntity
+  testService
 } from '@sap-cloud-sdk/test-services/v2/test-service';
 
-const createTestEntity = TestEntity.requestBuilder().create(
-  TestEntity.builder().build()
-);
-const createTestEntityFromOtherService =
-  MultiSchemaTestEntity.requestBuilder().create(
-    MultiSchemaTestEntity.builder().build()
-  );
+const { testEntityApi } = testService();
+const { multiSchemaTestEntityApi } = multipleSchemasService();
 
-// $ExpectType BatchChangeSet<WriteTestServiceRequestBuilder>
+const createTestEntity = testEntityApi
+  .requestBuilder()
+  .create(testEntityApi.entityBuilder().build());
+const createTestEntityFromOtherService = multiSchemaTestEntityApi
+  .requestBuilder()
+  .create(multiSchemaTestEntityApi.entityBuilder().build());
+
+// $ExpectType BatchChangeSet<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 const changeSetTestEntity = testEntityChangeset(createTestEntity);
 
-// $ExpectType BatchChangeSet<WriteTestServiceRequestBuilder>
+// $ExpectType BatchChangeSet<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityChangeset(createTestEntity, createTestEntity);
 
-// $ExpectType BatchChangeSet<WriteTestServiceRequestBuilder>
+// $ExpectType BatchChangeSet<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 testEntityChangeset([createTestEntity, createTestEntity]);
 
-// $ExpectType BatchChangeSet<WriteMultipleSchemasServiceRequestBuilder>
+// $ExpectType BatchChangeSet<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 otherServiceChangeset(createTestEntityFromOtherService);
 
 // // $ExpectError
@@ -34,10 +36,10 @@ otherServiceChangeset(createTestEntityFromOtherService);
 // // $ExpectError
 // TestEntityChangeset(createTestEntity, createTestEntityFromOtherService);
 
-// $ExpectType ODataBatchRequestBuilder
+// $ExpectType ODataBatchRequestBuilder<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 batch(changeSetTestEntity, changeSetTestEntity);
 
-// $ExpectType ODataBatchRequestBuilder
+// $ExpectType ODataBatchRequestBuilder<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 batch([changeSetTestEntity, changeSetTestEntity]);
 
 // // $ExpectError

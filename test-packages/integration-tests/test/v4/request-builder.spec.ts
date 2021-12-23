@@ -1,8 +1,10 @@
 import nock from 'nock';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { TestEntityApi } from '@sap-cloud-sdk/test-services/v4/test-service';
 import { testEntityCollectionResponse } from '../test-data/test-entity-collection-response-v4';
 import { singleTestEntityResponse } from '../test-data/single-test-entity-response-v4';
+
+const testEntityApi = new TestEntityApi();
 
 const servicePath = '/sap/opu/odata/sap/API_TEST_SRV';
 const entityName = 'A_TestEntity';
@@ -60,7 +62,10 @@ describe('Request Builder', () => {
       .get(`${servicePath}/${entityName}?$format=json`)
       .reply(200, getAllResponse);
 
-    const request = TestEntity.requestBuilder().getAll().execute(destination);
+    const request = testEntityApi
+      .requestBuilder()
+      .getAll()
+      .execute(destination);
 
     await expect(request).resolves.not.toThrow();
   });
@@ -85,9 +90,11 @@ describe('Request Builder', () => {
       })
       .reply(200, response);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .create(
-        TestEntity.builder()
+        testEntityApi
+          .entityBuilder()
           .stringProperty('someProperty')
           .int16Property(16)
           .booleanProperty(false)
@@ -120,9 +127,11 @@ describe('Request Builder', () => {
       )
       .reply(204);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .update(
-        TestEntity.builder()
+        testEntityApi
+          .entityBuilder()
           .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
           .keyPropertyString('abcd1234')
           .stringProperty('newStringProp')
@@ -138,7 +147,8 @@ describe('Request Builder', () => {
       `${entityName}(KeyPropertyGuid=aaaabbbb-cccc-dddd-eeee-ffff00001111,KeyPropertyString=%27abcd1234%27)`
     );
 
-    const entity = TestEntity.builder()
+    const entity = testEntityApi
+      .entityBuilder()
       .keyPropertyGuid('aaaabbbb-cccc-dddd-eeee-ffff00001111')
       .keyPropertyString('abcd1234')
       .stringProperty('someContent')
@@ -160,7 +170,8 @@ describe('Request Builder', () => {
       )
       .reply(200, entityJson);
 
-    const request = TestEntity.requestBuilder()
+    const request = testEntityApi
+      .requestBuilder()
       .delete(entity.keyPropertyGuid, entity.keyPropertyString)
       .execute(destination);
 

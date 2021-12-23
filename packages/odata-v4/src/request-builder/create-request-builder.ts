@@ -1,36 +1,39 @@
 import {
-  Constructable,
+  EntityApi,
   CreateRequestBuilderBase,
+  entitySerializer,
   EntityIdentifiable
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers, entityDeserializer } from '../de-serializers';
 import { Entity } from '../entity';
-import { entitySerializer } from '../entity-serializer';
-import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
+import { createODataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 /**
  * Create OData request to create an entity.
  * @typeparam EntityT - Type of the entity to be created
  */
-export class CreateRequestBuilder<EntityT extends Entity>
-  extends CreateRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT>
+export class CreateRequestBuilder<
+    EntityT extends Entity,
+    DeSerializersT extends DeSerializers
+  >
+  extends CreateRequestBuilderBase<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
    * Creates an instance of CreateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be created
-   * @param _entity - Entity to be created
+   * @param entityApi - Entity API for building and executing the request.
+   * @param _entity - Entity to be created.
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT
   ) {
     super(
-      _entityConstructor,
+      entityApi,
       _entity,
-      oDataUri,
-      entitySerializer,
-      entityDeserializer,
+      createODataUri(entityApi.deSerializers),
+      entitySerializer(entityApi.deSerializers),
+      entityDeserializer(entityApi.deSerializers),
       responseDataAccessor
     );
   }

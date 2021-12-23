@@ -8,13 +8,11 @@ exports.defaultTestServicePath = exports.changeset = exports.batch = void 0;
  */
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
 const util_1 = require('@sap-cloud-sdk/util');
-const index_1 = require('./index');
 const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 function batch(first, ...rest) {
   return new odata_v2_1.ODataBatchRequestBuilder(
     exports.defaultTestServicePath,
-    (0, util_1.variadicArgumentToArray)(first, rest),
-    map
+    (0, util_1.variadicArgumentToArray)(first, rest)
   );
 }
 exports.batch = batch;
@@ -25,20 +23,4 @@ function changeset(first, ...rest) {
 }
 exports.changeset = changeset;
 exports.defaultTestServicePath = '/sap/opu/odata/sap/API_TEST_SRV';
-const map = {
-  A_TestEntity: index_1.TestEntity,
-  A_TestEntityMultiLink: index_1.TestEntityMultiLink,
-  A_TestEntityOtherMultiLink: index_1.TestEntityOtherMultiLink,
-  A_TestEntityLvl2MultiLink: index_1.TestEntityLvl2MultiLink,
-  A_TestEntitySingleLink: index_1.TestEntitySingleLink,
-  A_TestEntityLvl2SingleLink: index_1.TestEntityLvl2SingleLink,
-  A_TestEntityWithSharedEntityType1: index_1.TestEntityWithSharedEntityType1,
-  A_TestEntityWithSharedEntityType2: index_1.TestEntityWithSharedEntityType2,
-  A_TestEntityCircularLinkParent: index_1.TestEntityCircularLinkParent,
-  A_TestEntityCircularLinkChild: index_1.TestEntityCircularLinkChild,
-  A_TestEntityEndsWithCollection: index_1.TestEntityEndsWith,
-  A_TestEntityEndsWithSomethingElse: index_1.TestEntityEndsWithSomethingElse,
-  A_CaseTest: index_1.CaseTest,
-  A_CASETEST: index_1.Casetest_1
-};
 //# sourceMappingURL=BatchRequest.js.map

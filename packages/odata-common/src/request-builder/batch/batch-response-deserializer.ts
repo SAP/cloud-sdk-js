@@ -5,7 +5,8 @@ import {
   WriteResponse,
   WriteResponses
 } from '../../batch-response';
-import { Constructable, EntityBase } from '../../entity-base';
+import { DeSerializers } from '../../de-serializers';
+import { EntityApi, EntityBase } from '../../entity-base';
 import { EntityDeserializer } from '../../entity-deserializer';
 import { ResponseDataAccessor } from '../../response-data-accessor';
 import { ResponseData, isHttpSuccessCode } from './batch-response-parser';
@@ -19,17 +20,17 @@ const logger = createLogger({
  * Represents the state needed to deserialize a parsed batch response using OData version specific deserialization data access.
  * @internal
  */
-export class BatchResponseDeserializer {
+export class BatchResponseDeserializer<DeSerializersT extends DeSerializers> {
   /**
    * Creates an instance of BatchResponseTransformer.
-   * @param entityToConstructorMap - A map that holds the entity type to constructor mapping.
+   * @param entityToApi - A map that holds the entity type to constructor mapping.
    * @param responseDataAccessor - Response data access module.
    * @param deserializer - Entity deserializer.
    */
   constructor(
-    private readonly entityToConstructorMap: Record<
+    private readonly entityToApi: Record<
       string,
-      Constructable<EntityBase>
+      EntityApi<EntityBase, DeSerializersT>
     >,
     private readonly responseDataAccessor: ResponseDataAccessor,
     private readonly deserializer: EntityDeserializer
@@ -42,7 +43,11 @@ export class BatchResponseDeserializer {
    */
   deserializeBatchResponse(
     parsedBatchResponse: (ResponseData[] | ResponseData)[]
-  ): (ErrorResponse | ReadResponse | WriteResponses)[] {
+  ): (
+    | ErrorResponse
+    | ReadResponse<DeSerializersT>
+    | WriteResponses<DeSerializersT>
+  )[] {
     return parsedBatchResponse.map(responseData => {
       if (Array.isArray(responseData)) {
         return this.deserializeChangeSet(responseData);
@@ -55,10 +60,10 @@ export class BatchResponseDeserializer {
 
   private deserializeRetrieveResponse(
     responseData: ResponseData
-  ): ReadResponse {
+  ): ReadResponse<DeSerializersT> {
     return {
       ...responseData,
-      type: this.getConstructor(responseData.body)!,
+      type: this.getApi(responseData.body)!,
       as: asReadResponse(
         responseData.body,
         this.responseDataAccessor,
@@ -74,10 +79,10 @@ export class BatchResponseDeserializer {
 
   private deserializeChangeSetSubResponse(
     responseData: ResponseData
-  ): WriteResponse {
+  ): WriteResponse<DeSerializersT> {
     return {
       ...responseData,
-      type: this.getConstructor(responseData.body),
+      type: this.getApi(responseData.body),
       as: asWriteResponse(
         responseData.body,
         this.responseDataAccessor,
@@ -86,7 +91,9 @@ export class BatchResponseDeserializer {
     };
   }
 
-  private deserializeChangeSet(changesetData: ResponseData[]): WriteResponses {
+  private deserializeChangeSet(
+    changesetData: ResponseData[]
+  ): WriteResponses<DeSerializersT> {
     return {
       responses: changesetData.map(subResponseData =>
         this.deserializeChangeSetSubResponse(subResponseData)
@@ -100,9 +107,9 @@ export class BatchResponseDeserializer {
    * @param responseBody - The body of a single response as an object.
    * @returns The constructor if found in the mapping, `undefined` otherwise.
    */
-  private getConstructor(
+  private getApi(
     responseBody: Record<string, any>
-  ): Constructable<EntityBase> | undefined {
+  ): EntityApi<EntityBase, DeSerializersT> | undefined {
     const entityJson = this.responseDataAccessor.isCollectionResult(
       responseBody
     )
@@ -111,9 +118,7 @@ export class BatchResponseDeserializer {
 
     const entityUri = entityJson?.__metadata?.uri;
     if (entityUri) {
-      return this.entityToConstructorMap[
-        parseEntityNameFromMetadataUri(entityUri)
-      ];
+      return this.entityToApi[parseEntityNameFromMetadataUri(entityUri)];
     }
 
     logger.warn('Could not parse constructor from response body.');
@@ -123,20 +128,24 @@ export class BatchResponseDeserializer {
 /**
  * Deserialize the parsed batch response.
  * @param parsedBatchResponse - Two dimensional list of parsed batch sub responses.
- * @param entityToConstructorMap - A map that holds the entity type to constructor mapping.
+ * @param entityToApi - A map that holds the entity type to constructor mapping.
  * @param responseDataAccessor - Response data access module.
  * @param deserializer - Entity deserializer.
  * @returns An array of parsed sub responses of the batch response.
  * @internal
  */
-export function deserializeBatchResponse(
+export function deserializeBatchResponse<DeSerializersT extends DeSerializers>(
   parsedBatchResponse: (ResponseData[] | ResponseData)[],
-  entityToConstructorMap: Record<string, Constructable<EntityBase>>,
+  entityToApi: Record<string, EntityApi<EntityBase, DeSerializersT>>,
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
-): (ErrorResponse | ReadResponse | WriteResponses)[] {
+): (
+  | ErrorResponse
+  | ReadResponse<DeSerializersT>
+  | WriteResponses<DeSerializersT>
+)[] {
   return new BatchResponseDeserializer(
-    entityToConstructorMap,
+    entityToApi,
     responseDataAccessor,
     deserializer
   ).deserializeBatchResponse(parsedBatchResponse);
@@ -154,8 +163,9 @@ function asReadResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <EntityT extends EntityBase>(
-    constructor: Constructable<EntityT>
+  return <EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
+    // constructor: Constructable<EntityT>
+    entityApi: EntityApi<EntityT, DeSerializersT>
   ): EntityT[] => {
     if (body.error) {
       throw new ErrorWithCause('Could not parse read response.', body.error);
@@ -163,12 +173,12 @@ function asReadResponse(
     if (responseDataAccessor.isCollectionResult(body)) {
       return responseDataAccessor
         .getCollectionResult(body)
-        .map(r => deserializer.deserializeEntity(r, constructor));
+        .map(r => deserializer.deserializeEntity(r, entityApi));
     }
     return [
       deserializer.deserializeEntity(
         responseDataAccessor.getSingleResult(body),
-        constructor
+        entityApi
       )
     ];
   };
@@ -186,10 +196,12 @@ function asWriteResponse(
   responseDataAccessor: ResponseDataAccessor,
   deserializer: EntityDeserializer
 ) {
-  return <EntityT extends EntityBase>(constructor: Constructable<EntityT>) =>
+  return <EntityT extends EntityBase, DeSerializersT extends DeSerializers>(
+    entityApi: EntityApi<EntityT, DeSerializersT>
+  ) =>
     deserializer.deserializeEntity(
       responseDataAccessor.getSingleResult(body),
-      constructor
+      entityApi
     );
 }
 

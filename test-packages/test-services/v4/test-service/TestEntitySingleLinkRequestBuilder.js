@@ -19,19 +19,16 @@ class TestEntitySingleLinkRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `TestEntitySingleLink` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new odata_v4_1.GetByKeyRequestBuilder(
-      TestEntitySingleLink_1.TestEntitySingleLink,
-      { KeyProperty: keyProperty }
-    );
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+      KeyProperty: keyProperty
+    });
   }
   /**
    * Returns a request builder for querying all `TestEntitySingleLink` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntitySingleLink` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(
-      TestEntitySingleLink_1.TestEntitySingleLink
-    );
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `TestEntitySingleLink` entity.
@@ -39,10 +36,7 @@ class TestEntitySingleLinkRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntitySingleLink`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(
-      TestEntitySingleLink_1.TestEntitySingleLink,
-      entity
-    );
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntitySingleLink`.
@@ -50,14 +44,11 @@ class TestEntitySingleLinkRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntitySingleLink`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(
-      TestEntitySingleLink_1.TestEntitySingleLink,
-      entity
-    );
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyOrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      TestEntitySingleLink_1.TestEntitySingleLink,
+      this.entityApi,
       keyPropertyOrEntity instanceof TestEntitySingleLink_1.TestEntitySingleLink
         ? keyPropertyOrEntity
         : { KeyProperty: keyPropertyOrEntity }

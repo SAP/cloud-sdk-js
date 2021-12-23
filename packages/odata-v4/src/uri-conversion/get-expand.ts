@@ -1,13 +1,14 @@
 import {
   Expandable,
   OneToManyLink,
-  Constructable,
   AllFields,
   Link,
   and,
   createGetFilter,
-  getOrderBy
+  getOrderBy,
+  EntityApi
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers } from '../de-serializers';
 import { Entity } from '../entity';
 import { getSelect } from './get-select';
 import { uriConverter } from './uri-value-converter';
@@ -17,29 +18,35 @@ function prependDollar(param: string): string {
 }
 
 /**
- * Get an object containing the given expand as a query parameter, or an empty object if none was given.
- * @typeparam EntityT - Type of the entity to expand on
- * @param expands - The expands to transform to a query parameter
- * @param entityConstructor - Constructor type of the entity to expand on
- * @returns An object containing the query parameter or an empty object
  * @internal
+ * Get an object containing the given expand as a query parameter, or an empty object if none was given.
+ * @typeparam EntityT - Type of the entity to expand on.
+ * @param expands - The expands to transform to a query parameter.
+ * @param entityApi - Entity API of the entity to build the expand for.
+ * @returns An object containing the query parameter or an empty object/
  */
-export function getExpand<EntityT extends Entity>(
-  expands: Expandable<EntityT>[] = [],
-  entityConstructor: Constructable<EntityT>
+export function getExpand<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  expands: Expandable<EntityT, DeSerializersT>[] = [],
+  entityApi: EntityApi<EntityT, DeSerializersT>
 ): Partial<{ expand: string }> {
   return expands.length
     ? {
         expand: expands
-          .map(expand => getExpandAsString(expand, entityConstructor))
+          .map(expand => getExpandAsString(expand, entityApi))
           .join(',')
       }
     : {};
 }
 
-function getExpandAsString<EntityT extends Entity>(
-  expand: Expandable<EntityT>,
-  entityConstructor: Constructable<EntityT>
+function getExpandAsString<
+  EntityT extends Entity,
+  DeSerializersT extends DeSerializers
+>(
+  expand: Expandable<EntityT, DeSerializersT>,
+  entityApi: EntityApi<EntityT, DeSerializersT>
 ): string {
   if (expand instanceof AllFields) {
     return '*';
@@ -51,7 +58,7 @@ function getExpandAsString<EntityT extends Entity>(
     params = {
       ...params,
       ...getSelect(expand._selects),
-      ...getExpand(expand._expand, expand._linkedEntity)
+      ...getExpand(expand._expand, expand._linkedEntityApi)
     };
 
     if (expand instanceof OneToManyLink) {
@@ -59,7 +66,7 @@ function getExpandAsString<EntityT extends Entity>(
         ...params,
         ...createGetFilter(uriConverter).getFilter(
           and(expand._filters?.filters || []),
-          entityConstructor
+          entityApi
         ),
         ...(expand._skip && { skip: expand._skip }),
         ...(expand._top && { top: expand._top }),

@@ -16,6 +16,9 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
     statements: [
       ...service.entities.map(entity => exportStatement(entity.className)),
       ...service.entities.map(entity =>
+        exportStatement(`${entity.className}Api`)
+      ),
+      ...service.entities.map(entity =>
         exportStatement(`${entity.className}RequestBuilder`)
       ),
       ...service.complexTypes.map(complexType =>
@@ -28,7 +31,8 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
       ...(service.actionsImports && service.actionsImports.length
         ? [exportStatement('action-imports')]
         : []),
-      ...(hasEntities(service) ? [exportStatement('BatchRequest')] : [])
+      ...(hasEntities(service) ? [exportStatement('BatchRequest')] : []),
+      exportStatement('service')
     ]
   };
 }

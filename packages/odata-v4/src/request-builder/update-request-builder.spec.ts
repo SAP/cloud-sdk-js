@@ -1,22 +1,24 @@
 import nock from 'nock';
 import { v4 as uuid } from 'uuid';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
   mockUpdateRequest
 } from '../../../../test-resources/test/test-util/request-mocker';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { uriConverter } from '../uri-conversion/uri-value-converter';
+import { defaultDeSerializers } from '../de-serializers';
+import { testEntityApi } from '../../test/test-util';
 import { UpdateRequestBuilder } from './update-request-builder';
 
-const { convertToUriFormat } = uriConverter;
+const convertToUriFormat = createUriConverter(defaultDeSerializers);
 
 function createTestEntity() {
   const keyPropGuid = uuid();
   const keyPropString = 'stringId';
   const int32Prop = 125;
 
-  return TestEntity.builder()
+  return testEntityApi
+    .entityBuilder()
     .keyPropertyGuid(keyPropGuid)
     .keyPropertyString(keyPropString)
     .int32Property(int32Prop)
@@ -45,12 +47,13 @@ describe('UpdateRequestBuilder', () => {
           convertToUriFormat
         )
       },
-      TestEntity
+      testEntityApi
     );
 
-    const actual = await new UpdateRequestBuilder(TestEntity, entity).execute(
-      defaultDestination
-    );
+    const actual = await new UpdateRequestBuilder(
+      testEntityApi,
+      entity
+    ).execute(defaultDestination);
     expect(actual).toEqual(entity.setOrInitializeRemoteState());
   });
 });

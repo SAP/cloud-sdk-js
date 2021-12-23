@@ -19,19 +19,16 @@ class MultiSchemaTestEntityRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `MultiSchemaTestEntity` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new odata_v2_1.GetByKeyRequestBuilder(
-      MultiSchemaTestEntity_1.MultiSchemaTestEntity,
-      { KeyProperty: keyProperty }
-    );
+    return new odata_v2_1.GetByKeyRequestBuilder(this.entityApi, {
+      KeyProperty: keyProperty
+    });
   }
   /**
    * Returns a request builder for querying all `MultiSchemaTestEntity` entities.
    * @returns A request builder for creating requests to retrieve all `MultiSchemaTestEntity` entities.
    */
   getAll() {
-    return new odata_v2_1.GetAllRequestBuilder(
-      MultiSchemaTestEntity_1.MultiSchemaTestEntity
-    );
+    return new odata_v2_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `MultiSchemaTestEntity` entity.
@@ -39,10 +36,7 @@ class MultiSchemaTestEntityRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `MultiSchemaTestEntity`.
    */
   create(entity) {
-    return new odata_v2_1.CreateRequestBuilder(
-      MultiSchemaTestEntity_1.MultiSchemaTestEntity,
-      entity
-    );
+    return new odata_v2_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `MultiSchemaTestEntity`.
@@ -50,14 +44,11 @@ class MultiSchemaTestEntityRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `MultiSchemaTestEntity`.
    */
   update(entity) {
-    return new odata_v2_1.UpdateRequestBuilder(
-      MultiSchemaTestEntity_1.MultiSchemaTestEntity,
-      entity
-    );
+    return new odata_v2_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyOrEntity) {
     return new odata_v2_1.DeleteRequestBuilder(
-      MultiSchemaTestEntity_1.MultiSchemaTestEntity,
+      this.entityApi,
       keyPropertyOrEntity instanceof
       MultiSchemaTestEntity_1.MultiSchemaTestEntity
         ? keyPropertyOrEntity

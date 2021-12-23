@@ -1,6 +1,5 @@
 import BigNumber from 'bignumber.js';
-import moment from 'moment';
-import { EntityBase, EntityIdentifiable, Constructable } from '../entity-base';
+import { EntityBase, Constructable } from '../entity-base';
 import { Time } from '../time';
 
 /**
@@ -76,9 +75,7 @@ export class Field<
   EntityT extends EntityBase,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> implements EntityIdentifiable<EntityT>
-{
-  readonly _entity: EntityT;
+> {
   readonly _fieldOptions: Required<FieldOptions<NullableT, SelectableT>>;
   /**
    * Creates an instance of Field.

@@ -1,7 +1,12 @@
-import { Entity } from '@sap-cloud-sdk/odata-v2';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  Entity
+} from '@sap-cloud-sdk/odata-v2';
 import {
   ComplexTypeField,
   ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
   FieldOptions,
   PropertyMetadata
@@ -9,12 +14,14 @@ import {
 /**
  * TestLvl2NestedComplexType
  */
-export interface TestLvl2NestedComplexType {
+export interface TestLvl2NestedComplexType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * String Property.
    * @nullable
    */
-  stringProperty?: string;
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 /**
  * TestLvl2NestedComplexTypeField
@@ -22,10 +29,12 @@ export interface TestLvl2NestedComplexType {
  */
 export declare class TestLvl2NestedComplexTypeField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
   EntityT,
+  DeSerializersT,
   TestLvl2NestedComplexType,
   NullableT,
   SelectableT
@@ -35,7 +44,13 @@ export declare class TestLvl2NestedComplexTypeField<
    * Representation of the [[TestLvl2NestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false>;
+  stringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  >;
   /**
    * Creates an instance of TestLvl2NestedComplexTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -44,6 +59,7 @@ export declare class TestLvl2NestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }

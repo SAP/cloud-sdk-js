@@ -6,6 +6,10 @@ export interface DeSerializers<
   BinaryT = any,
   BooleanT = any,
   ByteT = any,
+  // todo: Given that this generic type is mandatory and odata v2/v4 specific types are optional.
+  // For entity api files, we should not put unused import.
+  // So "import { Duration } from 'moment';" can be omitted when the "Edm.Duration" (v4 specific) is not used.
+  // However, even if "Edm.Decimal" is not used, the "import { BigNumber } from 'bignumber.js';" has to be provided, as it's used as default deserializer of the DecimalT (mandatory).
   DecimalT = any,
   DoubleT = any,
   FloatT = any,
@@ -32,6 +36,7 @@ export interface DeSerializers<
   'Edm.Single': DeSerializer<SingleT>;
   'Edm.String': DeSerializer<StringT>;
   'Edm.Any': DeSerializer<AnyT>;
+  // [key: string]: DeSerializer<any>;
 }
 
 /**
@@ -70,8 +75,8 @@ export interface DeSerializer<DeserializedT> {
 
 /**
  * @internal
- * Infers the deserialized type for an EDM type from the given `DeSerializers` type.
- * @typeparam DeSerializersT - Type of the `DeSerializers`.
+ * Infers the deserialized type for an EDM type from the given (de-)serializers type.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
  * @typeparam EdmT - Return type of the deserialize function for the given EDM type.
  */
 export type DeserializedType<
@@ -80,5 +85,37 @@ export type DeserializedType<
 > = EdmT extends keyof DeSerializersT
   ? DeSerializersT[EdmT] extends DeSerializer<infer DeserializedT>
     ? DeserializedT
-    : never
-  : never;
+    : any
+  : any;
+
+/**
+ * @internal
+ * Creates a function to deserialize values (from EDM to their representation in code).
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @param deSerializers - (De-)serializers object to use for deserialization of values.
+ * @returns A function that deserializes values with the given deserializers.
+ */
+export function createValueDeserializer<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT
+): <EdmT>(value: any, edmType: EdmT) => DeserializedType<DeSerializersT, EdmT> {
+  return (value, edmType) => {
+    const deserialize = deSerializers[edmType as any]?.deserialize;
+    return deserialize ? deserialize(value) : value;
+  };
+}
+
+/**
+ * @internal
+ * Creates a function to serialize values (from their representation in code to EDM).
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
+ * @param deSerializers - (De-)serializers object to use for deserialization of values.
+ * @returns A function that serializes values with the given serializers.
+ */
+export function createValueSerializer<DeSerializersT extends DeSerializers>(
+  deSerializers: DeSerializersT
+): <EdmT>(value: any, edmType: EdmT) => any {
+  return (value, edmType) => {
+    const serialize = deSerializers[edmType as any]?.serialize;
+    return serialize ? serialize(value) : value;
+  };
+}

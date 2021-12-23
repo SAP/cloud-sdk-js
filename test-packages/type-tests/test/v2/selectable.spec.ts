@@ -1,12 +1,17 @@
-import {
-  TestEntity,
-  TestEntitySingleLink
-} from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { OneToOneLink } from '@sap-cloud-sdk/odata-common/internal';
-import { Entity } from '@sap-cloud-sdk/odata-v2';
 
-// $ExpectType OneToOneLink<TestEntity, TestEntitySingleLink>
-new OneToOneLink('TestEntitySingleLink', TestEntity, TestEntitySingleLink);
+const { testEntityApi, testEntitySingleLinkApi } = testService();
 
-// $ExpectError
-new OneToOneLink('SomeWrongLink', TestEntity, Entity);
+// $ExpectType OneToOneLink<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, TestEntitySingleLink<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>>
+new OneToOneLink(
+  'TestEntitySingleLink',
+  testEntityApi,
+  testEntitySingleLinkApi
+);
+
+new OneToOneLink(
+  'SomeWrongLink',
+  testEntityApi,
+  {} // $ExpectError
+);

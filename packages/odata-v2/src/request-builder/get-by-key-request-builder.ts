@@ -1,12 +1,11 @@
 import {
-  Constructable,
+  EntityApi,
   EntityIdentifiable,
-  FieldType,
   GetByKeyRequestBuilderBase
 } from '@sap-cloud-sdk/odata-common/internal';
+import { DeSerializers, entityDeserializer } from '../de-serializers';
 import { Entity } from '../entity';
-import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
+import { createODataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 
 /**
@@ -15,26 +14,29 @@ import { responseDataAccessor } from './response-data-accessor';
  * Note that navigational properties are automatically expanded if they included in a  select.
  * @typeparam EntityT - Type of the entity to be requested
  */
-export class GetByKeyRequestBuilder<EntityT extends Entity>
-  extends GetByKeyRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT>
+export class GetByKeyRequestBuilder<
+    EntityT extends Entity,
+    DeSerializersT extends DeSerializers
+  >
+  extends GetByKeyRequestBuilderBase<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entity: EntityT;
 
   /**
    * Creates an instance of GetByKeyRequestBuilder.
-   * @param _entityConstructor - Constructor of the entity to create the request for
+   * @param entityApi - Entity API for building and executing the request.
    * @param keys - Key-value pairs where the key is the name of a key property of the given entity and the value is the respective value
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    keys: Record<string, FieldType>
+    entityApi: EntityApi<EntityT, DeSerializersT>,
+    keys: Record<string, any>
   ) {
     super(
-      _entityConstructor,
+      entityApi,
       keys,
-      oDataUri,
-      entityDeserializer,
+      createODataUri(entityApi.deSerializers),
+      entityDeserializer(entityApi.deSerializers),
       responseDataAccessor
     );
   }

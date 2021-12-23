@@ -4,36 +4,44 @@ import {
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { Constructable, EntityIdentifiable, EntityBase } from '../entity-base';
+import {
+  Constructable,
+  EntityIdentifiable,
+  EntityBase,
+  EntityApi
+} from '../entity-base';
 import { Selectable } from '../selectable';
 import {
   ODataGetAllRequestConfig,
   ODataGetByKeyRequestConfig
 } from '../request';
+import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
  * @internal
- * @internal
  */
 export abstract class GetRequestBuilderBase<
     EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
     RequestConfigT extends
-      | ODataGetAllRequestConfig<EntityT>
-      | ODataGetByKeyRequestConfig<EntityT>
+      | ODataGetAllRequestConfig<EntityT, DeSerializersT>
+      | ODataGetByKeyRequestConfig<EntityT, DeSerializersT>
   >
   extends MethodRequestBuilder<RequestConfigT>
-  implements EntityIdentifiable<EntityT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   readonly _entity: EntityT;
+  readonly _entityConstructor: Constructable<EntityT>;
+  readonly _deSerializers: DeSerializersT;
 
   /**
    * Creates an instance of GetAllRequestBuilder.
-   * @param _entityConstructor - Constructor of the entity to create the request for.
+   * @param _entityApi - Entity API for building and executing the request.
    * @param requestConfig - Request config of the get all or get by key request.
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     requestConfig: RequestConfigT
   ) {
     super(requestConfig);
@@ -43,11 +51,14 @@ export abstract class GetRequestBuilderBase<
    * @param selects - Fields to select in the request.
    * @returns The request builder itself, to facilitate method chaining.
    */
-  select(...selects: Selectable<EntityT>[]): this;
-  select(selects: Selectable<EntityT>[]): this;
+  select(...selects: Selectable<EntityT, DeSerializersT>[]): this;
+  select(selects: Selectable<EntityT, DeSerializersT>[]): this;
   select(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
+    first:
+      | undefined
+      | Selectable<EntityT, DeSerializersT>
+      | Selectable<EntityT, DeSerializersT>[],
+    ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
     this.requestConfig.selects = variadicArgumentToArray(first, rest);
     return this;

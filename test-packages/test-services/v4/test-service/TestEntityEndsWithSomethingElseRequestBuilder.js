@@ -19,19 +19,16 @@ class TestEntityEndsWithSomethingElseRequestBuilder extends internal_1.RequestBu
    * @returns A request builder for creating requests to retrieve one `TestEntityEndsWithSomethingElse` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new odata_v4_1.GetByKeyRequestBuilder(
-      TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
-      { KeyProperty: keyProperty }
-    );
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+      KeyProperty: keyProperty
+    });
   }
   /**
    * Returns a request builder for querying all `TestEntityEndsWithSomethingElse` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityEndsWithSomethingElse` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(
-      TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse
-    );
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `TestEntityEndsWithSomethingElse` entity.
@@ -39,10 +36,7 @@ class TestEntityEndsWithSomethingElseRequestBuilder extends internal_1.RequestBu
    * @returns A request builder for creating requests that create an entity of type `TestEntityEndsWithSomethingElse`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(
-      TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
-      entity
-    );
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntityEndsWithSomethingElse`.
@@ -50,14 +44,11 @@ class TestEntityEndsWithSomethingElseRequestBuilder extends internal_1.RequestBu
    * @returns A request builder for creating requests that update an entity of type `TestEntityEndsWithSomethingElse`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(
-      TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
-      entity
-    );
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyOrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse,
+      this.entityApi,
       keyPropertyOrEntity instanceof
       TestEntityEndsWithSomethingElse_1.TestEntityEndsWithSomethingElse
         ? keyPropertyOrEntity

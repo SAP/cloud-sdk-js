@@ -3,8 +3,15 @@ import {
   StringFilterFunction,
   BooleanFilterFunction,
   filterFunction,
-  filterFunctions as filterFunctionsCommon
+  filterFunctions as filterFunctionsCommon,
+  FilterFunctionsType as FilterFunctionsCommonType,
+  Time,
+  FilterFunctionNames as FilterFunctionNamesCommon
 } from '@sap-cloud-sdk/odata-common/internal';
+import BigNumber from 'bignumber.js';
+import { DeSerializers } from './de-serializers/de-serializers';
+import { defaultDeSerializers } from './de-serializers/default-de-serializers';
+import { mergeDefaultDeSerializersWith } from './de-serializers/custom-de-serializers';
 import { Entity } from './entity';
 
 /* String Functions */
@@ -53,18 +60,78 @@ export function replace<EntityT extends Entity>(
 /**
  * Export length filter function for backwards compatibility.
  */
-export const length = filterFunctionsCommon.length;
+export const length = filterFunctionsCommon(defaultDeSerializers).length;
 
 /**
  * Export substring filter function for backwards compatibility.
  */
-export const substring = filterFunctionsCommon.substring;
+export const substring = filterFunctionsCommon(defaultDeSerializers).substring;
 
 /**
  * OData v2 specific filter functions
+ * @param deSerializers - DeSerializer used in the filter
+ * @returns Filter functions object
  */
-export const filterFunctions = {
-  ...filterFunctionsCommon,
-  substringOf,
-  replace
+export function filterFunctions<
+  BinaryT = string,
+  BooleanT = boolean,
+  ByteT = number,
+  DecimalT = BigNumber,
+  DoubleT = number,
+  FloatT = number,
+  Int16T = number,
+  Int32T = number,
+  Int64T = BigNumber,
+  GuidT = string,
+  SByteT = number,
+  SingleT = number,
+  StringT = string,
+  AnyT = any,
+  DateTimeT = moment.Moment,
+  DateTimeOffsetT = moment.Moment,
+  TimeT = Time
+>(
+  deSerializers: Partial<
+    DeSerializers<
+      BinaryT,
+      BooleanT,
+      ByteT,
+      DecimalT,
+      DoubleT,
+      FloatT,
+      Int16T,
+      Int32T,
+      Int64T,
+      GuidT,
+      SByteT,
+      SingleT,
+      StringT,
+      AnyT,
+      DateTimeT,
+      DateTimeOffsetT,
+      TimeT
+    >
+  > = defaultDeSerializers as any
+): FilterFunctionsType {
+  return {
+    ...filterFunctionsCommon(mergeDefaultDeSerializersWith(deSerializers)),
+    substringOf,
+    replace
+  };
+}
+
+/**
+ * @internal
+ */
+export type FilterFunctionsType = FilterFunctionsCommonType & {
+  substringOf: typeof substringOf;
+  replace: typeof replace;
 };
+
+/**
+ * @internal
+ */
+export type FilterFunctionNames =
+  | FilterFunctionNamesCommon
+  | 'substringOf'
+  | 'replace';

@@ -1,11 +1,12 @@
 import { ErrorWithCause, variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import { Constructable, EntityBase, EntityIdentifiable } from '../entity-base';
+import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 import { extractEtagFromHeader } from '../entity-deserializer';
 import { EntitySerializer } from '../entity-serializer';
 import { ODataUpdateRequestConfig, ODataRequest } from '../request';
 import { ODataUri } from '../uri-conversion';
 import { Selectable } from '../selectable';
+import { DeSerializers } from '../de-serializers';
 import { MethodRequestBuilder } from './request-builder-base';
 
 /**
@@ -13,26 +14,32 @@ import { MethodRequestBuilder } from './request-builder-base';
  * @typeparam EntityT - Type of the entity to be updated
  * @internal
  */
-export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
-  extends MethodRequestBuilder<ODataUpdateRequestConfig<EntityT>>
-  implements EntityIdentifiable<EntityT>
+export abstract class UpdateRequestBuilderBase<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
+  extends MethodRequestBuilder<
+    ODataUpdateRequestConfig<EntityT, DeSerializersT>
+  >
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
+  readonly _deSerializers: DeSerializersT;
   private ignored: Set<string>;
   private required: Set<string>;
 
   /**
    * Creates an instance of UpdateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be updated
+   * @param _entityApi - Entity API for building and executing the request.
    * @param _entity - Entity to be updated
-   * @param oDataUri - Collection of URI conversion methods
+   * @param oDataUri - URI conversion functions.
    * @param entitySerializer - Entity serializer
    * @param extractODataEtag - Extractor for ETag from payload
    * @param payloadManipulator - Manipulator for the payload.
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT,
-    readonly oDataUri: ODataUri,
+    readonly oDataUri: ODataUri<DeSerializersT>,
     readonly entitySerializer: EntitySerializer,
     readonly extractODataEtag: (
       json: Record<string, any>
@@ -41,14 +48,14 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
       body: Record<string, any>
     ) => Record<string, any>
   ) {
-    super(new ODataUpdateRequestConfig(_entityConstructor, oDataUri));
+    super(new ODataUpdateRequestConfig(_entityApi, oDataUri));
     this.requestConfig.eTag = _entity.versionIdentifier;
     this.required = new Set<string>();
     this.ignored = new Set<string>();
 
     this.requestConfig.keys = this.oDataUri.getEntityKeys(
       this._entity,
-      this._entityConstructor
+      this._entityApi
     );
 
     this.requestConfig.payload = this.getPayload();
@@ -73,11 +80,14 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    * @param fields - Enumeration of the fields to be required.
    * @returns The entity itself, to facilitate method chaining.
    */
-  setRequiredFields(...fields: Selectable<EntityT>[]): this;
-  setRequiredFields(fields: Selectable<EntityT>[]): this;
+  setRequiredFields(...fields: Selectable<EntityT, DeSerializersT>[]): this;
+  setRequiredFields(fields: Selectable<EntityT, DeSerializersT>[]): this;
   setRequiredFields(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
+    first:
+      | undefined
+      | Selectable<EntityT, DeSerializersT>
+      | Selectable<EntityT, DeSerializersT>[],
+    ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
     this.required = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
@@ -89,11 +99,14 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    * @param fields - Enumeration of the fields to be ignored.
    * @returns The entity itself, to facilitate method chaining.
    */
-  setIgnoredFields(...fields: Selectable<EntityT>[]): this;
-  setIgnoredFields(fields: Selectable<EntityT>[]): this;
+  setIgnoredFields(...fields: Selectable<EntityT, DeSerializersT>[]): this;
+  setIgnoredFields(fields: Selectable<EntityT, DeSerializersT>[]): this;
   setIgnoredFields(
-    first: undefined | Selectable<EntityT> | Selectable<EntityT>[],
-    ...rest: Selectable<EntityT>[]
+    first:
+      | undefined
+      | Selectable<EntityT, DeSerializersT>
+      | Selectable<EntityT, DeSerializersT>[],
+    ...rest: Selectable<EntityT, DeSerializersT>[]
   ): this {
     this.ignored = this.toSet(variadicArgumentToArray(first, rest));
     this.requestConfig.payload = this.getPayload();
@@ -125,7 +138,7 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
    * @returns A promise resolving to the entity once it was updated.
    */
   protected async executeRequest(
-    request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
+    request: ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>>
   ): Promise<EntityT> {
     return (
       this.executeRequestRaw(request)
@@ -146,7 +159,7 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
   }
 
   protected async executeRequestRaw(
-    request: ODataRequest<ODataUpdateRequestConfig<EntityT>>
+    request: ODataRequest<ODataUpdateRequestConfig<EntityT, DeSerializersT>>
   ): Promise<HttpResponse> {
     return request.execute();
   }
@@ -154,7 +167,7 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
   protected getPayload(): Record<string, any> {
     const serializedBody = this.entitySerializer.serializeEntity(
       this._entity,
-      this._entityConstructor
+      this._entityApi
     );
 
     if (this.requestConfig.method === 'patch') {
@@ -190,22 +203,21 @@ export abstract class UpdateRequestBuilderBase<EntityT extends EntityBase>
   }
 
   private getKeyFieldNames(): string[] {
-    return Object.keys(this._entityConstructor._keys);
+    return this._entityApi.entityConstructor._keys;
   }
 
-  private toSet(fields: Selectable<EntityT>[]) {
-    const set = new Set<string>();
-    Object.values(fields).forEach(field => {
-      set.add(field._fieldName);
-    });
-    return set;
+  private toSet(fields: Selectable<EntityT, DeSerializersT>[]): Set<string> {
+    const fieldNames = Object.values(fields).map(
+      ({ _fieldName }) => _fieldName
+    );
+    return new Set(fieldNames);
   }
 
   private serializedDiff(): Record<string, any> {
     return {
       ...this.entitySerializer.serializeEntity(
         this._entity,
-        this._entityConstructor,
+        this._entityApi,
         true
       )
     };

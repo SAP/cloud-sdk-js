@@ -1,11 +1,6 @@
+import { DeSerializers } from '../de-serializers';
 import { EdmTypeShared } from '../edm-types';
-import {
-  Constructable,
-  EntityBase,
-  EntityIdentifiable,
-  ODataVersionOf
-} from '../entity-base';
-import { FieldType } from '../selectable';
+import { EntityBase, EntityIdentifiable, ODataVersionOf } from '../entity-base';
 import type { FilterFunction } from './filter-function-base';
 import type { Filterable } from './filterable';
 
@@ -22,12 +17,11 @@ export type FilterOperator =
 /**
  * @internal
  */
-export type FilterOperatorByType<FieldT extends FieldType> =
-  FieldT extends string
-    ? FilterOperatorString
-    : FieldT extends number
-    ? FilterOperatorNumber
-    : FilterOperatorBoolean;
+export type FilterOperatorByType<FieldT> = FieldT extends string
+  ? FilterOperatorString
+  : FieldT extends number
+  ? FilterOperatorNumber
+  : FilterOperatorBoolean;
 
 /**
  * Represents a filter expression to narrow the data on a [[GetAllRequestBuilder]] request for multiple entities that match the specified criteria.
@@ -43,21 +37,17 @@ export type FilterOperatorByType<FieldT extends FieldType> =
 // TODO 2.0 rename to BinaryFilter
 export class Filter<
   EntityT extends EntityBase,
-  FieldT extends FieldType | FieldType[]
-> implements EntityIdentifiable<EntityT>
+  DeSerializersT extends DeSerializers,
+  FieldT
+> implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  /**
-   * Constructor type of the entity to be filtered.
-   */
-  readonly _entityConstructor: Constructable<EntityT>;
   /**
    * Entity type of the entity tp be filtered.
    */
   readonly _entity: EntityT;
 
-  // TODO: change the constructor to the following:
-  // Constructor(public field: string | Field<EntityT>, public operator: FilterOperator, public value: FieldT) {}
-  // And deprecate passing a string as the field is needed later on
+  readonly _deSerializers: DeSerializersT;
+
   /**
    * Creates an instance of Filter.
    * @param field - Name of the field of the entity to be filtered on or a filter function
@@ -65,7 +55,6 @@ export class Filter<
    * @param value - Value to be used by the operator
    * @param edmType - EDM type of the field to filter on, needed for custom fields
    */
-
   constructor(
     public field: string | FilterFunction<EntityT, FieldT>,
     public operator: FilterOperator,
@@ -75,14 +64,18 @@ export class Filter<
 }
 
 /**
- * Typeguard for the Filter class.
- * @param filterable - Object to be checked
- * @returns boolean
+ * Type guard for the `Filter` class.
+ * @param filterable - Object to be checked.
+ * @returns Whether the given object is of type `Filter`.
  * @internal
  */
-export function isFilter<T extends EntityBase, FieldT extends FieldType>(
-  filterable: Filterable<T>
-): filterable is Filter<T, FieldT> {
+export function isFilter<
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
+  FieldT
+>(
+  filterable: Filterable<EntityT, DeSerializersT>
+): filterable is Filter<EntityT, DeSerializersT, FieldT> {
   return (
     typeof filterable['field'] !== 'undefined' &&
     typeof filterable['operator'] !== 'undefined' &&

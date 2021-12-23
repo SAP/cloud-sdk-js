@@ -1,9 +1,9 @@
+import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import BigNumber from 'bignumber.js';
 import moment = require('moment');
-import { edmToTs } from '../de-serializers';
-import { uriConverter } from './uri-value-converter';
+import { defaultDeSerializers, edmToTs } from '../de-serializers';
 
-const { convertToUriFormat } = uriConverter;
+const convertToUriFormat = createUriConverter(defaultDeSerializers);
 
 describe('convertToUriFormat', () => {
   it('Edm.Binary', () => {
@@ -70,7 +70,7 @@ describe('convertToUriFormat', () => {
     ).toBe("datetime'2019-03-11T11:39:42.000'");
     expect(
       convertToUriFormat(
-        edmToTs('/Date(1552304382000)/', 'Edm.DateTime'),
+        edmToTs('/Date(1552304382000)/', 'Edm.DateTime', defaultDeSerializers),
         'Edm.DateTime'
       )
     ).toBe("datetime'2019-03-11T11:39:42.000'");
@@ -82,7 +82,11 @@ describe('convertToUriFormat', () => {
     ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");
     expect(
       convertToUriFormat(
-        edmToTs('/Date(1552304382000+0000)/', 'Edm.DateTimeOffset'),
+        edmToTs(
+          '/Date(1552304382000+0000)/',
+          'Edm.DateTimeOffset',
+          defaultDeSerializers
+        ),
         'Edm.DateTimeOffset'
       )
     ).toBe("datetimeoffset'2019-03-11T11:39:42.000Z'");

@@ -1,60 +1,63 @@
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import { testService } from '@sap-cloud-sdk/test-services/v2/test-service';
 import { and, asc, desc, or } from '@sap-cloud-sdk/odata-common/internal';
 
-// $ExpectType TestComplexTypeField<TestEntity, true, true>
-TestEntity.COMPLEX_TYPE_PROPERTY;
+const { testEntityApi } = testService();
+const testEntitySchema = testEntityApi.schema;
 
-// $ExpectType EdmTypeField<TestEntity, "Edm.String", false, false>
-TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty;
+// $ExpectType TestComplexTypeField<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, true, true>
+testEntitySchema.COMPLEX_TYPE_PROPERTY;
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
-const getAllTSE = TestEntity.requestBuilder().getAll();
+// $ExpectType EdmTypeField<TestEntity<DeSerializers<any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>, "Edm.String", false, false>
+testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty;
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
-getAllTSE.select(TestEntity.COMPLEX_TYPE_PROPERTY);
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+const getAllTSE = testEntityApi.requestBuilder().getAll();
+
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+getAllTSE.select(testEntitySchema.COMPLEX_TYPE_PROPERTY);
 
 // $ExpectError
-getAllTSE.select(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty);
+getAllTSE.select(testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty);
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 getAllTSE.filter(
-  TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test')
+  testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test')
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 getAllTSE.filter(
-  TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
-  TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
+  testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
+  testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 getAllTSE.filter(
   and(
-    TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
-    TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
+    testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
+    testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 getAllTSE.filter(
   or(
-    TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
-    TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
+    testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.equals('test'),
+    testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty.notEquals('test')
   )
 );
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
-getAllTSE.orderBy(asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty));
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+getAllTSE.orderBy(asc(testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty));
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
-getAllTSE.orderBy(desc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty));
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
+getAllTSE.orderBy(desc(testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty));
 
-// $ExpectType GetAllRequestBuilder<TestEntity>
+// $ExpectType GetAllRequestBuilder<TestEntity<DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>, DeSerializers<string, boolean, number, BigNumber, number, number, number, number, BigNumber, string, number, number, string, any, Moment, Moment, Time>>
 getAllTSE.orderBy(
-  asc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty),
-  desc(TestEntity.COMPLEX_TYPE_PROPERTY.stringProperty)
+  asc(testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty),
+  desc(testEntitySchema.COMPLEX_TYPE_PROPERTY.stringProperty)
 );
 
 getAllTSE.orderBy(
-  asc(TestEntity.COMPLEX_TYPE_PROPERTY) // $ExpectError
+  asc(testEntitySchema.COMPLEX_TYPE_PROPERTY) // $ExpectError
 );

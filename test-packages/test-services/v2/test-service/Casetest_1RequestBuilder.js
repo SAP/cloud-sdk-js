@@ -19,7 +19,7 @@ class Casetest_1RequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
    */
   getByKey(keyPropertyString) {
-    return new odata_v2_1.GetByKeyRequestBuilder(Casetest_1_1.Casetest_1, {
+    return new odata_v2_1.GetByKeyRequestBuilder(this.entityApi, {
       KeyPropertyString: keyPropertyString
     });
   }
@@ -28,7 +28,7 @@ class Casetest_1RequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `Casetest_1` entities.
    */
   getAll() {
-    return new odata_v2_1.GetAllRequestBuilder(Casetest_1_1.Casetest_1);
+    return new odata_v2_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `Casetest_1` entity.
@@ -36,7 +36,7 @@ class Casetest_1RequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `Casetest_1`.
    */
   create(entity) {
-    return new odata_v2_1.CreateRequestBuilder(Casetest_1_1.Casetest_1, entity);
+    return new odata_v2_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `Casetest_1`.
@@ -44,11 +44,11 @@ class Casetest_1RequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `Casetest_1`.
    */
   update(entity) {
-    return new odata_v2_1.UpdateRequestBuilder(Casetest_1_1.Casetest_1, entity);
+    return new odata_v2_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyStringOrEntity) {
     return new odata_v2_1.DeleteRequestBuilder(
-      Casetest_1_1.Casetest_1,
+      this.entityApi,
       keyPropertyStringOrEntity instanceof Casetest_1_1.Casetest_1
         ? keyPropertyStringOrEntity
         : { KeyPropertyString: keyPropertyStringOrEntity }

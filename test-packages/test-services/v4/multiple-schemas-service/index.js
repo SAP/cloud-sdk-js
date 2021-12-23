@@ -32,6 +32,10 @@ __exportStar(require('./TestEntity1'), exports);
 __exportStar(require('./TestEntity2'), exports);
 __exportStar(require('./TestEntity3'), exports);
 __exportStar(require('./TestEntity4'), exports);
+__exportStar(require('./TestEntity1Api'), exports);
+__exportStar(require('./TestEntity2Api'), exports);
+__exportStar(require('./TestEntity3Api'), exports);
+__exportStar(require('./TestEntity4Api'), exports);
 __exportStar(require('./TestEntity1RequestBuilder'), exports);
 __exportStar(require('./TestEntity2RequestBuilder'), exports);
 __exportStar(require('./TestEntity3RequestBuilder'), exports);
@@ -43,4 +47,5 @@ __exportStar(require('./TestEnumType2'), exports);
 __exportStar(require('./function-imports'), exports);
 __exportStar(require('./action-imports'), exports);
 __exportStar(require('./BatchRequest'), exports);
+__exportStar(require('./service'), exports);
 //# sourceMappingURL=index.js.map

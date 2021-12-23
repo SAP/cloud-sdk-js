@@ -1,5 +1,6 @@
 import { EntityBase } from '../entity-base';
 import { EdmTypeShared } from '../edm-types';
+import { DeSerializers } from '../de-serializers';
 import { Field, FieldOptions } from './field';
 import { ConstructorOrField } from './constructor-or-field';
 import { ComplexTypeField, getEntityConstructor } from './complex-type-field';
@@ -8,6 +9,7 @@ import { ComplexTypeNamespace } from './complex-type-namespace';
 /**
  * Represents a field of an entity or a complex type, that can have a collection as value.
  * @typeparam EntityT - Type of the entity the field belongs to.
+ * @typeparam DeSerializersT - Type of the (de-)serializers.
  * @typeparam CollectionFieldT - Type of of elements of the collection. This can either be an EDM type or complex type.
  * @typeparam NullableT - Boolean type that represents whether the field is nullable.
  * @typeparam SelectableT - Boolean type that represents whether the field is selectable.
@@ -15,10 +17,12 @@ import { ComplexTypeNamespace } from './complex-type-namespace';
  */
 export class CollectionField<
   EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers,
   CollectionFieldT extends EdmTypeShared<'any'> | Record<string, any> = any,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends Field<EntityT, NullableT, SelectableT> {
+  readonly _deSerializers: DeSerializersT;
   /**
    * Creates an instance of CollectionField.
    * @param fieldName - Actual name of the field used in the OData request.

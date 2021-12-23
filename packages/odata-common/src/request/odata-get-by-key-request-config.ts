@@ -1,7 +1,8 @@
-import { EntityBase, Constructable } from '../entity-base';
+import { EntityBase, EntityApi } from '../entity-base';
 import { Expandable } from '../expandable';
-import { Selectable, FieldType } from '../selectable';
+import { Selectable } from '../selectable';
 import { ODataUri } from '../uri-conversion';
+import { DeSerializers } from '../de-serializers';
 import { WithKeys, WithSelection } from './odata-request-traits';
 import { ODataRequestConfig } from './odata-request-config';
 
@@ -10,41 +11,38 @@ import { ODataRequestConfig } from './odata-request-config';
  * @typeparam EntityT - Type of the entity to setup a request for
  * @internal
  */
-export class ODataGetByKeyRequestConfig<EntityT extends EntityBase>
+export class ODataGetByKeyRequestConfig<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >
   extends ODataRequestConfig
-  implements WithKeys, WithSelection<EntityT>
+  implements WithKeys, WithSelection<EntityT, DeSerializersT>
 {
-  keys: Record<string, FieldType>;
-  selects: Selectable<EntityT>[] = [];
-  expands: Expandable<EntityT>[];
+  keys: Record<string, any>;
+  selects: Selectable<EntityT, DeSerializersT>[] = [];
+  expands: Expandable<EntityT, DeSerializersT>[];
 
   /**
    * Creates an instance of ODataGetByKeyRequestConfig.
-   * @param entityConstructor - Constructor type of the entity to create a configuration for
+   * @param entityApi - Entity API for building and executing the request.
+   * @param oDataUri - URI conversion functions.
    */
   constructor(
-    readonly entityConstructor: Constructable<EntityT>,
-    private oDataUri: ODataUri
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
+    private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('get', entityConstructor._defaultServicePath);
+    super('get', entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
-    return this.oDataUri.getResourcePathForKeys(
-      this.keys,
-      this.entityConstructor
-    );
+    return this.oDataUri.getResourcePathForKeys(this.keys, this.entityApi);
   }
 
   queryParameters(): Record<string, any> {
     return this.prependDollarToQueryParameters({
       format: 'json',
       ...this.oDataUri.getSelect(this.selects),
-      ...this.oDataUri.getExpand(
-        this.selects,
-        this.expands,
-        this.entityConstructor
-      )
+      ...this.oDataUri.getExpand(this.selects, this.expands, this.entityApi)
     });
   }
 }

@@ -1,11 +1,12 @@
 import { asc, ODataGetAllRequestConfig } from '../internal';
-import { CommonEntity } from '../../test/common-entity';
+import { CommonEntity, commonEntityApi } from '../../test/common-entity';
 import { commonODataUri } from '../../test/common-request-config';
+import { DefaultDeSerializers } from '../de-serializers';
 
 describe('ODataGetAllRequestConfig', () => {
-  let config: ODataGetAllRequestConfig<CommonEntity>;
+  let config: ODataGetAllRequestConfig<CommonEntity, DefaultDeSerializers>;
   beforeEach(() => {
-    config = new ODataGetAllRequestConfig(CommonEntity, commonODataUri);
+    config = new ODataGetAllRequestConfig(commonEntityApi, commonODataUri);
   });
 
   it('method is get', () => {
@@ -40,14 +41,14 @@ describe('ODataGetAllRequestConfig', () => {
 
   it('has selection if set', () => {
     config.selects = [
-      CommonEntity.KEY_PROPERTY_GUID,
-      CommonEntity.STRING_PROPERTY
+      commonEntityApi.schema.KEY_PROPERTY_GUID,
+      commonEntityApi.schema.STRING_PROPERTY
     ];
     expect(Object.keys(config.queryParameters())).toContain('$select');
   });
 
   it('select all fields', () => {
-    config.selects = [CommonEntity.ALL_FIELDS];
+    config.selects = [commonEntityApi.schema.ALL_FIELDS];
     expect(Object.keys(config.queryParameters())).toContain('$select');
   });
 
@@ -56,7 +57,7 @@ describe('ODataGetAllRequestConfig', () => {
   });
 
   it('has filters if set', () => {
-    config.filter = CommonEntity.STRING_PROPERTY.equals('test');
+    config.filter = commonEntityApi.schema.STRING_PROPERTY.equals('test');
     expect(Object.keys(config.queryParameters())).toContain('$filter');
   });
 
@@ -65,7 +66,7 @@ describe('ODataGetAllRequestConfig', () => {
   });
 
   it('has orderby if set', () => {
-    config.orderBy = [asc(CommonEntity.INT_16_PROPERTY)];
+    config.orderBy = [asc(commonEntityApi.schema.INT_16_PROPERTY)];
     expect(Object.keys(config.queryParameters())).toContain('$orderby');
   });
 

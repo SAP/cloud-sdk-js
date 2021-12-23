@@ -3,26 +3,35 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
+  DefaultDeSerializers,
+  DeSerializers,
+  Entity
+} from '@sap-cloud-sdk/odata-v4';
+import {
+  CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
+  EnumField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
+  OrderableEdmTypeField,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * TestComplexBaseType
  */
-export interface TestComplexBaseType {
+export interface TestComplexBaseType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Base String Property.
    * @nullable
    */
-  baseStringProperty?: string;
+  baseStringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 
 /**
@@ -31,25 +40,35 @@ export interface TestComplexBaseType {
  */
 export class TestComplexBaseTypeField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
   EntityT,
+  DeSerializersT,
   TestComplexBaseType,
   NullableT,
   SelectableT
 > {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[TestComplexBaseType.baseStringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  baseStringProperty: EdmTypeField<EntityT, 'Edm.String', true, false> =
-    this._fieldBuilder.buildEdmTypeField(
-      'BaseStringProperty',
-      'Edm.String',
-      true
-    );
+  baseStringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'BaseStringProperty',
+    'Edm.String',
+    true
+  );
 
   /**
    * Creates an instance of TestComplexBaseTypeField.
@@ -59,9 +78,10 @@ export class TestComplexBaseTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, TestComplexBaseType, fieldOptions);
+    super(fieldName, fieldOf, deSerializers, TestComplexBaseType, fieldOptions);
   }
 }
 

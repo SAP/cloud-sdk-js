@@ -1,30 +1,36 @@
-import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import {
-  Constructable,
   EntityIdentifiable,
-  Filterable,
   GetAllRequestBuilderBase,
-  and,
-  ODataGetAllRequestConfig
+  ODataGetAllRequestConfig,
+  Filterable,
+  EntityApi,
+  and
 } from '@sap-cloud-sdk/odata-common/internal';
+import { variadicArgumentToArray } from '@sap-cloud-sdk/util';
 import { Entity } from '../entity';
-import { entityDeserializer } from '../entity-deserializer';
-import { oDataUri } from '../uri-conversion';
+import { DeSerializers, entityDeserializer } from '../de-serializers';
+import { createODataUri } from '../uri-conversion';
 import { responseDataAccessor } from './response-data-accessor';
 
-export class GetAllRequestBuilder<EntityT extends Entity>
-  extends GetAllRequestBuilderBase<EntityT>
-  implements EntityIdentifiable<EntityT>
+export class GetAllRequestBuilder<
+    EntityT extends Entity,
+    DeSerializersT extends DeSerializers
+  >
+  extends GetAllRequestBuilderBase<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
 {
   /**
    * Creates an instance of GetAllRequestBuilder.
-   * @param entityConstructor - Constructor of the entity to create the request for
+   * @param entityApi - Entity API for building and executing the request.
    */
-  constructor(entityConstructor: Constructable<EntityT>) {
+  constructor(entityApi: EntityApi<EntityT, DeSerializersT>) {
     super(
-      entityConstructor,
-      new ODataGetAllRequestConfig<EntityT>(entityConstructor, oDataUri),
-      entityDeserializer,
+      entityApi,
+      new ODataGetAllRequestConfig(
+        entityApi,
+        createODataUri(entityApi.deSerializers)
+      ),
+      entityDeserializer(entityApi.deSerializers),
       responseDataAccessor
     );
   }
@@ -34,11 +40,14 @@ export class GetAllRequestBuilder<EntityT extends Entity>
    * @param expressions - Filter expressions to restrict the response
    * @returns The request builder itself, to facilitate method chaining
    */
-  filter(expressions: Filterable<EntityT>[]): this;
-  filter(...expressions: Filterable<EntityT>[]): this;
+  filter(expressions: Filterable<EntityT, DeSerializersT>[]): this;
+  filter(...expressions: Filterable<EntityT, DeSerializersT>[]): this;
   filter(
-    first: undefined | Filterable<EntityT> | Filterable<EntityT>[],
-    ...rest: Filterable<EntityT>[]
+    first:
+      | undefined
+      | Filterable<EntityT, DeSerializersT>
+      | Filterable<EntityT, DeSerializersT>[],
+    ...rest: Filterable<EntityT, DeSerializersT>[]
   ): this {
     this.requestConfig.filter = and(variadicArgumentToArray(first, rest));
     return this;

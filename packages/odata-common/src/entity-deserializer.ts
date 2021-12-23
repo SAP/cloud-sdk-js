@@ -3,8 +3,9 @@ import {
   createLogger,
   pickValueIgnoreCase
 } from '@sap-cloud-sdk/util';
+import { createValueDeserializer, DeSerializers } from './de-serializers';
 import {
-  Constructable,
+  EntityApi,
   EntityBase,
   isExpandedProperty,
   isSelectedProperty
@@ -32,12 +33,13 @@ const logger = createLogger({
  * Interface representing the return type of the builder function [[entityDeserializer]]
  * @internal
  */
-export interface EntityDeserializer<EntityT extends EntityBase = any> {
-  deserializeEntity: (
+export interface EntityDeserializer {
+  deserializeEntity: <EntityT extends EntityBase = EntityBase>(
     json: any,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, any>,
     requestHeader?: any
   ) => EntityT;
+
   deserializeComplexType: (
     json: Record<string, any>,
     complexType: ComplexTypeNamespace<any>
@@ -50,33 +52,34 @@ type ExtractDataFromOneToManyLinkType = (data: any) => any[];
 /**
  * Constructs an entityDeserializer given the OData v2 or v4 specific methods.
  * The concrete deserializers are created in odata/v2/entity-deserializer.ts and odata/v4/entity-deserializer.ts
- * @param edmToTs - Converters  emd input to ts values.
+ * @param deSerializers - (De-)serializers used for transformation.
  * @param extractODataETag - Extractor for the ETag.
  * @param extractDataFromOneToManyLink - Extractor for data related to one to many links.
- * @returns a entity deserializer as defined by [[EntityDeserializer]]
+ * @returns an entity deserializer as defined by [[EntityDeserializer]]
  * @internal
  */
-export function entityDeserializer(
-  edmToTs: any, // TODO v 2.0 try to get common typing for v2 and v4 in here
+export function entityDeserializer<T extends DeSerializers>(
+  deSerializers: T,
   extractODataETag: ExtractODataETagType,
   extractDataFromOneToManyLink: ExtractDataFromOneToManyLinkType
 ): EntityDeserializer {
+  const edmToTs = createValueDeserializer(deSerializers);
   /**
    * Converts the JSON payload for a single entity into an instance of the corresponding generated entity class.
    * It sets the remote state to the data provided by the JSON payload.
    * If a version identifier is found in the '__metadata' or in the request header, the method also sets it.
    * @param json - The JSON payload.
-   * @param entityConstructor - The constructor function of the entity class.
+   * @param entityApi - Entity API to deserialize for.
    * @param requestHeader - Optional parameter which may be used to add a version identifier (ETag) to the entity
    * @returns An instance of the entity class.
    */
   function deserializeEntity<EntityT extends EntityBase, JsonT>(
     json: Partial<JsonT>,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, any>,
     requestHeader?: any
   ): EntityT {
     const etag = extractODataETag(json) || extractEtagFromHeader(requestHeader);
-    return (entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]) // type assertion for backwards compatibility, TODO: remove in v2.0
+    return Object.values(entityApi.schema)
       .filter(field => isSelectedProperty(json, field))
       .reduce((entity, staticField) => {
         entity[camelCase(staticField._fieldName)] = getFieldValue(
@@ -84,15 +87,19 @@ export function entityDeserializer(
           staticField
         );
         return entity;
-      }, new entityConstructor())
-      .setCustomFields(extractCustomFields(json, entityConstructor))
+      }, new entityApi.entityConstructor(entityApi.schema))
+      .setCustomFields(extractCustomFields(json, entityApi.schema))
       .setVersionIdentifier(etag)
       .setOrInitializeRemoteState();
   }
 
-  function getFieldValue<EntityT extends EntityBase, JsonT>(
+  function getFieldValue<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
+    JsonT
+  >(
     json: Partial<JsonT>,
-    field: Field<EntityT> | Link<EntityT>
+    field: Field<EntityT> | Link<EntityT, DeSerializersT>
   ) {
     if (field instanceof EdmTypeField) {
       return edmToTs(json[field._fieldName], field.edmType);
@@ -121,9 +128,10 @@ export function entityDeserializer(
 
   function getLinkFromJson<
     EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
     LinkedEntityT extends EntityBase,
     JsonT
-  >(json: Partial<JsonT>, link: Link<EntityT, LinkedEntityT>) {
+  >(json: Partial<JsonT>, link: Link<EntityT, DeSerializersT, LinkedEntityT>) {
     return link instanceof OneToOneLink
       ? getSingleLinkFromJson(json, link)
       : getMultiLinkFromJson(json, link);
@@ -133,38 +141,43 @@ export function entityDeserializer(
   // Not sure the purpose of the usage of null.
   function getSingleLinkFromJson<
     EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
     LinkedEntityT extends EntityBase,
     JsonT
   >(
     json: Partial<JsonT>,
-    link: Link<EntityT, LinkedEntityT>
+    link: Link<EntityT, DeSerializersT, LinkedEntityT>
   ): LinkedEntityT | null {
     if (isExpandedProperty(json, link)) {
-      return deserializeEntity(json[link._fieldName], link._linkedEntity);
+      return deserializeEntity(json[link._fieldName], link._linkedEntityApi);
     }
     return null;
   }
 
   function getMultiLinkFromJson<
     EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers,
     LinkedEntityT extends EntityBase,
     JsonT
   >(
     json: Partial<JsonT>,
-    link: Link<EntityT, LinkedEntityT>
+    link: Link<EntityT, DeSerializersT, LinkedEntityT>
   ): LinkedEntityT[] | undefined {
     if (isSelectedProperty(json, link)) {
       const results = extractDataFromOneToManyLink(json[link._fieldName]);
       return results.map(linkJson =>
-        deserializeEntity(linkJson, link._linkedEntity)
+        deserializeEntity(linkJson, link._linkedEntityApi)
       );
     }
   }
 
   // TODO: get rid of this function in v2.0
-  function deserializeComplexTypeLegacy<EntityT extends EntityBase>(
+  function deserializeComplexTypeLegacy<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >(
     json: Record<string, any>,
-    complexTypeField: ComplexTypeField<EntityT>
+    complexTypeField: ComplexTypeField<EntityT, DeSerializersT>
   ): Record<string, any> | null {
     logger.warn(
       'It seems that you are using an outdated OData client. To make this warning disappear, please regenerate your client using the latest version of the SAP Cloud SDK generator.'
@@ -262,21 +275,19 @@ export function extractEtagFromHeader(headers: any): string | undefined {
  * Extracts all custom fields from the JSON payload for a single entity.
  * In this context, a custom fields is every property that is not known in the corresponding entity class.
  * @param json - The JSON payload.
- * @param entityConstructor - The constructor function of the entity class.
+ * @param schema - TODO
  * @returns An object containing the custom fields as key-value pairs.
  * @internal
  */
-export function extractCustomFields<EntityT extends EntityBase, JsonT>(
+export function extractCustomFields<JsonT>(
   json: Partial<JsonT>,
-  entityConstructor: Constructable<EntityT>
+  schema: Record<string, any>
 ): Record<string, any> {
   const regularODataProperties = [
     '__metadata',
     '__deferred',
     // type assertion for backwards compatibility, TODO: remove in v2.0
-    ...(entityConstructor._allFields as (Field<EntityT> | Link<EntityT>)[]).map(
-      field => field._fieldName
-    )
+    ...Object.values(schema).map(field => field._fieldName)
   ];
   const regularFields = new Set<string>(regularODataProperties);
   return Object.keys(json)

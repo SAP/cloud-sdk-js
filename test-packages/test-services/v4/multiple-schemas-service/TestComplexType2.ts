@@ -3,25 +3,34 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
+  DefaultDeSerializers,
+  DeSerializers,
+  Entity
+} from '@sap-cloud-sdk/odata-v4';
+import {
+  CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
+  EnumField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
+  OrderableEdmTypeField,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * TestComplexType2
  */
-export interface TestComplexType2 {
+export interface TestComplexType2<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * String Property.
    */
-  stringProperty: string;
+  stringProperty: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 
 /**
@@ -30,16 +39,35 @@ export interface TestComplexType2 {
  */
 export class TestComplexType2Field<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, TestComplexType2, NullableT, SelectableT> {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+> extends ComplexTypeField<
+  EntityT,
+  DeSerializersT,
+  TestComplexType2,
+  NullableT,
+  SelectableT
+> {
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[TestComplexType2.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', false, false> =
-    this._fieldBuilder.buildEdmTypeField('StringProperty', 'Edm.String', false);
+  stringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'StringProperty',
+    'Edm.String',
+    false
+  );
 
   /**
    * Creates an instance of TestComplexType2Field.
@@ -49,9 +77,10 @@ export class TestComplexType2Field<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, TestComplexType2, fieldOptions);
+    super(fieldName, fieldOf, deSerializers, TestComplexType2, fieldOptions);
   }
 }
 

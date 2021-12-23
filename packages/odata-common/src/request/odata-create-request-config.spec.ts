@@ -1,9 +1,9 @@
-import { CommonEntity } from '../../test/common-entity';
+import { CommonEntity, commonEntityApi } from '../../test/common-entity';
 import { createRequestConfig } from '../../test/common-request-config';
 
 describe('ODataCreateRequestConfig', () => {
   const config = createRequestConfig({
-    payload: CommonEntity.builder().build()
+    payload: commonEntityApi.entityBuilder().build()
   });
 
   it('method is post', () => {

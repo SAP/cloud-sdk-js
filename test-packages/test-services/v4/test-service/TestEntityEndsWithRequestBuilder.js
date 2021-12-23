@@ -19,19 +19,16 @@ class TestEntityEndsWithRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `TestEntityEndsWith` entity based on its keys.
    */
   getByKey(keyProperty) {
-    return new odata_v4_1.GetByKeyRequestBuilder(
-      TestEntityEndsWith_1.TestEntityEndsWith,
-      { KeyProperty: keyProperty }
-    );
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+      KeyProperty: keyProperty
+    });
   }
   /**
    * Returns a request builder for querying all `TestEntityEndsWith` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityEndsWith` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(
-      TestEntityEndsWith_1.TestEntityEndsWith
-    );
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `TestEntityEndsWith` entity.
@@ -39,10 +36,7 @@ class TestEntityEndsWithRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntityEndsWith`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(
-      TestEntityEndsWith_1.TestEntityEndsWith,
-      entity
-    );
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntityEndsWith`.
@@ -50,14 +44,11 @@ class TestEntityEndsWithRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntityEndsWith`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(
-      TestEntityEndsWith_1.TestEntityEndsWith,
-      entity
-    );
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyOrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      TestEntityEndsWith_1.TestEntityEndsWith,
+      this.entityApi,
       keyPropertyOrEntity instanceof TestEntityEndsWith_1.TestEntityEndsWith
         ? keyPropertyOrEntity
         : { KeyProperty: keyPropertyOrEntity }

@@ -4,7 +4,9 @@ import {
   InstructionWithTextAndHeader,
   usageHeaderText
 } from '@sap-cloud-sdk/generator-common/internal';
+import voca from 'voca';
 import { VdmActionImport, VdmFunctionImport } from '../vdm-types';
+import { getApiName } from '../generator-without-ts-morph/service';
 import { getActionFunctionParams } from './code-sample-util';
 
 const instructionsText =
@@ -16,14 +18,18 @@ const instructionsText =
  */
 export function entityCodeSample(
   entityName: string,
+  serviceName: string,
   packageName: string
 ): InstructionWithText {
   return {
     text: instructionsText,
     instructions: codeBlock`
-import { ${entityName} } from '${packageName}';
+import { ${voca.decapitalize(serviceName)} } from '${packageName}';
 
-const resultPromise = ${entityName}.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
+const { ${getApiName(entityName)} } = ${voca.decapitalize(serviceName)}()
+const resultPromise = ${getApiName(
+      entityName
+    )}.requestBuilder().getAll().top(5).execute({ destinationName:'myDestinationName' });
 
 `
   };
@@ -35,6 +41,7 @@ export function genericEntityCodeSample(): InstructionWithTextAndHeader {
   return {
     ...entityCodeSample(
       'BusinessPartner',
+      'BusinessPartnerService',
       '@sap/cloud-sdk-vdm-business-partner-service'
     ),
     header: usageHeaderText

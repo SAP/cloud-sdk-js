@@ -20,7 +20,7 @@ class TestEntityRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `TestEntity` entity based on its keys.
    */
   getByKey(keyPropertyGuid, keyPropertyString) {
-    return new odata_v2_1.GetByKeyRequestBuilder(TestEntity_1.TestEntity, {
+    return new odata_v2_1.GetByKeyRequestBuilder(this.entityApi, {
       KeyPropertyGuid: keyPropertyGuid,
       KeyPropertyString: keyPropertyString
     });
@@ -30,7 +30,7 @@ class TestEntityRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve all `TestEntity` entities.
    */
   getAll() {
-    return new odata_v2_1.GetAllRequestBuilder(TestEntity_1.TestEntity);
+    return new odata_v2_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `TestEntity` entity.
@@ -38,7 +38,7 @@ class TestEntityRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntity`.
    */
   create(entity) {
-    return new odata_v2_1.CreateRequestBuilder(TestEntity_1.TestEntity, entity);
+    return new odata_v2_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntity`.
@@ -46,11 +46,11 @@ class TestEntityRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntity`.
    */
   update(entity) {
-    return new odata_v2_1.UpdateRequestBuilder(TestEntity_1.TestEntity, entity);
+    return new odata_v2_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyGuidOrEntity, keyPropertyString) {
     return new odata_v2_1.DeleteRequestBuilder(
-      TestEntity_1.TestEntity,
+      this.entityApi,
       keyPropertyGuidOrEntity instanceof TestEntity_1.TestEntity
         ? keyPropertyGuidOrEntity
         : {

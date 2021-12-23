@@ -12,9 +12,9 @@ class CityField extends internal_1.ComplexTypeField {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName, fieldOf, fieldOptions) {
-    super(fieldName, fieldOf, City, fieldOptions);
-    this._fieldBuilder = new internal_1.FieldBuilder(this);
+  constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
+    super(fieldName, fieldOf, deSerializers, City, fieldOptions);
+    this._fieldBuilder = new internal_1.FieldBuilder(this, this.deSerializers);
     /**
      * Representation of the [[City.countryRegion]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

@@ -1,10 +1,14 @@
 import { createLogger } from '@sap-cloud-sdk/util';
 import { v4 as uuid } from 'uuid';
-import { createGetResourcePathForKeys } from '@sap-cloud-sdk/odata-common/internal';
-import { TestEntity } from '@sap-cloud-sdk/test-services/v2/test-service';
+import {
+  createGetResourcePathForKeys,
+  createUriConverter
+} from '@sap-cloud-sdk/odata-common/internal';
 import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
-import { uriConverter } from './uri-value-converter';
+import { defaultDeSerializers } from '../de-serializers';
+import { testEntityApi } from '../../test/test-util';
 
+const uriConverter = createUriConverter(defaultDeSerializers);
 const { getResourcePathForKeys } = createGetResourcePathForKeys(uriConverter);
 
 describe('get resource path', () => {
@@ -16,18 +20,14 @@ describe('get resource path', () => {
       KeyPropertyString: keyPropString
     };
 
-    expect(getResourcePathForKeys(keys, TestEntity)).toEqual(
-      testEntityResourcePath(
-        keyPropGuid,
-        keyPropString,
-        uriConverter.convertToUriFormat
-      )
+    expect(getResourcePathForKeys(keys, testEntityApi)).toEqual(
+      testEntityResourcePath(keyPropGuid, keyPropString, uriConverter)
     );
   });
 
   it('throws error if no keys set', () => {
     expect(() =>
-      getResourcePathForKeys({}, TestEntity)
+      getResourcePathForKeys({}, testEntityApi)
     ).toThrowErrorMatchingSnapshot();
   });
 
@@ -35,7 +35,7 @@ describe('get resource path', () => {
     const keys = { KeyPropertyGuid: uuid() };
 
     expect(() =>
-      getResourcePathForKeys(keys, TestEntity)
+      getResourcePathForKeys(keys, testEntityApi)
     ).toThrowErrorMatchingSnapshot();
   });
 
@@ -43,14 +43,14 @@ describe('get resource path', () => {
     const keys = { KeyPropertyGuid: null, KeyPropertyString: undefined };
 
     expect(() =>
-      getResourcePathForKeys(keys, TestEntity)
+      getResourcePathForKeys(keys, testEntityApi)
     ).toThrowErrorMatchingSnapshot();
   });
 
   it('allows values to be empty string', () => {
     const keys = { KeyPropertyGuid: '', KeyPropertyString: '' };
 
-    expect(() => getResourcePathForKeys(keys, TestEntity)).not.toThrow();
+    expect(() => getResourcePathForKeys(keys, testEntityApi)).not.toThrow();
   });
 
   it('ignores additional properties and logs a warning', () => {
@@ -62,7 +62,7 @@ describe('get resource path', () => {
       StringProperty: 'test'
     };
 
-    expect(() => getResourcePathForKeys(keys, TestEntity)).not.toThrow();
+    expect(() => getResourcePathForKeys(keys, testEntityApi)).not.toThrow();
     expect(warnSpy).toBeCalledWith(
       'There are too many key properties. Ignoring the following keys: StringProperty'
     );

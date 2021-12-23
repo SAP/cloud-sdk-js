@@ -1,17 +1,17 @@
-import { TestEntityEndsWithSomethingElseRequestBuilder } from './TestEntityEndsWithSomethingElseRequestBuilder';
-import { CustomField, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
-  AllFields,
-  EdmTypeField,
-  EntityBuilderType,
-  Field
-} from '@sap-cloud-sdk/odata-common/internal';
+  Entity,
+  DefaultDeSerializers,
+  DeSerializers
+} from '@sap-cloud-sdk/odata-v4';
+import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
 /**
  * This class represents the entity "A_TestEntityEndsWithSomethingElse" of service "API_TEST_SRV".
  */
-export declare class TestEntityEndsWithSomethingElse
+export declare class TestEntityEndsWithSomethingElse<
+    T extends DeSerializers = DefaultDeSerializers
+  >
   extends Entity
-  implements TestEntityEndsWithSomethingElseType
+  implements TestEntityEndsWithSomethingElseType<T>
 {
   /**
    * Technical entity name for TestEntityEndsWithSomethingElse.
@@ -22,74 +22,18 @@ export declare class TestEntityEndsWithSomethingElse
    */
   static _defaultServicePath: string;
   /**
+   * All key fields of the TestEntityEndsWithSomethingElse entity
+   */
+  static _keys: string[];
+  /**
    * Key Property.
    * Maximum length: 10.
    */
-  keyProperty: string;
-  /**
-   * Returns an entity builder to construct instances of `TestEntityEndsWithSomethingElse`.
-   * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
-   */
-  static builder(): EntityBuilderType<
-    TestEntityEndsWithSomethingElse,
-    TestEntityEndsWithSomethingElseType
-  >;
-  /**
-   * Returns a request builder to construct requests for operations on the `TestEntityEndsWithSomethingElse` entity type.
-   * @returns A `TestEntityEndsWithSomethingElse` request builder.
-   */
-  static requestBuilder(): TestEntityEndsWithSomethingElseRequestBuilder;
-  /**
-   * Returns a selectable object that allows the selection of custom field in a get request for the entity `TestEntityEndsWithSomethingElse`.
-   * @param fieldName Name of the custom field to select
-   * @returns A builder that constructs instances of entity type `TestEntityEndsWithSomethingElse`.
-   */
-  static customField(
-    fieldName: string
-  ): CustomField<TestEntityEndsWithSomethingElse>;
-  /**
-   * Overwrites the default toJSON method so that all instance variables as well as all custom fields of the entity are returned.
-   * @returns An object containing all instance variables + custom fields.
-   */
-  toJSON(): {
-    [key: string]: any;
-  };
+  keyProperty: DeserializedType<T, 'Edm.String'>;
 }
-export interface TestEntityEndsWithSomethingElseType {
-  keyProperty: string;
-}
-export declare namespace TestEntityEndsWithSomethingElse {
-  /**
-   * Static representation of the [[keyProperty]] property for query construction.
-   * Use to reference this property in query operations such as 'select' in the fluent request API.
-   */
-  const KEY_PROPERTY: EdmTypeField<
-    TestEntityEndsWithSomethingElse,
-    'Edm.String',
-    false,
-    true
-  >;
-  /**
-   * All fields of the TestEntityEndsWithSomethingElse entity.
-   */
-  const _allFields: Array<
-    EdmTypeField<TestEntityEndsWithSomethingElse, 'Edm.String', false, true>
-  >;
-  /**
-   * All fields selector.
-   */
-  const ALL_FIELDS: AllFields<TestEntityEndsWithSomethingElse>;
-  /**
-   * All key fields of the TestEntityEndsWithSomethingElse entity.
-   */
-  const _keyFields: Array<
-    Field<TestEntityEndsWithSomethingElse, boolean, boolean>
-  >;
-  /**
-   * Mapping of all key field names to the respective static field property TestEntityEndsWithSomethingElse.
-   */
-  const _keys: {
-    [keys: string]: Field<TestEntityEndsWithSomethingElse, boolean, boolean>;
-  };
+export interface TestEntityEndsWithSomethingElseType<
+  T extends DeSerializers = DefaultDeSerializers
+> {
+  keyProperty: DeserializedType<T, 'Edm.String'>;
 }
 //# sourceMappingURL=TestEntityEndsWithSomethingElse.d.ts.map

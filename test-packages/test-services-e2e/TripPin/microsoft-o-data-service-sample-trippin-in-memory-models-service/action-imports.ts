@@ -7,13 +7,19 @@ import '@sap-cloud-sdk/odata-common/internal';
 import {
   ActionImportRequestBuilder,
   ActionImportParameter,
-  transformReturnValueForUndefined
+  transformReturnValueForUndefined,
+  DeSerializers,
+  DefaultDeSerializers,
+  defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v4';
+import { microsoftODataServiceSampleTrippinInMemoryModelsService } from './service';
 
 /**
  * Type of the parameters to be passed to [[resetDataSource]].
  */
-export interface ResetDataSourceParameters {}
+export interface ResetDataSourceParameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Reset Data Source.
@@ -21,16 +27,24 @@ export interface ResetDataSourceParameters {}
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function resetDataSource(
-  parameters: ResetDataSourceParameters
-): ActionImportRequestBuilder<ResetDataSourceParameters, undefined> {
+export function resetDataSource<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: ResetDataSourceParameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
+): ActionImportRequestBuilder<
+  DeSerializersT,
+  ResetDataSourceParameters<DeSerializersT>,
+  undefined
+> {
   const params = {};
 
   return new ActionImportRequestBuilder(
     'V4/(S(duh2c3dgb1c5lzc0bqwgyekc))/TripPinServiceRW/',
     'ResetDataSource',
     data => transformReturnValueForUndefined(data, val => undefined),
-    params
+    params,
+    deSerializers
   );
 }
 

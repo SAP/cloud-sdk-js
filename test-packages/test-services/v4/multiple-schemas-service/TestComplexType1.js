@@ -12,9 +12,9 @@ class TestComplexType1Field extends internal_1.ComplexTypeField {
    * @param fieldName - Actual name of the field as used in the OData request.
    * @param fieldOf - Either the parent entity constructor of the parent complex type this field belongs to.
    */
-  constructor(fieldName, fieldOf, fieldOptions) {
-    super(fieldName, fieldOf, TestComplexType1, fieldOptions);
-    this._fieldBuilder = new internal_1.FieldBuilder(this);
+  constructor(fieldName, fieldOf, deSerializers, fieldOptions) {
+    super(fieldName, fieldOf, deSerializers, TestComplexType1, fieldOptions);
+    this._fieldBuilder = new internal_1.FieldBuilder(this, this.deSerializers);
     /**
      * Representation of the [[TestComplexType1.stringProperty]] property for query construction.
      * Use to reference this property in query operations such as 'filter' in the fluent request API.

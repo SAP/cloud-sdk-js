@@ -5,31 +5,37 @@ import {
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import {
-  Constructable,
-  UpdateRequestBuilderBase
+  EntityIdentifiable,
+  EntityApi,
+  UpdateRequestBuilderBase,
+  entitySerializer
 } from '@sap-cloud-sdk/odata-common/internal';
 import { Entity } from '../entity';
-import { entitySerializer } from '../entity-serializer';
 import { extractODataEtag } from '../extract-odata-etag';
-import { oDataUri } from '../uri-conversion';
+import { DeSerializers } from '../de-serializers';
+import { createODataUri } from '../uri-conversion';
 
 export class UpdateRequestBuilder<
-  EntityT extends Entity
-> extends UpdateRequestBuilderBase<EntityT> {
+    EntityT extends Entity,
+    DeSerializersT extends DeSerializers
+  >
+  extends UpdateRequestBuilderBase<EntityT, DeSerializersT>
+  implements EntityIdentifiable<EntityT, DeSerializersT>
+{
   /**
    * Creates an instance of UpdateRequestBuilder.
-   * @param _entityConstructor - Constructor type of the entity to be updated
-   * @param _entity - Entity to be updated
+   * @param entityApi - Entity API for building and executing the request.
+   * @param _entity - Entity to be updated.
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT
   ) {
     super(
-      _entityConstructor,
+      entityApi,
       _entity,
-      oDataUri,
-      entitySerializer,
+      createODataUri(entityApi.deSerializers),
+      entitySerializer(entityApi.deSerializers),
       extractODataEtag,
       identity
     );

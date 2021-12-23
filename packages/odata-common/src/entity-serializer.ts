@@ -1,5 +1,5 @@
 import { createLogger, upperCaseSnakeCase } from '@sap-cloud-sdk/util';
-import { Constructable, EntityBase } from './entity-base';
+import { EntityApi, EntityBase } from './entity-base';
 import {
   ComplexTypeNamespace,
   isComplexTypeNameSpace,
@@ -12,6 +12,7 @@ import {
   EnumField
 } from './selectable';
 import { EdmTypeShared, isEdmType } from './edm-types';
+import { createValueSerializer, DeSerializers } from './de-serializers';
 
 const logger = createLogger({
   package: 'odata-common',
@@ -22,52 +23,49 @@ const logger = createLogger({
  * Interface representing the return type of the builder function [[entitySerializer]].
  * @internal
  */
-export interface EntitySerializer<
-  EntityT extends EntityBase = any,
-  ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
-> {
-  serializeEntity: (
+export interface EntitySerializer {
+  serializeEntity: <EntityT extends EntityBase>(
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, any>,
     diff?: boolean
   ) => Record<string, any>;
-  serializeComplexType: (
+  serializeComplexType: <
+    ComplexTypeNamespaceT extends ComplexTypeNamespace<any> = any
+  >(
     fieldValue: any,
     complexTypeNameSpace: ComplexTypeNamespaceT
   ) => any;
-  serializeEntityNonCustomFields: (
+  serializeEntityNonCustomFields: <EntityT extends EntityBase>(
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>
+    entityApi: EntityApi<EntityT, any>
   ) => Record<string, any>;
 }
-
-type TsToEdmType = (
-  value: any,
-  edmType: EdmTypeShared<'v2'> | EdmTypeShared<'v4'>
-) => any;
 
 /**
  * Constructs an entitySerializer given the OData v2 or v4 specific tsToEdm method.
  * The concrete serializers are created in odata/v2/entity-serializer.ts and odata/v4/entity-serializer.ts
- * @param tsToEdm - Converters ts input to EDM values
+ * @param deSerializers - (De-)serializers used for transformation.
  * @returns a entity serializer as defined by [[EntitySerializer]]
  * @internal
  */
-export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
+export function entitySerializer(
+  deSerializers: DeSerializers
+): EntitySerializer {
+  const tsToEdm = createValueSerializer(deSerializers);
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service.
    * @param entity - An instance of an entity.
-   * @param entityConstructor - The constructor function of that entity.
+   * @param entityApi - Entity API to serialize for.
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns JSON.
    */
   function serializeEntity<EntityT extends EntityBase>(
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, any>,
     diff = false
   ): Record<string, any> {
     return {
-      ...serializeEntityNonCustomFields(entity, entityConstructor, diff),
+      ...serializeEntityNonCustomFields(entity, entityApi, diff),
       ...(diff ? entity.getUpdatedCustomFields() : entity.getCustomFields())
     };
   }
@@ -80,11 +78,11 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
       return tsToEdm(fieldValue, field.edmType);
     }
     if (field instanceof OneToOneLink) {
-      return serializeEntity(fieldValue, field._linkedEntity);
+      return serializeEntity(fieldValue, field._linkedEntityApi);
     }
     if (field instanceof Link) {
       return fieldValue.map(linkedEntity =>
-        serializeEntity(linkedEntity, field._linkedEntity)
+        serializeEntity(linkedEntity, field._linkedEntityApi)
       );
     }
     if (field instanceof ComplexTypeField) {
@@ -104,17 +102,17 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   /**
    * Converts an instance of an entity class into a JSON payload to be sent to an OData service, ignoring custom fields.
    * @param entity - An instance of an entity.
-   * @param entityConstructor - The constructor function of that entity.
+   * @param entityApi - Entity API to serialize for.
    * @param diff - Serialize changed properties only. This only applies on the first level in case there are navigational properties.
    * @returns A JSON Representation of the non custom fields
    */
   function serializeEntityNonCustomFields<EntityT extends EntityBase>(
     entity: EntityT,
-    entityConstructor: Constructable<EntityT>,
+    entityApi: EntityApi<EntityT, any>,
     diff = false
   ): Record<string, any> {
     return getFieldNames(entity, diff).reduce((serialized, key) => {
-      const field = entityConstructor[upperCaseSnakeCase(key)];
+      const field = entityApi.schema[upperCaseSnakeCase(key)];
       const fieldValue = entity[key];
 
       const serializedValue = serializeField(field, fieldValue);
@@ -142,8 +140,11 @@ export function entitySerializer(tsToEdm: TsToEdmType): EntitySerializer {
   }
 
   // TODO: get rid of this function in v2.0
-  function serializeComplexTypeFieldLegacy<EntityT extends EntityBase>(
-    complexTypeField: ComplexTypeField<EntityT>,
+  function serializeComplexTypeFieldLegacy<
+    EntityT extends EntityBase,
+    DeSerializersT extends DeSerializers
+  >(
+    complexTypeField: ComplexTypeField<EntityT, DeSerializersT>,
     fieldValue: any
   ): any {
     logger.warn(

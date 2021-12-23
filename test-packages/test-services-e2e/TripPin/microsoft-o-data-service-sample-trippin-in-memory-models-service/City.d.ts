@@ -1,7 +1,12 @@
-import { Entity } from '@sap-cloud-sdk/odata-v4';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  Entity
+} from '@sap-cloud-sdk/odata-v4';
 import {
   ComplexTypeField,
   ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
   FieldOptions,
   PropertyMetadata
@@ -9,19 +14,21 @@ import {
 /**
  * City
  */
-export interface City {
+export interface City<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Country Region.
    */
-  countryRegion: string;
+  countryRegion: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Name.
    */
-  name: string;
+  name: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Region.
    */
-  region: string;
+  region: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 /**
  * CityField
@@ -29,25 +36,38 @@ export interface City {
  */
 export declare class CityField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, City, NullableT, SelectableT> {
+> extends ComplexTypeField<
+  EntityT,
+  DeSerializersT,
+  City,
+  NullableT,
+  SelectableT
+> {
   private _fieldBuilder;
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: EdmTypeField<EntityT, 'Edm.String', false, false>;
+  countryRegion: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  >;
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: EdmTypeField<EntityT, 'Edm.String', false, false>;
+  name: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false>;
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: EdmTypeField<EntityT, 'Edm.String', false, false>;
+  region: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false>;
   /**
    * Creates an instance of CityField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -56,6 +76,7 @@ export declare class CityField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }

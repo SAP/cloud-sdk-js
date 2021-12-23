@@ -19,19 +19,16 @@ class TestEntityWithEnumKeyRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests to retrieve one `TestEntityWithEnumKey` entity based on its keys.
    */
   getByKey(keyPropertyEnum1) {
-    return new odata_v4_1.GetByKeyRequestBuilder(
-      TestEntityWithEnumKey_1.TestEntityWithEnumKey,
-      { KeyPropertyEnum1: keyPropertyEnum1 }
-    );
+    return new odata_v4_1.GetByKeyRequestBuilder(this.entityApi, {
+      KeyPropertyEnum1: keyPropertyEnum1
+    });
   }
   /**
    * Returns a request builder for querying all `TestEntityWithEnumKey` entities.
    * @returns A request builder for creating requests to retrieve all `TestEntityWithEnumKey` entities.
    */
   getAll() {
-    return new odata_v4_1.GetAllRequestBuilder(
-      TestEntityWithEnumKey_1.TestEntityWithEnumKey
-    );
+    return new odata_v4_1.GetAllRequestBuilder(this.entityApi);
   }
   /**
    * Returns a request builder for creating a `TestEntityWithEnumKey` entity.
@@ -39,10 +36,7 @@ class TestEntityWithEnumKeyRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that create an entity of type `TestEntityWithEnumKey`.
    */
   create(entity) {
-    return new odata_v4_1.CreateRequestBuilder(
-      TestEntityWithEnumKey_1.TestEntityWithEnumKey,
-      entity
-    );
+    return new odata_v4_1.CreateRequestBuilder(this.entityApi, entity);
   }
   /**
    * Returns a request builder for updating an entity of type `TestEntityWithEnumKey`.
@@ -50,14 +44,11 @@ class TestEntityWithEnumKeyRequestBuilder extends internal_1.RequestBuilder {
    * @returns A request builder for creating requests that update an entity of type `TestEntityWithEnumKey`.
    */
   update(entity) {
-    return new odata_v4_1.UpdateRequestBuilder(
-      TestEntityWithEnumKey_1.TestEntityWithEnumKey,
-      entity
-    );
+    return new odata_v4_1.UpdateRequestBuilder(this.entityApi, entity);
   }
   delete(keyPropertyEnum1OrEntity) {
     return new odata_v4_1.DeleteRequestBuilder(
-      TestEntityWithEnumKey_1.TestEntityWithEnumKey,
+      this.entityApi,
       keyPropertyEnum1OrEntity instanceof
       TestEntityWithEnumKey_1.TestEntityWithEnumKey
         ? keyPropertyEnum1OrEntity

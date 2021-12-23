@@ -252,7 +252,7 @@ export function getGenericParameters(
   prop: VdmProperty,
   isSelectable: boolean
 ): string {
-  const params = [entityClassName];
+  const params = [entityClassName, 'DeSerializersT'];
   if (prop.isCollection) {
     if (prop.isEnum) {
       params.push(`typeof ${prop.jsType}`);
@@ -270,7 +270,6 @@ export function getGenericParameters(
       params.push(`'${prop.edmType}'`);
     }
   }
-
   params.push(prop.nullable.toString());
   params.push(isSelectable.toString());
 

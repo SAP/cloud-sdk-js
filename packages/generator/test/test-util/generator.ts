@@ -29,7 +29,7 @@ export async function getGeneratedFiles(
       useSwagger: false
     })
   );
-  return project!.getSourceFiles();
+  return project!.project.getSourceFiles();
 }
 
 export function getFunctionImportDeclarations(

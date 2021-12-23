@@ -42,6 +42,20 @@ __exportStar(require('./TestEntityCircularLinkParent'), exports);
 __exportStar(require('./TestEntityCircularLinkChild'), exports);
 __exportStar(require('./TestEntityEndsWith'), exports);
 __exportStar(require('./TestEntityEndsWithSomethingElse'), exports);
+__exportStar(require('./TestEntityApi'), exports);
+__exportStar(require('./TestEntityWithEnumKeyApi'), exports);
+__exportStar(require('./TestEntityWithSharedEntityType1Api'), exports);
+__exportStar(require('./TestEntityWithSharedEntityType2Api'), exports);
+__exportStar(require('./TestEntityMultiLinkApi'), exports);
+__exportStar(require('./TestEntityOtherMultiLinkApi'), exports);
+__exportStar(require('./TestEntityLvl2MultiLinkApi'), exports);
+__exportStar(require('./TestEntityLvl3MultiLinkApi'), exports);
+__exportStar(require('./TestEntitySingleLinkApi'), exports);
+__exportStar(require('./TestEntityLvl2SingleLinkApi'), exports);
+__exportStar(require('./TestEntityCircularLinkParentApi'), exports);
+__exportStar(require('./TestEntityCircularLinkChildApi'), exports);
+__exportStar(require('./TestEntityEndsWithApi'), exports);
+__exportStar(require('./TestEntityEndsWithSomethingElseApi'), exports);
 __exportStar(require('./TestEntityRequestBuilder'), exports);
 __exportStar(require('./TestEntityWithEnumKeyRequestBuilder'), exports);
 __exportStar(
@@ -75,4 +89,5 @@ __exportStar(require('./TestEnumTypeWithOneMember'), exports);
 __exportStar(require('./function-imports'), exports);
 __exportStar(require('./action-imports'), exports);
 __exportStar(require('./BatchRequest'), exports);
+__exportStar(require('./service'), exports);
 //# sourceMappingURL=index.js.map

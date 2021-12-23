@@ -28,5 +28,12 @@ export {
 export { Entity } from './entity';
 export { CustomField } from './selectable';
 
-export { edmToTs, CustomDeSerializers, DeSerializers } from './de-serializers';
-export { deserializeComplexType } from './entity-deserializer';
+export {
+  CustomDeSerializers,
+  defaultDeSerializers,
+  edmToTs,
+  entityDeserializer,
+  mergeDefaultDeSerializersWith
+} from './de-serializers';
+
+export type { DefaultDeSerializers, DeSerializers } from './de-serializers';

@@ -1,11 +1,13 @@
+import { TestLvl2NestedComplexTypeField } from './TestLvl2NestedComplexType';
 import {
-  TestLvl2NestedComplexType,
-  TestLvl2NestedComplexTypeField
-} from './TestLvl2NestedComplexType';
-import { Entity } from '@sap-cloud-sdk/odata-v4';
+  DefaultDeSerializers,
+  DeSerializers,
+  Entity
+} from '@sap-cloud-sdk/odata-v4';
 import {
   ComplexTypeField,
   ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
   FieldOptions,
   PropertyMetadata
@@ -13,17 +15,22 @@ import {
 /**
  * TestNestedComplexType
  */
-export interface TestNestedComplexType {
+export interface TestNestedComplexType<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * String Property.
    * @nullable
    */
-  stringProperty?: string;
+  stringProperty?: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Complex Type Property.
    * @nullable
    */
-  complexTypeProperty?: TestLvl2NestedComplexType;
+  complexTypeProperty?: DeserializedType<
+    DeSerializersT,
+    'API_TEST_SRV.A_TestLvl2NestedComplexType'
+  >;
 }
 /**
  * TestNestedComplexTypeField
@@ -31,10 +38,12 @@ export interface TestNestedComplexType {
  */
 export declare class TestNestedComplexTypeField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
 > extends ComplexTypeField<
   EntityT,
+  DeSerializersT,
   TestNestedComplexType,
   NullableT,
   SelectableT
@@ -44,12 +53,23 @@ export declare class TestNestedComplexTypeField<
    * Representation of the [[TestNestedComplexType.stringProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  stringProperty: EdmTypeField<EntityT, 'Edm.String', true, false>;
+  stringProperty: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    true,
+    false
+  >;
   /**
    * Representation of the [[TestNestedComplexType.complexTypeProperty]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  complexTypeProperty: TestLvl2NestedComplexTypeField<EntityT, true, false>;
+  complexTypeProperty: TestLvl2NestedComplexTypeField<
+    EntityT,
+    DeSerializersT,
+    true,
+    false
+  >;
   /**
    * Creates an instance of TestNestedComplexTypeField.
    * @param fieldName - Actual name of the field as used in the OData request.
@@ -58,6 +78,7 @@ export declare class TestNestedComplexTypeField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   );
 }

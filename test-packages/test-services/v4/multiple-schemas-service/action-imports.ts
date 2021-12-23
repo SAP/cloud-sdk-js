@@ -5,18 +5,24 @@
  */
 import '@sap-cloud-sdk/odata-common/internal';
 import {
-  deserializeComplexType,
+  entityDeserializer,
   ActionImportRequestBuilder,
   ActionImportParameter,
-  transformReturnValueForComplexType
+  transformReturnValueForComplexType,
+  DeSerializers,
+  DefaultDeSerializers,
+  defaultDeSerializers
 } from '@sap-cloud-sdk/odata-v4';
+import { multipleSchemasService } from './service';
 import { TestComplexType1 } from './TestComplexType1';
 import { TestComplexType2 } from './TestComplexType2';
 
 /**
  * Type of the parameters to be passed to [[testActionImportNoParameterComplexReturnType1]].
  */
-export interface TestActionImportNoParameterComplexReturnType1Parameters {}
+export interface TestActionImportNoParameterComplexReturnType1Parameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Action Import No Parameter Complex Return Type 1.
@@ -24,10 +30,14 @@ export interface TestActionImportNoParameterComplexReturnType1Parameters {}
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testActionImportNoParameterComplexReturnType1(
-  parameters: TestActionImportNoParameterComplexReturnType1Parameters
+export function testActionImportNoParameterComplexReturnType1<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): ActionImportRequestBuilder<
-  TestActionImportNoParameterComplexReturnType1Parameters,
+  DeSerializersT,
+  TestActionImportNoParameterComplexReturnType1Parameters<DeSerializersT>,
   TestComplexType1
 > {
   const params = {};
@@ -37,16 +47,22 @@ export function testActionImportNoParameterComplexReturnType1(
     'TestActionImportNoParameterComplexReturnType1',
     data =>
       transformReturnValueForComplexType(data, data =>
-        deserializeComplexType(data, TestComplexType1)
+        entityDeserializer(deSerializers).deserializeComplexType(
+          data,
+          TestComplexType1
+        )
       ),
-    params
+    params,
+    deSerializers
   );
 }
 
 /**
  * Type of the parameters to be passed to [[testActionImportNoParameterComplexReturnType2]].
  */
-export interface TestActionImportNoParameterComplexReturnType2Parameters {}
+export interface TestActionImportNoParameterComplexReturnType2Parameters<
+  DeSerializersT extends DeSerializers
+> {}
 
 /**
  * Test Action Import No Parameter Complex Return Type 2.
@@ -54,10 +70,14 @@ export interface TestActionImportNoParameterComplexReturnType2Parameters {}
  * @param parameters - Object containing all parameters for the action import.
  * @returns A request builder that allows to overwrite some of the values and execute the resulting request.
  */
-export function testActionImportNoParameterComplexReturnType2(
-  parameters: TestActionImportNoParameterComplexReturnType2Parameters
+export function testActionImportNoParameterComplexReturnType2<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+>(
+  parameters: TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
+  deSerializers: DeSerializersT = defaultDeSerializers as any
 ): ActionImportRequestBuilder<
-  TestActionImportNoParameterComplexReturnType2Parameters,
+  DeSerializersT,
+  TestActionImportNoParameterComplexReturnType2Parameters<DeSerializersT>,
   TestComplexType2
 > {
   const params = {};
@@ -67,9 +87,13 @@ export function testActionImportNoParameterComplexReturnType2(
     'TestActionImportNoParameterComplexReturnType2',
     data =>
       transformReturnValueForComplexType(data, data =>
-        deserializeComplexType(data, TestComplexType2)
+        entityDeserializer(deSerializers).deserializeComplexType(
+          data,
+          TestComplexType2
+        )
       ),
-    params
+    params,
+    deSerializers
   );
 }
 

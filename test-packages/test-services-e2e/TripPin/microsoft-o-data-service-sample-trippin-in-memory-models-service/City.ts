@@ -3,33 +3,42 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { deserializeComplexType, Entity } from '@sap-cloud-sdk/odata-v4';
 import {
+  DefaultDeSerializers,
+  DeSerializers,
+  Entity
+} from '@sap-cloud-sdk/odata-v4';
+import {
+  CollectionField,
   ComplexTypeField,
   ConstructorOrField,
+  DeserializedType,
   EdmTypeField,
+  EnumField,
   FieldBuilder,
   FieldOptions,
-  FieldType,
+  OrderableEdmTypeField,
   PropertyMetadata
 } from '@sap-cloud-sdk/odata-common/internal';
 
 /**
  * City
  */
-export interface City {
+export interface City<
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
+> {
   /**
    * Country Region.
    */
-  countryRegion: string;
+  countryRegion: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Name.
    */
-  name: string;
+  name: DeserializedType<DeSerializersT, 'Edm.String'>;
   /**
    * Region.
    */
-  region: string;
+  region: DeserializedType<DeSerializersT, 'Edm.String'>;
 }
 
 /**
@@ -38,27 +47,46 @@ export interface City {
  */
 export class CityField<
   EntityT extends Entity,
+  DeSerializersT extends DeSerializers = DefaultDeSerializers,
   NullableT extends boolean = false,
   SelectableT extends boolean = false
-> extends ComplexTypeField<EntityT, City, NullableT, SelectableT> {
-  private _fieldBuilder: FieldBuilder<this> = new FieldBuilder(this);
+> extends ComplexTypeField<
+  EntityT,
+  DeSerializersT,
+  City,
+  NullableT,
+  SelectableT
+> {
+  private _fieldBuilder: FieldBuilder<this, DeSerializersT> = new FieldBuilder(
+    this,
+    this.deSerializers
+  );
   /**
    * Representation of the [[City.countryRegion]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  countryRegion: EdmTypeField<EntityT, 'Edm.String', false, false> =
-    this._fieldBuilder.buildEdmTypeField('CountryRegion', 'Edm.String', false);
+  countryRegion: EdmTypeField<
+    EntityT,
+    DeSerializersT,
+    'Edm.String',
+    false,
+    false
+  > = this._fieldBuilder.buildEdmTypeField(
+    'CountryRegion',
+    'Edm.String',
+    false
+  );
   /**
    * Representation of the [[City.name]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  name: EdmTypeField<EntityT, 'Edm.String', false, false> =
+  name: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false> =
     this._fieldBuilder.buildEdmTypeField('Name', 'Edm.String', false);
   /**
    * Representation of the [[City.region]] property for query construction.
    * Use to reference this property in query operations such as 'filter' in the fluent request API.
    */
-  region: EdmTypeField<EntityT, 'Edm.String', false, false> =
+  region: EdmTypeField<EntityT, DeSerializersT, 'Edm.String', false, false> =
     this._fieldBuilder.buildEdmTypeField('Region', 'Edm.String', false);
 
   /**
@@ -69,9 +97,10 @@ export class CityField<
   constructor(
     fieldName: string,
     fieldOf: ConstructorOrField<EntityT>,
+    deSerializers: DeSerializersT,
     fieldOptions?: FieldOptions<NullableT, SelectableT>
   ) {
-    super(fieldName, fieldOf, City, fieldOptions);
+    super(fieldName, fieldOf, deSerializers, City, fieldOptions);
   }
 }
 

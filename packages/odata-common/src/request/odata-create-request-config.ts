@@ -1,6 +1,7 @@
-import { Constructable, EntityBase } from '../entity-base';
+import { EntityApi, EntityBase } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { Link } from '../selectable';
+import { DeSerializers } from '../de-serializers';
 import { ODataRequestConfig } from './odata-request-config';
 
 /**
@@ -9,7 +10,8 @@ import { ODataRequestConfig } from './odata-request-config';
  * @internal
  */
 export class ODataCreateRequestConfig<
-  EntityT extends EntityBase
+  EntityT extends EntityBase,
+  DeSerializersT extends DeSerializers
 > extends ODataRequestConfig {
   /**
    * Keys of the parent of the entity to create. Defined only when attempting to create child entities.
@@ -19,22 +21,23 @@ export class ODataCreateRequestConfig<
   /**
    * Field that links the parent entity class to the child entity class.
    */
-  childField: Link<EntityBase, EntityT>;
+  childField: Link<EntityBase, DeSerializersT, EntityT>;
 
   /**
    * Creates an instance of ODataRequest.
-   * @param _entityConstructor - Constructor type of the entity to create a configuration for
+   * @param entityApi - Entity API for building and executing the request.
+   * @param oDataUri - URI conversion functions.
    */
   constructor(
-    readonly _entityConstructor: Constructable<EntityT>,
-    private oDataUri: ODataUri
+    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
+    private oDataUri: ODataUri<DeSerializersT>
   ) {
-    super('post', _entityConstructor._defaultServicePath);
+    super('post', entityApi.entityConstructor._defaultServicePath);
   }
 
   resourcePath(): string {
     return this.parentKeys === undefined
-      ? this._entityConstructor._entityName
+      ? this.entityApi.entityConstructor._entityName
       : this.resourcePathAsChild();
   }
 
@@ -46,7 +49,7 @@ export class ODataCreateRequestConfig<
     return (
       this.oDataUri.getResourcePathForKeys(
         this.parentKeys,
-        this.childField._entityConstructor
+        this.childField._entityApi
       ) +
       '/' +
       this.childField._fieldName

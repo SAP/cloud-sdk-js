@@ -1,6 +1,7 @@
 import nock = require('nock');
 import {
-  Constructable,
+  EntityApi,
+  EntityBase,
   GetAllRequestBuilderBase,
   ODataCreateRequestConfig,
   ODataDeleteRequestConfig,
@@ -8,10 +9,8 @@ import {
   ODataRequest,
   ODataUpdateRequestConfig
 } from '@sap-cloud-sdk/odata-common/internal';
-import { oDataUri as oDataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
-import { oDataUri as oDataUriV4 } from '@sap-cloud-sdk/odata-v4/internal';
-import { TestEntity as TestEntityV2 } from '@sap-cloud-sdk/test-services/v2/test-service';
-import { TestEntity as TestEntityV4 } from '@sap-cloud-sdk/test-services/v4/test-service';
+import { createODataUri as createODataUriV2 } from '@sap-cloud-sdk/odata-v2/internal';
+import { createODataUri as createODataUriV4 } from '@sap-cloud-sdk/odata-v4/internal';
 import { Destination } from '@sap-cloud-sdk/connectivity';
 import { basicHeader } from '@sap-cloud-sdk/connectivity/internal';
 
@@ -67,13 +66,13 @@ interface MockRequestParams {
   headers?: Record<string, any>;
 }
 
-export function mockCreateRequest(
+export function mockCreateRequest<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
-  entityConstructor = TestEntityV2
+  entityApi: T
 ) {
   const requestConfig = new ODataCreateRequestConfig(
-    entityConstructor,
-    oDataUriV2
+    entityApi,
+    createODataUriV2(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -83,13 +82,13 @@ export function mockCreateRequest(
   });
 }
 
-export function mockCreateRequestV4(
+export function mockCreateRequestV4<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
-  entityConstructor = TestEntityV4
+  entityApi: T
 ) {
   const requestConfig = new ODataCreateRequestConfig(
-    entityConstructor,
-    oDataUriV4
+    entityApi,
+    createODataUriV4(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -99,13 +98,13 @@ export function mockCreateRequestV4(
   });
 }
 
-export function mockDeleteRequest(
+export function mockDeleteRequest<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
-  entityConstructor = TestEntityV2
+  entityApi: T
 ) {
   const requestConfig = new ODataDeleteRequestConfig(
-    entityConstructor,
-    oDataUriV2
+    entityApi,
+    createODataUriV2(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -114,13 +113,13 @@ export function mockDeleteRequest(
   });
 }
 
-export function mockUpdateRequest(
+export function mockUpdateRequest<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
-  entityConstructor: Constructable<any> = TestEntityV2
+  entityApi: T
 ) {
   const requestConfig = new ODataUpdateRequestConfig(
-    entityConstructor,
-    oDataUriV2
+    entityApi,
+    createODataUriV2(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {
     ...params,
@@ -132,24 +131,23 @@ export function mockUpdateRequest(
 export function mockCountRequest(
   destination: Destination,
   count: number,
-  getAllRequest:
-    | GetAllRequestBuilderBase<any>
-    | GetAllRequestBuilderBase<any> = TestEntityV2.requestBuilder().getAll()
+  getAllRequest: GetAllRequestBuilderBase<EntityBase, any>
 ) {
-  const servicePath = getAllRequest._entityConstructor._defaultServicePath;
-  const entityName = getAllRequest._entityConstructor._entityName;
+  const servicePath =
+    getAllRequest._entityApi.entityConstructor._defaultServicePath;
+  const entityName = getAllRequest._entityApi.entityConstructor._entityName;
   return nock(defaultHost)
     .get(`${destination.url}${servicePath}/${entityName}/$count`)
     .reply(200, count.toString());
 }
 
-export function mockGetRequest(
+export function mockGetRequest<T extends EntityApi<EntityBase, any>>(
   params: MockRequestParams,
-  entityConstructor: Constructable<any> = TestEntityV2
+  entityApi: T
 ) {
   const requestConfig = new ODataGetAllRequestConfig(
-    entityConstructor,
-    oDataUriV2
+    entityApi,
+    createODataUriV2(entityApi.deSerializers)
   );
   return mockRequest(requestConfig, {
     ...params,

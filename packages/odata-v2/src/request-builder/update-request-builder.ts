@@ -68,7 +68,7 @@ export class UpdateRequestBuilder<
     }
 
     const request = await this.build(destination);
-    warnIfNavigation(request, this._entity, this.entityApi.schema);
+    warnIfNavigation(request, this._entity, this._entityApi.schema);
 
     return super.executeRequest(request);
   }
@@ -90,7 +90,7 @@ export class UpdateRequestBuilder<
     }
 
     const request = await this.build(destination);
-    warnIfNavigation(request, this._entity, this.entityApi.schema);
+    warnIfNavigation(request, this._entity, this._entityApi.schema);
 
     return super.executeRequestRaw(request);
   }

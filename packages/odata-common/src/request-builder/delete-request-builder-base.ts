@@ -28,18 +28,18 @@ export abstract class DeleteRequestBuilderBase<
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
-   * @param entityApi - Entity API for building and executing the request.
+   * @param _entityApi - Entity API for building and executing the request.
    * @param oDataUri - URI conversion functions.
    * @param keysOrEntity - Entity or key-value pairs of key properties for the given entity.
    */
   constructor(
-    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     oDataUri: ODataUri<DeSerializersT>,
     keysOrEntity: Record<string, any> | EntityBase
   ) {
-    super(new ODataDeleteRequestConfig(entityApi, oDataUri));
+    super(new ODataDeleteRequestConfig(_entityApi, oDataUri));
     if (keysOrEntity instanceof EntityBase) {
-      this.requestConfig.keys = oDataUri.getEntityKeys(keysOrEntity, entityApi);
+      this.requestConfig.keys = oDataUri.getEntityKeys(keysOrEntity, _entityApi);
       this.setVersionIdentifier(keysOrEntity.versionIdentifier);
     } else {
       this.requestConfig.keys = keysOrEntity;

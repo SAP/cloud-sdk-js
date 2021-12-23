@@ -27,13 +27,13 @@ export class ODataCountRequestConfig<
   ) {
     super(
       'get',
-      getAllRequest.entityApi.entityConstructor._defaultServicePath
+      getAllRequest._entityApi.entityConstructor._defaultServicePath
     );
   }
 
   resourcePath(): string {
     return `${removeTrailingSlashes(
-      this.getAllRequest.entityApi.entityConstructor._entityName
+      this.getAllRequest._entityApi.entityConstructor._entityName
     )}/$count`;
   }
 

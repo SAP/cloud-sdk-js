@@ -73,7 +73,7 @@ export abstract class GetByKeyRequestBuilderBase<
       .then(response =>
         this.entityDeserializer.deserializeEntity(
           this.dataAccessor.getSingleResult(response.data),
-          this.entityApi,
+          this._entityApi,
           response.headers
         )
       )

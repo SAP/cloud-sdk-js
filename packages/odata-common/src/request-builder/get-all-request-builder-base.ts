@@ -117,7 +117,7 @@ export abstract class GetAllRequestBuilderBase<
         .map(json =>
           this.entityDeserializer.deserializeEntity(
             json,
-            this.entityApi,
+            this._entityApi,
             response.headers
           )
         )

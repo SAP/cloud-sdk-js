@@ -32,7 +32,7 @@ export abstract class CreateRequestBuilderBase<
 
   /**
    * Creates an instance of CreateRequestBuilder.
-   * @param entityApi - Entity API for building and executing the request.
+   * @param _entityApi - Entity API for building and executing the request.
    * @param _entity - Entity to be created.
    * @param oDataUri - URI conversion functions.
    * @param serializer - Entity serializer.
@@ -40,17 +40,17 @@ export abstract class CreateRequestBuilderBase<
    * @param responseDataAccessor - Object access functions for get requests.
    */
   constructor(
-    readonly entityApi: EntityApi<EntityT, DeSerializersT>,
+    readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
     readonly _entity: EntityT,
     readonly oDataUri: ODataUri<DeSerializersT>,
     readonly serializer: EntitySerializer,
     readonly deserializer: EntityDeserializer,
     readonly responseDataAccessor: ResponseDataAccessor
   ) {
-    super(new ODataCreateRequestConfig(entityApi, oDataUri));
+    super(new ODataCreateRequestConfig(_entityApi, oDataUri));
     this.requestConfig.payload = serializer.serializeEntity(
       this._entity,
-      this.entityApi
+      this._entityApi
     );
   }
 
@@ -88,7 +88,7 @@ export abstract class CreateRequestBuilderBase<
       .then(response =>
         this.deserializer.deserializeEntity(
           this.responseDataAccessor.getSingleResult(response.data),
-          this.entityApi,
+          this._entityApi,
           response.headers
         )
       )

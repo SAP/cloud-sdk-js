@@ -212,12 +212,11 @@ export abstract class UpdateRequestBuilderBase<
     return this._entityApi.entityConstructor._keys;
   }
 
-  private toSet(fields: Selectable<EntityT, DeSerializersT>[]) {
-    const set = new Set<string>();
-    Object.values(fields).forEach(field => {
-      set.add(field._fieldName);
-    });
-    return set;
+  private toSet(fields: Selectable<EntityT, DeSerializersT>[]): Set<string> {
+    const fieldNames = Object.values(fields).map(
+      ({ _fieldName }) => _fieldName
+    );
+    return new Set(fieldNames);
   }
 
   private serializedDiff(): Record<string, any> {

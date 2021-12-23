@@ -22,7 +22,8 @@ export class ODataDeleteRequestConfig<
 
   /**
    * Creates an instance of ODataDeleteRequestConfig.
-   * @param entityConstructor - Constructor type of the entity to create a configuration for
+   * @param _entityApi - TODO MM
+   * @param oDataUri - TODO MM
    */
   constructor(
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,

@@ -20,7 +20,7 @@ export class ODataCountRequestConfig<
 > extends ODataRequestConfig {
   /**
    * Creates an instance of ODataGetAllRequestConfig.
-   * @param entityConstructor - Constructor type of the entity to create a configuration for
+   * @param getAllRequest - Get all request builder to count result for.
    */
   constructor(
     readonly getAllRequest: GetAllRequestBuilderBase<EntityT, DeSerializersT>

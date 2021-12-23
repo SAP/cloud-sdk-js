@@ -4,12 +4,7 @@ import {
   DestinationFetchOptions
 } from '@sap-cloud-sdk/connectivity';
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
-import {
-  Constructable,
-  EntityApi,
-  EntityBase,
-  EntityIdentifiable
-} from '../entity-base';
+import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 import { ODataUri } from '../uri-conversion';
 import { ODataDeleteRequestConfig } from '../request';
 import { DeSerializers } from '../de-serializers';
@@ -28,15 +23,14 @@ export abstract class DeleteRequestBuilderBase<
   >
   implements EntityIdentifiable<EntityT, DeSerializersT>
 {
-  readonly _entityConstructor: Constructable<EntityT>;
   readonly _entity: EntityT;
   readonly _deSerializers: DeSerializersT;
 
   /**
    * Creates an instance of DeleteRequestBuilder. If the entity is passed, version identifier will also be added.
-   * @param entityConstructor - Constructor type of the entity to be deleted
-   * @param oDataUri - ODataUri conversion interface at runtime either v2 or v4
-   * @param keysOrEntity - Entity or Key-value pairs of key properties for the given entity
+   * @param _entityApi - TODO MM
+   * @param oDataUri - ODataUri conversion interface at runtime for either OData v2 or v4.
+   * @param keysOrEntity - Entity or key-value pairs of key properties for the given entity.
    */
   constructor(
     readonly _entityApi: EntityApi<EntityT, DeSerializersT>,
@@ -44,7 +38,6 @@ export abstract class DeleteRequestBuilderBase<
     keysOrEntity: Record<string, any> | EntityBase
   ) {
     super(new ODataDeleteRequestConfig(_entityApi, oDataUri));
-    this._entityConstructor = _entityApi.entityConstructor;
     if (keysOrEntity instanceof EntityBase) {
       this.requestConfig.keys = oDataUri.getEntityKeys(
         keysOrEntity,

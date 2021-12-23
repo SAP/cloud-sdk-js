@@ -19,19 +19,7 @@ export interface Constructable<EntityT extends EntityBase> {
   _entityName: string;
   _defaultServicePath: string;
   _keys: string[];
-  // _allFields: (Field<EntityT, boolean, boolean> | Link<EntityT>)[];
-  // _keyFields: Field<EntityT, boolean, boolean>[];
-  // _keys: {
-  //   [keys: string]: Field<EntityT, boolean, boolean>;
-  // };
   new (...args: any[]): EntityT;
-  // requestBuilder(): RequestBuilder<EntityT>;
-  // builder(): EntityBuilderType<EntityT, any>;
-  // entityConstructor(deSerializers: T): EntityT;
-  // customField(
-  //   fieldName: string,
-  //   isNullable?: boolean
-  // ): CustomField<EntityT, any, boolean>;
 }
 
 /**
@@ -334,9 +322,6 @@ export interface EntityIdentifiable<
   T extends EntityBase,
   DeSerializersT extends DeSerializers
 > {
-  // TODO can this be removed?
-  // TODO do we need the _?
-  readonly _entityConstructor: Constructable<T>;
   readonly _entity: T;
   readonly _deSerializers: DeSerializersT;
 }

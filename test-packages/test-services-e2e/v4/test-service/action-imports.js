@@ -56,7 +56,7 @@ function createTestEntityByIdReturnId(
     'createTestEntityByIdReturnId',
     data =>
       (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
-        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32')
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32', deSerializers)
       ),
     params,
     deSerializers

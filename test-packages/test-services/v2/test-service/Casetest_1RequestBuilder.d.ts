@@ -1,45 +1,57 @@
 import { DeserializedType } from '@sap-cloud-sdk/odata-common/internal';
-import { DefaultDeSerializers, DeSerializers, GetAllRequestBuilder, GetByKeyRequestBuilder, CreateRequestBuilder, UpdateRequestBuilder, DeleteRequestBuilder } from '@sap-cloud-sdk/odata-v2';
+import {
+  DefaultDeSerializers,
+  DeSerializers,
+  GetAllRequestBuilder,
+  GetByKeyRequestBuilder,
+  CreateRequestBuilder,
+  UpdateRequestBuilder,
+  DeleteRequestBuilder
+} from '@sap-cloud-sdk/odata-v2';
 import { RequestBuilder } from '@sap-cloud-sdk/odata-v2/internal';
 import { Casetest_1 } from './Casetest_1';
 /**
  * Request builder class for operations supported on the [[Casetest_1]] entity.
  */
-export declare class Casetest_1RequestBuilder<T extends DeSerializers = DefaultDeSerializers> extends RequestBuilder<Casetest_1<T>, T> {
-    /**
-     * Returns a request builder for retrieving one `Casetest_1` entity based on its keys.
-     * @param keyPropertyString Key property. See [[Casetest_1.keyPropertyString]].
-     * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
-     */
-    getByKey(keyPropertyString: DeserializedType<T, 'Edm.String'>): GetByKeyRequestBuilder<Casetest_1<T>, T>;
-    /**
-     * Returns a request builder for querying all `Casetest_1` entities.
-     * @returns A request builder for creating requests to retrieve all `Casetest_1` entities.
-     */
-    getAll(): GetAllRequestBuilder<Casetest_1<T>, T>;
-    /**
-     * Returns a request builder for creating a `Casetest_1` entity.
-     * @param entity The entity to be created
-     * @returns A request builder for creating requests that create an entity of type `Casetest_1`.
-     */
-    create(entity: Casetest_1<T>): CreateRequestBuilder<Casetest_1<T>, T>;
-    /**
-     * Returns a request builder for updating an entity of type `Casetest_1`.
-     * @param entity The entity to be updated
-     * @returns A request builder for creating requests that update an entity of type `Casetest_1`.
-     */
-    update(entity: Casetest_1<T>): UpdateRequestBuilder<Casetest_1<T>, T>;
-    /**
-     * Returns a request builder for deleting an entity of type `Casetest_1`.
-     * @param keyPropertyString Key property. See [[Casetest_1.keyPropertyString]].
-     * @returns A request builder for creating requests that delete an entity of type `Casetest_1`.
-     */
-    delete(keyPropertyString: string): DeleteRequestBuilder<Casetest_1<T>, T>;
-    /**
-     * Returns a request builder for deleting an entity of type `Casetest_1`.
-     * @param entity Pass the entity to be deleted.
-     * @returns A request builder for creating requests that delete an entity of type `Casetest_1` by taking the entity as a parameter.
-     */
-    delete(entity: Casetest_1<T>): DeleteRequestBuilder<Casetest_1<T>, T>;
+export declare class Casetest_1RequestBuilder<
+  T extends DeSerializers = DefaultDeSerializers
+> extends RequestBuilder<Casetest_1<T>, T> {
+  /**
+   * Returns a request builder for retrieving one `Casetest_1` entity based on its keys.
+   * @param keyPropertyString Key property. See [[Casetest_1.keyPropertyString]].
+   * @returns A request builder for creating requests to retrieve one `Casetest_1` entity based on its keys.
+   */
+  getByKey(
+    keyPropertyString: DeserializedType<T, 'Edm.String'>
+  ): GetByKeyRequestBuilder<Casetest_1<T>, T>;
+  /**
+   * Returns a request builder for querying all `Casetest_1` entities.
+   * @returns A request builder for creating requests to retrieve all `Casetest_1` entities.
+   */
+  getAll(): GetAllRequestBuilder<Casetest_1<T>, T>;
+  /**
+   * Returns a request builder for creating a `Casetest_1` entity.
+   * @param entity The entity to be created
+   * @returns A request builder for creating requests that create an entity of type `Casetest_1`.
+   */
+  create(entity: Casetest_1<T>): CreateRequestBuilder<Casetest_1<T>, T>;
+  /**
+   * Returns a request builder for updating an entity of type `Casetest_1`.
+   * @param entity The entity to be updated
+   * @returns A request builder for creating requests that update an entity of type `Casetest_1`.
+   */
+  update(entity: Casetest_1<T>): UpdateRequestBuilder<Casetest_1<T>, T>;
+  /**
+   * Returns a request builder for deleting an entity of type `Casetest_1`.
+   * @param keyPropertyString Key property. See [[Casetest_1.keyPropertyString]].
+   * @returns A request builder for creating requests that delete an entity of type `Casetest_1`.
+   */
+  delete(keyPropertyString: string): DeleteRequestBuilder<Casetest_1<T>, T>;
+  /**
+   * Returns a request builder for deleting an entity of type `Casetest_1`.
+   * @param entity Pass the entity to be deleted.
+   * @returns A request builder for creating requests that delete an entity of type `Casetest_1` by taking the entity as a parameter.
+   */
+  delete(entity: Casetest_1<T>): DeleteRequestBuilder<Casetest_1<T>, T>;
 }
 //# sourceMappingURL=Casetest_1RequestBuilder.d.ts.map

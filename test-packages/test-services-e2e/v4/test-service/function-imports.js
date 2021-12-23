@@ -42,7 +42,7 @@ function concatStrings(
     'concatStrings',
     data =>
       (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
-        (0, odata_v4_1.edmToTs)(val.value, 'Edm.String')
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)
       ),
     params,
     deSerializers
@@ -116,7 +116,7 @@ function returnCollection(
     'returnCollection',
     data =>
       (0, odata_v4_1.transformReturnValueForEdmTypeList)(data, val =>
-        (0, odata_v4_1.edmToTs)(val, 'Edm.Int32')
+        (0, odata_v4_1.edmToTs)(val, 'Edm.Int32', deSerializers)
       ),
     params,
     deSerializers
@@ -144,7 +144,7 @@ function returnInt(
     'returnInt',
     data =>
       (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
-        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32')
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.Int32', deSerializers)
       ),
     params,
     deSerializers
@@ -166,7 +166,7 @@ function returnSapCloudSdk(
     'returnSapCloudSdk',
     data =>
       (0, odata_v4_1.transformReturnValueForEdmType)(data, val =>
-        (0, odata_v4_1.edmToTs)(val.value, 'Edm.String')
+        (0, odata_v4_1.edmToTs)(val.value, 'Edm.String', deSerializers)
       ),
     params,
     deSerializers

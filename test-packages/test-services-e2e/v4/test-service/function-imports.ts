@@ -58,7 +58,7 @@ export function concatStrings<
     'concatStrings',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTs(val.value, 'Edm.String')
+        edmToTs(val.value, 'Edm.String', deSerializers)
       ),
     params,
     deSerializers
@@ -178,7 +178,7 @@ export function returnCollection<
     'returnCollection',
     data =>
       transformReturnValueForEdmTypeList(data, val =>
-        edmToTs(val, 'Edm.Int32')
+        edmToTs(val, 'Edm.Int32', deSerializers)
       ),
     params,
     deSerializers
@@ -219,7 +219,7 @@ export function returnInt<
     'returnInt',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTs(val.value, 'Edm.Int32')
+        edmToTs(val.value, 'Edm.Int32', deSerializers)
       ),
     params,
     deSerializers
@@ -255,7 +255,7 @@ export function returnSapCloudSdk<
     'returnSapCloudSdk',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTs(val.value, 'Edm.String')
+        edmToTs(val.value, 'Edm.String', deSerializers)
       ),
     params,
     deSerializers

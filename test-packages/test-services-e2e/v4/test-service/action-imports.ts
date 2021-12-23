@@ -100,7 +100,7 @@ export function createTestEntityByIdReturnId<
     'createTestEntityByIdReturnId',
     data =>
       transformReturnValueForEdmType(data, val =>
-        edmToTs(val.value, 'Edm.Int32')
+        edmToTs(val.value, 'Edm.Int32', deSerializers)
       ),
     params,
     deSerializers

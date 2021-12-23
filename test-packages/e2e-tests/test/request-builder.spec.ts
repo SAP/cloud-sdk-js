@@ -1,7 +1,10 @@
 import {} from '@sap-cloud-sdk/test-services-e2e/v4/test-service';
 import moment from 'moment';
 import { and } from '@sap-cloud-sdk/odata-common/internal';
-import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/internal';
+import {
+  defaultDeSerializers,
+  entityDeserializer
+} from '@sap-cloud-sdk/odata-v4';
 import {
   deleteEntity,
   queryEntity,
@@ -76,7 +79,10 @@ describe('Request builder', () => {
         .executeRaw(destination)
     ).data.value as any[];
     const actual = multiLinks.map(multiLink =>
-      deserializeEntity(multiLink, testEntityLinkApi)
+      entityDeserializer(defaultDeSerializers).deserializeEntity(
+        multiLink,
+        testEntityLinkApi
+      )
     );
 
     expect(actual).toEqual(

@@ -4,8 +4,11 @@ import {
   People,
   PeopleApi
 } from '@sap-cloud-sdk/test-services-e2e/TripPin/microsoft-o-data-service-sample-trippin-in-memory-models-service';
-import { deserializeEntity } from '@sap-cloud-sdk/odata-v4/internal';
-import { any } from '@sap-cloud-sdk/odata-v4';
+import {
+  any,
+  defaultDeSerializers,
+  entityDeserializer
+} from '@sap-cloud-sdk/odata-v4';
 
 const url = 'https://services.odata.org/';
 const destination = { url };
@@ -53,7 +56,11 @@ xdescribe('Request builder', () => {
         .executeRaw(destination)
     ).data.value as any[];
     const actual = people.map(
-      person => deserializeEntity(person, new PeopleApi()) as People
+      person =>
+        entityDeserializer(defaultDeSerializers).deserializeEntity(
+          person,
+          new PeopleApi()
+        ) as People
     );
     expect(actual.length).toEqual(4);
     expect(actual).toEqual(

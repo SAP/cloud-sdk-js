@@ -8,7 +8,7 @@ import {
   UpdateRequestBuilder,
   DeleteRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
-import { RequestBuilder } from '@sap-cloud-sdk/odata-v4/internal';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntity1 } from './TestEntity1';
 /**
  * Request builder class for operations supported on the [[TestEntity1]] entity.

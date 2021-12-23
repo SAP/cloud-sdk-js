@@ -1,5 +1,5 @@
 import { DeSerializers } from '../de-serializers';
-import { EntityBase, EntityIdentifiable } from '../entity-base';
+import { EntityApi, EntityBase, EntityIdentifiable } from '../entity-base';
 
 /**
  * @internal
@@ -11,4 +11,6 @@ export abstract class RequestBuilder<
 {
   _deSerializers: DeSerializersT;
   _entity: EntityT;
+
+  constructor(public entityApi: EntityApi<EntityT, DeSerializersT>) {}
 }

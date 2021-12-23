@@ -2,7 +2,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.CaseTestRequestBuilder = void 0;
 const odata_v2_1 = require('@sap-cloud-sdk/odata-v2');
-const internal_1 = require('@sap-cloud-sdk/odata-v2/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const CaseTest_1 = require('./CaseTest');
 /**
  * Request builder class for operations supported on the [[CaseTest]] entity.

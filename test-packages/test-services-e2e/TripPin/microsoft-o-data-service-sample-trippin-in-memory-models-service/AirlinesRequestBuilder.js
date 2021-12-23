@@ -2,7 +2,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.AirlinesRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const internal_1 = require('@sap-cloud-sdk/odata-v4/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const Airlines_1 = require('./Airlines');
 /**
  * Request builder class for operations supported on the [[Airlines]] entity.

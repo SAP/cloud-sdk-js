@@ -13,7 +13,7 @@ import {
   UpdateRequestBuilder,
   DeleteRequestBuilder
 } from '@sap-cloud-sdk/odata-v2';
-import { RequestBuilder } from '@sap-cloud-sdk/odata-v2/internal';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
 import { TestEntityWithSharedEntityType2 } from './TestEntityWithSharedEntityType2';
 
 /**

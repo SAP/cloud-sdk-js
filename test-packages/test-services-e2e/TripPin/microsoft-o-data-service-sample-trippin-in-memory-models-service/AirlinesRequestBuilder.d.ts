@@ -8,7 +8,7 @@ import {
   UpdateRequestBuilder,
   DeleteRequestBuilder
 } from '@sap-cloud-sdk/odata-v4';
-import { RequestBuilder } from '@sap-cloud-sdk/odata-v4/internal';
+import { RequestBuilder } from '@sap-cloud-sdk/odata-common/internal';
 import { Airlines } from './Airlines';
 /**
  * Request builder class for operations supported on the [[Airlines]] entity.

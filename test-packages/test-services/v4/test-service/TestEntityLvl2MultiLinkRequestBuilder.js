@@ -2,7 +2,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestEntityLvl2MultiLinkRequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const internal_1 = require('@sap-cloud-sdk/odata-v4/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const TestEntityLvl2MultiLink_1 = require('./TestEntityLvl2MultiLink');
 /**
  * Request builder class for operations supported on the [[TestEntityLvl2MultiLink]] entity.

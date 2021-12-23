@@ -2,7 +2,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.TestEntity2RequestBuilder = void 0;
 const odata_v4_1 = require('@sap-cloud-sdk/odata-v4');
-const internal_1 = require('@sap-cloud-sdk/odata-v4/internal');
+const internal_1 = require('@sap-cloud-sdk/odata-common/internal');
 const TestEntity2_1 = require('./TestEntity2');
 /**
  * Request builder class for operations supported on the [[TestEntity2]] entity.

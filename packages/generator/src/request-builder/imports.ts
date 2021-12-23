@@ -23,7 +23,7 @@ export function requestBuilderImportDeclarations(
       ...propertyTypeImportNames(entity.keys)
     ]),
     odataImportDeclaration(requestBuilderImports(entity), oDataVersion),
-    odataImportDeclaration(['RequestBuilder'], oDataVersion, true),
+    odataCommonImportDeclaration(['RequestBuilder']),
     entityImportDeclaration(entity),
     ...entityKeyImportDeclaration(entity.keys)
   ];

@@ -196,7 +196,7 @@ export function setDestinationsInEnv(destinations: Destination[]): void {
  * Throws an error if a destination with the same name as the given test destination already exists.
  * @param destination - Test destination to add to the `destinations` environment variable
  */
- export function registerDestination(destination: Destination): void {
+export function registerDestination(destination: Destination): void {
   const currentDestinations = getDestinationsFromEnv();
   const existingNames = new Set<string>(
     currentDestinations.map(dest => {

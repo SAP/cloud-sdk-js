@@ -211,11 +211,3 @@ describe('registerDestination', () => {
     });
   });
 });
-
-/*
-const expected = [destinationFromEnv, destinationFromConfigEnv];
-const actual = getDestinationsFromEnv();
-expected.forEach((e, index) => {
-  expect(actual[index]).toMatchObject(e);
-});
-*/

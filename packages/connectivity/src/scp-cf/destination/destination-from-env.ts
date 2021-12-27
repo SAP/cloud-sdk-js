@@ -169,6 +169,9 @@ function destinationAuthToken(
   );
 }
 
+/**
+ * @internal
+ */
 export function validateNameAvailable(
   destinationName: string,
   existingNames: Set<string>
@@ -180,6 +183,9 @@ export function validateNameAvailable(
   }
 }
 
+/**
+ * @internal
+ */
 export function setDestinationsInEnv(destinations: Destination[]): void {
   process.env.destinations = JSON.stringify(destinations);
 }

@@ -189,3 +189,26 @@ export function validateNameAvailable(
 export function setDestinationsInEnv(destinations: Destination[]): void {
   process.env.destinations = JSON.stringify(destinations);
 }
+
+/**
+ * Set a given destination in the `destinations` environment variable.
+ *
+ * Throws an error if a destination with the same name as the given test destination already exists.
+ * @param destination - Test destination to add to the `destinations` environment variable
+ */
+ export function registerDestination(destination: Destination): void {
+  const currentDestinations = getDestinationsFromEnv();
+  const existingNames = new Set<string>(
+    currentDestinations.map(dest => {
+      if (!dest.name) {
+        throw Error('The destination name is undefined.');
+      }
+      return dest.name;
+    })
+  );
+  if (!destination.name) {
+    throw Error('The destination name is undefined.');
+  }
+  validateNameAvailable(destination.name, existingNames);
+  setDestinationsInEnv([...currentDestinations, destination]);
+}

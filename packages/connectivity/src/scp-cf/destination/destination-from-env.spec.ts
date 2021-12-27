@@ -8,7 +8,8 @@ import {
 import { Destination } from './destination-service-types';
 import {
   getDestinationFromEnvByName,
-  getDestinationsFromEnv
+  getDestinationsFromEnv,
+  registerDestination
 } from './destination-from-env';
 import { getDestination } from './destination-accessor';
 
@@ -203,6 +204,30 @@ describe('env-destination-accessor', () => {
       expect(() => getDestinationsFromEnv()).toThrowErrorMatchingInlineSnapshot(
         '"Error in parsing the destinations from the environment variable."'
       );
+    });
+  });
+});
+
+describe('registerDestination', () => {
+  const mockDestination: Destination = {
+    name: 'MockedDestination',
+    url: 'https://example.com'
+  };
+
+  afterEach(() => {
+    unmockDestinationsEnv();
+    jest.resetAllMocks();
+  });
+
+  it('should set the destination in the environment variables', () => {
+    mockDestinationsEnv(environmentDestination);
+
+    registerDestination(mockDestination);
+    const actual = getDestinationsFromEnv();
+
+    const expected = [destinationFromEnv, mockDestination];
+    expected.forEach((e, index) => {
+      expect(actual[index]).toMatchObject(e);
     });
   });
 });

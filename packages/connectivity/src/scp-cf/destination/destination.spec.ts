@@ -4,16 +4,10 @@ import {
   certificateSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import {
-  mockDestinationsEnv,
-  unmockDestinationsEnv
-} from '../../../../../test-resources/test/test-util/request-mocker';
-import {
   DestinationConfiguration,
   parseDestination,
-  registerDestination,
   sanitizeDestination
 } from './destination';
-import { getDestinationsFromEnv } from './destination-from-env';
 import { Destination } from './destination-service-types';
 
 describe('parseDestination', () => {
@@ -162,52 +156,5 @@ describe('sanitizeDestination', () => {
 
   it("does not throw when there is no `url` for destinations with type other than 'HTTP' or undefined", () => {
     expect(() => sanitizeDestination({ type: 'RFC' })).not.toThrow();
-  });
-});
-
-describe('registerDestination', () => {
-  const environmentDestination = {
-    name: 'FINAL-DESTINATION',
-    url: 'https://mys4hana.com',
-    username: 'myuser',
-    password: 'mypw'
-  };
-
-  const destinationFromEnv: Destination = {
-    authTokens: [],
-    authentication: 'BasicAuthentication',
-    name: 'FINAL-DESTINATION',
-    isTrustingAllCertificates: false,
-    originalProperties: {
-      name: 'FINAL-DESTINATION',
-      url: 'https://mys4hana.com',
-      username: 'myuser',
-      password: 'mypw'
-    },
-    password: 'mypw',
-    username: 'myuser',
-    url: 'https://mys4hana.com'
-  };
-
-  const mockDestination: Destination = {
-    name: 'MockedDestination',
-    url: 'https://example.com'
-  };
-
-  afterEach(() => {
-    unmockDestinationsEnv();
-    jest.resetAllMocks();
-  });
-
-  it('should set the destination in the environment variables', () => {
-    mockDestinationsEnv(environmentDestination);
-
-    registerDestination(mockDestination);
-    const actual = getDestinationsFromEnv();
-
-    const expected = [destinationFromEnv, mockDestination];
-    expected.forEach((e, index) => {
-      expect(actual[index]).toMatchObject(e);
-    });
   });
 });

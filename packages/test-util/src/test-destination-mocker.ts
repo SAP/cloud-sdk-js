@@ -1,4 +1,4 @@
-import { Destination } from '@sap-cloud-sdk/connectivity';
+import { Destination, getDestinationsFromEnv, validateNameAvailable, setDestinationsInEnv } from '@sap-cloud-sdk/connectivity/internal';
 import {
   getTestDestinationByAlias,
   GetTestDestinationOptions,
@@ -102,28 +102,3 @@ export function unmockAllTestDestinations(): void {
   setDestinationsInEnv(cleanedDestinations);
 }
 
-export function validateNameAvailable(
-  destinationName: string,
-  existingNames: Set<string>
-): void {
-  if (existingNames.has(destinationName)) {
-    throw new Error(
-      `Parsing mocked destinations failed, destination with name "${destinationName}" already exists in the "destinations" environment variables.`
-    );
-  }
-}
-
-export function setDestinationsInEnv(destinations: Destination[]): void {
-  process.env['destinations'] = JSON.stringify(destinations);
-}
-
-function getDestinationsFromEnv(): Destination[] {
-  try {
-    const envDestinations = process.env['destinations'] || '[]';
-    return JSON.parse(envDestinations);
-  } catch (error) {
-    throw new Error(
-      `Destinations environment variable cannot be read: ${error.message}`
-    );
-  }
-}

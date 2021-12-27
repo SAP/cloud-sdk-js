@@ -1,5 +1,4 @@
 import { assoc } from '@sap-cloud-sdk/util';
-import { validateNameAvailable, setDestinationsInEnv } from '@sap-cloud-sdk/test-util';
 import {
   DestinationFetchOptions,
   isDestinationFetchOptions
@@ -10,7 +9,7 @@ import {
   DestinationAuthToken,
   DestinationCertificate
 } from './destination-service-types';
-import { getDestinationsFromEnv } from './destination-from-env';
+import { getDestinationsFromEnv, setDestinationsInEnv, validateNameAvailable } from './destination-from-env';
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.

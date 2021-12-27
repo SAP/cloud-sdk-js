@@ -168,3 +168,18 @@ function destinationAuthToken(
     "Option 'forwardAuthToken' was set on destination but no token was provided to forward. This is most likely unintended and will lead to a authorization error on request execution."
   );
 }
+
+export function validateNameAvailable(
+  destinationName: string,
+  existingNames: Set<string>
+): void {
+  if (existingNames.has(destinationName)) {
+    throw new Error(
+      `Parsing mocked destinations failed, destination with name "${destinationName}" already exists in the "destinations" environment variables.`
+    );
+  }
+}
+
+export function setDestinationsInEnv(destinations: Destination[]): void {
+  process.env['destinations'] = JSON.stringify(destinations);
+}

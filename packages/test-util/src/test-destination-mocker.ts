@@ -102,7 +102,7 @@ export function unmockAllTestDestinations(): void {
   setDestinationsInEnv(cleanedDestinations);
 }
 
-function validateNameAvailable(
+export function validateNameAvailable(
   destinationName: string,
   existingNames: Set<string>
 ): void {
@@ -113,7 +113,7 @@ function validateNameAvailable(
   }
 }
 
-function setDestinationsInEnv(destinations: Destination[]): void {
+export function setDestinationsInEnv(destinations: Destination[]): void {
   process.env['destinations'] = JSON.stringify(destinations);
 }
 

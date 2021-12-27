@@ -6,6 +6,7 @@ import {
 import {
   DestinationConfiguration,
   parseDestination,
+  registerDestination,
   sanitizeDestination
 } from './destination';
 import { Destination } from './destination-service-types';
@@ -156,5 +157,35 @@ describe('sanitizeDestination', () => {
 
   it("does not throw when there is no `url` for destinations with type other than 'HTTP' or undefined", () => {
     expect(() => sanitizeDestination({ type: 'RFC' })).not.toThrow();
+  });
+});
+
+describe('registerDestination', () => {
+  const envDestination: Destination = {
+    url: 'https://example.com',
+    name: 'envDestination'
+  };
+
+  afterEach(() => {
+    delete process.env['destinations'];
+  });
+
+  it('should set the destination in the environment variables', () => {
+    process.env['destinations'] = JSON.stringify([envDestination]);
+
+    registerDestination({
+      name: 'MockedDestination',
+      url: 'https://example.com'
+    });
+    const actual = JSON.parse(process.env['destinations']!);
+
+    const expected = [
+      envDestination,
+      {
+        name: 'MockedDestination',
+        url: 'https://example.com'
+      }
+    ];
+    expect(actual).toEqual(expected);
   });
 });

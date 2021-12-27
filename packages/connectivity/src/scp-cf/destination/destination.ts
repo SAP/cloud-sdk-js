@@ -1,4 +1,5 @@
 import { assoc } from '@sap-cloud-sdk/util';
+import { validateNameAvailable, setDestinationsInEnv } from '@sap-cloud-sdk/test-util';
 import {
   DestinationFetchOptions,
   isDestinationFetchOptions
@@ -9,6 +10,7 @@ import {
   DestinationAuthToken,
   DestinationCertificate
 } from './destination-service-types';
+import { getDestinationsFromEnv } from './destination-from-env';
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
@@ -329,4 +331,27 @@ export function noDestinationErrorMessage(
   return isDestinationFetchOptions(destination)
     ? `Could not find a destination with name "${destination.destinationName}"! Unable to execute request.`
     : 'Could not find a destination to execute request against and no destination name has been provided (this should never happen)!';
+}
+
+/**
+ * Set a given destination in the `destinations` environment variable.
+ *
+ * Throws an error if a destination with the same name as the given test destination already exists.
+ * @param destination - Test destination to add to the `destinations` environment variable
+ */
+ export function registerDestination(destination: Destination): void {
+  const currentDestinations = getDestinationsFromEnv();
+  const existingNames = new Set<string>(
+    currentDestinations.map(dest => {
+      if (!dest.name) {
+        throw Error('The destination name is undefined.');
+      }
+      return dest.name;
+    })
+  );
+  if (!destination.name) {
+    throw Error('The destination name is undefined.');
+  }
+  validateNameAvailable(destination.name, existingNames);
+  setDestinationsInEnv([...currentDestinations, destination]);
 }

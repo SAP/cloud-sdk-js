@@ -1,4 +1,8 @@
-import { Destination, getDestinationsFromEnv, validateNameAvailable, setDestinationsInEnv } from '@sap-cloud-sdk/connectivity/internal';
+import {
+  Destination,
+  validateNameAvailable,
+  setDestinationsInEnv
+} from '@sap-cloud-sdk/connectivity/internal';
 import {
   getTestDestinationByAlias,
   GetTestDestinationOptions,
@@ -102,3 +106,13 @@ export function unmockAllTestDestinations(): void {
   setDestinationsInEnv(cleanedDestinations);
 }
 
+function getDestinationsFromEnv(): Destination[] {
+  try {
+    const envDestinations = process.env['destinations'] || '[]';
+    return JSON.parse(envDestinations);
+  } catch (error) {
+    throw new Error(
+      `Destinations environment variable cannot be read: ${error.message}`
+    );
+  }
+}

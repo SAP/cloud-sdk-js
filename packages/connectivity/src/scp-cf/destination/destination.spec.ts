@@ -4,11 +4,16 @@ import {
   certificateSingleResponse
 } from '../../../../../test-resources/test/test-util/example-destination-service-responses';
 import {
+  mockDestinationsEnv,
+  unmockDestinationsEnv
+} from '../../../../../test-resources/test/test-util/request-mocker';
+import {
   DestinationConfiguration,
   parseDestination,
   registerDestination,
   sanitizeDestination
 } from './destination';
+import { getDestinationsFromEnv } from './destination-from-env';
 import { Destination } from './destination-service-types';
 
 describe('parseDestination', () => {
@@ -161,31 +166,56 @@ describe('sanitizeDestination', () => {
 });
 
 describe('registerDestination', () => {
-  const envDestination: Destination = {
-    url: 'https://example.com',
-    name: 'envDestination'
+  const environmentDestination = {
+    name: 'FINAL-DESTINATION',
+    url: 'https://mys4hana.com',
+    username: 'myuser',
+    password: 'mypw'
+  };
+
+  const destinationFromEnv: Destination = {
+    authTokens: [],
+    authentication: 'BasicAuthentication',
+    name: 'FINAL-DESTINATION',
+    isTrustingAllCertificates: false,
+    originalProperties: {
+      name: 'FINAL-DESTINATION',
+      url: 'https://mys4hana.com',
+      username: 'myuser',
+      password: 'mypw'
+    },
+    password: 'mypw',
+    username: 'myuser',
+    url: 'https://mys4hana.com'
+  };
+
+  const mockDestination: Destination = {
+    name: 'MockedDestination',
+    url: 'https://example.com'
   };
 
   afterEach(() => {
-    delete process.env['destinations'];
+    unmockDestinationsEnv();
+    jest.resetAllMocks();
   });
 
   it('should set the destination in the environment variables', () => {
-    process.env['destinations'] = JSON.stringify([envDestination]);
+    mockDestinationsEnv(environmentDestination);
 
-    registerDestination({
-      name: 'MockedDestination',
-      url: 'https://example.com'
+    registerDestination(mockDestination);
+    const actual = getDestinationsFromEnv();
+
+    const expected = [destinationFromEnv, mockDestination];
+    expected.forEach((e, index) => {
+      expect(actual[index]).toMatchObject(e);
     });
-    const actual = JSON.parse(process.env['destinations']!);
-
-    const expected = [
-      envDestination,
-      {
-        name: 'MockedDestination',
-        url: 'https://example.com'
-      }
-    ];
-    expect(actual).toEqual(expected);
   });
 });
+
+/*
+const expected = [destinationFromEnv, destinationFromConfigEnv];
+const actual = getDestinationsFromEnv();
+expected.forEach((e, index) => {
+  expect(actual[index]).toMatchObject(e);
+});
+*/

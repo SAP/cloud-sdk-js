@@ -9,7 +9,11 @@ import {
   DestinationAuthToken,
   DestinationCertificate
 } from './destination-service-types';
-import { getDestinationsFromEnv, setDestinationsInEnv, validateNameAvailable } from './destination-from-env';
+import {
+  getDestinationsFromEnv,
+  setDestinationsInEnv,
+  validateNameAvailable
+} from './destination-from-env';
 
 /**
  * Takes an existing or a parsed destination and returns an SDK compatible destination object.
@@ -338,7 +342,7 @@ export function noDestinationErrorMessage(
  * Throws an error if a destination with the same name as the given test destination already exists.
  * @param destination - Test destination to add to the `destinations` environment variable
  */
- export function registerDestination(destination: Destination): void {
+export function registerDestination(destination: Destination): void {
   const currentDestinations = getDestinationsFromEnv();
   const existingNames = new Set<string>(
     currentDestinations.map(dest => {

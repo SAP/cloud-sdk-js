@@ -181,5 +181,5 @@ export function validateNameAvailable(
 }
 
 export function setDestinationsInEnv(destinations: Destination[]): void {
-  process.env['destinations'] = JSON.stringify(destinations);
+  process.env.destinations = JSON.stringify(destinations);
 }

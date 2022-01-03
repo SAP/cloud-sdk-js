@@ -36,21 +36,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getProductiveLernaModules = exports.getAllLernaModules = exports.openFile = exports.transformFile = exports.apiDocsDir = exports.docsDir = exports.version = void 0;
+exports.getProductiveLernaModules = exports.getAllLernaModules = exports.openFile = exports.jsonStringify = exports.transformFile = exports.apiDocsDir = exports.docsDir = exports.version = void 0;
 var fs_1 = require("fs");
 var path_1 = require("path");
 var execa = require("execa");
-exports.version = JSON.parse((0, fs_1.readFileSync)('lerna.json', 'utf8')).version;
-exports.docsDir = (0, path_1.resolve)('docs');
-exports.apiDocsDir = (0, path_1.resolve)(exports.docsDir, 'api');
+exports.version = JSON.parse(fs_1.readFileSync('lerna.json', 'utf8')).version;
+exports.docsDir = path_1.resolve('docs');
+exports.apiDocsDir = path_1.resolve(exports.docsDir, 'api');
 function transformFile(filePath, tranformFn) {
-    var file = (0, fs_1.readFileSync)(filePath, { encoding: 'utf8' });
+    var file = fs_1.readFileSync(filePath, { encoding: 'utf8' });
     var transformedFile = tranformFn(file);
-    (0, fs_1.writeFileSync)(filePath, transformedFile, { encoding: 'utf8' });
+    fs_1.writeFileSync(filePath, transformedFile, { encoding: 'utf8' });
 }
 exports.transformFile = transformFile;
+function jsonStringify(json) {
+    return JSON.stringify(json, null, 2) + '\n';
+}
+exports.jsonStringify = jsonStringify;
 function openFile(filePath) {
-    return (0, fs_1.readFileSync)(filePath, { encoding: 'utf8' });
+    return fs_1.readFileSync(filePath, { encoding: 'utf8' });
 }
 exports.openFile = openFile;
 function getAllLernaModules() {
@@ -59,8 +63,8 @@ function getAllLernaModules() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, execa('lerna', ['list', '--json', '-a'], {
-                        cwd: (0, path_1.resolve)(__dirname, '../')
-                    })];
+                    cwd: path_1.resolve(__dirname, '../')
+                })];
                 case 1:
                     response = _a.sent();
                     return [2 /*return*/, JSON.parse(response.stdout)];

@@ -1,5 +1,5 @@
 import { PathLike } from 'fs';
-import { resolve, basename, dirname } from 'path';
+import { resolve, dirname } from 'path';
 import { createLogger, splitInChunks } from '@sap-cloud-sdk/util';
 import { emptyDirSync } from 'fs-extra';
 import {
@@ -18,12 +18,13 @@ import {
   getVersionForClient,
   sdkMetadataHeader,
   transpileDirectory,
-  readCompilerOptions
+  readCompilerOptions,
+  copyAdditionalFiles
 } from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
 import { entitySourceFile } from './entity/file';
-import { copyFile, otherFile, sourceFile } from './file-generator';
+import { otherFile, sourceFile } from './file-generator';
 import {
   defaultValueProcessesJsGeneration,
   GeneratorOptions
@@ -147,9 +148,25 @@ async function generateFilesWithoutTsMorph(
 ): Promise<void> {
   const promises = services.flatMap(service => [
     generateEntityApis(service, options),
-    generateServiceFile(service, options)
+    generateServiceFile(service, options),
+    generateAdditionalFiles(service, options)
   ]);
   await Promise.all(promises);
+}
+
+async function generateAdditionalFiles(
+  service: VdmServiceMetadata,
+  options: GeneratorOptions
+): Promise<void> {
+  if (options.additionalFiles) {
+    const additionalFilesDir = resolve(
+      options.inputDir.toString(),
+      options.additionalFiles
+    );
+    const serviceDir = resolvePath(service.directoryName, options);
+    const files = new GlobSync(additionalFilesDir).found;
+    await copyAdditionalFiles(serviceDir, files, options.forceOverwrite);
+  }
 }
 
 async function generateServiceFile(
@@ -299,13 +316,6 @@ export async function generateSourcesForService(
     );
   }
 
-  if (options.additionalFiles) {
-    logger.info(
-      `Copying additional files matching ${options.additionalFiles} for project: ${serviceDir}...`
-    );
-    copyAdditionalFiles(serviceDir, options);
-  }
-
   if (options.generateNpmrc) {
     logger.info(`[${service.originalFileName}] Generating .npmrc for ...`);
     otherFile(serviceDir, '.npmrc', npmrc(), options.forceOverwrite);
@@ -400,22 +410,6 @@ function sanitizeOptions(options: GeneratorOptions): GeneratorOptions {
     options.serviceMapping ||
     resolve(options.inputDir.toString(), 'service-mapping.json');
   return options;
-}
-
-function copyAdditionalFiles(
-  toDirectory: Directory,
-  options: GeneratorOptions
-) {
-  if (options.additionalFiles) {
-    new GlobSync(options.additionalFiles).found.forEach(filePath => {
-      copyFile(
-        filePath,
-        basename(filePath),
-        toDirectory,
-        options.forceOverwrite
-      );
-    });
-  }
 }
 
 function resolvePath(path: PathLike, options: GeneratorOptions): string {

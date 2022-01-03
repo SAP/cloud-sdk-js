@@ -1,6 +1,8 @@
-import { resolve } from 'path';
+import { join, resolve } from 'path';
+import { promises } from 'fs';
 import nock = require('nock');
 import { FunctionDeclaration, SourceFile } from 'ts-morph';
+import mock from 'mock-fs';
 import { createOptions } from '../test/test-util/create-generator-options';
 import {
   checkStaticProperties,
@@ -8,35 +10,52 @@ import {
   getGeneratedFiles
 } from '../test/test-util/generator';
 import { oDataServiceSpecs } from '../../../test-resources/odata-service-specs';
-import { generateProject } from './generator';
+import { generate, generateProject } from './generator';
 import { GeneratorOptions } from './generator-options';
 import * as csnGeneration from './service/csn';
 
+const pathTestResources = resolve(__dirname, '../../../test-resources');
+const pathTestService = resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV');
+const outPutPath = 'mockOutput';
+
 describe('generator', () => {
-  describe('common', () => {
+  describe('common mock-fs', () => {
+    beforeEach(() => {
+      mock({
+        [outPutPath]: {},
+        [pathTestResources]: mock.load(pathTestResources)
+      });
+    });
+
+    afterEach(() => {
+      mock.restore();
+    });
     it('copies the additional files matching the glob.', async () => {
-      const project = await generateProject(
+      await generate(
         createOptions({
-          inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+          inputDir: pathTestService,
+          outputDir: outPutPath,
           forceOverwrite: true,
-          additionalFiles: '../../test-resources/*.md'
+          additionalFiles: '../../../*.md'
         })
       );
 
-      const sourceFiles = project!.project!.getSourceFiles();
+      const sourceFiles = await promises.readdir(
+        join(outPutPath, 'test-service')
+      );
       expect(
-        sourceFiles.find(file => file.getBaseName() === 'some-test-markdown.md')
+        sourceFiles.find(file => file === 'some-test-markdown.md')
       ).toBeDefined();
-      expect(
-        sourceFiles.find(file => file.getBaseName() === 'CHANGELOG.md')
-      ).toBeDefined();
+      expect(sourceFiles.find(file => file === 'CHANGELOG.md')).toBeDefined();
     });
+  });
 
+  describe('common ts-morph', () => {
     it('generates the api hub metadata and writes to the input folder', async () => {
       nock('http://registry.npmjs.org/').head(/.*/).reply(404);
       const project = await generateProject(
         createOptions({
-          inputDir: resolve(oDataServiceSpecs, 'v2', 'API_TEST_SRV'),
+          inputDir: pathTestService,
           forceOverwrite: true,
           generateSdkMetadata: true
         })

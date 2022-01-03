@@ -1,14 +1,5 @@
 import { promises as promisesFs } from 'fs';
-import {
-  resolve,
-  parse,
-  basename,
-  dirname,
-  join,
-  relative,
-  posix,
-  sep
-} from 'path';
+import { resolve, parse, basename, dirname, relative, posix, sep } from 'path';
 import {
   createLogger,
   kebabCase,
@@ -21,7 +12,8 @@ import {
   getSdkVersion,
   readCompilerOptions,
   sdkMetadataHeader,
-  transpileDirectory
+  transpileDirectory,
+  copyAdditionalFiles
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   apiFile,
@@ -35,7 +27,7 @@ import {
 import { OpenApiDocument } from './openapi-types';
 import { parseOpenApiDocument } from './parser';
 import { convertOpenApiSpec } from './document-converter';
-import { createFile, copyFile } from './file-writer';
+import { createFile } from './file-writer';
 import {
   parseGeneratorOptions,
   tsconfigJson,
@@ -282,26 +274,6 @@ export async function getInputFilePaths(input: string): Promise<string[]> {
       ...(await getInputFilePaths(resolve(input, directoryContent)))
     ],
     Promise.resolve([] as string[])
-  );
-}
-
-async function copyAdditionalFiles(
-  serviceDir: string,
-  additionalFiles: string[],
-  overwrite: boolean
-): Promise<void[]> {
-  logger.verbose(
-    `Copying additional files matching ${additionalFiles} into ${serviceDir}.`
-  );
-
-  return Promise.all(
-    additionalFiles.map(filePath =>
-      copyFile(
-        resolve(filePath),
-        join(serviceDir, basename(filePath)),
-        overwrite
-      )
-    )
   );
 }
 

@@ -8,4 +8,3 @@ try {
 catch (error) {
     core_1.setFailed(error.message);
 }
-```

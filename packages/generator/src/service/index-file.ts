@@ -28,7 +28,7 @@ export function indexFile(service: VdmServiceMetadata): SourceFileStructure {
       ...(service.functionImports && service.functionImports.length
         ? [exportStatement('function-imports')]
         : []),
-      ...(service.actionsImports && service.actionsImports.length
+      ...(service.actionImports && service.actionImports.length
         ? [exportStatement('action-imports')]
         : []),
       ...(hasEntities(service) ? [exportStatement('BatchRequest')] : []),

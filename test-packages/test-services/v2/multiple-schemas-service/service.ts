@@ -99,4 +99,8 @@ export class MultipleSchemasService<
   get multiSchemaTestEntityApi(): MultiSchemaTestEntityApi<DeSerializersT> {
     return this.initApi('multiSchemaTestEntityApi', MultiSchemaTestEntityApi);
   }
+
+  get functionImports() {
+    return {};
+  }
 }

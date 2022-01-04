@@ -10,12 +10,43 @@ ${serviceBuilder(service.className, service.oDataVersion)}
 ${serviceClass(service)}`;
 }
 
+function getImports(
+  actionFunctionImports:
+    | { name: string; parametersTypeName: string }[]
+    | undefined,
+  type: 'function-imports' | 'action-imports'
+): Import[] {
+  if (actionFunctionImports === undefined) {
+    return [];
+  }
+  const names = actionFunctionImports.map(
+    actionFunctionImport => actionFunctionImport.name
+  );
+  const parameterNames = actionFunctionImports.map(
+    actionFunctionImport => actionFunctionImport.parametersTypeName
+  );
+  return [
+    {
+      names: [...names, ...parameterNames],
+      moduleIdentifier: `./${type}`
+    }
+  ];
+}
+
 export function imports(service: VdmServiceMetadata): Import[] {
+  const functionImports = getImports(
+    service.functionImports,
+    'function-imports'
+  );
+
+  const actionImports = getImports(service.actionImports, 'action-imports');
   return [
     ...service.entities.map(entity => ({
       names: [`${entity.className}Api`],
       moduleIdentifier: `./${entity.className}Api`
     })),
+    ...functionImports,
+    ...actionImports,
     {
       names: ['Time'],
       moduleIdentifier: '@sap-cloud-sdk/odata-common/internal'

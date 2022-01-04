@@ -52,7 +52,7 @@ describe('generation-and-usage', () => {
   const serviceWithActionImport = {
     npmPackageName: '@sap/dummy-package',
     originalFileName: 'Dummy',
-    actionsImports: [
+    actionImports: [
       {
         name: 'dummyActionImport',
         httpMethod: 'get',

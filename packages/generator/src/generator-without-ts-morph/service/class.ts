@@ -46,7 +46,35 @@ export function serviceClass(service: VdmServiceMetadata): string {
     ${service.entities
       .map(entity => getEntityApiFunction(entity, service))
       .join('\n\n')}
+    
+    ${getActionFunctionImports(service, 'functionImports')}
+    
+    ${getActionFunctionImports(service, 'actionImports')}
   }`;
+}
+
+function getActionFunctionImports(
+  service: VdmServiceMetadata,
+  type: 'functionImports' | 'actionImports'
+): string {
+  const names = service[type]
+    ? service[type]!.map(actionOrFunctionImport => actionOrFunctionImport.name)
+    : [];
+
+  if (service[type] === undefined || service[type]!.length === 0) {
+    return '';
+  }
+
+  const lines = service[type]!.map(
+    f =>
+      `${f.name}:(parameter:${f.parametersTypeName}<DeSerializersT>)=>${f.name}(parameter,this.deSerializers)`
+  );
+
+  return codeBlock`
+  get ${type}(){
+  return {${lines.join(',')}}
+  }
+  `;
 }
 
 function getEntityApiFunction(

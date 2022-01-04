@@ -498,7 +498,7 @@ describe('service-generator', () => {
           })
         );
 
-        const actions = services[0].actionsImports;
+        const actions = services[0].actionImports;
 
         expect(actions?.length).toEqual(7);
         const actionWithUnsupportedEdmType = actions?.find(

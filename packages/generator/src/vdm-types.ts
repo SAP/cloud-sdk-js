@@ -23,7 +23,7 @@ export interface VdmServiceEntities {
   complexTypes: VdmComplexType[];
   enumTypes: VdmEnumType[];
   functionImports: VdmFunctionImport[];
-  actionsImports?: VdmActionImport[];
+  actionImports?: VdmActionImport[];
 }
 /**
  * @internal

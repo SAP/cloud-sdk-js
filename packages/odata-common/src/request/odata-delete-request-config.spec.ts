@@ -1,10 +1,7 @@
 import { v4 as uuid } from 'uuid';
-import { testEntityResourcePath } from '../../../../test-resources/test/test-util/test-data';
 import { CommonEntity, commonEntityApi } from '../../test/common-entity';
-import {
-  commonODataUri,
-  commonUriConverter
-} from '../../test/common-request-config';
+import { commonODataUri } from '../../test/common-request-config';
+import { testEntityResourcePath } from '../../test/test-util';
 import { DefaultDeSerializers } from '../de-serializers';
 import { ODataDeleteRequestConfig } from './odata-delete-request-config';
 
@@ -26,12 +23,7 @@ describe('ODataDeleteRequestConfig', () => {
       KeyPropertyString: keyPropString
     };
     expect(config.resourcePath()).toEqual(
-      testEntityResourcePath(
-        keyPropGuid,
-        keyPropString,
-        commonUriConverter,
-        'A_CommonEntity'
-      )
+      testEntityResourcePath(keyPropGuid, keyPropString)
     );
   });
 

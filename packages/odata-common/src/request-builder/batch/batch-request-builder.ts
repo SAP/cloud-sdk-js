@@ -5,7 +5,7 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig, ODataRequest } from '../../request';
-import { DeSerializers } from '../../de-serializers';
+import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
 import { EntityApi, EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';
@@ -19,7 +19,7 @@ import { serializeBatchRequest } from './batch-request-serializer';
  * @internal
  */
 export class BatchRequestBuilder<
-  DeSerializersT extends DeSerializers
+  DeSerializersT extends DeSerializers = DefaultDeSerializers
 > extends MethodRequestBuilder<ODataBatchRequestConfig> {
   // FIXME: MethodRequestBuilder is too broad here. Should be getAll and getByKey
   /**

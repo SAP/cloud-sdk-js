@@ -13,7 +13,7 @@ import {
   testFilterSingleLink,
   testFilterString,
   testFilterStringEncoding
-} from '../../../../test-resources/test/test-util/filter-factory';
+} from '../../../../test-resources/test/test-util';
 import { filterFunctions } from '../filter-functions';
 import { testEntityApi } from '../../test/test-util';
 import { defaultDeSerializers } from '../de-serializers';

@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`setTestDestinationInEnv should fail when mock a destination name already exists in destinations of environment variables 1`] = `"Parsing mocked destinations failed, destination with name \\"SYS_001\\" already exists in the \\"destinations\\" environment variables."`;

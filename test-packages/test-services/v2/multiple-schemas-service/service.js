@@ -33,9 +33,6 @@ class MultipleSchemasService {
       MultiSchemaTestEntityApi_1.MultiSchemaTestEntityApi
     );
   }
-  get functionImports() {
-    return {};
-  }
 }
 exports.MultipleSchemasService = MultipleSchemasService;
 //# sourceMappingURL=service.js.map

@@ -72,6 +72,5 @@ export declare class MultipleSchemasService<
   constructor(deSerializers: DeSerializersT);
   private initApi;
   get multiSchemaTestEntityApi(): MultiSchemaTestEntityApi<DeSerializersT>;
-  get functionImports(): {};
 }
 //# sourceMappingURL=service.d.ts.map

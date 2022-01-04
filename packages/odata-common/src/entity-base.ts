@@ -174,7 +174,6 @@ export abstract class EntityBase {
   }
 
   /**
-   * @deprecated Since 1.12.0. Will be hidden in version 2.0.
    * Initializes or sets the remoteState of the entity.
    * This function is called on all read, create and update requests.
    * This function should be called after [[initializeCustomFields]], if custom fields are defined.

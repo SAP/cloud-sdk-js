@@ -63,8 +63,8 @@ function getAllLernaModules() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, execa('lerna', ['list', '--json', '-a'], {
-                        cwd: path_1.resolve(__dirname, '../')
-                    })];
+                    cwd: path_1.resolve(__dirname, '../')
+                })];
                 case 1:
                     response = _a.sent();
                     return [2 /*return*/, JSON.parse(response.stdout)];

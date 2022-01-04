@@ -19,7 +19,7 @@ import {
   sdkMetadataHeader,
   transpileDirectory,
   readCompilerOptions,
-  copyAdditionalFiles
+  copyFiles
 } from '@sap-cloud-sdk/generator-common/internal';
 import { batchSourceFile } from './batch/file';
 import { complexTypeSourceFile } from './complex-type/file';
@@ -165,7 +165,7 @@ async function generateAdditionalFiles(
     );
     const serviceDir = resolvePath(service.directoryName, options);
     const files = new GlobSync(additionalFilesDir).found;
-    await copyAdditionalFiles(serviceDir, files, options.forceOverwrite);
+    await copyFiles(files, serviceDir, options.forceOverwrite);
   }
 }
 

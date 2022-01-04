@@ -81,7 +81,7 @@ export const generatorOptionsCli: KeysToOptions = {
   },
   additionalFiles: {
     describe:
-      'Glob describing additional files to be added to the each generated service directory.',
+      'Glob describing additional files to be added to the each generated service directory - relative to the input inputDir.',
     type: 'string',
     coerce: coercePathArg,
     normalize: true,

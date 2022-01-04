@@ -13,7 +13,7 @@ import {
   readCompilerOptions,
   sdkMetadataHeader,
   transpileDirectory,
-  copyAdditionalFiles
+  copyFiles
 } from '@sap-cloud-sdk/generator-common/internal';
 import {
   apiFile,
@@ -139,7 +139,7 @@ async function generateSources(
   }
 
   if (options.include) {
-    await copyAdditionalFiles(serviceDir, options.include, options.overwrite);
+    await copyFiles(options.include, serviceDir, options.overwrite);
   }
 
   if (tsConfig) {

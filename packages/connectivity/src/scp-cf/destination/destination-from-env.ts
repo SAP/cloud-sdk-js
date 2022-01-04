@@ -178,7 +178,7 @@ export function validateNameAvailable(
 ): void {
   if (existingNames.has(destinationName)) {
     throw new Error(
-      `Parsing mocked destinations failed, destination with name "${destinationName}" already exists in the "destinations" environment variables.`
+      `Parsing destinations failed, destination with name "${destinationName}" already exists in the "destinations" environment variables.`
     );
   }
 }
@@ -190,6 +190,14 @@ export function setDestinationsInEnv(destinations: Destination[]): void {
   process.env.destinations = JSON.stringify(destinations);
 }
 
+type DestinationWithName = Omit<Destination, 'name'> & { name: string };
+
+function destinationHasName(
+  destination: Destination
+): destination is DestinationWithName {
+  return !!destination.name;
+}
+
 /**
  * Set a given destination in the `destinations` environment variable.
  *
@@ -199,15 +207,12 @@ export function setDestinationsInEnv(destinations: Destination[]): void {
 export function registerDestination(destination: Destination): void {
   const currentDestinations = getDestinationsFromEnv();
   const existingNames = new Set<string>(
-    currentDestinations.map(dest => {
-      if (!dest.name) {
-        throw Error('The destination name is undefined.');
-      }
-      return dest.name;
-    })
+    currentDestinations.filter(destinationHasName).map(dest => dest.name)
   );
-  if (!destination.name) {
-    throw Error('The destination name is undefined.');
+  if (!destination.name || !destination.url) {
+    throw Error(
+      'The registerDestination function requires a destination name and url.'
+    );
   }
   validateNameAvailable(destination.name, existingNames);
   setDestinationsInEnv([...currentDestinations, destination]);

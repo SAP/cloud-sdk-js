@@ -214,6 +214,23 @@ describe('registerDestination', () => {
     url: 'https://example.com'
   };
 
+  const mockDestinationFromEnv: Destination = {
+    name: 'MockedDestination',
+    url: 'https://example.com',
+    authTokens: [],
+    certificates: [],
+    authentication: 'NoAuthentication',
+    isTrustingAllCertificates: false,
+    originalProperties: {
+      name: 'MockedDestination',
+      url: 'https://example.com',
+      authTokens: [],
+      certificates: [],
+      authentication: 'NoAuthentication',
+      isTrustingAllCertificates: false
+    }
+  };
+
   afterEach(() => {
     unmockDestinationsEnv();
     jest.resetAllMocks();
@@ -229,5 +246,28 @@ describe('registerDestination', () => {
     expected.forEach((e, index) => {
       expect(actual[index]).toMatchObject(e);
     });
+    expect(
+      getDestination({ destinationName: 'MockedDestination' })
+    ).resolves.toMatchObject(mockDestinationFromEnv);
+  });
+
+  it('should throw an exception if a property of the destination is missing', () => {
+    const badDestination: Destination = {
+      url: 'https://test.com'
+    };
+    expect(() => {
+      registerDestination(badDestination);
+    }).toThrowErrorMatchingInlineSnapshot(
+      '"The registerDestination function requires a destination name and url."'
+    );
+  });
+
+  it('should throw an exception if a name conflict occurs', () => {
+    registerDestination(mockDestination);
+    expect(() => {
+      registerDestination(mockDestination);
+    }).toThrowErrorMatchingInlineSnapshot(
+      '"Parsing destinations failed, destination with name \\"MockedDestination\\" already exists in the \\"destinations\\" environment variables."'
+    );
   });
 });

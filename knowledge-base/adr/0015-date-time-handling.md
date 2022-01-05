@@ -23,7 +23,10 @@ This is a Stage 2 proposal at the time being and will most likely reach stage 3 
 ## Decision
 
 Allow to configure different serializers / deserializers for dates, but maybe even for all field types.
-We will provide adapters for moment, string and Temporal serialization and switch the default implementation from moment to either string or Temporal depending on the state of the proposal at the time of switching.
+~~We will provide adapters for moment, string and Temporal serialization and switch the default implementation from moment to either string or Temporal depending on the state of the proposal at the time of switching.~~
+We will provide adapters for moment and Temporal in the initial 2.0 release.
+The default implementation will be moment until Temporal has reached stage 4.
+We will provide the string adapters once Temporal is part of node standard.
 
 Further it should be possible to switch the adapters globally.
 

@@ -27,7 +27,7 @@ import {
   TestEntityEndsWith,
   TestEntityEndsWithSomethingElse,
   CaseTest,
-  Casetest_1
+  Casetest_1, testService
 } from './index';
 import { BatchChangeSet } from '@sap-cloud-sdk/odata-common/internal';
 
@@ -67,6 +67,9 @@ export function batch<DeSerializersT extends DeSerializers>(
     variadicArgumentToArray(first, rest)
   );
 }
+
+
+batch(testService().testEntityApi.requestBuilder().getAll()).execute()
 
 /**
  * Change set constructor consists of write operations supported on the Test Service.

@@ -10,15 +10,15 @@ import {
   defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v4';
-import {
+  mergeDefaultDeSerializersWith,
   EdmTypeField,
   AllFields,
+  FieldBuilder
+} from '@sap-cloud-sdk/odata-v4';
+import {
   entityBuilder,
   EntityBuilderType,
   EntityApi,
-  FieldBuilder,
   Time
 } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';

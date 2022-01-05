@@ -36,7 +36,19 @@ export { ODataBatchRequestBuilder } from './batch-request-builder';
 export { ActionImportParameter } from './request';
 
 export { Entity } from './entity';
-export { CustomField } from './selectable';
+export {
+  CustomField,
+  CollectionField,
+  ComplexTypeField,
+  EdmTypeField,
+  EnumField,
+  FieldBuilder,
+  OrderableEdmTypeField,
+  PropertyMetadata,
+  ConstructorOrField,
+  FieldOptions,
+  AllFields
+} from './selectable';
 export { uriConverter } from './uri-conversion';
 export { all, any } from './filter';
 
@@ -45,7 +57,8 @@ export {
   defaultDeSerializers,
   edmToTs,
   entityDeserializer,
-  mergeDefaultDeSerializersWith
+  mergeDefaultDeSerializersWith,
+  DeserializedType
 } from './de-serializers';
 
 export type { DefaultDeSerializers, DeSerializers } from './de-serializers';

@@ -4,22 +4,20 @@
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
 import {
+  EnumField,
+  FieldOptions,
   DefaultDeSerializers,
   DeSerializers,
-  Entity
-} from '@sap-cloud-sdk/odata-v4';
-import {
+  Entity,
   CollectionField,
   ComplexTypeField,
-  ConstructorOrField,
-  DeserializedType,
   EdmTypeField,
-  EnumField,
   FieldBuilder,
-  FieldOptions,
+  DeserializedType,
+  ConstructorOrField,
   OrderableEdmTypeField,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-v4';
 
 /**
  * City

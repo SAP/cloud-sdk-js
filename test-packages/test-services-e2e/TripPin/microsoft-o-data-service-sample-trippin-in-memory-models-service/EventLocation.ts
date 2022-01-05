@@ -7,9 +7,7 @@ import { City, CityField } from './City';
 import {
   DefaultDeSerializers,
   DeSerializers,
-  Entity
-} from '@sap-cloud-sdk/odata-v4';
-import {
+  Entity,
   CollectionField,
   ComplexTypeField,
   ConstructorOrField,
@@ -20,7 +18,7 @@ import {
   FieldOptions,
   OrderableEdmTypeField,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-v4';
 
 /**
  * EventLocation

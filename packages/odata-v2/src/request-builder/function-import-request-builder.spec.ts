@@ -16,7 +16,7 @@ import {
 import {
   defaultDestination,
   defaultHost
-} from '../../../../test-resources/test/test-util/request-mocker';
+} from '../../../../test-resources/test/test-util';
 import { testEntityApi } from '../../test/test-util';
 
 const serviceUrl = '/testination/sap/opu/odata/sap/API_TEST_SRV';

@@ -1,21 +1,17 @@
 import nock = require('nock');
 import { v4 as uuid } from 'uuid';
-import { createUriConverter } from '@sap-cloud-sdk/odata-common/internal';
 import {
   defaultDestination,
-  mockGetRequest
-} from '../../../../test-resources/test/test-util/request-mocker';
-import {
+  mockGetRequest,
   createOriginalTestEntityData1,
-  createOriginalTestEntityDataWithLinks,
+  createOriginalTestEntityDataWithLinks
+} from '../../../../test-resources/test/test-util';
+import {
+  testEntityApi,
   createTestEntity,
   testEntityResourcePath
-} from '../../../../test-resources/test/test-util/test-data';
-import { defaultDeSerializers } from '../de-serializers';
-import { testEntityApi } from '../../test/test-util';
+} from '../../test/test-util';
 import { GetByKeyRequestBuilder } from './get-by-key-request-builder';
-
-const uriConverter = createUriConverter(defaultDeSerializers);
 
 describe('GetByKeyRequestBuilder', () => {
   describe('url', () => {
@@ -44,8 +40,7 @@ describe('GetByKeyRequestBuilder', () => {
         {
           path: testEntityResourcePath(
             expected.keyPropertyGuid,
-            expected.keyPropertyString,
-            uriConverter
+            expected.keyPropertyString
           ),
           responseBody: { d: entityData }
         },
@@ -70,8 +65,7 @@ describe('GetByKeyRequestBuilder', () => {
         {
           path: testEntityResourcePath(
             expected.keyPropertyGuid,
-            expected.keyPropertyString,
-            uriConverter
+            expected.keyPropertyString
           ),
           responseBody: { d: entityData }
         },
@@ -96,8 +90,7 @@ describe('GetByKeyRequestBuilder', () => {
         {
           path: testEntityResourcePath(
             expected.keyPropertyGuid,
-            expected.keyPropertyString,
-            uriConverter
+            expected.keyPropertyString
           ),
           responseBody: { d: entityData },
           responseHeaders: { Etag: versionIdentifier }
@@ -120,8 +113,7 @@ describe('GetByKeyRequestBuilder', () => {
         {
           path: testEntityResourcePath(
             expected.keyPropertyGuid,
-            expected.keyPropertyString,
-            uriConverter
+            expected.keyPropertyString
           ),
           responseBody: { d: { results: entityData } }
         },
@@ -146,8 +138,7 @@ describe('GetByKeyRequestBuilder', () => {
         {
           path: testEntityResourcePath(
             expected.keyPropertyGuid,
-            expected.keyPropertyString,
-            uriConverter
+            expected.keyPropertyString
           ),
           responseBody: { d: entityData }
         },
@@ -170,8 +161,7 @@ describe('GetByKeyRequestBuilder', () => {
         {
           path: `${testEntityResourcePath(
             entity.keyPropertyGuid,
-            entity.keyPropertyString,
-            uriConverter
+            entity.keyPropertyString
           )}/to_SingleLink/to_MultiLink`
         },
         testEntityApi

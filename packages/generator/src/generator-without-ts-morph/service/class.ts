@@ -57,10 +57,6 @@ function getActionFunctionImports(
   service: VdmServiceMetadata,
   type: 'functionImports' | 'actionImports'
 ): string {
-  const names = service[type]
-    ? service[type]!.map(actionOrFunctionImport => actionOrFunctionImport.name)
-    : [];
-
   if (service[type] === undefined || service[type]!.length === 0) {
     return '';
   }
@@ -71,8 +67,8 @@ function getActionFunctionImports(
   );
 
   return codeBlock`
-  get ${type}(){
-  return {${lines.join(',')}}
+  get ${type}( ) {
+    return {${lines.join(',')}}
   }
   `;
 }

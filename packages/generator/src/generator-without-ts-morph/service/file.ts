@@ -14,7 +14,7 @@ function getImports(
   actionFunctionImports:
     | { name: string; parametersTypeName: string }[]
     | undefined,
-  type: 'function-imports' | 'action-imports'
+  moduleIdentifier: 'function-imports' | 'action-imports'
 ): Import[] {
   if (actionFunctionImports === undefined) {
     return [];
@@ -28,7 +28,7 @@ function getImports(
   return [
     {
       names: [...names, ...parameterNames],
-      moduleIdentifier: `./${type}`
+      moduleIdentifier: `./${moduleIdentifier}`
     }
   ];
 }

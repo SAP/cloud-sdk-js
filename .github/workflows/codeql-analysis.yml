@@ -8,6 +8,9 @@ name: 'code-ql'
 on:
   schedule:
     - cron: '0 20 * * *'
+  push:
+    branches: [ add-check ]
+  workflow_dispatch:
 
 jobs:
   analyze:
@@ -59,3 +62,5 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
+        paths:
+          - packages/**/src

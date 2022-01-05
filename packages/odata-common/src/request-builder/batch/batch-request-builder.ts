@@ -5,7 +5,7 @@ import {
 import { HttpResponse } from '@sap-cloud-sdk/http-client';
 import { MethodRequestBuilder } from '../request-builder-base';
 import { ODataBatchRequestConfig, ODataRequest } from '../../request';
-import { DefaultDeSerializers, DeSerializers } from '../../de-serializers';
+import { DeSerializers } from '../../de-serializers';
 import { EntityApi, EntityBase } from '../../entity-base';
 import { GetAllRequestBuilderBase } from '../get-all-request-builder-base';
 import { GetByKeyRequestBuilderBase } from '../get-by-key-request-builder-base';

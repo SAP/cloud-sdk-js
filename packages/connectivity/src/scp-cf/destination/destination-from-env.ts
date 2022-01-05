@@ -168,3 +168,52 @@ function destinationAuthToken(
     "Option 'forwardAuthToken' was set on destination but no token was provided to forward. This is most likely unintended and will lead to a authorization error on request execution."
   );
 }
+
+/**
+ * @internal
+ */
+export function validateNameAvailable(
+  destinationName: string,
+  existingNames: Set<string>
+): void {
+  if (existingNames.has(destinationName)) {
+    throw new Error(
+      `Parsing destinations failed, destination with name "${destinationName}" already exists in the "destinations" environment variables.`
+    );
+  }
+}
+
+/**
+ * @internal
+ */
+export function setDestinationsInEnv(destinations: Destination[]): void {
+  process.env.destinations = JSON.stringify(destinations);
+}
+
+type DestinationWithName = Omit<Destination, 'name'> & { name: string };
+
+function destinationHasName(
+  destination: Destination
+): destination is DestinationWithName {
+  return !!destination.name;
+}
+
+/**
+ * Set a given destination in the `destinations` environment variable.
+ *
+ * Throws an error if a destination with the same name as the given test destination already exists.
+ * @param destination - Test destination to add to the `destinations` environment variable
+ */
+export function registerDestination(destination: Destination): void {
+  const currentDestinations = getDestinationsFromEnv();
+  const existingNames = new Set<string>(
+    currentDestinations.filter(destinationHasName).map(dest => dest.name)
+  );
+  if (!destination.name || !destination.url) {
+    throw Error(
+      'The registerDestination function requires a destination name and url.'
+    );
+  }
+  validateNameAvailable(destination.name, existingNames);
+  setDestinationsInEnv([...currentDestinations, destination]);
+}

@@ -30,7 +30,8 @@ export {
   ServiceCredentials,
   buildHeadersForDestination,
   getClientCredentialsToken,
-  getUserToken
+  getUserToken,
+  registerDestination
 } from './scp-cf';
 
 export { getAgentConfig } from './http-agent';

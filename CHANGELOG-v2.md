@@ -432,6 +432,7 @@
 ## New Functionality
 
 - [connectivity] Create a new package with minimal API.
+  - `registerDestination` function to add destinations to the environment variables
 - [http-client] Create a new package with minimal API
 
 ## Improvements

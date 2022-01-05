@@ -19,7 +19,7 @@ import { serializeBatchRequest } from './batch-request-serializer';
  * @internal
  */
 export class BatchRequestBuilder<
-  DeSerializersT extends DeSerializers = DefaultDeSerializers
+  DeSerializersT extends DeSerializers
 > extends MethodRequestBuilder<ODataBatchRequestConfig> {
   // FIXME: MethodRequestBuilder is too broad here. Should be getAll and getByKey
   /**

@@ -1,16 +1,14 @@
 import {
-  DefaultDeSerializers,
-  DeSerializers,
-  Entity
-} from '@sap-cloud-sdk/odata-v2';
-import {
   ComplexTypeField,
   ConstructorOrField,
+  DeSerializers,
+  DefaultDeSerializers,
   DeserializedType,
   EdmTypeField,
+  Entity,
   FieldOptions,
   PropertyMetadata
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-v2';
 /**
  * TestLvl2NestedComplexType
  */

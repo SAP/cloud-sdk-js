@@ -12,10 +12,13 @@ import { TestEntityCircularLinkParentApi } from './TestEntityCircularLinkParentA
 import { TestEntityCircularLinkChildApi } from './TestEntityCircularLinkChildApi';
 import { TestEntityEndsWithApi } from './TestEntityEndsWithApi';
 import { TestEntityEndsWithSomethingElseApi } from './TestEntityEndsWithSomethingElseApi';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
-import { DeSerializers, DefaultDeSerializers } from '@sap-cloud-sdk/odata-v4';
+import {
+  DeSerializers,
+  DefaultDeSerializers,
+  Time
+} from '@sap-cloud-sdk/odata-v4';
 export declare function testService<
   BinaryT = string,
   BooleanT = boolean,

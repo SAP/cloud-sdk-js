@@ -69,5 +69,6 @@ export {
   BatchChangeSet,
   FunctionImportParameter,
   OneToManyLink,
-  OneToOneLink
+  OneToOneLink,
+  throwErrorWhenReturnTypeIsUnionType
 } from '@sap-cloud-sdk/odata-common/internal';

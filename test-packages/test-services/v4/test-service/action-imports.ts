@@ -3,7 +3,6 @@
  *
  * This is a generated file powered by the SAP Cloud SDK for JavaScript.
  */
-import { throwErrorWhenReturnTypeIsUnionType } from '@sap-cloud-sdk/odata-common/internal';
 import {
   edmToTs,
   entityDeserializer,
@@ -15,7 +14,8 @@ import {
   transformReturnValueForEntity,
   DeSerializers,
   DefaultDeSerializers,
-  defaultDeSerializers
+  defaultDeSerializers,
+  throwErrorWhenReturnTypeIsUnionType
 } from '@sap-cloud-sdk/odata-v4';
 import { testService } from './service';
 import { TestComplexType } from './TestComplexType';

@@ -11,19 +11,17 @@ import { TestEnumTypeWithOneMember } from './TestEnumTypeWithOneMember';
 import {
   CustomField,
   DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v4';
-import {
+  DeSerializers,
+  AllFields,
+  EntityBuilderType,
+  EntityApi,
   EdmTypeField,
   OrderableEdmTypeField,
   CollectionField,
   EnumField,
   OneToManyLink,
-  OneToOneLink,
-  AllFields,
-  EntityBuilderType,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
+  OneToOneLink
+} from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements EntityApi<TestEntity<DeSerializersT>, DeSerializersT>

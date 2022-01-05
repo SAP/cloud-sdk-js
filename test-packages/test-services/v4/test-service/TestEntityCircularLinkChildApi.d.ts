@@ -5,15 +5,13 @@ import { TestEntityCircularLinkParentApi } from './TestEntityCircularLinkParentA
 import {
   CustomField,
   DefaultDeSerializers,
-  DeSerializers
-} from '@sap-cloud-sdk/odata-v4';
-import {
-  EdmTypeField,
-  OneToOneLink,
+  DeSerializers,
   AllFields,
   EntityBuilderType,
-  EntityApi
-} from '@sap-cloud-sdk/odata-common/internal';
+  EntityApi,
+  EdmTypeField,
+  OneToOneLink
+} from '@sap-cloud-sdk/odata-v4';
 export declare class TestEntityCircularLinkChildApi<
   DeSerializersT extends DeSerializers = DefaultDeSerializers
 > implements

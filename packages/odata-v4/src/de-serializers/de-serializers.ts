@@ -50,4 +50,7 @@ export interface DeSerializers<
   'Edm.Enum': DeSerializer<EnumT>;
 }
 
-export type DeserializedType<DeSerializersT extends DeSerializers, EdmT> = DeserializedTypeCommon<DeSerializersT, EdmT>;
+export type DeserializedType<
+  DeSerializersT extends DeSerializers,
+  EdmT
+> = DeserializedTypeCommon<DeSerializersT, EdmT>;

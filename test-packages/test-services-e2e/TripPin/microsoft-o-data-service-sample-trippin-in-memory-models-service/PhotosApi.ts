@@ -10,9 +10,7 @@ import {
   defaultDeSerializers,
   DefaultDeSerializers,
   DeSerializers,
-  mergeDefaultDeSerializersWith
-} from '@sap-cloud-sdk/odata-v4';
-import {
+  mergeDefaultDeSerializersWith,
   OrderableEdmTypeField,
   EdmTypeField,
   AllFields,
@@ -21,7 +19,8 @@ import {
   EntityApi,
   FieldBuilder,
   Time
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-v4';
+
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 export class PhotosApi<

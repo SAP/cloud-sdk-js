@@ -7,14 +7,14 @@ import { PhotosApi } from './PhotosApi';
 import { PeopleApi } from './PeopleApi';
 import { AirlinesApi } from './AirlinesApi';
 import { AirportsApi } from './AirportsApi';
-import { Time } from '@sap-cloud-sdk/odata-common/internal';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 import {
   defaultDeSerializers,
   DeSerializers,
   DefaultDeSerializers,
-  mergeDefaultDeSerializersWith
+  mergeDefaultDeSerializersWith,
+  Time
 } from '@sap-cloud-sdk/odata-v4';
 
 export function microsoftODataServiceSampleTrippinInMemoryModelsService<

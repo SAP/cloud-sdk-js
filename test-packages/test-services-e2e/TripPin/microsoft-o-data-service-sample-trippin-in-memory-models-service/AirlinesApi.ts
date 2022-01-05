@@ -13,14 +13,12 @@ import {
   mergeDefaultDeSerializersWith,
   EdmTypeField,
   AllFields,
-  FieldBuilder
-} from '@sap-cloud-sdk/odata-v4';
-import {
+  FieldBuilder,
   entityBuilder,
   EntityBuilderType,
   EntityApi,
   Time
-} from '@sap-cloud-sdk/odata-common/internal';
+} from '@sap-cloud-sdk/odata-v4';
 import { BigNumber } from 'bignumber.js';
 import { Moment, Duration } from 'moment';
 export class AirlinesApi<
